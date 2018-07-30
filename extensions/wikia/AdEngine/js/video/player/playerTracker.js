@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': params.slotName || emptyValue.string,
+				'position': (params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
@@ -58,22 +58,13 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
-				'additional_2': floatingState
+				'additional_2': floatingState,
+				'vast_id': params.vastId || emptyValue.string
 			};
 
 		if (bidHelper && params.bid) {
-			if (params.bid.bidderCode === 'rubicon') {
-				trackingData['vast_id'] = [
-					params.bid.rubiconAdvertiserId || emptyValue.string,
-					params.bid.rubiconAdId || emptyValue.string
-				].join(':');
-				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-			}
-
-			if (params.bid.bidderCode === 'appnexusAst' || params.bid.bidderCode === 'beachfront') {
-				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
-				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-			}
+			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			trackingData['vast_id'] = params.bid.creativeId || emptyValue.string;
 		}
 
 		return trackingData;

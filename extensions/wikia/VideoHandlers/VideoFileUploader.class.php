@@ -75,14 +75,16 @@ class VideoFileUploader {
 			// Some providers will sometimes return error codes when attempting
 			// to fetch a thumbnail
 			try {
-				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+				$thumbnailUrl1 = $apiWrapper->getThumbnailUrl();
+				$upload = $this->uploadBestThumbnail( $thumbnailUrl1 );
 			} catch ( Exception $e ) {
 				WikiaLogger::instance()->error('Video upload failed', [
 					'targetFile' => $this->sTargetTitle,
 					'externalURL' => $this->sExternalUrl,
 					'videoID' => $this->sVideoId,
 					'provider' => $this->sProvider,
-					'exception' => $e
+					'exception' => $e,
+					'thumbnailURL' => $thumbnailUrl,
 				]);
 				return Status::newFatal($e->getMessage());
 			}
@@ -94,6 +96,8 @@ class VideoFileUploader {
 				'provider' => $this->sProvider,
 				'apiWrapper' => get_class( $apiWrapper )
 			]);
+
+			return Status::newFatal( 'Api wrapper corrupted' );
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
@@ -189,45 +193,13 @@ class VideoFileUploader {
 	}
 
 	/**
-	 * Reset the thumbnail for this video to its original from the provider
-	 * @param File $file
-	 * @param string $thumbnailUrl
-	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
-	 * @return FileRepoStatus
-	 */
-	public function resetThumbnail( File &$file, $thumbnailUrl, $delayIndex = 0 ) {
-		wfProfileIn(__METHOD__);
-
-		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnail
-		try {
-			$upload = $this->uploadBestThumbnail( $thumbnailUrl, $delayIndex );
-
-			// Publish the thumbnail file (some filerepo classes do not support write operations)
-			$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
-		} catch ( Exception $e ) {
-			WikiaLogger::instance()->error( __METHOD__, [
-				'thumbnailUrl' => $thumbnailUrl,
-				'delayIndex' => $delayIndex,
-				'file_obj' => $file,
-				'exception' => $e
-			]);
-			wfProfileOut(__METHOD__);
-			return Status::newFatal($e->getMessage());
-		}
-
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
-	/**
 	 * Try to upload the best thumbnail for this file, starting with the one the provider
 	 * gives and falling back to the default thumb
 	 * @param string $thumbnailUrl
-	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
+	 * @throws Exception
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail( $thumbnailUrl, $delayIndex = 0 ) {
+	protected function uploadBestThumbnail( $thumbnailUrl ) {
 		wfProfileIn( __METHOD__ );
 
 		// disable proxy
@@ -235,16 +207,10 @@ class VideoFileUploader {
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $thumbnailUrl );
 
-		// If uploading the actual thumbnail fails, load a default thumbnail
-		if ( empty($upload) ) {
-			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::getLegacyThumbnailUrl() );
-			$this->scheduleJob( $delayIndex );
-		}
-
 		// If we still don't have anything, give up.
 		if ( empty( $upload ) ) {
 			wfProfileOut( __METHOD__ );
-			return null;
+			throw new Exception( 'Thumbnail upload failed' );
 		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );
@@ -252,21 +218,6 @@ class VideoFileUploader {
 		wfProfileOut( __METHOD__ );
 
 		return $upload;
-	}
-
-	/**
-	 * @param $delayIndex
-	 */
-	private function scheduleJob( $delayIndex ) {
-		$provider = $this->oApiWrapper->getProvider();
-		if ( $delayIndex < UpdateThumbnailTask::getDelayCount( $provider ) ) {
-			$delay = UpdateThumbnailTask::getDelay( $provider, $delayIndex );
-			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
-			$task->delay( $delay );
-			$task->dupCheck();
-			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider );
-			$task->queue();
-		}
 	}
 
 	/**
@@ -299,6 +250,9 @@ class VideoFileUploader {
 	}
 
 
+	/**
+	 * @param UploadBase $upload
+	 */
 	protected function adjustThumbnailToVideoRatio( $upload ) {
 
 		wfProfileIn( __METHOD__ );

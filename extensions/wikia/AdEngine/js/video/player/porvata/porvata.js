@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 			var imaPlayer = googleIma.getPlayer(videoSettings);
 
-			log(['ima player set up', ima], log.levels.debug, logGroup);
+			log('ima player set up', log.levels.debug, logGroup);
 
 			onPorvataCreated(porvataPlayerFactory.create(videoSettings, imaPlayer));
 		}

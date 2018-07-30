@@ -4,15 +4,11 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/flexbox";
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 @import "ChatColor";
 @import "UserStatsMenu";
-
-body.skin-monobook .ChatWidget,
-body.skin-oasis .ChatMonobookWidget {
-	display: none;
-}
 
 .chat-join {
 	button .icon {
@@ -58,7 +54,7 @@ body.skin-oasis .ChatMonobookWidget {
 				}
 
 				.wds-avatar {
-					border-color: $color-page-border;
+					@include wds-avatar(32px, $color-page-border, $color-page-border);
 				}
 			}
 
@@ -84,12 +80,6 @@ body.skin-oasis .ChatMonobookWidget {
 		position: absolute;
 		top: 0;
 		right: 0;
-	}
-
-	html[lang^='zh'] & .wds-is-squished {
-		font-size: 12px;
-		font-weight: 400;
-		padding: 9px 12px 8px;
 	}
 }
 
@@ -128,6 +118,8 @@ body.skin-oasis .ChatMonobookWidget {
 
 		&.wds-is-secondary {
 			margin-left: 12px;
+			padding-left: 16px;
+			padding-right: 16px;
 		}
 	}
 }

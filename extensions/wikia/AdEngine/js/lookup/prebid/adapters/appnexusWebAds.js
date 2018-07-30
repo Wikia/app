@@ -1,15 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'wikia.geo',
-	'wikia.instantGlobals',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.log'
-], function (slotsContext, geo, instantGlobals, log) {
+], function (adContext, slotsContext, babDetection, log) {
 	'use strict';
 
 	var bidderName = 'appnexusWebAds',
 		aliases = {
-			'appnexusAst': [bidderName]
+			'appnexus': [bidderName]
 		},
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',
 		priorityLevel = 0,
@@ -78,7 +78,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusWebAdsBidderCountries);
+		return adContext.get('bidders.appnexusWebAds') && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -88,7 +88,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

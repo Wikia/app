@@ -1,16 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.log'
-], function (slotsContext, instartLogic, geo, instantGlobals, log) {
+], function (adContext, slotsContext, babDetection, log) {
 	'use strict';
 
 	var bidderName = 'pubmatic',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',
-		publisherId = 156260,
+		publisherId = '156260',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -89,7 +88,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverPubMaticBidderCountries) && !instartLogic.isBlocking();
+		return adContext.get('bidders.pubmatic') && !babDetection.isBlocking();
 	}
 
 	function getSlots(skin) {
@@ -101,7 +100,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: config.ids.map(function (id) {
 				return {
 					bidder: bidderName,

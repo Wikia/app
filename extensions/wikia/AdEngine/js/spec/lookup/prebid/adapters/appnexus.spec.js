@@ -3,11 +3,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 	'use strict';
 
 	var mocks = {
-		instantGlobals: {
-			wgAdDriverAppNexusBidderCountries: ['PL']
-		},
-		geo: {
-			isProperGeo: jasmine.createSpy('isProperGeo')
+		adContext: {
+			get: function () {}
 		},
 		appNexusPlacements: {
 			getPlacement: function () {
@@ -19,6 +16,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 				return map;
 			}
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		log: function() {}
 	};
 
@@ -26,18 +28,22 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.adContext,
 			mocks.slotsContext,
 			mocks.appNexusPlacements,
-			mocks.geo,
-			mocks.instantGlobals,
+			mocks.babDetection,
 			mocks.log
 		);
 	}
 
-	it('isEnabled checks the countries instant global', function () {
-		var appNexus = getAppNexus();
-		appNexus.isEnabled();
-		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
+	it('enables bidder if flag is on and user is not blocking ads', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		expect(getAppNexus().isEnabled()).toBeTruthy();
+	});
+
+	it('disables bidder if flag is off and user is not blocking ads', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
+		expect(getAppNexus().isEnabled()).toBeFalsy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
@@ -50,7 +56,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 			placementId: '5823300'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'appnexus',

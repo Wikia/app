@@ -31,7 +31,7 @@
 					</span>
 					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
 					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
-					.<?= htmlspecialchars( $wikiaBaseDomain ) ?>
+					.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiaBaseDomain ) ?></span>
 					<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
 					<div class="wiki-domain-error error-msg"></div>
 				</div>
@@ -45,7 +45,7 @@
 									 <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$selectedLang] ) ?>
 								</span>
 							<? endif ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 						</div>
 						<div class="wds-dropdown__content wiki-language-dropdown">
 							<ul class="wds-list">
@@ -100,7 +100,7 @@
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
 							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 						</div>
 						<div class="wds-dropdown__content wiki-vertical-dropdown">
 							<ul class="wds-list">

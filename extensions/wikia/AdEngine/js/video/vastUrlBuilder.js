@@ -1,15 +1,18 @@
 /*global define*/
 define('ext.wikia.adEngine.video.vastUrlBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.location',
-	'wikia.log'
-], function (page, adUnitBuilder, slotTargeting, loc, log) {
+	'wikia.log',
+	'wikia.trackingOptIn'
+], function (adContext, page, adUnitBuilder, slotTargeting, loc, log, trackingOptIn) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
-			horizontal: '640x480'
+			horizontal: '640x480',
+			horizontalExtra: '640x480|480x360'
 		},
 		availableVideoPositions = ['preroll', 'midroll', 'postroll'],
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
@@ -41,8 +44,13 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return !isNaN(parseFloat(n)) && isFinite(n);
 	}
 
-	function getSizeByAspectRatio(aspectRatio) {
-		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
+	function getSizeByAspectRatio(aspectRatio, slotName) {
+		if (aspectRatio >= 1 || !isNumeric(aspectRatio)) {
+			return slotName === 'FEATURED' && adContext.get('opts.additionalVastSize')
+				? adSizes.horizontalExtra : adSizes.horizontal;
+		}
+
+		return adSizes.vertical;
 	}
 
 	function getAdUnit(options, slotParams) {
@@ -64,7 +72,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			'impl=s',
 			'unviewed_position_start=1',
 			'iu=' + getAdUnit(options, slotParams),
-			'sz=' + getSizeByAspectRatio(aspectRatio),
+			'sz=' + getSizeByAspectRatio(aspectRatio, slotParams.pos),
 			'url=' + encodeURIComponent(loc.href),
 			'description_url=' + encodeURIComponent(loc.href),
 			'correlator=' + correlator,
@@ -83,6 +91,8 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params.push('cmsid=' + options.contentSourceId);
 			params.push('vid=' + options.videoId);
 		}
+
+		params.push('npa=' + (trackingOptIn.isOptedIn() ? 0 : 1));
 
 		url = baseUrl + params.join('&');
 		log(['build', url], 'debug', logGroup);

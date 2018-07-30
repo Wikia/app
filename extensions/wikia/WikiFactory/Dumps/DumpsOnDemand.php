@@ -66,7 +66,10 @@ class DumpsOnDemand {
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
 		$tmpl->set( 'editToken', $user->getEditToken());
 
-		if ( $request->wasPosted() && $available && $bIsAllowed && $user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+		if ( $request->wasPosted() &&
+			 $request->getVal('dumpRequest') &&
+		     $available && $bIsAllowed &&
+		     $user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( $page->msg( 'dump-database-request-requested' )->text() ) . $text;
@@ -117,9 +120,11 @@ class DumpsOnDemand {
 			sprintf( 'No such wiki. city_id: %d.', $iCityId )
 		);
 
+		$iUserId = $wgUser->getId();
+
 		$aData = [
 			'dump_wiki_id'   => $iCityId,
-			'dump_user_id'   => $wgUser->getId(),
+			'dump_user_id'   => $iUserId,
 			'dump_requested' => wfTimestampNow()
 		];
 
@@ -139,6 +144,14 @@ class DumpsOnDemand {
 				array( 'city_id' => $iCityId ),
 				__METHOD__
 		);
+
+		$task = ( new \Wikia\Tasks\Tasks\DumpsOnDemandTask() )
+			->setQueue( \Wikia\Tasks\Queues\DumpsOnDemandQueue::NAME )
+			->wikiId( $iCityId )
+			->createdBy( $iUserId );
+
+		$task->call( 'dump' );
+		$task->queue();
 
 		WikiFactory::clearCache( $iCityId );
 	}

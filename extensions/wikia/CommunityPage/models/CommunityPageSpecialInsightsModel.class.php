@@ -4,7 +4,6 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 3;
 	const INSIGHTS_ICON = 'icon';
 	const INSIGHTS_TITLE = 'title';
-	const RANDOM_SORTING_TYPE = 'random';
 	const INSIGHTS_MODULES = [
 		'popularpages' => [
 			self::INSIGHTS_ICON => 'proof-read',
@@ -50,12 +49,17 @@ class CommunityPageSpecialInsightsModel {
 	 *  - should display page views on list
 	 *  - how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
+	 * @throws MWException
 	 */
 	private function getInsightModule( $type, $config ) {
-		$insightPages = $this->insightsService->getInsightPages(
-			$type,
-			static::INSIGHTS_MODULE_ITEMS,
-			static::RANDOM_SORTING_TYPE
+		$model = InsightsHelper::getInsightModel( $type );
+
+		// SUS-4758: we don't need to load page view data
+		$model->getConfig()->setShowPageViews( false );
+
+		$insightPages = $this->insightsService->getInsightPagesForModel(
+			$model,
+			static::INSIGHTS_MODULE_ITEMS
 		);
 
 		if ( empty( $insightPages[ 'pages' ] ) ) {

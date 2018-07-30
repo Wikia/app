@@ -1,0 +1,7 @@
+schedule: "0 3 * * *"
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+- --active=1
+- --params="--noviews --active --update"
+- maintenance/initStats.php

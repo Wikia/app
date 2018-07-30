@@ -52,6 +52,9 @@ function efCreateSearchForm() {
 
 	if ( !empty( $wgHelpWikiId ) ) {
 		$helpSearchUrl = GlobalTitle::newFromText( 'Search', NS_SPECIAL, $wgHelpWikiId )->getFullURL();
+		if ( wfHttpsAllowedForURL( $helpSearchUrl ) ) {
+			$helpSearchUrl = wfProtocolUrlToRelative( $helpSearchUrl );
+		}
 	} else {
 		$helpSearchUrl = SpecialPage::getTitleFor( 'Search' )->getLocalURL();
 	}

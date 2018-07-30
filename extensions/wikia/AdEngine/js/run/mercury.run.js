@@ -4,7 +4,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.babDetection',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -15,8 +15,10 @@ require([
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
@@ -24,7 +26,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
-	babDetection,
+	adGeo,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -35,8 +37,10 @@ require([
 	actionHandler,
 	slotRegistry,
 	adInfoListener,
+	babDetection,
 	geo,
 	instantGlobals,
+	trackingOptIn,
 	win,
 	fvLagger
 ) {
@@ -56,7 +60,8 @@ require([
 			pageLevelParams.getPageLevelParams(),
 			adContext,
 			btfBlocker,
-			'mercury'
+			'mercury',
+			trackingOptIn
 		);
 	});
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
@@ -64,21 +69,21 @@ require([
 	function passFVLineItemIdToUAP() {
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 			fvLagger.addResponseListener(function (lineItemId) {
-				adEngineBridge.universalAdPackage.setUapId(lineItemId);
-				adEngineBridge.universalAdPackage.setType('jwp');
-
-				slotRegistry.disable('MOBILE_TOP_LEADERBOARD');
-				slotRegistry.disable('BOTTOM_LEADERBOARD');
+				win.loadCustomAd({
+					adProduct: 'jwp',
+					type: 'bfp',
+					uap: lineItemId
+				});
 			});
 		}
 	}
 
 	function callBiddersOnConsecutivePageView() {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
@@ -86,11 +91,11 @@ require([
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 

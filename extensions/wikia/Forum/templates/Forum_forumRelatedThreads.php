@@ -9,9 +9,11 @@
 					$username = User::isIp( $messageLast->getUser()->getName() ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $messageLast->getUser()->getName() );
 				?>
 
-				<a class="activity-avatar" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
-					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" data-tracking="activity-avatar" title="<?= $username ?>" />
-				</a>
+				<div class="wds-avatar">
+					<a href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
+						<img class="wds-avatar__image" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" data-tracking="activity-avatar" title="<?= $username ?>" />
+					</a>
+				</div>
 
 				<div class="activity-info">
 					<div class="page-title">

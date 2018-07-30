@@ -134,13 +134,6 @@ $Factory.VariableCallback = {
     success: function( aData ) {
     	$("#" + aData["div-name"]).html(aData["div-body"]);
         //--- now add listeners and events
-		$.loadJQueryAutocomplete(function() {
-			$('#tagName').autocomplete({
-				serviceUrl: ajaxpath+'?action=ajax&rs=WikiFactoryTags::axQuery',
-				minChars:3,
-				deferRequestBy: 0
-			});
-		});
 		mw.loader.using('ext.wikia.wikiFactory', function () {
 			require(['ext.wikia.wikiFactory.variableManager'], function (variableManager) {
 				variableManager();
@@ -551,7 +544,6 @@ $(function() {
 	<div id="wiki-factory-panel">
 		<?php
 			$subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace", 'compare') );
-			$subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
 		?>
 		<ul class="tabs" id="wiki-factory-tabs">
 			<li <?php echo ( $tab === "info" ) ? 'class="selected"' : 'class="inactive"' ?> >
@@ -562,9 +554,6 @@ $(function() {
 			</li>
 			<li <?php echo ( $tab === "domains" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "domains", $tab, $wiki->city_id ); ?>
-			</li>
-			<li <?php echo ( $subTags ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "tags", ( ($subTags)?'tags':$tab ), $wiki->city_id ); ?>
 			</li>
 			<li <?php echo ( $tab === "hubs" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "hubs", $tab, $wiki->city_id ); ?>
@@ -591,21 +580,6 @@ $(function() {
 			</li>
 			<li <?php echo ( $tab === "eznamespace" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
-			</li>
-		</ul>
-<?php
-	}
-	if( $subTags ) {
-?>
-		<ul class="tabs second-row" id="wiki-factory-tabs-second">
-			<li <?php echo ( $tab === "tags" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "tags", $tab, $wiki->city_id, 'tags2' ); ?>
-			</li>
-			<li <?php echo ( $tab === "masstags" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "masstags", $tab, $wiki->city_id ); ?>
-			</li>
-			<li <?php echo ( $tab === "findtags" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "findtags", $tab, $wiki->city_id ); ?>
 			</li>
 		</ul>
 <?php
@@ -647,19 +621,6 @@ $(function() {
 		# LOGS
 			case "clog":
 				include_once( "form-clog.tmpl.php" );
-				break;
-
-		# TAGS
-			case "tags":
-				include_once( "form-tags.tmpl.php" );
-				break;
-
-			case "masstags":
-				include_once( "form-tags-mass.tmpl.php" );
-				break;
-
-			case "findtags":
-				include_once( "form-tags-find.tmpl.php" );
 				break;
 
 		# CLOSE

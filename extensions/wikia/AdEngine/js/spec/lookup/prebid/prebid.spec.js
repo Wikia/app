@@ -5,12 +5,20 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 	var insertBefore = jasmine.createSpy('insertBefore'),
 		mocks = {
 			adContext: {
+				get: function () {
+					return true;
+				},
 				getContext: function () {
 					return {
 						opts: mocks.opts,
 						slots: noop,
 						targeting: mocks.targeting
 					};
+				}
+			},
+			uapContext: {
+				isFanTakeoverLoaded: function () {
+					return false;
 				}
 			},
 			opts: {
@@ -56,9 +64,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			adBlockDetection: {
-				addOnBlockingCallback: noop
-			},
 			bidResponses: {
 				TOP_LEADERBOARD: {
 					bids: [
@@ -82,13 +87,19 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			win: {
+				addEventListener: noop,
 				pbjs: {
 					que: [],
 					requestBids: function () {
 					},
-					getBidResponses: function (slotName) {
-						return mocks.bidResponses;
-					},
+					getBidResponsesForAdUnitCode: function (slotName) {
+						return mocks.bidResponses[slotName];
+					}
+				}
+			},
+			trackingOptIn: {
+				pushToUserConsentQueue: function (cb) {
+					cb(true);
 				}
 			},
 			adaptersPricesTracker: {},
@@ -134,14 +145,13 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		},
 		prebid;
 
-	function noop() {
-	}
+	function noop() {}
+	mocks.log.levels = {};
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -149,12 +159,16 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 
 	function getPrebid() {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
+			mocks.adContext,
+			mocks.uapContext,
 			mocks.adaptersPerformanceTracker,
 			mocks.adaptersPricesTracker,
 			mocks.adaptersRegistry,
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),
+			mocks.log,
+			mocks.trackingOptIn,
 			mocks.win
 		);
 	}
@@ -167,6 +181,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		prebid = getPrebid();
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
+
+		mocks.log.levels = {};
 	});
 
 	it('Ad slots are pushed', function () {

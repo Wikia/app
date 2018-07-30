@@ -7,3 +7,20 @@ This version (for MediaWiki 1.19) has some changes since previous versions:
 See the README in the math subdirectory for more info on setting up the
 low-level conversion tools.
 
+MathJax configuration:
+Client-side configuration of MathJax can be done by specifying a mathJax.config
+table, which takes a table as described in:
+http://docs.mathjax.org/en/v1.1-latest/options/index.html#configuration
+
+Example:
+if ( typeof mathJax === 'undefined' ) {
+  mathJax = {};
+  mathJax.config = {
+    showProcessingMessages: true
+  };
+}
+
+For testing your installation run
+php tests/phpunit/phpunit.php extensions/Math/tests/
+from your MediWiki home path.
+

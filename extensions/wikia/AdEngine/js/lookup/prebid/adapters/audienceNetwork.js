@@ -1,12 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
-	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.querystring'
-], function (slotsContext, instartLogic, geo, instantGlobals, adContext, querystring) {
+], function (adContext, slotsContext, babDetection, querystring) {
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
@@ -37,10 +35,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	function isEnabled() {
 		var isAudienceNetworkAvailable = adContext.getContext().providers.audienceNetwork;
 
-		return adContext.getContext().targeting.skin === 'mercury' &&
-			isAudienceNetworkAvailable &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries) &&
-			!instartLogic.isBlocking();
+		return adContext.getContext().targeting.skin === 'mercury' && isAudienceNetworkAvailable &&
+			adContext.get('bidders.audienceNetwork') && !babDetection.isBlocking();
 	}
 
 	function getSlots(skin) {
@@ -50,7 +46,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

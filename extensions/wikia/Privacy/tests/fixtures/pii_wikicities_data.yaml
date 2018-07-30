@@ -1,0 +1,130 @@
+# user 1 data should be removed/anonimized
+# user 2 should be preserved
+
+user:
+  - user_id: 1
+    user_name: should_anonymize
+    user_real_name: user real name
+    user_email: user@gmail.com
+    user_touched: 20140101110111
+    user_token: something
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-01'
+    user_options: ''
+  - user_id: 2
+    user_name: should_not_anonymize
+    user_real_name: user real name2
+    user_email: user2@gmail.com
+    user_touched: 20140101110111
+    user_token: something2
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken2
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 102
+    user_birthdate: '1998-01-02'
+    user_options: ''
+  - user_id: 3
+    user_name: renamed_user
+    user_real_name: user real name3
+    user_email: user3@gmail.com
+    user_touched: 20140101110111
+    user_token: something3
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-03'
+    user_options: ''
+  - user_id: 4
+    user_name: before_rename_fake_user
+    user_real_name: user real name4
+    user_email: user4@gmail.com
+    user_touched: 20140101110111
+    user_token: something4
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-04'
+    user_options: ''
+
+user_email_log:
+  - el_id: 1
+    user_id: 1
+    old_email: user@gmail.com
+    new_email: user_new@gmail.com
+    changed_by_id: 10
+    changed_by_ip: 192.168.0.1
+    changed_at: '2018-01-19 03:14:07'
+  - el_id: 2
+    user_id: 1
+    old_email: user_new@gmail.com
+    new_email: user_newer@gmail.com
+    changed_by_id: 10
+    changed_by_ip: 192.168.0.1
+    changed_at: '2018-01-19 10:14:07'
+  - el_id: 3
+    user_id: 1
+    old_email: user_newer@gmail.com
+    new_email: user_newest@gmail.com
+    changed_by_id: 10
+    changed_by_ip: 192.168.0.1
+    changed_at: '2018-01-19 11:14:07'
+  - el_id: 4
+    user_id: 2
+    old_email: user2@gmail.com
+    new_email: user2new@gmail.com
+    changed_by_id: 10
+    changed_by_ip: 192.168.0.1
+    changed_at: '2018-01-19 11:14:08'
+
+user_properties:
+  - up_user: 1
+    up_property: some_property1
+    up_value: someVal
+  - up_user: 1
+    up_property: some_property2
+    up_value: someVal
+  - up_user: 2
+    up_property: some_property1
+    up_value: someVal
+  - up_user: 2
+    up_property: some_property2
+    up_value: someVal
+  - up_user: 4
+    up_property: renameData
+    up_value: renamed_to=renamed_user
+
+wikiastaff_log:
+  - slog_id: 1
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 1
+    slog_userdst: 3
+    slog_user_name: 'should_anonymize'
+    slog_user_namedst: 'should_anonymize'
+  - slog_id: 2
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 2
+    slog_userdst: 2
+    slog_user_name: 'should_not_anonymize'
+    slog_user_namedst: 'should_not_anonymize'
+  - slog_id: 3
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 3
+    slog_userdst: 1
+    slog_user_name: 'should_anonymize'
+    slog_user_namedst: 'should_anonymize'
+
+spoofuser:
+  - su_name: 'should_anonymize'
+    su_normalized: 'v2:5H0U1DAN0NYM1ZE'

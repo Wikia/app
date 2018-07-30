@@ -13,19 +13,15 @@ namespace Wikia\Tasks\Queues;
 class Queue {
 	const NAME = 'Queue';
 
-	protected $name;
-	protected $routingKey;
+	const RTBF_QUEUE_NAME = 'mediawiki_rtbf';
 
-	public function __construct() {
-		$this->name = 'mediawiki_main';
-		$this->routingKey = 'mediawiki.main';
+	private $name;
+
+	public function __construct( string $name = 'mediawiki_main' ) {
+		$this->name = $name;
 	}
 
 	public function name() {
 		return $this->name;
-	}
-
-	public function routingKey() {
-		return $this->routingKey;
 	}
 }

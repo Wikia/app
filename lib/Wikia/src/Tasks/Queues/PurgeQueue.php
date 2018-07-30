@@ -13,7 +13,6 @@ class PurgeQueue extends Queue {
 	const NAME = 'PurgeQueue';
 
 	public function __construct() {
-		$this->name = 'purger';
-		$this->routingKey = 'purger';
+		parent::__construct('purger');
 	}
 }

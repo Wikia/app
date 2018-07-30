@@ -19,9 +19,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
 			megaAdUnitBuilder: {name: 'megaAdUnit'},
-			slotTweaker: {},
-			pageFairRecovery: {},
-			instartLogicRecovery: {}
+			slotTweaker: {}
 		};
 
 	function getModule() {
@@ -30,9 +28,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			mocks.factory,
 			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
-			mocks.slotTweaker,
-			mocks.instartLogicRecovery,
-			mocks.pageFairRecovery
+			mocks.slotTweaker
 		);
 	}
 

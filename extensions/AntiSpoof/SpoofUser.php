@@ -2,6 +2,9 @@
 
 class SpoofUser {
 
+	// used for creating private antispoof records for forgotten users (SUS-4793)
+	const HASH_ALGO = 'sha256';
+
 	/**
 	 * @param $name string
 	 */
@@ -11,6 +14,8 @@ class SpoofUser {
 		$this->mLegal = ( $ok == 'OK' );
 		if ( $this->mLegal ) {
 			$this->mNormalized = $normalized;
+			$this->mNormalizedHash = hash( self::HASH_ALGO, $normalized );
+			$this->mExactHash = hash( self::HASH_ALGO, $this->mName );
 			$this->mError = null;
 		} else {
 			$this->mNormalized = null;
@@ -43,7 +48,7 @@ class SpoofUser {
 	}
 
 	/**
-	 * Does the username pass Unicode legality and script-mixing checks?
+	 * Does the username conflict with existing/blocked ones?
 	 *
 	 * @param $skipExactMatch - when true exact match username is not returned
 	 *
@@ -58,10 +63,10 @@ class SpoofUser {
 			Quote the table names, otherwise the select method
 				tries to prefix the tablenames with the current user DB
 			Added $skipExactMatch */
-		$conds = array(
+		$conds = [
 			'su_normalized' => $this->mNormalized,
 			'su_name=user_name',
-		);
+		];
 		if ( $skipExactMatch ) {
 			// BINARY enforces case sensitive comparison
 			$conds[] = "BINARY su_name != {$dbr->addQuotes( $this->mName )}";
@@ -75,11 +80,21 @@ class SpoofUser {
 			array(
 				'LIMIT' => 5
 			) );
+
+		// check forgotten users as well
+		$forgottenSpoofedUsers = $dbr->select(
+			'`spoofuser_forgotten`',
+			'suf_normalized_hash',
+			['suf_normalized_hash' => $this->mNormalizedHash],
+			__METHOD__ );
 		/* Wikia Change - end */
 
 		$spoofs = array();
 		foreach ( $spoofedUsers as $row ) {
-			array_push( $spoofs, $row->user_name );
+			$spoofs[] = $row->user_name;
+		}
+		foreach( $forgottenSpoofedUsers as $row ) {
+			$spoofs[] = $row->suf_normalized_hash;
 		}
 		return $spoofs;
 	}
@@ -164,6 +179,8 @@ class SpoofUser {
 	/**
 	 * Wikia change
 	 * remove spoof normalization record from the database
+	 *
+	 * This method will not remove a private record from spoofuser_forgotten
 	 */
 	public function removeRecord() {
 		wfProfileIn( __METHOD__ );
@@ -179,6 +196,25 @@ class SpoofUser {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Wikia change SUS-4793
+	 *
+	 * Stores a hash of the normalized username in case we can't store the username in plaintext.
+	 * The original record is removed.
+	 *
+	 * If spoofing rules ever change, these private records must be versioned correctly.
+	 */
+	public function makeRecordPrivate() {
+		$db = $this->getDBMaster();
+		$row = [
+			'suf_exact_hash' => $this->mExactHash,
+			'suf_normalized_hash' => $this->mNormalizedHash
+		];
+		$db->insert( 'spoofuser_forgotten', $row, __METHOD__ );
+		$db->delete( 'spoofuser', ['su_name' => $this->mName], __METHOD__ );
+		$db->commit();
 	}
 
 }

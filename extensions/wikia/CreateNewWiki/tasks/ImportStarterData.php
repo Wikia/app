@@ -54,10 +54,12 @@ class ImportStarterData extends Task {
 		] );
 	}
 
-	public function canExecute() {
+	public function canExecute() : bool {
 		global $wgPhpCli;
 
-		return file_exists( $wgPhpCli ) && is_executable( $wgPhpCli );
+		wfShellExec( sprintf('%s -v', $wgPhpCli), $retVal );
+
+		return $retVal === 0;
 	}
 
 	public function executeShell() {

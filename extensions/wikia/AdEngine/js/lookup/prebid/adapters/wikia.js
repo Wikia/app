@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wrappers.prebid',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (prebid, instartLogic, doc, QueryString) {
+], function (adContext, babDetection, prebid, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -58,13 +59,17 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	}
 
 	function isEnabled() {
-		return qs.getVal('wikia_adapter', false) !== false && !instartLogic.isBlocking();
+		return qs.getVal('wikia_adapter', false) !== false && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName
@@ -106,27 +111,36 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 		return creative.outerHTML;
 	}
 
-	function addBids(bidderRequest) {
-		bidderRequest.bids.forEach(function (bid) {
+	function addBids(bidRequest, addBidResponse, done) {
+		bidRequest.bids.forEach(function (bid) {
 			var bidResponse = prebid.get().createBid(1),
 				price = getPrice();
 
-			bidResponse.bidderCode = bidderRequest.bidderCode;
-			bidResponse.cpm = price;
 			bidResponse.ad = getCreative(price, bid.sizes[0]);
+			bidResponse.bidderCode = bidRequest.bidderCode;
+			bidResponse.cpm = price;
+			bidResponse.ttl = 300;
+			bidResponse.mediaType = 'banner';
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 
 	function create() {
 		return {
-			callBids: function (bidderRequest) {
+			callBids: function (bidRequest, addBidResponse, done) {
 				prebid.push(function () {
-					addBids(bidderRequest);
+					addBids(bidRequest, addBidResponse, done);
 				});
+			},
+			getSpec: function () {
+				return {
+					code: getName(),
+					supportedMediaTypes: ['banner']
+				};
 			}
 		};
 	}

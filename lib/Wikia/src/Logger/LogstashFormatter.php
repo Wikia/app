@@ -47,6 +47,10 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 			$message['@context'] = $record['context'];
 		}
 
+		// SUS-5266 | explicitly add severity to MediaWiki logs
+		// as those coming from containers do not have them set
+		$message['severity'] = strtolower( $record['level_name'] );
+
 		return $message;
 	}
 

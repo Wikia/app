@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 
 	var mocks = {
 		adContext: {
+			get: function () {},
 			getContext: function () {
 				return mocks.context;
 			}
@@ -12,11 +13,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
-			}
-		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
 			}
 		},
 		adaptersHelper: {
@@ -31,6 +27,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 				}
 			}
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		log: function () { }
 	};
 
@@ -41,12 +42,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adaptersHelper,
-			mocks.instartLogic,
+			mocks.babDetection,
 			mocks.log
 		);
 	}
 
 	beforeEach(function () {
+		spyOn(mocks.adContext, 'get');
 		mocks.context = {
 			bidders: {
 				rubiconDisplay: true
@@ -59,26 +61,21 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.rubiconDisplay = false;
+		mocks.adContext.get.and.returnValue(false);
 		var rubicon = getBidder();
-
-		expect(rubicon.isEnabled()).toBeFalsy();
-	});
-
-	it('Is disabled when context is enabled but is blocking', function () {
-		var rubicon = getBidder();
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});
 
 	it('Is enabled when context is enabled', function () {
+		mocks.adContext.get.and.returnValue(true);
 		var rubicon = getBidder();
 
 		expect(rubicon.isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
+		mocks.adContext.get.and.returnValue(undefined);
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [[728, 90], [970, 250]],
@@ -88,7 +85,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			zoneId: 175094
 		}, 'oasis')).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'rubicon_display',

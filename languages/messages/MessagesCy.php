@@ -116,3 +116,10 @@ $magicWords = array(
 
 $linkTrail = "/^([àáâèéêìíîïòóôûŵŷa-z]+)(.*)$/sDu";
 
+$pluralRules = [
+	"n = 0",
+	"n = 1",
+	"n = 2",
+	"n = 3",
+	"n = 6",
+];

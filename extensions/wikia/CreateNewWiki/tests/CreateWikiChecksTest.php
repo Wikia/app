@@ -34,7 +34,7 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 		}
 
 		$this->mockStaticMethod( 'CreateWikiChecks', 'checkBadWords', true );
-		$this->mockStaticMethod( 'CreateWikiChecks', 'checkDomainExists', false );
+		$this->mockStaticMethod( 'CreateWikiChecks', 'domainExists', false );
 		$this->mockStaticMethod( 'CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 			'en' => 'en',
@@ -117,7 +117,7 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 			->will( $this->returnValue( $messageMock ) );
 
 		$this->mockStaticMethod( 'CreateWikiChecks', 'checkBadWords', true );
-		$this->mockStaticMethod( 'CreateWikiChecks', 'checkDomainExists', true );
+		$this->mockStaticMethod( 'CreateWikiChecks', 'domainExists', true );
 		$this->mockStaticMethod( 'CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 		) );

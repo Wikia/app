@@ -3,11 +3,13 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.log',
 	'wikia.querystring',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, vastParser, log, Querystring, win) {
+], function (adContext, lookupServices, tracker, eventDispatcher, vastParser, log, Querystring, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -141,6 +143,10 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				if (shouldHandleSlot(slot)) {
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					trackSlot(slot, status, adInfo);
+				}
+
+				if (slot.name === 'TOP_RIGHT_BOXAD') {
+					eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
 				}
 			});
 

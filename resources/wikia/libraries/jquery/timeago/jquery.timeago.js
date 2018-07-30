@@ -79,21 +79,20 @@
 			var years = days / 365;
 
 			function substitute(key, number) {
-				var string = $l[isFuture ? (key + '-from-now') : key] || '';
-				return string.replace(/%d/i, number);
+				return mw.message(isFuture ? ('timeago-' + key + '-from-now') : 'timeago-' + key, number).text();
 			}
 
-			var words = (seconds < 45 && substitute('seconds', Math.round(seconds))) ||
+			var words = (seconds < 45 && substitute('second', Math.round(seconds))) ||
 				(seconds < 90 && substitute('minute', 1)) ||
-				(minutes < 45 && substitute('minutes', Math.round(minutes))) ||
+				(minutes < 45 && substitute('minute', Math.round(minutes))) ||
 				(minutes < 90 && substitute('hour', 1)) ||
-				(hours < 24 && substitute('hours', Math.round(hours))) ||
+				(hours < 24 && substitute('hour', Math.round(hours))) ||
 				(hours < 48 && substitute('day', 1)) ||
-				(days < 30 && substitute('days', Math.floor(days))) ||
+				(days < 30 && substitute('day', Math.floor(days))) ||
 				(days < 60 && substitute('month', 1)) ||
-				(days < 365 && substitute('months', Math.floor(days / 30))) ||
+				(days < 365 && substitute('month', Math.floor(days / 30))) ||
 				(years < 2 && substitute('year', 1)) ||
-				substitute('years', Math.floor(years));
+				substitute('year', Math.floor(years));
 
 			return words;
 		},

@@ -1,0 +1,96 @@
+user:
+  - user_id: 1
+    user_name: 'TesztJózsef'
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_options: ''
+  - user_id: 2
+    user_name: 'TesztBéla'
+    user_email: 'belavagyok@bela.hu'
+    user_options: ''
+page:
+  - page_id: 1
+    page_namespace: 0
+    page_title: 'Test_article'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 0
+    page_restrictions: ''
+    page_random: 0
+  - page_id: 2
+    page_namespace: 1
+    page_title: 'Test_article/@comment-1-20170605164745'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 1
+    page_restrictions: ''
+    page_random: 0
+  - page_id: 3
+    page_namespace: 1
+    page_title: 'Test_article/@comment-2-20180605164745'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 3
+    page_restrictions: ''
+    page_random: 0
+  - page_id: 4
+    page_namespace: 0
+    page_title: 'Test_article_with_bad_comment'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 0
+    page_restrictions: ''
+    page_random: 0
+  - page_id: 5
+    page_namespace: 1
+    page_title: 'Test_article_with_bad_comment/@comment-1-20120101000000'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 0
+    page_restrictions: ''
+    page_random: 0
+  - page_id: 6
+    page_namespace: 1
+    page_title: 'Test_article_with_bad_comment/@comment-2-20180101000000'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 4
+    page_restrictions: ''
+    page_random: 0
+revision:
+  - rev_id: 1
+    rev_page: 2
+    rev_text_id: 1
+    rev_comment: 'Test comment 1'
+    rev_user: 1
+    rev_user_text: ''
+  - rev_id: 2
+    rev_page: 3
+    rev_text_id: 2
+    rev_comment: 'Test comment 2'
+    rev_user: 2
+    rev_user_text: ''
+  - rev_id: 3
+    rev_page: 3
+    rev_text_id: 3
+    rev_comment: 'Edited comment 2'
+    rev_user: 2
+    rev_user_text: ''
+  - rev_id: 4
+    rev_page: 6
+    rev_text_id: 4
+    rev_comment: 'Test comment'
+    rev_user: 2
+    rev_user_text: ''
+text:
+  - old_id: 1
+    old_text: Lorem ipsum
+    old_flags: ''
+  - old_id: 2
+    old_text: Foo
+    old_flags: ''
+  - old_id: 3
+    old_text: Foo bar
+    old_flags: ''
+  - old_id: 4
+    old_text: baz
+    old_flags: ''

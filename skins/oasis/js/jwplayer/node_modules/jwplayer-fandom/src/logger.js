@@ -1,9 +1,10 @@
 function wikiaJWPlayerLogger(options) {
 	var servicesDomain = options.servicesDomain || 'services.wikia.com',
-		loggerPath = '/event-logger/error',
+		loggerPath = '/event-logger/',
 		loggerUrl = 'https://' + servicesDomain + loggerPath,
 		prefix = 'JWPlayer',
 		logLevels = {
+			debug: 0,
 			info: 1,
 			warn: 2,
 			error: 3,
@@ -11,16 +12,18 @@ function wikiaJWPlayerLogger(options) {
 		},
 		loggerOptions = options.logger || {},
 		logLevel = loggerOptions.logLevel ? logLevels[loggerOptions.logLevel] : logLevels['error'],
+		logDebugToService = loggerOptions.logDebugToService,
 		clientName = loggerOptions.clientName,
 		clientVersion = loggerOptions.clientVersion;
 
 	/**
 	 * logs errors to event-logger service
 	 *
+	 * @param resource - 'debug' or 'error'
 	 * @param name
 	 * @param description
 	 */
-	function logErrorToService(name, description) {
+	function logToService(resource, name, description) {
 		var request = new XMLHttpRequest(),
 			data = {
 				name: prefix + ' ' + name
@@ -38,12 +41,21 @@ function wikiaJWPlayerLogger(options) {
 			data.client_version = clientVersion;
 		}
 
-		request.open('POST', loggerUrl, true);
+		request.open('POST', loggerUrl + resource, true);
 		request.setRequestHeader('Content-type', 'application/json');
 
 		request.send(JSON.stringify(data));
 	}
 
+	function debug(name, description) {
+		if (logLevel <= logLevels['debug']) {
+			console.log(prefix, name, description);
+		}
+
+		if (logDebugToService) {
+			logToService('debug', name, description);
+		}
+	}
 
 	function info(name, description) {
 		if (logLevel <= logLevels['info']) {
@@ -60,7 +72,8 @@ function wikiaJWPlayerLogger(options) {
 	function error(name, description) {
 		if (logLevel <= logLevels['error']) {
 			console.error(prefix, name, description);
-			logErrorToService(name, description);
+
+			logToService('error', name, description);
 		}
 	}
 
@@ -80,6 +93,7 @@ function wikiaJWPlayerLogger(options) {
 	}
 
 	return {
+		debug: debug,
 		info: info,
 		warn: warn,
 		error: error,

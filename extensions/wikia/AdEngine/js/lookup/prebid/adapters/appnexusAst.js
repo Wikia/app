@@ -2,20 +2,29 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.location'
-], function (adContext, slotsContext, instartLogic, loc) {
+], function (adContext, slotsContext, babDetection, loc) {
 	'use strict';
 
 	var bidderName = 'appnexusAst',
+		aliases = {
+			'appnexus': [bidderName]
+		},
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
+				FEATURED: {
+					placementId: '13684967'
+				},
 				INCONTENT_PLAYER: {
 					placementId: '11543172'
 				}
 			},
 			mercury: {
+				FEATURED: {
+					placementId: '13705871'
+				},
 				MOBILE_IN_CONTENT: {
 					placementId: '11543173'
 				}
@@ -23,7 +32,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		};
 
 	function isEnabled() {
-		return adContext.getContext().bidders.appnexusAst && !instartLogic.isBlocking();
+		return adContext.get('bidders.appnexusAst') && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -31,8 +40,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 
 		return {
 			code: slotName,
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			mediaTypes: {
+				video: {
+					context: slotName === 'FEATURED' ? 'instream' : 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,
@@ -40,7 +53,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 						placementId: isDebugMode ? debugPlacementId : config.placementId,
 						video: {
 							skippable: false,
-							playback_method: [ 'auto_play_sound_off' ]
+							playback_method: ['auto_play_sound_off']
 						}
 					}
 				}
@@ -56,9 +69,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		return bidderName;
 	}
 
+	function getAliases() {
+		return aliases;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getAliases: getAliases,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

@@ -21,7 +21,7 @@ class RobotsTxtMock extends \Wikia\RobotsTxt\RobotsTxt {
 	public function getContents() {
 	}
 
-	public function setSitemap( $sitemapUrl ) {
+	public function addSitemap( $sitemapUrl ) {
 		$this->spiedSitemap[] = $sitemapUrl;
 	}
 }

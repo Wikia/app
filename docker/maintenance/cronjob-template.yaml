@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "mw-cj-${name}"
+spec:
+  schedule: ${schedule}
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: php
+            image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${label}
+            env:
+              # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+              - name: KUBERNETES_DEPLOYMENT_NAME
+                value: mediawiki-tasks
+              - name: KUBERNETES_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: SERVER_ID
+                value: "${server_id}"
+              - name: LOG_STDOUT_ONLY
+                value: "yes"
+            args:
+${args}
+          restartPolicy: Never
+

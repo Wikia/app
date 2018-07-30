@@ -9,34 +9,34 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	}
 
 	var mocks = {
-			adContext: {
-				get: noop
-			},
-			adEngine: {
-				run: noop
-			},
-			adTracker: {
-				measureTime: function () {
-					return {
-						track: noop
-					};
-				}
-			},
-			fvLagger: {
-				addResponseListener: noop,
-				wasCalled: function () {
-					return false;
-				},
-				getName: noop
-			},
-			log: noop,
-			win: {},
-			a9: {
-				getName: function () {
-					return 'a9';
-				}
+		adContext: {
+			get: noop
+		},
+		adEngine: {
+			run: noop
+		},
+		adTracker: {
+			measureTime: function () {
+				return {
+					track: noop
+				};
 			}
-		};
+		},
+		fvLagger: {
+			addResponseListener: noop,
+			wasCalled: function () {
+				return false;
+			},
+			getName: noop
+		},
+		log: noop,
+		win: {},
+		a9: {
+			getName: function () {
+				return 'a9';
+			}
+		}
+	};
 
 	mocks.log.levels = {};
 
@@ -176,6 +176,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('sets overwritten timeout value by instant global', function () {
+		mockContext({
+			'opts.overwriteDelayEngine': true
+		});
 		var runner = getRunner({
 			a9: mocks.a9
 		}, {

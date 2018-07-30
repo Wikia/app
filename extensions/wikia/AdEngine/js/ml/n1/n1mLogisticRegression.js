@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.ml.n1.n1mLogisticRegression', [
 		intercept = -0.17861922;
 
 	return modelFactory.create({
-		inputParser: inputParser,
+		dataSource: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'n1mlr',
 		wgCountriesVariable: 'wgAdDriverN1LogisticRegressionRabbitCountries',

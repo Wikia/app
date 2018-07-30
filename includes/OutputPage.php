@@ -134,6 +134,10 @@ class OutputPage extends ContextSource {
 
 	var $mRedirectCode = '';
 
+	# start wikia change
+	var $mRedirectProtocol = PROTO_CURRENT;
+	# end wikia change
+
 	var $mFeedLinksAppendQuery = null;
 
 	/**
@@ -256,6 +260,15 @@ class OutputPage extends ContextSource {
 			$this->setContext( $context );
 		}
 	}
+
+	# start wikia change
+	public function redirectProtocol( $protocol, $responsecode = '302' ) {
+		if ( $protocol === PROTO_HTTP || $protocol === PROTO_HTTPS ) {
+			$this->mRedirectProtocol = $protocol;
+			$this->mRedirectCode = $responsecode;
+		}
+	}
+	# end wikia change
 
 	/**
 	 * Redirect to $url rather than displaying the normal page
@@ -2065,9 +2078,19 @@ class OutputPage extends ContextSource {
 
 		$response = $this->getRequest()->response();
 
-		if ( $this->mRedirect != '' ) {
+		if ( $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT ) {
+			if ( $this->mRedirect == '') {
+				$this->mRedirect = $this->getRequest()->getFullRequestURL();
+			}
+
+			if ( $this->mRedirectProtocol === PROTO_HTTP ) {
+				$this->mRedirect = wfHttpsToHttp( $this->mRedirect );
+			} elseif ( $this->mRedirectProtocol === PROTO_HTTPS ) {
+				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
+			}
+
 			# Standards require redirect URLs to be absolute
-			$this->mRedirect = wfExpandUrl( $this->mRedirect, PROTO_CURRENT );
+			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
 
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
@@ -2853,7 +2876,7 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt;
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt, $wgInlineStartupScript;
 		// Achtung! Achtung!
 		if ( !empty( $wgEnableNewVisualEditorExt ) ) {
 			$extraData = array( 'newve' => 1 );
@@ -2861,7 +2884,27 @@ $templates
 			$extraData = array();
 		}
 		// Startup - this will immediately load jquery and mediawiki modules
-		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
+		if ( !$wgInlineStartupScript ) {
+			$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
+		} else {
+			// Wikia change - SUS-4734 allow to generate an inline startup script
+			$query = ResourceLoader::makeLoaderQuery(
+				array(),
+				$this->getLanguage()->getCode(),
+				$this->getSkin()->getSkinName(),
+				null,
+				null, // version; not determined yet
+				ResourceLoader::inDebugMode(),
+				ResourceLoaderModule::TYPE_SCRIPTS
+			);
+
+			$resourceLoader = $this->getResourceLoader();
+			$resourceLoaderContext = new ResourceLoaderContext( $resourceLoader, new FauxRequest( $query ) );
+
+			$startupModule = $resourceLoader->getModule( 'startup' );
+
+			$scripts = Html::inlineScript( $resourceLoader->makeModuleResponse( $resourceLoaderContext, [ 'startup' => $startupModule ] ) );
+		}
 		// Load config before anything else
 		$scripts .= Html::inlineScript(
 			ResourceLoader::makeLoaderConditionalScript(

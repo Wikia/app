@@ -31,7 +31,7 @@ class DailymotionApiWrapper extends ApiWrapper {
 		return $text;
 	}
 
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 
 		$thumbnailDatas = $this->getVideoThumbnails();
 

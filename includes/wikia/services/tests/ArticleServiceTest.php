@@ -15,7 +15,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 * @param string $expSnippetText expected output text snippet
 	 */
 	public function testGetTextSnippetAsArticleTest($snippetLength, $articleText, $expSnippetText) {
-		$randId = (int) ( rand() * microtime() );
+		$randId = (int) ( rand() * microtime( true ) );
 		$mockTitle = $this->createMock( Title::class );
 		$mockCache = $this->getMockBuilder( MemCachedClientforWiki::class )
 			->setMethods( [ 'get', 'set' ] )
@@ -87,7 +87,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 * @covers ArticleService::getTextSnippet
 	 */
 	public function testGetTextSnippetAsSolrTest() {
-		$randId = (int) ( rand() * microtime() );
+		$randId = (int) ( rand() * microtime( true ) );
 		$mockTitle = $this->getMock( 'Title' );
 		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
 		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );

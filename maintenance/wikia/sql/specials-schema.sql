@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
@@ -18,18 +18,6 @@ CREATE TABLE `city_used_tags` (
   `ct_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
   PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `common_key_value`
---
-
-DROP TABLE IF EXISTS `common_key_value`;
-CREATE TABLE `common_key_value` (
-  `identifier` varchar(255) NOT NULL,
-  `content` mediumblob NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `discussion_reporting`
@@ -98,15 +86,33 @@ CREATE TABLE `phalanx_stats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `script_log`
+-- Table structure for table `rtbf_log`
 --
 
-DROP TABLE IF EXISTS `script_log`;
-CREATE TABLE `script_log` (
-  `logname` varchar(50) NOT NULL,
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`logname`)
+DROP TABLE IF EXISTS `rtbf_log`;
+CREATE TABLE `rtbf_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(5) unsigned NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `number_of_wikis` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `rtbf_log_details`
+--
+
+DROP TABLE IF EXISTS `rtbf_log_details`;
+CREATE TABLE `rtbf_log_details` (
+  `log_id` int(10) unsigned NOT NULL,
+  `wiki_id` int(10) unsigned NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `celery_task` char(39) DEFAULT NULL,
+  `finished` datetime DEFAULT NULL,
+  `was_successful` tinyint(1) DEFAULT NULL,
+  UNIQUE KEY `log_id` (`log_id`,`wiki_id`),
+  CONSTRAINT `rtbf_log_details_ibfk_1` FOREIGN KEY (`log_id`) REFERENCES `rtbf_log` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-30 12:33:44
+-- Dump completed on 2018-07-09  9:15:15

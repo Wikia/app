@@ -2,30 +2,23 @@
 describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	'use strict';
 
-	var noop = function () {},
-		mocks = {
-			adContext: {
-				get: function () {
-					return false;
-				}
-			},
-			adBlockDetection: {
-				isBlocking: noop
-			},
-			adBlockRecovery: {
-				isEnabled: noop
-			},
-			instartLogic: {
-				isEnabled: noop
+	var mocks = {
+		adContext: {
+			get: function () {
+				return false;
 			}
-		};
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		}
+	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.srcProvider'](
 			mocks.adContext,
-			mocks.adBlockDetection,
-			mocks.adBlockRecovery,
-			mocks.instartLogic
+			mocks.babDetection
 		);
 	}
 
@@ -73,25 +66,23 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	});
 
 	it('doesn\'t change src to rec if ad is not recoverable', function () {
-		var extra = {
-			isPageFairRecoverable: false
-		};
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
 
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(false);
 
-		expect(getModule().get('asd', extra)).toEqual('asd');
+		expect(getModule().get('asd')).toEqual('asd');
 	});
 
 	it('changes src to rec if ad is recoverable', function () {
-		var extra = {
-			isPageFairRecoverable: true
-		};
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
 
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
 
-		expect(getModule().get('asd', extra)).toBe('rec');
+		expect(getModule().get('asd')).toBe('rec');
 	});
 
 	it('sets src=premium if article is premium', function () {
@@ -102,29 +93,25 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	});
 
 	it('change src to rec if on premium pages', function () {
-		var extra = {
-			isPageFairRecoverable: true
-		};
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.premiumOnly': true
+		});
 
-		mockContext({'opts.premiumOnly': true});
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
 
-		expect(getModule().get('asd', extra)).toBe('rec');
+		expect(getModule().get('asd')).toBe('rec');
 	});
 
 	it('overrides src=rec for test wiki', function () {
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.isAdTestWiki': true
+		});
 
-		var extra = {
-			isPageFairRecoverable: true
-		};
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
 
-		expect(getModule().get('abc', extra)).toBe('rec');
-
-		mockContext({'opts.isAdTestWiki': true});
-		expect(getModule().get('abc', extra)).toBe('test-rec');
+		expect(getModule().get('abc')).toBe('test-rec');
 	});
 
 	it('doesn\'t set src=premium if article isn\'t premium', function () {
@@ -132,25 +119,15 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		expect(getModule().get('abc')).not.toBe('premium');
 	});
 
-	it('doesn\'t set src=rec if recovery service is enabled and ad is recoverable but adblock is off', function () {
-		var extra = {
-			isPageFairRecoverable: true
-		};
-
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(false);
-
-		expect(getModule().get('abc', extra)).not.toBe('rec');
+	it('returns by default rec as src value for rec', function () {
+		expect(getModule().getRecSrc()).toBe('rec');
 	});
 
-	it('returns by default rec as src value for recovery', function () {
-		expect(getModule().getRecoverySrc()).toBe('rec');
-	});
-
-	it('returns by test-rec to recovery & test wikis', function () {
+	it('returns by test-rec to rec & test wikis', function () {
 		mockContext({
 			'opts.isAdTestWiki': true
 		});
-		expect(getModule().getRecoverySrc()).toBe('test-rec');
+
+		expect(getModule().getRecSrc()).toBe('test-rec');
 	});
 });

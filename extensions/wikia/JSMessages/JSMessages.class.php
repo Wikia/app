@@ -21,17 +21,6 @@ class JSMessages {
 	// cache for all message keys
 	static private $allMessageKeys = null;
 
-
-	/**
-	 * Debug logging
-	 *
-	 * @param string $method - name of the method
-	 * @param string $msg - log message to be added
-	 */
-	static private function log($method, $msg) {
-		wfDebug($method  . ": {$msg}\n");
-	}
-
 	/**
 	 * Registers given messages package
 	 *
@@ -41,7 +30,6 @@ class JSMessages {
 	 * @param array $messages - list of messages in the package
 	 */
 	static public function registerPackage($packageName, $messages) {
-		self::log(__METHOD__, $packageName);
 		self::$packages[$packageName] = $messages;
 	}
 
@@ -52,14 +40,9 @@ class JSMessages {
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
 	static public function enqueuePackage($package, $mode) {
-		wfProfileIn(__METHOD__);
-
 		// add to proper queue
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
 		self::$queue[$queueName][] = $package;
-
-		self::log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
-		wfProfileOut(__METHOD__);
 	}
 
 	/*
@@ -70,12 +53,8 @@ class JSMessages {
 	 * @return string A string containing the package as an inline-able tag to use in templates
 	 */
 	static public function printPackages( Array $packages ) {
-		wfProfileIn(__METHOD__);
-
 		$pkgs = implode(',', $packages);
 		$ret = '<script>' . F::app()->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
-
-		wfProfileOut(__METHOD__);
 
 		return $ret;
 	}
@@ -89,11 +68,6 @@ class JSMessages {
 	 * @return array - key/value list of matching messages
 	 */
 	static private function resolveMessagesPattern($pattern) {
-		$fname = __METHOD__ . "::$pattern";
-		wfProfileIn($fname);
-
-		self::log(__METHOD__, $pattern);
-
 		$pattern = substr($pattern, 0, -1);
 		$patternLen = strlen($pattern);
 
@@ -113,8 +87,6 @@ class JSMessages {
 			}
 		}
 
-
-		wfProfileOut($fname);
 		return $ret;
 	}
 
@@ -125,10 +97,7 @@ class JSMessages {
 	 * @return array - list of all message keys
 	 */
 	static private function getAllMessageKeys(Language $lang) {
-		wfProfileIn(__METHOD__);
-
 		if (is_null(self::$allMessageKeys)) {
-			wfProfileIn(__METHOD__ . '::miss');
 			$messageKeys = $lang->getAllMessageKeys();
 			self::$allMessageKeys = $messageKeys['messages'];
 
@@ -141,11 +110,8 @@ class JSMessages {
 					self::$allMessageKeys
 				);
 			}
-
-			wfProfileOut(__METHOD__ . '::miss');
 		}
 
-		wfProfileOut(__METHOD__);
 		return self::$allMessageKeys;
 	}
 
@@ -159,12 +125,9 @@ class JSMessages {
 	 * @return array - key/value array of messages
 	 */
 	static private function getPackage($name, $allowWildcards = true) {
-		wfProfileIn(__METHOD__);
 		$ret = null;
 
 		if (isset(self::$packages[$name])) {
-			self::log(__METHOD__, $name);
-
 			// get messages
 			$messages = self::$packages[$name];
 			$ret = array();
@@ -179,12 +142,8 @@ class JSMessages {
 						if (!empty($msgs)) {
 							$ret = array_merge($ret, $msgs);
 						}
-					}
-					else {
-						Wikia::logBacktrace(__METHOD__);
-						wfProfileOut(__METHOD__);
-						trigger_error("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode", E_USER_ERROR);
-						return;
+					} else {
+						throw new WikiaException("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode" );
 					}
 				}
 				// single message
@@ -203,7 +162,6 @@ class JSMessages {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -237,17 +195,12 @@ class JSMessages {
 	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
 	 */
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
-		wfProfileIn(__METHOD__);
-		self::log(__METHOD__, 'preparing list of inline messages...');
-
 		// get items to be rendered as a variable in <head> section
 		$packages = self::$queue['inline'];
 
 		if (!empty($packages)) {
 			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
 		}
-
-		self::log(__METHOD__, 'preparing list of external packages...');
 
 		$url = self::getExternalPackagesUrl();
 
@@ -256,7 +209,6 @@ class JSMessages {
 			F::app()->wg->Out->addScript(Html::linkedScript($url));
 		}
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -279,8 +231,6 @@ class JSMessages {
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
 	static public function getExternalPackagesUrl() {
-		wfProfileIn( __METHOD__ );
-
 		$wg = F::app()->wg;
 
 		// get items to be loaded via JS file
@@ -307,8 +257,7 @@ class JSMessages {
 				'cb' => JSMessagesHelper::getMessagesCacheBuster(),
 			));
 		}
-
-		wfProfileOut( __METHOD__ );
+		
 		return $url;
 	}
 }

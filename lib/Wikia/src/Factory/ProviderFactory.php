@@ -2,6 +2,7 @@
 namespace Wikia\Factory;
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Gateway\InternalIngressUrlProvider;
 use Wikia\Service\Gateway\KubernetesUrlProvider;
 use Wikia\Service\Gateway\UrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
@@ -22,9 +23,14 @@ class ProviderFactory {
 
 	public function urlProvider(): UrlProvider {
 		if ( $this->urlProvider === null ) {
-			global $wgRealEnvironment, $wgWikiaDatacenter;
-			$this->urlProvider = new KubernetesUrlProvider( $wgRealEnvironment, $wgWikiaDatacenter );
-			$this->urlProvider->setLogger( WikiaLogger::instance() );
+			global $wgRealEnvironment, $wgWikiaDatacenter, $wgUseKubernetesInternalIngress;
+
+			if ( $wgUseKubernetesInternalIngress ) {
+				$this->urlProvider = new InternalIngressUrlProvider( $wgRealEnvironment );
+			} else {
+				$this->urlProvider = new KubernetesUrlProvider( $wgRealEnvironment, $wgWikiaDatacenter );
+				$this->urlProvider->setLogger( WikiaLogger::instance() );
+			}
 		}
 
 		return $this->urlProvider;

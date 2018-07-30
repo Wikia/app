@@ -48,22 +48,29 @@ class ApiService {
 	 * @return mixed API response
 	 */
 	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
-		$hostName = self::getHostByDbName( $dbName );
+		// Note - this won't work the city_url contains url, as it uses http proxy to make the call.
+		// This should be fixed in PLATFORM-3486
+		$cityUrl = WikiFactory::DBtoUrl( $dbName );
 
-		// If hostName is empty, this would make a request to the current host.
-		if ( empty( $hostName ) ) {
+		// If city url is empty, this would make a request to the current host.
+		if ( empty( $cityUrl ) ) {
 			return false;
+		}
+
+		$options = [];
+		if ( startsWith( $cityUrl, "https://" ) ) {
+			$cityUrl = wfHttpsToHttp( $cityUrl );
+			$options[ 'headers' ] = [ 'Fastly-SSL' => 1, ];
 		}
 
 		// request JSON format of API response
 		$params[ 'format' ] = 'json';
 
-		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
+		$url = "{$cityUrl}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
 
-		$options = [];
 		if ( $setUser ) {
-			$options = self::loginAsUser();
+			$options = array_merge( $options, self::loginAsUser() );
 		}
 
 		// send request and parse response
@@ -77,29 +84,6 @@ class ApiService {
 		}
 
 		return $res;
-	}
-
-	/**
-	 * Get domain for a wiki using given database name
-	 *
-	 * @param string $dbName database name
-	 *
-	 * @return string HTTP domain
-	 */
-	private static function getHostByDbName( string $dbName ): string {
-		global $wgDevelEnvironment, $wgDevDomain;
-
-		$hostName = WikiFactory::DBtoUrl( $dbName );
-
-		if ( !empty( $wgDevelEnvironment ) ) {
-			if ( strpos( $hostName, 'wikia.com' ) ) {
-				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
-			} else {
-				$hostName = WikiFactory::getLocalEnvURL( $hostName );
-			}
-		}
-
-		return rtrim( $hostName, '/' );
 	}
 
 	/**

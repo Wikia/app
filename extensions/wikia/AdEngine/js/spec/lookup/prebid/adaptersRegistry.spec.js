@@ -5,6 +5,8 @@ describe('adaptersRegistry', function () {
 
 	var mocks = null;
 
+	function noop() {}
+
 	function AdapterMock(name, enabled) {
 		this.getName = function () {
 			return name;

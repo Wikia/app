@@ -332,9 +332,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'opts' => [
 				'pageType' => 'all_ads',
 				'showAds' => true,
-				'delayBtf' => true,
-				'pageFairRecovery' => true,
-				'instartLogicRecovery' => true
+				'delayBtf' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -344,6 +342,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiCategory' => $shortCat,
 				'wikiCustomKeyValues' => $customDartKvs,
 				'wikiDbName' => $dbName,
+				'wikiId' => $cityId,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
@@ -371,10 +370,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
 		}
-
-		// Check for PageFair URL
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
-		unset($result['opts']['pageFairDetectionUrl']);
 
 		// Check for Prebid.js URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
@@ -408,6 +403,23 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
 		$this->mockStaticMethod( 'ArticleVideoContext', 'isRecommendedVideoAvailable', $expected );
+
+		// Mock HubService
+		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object)[
+			'cat_name' => 'test'
+		] );
+
+		// Mock WikiFactoryHub
+		$wikiFactoryHubMock = $this->getMockBuilder( 'WikiFactoryHub' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCategoryId', 'getCategoryShort', 'getWikiVertical', 'getWikiCategoryNames' ] )
+			->getMock();
+
+		$wikiFactoryHubMock->expects( $this->any() )
+			->method( 'getCategoryShort' )
+			->willReturn( 'test' );
+
+		$this->mockStaticMethod( WikiFactoryHub::class, 'getInstance', $wikiFactoryHubMock );
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );

@@ -2,12 +2,10 @@
 	require([
 		'wikia.geo',
 		'wikia.instantGlobals',
+        'ext.wikia.adEngine.adContext',
 		require.optional('{{moduleName}}')
-	], function (geo, globals, bidder) {
-		var countries = globals['{{wgCountriesVariable}}'],
-			prebidCountries = globals['{{wgPrebidCountriesVariable}}'];
-
-		if (bidder && geo.isProperGeo(countries) && !geo.isProperGeo(prebidCountries)) {
+	], function (geo, globals, adContext, bidder) {
+		if (bidder && adContext.isEnabled('{{wgCountriesVariable}}') && !adContext.isEnabled('{{wgPrebidCountriesVariable}}')) {
 			bidder.call();
 		}
 	});

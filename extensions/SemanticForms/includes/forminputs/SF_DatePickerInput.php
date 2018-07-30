@@ -425,36 +425,36 @@ class SFDatePickerInput extends SFFormInput {
 			if ( count( $disabledDates ) > 0 ) {
 
 				// convert the PHP array of date ranges into an array of numbers
-				$jsattribs["disabledDates"] = array_map( create_function ( '$range', '
+				$jsattribs["disabledDates"] = array_map( function ( $range ) {
 
-							$y0 = $range[0]->format( "Y" );
-							$m0 = $range[0]->format( "m" ) - 1;
-							$d0 = $range[0]->format( "d" );
+					$y0 = $range[0]->format( "Y" );
+					$m0 = $range[0]->format( "m" ) - 1;
+					$d0 = $range[0]->format( "d" );
 
-							$y1 = $range[1]->format( "Y" );
-							$m1 = $range[1]->format( "m" ) - 1;
-							$d1 = $range[1]->format( "d" );
+					$y1 = $range[1]->format( "Y" );
+					$m1 = $range[1]->format( "m" ) - 1;
+					$d1 = $range[1]->format( "d" );
 
-							return array($y0, $m0, $d0, $y1, $m1, $d1);
-						' ) , $disabledDates );
+					return [ $y0, $m0, $d0, $y1, $m1, $d1 ];
+				}, $disabledDates );
 			}
 
 			// register highlighted dates with datepicker
 			if ( count( $highlightedDates ) > 0 ) {
 
 				// convert the PHP array of date ranges into an array of numbers
-				$jsattribs["highlightedDates"] = array_map( create_function ( '$range', '
+				$jsattribs["highlightedDates"] = array_map( function ( $range ) {
 
-							$y0 = $range[0]->format( "Y" );
-							$m0 = $range[0]->format( "m" ) - 1;
-							$d0 = $range[0]->format( "d" );
+					$y0 = $range[0]->format( "Y" );
+					$m0 = $range[0]->format( "m" ) - 1;
+					$d0 = $range[0]->format( "d" );
 
-							$y1 = $range[1]->format( "Y" );
-							$m1 = $range[1]->format( "m" ) - 1;
-							$d1 = $range[1]->format( "d" );
+					$y1 = $range[1]->format( "Y" );
+					$m1 = $range[1]->format( "m" ) - 1;
+					$d1 = $range[1]->format( "d" );
 
-							return array($y0, $m0, $d0, $y1, $m1, $d1);
-						' ) , $highlightedDates );
+					return [ $y0, $m0, $d0, $y1, $m1, $d1 ];
+				}, $highlightedDates );
 			}
 
 			// register disabled days of week with datepicker
@@ -557,18 +557,19 @@ class SFDatePickerInput extends SFFormInput {
    static private function createRangesArray ( $rangesAsStrings ) {
 
 	   // transform array of strings into array of array of dates
-	   // have to use create_function to be PHP pre5.3 compatible
-	   return array_map( create_function( '$range', '
+	   return array_map( function( $range ) {
 
-					if ( strpos ( $range, "-" ) === FALSE ) { // single date
-						$date = date_create( $range );
-						return ( $date ) ? array( $date, clone $date ):null;
-					} else { // date range
-						$dates = array_map( "date_create", explode( "-", $range ) );
-						return  ( $dates[0] && $dates[1] ) ? $dates:null;
-					}
+		   if ( strpos( $range, "-" ) === FALSE ) { // single date
+			   $date = date_create( $range );
 
-					' ), $rangesAsStrings );
+			   return ( $date ) ? [ $date, clone $date ] : null;
+		   } else { // date range
+			   $dates = array_map( "date_create", explode( "-", $range ) );
+
+			   return ( $dates[0] && $dates[1] ) ? $dates : null;
+		   }
+
+	   }, $rangesAsStrings );
 
    }
 

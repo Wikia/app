@@ -11,6 +11,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   - user_id: 13
     user_name: 'TestUser2'
     user_real_name: ''
@@ -23,6 +24,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
 user_properties:
   - up_user: 12
     up_property: new_email

@@ -127,6 +127,4 @@ function efOpenGraphMetaPageHook( OutputPage $out, Skin $skin ): bool {
 	return true;
 }
 
-$egFacebookAppId = null;
 $egFacebookAdmins = null;
-

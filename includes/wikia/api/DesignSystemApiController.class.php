@@ -30,11 +30,19 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getNavigation() {
 		$params = $this->getRequestParameters();
-		$navigationModel = new DesignSystemGlobalNavigationModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
-		);
+		// TODO: remove after full rollout of XW-4947
+		$version = $this->getVal('version', '1');
+		$navigationModel = $version === '2'
+			? new DesignSystemGlobalNavigationModelV2(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			)
+			: new DesignSystemGlobalNavigationModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			);
 
 		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $navigationModel->getData() );
@@ -43,10 +51,7 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getCommunityHeader() {
 		$params = $this->getRequestParameters();
-		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
-		);
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $params[static::PARAM_LANG] );
 
 		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $communityHeaderModel->getData() );
@@ -67,11 +72,19 @@ class DesignSystemApiController extends WikiaApiController {
 			$params[static::PARAM_LANG]
 		);
 
-		$navigationModel = new DesignSystemGlobalNavigationModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
-		);
+		// TODO: remove after full rollout of XW-4947
+		$version = $this->getVal('version', '1');
+		$navigationModel = $version === '2'
+			? new DesignSystemGlobalNavigationModelV2(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			)
+			: new DesignSystemGlobalNavigationModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			);
 
 		$this->cors->setHeaders( $this->response );
 
@@ -81,9 +94,7 @@ class DesignSystemApiController extends WikiaApiController {
 		];
 
 		if ( $params[self::PARAM_PRODUCT] === self::PRODUCT_WIKIS ) {
-			$communityHeaderModel =
-				new DesignSystemCommunityHeaderModel( $params[static::PARAM_ID],
-					$params[static::PARAM_LANG] );
+			$communityHeaderModel = new DesignSystemCommunityHeaderModel( $params[static::PARAM_LANG] );
 
 			$responseData['community-header'] = $communityHeaderModel->getData();
 		}

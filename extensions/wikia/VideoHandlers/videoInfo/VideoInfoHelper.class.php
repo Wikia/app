@@ -89,35 +89,6 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get total view from database
-	 * @param DatabaseBase $db
-	 * @return array $videoList
-	 */
-	public static function getTotalViewsFromDB( DatabaseBase $db = null ) {
-		wfProfileIn( __METHOD__ );
-
-		$db = empty( $db ) ? wfGetDB( DB_SLAVE ) : $db;
-
-		$result = $db->select(
-			array( 'video_info' ),
-			array( 'video_title, views_total' ),
-			array( 'views_total != 0' ),
-			__METHOD__
-		);
-
-		$videoList = array();
-		while ( $row = $db->fetchObject($result) ) {
-			$hashTitle = md5( $row->video_title );
-			$key = substr( $hashTitle, 0, 2 );
-			$videoList[$key][$hashTitle] = $row->views_total;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videoList;
-	}
-
-	/**
 	 * get total views of a video from database using title
 	 * @param $title
 	 * @return int $viewCount
@@ -211,20 +182,6 @@ class VideoInfoHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $affected;
-	}
-
-	/**
-	 * Fetch the list of local videos from this wiki
-	 * @return array $titles
-	 */
-	public static function getLocalVideoTitles() {
-		$db = wfGetDB( DB_SLAVE );
-
-		return $db->selectFieldValues(
-			'video_info',
-			'video_title',
-			__METHOD__
-		);
 	}
 
 }

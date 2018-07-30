@@ -1,25 +1,28 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (adContext, geo, instantGlobals) {
+	'wikia.querystring'
+], function (adContext, Querystring) {
 	'use strict';
 
 	var requiredData = [
-		'inputParser',
+		'dataSource',
 		'model',
 		'name',
-		'wgCountriesVariable',
 		'enabled'
 	];
 
-	function create(modelData) {
+	function validateModel(modelData) {
 		requiredData.forEach(function (key) {
 			if (typeof modelData[key] === 'undefined') {
 				throw new Error('Missing ' + key + ' in model definition.');
 			}
 		});
+	}
+
+	function create(modelData) {
+		var qs = new Querystring();
+		validateModel(modelData);
 
 		var predictedValue = null;
 
@@ -37,12 +40,28 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				return modelData.enabled && geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+				var isEnabled = modelData.enabled,
+					isGeoEnabled = !modelData.wgCountriesVariable || adContext.isEnabled(modelData.wgCountriesVariable);
+
+				if (typeof modelData.enabled === 'function') {
+					isEnabled = modelData.enabled();
+				}
+
+				return isEnabled && isGeoEnabled;
+			},
+
+			buildModelForcedKey: function (modelName) {
+				return 'rabbits.' + modelName + 'Forced';
 			},
 
 			predict: function () {
+				var key = this.buildModelForcedKey(modelData.name);
+				if (qs.getVal(key, undefined) !== undefined) {
+					return parseInt(qs.getVal(key), 10);
+				}
+
 				if (predictedValue === null || !modelData.cachePrediction) {
-					var data = modelData.inputParser.getData();
+					var data = modelData.dataSource.getData();
 
 					predictedValue = modelData.model.predict(data);
 				}

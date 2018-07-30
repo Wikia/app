@@ -502,15 +502,15 @@ function wfSIWELinkWikisCommit () {
 }
 
 function wfSIWEMakeInterlanguageUrl($wikiaID) {
-	global $wgArticlePath;
-
-	$server = WikiFactory::getVarValueByName( 'wgServer', $wikiaID );
-	$path = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiaID );
-	if ( empty( $path ) ) {
-		// if not defined per-wiki, assume default
-		// note: this is not a true default, but a value from the current wiki, will do for now
-		$path = $wgArticlePath;
+	$cityUrl = WikiFactory::cityIDtoUrl( $wikiaID );
+	if ( !$cityUrl ) {
+		\Wikia\Logger\WikiaLogger::instance()->warning( 'wfSIWEMakeInterlanguageUrl - empty city_url', [
+			'city_id' => $wikiaID
+		] );
+		return '';
 	}
+	$server = WikiFactory::cityUrlToDomain( $cityUrl );
+	$path = WikiFactory::cityUrlToArticlePath( $cityUrl, $wikiaID);
 
 	return $server . $path;
 }

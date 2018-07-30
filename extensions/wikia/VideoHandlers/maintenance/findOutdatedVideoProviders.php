@@ -5,7 +5,7 @@ use \Wikia\Logger\WikiaLogger;
 /**
  * This script queries Solr index for videos coming from all registered providers.
  *
- * Providers that have the last vidoe uploaded more than X days ago
+ * Providers that have the last video uploaded more than X days ago
  * are considered outdated. Log message is sent via ELK and Jira ticker is filled
  * via Jira Reporter
  *

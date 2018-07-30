@@ -202,7 +202,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 *
 	 * @return bool
 	 */
-	function isWriteQuery( $sql ) {
+	static function isWriteQuery( $sql ) {
 		return parent::isWriteQuery( $sql ) && !preg_match( '/^ATTACH\b/i', $sql );
 	}
 

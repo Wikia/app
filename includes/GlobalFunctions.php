@@ -145,11 +145,17 @@ function wfArrayDiff2_cmp( $a, $b ) {
 	} else {
 		reset( $a );
 		reset( $b );
-		while( ( list( , $valueA ) = each( $a ) ) && ( list( , $valueB ) = each( $b ) ) ) {
+		while ( key( $a ) !== null && key( $b ) !== null ) {
+			$valueA = current( $a );
+			$valueB = current( $b );
+
 			$cmp = strcmp( $valueA, $valueB );
 			if ( $cmp !== 0 ) {
 				return $cmp;
 			}
+
+			next( $a );
+			next( $b );
 		}
 		return 0;
 	}
@@ -1181,7 +1187,7 @@ function wfLogProfilingData() {
 	$profiler = Profiler::instance();
 
 	# Profiling must actually be enabled...
-	if ( $profiler->isStub() ) {
+	if ( $profiler instanceof ProfilerStub ) {
 		return;
 	}
 
@@ -3002,31 +3008,6 @@ function wfInitShellLocale() {
 }
 
 /**
- * Generate a shell-escaped command line string to run a maintenance script.
- * Note that $parameters should be a flat array and an option with an argument
- * should consist of two consecutive items in the array (do not use "--option value").
- * @param $script string MediaWiki maintenance script path
- * @param $parameters Array Arguments and options to the script
- * @param $options Array Associative array of options:
- * 		'php': The path to the php executable
- * 		'wrapper': Path to a PHP wrapper to handle the maintenance script
- * @return Array
- */
-function wfShellMaintenanceCmd( $script, array $parameters = array(), array $options = array() ) {
-	global $wgPhpCli;
-	// Give site config file a chance to run the script in a wrapper.
-	// The caller may likely want to call wfBasename() on $script.
-	Hooks::run( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
-	$cmd = isset( $options['php'] ) ? array( $options['php'] ) : array( $wgPhpCli );
-	if ( isset( $options['wrapper'] ) ) {
-		$cmd[] = $options['wrapper'];
-	}
-	$cmd[] = $script;
-	// Escape each parameter for shell
-	return implode( " ", array_map( 'wfEscapeShellArg', array_merge( $cmd, $parameters ) ) );
-}
-
-/**
  * wfMerge attempts to merge differences between three texts.
  * Returns true for a clean merge and false for failure or a conflict.
  *
@@ -3807,12 +3788,28 @@ function wfWaitForSlaves( $wiki = false ) {
 		// Wikia change - begin
 		// PLATFORM-1489: check if we're using consul configuration for DB slave
 		if ( $lb->hasConsulConfig() ) {
-			// get the list of IP addresses of all slave nodes from consul
-			// so that we can check all of them explicitly
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+
+			// SUS-4805 | iterate over all data centers for the current environment
+			global $wgWikiaEnvironment;
 			$consul = new Wikia\Consul\Client();
 
-			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
-			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+			$slaves = [];
+
+			foreach( $consul->getDataCentersForEnv( $wgWikiaEnvironment ) as $dc ) {
+				wfDebug( __METHOD__ . ": getting the list of slaves in {$dc} DC...\n" );
+
+				// get the list of IP addresses of all slave nodes from consul
+				// so that we can check all of them explicitly
+				$consul = new Wikia\Consul\Client( [
+					'base_uri' => Wikia\Consul\Client::getConsulBaseUrlForDC( $dc )
+				] );
+
+				$slaves = array_merge( $slaves, $consul->getNodesFromHostname( $slaveInfo['hostName'] ) );
+			}
+
+			// we may get duplicated entries from different DCs
+			$slaves = array_unique( $slaves );
 
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
@@ -4083,4 +4080,50 @@ function wfRandomString( $length = 32 ) {
 		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
 	}
 	return substr( $str, 0, $length );
+}
+
+/**
+ * Check if we are running from the commandline
+ *
+ * @since 1.31
+ * @return bool
+ */
+function wfIsCLI() {
+	return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
+}
+
+/**
+ * Get system resource usage of current request context.
+ * Invokes the getrusage(2) system call, requesting RUSAGE_SELF if on PHP5
+ * or RUSAGE_THREAD if on HHVM. Returns false if getrusage is not available.
+ *
+ * @since 1.24
+ * @return array|bool Resource usage data or false if no data available.
+ */
+function wfGetRusage() {
+	if ( !function_exists( 'getrusage' ) ) {
+		return false;
+	} elseif ( defined( 'HHVM_VERSION' ) && PHP_OS === 'Linux' ) {
+		return getrusage( 2 /* RUSAGE_THREAD */ );
+	} else {
+		return getrusage( 0 /* RUSAGE_SELF */ );
+	}
+}
+
+/**
+ * Begin profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we will profile
+ */
+function wfProfileIn( $functionname ) {
+	// no-op
+}
+
+/**
+ * Stop profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we have profiled
+ */
+function wfProfileOut( $functionname = 'missing' ) {
+	// no-op
 }

@@ -6,12 +6,10 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.babDetection',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -19,8 +17,10 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.adEngine.wad.babDetection',
+	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.geo',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
@@ -29,12 +29,10 @@ require([
 	adEngineRunner,
 	pageLevelParams,
 	adTracker,
-	babDetection,
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
 	messageListener,
-	pageFairDetection,
 	btfBlocker,
 	actionHandler,
 	slotRegistry,
@@ -42,66 +40,68 @@ require([
 	slotTweaker,
 	adInfoListener,
 	scrollDepthTracker,
-	adBlockDetection,
+	babDetection,
+	wadRecRunner,
 	geo,
+	trackingOptIn,
 	win,
 	fvLagger
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
-
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
-
-	messageListener.init();
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	win.adSlotTweaker = slotTweaker;
 
-	// Custom ads (skins, footer, etc)
-	adEngineBridge.init(
-		adTracker,
-		geo,
-		slotRegistry,
-		null,
-		pageLevelParams.getPageLevelParams(),
-		adContext,
-		btfBlocker,
-		'oasis'
-	);
-	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	trackingOptIn.pushToUserConsentQueue(function () {
+		var context = adContext.getContext();
 
-	if (context.opts.babDetectionDesktop) {
-		adEngineBridge.checkAdBlocking(babDetection);
-	}
+		messageListener.init();
 
-	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
-		fvLagger.addResponseListener(function (lineItemId) {
-			adEngineBridge.universalAdPackage.setUapId(lineItemId);
-			adEngineBridge.universalAdPackage.setType('jwp');
+		// Custom ads (skins, footer, etc)
+		adEngineBridge.init(
+			adTracker,
+			geo,
+			slotRegistry,
+			null,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'oasis',
+			trackingOptIn
+		);
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-			slotRegistry.disable('TOP_LEADERBOARD');
-			slotRegistry.disable('BOTTOM_LEADERBOARD');
-		});
-	}
-
-	// Everything starts after content and JS
-	win.wgAfterContentAndJS.push(function () {
-		adInfoListener.run();
-		slotStateMonitor.run();
-
-		// Ads
-		win.adslots2 = win.adslots2 || [];
-		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
-
-		actionHandler.registerMessageListener();
-
-		scrollDepthTracker.run();
-
-		if (context.opts.pageFairDetection) {
-			pageFairDetection.initDetection(context);
+		if (context.opts.babDetectionDesktop) {
+			adEngineBridge.checkAdBlocking(babDetection);
 		}
+
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				win.loadCustomAd({
+					adProduct: 'jwp',
+					type: 'bfp',
+					uap: lineItemId
+				});
+			});
+		}
+
+		// Everything starts after content and JS
+		win.wgAfterContentAndJS.push(function () {
+			wadRecRunner.init();
+			adInfoListener.run();
+			slotStateMonitor.run();
+
+			// Ads
+			win.adslots2 = win.adslots2 || [];
+			adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
+
+			actionHandler.registerMessageListener();
+
+			scrollDepthTracker.run();
+		});
 	});
 });
 
@@ -113,6 +113,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
 	adContext,
@@ -121,6 +122,7 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	trackingOptIn,
 	win
 ) {
 	'use strict';
@@ -131,19 +133,11 @@ require([
 		bottomLeaderboard.init();
 	}
 
-	if (doc.readyState === 'complete') {
-		initDesktopSlots();
-	} else {
-		win.addEventListener('load', initDesktopSlots);
-	}
-});
-
-// FPS meter
-require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
-	'use strict';
-	if (qs().getVal('fps')) {
-		var s = doc.createElement('script');
-		s.src = 'https://raw.githubusercontent.com/Wikia/fps-meter/master/fps-meter.js';
-		doc.body.appendChild(s);
-	}
+	trackingOptIn.pushToUserConsentQueue(function () {
+		if (doc.readyState === 'complete') {
+			initDesktopSlots();
+		} else {
+			win.addEventListener('load', initDesktopSlots);
+		}
+	});
 });

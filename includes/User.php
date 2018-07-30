@@ -1564,7 +1564,6 @@ class User implements JsonSerializable {
 		}
 		// Set the user limit key
 		if ( $userLimit !== false ) {
-			wfDebug( __METHOD__ . ": effective user limit: $userLimit\n" );
 			$keys[ wfMemcKey( 'limiter', $action, 'user', $id ) ] = $userLimit;
 		}
 
@@ -2019,9 +2018,8 @@ class User implements JsonSerializable {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc;
-			$wgMemc->delete( $this->getCacheKey() );
-			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-			$this->userPreferences()->deleteFromCache( $this->getId() );
+			$this->deleteCache();
+
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 
@@ -2044,6 +2042,15 @@ class User implements JsonSerializable {
 
 		// Wikia change
 		self::permissionsService()->invalidateCache( $this );
+	}
+
+	public function deleteCache() {
+		global $wgMemc;
+
+		$this->load();
+		$wgMemc->delete( $this->getCacheKey() );
+		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
+		$this->userPreferences()->deleteFromCache( $this->getId() );
 	}
 
 	/**

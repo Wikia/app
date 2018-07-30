@@ -4,11 +4,13 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
+	'ext.wikia.adEngine.utils.device',
 	'wikia.browserDetect',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, trackingOptIn, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -16,7 +18,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	function getPosParameter(slotParams) {
 		var pos = (slotParams.pos || ''),
 			posArray = Array.isArray(pos) ? pos : pos.split(',');
-		return posArray[0];
+
+		return posArray[0].toLowerCase();
 	}
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
@@ -45,6 +48,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.pvUID,
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+			'device': deviceDetect.getDevice(pageParams),
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
@@ -89,7 +93,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': geo.getSamplingResults().join(';')
+			'labrador': geo.getSamplingResults().join(';'),
+			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};
 
 		log(['prepareData', slotName, data], log.levels.debug, logGroup);

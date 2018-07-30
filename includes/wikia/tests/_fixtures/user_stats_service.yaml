@@ -1,0 +1,22 @@
+user:
+  - user_id: 1
+    user_name: 'UserStatsUser'
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_options: ''
+  - user_id: 2
+    user_name: 'UserStatsUserWithEdits'
+    user_email: 'jozsef.attila@attilajozsef.hu'
+    user_options: ''
+wikia_user_properties:
+  - wup_user: 2
+    wup_property: editcount
+    wup_value: 4
+  - wup_user: 2
+    wup_property: editcountThisWeek
+    wup_value: 3
+  - wup_user: 2
+    wup_property: firstContributionTimestamp
+    wup_value: 20110101000000
+  - wup_user: 2
+    wup_property: lastContributionTimestamp
+    wup_value: 20180501120000

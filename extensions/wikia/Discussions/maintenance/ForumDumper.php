@@ -51,6 +51,18 @@ class ForumDumper {
 	];
 
 	const COLUMNS_REVISION = [
+		"revision_id",
+		"page_id",
+		"page_namespace",
+		"title",
+		"user_type",
+		"user_identifier",
+		"timestamp",
+		"is_minor_edit",
+		"is_deleted",
+		"length",
+		"parent_id",
+		"text_flags",
 		"raw_content",
 		"content",
 	];
@@ -165,7 +177,22 @@ class ForumDumper {
 				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
 
-				$this->addRevision( $parsedText );
+				$this->addRevision( [
+					"revision_id" => $row->rev_id,
+					"page_id" => $row->rev_page,
+					"page_namespace" => $curPage['namespace'],
+					"title" => $title,
+					"user_type" => $this->getContributorType( $row ),
+					"user_identifier" => $row->rev_user,
+					"timestamp" => $row->rev_timestamp,
+					"is_minor_edit" => $row->rev_minor_edit,
+					"is_deleted" => $row->rev_deleted,
+					"length" => $row->rev_len,
+					"parent_id" => $row->rev_parent_id,
+					"text_flags" => $row->old_flags,
+					"raw_content" => $plainText,
+					"content" => $parsedText,
+				] );
 			} );
 
 		return $this->revisions;

@@ -2,10 +2,8 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (adContext, slotsContext, instartLogic, geo, instantGlobals) {
+	'ext.wikia.adEngine.wad.babDetection'
+], function (adContext, slotsContext, babDetection) {
 	'use strict';
 
 	var bidderName = 'onemobile',
@@ -29,7 +27,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 
 	function isEnabled() {
 		return adContext.get('targeting.skin') === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAolOneMobileBidderCountries) && !instartLogic.isBlocking();
+			adContext.get('bidders.onemobile') && !babDetection.isBlocking();
 	}
 
 	function getSlots(skin) {
@@ -39,7 +37,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: [config.size],
+			mediaTypes: {
+				banner: {
+					sizes: [config.size]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

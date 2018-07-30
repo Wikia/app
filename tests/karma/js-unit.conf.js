@@ -103,13 +103,10 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/tracking/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
 			'extensions/wikia/AdEngine/js/video/**/*.js',
+			'extensions/wikia/AdEngine/js/wad/*.js',
 			'extensions/wikia/AdEngine/js/wrappers/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
-
-			//ARecoveryEngine
-			'extensions/wikia/ARecoveryEngine/js/*.js',
-			'extensions/wikia/ARecoveryEngine/js/**/*.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -185,7 +182,7 @@ module.exports = function (config) {
 
 			// Global Shortcuts
 			'extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
-			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js',
+			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js'
 		]
 	});
 };

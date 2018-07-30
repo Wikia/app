@@ -7,7 +7,7 @@
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;

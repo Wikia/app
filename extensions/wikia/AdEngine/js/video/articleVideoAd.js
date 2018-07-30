@@ -23,25 +23,42 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerMuted, bidParams) {
+	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerState, bidParams) {
+		playerState = playerState || {};
+
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
-			slotParams = Object.assign({
+			slotNameSuffix = '',
+			slotParams = {
 				passback: featuredVideoPassback,
 				pos: slotName,
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
-				audio: playerMuted ? 'no' : 'yes'
-			}, slotTargeting);
+				audio: playerState.muted ? 'no' : 'yes',
+				ctp: playerState.autoplay ? 'no' : 'yes'
+			};
+
+		if (slotTargeting) {
+			Object.keys(slotTargeting).forEach(function (key) {
+				slotParams[key] = slotTargeting[key];
+			});
+		}
 
 		if (videoDepth === 1 && bidParams) {
 			Object.keys(bidParams).forEach(function (key) {
 				slotParams[key] = bidParams[key];
 			});
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
+
+		if (!playerState.autoplay) {
+			slotNameSuffix = '-ctp';
+		} else if (!playerState.muted) {
+			slotNameSuffix = '-audio';
+		}
+
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, slotNameSuffix);
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 

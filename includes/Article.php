@@ -544,6 +544,9 @@ class Article extends Page {
 							} else {
 								wfDebug( __METHOD__ . ": showing parser cache contents\n" );
 							}
+							if ( rand( 0, 99 ) <= 1 ) {
+								\Wikia\Logger\WikiaLogger::instance()->info( "SUS-5514 - cache used" );
+							}
 							$wgOut->addParserOutput( $this->mParserOutput );
 							// Wikia change - begin - @author: wladek
 							Hooks::run('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
@@ -625,7 +628,9 @@ class Article extends Page {
 				case 4:
 					# Run the parse, protected by a pool counter
 					wfDebug( __METHOD__ . ": doing uncached parse\n" );
-
+					if ( rand( 0, 99 ) <= 1 ) {
+						\Wikia\Logger\WikiaLogger::instance()->info( "SUS-5514 - doing uncached parse" );
+					}
 					$poolArticleView = new PoolWorkArticleView( $this, $parserOptions,
 						$this->getRevIdFetched(), $useParserCache, $this->getContent() );
 

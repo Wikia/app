@@ -11,6 +11,7 @@ namespace Wikia\Tasks\Tasks;
 
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
+use Wikia\Tasks\DeferredTaskQueueUpdate;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
@@ -157,7 +158,7 @@ abstract class BaseTask {
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
-		return count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
+		return is_array( $taskIds ) && count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
 	}
 
 	/**
@@ -339,7 +340,7 @@ abstract class BaseTask {
 
 	/**
 	 * @see AsyncTaskList::wikiId
-	 * @param $wikiId
+	 * @param int|int[] $wikiId
 	 * @return $this
 	 */
 	public function wikiId( $wikiId ) {
@@ -356,11 +357,21 @@ abstract class BaseTask {
 	}
 
 	/**
+	 * @deprecated
 	 * @see AsyncTaskList::setPriority
 	 * @param $queueName
 	 * @return $this
 	 */
 	public function setPriority( $queueName ) {
+		return $this->setQueue( $queueName );
+	}
+
+	/**
+	 * @see AsyncTaskList::setQueue
+	 * @param $queueName
+	 * @return $this
+	 */
+	public function setQueue( $queueName ) {
 		$this->queueName = $queueName;
 		return $this;
 	}
@@ -415,6 +426,13 @@ abstract class BaseTask {
 		] );
 
 		return AsyncTaskList::batch( $taskLists, $priority );
+	}
+
+	/**
+	 * Schedule this task to be published to the queue after the main response has been flushed back to the client.
+	 */
+	public function scheduleAsDeferredUpdate() {
+		\DeferredUpdates::addUpdate( new DeferredTaskQueueUpdate( $this ) );
 	}
 
 	public static function newLocalTask(): BaseTask {

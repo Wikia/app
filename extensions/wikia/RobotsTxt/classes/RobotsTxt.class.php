@@ -7,7 +7,7 @@ class RobotsTxt {
 	private $allowed = [];
 	private $blockedRobots = [];
 	private $disallowed = [];
-	private $sitemap;
+	private $sitemaps = [];
 
 	/**
 	 * Allow specific paths
@@ -53,13 +53,34 @@ class RobotsTxt {
 		);
 	}
 
+	public function getAllowedPaths() {
+		return $this->allowed;
+	}
+
+	public function getDisallowedPaths() {
+		return $this->disallowed;
+	}
+
+	public function getSitemaps() {
+		return $this->sitemaps;
+	}
+
 	/**
-	 * Set Sitemap URL
+	 * Add a sitemap URL
 	 *
 	 * @param string $sitemapUrl
 	 */
-	public function setSitemap( $sitemapUrl ) {
-		$this->sitemap = $sitemapUrl;
+	public function addSitemap( $sitemapUrl ) {
+		$this->sitemaps[] = $sitemapUrl;
+	}
+
+	/**
+	 * Add multiple sitemap URLs
+	 *
+	 * @param array $sitemaps
+	 */
+	public function addSitemaps( array $sitemaps ) {
+		$this->sitemaps = array_merge( $this->sitemaps, $sitemaps );
 	}
 
 	// Private methods follow:
@@ -111,9 +132,8 @@ class RobotsTxt {
 	}
 
 	private function getSitemapSection() {
-		if ( $this->sitemap ) {
-			return [ 'Sitemap: ' . $this->sitemap ];
-		}
-		return [];
+		return array_map( function ( $sitemapUrl ) {
+			return 'Sitemap: ' . $sitemapUrl;
+		}, $this->sitemaps );
 	}
 }

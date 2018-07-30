@@ -87,15 +87,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						],
 						'href' => $this->getHref( 'contact' ),
 						'tracking_label' => 'company-overview.contact',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-org'
-						],
-						'href' => $this->getHref( 'wikia-org' ),
-						'tracking_label' => 'company-overview.wikia-org',
 					]
 				]
 			],
@@ -522,7 +513,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			);
 
 			if ( $localSitemapAvailable ) {
-				return $this->getHref( 'local-sitemap' );
+				return $this->getLocalHref( 'local-sitemap' );
 			}
 		}
 
@@ -544,6 +535,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		return $licenseUrl;
+	}
+
+	private function getLocalHref( $hrefKey ) {
+		return DesignSystemSharedLinks::getInstance()->getLocalHref( $hrefKey, $this->lang, $this->productInstanceId );
 	}
 
 	private function getHref( $hrefKey ) {

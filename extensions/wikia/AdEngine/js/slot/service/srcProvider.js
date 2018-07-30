@@ -1,33 +1,18 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.service.srcProvider',  [
+define('ext.wikia.adEngine.slot.service.srcProvider', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
+	'ext.wikia.adEngine.wad.babDetection'
 ], function (
 	adContext,
-	adBlockDetection,
-	adBlockRecovery,
-	instartLogic
+	babDetection
 ) {
 	'use strict';
-
-	function adIsRecoverable(extra) {
-		return extra && (extra.isPageFairRecoverable || extra.isInstartLogicRecoverable);
-	}
-
-	function isRecoverableByPF(extra) {
-		return adBlockRecovery.isEnabled() && adBlockDetection.isBlocking() && adIsRecoverable(extra);
-	}
-
-	function isRecoverableByIL() {
-		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
-	}
 
 	function addTestPrefixForTestWiki(originalSrc, extra) {
 		if (adContext.get('opts.isAdTestWiki')) {
 			originalSrc = extra && extra.testSrc ? extra.testSrc : 'test-' + originalSrc;
 		}
+
 		return originalSrc;
 	}
 
@@ -35,19 +20,20 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
 			originalSrc = 'premium';
 		}
-		if (isRecoverableByPF(extra) || isRecoverableByIL()) {
-			originalSrc = 'rec';
+
+		if (adContext.get('targeting.skin') === 'oasis' && babDetection.isBlocking()) {
+			return getRecSrc();
 		}
 
 		return addTestPrefixForTestWiki(originalSrc, extra);
 	}
 
-	function getRecoverySrc() {
+	function getRecSrc() {
 		return addTestPrefixForTestWiki('rec');
 	}
 
 	return {
 		get: get,
-		getRecoverySrc: getRecoverySrc
+		getRecSrc: getRecSrc
 	};
 });

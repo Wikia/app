@@ -44,26 +44,8 @@ class ThemeSettings {
 		$this->cityId = $cityId;
 
 		$wgSitename = WikiFactory::getVarValueByName( 'wgSitename', $cityId );
-		$wgAdminSkin = WikiFactory::getVarValueByName( 'wgAdminSkin', $cityId );
 
-		$adminSkin = explode( '-', $wgAdminSkin );
 		$themeName = 'oasis';
-
-		if ( count( $adminSkin ) == 2 ) {
-			$transition = [
-				'sky' => 'oasis',
-				'sapphire' => 'oasis',
-				'spring' => 'jade',
-				'forest' => 'jade',
-				'obsession' => 'carbon',
-				'moonlight' => 'bluesteel',
-				'beach' => 'creamsicle',
-			];
-
-			if ( isset( $transition[$adminSkin[1]] ) ) {
-				$themeName = $transition[$adminSkin[1]];
-			}
-		}
 
 		// colors
 		$this->defaultSettings = $wgOasisThemes[$themeName];

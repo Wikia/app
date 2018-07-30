@@ -68,35 +68,6 @@ class DataProvider {
 	}
 
 	/**
-	 * Returns original translation or translation used in monobook if original is not found
-	 * Author: Gerard, Inez, Tomek
-	 * @param string $key
-	 * @return string
-	 */
-	private static function Translate( string $key ) {
-		wfProfileIn( __METHOD__ );
-		global $wgLang, $wgSkinTranslationMap;
-
-		if ( $wgLang->getCode() == 'en' ) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg( $key );
-		}
-		if ( ( $message = $wgLang->getMessage( $key ) ) === false || ( trim( $message ) == '' ) ) {
-			if ( array_key_exists( $key, $wgSkinTranslationMap ) ) {
-				$message = wfMsg( $wgSkinTranslationMap[$key] );
-			} else {
-				$message = wfMsg( $key );
-			}
-		}
-		if ( !isset( $message ) || trim( $message ) == '' ) {
-			$message = $key;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $message;
-	}
-
-	/**
 	 * Author: Inez Korczynski (inez at wikia.com)
 	 * @return array
 	 */
@@ -126,30 +97,25 @@ class DataProvider {
 	 */
 	final public static function GetThisWiki() {
 		wfProfileIn( __METHOD__ );
-		global $wgWikiaUsePHPBB;
 
 		$data = array();
-		$data['header'] = self::Translate( 'this_wiki' );
+		$data['header'] = wfMessage( 'this_wiki' )->text();
 
 		$data['home']['url'] = Skin::makeMainPageUrl();
-		$data['home']['text'] = self::Translate( 'home' );
+		$data['home']['text'] = wfMessage( 'home' )->text();
 
-		if ( !empty( $wgWikiaUsePHPBB ) ) {
-			$data['forum']['url'] = '/forum/';
-			$data['forum']['text'] = self::Translate( 'forum' );
-		} else {
-			$data['forum']['url'] = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'forum-url' ) );
-			$data['forum']['text'] = self::Translate( 'forum' );
-		}
+
+		$data['forum']['url'] = Skin::makeInternalOrExternalUrl( wfMessage( 'forum-url' )->inContentLanguage()->text() );
+		$data['forum']['text'] = wfMessage( 'forum' )->text();
 
 		$data['randompage']['url'] = Skin::makeSpecialUrl( 'Randompage' );
-		$data['randompage']['text'] = self::Translate( 'randompage' );
+		$data['randompage']['text'] = wfMessage( 'randompage' )->text();
 
 		$data['help']['url'] = 'http://www.wikia.com/wiki/Help:Tutorial_1';
-		$data['help']['text'] = self::Translate( 'helpfaq' );
+		$data['help']['text'] = wfMessage( 'helpfaq' )->text();
 
 		$data['joinnow']['url'] = Skin::makeSpecialUrl( 'Userlogin', "type=signup" );
-		$data['joinnow']['text'] = self::Translate( 'joinnow' );
+		$data['joinnow']['text'] = wfMessage( 'joinnow' )->text();
 
 		wfProfileOut( __METHOD__ );
 		return $data;
@@ -191,20 +157,20 @@ class DataProvider {
 
 		# Create page
 		$url = Skin::makeSpecialUrl( 'Createpage' );
-		$text = self::Translate( 'createpage' );
+		$text = wfMessage( 'createpage' )->text();
 		$id = 'createpage';
 		$links[] = array( 'url' => $url, 'text' => $text, 'id' => $id );
 
 		# Recent changes
 		$url = SpecialPage::getTitleFor( 'Recentchanges' )->getLocalURL();
-		$text = self::Translate( 'recentchanges' );
+		$text = wfMessage( 'recentchanges' )->text();
 		$id = 'recentchanges';
 		$links[] = array( 'url' => $url, 'text' => $text, 'id' => $id );
 
 		if ( !is_null( $this->skin ) && !empty( $this->skin->data['nav_urls'] ) ) {
 			foreach ( $this->skin->data['nav_urls'] as $key => $val ) {
 				if ( !empty( $val ) && $key != 'mainpage' && $key != 'print' ) {
-					$links[] = array( 'url' => $val['href'], 'text' => self::Translate( $key ), 'id' => $key );
+					$links[] = array( 'url' => $val['href'], 'text' => wfMessage( $key )->text(), 'id' => $key );
 				}
 			}
 		}

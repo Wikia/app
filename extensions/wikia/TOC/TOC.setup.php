@@ -27,5 +27,4 @@ $wgAutoloadClasses['TOCHooksHelper'] =  $dir . 'TOCHooksHelper.class.php';
 
 // register hooks
 $wgHooks['Linker::overwriteTOC'][] = 'TOCHooksHelper::onOverwriteTOC';
-$wgHooks['MonobookSkinAssetGroups'][] = 'TOCHooksHelper::onMonobookSkinAssetGroups';
 $wgHooks['OasisSkinAssetGroups'][] = 'TOCHooksHelper::onOasisSkinAssetGroups';

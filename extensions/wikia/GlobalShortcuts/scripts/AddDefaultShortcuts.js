@@ -67,7 +67,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader', 'wikia.window']
 						id: 'wikia:Search',
 						caption: mw.message('global-shortcuts-caption-search-for-a-page').plain(),
 						fn: function () {
-							$('#searchInput')[0].focus();
+							$('.wds-global-navigation__search-toggle')[0].click();
 						},
 						category: mw.message('global-shortcuts-category-current-wikia').escaped()
 					}

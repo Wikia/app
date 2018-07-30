@@ -13,6 +13,10 @@ class PortableInfoboxParserTagControllerTest extends TestCase {
 		parent::setUp();
 		require_once __DIR__ . '/../controllers/PortableInfoboxParserTagController.class.php';
 
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
+
 		$this->parser = $this->setUpParser();
 		$this->controller = new PortableInfoboxParserTagController();
 	}

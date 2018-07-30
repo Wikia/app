@@ -14,7 +14,6 @@ class PriorityQueue extends Queue {
 	const NAME = 'PriorityQueue';
 
 	public function __construct() {
-		$this->name = 'mediawiki_priority';
-		$this->routingKey = 'mediawiki.priority';
+		parent::__construct('mediawiki_priority');
 	}
 }

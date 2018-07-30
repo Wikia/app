@@ -59,3 +59,6 @@ $digitTransformTable = array(
 );
 $linkTrail = "/^([a-z]+)(.*)\$/sD";
 
+$pluralRules = [
+	"i = 0 or n = 1",
+];

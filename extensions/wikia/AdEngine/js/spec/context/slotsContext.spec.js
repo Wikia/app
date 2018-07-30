@@ -11,7 +11,10 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			targeting: {
 				skin: 'oasis'
 			},
-			opts: {}
+			opts: {},
+			slots: {
+				invisibleHighImpact2: false
+			}
 		},
 		adContext: {
 			addCallback: noop,
@@ -38,11 +41,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 				];
 			}
 		},
-		geo: {
-			isProperGeo: function (countries) {
-				return countries && countries.indexOf('XX') !== -1;
-			}
-		},
 		instantGlobals: {},
 		log: noop
 	};
@@ -54,7 +52,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			mocks.adContext,
 			mocks.videoFrequencyMonitor,
 			mocks.doc,
-			mocks.geo,
 			mocks.instantGlobals,
 			mocks.log
 		);
@@ -67,6 +64,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('on article page mark home slots as disabled', function () {
+		mocks.context.slots.invisibleHighImpact2 = true;
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
@@ -83,43 +81,32 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
-	it('geo restricted slots are disabled by default', function () {
-		var context = getContext();
+	it('disables IHI2 by default', function () {
+		mocks.context.slots.invisibleHighImpact2 =  undefined;
 
-		expect(context.isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
+		expect(getContext().isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
 	});
 
-	it('geo based slots', function () {
-		var dataProvider = [
-			{
-				countriesVariable: 'wgAdDriverHighImpact2SlotCountries',
-				slotName: 'INVISIBLE_HIGH_IMPACT_2'
-			}
-		];
+	it('turns on IHI2', function () {
+		mocks.context.slots.invisibleHighImpact2 = true;
 
-		dataProvider.forEach(function (testCase) {
-			mocks.instantGlobals[testCase.countriesVariable] = ['XX'];
-			var context = getContext();
+		expect(getContext().isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeTruthy();
+	});
 
-			expect(context.isApplicable(testCase.slotName)).toBeTruthy();
-		});
+	it('turns off IHI2', function () {
+		mocks.context.slots.invisibleHighImpact2 = false;
 
-		dataProvider.forEach(function (testCase) {
-			mocks.instantGlobals[testCase.countriesVariable] = ['DE'];
-			var context = getContext();
-
-			expect(context.isApplicable(testCase.slotName)).toBeFalsy();
-		});
+		expect(getContext().isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
 	});
 
 	it('disable INCONTENT_PLAYER by vide frequency capping', function () {
 		mocks.videoFrequencyMonitor.canLaunchVideo = false;
-		var context = getContext();
 
-		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
+		expect(getContext().isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
 	it('filter slot map based on status (article page type)', function () {
+		mocks.context.slots.invisibleHighImpact2 = false;
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
@@ -176,9 +163,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('should enable article video slot by default', function () {
-		var context = getContext();
-
-		expect(context.isApplicable('FEATURED')).toBeTruthy();
+		expect(getContext().isApplicable('FEATURED')).toBeTruthy();
 	});
-
 });

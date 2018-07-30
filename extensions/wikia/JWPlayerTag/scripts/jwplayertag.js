@@ -2,8 +2,9 @@ require([
 	'jquery',
 	'wikia.articleVideo.jwplayertag.ads',
 	'wikia.tracker',
+	'wikia.trackingOptIn',
 	'wikia.articleVideo.featuredVideo.cookies'
-], function ($, videoAds, tracker, featuredVideoCookieService) {
+], function ($, videoAds, tracker, trackingOptIn, featuredVideoCookieService) {
 	'use strict';
 
 	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
@@ -14,7 +15,6 @@ require([
 
 		Array.prototype.slice.call(parserTags).forEach(function (each) {
 			// We check this to avoid errors in places where we don't load JW
-			// e.g. Monobook
 			if (window.wikiaJWPlayer) {
 				setupPlayer(each);
 			}
@@ -22,7 +22,9 @@ require([
 	}
 
 	function onPlayerReady(playerInstance) {
-		videoAds(playerInstance);
+		trackingOptIn.pushToUserConsentQueue(function () {
+			videoAds(playerInstance);
+		});
 
 		playerInstance.on('captionsSelected', function (data) {
 			featuredVideoCookieService.setCaptions(data.selectedLang);

@@ -88,9 +88,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	function __construct() {
 		parent::__construct();
-		$this->videoPlayButton = '<span class="thumbnail-play-icon-container">'
-			. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
-			. '</span>';
 
 		$this->mData = array(
 			'externalImages' => array(),
@@ -141,6 +138,16 @@ class WikiaPhotoGallery extends ImageGallery {
 				)
 			)
 		);
+	}
+
+	private function getVideoPlayButton() {
+		if ( empty( $this->videoPlayButton ) ) {
+			$this->videoPlayButton = '<span class="thumbnail-play-icon-container">'
+			. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+			. '</span>';
+		}
+
+		return $this->videoPlayButton;
 	}
 
 	/**
@@ -648,11 +655,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
-		// We don't support new features in monobook
-		if ( F::app()->checkSkin( 'monobook' ) ) {
-			return false;
-		}
-
 		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
 		// like a charm. This is meant to be deleted when "new galleries" are the only galleries.
 		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
@@ -995,7 +997,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				if ( $isVideo ) {
 					$thumbHtml = '';
 					$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
-					$thumbHtml .= $this->videoPlayButton;
+					$thumbHtml .= $this->getVideoPlayButton();
 					$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
 				} else {
 					$thumbHtml = '';
@@ -1488,7 +1490,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
 
 					// Get play button overlay for little video thumb
-					$videoPlayButton = $this->videoPlayButton;
+					$videoPlayButton = $this->getVideoPlayButton();
 					$navClass = 'xxsmall video-thumbnail';
 				}
 

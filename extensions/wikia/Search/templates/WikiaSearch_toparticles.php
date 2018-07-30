@@ -1,14 +1,14 @@
 <?php $wid = $resultSet->getHeader( 'wid' ) ?>
-<? if (! empty( $wid ) ): ?>
+<?php if (! empty( $wid ) ): ?>
 <div class="result-top-articles">
     <ul>
     <?php foreach ( $resultSet->getTopPages() as $articleId ): ?>
         <?php $title = GlobalTitle::newFromID( $articleId, $wid ); ?>
-        <? if ( $title ): ?>
+        <?php if ( $title ): ?>
         <li>
             <a href="<?=$title->getFullUrl()?>"><?=$title->getText()?></a>
         </li>
-        <? endif; ?>
+        <?php endif; ?>
     <?php endforeach; ?>
     </ul>
 </div>

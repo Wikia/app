@@ -7080,7 +7080,7 @@ $messages['de'] = array(
 
 Die Seite ist möglicherweise gelöscht oder verschoben worden.
 
-Falls dies nicht  zutrifft, hast du eventuell einen Fehler in der Software gefunden. Bitte melde dies einem [[Special:ListUsers/sysop|Administrator]] unter Nennung der URL.',
+Falls dies nicht zutrifft, hast du eventuell einen Fehler in der Software gefunden. Bitte melde dies dem [[Special:Contact|FANDOM Support-Team]] unter Nennung der URL.',
 	'missingarticle-rev' => '(Versionsnummer: $1)',
 	'missingarticle-diff' => '(Unterschied zwischen Versionen: $1, $2)',
 	'mailmypassword' => 'Neues Passwort zusenden',
@@ -8597,14 +8597,13 @@ $messages['es'] = array(
 	'mypage' => 'Mi página',
 	'mytalk' => 'Mi discusión',
 	'mainpage' => 'Portada',
-	'mainpage-description' => 'Página principal',
-	'missing-article' => "La base de datos no encuentra el texto de una página que debería hallarse, llamada «$1» $2.
+	'mainpage-description' => 'Portada',
+	'missing-article' => 'La base de datos no encuentra el texto de una página que debería hallarse, llamada "$1" $2.
 
-La causa de esto suele deberse a un ''diff'' anacrónico o un enlace al historial de una página que ha sido borrada.
+La causa de esto suele deberse a un \'\'diff\'\' anacrónico o un enlace al historial de una página que ha sido borrada.
 
 Si no fuera el caso, puedes haber encontrado un fallo en el software.
-
-Por favor, avisa a un [[Special:ListUsers/sysop|administrador]], tomando nota de la URL.",
+Por favor, [[Special:Contact|reporta esto a un miembro del staff]], tomando nota de la URL.',
 	'missingarticle-rev' => '(n.º de revisión: $1)',
 	'missingarticle-diff' => '(Dif.: $1, $2)',
 	'mailmypassword' => 'Enviar una nueva contraseña por correo electrónico',
@@ -8612,9 +8611,9 @@ Por favor, avisa a un [[Special:ListUsers/sysop|administrador]], tomando nota de
 	'media_sample' => 'Ejemplo.ogg',
 	'media_tip' => 'Enlace a archivo',
 	'minoredit' => 'Edición menor',
-	'missingsummary' => "'''Atención:''' No has escrito un resumen de edición. Si haces clic nuevamente en «{{int:savearticle}}» tu edición se grabará sin él.",
+	'missingsummary' => "'''Atención:''' No has escrito un resumen de edición. Si haces clic nuevamente en «{{int: savearticle}}» tu edición se publicará sin él.",
 	'missingcommenttext' => 'Por favor introduce texto debajo.',
-	'missingcommentheader' => "'''Recordatorio:''' No has escrito un título para este comentario. Si haces clic nuevamente en \"{{int:savearticle}}\" tu edición se grabará sin él.",
+	'missingcommentheader' => "'''Atención:''' No has escrito un título para este comentario. Si haces clic nuevamente en \"{{int:savearticle}}\" tu edición se publicará sin él.",
 	'moveddeleted-notice' => 'Esta página ha sido borrada.
 El registro de borrados y traslados para la página están provistos debajo como referencia.',
 	'mergehistory' => 'Fusionar historiales de páginas',
@@ -8666,7 +8665,7 @@ Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
 	'movedarticleprotection' => 'cambiadas protecciones de «[[$2]]» a «[[$1]]»',
 	'minimum-size' => 'Tamaño mínimo',
 	'maximum-size' => 'Tamaño máximo:',
-	'mycontris' => 'Contribuciones',
+	'mycontris' => 'Mis contribuciones',
 	'month' => 'Desde el mes (y anterior):',
 	'move-page' => 'Renombrar $1',
 	'move-page-legend' => 'Renombrar página',
@@ -8695,12 +8694,12 @@ por favor, asegúrate de entender las consecuencias del procedimiento antes de s
 
 En estos casos, deberás trasladar manualmente el contenido de la página de discusión.",
 	'movearticle' => 'Renombrar página',
-	'moveuserpage-warning' => "'''Advertencia:''' estás a punto de renombrar una página de usuario. Ten en cuenta de que sólo se renombrará la página, pero el usuario '''no''' será renombrado. Si quieres cambiar tu nombre de usuario, deberás solicitarlo por [[special:contact]] (puedes hacerlo en español).",
+	'moveuserpage-warning' => "'''Advertencia:''' estás a punto de renombrar una página de usuario. Ten en cuenta de que sólo se renombrará la página, pero el usuario '''no''' será renombrado.",
 	'movenologin' => 'No has iniciado sesión',
 	'movenologintext' => 'Es necesario ser usuario registrado y [[Special:UserLogin|haber iniciado sesión]] para renombrar una página.',
 	'movenotallowed' => 'No tienes permiso para renombrar páginas.',
 	'movenotallowedfile' => 'No tienes permiso para renombrar archivos.',
-	'move-watch' => 'Vigilar páginas de origen y destino',
+	'move-watch' => 'Seguir esta página',
 	'movepagebtn' => 'Renombrar página',
 	'movepage-moved' => '\'\'\'"$1" ha sido renombrada a "$2".\'\'\'',
 	'movepage-moved-redirect' => 'Se ha creado una redirección.',
@@ -8718,7 +8717,7 @@ En estos casos, deberás trasladar manualmente el contenido de la página de dis
 	'movesubpage' => '{{PLURAL:$1|Subpágina|Subpáginas}}',
 	'movesubpagetext' => 'Esta página tiene {{PLURAL:$1|la siguiente subpágina|las siguientes $1 subpáginas}}:',
 	'movenosubpage' => 'Esta página no tiene subpáginas.',
-	'movereason' => 'Motivo:',
+	'movereason' => 'Razón:',
 	'move-leave-redirect' => 'Dejar una redirección',
 	'move-over-sharedrepo' => '== El archivo ya existe ==
 [[:$1]] existe en una base de datos compartida. Renombrar el archivo a este título invalidará el archivo compartido.',
@@ -8728,11 +8727,11 @@ En estos casos, deberás trasladar manualmente el contenido de la página de dis
 	'markaspatrolledtext' => 'Marcar este artículo como revisado',
 	'markedaspatrolled' => 'Marcado como revisado',
 	'markedaspatrolledtext' => 'La revisión seleccionada de [[:$1|$1]] ha sido marcada como revisada.',
-	'markedaspatrollederror' => 'No se puede marcar como patrullada',
-	'markedaspatrollederrortext' => 'Debes especificar una revisión para marcarla como patrullada.',
+	'markedaspatrollederror' => 'No se puede marcar como revisada',
+	'markedaspatrollederrortext' => 'Debes especificar una revisión para marcarla como revisada.',
 	'markedaspatrollederror-noautopatrol' => 'No tienes permisos para marcar tus propios cambios como revisados.',
 	'mediawarning' => "'''Atención''': Este fichero puede contener código malicioso.
-Ejecutarlo podría comprometer la seguridad de su equipo.",
+Ejecutarlo podría comprometer la seguridad de tu equipo.",
 	'minutes-abbrev' => '$1m',
 	'minutes' => '{{PLURAL:$1|un minuto|$1 minutos}}',
 	'metadata' => 'Metadatos',
@@ -8764,7 +8763,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'manage_widgets' => 'Organizar widgets',
 	'masthead-anonymous-user' => 'Un usuario de FANDOM',
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
-	'mu_login' => 'Debes identificarte para subir archivos',
+	'mu_login' => 'Debes iniciar sesión para subir archivos.',
 	'multiplefileuploadsummary' => 'Resumen:',
 	'mwlink_tip' => 'Enlace interno',
 	'mycontributions' => 'Mis contribuciones',
@@ -8778,7 +8777,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'markaspatrolledlink' => '[$1]',
 	'metadata-langitem' => "'''$2:''' $1",
 	'metadata-langitem-default' => '$1',
-	'move-redirect-suppressed' => 'redirect suppressed',
+	'move-redirect-suppressed' => 'redirección suprimida',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *randompage-url|randompage
 *mainpage|TopContent
@@ -8791,8 +8790,8 @@ Existen otros campos que se mantendrán ocultos por defecto.
 *portal-url|community
 **portal-url|portal
 **forum-url|forum',
-	'mobile-show' => 'Show',
-	'mobile-hide' => 'Hide',
+	'mobile-show' => 'Mostrar',
+	'mobile-hide' => 'Ocultar',
 );
 
 $messages['et'] = array(
@@ -9989,8 +9988,8 @@ $messages['fr'] = array(
 
 Généralement, cela survient en suivant un lien vers un diff périmé ou vers l’historique d’une page supprimée.
 
-Si ce n’est pas le cas, il peut s’agir d’un bogue dans le programme.
-Veuillez le signaler à un [[Special:ListUsers/sysop|administrateur]] sans oublier de lui indiquer l’URL du lien.',
+Si ce n’est pas le cas, il peut s’agir d’un bug dans le programme.
+Veuillez le [[Special:Contact|signaler au staff de FANDOM]] sans oublier de lui indiquer l’URL du lien.',
 	'missingarticle-rev' => '(numéro de version : $1)',
 	'missingarticle-diff' => '(diff : $1, $2)',
 	'mailmypassword' => 'Recevoir un nouveau mot de passe par e-mail',
@@ -15018,10 +15017,10 @@ $messages['it'] = array(
 	'mainpage-description' => 'Pagina principale',
 	'missing-article' => 'Il database non ha trovato il testo di una pagina che avrebbe dovuto trovare sotto il nome di "$1" $2.
 
-Di solito ciò si verifica quando viene richiamato, a partire dalla cronologia o dal confronto tra revisioni, un collegamento a una pagina cancellata, a un confronto tra revisioni inesistenti o a un confronto tra revisioni ripulite dalla cronologia.
+Di solito ciò si verifica quando viene richiamato, a partire dalla cronologia o dal confronto tra revisioni, un collegamento ad una pagina cancellata, ad un confronto tra revisioni inesistenti o ad un confronto tra revisioni ripulite dalla cronologia.
 
 In caso contrario, si è probabilmente scoperto un errore del software MediaWiki.
-Si prega di segnalare l\'accaduto a un [[Special:ListUsers/sysop|amministratore]] specificando la URL in questione.',
+Si prega di segnalare l\'accaduto ad un [[Special:Contact|membro dello Staff]] specificando l\'URL in questione.',
 	'missingarticle-rev' => '(numero della revisione: $1)',
 	'missingarticle-diff' => '(Diff: $1, $2)',
 	'mailmypassword' => 'Invia una nuova password al mio indirizzo e-mail',
@@ -15373,12 +15372,12 @@ $messages['ja'] = array(
 	'mytalk' => '自分のトーク',
 	'mainpage' => 'メインページ',
 	'mainpage-description' => 'メインページ',
-	'missing-article' => '「$1」$2というページの本文をデータベース上に見つけることができませんでした。
+	'missing-article' => '$2内で「$1」というページをデータベース上で見つけることができませんでした。
 
-ページの削除された版への古い差分表示や固定リンクをたどった時にこのようなことになります。
+削除されたページへの古い差分や履歴リンクをたどった時にこのようなことが起こります。
 
 それ以外の操作でこのメッセージが表示された場合、ソフトウェアのバグである可能性があります。
-[[Special:ListUsers/sysop|管理者]]までそのURLを添えてお知らせください。',
+[[Special:Contact|FANDOMサポートスタッフ]]までそのURLを添えてお知らせください。',
 	'missingarticle-rev' => '（版番号：$1）',
 	'missingarticle-diff' => '（差分：$1、$2）',
 	'mailmypassword' => '新しいパスワードを電子メールで送る',
@@ -25813,10 +25812,10 @@ $messages['pl'] = array(
 	'mainpage-description' => 'Strona główna',
 	'missing-article' => 'W bazie danych nie odnaleziono treści strony „$1” $2.
 
-Zazwyczaj jest to spowodowane odwołaniem do nieaktualnego linku prowadzącego do różnicy pomiędzy dwoma wersjami strony lub do wersji z historii usuniętej strony.
+Zazwyczaj jest to spowodowane nieaktualnym linkiem do różnicy pomiędzy wersjami strony lub do wersji strony, która została usunięta.
 
-Jeśli tak nie jest, możliwe, że problem został wywołany przez błąd w oprogramowaniu.
-Można zgłosić ten fakt [[Special:ListUsers/sysop|administratorowi]], podając adres URL.',
+Jeśli tak nie jest, problem mógł zostać wywołany przez błąd w oprogramowaniu.
+Prosiłmy o [[Special:Contact/bug|zgłoszenie błędu personelowi FANDOMU]], podając adres URL.',
 	'missingarticle-rev' => '(wersja $1)',
 	'missingarticle-diff' => '(różnica: $1, $2)',
 	'mailmypassword' => 'Wyślij mi nowe hasło poprzez e‐mail',
@@ -25824,11 +25823,11 @@ Można zgłosić ten fakt [[Special:ListUsers/sysop|administratorowi]], podając
 	'media_sample' => 'Przykład.ogg',
 	'media_tip' => 'Link do pliku',
 	'minoredit' => 'To jest drobna zmiana',
-	'missingsummary' => "'''Uwaga:''' Nie wprowadz{{GENDER:|iłeś|iłaś|ono}} opisu zmian.
-Jeżeli nie chcesz go wprowadzać, naciśnij przycisk „Zapisz” jeszcze raz.",
+	'missingsummary' => "'''Uwaga:''' nie wprowadz{{GENDER:|iłeś|iłaś|ono}} opisu zmian.
+Naciśnij ponownie „{{int:savearticle}}”, aby zapisać bez podawania go.",
 	'missingcommenttext' => 'Wprowadź komentarz poniżej.',
-	'missingcommentheader' => "'''Uwaga''' – treść tytułu lub nagłówka komentarza jest pusta.
-Jeśli ponownie klikniesz „{{int:savearticle}}“, zmiany zostaną zapisane bez niego.",
+	'missingcommentheader' => "'''Uwaga:''' nie wprowadz{{GENDER:|iłeś|iłaś|ono}} tytułu/nagłówka dla tego komentarza.
+Naciśnij ponownie „{{int:savearticle}}”, aby zapisać bez podawania go.",
 	'moveddeleted-notice' => 'Ta strona została usunięta.
 Rejestr usunięć i zmian nazwy tej strony jest pokazany poniżej.',
 	'mergehistory' => 'Scalanie historii stron',
@@ -26748,7 +26747,7 @@ $messages['pt'] = array(
 	'mainpage-description' => 'Página principal',
 	'missing-article' => 'O banco de dados não encontrou o texto de uma página que deveria ter encontrado, com o nome "$1" $2.
 
-Isso normalmente é causado ao acessar um link de diferença (diff) desatualizado ou para o histórico de uma página que foi apagada.
+Isso normalmente é causado ao acessar um link de diferença (diff) desatualizado ou um link histórico de uma página que foi apagada.
 
 Se não for este o caso, você pode ter encontrado um defeito (bug) no software.
 Anote o URL e reporte o ocorrido a um [[Special:ListUsers/sysop|administrador]].',
@@ -27938,14 +27937,14 @@ $messages['ru'] = array(
 Подобная ситуация обычно возникает при попытке перехода по устаревшей ссылке на историю изменения страницы, которая была удалена.
 
 Если дело не в этом, то скорее всего, вы обнаружили ошибку в программном обеспечении.
-Пожалуйста, сообщите об этом [[Special:Contact|сотрудникам Викия]], указав данный URL.',
+Пожалуйста, сообщите об этом [[Special:Contact|сотрудникам ФЭНДОМА]], указав данный URL.',
 	'missingarticle-rev' => '(версия № $1)',
-	'missingarticle-diff' => '(разность: $1, $2)',
-	'mailmypassword' => 'Выслать новый пароль по электронной почте',
+	'missingarticle-diff' => '(разн.: $1, $2)',
+	'mailmypassword' => 'Выслать новый пароль по эл. почте',
 	'mailerror' => 'Ошибка при отправке почты: $1',
-	'media_tip' => 'Ссылка на медиа-файл',
+	'media_tip' => 'Ссылка на файл',
 	'minoredit' => 'Малая правка',
-	'missingsummary' => "'''Напоминание.''' Вы не дали краткого описания изменений. При повторном нажатии на кнопку «{{int:savearticle}}», ваши изменения будут сохранены без комментария.",
+	'missingsummary' => "'''Напоминание.''' Вы не дали описания правки. При повторном нажатии на кнопку «Записать» ваши правки будут записаны без комментария.",
 	'missingcommenttext' => 'Пожалуйста, введите ниже ваше сообщение.',
 	'missingcommentheader' => "'''Напоминание.''' Вы не указали тему/заголовок для этого комментария.
 При повторном нажатии на кнопку «{{int:savearticle}}», ваша правка будет записана без заголовка.",
@@ -27966,7 +27965,7 @@ $messages['ru'] = array(
 	'mergehistory-fail' => 'Не удалось произвести объединение историй страниц, пожалуйста, проверьте параметры страницы и времени.',
 	'mergehistory-no-source' => 'Исходная страница «$1» не существует.',
 	'mergehistory-no-destination' => 'Целевая страница «$1» не существует.',
-	'mergehistory-invalid-source' => 'Источник должен иметь правильный заголовок.',
+	'mergehistory-invalid-source' => 'Исходная страница должна иметь правильный заголовок.',
 	'mergehistory-invalid-destination' => 'Целевая страница должна иметь правильный заголовок.',
 	'mergehistory-autocomment' => 'Перенос [[:$1]] в [[:$2]]',
 	'mergehistory-comment' => 'Перенос [[:$1]] в [[:$2]]: $3',
@@ -27980,7 +27979,7 @@ $messages['ru'] = array(
 	'minlength1' => 'Название файла должно содержать хотя бы одну букву.',
 	'morelinkstoimage' => 'Просмотреть [[Special:WhatLinksHere/$1|остальные ссылки]] на этот файл.',
 	'mimesearch' => 'Поиск по MIME',
-	'mimesearch-summary' => 'Эта страница позволяет отбирать файлы по их MIME-типу. Формат ввода: типсодержимого/подтип, например <tt>image/jpeg</tt>.',
+	'mimesearch-summary' => 'Эта страница позволяет отбирать файлы по их MIME-типу. Формат ввода: тип содержимого/подтип, например <tt>image/jpeg</tt>.',
 	'mimetype' => 'MIME-тип:',
 	'mostlinked' => 'Страницы, на которые больше всего ссылок',
 	'mostlinkedcategories' => 'Категории, на которые больше всего ссылок',
@@ -27995,8 +27994,8 @@ $messages['ru'] = array(
 	'mywatchlist' => 'Список наблюдения',
 	'modifiedarticleprotection' => 'изменён уровень защиты страницы «[[$1]]»',
 	'movedarticleprotection' => 'перенёс настройки защиты с «[[$2]]» на «[[$1]]»',
-	'minimum-size' => 'Минимальный размер',
-	'maximum-size' => 'Максимальный размер:',
+	'minimum-size' => 'Миним. размер',
+	'maximum-size' => 'Макс. размер:',
 	'mycontris' => 'Мой вклад',
 	'month' => 'С месяца (и ранее):',
 	'move-page' => '$1 — переименование',
@@ -28052,7 +28051,7 @@ $messages['ru'] = array(
 	'markaspatrolleddiff' => 'Отметить как проверенную',
 	'markaspatrolledtext' => 'Отметить эту статью как проверенную',
 	'markedaspatrolled' => 'Отмечена как проверенная',
-	'markedaspatrolledtext' => 'Выбранная версия статьи [[:$1]] была отмечена как отпатрулированная.',
+	'markedaspatrolledtext' => 'Выбранная версия статьи [[:$1]] была отмечена как проверенная.',
 	'markedaspatrollederror' => 'Невозможно отметить как проверенную',
 	'markedaspatrollederrortext' => 'Вы должны указать версию, которая будет отмечена как проверенная.',
 	'markedaspatrollederror-noautopatrol' => 'Вам не разрешено отмечать собственные правки как проверенные.',
@@ -28083,9 +28082,9 @@ $messages['ru'] = array(
 	'my_stuff' => 'Моё',
 	'most_popular' => 'Самые популярные',
 	'most_visited' => 'Самые посещаемые',
-	'most_emailed' => 'Самые популярные по количеству электронных писем',
+	'most_emailed' => 'Самые популярные по количеству эл. писем',
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
-	'masthead-anonymous-user' => 'Участник Фэндома',
+	'masthead-anonymous-user' => 'Участник ФЭНДОМА',
 	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
 	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
 	'mwlink_tip' => 'Внутренняя ссылка',
@@ -28114,10 +28113,10 @@ $messages['ru'] = array(
 *portal-url|community
 **portal-url|portal
 **forum-url|forum',
-	'multiplefileuploadsummary' => 'Summary:',
-	'manage_widgets' => 'Manage widgets',
-	'mobile-show' => 'Show',
-	'mobile-hide' => 'Hide',
+	'multiplefileuploadsummary' => 'Описание:',
+	'manage_widgets' => 'Управление виджетами',
+	'mobile-show' => 'Показать',
+	'mobile-hide' => 'Скрыть',
 );
 
 $messages['rue'] = array(
@@ -36682,11 +36681,12 @@ $messages['zh-hans'] = array(
 	'mytalk' => '我的讨论页',
 	'mainpage' => '首页',
 	'mainpage-description' => '首页',
-	'missing-article' => '数据库找不到预期的页面文字：“$1”$2。
+	'missing-article' => '数据库找不到需要查找的文字内容：“$1”$2。
 
-这通常是由于点击了链向旧有差异或历史的链接，而原有修订已被删除导致的。
+这通常是由于单击了含有旧历史记录的文章链接，而原有的修订已被删除导致的。
 
-如果情况不是这样，您可能找到了软件的一个内部错误。请记录下URL地址，并向[[Special:ListUsers/sysop|管理员]]报告。',
+如果并非如此，您有可能发现了的一个技术故障。
+请通过[[Special:Contact|线上联系]]发送给我们FANDOM员工出错的URL网址链接。',
 	'missingarticle-rev' => '（修订版本编号：$1）',
 	'missingarticle-diff' => '（差异：$1，$2）',
 	'mailmypassword' => '用电子邮件发送新密码',
@@ -36910,29 +36910,29 @@ $messages['zh-hant'] = array(
 	'mytalk' => '我的對話頁',
 	'mainpage' => '首頁',
 	'mainpage-description' => '首頁',
-	'missing-article' => '資料庫找不到文字"$1" $2。
+	'missing-article' => '資料庫找不到應該存在的頁面文字"$1" $2。
 
-<p>通常這是由於修訂歷史頁上過時的連結到已經被刪除的頁面所導致的。</p>
+通常這是由於修訂歷史頁上過時的連結到已經被刪除的頁面所導致的。
 
-<p>如果情況不是這樣，您可能找到了軟體內的一個臭蟲。
-請記錄下URL地址，並向[[Special:ListUsers/sysop|管理員]]報告。</p>',
+如果不是這種狀況，您可能發現了軟體內的一個錯誤。
+請記錄下URL地址，並向[[Special:Contact|工作人員回報]]。',
 	'missingarticle-rev' => '（修訂#: $1）',
 	'missingarticle-diff' => '（差異: $1, $2）',
 	'mailmypassword' => '將新密碼寄給我',
 	'mailerror' => '發送郵件錯誤: $1',
 	'media_tip' => '檔案連結',
 	'minoredit' => '這是一個小修改',
-	'missingsummary' => "'''提示:''' 您沒有提供一個編輯摘要。如果您再次單擊「{{int:savearticle}}」，您的編輯將不帶編輯摘要儲存。",
+	'missingsummary' => "'''提示:''' 您沒有提供一個編輯摘要。如果您再次點擊「{{int:savearticle}}」，您的編輯將不帶編輯摘要儲存。",
 	'missingcommenttext' => '請在下面輸入評論。',
-	'missingcommentheader' => "'''提示:''' 您沒有為此評論提供一個標題。如果您再次單擊「{{int:savearticle}}」，您的編輯將不帶標題儲存。",
+	'missingcommentheader' => "'''提示:''' 您沒有為此評論提供一個標題。如果您再次點擊「{{int:savearticle}}」，您的編輯將不帶標題儲存。",
 	'moveddeleted-notice' => '這個頁面已經刪除。
 這個頁面的刪除和移動日誌已在下面提供以便參考。',
 	'mergehistory' => '合併頁面歷史',
-	'mergehistory-header' => '這一頁可以講您合併一個來源頁面的歷史到另一個新頁面中。
-請確認這次更改會繼續保留該頁面先前的歷史版本。',
-	'mergehistory-box' => '合併兩個頁面的修訂:',
-	'mergehistory-from' => '來源頁面:',
-	'mergehistory-into' => '目的頁面:',
+	'mergehistory-header' => '這一頁可以讓您合併一個來源頁面的歷史到另一個新頁面中。
+請確認這次更改不會破壞歷史頁面的延續性。',
+	'mergehistory-box' => '合併兩個頁面的修訂：',
+	'mergehistory-from' => '來源頁面:：',
+	'mergehistory-into' => '目的頁面：',
 	'mergehistory-list' => '可以合併的編輯歷史',
 	'mergehistory-merge' => '以下[[:$1]]的修訂可以合併到[[:$2]]。用該選項按鈕欄去合併只有在指定時間以前所創建的修訂。要留意的是使用導航連結便會重設這一欄。',
 	'mergehistory-go' => '顯示可以合併的編輯',
@@ -36944,12 +36944,12 @@ $messages['zh-hant'] = array(
 	'mergehistory-no-destination' => '目的頁面$1不存在。',
 	'mergehistory-invalid-source' => '來源頁面必須是一個有效的標題。',
 	'mergehistory-invalid-destination' => '目的頁面必須是一個有效的標題。',
-	'mergehistory-autocomment' => '已經合併[[:$1]]去到[[:$2]]',
-	'mergehistory-comment' => '已經合併[[:$1]]去到[[:$2]]: $3',
+	'mergehistory-autocomment' => '已經合併[[:$1]]至[[:$2]]',
+	'mergehistory-comment' => '已經合併[[:$1]]至[[:$2]]：$3',
 	'mergehistory-same-destination' => '來源頁面與目的頁面不可以相同',
 	'mergehistory-reason' => '理由：',
 	'mergelog' => '合併日誌',
-	'mergelogpagetext' => '以下是一個最近由一個頁面的修訂歷史合併到另一個頁面的列表。',
+	'mergelogpagetext' => '以下是一個最近將一個頁面的修訂歷史合併到另一個頁面的列表。',
 	'mwsuggest-disable' => '停用AJAX建議',
 	'mypreferences' => '我的偏好設定',
 	'minoreditletter' => '小',
@@ -36972,7 +36972,7 @@ $messages['zh-hant'] = array(
 中有一個有效的 e-mail 地址才可以電郵其他用戶。',
 	'mywatchlist' => '我的監視列表',
 	'modifiedarticleprotection' => '已經更改「[[$1]]」的保護等級',
-	'movedarticleprotection' => '已將「[[$2]]」的保護設定移動至「[[$1]]」',
+	'movedarticleprotection' => '已將「[[$2]]」的保護設定改變為「[[$1]]」',
 	'minimum-size' => '最小大小',
 	'maximum-size' => '最大大小:',
 	'mycontris' => '我的貢獻',
@@ -37015,41 +37015,41 @@ $messages['zh-hant'] = array(
 	'movearticle' => '移動頁面:',
 	'moveuserpage-warning' => "'''警告：'''您將會移動一個用戶頁面。請留意該頁面在移動後該用戶的名字是''不會''變更的。",
 	'movenologin' => '未登入',
-	'movenologintext' => '您必須是一名登記用戶並且[[Special:UserLogin|登入]]
+	'movenologintext' => '您必須是一名註冊用戶並且[[Special:UserLogin|登入]]
 後才可移動一個頁面。',
-	'movenotallowed' => '您並沒有許可權去移動頁面。',
-	'movenotallowedfile' => '您並沒有許可權去移動檔案。',
+	'movenotallowed' => '您並沒有移動頁面的權限。',
+	'movenotallowedfile' => '您並沒有移動檔案的權限。',
 	'move-watch' => '監視來源以及目標頁',
 	'movepagebtn' => '移動頁面',
 	'movepage-moved' => "'''「$1」已經移動到「$2」'''",
-	'movepage-moved-redirect' => '一個重新定向已經被創建。',
-	'movepage-moved-noredirect' => '已經壓制創建重新定向。',
+	'movepage-moved-redirect' => '一個重定向頁已經被創建。',
+	'movepage-moved-noredirect' => '已經防止創建重定向頁。',
 	'movedto' => '移動到',
 	'movetalk' => '移動關聯的對話頁',
 	'move-subpages' => '移動子頁面（上至$1頁）',
-	'move-talk-subpages' => '移動子對話頁面（上至$1頁）',
+	'move-talk-subpages' => '移動討論子頁面（上至$1頁）',
 	'movepage-page-exists' => '頁面 $1 已經存在，不可以自動地覆寫。',
 	'movepage-page-moved' => '頁面 $1 已經移動到 $2。',
 	'movepage-page-unmoved' => '頁面 $1 不可以移動到 $2。',
 	'movepage-max-pages' => '最多有$1個頁面已經移動同時不可以自動地再移動更多。',
 	'movelogpage' => '移動日誌',
-	'movelogpagetext' => '以下是所有移動的頁面清單:',
+	'movelogpagetext' => '以下是所有移動的頁面清單：',
 	'movesubpage' => '{{PLURAL:$1|子頁面|子頁面}}',
 	'movesubpagetext' => '這個頁面有$1個子頁面列示如下。',
 	'movenosubpage' => '這個頁面沒有子頁面。',
 	'movereason' => '原因',
-	'move-leave-redirect' => '留下重新定向',
+	'move-leave-redirect' => '保留重定向頁',
 	'move-over-sharedrepo' => '== 檔案已存在 ==
 [[:$1]]已於共享資源存在，將檔案移動到此標題會覆蓋共享資源中的檔案。',
 	'monobook.css' => '/* 此處的 CSS 將影響使用 Monobook 面板的用戶 */',
 	'monobook.js' => '/* 此處的JavaScript將載入於使用Monobook面板的用戶 */',
 	'markaspatrolleddiff' => '標記為已巡查',
 	'markaspatrolledtext' => '標記此頁面為已巡查',
-	'markedaspatrolled' => '標記為已檢查',
+	'markedaspatrolled' => '標記為已巡查',
 	'markedaspatrolledtext' => '[[:$1]]的已選定修訂版本已被標識為已巡查。',
 	'markedaspatrollederror' => '不能標誌為已檢查',
-	'markedaspatrollederrortext' => '{{GENDER:|你|妳|你}}需要指定某個版本才能標誌為已檢查。',
-	'markedaspatrollederror-noautopatrol' => '您無法將{{GENDER:|你|妳|你}}自己所作的更改標記為已檢查。',
+	'markedaspatrollederrortext' => '{{GENDER:|你|妳|你}}需要指定某個版本才能標誌為已巡查。',
+	'markedaspatrollederror-noautopatrol' => '您無法將{{GENDER:|你|妳|你}}自己所作的更改標記為已巡查。',
 	'mediawarning' => "'''警告''': 該檔案類型可能包含惡意代碼。
 執行它可能對您的系統帶來危險。",
 	'minutes' => '$1分鍾',
@@ -37105,9 +37105,9 @@ $messages['zh-hant'] = array(
 **portal-url|portal
 **forum-url|forum',
 	'mu_login' => 'You must be logged in to upload files.',
-	'mycontributions' => 'My contributions',
-	'multiplefileuploadsummary' => 'Summary:',
-	'mwlink_tip' => 'Internal link',
+	'mycontributions' => '我的貢獻',
+	'multiplefileuploadsummary' => '摘要：',
+	'mwlink_tip' => '內部連結',
 	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
 
 Special:CreateWiki|Start a new Wikia

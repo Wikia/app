@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-archive-slave.query.consul    Database: dataware
 -- ------------------------------------------------------
@@ -91,6 +91,7 @@ CREATE TABLE `blobs` (
   `blob_text` mediumtext NOT NULL,
   PRIMARY KEY (`blob_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+/* PARTITION BY RANGE (blob_id)
 (PARTITION p0 VALUES LESS THAN (10388840) ENGINE = InnoDB,
  PARTITION p1 VALUES LESS THAN (20777680) ENGINE = InnoDB,
  PARTITION p2 VALUES LESS THAN (41555360) ENGINE = InnoDB,
@@ -260,4 +261,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-03-07 14:30:05
+-- Dump completed on 2018-07-06 12:59:33
