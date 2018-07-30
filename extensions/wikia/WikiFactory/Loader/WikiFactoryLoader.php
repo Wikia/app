@@ -408,8 +408,7 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName ) &&
-			$wgWikiFactoryRedirectForAlternateDomains;
+		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
@@ -417,7 +416,7 @@ class WikiFactoryLoader {
 			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
 		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-		if ( $cond1 || $cond2 || $shouldUpgradeToHttps ) {
+		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) &&  $wgWikiFactoryRedirectForAlternateDomains ) {
 			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
