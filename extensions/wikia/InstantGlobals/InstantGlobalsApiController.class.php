@@ -25,7 +25,7 @@ class InstantGlobalsApiController extends WikiaController {
 	}
 
 	/**
-	 * Get news&stories variables values
+	 * Get variables values
 	 *
 	 * @return array key / value list variables
 	 */
