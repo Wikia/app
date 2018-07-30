@@ -53,9 +53,9 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		});
 
 		bridge.billTheLizard.call()
-			.then(() => {
+			.then(function () {
 				log(['respond'], log.levels.debug, logGroup);
-			}, () => {
+			}, function () {
 				log(['reject'], log.levels.debug, logGroup);
 			});
 	}
