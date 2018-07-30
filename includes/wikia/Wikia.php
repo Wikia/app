@@ -1950,6 +1950,33 @@ class Wikia {
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
 	}
 
+	/**
+	 * Send surrogate key(s) headers.
+	 *
+	 * Do not set the $replace param to true unless you're know what you're doing (this will
+	 * remove wiki surrogate keys).
+	 *
+	 * @param string|array $surrogateKeys Surrogate keys (array or space-delimited string)
+	 * @param bool $replace When false, new values will be added to the existing header
+	 */
+	public static function setSurrogateKeysHeaders( $surrogateKeys, $replace = false ) {
+		if ( !is_array( $surrogateKeys ) ) {
+			$surrogateKeys = [ $surrogateKeys ];
+		}
+		if ( !$replace ) {
+			// get existing surrogate keys
+			$headers = headers_list();
+			foreach ( $headers as $header ) {
+				if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
+					$surrogateKeys[] = trim( substr( $header, 14 ) );
+				}
+			}
+		}
+		$surrogateKey = implode( ' ', $surrogateKeys );
+		header( 'Surrogate-Key: ' . $surrogateKey );
+		header( 'X-Surrogate-Key: ' . $surrogateKey );
+	}
+
 	public static function surrogateKey( $args ) {
 		global $wgCachePrefix;
 
