@@ -25,7 +25,7 @@ describe('ext.wikia.adEngine.slot.service.viewabilityHandler', function () {
 					}
 
 					if (slotName === 'ALREADY_VIEWED_FOO') {
-						mocks.slot.isViewed = true;
+						mocks.slot.isViewedFlag = true;
 					}
 
 					return mocks.slot;
