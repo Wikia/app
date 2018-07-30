@@ -192,7 +192,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'articles_i:[50 TO *] AND -id:123',
+				'( articles_i:[50 TO *] OR promoted_wiki_b:true ) AND -id:123',
 				$reflspell->invoke( $mockSelect )
 		);
 	}

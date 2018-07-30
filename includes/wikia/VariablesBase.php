@@ -3681,13 +3681,6 @@ $wgEnableTemplateTypesParsing = true;
 $wgEnableTitleBlacklistExt = true;
 
 /**
- * Enable TorBlock extension.
- * @see extensions/TorBlock
- * @var bool $wgEnableTorBlockExt
- */
-$wgEnableTorBlockExt = true;
-
-/**
  * Enable page/event tracking.
  * @see extensions/wikia/Track
  * @var bool $wgEnableTracking
@@ -4918,15 +4911,6 @@ $wgHtml5 = true;
  * @var string $wgHtml5Version
  */
 $wgHtml5Version = null;
-
-/**
- * Proxy to use for CURL requests.
- * @see PLATFORM-1745
- * @see includes/wikia/CurlMultiClient.php
- * @see includes/HttpFunctions.php
- * @var string $wgHTTPProxy
- */
-$wgHTTPProxy = 'prod.border.service.consul:80';
 
 /**
  * If set, inline scaled images will still produce <img> tags ready for output
@@ -8202,13 +8186,6 @@ $wgUseImageResize = true;
  * @var bool $wgUseInstantCommons
  */
 $wgUseInstantCommons = false;
-
-/**
- * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
- * This is only enabled if app itself is running on Kubernetes.
- * @var bool $wgUseKubernetesInternalIngress
- */
-$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
 
 /**
  * Set this to true to make a local copy of the message cache, for use in

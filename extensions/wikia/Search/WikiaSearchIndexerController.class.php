@@ -69,10 +69,11 @@ class WikiaSearchIndexerController extends WikiaController
 	public function getForWiki()
 	{
 		$this->getResponse()->setFormat('json');
-		
+
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service' );
+		/* @var $service Wikia\Search\IndexService\CrossWikiCore|Wikia\Search\IndexService\All */
 		$service = new $serviceName();
-		
+
 		$this->response->setData( $service->getStubbedWikiResponse() );
 	}
 

@@ -72,6 +72,13 @@ spec:
               port: 9000
             timeoutSeconds: 5
           env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-prod
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
@@ -246,6 +253,13 @@ spec:
               port: 9000
             timeoutSeconds: 5
           env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-tasks
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT

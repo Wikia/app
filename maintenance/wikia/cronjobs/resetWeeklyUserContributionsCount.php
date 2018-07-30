@@ -1,17 +1,14 @@
 <?php
-
-use \Wikia\Logger\WikiaLogger;
-
 /**
  * On Special:Community we have weekly users rank with most contributions.
- * We need to reset it after every Sunday
+ * We need to reset it after every Sunday.
+ *
+ * @group cronjobs
+ * @see reset-weekly-user-contributions.yaml
  */
 
-require_once( __DIR__ . '/../../Maintenance.php' );
+require_once __DIR__ . '/../../Maintenance.php';
 
-/**
- * Class ResetWeeklyUserContributionsCount
- */
 class ResetWeeklyUserContributionsCount extends Maintenance {
 
 	public function __construct() {
@@ -31,6 +28,16 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			__METHOD__
 		);
 
+		$this->mLogger->info( 'select users', [
+			'users' => count( $userIds ),
+			'query' => $dbw->lastQuery()
+		] );
+
+		if ( $this->hasOption( 'dry-run' ) ) {
+			$this->output( sprintf( "Dry run: %s entries will be deleted from wikia_user_properties.\n", count( $userIds ) ) );
+			return;
+		}
+
 		$result = $dbw->delete(
 			'wikia_user_properties',
 			[ 'wup_property' => 'editcountThisWeek' ],
@@ -38,8 +45,13 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 		);
 
 		if ( $result === false ) {
-			WikiaLogger::instance()->error( 'Reset Weekly Contributions Count' );
+			$this->mLogger->error( 'error while deleting entries', [ 'query' => $dbw->lastQuery() ] );
 		} else {
+			$this->mLogger->info( 'deleted entries', [
+				'users' => $dbw->affectedRows(),
+				'query' => $dbw->lastQuery()
+			] );
+
 			foreach ( $userIds as $id ) {
 				UserStatsService::purgeOptionsWikiCache( $id, $wgCityId );
 			}
@@ -47,11 +59,11 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			if ( $wgEnableCommunityPageExt ) {
 				WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY ) );
 			}
-
-			WikiaLogger::instance()->info( 'Reset Weekly Contributions Count' );
 		}
+
+		$this->output( "Done.\n" );
 	}
 }
 
 $maintClass = 'ResetWeeklyUserContributionsCount';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

@@ -17,6 +17,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Queues\DumpsOnDemandQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
@@ -97,6 +98,9 @@ class AsyncTaskList {
 	 */
 	public function setQueue( $queue ) {
 		switch ( $queue ) {
+			case DumpsOnDemandQueue::NAME:
+				$queue = new DumpsOnDemandQueue();
+				break;
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
 				break;
