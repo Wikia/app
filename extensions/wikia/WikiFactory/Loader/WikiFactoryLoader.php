@@ -372,15 +372,19 @@ class WikiFactoryLoader {
 		// otherwise getVarValueByName just uses locally set globals and returns empty value here
 		$wgEnableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $this->mWikiID );
 
-		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
-		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
-		$wgCityId = $this->mWikiID;
-
 		/**
 		 * save default var values for Special:WikiFactory
 		 */
 		if ( $this->mWikiID == Wikia::COMMUNITY_WIKI_ID ) {
 			$this->mSaveDefaults = true;
+		}
+
+		// Emit surrogate keys now so every wiki response is covered
+		$surrogateKey = Wikia::wikiSurrogateKey( $this->mWikiID );
+		if ( $surrogateKey ) {
+			// also add mediawiki-specific key
+			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
+			Wikia::setSurrogateKeysHeaders( $surrogateKeys, true );
 		}
 
 		/**
@@ -643,6 +647,8 @@ class WikiFactoryLoader {
 				}
 			}
 		}
+
+		$wgCityId = $this->mWikiID;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers

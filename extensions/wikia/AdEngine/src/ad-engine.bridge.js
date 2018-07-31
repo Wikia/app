@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	billTheLizard,
 	universalAdPackage,
 	isProperGeo,
 	getSamplingResults,
@@ -198,6 +199,7 @@ function passSlotEvent(slotName, eventName) {
 }
 
 export {
+	billTheLizard,
 	init,
 	GptSizeMap,
 	loadCustomAd,
