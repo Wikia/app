@@ -36,6 +36,13 @@ abstract class AbstractService {
 	protected $pageIds = [];
 
 	/**
+	 * Stores flags passed in a query param
+	 *
+	 * @var array
+	 */
+	protected $flags = [];
+
+	/**
 	 * A pointer to the page ID we're currently operating on.
 	 * Allows us to interact with a specific page ID during iteration without passing it.
 	 *
@@ -54,9 +61,11 @@ abstract class AbstractService {
 	 * Allows us to instantiate a service with pageIds already set
 	 *
 	 * @param array $pageIds
+	 * @param array $flags
 	 */
-	public function __construct( array $pageIds = [] ) {
+	public function __construct( array $pageIds = [], array $flags = [] ) {
 		$this->pageIds = $pageIds;
+		$this->flags = $flags;
 	}
 
 	/**

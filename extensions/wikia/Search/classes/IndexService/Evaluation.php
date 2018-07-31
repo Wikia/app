@@ -38,7 +38,7 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	protected function processAllDocuments( $documents ) {
-		if ( empty( $documents ) ) {
+		if ( empty( $documents ) || in_array( 'disable_backlinks_count', $this->flags ) ) {
 			return $documents;
 		}
 
