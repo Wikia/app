@@ -143,6 +143,7 @@ abstract class AbstractService {
 			}
 		}
 
+		$documents = $this->processAllDocuments( $documents );
 		$result['contents'] = $documents;
 
 		return $result;
@@ -228,6 +229,16 @@ abstract class AbstractService {
 		$this->reinitialize();
 
 		return $response;
+	}
+
+	/**
+	 * Hook allowing for processing documents in batches instead of page by page
+	 *
+	 * @param array $documents
+	 * @return array
+	 */
+	protected function processAllDocuments( $documents ) {
+		return $documents;
 	}
 
 }
