@@ -5,6 +5,7 @@ namespace Wikia\Search\IndexService;
 use Wikia\Search\Utilities;
 
 class Evaluation extends AbstractService {
+	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
 
 	/**
 	 * @return array
@@ -38,7 +39,7 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	protected function processAllDocuments( $documents ) {
-		if ( empty( $documents ) || in_array( 'disable_backlinks_count', $this->flags ) ) {
+		if ( empty( $documents ) || in_array( self::DISABLE_BACKLINKS_COUNT_FLAG, $this->flags ) ) {
 			return $documents;
 		}
 
