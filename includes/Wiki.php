@@ -54,15 +54,24 @@ class MediaWiki {
 	}
 
 	/**
-	 * @param IContextSource|null $context
+	 * @var null|string Redirect location requested by WikiFactoryLoader, can be altered during
+	 * 	request processing.
 	 */
-	public function __construct( IContextSource $context = null ) {
+	private $initialRedirect = null;
+
+	/**
+	 * @param IContextSource|null $context
+     * @param $initialRedirect string|null location where the current request should be redirected to
+	 */
+	public function __construct( IContextSource $context = null, $initialRedirect = null ) {
 		if ( !$context ) {
 			$context = RequestContext::getMain();
 		}
 
 		$this->context = $context;
 		$this->context->setTitle( $this->parseTitle() );
+
+		$this->initialRedirect = $initialRedirect;
 	}
 
 	/**
@@ -161,9 +170,9 @@ class MediaWiki {
 		$request = $this->context->getRequest();
 		$title = $this->context->getTitle();
 		$output = $this->context->getOutput();
-		global $wgWFLRedirectHint;
-		if ( !empty( $wgWFLRedirectHint ) ) {
-			$output->redirect( $wgWFLRedirectHint, 301 );
+
+		if ( !empty( $this->initialRedirect ) ) {
+			$output->redirect( $this->initialRedirect, 301 );
 		}
 		$user = $this->context->getUser();
 
@@ -516,6 +525,7 @@ class MediaWiki {
 	/**
 	 * Run the current MediaWiki instance
 	 * index.php just calls this
+	 *
 	 */
 	public function run() {
 		try {

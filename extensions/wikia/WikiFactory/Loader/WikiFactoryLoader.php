@@ -431,8 +431,11 @@ class WikiFactoryLoader {
 			if ( !empty( $queryParams ) ) {
 				$target .= '?' . http_build_query( $queryParams );
 			}
-			global $wgDontRedirectInsideWFL;
-			if ( empty( $wgDontRedirectInsideWFL ) ) {
+
+			global $wgWFLRedirectHandler;
+			if ( !empty( $wgWFLRedirectHandler ) ) {
+				$wgWFLRedirectHandler->redirect( $target );
+			} else {
 				header( "X-Redirected-By-WF: NotPrimary" );
 				header( 'Vary: Cookie,Accept-Encoding' );
 
@@ -451,9 +454,6 @@ class WikiFactoryLoader {
 				header( "Location: {$target}", true, 301 );
 				wfProfileOut( __METHOD__ );
 				return false;
-			} else {
-				global $wgWFLRedirectHint;
-				$wgWFLRedirectHint = $target;
 			}
 		}
 
