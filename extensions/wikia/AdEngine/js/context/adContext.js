@@ -222,6 +222,8 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverMegaAdUnitBuilderForFVCountries');
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
+		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
+			context.targeting.skin !== 'oasis';
 
 		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');

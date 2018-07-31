@@ -44,6 +44,8 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
+	context.set('options.bfabStickiness', legacyContext.get('opts.isBfabStickinessEnabled'));
+
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
@@ -127,8 +129,19 @@ function unifySlotInterface(slot) {
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		},
-		getStatus: () => null
+		getStatus: () => null,
+		setStatus: (status) => {
+			if (status === 'viewport-conflict') {
+				const event = document.createEvent('CustomEvent');
+				event.initCustomEvent('adengine.slot.status', true, true, {
+					slot: slot,
+					status: status
+				});
+				window.dispatchEvent(event);
+			}
+		}
 	});
+
 	slot.pre('viewed', (event) => {
 		slotListener.emitImpressionViewable(event, slot);
 	});
