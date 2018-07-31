@@ -302,7 +302,7 @@ class MediaWiki {
 					}
 
 					$output->setSquidMaxage( 1200 );
-					$output->redirect( $targetUrl, '301', 'Mainpage-Redirect' );
+					$output->redirect( $targetUrl, '301', 'Title-Redirect' );
 				}
 			}
 
