@@ -231,6 +231,8 @@ class MediaWiki {
 		}
 
 		$pageView = false; // was an article or special page viewed?
+		$shouldRedirectToTitle = $request->getVal( 'title' ) === null ||
+			$title->getPrefixedDBKey() != $request->getVal( 'title' );
 
 		// Interwiki redirects
 		if ( $title->getInterwiki() != '' ) {
@@ -256,14 +258,12 @@ class MediaWiki {
 		// Redirect loops, no title in URL, $wgUsePathInfo URLs, and URLs with a variant
 		} elseif ( (
 			( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
-				&& ( $request->getVal( 'title' ) === null ||
-					$title->getPrefixedDBKey() != $request->getVal( 'title' ) )
+				&& $shouldRedirectToTitle
 				&& !count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) ) ) ||
 			$output->isRedirect() )
 			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
-
-			if ( $request->getVal( 'title' ) === null ) {
+			if ( $shouldRedirectToTitle ) {
 				if ( $title->isSpecialPage() ) {
 					list( $name, $subpage ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 					if ( $name ) {
@@ -272,7 +272,6 @@ class MediaWiki {
 				}
 
 				$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT ); // ?
-
 				// Redirect to canonical url, make it a 301 to allow caching
 				if ( $targetUrl == $request->getFullRequestURL() ) {
 					$message = "Redirect loop detected!\n\n" .
