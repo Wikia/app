@@ -85,7 +85,7 @@
 
 	&__modal {
 		background-color: $wds-fandom-color-light-gray;
-		height: 100%;
+		height: calc(100% - 55px);
 		left: 0;
 		overflow-y: scroll;
 		position: fixed;
