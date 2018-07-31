@@ -47,9 +47,10 @@ class WikiaSearchIndexerController extends WikiaController
 
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
+		$flags = explode( '|', $this->getVal( 'flags', '' ) );
 		if ( class_exists( $serviceName ) ) {
 			/* @var Wikia\Search\IndexService\AbstractService $service */
-			$service = new $serviceName( $ids );
+			$service = new $serviceName( $ids, $flags );
 			$ids = $this->getVal( 'ids' );
 			if ( !empty( $ids ) ) {
 				$this->response->setData( $service->getResponseForPageIds() );
