@@ -115,23 +115,23 @@ class WikiFactoryLoader {
 		 *
 		 * muppets.wikia.org => muppets.wikia.com
 		 *
-		 * additionally we remove www. before matching
+		 * additionally we remove www. prefix
 		 */
-
-		// remove www from domain
-		$name = preg_replace( "/^www\./", "", $this->mServerName );
 
 		foreach ( $wikiFactoryDomains as $domain ) {
 			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
 			if ( $domain !== "wikia.com" && strpos( $this->mServerName, $domain ) === $tldLength ) {
 				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = str_replace( $domain, "wikia.com", $name );
+				$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
+				// remove www from domain - needed on dev env for wikia global
+				if ( $this->mServerName !== 'www.wikia.com' ) {
+					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				}
 				$this->mAlternativeDomainUsed = true;
 				break;
 			}
 		}
-
 		WikiFactory::isUsed( true );
 
 		/**
@@ -405,7 +405,7 @@ class WikiFactoryLoader {
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName ) &&
-			$wgWikiFactoryRedirectForAlternateDomains;
+			empty( $wgDevelEnvironment );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
