@@ -2,15 +2,17 @@
 
 namespace Wikia\Search\IndexService;
 
+use BadRequestApiException;
 use MWNamespace;
-use Wikia\Search\Utilities;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
 	const BACKLINKS_FROM_ALL_NAMESPACES_FLAG = 'backlinks_from_all_namespaces';
+	const LANGUAGES_SUPPORTED = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw'];
 
 	/**
 	 * @return array
+	 * @throws BadRequestApiException
 	 */
 	public function execute() {
 
@@ -21,16 +23,17 @@ class Evaluation extends AbstractService {
 		$text = $page->getRawText();
 
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
+		$languageCode = $this->getLanguageCode();
 
 		return [
 			'wiki_id' => $service->getWikiId(),
 			'page_id' => $pageId,
-			( new Utilities )->field( 'title' ) => $titleStr,
+			"title_${languageCode}" => $titleStr,
 			'url' => $service->getUrlFromPageId( $pageId ),
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
-			( new Utilities )->field( 'content' ) => $text,
+			"content_${languageCode}" => $text,
 			// 'backlinks_count' is added in processAllDocuments()
 		];
 	}
@@ -105,5 +108,19 @@ class Evaluation extends AbstractService {
 		}
 
 		return $backlinks;
+	}
+
+	/**
+	 * @return string
+	 * @throws BadRequestApiException
+	 */
+	private function getLanguageCode() {
+		$code = $this->service->getLanguageCode();
+
+		if ( in_array( $code, self::LANGUAGES_SUPPORTED ) ) {
+			return $code;
+		} else {
+			throw new BadRequestApiException( "This wiki's content language isn't supported" );
+		}
 	}
 }
