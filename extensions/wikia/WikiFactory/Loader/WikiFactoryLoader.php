@@ -190,7 +190,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
+			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath, $wgEnableHTTPSForAnons;
 
 		wfProfileIn(__METHOD__);
 
@@ -368,15 +368,23 @@ class WikiFactoryLoader {
 			}
 		}
 
-		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
-		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
-		$wgCityId = $this->mWikiID;
+		// Important note: we have to call getVarValueByName before setting $wgCityId global
+		// otherwise getVarValueByName just uses locally set globals and returns empty value here
+		$wgEnableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $this->mWikiID );
 
 		/**
 		 * save default var values for Special:WikiFactory
 		 */
 		if ( $this->mWikiID == Wikia::COMMUNITY_WIKI_ID ) {
 			$this->mSaveDefaults = true;
+		}
+
+		// Emit surrogate keys now so every wiki response is covered
+		$surrogateKey = Wikia::wikiSurrogateKey( $this->mWikiID );
+		if ( $surrogateKey ) {
+			// also add mediawiki-specific key
+			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
+			Wikia::setSurrogateKeysHeaders( $surrogateKeys, true );
 		}
 
 		/**
@@ -402,13 +410,14 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && $wgWikiFactoryRedirectForAlternateDomains ) {
-			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
+			wfHttpsAllowedForURL( $redirectUrl ) &&
+			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
+		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
-				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
-				 wfHttpsAllowedForURL( $redirectUrl )
-			) {
+		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) &&  $wgWikiFactoryRedirectForAlternateDomains ) {
+			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
@@ -638,6 +647,8 @@ class WikiFactoryLoader {
 				}
 			}
 		}
+
+		$wgCityId = $this->mWikiID;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers

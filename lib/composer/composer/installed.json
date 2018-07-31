@@ -1158,70 +1158,6 @@
         ]
     },
     {
-        "name": "mcustiel/phiremock",
-        "version": "v1.8.0",
-        "version_normalized": "1.8.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mcustiel/phiremock.git",
-            "reference": "a88e47fafdd6f0ece3f69e561fe50b31771dfa47"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mcustiel/phiremock/zipball/a88e47fafdd6f0ece3f69e561fe50b31771dfa47",
-            "reference": "a88e47fafdd6f0ece3f69e561fe50b31771dfa47",
-            "shasum": ""
-        },
-        "require": {
-            "guzzlehttp/guzzle": "^6.0",
-            "mcustiel/php-simple-di": "^1.2.1",
-            "mcustiel/php-simple-request": "^3.1",
-            "mcustiel/power-route": "^3.0.0",
-            "monolog/monolog": "^1.17.2",
-            "php": ">=5.6",
-            "react/http": "~0.7.0",
-            "symfony/cache": "^3.1"
-        },
-        "require-dev": {
-            "codeception/codeception": "^2.2.10"
-        },
-        "suggest": {
-            "ext-pcntl": "Allows phiremock to handle system signals"
-        },
-        "time": "2018-01-27T10:08:00+00:00",
-        "bin": [
-            "bin/phiremock"
-        ],
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Mcustiel\\Phiremock\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0+"
-        ],
-        "authors": [
-            {
-                "name": "Mariano Custiel",
-                "email": "jmcustiel@gmail.com",
-                "homepage": "https://github.com/mcustiel",
-                "role": "Developer"
-            }
-        ],
-        "description": "A mocker for HTTP and REST services",
-        "keywords": [
-            "acceptance",
-            "external",
-            "http",
-            "mock",
-            "server",
-            "tests"
-        ]
-    },
-    {
         "name": "mcustiel/php-simple-di",
         "version": "1.2.1",
         "version_normalized": "1.2.1.0",
@@ -5960,6 +5896,70 @@
             "http",
             "psr",
             "psr-7"
+        ]
+    },
+    {
+        "name": "mcustiel/phiremock",
+        "version": "v1.9.1",
+        "version_normalized": "1.9.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mcustiel/phiremock.git",
+            "reference": "942823bc7a147484483d0bda6b83ab38b8509485"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mcustiel/phiremock/zipball/942823bc7a147484483d0bda6b83ab38b8509485",
+            "reference": "942823bc7a147484483d0bda6b83ab38b8509485",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^6.0",
+            "mcustiel/php-simple-di": "^1.2.1",
+            "mcustiel/php-simple-request": "^3.1",
+            "mcustiel/power-route": "^3.0.0",
+            "monolog/monolog": "^1.17.2",
+            "php": ">=5.6",
+            "react/http": "~0.7.0",
+            "symfony/cache": ">=3.1 <5.0"
+        },
+        "require-dev": {
+            "codeception/codeception": "^2.2.10"
+        },
+        "suggest": {
+            "ext-pcntl": "Allows phiremock to handle system signals"
+        },
+        "time": "2018-06-14T09:59:31+00:00",
+        "bin": [
+            "bin/phiremock"
+        ],
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Mcustiel\\Phiremock\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "Mariano Custiel",
+                "email": "jmcustiel@gmail.com",
+                "homepage": "https://github.com/mcustiel",
+                "role": "Developer"
+            }
+        ],
+        "description": "A mocker for HTTP and REST services",
+        "keywords": [
+            "acceptance",
+            "external",
+            "http",
+            "mock",
+            "server",
+            "tests"
         ]
     }
 ]

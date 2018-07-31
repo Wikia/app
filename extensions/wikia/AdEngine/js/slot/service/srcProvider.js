@@ -17,12 +17,12 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 	}
 
 	function get(originalSrc, extra) {
-		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
-			originalSrc = 'premium';
-		}
-
 		if (adContext.get('targeting.skin') === 'oasis' && babDetection.isBlocking()) {
 			return getRecSrc();
+		}
+
+		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
+			return ['premium', originalSrc];
 		}
 
 		return addTestPrefixForTestWiki(originalSrc, extra);

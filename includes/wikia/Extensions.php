@@ -607,11 +607,6 @@ if ( !empty( $wgEnableLookupContribsExt ) ) {
 	include( "$IP/extensions/wikia/LookupUser/LookupUser.php" );
 }
 
-if( !empty( $wgEnableTorBlockExt ) ) {
-	include( "$IP/extensions/TorBlock/TorBlock.php" );
-	$wgTorIPs = [];
-}
-
 if( !empty( $wgEnableWhereIsExtensionExt ) ) {
 	include( "$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php" );
 }

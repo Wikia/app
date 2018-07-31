@@ -193,8 +193,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		if (krux && targeting.enableKruxTargeting) {
-			params.u = krux.getUser();
-			params.ksgmnt = krux.getSegments();
+			if (context.opts.kruxNewParams) {
+				params.kuid = krux.getUser();
+				params.ksg = krux.getSegments();
+			} else {
+				params.u = krux.getUser();
+				params.ksgmnt = krux.getSegments();
+			}
 		}
 
 		if (targeting.wikiIsTop1000) {
@@ -203,6 +208,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		if (cid) {
 			params.cid = cid;
+		}
+
+		if (context.opts.labradorDfp) {
+			params.labrador = context.opts.labradorDfp;
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));

@@ -69,7 +69,7 @@ class CeleryPurge {
 	/**
 	 * SUS-81: allow CDN purging by surrogate key
 	 *
-	 * Use OutputPage::tagWithSurrogateKeys() helper to emit proper headers
+	 * Use Wikia::setSurrogateKeysHeaders helper to emit proper headers
 	 *
 	 * @param string $key surrogate key to purge
 	 * @param string $service Fastly's service name (defaults to "mediawiki")

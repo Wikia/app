@@ -3,6 +3,8 @@
 namespace Wikia\Search\IndexService;
 
 
+use Wikia\Search\Utilities;
+
 class Evaluation extends AbstractService {
 
 
@@ -22,12 +24,12 @@ class Evaluation extends AbstractService {
 		return [
 			'wiki_id' => $service->getWikiId(),
 			'page_id' => $pageId,
-			'title' => $titleStr,
+			( new Utilities )->field( 'title' ) => $titleStr,
 			'url' => $service->getUrlFromPageId( $pageId ),
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
-			'content' => $text,
+			( new Utilities )->field( 'content' ) => $text,
 		];
 	}
 }

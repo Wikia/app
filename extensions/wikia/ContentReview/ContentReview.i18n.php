@@ -501,7 +501,7 @@ Examples:
 
 $messages['pl'] = array(
 	'content-review-desc' => 'To rozszerzenie tworzy proces, dzięki któremu kod JavaScript tworzony przez społeczność jest ręcznie sprawdzany zanim zobaczą go odwiedzający.',
-	'content-review-module-title' => 'Status dostosowanego kodu JavaScript',
+	'content-review-module-title' => 'Status przeglądu JavaScript',
 	'content-review-module-header-latest' => 'Ostatnia wersja:',
 	'content-review-module-header-last' => 'Ostatnia sprawdzona wersja:',
 	'content-review-module-header-live' => 'Aktywna wersja:',
@@ -519,7 +519,7 @@ $messages['pl'] = array(
 	'content-review-module-submit-success' => 'Zmiany zostały pomyślnie przesłane do sprawdzenia.',
 	'content-review-module-submit-exception' => 'Niestety, nie udało się przesłać zmian do sprawdzenia z powodu następującego błędu: $1.',
 	'content-review-module-submit-error' => 'Niestety nie udało się przesłać zmian do sprawdzenia.',
-	'content-review-module-test-mode-enable' => 'Przejdź do trybu testowego',
+	'content-review-module-test-mode-enable' => 'Włącz tryb testowy',
 	'content-review-module-test-mode-disable' => 'Opuść tryb testowy',
 	'content-review-test-mode-error' => 'Coś poszło nie tak. Spróbuj ponownie później.',
 	'content-review-test-mode-enabled' => 'Obecnie korzystasz z niesprawdzonych wersji plików JavaScript. ',
