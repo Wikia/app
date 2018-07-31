@@ -43,13 +43,13 @@ class Evaluation extends AbstractService {
 		}
 
 		$pageIds = array_filter( array_map( function ( $document ) {
-			return $document['id'];
+			return $document['page_id']['set'];
 		}, $documents ) );
 
 		$backlinks = $this->getBacklinksCount( $pageIds );
 
 		return array_map( function ( $document ) use ( $backlinks ) {
-			$id = $document['id'];
+			$id = $document['page_id']['set'];
 
 			if ( isset( $id ) && isset( $backlinks[ $id ] ) ) {
 				$document['backlinks'] = [
