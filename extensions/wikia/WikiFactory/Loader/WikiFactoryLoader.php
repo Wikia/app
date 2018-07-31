@@ -190,7 +190,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath, $wgEnableHTTPSForAnons;
+			   $wgArticlePath, $wgEnableHTTPSForAnons;
 
 		wfProfileIn(__METHOD__);
 
@@ -404,8 +404,8 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName ) &&
-			empty( $wgDevelEnvironment );
+		$cond2 = $this->mAlternativeDomainUsed &&
+			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
