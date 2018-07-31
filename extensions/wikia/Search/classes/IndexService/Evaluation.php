@@ -2,10 +2,12 @@
 
 namespace Wikia\Search\IndexService;
 
+use MWNamespace;
 use Wikia\Search\Utilities;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
+	const BACKLINKS_FROM_ALL_NAMESPACES_FLAG = 'backlinks_from_all_namespaces';
 
 	/**
 	 * @return array
@@ -68,6 +70,8 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	private function getBacklinksCount( $pageIds ) {
+		$contentNamespaces = MWNamespace::getContentNamespaces();
+
 		$service = $this->getService();
 
 		$titles = [];
@@ -76,12 +80,19 @@ class Evaluation extends AbstractService {
 			$titles[ $id ] = $service->getTitleFromPageId( $id )->getPrefixedDBkey();
 		}
 
+		$where = [ 'pl_title' => array_values( $titles ) ];
+
+		// Adding namespace to query causes db to use `pl_namespace` index and is much faster
+		if ( !in_array( self::BACKLINKS_FROM_ALL_NAMESPACES_FLAG, $this->flags ) ) {
+			$where['pl_namespace'] = $contentNamespaces;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$dbResults = $dbr->select(
 			'pagelinks',
 			[ 'count(*) as cnt', 'pl_title' ],
-			[ 'pl_title' => array_values( $titles ) ],
+			$where,
 			__METHOD__,
 			[ 'GROUP BY' => 'pl_title' ]
 		);
@@ -90,7 +101,7 @@ class Evaluation extends AbstractService {
 
 		while ( ( $row = $dbResults->fetchObject() ) ) {
 			$id = array_search( $row->pl_title, $titles );
-			$backlinks[$id] = $row->cnt;
+			$backlinks[ $id ] = $row->cnt;
 		}
 
 		return $backlinks;
