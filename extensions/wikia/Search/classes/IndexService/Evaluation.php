@@ -28,7 +28,7 @@ class Evaluation extends AbstractService {
 			'lang' => $service->getSimpleLanguageCode(),
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
 			( new Utilities )->field( 'content' ) => $text,
-			// 'backlinks' is added in processAllDocuments()
+			// 'backlinks_count' is added in processAllDocuments()
 		];
 	}
 
@@ -46,14 +46,14 @@ class Evaluation extends AbstractService {
 			return $document['page_id']['set'];
 		}, $documents ) );
 
-		$backlinks = $this->getBacklinksCount( $pageIds );
+		$backlinksCount = $this->getBacklinksCount( $pageIds );
 
-		return array_map( function ( $document ) use ( $backlinks ) {
+		return array_map( function ( $document ) use ( $backlinksCount ) {
 			$id = $document['page_id']['set'];
 
-			if ( isset( $id ) && isset( $backlinks[ $id ] ) ) {
-				$document['backlinks'] = [
-					'set' => $backlinks[ $id ]
+			if ( isset( $id ) && isset( $backlinksCount[ $id ] ) ) {
+				$document['backlinks_count'] = [
+					'set' => $backlinksCount[ $id ]
 				];
 			}
 
