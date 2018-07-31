@@ -49,19 +49,26 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 # AutoLoader, and the globals $wgRequest, $wgOut, $wgUser, $wgLang and
 # $wgContLang, amongst others; it does *not* load $wgTitle
 
-class RedirectHandler {
+class WFLRedirect {
 	private $redirectUrl = null;
+	private $redirectedBy = null;
 
-	public function redirect( $targetUrl ) {
+	public function redirect( $targetUrl, $redirectedBy = null ) {
 		$this->redirectUrl = $targetUrl;
+		$this->redirectedBy = $redirectedBy;
+
 	}
 
 	public function getRedirect() {
 		return $this->redirectUrl;
 	}
+
+	public function getRedirectedBy() {
+		return $this->redirectedBy;
+	}
 };
 
-$wgWFLRedirectHandler = new RedirectHandler();
+$wgWFLRedirect = new WFLRedirect();
 
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( 'phase3/includes/WebStart.php' );
@@ -69,5 +76,5 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-$mediaWiki = new MediaWiki();
-$mediaWiki->run( $wgWFLRedirectHandler->getRedirect() );
+$mediaWiki = new MediaWiki(null, $wgWFLRedirect );
+$mediaWiki->run();

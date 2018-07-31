@@ -434,7 +434,7 @@ class WikiFactoryLoader {
 
 			global $wgWFLRedirectHandler;
 			if ( !empty( $wgWFLRedirectHandler ) ) {
-				$wgWFLRedirectHandler->redirect( $target );
+				$wgWFLRedirectHandler->redirect( $target, 'NotPrimary' );
 			} else {
 				header( "X-Redirected-By-WF: NotPrimary" );
 				header( 'Vary: Cookie,Accept-Encoding' );

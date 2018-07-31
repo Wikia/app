@@ -61,7 +61,7 @@ class MediaWiki {
 
 	/**
 	 * @param IContextSource|null $context
-     * @param $initialRedirect string|null location where the current request should be redirected to
+     * @param $initialRedirect WFLRedirect|null location where the current request should be redirected to
 	 */
 	public function __construct( IContextSource $context = null, $initialRedirect = null ) {
 		if ( !$context ) {
@@ -172,7 +172,8 @@ class MediaWiki {
 		$output = $this->context->getOutput();
 
 		if ( !empty( $this->initialRedirect ) ) {
-			$output->redirect( $this->initialRedirect, 301 );
+			$output->redirect( $this->initialRedirect->getRedirect(), 301,
+				$this->initialRedirect->getRedirectedBy() );
 		}
 		$user = $this->context->getUser();
 
@@ -246,7 +247,7 @@ class MediaWiki {
 				&& $title->isLocal() )
 			{
 				// 301 so google et al report the target as the actual url.
-				$output->redirect( $url, 301 );
+				$output->redirect( $url, 301, 'InterwikiRedirect' );
 			} else {
 				$this->context->setTitle( SpecialPage::getTitleFor( 'Badtitle' ) );
 				wfProfileOut( __METHOD__ );
@@ -302,7 +303,7 @@ class MediaWiki {
 					}
 
 					$output->setSquidMaxage( 1200 );
-					$output->redirect( $targetUrl, '301' );
+					$output->redirect( $targetUrl, '301', 'Mainpage-Redirect' );
 				}
 			}
 
@@ -326,7 +327,7 @@ class MediaWiki {
 
 				$this->performAction( $article );
 			} elseif ( is_string( $article ) ) {
-				$output->redirect( $article );
+				$output->redirect( $article, 'Article-Redirect' );
 			} else {
 				wfProfileOut( __METHOD__ );
 				throw new MWException( "Shouldn't happen: MediaWiki::initializeArticle() returned neither an object nor a URL" );
