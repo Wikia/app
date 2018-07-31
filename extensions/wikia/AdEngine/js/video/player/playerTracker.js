@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
