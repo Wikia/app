@@ -108,7 +108,9 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebidOptOut = isProperGeoAds('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9BidderCountries');
+		context.bidders.a9OptOut = isProperGeoAds('wgAdDriverA9OptOutCountries');
 		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeoAds('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeoAds('wgAdDriverRubiconPrebidCountries');
