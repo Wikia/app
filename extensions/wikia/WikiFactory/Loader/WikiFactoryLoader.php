@@ -432,7 +432,7 @@ class WikiFactoryLoader {
 				$target .= '?' . http_build_query( $queryParams );
 			}
 			$redirectedBy = [];
-			if ( $shouldUpgradeToHttps ) $redirectedBy[] = 'WFL-HTTPS-upgrade';
+			if ( $shouldUpgradeToHttps ) $redirectedBy[] = 'AnonsHTTPSUpgrade';
 			if ( $cond1 ) $redirectedBy[] = 'NotPrimary';
 			if ( $cond2 ) $redirectedBy[] = 'AlternativeDomain';
 			$redirectedBy = join( ' ', $redirectedBy );
