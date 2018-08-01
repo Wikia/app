@@ -3,11 +3,11 @@
 namespace Wikia\Search\IndexService;
 
 use BadRequestApiException;
-use MWNamespace;
+use DatabaseMysqli;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
-	const LANGUAGES_SUPPORTED = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw'];
+	const LANGUAGES_SUPPORTED = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw' ];
 
 	/**
 	 * @return array
@@ -34,6 +34,7 @@ class Evaluation extends AbstractService {
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
 			"content_${languageCode}" => $text,
 			// 'backlinks_count' is added in processAllDocuments()
+			// 'redirects' is added in processAllDocuments()
 		];
 	}
 
@@ -51,64 +52,29 @@ class Evaluation extends AbstractService {
 			return $document['page_id']['set'];
 		}, $documents ) );
 
-		$backlinksCount = $this->getBacklinksCount( $pageIds );
+		list( $backlinksCount, $redirects ) = $this->getAdditionalInfo( $pageIds );
 
-		return array_map( function ( $document ) use ( $backlinksCount ) {
+		return array_map( function ( $document ) use ( $backlinksCount, $redirects ) {
 			$id = $document['page_id']['set'];
 
-			if ( isset( $id ) && isset( $backlinksCount[ $id ] ) ) {
+			if ( !isset( $id ) ) {
+				return $document;
+			}
+
+			if ( isset( $backlinksCount[ $id ] ) ) {
 				$document['backlinks_count'] = [
 					'set' => $backlinksCount[ $id ]
 				];
 			}
 
+			if ( isset( $redirects[ $id ] ) ) {
+				$document['redirects'] = [
+					'set' => $redirects[ $id ]
+				];
+			}
+
 			return $document;
 		}, $documents );
-	}
-
-	/**
-	 * @param $pageIds
-	 * @return array
-	 * @throws \DBUnexpectedError
-	 */
-	private function getBacklinksCount( $pageIds ) {
-		$service = $this->getService();
-
-		$titlesById = [];
-		$titlesByNamespace = [];
-		$backlinks = [];
-
-		foreach ( $pageIds as $id ) {
-			$title = $service->getTitleFromPageId( $id );
-			$dbKey = $title->getDBkey();
-
-			$titlesById[ $id ] = $dbKey;
-
-			// Group by namespace so the pl_namespace index can be used
-			$titlesByNamespace[ $title->getNamespace() ][] = $dbKey;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-
-		foreach ( $titlesByNamespace as $namespace => $titles ) {
-			$dbResults = $dbr->select(
-				'pagelinks',
-				[ 'count(*) as cnt', 'pl_title' ],
-				[
-					'pl_namespace' => $namespace,
-					'pl_title' => $titles
-				],
-				__METHOD__,
-				[ 'GROUP BY' => 'pl_title' ]
-			);
-
-			while ( ( $row = $dbResults->fetchObject() ) ) {
-				$id = array_search( $row->pl_title, $titlesById );
-				$backlinks[ $id ] = $row->cnt;
-			}
-		}
-
-		return $backlinks;
 	}
 
 	/**
@@ -122,6 +88,102 @@ class Evaluation extends AbstractService {
 			return $code;
 		} else {
 			throw new BadRequestApiException( "This wiki's content language isn't supported" );
+		}
+	}
+
+	/**
+	 * @param $pageIds
+	 * @return array
+	 * @throws \DBUnexpectedError
+	 */
+	private function getAdditionalInfo( $pageIds ) {
+		$service = $this->getService();
+
+		$titlesById = [];
+		$titlesByNamespace = [];
+		$backlinks = [];
+		$redirects = [];
+
+		foreach ( $pageIds as $id ) {
+			$title = $service->getTitleFromPageId( $id );
+			$dbKey = $title->getDBkey();
+
+			$titlesById[ $id ] = $dbKey;
+
+			// Group by namespace so better indexes can be used
+			$titlesByNamespace[ $title->getNamespace() ][] = $dbKey;
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		foreach ( $titlesByNamespace as $namespace => $titles ) {
+			$this->setBacklinksCount( $dbr, $namespace, $titles, $titlesById, $backlinks );
+			$this->setRedirects( $dbr, $namespace, $titles, $titlesById, $redirects );
+		}
+
+		return [ $backlinks, $redirects ];
+	}
+
+	/**
+	 * @param DatabaseMysqli $dbr
+	 * @param $namespace
+	 * @param $titles
+	 * @param $titlesById
+	 * @param $backlinks
+	 * @throws \DBUnexpectedError
+	 */
+	private function setBacklinksCount( DatabaseMysqli $dbr, $namespace, $titles, $titlesById, &$backlinks ) {
+		$dbResults = $dbr->select(
+			'pagelinks',
+			[ 'count(*) as cnt', 'pl_title' ],
+			[
+				'pl_namespace' => $namespace,
+				'pl_title' => $titles
+			],
+			__METHOD__,
+			[ 'GROUP BY' => 'pl_title' ]
+		);
+
+		while ( ( $row = $dbResults->fetchObject() ) ) {
+			$id = array_search( $row->pl_title, $titlesById );
+			$backlinks[ $id ] = $row->cnt;
+		}
+	}
+
+	/**
+	 * @param DatabaseMysqli $dbr
+	 * @param $namespace
+	 * @param $titles
+	 * @param $titlesById
+	 * @param $redirects
+	 * @throws \DBUnexpectedError
+	 */
+	private function setRedirects( DatabaseMysqli $dbr, $namespace, $titles, $titlesById, &$redirects ) {
+		$dbResults = $dbr->select(
+			[ 'redirect', 'page' ],
+			[ 'rd_title', 'page_title' ],
+			[
+				'rd_title' => $titles,
+				'rd_namespace' => $namespace
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [
+					'INNER JOIN',
+					[ 'page_id = rd_from' ]
+				]
+			]
+		);
+
+		while ( ( $row = $dbResults->fetchObject() ) ) {
+			$id = array_search( $row->rd_title, $titlesById );
+
+			if ( !isset( $redirects[ $id ] ) ) {
+				$redirects[ $id ] = [];
+			}
+
+			$redirects[ $id ][] = $row->page_title;
 		}
 	}
 }
