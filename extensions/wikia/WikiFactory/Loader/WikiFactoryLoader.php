@@ -431,12 +431,17 @@ class WikiFactoryLoader {
 			if ( !empty( $queryParams ) ) {
 				$target .= '?' . http_build_query( $queryParams );
 			}
+			$redirectedBy = [];
+			if ( $shouldUpgradeToHttps ) $redirectedBy[] = 'WFL-HTTPS-upgrade';
+			if ( $cond1 ) $redirectedBy[] = 'NotPrimary';
+			if ( $cond2 ) $redirectedBy[] = 'AlternativeDomain';
+			$redirectedBy = join( ' ', $redirectedBy );
 
 			global $wgWFLRedirect;
 			if ( !empty( $wgWFLRedirect ) ) {
-				$wgWFLRedirect->redirect( $target, 'NotPrimary' );
+				$wgWFLRedirect->redirect( $target, $redirectedBy );
 			} else {
-				header( "X-Redirected-By-WF: NotPrimary" );
+				header( 'X-Redirected-By-WF: ' . $redirectedBy );
 				header( 'Vary: Cookie,Accept-Encoding' );
 
 				global $wgCookiePrefix;
