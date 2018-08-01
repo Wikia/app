@@ -7,7 +7,6 @@ use MWNamespace;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
-	const BACKLINKS_FROM_ALL_NAMESPACES_FLAG = 'backlinks_from_all_namespaces';
 	const LANGUAGES_SUPPORTED = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw'];
 
 	/**
@@ -73,38 +72,40 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	private function getBacklinksCount( $pageIds ) {
-		$contentNamespaces = MWNamespace::getContentNamespaces();
-
 		$service = $this->getService();
 
-		$titles = [];
+		$titlesById = [];
+		$titlesByNamespace = [];
+		$backlinks = [];
 
 		foreach ( $pageIds as $id ) {
-			$titles[ $id ] = $service->getTitleFromPageId( $id )->getPrefixedDBkey();
-		}
+			$title = $service->getTitleFromPageId( $id );
+			$dbKey = $title->getDBkey();
 
-		$where = [ 'pl_title' => array_values( $titles ) ];
+			$titlesById[ $id ] = $dbKey;
 
-		// Adding namespace to query causes db to use `pl_namespace` index and is much faster
-		if ( !in_array( self::BACKLINKS_FROM_ALL_NAMESPACES_FLAG, $this->flags ) ) {
-			$where['pl_namespace'] = $contentNamespaces;
+			// Group by namespace so the pl_namespace index can be used
+			$titlesByNamespace[ $title->getNamespace() ][] = $dbKey;
 		}
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$dbResults = $dbr->select(
-			'pagelinks',
-			[ 'count(*) as cnt', 'pl_title' ],
-			$where,
-			__METHOD__,
-			[ 'GROUP BY' => 'pl_title' ]
-		);
+		foreach ( $titlesByNamespace as $namespace => $titles ) {
+			$dbResults = $dbr->select(
+				'pagelinks',
+				[ 'count(*) as cnt', 'pl_title' ],
+				[
+					'pl_namespace' => $namespace,
+					'pl_title' => $titles
+				],
+				__METHOD__,
+				[ 'GROUP BY' => 'pl_title' ]
+			);
 
-		$backlinks = [];
-
-		while ( ( $row = $dbResults->fetchObject() ) ) {
-			$id = array_search( $row->pl_title, $titles );
-			$backlinks[ $id ] = $row->cnt;
+			while ( ( $row = $dbResults->fetchObject() ) ) {
+				$id = array_search( $row->pl_title, $titlesById );
+				$backlinks[ $id ] = $row->cnt;
+			}
 		}
 
 		return $backlinks;
