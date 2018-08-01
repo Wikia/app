@@ -7,7 +7,6 @@ use MWNamespace;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
-	const BACKLINKS_FROM_ALL_NAMESPACES_FLAG = 'backlinks_from_all_namespaces';
 	const LANGUAGES_SUPPORTED = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw'];
 
 	/**
