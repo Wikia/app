@@ -1,5 +1,7 @@
 .wds-search-modal {
 	background-color: rgba($wds-fandom-color-light-gray, .9);
+	display: flex;
+	flex-direction: column;
 
 	&__form-and-links-wrapper {
 		background-color: $wds-fandom-color-navy;
