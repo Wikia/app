@@ -69,13 +69,13 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
+	 * Handle downgrading anonymous requests for our robots.txt.
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
 	 * @return boolean
 	 */
-	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
+	public static function onRobotsBeforeOutput( WebRequest $request, User $user ): bool {
 		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
