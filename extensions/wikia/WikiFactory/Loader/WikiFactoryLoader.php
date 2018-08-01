@@ -48,7 +48,7 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -121,11 +121,11 @@ class WikiFactoryLoader {
 		foreach ( $wikiFactoryDomains as $domain ) {
 			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
-			if ( $domain !== "wikia.com" && strpos( $this->mServerName, $domain ) === $tldLength ) {
+			if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
 				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
+				$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
 				// remove www from domain - needed on dev env for wikia global
-				if ( $this->mServerName !== 'www.wikia.com' ) {
+				if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {
 					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
 				}
 				$this->mAlternativeDomainUsed = true;
