@@ -124,6 +124,7 @@ describe('AdLogicPageParams', function () {
 			mockAdLogicZoneParams(),
 			windowMock.document,
 			geoMock,
+			{},
 			windowMock.location,
 			logMock,
 			mocks.trackingOptIn,

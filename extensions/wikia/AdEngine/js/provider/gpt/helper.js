@@ -14,9 +14,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.instantGlobals',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
 ], function (
 	adContext,
@@ -32,9 +30,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTargeting,
 	slotTweaker,
 	doc,
-	instantGlobals,
 	log,
-	rabbit,
 	sraHelper
 ) {
 	'use strict';
@@ -92,15 +88,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
-			var abId,
-				rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+			var abId;
 
 			if (slotTargetingData.src) {
 				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
-			}
-
-			if (rabbitResults && rabbitResults.length) {
-				slotTargetingData.rabbit = rabbitResults;
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
