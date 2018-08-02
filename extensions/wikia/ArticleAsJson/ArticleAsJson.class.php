@@ -212,7 +212,7 @@ class ArticleAsJson {
 				$mediaObj['galleryRef'] = $index;
 				try {
 					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
-						->zoomCrop()
+						->topCrop()
 						->width( 195 )
 						->height( 195 )
 						->url();
@@ -254,19 +254,19 @@ class ArticleAsJson {
 				try {
 					$height = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 5 / 4;
 					$thumbnail4by5 = VignetteRequest::fromUrl( $mediaObj['url'] )
-						->zoomCrop()
+						->topCrop()
 						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
 						->height( $height )
 						->url();
 
 					$thumbnail4by5x2 = VignetteRequest::fromUrl( $mediaObj['url'] )
-						->zoomCrop()
+						->topCrop()
 						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 2 )
 						->height( $height * 2)
 						->url();
 
 					$thumbnail1by1 = VignetteRequest::fromUrl( $mediaObj['url'] )
-						->zoomCrop()
+						->topCrop()
 						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
 						->height( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
 						->url();
