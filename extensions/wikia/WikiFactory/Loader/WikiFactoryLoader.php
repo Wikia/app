@@ -12,8 +12,8 @@ class WikiFactoryLoader {
 
 	/** @var mixed $mServerName SERVER_NAME as provided by apache */
 	private $mServerName;
-	/** @var string $pathParams The part of the request path excluding the language code, without a leading slash */
-	private $pathParams = '';
+	/** @var array parsedUrl Parsed request url with language code removed from the path */
+	private $parsedUrl = '';
 	/** @var string $langCode Language code given in request path, if present, without a leading slash  */
 	private $langCode = '';
 
@@ -73,19 +73,17 @@ class WikiFactoryLoader {
 
 			$fullUrl =  preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
 				$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
-			$path = parse_url( $fullUrl, PHP_URL_PATH );
+			$this->parsedUrl = parse_url( $fullUrl );
 
-			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
+			$slash = strpos( $this->parsedUrl['path'], '/', 1 ) ?: strlen( $this->parsedUrl['path'] );
 
 			if ( $slash ) {
 				$languages = Language::getLanguageNames();
-				$langCode = substr( $path, 1, $slash - 1 );
+				$langCode = substr( $this->parsedUrl['path'], 1, $slash - 1 );
 
 				if ( isset( $languages[$langCode] ) ) {
 					$this->langCode = $langCode;
-					$this->pathParams = substr( $path, $slash + 1 ) ?: '';
-				} else {
-					$this->pathParams = substr( $path, 1 );
+					$this->parsedUrl['path'] = substr( $this->parsedUrl['path'], $slash ) ?: '/';
 				}
 			}
 
@@ -417,20 +415,16 @@ class WikiFactoryLoader {
 			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
-			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
-
-			$queryParams = $_GET;
-			$localArticlePathClean = str_replace( '$1', '', $wgArticlePath );
-			if ( !empty( $localArticlePathClean ) &&
-				!empty( $queryParams['title'] ) &&
-				startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
-				// skip the 'title' which is part of the $target, but append remaining parameters
-				unset( $queryParams['title'] );
+			if ( isset( $this->parsedUrl['path'] ) ) {
+				$redirectUrl .= $this->parsedUrl['path'];
+			}
+			if ( isset( $this->parsedUrl['query'] ) ) {
+				$redirectUrl .= '?' . $this->parsedUrl['query'];
+			}
+			if ( isset( $this->parsedUrl['fragment'] ) ) {
+				$redirectUrl .= '#' . $this->parsedUrl['fragment'];
 			}
 
-			if ( !empty( $queryParams ) ) {
-				$target .= '?' . http_build_query( $queryParams );
-			}
 			$redirectedBy = [];
 			if ( $shouldUpgradeToHttps ) $redirectedBy[] = 'AnonsHTTPSUpgrade';
 			if ( $cond1 ) $redirectedBy[] = 'NotPrimary';
@@ -439,7 +433,7 @@ class WikiFactoryLoader {
 
 			global $wgWFLRedirect;
 			if ( !empty( $wgWFLRedirect ) ) {
-				$wgWFLRedirect->redirect( $target, $redirectedBy );
+				$wgWFLRedirect->redirect( $redirectUrl, $redirectedBy );
 			} else {
 				header( 'X-Redirected-By-WF: ' . $redirectedBy );
 				header( 'Vary: Cookie,Accept-Encoding' );
@@ -456,7 +450,7 @@ class WikiFactoryLoader {
 					header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
 				}
 
-				header( "Location: {$target}", true, 301 );
+				header( "Location: {$redirectUrl}", true, 301 );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
