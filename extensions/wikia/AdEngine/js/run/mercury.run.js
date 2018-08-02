@@ -83,9 +83,7 @@ require([
 	function addRabbitPageParams() {
 		var rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
 
-		if (rabbitResults && rabbitResults.length) {
-			pageLevelParams.add('rabbit', rabbitResults);
-		}
+		pageLevelParams.add('rabbit', rabbitResults || null);
 	}
 
 	function callOnConsecutivePageView() {
