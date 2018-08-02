@@ -231,8 +231,9 @@ class MediaWiki {
 		}
 
 		$pageView = false; // was an article or special page viewed?
-		$shouldRedirectToTitle = $request->getVal( 'title' ) === null ||
-			$title->getPrefixedDBKey() != $request->getVal( 'title' );
+		$shouldRedirectToTitle = ($request->getVal( 'title' ) === null ||
+			$title->getPrefixedDBKey() != $request->getVal( 'title' ) ) &&
+			Hooks::run( 'BeforeTitleRedirect', array( $request, $title ) );
 
 		// Interwiki redirects
 		if ( $title->getInterwiki() != '' ) {
@@ -264,6 +265,7 @@ class MediaWiki {
 			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
 			if ( $shouldRedirectToTitle ) {
+
 				if ( $title->isSpecialPage() ) {
 					list( $name, $subpage ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 					if ( $name ) {
@@ -271,7 +273,8 @@ class MediaWiki {
 					}
 				}
 
-				$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT ); // ?
+				$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
+
 				// Redirect to canonical url, make it a 301 to allow caching
 				if ( $targetUrl == $request->getFullRequestURL() ) {
 					$message = "Redirect loop detected!\n\n" .
@@ -296,6 +299,7 @@ class MediaWiki {
 					wfProfileOut( __METHOD__ );
 					throw new HttpError( 500, $message );
 				} else {
+					// TBD - what about other query parameters?
 					if ( !empty( $gaParams = $request->getVal( '_ga' ) ) ) {
 						// add GA cross domain tracking parameter when redirecting
 						$targetUrl = wfExpandUrl( $title->getFullURL( [ '_ga' => $gaParams ] ), PROTO_CURRENT );
