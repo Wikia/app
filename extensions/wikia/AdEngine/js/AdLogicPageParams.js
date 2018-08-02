@@ -234,7 +234,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	updateContext();
-	adContext.addCallback(updateContext);
+	adContext.addCallback(function () {
+		runtimeParams = {};
+		updateContext();
+	});
 
 	return {
 		add: addParam,
