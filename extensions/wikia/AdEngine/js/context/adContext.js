@@ -222,6 +222,8 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverMegaAdUnitBuilderForFVCountries');
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
+		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
+			context.targeting.skin !== 'oasis';
 
 		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
@@ -236,15 +238,16 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isProperGeoAds('wgAdDriverSingleBLBSizeForUAPCountries');
+		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
 
 		context.opts.labradorTest = isProperGeoAds('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.mobileSectionsCollapse = isProperGeoAds('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isProperGeoAds('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isProperGeoAds('wgAdDriverAdditionalVastSizeCountries');
-		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
-		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
+		// Need to be placed always after all lABrador wgVars checks
+		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

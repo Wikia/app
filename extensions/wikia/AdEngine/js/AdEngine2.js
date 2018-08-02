@@ -181,7 +181,7 @@ define('ext.wikia.adEngine.adEngine', [
 				});
 
 			slot.post('viewed', function () {
-				slot.isViewed = true;
+				slot.isViewedFlag = true;
 			});
 
 			slotRegistry.add(slot, provider.name);

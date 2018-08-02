@@ -47,6 +47,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
+		$vars[] = 'wgAdDriverBfabStickinessCountries';
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
@@ -152,6 +153,24 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;
+	}
+
+	public static function onInstantGlobalsGetFandomCreatorVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
+		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
+		$vars[] = 'wgAdDriverVideoMidrollCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoPostrollCountries';
 	}
 
 	/**

@@ -29,6 +29,7 @@ class WikiFactoryVariableParserTest extends TestCase {
 		yield [ 'integer', '56', 56 ];
 		yield [ 'boolean', 1, true ];
 		yield [ 'boolean', 0, false ];
+		yield [ 'array', '[]', [] ];
 		yield [ 'array', [ 'an array' ], [ 'an array' ] ];
 		yield [ 'array', [ 'a' => 'hashmap' ], [ 'a' => 'hashmap' ] ];
 		yield [ 'array', [ 'a' => [ 'nested' => [ 'structure' => [ 'items'] ] ] ], [ 'a' => [ 'nested' => [ 'structure' => [ 'items'] ] ] ] ];
