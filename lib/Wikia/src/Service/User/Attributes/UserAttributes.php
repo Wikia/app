@@ -96,7 +96,7 @@ class UserAttributes {
 		// SRE-97: Only set the attribute if it was not set before or the value was changed
 		if ( !isset( $this->attributes[$userId][$name] ) || $this->attributes[$userId][$name] !== $value ) {
 			$this->changedAttributes[$name] = $attribute;
-			$this->attributes[$userId][$name] = $value;
+			$this->attributes[$userId][$name] = $attribute->getValue();
 		}
 	}
 
