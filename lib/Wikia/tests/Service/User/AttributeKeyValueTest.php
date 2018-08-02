@@ -10,6 +10,7 @@ class AttributeKeyValueTest extends TestCase {
 
 	protected $userId = 1;
 	protected $anonUserId = 0;
+	/** @var Attribute $testAttribute_1 */
 	protected $testAttribute_1;
 	protected $testAttribute_2;
 	protected $testAttributes;
@@ -21,19 +22,19 @@ class AttributeKeyValueTest extends TestCase {
 		$this->testAttribute_2 = new Attribute( "attr-2-name", "attr-2-value" );
 		$this->testAttributes = [ $this->testAttribute_1, $this->testAttribute_2 ];
 		$this->persistenceMock = $this->getMockBuilder( AttributePersistence::class )
-			->setMethods( [ 'saveAttribute', 'getAttributes', 'deleteAttribute' ] )
+			->setMethods( [ 'saveAttributes', 'getAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
 	public function testSetSuccess() {
 		$this->persistenceMock->expects( $this->once() )
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->testAttribute_1 )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] )
 			->willReturn( true );
 
 		$service = new AttributeService( $this->persistenceMock );
-		$ret = $service->set( $this->userId,  $this->testAttribute_1 );
+		$ret = $service->set( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] );
 
 		$this->assertTrue( $ret, "the attribute was not set" );
 	}
@@ -42,22 +43,32 @@ class AttributeKeyValueTest extends TestCase {
 	 * @expectedException \Exception
 	 */
 	public function testSetWithAnonUserId() {
-		$this->persistenceMock->expects( $this->exactly( 0 ) )
-			->method( 'saveAttribute' );
+		$this->persistenceMock->expects( $this->never() )
+			->method( 'saveAttributes' );
 
 		$service = new AttributeService( $this->persistenceMock );
-		$service->set( $this->anonUserId, $this->testAttribute_1 );
+		$service->set( $this->anonUserId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] );
+	}
+
+	public function testSetWithEmptySetOfAttributesDoesNotCallTheService() {
+		$this->persistenceMock->expects( $this->never() )
+			->method( 'saveAttributes' );
+
+		$service = new AttributeService( $this->persistenceMock );
+		$result = $service->set( $this->userId, [] );
+
+		$this->assertTrue( $result );
 	}
 
 	public function testSetWithError() {
 		$this->persistenceMock->expects( $this->once() )
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->testAttribute_1 )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] )
 			->will( $this->throwException( new PersistenceException() ) );
 
 		$service = new AttributeService( $this->persistenceMock );
 		try {
-			$service->set( $this->userId, $this->testAttribute_1 );
+			$service->set( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] );
 		} catch ( PersistenceException $e ) {
 			$this->fail( "Excepction should be caught and logged, not thrown" );
 		}
