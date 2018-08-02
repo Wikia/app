@@ -20,9 +20,11 @@ require([
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
+	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -44,9 +46,11 @@ require([
 	babDetection,
 	wadRecRunner,
 	geo,
+	instantGlobals,
 	trackingOptIn,
 	win,
 	billTheLizard,
+	rabbit,
 	fvLagger
 ) {
 	'use strict';
@@ -58,7 +62,12 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		var context = adContext.getContext();
+		var context = adContext.getContext(),
+			rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+
+		if (rabbitResults && rabbitResults.length) {
+			pageLevelParams.addParam('rabbit', rabbitResults);
+		}
 
 		messageListener.init();
 

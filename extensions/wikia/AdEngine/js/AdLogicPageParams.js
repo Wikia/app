@@ -5,13 +5,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.location',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.querystring',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
 ], function (
@@ -19,15 +17,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	zoneParams,
 	doc,
 	geo,
-	instantGlobals,
 	loc,
 	log,
 	trackingOptIn,
 	Querystring,
 	win,
 	abTest,
-	krux,
-	rabbit
+	krux
 ) {
 	'use strict';
 
@@ -175,7 +171,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		var params,
 			targeting = context.targeting,
-			rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues),
 			cid = qs.getVal('cid', '');
 
 		options = options || {};
@@ -229,10 +224,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		if (context.opts.labradorDfp) {
 			params.labrador = context.opts.labradorDfp;
-		}
-
-		if (rabbitResults && rabbitResults.length) {
-			params.rabbit = rabbitResults;
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
