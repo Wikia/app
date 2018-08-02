@@ -180,6 +180,13 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
 	}
 
+	protected function renderHorizontalGroupContent( $groupContent ) {
+		return $this->renderItem(
+			'horizontal-group-content-mobile',
+			$this->createHorizontalGroupData( $groupContent )
+		);
+	}
+
 	/**
 	 * checks if infobox data item is valid hero component data.
 	 *
