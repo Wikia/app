@@ -17,10 +17,8 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.trackingOptIn',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -40,10 +38,8 @@ require([
 	adInfoListener,
 	babDetection,
 	geo,
-	instantGlobals,
 	trackingOptIn,
 	win,
-	rabbit,
 	fvLagger
 ) {
 	'use strict';
@@ -80,12 +76,6 @@ require([
 		}
 	}
 
-	function addRabbitPageParams() {
-		var rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
-
-		pageLevelParams.add('rabbit', rabbitResults || null);
-	}
-
 	function callOnConsecutivePageView() {
 		if (adContext.get('bidders.prebid')) {
 			prebid.call();
@@ -96,7 +86,6 @@ require([
 		}
 
 		passFVLineItemIdToUAP();
-		addRabbitPageParams();
 	}
 
 	mercuryListener.onLoad(function () {
@@ -109,7 +98,6 @@ require([
 		}
 
 		passFVLineItemIdToUAP();
-		addRabbitPageParams();
 
 		adInfoListener.run();
 		slotStateMonitor.run();

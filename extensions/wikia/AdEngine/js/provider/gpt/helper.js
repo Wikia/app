@@ -15,6 +15,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
+	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
 ], function (
 	adContext,
@@ -31,6 +32,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTweaker,
 	doc,
 	log,
+	rabbit,
 	sraHelper
 ) {
 	'use strict';
@@ -133,7 +135,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!googleTag.isInitialized()) {
 			googleTag.init();
-			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			setupPageLevelParams();
 		}
 
 		if (!slot.isEnabled()) {
@@ -174,9 +176,16 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	function setupPageLevelParams() {
+		if (rabbit) {
+			adLogicPageParams.add('rabbit', rabbit.getTargetingValues());
+		}
+		googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+	}
+
 	adContext.addCallback(function () {
 		if (googleTag.isInitialized()) {
-			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			setupPageLevelParams();
 			uapContext.reset();
 		}
 	});
