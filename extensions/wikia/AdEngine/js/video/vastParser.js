@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.video.vastParser', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.vastParser';
 
-	function getFirstInteger(possibleValues) {
+	function getFirstNumber(possibleValues) {
 		var i, value;
 
 		for (i = 0; i < possibleValues.length; i++) {
@@ -32,11 +32,11 @@ define('ext.wikia.adEngine.video.vastParser', [
 				wrapperCreativeIds = imaAd.getWrapperCreativeIds();
 
 			if (wrapperAdIds && wrapperAdIds.length) {
-				adInfo.lineItemId = getFirstInteger(wrapperAdIds);
+				adInfo.lineItemId = getFirstNumber(wrapperAdIds);
 			}
 
 			if (wrapperCreativeIds && wrapperCreativeIds.length) {
-				adInfo.creativeId = getFirstInteger(wrapperCreativeIds);
+				adInfo.creativeId = getFirstNumber(wrapperCreativeIds);
 			}
 		}
 
