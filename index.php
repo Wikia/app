@@ -68,6 +68,10 @@ class WFLRedirect {
 	}
 };
 
+// This will intercept wiki redirects made in WikiFactoryLoader and pass
+// them later to mediawiki to merge with other redirects (like the main page).
+// This allows us to return a single redirects response instead of a chain of
+// 301s.
 $wgWFLRedirect = new WFLRedirect();
 
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
