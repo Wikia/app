@@ -529,7 +529,6 @@ class MediaWiki {
 	/**
 	 * Run the current MediaWiki instance
 	 * index.php just calls this
-	 *
 	 */
 	public function run() {
 		try {
