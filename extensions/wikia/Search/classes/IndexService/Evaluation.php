@@ -42,11 +42,14 @@ class Evaluation extends AbstractService {
 	 * @param array $documents
 	 * @return array
 	 * @throws \DBUnexpectedError
+	 * @throws BadRequestApiException
 	 */
 	protected function processAllDocuments( $documents ) {
 		if ( empty( $documents ) || in_array( self::DISABLE_BACKLINKS_COUNT_FLAG, $this->flags ) ) {
 			return $documents;
 		}
+
+		$languageCode = $this->getLanguageCode();
 
 		$pageIds = array_filter( array_map( function ( $document ) {
 			return $document['page_id']['set'];
@@ -54,7 +57,7 @@ class Evaluation extends AbstractService {
 
 		list( $backlinksCount, $redirects ) = $this->getAdditionalInfo( $pageIds );
 
-		return array_map( function ( $document ) use ( $backlinksCount, $redirects ) {
+		return array_map( function ( $document ) use ( $backlinksCount, $languageCode, $redirects ) {
 			$id = $document['page_id']['set'];
 
 			if ( !isset( $id ) ) {
@@ -68,7 +71,7 @@ class Evaluation extends AbstractService {
 			}
 
 			if ( isset( $redirects[ $id ] ) ) {
-				$document['redirects'] = [
+				$document["redirects_${languageCode}"] = [
 					'set' => $redirects[ $id ]
 				];
 			}
