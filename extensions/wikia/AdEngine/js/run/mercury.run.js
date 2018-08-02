@@ -84,7 +84,7 @@ require([
 		var rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
 
 		if (rabbitResults && rabbitResults.length) {
-			pageLevelParams.addParam('rabbit', rabbitResults);
+			pageLevelParams.add('rabbit', rabbitResults);
 		}
 	}
 

@@ -55,6 +55,14 @@ require([
 ) {
 	'use strict';
 
+	function addRabbitPageParams() {
+		var rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+
+		if (rabbitResults && rabbitResults.length) {
+			pageLevelParams.add('rabbit', rabbitResults);
+		}
+	}
+
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	// Register adSlotTweaker so DART creatives can use it
@@ -62,13 +70,9 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		var context = adContext.getContext(),
-			rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+		var context = adContext.getContext();
 
-		if (rabbitResults && rabbitResults.length) {
-			pageLevelParams.addParam('rabbit', rabbitResults);
-		}
-
+		addRabbitPageParams();
 		messageListener.init();
 
 		// Custom ads (skins, footer, etc)
