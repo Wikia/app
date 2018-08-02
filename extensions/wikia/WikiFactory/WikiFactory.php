@@ -1242,7 +1242,7 @@ class WikiFactory {
 	 * @param $host
 	 * @return string normalized host name
 	 */
-	protected static function normalizeHost( $host ) {
+	public static function normalizeHost( $host ) {
 		global $wgDevDomain, $wgWikiaBaseDomain;
 		// strip env-specific pre- and suffixes for staging environment
 		$host = preg_replace(

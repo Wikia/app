@@ -115,18 +115,19 @@ class WikiFactoryLoader {
 		 *
 		 * muppets.wikia.org => muppets.wikia.com
 		 *
-		 * additionally we remove www. before matching
+		 * additionally we remove www.
 		 */
-
-		// remove www from domain
-		$name = preg_replace( "/^www\./", "", $this->mServerName );
 
 		foreach ( $wikiFactoryDomains as $domain ) {
 			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
 			if ( $domain !== "wikia.com" && strpos( $this->mServerName, $domain ) === $tldLength ) {
 				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = str_replace( $domain, "wikia.com", $name );
+				$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
+				// remove extra www. prefix from domain
+				if ( $this->mServerName !== 'www.wikia.com' ) {  // skip canonical wikia global host
+					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				}
 				$this->mAlternativeDomainUsed = true;
 				break;
 			}
@@ -190,7 +191,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath, $wgEnableHTTPSForAnons;
+			   $wgArticlePath, $wgEnableHTTPSForAnons;
 
 		wfProfileIn(__METHOD__);
 
@@ -408,7 +409,8 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
+		$cond2 = $this->mAlternativeDomainUsed &&
+			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
@@ -416,7 +418,7 @@ class WikiFactoryLoader {
 			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
 		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) &&  $wgWikiFactoryRedirectForAlternateDomains ) {
+		if ( $cond1 || $cond2 || $shouldUpgradeToHttps ) {
 			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
