@@ -9,8 +9,21 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, trackingOptIn, win, rabbit) {
+], function (
+	adTracker,
+	geo,
+	slotRegistry,
+	pageLayout,
+	deviceDetect,
+	browserDetect,
+	log,
+	trackingOptIn,
+	win,
+	billTheLizard,
+	rabbit
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -83,6 +96,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
 			'bidder_16': transformBidderPrice('appnexusWebAds'),
+			'bidder_17': transformBidderPrice('kargo'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',
@@ -91,6 +105,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slotName) || 0,
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
+			'btl': (billTheLizard && billTheLizard.serialize()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
 			'labrador': geo.getSamplingResults().join(';'),

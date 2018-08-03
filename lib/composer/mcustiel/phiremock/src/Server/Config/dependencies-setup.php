@@ -21,6 +21,7 @@ use Mcustiel\Phiremock\Server\Config\Matchers;
 use Mcustiel\Phiremock\Server\Config\RouterConfig;
 use Mcustiel\Phiremock\Server\Http\Implementation\ReactPhpServer;
 use Mcustiel\Phiremock\Server\Http\InputSources\UrlFromPath;
+use Mcustiel\Phiremock\Server\Http\Matchers\JsonObjectsEquals;
 use Mcustiel\Phiremock\Server\Model\Implementation\ExpectationAutoStorage;
 use Mcustiel\Phiremock\Server\Model\Implementation\RequestAutoStorage;
 use Mcustiel\Phiremock\Server\Model\Implementation\ScenarioAutoStorage;
@@ -161,12 +162,13 @@ $di->register('router', function () use ($di) {
     );
 });
 
-$di->register('matcherFactory', function () {
+$di->register('matcherFactory', function () use ($di) {
     return new MatcherFactory([
         Matchers::EQUAL_TO    => new SingletonLazyCreator(Equals::class),
         Matchers::MATCHES     => new SingletonLazyCreator(RegExpMatcher::class),
         Matchers::SAME_STRING => new SingletonLazyCreator(CaseInsensitiveEquals::class),
         Matchers::CONTAINS    => new SingletonLazyCreator(ContainsMatcher::class),
+        Matchers::SAME_JSON   => new SingletonLazyCreator(JsonObjectsEquals::class, [$di->get('logger')]),
     ]);
 });
 

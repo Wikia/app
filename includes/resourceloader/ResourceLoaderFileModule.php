@@ -250,7 +250,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		}
 		// Make sure the remote base path is a complete valid URL,
 		// but possibly protocol-relative to avoid cache pollution
-		$this->remoteBasePath = wfExpandUrl( $this->remoteBasePath, PROTO_RELATIVE );
+		$this->remoteBasePath = $this->expandRemoteBasePath( $this->remoteBasePath );
 	}
 
 	/**
@@ -684,6 +684,15 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 
 	public function getSource() {
 		return $this->source;
+	}
+
+	protected function expandRemoteBasePath( $remoteBasePath ) {
+		$remoteBasePath = wfExpandUrl( $remoteBasePath, PROTO_RELATIVE );
+		if ( wfHttpsAllowedForURL( $remoteBasePath ) ) {
+			$remoteBasePath = wfProtocolUrlToRelative( $remoteBasePath );
+		}
+
+		return $remoteBasePath;
 	}
 
 	/* Wikia - change begin - @author: wladek */

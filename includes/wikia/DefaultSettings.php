@@ -1150,6 +1150,20 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
 $wgAdDriverPubMaticBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAdditionalVastSizeCountries
+ * List of countries where vast requests has additional size 480x360.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdditionalVastSizeCountries = null;
+
+/**
+ * @name $wgAdDriverKargoBidderCountries
+ * List of countries where Kargo prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKargoBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1397,6 +1411,12 @@ $wgAdDriverWadBTCountries = null;
  * List of countries to enable InstartLogic recovery
  */
 $wgAdDriverWadILCountries = null;
+
+/**
+ * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
+ * List of countries to switch BLB with PreFooter on mobile
+ */
+$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
 
 /**
  * @name $wgEnableCMPCountries

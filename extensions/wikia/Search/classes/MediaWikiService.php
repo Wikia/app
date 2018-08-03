@@ -1207,7 +1207,7 @@ class MediaWikiService {
 	 *
 	 * @return \Title|null
 	 */
-	protected function getTitleFromPageId( $pageId ) {
+	public function getTitleFromPageId( $pageId ) {
 
 		if ( !isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );

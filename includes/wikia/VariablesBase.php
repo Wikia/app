@@ -3681,13 +3681,6 @@ $wgEnableTemplateTypesParsing = true;
 $wgEnableTitleBlacklistExt = true;
 
 /**
- * Enable TorBlock extension.
- * @see extensions/TorBlock
- * @var bool $wgEnableTorBlockExt
- */
-$wgEnableTorBlockExt = true;
-
-/**
  * Enable page/event tracking.
  * @see extensions/wikia/Track
  * @var bool $wgEnableTracking

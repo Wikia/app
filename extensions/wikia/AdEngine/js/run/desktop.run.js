@@ -22,6 +22,7 @@ require([
 	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -45,6 +46,7 @@ require([
 	geo,
 	trackingOptIn,
 	win,
+	billTheLizard,
 	fvLagger
 ) {
 	'use strict';
@@ -73,6 +75,10 @@ require([
 			trackingOptIn
 		);
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+
+		if (billTheLizard) {
+			billTheLizard.call();
+		}
 
 		if (context.opts.babDetectionDesktop) {
 			adEngineBridge.checkAdBlocking(babDetection);
