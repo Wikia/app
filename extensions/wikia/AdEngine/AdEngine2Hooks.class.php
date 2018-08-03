@@ -43,6 +43,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAppNexusWebAdsBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
+		$vars[] = 'wgAdDriverA9OptOutCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
@@ -97,6 +98,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
+		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';

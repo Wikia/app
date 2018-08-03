@@ -998,6 +998,13 @@ $wgAdDriverA9VideoBidderCountries = [];
 $wgAdDriverA9BidderCountries = null;
 
 /**
+ * @name $wgAdDriverA9OptOutCountries
+ * List of countries where A9 is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9OptOutCountries = null;
+
+/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
@@ -1058,6 +1065,13 @@ $wgAdDriverAppNexusDfpCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPrebidOptOutCountries
+ * List of countries where Prebid is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidOptOutCountries = null;
 
 /**
  * @name $wgAdDriverAolBidderCountries
