@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			adError: 'error',
 			adImpression: 'impression',
 			adStarted: 'started',
+			adViewableImpression: 'viewable_impression',
 			adFirstQuartile: 'first_quartile',
 			adMidPoint: 'midpoint',
 			adThirdQuartile: 'third_quartile',
