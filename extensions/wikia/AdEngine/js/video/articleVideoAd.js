@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
 				audio: playerState.muted ? 'no' : 'yes',
-				ctp: playerState.autoplay || videoDepth > 0 ? 'no' : 'yes'
+				ctp: playerState.autoplay || videoDepth > 1 ? 'no' : 'yes'
 			};
 
 		if (slotTargeting) {
