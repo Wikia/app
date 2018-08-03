@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
+	'wikia.instantGlobals',
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpMobile'),
 	require.optional('ext.wikia.adEngine.ml.ctp.queenDesktop'),
@@ -8,6 +9,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression')
 ], function (
+	instantGlobals,
 	ctpDesktop,
 	ctpMobile,
 	queenDesktop,
@@ -76,9 +78,14 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		return getResults(allowedModels).join(';');
 	}
 
+	function getTargetingValues() {
+		return getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+	}
+
 	return {
 		getResults: getResults,
 		getPrediction: getPrediction,
-		getAllSerializedResults: getAllSerializedResults
+		getAllSerializedResults: getAllSerializedResults,
+		getTargetingValues: getTargetingValues
 	};
 });
