@@ -1942,7 +1942,7 @@ class Wikia {
 	public static function wikiSurrogateKey( $wikiId ) {
 		global $wgSurrogateKeysProdWikis;
 		if ( self::isProductionEnv() ) {
-			if ( !in_array( $wikiId, $wgSurrogateKeysProdWikis ) ) {
+			if ( !in_array( $wikiId, $wgSurrogateKeysProdWikis ) || $wikiId > 1000000 ) {
 				return '';
 			}
 			return 'wiki-' . $wikiId;
