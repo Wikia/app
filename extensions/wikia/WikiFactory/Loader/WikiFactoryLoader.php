@@ -431,9 +431,10 @@ class WikiFactoryLoader {
 			if ( $cond2 ) $redirectedBy[] = 'AlternativeDomain';
 			$redirectedBy = join( ' ', $redirectedBy );
 
-			global $wgWFLRedirect;
-			if ( !empty( $wgWFLRedirect ) ) {
-				$wgWFLRedirect->redirect( $redirectUrl, $redirectedBy );
+			global $wgSkipWFLRedirect;
+			if ( !empty( $wgSkipWFLRedirect ) ) {
+				RequestContext::getMain()->getOutput()->redirect(
+					$redirectUrl, 301, $redirectedBy );
 			} else {
 				header( 'X-Redirected-By-WF: ' . $redirectedBy );
 				header( 'Vary: Cookie,Accept-Encoding' );

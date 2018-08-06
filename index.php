@@ -49,30 +49,8 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 # AutoLoader, and the globals $wgRequest, $wgOut, $wgUser, $wgLang and
 # $wgContLang, amongst others; it does *not* load $wgTitle
 
-class WFLRedirect {
-	private $redirectUrl = null;
-	private $redirectedBy = null;
-
-	public function redirect( $targetUrl, $redirectedBy = null ) {
-		$this->redirectUrl = $targetUrl;
-		$this->redirectedBy = $redirectedBy;
-
-	}
-
-	public function getRedirect() {
-		return $this->redirectUrl;
-	}
-
-	public function getRedirectedBy() {
-		return $this->redirectedBy;
-	}
-};
-
-// This will intercept wiki redirects made in WikiFactoryLoader and pass
-// them later to mediawiki to merge with other redirects (like the main page).
-// This allows us to return a single redirects response instead of a chain of
-// 301s.
-$wgWFLRedirect = new WFLRedirect();
+// This will prevent WFL from redirecting
+$wgSkipWFLRedirect = true;
 
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( 'phase3/includes/WebStart.php' );
@@ -80,5 +58,5 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-$mediaWiki = new MediaWiki(null, $wgWFLRedirect );
+$mediaWiki = new MediaWiki();
 $mediaWiki->run();

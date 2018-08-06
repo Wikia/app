@@ -48,6 +48,7 @@ class HTTPSSupportHooks {
 			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
 		) {
 			$requestURL = $request->getFullRequestURL();
+			$wgDisableHTTPSDowngrade = false;
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
