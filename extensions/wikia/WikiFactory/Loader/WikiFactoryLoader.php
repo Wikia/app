@@ -130,6 +130,7 @@ class WikiFactoryLoader {
 				break;
 			}
 		}
+
 		WikiFactory::isUsed( true );
 
 		/**
