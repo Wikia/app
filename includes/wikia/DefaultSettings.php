@@ -1765,5 +1765,7 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 $wgSurrogateKeysProdWikis = [
 	1721212,    // mech-internal-https-test
 	1558829,     // rikitiki
-	1714958    // szlwikiactivities
+	518038,    // mobileregressiontesting
+	203236,    // mediawiki119
+	1927      // communitytest
 ];
