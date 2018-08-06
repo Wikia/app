@@ -161,7 +161,6 @@ class MediaWiki {
 		$request = $this->context->getRequest();
 		$title = $this->context->getTitle();
 		$output = $this->context->getOutput();
-
 		$user = $this->context->getUser();
 
 		if ( $request->getVal( 'printable' ) === 'yes' ) {
