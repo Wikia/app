@@ -59,7 +59,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
-				'vast_id': params.vastId || emptyValue.string
+				'vast_id': params.vastId || emptyValue.string,
+				'video_id': (adContext.get('targeting.featuredVideo') || {}).mediaId
 			};
 
 		if (bidHelper && params.bid) {
