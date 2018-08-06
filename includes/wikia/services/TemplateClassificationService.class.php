@@ -35,18 +35,6 @@ class TemplateClassificationService extends ContextSource {
 	private $apiClient = null;
 	private $cache = [];
 
-
-	public function __construct() {
-		global $wgWikiaEnvironment;
-
-		// FIXME: more generic solution needed here.
-		// Since we have master dev db in reston, request to template-classification-storage service in POZ takes longer
-		// than one second when classifying template
-		if ($wgWikiaEnvironment === WIKIA_ENV_DEV) {
-			$this->queryTimeout = 10;
-		}
-	}
-
 	/**
 	 * Get template type
 	 *
