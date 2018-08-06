@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_1': canFloat,
 				'additional_2': floatingState,
 				'vast_id': params.vastId || emptyValue.string,
-				'video_id': (adContext.get('targeting.featuredVideo') || {}).mediaId
+				'video_id': params.videoId || ''
 			};
 
 		if (bidHelper && params.bid) {

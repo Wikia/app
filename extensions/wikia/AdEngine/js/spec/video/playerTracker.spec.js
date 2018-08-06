@@ -5,13 +5,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	function noop() {
 	}
 
-	var featuredVideoMediaId = 'qwe123';
-	var adContextLookup = {
-		'targeting.featuredVideo': {
-			mediaId: featuredVideoMediaId
-		}
-	};
-
 	var mocks = {
 			adContext: {
 				getContext: function () {
@@ -20,9 +13,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 							playerTracking: true
 						}
 					};
-				},
-				get: function (key) {
-					return adContextLookup[key];
 				}
 			},
 			adLogicPageParams: {
@@ -149,7 +139,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('price')).toEqual(-1);
 		expect(getTrackedValue('wsi')).toEqual('(none)');
 		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
-		expect(getTrackedValue('video_id')).toEqual(featuredVideoMediaId);
 	});
 
 	it('Track data with slot name', function () {
