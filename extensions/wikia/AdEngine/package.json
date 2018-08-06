@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v12.0.12",
-    "@wikia/ad-products": "git+https://github.com/Wikia/ad-products.git#v7.6.1",
+    "@wikia/ad-products": "git+https://github.com/Wikia/ad-products.git#ADEN-7483",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "lodash": "4.17.10"

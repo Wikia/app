@@ -1060,6 +1060,13 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
  * @name $wgAdDriverAolBidderCountries
  * List of countries where aol bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

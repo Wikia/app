@@ -7,6 +7,7 @@ require([
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
+	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
@@ -15,6 +16,7 @@ require([
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.geo',
 	'wikia.instantGlobals',
@@ -29,6 +31,7 @@ require([
 	adGeo,
 	slotStateMonitor,
 	a9,
+	bidders,
 	prebid,
 	customAdsLoader,
 	messageListener,
@@ -37,6 +40,7 @@ require([
 	actionHandler,
 	slotRegistry,
 	adInfoListener,
+	adLogicZoneParams,
 	babDetection,
 	geo,
 	instantGlobals,
@@ -58,13 +62,19 @@ require([
 			slotRegistry,
 			mercuryListener,
 			pageLevelParams.getPageLevelParams(),
+			adLogicZoneParams,
 			adContext,
 			btfBlocker,
 			'mercury',
 			trackingOptIn
 		);
 	});
+
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+
+	if (bidders) {
+		bidders.runBidding();
+	}
 
 	function passFVLineItemIdToUAP() {
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {

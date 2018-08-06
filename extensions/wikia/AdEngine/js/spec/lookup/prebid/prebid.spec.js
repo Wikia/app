@@ -21,9 +21,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					return false;
 				}
 			},
-			opts: {
-				prebidBidderUrl: 'foo'
-			},
 			tracker: {
 				measureDiff: function () {
 					return mocks.tracker;

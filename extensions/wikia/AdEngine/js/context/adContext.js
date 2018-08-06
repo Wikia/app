@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
 			context.targeting.skin === 'oasis' &&
-			!areDelayServicesBlocked();
+			!context.opts.delayBlocked;
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -107,9 +107,10 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverPrebidBidderCountries');
-		context.bidders.a9 = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9BidderCountries');
-		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
+		context.bidders.prebid = !context.opts.delayBlocked && isProperGeoAds('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebidAE3 = isProperGeoAds('wgAdDriverPrebidAdEngine3Countries');
+		context.bidders.a9 = !context.opts.delayBlocked && isProperGeoAds('wgAdDriverA9BidderCountries');
+		context.bidders.a9Video = !context.opts.delayBlocked && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeoAds('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeoAds('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconDfp = isProperGeoAds('wgAdDriverRubiconDfpCountries');
@@ -155,11 +156,13 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
+		context.opts.delayBlocked = areDelayServicesBlocked();
 		context.opts.overwriteDelayEngine = isProperGeoAds('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo && isEnabled('wgAdDriverSrcPremiumCountries');
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
 
@@ -225,7 +228,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
 			context.targeting.skin !== 'oasis';
 
-		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
+		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
