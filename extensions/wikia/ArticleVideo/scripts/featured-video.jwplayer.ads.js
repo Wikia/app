@@ -138,6 +138,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Midroll position reached', log.levels.info, logGroup);
 				if (videoDepth > 0 && articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
+					playerState.muted = player.getMute();
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'midroll',
@@ -154,6 +155,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Postroll position reached', log.levels.info, logGroup);
 				if (videoDepth > 0 && articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
+					playerState.muted = player.getMute();
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'postroll',
