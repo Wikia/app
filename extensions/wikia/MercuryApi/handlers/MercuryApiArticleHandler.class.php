@@ -130,7 +130,7 @@ class MercuryApiArticleHandler {
 					return $userDetails;
 				},
 				F::app()
-					->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ), 'size' => 50 ] )
+					->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ), 'size' => AvatarService::AVATAR_SIZE_SMALL_PLUS ] )
 					->getData()['items']
 			);
 		} catch ( NotFoundApiException $e ) {

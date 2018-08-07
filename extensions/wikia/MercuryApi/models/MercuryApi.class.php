@@ -254,14 +254,27 @@ class MercuryApi {
 	 * @return string userName
 	 */
 	private function addUser( User $user  ) {
+		$premiumBottom = (bool) RequestContext::getMain()->getRequest()->getVal('premiumBottom', false);
+
 		$userName = trim( $user->getName() );
 		if ( !isset( $this->users[$userName] ) ) {
+			if ($premiumBottom) {
+				if (AvatarService::isEmptyOrFirstDefault( $userName )) {
+					$avatarUrl = null;
+				} else {
+					$avatarUrl = AvatarService::getAvatarUrl(
+						$userName,
+						AvatarService::AVATAR_SIZE_SMALL_PLUS);
+				}
+			} else {
+				$avatarUrl = AvatarService::getAvatarUrl(
+					$userName,
+					AvatarService::AVATAR_SIZE_MEDIUM);
+			}
+
 			$this->users[$userName] = [
 				'id' => (int) $user->getId(),
-				'avatar' => AvatarService::getAvatarUrl(
-					$userName,
-					AvatarService::AVATAR_SIZE_MEDIUM
-				),
+				'avatar' => $avatarUrl,
 				'url' => AvatarService::getUrl( $userName ),
 			];
 		}
