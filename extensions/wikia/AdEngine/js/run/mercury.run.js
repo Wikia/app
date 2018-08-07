@@ -17,7 +17,6 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
@@ -39,7 +38,6 @@ require([
 	adInfoListener,
 	babDetection,
 	geo,
-	instantGlobals,
 	trackingOptIn,
 	win,
 	fvLagger
@@ -78,7 +76,7 @@ require([
 		}
 	}
 
-	function callBiddersOnConsecutivePageView() {
+	function callOnConsecutivePageView() {
 		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
@@ -111,6 +109,6 @@ require([
 	});
 
 	mercuryListener.afterPageWithAdsRender(function () {
-		callBiddersOnConsecutivePageView();
+		callOnConsecutivePageView();
 	});
 });

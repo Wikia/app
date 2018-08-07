@@ -1942,10 +1942,10 @@ class Wikia {
 	public static function wikiSurrogateKey( $wikiId ) {
 		global $wgSurrogateKeysProdWikis;
 		if ( self::isProductionEnv() ) {
-			if ( !in_array( $wikiId, $wgSurrogateKeysProdWikis ) ) {
-				return '';
+			if ( in_array( $wikiId, $wgSurrogateKeysProdWikis ) || $wikiId > 1000000 ) {
+				return 'wiki-' . $wikiId;
 			}
-			return 'wiki-' . $wikiId;
+			return '';
 		}
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
 	}

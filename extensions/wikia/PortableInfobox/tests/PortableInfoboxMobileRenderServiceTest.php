@@ -284,7 +284,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">test label</h3>
 										<div class="pi-data-value pi-font">test value</div>
@@ -335,7 +337,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<section class="pi-item pi-group pi-border-color">
 									<table class="pi-horizontal-group">
 										<caption
-										class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">Test header</caption>
+										class="pi-secondary-font pi-secondary-background pi-item-spacing"><span class="pi-header">Test header</span></caption>
 										<thead>
 											<tr>
 												<th
@@ -706,7 +708,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value 1</div>
 								</div>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 										<div class="pi-data-value pi-font">test value 2</div>
@@ -815,7 +819,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value 1</div>
 								</div>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 										<div class="pi-data-value pi-font">test value 2</div>

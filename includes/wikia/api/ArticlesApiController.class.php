@@ -891,7 +891,6 @@ class ArticlesApiController extends WikiaApiController {
 		return $category;
 	}
 
-
 	/**
 	 * @param      $namespaces
 	 * @param null $caller

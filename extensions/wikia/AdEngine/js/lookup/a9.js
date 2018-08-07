@@ -56,8 +56,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
 
-			// force disabled if opt out, remove after CMP tests
-			if (!optIn) {
+			// Cleanup in ADEN-7500
+			if (!optIn && !adContext.get('bidders.a9OptOut')) {
 				return;
 			}
 
