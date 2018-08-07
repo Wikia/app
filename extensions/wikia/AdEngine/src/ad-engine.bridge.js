@@ -44,7 +44,9 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	context.set('options.bfabStickiness', legacyContext.get('opts.isBfabStickinessEnabled'));
+	const bfabStickiness = legacyContext.get('opts.isBfabStickinessEnabled') ||
+		legacyContext.get('opts.isDesktopBfabStickinessEnabled');
+	context.set('options.bfabStickiness', bfabStickiness);
 
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();

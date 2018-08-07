@@ -1,5 +1,7 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
-	<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'BOTTOM_LEADERBOARD', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'], 'addToAdQueue' => false]); ?>
+	<div id="bottomLeaderboardWrapper">
+		<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'BOTTOM_LEADERBOARD', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'], 'addToAdQueue' => false]); ?>
+	</div>
 	<?php if ( !WikiaPageType::isCorporatePage() ): ?>
 		<?= F::app()->renderView( 'Recirculation', 'Footer' ); ?>
 	<?php endif; ?>
