@@ -42,11 +42,7 @@ class CategoryViewer extends ContextSource {
 	 */
 	private $cat;
 
-	/**
-	 * The original query array, to be used in generating paging links.
-	 * @var array
-	 */
-	private $query;
+	private $lastItems;
 
 	/**
 	 * Constructor
@@ -54,22 +50,20 @@ class CategoryViewer extends ContextSource {
 	 * @since 1.19 $context is a second, required parameter
 	 * @param $title Title
 	 * @param $context IContextSource
-	 * @param $from String
-	 * @param $until String
-	 * @param $query Array
+	 * @param $from array
+	 * @param $until array
 	 */
-	function __construct( $title, IContextSource $context, $from = array(), $until = array(), $query = array() ) {
+	function __construct( $title, IContextSource $context, $from = array(), $until = array() ) {
 		global $wgCategoryPagingLimit;
 		$default = array('page' => null, 'subcat' => null, 'file' => null);
 		$this->title = $title;
 		$this->setContext( $context );
 		$this->from = array_merge( $default, $from );
-		$this->until = array_merge( $default, $until );;
+		$this->until = array_merge( $default, $until );
+		$this->lastItems = array_merge( $default, [] );
 		$this->limit = $wgCategoryPagingLimit;
 		$this->cat = Category::newFromTitle( $title );
-		$this->query = $query;
 		$this->collation = Collation::singleton();
-		unset( $this->query['title'] );
 	}
 
 	/**
@@ -91,7 +85,8 @@ class CategoryViewer extends ContextSource {
 			$this->getPagesSection() .
 			$this->getImageSection() .
 		# <Wikia>
-			$this->getOtherSection();
+			$this->getOtherSection() .
+			$this->getPagingLinks();
 		# </Wikia>
 
 		if ( $r == '' ) {
@@ -333,12 +328,15 @@ class CategoryViewer extends ContextSource {
 				if ( $title->getNamespace() == NS_CATEGORY ) {
 					$cat = Category::newFromRow( $row, $title );
 					$this->addSubcategoryObject( $cat, $humanSortkey, $row->page_len );
+					$this->lastItems['subcat'] = $humanSortkey;
 				} elseif ( $title->getNamespace() == NS_FILE ) {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
+					$this->lastItems['file'] = $humanSortkey;
 				} else {
 					# <Wikia>
 					if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
+						$this->lastItems['page'] = $humanSortkey;
 					}
 					# </Wikia>
 				}
@@ -377,9 +375,7 @@ class CategoryViewer extends ContextSource {
 			$r .= "<div id=\"mw-subcategories\">\n";
 			$r .= '<h2>' . wfMsg( 'subcategories' ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'subcat' );
 			$r .= $this->formatList( $this->children, $this->children_start_char );
-			$r .= $this->getSectionPagingLinks( 'subcat' );
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -406,9 +402,7 @@ class CategoryViewer extends ContextSource {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( 'category_header', $ti ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'page' );
 			$r .= $this->formatList( $this->articles, $this->articles_start_char );
-			$r .= $this->getSectionPagingLinks( 'page' );
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -427,13 +421,11 @@ class CategoryViewer extends ContextSource {
 			$r .= "<div id=\"mw-category-media\">\n";
 			$r .= '<h2>' . wfMsg( 'category-media-header', htmlspecialchars( $this->title->getText() ) ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'file' );
 			if ( $this->showGallery ) {
 				$r .= $this->gallery->toHTML();
 			} else {
 				$r .= $this->formatList( $this->imgsNoGallery, $this->imgsNoGallery_start_char );
 			}
-			$r .= $this->getSectionPagingLinks( 'file' );
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -449,17 +441,16 @@ class CategoryViewer extends ContextSource {
 	/* </Wikia> */
 
 	/**
-	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
+	 * Get the paging links for a section (subcats/pages/files), to go at the bottom
 	 * of the output.
 	 *
-	 * @param $type String: 'page', 'subcat', or 'file'
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
-	private function getSectionPagingLinks( $type ) {
-		if ( $this->until[$type] !== null ) {
-			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
-		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {
-			return $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
+	private function getPagingLinks() {
+		if ( !empty( array_filter( $this->until ) ) ) {
+			return $this->pagingLinks( $this->nextPage, $this->until );
+		} elseif ( !empty ( array_filter( $this->nextPage ) ) || !empty( array_filter( $this->from ) ) ) {
+			return $this->pagingLinks( $this->from, $this->nextPage, $this->lastItems );
 		} else {
 			return '';
 		}
@@ -582,73 +573,50 @@ class CategoryViewer extends ContextSource {
 	}
 
 	/**
-	 * Create paging links, as a helper method to getSectionPagingLinks().
+	 * Create paging links, as a helper method to getPagingLinks().
 	 *
-	 * @param $first String The 'until' parameter for the generated URL
-	 * @param $last String The 'from' parameter for the genererated URL
-	 * @param $type String A prefix for parameters, 'page' or 'subcat' or
-	 *     'file'
+	 * @param array $fromOrNext
+	 * @param array $untilOrNext
+	 * @param array $lastItems
 	 * @return String HTML
 	 */
-	private function pagingLinks( $first, $last, $type = '' ) {
-		$prevLink = wfMessage( 'prevn' )->numParams( $this->limit )->escaped();
+	private function pagingLinks( $fromOrNext, $untilOrNext, $lastItems = [] ) {
+		$types = [ 'page', 'subcat', 'file' ];
+		$links = [];
 
-		if ( $first != '' ) {
-			$prevQuery = $this->query;
-			$prevQuery["{$type}until"] = $first;
-			unset( $prevQuery["{$type}from"] );
-			$prevLink = Linker::linkKnown(
-				$this->addFragmentToTitle( $this->title, $type ),
-				$prevLink,
+		if ( !empty( array_filter( $fromOrNext ) ) ) {
+			$until = [];
+
+			foreach ( $types as $type ) {
+				$until[] = $type . '|' . $fromOrNext[$type];
+			}
+
+			$links[] = Linker::linkKnown(
+				$this->title,
+				'&#x1F448; Previous page',
 				array(),
-				$prevQuery
+				[ 'until' => join( '|', $until ) ]
 			);
 		}
 
-		$nextLink = wfMessage( 'nextn' )->numParams( $this->limit )->escaped();
+		if ( !empty( array_filter( $untilOrNext ) ) ) {
+			$from = [];
 
-		if ( $last != '' ) {
-			$lastQuery = $this->query;
-			$lastQuery["{$type}from"] = $last;
-			unset( $lastQuery["{$type}until"] );
-			$nextLink = Linker::linkKnown(
-				$this->addFragmentToTitle( $this->title, $type ),
-				$nextLink,
+			foreach ( $types as $type ) {
+				$from[] = $type . '|' . ( $untilOrNext[$type] ?? $lastItems[$type] );
+			}
+
+			$links[] = Linker::linkKnown(
+				$this->title,
+				'Next page &#x1F449;',
 				array(),
-				$lastQuery
+				[ 'from' => join( '|', $from ) ]
 			);
 		}
 
-		return "($prevLink) ($nextLink)";
+		return join( " ", $links );
 	}
 
-	/**
-	 * Takes a title, and adds the fragment identifier that
-	 * corresponds to the correct segment of the category.
-	 *
-	 * @param Title $title: The title (usually $this->title)
-	 * @param String $section: Which section
-	 * @return Title
-	 */
-	private function addFragmentToTitle( $title, $section ) {
-		switch ( $section ) {
-			case 'page':
-				$fragment = ''; # 'mw-pages'; SUS-4071
-				break;
-			case 'subcat':
-				$fragment = 'mw-subcategories';
-				break;
-			case 'file':
-				$fragment = 'mw-category-media';
-				break;
-			default:
-				throw new MWException( __METHOD__ .
-					" Invalid section $section." );
-		}
-
-		return Title::makeTitle( $title->getNamespace(),
-			$title->getDBkey(), $fragment );
-	}
 	/**
 	 * What to do if the category table conflicts with the number of results
 	 * returned?  This function says what. Each type is considered independently

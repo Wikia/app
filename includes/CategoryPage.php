@@ -71,29 +71,38 @@ class CategoryPage extends Article {
 	function closeShowCategory() {
 		// Use these as defaults for back compat --catrope
 		$request = $this->getContext()->getRequest();
-		$oldFrom = $request->getVal( 'from' );
-		$oldUntil = $request->getVal( 'until' );
 
-		$reqArray = $request->getValues();
+		$from = $this->getPaginationParams( $request->getVal( 'from', null ) );
+		$until = $this->getPaginationParams( $request->getVal( 'until', null ) );
 
-		$from = $until = array();
-		foreach ( array( 'page', 'subcat', 'file' ) as $type ) {
-			$from[$type] = $request->getVal( "{$type}from", $oldFrom );
-			$until[$type] = $request->getVal( "{$type}until", $oldUntil );
+		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from, $until );
+		$this->getContext()->getOutput()->addHTML( $viewer->getHTML() );
+	}
 
-			// Do not want old-style from/until propagating in nav links.
-			if ( !isset( $reqArray["{$type}from"] ) && isset( $reqArray["from"] ) ) {
-				$reqArray["{$type}from"] = $reqArray["from"];
-			}
-			if ( !isset( $reqArray["{$type}to"] ) && isset( $reqArray["to"] ) ) {
-				$reqArray["{$type}to"] = $reqArray["to"];
-			}
+	// TODO support `?from=B` hardcoded by users
+	private function getPaginationParams( $rawValue ) {
+		$params = [];
+
+		if ( $rawValue === null ) {
+			return $params;
 		}
 
-		unset( $reqArray["from"] );
-		unset( $reqArray["to"] );
+		$exploded = explode( '|', $rawValue );
 
-		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from, $until, $reqArray );
-		$this->getContext()->getOutput()->addHTML( $viewer->getHTML() );
+		for ( $i = 0; $i < count( $exploded ); $i++ ) {
+			if ( $i % 2 !== 0 ) {
+				continue;
+			}
+
+			$type = $exploded[ $i ];
+			$value = $exploded[ $i + 1 ];
+
+			if ( empty( $value ) ) {
+				continue;
+			}
+
+			$params[ $type ] = $value;
+		}
+		return $params;
 	}
 }
