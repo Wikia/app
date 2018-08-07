@@ -50,6 +50,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
+			null,
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,

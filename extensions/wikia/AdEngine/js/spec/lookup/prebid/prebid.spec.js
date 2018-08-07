@@ -6,7 +6,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		mocks = {
 			adContext: {
 				get: function () {
-					return true;
+					return false;
 				},
 				getContext: function () {
 					return {

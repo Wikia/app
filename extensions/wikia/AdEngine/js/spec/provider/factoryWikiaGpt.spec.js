@@ -66,6 +66,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
+			null,
 			mocks.lookups
 		);
 	}
