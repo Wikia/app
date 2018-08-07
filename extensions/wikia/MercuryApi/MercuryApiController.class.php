@@ -352,6 +352,7 @@ class MercuryApiController extends WikiaController {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 					$displayTitle = $articleData['displayTitle'];
 					$data['categories'] = $articleData['categories'];
+					$data['languageLinks'] = $articleData['languageLinks'];
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
 					$data['categories'] = [];
