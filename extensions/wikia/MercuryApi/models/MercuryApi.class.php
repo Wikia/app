@@ -254,6 +254,7 @@ class MercuryApi {
 	 * @return string userName
 	 */
 	private function addUser( User $user  ) {
+		// TODO: clean me after new mobile bottom of a page is released and icache expires
 		$premiumBottom = (bool) RequestContext::getMain()->getRequest()->getVal('premiumBottom', false);
 
 		$userName = trim( $user->getName() );
