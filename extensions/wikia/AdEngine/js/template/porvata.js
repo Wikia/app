@@ -1,6 +1,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
@@ -16,6 +17,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
 	DOMElementTweaker,
+	bidders,
 	slotRegistry,
 	slotTweaker,
 	porvata,
@@ -106,7 +108,9 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			hasDirectAd = false;
-			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			fallbackBid = bidders.isEnabled()
+				? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders)
+				: prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
@@ -184,7 +188,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (prebid && params.hbAdId) {
-			params.bid = prebid.getBidByAdId(params.hbAdId);
+			params.bid = bidders.isEnabled() ? bidders.getBidByAdId(params.hbAdId) : prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}

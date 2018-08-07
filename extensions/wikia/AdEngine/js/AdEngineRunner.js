@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		supportedModules = [babDetection, fvLagger],
 		timeout = getTimeout();
 
-	if (adContext.get('bidders.prebidAE3')) {
+	if (bidders && bidders.isEnabled()) {
 		supportedModules.push(bidders);
 	} else {
 		supportedModules.push(a9);

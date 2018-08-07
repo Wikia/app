@@ -92,7 +92,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.src = src;
 			slotTargeting.rv = slotRegistry.getRefreshCount(slot.name).toString();
 
-			if (bidders && bidders.wasCalled()) {
+			if (bidders && bidders.isEnabled()) {
 				var targeting = bidders.updateSlotTargeting(slot.name);
 
 				Object.keys(targeting).forEach(function (key) {
