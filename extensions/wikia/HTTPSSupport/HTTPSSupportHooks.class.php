@@ -91,6 +91,29 @@ class HTTPSSupportHooks {
 		return true;
 	}
 
+	public static function parserUpgradeVignetteUrls( string &$url ) {
+		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
+			$url = wfHttpToHttps( $url );
+		}
+	}
+
+	/**
+	 * Make sure any "external" links to our own wikis that support HTTPS
+	 * are protocol-relative on output.
+	 *
+	 * @param  string  &$url
+	 * @param  string  &$text
+	 * @param  bool    &$link
+	 * @param  array   &$attribs
+	 * @return boolean
+	 */
+	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
+		if ( wfHttpsAllowedForURL( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+		return true;
+	}
+
 	private static function httpsAllowed( User $user, string $url ): bool {
 		global $wgEnableHTTPSForAnons;
 		return wfHttpsAllowedForURL( $url ) &&
@@ -101,12 +124,6 @@ class HTTPSSupportHooks {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
-	}
-
-	public static function parserUpgradeVignetteUrls( string &$url ) {
-		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
-			$url = wfHttpToHttps( $url );
-		}
 	}
 
 	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
