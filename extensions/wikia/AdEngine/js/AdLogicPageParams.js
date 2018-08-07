@@ -12,7 +12,19 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, zoneParams, doc, geo, loc, log, trackingOptIn, Querystring, win, abTest, krux) {
+], function (
+	adContext,
+	zoneParams,
+	doc,
+	geo,
+	loc,
+	log,
+	trackingOptIn,
+	Querystring,
+	win,
+	abTest,
+	krux
+) {
 	'use strict';
 
 	var context = {},
