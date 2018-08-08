@@ -5,6 +5,7 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 class CategoryViewer extends ContextSource {
 	var $limit, $from, $until,
+		$members, $members_start_char,
 		$articles, $articles_start_char,
 		$children, $children_start_char,
 		$showGallery, $imgsNoGalley,
@@ -12,12 +13,12 @@ class CategoryViewer extends ContextSource {
 		$imgsNoGallery;
 
 	/**
-	 * @var Array
+	 * @var String
 	 */
 	var $nextPage;
 
 	/**
-	 * @var Array
+	 * @var Boolean
 	 */
 	var $flip;
 
@@ -48,6 +49,8 @@ class CategoryViewer extends ContextSource {
 	 */
 	private $query;
 
+	public $paginationUrls;
+
 	/**
 	 * Constructor
 	 *
@@ -56,18 +59,16 @@ class CategoryViewer extends ContextSource {
 	 * @param $context IContextSource
 	 * @param $from String
 	 * @param $until String
-	 * @param $query Array
+	 * @param $query array
 	 */
-	function __construct( $title, IContextSource $context, $from = array(), $until = array(), $query = array() ) {
+	function __construct( $title, IContextSource $context, $from, $until, $query = array() ) {
 		global $wgCategoryPagingLimit;
-		$default = array('page' => null, 'subcat' => null, 'file' => null);
 		$this->title = $title;
 		$this->setContext( $context );
-		$this->from = array_merge( $default, $from );
-		$this->until = array_merge( $default, $until );;
+		$this->from = $from;
+		$this->until = $until;
 		$this->limit = $wgCategoryPagingLimit;
 		$this->cat = Category::newFromTitle( $title );
-		$this->query = $query;
 		$this->collation = Collation::singleton();
 		unset( $this->query['title'] );
 	}
@@ -78,21 +79,13 @@ class CategoryViewer extends ContextSource {
 	 * @return string HTML output
 	 */
 	public function getHTML() {
-		global $wgCategoryMagicGallery;
 		wfProfileIn( __METHOD__ );
-
-		$this->showGallery = $wgCategoryMagicGallery && !$this->getOutput()->mNoGallery;
 
 		$this->clearCategoryState();
 		$this->doCategoryQuery();
 		$this->finaliseCategoryState();
 
-		$r = $this->getSubcategorySection() .
-			$this->getPagesSection() .
-			$this->getImageSection() .
-		# <Wikia>
-			$this->getOtherSection();
-		# </Wikia>
+		$r = $this->getContent();
 
 		if ( $r == '' ) {
 			// If there is no category content to display, only
@@ -122,17 +115,10 @@ class CategoryViewer extends ContextSource {
 	}
 
 	function clearCategoryState() {
-		$this->articles = array();
-		$this->articles_start_char = array();
+		$this->members = array();
+		$this->members_start_char = array();
 		$this->children = array();
 		$this->children_start_char = array();
-		if ( $this->showGallery ) {
-			$this->gallery = new ImageGallery();
-			$this->gallery->setHideBadImages();
-		} else {
-			$this->imgsNoGallery = array();
-			$this->imgsNoGallery_start_char = array();
-		}
 	}
 
 	/**
@@ -152,9 +138,9 @@ class CategoryViewer extends ContextSource {
 			// on a category page.
 			$link = '<span class="redirect-in-category">' . $link . '</span>';
 		}
-		$this->children[] = $link;
+		$this->members[] = $link;
 
-		$this->children_start_char[] =
+		$this->members_start_char[] =
 			$this->getSubcategorySortChar( $cat->getTitle(), $sortkey );
 	}
 
@@ -200,25 +186,17 @@ class CategoryViewer extends ContextSource {
 	 */
 	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
-		if ( $this->showGallery ) {
-			$flip = $this->flip['file'];
-			if ( $flip ) {
-				$this->gallery->insert( $title );
-			} else {
-				$this->gallery->add( $title );
-			}
-		} else {
-			$link = Linker::link( $title );
-			if ( $isRedirect ) {
-				// This seems kind of pointless given 'mw-redirect' class,
-				// but keeping for back-compatibility with user css.
-				$link = '<span class="redirect-in-category">' . $link . '</span>';
-			}
-			$this->imgsNoGallery[] = $link;
 
-			$this->imgsNoGallery_start_char[] = $wgContLang->convert(
-				$this->collation->getFirstLetter( $sortkey ) );
+		$link = Linker::link( $title );
+
+		if ( $isRedirect ) {
+			// This seems kind of pointless given 'mw-redirect' class,
+			// but keeping for back-compatibility with user css.
+			$link = '<span class="redirect-in-category">' . $link . '</span>';
 		}
+		$this->members[] = $link;
+
+		$this->members_start_char[] = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
 	}
 
 	/**
@@ -237,111 +215,96 @@ class CategoryViewer extends ContextSource {
 			// but keeping for back-compatiability with user css.
 			$link = '<span class="redirect-in-category">' . $link . '</span>';
 		}
-		$this->articles[] = $link;
+		$this->members[] = $link;
 
-		$this->articles_start_char[] = $wgContLang->convert(
-			$this->collation->getFirstLetter( $sortkey ) );
+		$this->members_start_char[] = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
 	}
 
 	function finaliseCategoryState() {
-		if ( $this->flip['subcat'] ) {
-			$this->children            = array_reverse( $this->children );
-			$this->children_start_char = array_reverse( $this->children_start_char );
-		}
-		if ( $this->flip['page'] ) {
-			$this->articles            = array_reverse( $this->articles );
-			$this->articles_start_char = array_reverse( $this->articles_start_char );
-		}
-		if ( !$this->showGallery && $this->flip['file'] ) {
-			$this->imgsNoGallery            = array_reverse( $this->imgsNoGallery );
-			$this->imgsNoGallery_start_char = array_reverse( $this->imgsNoGallery_start_char );
+		if ( $this->flip ) {
+			$this->members = array_reverse( $this->members );
+			$this->members_start_char = array_reverse( $this->members_start_char );
 		}
 	}
 
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'category' );
 
-		$this->nextPage = array(
-			'page' => null,
-			'subcat' => null,
-			'file' => null,
-		);
-		$this->flip = array( 'page' => false, 'subcat' => false, 'file' => false );
+		$this->nextPage = null;
+		$this->flip = false;
 
-		foreach ( array( 'page', 'subcat', 'file' ) as $type ) {
-			# Get the sortkeys for start/end, if applicable.  Note that if
-			# the collation in the database differs from the one
-			# set in $wgCategoryCollation, pagination might go totally haywire.
-			$extraConds = array( 'cl_type' => $type );
-			if ( $this->from[$type] !== null ) {
-				$extraConds[] = 'cl_sortkey >= '
-					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
-			} elseif ( $this->until[$type] !== null ) {
-				$extraConds[] = 'cl_sortkey < '
-					. $dbr->addQuotes( $this->collation->getSortKey( $this->until[$type] ) );
-				$this->flip[$type] = true;
+		# Get the sortkeys for start/end, if applicable.  Note that if
+		# the collation in the database differs from the one
+		# set in $wgCategoryCollation, pagination might go totally haywire.
+		$extraConds = [];
+		if ( $this->from !== null ) {
+			$extraConds[] = 'cl_sortkey >= '
+				. $dbr->addQuotes( $this->collation->getSortKey( $this->from ) );
+		} elseif ( $this->until !== null ) {
+			$extraConds[] = 'cl_sortkey < '
+				. $dbr->addQuotes( $this->collation->getSortKey( $this->until ) );
+			$this->flip = true;
+		}
+
+		/* Wikia change begin - @author: TomekO */
+		/* Changed by MoLi (1.19 ugrade) */
+		Hooks::run( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
+		/* Wikia change end */
+
+		$res = $dbr->select(
+			array( 'page', 'categorylinks', 'category' ),
+			array( 'page_id', 'page_title', 'page_namespace', 'page_len',
+				'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
+				'cat_subcats', 'cat_pages', 'cat_files',
+				'cl_sortkey_prefix', 'cl_collation' ),
+			array_merge( array( 'cl_to' => $this->title->getDBkey() ),  $extraConds ),
+			__METHOD__,
+			array(
+				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				'LIMIT' => /* <Wikia> */( is_integer( $this->limit ) ) /* </Wikia> */ ? $this->limit + 1 : null,
+				'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
+			),
+			array(
+				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
+				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY )
+			)
+		);
+
+		$count = 0;
+		foreach ( $res as $row ) {
+			$title = Title::newFromRow( $row );
+			if ( $row->cl_collation === '' ) {
+				// Hack to make sure that while updating from 1.16 schema
+				// and db is inconsistent, that the sky doesn't fall.
+				// See r83544. Could perhaps be removed in a couple decades...
+				$humanSortkey = $row->cl_sortkey;
+			} else {
+				$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
 			}
 
-			/* Wikia change begin - @author: TomekO */
-			/* Changed by MoLi (1.19 ugrade) */
-			Hooks::run( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
-			/* Wikia change end */
+			if ( ++$count > $this->limit
+				/* Wikia change begin - @author: Federico "Lox" Lucignano */
+				/* allow getting all the items in a category */
+				&& is_integer( $this->limit )
+				/* Wikia change end*/
+			) {
+				# We've reached the one extra which shows that there
+				# are additional pages to be had. Stop here...
+				$this->nextPage = $humanSortkey;
+				break;
+			}
 
-			$res = $dbr->select(
-				array( 'page', 'categorylinks', 'category' ),
-				array( 'page_id', 'page_title', 'page_namespace', 'page_len',
-					'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
-					'cat_subcats', 'cat_pages', 'cat_files',
-					'cl_sortkey_prefix', 'cl_collation' ),
-				array_merge( array( 'cl_to' => $this->title->getDBkey() ),  $extraConds ),
-				__METHOD__,
-				array(
-					'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-					'LIMIT' => /* <Wikia> */( is_integer( $this->limit ) ) /* </Wikia> */ ? $this->limit + 1 : null,
-					'ORDER BY' => $this->flip[$type] ? 'cl_sortkey DESC' : 'cl_sortkey',
-				),
-				array(
-					'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-					'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY )
-				)
-			);
-
-			$count = 0;
-			foreach ( $res as $row ) {
-				$title = Title::newFromRow( $row );
-				if ( $row->cl_collation === '' ) {
-					// Hack to make sure that while updating from 1.16 schema
-					// and db is inconsistent, that the sky doesn't fall.
-					// See r83544. Could perhaps be removed in a couple decades...
-					$humanSortkey = $row->cl_sortkey;
-				} else {
-					$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
+			if ( $title->getNamespace() == NS_CATEGORY ) {
+				$cat = Category::newFromRow( $row, $title );
+				$this->addSubcategoryObject( $cat, $humanSortkey, $row->page_len );
+			} elseif ( $title->getNamespace() == NS_FILE ) {
+				$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
+			} else {
+				# <Wikia>
+				if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
+					$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				}
-
-				if ( ++$count > $this->limit
-					/* Wikia change begin - @author: Federico "Lox" Lucignano */
-					/* allow getting all the items in a category */
-					&& is_integer( $this->limit )
-					/* Wikia change end*/
-				) {
-					# We've reached the one extra which shows that there
-					# are additional pages to be had. Stop here...
-					$this->nextPage[$type] = $humanSortkey;
-					break;
-				}
-
-				if ( $title->getNamespace() == NS_CATEGORY ) {
-					$cat = Category::newFromRow( $row, $title );
-					$this->addSubcategoryObject( $cat, $humanSortkey, $row->page_len );
-				} elseif ( $title->getNamespace() == NS_FILE ) {
-					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
-				} else {
-					# <Wikia>
-					if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
-						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
-					}
-					# </Wikia>
-				}
+				# </Wikia>
 			}
 		}
 	}
@@ -356,84 +319,22 @@ class CategoryViewer extends ContextSource {
 		Hooks::run('CategoryPage::getCategoryTop',array($this,&$r));
 		/* Wikia change end */
 
-		$r .= $this->getCategoryBottom();
 		return $r === ''
 			? $r
 			: "<br style=\"clear:both;\"/>\n" . $r;
 	}
 
-	/**
-	 * @return string
-	 */
-	function getSubcategorySection() {
-		# Don't show subcategories section if there are none.
+	private function getContent() {
 		$r = '';
-		$rescnt = count( $this->children );
-		$dbcnt = $this->cat->getSubcatCount();
-		$countmsg = $this->getCountMessage( $rescnt, $dbcnt, 'subcat' );
+		$rescnt = count( $this->members );
+		$dbcnt = $this->cat->getPageCount();
+		$countmsg = $this->getCountMessage( $rescnt, $dbcnt );
 
 		if ( $rescnt > 0 ) {
-			# Showing subcategories
-			$r .= "<div id=\"mw-subcategories\">\n";
-			$r .= '<h2>' . wfMsg( 'subcategories' ) . "</h2>\n";
+			$r .= "<div>\n";
+			$r .= "<h2>Members</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'subcat' );
-			$r .= $this->formatList( $this->children, $this->children_start_char );
-			$r .= $this->getSectionPagingLinks( 'subcat' );
-			$r .= "\n</div>";
-		}
-		return $r;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getPagesSection() {
-		$ti = htmlspecialchars( $this->title->getText() );
-		# Don't show articles section if there are none.
-		$r = '';
-
-		# @todo FIXME: Here and in the other two sections: we don't need to bother
-		# with this rigamarole if the entire category contents fit on one page
-		# and have already been retrieved.  We can just use $rescnt in that
-		# case and save a query and some logic.
-		$dbcnt = $this->cat->getPageCount() - $this->cat->getSubcatCount()
-			- $this->cat->getFileCount();
-		$rescnt = count( $this->articles );
-		$countmsg = $this->getCountMessage( $rescnt, $dbcnt, 'article' );
-
-		if ( $rescnt > 0 ) {
-			$r = "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMsg( 'category_header', $ti ) . "</h2>\n";
-			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'page' );
-			$r .= $this->formatList( $this->articles, $this->articles_start_char );
-			$r .= $this->getSectionPagingLinks( 'page' );
-			$r .= "\n</div>";
-		}
-		return $r;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getImageSection() {
-		$r = '';
-		$rescnt = $this->showGallery ? $this->gallery->count() : count( $this->imgsNoGallery );
-		if ( $rescnt > 0 ) {
-			$dbcnt = $this->cat->getFileCount();
-			$countmsg = $this->getCountMessage( $rescnt, $dbcnt, 'file' );
-
-			$r .= "<div id=\"mw-category-media\">\n";
-			$r .= '<h2>' . wfMsg( 'category-media-header', htmlspecialchars( $this->title->getText() ) ) . "</h2>\n";
-			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'file' );
-			if ( $this->showGallery ) {
-				$r .= $this->gallery->toHTML();
-			} else {
-				$r .= $this->formatList( $this->imgsNoGallery, $this->imgsNoGallery_start_char );
-			}
-			$r .= $this->getSectionPagingLinks( 'file' );
+			$r .= $this->formatList( $this->members, $this->members_start_char );
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -449,27 +350,29 @@ class CategoryViewer extends ContextSource {
 	/* </Wikia> */
 
 	/**
-	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
-	 * of the output.
+	 * Get the paging links
 	 *
-	 * @param $type String: 'page', 'subcat', or 'file'
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
-	private function getSectionPagingLinks( $type ) {
-		if ( $this->until[$type] !== null ) {
-			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
-		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {
-			return $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
+	private function getPagingLinks() {
+		$links = '';
+
+		if ( $this->until !== null ) {
+			$links = $this->pagingLinks( $this->nextPage, $this->until );
+		} elseif ( $this->nextPage !== null || $this->from !== null ) {
+			$links = $this->pagingLinks( $this->from, $this->nextPage );
 		} else {
-			return '';
+			return $links;
 		}
+
+		return join( " ", $links );
 	}
 
 	/**
 	 * @return string
 	 */
 	function getCategoryBottom() {
-		return '';
+		return $this->getPagingLinks();
 	}
 
 	/**
@@ -581,45 +484,40 @@ class CategoryViewer extends ContextSource {
 		return $r;
 	}
 
-	/**
-	 * Create paging links, as a helper method to getSectionPagingLinks().
-	 *
-	 * @param $first String The 'until' parameter for the generated URL
-	 * @param $last String The 'from' parameter for the genererated URL
-	 * @param $type String A prefix for parameters, 'page' or 'subcat' or
-	 *     'file'
-	 * @return String HTML
-	 */
-	private function pagingLinks( $first, $last, $type = '' ) {
-		$prevLink = wfMessage( 'prevn' )->numParams( $this->limit )->escaped();
+	public function pagingLinks( $first, $last ) {
+		$links = [];
 
 		if ( $first != '' ) {
 			$prevQuery = $this->query;
-			$prevQuery["{$type}until"] = $first;
-			unset( $prevQuery["{$type}from"] );
-			$prevLink = Linker::linkKnown(
-				$this->addFragmentToTitle( $this->title, $type ),
-				$prevLink,
+			$prevQuery['until'] = $first;
+			unset( $prevQuery['from'] );
+
+			$this->paginationUrls['prev'] = $this->title->getLocalURL( $prevQuery );
+
+			$links['prev'] = Linker::linkKnown(
+				$this->title,
+				'&#x1F448; Previous',
 				array(),
 				$prevQuery
 			);
 		}
 
-		$nextLink = wfMessage( 'nextn' )->numParams( $this->limit )->escaped();
-
 		if ( $last != '' ) {
 			$lastQuery = $this->query;
-			$lastQuery["{$type}from"] = $last;
-			unset( $lastQuery["{$type}until"] );
-			$nextLink = Linker::linkKnown(
-				$this->addFragmentToTitle( $this->title, $type ),
-				$nextLink,
+			$lastQuery['from'] = $last;
+			unset( $lastQuery['until'] );
+
+			$this->paginationUrls['next'] = $this->title->getLocalURL( $lastQuery );
+
+			$links['next'] = Linker::linkKnown(
+				$this->title,
+				'Next &#x1F449;',
 				array(),
 				$lastQuery
 			);
 		}
 
-		return "($prevLink) ($nextLink)";
+		return $links;
 	}
 
 	/**
@@ -654,17 +552,11 @@ class CategoryViewer extends ContextSource {
 	 * returned?  This function says what. Each type is considered independently
 	 * of the other types.
 	 *
-	 * Note for grepping: uses the messages category-article-count,
-	 * category-article-count-limited, category-subcat-count,
-	 * category-subcat-count-limited, category-file-count,
-	 * category-file-count-limited.
-	 *
 	 * @param $rescnt Int: The number of items returned by our database query.
 	 * @param $dbcnt Int: The number of items according to the category table.
-	 * @param $type String: 'subcat', 'article', or 'file'
 	 * @return String: A message giving the number of items, to output to HTML.
 	 */
-	private function getCountMessage( $rescnt, $dbcnt, $type ) {
+	private function getCountMessage( $rescnt, $dbcnt ) {
 		# There are three cases:
 		#   1) The category table figure seems sane.  It might be wrong, but
 		#      we can't do anything about it if we don't recalculate it on ev-
@@ -675,18 +567,8 @@ class CategoryViewer extends ContextSource {
 		#      know the right figure.
 		#   3) We have no idea.
 
-		# Check if there's a "from" or "until" for anything
-
-		// This is a little ugly, but we seem to use different names
-		// for the paging types then for the messages.
-		if ( $type === 'article' ) {
-			$pagingType = 'page';
-		} else {
-			$pagingType = $type;
-		}
-
 		$fromOrUntil = false;
-		if ( $this->from[$pagingType] !== null || $this->until[$pagingType] !== null ) {
+		if ( $this->from !== null || $this->until !== null ) {
 			$fromOrUntil = true;
 		}
 
@@ -707,9 +589,9 @@ class CategoryViewer extends ContextSource {
 			$task->queue();
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMessage( "category-$type-count-limited" )->numParams( $rescnt )->parseAsBlock();
+			return null;
 		}
-		return wfMessage( "category-$type-count" )->numParams( $rescnt, $totalcnt )->parseAsBlock();
+		return 'There are ' . $totalcnt . ' members in this category.';
 	}
 
 	/**

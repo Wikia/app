@@ -71,29 +71,37 @@ class CategoryPage extends Article {
 	function closeShowCategory() {
 		// Use these as defaults for back compat --catrope
 		$request = $this->getContext()->getRequest();
-		$oldFrom = $request->getVal( 'from' );
-		$oldUntil = $request->getVal( 'until' );
+		$from = $request->getVal( 'from' );
+		$until = $request->getVal( 'until' );
+		$query = $request->getValues();
 
-		$reqArray = $request->getValues();
+		/** @var CategoryViewer $viewer */
+		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from, $until, $query );
+		$this->getContext()->getOutput()->addHTML( $viewer->getHTML() );
+		$this->addPaginationToHead( $viewer->paginationUrls );
+	}
 
-		$from = $until = array();
-		foreach ( array( 'page', 'subcat', 'file' ) as $type ) {
-			$from[$type] = $request->getVal( "{$type}from", $oldFrom );
-			$until[$type] = $request->getVal( "{$type}until", $oldUntil );
+	private function addPaginationToHead( $paginationUrls ) {
+		$output = $this->getContext()->getOutput();
 
-			// Do not want old-style from/until propagating in nav links.
-			if ( !isset( $reqArray["{$type}from"] ) && isset( $reqArray["from"] ) ) {
-				$reqArray["{$type}from"] = $reqArray["from"];
-			}
-			if ( !isset( $reqArray["{$type}to"] ) && isset( $reqArray["to"] ) ) {
-				$reqArray["{$type}to"] = $reqArray["to"];
-			}
+		if ( !empty ( $paginationUrls['prev'] ) ) {
+			$output->addHeadItem(
+				'Category pagination prev',
+				"\t" . Html::element( 'link', [
+					'rel' => 'prev',
+					'href' => $paginationUrls['prev'],
+				] ) . PHP_EOL
+			);
 		}
 
-		unset( $reqArray["from"] );
-		unset( $reqArray["to"] );
-
-		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from, $until, $reqArray );
-		$this->getContext()->getOutput()->addHTML( $viewer->getHTML() );
+		if ( !empty ( $paginationUrls['next'] ) ) {
+			$output->addHeadItem(
+				'Category pagination next',
+				"\t" . Html::element( 'link', [
+					'rel' => 'next',
+					'href' => $paginationUrls['next'],
+				] ) . PHP_EOL
+			);
+		}
 	}
 }

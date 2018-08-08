@@ -17,6 +17,9 @@ class CategoryExhibitionHooks {
 	static public function onArticleFromTitle( &$title, &$article ) {
 		$app = F::app();
 
+		// Disable category exhibition
+		return true;
+
 		// Only touch category pages on Oasis
 		if ( !$app->checkSkin( 'oasis' ) || !$title || $title->getNamespace() !== NS_CATEGORY ) {
 			return true;
