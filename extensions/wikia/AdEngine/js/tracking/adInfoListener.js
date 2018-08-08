@@ -1,6 +1,7 @@
 /*global define, JSON*/
 define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'ext.wikia.adEngine.utils.eventDispatcher',
@@ -9,7 +10,18 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'wikia.querystring',
 	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, eventDispatcher, vastParser, log, Querystring, trackingOptIn, win) {
+], function (
+	adContext,
+	bidders,
+	lookupServices,
+	tracker,
+	eventDispatcher,
+	vastParser,
+	log,
+	Querystring,
+	trackingOptIn,
+	win
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -56,8 +68,12 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		var slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams || '{}'),
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams || '{}'),
-			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
-			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
+			slotPricesIgnoringTimeout = bidders.isEnabled()
+				? bidders.getCurrentSlotPrices(slot.name)
+				: lookupServices.getCurrentSlotPrices(slot.name),
+			realSlotPrices = bidders.isEnabled()
+				? bidders.getDfpSlotPrices(slot.name)
+				: lookupServices.getDfpSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize || '[]'),
 			bidderWon = getBidderWon(slotParams, realSlotPrices);
 

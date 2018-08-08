@@ -26,6 +26,7 @@ import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
 import { getSlotsContext } from './slots';
+import { getBiddersContext } from './bidders';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
@@ -42,7 +43,8 @@ function init(
 	legacyContext,
 	legacyBtfBlocker,
 	skin,
-	trackingOptIn
+	trackingOptIn,
+	babDetection
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
@@ -72,6 +74,8 @@ function init(
 	});
 
 	if (legacyContext.get('bidders.prebidAE3')) {
+		context.set('bidders', getBiddersContext(skin));
+
 		context.set('bidders.a9.enabled', legacyContext.get('bidders.a9'));
 		context.set('bidders.a9.videoEnabled', legacyContext.get('bidders.a9Video'));
 
@@ -109,6 +113,8 @@ function init(
 
 		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
 	}
+
+	context.set('custom.rec', babDetection.isBlocking());
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {

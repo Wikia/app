@@ -51,6 +51,8 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	return {
 		addResponseListener: addResponseListener,
 		getBidByAdId: adEngineBridge.bidders.prebidHelper.getBidByAdId,
+		getCurrentSlotPrices: adEngineBridge.bidders.getCurrentSlotPrices,
+		getDfpSlotPrices: adEngineBridge.bidders.getDfpSlotPrices,
 		getName: getName,
 		getPrebid: adEngineBridge.bidders.prebidHelper.getPrebid,
 		getWinningVideoBidBySlotName: adEngineBridge.bidders.prebidHelper.getWinningVideoBidBySlotName,

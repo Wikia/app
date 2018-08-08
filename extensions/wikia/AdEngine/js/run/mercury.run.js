@@ -64,7 +64,8 @@ require([
 			adContext,
 			btfBlocker,
 			'mercury',
-			trackingOptIn
+			trackingOptIn,
+			babDetection
 		);
 	});
 
@@ -87,27 +88,23 @@ require([
 	}
 
 	function callOnConsecutivePageView() {
-		if (adContext.get('bidders.prebid')) {
-			prebid.call();
-		}
+		if (bidders && bidders.isEnabled()) {
+			bidders.runBidding();
+		} else {
+			if (adContext.get('bidders.prebid')) {
+				prebid.call();
+			}
 
-		if (adContext.get('bidders.a9')) {
-			a9.call();
+			if (adContext.get('bidders.a9')) {
+				a9.call();
+			}
 		}
 
 		passFVLineItemIdToUAP();
 	}
 
 	mercuryListener.onLoad(function () {
-		if (adContext.get('bidders.a9')) {
-			a9.call();
-		}
-
-		if (adContext.get('bidders.prebid')) {
-			prebid.call();
-		}
-
-		passFVLineItemIdToUAP();
+		callOnConsecutivePageView();
 
 		adInfoListener.run();
 		slotStateMonitor.run();

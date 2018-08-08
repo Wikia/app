@@ -77,21 +77,22 @@ require([
 			adContext,
 			btfBlocker,
 			'oasis',
-			trackingOptIn
+			trackingOptIn,
+			babDetection
 		);
 
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-		if (bidders) {
+		if (context.opts.babDetectionDesktop) {
+			adEngineBridge.checkAdBlocking(babDetection);
+		}
+
+		if (bidders && bidders.isEnabled()) {
 			bidders.runBidding();
 		}
 
 		if (billTheLizard) {
 			billTheLizard.call();
-		}
-
-		if (context.opts.babDetectionDesktop) {
-			adEngineBridge.checkAdBlocking(babDetection);
 		}
 
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
