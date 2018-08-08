@@ -1414,10 +1414,12 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
- * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
- * List of countries to switch BLB with PreFooter on mobile
+ * @name $wgAdDriverStickyAndSwapCountries
+ * List of countries to run simultaneously two experiments:
+ * - switch BLB with PreFooter
+ * - sticky BFAB
  */
-$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
+$wgAdDriverStickyAndSwapCountries = null;
 
 /**
  * @name $wgEnableCMPCountries
