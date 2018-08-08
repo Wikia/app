@@ -38,7 +38,6 @@ describe('AdContext', function () {
 			callback: noop
 		},
 		queryParams = [
-			'evolve2',
 			'turtle'
 		];
 
@@ -355,44 +354,6 @@ describe('AdContext', function () {
 		mocks.win.ads.context = {};
 		mocks.wikiaCookies.get.and.returnValue(false);
 		expect(getModule().getContext().opts.showcase).toBeFalsy();
-	});
-
-	it('enables evolve2 provider when country in instantGlobals.wgAdDriverEvolve2Countries', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						evolve2: true
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeFalsy();
-	});
-
-	it('disables evolve2 provider when provider is disabled by wg var', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						evolve2: false
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeFalsy();
 	});
 
 	it('enables FAN provider when provider is enabled by wg var', function () {

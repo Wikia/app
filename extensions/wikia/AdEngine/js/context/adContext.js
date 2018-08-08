@@ -178,11 +178,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Evolve2 integration
-		if (context.providers.evolve2) {
-			context.providers.evolve2 = isEnabled('wgAdDriverEvolve2Countries');
-		}
-
 		context.providers.turtle = isProperGeoAds('wgAdDriverTurtleCountries');
 
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
