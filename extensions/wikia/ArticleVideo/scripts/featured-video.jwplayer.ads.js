@@ -111,6 +111,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				correlator = Math.round(Math.random() * 10000000000);
 				trackingParams.adProduct = 'featured-video';
+				trackingParams.videoId = currentMedia.mediaid;
 				videoDepth += 1;
 
 				if (prebidParams) {
