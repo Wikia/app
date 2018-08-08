@@ -11,7 +11,16 @@ class CategoryViewer extends ContextSource {
 	 * @var String
 	 */
 	var $nextPage;
+
+	/**
+	 * @var String
+	 */
 	var $prevPage;
+
+	/**
+	 * @var String
+	 */
+	var $lastPage;
 
 	/**
 	 * @var Title
@@ -271,6 +280,10 @@ class CategoryViewer extends ContextSource {
 		}
 
 		$this->findPrevPage( $dbr );
+
+		if ( $this->nextPage ) {
+			$this->findLastPage( $dbr );
+		}
 	}
 
 	private function findPrevPage( DatabaseMysqli $dbr ) {
@@ -325,6 +338,58 @@ class CategoryViewer extends ContextSource {
 		}
 
 		$this->prevPage = $humanSortkey;
+	}
+
+	private function findLastPage( DatabaseMysqli $dbr ) {
+		$totalCount = $dbr->selectField(
+			'categorylinks',
+			'count(0)',
+			[
+				'cl_to' => $this->title->getDBkey()
+			],
+			__METHOD__
+		);
+
+		$lastPageMembersCount = $totalCount % $this->limit;
+
+
+		$res = $dbr->select(
+			[ 'page', 'categorylinks' ],
+			[
+				'page_id', 'page_title', 'page_namespace', 'page_len', 'page_is_redirect',
+				'cl_sortkey_prefix', 'cl_collation'
+			],
+			[
+				'cl_to' => $this->title->getDBkey()
+			],
+			__METHOD__,
+			[
+				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
+				'LIMIT' => $lastPageMembersCount,
+				'ORDER BY' => 'cl_sortkey DESC',
+			],
+			[
+				'categorylinks'  => [ 'INNER JOIN', 'cl_from = page_id' ],
+			]
+		);
+
+		$lastRow = null;
+
+		foreach ( $res as $row ) {
+			$lastRow = $row;
+		}
+
+		$title = Title::newFromRow( $lastRow );
+		if ( $lastRow->cl_collation === '' ) {
+			// Hack to make sure that while updating from 1.16 schema
+			// and db is inconsistent, that the sky doesn't fall.
+			// See r83544. Could perhaps be removed in a couple decades...
+			$humanSortkey = $lastRow->cl_sortkey;
+		} else {
+			$humanSortkey = $title->getCategorySortkey( $lastRow->cl_sortkey_prefix );
+		}
+
+		$this->lastPage = $humanSortkey;
 	}
 
 	/**
@@ -384,7 +449,7 @@ class CategoryViewer extends ContextSource {
 
 			$this->paginationUrls['prev'] = $this->title->getLocalURL( $queryParams );
 
-			$links['prev'] = Linker::linkKnown(
+			$links[] = Linker::linkKnown(
 				$this->title,
 				'&#x1F448; Previous',
 				[],
@@ -397,9 +462,20 @@ class CategoryViewer extends ContextSource {
 
 			$this->paginationUrls['next'] = $this->title->getLocalURL( $queryParams );
 
-			$links['next'] = Linker::linkKnown(
+			$links[] = Linker::linkKnown(
 				$this->title,
 				'Next &#x1F449;',
+				[],
+				$queryParams
+			);
+		}
+
+		if ( $this->lastPage && $this->lastPage !== $this->nextPage ) {
+			$queryParams = [ 'from' => $this->lastPage ];
+
+			$links[] = Linker::linkKnown(
+				$this->title,
+				'Last &#x1F449;&#x1F449;&#x1F449;',
 				[],
 				$queryParams
 			);
