@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',

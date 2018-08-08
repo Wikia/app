@@ -21,7 +21,7 @@ require([
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),

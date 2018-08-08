@@ -18,7 +18,6 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
-	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
@@ -27,7 +26,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
-	adGeo,
+	geo,
 	slotStateMonitor,
 	a9,
 	bidders,
@@ -41,7 +40,6 @@ require([
 	adInfoListener,
 	adLogicZoneParams,
 	babDetection,
-	geo,
 	trackingOptIn,
 	win,
 	fvLagger
