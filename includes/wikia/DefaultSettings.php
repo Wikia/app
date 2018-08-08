@@ -1215,19 +1215,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
  */
 $wgAdDriverUseAdsAfterInfobox = false;
 
-/**
- * @name $wgAdDriverUseEvolve2
- * Whether to enable AdProviderEvolve2 (true) or not (false)
- */
-$wgAdDriverUseEvolve2 = true;
-
-/**
- * @name $wgAdDriverEvolve2Countries
- * List of countries with enabled Evolve2 module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverEvolve2Countries = null;
-
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
