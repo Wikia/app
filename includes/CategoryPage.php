@@ -69,14 +69,11 @@ class CategoryPage extends Article {
 	}
 
 	function closeShowCategory() {
-		// Use these as defaults for back compat --catrope
 		$request = $this->getContext()->getRequest();
 		$from = $request->getVal( 'from' );
-		$until = $request->getVal( 'until' );
-		$query = $request->getValues();
 
 		/** @var CategoryViewer $viewer */
-		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from, $until, $query );
+		$viewer = new $this->mCategoryViewerClass( $this->getContext()->getTitle(), $this->getContext(), $from );
 		$this->getContext()->getOutput()->addHTML( $viewer->getHTML() );
 		$this->addPaginationToHead( $viewer->paginationUrls );
 	}

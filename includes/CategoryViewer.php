@@ -4,23 +4,14 @@ if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
 class CategoryViewer extends ContextSource {
-	var $limit, $from, $until,
-		$members, $members_start_char,
-		$articles, $articles_start_char,
-		$children, $children_start_char,
-		$showGallery, $imgsNoGalley,
-		$imgsNoGallery_start_char,
-		$imgsNoGallery;
+	var $limit, $from,
+		$members, $members_start_char;
 
 	/**
 	 * @var String
 	 */
 	var $nextPage;
-
-	/**
-	 * @var Boolean
-	 */
-	var $flip;
+	var $prevPage;
 
 	/**
 	 * @var Title
@@ -33,23 +24,13 @@ class CategoryViewer extends ContextSource {
 	var $collation;
 
 	/**
-	 * @var ImageGallery
-	 */
-	var $gallery;
-
-	/**
 	 * Category object for this page
 	 * @var Category
 	 */
 	private $cat;
 
-	/**
-	 * The original query array, to be used in generating paging links.
-	 * @var array
-	 */
-	private $query;
-
 	public $paginationUrls;
+	private $prevPageIsTheFirstPage;
 
 	/**
 	 * Constructor
@@ -58,19 +39,15 @@ class CategoryViewer extends ContextSource {
 	 * @param $title Title
 	 * @param $context IContextSource
 	 * @param $from String
-	 * @param $until String
-	 * @param $query array
 	 */
-	function __construct( $title, IContextSource $context, $from, $until, $query = array() ) {
+	function __construct( $title, IContextSource $context, $from ) {
 		global $wgCategoryPagingLimit;
 		$this->title = $title;
 		$this->setContext( $context );
 		$this->from = $from;
-		$this->until = $until;
 		$this->limit = $wgCategoryPagingLimit;
 		$this->cat = Category::newFromTitle( $title );
 		$this->collation = Collation::singleton();
-		unset( $this->query['title'] );
 	}
 
 	/**
@@ -83,7 +60,6 @@ class CategoryViewer extends ContextSource {
 
 		$this->clearCategoryState();
 		$this->doCategoryQuery();
-		$this->finaliseCategoryState();
 
 		$r = $this->getContent();
 
@@ -117,8 +93,6 @@ class CategoryViewer extends ContextSource {
 	function clearCategoryState() {
 		$this->members = array();
 		$this->members_start_char = array();
-		$this->children = array();
-		$this->children_start_char = array();
 	}
 
 	/**
@@ -220,30 +194,18 @@ class CategoryViewer extends ContextSource {
 		$this->members_start_char[] = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
 	}
 
-	function finaliseCategoryState() {
-		if ( $this->flip ) {
-			$this->members = array_reverse( $this->members );
-			$this->members_start_char = array_reverse( $this->members_start_char );
-		}
-	}
-
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'category' );
 
 		$this->nextPage = null;
-		$this->flip = false;
 
-		# Get the sortkeys for start/end, if applicable.  Note that if
+		# Get the sortkeys, if applicable.  Note that if
 		# the collation in the database differs from the one
 		# set in $wgCategoryCollation, pagination might go totally haywire.
 		$extraConds = [];
 		if ( $this->from !== null ) {
 			$extraConds[] = 'cl_sortkey >= '
 				. $dbr->addQuotes( $this->collation->getSortKey( $this->from ) );
-		} elseif ( $this->until !== null ) {
-			$extraConds[] = 'cl_sortkey < '
-				. $dbr->addQuotes( $this->collation->getSortKey( $this->until ) );
-			$this->flip = true;
 		}
 
 		/* Wikia change begin - @author: TomekO */
@@ -261,8 +223,8 @@ class CategoryViewer extends ContextSource {
 			__METHOD__,
 			array(
 				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-				'LIMIT' => /* <Wikia> */( is_integer( $this->limit ) ) /* </Wikia> */ ? $this->limit + 1 : null,
-				'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
+				'LIMIT' => ( is_integer( $this->limit ) ) ? $this->limit + 1 : null,
+				'ORDER BY' => 'cl_sortkey',
 			),
 			array(
 				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
@@ -307,6 +269,62 @@ class CategoryViewer extends ContextSource {
 				# </Wikia>
 			}
 		}
+
+		$this->findPrevPage( $dbr );
+	}
+
+	private function findPrevPage( DatabaseMysqli $dbr ) {
+		if ( $this->from === null ) {
+			return;
+		}
+
+		$res = $dbr->select(
+			[ 'page', 'categorylinks' ],
+			[
+				'page_id', 'page_title', 'page_namespace', 'page_len', 'page_is_redirect',
+				'cl_sortkey_prefix', 'cl_collation'
+			],
+			[
+				'cl_to' => $this->title->getDBkey(),
+				'cl_sortkey < ' . $dbr->addQuotes( $this->collation->getSortKey( $this->from ) )
+			],
+			__METHOD__,
+			[
+				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
+				'LIMIT' => $this->limit + 1,
+				'ORDER BY' => 'cl_sortkey DESC',
+			],
+			[
+				'categorylinks'  => [ 'INNER JOIN', 'cl_from = page_id' ],
+			]
+		);
+
+		$lastRow = null;
+		$count = 0;
+		$this->prevPageIsTheFirstPage = true;
+
+		foreach ( $res as $row ) {
+			$count++;
+
+			if ( $count > $this->limit ) {
+				$this->prevPageIsTheFirstPage = false;
+				break;
+			}
+
+			$lastRow = $row;
+		}
+
+		$title = Title::newFromRow( $lastRow );
+		if ( $lastRow->cl_collation === '' ) {
+			// Hack to make sure that while updating from 1.16 schema
+			// and db is inconsistent, that the sky doesn't fall.
+			// See r83544. Could perhaps be removed in a couple decades...
+			$humanSortkey = $lastRow->cl_sortkey;
+		} else {
+			$humanSortkey = $title->getCategorySortkey( $lastRow->cl_sortkey_prefix );
+		}
+
+		$this->prevPage = $humanSortkey;
 	}
 
 	/**
@@ -355,14 +373,36 @@ class CategoryViewer extends ContextSource {
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
 	private function getPagingLinks() {
-		$links = '';
+		$links = [];
 
-		if ( $this->until !== null ) {
-			$links = $this->pagingLinks( $this->nextPage, $this->until );
-		} elseif ( $this->nextPage !== null || $this->from !== null ) {
-			$links = $this->pagingLinks( $this->from, $this->nextPage );
-		} else {
-			return $links;
+		if ( $this->prevPage !== null ) {
+			$queryParams = [];
+
+			if ( !$this->prevPageIsTheFirstPage ) {
+				$queryParams['from'] = $this->prevPage;
+			}
+
+			$this->paginationUrls['prev'] = $this->title->getLocalURL( $queryParams );
+
+			$links['prev'] = Linker::linkKnown(
+				$this->title,
+				'&#x1F448; Previous',
+				[],
+				$queryParams
+			);
+		}
+
+		if ( $this->nextPage !== null ) {
+			$queryParams = [ 'from' => $this->nextPage ];
+
+			$this->paginationUrls['next'] = $this->title->getLocalURL( $queryParams );
+
+			$links['next'] = Linker::linkKnown(
+				$this->title,
+				'Next &#x1F449;',
+				[],
+				$queryParams
+			);
 		}
 
 		return join( " ", $links );
@@ -484,69 +524,6 @@ class CategoryViewer extends ContextSource {
 		return $r;
 	}
 
-	public function pagingLinks( $first, $last ) {
-		$links = [];
-
-		if ( $first != '' ) {
-			$prevQuery = $this->query;
-			$prevQuery['until'] = $first;
-			unset( $prevQuery['from'] );
-
-			$this->paginationUrls['prev'] = $this->title->getLocalURL( $prevQuery );
-
-			$links['prev'] = Linker::linkKnown(
-				$this->title,
-				'&#x1F448; Previous',
-				array(),
-				$prevQuery
-			);
-		}
-
-		if ( $last != '' ) {
-			$lastQuery = $this->query;
-			$lastQuery['from'] = $last;
-			unset( $lastQuery['until'] );
-
-			$this->paginationUrls['next'] = $this->title->getLocalURL( $lastQuery );
-
-			$links['next'] = Linker::linkKnown(
-				$this->title,
-				'Next &#x1F449;',
-				array(),
-				$lastQuery
-			);
-		}
-
-		return $links;
-	}
-
-	/**
-	 * Takes a title, and adds the fragment identifier that
-	 * corresponds to the correct segment of the category.
-	 *
-	 * @param Title $title: The title (usually $this->title)
-	 * @param String $section: Which section
-	 * @return Title
-	 */
-	private function addFragmentToTitle( $title, $section ) {
-		switch ( $section ) {
-			case 'page':
-				$fragment = ''; # 'mw-pages'; SUS-4071
-				break;
-			case 'subcat':
-				$fragment = 'mw-subcategories';
-				break;
-			case 'file':
-				$fragment = 'mw-category-media';
-				break;
-			default:
-				throw new MWException( __METHOD__ .
-					" Invalid section $section." );
-		}
-
-		return Title::makeTitle( $title->getNamespace(),
-			$title->getDBkey(), $fragment );
-	}
 	/**
 	 * What to do if the category table conflicts with the number of results
 	 * returned?  This function says what. Each type is considered independently
@@ -567,16 +544,11 @@ class CategoryViewer extends ContextSource {
 		#      know the right figure.
 		#   3) We have no idea.
 
-		$fromOrUntil = false;
-		if ( $this->from !== null || $this->until !== null ) {
-			$fromOrUntil = true;
-		}
-
-		if ( $dbcnt == $rescnt || ( ( $rescnt == $this->limit || $fromOrUntil )
+		if ( $dbcnt == $rescnt || ( ( $rescnt == $this->limit || $this->from !== null )
 			&& $dbcnt > $rescnt ) ) {
 			# Case 1: seems sane.
 			$totalcnt = $dbcnt;
-		} elseif ( $rescnt < $this->limit && !$fromOrUntil ) {
+		} elseif ( $rescnt < $this->limit && !$this->from !== null ) {
 			# Case 2: not sane, but salvageable.  Use the number of results.
 			# Since there are fewer than 200, we can also take this opportunity
 			# to refresh the incorrect category table entry -- which should be
