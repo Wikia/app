@@ -19,7 +19,6 @@ describe('AdContext', function () {
 					return 100;
 				}
 			},
-			adsGeo: {},
 			geo: {},
 			instantGlobals: {},
 			win: {},
@@ -45,9 +44,8 @@ describe('AdContext', function () {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.browserDetect,
 			mocks.wikiaCookies,
-			mocks.geo,
 			mocks.instantGlobals,
-			mocks.adsGeo,
+			mocks.geo,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -62,12 +60,10 @@ describe('AdContext', function () {
 	beforeEach(function () {
 		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo', 'getSamplingResults'];
 		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
-		mocks.adsGeo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
-		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
-		mocks.adsGeo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
+		mocks.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
 		mocks.instantGlobals = {};
 	});
 
@@ -617,23 +613,6 @@ describe('AdContext', function () {
 		expect(getModule().get('..')).toBeUndefined();
 		expect(getModule().get('..')).toBeUndefined();
 		expect(getModule().get('opts..showAds')).toBeUndefined();
-	});
-
-	it('uses default geo', function () {
-		mocks.instantGlobals = {
-			wgAdDriverNewGeoCountries: [],
-		};
-		getModule();
-		expect(mocks.geo.isProperGeo.calls.count()).toBeGreaterThan(1);
-	});
-
-	it('uses ads lABrador geo if is enabled', function () {
-		mocks.instantGlobals = {
-			wgAdDriverNewGeoCountries: ['CURRENT_COUNTRY'],
-		};
-
-		getModule();
-		expect(mocks.geo.isProperGeo.calls.count()).toEqual(1);
 	});
 
 	it('checks which lABrador keyvals should be sent to DFP', function () {

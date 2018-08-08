@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifierInputParser', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'wikia.browserDetect',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log'
 ], function (pageParams, browserDetect, geo, log) {
 	'use strict';
@@ -11,25 +11,26 @@ define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifierInputParser', [
 
 	function getData() {
 		var data,
-			params = pageParams.getPageLevelParams();
+			params = pageParams.getPageLevelParams(),
+			countryCode = geo.getCountryCode();
 
 		data = [
 			browserDetect.getBrowser().indexOf('Firefox') === 0 ? 1 : 0,
 			browserDetect.getBrowser().indexOf('Netscape') === 0 ? 1 : 0,
 			browserDetect.getBrowser().indexOf('Safari') === 0 ? 1 : 0,
-			geo.getCountryCode() === 'CA' ? 1 : 0,
-			geo.getCountryCode() === 'CN' ? 1 : 0,
-			geo.getCountryCode() === 'DK' ? 1 : 0,
-			geo.getCountryCode() === 'FR' ? 1 : 0,
-			geo.getCountryCode() === 'IN' ? 1 : 0,
-			geo.getCountryCode() === 'KR' ? 1 : 0,
-			geo.getCountryCode() === 'NO' ? 1 : 0,
-			geo.getCountryCode() === 'PK' ? 1 : 0,
-			geo.getCountryCode() === 'RU' ? 1 : 0,
-			geo.getCountryCode() === 'TW' ? 1 : 0,
-			geo.getCountryCode() === 'UA' ? 1 : 0,
-			geo.getCountryCode() === 'VE' ? 1 : 0,
-			geo.getCountryCode() ? 0 : 1,
+			countryCode === 'CA' ? 1 : 0,
+			countryCode === 'CN' ? 1 : 0,
+			countryCode === 'DK' ? 1 : 0,
+			countryCode === 'FR' ? 1 : 0,
+			countryCode === 'IN' ? 1 : 0,
+			countryCode === 'KR' ? 1 : 0,
+			countryCode === 'NO' ? 1 : 0,
+			countryCode === 'PK' ? 1 : 0,
+			countryCode === 'RU' ? 1 : 0,
+			countryCode === 'TW' ? 1 : 0,
+			countryCode === 'UA' ? 1 : 0,
+			countryCode === 'VE' ? 1 : 0,
+			countryCode ? 0 : 1,
 			params.s0v === 'comics' ? 1 : 0,
 			params.s0v === 'lifestyle' ? 1 : 0,
 			params.s0v === 'movies' ? 1 : 0,

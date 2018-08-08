@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.location',
 	'wikia.log',
 	'wikia.trackingOptIn',
