@@ -114,7 +114,13 @@ function init(
 		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
 	}
 
-	context.set('custom.rec', babDetection.isBlocking());
+	if (skin === 'oasis' && babDetection.isBlocking()) {
+		context.set('bidders.prebid.appnexus.placements', context.get('bidders.prebid.appnexus.recPlacements'));
+
+		Object.keys(context.get('bidders.prebid.indexExchange.slots')).forEach((key) =>
+			context.set(`bidders.prebid.indexExchange.slots.${key}.siteId`,
+				context.get(`bidders.prebid.indexExchange.recPlacements.${key}`)));
+	}
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
