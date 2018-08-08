@@ -87,7 +87,7 @@ require([
 			adEngineBridge.checkAdBlocking(babDetection);
 		}
 
-		if (bidders && bidders.isEnabled()) {
+		if (bidders.isEnabled()) {
 			bidders.runBidding();
 		}
 

@@ -105,8 +105,8 @@ function init(
 
 			context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 			context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
-			context.set('custom.rubiconInFV', legacyContext.get('bidders.appnexusDfp'));
-			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconDfp'));
+			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
+			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
 			context.set('custom.isCMPEnabled', legacyContext.get('opts.isCMPEnabled'));
 		}

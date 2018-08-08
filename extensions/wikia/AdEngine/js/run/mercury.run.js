@@ -69,10 +69,6 @@ require([
 
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-	if (bidders) {
-		bidders.runBidding();
-	}
-
 	function passFVLineItemIdToUAP() {
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 			fvLagger.addResponseListener(function (lineItemId) {
@@ -86,7 +82,7 @@ require([
 	}
 
 	function callOnConsecutivePageView() {
-		if (bidders && bidders.isEnabled()) {
+		if (bidders.isEnabled()) {
 			bidders.runBidding();
 		} else {
 			if (adContext.get('bidders.prebid')) {
