@@ -1414,14 +1414,6 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
- * @name $wgAdDriverStickyAndSwapCountries
- * List of countries to run simultaneously two experiments:
- * - switch BLB with PreFooter
- * - sticky BFAB
- */
-$wgAdDriverStickyAndSwapCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
