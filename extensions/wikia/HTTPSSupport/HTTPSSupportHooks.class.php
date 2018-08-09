@@ -57,9 +57,7 @@ class HTTPSSupportHooks {
 				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
-				empty( $wgDisableHTTPSDowngrade ) &&
-				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-				!self::httpsEnabledTitle( $title )
+				self::shouldDowngradeRequest( $title, $request )
 			) {
 				$output->redirectProtocol( PROTO_HTTP, 302, 'HTTPS-Downgrade' );
 				$output->enableClientCache( false );
@@ -101,6 +99,20 @@ class HTTPSSupportHooks {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
+	}
+
+	private static function shouldDowngradeRequest( Title $title, WebRequest $request ): bool {
+		global $wgDisableHTTPSDowngrade;
+		return empty( $wgDisableHTTPSDowngrade ) &&
+			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+			!self::httpsEnabledTitle( $title ) &&
+			!self::isRawCSSorJS( $request );
+	}
+
+	private static function isRawCssOrJs( WebRequest $request ): bool {
+		global $wgJsMimeType;
+		return $request->getVal( 'action', 'view' ) === 'raw' &&
+			in_array( $request->getVal( 'ctype', '' ), [ $wgJsMimeType, 'text/css' ] );
 	}
 
 	public static function parserUpgradeVignetteUrls( string &$url ) {
