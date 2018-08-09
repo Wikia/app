@@ -106,7 +106,8 @@ class MercuryApi {
 			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
 			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist;
+			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
+		       $wgFandomAppSmartBannerText;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -128,6 +129,7 @@ class MercuryApi {
 			'enableLightweightContributions' => $wgEnableLightweightContributions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
+			'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
