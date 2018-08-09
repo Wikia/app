@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 	function create(module) {
 		if (adContext.get('bidders.prebidAE3')) {
-			return null;
+			return {};
 		}
 
 		var called,

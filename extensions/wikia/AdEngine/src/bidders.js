@@ -108,10 +108,12 @@ export function getBiddersContext(skin) {
 						debugPlacementId: '5768085',
 						slots: {
 							FEATURED: {
-								placementId: '13684967'
+								placementId: '13684967',
+								context: 'instream'
 							},
 							INCONTENT_PLAYER: {
-								placementId: '11543172'
+								placementId: '11543172',
+								context: 'outstream'
 							}
 						}
 					},
@@ -490,10 +492,12 @@ export function getBiddersContext(skin) {
 						debugPlacementId: '5768085',
 						slots: {
 							FEATURED: {
-								placementId: '13705871'
+								placementId: '13705871',
+								context: 'instream'
 							},
 							MOBILE_IN_CONTENT: {
-								placementId: '11543173'
+								placementId: '11543173',
+								context: 'outstream'
 							}
 						}
 					},
