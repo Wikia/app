@@ -285,6 +285,36 @@ class SEOTweaksHooksHelper {
 	}
 
 	/**
+	 * When #REDIRECT is used make a proper 301 redirect
+	 *
+	 * @param Title $title
+	 * @param WebRequest $request
+	 * @param $ignoreRedirect
+	 * @param $target
+	 * @param Article $article
+	 * @return bool
+	 */
+	static public function onInitializeArticleMaybeRedirect(
+		Title &$title, WebRequest &$request, &$ignoreRedirect, &$target, &$article
+	): bool {
+		global $wgUser;
+
+		if ( !$wgUser->isAnon() || !$title->isRedirect() ) {
+			return true;
+		}
+
+		$queryParams = $request->getQueryValues();
+		unset( $queryParams['title'] );
+		$targetUrl = $article->getPage()->getRedirectTarget()->getFullURL( $queryParams );
+
+		$response = $request->response();
+		$response->header( "Location: $targetUrl", true, 301 );
+		$response->header( 'X-Redirected-By: SEOTweaksArticleRedirect' );
+
+		return false;
+	}
+
+	/**
 	 * Hook: set status code to 404 for category pages without pages or media
 	 * @param CategoryPage $categoryPage
 	 * @return bool
