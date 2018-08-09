@@ -209,6 +209,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
 			context.targeting.skin !== 'oasis';
+		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
+			context.targeting.skin === 'oasis';
 
 		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
