@@ -1939,6 +1939,9 @@ class Wikia {
 	 * Can be called at any point during the request handling as it does not rely on WF variables.
 	 */
 	public static function wikiSurrogateKey( $wikiId ) {
+		if ( self::isProductionEnv() ) {
+			return 'wiki-' . $wikiId;
+		}
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
 	}
 
