@@ -7428,7 +7428,7 @@ $wgSortSpecialPages = true;
  * @var Array $wgSMTP
  */
 $wgSMTP = [
-    'host'   => 'relay-mailer-s2',
+    'host'   => 'prod.smtp.service.consul',
     'port'   => 25,
     'auth'   => false,
     'IDHost' => ''
