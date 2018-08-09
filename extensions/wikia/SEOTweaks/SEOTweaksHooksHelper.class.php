@@ -285,28 +285,31 @@ class SEOTweaksHooksHelper {
 	}
 
 	/**
-	 * Hook: set status code to 404 for category pages without pages or media
+	 * Hook: set status code to 404 for category pages without content or without members
 	 * @param CategoryPage $categoryPage
 	 * @return bool
 	 */
 	public static function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		$title = $categoryPage->getTitle();
 		if ( $title->getNamespace() === NS_CATEGORY ) {
-			$app = F::app();
-			$cacheKey = wfMemcKey( 'category_has_members', sha1( $title->getDBkey() ) );
-			$hasMembers = $app->wg->Memc->get( $cacheKey );
-			if ( !is_numeric( $hasMembers ) ) {
-				$category = Category::newFromTitle( $title );
-				$hasMembers = empty( $category->getPageCount() ) ? 0 : 1;
-				$app->wg->Memc->set( $cacheKey, $hasMembers, WikiaResponse::CACHE_VERY_SHORT );
+			if ( self::isCategoryWithContentAndMembers( $title ) ) {
+				return true;
 			}
 
-			if ( $hasMembers < 1 ) {
-				$categoryPage->getContext()->getOutput()->setStatusCode( self::NOT_FOUND_STATUS_CODE );
-			}
+			$categoryPage->getContext()->getOutput()->setStatusCode( self::NOT_FOUND_STATUS_CODE );
 		}
 
 		return true;
 	}
 
+	private static function isCategoryWithContentAndMembers( Title $title ) {
+		return WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, sha1( $title->getDBkey() ) ),
+			WikiaResponse::CACHE_VERY_SHORT,
+			function () use ( $title ) {
+				$category = Category::newFromTitle( $title );
+				return $title->exists() && $category->getPageCount() > 0;
+			}
+		);
+	}
 }
