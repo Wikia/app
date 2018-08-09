@@ -5,21 +5,19 @@
 define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
-	'wikia.geo',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, instantGlobals, geo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
 		callbacks = [],
-		qs = new Querystring(),
-		useNewGeo = geo.isProperGeo(instantGlobals.wgAdDriverNewGeoCountries);
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -81,53 +79,43 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
-
-		if (useNewGeo) {
-			return isProperGeoAds(name);
-		}
-
-		return geo.isProperGeo(geos);
-	}
-
-	function isProperGeoAds(name) {
-		var geos = instantGlobals[name] || [];
-		return adsGeo.isProperGeo(geos, name);
+		return geo.isProperGeo(geos, name);
 	}
 
 	function updateAdContextRabbitExperiments(context) {
-		context.rabbits.ctpDesktop = isProperGeoAds('wgAdDriverCTPDesktopRabbitCountries');
-		context.rabbits.ctpMobile = isProperGeoAds('wgAdDriverCTPMobileRabbitCountries');
-		context.rabbits.queenDesktop = isProperGeoAds('wgAdDriverCTPDesktopQueenCountries');
+		context.rabbits.ctpDesktop = isEnabled('wgAdDriverCTPDesktopRabbitCountries');
+		context.rabbits.ctpMobile = isEnabled('wgAdDriverCTPMobileRabbitCountries');
+		context.rabbits.queenDesktop = isEnabled('wgAdDriverCTPDesktopQueenCountries');
 	}
 
 	function areDelayServicesBlocked() {
-		return context.targeting.skin === 'mercury' && isProperGeoAds('wgAdDriverBlockDelayServicesCountries');
+		return context.targeting.skin === 'mercury' && isEnabled('wgAdDriverBlockDelayServicesCountries');
 	}
 
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverPrebidBidderCountries');
-		context.bidders.prebidOptOut = isProperGeoAds('wgAdDriverPrebidOptOutCountries');
-		context.bidders.a9 = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9BidderCountries');
-		context.bidders.a9OptOut = isProperGeoAds('wgAdDriverA9OptOutCountries');
-		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
-		context.bidders.rubiconDisplay = isProperGeoAds('wgAdDriverRubiconDisplayPrebidCountries');
-		context.bidders.rubicon = isProperGeoAds('wgAdDriverRubiconPrebidCountries');
-		context.bidders.rubiconDfp = isProperGeoAds('wgAdDriverRubiconDfpCountries');
-		context.bidders.rubiconInFV = isProperGeoAds('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
-		context.bidders.beachfront = isProperGeoAds('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
-		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries');
-		context.bidders.aol = isProperGeoAds('wgAdDriverAolBidderCountries');
-		context.bidders.appnexus = isProperGeoAds('wgAdDriverAppNexusBidderCountries');
-		context.bidders.appnexusDfp = isProperGeoAds('wgAdDriverAppNexusDfpCountries');
-		context.bidders.appnexusWebAds = isProperGeoAds('wgAdDriverAppNexusWebAdsBidderCountries');
-		context.bidders.audienceNetwork = isProperGeoAds('wgAdDriverAudienceNetworkBidderCountries');
-		context.bidders.indexExchange = isProperGeoAds('wgAdDriverIndexExchangeBidderCountries');
-		context.bidders.kargo = isProperGeoAds('wgAdDriverKargoBidderCountries');
-		context.bidders.onemobile = isProperGeoAds('wgAdDriverAolOneMobileBidderCountries');
-		context.bidders.openx = isProperGeoAds('wgAdDriverOpenXPrebidBidderCountries');
-		context.bidders.pubmatic = isProperGeoAds('wgAdDriverPubMaticBidderCountries');
+		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
+		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
+		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
+		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
+		context.bidders.rubicon = isEnabled('wgAdDriverRubiconPrebidCountries');
+		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
+		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
+		context.bidders.beachfront = isEnabled('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
+		context.bidders.appnexusAst = isEnabled('wgAdDriverAppNexusAstBidderCountries');
+		context.bidders.aol = isEnabled('wgAdDriverAolBidderCountries');
+		context.bidders.appnexus = isEnabled('wgAdDriverAppNexusBidderCountries');
+		context.bidders.appnexusDfp = isEnabled('wgAdDriverAppNexusDfpCountries');
+		context.bidders.appnexusWebAds = isEnabled('wgAdDriverAppNexusWebAdsBidderCountries');
+		context.bidders.audienceNetwork = isEnabled('wgAdDriverAudienceNetworkBidderCountries');
+		context.bidders.indexExchange = isEnabled('wgAdDriverIndexExchangeBidderCountries');
+		context.bidders.kargo = isEnabled('wgAdDriverKargoBidderCountries');
+		context.bidders.onemobile = isEnabled('wgAdDriverAolOneMobileBidderCountries');
+		context.bidders.openx = isEnabled('wgAdDriverOpenXPrebidBidderCountries');
+		context.bidders.pubmatic = isEnabled('wgAdDriverPubMaticBidderCountries');
 	}
 
 	function isMOATTrackingForFVEnabled() {
@@ -157,7 +145,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
-		context.opts.overwriteDelayEngine = isProperGeoAds('wgAdDriverDelayCountries');
+		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo && isEnabled('wgAdDriverSrcPremiumCountries');
 
@@ -178,12 +166,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Evolve2 integration
-		if (context.providers.evolve2) {
-			context.providers.evolve2 = isEnabled('wgAdDriverEvolve2Countries');
-		}
-
-		context.providers.turtle = isProperGeoAds('wgAdDriverTurtleCountries');
+		context.providers.turtle = isEnabled('wgAdDriverTurtleCountries');
 
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
 
@@ -206,9 +189,9 @@ define('ext.wikia.adEngine.adContext', [
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			isProperGeoAds('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
+			isEnabled('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
-		context.opts.kruxNewParams = isProperGeoAds('wgAdDriverKruxNewParamsCountries');
+		context.opts.kruxNewParams = isEnabled('wgAdDriverKruxNewParamsCountries');
 
 		// Floating medrec
 		context.opts.floatingMedrec = !!(
@@ -241,14 +224,14 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBMegaEnabled = isEnabled('wgAdDriverBottomLeaderBoardMegaCountries');
 		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
-		context.opts.isBLBSingleSizeForUAPEnabled = isProperGeoAds('wgAdDriverSingleBLBSizeForUAPCountries');
-		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
+		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
+		context.opts.preFooterAndBLBSwitched = isEnabled('wgAdDriverPreFooterAndBLBSwitchedCountries');
 
-		context.opts.labradorTest = isProperGeoAds('wgAdDriverLABradorTestCountries');
+		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
-		context.opts.mobileSectionsCollapse = isProperGeoAds('wgAdDriverMobileSectionsCollapseCountries');
-		context.opts.netzathleten = isProperGeoAds('wgAdDriverNetzAthletenCountries');
-		context.opts.additionalVastSize = isProperGeoAds('wgAdDriverAdditionalVastSizeCountries');
+		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
+		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
+		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
@@ -270,13 +253,13 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		var labradorDfpKeys = [],
-			labradorVariables = adsGeo.getSamplingResults();
+			labradorVariables = geo.getSamplingResults();
 
 		wfKeyvals.forEach(function (keyval) {
 			keyval = keyval.split(':');
 
 			if (labradorVariables.indexOf(keyval[0]) !== -1) {
-				labradorDfpKeys.push(keyval[1])
+				labradorDfpKeys.push(keyval[1]);
 			}
 		});
 
