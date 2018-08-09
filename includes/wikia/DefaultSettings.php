@@ -1746,13 +1746,3 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
-
-// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-// to be removed after we make sure it works fine
-$wgSurrogateKeysProdWikis = [
-	1721212,    // mech-internal-https-test
-	1558829,     // rikitiki
-	518038,    // mobileregressiontesting
-	203236,    // mediawiki119
-	1927      // communitytest
-];
