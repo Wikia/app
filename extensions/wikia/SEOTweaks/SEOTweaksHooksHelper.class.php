@@ -308,7 +308,7 @@ class SEOTweaksHooksHelper {
 			WikiaResponse::CACHE_VERY_SHORT,
 			function () use ( $title ) {
 				$category = Category::newFromTitle( $title );
-				return $title->exists() && $category->getPageCount() > 0;
+				return $title->getLength() > 0 && $category->getPageCount() > 0;
 			}
 		);
 	}

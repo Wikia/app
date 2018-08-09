@@ -1,0 +1,33 @@
+page:
+  - page_id: 1
+    page_namespace: 14
+    page_title: CategoryWithContentAndMembers
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1
+    page_len: 1
+  - page_id: 2
+    page_namespace: 14
+    page_title: CategoryWithoutContentAndWithMembers
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2
+    page_len: 0
+  - page_id: 3
+    page_namespace: 14
+    page_title: CategoryWithoutContentAndWithoutMembers
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 3
+    page_len: 1
+
+category:
+  - cat_id: 1
+    cat_pages: 1
+    cat_title: CategoryWithContentAndMembers
+  - cat_id: 2
+    cat_pages: 1
+    cat_title: CategoryWithoutContentAndWithMembers
+  - cat_id: 3
+    cat_pages: 0
+    cat_title: CategoryWithoutContentAndWithoutMembers
