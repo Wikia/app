@@ -135,6 +135,10 @@ $footer-line-height: 1.3em;
 			border: 0;
 			padding: 0;
 
+			.wds-global-footer__links-list {
+				margin-bottom: 38px;
+			}
+
 			.wds-global-footer__link {
 				@extend %wds-font-size-xxl;
 				@extend %wds-font-weight-bold;
@@ -156,6 +160,7 @@ $footer-line-height: 1.3em;
 			.wds-global-footer__links-list {
 				display: flex;
 				flex-wrap: nowrap;
+				margin-bottom: 38px;
 			}
 
 			.wds-global-footer__link {
@@ -195,6 +200,13 @@ $footer-line-height: 1.3em;
 			.wds-global-footer__image {
 				height: 35px;
 				width: 119px;
+			}
+		}
+
+		&.wds-is-community {
+			.wds-global-footer__links-list {
+				column-count: 2;
+				margin-bottom: 38px;
 			}
 		}
 	}
