@@ -70,9 +70,7 @@ class WikiFactoryLoader {
 		if ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
-
-			$fullUrl =  preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
-				$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
+			$fullUrl =  self::getCurrentRequestUri( $server );
 			$this->parsedUrl = parse_url( $fullUrl );
 
 			$slash = strpos( $this->parsedUrl['path'], '/', 1 ) ?: strlen( $this->parsedUrl['path'] );
@@ -138,6 +136,11 @@ class WikiFactoryLoader {
 		 * never from cache
 		 */
 		$this->mAlwaysFromDB = $this->mCommandLine || $wgDevelEnvironment;
+	}
+
+	public static function getCurrentRequestUri( $server ) {
+		return preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
+			$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
 	}
 
 	/**

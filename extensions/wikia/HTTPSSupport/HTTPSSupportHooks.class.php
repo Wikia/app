@@ -77,7 +77,6 @@ class HTTPSSupportHooks {
 	 * @return boolean
 	 */
 	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
-		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
