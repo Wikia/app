@@ -1904,28 +1904,31 @@ class OutputPage extends ContextSource {
 	 *   /w/index.php?title=Main_page&variant=zh-cn should never be served.
 	 */
 	function addAcceptLanguage() {
-		$lang = $this->getTitle()->getPageLanguage();
-		if( !$this->getRequest()->getCheck( 'variant' ) && $lang->hasVariants() ) {
-			$variants = $lang->getVariants();
-			$aloption = array();
-			foreach ( $variants as $variant ) {
-				if( $variant === $lang->getCode() ) {
-					continue;
-				} else {
-					$aloption[] = 'string-contains=' . $variant;
+		$title = $this->getTitle();
+		if ( !is_null( $title ) ) {
+			$lang = $title->getPageLanguage();
+			if( !$this->getRequest()->getCheck( 'variant' ) && $lang->hasVariants() ) {
+				$variants = $lang->getVariants();
+				$aloption = array();
+				foreach ( $variants as $variant ) {
+					if( $variant === $lang->getCode() ) {
+						continue;
+					} else {
+						$aloption[] = 'string-contains=' . $variant;
 
-					// IE and some other browsers use another form of language code
-					// in their Accept-Language header, like "zh-CN" or "zh-TW".
-					// We should handle these too.
-					$ievariant = explode( '-', $variant );
-					if ( count( $ievariant ) == 2 ) {
-						$ievariant[1] = strtoupper( $ievariant[1] );
-						$ievariant = implode( '-', $ievariant );
-						$aloption[] = 'string-contains=' . $ievariant;
+						// IE and some other browsers use another form of language code
+						// in their Accept-Language header, like "zh-CN" or "zh-TW".
+						// We should handle these too.
+						$ievariant = explode( '-', $variant );
+						if ( count( $ievariant ) == 2 ) {
+							$ievariant[1] = strtoupper( $ievariant[1] );
+							$ievariant = implode( '-', $ievariant );
+							$aloption[] = 'string-contains=' . $ievariant;
+						}
 					}
 				}
+				$this->addVaryHeader( 'Accept-Language', $aloption );
 			}
-			$this->addVaryHeader( 'Accept-Language', $aloption );
 		}
 	}
 
