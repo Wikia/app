@@ -6,6 +6,7 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
@@ -32,6 +33,7 @@ require([
 	adEngineRunner,
 	pageLevelParams,
 	adTracker,
+	slotsContext,
 	bidders,
 	slotStateMonitor,
 	adConfigDesktop,
@@ -78,7 +80,8 @@ require([
 			btfBlocker,
 			'oasis',
 			trackingOptIn,
-			babDetection
+			babDetection,
+			slotsContext
 		);
 
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);

@@ -4,6 +4,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
@@ -25,6 +26,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
+	slotsContext,
 	geo,
 	slotStateMonitor,
 	a9,
@@ -61,7 +63,8 @@ require([
 			btfBlocker,
 			'mercury',
 			trackingOptIn,
-			babDetection
+			babDetection,
+			slotsContext
 		);
 	});
 

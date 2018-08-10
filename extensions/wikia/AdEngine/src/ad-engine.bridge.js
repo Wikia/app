@@ -44,7 +44,8 @@ function init(
 	legacyBtfBlocker,
 	skin,
 	trackingOptIn,
-	babDetection
+	babDetection,
+	slotsContext
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
@@ -103,6 +104,7 @@ function init(
 				lang: [adLogicZoneParams.getLanguage()]
 			});
 
+			context.set('bidders.disabledSlots', slotsContext.getNotApplicable());
 			context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 			context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
