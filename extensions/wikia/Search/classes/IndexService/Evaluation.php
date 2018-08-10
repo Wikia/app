@@ -4,9 +4,11 @@ namespace Wikia\Search\IndexService;
 
 use BadRequestApiException;
 use DatabaseMysqli;
+use User;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
+	const PARSE_PAGE = 'parse_page';
 	const LANGUAGES_SUPPORTED = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw' ];
 
 	/**
@@ -19,7 +21,7 @@ class Evaluation extends AbstractService {
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		$page = \WikiPage::newFromID( $pageId );
-		$text = $page->getRawText();
+		$text = $this->getContent( $page );
 
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 		$languageCode = $this->getLanguageCode();
@@ -36,6 +38,14 @@ class Evaluation extends AbstractService {
 			// 'backlinks_count' is added in processAllDocuments()
 			// 'redirects' is added in processAllDocuments()
 		];
+	}
+
+	private function getContent(\WikiPage $page) {
+		if ( in_array( self::PARSE_PAGE, $this->flags ) ) {
+			return $page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
+		} else {
+			return $page->getRawText();
+		}
 	}
 
 	/**
