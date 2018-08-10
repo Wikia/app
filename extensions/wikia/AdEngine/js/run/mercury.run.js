@@ -7,7 +7,6 @@ require([
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
-	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
@@ -29,7 +28,6 @@ require([
 	geo,
 	slotStateMonitor,
 	a9,
-	bidders,
 	prebid,
 	customAdsLoader,
 	messageListener,
@@ -82,16 +80,12 @@ require([
 	}
 
 	function callOnConsecutivePageView() {
-		if (bidders.isEnabled()) {
-			bidders.runBidding();
-		} else {
-			if (adContext.get('bidders.prebid')) {
-				prebid.call();
-			}
+		if (adContext.get('bidders.prebid')) {
+			prebid.call();
+		}
 
-			if (adContext.get('bidders.a9')) {
-				a9.call();
-			}
+		if (adContext.get('bidders.a9')) {
+			a9.call();
 		}
 
 		passFVLineItemIdToUAP();
