@@ -17,7 +17,6 @@ class SocialSharingService{
 		$this->register( 'FacebookSharing');
 		$this->register( 'TwitterSharing' );
 		$this->register( 'PlusoneSharing' );
-		$this->register( 'StumbleuponSharing' );
 		$this->register( 'RedditSharing' );
 		$this->register( 'EmailSharing' );
 	}

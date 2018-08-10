@@ -211,9 +211,6 @@
 	&.small-lightbox-white {
 		@include sprite-Lightbox('small_lightbox_white',$width,$height);
 	}
-	&.stumbleupon {
-		@include sprite-Lightbox('stumbleupon',$width,$height);
-	}
 	&.twitter {
 		@include sprite-Lightbox('twitter',$width,$height);
 	}
