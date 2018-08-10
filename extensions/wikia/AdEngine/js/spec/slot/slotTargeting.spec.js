@@ -39,6 +39,11 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					};
 				}
 			},
+			bidders = {
+				isEnabled: function () {
+					return false;
+				}
+			},
 			instantGlobals = {
 				wgAdDriverAbTestIdTargeting: 1
 			},
@@ -50,7 +55,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
-			null,
+			bidders,
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
