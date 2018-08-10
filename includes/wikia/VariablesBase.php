@@ -2643,6 +2643,11 @@ $wgEnableEmailExt = true;
 $wgEnableFandomAppSmartBanner = false;
 
 /**
+ * custom copy for FandomApp smart banner on mobile
+ */
+$wgFandomAppSmartBannerText = null;
+
+/**
  * Surprisingly, this variable enables FANDOM stories on search result page!
  * @see /extensions/wikia/Search/WikiaSearchController.class.php
  * @var bool $wgEnableFandomStoriesOnSearchResultPage
