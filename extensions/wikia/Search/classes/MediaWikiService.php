@@ -1080,6 +1080,25 @@ class MediaWikiService {
 		return self::$pageIdsToFiles[$pageId];
 	}
 
+
+	/**
+	 * @param $pageIds
+	 */
+	public function initialPagesLoad( $pageIds ) {
+		$titles = \TitleBatch::newFromIds( $pageIds, DB_SLAVE );
+		/* @var \Title $title */
+		foreach ( $titles as $title ) {
+			$pageId = $title->getArticleID();
+			$article = new \Article( $title );
+			if ( $article === null ) {
+				return null;
+			}
+
+			$page = $this->useRedirection( $pageId, $article );
+			self::$pageIdsToArticles[$title->getArticleID()] = $page;
+		}
+	}
+
 	/**
 	 * Standard interface for this class's services to access a page
 	 *
@@ -1087,7 +1106,7 @@ class MediaWikiService {
 	 *
 	 * @return \Article|null
 	 */
-	protected function getPageFromPageId( $pageId ) {
+	public function getPageFromPageId( $pageId ) {
 
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
 
@@ -1099,18 +1118,7 @@ class MediaWikiService {
 			return null;
 		}
 
-		$redirectTarget = null;
-		if ( $page->isRedirect() ) {
-			$redirectTarget = $page->getRedirectTarget();
-		}
-
-		if ( $redirectTarget ) {
-			self::$redirectArticles[$pageId] = $page;
-			$page = new \Article( $redirectTarget );
-			$newId = $page->getID();
-			self::$pageIdsToArticles[$newId] = $page;
-			self::$redirectsToCanonicalIds[$pageId] = $newId;
-		}
+		$page = $this->useRedirection( $pageId, $page );
 		self::$pageIdsToArticles[$pageId] = $page;
 
 		return $page;
@@ -1215,5 +1223,27 @@ class MediaWikiService {
 		}
 
 		return static::$pageIdsToTitles[$pageId];
+	}
+
+	/**
+	 * @param $pageId
+	 * @param $page
+	 * @return \Article
+	 */
+	private function useRedirection( $pageId, $page ): \Article {
+		$redirectTarget = null;
+		if ( $page->getTitle()->isRedirect() ) {
+			$redirectTarget = $page->getRedirectTarget();
+		}
+
+		if ( $redirectTarget ) {
+			self::$redirectArticles[$pageId] = $page;
+			$page = new \Article( $redirectTarget );
+			$newId = $page->getID();
+			self::$pageIdsToArticles[$newId] = $page;
+			self::$redirectsToCanonicalIds[$pageId] = $newId;
+		}
+
+		return $page;
 	}
 }

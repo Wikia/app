@@ -16,10 +16,8 @@ class Evaluation extends AbstractService {
 	public function execute() {
 
 		$service = $this->getService();
-		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
-		$page = \WikiPage::newFromID( $pageId );
-		$text = $page->getRawText();
+		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 		$languageCode = $this->getLanguageCode();
@@ -32,7 +30,7 @@ class Evaluation extends AbstractService {
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
-			"content_${languageCode}" => $text,
+			// "content is added in processAllDocuments()
 			// 'backlinks_count' is added in processAllDocuments()
 			// 'redirects' is added in processAllDocuments()
 		];
@@ -55,9 +53,11 @@ class Evaluation extends AbstractService {
 			return $document['page_id']['set'];
 		}, $documents ) );
 
-		list( $backlinksCount, $redirects ) = $this->getAdditionalInfo( $pageIds );
+		list( $backlinksCount, $redirects, $contents ) = $this->getAdditionalInfo( $pageIds );
 
-		return array_map( function ( $document ) use ( $backlinksCount, $languageCode, $redirects ) {
+		return array_map( function ( $document ) use (
+			$backlinksCount, $languageCode, $redirects, $contents
+		) {
 			$id = $document['page_id']['set'];
 
 			if ( !isset( $id ) ) {
@@ -73,6 +73,12 @@ class Evaluation extends AbstractService {
 			if ( isset( $redirects[ $id ] ) ) {
 				$document["redirects_${languageCode}"] = [
 					'set' => $redirects[ $id ]
+				];
+			}
+
+			if ( isset ( $contents[$id] ) ) {
+				$document["content_${languageCode}"] = [
+					'set' => $contents[$id],
 				];
 			}
 
@@ -107,6 +113,7 @@ class Evaluation extends AbstractService {
 		$backlinks = [];
 		$redirects = [];
 
+
 		foreach ( $pageIds as $id ) {
 			$title = $service->getTitleFromPageId( $id );
 			$dbKey = $title->getDBkey();
@@ -119,12 +126,14 @@ class Evaluation extends AbstractService {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
+		$contents = $this->loadContent( $dbr, $pageIds );
+
 		foreach ( $titlesByNamespace as $namespace => $titles ) {
 			$this->setBacklinksCount( $dbr, $namespace, $titles, $titlesById, $backlinks );
 			$this->setRedirects( $dbr, $namespace, $titles, $titlesById, $redirects );
 		}
 
-		return [ $backlinks, $redirects ];
+		return [ $backlinks, $redirects, $contents ];
 	}
 
 	/**
@@ -151,6 +160,8 @@ class Evaluation extends AbstractService {
 			$id = array_search( $row->pl_title, $titlesById );
 			$backlinks[ $id ] = $row->cnt;
 		}
+
+		$dbResults->free();
 	}
 
 	/**
@@ -188,5 +199,47 @@ class Evaluation extends AbstractService {
 
 			$redirects[ $id ][] = $row->page_title;
 		}
+
+		$dbResults->free();
+	}
+
+	/**
+	 * @param DatabaseMysqli $dbr
+	 * @param $ids
+	 * @throws \DBUnexpectedError
+	 */
+	private function loadContent( DatabaseMysqli $dbr, $ids ) {
+		$contents = [];
+		$text_id_to_page_id = [];
+		$text_ids = [];
+		$cond = [];
+
+		foreach ( $ids as $id ) {
+			$revId = $this->getService()->getPageFromPageId( $id )->mTitle->getLatestRevID();
+			$cond[] = "(rev_page=${id} AND rev_id = ${revId})";
+		}
+
+		$dbResults =
+			$dbr->select( [ 'revision' ], [ 'rev_page', 'rev_text_id' ], implode( " OR ", $cond ),
+				__METHOD__ );
+
+		while ( ( $row = $dbResults->fetchObject() ) ) {
+			$text_id_to_page_id[$row->rev_text_id] = $row->rev_page;
+			$text_ids[] = $row->rev_text_id;
+		}
+
+		$dbResults->free();
+		$dbResults =
+			$dbr->select( 'text', [ 'old_id', 'old_text', 'old_flags' ], [ 'old_id' => $text_ids ],
+				__METHOD__ );
+
+		while ( ( $row = $dbResults->fetchObject() ) ) {
+
+			$contents[$text_id_to_page_id[$row->old_id]] = \Revision::getRevisionText( $row );
+		}
+
+		$dbResults->free();
+
+		return $contents;
 	}
 }
