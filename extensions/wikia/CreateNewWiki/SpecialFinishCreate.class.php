@@ -22,6 +22,13 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 		$user = $this->getUser();
 
 		if ( !$user->isAllowed( 'finishcreate' ) || !$user->matchEditToken( $editToken ) ) {
+			Wikia\Logger\WikiaLogger::instance()->debug(
+				'SUS-5711',
+				[
+					'isAllowed' => $user->isAllowed( 'finishcreate' ),
+					'matchEditToken' => $user->matchEditToken( $editToken )
+				]
+			);
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;
