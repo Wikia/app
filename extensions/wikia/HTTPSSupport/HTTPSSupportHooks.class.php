@@ -80,13 +80,13 @@ class HTTPSSupportHooks {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			$output->redirectProtocol(PROTO_HTTPS, 302, 'Robots-HTTPS-upgrade');
-			$output->enableClientCache(false);
+			$output->redirectProtocol( PROTO_HTTPS, 302, 'Robots-HTTPS-upgrade' );
+			$output->enableClientCache( false );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			$output->redirectProtocol(PROTO_HTTP, 302, 'Robots-HTTP-downgrade');
-			$output->enableClientCache(false);
+			$output->redirectProtocol( PROTO_HTTP, 302, 'Robots-HTTP-downgrade' );
+			$output->enableClientCache( false );
 		}
 		return true;
 	}

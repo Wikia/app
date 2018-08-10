@@ -17,10 +17,10 @@ class RobotsRedirect {
 	 */
 	private function removeRobotsPathPrefix( $url ) {
 		$urlParts = parse_url( $url );
-		$robots_pos = strpos( $urlParts['path'], '/robots.txt' );
-		if ( $robots_pos  > 0 ) {
+		$robotsPos = strpos( $urlParts['path'], '/robots.txt' );
+		if ( $robotsPos  > 0 ) {
 			// there is a path prefix, we want to redirect to domain root
-			$urlParts['path'] = substr( $urlParts['path'], $robots_pos );
+			$urlParts['path'] = substr( $urlParts['path'], $robotsPos );
 			$urlParts['delimiter'] = '://';    // needed by the wfAssembleUrl to include scheme
 			$url = wfAssembleUrl( $urlParts );
 		}
@@ -33,18 +33,18 @@ class RobotsRedirect {
 	 * the target url (domain root).
 	 */
 	public function onBeforePageRedirect($outputPage, &$redirect, &$code, &$redirectedBy) {
-		$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER );
-		$new = $this->removeRobotsPathPrefix( $redirect );
+		$currentUri = WikiFactoryLoader::getCurrentRequestUri( $_SERVER );
+		$targetUri = $this->removeRobotsPathPrefix( $redirect );
 
-		if ( $current == $new ) {
+		if ( $currentUri == $targetUri ) {
 			// we're on the correct url, prevent the redirect from happening
 			$this->redirectCancelled = true;
 			header( 'X-Robots-Redirect-Cancelled: 1' );	// debug header
 			return false;
 		}
-		if ( $new !== $redirect ) {
+		if ( $targetUri !== $redirect ) {
 			$redirectedBy[] = 'Robots-DomainRoot';
-			$redirect = $new;
+			$redirect = $targetUri;
 		}
 		return true;
 	}
