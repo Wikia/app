@@ -101,13 +101,6 @@ class PlusoneSharing extends SocialSharing{
 	}
 }
 
-class StumbleuponSharing extends SocialSharing{
-	function __construct(){
-		$this->urlTemplate = 'http://www.stumbleupon.com/submit?url=$1&title=$2';
-		$this->id = 'stumbleupon';
-	}
-}
-
 class RedditSharing extends SocialSharing{
 	function __construct(){
 		$this->urlTemplate = 'http://www.reddit.com/submit?url=$1&title=$2';
