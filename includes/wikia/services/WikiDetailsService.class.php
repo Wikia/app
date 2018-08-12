@@ -202,7 +202,7 @@ class WikiDetailsService extends WikiService {
 				'admins' => count( $this->getWikiAdminIds( $id ) )
 			],
 			'topUsers' => array_keys( $topUsers ),
-            'founding_user_id' => isset( $modelData [$id] ) ? $modelData[$id]['founding_user_id'] : '',
+			'founding_user_id' => isset( $modelData[$id] ) ? $modelData[$id]['founding_user_id'] : '',
 			'headline' => isset( $modelData[$id] ) ? $modelData[$id]['headline'] : '',
 			'title' => isset( $modelData [$id] ) ? $modelData[$id]['title'] : '',
 			'name' => isset( $modelData [$id] ) ? $modelData[$id]['name'] : '',
