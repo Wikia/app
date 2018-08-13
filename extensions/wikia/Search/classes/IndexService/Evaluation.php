@@ -230,6 +230,11 @@ class Evaluation extends AbstractService {
 		$text_ids = [];
 		$cond = [];
 
+		// if we parse html then we dont want to use wiki text
+		if ( !in_array( self::PARSE_PAGE, $this->flags ) ) {
+			return $contents;
+		}
+
 		foreach ( $ids as $id ) {
 			$revId = $this->getService()->getPageFromPageId( $id )->mTitle->getLatestRevID();
 			$cond[] = "(rev_page=${id} AND rev_id = ${revId})";
@@ -250,7 +255,6 @@ class Evaluation extends AbstractService {
 				__METHOD__ );
 
 		while ( ( $row = $dbResults->fetchObject() ) ) {
-
 			$contents[$text_id_to_page_id[$row->old_id]] = \Revision::getRevisionText( $row );
 		}
 
