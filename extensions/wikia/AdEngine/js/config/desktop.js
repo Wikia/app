@@ -4,14 +4,13 @@ define('ext.wikia.adEngine.config.desktop', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.turtle'
 ], function (
@@ -26,7 +25,6 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderDirectGpt,
-	adProviderEvolve2,
 	adProviderRemnantGpt,
 	adProviderTurtle
 ) {
@@ -36,7 +34,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		context = adContext.getContext(),
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
-			evolve2:  [adProviderEvolve2],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -63,11 +60,9 @@ define('ext.wikia.adEngine.config.desktop', [
 			return forcedProviders[context.forcedProvider];
 		}
 
-		// First provider: Turtle, Evolve or Direct GPT?
+		// First provider: Turtle or Direct GPT?
 		if (context.providers.turtle && isTrackingOptedIn && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
-		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
-			providerList.push(adProviderEvolve2);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 

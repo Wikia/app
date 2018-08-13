@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.utils.device',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log'
 ], function (adContext, pageLevelParams, deviceDetect, geo, log) {
 	'use strict';

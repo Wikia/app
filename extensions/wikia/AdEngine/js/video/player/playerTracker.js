@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
@@ -59,7 +59,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
-				'vast_id': params.vastId || emptyValue.string
+				'vast_id': params.vastId || emptyValue.string,
+				'video_id': params.videoId || ''
 			};
 
 		if (bidHelper && params.bid) {

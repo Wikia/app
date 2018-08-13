@@ -2358,50 +2358,50 @@ $messages['ne'] = array(
 );
 
 $messages['nl'] = array(
-	'createnewwiki-desc' => 'Wizard wiki aanmaken',
+	'createnewwiki-desc' => 'Wizard voor het maken van een wiki',
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
 	'cnw-title' => 'Nieuwe wiki aanmaken',
 	'cnw-name-wiki-headline' => 'Wiki oprichten',
-	'cnw-name-wiki-creative' => 'Wikia is de beste plaats om een website te bouwen en een gemeenschap te laten groeien om het onderwerp dat je aan het hart gaat.',
+	'cnw-name-wiki-creative' => 'Of het gaat om een community voor wereldwijd entertainment of om je persoonlijke project, een goede en unieke naam is belangrijk:',
 	'cnw-name-wiki-label' => 'Geef je wiki een naam',
 	'cnw-name-wiki-domain-label' => 'Geef je wiki een adres',
 	'cnw-name-wiki-submit-error' => 'Je moet beide bovenstaande velden invullen om door te kunnen gaan.',
 	'cnw-desc-headline' => 'Waar gaat je wikia over?',
-	'cnw-desc-creative' => 'Je omschrijving zal mensen helpen je wikia te vinden',
-	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van uw wiki.',
+	'cnw-desc-creative' => 'Met een goede omschrijving kunnen mensen je wiki makkelijker vinden.',
+	'cnw-desc-placeholder' => 'Zorg dat dit mooi is! Dit wordt weergegeven op de hoofdpagina van je wiki.',
 	'cnw-desc-select-vertical' => 'Selecteer een Hubcategorie',
 	'cnw-desc-select-categories' => 'Selecteer extra categorieën',
 	'cnw-desc-select-one' => 'Maak een keuze',
-	'cnw-desc-all-ages' => 'Is this community directed to children under the age of 13?',
-	'cnw-desc-lang' => 'Taal',
+	'cnw-desc-all-ages' => 'Is deze community gericht op kinderen jonger dan 13 jaar?',
+	'cnw-desc-lang' => 'Taal van je wiki',
 	'cnw-desc-wiki-submit-error' => 'Kies een categorie',
-	'cnw-theme-headline' => 'Ontwerp uw wiki',
-	'cnw-theme-creative' => 'Kies hieronder een vormgeving. Als je een vormgeving selecteert, wordt een voorvertoning weergegeven.',
-	'cnw-theme-instruction' => 'Je kunt je thema of ontwerp altijd later aanpassen via "Mijn hulpmiddelen".',
-	'cnw-welcome-headline' => 'Gefeliciteerd. U hebt de wiki $1 aangemaakt',
+	'cnw-theme-headline' => 'Ontwerp je wiki',
+	'cnw-theme-creative' => 'Kies hieronder een vormgeving die het best past bij je wiki.',
+	'cnw-theme-instruction' => 'Je kunt je ontwerp altijd later aanpassen via de "Themaontwerper".',
+	'cnw-welcome-headline' => 'Gefeliciteerd. Je hebt de wiki $1 aangemaakt',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.',
-	'cnw-error-general-heading' => 'Fout tijdens het aanmaken van een nieuwe wiki',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of [[Special:Contact|neem contact met ons op]] voor hulp.',
+	'cnw-error-general-heading' => 'Onze excuses',
 	'cnw-badword-header' => 'Pas op!',
-	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
+	'cnw-badword-msg' => 'Hallo. Gebruik geen ongewenste woorden in je wikibeschrijving: $1',
 	'cnw-error-wiki-limit-header' => 'De wikilimiet is bereikt',
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
-	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
-	'cnw-error-anon-user-header' => 'Meld u aan',
-	'cnw-error-anon-user' => "Het aanmaken voor wiki's is uitgeschakeld voor anonieme gebruikers. [[Special:UserLogin|Meld u aan]] en probeer het opnieuw.",
+	'cnw-error-blocked' => 'Je bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
+	'cnw-error-anon-user-header' => 'Meld je aan',
+	'cnw-error-anon-user' => "Anonieme gebruikers kunnen geen wiki's aanmaken. [[Special:UserLogin|Meld je aan]] en probeer het opnieuw.",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
-	'cnw-error-unconfirmed-email-header' => 'Uw e-mailadres is niet bevestigd',
-	'cnw-error-unconfirmed-email' => 'Uw e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
+	'cnw-error-unconfirmed-email-header' => 'Je e-mailadres is niet bevestigd',
+	'cnw-error-unconfirmed-email' => 'Je e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-name-wiki-language' => '',
-	'cnw-next-create-wiki' => 'Create my wiki',
-	'cnw-theme-loading-state' => 'Creating your wiki. You may change your theme during this time.',
-	'cnw-theme-show-wiki' => 'Show me my wiki',
-	'autocreatewiki' => 'Begin een nieuwe wiki',
-	'createwiki' => 'Nieuwe wiki aanmaken',
-	'autocreatewiki-language-top' => 'Supported languages',
+	'cnw-next-create-wiki' => 'Mijn wiki maken',
+	'cnw-theme-loading-state' => 'Je wiki wordt aangemaakt. Je kan nog steeds het ontwerp wijzigen.',
+	'cnw-theme-show-wiki' => 'Toon me mijn wiki',
+	'autocreatewiki' => 'Maak een nieuwe wiki',
+	'createwiki' => 'Maak een nieuwe wiki',
+	'autocreatewiki-language-top' => 'Ondersteunde talen',
 	'autocreatewiki-language-all' => 'Alle talen',
 	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-empty-field' => 'Vul dit veld in.',
@@ -2409,28 +2409,28 @@ $messages['nl'] = array(
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
 	'autocreatewiki-violate-policy' => 'Deze wikinaam bevat een woord dat ons beleid voor namen schendt.',
 	'autocreatewiki-name-taken' => 'Er bestaat al een wiki met dit adres.
-U kunt meehelpen op <a href=\\"http://$1.wikia.com\\">http://$1.wikia.com</a> of een ander adres kiezen.',
+Je kunt meehelpen op <a href=\\"http://$1.wikia.com\\">http://$1.wikia.com</a> of een ander adres kiezen.',
 	'autocreatewiki-name-too-short' => 'Dit adres is te kort.
-Kies alstublieft een adres met tenminste drie tekens.',
+Kies een adres met tenminste drie tekens.',
 	'autocreatewiki-name-too-long' => 'Het adres is te lang.
 Kies een naam met hoogstens vijftig tekens.',
 	'autocreatewiki-empty-wikiname' => 'De naam van de wiki kan niet leeg zijn.',
 	'autocreatewiki-category-label' => 'Categorie:',
 	'autocreatewiki-welcometalk-log' => 'Welkomstbericht',
-	'autocreatewiki-regex-error-comment' => 'gebruikt in wiki $1 (volledige tekst: $2)',
+	'autocreatewiki-regex-error-comment' => 'gebruikt op wiki $1 (volledige tekst: $2)',
 	'autocreatewiki-protect-reason' => 'Onderdeel van de officiële interface',
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk-wall' => "Hallo!
-We zijn blij dat {{SITENAME}} nu onderdeel is van de Wikiagemeenschap.
+We zijn blij dat {{SITENAME}} nu onderdeel is van de FANDOM-gemeenschap.
 
 Er is nog veel te doen, dus hier zijn wat handige tips om je wiki verder te helpen:
-* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies je voor je wiki in kunt schakelen, waaronder chat, speldjes en nog veel meer.
-* Ga langs bij de [[w:c:nl.community|Centrale Wikia community]] om op de hoogte te blijven via onze [[w:c:nl.community:Categorie:Staff_blogs|medewerkersblog]], stel vragen op ons [[w:c:nl.community:Special:Forum|community forum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen.
-* Tenslotte kunt u onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van Wikia te leren kennen.
+* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies je voor je wiki in kunt schakelen, waaronder chat, gallerijen en nog veel meer.
+* Ga langs bij de [[w:c:nl.community|Centrale Wikia community]] om op de hoogte te blijven via onze [[w:c:nl.community:Categorie:Staff_blogs|medewerkersblog]], stel vragen op ons [[w:c:nl.community:Special:Forum|community forum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met andere gebruikers.
+* Tenslotte kun je onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van FANDOM te leren kennen.
 
-Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Veel plezier!",
+Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van FANDOM. Veel plezier!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikia-gemeenschap!
+<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de FANDOM-gemeenschap!
 
 Je hebt nu een hele website tot je beschikking hebt die je met informatie, afbeeldingen en video over je favoriete onderwerp kunt gaan vullen. Maar nu staart een lege pagina je aan. Spannend, toch? Hier volgen wat tips om je op weg te helpen.
 
@@ -2443,10 +2443,10 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
 -- [[User:\$2|\$3]] <staff /></div>",
-	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
-The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
-Good luck with the project,<br /><br />
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />
+Je wiki is nu beschikbaar op <a href="$1">$1</a>.  We hopen dat je snel aan de slag gaat!<br /><br />
+We hebben nog wat extra informatie en tips op je <a href="$5">prikbord</a> om je op weg te helpen. Als je vragen hebt kun je reageren op deze email of onze hulppagina\'s verkennen.<br /><br />
+Veel success met je project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
 );

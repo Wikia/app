@@ -1937,15 +1937,10 @@ class Wikia {
 	 * Generates surrogate key to be used for requests served from a wiki domain.
 	 *
 	 * Can be called at any point during the request handling as it does not rely on WF variables.
-	 * This method can return an empty value if wiki shouldn't use surrogate keys
 	 */
 	public static function wikiSurrogateKey( $wikiId ) {
-		global $wgSurrogateKeysProdWikis;
 		if ( self::isProductionEnv() ) {
-			if ( in_array( $wikiId, $wgSurrogateKeysProdWikis ) || $wikiId > 1000000 ) {
-				return 'wiki-' . $wikiId;
-			}
-			return '';
+			return 'wiki-' . $wikiId;
 		}
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
 	}

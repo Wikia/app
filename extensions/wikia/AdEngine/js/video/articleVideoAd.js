@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
 				audio: playerState.muted ? 'no' : 'yes',
-				ctp: playerState.autoplay ? 'no' : 'yes'
+				ctp: playerState.autoplay || videoDepth > 1 ? 'no' : 'yes'
 			};
 
 		if (slotTargeting) {
@@ -52,9 +52,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			});
 		}
 
-		if (!playerState.autoplay) {
+		if (slotParams.ctp === 'yes') {
 			slotNameSuffix = '-ctp';
-		} else if (!playerState.muted) {
+		} else if (slotParams.audio === 'yes') {
 			slotNameSuffix = '-audio';
 		}
 
