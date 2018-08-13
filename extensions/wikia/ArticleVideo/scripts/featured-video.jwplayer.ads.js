@@ -1,6 +1,5 @@
 define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -13,10 +12,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.wrappers.prebid'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.lookup.prebid')
 ], function (
 	adContext,
-	bidders,
 	vastUrlBuilder,
 	megaAdUnitBuilder,
 	slotRegistry,
@@ -29,6 +28,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	log,
 	win,
 	prebidWrapper,
+	bidders,
 	prebid
 ) {
 	'use strict';
@@ -73,7 +73,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				return;
 			}
 
-			var bid = bidders.isEnabled()
+			var bid = bidders && bidders.isEnabled()
 				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
 				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 

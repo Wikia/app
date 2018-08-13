@@ -55,10 +55,10 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
-			bidders,
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
+			bidders,
             prebid
         );
 	}
