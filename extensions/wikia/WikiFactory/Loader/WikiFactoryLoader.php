@@ -149,7 +149,7 @@ class WikiFactoryLoader {
 		$uri = preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
 			$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
 		if ( $localEnvUrl ) {
-			$uri = \WikiFactory::getLocalEnvURL( $uri );
+			$uri = WikiFactory::getLocalEnvURL( $uri );
 		}
 		if ( $detectHttps && $server['HTTP_FASTLY_SSL'] ) {
 			$uri = wfHttpToHttps( $uri );
