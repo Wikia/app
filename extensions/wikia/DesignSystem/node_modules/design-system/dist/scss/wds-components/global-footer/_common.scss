@@ -119,10 +119,12 @@ $footer-line-height: 1.3em;
 			color: $wds-fandom-color-aqua;
 			line-height: $footer-line-height;
 			text-decoration: none;
+			transition: color $wds-button-transition-duration;
 		}
 
 		&:hover {
 			color: $wds-color-white;
+			text-decoration: none;
 		}
 	}
 
@@ -142,6 +144,7 @@ $footer-line-height: 1.3em;
 			.wds-global-footer__link {
 				@extend %wds-font-size-xxl;
 				@extend %wds-font-weight-bold;
+				@extend %wds-text-transform-uppercase;
 
 				align-items: center;
 				display: flex;
@@ -176,6 +179,7 @@ $footer-line-height: 1.3em;
 
 			.wds-global-footer__image {
 				color: $wds-color-slate-gray;
+				transition: color $wds-button-transition-duration;
 
 				&:hover {
 					color: $wds-color-white;
