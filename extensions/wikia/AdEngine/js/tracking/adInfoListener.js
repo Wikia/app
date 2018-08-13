@@ -1,4 +1,4 @@
-/*global define, JSON*/
+/*global define, require, JSON*/
 define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
