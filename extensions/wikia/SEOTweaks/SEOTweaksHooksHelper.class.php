@@ -288,30 +288,28 @@ class SEOTweaksHooksHelper {
 	 * When #REDIRECT is used make a proper 301 redirect
 	 *
 	 * @param Title $title
+	 * @param $unused
+	 * @param OutputPage $output
+	 * @param User $user
 	 * @param WebRequest $request
-	 * @param $ignoreRedirect
-	 * @param $target
-	 * @param Article $article
+	 * @param MediaWiki $mediawiki
 	 * @return bool
 	 */
-	static public function onInitializeArticleMaybeRedirect(
-		Title &$title, WebRequest &$request, &$ignoreRedirect, &$target, &$article
+	static public function onBeforeInitialize(
+		Title $title, $unused, OutputPage $output,
+		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
-		global $wgUser;
-
-		if ( !$wgUser->isAnon() || !$title->isRedirect() ) {
+		if ( !$user->isAnon() || !$title->isRedirect() ) {
 			return true;
 		}
 
 		$queryParams = $request->getQueryValues();
 		unset( $queryParams['title'] );
-		$targetUrl = $article->getPage()->getRedirectTarget()->getFullURL( $queryParams );
+		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
 
-		$response = $request->response();
-		$response->header( "Location: $targetUrl", true, 301 );
-		$response->header( 'X-Redirected-By: SEOTweaksArticleRedirect' );
+		$output->redirect( $targetUrl, HTTP_REDIRECT_PERM );
 
-		return false;
+		return true;
 	}
 
 	/**
