@@ -43,26 +43,30 @@ class Evaluation extends AbstractService {
 	 * @throws BadRequestApiException
 	 */
 	protected function processAllDocuments( $documents ) {
-		if ( empty( $documents ) || in_array( self::DISABLE_BACKLINKS_COUNT_FLAG, $this->flags ) ) {
+		if ( empty( $documents ) ) {
 			return $documents;
 		}
 
 		$languageCode = $this->getLanguageCode();
 
-		$pageIds = array_filter( array_map( function ( $document ) {
+		$filteredDocuments = array_filter( $documents, function ( $document ) {
+			return isset( $document['page_id']['set'] );
+		} );
+
+		$pageIds = array_map( function ( $document ) {
 			return $document['page_id']['set'];
-		}, $documents ) );
+		}, $filteredDocuments );
 
 		list( $backlinksCount, $redirects, $contents ) = $this->getAdditionalInfo( $pageIds );
 
 		return array_map( function ( $document ) use (
 			$backlinksCount, $languageCode, $redirects, $contents
 		) {
-			$id = $document['page_id']['set'];
-
-			if ( !isset( $id ) ) {
+			if ( !isset( $document['page_id']['set'] ) ) {
 				return $document;
 			}
+
+			$id = $document['page_id']['set'];
 
 			if ( isset( $backlinksCount[ $id ] ) ) {
 				$document['backlinks_count'] = [
@@ -145,6 +149,9 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	private function setBacklinksCount( DatabaseMysqli $dbr, $namespace, $titles, $titlesById, &$backlinks ) {
+		if ( in_array( self::DISABLE_BACKLINKS_COUNT_FLAG, $this->flags ) ) {
+			return;
+		}
 		$dbResults = $dbr->select(
 			'pagelinks',
 			[ 'count(*) as cnt', 'pl_title' ],
