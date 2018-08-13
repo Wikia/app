@@ -307,7 +307,7 @@ class SEOTweaksHooksHelper {
 		unset( $queryParams['title'] );
 		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
 
-		$output->redirect( $targetUrl, HTTP_REDIRECT_PERM );
+		$output->redirect( $targetUrl, '301' );
 
 		return true;
 	}
