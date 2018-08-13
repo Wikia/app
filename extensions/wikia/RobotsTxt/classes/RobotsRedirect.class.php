@@ -27,7 +27,7 @@ class RobotsRedirect {
 	 * the target url (domain root).
 	 */
 	public function onBeforePageRedirect($outputPage, &$redirect, &$code, &$redirectedBy) {
-		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER );
+		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
 		$targetUri = $this->removeRobotsPathPrefix( $redirect );
 
 		if ( $currentUri == $targetUri ) {
