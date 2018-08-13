@@ -2109,7 +2109,8 @@ class OutputPage extends ContextSource {
 			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
 				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
 				if ( $current == $redirect ) {
-					$response->header( 'HTTP/1.1 508 Redirect Loop Detected' );
+					$response->header( 'HTTP/1.1 508 Loop Detected' );
+					$response->header( 'X-Reason: Redirect loop detected' );
 					\Wikia\Logger\WikiaLogger::instance()->error(
 						'Redirect loop detected', [
 							'currentUrl' => $current,
