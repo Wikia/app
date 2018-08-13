@@ -2115,7 +2115,7 @@ class OutputPage extends ContextSource {
 						'Redirect loop detected', [
 							'currentUrl' => $current,
 							'targetUrl' => $redirect,
-							'redirectedBy' => join( ' ', $this->redirectedBy)
+							'redirectedBy' => join( ' ', $this->redirectedBy )
 						]
 					);
 					wfProfileOut( __METHOD__ );
