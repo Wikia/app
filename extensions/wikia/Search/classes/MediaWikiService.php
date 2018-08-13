@@ -1105,9 +1105,10 @@ class MediaWikiService {
 				$newId = $page->getID();
 				self::$pageIdsToArticles[$newId] = $page;
 				self::$redirectsToCanonicalIds[$pageId] = $newId;
+				self::$pageIdsToArticles[$title->getArticleID()] = $page;
+			} else {
+				self::$pageIdsToArticles[$title->getArticleID()] = $article;
 			}
-
-			self::$pageIdsToArticles[$title->getArticleID()] = $page;
 		}
 	}
 
