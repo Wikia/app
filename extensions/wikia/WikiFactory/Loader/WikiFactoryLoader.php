@@ -151,7 +151,7 @@ class WikiFactoryLoader {
 		if ( $localEnvUrl ) {
 			$uri = WikiFactory::getLocalEnvURL( $uri );
 		}
-		if ( $detectHttps && $server['HTTP_FASTLY_SSL'] ) {
+		if ( $detectHttps && !empty( $server['HTTP_FASTLY_SSL'] ) ) {
 			$uri = wfHttpToHttps( $uri );
 		}
 		return $uri;
