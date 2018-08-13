@@ -6,6 +6,10 @@
 	@extend %wds-font-style-normal;
 }
 
+.wds-text-transform-capitalize {
+	@extend %wds-text-transform-capitalize;
+}
+
 .wds-text-transform-uppercase {
 	@extend %wds-text-transform-uppercase;
 }
