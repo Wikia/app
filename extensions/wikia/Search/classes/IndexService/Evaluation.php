@@ -24,7 +24,7 @@ class Evaluation extends AbstractService {
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 		$languageCode = $this->getLanguageCode();
 
-		return [
+		$ret = [
 			'wiki_id' => $service->getWikiId(),
 			'page_id' => $pageId,
 			"title_${languageCode}" => $titleStr,
@@ -36,6 +36,8 @@ class Evaluation extends AbstractService {
 			// 'backlinks_count' is added in processAllDocuments()
 			// 'redirects' is added in processAllDocuments()
 		];
+
+		return $ret;
 	}
 
 	private function getContent( \WikiPage $page ) {
