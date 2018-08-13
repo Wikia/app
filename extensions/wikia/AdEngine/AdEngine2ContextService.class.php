@@ -81,7 +81,6 @@ class AdEngine2ContextService {
 					'featuredVideo' => $featuredVideoDetails
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'evolve2' => $wg->AdDriverUseEvolve2,
 					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [

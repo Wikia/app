@@ -16,7 +16,6 @@ require([
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.wad.babDetection',
-	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
@@ -25,7 +24,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
-	adGeo,
+	geo,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -37,7 +36,6 @@ require([
 	slotRegistry,
 	adInfoListener,
 	babDetection,
-	geo,
 	trackingOptIn,
 	win,
 	fvLagger

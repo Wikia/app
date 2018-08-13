@@ -49,6 +49,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBfabStickinessCountries';
+		$vars[] = 'wgAdDriverBfabStickinessOasisCountries';
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
@@ -61,7 +62,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
-		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
@@ -90,7 +90,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
-		$vars[] = 'wgAdDriverNewGeoCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
@@ -152,6 +151,7 @@ class AdEngine2Hooks {
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
+		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;
