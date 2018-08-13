@@ -109,7 +109,7 @@ abstract class AbstractService {
 	 */
 	public function getResponseForPageIds() {
 
-		$this->getService()->initialPagesLoad($this->pageIds);
+		$this->getService()->initialPagesLoad( $this->pageIds );
 
 		$result = [ 'contents' => '', 'errors' => [] ];
 		$documents = [];
