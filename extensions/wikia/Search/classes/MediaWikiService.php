@@ -1091,10 +1091,22 @@ class MediaWikiService {
 			$pageId = $title->getArticleID();
 			$article = new \Article( $title );
 			if ( $article === null ) {
-				return null;
+				continue;
 			}
 
-			$page = $this->useRedirection( $pageId, $article );
+			$redirectTarget = null;
+			if ( $title->isRedirect() ) {
+				$redirectTarget = $article->getRedirectTarget();
+			}
+
+			if ( $redirectTarget ) {
+				self::$redirectArticles[$pageId] = $article;
+				$page = new \Article( $redirectTarget );
+				$newId = $page->getID();
+				self::$pageIdsToArticles[$newId] = $page;
+				self::$redirectsToCanonicalIds[$pageId] = $newId;
+			}
+
 			self::$pageIdsToArticles[$title->getArticleID()] = $page;
 		}
 	}
@@ -1118,7 +1130,18 @@ class MediaWikiService {
 			return null;
 		}
 
-		$page = $this->useRedirection( $pageId, $page );
+		$redirectTarget = null;
+		if ( $page->isRedirect() ) {
+			$redirectTarget = $page->getRedirectTarget();
+		}
+
+		if ( $redirectTarget ) {
+			self::$redirectArticles[$pageId] = $page;
+			$page = new \Article( $redirectTarget );
+			$newId = $page->getID();
+			self::$pageIdsToArticles[$newId] = $page;
+			self::$redirectsToCanonicalIds[$pageId] = $newId;
+		}
 		self::$pageIdsToArticles[$pageId] = $page;
 
 		return $page;
@@ -1223,27 +1246,5 @@ class MediaWikiService {
 		}
 
 		return static::$pageIdsToTitles[$pageId];
-	}
-
-	/**
-	 * @param $pageId
-	 * @param $page
-	 * @return \Article
-	 */
-	private function useRedirection( $pageId, $page ): \Article {
-		$redirectTarget = null;
-		if ( $page->getTitle()->isRedirect() ) {
-			$redirectTarget = $page->getRedirectTarget();
-		}
-
-		if ( $redirectTarget ) {
-			self::$redirectArticles[$pageId] = $page;
-			$page = new \Article( $redirectTarget );
-			$newId = $page->getID();
-			self::$pageIdsToArticles[$newId] = $page;
-			self::$redirectsToCanonicalIds[$pageId] = $newId;
-		}
-
-		return $page;
 	}
 }
