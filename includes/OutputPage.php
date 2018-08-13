@@ -245,6 +245,7 @@ class OutputPage extends ContextSource {
 	 */
 	var $mRedirectsEnabled = true;
 	var $topScripts = '';
+	private $redirectedBy = [];
 
 
 	/**
@@ -262,10 +263,13 @@ class OutputPage extends ContextSource {
 	}
 
 	# start wikia change
-	public function redirectProtocol( $protocol, $responsecode = '302' ) {
+	public function redirectProtocol( $protocol, $responsecode = '302', $redirectedBy = null ) {
 		if ( $protocol === PROTO_HTTP || $protocol === PROTO_HTTPS ) {
 			$this->mRedirectProtocol = $protocol;
 			$this->mRedirectCode = $responsecode;
+			if ( !empty( $redirectedBy ) ) {
+				$this->redirectedBy[] = $redirectedBy;
+			}
 		}
 	}
 	# end wikia change
@@ -276,7 +280,7 @@ class OutputPage extends ContextSource {
 	 * @param $url String: URL
 	 * @param $responsecode String: HTTP status code
 	 */
-	public function redirect( $url, $responsecode = '302' ) {
+	public function redirect( $url, $responsecode = '302', $redirectedBy = null ) {
 
 		# start wikia change
 		if( !$this->mRedirectsEnabled ) {
@@ -287,6 +291,10 @@ class OutputPage extends ContextSource {
 		# Strip newlines as a paranoia check for header injection in PHP<5.1.2
 		$this->mRedirect = str_replace( "\n", '', $url );
 		$this->mRedirectCode = $responsecode;
+
+		if ( !empty( $redirectedBy ) ) {
+			$this->redirectedBy[] = $redirectedBy;
+		}
 
 		# start wikia change
 		# Cache permanent redirects for 20 minutes, see rt#18297
@@ -2063,6 +2071,9 @@ class OutputPage extends ContextSource {
 		return HttpStatus::getMessage( $code );
 	}
 
+	public function isRedirect() {
+		return $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT;
+	}
 	/**
 	 * Finally, all the text has been munged and accumulated into
 	 * the object, let's actually output it:
@@ -2078,7 +2089,7 @@ class OutputPage extends ContextSource {
 
 		$response = $this->getRequest()->response();
 
-		if ( $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT ) {
+		if ( $this->isRedirect() ) {
 			if ( $this->mRedirect == '') {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}
@@ -2109,7 +2120,8 @@ class OutputPage extends ContextSource {
 				$this->sendCacheControl();
 
 				// SUS-4175 | make the source of the redirect more obvious
-				$response->header( 'X-Redirected-By: mw-OutputPage::redirect' );
+				$this->redirectedBy[] = 'mw-OutputPage::redirect';
+				$response->header( 'X-Redirected-By: ' . join( ' ', $this->redirectedBy) );
 				# end wikia change
 
 				$response->header( "Content-Type: text/html; charset=utf-8" );

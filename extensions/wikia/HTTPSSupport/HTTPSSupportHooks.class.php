@@ -32,14 +32,14 @@ class HTTPSSupportHooks {
 	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
-	 * @param             $article
+	 * @param             $unused
 	 * @param  OutputPage $output
 	 * @param  User       $user
 	 * @param  WebRequest $request
 	 * @param  MediaWiki  $mediawiki
 	 * @return bool
 	 */
-	public static function onAfterInitialize( Title $title, $article, OutputPage $output,
+	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
@@ -51,17 +51,15 @@ class HTTPSSupportHooks {
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
-				$output->redirectProtocol( PROTO_HTTPS, '301' );
+				$output->redirectProtocol( PROTO_HTTPS, '301', 'HTTPS-Upgrade' );
 				if ( $user->isAnon() ) {
 					$output->enableClientCache( false );
 				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
-				empty( $wgDisableHTTPSDowngrade ) &&
-				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-				!self::httpsEnabledTitle( $title )
+				self::shouldDowngradeRequest( $title, $request )
 			) {
-				$output->redirectProtocol( PROTO_HTTP );
+				$output->redirectProtocol( PROTO_HTTP, 302, 'HTTPS-Downgrade' );
 				$output->enableClientCache( false );
 			}
 		}
@@ -69,13 +67,13 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
+	 * Handle downgrading anonymous requests for our robots.txt.
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
 	 * @return boolean
 	 */
-	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
+	public static function onRobotsBeforeOutput( WebRequest $request, User $user ): bool {
 		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
@@ -124,6 +122,20 @@ class HTTPSSupportHooks {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
+	}
+
+	private static function shouldDowngradeRequest( Title $title, WebRequest $request ): bool {
+		global $wgDisableHTTPSDowngrade;
+		return empty( $wgDisableHTTPSDowngrade ) &&
+			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+			!self::httpsEnabledTitle( $title ) &&
+			!self::isRawCSSorJS( $request );
+	}
+
+	private static function isRawCssOrJs( WebRequest $request ): bool {
+		global $wgJsMimeType;
+		return $request->getVal( 'action', 'view' ) === 'raw' &&
+			in_array( $request->getVal( 'ctype', '' ), [ $wgJsMimeType, 'text/css' ] );
 	}
 
 	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
