@@ -37,15 +37,12 @@ class Evaluation extends AbstractService {
 			// 'redirects' is added in processAllDocuments()
 		];
 
-		return $ret;
-	}
-
-	private function getContent( \WikiPage $page ) {
 		if ( in_array( self::PARSE_PAGE, $this->flags ) ) {
-			return $page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
-		} else {
-			return $page->getRawText();
+			$page = \WikiPage::newFromID( $pageId );
+			$ret["content_${languageCode}"] =  $page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
 		}
+
+		return $ret;
 	}
 
 	/**
