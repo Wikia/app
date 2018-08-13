@@ -1,5 +1,6 @@
 <?php
 
+
 class HTTPSSupportHooks {
 
 	// List of articles that shouldn't redirect to http versions.
