@@ -1222,19 +1222,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
  */
 $wgAdDriverUseAdsAfterInfobox = false;
 
-/**
- * @name $wgAdDriverUseEvolve2
- * Whether to enable AdProviderEvolve2 (true) or not (false)
- */
-$wgAdDriverUseEvolve2 = true;
-
-/**
- * @name $wgAdDriverEvolve2Countries
- * List of countries with enabled Evolve2 module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverEvolve2Countries = null;
-
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1766,13 +1753,3 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
-
-// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-// to be removed after we make sure it works fine
-$wgSurrogateKeysProdWikis = [
-	1721212,    // mech-internal-https-test
-	1558829,     // rikitiki
-	518038,    // mobileregressiontesting
-	203236,    // mediawiki119
-	1927      // communitytest
-];

@@ -342,9 +342,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiVertical' => $vertical,
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
-			'providers' => [
-				'evolve2' => true
-			],
+			'providers' => [],
 			'slots' => [
 			],
 			'forcedProvider' => $expectedForcedProvider

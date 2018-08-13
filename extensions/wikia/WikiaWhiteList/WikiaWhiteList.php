@@ -55,7 +55,7 @@ function wfWhiteListParse($text) {
 		preg_match('#href\s*?=\s*?[\'"]?([^\'" ]*)[\'"]?#i', $text, $captures);
 		if ( is_array($captures) && isset($captures[1]) ) {
 			$lhref = $captures[1];
-			if (preg_match('#^\s*https?://#', $lhref)) {
+			if (preg_match('#^\s*(https?:)?//#', $lhref)) {
 				$lparsed = @parse_url($lhref);
 				#---
 				if ( empty($lparsed) || (!is_array($lparsed)) ) {

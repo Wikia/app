@@ -106,7 +106,8 @@ class MercuryApi {
 			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
 			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist;
+			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
+		       $wgFandomAppSmartBannerText;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -128,6 +129,7 @@ class MercuryApi {
 			'enableLightweightContributions' => $wgEnableLightweightContributions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
+			'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
@@ -254,14 +256,28 @@ class MercuryApi {
 	 * @return string userName
 	 */
 	private function addUser( User $user  ) {
+		// TODO: clean me after new mobile bottom of a page is released and icache expires
+		$premiumBottom = (bool) RequestContext::getMain()->getRequest()->getVal('premiumBottom', false);
+
 		$userName = trim( $user->getName() );
 		if ( !isset( $this->users[$userName] ) ) {
+			if ($premiumBottom) {
+				if (AvatarService::isEmptyOrFirstDefault( $userName )) {
+					$avatarUrl = null;
+				} else {
+					$avatarUrl = AvatarService::getAvatarUrl(
+						$userName,
+						AvatarService::AVATAR_SIZE_SMALL_PLUS);
+				}
+			} else {
+				$avatarUrl = AvatarService::getAvatarUrl(
+					$userName,
+					AvatarService::AVATAR_SIZE_MEDIUM);
+			}
+
 			$this->users[$userName] = [
 				'id' => (int) $user->getId(),
-				'avatar' => AvatarService::getAvatarUrl(
-					$userName,
-					AvatarService::AVATAR_SIZE_MEDIUM
-				),
+				'avatar' => $avatarUrl,
 				'url' => AvatarService::getUrl( $userName ),
 			];
 		}

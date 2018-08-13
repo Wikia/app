@@ -185,6 +185,11 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
+		z-index: $wikia-top-ads-index;
+	}
+
+	&.sticky-bfab {
+		width: inherit;
 	}
 
 	overflow: hidden;

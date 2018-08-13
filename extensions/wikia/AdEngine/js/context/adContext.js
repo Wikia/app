@@ -169,11 +169,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Evolve2 integration
-		if (context.providers.evolve2) {
-			context.providers.evolve2 = isEnabled('wgAdDriverEvolve2Countries');
-		}
-
 		context.providers.turtle = isEnabled('wgAdDriverTurtleCountries');
 
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
@@ -217,6 +212,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
 			context.targeting.skin !== 'oasis';
+		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
+			context.targeting.skin === 'oasis';
 
 		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
