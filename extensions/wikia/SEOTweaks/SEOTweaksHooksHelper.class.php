@@ -309,4 +309,11 @@ class SEOTweaksHooksHelper {
 		return true;
 	}
 
+	public static function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ): bool {
+		if ( in_array( 'broken', $options ) ) {
+			$attribs['rel'] = 'nofollow';
+		}
+
+		return true;
+	}
 }
