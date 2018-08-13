@@ -141,6 +141,25 @@ class WikiFactoryLoader {
 	}
 
 	/**
+	 * Return current request uri received by the HTTP server.
+	 *
+	 * @param $server array of server variables (usually $_SERVER)
+	 * @param $localEnvUrl if true, include staging/dev headers, when false, returns wiki canonical url
+	 * @param $detectHttps detect and return https requests based on Fastly headers
+	 */
+	public static function getCurrentRequestUri( $server, $localEnvUrl=false, $detectHttps=false ) {
+		$uri = preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
+			$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
+		if ( $localEnvUrl ) {
+			$uri = WikiFactory::getLocalEnvURL( $uri );
+		}
+		if ( $detectHttps && $server['HTTP_FASTLY_SSL'] ) {
+			$uri = wfHttpToHttps( $uri );
+		}
+		return $uri;
+	}
+
+	/**
 	 * getDB
 	 *
 	 * Method for getting database handler. It checks if $wgDBservers is
