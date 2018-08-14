@@ -119,7 +119,7 @@ class ArticleAsJson {
 				$result = [];
 				break;
 			case 1:
-				$result = [ // TODO: check if that is even possible
+				$result = [
 					[
 						'typeRow1' => true,
 						'items' => $media,
@@ -165,15 +165,17 @@ class ArticleAsJson {
 
 	private static function getGalleryRow3ItemsLeft( $items ) {
 		return [
-			'typeRow3-left' => true,
-			'items' => $items
+			'typeRow3' => true,
+			'leftColumn' => [ $items[0] ],
+			'rightColumn' => [ $items[1], $items[2] ]
 		];
 	}
 
 	private static function getGalleryRow3ItemsRigth( $items ) {
 		return [
-			'typeRow3-right' => true,
-			'items' => $items
+			'typeRow3' => true,
+			'leftColumn' => [ $items[0], $items[1] ],
+			'rightColumn' => [ $items[2] ]
 		];
 	}
 
@@ -229,9 +231,9 @@ class ArticleAsJson {
 					break;
 				case 3:
 					if ($index % 2 == 0) {
-						$result = self::getGalleryRow3ItemsRigth(array_slice($items, $itemsTaken, 3));
+						$result[] = self::getGalleryRow3ItemsRigth(array_slice($items, $itemsTaken, 3));
 					} else {
-						$result = self::getGalleryRow3ItemsLeft(array_slice($items, $itemsTaken, 3));
+						$result[] = self::getGalleryRow3ItemsLeft(array_slice($items, $itemsTaken, 3));
 					}
 					$itemsTaken += 3;
 
@@ -241,6 +243,7 @@ class ArticleAsJson {
 					break;
 			}
 		}
+
 
 		return $result;
 	}
