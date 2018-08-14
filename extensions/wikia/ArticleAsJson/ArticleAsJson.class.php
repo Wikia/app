@@ -105,6 +105,7 @@ class ArticleAsJson {
 		if ( $isGallery ) {
 			$hasLinkedImages = false;
 
+			// TODO: remove this when new galleries are released
 			if ( count(
 				array_filter(
 					$media,
@@ -213,8 +214,8 @@ class ArticleAsJson {
 				try {
 					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
 						->topCrop()
-						->width( 195 )
-						->height( 195 )
+						->width( 200 )
+						->height( 200 )
 						->url();
 				} catch (InvalidArgumentException $e) {
 					$mediaObj['thumbnailUrl'] = '';
