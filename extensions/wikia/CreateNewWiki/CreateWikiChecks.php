@@ -46,19 +46,23 @@ class CreateWikiChecks {
 	}
 
 	private static function getDomainVariantsToCheck( string $domain, string $langCode = null ) {
-		global $wgWikiaBaseDomain;
+		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
 
 		if ( $langCode != null && $langCode !== 'en' ) {
 			return [
 				"$langCode.$domain.$wgWikiaBaseDomain",
-				"$domain.$wgWikiaBaseDomain/$langCode"
-			];
-		} else {
-			return [
-				"$domain.$wgWikiaBaseDomain",
-				"www.$domain.$wgWikiaBaseDomain",
+				"$domain.$wgWikiaBaseDomain/$langCode",
+				"$langCode.$domain.$wgFandomBaseDomain",
+				"$domain.$wgFandomBaseDomain/$langCode",
 			];
 		}
+
+		return [
+			"$domain.$wgWikiaBaseDomain",
+			"www.$domain.$wgWikiaBaseDomain",
+			"$domain.$wgFandomBaseDomain",
+			"www.$domain.$wgFandomBaseDomain",
+		];
 	}
 
 	/*

@@ -1695,7 +1695,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis

@@ -285,55 +285,6 @@ class Wikia {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
-    /**
-     * fixDomainName
-     *
-     * It takes domain name as param, then checks if it contains more than one
-     * dot, then depending on that information adds .wikia.com domain or not.
-     * Additionally it lowercase name
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia-inc.com
-     *
-     * @param string $name Domain Name
-     * @param string $language default false - choosen language
-     * @param mixed  $type type of domain, default false = wikia.com
-     *
-     * @return string fixed domain name
-     */
-	static public function fixDomainName( $name, $language = false, $type = false ) {
-		global $wgWikiaBaseDomain;
-
-		if (empty( $name )) {
-			return $name;
-		}
-
-		$name = strtolower( $name );
-
-		$parts = explode(".", trim($name));
-		if( is_array( $parts ) && count( $parts ) <= 2 ) {
-			$allowLang = true;
-
-			if ( $type === 'answers' ) {
-				$domains = self::getAnswersDomains();
-				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
-					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
-					$allowLang = false;
-				} else {
-					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
-				}
-			} else {
-				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
-			}
-
-			if ( $language && $language != "en" && $allowLang ) {
-				$name = $language.".".$name;
-			}
-		}
-		return $name;
-	}
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
