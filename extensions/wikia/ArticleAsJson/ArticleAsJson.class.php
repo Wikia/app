@@ -7,7 +7,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.33;
+	const CACHE_VERSION = 3.37;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -166,6 +166,7 @@ class ArticleAsJson {
 	private static function getGalleryRow3ItemsLeft( $items ) {
 		return [
 			'typeRow3' => true,
+			'left' => true,
 			'leftColumn' => [ $items[0] ],
 			'rightColumn' => [ $items[1], $items[2] ]
 		];
@@ -174,6 +175,7 @@ class ArticleAsJson {
 	private static function getGalleryRow3ItemsRigth( $items ) {
 		return [
 			'typeRow3' => true,
+			'right' => true,
 			'leftColumn' => [ $items[0], $items[1] ],
 			'rightColumn' => [ $items[2] ]
 		];
@@ -230,7 +232,7 @@ class ArticleAsJson {
 
 					break;
 				case 3:
-					if ($index % 2 == 0) {
+					if ($index % 2 == 0  && $index != 0) {
 						$result[] = self::getGalleryRow3ItemsRigth(array_slice($items, $itemsTaken, 3));
 					} else {
 						$result[] = self::getGalleryRow3ItemsLeft(array_slice($items, $itemsTaken, 3));
@@ -365,8 +367,8 @@ class ArticleAsJson {
 				try {
 					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
 						->topCrop()
-						->width( 200 )
-						->height( 200 )
+						->width( 300 )
+						->height( 300 )
 						->url();
 				} catch (InvalidArgumentException $e) {
 					$mediaObj['thumbnailUrl'] = '';
