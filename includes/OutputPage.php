@@ -304,7 +304,7 @@ class OutputPage extends ContextSource {
 	}
 
 	public function cancelRedirect( $cancelProtocolRedirect = true ) {
-		$this->redirect = '';
+		$this->mRedirect = '';
 		if ( $cancelProtocolRedirect ) {
 			$this->mRedirectProtocol = PROTO_CURRENT;
 		}

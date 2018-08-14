@@ -20,8 +20,12 @@ class SitemapHooks {
 			return true;
 		}
 		header('X-sitemaps-redirect-cancelled: 1');
-		// TBD: override the wgServer so the sitemap uses currently used address
+		// override the wgServer so the sitemap uses currently used address
 		// this needs to be done because WFL used the address from city_url
+		global $wgServer;
+		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
+		$parsed = parse_url( $currentUri );
+		$wgServer = $parsed['scheme'] . '://' . $parsed['host'];	// TBD: need to care about language path?
 		return false;
 	}
 
