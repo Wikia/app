@@ -19,7 +19,7 @@ class SitemapHooks {
 			// there is still a protocol redirect left, proceed with redirecting
 			return true;
 		}
-		header('X-sitemaps-redirect-cancelled: 1');
+		$request->response()->header( 'X-sitemaps-redirect-cancelled: 1' );
 		// override the wgServer so the sitemap uses currently used address
 		// this needs to be done because WFL used the address from city_url
 		global $wgServer;
