@@ -71,20 +71,20 @@ class HTTPSSupportHooks {
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
+	 * @param OutputPage $output
 	 * @return boolean
 	 */
-	public static function onRobotsBeforeOutput( WebRequest $request, User $user ): bool {
-		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
-			return false;
+			$output->redirectProtocol( PROTO_HTTPS, 302, 'Robots-HTTPS-upgrade' );
+			$output->enableClientCache( false );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
-			return false;
+			$output->redirectProtocol( PROTO_HTTP, 302, 'Robots-HTTP-downgrade' );
+			$output->enableClientCache( false );
 		}
 		return true;
 	}
@@ -136,12 +136,5 @@ class HTTPSSupportHooks {
 		global $wgJsMimeType;
 		return $request->getVal( 'action', 'view' ) === 'raw' &&
 			in_array( $request->getVal( 'ctype', '' ), [ $wgJsMimeType, 'text/css' ] );
-	}
-
-	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
-		$response = $request->response();
-		$response->header( "Location: $url", true, 302 );
-		$response->header( 'X-Redirected-By: HTTPS-Support' );
-		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
 	}
 }
