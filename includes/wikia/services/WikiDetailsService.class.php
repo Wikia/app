@@ -203,6 +203,7 @@ class WikiDetailsService extends WikiService {
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'founding_user_id' => isset( $modelData[$id] ) ? $modelData[$id]['founding_user_id'] : '',
+			'creation_date' => isset( $modelData[$id] ) ? $modelData[$id]['creation_date'] : '',
 			'headline' => isset( $modelData[$id] ) ? $modelData[$id]['headline'] : '',
 			'title' => isset( $modelData [$id] ) ? $modelData[$id]['title'] : '',
 			'name' => isset( $modelData [$id] ) ? $modelData[$id]['name'] : '',
