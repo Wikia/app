@@ -4,7 +4,8 @@ require(['jquery'], function ($) {
 	$('#WikiaRail').one('afterLoad.rail', function() {
 		$.getScript(fpLibrary, function () {
 			// Load FP into a newly inserted element
-			var fpContainer = $('#wikia-recent-activity').after('<div class="rail-module feed-module"></div>').get(0);
+			$('#wikia-recent-activity').after('<div class="rail-module feed-posts-module"></div>');
+			var fpContainer = $('.feed-posts-module').get(0);
 			window.fp.default(fpContainer);
 		});
 	});
