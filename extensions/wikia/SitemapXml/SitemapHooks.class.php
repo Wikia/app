@@ -13,15 +13,15 @@ class SitemapHooks {
 	}
 
 	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output ) {
-		// Question 1: do we cancel a redirect for all alternative domain?
+		// Question 1: do we cancel a redirect for all alternative domains?
 		$output->cancelRedirect( false );
 		if ( $output->isRedirect() ) {
 			// there is still a protocol redirect left, proceed with redirecting
 			return true;
 		}
 		$request->response()->header( 'X-sitemaps-redirect-cancelled: 1' );
-		// override the wgServer so the sitemap uses currently used address
-		// this needs to be done because WFL used the address from city_url
+		// Override the wgServer so the sitemap uses host from the current request.
+		// This needs to be done because WFL used the address from city_url
 		global $wgServer;
 		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
 		$parsed = parse_url( $currentUri );
