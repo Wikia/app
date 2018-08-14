@@ -22,7 +22,8 @@ class ArticleAsJson {
 	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
-	const MEDIA_LINKED_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery.mustache';
+	const MEDIA_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-gallery-old.mustache';
+	const MEDIA_LINKED_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery-old.mustache';
 
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
@@ -69,10 +70,25 @@ class ArticleAsJson {
 	}
 
 	private static function renderGallery( $media, $hasLinkedImages ) {
-		if ( $hasLinkedImages ) {
+		// TODO: clean me when new galleries in mobile-wiki are released and cache expires
+		$isNewGalleryLayout = !empty( RequestContext::getMain()->getRequest()->getVal( 'premiumGalleries', false ) );
+		if ( $isNewGalleryLayout ) {
+			$rows = self::prepareGalleryRows($media);
+
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
-					self::MEDIA_LINKED_GALLERY_TEMPLATE,
+					self::MEDIA_GALLERY_TEMPLATE,
+					[
+						'galleryAttrs' => json_encode( $media ),
+						'rows' => $rows,
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+					]
+				)
+			);
+		} elseif ( $hasLinkedImages ) {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_LINKED_GALLERY_TEMPLATE_OLD,
 					[
 						'galleryAttrs' => json_encode( $media ),
 						'media' => $media,
@@ -86,7 +102,7 @@ class ArticleAsJson {
 		} else {
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
-					self::MEDIA_GALLERY_TEMPLATE,
+					self::MEDIA_GALLERY_TEMPLATE_OLD,
 					[
 						'galleryAttrs' => json_encode( $media ),
 						'media' => $media,
@@ -95,6 +111,138 @@ class ArticleAsJson {
 				)
 			);
 		}
+	}
+
+	private static function prepareGalleryRows( $media ): array {
+		switch ( count( $media ) ) {
+			case 0:
+				$result = [];
+				break;
+			case 1:
+				$result = [ // TODO: check if that is even possible
+					[
+						'typeRow1' => true,
+						'items' => $media,
+					]
+				];
+				break;
+			case 2:
+				$result = [
+					self::getGalleryRow2items( $media ),
+				];
+				break;
+			case 3:
+				$result = [
+					self::getGalleryRow3ItemsLeft( $media ),
+				];
+				break;
+			case 4:
+				$result = [
+					self::getGalleryRow2items( array_slice($media, 0, 2)),
+					self::getGalleryRow2items( array_slice($media, 2, 2)),
+				];
+				break;
+			case 7:
+				$result = [
+					self::getGalleryRow2items( array_slice($media, 0, 2)),
+					self::getGalleryRow3ItemsLeft( array_slice($media, 2, 3) ),
+					self::getGalleryRow2items( array_slice($media, 5, 2)),
+				];
+				break;
+			default:
+				$result = self::getGalleryRows($media);
+		}
+
+		return $result;
+	}
+
+	private static function getGalleryRow2items( $items ) {
+		return [
+			'typeRow2' => true,
+			'items' => $items,
+		];
+	}
+
+	private static function getGalleryRow3ItemsLeft( $items ) {
+		return [
+			'typeRow3-left' => true,
+			'items' => $items
+		];
+	}
+
+	private static function getGalleryRow3ItemsRigth( $items ) {
+		return [
+			'typeRow3-right' => true,
+			'items' => $items
+		];
+	}
+
+	private static function getGalleryRows( $items ) {
+		$itemsLeft = count($items);
+		$evenRow = false;
+		$rowSequence = [];
+
+		while ($itemsLeft > 2) {
+			// every odd row should have 3 images and every even row should have 2 images
+			if ($evenRow) {
+				$rowSequence[] = 2;
+				$itemsLeft -= 2;
+			} else {
+				$rowSequence[] = 3;
+				$itemsLeft -= 3;
+			}
+
+			$evenRow = !$evenRow;
+		}
+
+		switch( $itemsLeft ) {
+			case 0: break;
+			case 1:
+				// if there is one image left, change the last row with two images to have 3 images
+				if ($rowSequence[count($rowSequence) - 1] === 2) {
+					$rowSequence[count($rowSequence) - 1] = 3;
+				} else {
+					$rowSequence[count($rowSequence) - 2] = 3;
+				}
+				break;
+			case 2:
+				// if there are 2 images left:
+				//      if the last row has 2 images then add an image to last two rows with 2 images
+				//      if the last row has 3 images just add new row with two images
+				if ($rowSequence[count($rowSequence) - 1] === 2) {
+					$rowSequence[count($rowSequence) - 1] = 3;
+					$rowSequence[count($rowSequence) - 3] = 3;
+				} else {
+					$rowSequence[] = 2;
+				}
+				break;
+		}
+
+		$result = [];
+		$itemsTaken = 0;
+		foreach ($rowSequence as $index => $value) {
+			switch($value) {
+				case 2:
+					$result[] = self::getGalleryRow2items(array_slice($items, $itemsTaken, 2));
+					$itemsTaken += 2;
+
+					break;
+				case 3:
+					if ($index % 2 == 0) {
+						$result = self::getGalleryRow3ItemsRigth(array_slice($items, $itemsTaken, 3));
+					} else {
+						$result = self::getGalleryRow3ItemsLeft(array_slice($items, $itemsTaken, 3));
+					}
+					$itemsTaken += 3;
+
+					break;
+				default:
+					Wikia\Logger\WikiaLogger::instance()->warning('Error while generating gallery, unexpected number of images in row');
+					break;
+			}
+		}
+
+		return $result;
 	}
 
 	private static function removeNewLines( $string ) {
