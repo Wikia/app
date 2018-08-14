@@ -39,7 +39,8 @@ class Evaluation extends AbstractService {
 
 		if ( in_array( self::PARSE_PAGE, $this->flags ) ) {
 			$page = \WikiPage::newFromID( $pageId );
-			$ret["content_${languageCode}"] =  $page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
+			$ret["html_${languageCode}"] =
+				$page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
 		}
 
 		return $ret;
@@ -229,11 +230,6 @@ class Evaluation extends AbstractService {
 		$text_id_to_page_id = [];
 		$text_ids = [];
 		$cond = [];
-
-		// if we parse html then we dont want to use wiki text
-		if ( !in_array( self::PARSE_PAGE, $this->flags ) ) {
-			return $contents;
-		}
 
 		foreach ( $ids as $id ) {
 			$revId = $this->getService()->getPageFromPageId( $id )->mTitle->getLatestRevID();
