@@ -9,7 +9,3 @@ $wgAutoloadClasses['FeedsAndPostsHooks'] =  __DIR__ . '/FeedsAndPostsHooks.class
 
 // Hooks
 $wgHooks['OasisSkinAssetGroups'][] = 'FeedsAndPostsHooks::onOasisSkinAssetGroups';
-
-$wgResourceModules['ext.wikia.feedsAndPosts'] = [
-	'scripts' => 'js/feedsAndPosts.js',
-];
