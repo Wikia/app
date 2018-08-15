@@ -1,5 +1,5 @@
 require(['jquery'], function ($) {
-	var fpLibrary = window.location.protocol + '//' + window.wgDBname + '.wikia.com/feeds-and-posts/public/dist/lib.min.js';
+	var fpLibrary = '/feeds-and-posts/public/dist/lib.min.js';
 
 	$('#WikiaRail').one('afterLoad.rail', function() {
 		$.getScript(fpLibrary, function () {

@@ -28,8 +28,6 @@ class FeedsAndPostsHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgNoExternals;
-
 		if ( self::shouldLoadAssets() ) {
 			$jsAssets[] = 'feeds_and_posts_js';
 		}
