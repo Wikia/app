@@ -1766,4 +1766,6 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
 
-include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
+	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+}

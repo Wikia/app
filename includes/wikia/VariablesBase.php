@@ -2662,6 +2662,13 @@ $wgEnableFandomStoriesOnSearchResultPage = true;
 $wgEnableFastLinkCache = true;
 
 /**
+ * Enable the FeedsAndPosts extension
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableFeedsAndPostsExt
+ */
+$wgEnableFeedsAndPostsExt = false;
+
+/**
  * Enable FileInfoFunctions extension.
  * @see extensions/wikia/ImageSizeInfoFunctions
  * @var bool $wgEnableFileInfoFunctionsExt
