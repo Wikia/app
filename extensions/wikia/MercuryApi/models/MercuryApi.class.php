@@ -107,7 +107,7 @@ class MercuryApi {
 			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
 			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
-		       $wgFandomAppSmartBannerText;
+		       $wgFandomAppSmartBannerText, $wgEnableFeedsAndPostsExt;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -126,6 +126,7 @@ class MercuryApi {
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 			'enableLightweightContributions' => $wgEnableLightweightContributions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
