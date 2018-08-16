@@ -62,6 +62,12 @@ abstract class EmailController extends \WikiaController {
 
 	public function init() {
 		try {
+			global $wgForceProtocolLinks;
+
+			// Protocol relative links don't work in email clients like iOS mail app or Thunderbird
+			// They also break SendGrid's click tracking
+			$wgForceProtocolLinks = true;
+
 			$this->assertCanAccessController();
 
 			// If we're calling an internal handler, don't go through this init again
@@ -138,8 +144,11 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \MWException
 	 */
 	public function handle() {
+		global $wgForceProtocolLinks;
+
 		// If something previously has thrown an error (likely 'init') don't continue
 		if ( $this->hasErrorResponse ) {
+			$wgForceProtocolLinks = false;
 			return;
 		}
 
@@ -178,6 +187,7 @@ abstract class EmailController extends \WikiaController {
 				$this->afterSuccess();
 			}
 		} catch ( \Exception $e ) {
+			$wgForceProtocolLinks = false;
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -187,6 +197,8 @@ abstract class EmailController extends \WikiaController {
 			'subject' => $subject,
 			'body' => $body['html'],
 		] );
+
+		$wgForceProtocolLinks = false;
 	}
 
 	/**
