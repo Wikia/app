@@ -82,6 +82,7 @@ class ArticleAsJson {
 						'galleryAttrs' => json_encode( $media ),
 						'rows' => $rows,
 						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						'viewMoreLabel' => count($media) > 20 ? wfMessage('communitypage-view-more')->escaped() : false, // TODO:  XW-4793
 					]
 				)
 			);
@@ -138,46 +139,49 @@ class ArticleAsJson {
 				break;
 			case 4:
 				$result = [
-					self::getGalleryRow2items( array_slice($media, 0, 2)),
-					self::getGalleryRow2items( array_slice($media, 2, 2)),
+					self::getGalleryRow2items( array_slice( $media, 0, 2 ) ),
+					self::getGalleryRow2items( array_slice( $media, 2, 2 ) ),
 				];
 				break;
 			case 7:
 				$result = [
-					self::getGalleryRow2items( array_slice($media, 0, 2)),
-					self::getGalleryRow3ItemsLeft( array_slice($media, 2, 3) ),
-					self::getGalleryRow2items( array_slice($media, 5, 2)),
+					self::getGalleryRow2items( array_slice( $media, 0, 2 ) ),
+					self::getGalleryRow3ItemsLeft( array_slice( $media, 2, 3 ) ),
+					self::getGalleryRow2items( array_slice( $media, 5, 2 ) ),
 				];
 				break;
 			default:
-				$result = self::getGalleryRows($media);
+				$result = self::getGalleryRows( $media );
 		}
 
 		return $result;
 	}
 
-	private static function getGalleryRow2items( $items ) {
+	private static function getGalleryRow2items( $items, $hidden = false ) {
 		return [
 			'typeRow2' => true,
 			'items' => $items,
+			'rowHidden' => $hidden,
 		];
 	}
 
-	private static function getGalleryRow3ItemsLeft( $items ) {
+	private static function getGalleryRow3ItemsLeft( $items, $hidden = false ) {
 		return [
 			'typeRow3' => true,
 			'left' => true,
 			'leftColumn' => [ $items[0] ],
-			'rightColumn' => [ $items[1], $items[2] ]
+			'rightColumn' => [ $items[1], $items[2] ],
+			'rowHidden' => $hidden,
 		];
 	}
 
-	private static function getGalleryRow3ItemsRigth( $items ) {
+	private static function getGalleryRow3ItemsRigth( $items, $hidden = false ) {
 		return [
 			'typeRow3' => true,
 			'right' => true,
 			'leftColumn' => [ $items[0], $items[1] ],
-			'rightColumn' => [ $items[2] ]
+			'rightColumn' => [ $items[2] ],
+			'rowHidden' => $hidden,
 		];
 	}
 
@@ -226,17 +230,20 @@ class ArticleAsJson {
 		$result = [];
 		$itemsTaken = 0;
 		foreach ( $rowSequence as $index => $value ) {
+			// By default ~20 first images is shown in gallery (first 8 rows), rest is hidden
+			$rowHidden = $index > 7;
+
 			switch ( $value ) {
 				case 2:
-					$result[] = self::getGalleryRow2items( array_slice( $items, $itemsTaken, 2 ) );
+					$result[] = self::getGalleryRow2items( array_slice( $items, $itemsTaken, 2 ), $rowHidden );
 					$itemsTaken += 2;
 
 					break;
 				case 3:
 					if ( $index % 2 != 0 ) {
-						$result[] = self::getGalleryRow3ItemsRigth( array_slice( $items, $itemsTaken, 3 ) );
+						$result[] = self::getGalleryRow3ItemsRigth( array_slice( $items, $itemsTaken, 3 ), $rowHidden );
 					} else {
-						$result[] = self::getGalleryRow3ItemsLeft( array_slice( $items, $itemsTaken, 3 ) );
+						$result[] = self::getGalleryRow3ItemsLeft( array_slice( $items, $itemsTaken, 3 ), $rowHidden );
 					}
 					$itemsTaken += 3;
 
