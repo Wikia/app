@@ -299,11 +299,16 @@ class SEOTweaksHooksHelper {
 		Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
-		if ( !$user->isAnon() || !$title->isRedirect() ) {
+		$queryParams = $request->getQueryValues();
+
+		if (
+			!$user->isAnon() ||
+			!$title->isRedirect() ||
+			isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no'
+		) {
 			return true;
 		}
 
-		$queryParams = $request->getQueryValues();
 		unset( $queryParams['title'] );
 		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
 
