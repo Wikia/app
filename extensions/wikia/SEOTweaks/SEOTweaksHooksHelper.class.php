@@ -285,6 +285,39 @@ class SEOTweaksHooksHelper {
 	}
 
 	/**
+	 * When #REDIRECT is used make a proper 301 redirect
+	 *
+	 * @param Title $title
+	 * @param $unused
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $request
+	 * @param MediaWiki $mediawiki
+	 * @return bool
+	 */
+	static public function onBeforeInitialize(
+		Title $title, $unused, OutputPage $output,
+		User $user, WebRequest $request, MediaWiki $mediawiki
+	): bool {
+		$queryParams = $request->getQueryValues();
+
+		if (
+			!$user->isAnon() ||
+			!$title->isRedirect() ||
+			isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no'
+		) {
+			return true;
+		}
+
+		unset( $queryParams['title'] );
+		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
+
+		$output->redirect( $targetUrl, '301', 'CanonicalTitle' );
+
+		return true;
+	}
+
+	/**
 	 * Hook: set status code to 404 for category pages without pages or media
 	 * @param CategoryPage $categoryPage
 	 * @return bool
