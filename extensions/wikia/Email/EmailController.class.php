@@ -148,7 +148,6 @@ abstract class EmailController extends \WikiaController {
 
 		// If something previously has thrown an error (likely 'init') don't continue
 		if ( $this->hasErrorResponse ) {
-			$wgForceProtocolLinks = false;
 			return;
 		}
 
@@ -187,7 +186,6 @@ abstract class EmailController extends \WikiaController {
 				$this->afterSuccess();
 			}
 		} catch ( \Exception $e ) {
-			$wgForceProtocolLinks = false;
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -217,6 +215,8 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 */
 	protected function setErrorResponse( \Exception $e ) {
+		global $wgForceProtocolLinks;
+
 		if ( $e instanceof ControllerException ) {
 			$result = $e->getErrorType();
 		} else {
@@ -230,6 +230,8 @@ abstract class EmailController extends \WikiaController {
 			'result' => $result,
 			'msg' => $e->getMessage(),
 		] );
+
+		$wgForceProtocolLinks = false;
 	}
 
 	/**
