@@ -7,7 +7,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.37;
+	const CACHE_VERSION = 3.38;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -182,13 +182,13 @@ class ArticleAsJson {
 	}
 
 	private static function getGalleryRows( $items ) {
-		$itemsLeft = count($items);
+		$itemsLeft = count( $items );
 		$evenRow = false;
 		$rowSequence = [];
 
-		while ($itemsLeft > 2) {
+		while ( $itemsLeft > 2 ) {
 			// every odd row should have 3 images and every even row should have 2 images
-			if ($evenRow) {
+			if ( $evenRow ) {
 				$rowSequence[] = 2;
 				$itemsLeft -= 2;
 			} else {
@@ -199,23 +199,24 @@ class ArticleAsJson {
 			$evenRow = !$evenRow;
 		}
 
-		switch( $itemsLeft ) {
-			case 0: break;
+		switch ( $itemsLeft ) {
+			case 0:
+				break;
 			case 1:
 				// if there is one image left, change the last row with two images to have 3 images
-				if ($rowSequence[count($rowSequence) - 1] === 2) {
-					$rowSequence[count($rowSequence) - 1] = 3;
+				if ( $rowSequence[count( $rowSequence ) - 1] === 2 ) {
+					$rowSequence[count( $rowSequence ) - 1] = 3;
 				} else {
-					$rowSequence[count($rowSequence) - 2] = 3;
+					$rowSequence[count( $rowSequence ) - 2] = 3;
 				}
 				break;
 			case 2:
 				// if there are 2 images left:
 				//      if the last row has 2 images then add an image to last two rows with 2 images
 				//      if the last row has 3 images just add new row with two images
-				if ($rowSequence[count($rowSequence) - 1] === 2) {
-					$rowSequence[count($rowSequence) - 1] = 3;
-					$rowSequence[count($rowSequence) - 3] = 3;
+				if ( $rowSequence[count( $rowSequence ) - 1] === 2 ) {
+					$rowSequence[count( $rowSequence ) - 1] = 3;
+					$rowSequence[count( $rowSequence ) - 3] = 3;
 				} else {
 					$rowSequence[] = 2;
 				}
@@ -224,28 +225,29 @@ class ArticleAsJson {
 
 		$result = [];
 		$itemsTaken = 0;
-		foreach ($rowSequence as $index => $value) {
-			switch($value) {
+		foreach ( $rowSequence as $index => $value ) {
+			switch ( $value ) {
 				case 2:
-					$result[] = self::getGalleryRow2items(array_slice($items, $itemsTaken, 2));
+					$result[] = self::getGalleryRow2items( array_slice( $items, $itemsTaken, 2 ) );
 					$itemsTaken += 2;
 
 					break;
 				case 3:
-					if ($index % 2 == 0  && $index != 0) {
-						$result[] = self::getGalleryRow3ItemsRigth(array_slice($items, $itemsTaken, 3));
+					if ( $index % 2 != 0 ) {
+						$result[] = self::getGalleryRow3ItemsRigth( array_slice( $items, $itemsTaken, 3 ) );
 					} else {
-						$result[] = self::getGalleryRow3ItemsLeft(array_slice($items, $itemsTaken, 3));
+						$result[] = self::getGalleryRow3ItemsLeft( array_slice( $items, $itemsTaken, 3 ) );
 					}
 					$itemsTaken += 3;
 
 					break;
 				default:
-					Wikia\Logger\WikiaLogger::instance()->warning('Error while generating gallery, unexpected number of images in row');
+					Wikia\Logger\WikiaLogger::instance()->warning(
+						'Error while generating gallery, unexpected number of images in row'
+					);
 					break;
 			}
 		}
-
 
 		return $result;
 	}
