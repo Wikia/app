@@ -57,6 +57,18 @@ class ArticleHTMLCleanup {
 			}
 		}
 
+		// remove empty paragraphs from article content
+		$paragraphs = $xpath->query( "//p" );
+		$emptyParagraphs = [];
+
+		foreach ( $paragraphs as $p ) {
+			if ( empty( $p->nodeValue ) ) {
+				$emptyParagraphs[] = $p;
+			}
+		}
+
+		HtmlHelper::removeNodes( $emptyParagraphs );
+
 		return HtmlHelper::getBodyHtml( $dom );
 	}
 

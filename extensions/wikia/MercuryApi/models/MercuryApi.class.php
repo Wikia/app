@@ -107,7 +107,7 @@ class MercuryApi {
 			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
 			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
-		       $wgFandomAppSmartBannerText;
+		       $wgFandomAppSmartBannerText, $wgTwitterAccount;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -121,6 +121,7 @@ class MercuryApi {
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
+			'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
@@ -140,11 +141,12 @@ class MercuryApi {
 			],
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'namespaces' => $wgContLang->getNamespaces(),
+			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 			'scriptPath' => $wgScriptPath,
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
-			'discussionColorOverride' => SassUtil::sanitizeColor($wgDiscussionColorOverride),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
@@ -155,9 +157,8 @@ class MercuryApi {
 					'url' => AnalyticsProviderNetzAthleten::URL
 				]
 			],
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
-			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
+			'twitterAccount' => $wgTwitterAccount,
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 

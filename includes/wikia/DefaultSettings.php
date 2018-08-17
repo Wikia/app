@@ -1414,12 +1414,6 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
- * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
- * List of countries to switch BLB with PreFooter on mobile
- */
-$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
@@ -1701,7 +1695,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis

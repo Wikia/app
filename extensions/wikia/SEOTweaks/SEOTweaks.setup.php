@@ -15,6 +15,7 @@ $wgAutoloadClasses['SEOTweaksHooksHelper'] =  $dir . 'SEOTweaksHooksHelper.class
 // hooks
 $wgHooks['ArticleRobotPolicy'][] = 'SEOTweaksHooksHelper::onArticleRobotPolicy';
 $wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
+$wgHooks['BeforeInitialize'][] = 'SEOTweaksHooksHelper::onBeforeInitialize';
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
 $wgHooks['CategoryPageView'][] = 'SEOTweaksHooksHelper::onCategoryPageView';
 $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
