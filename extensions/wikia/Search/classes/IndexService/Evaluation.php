@@ -67,6 +67,10 @@ class Evaluation extends AbstractService {
 			return $document['page_id']['set'];
 		}, $filteredDocuments );
 
+		if ( empty( $pageIds ) ) {
+			return $documents;
+		}
+
 		list( $backlinksCount, $redirects, $contents ) = $this->getAdditionalInfo( $pageIds );
 
 		return array_map( function ( $document ) use (
