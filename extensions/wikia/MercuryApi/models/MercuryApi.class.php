@@ -101,13 +101,13 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
-			   $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-			   $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
-			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
-			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
-			   $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
+		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
+		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
+		       $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
