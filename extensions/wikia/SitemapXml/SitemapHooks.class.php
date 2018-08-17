@@ -2,10 +2,6 @@
 
 class SitemapHooks {
 
-	protected static function isSitemapTitle( Title $title ) {
-		return $title->isSpecial( 'Sitemap' );
-	}
-
 	/**
 	 * Disable title redirects for sitemaps, as we want to use the original request url rather than Special:Sitemap.
 	 */
@@ -17,27 +13,16 @@ class SitemapHooks {
 	}
 
 	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output ) {
-		global $wgServer, $wgWikiaBaseDomain, $wgFandomBaseDomain;
+		global $wgServer, $wgScriptPath, $wgScript, $wgArticlePath;
 
 		if ( !self::isSitemapTitle( $title ) || WebRequest::detectProtocol() !== 'http' ) {
 			return true;
 		}
 
-		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
-		$currentHost = parse_url( $currentUri, PHP_URL_HOST );
+		$currentHost = parse_url( WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true ), PHP_URL_HOST );
 
 		// We only want to deal with plain HTTP versions of the wikia.com domain
-		if ( strpos( $currentHost, ".{$wgWikiaBaseDomain}" ) === false ) {
-			return true;
-		}
-
-		// Only cancel the redirect if we're redirecting to the fandom.com version of the
-		// current URL
-		$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
-		$targetHost = parse_url( $targetUrl, PHP_URL_HOST );
-		if ( strpos( $targetHost, ".{$wgFandomBaseDomain}" ) === false ||
-			str_replace( ".{$wgFandomBaseDomain}", ".{$wgWikiaBaseDomain}", $targetHost ) !== $currentHost
-		) {
+		if ( !self::shouldCancelRedirect( $currentHost, $title ) ) {
 			return true;
 		}
 
@@ -48,7 +33,45 @@ class SitemapHooks {
 		// Override the wgServer so the sitemap uses host from the current request.
 		// This needs to be done because WFL used the address from city_url
 		$wgServer = "http://{$currentHost}";
+		// Reset script path and related variables on language path wikis
+		// so the URLs in the sitemap are correct
+		$wgScriptPath = '';
+		$wgScript = '/index.php';
+		$wgArticlePath = '/wiki/$1';
 		return false;
 	}
 
+	private static function shouldCancelRedirect( $currentHost, Title $targetTitle ): bool {
+		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+
+		$currentHost = WikiFactory::normalizeHost( $currentHost );
+		$targetUrlParsed = parse_url( wfExpandUrl( $targetTitle->getFullURL(), PROTO_CURRENT ) );
+		$targetHost = WikiFactory::normalizeHost( $targetUrlParsed['host'] );
+
+		if ( strpos( $currentHost, ".{$wgWikiaBaseDomain}" ) === false ||
+			strpos( $targetHost, ".{$wgFandomBaseDomain}" ) === false
+		) {
+			return false;
+		}
+
+		// Only cancel the redirect if we're redirecting to the fandom.com and potentially
+		// the language path version of the current URL
+		$wikiaTargetHost = str_replace( ".{$wgFandomBaseDomain}", ".{$wgWikiaBaseDomain}", $targetHost );
+		if ( substr_count( $currentHost, '.' ) > 2 ) {
+			$langCode = explode( '.', $currentHost )[0];
+			if ( strpos( $targetUrlParsed['path'], "/{$langCode}" ) === 0 ) {
+				$wikiaTargetHost = "$langCode.$wikiaTargetHost";
+			}
+		}
+
+		if ( $wikiaTargetHost !== $currentHost ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static function isSitemapTitle( Title $title ) {
+		return $title->isSpecial( 'Sitemap' );
+	}
 }
