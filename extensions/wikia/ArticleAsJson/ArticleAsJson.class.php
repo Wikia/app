@@ -158,6 +158,12 @@ class ArticleAsJson {
 	}
 
 	private static function getGalleryRow2items( $items, $hidden = false ) {
+		$thumbsize = 220;
+		$items[0]['thumbnailUrl'] = self::getGalleryThumbnail( $items[0], $thumbsize);
+		$items[0]['thumbSize'] = $thumbsize;
+		$items[1]['thumbnailUrl'] = self::getGalleryThumbnail( $items[1], $thumbsize);
+		$items[1]['thumbSize'] = $thumbsize;
+
 		return [
 			'typeRow2' => true,
 			'items' => $items,
@@ -166,6 +172,13 @@ class ArticleAsJson {
 	}
 
 	private static function getGalleryRow3ItemsLeft( $items, $hidden = false ) {
+		$items[0]['thumbnailUrl'] = self::getGalleryThumbnail( $items[0], 300);
+		$items[0]['thumbSize'] = 300;
+		$items[1]['thumbnailUrl'] = self::getGalleryThumbnail( $items[1], 150);
+		$items[1]['thumbSize'] = 150;
+		$items[2]['thumbnailUrl'] = self::getGalleryThumbnail( $items[2], 150);
+		$items[2]['thumbSize'] = 150;
+
 		return [
 			'typeRow3' => true,
 			'left' => true,
@@ -176,6 +189,13 @@ class ArticleAsJson {
 	}
 
 	private static function getGalleryRow3ItemsRigth( $items, $hidden = false ) {
+		$items[0]['thumbnailUrl'] = self::getGalleryThumbnail( $items[0], 150);
+		$items[0]['thumbSize'] = 150;
+		$items[1]['thumbnailUrl'] = self::getGalleryThumbnail( $items[1], 150);
+		$items[1]['thumbSize'] = 150;
+		$items[2]['thumbnailUrl'] = self::getGalleryThumbnail( $items[2], 300);
+		$items[2]['thumbSize'] = 300;
+
 		return [
 			'typeRow3' => true,
 			'right' => true,
@@ -183,6 +203,18 @@ class ArticleAsJson {
 			'rightColumn' => [ $items[2] ],
 			'rowHidden' => $hidden,
 		];
+	}
+
+	private static function getGalleryThumbnail( $item, int $width ): string {
+		try {
+			return VignetteRequest::fromUrl( $item['url'] )
+				->topCrop()
+				->width( $width )
+				->height( $width )
+				->url();
+		} catch (InvalidArgumentException $e) {
+			return '';
+		}
 	}
 
 	private static function getGalleryRows( $items ) {
@@ -346,6 +378,9 @@ class ArticleAsJson {
 		global $wgArticleAsJson;
 
 		if ( $wgArticleAsJson ) {
+			// TODO: clean me when new galleries in mobile-wiki are released and cache expires
+			$isNewGalleryLayout = !empty( RequestContext::getMain()->getRequest()->getVal( 'premiumGalleries', false ) );
+
 			$parser = ParserPool::get();
 			$parserOptions = new ParserOptions();
 			$title = F::app()->wg->Title;
@@ -373,14 +408,18 @@ class ArticleAsJson {
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
-				try {
-					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
-						->topCrop()
-						->width( 300 )
-						->height( 300 )
-						->url();
-				} catch (InvalidArgumentException $e) {
-					$mediaObj['thumbnailUrl'] = '';
+
+				// TODO: clean me when new galleries in mobile-wiki are released and cache expires
+				if (!$isNewGalleryLayout) {
+					try {
+						$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
+							->topCrop()
+							->width( 300 )
+							->height( 300 )
+							->url();
+					} catch (InvalidArgumentException $e) {
+						$mediaObj['thumbnailUrl'] = '';
+					}
 				}
 
 				$media[] = $mediaObj;
