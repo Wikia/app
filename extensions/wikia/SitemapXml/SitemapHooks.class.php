@@ -28,7 +28,7 @@ class SitemapHooks {
 
 		$output->cancelRedirect();
 
-		$request->response()->header( 'X-sitemaps-redirect-cancelled: 1' );
+		$request->response()->header( 'X-Sitemaps-Redirect-Cancelled: 1' );
 
 		// Override the wgServer so the sitemap uses host from the current request.
 		// This needs to be done because WFL used the address from city_url
