@@ -262,38 +262,15 @@ class MediaWiki {
 				$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
 
 				// Redirect to canonical url, make it a 301 to allow caching
-				if ( $targetUrl == $request->getFullRequestURL() ) {
-					$message = "Redirect loop detected!\n\n" .
-						"This means the wiki got confused about what page was " .
-						"requested; this sometimes happens when moving a wiki " .
-						"to a new server or changing the server configuration.\n\n";
 
-					if ( $wgUsePathInfo ) {
-						$message .= "The wiki is trying to interpret the page " .
-							"title from the URL path portion (PATH_INFO), which " .
-							"sometimes fails depending on the web server. Try " .
-							"setting \"\$wgUsePathInfo = false;\" in your " .
-							"LocalSettings.php, or check that \$wgArticlePath " .
-							"is correct.";
-					} else {
-						$message .= "Your web server was detected as possibly not " .
-							"supporting URL path components (PATH_INFO) correctly; " .
-							"check your LocalSettings.php for a customized " .
-							"\$wgArticlePath setting and/or toggle \$wgUsePathInfo " .
-							"to true.";
-					}
-					wfProfileOut( __METHOD__ );
-					throw new HttpError( 500, $message );
-				} else {
-					// TBD - what about other query parameters?
-					if ( !empty( $gaParams = $request->getVal( '_ga' ) ) ) {
-						// add GA cross domain tracking parameter when redirecting
-						$targetUrl = wfExpandUrl( $title->getFullURL( [ '_ga' => $gaParams ] ), PROTO_CURRENT );
-					}
-
-					$output->setSquidMaxage( 1200 );
-					$output->redirect( $targetUrl, '301', 'Title-Redirect' );
+				// TBD - what about other query parameters?
+				if ( !empty( $gaParams = $request->getVal( '_ga' ) ) ) {
+					// add GA cross domain tracking parameter when redirecting
+					$targetUrl = wfExpandUrl( $title->getFullURL( [ '_ga' => $gaParams ] ), PROTO_CURRENT );
 				}
+
+				$output->setSquidMaxage( 1200 );
+				$output->redirect( $targetUrl, '301', 'Title-Redirect' );
 			}
 
 		} elseif ( NS_SPECIAL == $title->getNamespace() ) {  // Special pages
