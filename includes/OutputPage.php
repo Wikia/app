@@ -1904,7 +1904,11 @@ class OutputPage extends ContextSource {
 	 *   /w/index.php?title=Main_page&variant=zh-cn should never be served.
 	 */
 	function addAcceptLanguage() {
-		$lang = $this->getTitle()->getPageLanguage();
+		$title = $this->getTitle();
+		if ( is_null( $title ) ) {
+			return;
+		}
+		$lang = $title->getPageLanguage();
 		if( !$this->getRequest()->getCheck( 'variant' ) && $lang->hasVariants() ) {
 			$variants = $lang->getVariants();
 			$aloption = array();
@@ -2106,7 +2110,7 @@ class OutputPage extends ContextSource {
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
 
-			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
+			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code, &$this->redirectedBy ) ) ) {
 				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
 				if ( $current == $redirect ) {
 					$response->header( 'HTTP/1.1 508 Loop Detected' );

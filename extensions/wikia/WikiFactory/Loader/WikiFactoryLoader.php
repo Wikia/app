@@ -70,9 +70,7 @@ class WikiFactoryLoader {
 		if ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
-
-			$fullUrl =  preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
-				$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
+			$fullUrl =  self::getCurrentRequestUri( $server );
 			$this->parsedUrl = parse_url( $fullUrl );
 
 			$slash = strpos( $this->parsedUrl['path'], '/', 1 ) ?: strlen( $this->parsedUrl['path'] );
@@ -144,7 +142,7 @@ class WikiFactoryLoader {
 	 * Return current request uri received by the HTTP server.
 	 *
 	 * @param $server array of server variables (usually $_SERVER)
-	 * @param $localEnvUrl if true, include staging/dev headers, when false, returns wiki canonical url
+	 * @param $localEnvUrl if true, includes staging/dev env part of the address, when false, returns wiki canonical url
 	 * @param $detectHttps detect and return https requests based on Fastly headers
 	 */
 	public static function getCurrentRequestUri( $server, $localEnvUrl=false, $detectHttps=false ) {

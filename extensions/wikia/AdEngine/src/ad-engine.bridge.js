@@ -44,7 +44,7 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	const bfabStickiness = legacyContext.get('opts.isBfabStickinessEnabled') ||
+	const bfabStickiness = legacyContext.get('opts.areMobileStickyAndSwapEnabled') ||
 		legacyContext.get('opts.isDesktopBfabStickinessEnabled');
 	context.set('options.bfabStickiness', bfabStickiness);
 

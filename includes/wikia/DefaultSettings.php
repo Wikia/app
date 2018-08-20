@@ -1414,12 +1414,6 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
- * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
- * List of countries to switch BLB with PreFooter on mobile
- */
-$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
