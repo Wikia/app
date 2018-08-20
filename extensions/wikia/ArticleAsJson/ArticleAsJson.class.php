@@ -188,7 +188,7 @@ class ArticleAsJson {
 		];
 	}
 
-	private static function getGalleryRow3ItemsRigth( $items, $hidden = false ) {
+	private static function getGalleryRow3ItemsRight( $items, $hidden = false ) {
 		$items[0]['thumbnailUrl'] = self::getGalleryThumbnail( $items[0], 150);
 		$items[0]['thumbSize'] = 150;
 		$items[1]['thumbnailUrl'] = self::getGalleryThumbnail( $items[1], 150);
@@ -273,7 +273,7 @@ class ArticleAsJson {
 					break;
 				case 3:
 					if ( $index % 2 != 0 ) {
-						$result[] = self::getGalleryRow3ItemsRigth( array_slice( $items, $itemsTaken, 3 ), $rowHidden );
+						$result[] = self::getGalleryRow3ItemsRight( array_slice( $items, $itemsTaken, 3 ), $rowHidden );
 					} else {
 						$result[] = self::getGalleryRow3ItemsLeft( array_slice( $items, $itemsTaken, 3 ), $rowHidden );
 					}
