@@ -1402,6 +1402,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
