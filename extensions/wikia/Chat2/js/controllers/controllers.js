@@ -511,7 +511,7 @@ var NodeRoomController = $.createClass(Observable, {
 					'chat-user-was-' + mode,
 					kickEvent.get('kickedUserName'),
 					kickEvent.get('moderatorName')
-				).rawParams([undoLink]).escaped()
+				).escaped().replace(/\$3/g, undoLink)
 			});
 
 			this.model.chats.add(newChatEntry);
