@@ -216,9 +216,11 @@ class MediaWiki {
 			throw new PermissionsError( 'read', $permErrors );
 		}
 
-		$pageView = false; // was an article or special page viewed?
 		$shouldRedirectToTitle = ($request->getVal( 'title' ) === null ||
 			$title->getPrefixedDBKey() != $request->getVal( 'title' ) ) &&
+			$request->getVal( 'action', 'view' ) == 'view' &&
+			!$request->wasPosted() &&
+			!count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) ) &&
 			Hooks::run( 'BeforeTitleRedirect', array( $request, $title ) );
 
 		// Interwiki redirects
@@ -244,9 +246,7 @@ class MediaWiki {
 			}
 		// Redirect loops, no title in URL, $wgUsePathInfo URLs, and URLs with a variant
 		} elseif ( (
-			( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
-				&& $shouldRedirectToTitle
-				&& !count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) ) ) ||
+			$shouldRedirectToTitle ||
 			$output->isRedirect() )
 			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
