@@ -195,9 +195,9 @@ class ForumController extends WallBaseController {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = [ ];
-			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
+			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->text(), 'url' => $indexPage->getFullUrl() ];
 
-			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
+			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->text() ];
 
 			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
 
