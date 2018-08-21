@@ -1480,6 +1480,12 @@ function wfGetValueExcerpt( $value ) {
  * @return string
  */
 function wfProtocolUrlToRelative( $url ) {
+	global $wgForceProtocolLinks;
+
+	if ( $wgForceProtocolLinks === true ) {
+		return $url;
+	}
+
 	$pos = strpos( $url, '://' );
 	if ( $pos > 0 ) {
 		$url = substr_replace( $url, '', 0, $pos+1 );
