@@ -67,7 +67,7 @@ class UserProfilePageController extends WikiaController {
 		 * @var $userIdentityBox UserIdentityBox
 		 */
 		$userIdentityBox = new UserIdentityBox( $user );
-		$isUserPageOwner = ( !$user->isAnon() && $user->getId() == $sessionUser->getId() ) ? true : false;
+		$isUserPageOwner = $this->isUserPageOwner( $user );
 
 		if ( $isUserPageOwner ) {
 			// this is a small trick to remove some
@@ -92,15 +92,8 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed( 'removeavatar' ) );
 		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
 
-		$canEditProfile = $isUserPageOwner || $sessionUser->isAllowed( 'editprofilev3' );
-		// if user is blocked locally (can't edit anything) he can't edit masthead too
-		$canEditProfile = $sessionUser->isAllowed( 'edit' ) ? $canEditProfile : false;
-		// if user is blocked globally he can't edit
-		$blockId = $sessionUser->getBlockId();
-		$canEditProfile = empty( $blockId ) ? $canEditProfile : false;
-		$this->setVal( 'canEditProfile', $canEditProfile );
-		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
-		$this->setVal( 'canEditProfile', ( $isUserPageOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
+		$this->setVal( 'canEditProfile', $this->canEditProfile( $user ) );
+		$this->setVal( 'isWikiStaff', in_array( 'staff', $sessionUser->getEffectiveGroups() ) );
 		$this->setVal( 'canClearProfile', $sessionUser->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) );
 
 		$this->fetchDiscussionPostsNumberFrom($user);
@@ -140,7 +133,7 @@ class UserProfilePageController extends WikiaController {
 		$canRename = $sessionUser->isAllowed( 'renameprofilev3' );
 		$canProtect = $sessionUser->isAllowed( 'protect' );
 		$canDelete = $sessionUser->isAllowed( 'deleteprofilev3' );
-		$isUserPageOwner = ( $user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId() ) ? true : false;
+		$isUserPageOwner = $this->isUserPageOwner( $user );
 
 		$editQuery = [ 'action' => 'edit' ];
 
@@ -289,18 +282,12 @@ class UserProfilePageController extends WikiaController {
 
 		$selectedTab = $this->getVal( 'tab' );
 		$userId = $this->getVal( 'userId' );
-		$sessionUser = $this->wg->User;
-		$canEditProfile = $sessionUser->isAllowed( 'editprofilev3' );
+		$user = User::newFromId( $userId );
 
-		// checking if user is blocked locally
-		$isBlocked = !$sessionUser->isAllowed( 'edit' );
-		// checking if user is blocked globally
-		$isBlocked = empty( $isBlocked ) ? $sessionUser->getBlockId() : $isBlocked;
-
-		if ( ( $sessionUser->isAnon() && !$canEditProfile ) || $isBlocked ) {
+		if ( !$this->canEditProfile( $user ) ) {
 			throw new WikiaException( wfMessage( 'userprofilepage-invalid-user' )->escaped() );
 		} else {
-			$this->profilePage = new UserProfilePage( $sessionUser );
+			$this->profilePage = new UserProfilePage( $user );
 
 			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderLightbox', [ 'tab' => $selectedTab, 'userId' => $userId ] ) );
 
@@ -390,7 +377,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$user = User::newFromId( $this->getVal( 'userId' ) );
-		$isAllowed = ( $this->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->wg->User->getId() ) );
+		$isAllowed = $this->canEditProfile( $user );
 
 		$userData = json_decode( $this->getVal( 'data' ) );
 
@@ -462,18 +449,13 @@ class UserProfilePageController extends WikiaController {
 			$user = User::newFromId( $userId );
 		}
 
-		$isAllowed = (
-			$this->app->wg->User->isAllowed( 'editprofilev3' ) ||
-			$user->getId() == $this->wg->User->getId()
-		);
-
 		if ( is_null( $data ) ) {
 			$data = json_decode( $this->getVal( 'data' ) );
 		}
 
 		$success = true;
 
-		if ( $isAllowed && isset( $data->source ) && isset( $data->file ) ) {
+		if ( $this->canEditProfile( $user ) && isset( $data->source ) && isset( $data->file ) ) {
 			switch ( $data->source ) {
 				case 'sample':
 					// remove old avatar file
@@ -871,9 +853,8 @@ class UserProfilePageController extends WikiaController {
 		$wikiId = intval( $this->getVal( 'wikiId' ) );
 
 		$user = User::newFromId( $userId );
-		$isAllowed = ( $this->app->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->app->wg->User->getId() ) );
 
-		if ( $isAllowed && $wikiId > 0 ) {
+		if ( $this->canEditProfile( $user ) && $wikiId > 0 && $this->request->wasPosted() ) {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
@@ -892,10 +873,18 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
+		$result = [ 'success' => false ];
 		$userId = intval( $this->getVal( 'userId' ) );
+
 		$user = User::newFromId( $userId );
-		$userIdentityBox = new UserIdentityBox( $user );
-		$result = [ 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) ];
+
+		if ( $this->canEditProfile( $user ) && $this->request->wasPosted() ) {
+			$userIdentityBox = new UserIdentityBox( $user );
+			$result = [
+				'success' => true,
+				'wikis' => $userIdentityBox->getTopWikis( true )
+			];
+		}
 
 		$this->setVal( 'result', $result );
 	}
@@ -1049,5 +1038,46 @@ class UserProfilePageController extends WikiaController {
 			$this->response->setVal( 'error', wfMessage( 'user-identity-box-clear-notarget' )->escaped() );
 		}
 	}
+
+	/**
+	 * Checks whether the current user is the owner of the specified user's
+	 * profile
+	 * @param User $user
+	 * @returns boolean
+	 */
+	private function isUserPageOwner( User $user ) : boolean {
+		return !$user->isAnon() && $user->getId() == $this->wg->User->getId();
+	}
+
+	/**
+	 * Checks whether the current user can edit a specified user's profile
+	 * @param User $user
+	 * @returns boolean
+	 */
+	private function canEditProfile( User $user ) : boolean {
+		/**
+		 * @var $sessionUser User
+		 */
+		$sessionUser = $this->wg->User;
+
+		if ( $sessionUser->isAllowed( 'editprofilev3' ) ) {
+			// User is in a trusted global group
+			return true;
+		}
+
+		if ( !$sessionUser->isAllowed( 'edit' ) ) {
+			// User is blocked locally
+			return false;
+		}
+
+		if ( !empty( $sessionUser->getBlockId() ) ) {
+			// User is blocked globally
+			return false;
+		}
+
+		// User editing the profile is the userpage owner
+		return isUserPageOwner( $user );
+	}
+
 }
 
