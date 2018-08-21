@@ -274,7 +274,6 @@ class MediaWiki {
 			}
 
 		} elseif ( NS_SPECIAL == $title->getNamespace() ) {  // Special pages
-			$pageView = true;
 			// Actions that need to be made when we have a special pages
 			SpecialPageFactory::executePath( $title, $this->context );
 		} else {
@@ -282,7 +281,6 @@ class MediaWiki {
 			// may be a redirect to another article or URL.
 			$article = $this->initializeArticle();
 			if ( is_object( $article ) ) {
-				$pageView = true;
 				/**
 				 * $wgArticle is deprecated, do not use it.
 				 * This will be removed entirely in 1.20.
