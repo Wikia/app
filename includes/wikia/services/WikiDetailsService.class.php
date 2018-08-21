@@ -221,7 +221,7 @@ class WikiDetailsService extends WikiService {
 		 * We need to get value from WikiFactory to make sure the value is correct
 		 */
 		if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $id ) ) {
-			$wikiDetails['stats']['discussions'] = (int)$this->getDiscussionStats( $id );
+			$wikiDetails['stats']['discussions'] = $this->getDiscussionStats( $id );
 		}
 
 		return $wikiDetails;
@@ -280,18 +280,29 @@ class WikiDetailsService extends WikiService {
 
 	/**
 	 * @param int $id
-	 * @return mixed
+	 * @return int
 	 */
 	private function getDiscussionStats( $id ) {
 		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
-		$response = Http::get( "http://$discussionsServiceUrl/$id/forums/$id?limit=1", 'default', [ 'noProxy' => true ] );
-		if ( $response !== false ) {
-			$decodedResponse = json_decode( $response, true );
-			if ( isset( $decodedResponse['threadCount'] ) && json_last_error() === JSON_ERROR_NONE ) {
-				return $decodedResponse['threadCount'];
+		$response = Http::get( "http://$discussionsServiceUrl/$id/forums", 'default', [ 'noProxy' => true ] );
+		$threadCount = 0;
+
+		if ($response === false) {
+			return $threadCount;
+		}
+
+		$decodedResponse = json_decode( $response, true );
+		if ( json_last_error() !== JSON_ERROR_NONE || !isset( $decodedResponse['_embedded']['doc:forum'] ) ) {
+			return $threadCount;
+		}
+
+		foreach ( $decodedResponse['_embedded']['doc:forum'] as $forum ) {
+			if ( isset( $forum['threadCount'] ) ) {
+				$threadCount += $forum['threadCount'];
 			}
 		}
-		return null;
+
+		return $threadCount;
 	}
 
 	/**
