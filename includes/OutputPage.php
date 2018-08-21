@@ -2112,7 +2112,8 @@ class OutputPage extends ContextSource {
 
 			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code, &$this->redirectedBy ) ) ) {
 				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
-				if ( $current == $redirect ) {
+				// Check for the POST requests, as those are allowed to redirect to the same url (see PLATFORM-3646)
+				if ( !$this->getRequest()->wasPosted() && $current == $redirect ) {
 					$response->header( 'HTTP/1.1 508 Loop Detected' );
 					$response->header( 'X-Reason: Redirect loop detected' );
 					\Wikia\Logger\WikiaLogger::instance()->error(
