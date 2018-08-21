@@ -149,6 +149,7 @@ class AdEngine2Hooks {
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
+		$vars[] = 'wgAdDriverF2BfabStickinessCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';

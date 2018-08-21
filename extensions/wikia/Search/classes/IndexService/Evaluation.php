@@ -8,6 +8,7 @@ use User;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
+	const DISABLE_CONTENT_FLAG = 'without_content';
 	const PARSE_PAGE = 'parse_page';
 	const LANGUAGES_SUPPORTED = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw' ];
 
@@ -66,6 +67,10 @@ class Evaluation extends AbstractService {
 		$pageIds = array_map( function ( $document ) {
 			return $document['page_id']['set'];
 		}, $filteredDocuments );
+
+		if ( empty( $pageIds ) ) {
+			return $documents;
+		}
 
 		list( $backlinksCount, $redirects, $contents ) = $this->getAdditionalInfo( $pageIds );
 
@@ -226,6 +231,9 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	private function loadContent( DatabaseMysqli $dbr, $ids ) {
+		if ( in_array( self::DISABLE_CONTENT_FLAG, $this->flags ) ) {
+			return [];
+		}
 		$contents = [];
 		$text_id_to_page_id = [];
 		$text_ids = [];
