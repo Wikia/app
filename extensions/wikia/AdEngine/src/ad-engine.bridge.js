@@ -133,7 +133,7 @@ function unifySlotInterface(slot) {
 		},
 		getStatus: () => null,
 		setStatus: (status) => {
-			if (status === 'viewport-conflict') {
+			if (['viewport-conflict', 'sticked', 'unsticked'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
 				event.initCustomEvent('adengine.slot.status', true, true, {
 					slot: slot,
