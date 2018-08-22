@@ -1480,6 +1480,12 @@ function wfGetValueExcerpt( $value ) {
  * @return string
  */
 function wfProtocolUrlToRelative( $url ) {
+	global $wgForceProtocolLinks;
+
+	if ( $wgForceProtocolLinks === true ) {
+		return $url;
+	}
+
 	$pos = strpos( $url, '://' );
 	if ( $pos > 0 ) {
 		$url = substr_replace( $url, '', 0, $pos+1 );
@@ -1497,7 +1503,7 @@ function wfHttpsToHttp( $url ) {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	global $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
@@ -1505,14 +1511,18 @@ function wfHttpsAllowedForURL( $url ): bool {
 
 	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
 		$server = str_replace( ".{$wgDevDomain}", '', $host );
-	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-		$server = preg_replace(
-			'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $wgWikiaBaseDomain ) . '$/',
-			'',
-			$host
-		);
 	} else {
-		$server = str_replace( ".{$wgWikiaBaseDomain}", '', $host );
+		$baseDomain = wfGetBaseDomainForHost( $host );
+
+		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+			$server = preg_replace(
+				'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $baseDomain ) . '$/',
+				'',
+				$host
+			);
+		} else {
+			$server = str_replace( ".{$baseDomain}", '', $host );
+		}
 	}
 
 	// Only allow single subdomain wikis through
@@ -1537,4 +1547,13 @@ function wfStripProtocol( $url ) {
  */
 function wfGetEffectiveHostname() {
 	return getenv('HOSTNAME_OVERRIDE') ?: gethostname();
+}
+
+function wfGetBaseDomainForHost( $host ) {
+	global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+	if ( strpos( $host, ".{$wgFandomBaseDomain}" ) !== false ) {
+		return $wgFandomBaseDomain;
+	}
+
+	return $wgWikiaBaseDomain;
 }

@@ -1402,6 +1402,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
@@ -1695,7 +1701,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis

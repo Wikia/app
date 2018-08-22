@@ -1,5 +1,7 @@
 require(['jquery'], function ($) {
-	var fpLibrary = '/feeds-and-posts/public/dist/lib.min.js';
+	// Use number of hours passed since Jan. 1, 1970. That way cache is busted at most every hour.
+	var version = Math.floor((new Date()).getTime() / (60 * 60 * 1000));
+	var fpLibrary = '/feeds-and-posts/public/dist/lib.min.js?' + version;
 
 	$('#WikiaRail').one('afterLoad.rail', function() {
 		$.getScript(fpLibrary, function () {
