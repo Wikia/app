@@ -157,7 +157,7 @@ class WikiaRobots {
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
-			   $wgFandomBaseDomain,
+		       $wgFandomBaseDomain,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
