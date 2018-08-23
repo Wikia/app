@@ -66,6 +66,9 @@ class TaskContext {
 	/** @var bool $shouldCreateLanguageWikiWithPath */
 	private $shouldCreateLanguageWikiWithPath;
 
+	/** @var bool $shouldCreateEnglishWikisOnFandomCom */
+	private $shouldCreateEnglishWikisOnFandomCom;
+
 	public function __construct( $params ) {
 		foreach ($params as $key => $value) {
 			if ( property_exists($this, $key) ) {
@@ -77,7 +80,7 @@ class TaskContext {
 	}
 
 	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $allAges, $taskId, $ip, $fandomCreatorCommunityId ) {
-		global $wgCreateLanguageWikisWithPath;
+		global $wgCreateLanguageWikisWithPath, $wgCreateEnglishWikisOnFandomCom;
 
 		return new self( [
 			'inputWikiName' => $inputWikiName,
@@ -90,6 +93,7 @@ class TaskContext {
 			'ip' => $ip,
 			'fandomCreatorCommunityId' => $fandomCreatorCommunityId,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
+			'shouldCreateEnglishWikisOnFandomCom' => $wgCreateEnglishWikisOnFandomCom
 		] );
 	}
 
@@ -265,5 +269,9 @@ class TaskContext {
 
 	public function shouldCreateLanguageWikiWithPath(): bool {
 		return $this->shouldCreateLanguageWikiWithPath;
+	}
+
+	public function shouldCreateEnglishWikisOnFandomCom(): bool {
+		return $this->shouldCreateEnglishWikisOnFandomCom;
 	}
 }
