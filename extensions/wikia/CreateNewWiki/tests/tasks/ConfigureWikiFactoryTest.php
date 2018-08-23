@@ -148,6 +148,20 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgMetaNamespace' => 'foo_barfizz',
 				]
+			],
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.fandom.com',
+				[
+					'wgSitename' => 'foo',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgLocalInterwiki' => 'foo',
+					'wgLanguageCode' => 'en',
+					'wgEnableSectionEdit' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgEnableHTTPSForAnons' => true,
+				]
 			]
 		];
 	}
