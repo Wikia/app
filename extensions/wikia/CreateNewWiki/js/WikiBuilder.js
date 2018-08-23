@@ -305,16 +305,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkWikiName();
 		checkDomain();
 		var selected = $(this).val();
-
+		if (shouldCreateEnglishWikisOnFandomCom) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain);
+			} else {
+				wikiBaseDomain.text(fandomBaseDomain);
+			}
+		}
 		if (shouldCreateLanguageWikisWithPath) {
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
 				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
-			} else {
-				if (shouldCreateEnglishWikisOnFandomCom) {
-					wikiBaseDomain.text(fandomBaseDomain);
-				} else {
-					wikiBaseDomain.text(wikiaBaseDomain);
-				}
 			}
 		} else {
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
