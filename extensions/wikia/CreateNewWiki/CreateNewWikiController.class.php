@@ -24,7 +24,8 @@ class CreateNewWikiController extends WikiaController {
 	const DAILY_USER_LIMIT         = 2;
 
 	public function index() {
-		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
+		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
+			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -85,7 +86,11 @@ class CreateNewWikiController extends WikiaController {
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		// use either wikia.com (production) or wikia-staging.com (staging)
-		$this->wikiaBaseDomain = $wgWikiaBaseDomain;
+		if ( $wgCreateEnglishWikisOnFandomCom ) {
+			$this->wikiBaseDomain = $wgFandomBaseDomain;
+		} else {
+			$this->wikiBaseDomain = $wgWikiaBaseDomain;
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

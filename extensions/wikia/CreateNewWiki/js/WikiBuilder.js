@@ -48,7 +48,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			trackingMethod: 'analytics'
 		}),
 		wikiaBaseDomain = window.wgWikiaBaseDomain,
+		fandomBaseDomain = window.wgFandomBaseDomain,
 		shouldCreateLanguageWikisWithPath = window.wgCreateLanguageWikisWithPath,
+        shouldCreateEnglishWikisOnFandomCom = window.wgCreateEnglishWikisOnFandomCom,
 		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
@@ -308,7 +310,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
 				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
 			} else {
-				wikiBaseDomain.text(wikiaBaseDomain);
+				if (shouldCreateEnglishWikisOnFandomCom) {
+                    wikiBaseDomain.text(fandomBaseDomain);
+				} else {
+                    wikiBaseDomain.text(wikiaBaseDomain);
+				}
 			}
 		} else {
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
@@ -321,6 +327,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				wikiDomainLabel.css('left', wikiDomain.position().left);
 			}
 		}
+
 
 		track({
 			label: 'language-changed'
