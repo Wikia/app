@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.lookup.prebid.bidHelper', [
 	function transformPriceFromBid(bid) {
 		var maxCpm = 20;
 		// Do not cap bids as $20 for AppNexus and Rubicon videos
-		if (['appnexusAst', 'rubicon'].indexOf(bid.bidderCode) > -1) {
+		if (['appnexusAst', 'rubicon', 'wikiaVideo'].indexOf(bid.bidderCode) > -1) {
 			maxCpm = 50;
 		}
 
