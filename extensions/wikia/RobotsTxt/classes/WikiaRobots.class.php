@@ -157,13 +157,19 @@ class WikiaRobots {
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
+			   $wgFandomBaseDomain,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
 		       $wgScriptPath,
 		       $wgRequest;
 
-		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
+		if (
+			!$this->accessAllowed ||
+			!empty( $wgRobotsTxtBlockedWiki ) ||
+			// PLATFORM-3654 temporarily disable robots on fandom.com wikis
+			wfGetBaseDomainForHost( $wgServer ) === $wgFandomBaseDomain
+		) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ $this->pathBuilder->buildPath( '/' ) ] );
 			return $robots;
