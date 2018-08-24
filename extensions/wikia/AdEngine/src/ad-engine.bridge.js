@@ -66,6 +66,9 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
+	context.set('services.billTheLizard.host',
+		window.mw.config.get('wgServicesExternalDomain').replace(/\/$/, ''));
+
 	legacyContext.addCallback(() => {
 		context.set('slots', getSlotsContext(legacyContext, skin));
 		syncSlotsStatus(slotRegistry, context.get('slots'));
