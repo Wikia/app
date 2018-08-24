@@ -73,7 +73,7 @@ class ConfigureWikiFactory extends Task {
 		];
 		global $wgFandomBaseDomain;
 		$host = parse_url( $url, PHP_URL_HOST );
-		if ( endsWith( $host, '.' . $wgFandomBaseDomain ) ) {
+		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
 			$wikiFactoryVariables['wgEnableHTTPSForAnons'] = true;
 		}
 

@@ -78,16 +78,18 @@ class SetupWikiCities extends Task {
 				'city_domain' => $this->taskContext->getDomain()
 			]
 		];
-		if ( !endsWith( $host, '.' . $wgFandomBaseDomain ) ) {
-			$domains[] = [
-				'city_id' => $this->taskContext->getCityId(),
-				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-			];
-		} else {
+		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
+			// for fandom.com wiki, create a secondary wikia.com domain for redirects
 			$wikiaDomain = str_replace( '.' . $wgFandomBaseDomain, '.' . $wgWikiaBaseDomain, $this->taskContext->getDomain() );
 			$domains[] = [
 				'city_id' => $this->taskContext->getCityId(),
 				'city_domain' => $wikiaDomain
+			];
+		} else {
+			// legacy www. subdomain for wikia.com wikis
+			$domains[] = [
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
 			];
 		}
 
