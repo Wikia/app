@@ -74,9 +74,10 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		// User pages for discussions
+		// Discussions user pages
 		'/d/u/',
-
+		// Discussions guidelines
+		'/d/g',
 		// Fandom old URLs
 		'/fandom?p=',
 

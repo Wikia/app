@@ -216,9 +216,11 @@ class MediaWiki {
 			throw new PermissionsError( 'read', $permErrors );
 		}
 
-		$pageView = false; // was an article or special page viewed?
 		$shouldRedirectToTitle = ($request->getVal( 'title' ) === null ||
 			$title->getPrefixedDBKey() != $request->getVal( 'title' ) ) &&
+			$request->getVal( 'action', 'view' ) == 'view' &&
+			!$request->wasPosted() &&
+			!count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) ) &&
 			Hooks::run( 'BeforeTitleRedirect', array( $request, $title ) );
 
 		// Interwiki redirects
@@ -244,9 +246,7 @@ class MediaWiki {
 			}
 		// Redirect loops, no title in URL, $wgUsePathInfo URLs, and URLs with a variant
 		} elseif ( (
-			( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
-				&& $shouldRedirectToTitle
-				&& !count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) ) ) ||
+			$shouldRedirectToTitle ||
 			$output->isRedirect() )
 			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
@@ -274,7 +274,6 @@ class MediaWiki {
 			}
 
 		} elseif ( NS_SPECIAL == $title->getNamespace() ) {  // Special pages
-			$pageView = true;
 			// Actions that need to be made when we have a special pages
 			SpecialPageFactory::executePath( $title, $this->context );
 		} else {
@@ -282,7 +281,6 @@ class MediaWiki {
 			// may be a redirect to another article or URL.
 			$article = $this->initializeArticle();
 			if ( is_object( $article ) ) {
-				$pageView = true;
 				/**
 				 * $wgArticle is deprecated, do not use it.
 				 * This will be removed entirely in 1.20.
