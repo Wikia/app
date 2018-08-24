@@ -343,36 +343,6 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function saveInterviewAnswers() {
-		wfProfileIn( __METHOD__ );
-
-		$user = User::newFromId( $this->getVal( 'userId' ) );
-		$wikiId = $this->wg->CityId;
-
-		$answers = json_decode( $this->getVal( 'answers' ) );
-
-		$status = 'error';
-		$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
-
-		if ( !$user->isAnon() && is_array( $answers ) ) {
-			$this->profilePage = new UserProfilePage( $user );
-
-			if ( !$this->profilePage->saveInterviewAnswers( $wikiId, $answers ) ) {
-				$status = 'error';
-				$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
-			} else {
-				$status = 'ok';
-			}
-		}
-
-		$this->setVal( 'status', $status );
-		if ( $status == 'error' ) {
-			$this->setVal( 'errorMsg', $errorMsg );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	/**
 	 * @brief Receives data from AJAX call, validates and saves new user data
 	 *
