@@ -80,7 +80,9 @@ class SetupWikiCities extends Task {
 		];
 		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
 			// for fandom.com wiki, create a secondary wikia.com domain for redirects
-			$wikiaDomain = str_replace( '.' . $wgFandomBaseDomain, '.' . $wgWikiaBaseDomain, $this->taskContext->getDomain() );
+			$wikiaDomain = str_replace( '.' . $wgFandomBaseDomain,
+				'.' . $wgWikiaBaseDomain,
+				$this->taskContext->getDomain() );
 			$domains[] = [
 				'city_id' => $this->taskContext->getCityId(),
 				'city_domain' => $wikiaDomain

@@ -106,8 +106,10 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 			$expectedDbValues[] = ['city_id' => 321, 'city_domain' => $domain];
 
 		}
-		$mockedDB->expects( $this->once() )->method( 'insert' )->with( "city_domains", $expectedDbValues, $this->anything() );
-
+		$mockedDB
+			->expects( $this->once() )
+			->method( 'insert' )
+			->with( "city_domains", $expectedDbValues, $this->anything() );
 
 		$setupWikiCitiesTask = new \Wikia\CreateNewWiki\Tasks\SetupWikiCities( $taskContext );
 

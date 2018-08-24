@@ -86,11 +86,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		// use either wikia.com (production) or wikia-staging.com (staging)
-		if ( $wgCreateEnglishWikisOnFandomCom ) {
-			$this->wikiBaseDomain = $wgFandomBaseDomain;
-		} else {
-			$this->wikiBaseDomain = $wgWikiaBaseDomain;
-		}
+		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
 	}
