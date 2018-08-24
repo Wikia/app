@@ -70,18 +70,27 @@ class SetupWikiCities extends Task {
 	}
 
 	public function addToCityDomains() {
-		return $this->taskContext->getSharedDBW()->insert(
-			"city_domains",
+		global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+		$host = parse_url( $this->taskContext->getURL(), PHP_URL_HOST );
+		$domains = [
 			[
-				[
-					'city_id' => $this->taskContext->getCityId(),
-					'city_domain' => $this->taskContext->getDomain()
-				], [
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => $this->taskContext->getDomain()
+			]
+		];
+		if ( !endsWith( $host, '.' . $wgFandomBaseDomain ) ) {
+			$domains[] = [
 				'city_id' => $this->taskContext->getCityId(),
 				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-			]
-			],
-			__METHOD__
-		);
+			];
+		} else {
+			$wikiaDomain = str_replace( '.' . $wgFandomBaseDomain, '.' . $wgWikiaBaseDomain, $this->taskContext->getDomain() );
+			$domains[] = [
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => $wikiaDomain
+			];
+		}
+
+		return $this->taskContext->getSharedDBW()->insert( "city_domains", $domains, __METHOD__ );
 	}
 }
