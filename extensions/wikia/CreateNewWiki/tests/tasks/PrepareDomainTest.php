@@ -91,7 +91,7 @@ class PrepareDomainTest extends \WikiaBaseTest {
 		$this->assertTrue( $result->isOk() );
 
 		$this->assertEquals( 'starwars.wikia.com/de', $taskContext->getDomain() );
-		$this->assertEquals( 'http://starwars.wikia.com/de', $taskContext->getURL() );
+		$this->assertEquals( 'http://starwars.wikia.com/de/', $taskContext->getURL() );
 	}
 
 	public function testPrepareLanguageWikiNoPath() {
