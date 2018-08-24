@@ -92,15 +92,8 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed( 'removeavatar' ) );
 		$this->setVal( 'isUserPageOwner', $isOwner );
 
-		$canEditProfile = $isOwner || $sessionUser->isAllowed( 'editprofilev3' );
-		// if user is blocked locally (can't edit anything) he can't edit masthead too
-		$canEditProfile = $sessionUser->isAllowed( 'edit' ) ? $canEditProfile : false;
-		// if user is blocked globally he can't edit
-		$blockId = $sessionUser->getBlockId();
-		$canEditProfile = empty( $blockId ) ? $canEditProfile : false;
-		$this->setVal( 'canEditProfile', $canEditProfile );
-		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
-		$this->setVal( 'canEditProfile', ( $isOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
+		$this->setVal( 'canEditProfile', $this->canEdit( $user ) );
+		$this->setVal( 'isWikiStaff', $sessionUser->isStaff() );
 		$this->setVal( 'canClearProfile', $sessionUser->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) );
 
 		$this->fetchDiscussionPostsNumberFrom($user);
@@ -290,14 +283,9 @@ class UserProfilePageController extends WikiaController {
 		$selectedTab = $this->getVal( 'tab' );
 		$userId = $this->getVal( 'userId' );
 		$sessionUser = $this->wg->User;
-		$canEditProfile = $sessionUser->isAllowed( 'editprofilev3' );
+		$canEditProfile = $this->canEdit( $sessionUser );
 
-		// checking if user is blocked locally
-		$isBlocked = !$sessionUser->isAllowed( 'edit' );
-		// checking if user is blocked globally
-		$isBlocked = empty( $isBlocked ) ? $sessionUser->getBlockId() : $isBlocked;
-
-		if ( ( $sessionUser->isAnon() && !$canEditProfile ) || $isBlocked ) {
+		if ( $sessionUser->isAnon() || $this->canEdit( $sessionUser ) ) {
 			throw new WikiaException( wfMessage( 'userprofilepage-invalid-user' )->escaped() );
 		} else {
 			$this->profilePage = new UserProfilePage( $sessionUser );
@@ -360,7 +348,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$user = User::newFromId( $this->getVal( 'userId' ) );
-		$isAllowed = $this->wg->User->isAllowed( 'editprofilev3' ) || $this->isOwner( $user );
+		$isAllowed = $this->canEdit( $user );
 
 		$userData = json_decode( $this->getVal( 'data' ) );
 
@@ -432,10 +420,7 @@ class UserProfilePageController extends WikiaController {
 			$user = User::newFromId( $userId );
 		}
 
-		$isAllowed = (
-			$this->app->wg->User->isAllowed( 'editprofilev3' ) ||
-			$this->isOwner( $user )
-		);
+		$isAllowed = $this->canEdit( $user );
 
 		if ( is_null( $data ) ) {
 			$data = json_decode( $this->getVal( 'data' ) );
@@ -841,7 +826,7 @@ class UserProfilePageController extends WikiaController {
 		$wikiId = intval( $this->getVal( 'wikiId' ) );
 
 		$user = User::newFromId( $userId );
-		$isAllowed = ( $this->app->wg->User->isAllowed( 'editprofilev3' ) || $this->isOwner( $user ) );
+		$isAllowed = $this->canEdit( $user );
 
 		if ( $isAllowed && $wikiId > 0 ) {
 			/**
@@ -1028,5 +1013,37 @@ class UserProfilePageController extends WikiaController {
 	 */
 	private function isOwner( User $user ) : boolean {
 		return !$user->isAnon() && $user->getId() == $this->wg->User->getId();
+	}
+
+	/**
+	 * Checks whether the current user can edit a specified user's profile
+	 * @param User $user
+	 * @returns boolean
+	 */
+	private function canEdit( User $user ) : boolean {
+		$sessionUser = $this->wg->User;
+
+		// Staff users bypass further checks.
+		if ( $sessionUser->isStaff() ) {
+			return true;
+		}
+
+		// Users with elevated privileges bypass further checks.
+		if ( $sessionUser->isAllowed( 'editprofilev3' ) ) {
+			return true;
+		}
+
+		// Blocked users are... blocked...
+		if ( $sessionUser->isBlocked( true, false ) || $sessionUser->isBlockedGlobally() ) {
+			return false;
+		}
+
+		// Check for revoked edit rights.
+		if ( ! $sessionUser->isAllowed( 'edit' ) ) {
+			return false;
+		}
+
+		// And finally, limit profile editing to the owners.
+		return $this->isOwner( $user );
 	}
 }
