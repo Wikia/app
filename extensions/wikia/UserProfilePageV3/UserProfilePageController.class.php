@@ -847,10 +847,14 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
+		$result = [ 'success' => false ];
 		$userId = intval( $this->getVal( 'userId' ) );
 		$user = User::newFromId( $userId );
-		$userIdentityBox = new UserIdentityBox( $user );
-		$result = [ 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) ];
+
+		if ( $this->canEdit( $user ) && $this->request->wasPosted() ) {
+			$userIdentityBox = new UserIdentityBox( $user );
+			$result = [ 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) ];
+		}
 
 		$this->setVal( 'result', $result );
 	}
