@@ -130,12 +130,21 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgRequest,
+		global $wgWikiaBaseDomain,
+			   $wgRequest,
 			   $wgRobotsTxtCustomRules,
+			   $wgServer,
 			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
-		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+		$this->accessAllowed = (
+			(
+				$wgWikiaEnvironment === WIKIA_ENV_PROD &&
+				// PLATFORM-3654 temporarily disable robots on fandom.com wikis
+				wfGetBaseDomainForHost( $wgServer ) === $wgWikiaBaseDomain
+			) ||
+			$wgRequest->getBool( 'forcerobots' )
+		);
 		$this->experiment = false;
 
 		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {
@@ -157,19 +166,13 @@ class WikiaRobots {
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
-		       $wgFandomBaseDomain,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
 		       $wgScriptPath,
 		       $wgRequest;
 
-		if (
-			!$this->accessAllowed ||
-			!empty( $wgRobotsTxtBlockedWiki ) ||
-			// PLATFORM-3654 temporarily disable robots on fandom.com wikis
-			wfGetBaseDomainForHost( $wgServer ) === $wgFandomBaseDomain
-		) {
+		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ $this->pathBuilder->buildPath( '/' ) ] );
 			return $robots;
