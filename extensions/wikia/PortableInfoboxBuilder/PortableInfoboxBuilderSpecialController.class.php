@@ -28,9 +28,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 * @throws MWException
 	 */
 	public function index() {
-		global $wgOut;
-
-		$wgOut->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
+		$this->getOutput()->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
 		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
@@ -55,8 +53,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 * @throws MWException
 	 */
 	public function sourceEditor() {
-		global $wgOut;
-		$wgOut->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
+		$this->getOutput()->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
 	}
 
 	/**
