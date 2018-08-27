@@ -1769,3 +1769,8 @@ include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesSche
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
+
+// PLATFORM-3647 temp hack
+if ( !empty( $wgMigrateNewWikiToFandomCom ) ) {
+	include "$IP/extensions/wikia/CreateNewWiki/FinishCreateMigrateToFandom_setup.php";
+}
