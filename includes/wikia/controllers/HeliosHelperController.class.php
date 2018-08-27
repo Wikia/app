@@ -2,6 +2,7 @@
 
 namespace Wikia\Helios;
 
+use WebRequest;
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -210,10 +211,8 @@ class HelperController extends \WikiaController {
 		$theirSchwartz = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM, '' );
 		$theirSchwartzIsValid = \hash_equals( $this->wg->TheSchwartzSecretToken, $theirSchwartz );
 
-		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
-			return true;
-		}
+		$internalRequestHeader = $this->wg->Request->getHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER );
 
-		return false;
+		return $internalRequestHeader || $ourSchwartzIsValid || $theirSchwartzIsValid;
 	}
 }

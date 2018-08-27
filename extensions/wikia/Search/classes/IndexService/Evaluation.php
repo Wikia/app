@@ -8,6 +8,7 @@ use User;
 
 class Evaluation extends AbstractService {
 	const DISABLE_BACKLINKS_COUNT_FLAG = 'disable_backlinks_count';
+	const DISABLE_CONTENT_FLAG = 'without_content';
 	const PARSE_PAGE = 'parse_page';
 	const LANGUAGES_SUPPORTED = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh', 'zh-tw' ];
 
@@ -39,7 +40,8 @@ class Evaluation extends AbstractService {
 
 		if ( in_array( self::PARSE_PAGE, $this->flags ) ) {
 			$page = \WikiPage::newFromID( $pageId );
-			$ret["content_${languageCode}"] =  $page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
+			$ret["html_${languageCode}"] =
+				$page->getParserOutput( $page->makeParserOptions( new User() ) )->mText;
 		}
 
 		return $ret;
@@ -65,6 +67,10 @@ class Evaluation extends AbstractService {
 		$pageIds = array_map( function ( $document ) {
 			return $document['page_id']['set'];
 		}, $filteredDocuments );
+
+		if ( empty( $pageIds ) ) {
+			return $documents;
+		}
 
 		list( $backlinksCount, $redirects, $contents ) = $this->getAdditionalInfo( $pageIds );
 
@@ -225,15 +231,13 @@ class Evaluation extends AbstractService {
 	 * @throws \DBUnexpectedError
 	 */
 	private function loadContent( DatabaseMysqli $dbr, $ids ) {
+		if ( in_array( self::DISABLE_CONTENT_FLAG, $this->flags ) ) {
+			return [];
+		}
 		$contents = [];
 		$text_id_to_page_id = [];
 		$text_ids = [];
 		$cond = [];
-
-		// if we parse html then we dont want to use wiki text
-		if ( !in_array( self::PARSE_PAGE, $this->flags ) ) {
-			return $contents;
-		}
 
 		foreach ( $ids as $id ) {
 			$revId = $this->getService()->getPageFromPageId( $id )->mTitle->getLatestRevID();

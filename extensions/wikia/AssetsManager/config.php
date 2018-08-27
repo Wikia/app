@@ -2482,3 +2482,10 @@ $config['special_contact_forget_account_js'] = [
 		'//extensions/wikia/SpecialContact2/SpecialContactForgetAccount.js',
 	],
 ];
+
+$config['feeds_and_posts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+	]
+];

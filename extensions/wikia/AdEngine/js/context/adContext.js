@@ -210,10 +210,6 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverMegaAdUnitBuilderForFVCountries');
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
-		context.opts.isBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessCountries') &&
-			context.targeting.skin !== 'oasis';
-		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
-			context.targeting.skin === 'oasis';
 
 		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
@@ -228,7 +224,12 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-		context.opts.preFooterAndBLBSwitched = isEnabled('wgAdDriverPreFooterAndBLBSwitchedCountries');
+
+		context.opts.areMobileStickyAndSwapEnabled = (
+			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileStickyAndSwapCountries')
+		);
+		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
+			context.targeting.skin === 'oasis';
 
 		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
