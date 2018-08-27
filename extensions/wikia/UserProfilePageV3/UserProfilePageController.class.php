@@ -15,10 +15,6 @@ class UserProfilePageController extends WikiaController {
 	 */
 	const CLEAR_USER_PROFILE_RIGHT = 'clearuserprofile';
 
-	/**
-	 * @var $profilePage UserProfilePage
-	 */
-	protected $profilePage = null;
 	protected $allowedNamespaces = null;
 	protected $title = null;
 
@@ -288,8 +284,6 @@ class UserProfilePageController extends WikiaController {
 		if ( $sessionUser->isAnon() || $this->canEdit( $sessionUser ) ) {
 			throw new WikiaException( wfMessage( 'userprofilepage-invalid-user' )->escaped() );
 		} else {
-			$this->profilePage = new UserProfilePage( $sessionUser );
-
 			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderLightbox', [ 'tab' => $selectedTab, 'userId' => $userId ] ) );
 
 			if ( !empty( $this->wg->AvatarsMaintenance ) ) {
