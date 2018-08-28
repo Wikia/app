@@ -144,8 +144,20 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			action: tracker.ACTIONS.SUBMIT,
 			label: 'theme-selection-submitted'
 		});
-		saveState(ThemeDesigner.settings, function () {
-			gotoMainPage();
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'finishCreateWiki',
+			data: {
+				themeSettings: ThemeDesigner.settings,
+				wikiId: cityId,
+				token: mw.user.tokens.get('editToken')
+			}
+		}).then(function (res) {
+			var targetUrl = 'https://' + wikiDomain.val() + '/';
+			if (res.wikiUrl) {
+				targetUrl = res.wikiUrl;
+			}
+			gotoMainPage(targetUrl + '?wiki-welcome=1');
 		});
 	}
 
@@ -593,10 +605,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		}
 	}
 
-	function gotoMainPage() {
+	function gotoMainPage(targetUrl) {
 		nextButtons.attr('disabled', true);
-		if (createStatus && createStatus === 'ok' && finishCreateUrl) {
-			location.href = finishCreateUrl;
+		if (createStatus && createStatus === 'ok' && targetUrl) {
+			location.href = targetUrl;
 		} else if (!createStatus || (createStatus && createStatus === 'backenderror')) {
 			$.showModal(errorModalHeader, errorModalMessage);
 		} else if (retryGoto < 300) {
