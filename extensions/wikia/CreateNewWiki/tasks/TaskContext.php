@@ -231,6 +231,10 @@ class TaskContext {
 		$this->starterDb = $db;
 	}
 
+	public function getDescription() {
+		return $this->description;
+	}
+
 	public function getSiteName() {
 		return $this->siteName;
 	}
