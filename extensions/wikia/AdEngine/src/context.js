@@ -9,6 +9,7 @@ export default {
 		slot: []
 	},
 	slots: {},
+	bidders: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{custom.wikiIdentifier}//{targeting.s2}/{targeting.src}/{slotName}',
 		megaAdUnitId: '/{custom.dfpId}/wka1a.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}'
