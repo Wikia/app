@@ -96,7 +96,7 @@
 	<!-- Combined JS files and head scripts -->
 	<?= $jsFiles ?>
 <? endif ?>
-<? if ( $isUserLoggedIn ): ?>
+<? if ( $isUserLoggedIn && $cookieSyncEnabled ): ?>
 	<?= F::app()->renderView( 'AutoLoginService', 'Index' ) ?>
 <? endif ?>
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>

@@ -6,6 +6,12 @@ class AutoLoginService extends WikiaService {
 
 	private $kubernetesExternalUrlProvider;
 
+	const SYNC_COOKIE_NAME = 'cookies_synchronised';
+
+	public static function cookieSyncEnabled( WebRequest $request ) {
+		return $request->getCookie( self::SYNC_COOKIE_NAME ) !== '1';
+	}
+
 	public function __construct() {
 		parent::__construct();
 		$this->kubernetesExternalUrlProvider = new KubernetesExternalUrlProvider();
