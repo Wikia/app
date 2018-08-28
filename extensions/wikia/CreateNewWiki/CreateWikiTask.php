@@ -82,7 +82,7 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $fandomCreatorCommunityId
 	 * @throws CreateWikiException an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical,
+	public function create( string $name, string $domain, string $language, int $vertical, string $description,
 	                        array $categories, bool $allAges, int $timestamp, string $ip, string $fandomCreatorCommunityId = null ) {
 		wfProfileIn( __METHOD__ );
 

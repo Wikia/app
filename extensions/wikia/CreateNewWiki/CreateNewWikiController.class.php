@@ -278,7 +278,7 @@ class CreateNewWikiController extends WikiaController {
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
 		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
-			$params['wVertical'], $categories, $allAges, time(),
+			$params['wVertical'], $params[ 'wDescription' ], $categories, $allAges, time(),
 			$this->getContext()->getRequest()->getIP(),
 			$fandomCreatorCommunityId );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
@@ -361,6 +361,26 @@ class CreateNewWikiController extends WikiaController {
 				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $task_details->exception_message );
 			}
 		}
+	}
+
+	public function finishCreateWiki() {
+		$this->checkWriteRequest();
+
+		$wikiId = $this->getInt( 'wikiId' );
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+
+		if ( $wiki->city_founding_user !== $this->getContext()->getUser()->getId() ) {
+			throw new ForbiddenException();
+		}
+
+		$themeParams = $this->getVal( 'themeSettings' );
+
+		if ( !empty( $themeParams['color-body'] ) ) {
+			$themeSettings = new ThemeSettings( $wikiId );
+			$themeSettings->saveSettings( $themeParams );
+		}
+
+		$this->setVal( 'wikiUrl', $wiki->city_url );
 	}
 
 	/**
