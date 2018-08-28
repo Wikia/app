@@ -7,7 +7,10 @@ class SUS5726 extends Maintenance {
 	public function execute() {
 		global $wgUser;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
-		foreach ( $this->allWikis() as $wiki ) $this->updateThemeSettings( $wiki->city_id );
+		foreach ( $this->allWikis() as $wiki ) {
+			$this->updateThemeSettings( $wiki->city_id );
+			$wiki->city_id % 1000 or sleep( 10 );
+		}
 	}
 
 	private function allWikis() {
