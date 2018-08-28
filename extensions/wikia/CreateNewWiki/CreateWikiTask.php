@@ -96,7 +96,7 @@ class CreateWikiTask extends BaseTask {
 
 		$then = microtime( true );
 
-		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
+		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $description, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
