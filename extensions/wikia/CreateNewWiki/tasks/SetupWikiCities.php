@@ -53,7 +53,7 @@ class SetupWikiCities extends Task {
 		$insertFields = [
 			'city_title' => $this->taskContext->getSiteName(),
 			'city_dbname' => $this->taskContext->getDbName(),
-			'city_url' => $city_url,
+			'city_url' => $this->taskContext->getURL(),
 			'city_founding_user' => $founder->getId(),
 			'city_founding_email' => $founder->getEmail(),
 			'city_founding_ip_bin' => inet_pton( $this->taskContext->getIP() ),
