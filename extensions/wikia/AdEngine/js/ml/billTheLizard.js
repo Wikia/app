@@ -17,11 +17,15 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	}
 
 	function isApplicable(name) {
-		if (name.indexOf('ctp_desktop') === 0) {
-			return adContext.get('targeting.hasFeaturedVideo');
-		}
+		var parts = name.split(':');
 
-		return true;
+		switch (parts[0]) {
+			case 'ctp_desktop':
+			case 'queen_of_hearts':
+				return adContext.get('targeting.hasFeaturedVideo');
+			default:
+				return false;
+		}
 	}
 
 	function call() {
