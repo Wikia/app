@@ -103,7 +103,7 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (a9 && adContext.get('bidders.a9Video')) {
+		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
 			a9.waitForResponseCallbacks(
 				function onSuccess() {
 					bidParams = a9.getSlotParams('FEATURED');

@@ -303,6 +303,13 @@ class OutputPage extends ContextSource {
 		}
 	}
 
+	public function cancelRedirect( $cancelProtocolRedirect = true ) {
+		$this->mRedirect = '';
+		if ( $cancelProtocolRedirect ) {
+			$this->mRedirectProtocol = PROTO_CURRENT;
+		}
+	}
+
 	/**
 	 * Get the URL to redirect to, or an empty string if not redirect URL set
 	 *
@@ -1904,7 +1911,11 @@ class OutputPage extends ContextSource {
 	 *   /w/index.php?title=Main_page&variant=zh-cn should never be served.
 	 */
 	function addAcceptLanguage() {
-		$lang = $this->getTitle()->getPageLanguage();
+		$title = $this->getTitle();
+		if ( is_null( $title ) ) {
+			return;
+		}
+		$lang = $title->getPageLanguage();
 		if( !$this->getRequest()->getCheck( 'variant' ) && $lang->hasVariants() ) {
 			$variants = $lang->getVariants();
 			$aloption = array();
@@ -2106,7 +2117,22 @@ class OutputPage extends ContextSource {
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
 
-			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
+			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code, &$this->redirectedBy ) ) ) {
+				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
+				// Check for the POST requests, as those are allowed to redirect to the same url (see PLATFORM-3646)
+				if ( !$this->getRequest()->wasPosted() && $current == $redirect ) {
+					$response->header( 'HTTP/1.1 508 Loop Detected' );
+					$response->header( 'X-Reason: Redirect loop detected' );
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'Redirect loop detected', [
+							'currentUrl' => $current,
+							'targetUrl' => $redirect,
+							'redirectedBy' => join( ' ', $this->redirectedBy )
+						]
+					);
+					wfProfileOut( __METHOD__ );
+					return;
+				}
 				if( $code == '301' || $code == '303' ) {
 					if( !$wgDebugRedirects ) {
 						$message = HttpStatus::getMessage( $code );
