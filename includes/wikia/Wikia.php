@@ -1200,7 +1200,10 @@ class Wikia {
 	 * @return bool true, it's a hook
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
+		global $wgRequest;
 		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
