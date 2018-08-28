@@ -33,7 +33,7 @@ class SetMainPageContent extends Task {
 		if ( !isset($wgParser) ) {
 			$this->error( "SetMainPageContent: no wgParser in task"  );
 		} else {
-			$this->error( "SetMainPageContent: wgParser class is " . get_class($wgParser );
+			$this->error( "SetMainPageContent: wgParser class is " . get_class($wgParser ) );
 		}
 
 		$siteName = $this->taskContext->getSiteName();

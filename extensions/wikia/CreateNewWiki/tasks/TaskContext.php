@@ -235,6 +235,10 @@ class TaskContext {
 		return $this->description;
 	}
 
+	public function setDescription($description) {
+		return $this->description = $description;
+	}
+
 	public function getSiteName() {
 		return $this->siteName;
 	}
