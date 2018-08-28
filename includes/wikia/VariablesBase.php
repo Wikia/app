@@ -1287,7 +1287,6 @@ $wgCreateLanguageWikisWithPath = false;
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
 $wgCreateEnglishWikisOnFandomCom = false;
-$wgMigrateNewWikiToFandomCom = false;	// PLATFORM-3647 temp hack, migrate to fandom.com on the first page view
 
 /**
  * Domains that should not be allowed to make AJAX requests,

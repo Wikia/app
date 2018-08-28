@@ -161,7 +161,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgEnableHTTPSForAnons' => true,
-					'wgMigrateNewWikiToFandomCom' => true,  // PLATFORM-3647 temp hack
 				]
 			]
 		];

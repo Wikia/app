@@ -75,7 +75,6 @@ class ConfigureWikiFactory extends Task {
 		$host = parse_url( $url, PHP_URL_HOST );
 		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
 			$wikiFactoryVariables['wgEnableHTTPSForAnons'] = true;
-			$wikiFactoryVariables['wgMigrateNewWikiToFandomCom'] = true;  // PLATFORM-3647 temp hack
 		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
