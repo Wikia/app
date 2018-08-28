@@ -7,10 +7,7 @@ class SUS5726 extends Maintenance {
 	public function execute() {
 		global $wgUser;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
-		foreach ( $this->allWikis() as $wiki ) {
-			$this->updateThemeSettings( $wiki->city_id );
-			$wiki->city_id % 1000 or sleep( 10 );
-		}
+		foreach ( $this->allWikis() as $wiki ) $this->updateThemeSettings( $wiki->city_id );
 	}
 
 	private function allWikis() {
@@ -47,6 +44,7 @@ class SUS5726 extends Maintenance {
 				$this->output( "Wiki $wiki has been updated.\n" );
 				WikiFactory::setVarByName( 'wgOasisThemeSettings', $wiki, $var, 'SUS-5726' );
 			}
+			$wiki % 1000 or sleep( 10 );
 		}
 	}
 
