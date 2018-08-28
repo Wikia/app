@@ -254,9 +254,6 @@ class VideoEmbedTool {
 		$vHelper = new VideoHandlerHelper();
 		$vHelper->setVideoDescription( $oTitle, $description );
 
-		// SUS-66: let's wait for all slaves to catch up after the above
-		wfWaitForSlaves();
-
 		$message = wfMessage( 'vet-single-success' )->plain();
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal( 'caption' );
@@ -361,9 +358,6 @@ class VideoEmbedTool {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $videoName );
-
-		// SUS-66: let's wait for all slaves to catch up before uploading a video
-		wfWaitForSlaves();
 
 		return $oUploader->upload( $oTitle );
 	}
