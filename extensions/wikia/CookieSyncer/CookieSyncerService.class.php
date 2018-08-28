@@ -15,6 +15,6 @@ class CookieSyncerService extends WikiaService {
 	}
 
 	protected function getServiceUrl() {
-		return $this->kubernetesExternalUrlProvider->getUrl( 'cookiesyncer' ) . '/frame';
+		return $this->kubernetesExternalUrlProvider->getUrl( 'cookie-syncer' ) . '/frame';
 	}
 }
