@@ -10,14 +10,21 @@ class SetMainPageContent extends Task {
 	use Loggable;
 
 	public function run() {
+		$this->error( "SetMainPageContent started"  );
+
+		$this->error( "SetMainPageContent creating title for " . $this->taskContext->getSiteName() );
+
 		$mainTitle = Title::newFromText( $this->taskContext->getSiteName() );
 		$mainId = $mainTitle->getArticleID();
+		$this->error( "SetMainPageContent mainId is " .json_encode( $mainId ) );
 		$mainArticle = Article::newFromID( $mainId );
 
 		if ( !empty( $mainArticle ) ) {
 			$newMainPageText = $this->getClassicMainPage($mainArticle);
 
 			$mainArticle->doEdit($newMainPageText, '');
+		} else {
+			$this->error( "SetMainPageContent: mainArticle is empty!!!"  );
 		}
 
 		return TaskResult::createForSuccess();
