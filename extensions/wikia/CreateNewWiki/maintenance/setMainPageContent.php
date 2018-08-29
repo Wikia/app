@@ -11,6 +11,9 @@ class SetMainPageContent extends Maintenance {
 	public function execute() {
 		global $wgSitename, $wgWikiDescription;
 
+		$this->output( "SetMainPageContent: Started" );
+		$this->output( "SetMainPageContent: sitename is " . $wgSitename );
+		$this->output( "SetMainPageContent: description is " . $wgWikiDescription );
 		if ( empty( $wgWikiDescription ) ) {
 			$this->output( "SetMainPageContent: Empty wiki description, skipping" );
 			return;
@@ -21,7 +24,7 @@ class SetMainPageContent extends Maintenance {
 		$mainId = $mainTitle->getArticleID();
 		$mainArticle = Article::newFromID( $mainId );
 
-		if ( empty( $wgWikiDescription ) ) {
+		if ( empty( $mainArticle ) ) {
 			$this->error( "SetMainPageContent: Cannot find the main article!" );
 			return;
 		}
