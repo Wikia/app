@@ -1,7 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker'
-], function (playerTracker) {
+	'ext.wikia.adEngine.video.player.playerTracker',
+	'ext.wikia.adEngine.video.vastParser'
+], function (
+	playerTracker,
+	vastParser
+) {
 	'use strict';
 	var playerName = 'jwplayer',
 		trackingEventsMap = {
@@ -35,10 +39,17 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
-				var errorCode;
+				var errorCode,
+					vastParams = vastParser.parse(event.tag);
+
+				if (params.withCtp === undefined && vastParams.customParams && vastParams.customParams.ctp !== undefined) {
+					params.withCtp = vastParams.customParams.ctp === 'yes';
+				}
+
 				if (playerEvent === 'adError') {
 					errorCode = event && event.code;
 				}
+
 				track(params, trackingEventsMap[playerEvent], errorCode);
 			});
 		});
