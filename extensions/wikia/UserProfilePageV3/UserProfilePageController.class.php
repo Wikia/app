@@ -1009,7 +1009,7 @@ class UserProfilePageController extends WikiaController {
 	 * @param User $user
 	 * @returns boolean
 	 */
-	private function isOwner( User $user ) : boolean {
+	private function isOwner( User $user ) : bool {
 		return !$user->isAnon() && $user->getId() == $this->wg->User->getId();
 	}
 
@@ -1018,7 +1018,7 @@ class UserProfilePageController extends WikiaController {
 	 * @param User $user
 	 * @returns boolean
 	 */
-	private function canEdit( User $user ) : boolean {
+	private function canEdit( User $user ) : bool {
 		$sessionUser = $this->wg->User;
 
 		// Staff users bypass further checks.
