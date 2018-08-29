@@ -382,6 +382,8 @@ class CreateNewWikiController extends WikiaController {
 		}
 
 		$this->setVal( 'wikiUrl', $wiki->city_url );
+		$this->setVal( 'showWikiUrl',
+			wfAppendQuery( WikiFactory::getLocalEnvURL( $wiki->city_url ), 'wiki-welcome=1' ) );
 	}
 
 	/**

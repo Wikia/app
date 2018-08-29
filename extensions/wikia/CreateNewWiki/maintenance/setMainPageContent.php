@@ -19,6 +19,7 @@ class SetMainPageContent extends Maintenance {
 		}
 
 		// this runs before the StartPostCreationTasks so main page is available under the old address
+		// see: CreateNewWikiTask::moveMainPage
 		$mainTitle = Title::newFromText( wfMsgForContent( 'Mainpage' ) );
 		if ( !$mainTitle ) {
 			$mainTitle = Title::newFromText( 'Main_Page' );
