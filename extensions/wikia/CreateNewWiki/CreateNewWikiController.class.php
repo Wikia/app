@@ -278,7 +278,7 @@ class CreateNewWikiController extends WikiaController {
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
 		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
-			$params['wVertical'], $categories, $allAges, time(),
+			$params['wVertical'], $params[ 'wDescription' ], $categories, $allAges, time(),
 			$this->getContext()->getRequest()->getIP(),
 			$fandomCreatorCommunityId );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
@@ -342,15 +342,7 @@ class CreateNewWikiController extends WikiaController {
 
 			if ( $completed === 1 ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-				$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $task_details->city_id );
-
-				$fullURL = $finishCreateTitle->getFullURL( [
-					'editToken' => $this->getContext()->getUser()->getEditToken()
-				] );
-				$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
-				$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-			}
-			else {
+			} else {
 				// oh my, an error...
 				$this->response->setCode( 500 );
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
@@ -361,6 +353,35 @@ class CreateNewWikiController extends WikiaController {
 				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $task_details->exception_message );
 			}
 		}
+	}
+
+	/**
+	 * Sets the theme designer setting selected on the last step of CNW.
+	 * Returns the url for the created wiki.
+	 *
+	 * @throws BadRequestException in case edit token cannot be validated
+	 * @throws ForbiddenException when the current user is not the wiki founder
+	 */
+	public function finishCreateWiki() {
+		$this->checkWriteRequest();
+
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+
+		if ( intval( $wiki->city_founding_user ) !== $this->getContext()->getUser()->getId() ) {
+			throw new ForbiddenException();
+		}
+
+		$themeParams = $this->getVal( 'themeSettings' );
+
+		if ( !empty( $themeParams['color-body'] ) ) {
+			$themeSettings = new ThemeSettings( $wikiId );
+			$themeSettings->saveSettings( $themeParams );
+		}
+
+		$this->setVal( 'wikiUrl', $wiki->city_url );
+		$this->setVal( 'showWikiUrl',
+			wfAppendQuery( WikiFactory::getLocalEnvURL( $wiki->city_url ), 'wiki-welcome=1' ) );
 	}
 
 	/**

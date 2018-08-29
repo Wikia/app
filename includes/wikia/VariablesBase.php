@@ -1287,7 +1287,6 @@ $wgCreateLanguageWikisWithPath = false;
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
 $wgCreateEnglishWikisOnFandomCom = false;
-$wgMigrateNewWikiToFandomCom = false;	// PLATFORM-3647 temp hack, migrate to fandom.com on the first page view
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -2681,14 +2680,6 @@ $wgEnableFeedsAndPostsExt = false;
  * @var bool $wgEnableFileInfoFunctionsExt
  */
 $wgEnableFileInfoFunctionsExt = false;
-
-/**
- * Enables FinishCreateWiki part of CreateNewWiki extension, which is needed
- * for every wiki.
- * @see extensions/wikia/CreateNewWiki/FinishCreateWiki_setup.php
- * @var bool $wgEnableFinishCreateWiki
- */
-$wgEnableFinishCreateWiki = true;
 
 /**
  * Enable FirstContributions extension.

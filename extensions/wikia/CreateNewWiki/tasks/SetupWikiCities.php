@@ -50,19 +50,10 @@ class SetupWikiCities extends Task {
 		global $wgCreateDatabaseActiveCluster, $wgWikiaBaseDomain, $wgFandomBaseDomain;
 		$founder = $this->taskContext->getFounder();
 
-		// PLATFORM-3647 temp hack: create the wiki on wikia.com and switch on the first view,
-		// otherwise the cookie from CNW won't be passed to FinishCreate
-		$city_url = $this->taskContext->getURL();
-		$host = parse_url( $city_url, PHP_URL_HOST );
-		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
-			$city_url = str_replace( '.' . $wgFandomBaseDomain, '.' . $wgWikiaBaseDomain, $city_url );
-		}
-		// PLATFORM-3647 end of temp hack
-
 		$insertFields = [
 			'city_title' => $this->taskContext->getSiteName(),
 			'city_dbname' => $this->taskContext->getDbName(),
-			'city_url' => $city_url,
+			'city_url' => $this->taskContext->getURL(),
 			'city_founding_user' => $founder->getId(),
 			'city_founding_email' => $founder->getEmail(),
 			'city_founding_ip_bin' => inet_pton( $this->taskContext->getIP() ),

@@ -8,7 +8,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		createStatus = false,
 		createStatusMessage = false,
 		cityId = false,
-		finishCreateUrl = false,
 		retryGoto = 0,
 		nameAjax = false,
 		domainAjax = false,
@@ -144,9 +143,20 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			action: tracker.ACTIONS.SUBMIT,
 			label: 'theme-selection-submitted'
 		});
-		saveState(ThemeDesigner.settings, function () {
-			gotoMainPage();
-		});
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'finishCreateWiki',
+			data: {
+				themeSettings: ThemeDesigner.settings,
+				wikiId: cityId,
+				token: mw.user.tokens.get('editToken')
+			}
+		}).then(function(res) {
+			gotoMainPage(res.showWikiUrl);
+		}, function() {
+			// well, theme designer call failed, but we can show the wiki
+            gotoMainPage('http://' + wikiDomain.val() + '/?wiki-welcome=1');
+        });
 	}
 
 	function onDescWikiNextClick() {
@@ -593,10 +603,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		}
 	}
 
-	function gotoMainPage() {
+	function gotoMainPage(targetUrl) {
 		nextButtons.attr('disabled', true);
-		if (createStatus && createStatus === 'ok' && finishCreateUrl) {
-			location.href = finishCreateUrl;
+		if (createStatus && createStatus === 'ok' && targetUrl) {
+			location.href = targetUrl;
 		} else if (!createStatus || (createStatus && createStatus === 'backenderror')) {
 			$.showModal(errorModalHeader, errorModalMessage);
 		} else if (retryGoto < 300) {
@@ -658,7 +668,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
 						cityId = res.cityId;
 						createStatus = res.status;
-						finishCreateUrl = res.finishCreateUrl;
 
 						throbberWrapper.stopThrobbing();
 						throbberWrapper.removeClass('creating-wiki');
