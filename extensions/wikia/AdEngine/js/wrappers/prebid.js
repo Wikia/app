@@ -37,9 +37,11 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		};
 	}
 
-	win.pbjs.que.push(function() {
-		win.pbjs.setConfig(prebidConfig);
-	});
+	if (!adContext.get('bidders.prebidAE3')) {
+		win.pbjs.que.push(function() {
+			win.pbjs.setConfig(prebidConfig);
+		});
+	}
 
 	function get() {
 		return win.pbjs;

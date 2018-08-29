@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Search\TopWikiArticles;
+
 class WikiRecommendations {
 
 	const THUMBNAIL_WIDTH = 100;
@@ -724,5 +726,25 @@ class WikiRecommendations {
 
 			return '';
 		}
+	}
+
+	public static function getPopularArticles() {
+		global $wgCityId;
+
+		$topWikiArticles = TopWikiArticles::getArticlesWithCache( $wgCityId, false );
+		// do not show itself
+		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) {
+			return $item['id'] !== RequestContext::getMain()->getTitle()->getArticleID();
+		} );
+		// show max 3 elements
+		$topWikiArticles = array_slice( $topWikiArticles, 0, 3 );
+		// add index to items to render it by mustache template
+		$index = 1;
+		foreach ( $topWikiArticles as &$wikiArticle ) {
+			$wikiArticle['index'] = $index;
+			$index ++;
+		}
+
+		return $topWikiArticles;
 	}
 }
