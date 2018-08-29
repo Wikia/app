@@ -12,7 +12,7 @@ class SetMainPageContent extends Maintenance {
 		global $wgSitename, $wgWikiDescription;
 
 		if ( empty( $wgWikiDescription ) ) {
-			$this->output( "Empty wiki description, skipping\n" );
+			$this->output( "SetMainPageContent: Empty wiki description, skipping" );
 			return;
 		}
 		// set description on main page
@@ -22,14 +22,14 @@ class SetMainPageContent extends Maintenance {
 		$mainArticle = Article::newFromID( $mainId );
 
 		if ( empty( $wgWikiDescription ) ) {
-			$this->error( "Cannot find the main article!\n" );
+			$this->error( "SetMainPageContent: Cannot find the main article!" );
 			return;
 		}
 
 		$newMainPageText = $this->getClassicMainPage( $mainArticle, $wgWikiDescription );
 		$mainArticle->doEdit( $newMainPageText, '' );
 
-		$this->output( "Done\n" );
+		$this->output( "SetMainPageContent: Done" );
 	}
 
 	/**
