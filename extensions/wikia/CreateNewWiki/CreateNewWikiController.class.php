@@ -367,7 +367,7 @@ class CreateNewWikiController extends WikiaController {
 	public function finishCreateWiki() {
 		$this->checkWriteRequest();
 
-		$wikiId = $this->getInt( 'wikiId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
 		$wiki = WikiFactory::getWikiByID( $wikiId );
 
 		if ( $wiki->city_founding_user !== $this->getContext()->getUser()->getId() ) {
