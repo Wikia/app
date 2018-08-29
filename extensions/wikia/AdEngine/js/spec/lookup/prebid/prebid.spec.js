@@ -6,7 +6,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		mocks = {
 			adContext: {
 				get: function () {
-					return true;
+					return false;
 				},
 				getContext: function () {
 					return {
@@ -20,9 +20,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				isFanTakeoverLoaded: function () {
 					return false;
 				}
-			},
-			opts: {
-				prebidBidderUrl: 'foo'
 			},
 			tracker: {
 				measureDiff: function () {
