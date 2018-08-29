@@ -71,8 +71,10 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
-	context.set('services.billTheLizard.host',
-		window.mw.config.get('wgServicesExternalDomain').replace(/\/$/, ''));
+	if (window.wgServicesExternalDomain) {
+		context.set('services.billTheLizard.host',
+			window.wgServicesExternalDomain.replace(/\/$/, ''));
+	}
 
 	legacyContext.addCallback(() => {
 		context.set('slots', getSlotsContext(legacyContext, skin));
