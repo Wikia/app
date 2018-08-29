@@ -50,7 +50,7 @@
 					'&pv_number_global=' + window.pvNumberGlobal;
 
 			if (optIn) {
-				trackUrl += '&u=' + window.wgTrackID;
+				trackUrl += '&u=' + (window.trackID || window.wgTrackID || 0);
 			} else {
 				trackUrl += '&u=-1';
 			}
