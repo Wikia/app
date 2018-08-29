@@ -304,6 +304,9 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikiaVideo.js',
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
+
+		// Use Prebid.js built in @wikia/ad-products
+		'//extensions/wikia/AdEngine/js/build/prebid.js'
 	],
 ];
 
