@@ -371,6 +371,10 @@ class CreateNewWikiController extends WikiaController {
 		$wiki = WikiFactory::getWikiByID( $wikiId );
 
 		if ( $wiki->city_founding_user !== $this->getContext()->getUser()->getId() ) {
+			$this->info( 'Cannot validate user id', [
+				'city_founding_user' => $wiki->city_founding_user,
+				'context_user_id' => $this->getContext()->getUser()->getId()
+			] );
 			throw new ForbiddenException();
 		}
 
