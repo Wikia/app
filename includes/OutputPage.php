@@ -303,6 +303,13 @@ class OutputPage extends ContextSource {
 		}
 	}
 
+	public function cancelRedirect( $cancelProtocolRedirect = true ) {
+		$this->mRedirect = '';
+		if ( $cancelProtocolRedirect ) {
+			$this->mRedirectProtocol = PROTO_CURRENT;
+		}
+	}
+
 	/**
 	 * Get the URL to redirect to, or an empty string if not redirect URL set
 	 *
