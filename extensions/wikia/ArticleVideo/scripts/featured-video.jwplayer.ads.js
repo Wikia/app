@@ -1,3 +1,4 @@
+/*global define, require*/
 define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
@@ -12,6 +13,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.wrappers.prebid'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.lookup.prebid')
 ], function (
 	adContext,
@@ -27,6 +29,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	log,
 	win,
 	prebidWrapper,
+	bidders,
 	prebid
 ) {
 	'use strict';
@@ -44,7 +47,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && adContext.get('bidders.prebid')) {
+		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
 			return prebid.getSlotParams(featuredVideoSlotName);
 		}
 
@@ -71,7 +74,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				return;
 			}
 
-			var bid = prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders && bidders.isEnabled()
+				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
+				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';

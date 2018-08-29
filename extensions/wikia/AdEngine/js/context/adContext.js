@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
 			context.targeting.skin === 'oasis' &&
-			!areDelayServicesBlocked();
+			!context.opts.delayBlocked;
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -96,6 +96,7 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
@@ -145,11 +146,13 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
+		context.opts.delayBlocked = areDelayServicesBlocked();
 		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo && isEnabled('wgAdDriverSrcPremiumCountries');
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
 
@@ -208,7 +211,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
-		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
+		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
