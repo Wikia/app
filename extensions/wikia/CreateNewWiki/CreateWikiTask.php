@@ -75,6 +75,7 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $domain
 	 * @param string $language
 	 * @param int $vertical
+	 * @param string $description
 	 * @param string[] $categories
 	 * @param bool $allAges
 	 * @param int $timestamp when was the task scheduled

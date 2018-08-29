@@ -355,6 +355,13 @@ class CreateNewWikiController extends WikiaController {
 		}
 	}
 
+	/**
+	 * Sets the theme designer setting selected on the last step of CNW.
+	 * Returns the url for the created wiki.
+	 *
+	 * @throws BadRequestException in case edit token cannot be validated
+	 * @throws ForbiddenException when the current user is not the wiki founder
+	 */
 	public function finishCreateWiki() {
 		$this->checkWriteRequest();
 

@@ -151,11 +151,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				wikiId: cityId,
 				token: mw.user.tokens.get('editToken')
 			}
-		}).then(function (res) {
-			gotoMainPage( res.showWikiUrl );
-		}, function () {
+		}).then(function(res) {
+			gotoMainPage(res.showWikiUrl);
+		}, function() {
 			// well, theme designer call failed, but we can show the wiki
-            gotoMainPage( 'http://' + wikiDomain.val() + '/?wiki-welcome=1' );
+            gotoMainPage('http://' + wikiDomain.val() + '/?wiki-welcome=1');
         });
 	}
 
