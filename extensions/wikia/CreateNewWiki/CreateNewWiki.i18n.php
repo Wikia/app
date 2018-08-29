@@ -718,6 +718,8 @@ Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Inf
 Viel Glück mit deinem Projekt, <br /><br />
 <a href="http://de.community.wikia.com/wiki/User:$4">$3</a><br />
 Das FANDOM-Community-Team<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
+	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
 );
 
 $messages['de-formal'] = array(
@@ -915,6 +917,8 @@ Hemos añadido cierta información y consejos en tu <a href="$5"> Página de dis
 Buena suerte con el proyecto, < br /><br /> 
 <a href="http://comunidad.wikia.com/wiki/Usuario:$4">$3</a>< br /> 
 Equipo comunitario de FANDOM< br /></p>',
+	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear un wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
 );
 
 $messages['et'] = array(
@@ -1166,6 +1170,8 @@ Pour vous aider à vous lancer, nous avons ajouté des informations et des astuc
 Bonne réussite dans votre projet,<br /><br />
 <a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a><br />
 L\'équipe de la communauté FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wiki, vous devez confirmer votre adresse e-mail.',
+	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
 );
 
 $messages['fy'] = array(
@@ -1598,6 +1604,8 @@ Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina
 Buona fortuna con il tuo progetto,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Team della community di FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
 );
 
 $messages['ja'] = array(
@@ -1685,6 +1693,8 @@ FANDOMをお楽しみいただく上で、ぜひこれらの記事を役立て�
 今後ともFANDOMをよろしくお願いいたします。<br /><br />
 <a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
 FANDOMコミュニティ・チーム<br /></p>',
+	'cnw-error-unconfirmed-email' => 'FANDOMコミュニティを作成するには、メールの認証を行っていただく必要があります。',
+	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
 );
 
 $messages['km'] = array(
@@ -1990,6 +2000,8 @@ $messages['lol'] = array(
 	'autocreatewiki-welcometalk-wall' => 'crwdns66793:0{{subst:SITENAME}}crwdne66793:0',
 	'autocreatewiki-welcometalk' => 'crwdns66794:0crwdne66794:0',
 	'autocreatewiki-welcomebody-HTML' => 'crwdns66795:0crwdne66795:0',
+	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
+	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
 );
 
 $messages['lrc'] = array(
@@ -2396,6 +2408,8 @@ We hebben nog wat extra informatie en tips op je <a href="$5">prikbord</a> om je
 Veel success met je project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Je e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
+	'cnw-error-unconfirmed-email-header' => 'Je e-mailadres is niet bevestigd',
 );
 
 $messages['nl-informal'] = array(
@@ -2552,6 +2566,8 @@ Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji
 Powodzenia,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Zespół Społeczności portalu FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Musisz mieć potwierdzony adres e-mail, aby stworzyć wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
 );
 
 $messages['pms'] = array(
@@ -2741,6 +2757,8 @@ Nós adicionamos algumas informações e dicas em seu <a href="$5">mural de mens
 Boa sorte com o projeto, <br />< br / >
 <a href="http://comunidade.wikia.com/wiki/User:$4">$3</a><br />
  Equipe da comunidade FANDOM <br /></p>',
+	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
 );
 
 $messages['ro'] = array(
@@ -2871,6 +2889,8 @@ $messages['ru'] = array(
 Созданная вами вики доступна по адресу <a href="$1">$1</a>. Мы надеемся, что вы скоро начнете её развивать. <br /><br />
 Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке ФЭНДОМА</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br /> 
 Команда ФЭНДОМА<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Чтобы создать вики, необходимо подтвердить адрес электронной почты.',
+	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
 );
 
 $messages['sa'] = array(
@@ -3515,6 +3535,8 @@ $messages['zh-hans'] = array(
 祝您编辑一切顺利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM社区团队<br /></p>',
+	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
+	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
 );
 
 $messages['zh-hant'] = array(
@@ -3604,5 +3626,7 @@ $messages['zh-hant'] = array(
 祝您編輯一切順利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM社區團隊<br /></p>',
+	'cnw-error-unconfirmed-email' => '必須先認證你的電子郵件才能創建Wiki。',
+	'cnw-error-unconfirmed-email-header' => '你的電子郵件尚未認證。',
 );
 
