@@ -9,7 +9,7 @@ class AutoLoginService extends WikiaService {
 	const SYNC_COOKIE_NAME = 'cookies_synchronised';
 
 	public static function cookieSyncEnabled( WebRequest $request ) {
-		return $request->getCookie( self::SYNC_COOKIE_NAME ) !== '1';
+		return $request->getCookie( self::SYNC_COOKIE_NAME, "" ) !== '1';
 	}
 
 	public function __construct() {
