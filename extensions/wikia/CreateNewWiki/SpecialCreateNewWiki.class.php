@@ -23,12 +23,6 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 			return;
 		}
 
-		// SUS-1182: CreateNewWiki should check for valid email before progressing to the second step
-		// but allow anons to pass this check
-		if ( $user->isLoggedIn() && !$user->isEmailConfirmed() ) {
-			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
-		}
-
 		// SUS-352: check local and global user blocks before progressing to the second step
 		if ( $user->isBlocked() ) {
 			throw new UserBlockedError( $user->getBlock() );
