@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.n1.n1mInputParser', [
 	'ext.wikia.adEngine.adLogicPageParams',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log'
 ], function (pageParams, geo, log) {
 	'use strict';
@@ -10,12 +10,13 @@ define('ext.wikia.adEngine.ml.n1.n1mInputParser', [
 
 	function getData() {
 		var data,
-			params = pageParams.getPageLevelParams();
+			params = pageParams.getPageLevelParams(),
+			countryCode = geo.getCountryCode();
 
 		data = [
-			geo.getCountryCode() === 'RU' ? 1 : 0,
-			geo.getCountryCode() === 'UA' ? 1 : 0,
-			geo.getCountryCode() ? 0 : 1,
+			countryCode === 'RU' ? 1 : 0,
+			countryCode === 'UA' ? 1 : 0,
+			countryCode ? 0 : 1,
 			params.s0v === 'books' ? 1 : 0,
 			params.s0v === 'comics' ? 1 : 0,
 			params.s0v === 'games' ? 1 : 0,

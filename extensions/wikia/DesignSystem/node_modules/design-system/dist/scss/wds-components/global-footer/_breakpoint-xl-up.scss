@@ -81,9 +81,12 @@ $desktop-width: 1024px;
 				width: $desktop-third-column-width;
 
 				.wds-global-footer__link {
-					border: solid 1px $wds-color-blue-gray;
-					color: $wds-color-blue-gray;
-					display: inline-block;
+					align-items: center;
+					border-radius: 4px;
+					border: 1px solid;
+					display: inline-flex;
+					height: 36px;
+					justify-content: center;
 					font: {
 						size: $wds-typescale-size-minus-2;
 						weight: bold;
@@ -91,9 +94,10 @@ $desktop-width: 1024px;
 					letter-spacing: .3px;
 					line-height: $footer-line-height;
 					margin-top: 13px;
-					padding: 14px 18px;
+					padding: 0;
 					text-decoration: none;
 					text-transform: uppercase;
+					width: 153px;
 
 					&:hover {
 						color: $wds-color-white;

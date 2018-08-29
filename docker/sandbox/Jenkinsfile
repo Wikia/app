@@ -6,7 +6,7 @@ def sandbox = "sandbox-sus2"
 def environment = "sandbox"
 def datacenter = "sjc"
 
-def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php"
 
@@ -82,7 +82,7 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:e65afb8d20b625dd17e27a672560cfe89")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:8a16e38")
 
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")

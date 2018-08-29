@@ -342,7 +342,6 @@ $wgAutoloadClasses['Wikia\Helios\HelperController'] = "{$IP}/includes/wikia/cont
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
-$wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 $wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
@@ -977,6 +976,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -990,6 +996,13 @@ $wgAdDriverA9VideoBidderCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverA9BidderCountries = null;
+
+/**
+ * @name $wgAdDriverA9OptOutCountries
+ * List of countries where A9 is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9OptOutCountries = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane
@@ -1040,11 +1053,32 @@ $wgAdDriverRubiconPrebidCountries = null;
 $wgAdDriverRubiconDfpCountries = null;
 
 /**
+ * @name $wgAdDriverAppNexusDfpCountries
+ * Enables AppNexus via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusDfpCountries = null;
+
+/**
  * @name $wgAdDriverPrebidBidderCountries
  * List of countries where prebid bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
+ * @name $wgAdDriverPrebidOptOutCountries
+ * List of countries where Prebid is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidOptOutCountries = null;
 
 /**
  * @name $wgAdDriverAolBidderCountries
@@ -1137,6 +1171,20 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
 $wgAdDriverPubMaticBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAdditionalVastSizeCountries
+ * List of countries where vast requests has additional size 480x360.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdditionalVastSizeCountries = null;
+
+/**
+ * @name $wgAdDriverKargoBidderCountries
+ * List of countries where Kargo prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKargoBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1173,19 +1221,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
  * Enable new mobile_in_content slot after infobox placement
  */
 $wgAdDriverUseAdsAfterInfobox = false;
-
-/**
- * @name $wgAdDriverUseEvolve2
- * Whether to enable AdProviderEvolve2 (true) or not (false)
- */
-$wgAdDriverUseEvolve2 = true;
-
-/**
- * @name $wgAdDriverEvolve2Countries
- * List of countries with enabled Evolve2 module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverEvolve2Countries = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1335,6 +1370,13 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 $wgAdDriverKruxCountries = null;
 
 /**
+ * @name $wgAdDriverKruxNewParamsCountries
+ * List of countries where Krux will use new parameters (kuid and ksg)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxNewParamsCountries = null;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1365,6 +1407,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
  * List of countries to call BlockAdBlock detection scripts on news&stories
  */
 $wgAdDriverF2BabDetectionCountries = null;
+
+/**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
 
 /**
  * @name $wgAdDriverWadBTCountries
@@ -1660,7 +1708,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1705,10 +1753,3 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
-
-// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-// to be removed after we make sure it works fine
-$wgSurrogateKeysProdWikis = [
-	1721212,    // mech-internal-https-test
-	1558829     // rikitiki
-];

@@ -49,7 +49,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			'id' => $pageId,
 			'title' => $oTitle->getText(),
 			// Pass the display/sort params to the subcategory:
-			'url' => $oTitle->getFullURL( [
+			'url' => $oTitle->getLocalURL( [
 				'display' => $this->urlParams->getDisplayParam(),
 				'sort' => $this->urlParams->getSortParam(),
 			] ),

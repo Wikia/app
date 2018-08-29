@@ -71,7 +71,7 @@ class WikiFactoryVariableParser {
 
 		$decoded = json_decode( (string)$value, true );
 
-		if ( !$decoded || !is_array( $decoded ) ) {
+		if ( !is_array( $decoded ) ) {
 			throw new WikiFactoryVariableParseException( WikiFactoryVariableParseException::ERROR_VARIABLE_NOT_ARRAY );
 		}
 

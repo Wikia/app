@@ -616,6 +616,7 @@ taking over the output.
 $out: OutputPage object
 &$redirect: URL, modifiable
 &$code: HTTP code (eg '301' or '302'), modifiable
+&$redirectedBy: list of features causing the redirect
 
 'BeforeParserFetchFileAndTitle': before an image is rendered by Parser
 $parser: Parser object

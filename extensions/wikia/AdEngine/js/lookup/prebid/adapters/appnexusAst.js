@@ -14,13 +14,23 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
+				FEATURED: {
+					placementId: '13684967',
+					context: 'instream'
+				},
 				INCONTENT_PLAYER: {
-					placementId: '11543172'
+					placementId: '11543172',
+					context: 'outstream'
 				}
 			},
 			mercury: {
+				FEATURED: {
+					placementId: '13705871',
+					context: 'instream'
+				},
 				MOBILE_IN_CONTENT: {
-					placementId: '11543173'
+					placementId: '11543173',
+					context: 'outstream'
 				}
 			}
 		};
@@ -36,7 +46,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 			code: slotName,
 			mediaTypes: {
 				video: {
-					context: 'outstream',
+					context: config.context,
 					playerSize: [640, 480]
 				}
 			},

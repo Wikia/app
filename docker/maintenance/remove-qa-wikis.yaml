@@ -2,4 +2,3 @@ schedule: "35 20 * * 0"
 args:
 - php
 - /usr/wikia/slot1/current/src/maintenance/wikia/removeQAWikis.php
-

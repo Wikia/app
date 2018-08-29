@@ -285,55 +285,6 @@ class Wikia {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
-    /**
-     * fixDomainName
-     *
-     * It takes domain name as param, then checks if it contains more than one
-     * dot, then depending on that information adds .wikia.com domain or not.
-     * Additionally it lowercase name
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia-inc.com
-     *
-     * @param string $name Domain Name
-     * @param string $language default false - choosen language
-     * @param mixed  $type type of domain, default false = wikia.com
-     *
-     * @return string fixed domain name
-     */
-	static public function fixDomainName( $name, $language = false, $type = false ) {
-		global $wgWikiaBaseDomain;
-
-		if (empty( $name )) {
-			return $name;
-		}
-
-		$name = strtolower( $name );
-
-		$parts = explode(".", trim($name));
-		if( is_array( $parts ) && count( $parts ) <= 2 ) {
-			$allowLang = true;
-
-			if ( $type === 'answers' ) {
-				$domains = self::getAnswersDomains();
-				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
-					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
-					$allowLang = false;
-				} else {
-					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
-				}
-			} else {
-				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
-			}
-
-			if ( $language && $language != "en" && $allowLang ) {
-				$name = $language.".".$name;
-			}
-		}
-		return $name;
-	}
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
@@ -1937,17 +1888,39 @@ class Wikia {
 	 * Generates surrogate key to be used for requests served from a wiki domain.
 	 *
 	 * Can be called at any point during the request handling as it does not rely on WF variables.
-	 * This method can return an empty value if wiki shouldn't use surrogate keys
 	 */
 	public static function wikiSurrogateKey( $wikiId ) {
-		global $wgSurrogateKeysProdWikis;
 		if ( self::isProductionEnv() ) {
-			if ( !in_array( $wikiId, $wgSurrogateKeysProdWikis ) ) {
-				return '';
-			}
 			return 'wiki-' . $wikiId;
 		}
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
+	}
+
+	/**
+	 * Send surrogate key(s) headers.
+	 *
+	 * Do not set the $replace param to true unless you're know what you're doing (this will
+	 * remove wiki surrogate keys).
+	 *
+	 * @param string|array $surrogateKeys Surrogate keys (array or space-delimited string)
+	 * @param bool $replace When false, new values will be added to the existing header
+	 */
+	public static function setSurrogateKeysHeaders( $surrogateKeys, $replace = false ) {
+		if ( !is_array( $surrogateKeys ) ) {
+			$surrogateKeys = [ $surrogateKeys ];
+		}
+		if ( !$replace ) {
+			// get existing surrogate keys
+			$headers = headers_list();
+			foreach ( $headers as $header ) {
+				if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
+					$surrogateKeys[] = trim( substr( $header, 14 ) );
+				}
+			}
+		}
+		$surrogateKey = implode( ' ', $surrogateKeys );
+		header( 'Surrogate-Key: ' . $surrogateKey );
+		header( 'X-Surrogate-Key: ' . $surrogateKey );
 	}
 
 	public static function surrogateKey( $args ) {

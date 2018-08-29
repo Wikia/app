@@ -83,7 +83,6 @@ class Hooks {
 
 		$data = $dispatchable->getResponse()->getData();
 		$data['community-header']['sitename']['title']['value'] = $community->displayName;
-		$data['community-header']['sitename']['href'] = '/';
 
 		if ( !empty( $community->theme->graphics->wordmark ) ) {
 			// need to recreate entirely in case it wasn't set by the DS api

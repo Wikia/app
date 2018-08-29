@@ -67,7 +67,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 
 	it('should send bid params to VAST builder for first video depth', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		getModule().buildVastUrl('FEATURED', 'preroll', 1, 1234567890, {}, true, {bid: 'TEST_BID', bid_price: 666});
+		getModule().buildVastUrl('FEATURED', 'preroll', 1, 1234567890, {}, {}, {bid: 'TEST_BID', bid_price: 666});
 
 		var arg = mocks.vastUrlBuilder.build.calls.first().args[1];
 		expect(Object.keys(arg)).toContain('bid');
@@ -79,7 +79,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 
 	it('shouldn\'t send bid params to VAST builder for next video depths', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, true, {bid: 'TEST_BID', bid_price: 666});
+		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, {}, {bid: 'TEST_BID', bid_price: 666});
 
 		var arg = mocks.vastUrlBuilder.build.calls.first().args[1];
 		expect(Object.keys(arg)).not.toContain('bid');
@@ -88,7 +88,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 
 	it('should send audio=yes param to VAST builder', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, false, {bid: 'TEST_BID', bid_price: 666});
+		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, { muted: false }, {bid: 'TEST_BID', bid_price: 666});
 
 		var arg = mocks.vastUrlBuilder.build.calls.first().args[1];
 		expect(Object.keys(arg)).toContain('audio');
@@ -97,7 +97,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 
 	it('should send audio=no param to VAST builder', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, true, {bid: 'TEST_BID', bid_price: 666});
+		getModule().buildVastUrl('FEATURED', 'preroll', 2, 1234567890, {}, { muted: true }, {bid: 'TEST_BID', bid_price: 666});
 
 		var arg = mocks.vastUrlBuilder.build.calls.first().args[1];
 		expect(Object.keys(arg)).toContain('audio');

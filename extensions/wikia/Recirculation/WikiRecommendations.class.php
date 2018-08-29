@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Search\TopWikiArticles;
+
 class WikiRecommendations {
 
 	const THUMBNAIL_WIDTH = 100;
@@ -9,108 +11,93 @@ class WikiRecommendations {
 	const RECOMMENDATIONS = [
 		'en' => [
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/westworld/images/9/95/Man_In_Black.jpg/revision/latest?cb=20161005154601',
-				'title' => 'Westworld Wiki',
-				'url' => 'https://westworld.wikia.com/wiki/Westworld_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/charmed/images/a/a9/Season-5-group-06.jpg/revision/latest?cb=20111014232133',
+				'title' => 'Charmed Wiki',
+				'url' => 'https://charmed.wikia.com/wiki/Main_Page'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/arresteddevelopment/images/3/3d/Wikia-Visualization-Add-7.png/revision/latest?cb=20130409235616',
-				'title' => 'Arrested Development Wiki',
-				'url' => 'https://arresteddevelopment.wikia.com/wiki/Main_Page'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/stephenking/images/6/61/The_Losers_Club.png/revision/latest?cb=20170807021615',
+				'title' => 'Stephen King Wiki',
+				'url' => 'https://stephenking.wikia.com/wiki/Main_Page'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/babylon5/images/6/6b/Bester.jpg/revision/latest?cb=20071130075846',
-				'title' => 'Babylon 5 Wiki',
-				'url' => 'https://babylon5.wikia.com/wiki/Main_Page'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/supernatural/images/1/1d/601.jpg/revision/latest?cb=20100831195032',
+				'title' => 'Supernatural Wiki',
+				'url' => 'https://supernatural.wikia.com/wiki/Supernatural_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/naruto/images/e/ed/Ephemeral2.PNG/revision/latest?cb=20160113184538',
-				'title' => 'Naruto Wiki',
-				'url' => 'https://naruto.wikia.com/wiki/Narutopedia'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/the-darkest-minds/images/c/c9/The_Darkest_Minds_Still_6.jpg/revision/latest?cb=20180525215419',
+				'title' => 'The Darkest Minds Wiki',
+				'url' => 'https://the-darkest-minds.wikia.com/wiki/The_Darkest_Minds_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/tokyoghoul/images/e/e7/Wp1_1920x1080.jpg/revision/latest?cb=20141215103156',
-				'title' => 'Tokyo Ghoul:RE Wiki',
-				'url' => 'https://tokyoghoul.wikia.com/wiki/Tokyo_Ghoul_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/themagicians/images/4/48/CastleBlackspireGang.jpg/revision/latest?cb=20180408180237',
+				'title' => 'The Magicians Wiki',
+				'url' => 'https://themagicians.wikia.com/wiki/The_Magicians_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bokunoheroacademia/images/a/a8/Izuku_Meets_All_Might.png/revision/latest?cb=20170630050603',
-				'title' => 'My Hero Academia Wiki',
-				'url' => 'https://bokunoheroacademia.wikia.com/wiki/My_Hero_Academia_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/orange-is-the-new-black/images/b/ba/Blackgirlsoitnb.jpg/revision/latest?cb=20160522025304',
+				'title' => 'Orange is the New Black Wiki',
+				'url' => 'https://orange-is-the-new-black.wikia.com/wiki/Orange_Is_the_New_Black_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/hypotheticalhurricanes/images/2/2e/Beryl_image_2024.png/revision/latest?cb=20180429043818',
-				'title' => 'Hypothetical Hurricanes Wiki',
-				'url' => 'https://hypotheticalhurricanes.wikia.com/wiki/Hypothetical_Hurricanes_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/scrooge-mcduck/images/7/75/585af131f4147c5ae1a7071b36701392--dagobert-duck-scrooge-mcduck.jpg/revision/latest?cb=20180725134511',
+				'title' => 'Scrooge McDuck Wiki',
+				'url' => 'https://scrooge-mcduck.wikia.com/wiki/Scrooge_McDuck_Wikia'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/yuyuyu/images/a/a7/Sample.png/revision/latest?cb=20180625205834',
-				'title' => 'Yuki Yuna is a Hero Wiki',
-				'url' => 'https://yuyuyu.wikia.com/wiki/Yuki_Yuna_is_a_Hero_Wiki'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/glitchtale/images/c/c2/Glitchtale_Wallpaper.png/revision/latest?cb=20180626082439',
-				'title' => 'Glitchtale Wiki',
-				'url' => 'https://glitchtale.wikia.com/wiki/Glitchtale_Wikia'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/cswikia/images/1/1b/Csgo_poster_spotlight.png/revision/latest?cb=20180626061249',
-				'title' => 'Counter-Strike Wiki',
-				'url' => 'https://counterstrike.wikia.com/wiki/Counter-Strike_Wiki'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/arianagrande/images/4/48/ArianaSPL.png/revision/latest?cb=20180620063000',
-				'title' => 'Ariana Grande Wiki',
-				'url' => 'https://arianagrande.wikia.com/wiki/Ariana_Grande_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/central/images/2/21/O-BIG-NATE-ADVENTURE-THEATRE-facebook.jpg/revision/latest?cb=20180719205131',
+				'title' => 'Big Nate Wiki',
+				'url' => 'https://bignate.wikia.com/wiki/Big_Nate_Wiki'
 			]
 		],
 		'fr' => [
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/a/ac/FR-TheLastOfUs-Spotlight.jpg/revision/latest?cb=20180625132146&path-prefix=fr',
-				'title' => 'Wiki The Last of Us',
-				'url' => 'http://fr.thelastofus.wikia.com/wiki/Wiki_The_Last_of_Us'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/c/c3/FR-AttackOnTitan-Spotlight.jpg/revision/latest?cb=20180801091900&path-prefix=fr',
+				'title' => 'Wiki L\'Attaque des Titans',
+				'url' => 'http://fr.attaque-des-titans.wikia.com/wiki/Wiki_Shingeki_No_Kyojin'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/5/5b/FR-AmourSucre-Spotlight.jpg/revision/latest?cb=20180625132147&path-prefix=fr',
-				'title' => 'Wiki Amour Sucré',
-				'url' => 'http://fr.amour-sucre.wikia.com/wiki/Accueil'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/3/38/Battle_for_Azeroth_Spotlight.png/revision/latest?cb=20180731164459&path-prefix=de',
+				'title' => 'Wiki Warcraft',
+				'url' => 'http://fr.wowwiki.wikia.com/wiki/Accueil'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/1/19/FR-HollowKnight-Spotlight.jpg/revision/latest?cb=20180625132148&path-prefix=fr',
-				'title' => 'Wiki Hollow Knight',
-				'url' => 'http://fr.hollowknight.wikia.com/wiki/Accueil'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/f/ff/FR-OITNB-Spotlight.jpg/revision/latest?cb=20180801091829&path-prefix=fr',
+				'title' => 'Wiki Orange Is the New Black',
+				'url' => 'http://fr.orange-is-the-new-black.wikia.com/wiki/Wiki_Orange_is_the_New_Black'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/8/86/FR-DetroitBecomeHuman-Spotlight.jpg/revision/latest?cb=20180625132147&path-prefix=fr',
-				'title' => 'Wiki Detroit: Become Human',
-				'url' => 'http://fr.detroit-become-human.wikia.com/wiki/Wiki_Detroit:_Become_Human'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/2/25/Dragon_Quest_XI_Spotlight.png/revision/latest?cb=20180731165605&path-prefix=de',
+				'title' => 'Wiki Dragon Quest',
+				'url' => 'http://fr.dragonquest.wikia.com/wiki/Wiki_Dragon_Quest'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/2/20/FR-Disenchantment-Spotlight.jpg/revision/latest?cb=20180801091755&path-prefix=fr',
+				'title' => 'Wiki Désenchantée',
+				'url' => 'http://fr.disenchantment.wikia.com/wiki/Wiki_Disenchantment'
 			],
 		],
 		'de' => [
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/0/09/Spotlight-Luke-Cage.png/revision/latest?cb=20180627093124&path-prefix=de',
-				'title' => 'Defenders Wiki',
-				'url' => 'http://de.the-defenders.wikia.com/wiki/The_Defenders_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/5/59/Orange_is_the_New_Black_Spotlight.jpg/revision/latest?cb=20180731162237&path-prefix=de',
+				'title' => 'Orange is the New Black Wiki',
+				'url' => 'http://de.orange-is-the-new-black.wikia.com/wiki/Orange_is_the_New_Black_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/1/13/Spotlight-This-Is-Us.jpg/revision/latest?cb=20180627093930&path-prefix=de',
-				'title' => 'This Is Us Wiki',
-				'url' => 'http://de.this-is-us.wikia.com/wiki/This_Is_Us_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/7/70/Bibi_Blocksberg_Sportlights_August_18.jpg/revision/latest?cb=20180731162444&path-prefix=de',
+				'title' => 'Bibi Blocksberg Wiki',
+				'url' => 'http://de.bibi-blocksberg.wikia.com/wiki/Bibi_Blocksberg_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/8/81/Spotlight-Preacher.png/revision/latest?cb=20180627094243&path-prefix=de',
-				'title' => 'Preacher Wiki',
-				'url' => 'http://de.preacher.wikia.com/wiki/Preacher_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/f/f1/Handmaids_tale_spotlight_august.jpg/revision/latest?cb=20180731162525&path-prefix=de',
+				'title' => 'The Handmaid\'s Tale Wiki',
+				'url' => 'http://de.the-handmaids-tale.wikia.com/wiki/The_Handmaid%27s_Tale_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/c/cd/Spotlight-Ant-Man-Wasp.png/revision/latest?cb=20180627092923&path-prefix=de',
-				'title' => 'Marvel-Filme Wiki',
-				'url' => 'http://de.marvel-filme.wikia.com/wiki/Marvel-Filme'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/3/3c/Tsubasa_Wiki.jpg/revision/latest?cb=20180427091239&path-prefix=de',
-				'title' => 'Tsubasa Wiki',
-				'url' => 'http://de.tsubasa.wikia.com/wiki/Captain_Tsubasa_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/3/3b/Detektiv_Conan_Spotlight.jpg/revision/latest?cb=20180731163020&path-prefix=de',
+				'title' => 'Detektiv Conan Wiki',
+				'url' => 'https://detektivconan.wikia.com/wiki/Detektiv_Conan_Wiki'
 			],
 			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/2/21/Videospiele_Wiki.jpg/revision/latest?cb=20180228143312&path-prefix=de',
@@ -118,34 +105,39 @@ class WikiRecommendations {
 				'url' => 'http://videospiele.wikia.com/wiki/Videospiele_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/f/fc/Vampyr_Spotlight.png/revision/latest?cb=20180525135811&path-prefix=de',
-				'title' => 'Vampyr Wiki',
-				'url' => 'http://de.vampyr.wikia.com/wiki/Vampyr-Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/d/d9/No_Man%27s_Sky_Spotlight.png/revision/latest?cb=20180731163641&path-prefix=de',
+				'title' => 'No Man\'s Sky Wiki',
+				'url' => 'http://de.no-mans-sky.wikia.com/wiki/Startseite'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/d/db/BattleTech_Spotlight.png/revision/latest?cb=20180525094916&path-prefix=de',
-				'title' => 'BattleTech Wiki',
-				'url' => 'http://de.battletech.wikia.com/wiki/BattleTech_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/3/38/Battle_for_Azeroth_Spotlight.png/revision/latest?cb=20180731164459&path-prefix=de',
+				'title' => 'World of Warcraft Wiki',
+				'url' => 'http://de.wow.wikia.com/wiki/WoWWiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/d/d6/Spotlight-Crash-Bandicoot.png/revision/latest?cb=20180627095911&path-prefix=de',
-				'title' => 'Crash Bandicoot Wiki',
-				'url' => 'http://de.crash-bandicoot.wikia.com/wiki/Crash_Bandicoot_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/1/12/Telltale%27s_The_Walking_Dead_-_Final_Season.png/revision/latest?cb=20180731165000&path-prefix=de',
+				'title' => 'The Walking Dead Wiki',
+				'url' => 'http://de.thewalkingdeadtv.wikia.com/wiki/The_Walking_Dead_(TV)_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/9/92/Spotlight-Prey-Mooncrash.png/revision/latest?cb=20180627100718&path-prefix=de',
-				'title' => 'Prey Wiki',
-				'url' => 'http://de.prey.wikia.com/wiki/Prey_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/2/25/Dragon_Quest_XI_Spotlight.png/revision/latest?cb=20180731165605&path-prefix=de',
+				'title' => 'Dragon Quest Wiki',
+				'url' => 'http://de.dragonquest.wikia.com/wiki/Dragon_Quest_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/life-is-strange/images/9/94/Captain-Spirit-Screenshot-02.jpg/revision/latest?cb=20180627105350&path-prefix=de',
-				'title' => 'Life Is Strange Wiki',
-				'url' => 'http://de.life-is-strange.wikia.com/wiki/Life_Is_Strange_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/9/9a/Shadow_of_the_Tomb_Raider_Spotlight.png/revision/latest?cb=20180731170422&path-prefix=de',
+				'title' => 'Tomb Raider Wiki',
+				'url' => 'http://de.tombraider.wikia.com/wiki/Tomb_Raider_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/4/4c/Spotlight-Elder-Scrolls-Summerset.png/revision/latest?cb=20180627121300&path-prefix=de',
-				'title' => 'Elder Scrolls Wiki',
-				'url' => 'http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/c/c7/Destiny_2_Forsaken_Spotlight.jpg/revision/latest?cb=20180731171630&path-prefix=de',
+				'title' => 'Destiny Wiki',
+				'url' => 'http://de.destiny.wikia.com/wiki/Destiny_Wiki'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/bossosbastelbude/images/f/f5/Ninjago_Spotlight.png/revision/latest?cb=20180806131407&path-prefix=de',
+				'title' => 'Ninjago Wiki',
+				'url' => 'http://de.lego-ninjago.wikia.com/wiki/Lego_Ninjago_Wiki'
 			],
 		],
 		'it' => [
@@ -155,9 +147,9 @@ class WikiRecommendations {
 				'url' => 'https://goo.gl/QrXG3a'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/monsterhunter/images/c/c9/MHW-Rathalos_Artwork_002.jpg/revision/latest?cb=20170613095127',
-				'title' => 'Monster Hunter Wiki',
-				'url' => 'https://goo.gl/B8GDED'
+				'thumbnailUrl' => 'https://vignette2.wikia.nocookie.net/shingekinokyojin/images/4/42/Wikia-Visualization-Main%2Citshingekinokyojin.png/revision/latest/thumbnail-down/width/660/height/660?cb=20161102171435&path-prefix=it',
+				'title' => 'Shingeki no Kyojin Wiki',
+				'url' => 'http://bit.ly/fandom-it-footer-itshingekinokyojin'
 			],
 			[
 				'thumbnailUrl' => 'https://vignette3.wikia.nocookie.net/supermarioitalia/images/8/81/Wikia-Visualization-Main%2Citsupermarioitalia.png/revision/latest/thumbnail-down/width/660/height/660?cb=20161102154509&path-prefix=it',
@@ -173,6 +165,21 @@ class WikiRecommendations {
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/kingdomhearts/images/b/b1/Wikia-Visualization-Main%2Ckingdomhearts.png/revision/latest/thumbnail-down/width/660/height/660?cb=20161102141406',
 				'title' => 'Kingdom Hearts Wiki',
 				'url' => 'https://goo.gl/4VQrt1'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette2.wikia.nocookie.net/dragonball/images/0/0f/Wikia-Visualization-Main%2Citdragonball.png/revision/latest?cb=20161102150926&path-prefix=it',
+				'title' => 'Dragon Ball Wiki',
+				'url' => 'http://bit.ly/fandom-it-footer-itdragonball'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/onepiece/images/3/36/Promo_wiki.png/revision/latest?cb=20161129202134&path-prefix=it',
+				'title' => 'One Piece Wiki Italia',
+				'url' => 'http://bit.ly/fandom-it-footer-itonepiece'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette4.wikia.nocookie.net/naruto/images/5/50/Wikia-Visualization-Main%2Cplnaruto.png/revision/latest?cb=20161102143013',
+				'title' => 'Narutopedia',
+				'url' => 'http://bit.ly/fandom-it-footer-itnaruto'
 			],
 		],
 		'ja' => [
@@ -274,14 +281,14 @@ class WikiRecommendations {
 				'url' => 'http://pl.battlefield.wikia.com/wiki/Battlefield_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette3.wikia.nocookie.net/vuh/images/b/b1/Auta_Wiki.png/revision/latest?cb=20170901025628&path-prefix=pl',
-				'title' => 'Auta Wiki',
-				'url' => 'http://pl.auta.wikia.com/wiki/Auta_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plwikia/images/9/96/Fanonpedia.png/revision/latest?cb=20180407215628',
+				'title' => 'Star Wars Fanonpedia',
+				'url' => 'https://gwfanon.wikia.com/wiki/Star_Wars_Fanonpedia'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette2.wikia.nocookie.net/vuh/images/6/6e/Life_is_Strange_Wiki.jpg/revision/latest?cb=20170901032033&path-prefix=pl',
-				'title' => 'Life is Strange Wiki',
-				'url' => 'http://pl.lifeisstrange.wikia.com/wiki/Life_Is_Strange_Wikia'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plwikia/images/c/c1/BnHA_Slider.jpg/revision/latest?cb=20180530125401',
+				'title' => 'Boku no Hero Academia Wiki',
+				'url' => 'http://pl.bokunoheroacademia.wikia.com/wiki/Boku_no_Hero_Academia_Wiki'
 			],
 			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/unturned-polska/images/b/b6/Spotlight.jpg/revision/latest?cb=20170929203539&path-prefix=pl',
@@ -294,24 +301,24 @@ class WikiRecommendations {
 				'url' => 'http://arrowwersum.wikia.com/wiki/Arrowwersum'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plwikia/images/3/30/Fanonpedia_spotlight_listopad_2017.png/revision/latest?cb=20171008170243',
-				'title' => 'Star Wars Fanonpedia',
-				'url' => 'http://gwfanon.wikia.com/wiki/Strona_g%C5%82%C3%B3wna'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plwikia/images/3/33/PVZWiki_Spotlight2018.png/revision/latest?cb=20180606172907',
+				'title' => 'Plants vs. Zombies Wiki',
+				'url' => 'http://pl.plantsvszombies.wikia.com/wiki/Plants_vs._Zombies_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/vuh/images/7/7b/ELEX_Wiki.png/revision/latest?cb=20171105202319&path-prefix=pl',
-				'title' => 'ELEX Wiki',
-				'url' => 'http://pl.elex.wikia.com/wiki/ELEX_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/hearthstonepedia/images/7/78/HW_Slider.jpg/revision/latest?cb=20180709111854&path-prefix=pl',
+				'title' => 'Hearthstone Wiki',
+				'url' => 'http://pl.hearthstone.wikia.com/wiki/Hearthstone_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plwikia/images/2/27/YouTube_Wiki.jpg/revision/latest?cb=20171105210441',
-				'title' => 'YouTube Wiki',
-				'url' => 'http://pl.youtube.wikia.com/wiki/YouTube_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/polskapersopedia/images/7/76/New_Canvas.jpg/revision/latest?cb=20180712074537&path-prefix=pl',
+				'title' => 'Riordanopedia',
+				'url' => 'https://polskapersopedia.wikia.com/wiki/Percy_Jackson_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/vuh/images/7/74/UTfRdUj.jpg/revision/latest?cb=20171201175632&path-prefix=pl',
-				'title' => 'Phoenotopia Wiki',
-				'url' => 'http://pl.phoenotopia.wikia.com/wiki/Phoenotopia_Wikia'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/europa-song-contest/images/3/32/Spotlight.png/revision/latest?cb=20180713210019&path-prefix=pl',
+				'title' => 'Europa Song Contest Wiki',
+				'url' => 'http://pl.europa-song-contest.wikia.com/wiki/Europa_Song_Contest_Wiki'
 			],
 			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/vuh/images/4/4c/TI6Q6jX.jpg/revision/latest?cb=20171201175705&path-prefix=pl',
@@ -383,51 +390,6 @@ class WikiRecommendations {
 				'url' => 'http://ru.fallout.wikia.com/wiki/Fallout_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/kel/images/d/df/%D0%A1%D0%B8%D1%8F%D1%8E%D1%89%D0%B5%D0%B5_%D0%BE%D0%BA%D0%BE.png/revision/latest?cb=20180314110857&path-prefix=ru',
-				'title' => 'Kelconf вики',
-				'url' => 'http://bit.ly/ru-spotlight-kelconf'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/angrybirds/images/8/85/Piggy_Tales_4th_Street_png.png/revision/latest?cb=20180427154359&path-prefix=ru',
-				'title' => 'Angry Birds Wiki',
-				'url' => 'http://bit.ly/ru-spotlight-angrybirds'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/kirby/images/a/a4/KirbyBanner.jpg/revision/latest?cb=20180512060811&path-prefix=ru',
-				'title' => 'Кирби вики',
-				'url' => 'http://bit.ly/ru-spotlight-kirby'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/brickipedia/images/0/04/%D0%91%D0%B0%D0%BD%D0%BD%D0%B5%D1%80_06-07.2018.jpg/revision/latest?cb=20180520141544&path-prefix=ru',
-				'title' => 'Legopedia',
-				'url' => 'http://bit.ly/ru-spotlight-lego'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/plantsvs-zombies/images/d/d3/BWBbanner1.png/revision/latest?cb=20180520175450&path-prefix=ru',
-				'title' => 'Plants vs. Zombies Wiki',
-				'url' => 'http://bit.ly/ru-spotlight-plantsvszombies'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/jurassicpark/images/c/c6/%D0%91%D0%B0%D0%BD%D0%BD%D0%B5%D1%80.png/revision/latest?cb=20180605174841&path-prefix=ru',
-				'title' => 'Парк Юрского Периода Вики',
-				'url' => 'http://ru.jurassicpark.wikia.com/wiki/%D0%9F%D0%B0%D1%80%D0%BA_%D0%AE%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%9F%D0%B5%D1%80%D0%B8%D0%BE%D0%B4%D0%B0_%D0%92%D0%B8%D0%BA%D0%B8'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/2/2d/Pillars_of_eternity_2.jpg/revision/latest?cb=20180523132638',
-				'title' => 'Pillars of Eternity 2',
-				'url' => 'http://bit.ly/ru-spotlight-pillarsofeternity'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/6/6b/Conan_Exiles.jpg/revision/latest?cb=20180523132637',
-				'title' => 'Conan Exiles',
-				'url' => 'http://bit.ly/ru-spotlight-conanexiles'
-			],
-			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/a/a3/Shaman_King.jpg/revision/latest?cb=20180523132639',
-				'title' => 'Shaman King Вики',
-				'url' => 'http://bit.ly/ru-spotlight-shamanking'
-			],
-			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/doctorwho/images/f/f6/DWBanner.jpg/revision/latest?cb=20180531141140&path-prefix=ru',
 				'title' => 'Вики Доктор Кто',
 				'url' => 'http://ru.tardis.wikia.com/wiki/Doctor_Who_Wiki'
@@ -458,11 +420,6 @@ class WikiRecommendations {
 				'url' => 'http://ru.americangods.wikia.com/wiki/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5_%D0%B1%D0%BE%D0%B3%D0%B8_%D0%B2%D0%B8%D0%BA%D0%B8'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/4/48/Ru-spotlight-ant-man-and-the-wasp.jpg/revision/latest?cb=20180626120613',
-				'title' => 'Человек-муравей и Оса',
-				'url' => 'http://ru.marvel.wikia.com/wiki/%D0%A7%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA-%D0%BC%D1%83%D1%80%D0%B0%D0%B2%D0%B5%D0%B9_%D0%B8_%D0%9E%D1%81%D0%B0'
-			],
-			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/e/e7/Ru-spotlight-detroit-game.jpg/revision/latest?cb=20180626120614',
 				'title' => 'Detroit: Become Human вики',
 				'url' => 'http://ru.detroit-become-human.wikia.com/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0'
@@ -481,6 +438,51 @@ class WikiRecommendations {
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/0/08/Ru-spotlight-ninjago.jpg/revision/latest?cb=20180626120616',
 				'title' => 'Ninjago Wiki',
 				'url' => 'http://ru.ninjago.wikia.com/wiki/Ninjago_Wiki'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/luntik/images/2/26/X480-jJR.jpg/revision/latest?cb=20180325145607&path-prefix=ru',
+				'title' => 'Лунтик Wiki',
+				'url' => 'http://ru.luntik.wikia.com/wiki/%D0%9B%D1%83%D0%BD%D1%82%D0%B8%D0%BA_Wiki'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/crysis/images/2/2b/Crysis_Banner1.png/revision/latest?cb=20180630212633&path-prefix=ru',
+				'title' => 'Crysis Wiki',
+				'url' => 'http://ru.crysis.wikia.com/wiki/Crysis_Wiki'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/future/images/9/98/%D0%91%D0%B0%D0%BD%D0%BD%D0%B5%D1%80_%D0%9D%D0%B0%D0%B7%D0%B0%D0%B4_%D0%B2_%D0%91%D1%83%D0%B4%D1%83%D1%89%D0%B5%D0%B5.jpg/revision/latest?cb=20180706183019&path-prefix=ru',
+				'title' => 'Будущее Вики',
+				'url' => 'http://ru.future.wikia.com/wiki/%D0%91%D1%83%D0%B4%D1%83%D1%89%D0%B5%D0%B5_%D0%B2%D0%B8%D0%BA%D0%B8'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/magicmagicinandaroundus/images/7/7b/WhatsApp_Image_2018-07-20_at_00.25.35.jpeg/revision/latest?cb=20180720021014&path-prefix=ru',
+				'title' => 'Магия в нас и вокруг нас вики',
+				'url' => 'http://ru.magicmagicinandaroundus.wikia.com/wiki/%D0%9C%D0%B0%D0%B3%D0%B8%D1%8F_%D0%B2_%D0%BD%D0%B0%D1%81_%D0%B8_%D0%B2%D0%BE%D0%BA%D1%80%D1%83%D0%B3_%D0%BD%D0%B0%D1%81_%D0%B2%D0%B8%D0%BA%D0%B8'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/b/b7/Teen_titans_Go_spotlight_August18.jpg/revision/latest?cb=20180726091722',
+				'title' => 'Юные Титаны Вперёд! вики',
+				'url' => 'http://ru.teen-titans-go.wikia.com/wiki/%D0%AE%D0%BD%D1%8B%D0%B5_%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%D1%8B_%D0%92%D0%BF%D0%B5%D1%80%D1%91%D0%B4!_%D0%B2%D0%B8%D0%BA%D0%B8'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/6/6a/Castle_Rock_spotlight_August18.jpg/revision/latest?cb=20180726091720',
+				'title' => 'Касл-Рок',
+				'url' => 'http://ru.stephenking.wikia.com/wiki/%D0%9A%D0%B0%D1%81%D0%BB-%D0%A0%D0%BE%D0%BA'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/3/38/Walking_Dead_game_spotlight_August18.jpg/revision/latest?cb=20180726091723',
+				'title' => 'Ходячие мертвецы - финал истории Клементины',
+				'url' => 'http://ru.walkingdead.wikia.com/wiki/%D0%A5%D0%BE%D0%B4%D1%8F%D1%87%D0%B8%D0%B5_%D0%BC%D0%B5%D1%80%D1%82%D0%B2%D0%B5%D1%86%D1%8B_(%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D0%B0):_%D0%A7%D0%B5%D1%82%D0%B2%D1%91%D1%80%D1%82%D1%8B%D0%B9_%D1%81%D0%B5%D0%B7%D0%BE%D0%BD'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/4/42/Vampyr_game_spotlight_August18.jpg/revision/latest?cb=20180726091722',
+				'title' => 'Vampyr вики',
+				'url' => 'http://ru.vampyr.wikia.com/wiki/Vampyr_%D0%B2%D0%B8%D0%BA%D0%B8'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/spotlightsimagestemporary/images/9/98/Soul_Knight_game_spotlight_August18.jpg/revision/latest?cb=20180726091721',
+				'title' => 'Soul Knight вики',
+				'url' => 'http://ru.soul-knight.wikia.com/wiki/Soul_Knight_%D0%B2%D0%B8%D0%BA%D0%B8'
 			]
 		],
 		'es' => [
@@ -508,6 +510,11 @@ class WikiRecommendations {
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/eswikia/images/6/6d/Las_leyendas_spotlight.png/revision/latest?cb=20180615054513',
 				'title' => 'Las Leyendas',
 				'url' => 'http://bit.ly/2lIca1T'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/eswikia/images/7/73/WYouTubePedia.png/revision/latest/scale-to-width-down/255?cb=20180714184201',
+				'title' => 'Wiki Youtube Pedia',
+				'url' => 'http://bit.ly/2vhIexU'
 			],
 		],
 		'zh' => [
@@ -610,6 +617,11 @@ class WikiRecommendations {
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/shingekinokyojin/images/0/05/J1376017787645.jpg/revision/latest?cb=20180628091500&path-prefix=zh',
 				'title' => '進擊的巨人Wiki',
 				'url' => 'http://zh.shingekinokyojin.wikia.com'
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/along-with-the-gods/images/6/6b/Fun-facts-along-with-the-gods-the-two-worlds-2-teaser.jpg/revision/latest?cb=20180708153024&path-prefix=zh',
+				'title' => '與神同行Wiki',
+				'url' => 'http://zh.along-with-the-gods.wikia.com'
 			],
 		]
 	];
@@ -714,5 +726,25 @@ class WikiRecommendations {
 
 			return '';
 		}
+	}
+
+	public static function getPopularArticles() {
+		global $wgCityId;
+
+		$topWikiArticles = TopWikiArticles::getArticlesWithCache( $wgCityId, false );
+		// do not show itself
+		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) {
+			return $item['id'] !== RequestContext::getMain()->getTitle()->getArticleID();
+		} );
+		// show max 3 elements
+		$topWikiArticles = array_slice( $topWikiArticles, 0, 3 );
+		// add index to items to render it by mustache template
+		$index = 1;
+		foreach ( $topWikiArticles as &$wikiArticle ) {
+			$wikiArticle['index'] = $index;
+			$index ++;
+		}
+
+		return $topWikiArticles;
 	}
 }

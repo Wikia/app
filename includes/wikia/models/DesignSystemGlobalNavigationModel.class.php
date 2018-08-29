@@ -106,7 +106,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getPageUrl( $pageTitle, $namespace, $query = '', $protocolRelative = false ) {
 		global $wgCityId;
 
-		if ( $this->product === static::PRODUCT_WIKIS && $this->$this->productInstanceId == $wgCityId) {
+		if ( $this->product === static::PRODUCT_WIKIS && $this->productInstanceId == $wgCityId) {
 			$url = Title::newFromText($pageTitle, $namespace)->getFullURL();
 		} else {
 			$wikiId = $this->product === static::PRODUCT_WIKIS ?

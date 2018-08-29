@@ -85,7 +85,7 @@
 
 	&__modal {
 		background-color: $wds-fandom-color-light-gray;
-		height: 100%;
+		height: calc(100% - 55px);
 		left: 0;
 		overflow-y: scroll;
 		position: fixed;
@@ -189,8 +189,12 @@
 		margin-left: 30px;
 		text-decoration: none;
 
+		&:visited {
+			color: $wds-fandom-color-aqua !important;
+		}
+
 		&:hover {
-			color: $wds-color-white;
+			color: $wds-color-white !important;
 		}
 
 		.wds-dropdown__toggle-chevron {
@@ -225,10 +229,6 @@
 				color: $wds-color-white;
 			}
 		}
-	}
-
-	&__start-a-wiki-button {
-		@include button-theming($wds-fandom-color-aqua, $wds-color-white);
 	}
 
 	&__logo-image {

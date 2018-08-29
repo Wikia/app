@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.n1.n1InputParser', [
 	'ext.wikia.adEngine.adLogicPageParams',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log'
 ], function (pageParams, geo, log) {
 	'use strict';

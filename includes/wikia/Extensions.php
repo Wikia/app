@@ -617,11 +617,6 @@ if ( !empty( $wgEnableLookupContribsExt ) ) {
 	include( "$IP/extensions/wikia/LookupUser/LookupUser.php" );
 }
 
-if( !empty( $wgEnableTorBlockExt ) ) {
-	include( "$IP/extensions/TorBlock/TorBlock.php" );
-	$wgTorIPs = [];
-}
-
 if( !empty( $wgEnableWhereIsExtensionExt ) ) {
 	include( "$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php" );
 }
@@ -1773,3 +1768,7 @@ include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesSche
 
 // PLATFORM-3558 |
 include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
+
+if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
+	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+}

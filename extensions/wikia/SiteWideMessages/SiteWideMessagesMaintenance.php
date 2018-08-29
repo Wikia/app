@@ -8,6 +8,8 @@
  * @licence GNU General Public Licence 2.0 or later
  */
 
+use Wikia\Logger\Loggable;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension and cannot be used standalone.\n";
 	exit( 1 ) ;
@@ -30,6 +32,8 @@ define('MSG_REMOVED_YES', '1');
  */
 class SiteWideMessagesMaintenance {
 
+	use Loggable;
+
 	/**
 	 * execute
 	 *
@@ -38,11 +42,14 @@ class SiteWideMessagesMaintenance {
 	 *
 	 * @author Marooned
 	 * @access public
-	 *
-	 * @return status of operations
+	 * @throws DBQueryError
+	 * @throws MWException
 	 */
 	public function execute() {
 		global $wgExternalSharedDB;
+
+		$this->info( 'Starting SiteWideMessagesMaintenance script' );
+
 		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		$dbResult = (boolean) $dbr->query(
@@ -59,11 +66,11 @@ class SiteWideMessagesMaintenance {
 		);
 
 		if ( $dbResult ) {
-			echo "Rows affected: {$dbr->affectedRows()}\n";
+			$this->info( "Rows affected: {$dbr->affectedRows()}" );
 		} else {
-			echo "Query failed.\n";
+			$this->error( "Query failed", [
+				'error' => $dbr->lastError()
+			] );
 		}
-
-		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || result=" . ($dbResult ? 'true':'false') . "\n");
 	}
 }

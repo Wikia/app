@@ -111,5 +111,5 @@ function getTargetUrl() {
 
 // Issue the redirect
 $url = getTargetUrl();
-header( 'Location: ' . $url, 302 );
+header( 'Location: ' . $url, true, 301 );
 echo sprintf( 'Moved to <a href="%s">%s</a>', htmlspecialchars( $url ), htmlspecialchars( $url ) );

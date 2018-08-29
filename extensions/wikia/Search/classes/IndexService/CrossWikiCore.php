@@ -36,7 +36,8 @@ class CrossWikiCore extends AbstractWikiService {
 			$this->getCategories(),
 			$this->getVisualizationInfo(),
 			$this->getTopArticles(),
-			$this->getLicenseInformation()
+			$this->getLicenseInformation(),
+			$this->getIsPromotedWiki()
 		);
 	}
 
@@ -53,8 +54,6 @@ class CrossWikiCore extends AbstractWikiService {
 		$sitename = $service->getGlobal( 'Sitename' );
 		$response['id'] = $this->wikiId;
 		$response['sitename_txt'] = $sitename;
-		$sn = Utilities::field( 'sitename' );
-		$langSn = $sn == 'sitename' ? 'sitename_txt' : $sn;
 		$response['lang_s'] = $service->getLanguageCode();
 		$response['hub_s'] = $service->getHubForWikiId( $this->wikiId );
 		$response['created_dt'] = str_replace( ' ', 'T', $wiki->city_created ) . 'Z';
@@ -185,7 +184,6 @@ class CrossWikiCore extends AbstractWikiService {
 	protected function getCategories() {
 		$categories = [];
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "SELECT cat_title FROM category WHERE cat_hidden = 0 ORDER BY cat_pages DESC";
 		$query = $dbr->select(
 			'category',
 			'cat_title',
@@ -231,6 +229,20 @@ class CrossWikiCore extends AbstractWikiService {
 		return [
 			"commercial_use_allowed_b" => $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ===
 				true
+		];
+	}
+
+	/**
+	 * Get a flag that forces a wiki to show up in wiki search results despite low number of articles
+	 *
+	 * @see SUS-5681
+	 * @return array
+	 */
+	protected function getIsPromotedWiki() {
+		global $wgForceWikiIncludeInSearch;
+
+		return [
+			"promoted_wiki_b" => !empty( $wgForceWikiIncludeInSearch )
 		];
 	}
 
