@@ -2,63 +2,33 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-use Article;
-use Title;
 use Wikia\Logger\Loggable;
 
 class SetMainPageContent extends Task {
 	use Loggable;
 
 	public function run() {
-		$this->error( "SetMainPageContent started"  );
+		global $IP, $wgPhpCli;
 
-		$this->error( "SetMainPageContent creating title for " . $this->taskContext->getSiteName() );
+		$cmd = sprintf(
+			"SERVER_ID=%d %s %s/maintenance/setMainPageContent.php",
+			$this->taskContext->getCityId(),
+			$wgPhpCli,
+			"{$IP}/extensions/wikia/CreateNewWiki"
+		);
 
-		$mainTitle = Title::newFromText( $this->taskContext->getSiteName() );
-		$mainId = $mainTitle->getArticleID();
-		$this->error( "SetMainPageContent mainId is " .json_encode( $mainId ) );
-		$mainArticle = Article::newFromID( $mainId );
+		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );
+		wfShellExec( $cmd, $retVal );
 
-		if ( !empty( $mainArticle ) ) {
-			$newMainPageText = $this->getClassicMainPage($mainArticle);
-
-			$mainArticle->doEdit($newMainPageText, '');
-		} else {
-			$this->error( "SetMainPageContent: mainArticle is empty!!!"  );
+		if ( $retVal > 0 ) {
+			return TaskResult::createForError( 'setting main page content failed', [
+				'city_id' => $this->taskContext->getCityId()
+			] );
 		}
 
-		return TaskResult::createForSuccess();
+		return TaskResult::createForSuccess( [
+			'retval' => $retVal,
+			'city_id' => $this->taskContext->getCityId()
+		] );
 	}
-
-	/**
-	 * setup main page article content for classic main page
-	 * @param $mainArticle Article
-	 * @return string - main page article wiki text
-	 */
-	private function getClassicMainPage( $mainArticle ) {
-		global $wgParser;
-		if ( !isset($wgParser) ) {
-			$this->error( "SetMainPageContent: no wgParser in task"  );
-		} else {
-			$this->error( "SetMainPageContent: wgParser class is " . get_class($wgParser ) );
-		}
-
-		$siteName = $this->taskContext->getSiteName();
-
-		$mainPageText = $mainArticle->getRawText();
-		$matches = [];
-
-		$description = $this->taskContext->getDescription();
-
-		if ( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
-			$newSectionTitle = str_replace( 'Wiki', $siteName, $matches[ 0 ] );
-			$description = "{$newSectionTitle}\n{$description}";
-		}
-
-		$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
-
-		return $newMainPageText;
-	}
-
-
 }
