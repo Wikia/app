@@ -21,11 +21,15 @@ class SetMainPageContent extends Maintenance {
 		$mainId = $mainTitle->getArticleID();
 		$mainArticle = Article::newFromID( $mainId );
 
-		if ( !empty( $mainArticle ) ) {
-			$newMainPageText = $this->getClassicMainPage( $mainArticle, $wgWikiDescription );
-
-			$mainArticle->doEdit( $newMainPageText, '' );
+		if ( empty( $wgWikiDescription ) ) {
+			$this->error( "Cannot find the main article!\n" );
+			return;
 		}
+
+		$newMainPageText = $this->getClassicMainPage( $mainArticle, $wgWikiDescription );
+		$mainArticle->doEdit( $newMainPageText, '' );
+
+		$this->output( "Done\n" );
 	}
 
 	/**
