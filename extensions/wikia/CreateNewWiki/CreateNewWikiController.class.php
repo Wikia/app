@@ -343,15 +343,7 @@ class CreateNewWikiController extends WikiaController {
 
 			if ( $completed === 1 ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-				$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $task_details->city_id );
-
-				$fullURL = $finishCreateTitle->getFullURL( [
-					'editToken' => $this->getContext()->getUser()->getEditToken()
-				] );
-				$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
-				$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-			}
-			else {
+			} else {
 				// oh my, an error...
 				$this->response->setCode( 500 );
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
