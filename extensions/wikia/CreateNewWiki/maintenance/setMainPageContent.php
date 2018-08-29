@@ -9,7 +9,7 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 class SetMainPageContent extends Maintenance {
 
 	public function execute() {
-		global $wgWikiDescription;
+		global $wgWikiDescription, $wgCityId;
 
 		$this->output( "SetMainPageContent: Started" );
 		$this->output( "SetMainPageContent: description is " . $wgWikiDescription );
@@ -40,9 +40,16 @@ class SetMainPageContent extends Maintenance {
 
 		// set description on main page
 		$newMainPageText = $this->getClassicMainPage( $mainArticle, $wgWikiDescription );
-		$mainArticle->doEdit( $newMainPageText, '' );
-
-		$this->output( "SetMainPageContent: Done" );
+		$status = $mainArticle->doEdit( $newMainPageText, '' );
+		if ( $status->isOK() ) {
+			$this->output( "SetMainPageContent: Main article edited" );
+			WikiFactory::removeVarByName( 'wgWikiDescription', $wgCityId,
+				'Description was put in the main page' );
+		} else {
+			$this->warning( "SetMainPageContent: Failed to edit the main page" );
+			// Still, don't fail. It is better still to show the wiki to the user, the main page will be edited anyway.
+		}
+		$this->output( "SetMainPageContent: Finishing" );
 	}
 
 	/**
