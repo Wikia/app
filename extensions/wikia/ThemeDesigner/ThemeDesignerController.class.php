@@ -366,16 +366,17 @@ class ThemeDesignerController extends WikiaController {
 
 		// SUS-2942: this data is calculated from temporary file, should not be set directly
 		foreach ( ThemeSettings::IMAGES as $imageSource ) {
-			if ( !empty( $data["$imageSource-image-name"] ) && strpos( $data["$imageSource-image-name"],'Temp_file_' ) !== 0 ) {
+			if ( !empty( $data["$imageSource-image-name"] ) &&
+				strpos( $data["$imageSource-image-name"],'Temp_file_' ) !== 0
+			) {
 				unset( $data["$imageSource-image-name"] );
 			}
 
-			if ( !empty( $data["$imageSource-image"] ) ) {
-				unset( $data["$imageSource-image"] );
-			}
-
-			unset( $data["$imageSource-image-width"] );
-			unset( $data["$imageSource-image-height"] );
+				if ( !empty( $data["$imageSource-image"] ) && strpos( $data["$imageSource-image"],'/skins/oasis/images' ) !== 0 ) {
+					unset( $data["$imageSource-image"] );
+					unset( $data["$imageSource-image-width"] );
+					unset( $data["$imageSource-image-height"] );
+				}
 
 			if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
 				unset( $data["$imageSource-image-url"] );
