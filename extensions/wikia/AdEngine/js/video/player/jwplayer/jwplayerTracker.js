@@ -35,15 +35,19 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			return;
 		}
 
-		params.withAudio = !player.getConfig().mute;
-
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
 				var errorCode,
 					vastParams = vastParser.parse(event.tag);
 
-				if (params.withCtp === undefined && vastParams.customParams && vastParams.customParams.ctp !== undefined) {
-					params.withCtp = vastParams.customParams.ctp === 'yes';
+				if (vastParams.customParams) {
+					if (params.withCtp === undefined && vastParams.customParams.ctp !== undefined) {
+						params.withCtp = vastParams.customParams.ctp === 'yes' ? 1 : 0;
+					}
+
+					if (params.withAudio === undefined && vastParams.customParams.audio !== undefined) {
+						params.withAudio = vastParams.customParams.audio === 'yes' ? 1 : 0;
+					}
 				}
 
 				if (playerEvent === 'adError') {
