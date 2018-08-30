@@ -67,6 +67,12 @@ kubectl --context kube-sjc-prod -n prod get cronJobs | grep mw-cj
 
 ### Development Notes on Cronjobs Migration
 
+#### cleanup-notifications-queue.yaml
+
+`extensions/wikia/WallNotifications/maintenance/cleanupNotificationsQueue.php`
+
+Removes old entries from dataware.wall_notification_queue* tables
+
 #### cleanup-phalanx-stats.yaml
 
 `extensions/wikia/PhalanxII/maintenance/cleanupPhalanxStats.php`
