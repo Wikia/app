@@ -38,9 +38,9 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
 				var errorCode,
-					vastParams = vastParser.parse(event.tag);
+					vastParams = event.tag ? vastParser.parse(event.tag) : null;
 
-				if (vastParams.customParams) {
+				if (vastParams && vastParams.customParams) {
 					if (params.withCtp === undefined && vastParams.customParams.ctp !== undefined) {
 						params.withCtp = vastParams.customParams.ctp === 'yes' ? 1 : 0;
 					}
