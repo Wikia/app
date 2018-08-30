@@ -17,7 +17,7 @@ ini_set( 'include_path', dirname( __FILE__ ) . '/../../../maintenance/' );
 require_once( 'commandLine.inc' );
 
 if ( isset( $options['help'] ) ) {
-	die( "Usage: php maintenance.php [--only-cache] [--help]
+	die( "Usage: php cleanupNotificationsQueue.php [--only-cache] [--help]
 	--only-cache		clear users' cache only
 	--help			this message\n\n" );
 }
