@@ -1,4 +1,4 @@
-schedule: "5 8 * * 3"
+schedule: "5 8 * * *"
 args:
 - php
 - /usr/wikia/slot1/current/src/extensions/wikia/WallNotifications/maintenance/cleanupWallNotifications.php
