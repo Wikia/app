@@ -19,7 +19,11 @@ describe('AdContext', function () {
 					return 100;
 				}
 			},
-			geo: {},
+			geo: {
+				mapSamplingResults: function() {
+					return [];
+				}
+			},
 			instantGlobals: {},
 			win: {},
 			Querystring: function () {
