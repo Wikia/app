@@ -24,8 +24,7 @@ if ( isset( $options['help'] ) ) {
 		--wikiId		specific wiki id
 		--test-days     test daysPassed email with a specific day value.  Creates fake record that 
 		                will always trigger.  Requires --wikiId.
-		--help			you are reading it right now
-		--quiet			do not print anything to output\n\n" );
+		--help			you are reading it right now\n\n" );
 }
 
 $events = [
@@ -54,10 +53,7 @@ if ( isset( $options['test-days'] ) ) {
 }
 
 foreach ( $events as $event ) {
-	if ( !isset( $options['quiet'] ) ) {
-		echo "Sending Founder Emails ($event).\n";
-	}
-
+	echo "Sending Founder Emails ($event).\n";
 	FounderEmails::getInstance()->processEvents( $event, false, $wikiId );
 }
 
