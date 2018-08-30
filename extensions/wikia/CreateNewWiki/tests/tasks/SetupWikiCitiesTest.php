@@ -20,7 +20,7 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 	public function testRun( $addToCityListReturn, $setCityIdCalled, $insertId, $addToCityDomainsReturn, $expected ) {
 
 		/** @var TaskContext|\PHPUnit_Framework_MockObject_MockObject $taskContextMock */
-		$taskContextMock = $this->getMockBuilder(TaskContext::class )
+		$taskContextMock = $this->getMockBuilder( TaskContext::class )
 			->disableOriginalConstructor()
 			->setMethods( [ 'setCityId', 'getSharedDBW' ] )
 			->getMock();
@@ -79,7 +79,7 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 	 * @param $expectedDomains
 	 */
 	public function testAddToCityDomains( $cityDomain, $expectedDomains ) {
-		$taskContext = $this->getMockBuilder(TaskContext::class )
+		$taskContext = $this->getMockBuilder( TaskContext::class )
 			->disableOriginalConstructor()
 			->setMethods( [ 'setCityId', 'getSharedDBW', 'getCityId' ] )
 			->getMock();
