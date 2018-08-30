@@ -35,8 +35,8 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			return;
 		}
 
-		params.withCtp = !player.getConfig().autostart || '';
-		params.withAudio = !player.getConfig().mute || '';
+		params.withCtp = !player.getConfig().autostart;
+		params.withAudio = !player.getConfig().mute;
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
