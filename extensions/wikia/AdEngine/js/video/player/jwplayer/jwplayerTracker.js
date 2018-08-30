@@ -35,18 +35,27 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			return;
 		}
 
+		params.withCtp = !player.getConfig().autostart || '';
+		params.withAudio = !player.getConfig().mute || '';
+
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
 				var errorCode,
 					vastParams = event.tag ? vastParser.parse(event.tag) : null;
 
 				if (vastParams && vastParams.customParams) {
-					if (params.withCtp === undefined && vastParams.customParams.ctp !== undefined) {
-						params.withCtp = vastParams.customParams.ctp === 'yes' ? 1 : 0;
+					if (
+						vastParams.customParams.ctp !== undefined
+						&& params.withCtp !== (vastParams.customParams.ctp === 'yes')
+					) {
+						params.withCtp = vastParams.customParams.ctp === 'yes';
 					}
 
-					if (params.withAudio === undefined && vastParams.customParams.audio !== undefined) {
-						params.withAudio = vastParams.customParams.audio === 'yes' ? 1 : 0;
+					if (
+						vastParams.customParams.audio !== undefined
+						&& params.withAudio !== (vastParams.customParams.audio === 'yes')
+					) {
+						params.withAudio = vastParams.customParams.audio === 'yes';
 					}
 				}
 
