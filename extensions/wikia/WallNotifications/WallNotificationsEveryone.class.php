@@ -387,7 +387,7 @@ class WallNotificationsEveryone extends WallNotifications {
 	/**
 	 * Clears notification queues and expired notifications
 	 *
-	 * Called by the maintenance.php script
+	 * Called by the cleanupNotificationsQueue.php maintenance script
 	 *
 	 * @param bool $onlyCache - clears only users' cache
 	 * @return int number of rows removed
