@@ -352,6 +352,27 @@ class ThemeDesignerController extends WikiaController {
 		return $uploadStatus;
 	}
 
+	private function isStockBackgroundUrl( $backgroundUrl ) {
+		if ( empty($backgroundUrl) ) {
+			return false;
+		}
+
+		$backgroundUrlHost = parse_url($backgroundUrl, PHP_URL_HOST);
+		$resourcesDomainHost = parse_url($this->wg->resourceBasePath, PHP_URL_HOST);
+
+		if ( !empty( $backgroundUrlHost ) && $backgroundUrlHost != $resourcesDomainHost ) {
+			return false;
+		}
+
+		foreach( ThemeDesignerBackgroundAssets::$backgrounds as $bg ) {
+			if ( endsWith( $backgroundUrl, $bg['source'] ) ) {
+				return true;
+			};
+		}
+
+		return false;
+	}
+
 	public function saveSettings() {
 		global $wgBlankImgUrl;
 
@@ -366,24 +387,26 @@ class ThemeDesignerController extends WikiaController {
 
 		// SUS-2942: this data is calculated from temporary file, should not be set directly
 		foreach ( ThemeSettings::IMAGES as $imageSource ) {
-			if ( !empty( $data["$imageSource-image-name"] ) &&
-				strpos( $data["$imageSource-image-name"],'Temp_file_' ) !== 0
-			) {
-				unset( $data["$imageSource-image-name"] );
-			}
-
-				if ( !empty( $data["$imageSource-image"] ) && strpos( $data["$imageSource-image"],'/skins/oasis/images' ) !== 0 ) {
-					unset( $data["$imageSource-image"] );
-					unset( $data["$imageSource-image-width"] );
-					unset( $data["$imageSource-image-height"] );
+			if ( $imageSource != 'background' || $this->isStockBackgroundUrl($data["$imageSource-image"]) !== true ) {
+				if ( !empty( $data["$imageSource-image-name"] ) &&
+					strpos( $data["$imageSource-image-name"], 'Temp_file_' ) !== 0 ) {
+					unset( $data["$imageSource-image-name"] );
 				}
 
-			if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
-				unset( $data["$imageSource-image-url"] );
-			}
+				if ( !empty( $data["$imageSource-image"] ) ) {
+					unset( $data["$imageSource-image"] );
+				}
 
-			unset( $data["user-$imageSource-image"] );
-			unset( $data["user-$imageSource-image-thumb"] );
+				unset( $data["$imageSource-image-width"] );
+				unset( $data["$imageSource-image-height"] );
+
+				if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
+					unset( $data["$imageSource-image-url"] );
+				}
+
+				unset( $data["user-$imageSource-image"] );
+				unset( $data["user-$imageSource-image-thumb"] );
+			}
 		}
 
 		$themeSettings = new ThemeSettings();

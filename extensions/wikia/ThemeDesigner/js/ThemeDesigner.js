@@ -414,7 +414,6 @@
 				});
 
 			} else if (type === 'image') {
-
 				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
 				// add admin background
 				if (ThemeDesigner.settings['user-' + swatchName]) {
