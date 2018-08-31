@@ -100,6 +100,7 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
 		'chat-edit-count',
 		'chat-member-since',
 	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 ];
 
 
