@@ -61,7 +61,7 @@ function init(
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 
-	overrideSlotService(slotRegistry, legacyBtfBlocker);
+	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
@@ -111,7 +111,6 @@ function init(
 				lang: [adLogicZoneParams.getLanguage()]
 			});
 
-			context.set('bidders.disabledSlots', slotsContext.getNotApplicable());
 			context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 			context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
@@ -132,7 +131,7 @@ function init(
 	}
 }
 
-function overrideSlotService(slotRegistry, legacyBtfBlocker) {
+function overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext) {
 	const slotsCache = {};
 
 	slotService.get = (slotName) => {
@@ -155,9 +154,8 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 		legacyBtfBlocker.unblock(slotName);
 		slotRegistry.enable(slotName);
 	};
-	slotService.disable = (slotName) => {
-		slotRegistry.disable(slotName);
-	};
+	slotService.disable = (slotName) => slotRegistry.disable(slotName);
+	slotService.getState = (slotName) => slotsContext.isApplicable(slotName);
 }
 
 function syncSlotsStatus(slotRegistry, slotsInContext) {
