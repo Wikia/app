@@ -223,6 +223,12 @@ Reset weekly user rank on Special:Community.
 
 Sends emails to users to remind them to authenticate / confirm their users.
 
+#### send-weekly-digest.yaml
+
+`maintenance/wikia/cronjobs/sendWeeklyDigest.php`
+
+This script sends the weekly digest to the users found in the global_watchlist table found in the dataware database.
+
 #### site-wide-messages-maintenance.yaml
 
 `maintenance/wikia/SiteWideMessagesMaintenance.php`
