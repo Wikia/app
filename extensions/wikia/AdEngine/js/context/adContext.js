@@ -159,7 +159,7 @@ define('ext.wikia.adEngine.adContext', [
 		updateAdContextBidders(context);
 		updateAdContextRabbitExperiments(context);
 
-		// showcase.*
+		// *.showcase.wikia.com
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
