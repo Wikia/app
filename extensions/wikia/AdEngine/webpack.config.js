@@ -54,6 +54,10 @@ module.exports = function (env) {
 				{
 					from: './node_modules/@wikia/ad-products/dist/geo.amd.js',
 					to: 'geo.js'
+				},
+				{
+					from: './node_modules/@wikia/ad-products/lib/prebid.min.js',
+					to: 'prebid.js'
 				}
 			])
 		]
