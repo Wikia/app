@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker',
+	'ext.wikia.adEngine.video.player.playerTracker'
 ], function (
 	playerTracker
 ) {
