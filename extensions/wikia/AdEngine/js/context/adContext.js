@@ -238,7 +238,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = geo.getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
