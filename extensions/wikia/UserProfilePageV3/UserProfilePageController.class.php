@@ -281,7 +281,7 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$canEditProfile = $this->canEdit( $sessionUser );
 
-		if ( $sessionUser->isAnon() || $this->canEdit( $sessionUser ) ) {
+		if ( $sessionUser->isAnon() || ! $this->canEdit( $sessionUser ) ) {
 			throw new WikiaException( wfMessage( 'userprofilepage-invalid-user' )->escaped() );
 		} else {
 			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderLightbox', [ 'tab' => $selectedTab, 'userId' => $userId ] ) );
