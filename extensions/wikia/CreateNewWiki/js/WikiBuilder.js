@@ -8,7 +8,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		createStatus = false,
 		createStatusMessage = false,
 		cityId = false,
-		finishCreateUrl = false,
 		retryGoto = 0,
 		nameAjax = false,
 		domainAjax = false,
@@ -669,7 +668,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
 						cityId = res.cityId;
 						createStatus = res.status;
-						finishCreateUrl = res.finishCreateUrl;
 
 						throbberWrapper.stopThrobbing();
 						throbberWrapper.removeClass('creating-wiki');
