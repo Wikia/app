@@ -133,7 +133,6 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
-	'wikia.instantGlobals',
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -152,7 +151,7 @@ require([
 
 	function initDesktopSlots() {
 		highImpact.init();
-		if (adContext.getContext().opts.isIncontentPlayerDisabled) {
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			tracker.track({
 				category: 'wgDisableIncontentPlayer',
 				trackingMethod: 'analytics',
