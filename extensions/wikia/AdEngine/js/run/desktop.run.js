@@ -144,7 +144,6 @@ require([
 	highImpact,
 	inContent,
 	doc,
-	instantGlobals,
 	tracker,
 	trackingOptIn,
 	win
@@ -153,7 +152,7 @@ require([
 
 	function initDesktopSlots() {
 		highImpact.init();
-		if (instantGlobals.wgDisableIncontentPlayer) {
+		if (adContext.getContext().opts.isIncontentPlayerDisabled) {
 			tracker.track({
 				category: 'wgDisableIncontentPlayer',
 				trackingMethod: 'analytics',
