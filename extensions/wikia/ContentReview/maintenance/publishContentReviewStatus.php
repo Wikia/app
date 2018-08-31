@@ -5,7 +5,7 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 use Wikia\ContentReview\Models\ReviewModel;
 
 /**
- * Sends JS review statistics on a Slack channel
+ * Publishes JS review statistics on a Slack channel
  *
  * @see https://wikia.slack.com/messages/C0A0ZUT9Q
  */
