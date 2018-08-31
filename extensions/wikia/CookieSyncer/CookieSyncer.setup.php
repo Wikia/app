@@ -4,8 +4,7 @@ $wgExtensionCredits['other'][] = [
 	'author' => [
 		'Platform Team @Wikia',
 	],
-	'descriptionmsg' => 'cookiesyncer-tag-desc',
-	'version' => '1',
-	'url' => '',
+	'description' => 'Sync cookies between wikia.com and fandom.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CookieSyncer'
 ];
 $wgAutoloadClasses['CookieSyncerService'] = __DIR__ . '/CookieSyncerService.class.php';
