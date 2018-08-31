@@ -1104,7 +1104,7 @@ class Wikia {
 		$stagingHeader = $request->getHeader('X-Staging');
 
 		if( !empty($stagingHeader) ) {
-			// we've got special cases like externaltest.* and showcase.* aliases:
+			// we've got special cases like *.externaltest.wikia.com and *.showcase.wikia.com aliases:
 			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
 			// those cases for backend look like production,
 			// therefore we don't want to base only on environment variables
@@ -1201,6 +1201,8 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
