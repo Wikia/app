@@ -2689,6 +2689,14 @@ $wgEnableFeedsAndPostsExt = false;
 $wgEnableFileInfoFunctionsExt = false;
 
 /**
+ * Enables FinishCreateWiki part of CreateNewWiki extension, which is needed
+ * for every wiki.
+ * @see extensions/wikia/CreateNewWiki/FinishCreateWiki_setup.php
+ * @var bool $wgEnableFinishCreateWiki
+ */
+$wgEnableFinishCreateWiki = true;
+
+/**
  * Enable FirstContributions extension.
  * @see extensions/wikia/FirstContributions
  * @var bool $wgEnableFirstContributionsExt

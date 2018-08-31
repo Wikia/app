@@ -1044,6 +1044,10 @@ if ( !empty($wgEnableCreateNewWiki) ) {
 	include( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_setup.php" );
 }
 
+if ( !empty($wgEnableFinishCreateWiki) ) {
+	include( "$IP/extensions/wikia/CreateNewWiki/FinishCreateWiki_setup.php" );
+}
+
 /**
  * GameGuides mobile app extension
  */
