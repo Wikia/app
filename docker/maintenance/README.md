@@ -199,6 +199,12 @@ Closes accounts permanently blocked in Phalanx.
 
 Scans users' activity for certain suspicious phrases and alerts ComSup.
 
+#### publish-content-review-status.yaml
+
+`extensions/wikia/ContentReview/maintenance/publishContentReviewStatus.php`
+
+Publishes JS review statistics on a Slack channel
+
 #### remove-qa-wikis.yaml
 
 `maintenance/wikia/removeQAWikis.php`
