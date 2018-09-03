@@ -160,7 +160,7 @@ class WallNotificationEntity {
 			$this->parentTitleDbKey = $response['parentTitleDbKey'];
 			$this->msgText = $response['msgText'];
 			$this->threadTitleFull = $response['threadTitleFull'];
-			$this->data = $response['data'];
+			$this->data = (object) $response['data'];
 
 			var_dump("WallNotificationEntity::loadDataFromRevIdOnWiki", $this->data);
 			return true;
