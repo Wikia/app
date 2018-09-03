@@ -33,6 +33,7 @@ class CrossWikiCoreTest extends BaseTest
 		$articles = [ 'art' => 'vandelay' ];
 		$licence  = ['commercial_use_allowed_b'=>true];
 		$isPromoted  = ['promoted_wiki_b'=>false];
+		$isHidden  = [ 'hidden_wiki_b' => false ];
 
 		$service
 		    ->expects( $this->once() )
@@ -82,8 +83,15 @@ class CrossWikiCoreTest extends BaseTest
 			->will   ( $this->returnValue( $isPromoted ) )
 		;
 
+		$service
+			->expects( $this->once() )
+			->method ( 'getIsHiddenWiki' )
+			->will   ( $this->returnValue( $isHidden ) )
+		;
+
 		$this->assertEquals(
-				array_merge( $basics, $stats, $views, $wam, $cats, $viz, $articles, $licence, $isPromoted),
+				array_merge( $basics, $stats, $views, $wam, $cats, $viz,
+					$articles, $licence, $isPromoted, $isHidden ),
 				$service->execute()
 		);
 	}
