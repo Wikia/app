@@ -336,6 +336,9 @@ class CreateNewWikiController extends WikiaController {
 
 			if ( $completed === 1 ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
+				// if user was not logged in when starting the CNW process, the editToken is not available
+				// in client JS yet. Send it in the response so it can be used when calling finishCreate.
+				$this->response->setVal( 'editToken',  $this->getContext()->getUser()->getEditToken() );
 			} else {
 				// oh my, an error...
 				$this->response->setCode( 500 );

@@ -8,6 +8,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		createStatus = false,
 		createStatusMessage = false,
 		cityId = false,
+		editToken = null,
 		retryGoto = 0,
 		nameAjax = false,
 		domainAjax = false,
@@ -149,7 +150,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			data: {
 				themeSettings: ThemeDesigner.settings,
 				wikiId: cityId,
-				token: mw.user.tokens.get('editToken')
+				token: editToken || mw.user.tokens.get('editToken')
 			}
 		}).then(function(res) {
 			gotoMainPage(res.showWikiUrl);
@@ -668,6 +669,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
 						cityId = res.cityId;
 						createStatus = res.status;
+						editToken = res.editToken;
 
 						throbberWrapper.stopThrobbing();
 						throbberWrapper.removeClass('creating-wiki');
