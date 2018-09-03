@@ -269,9 +269,10 @@ class CreateNewWikiController extends WikiaController {
 
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
+		$wikiDescription = !empty( $params['wDescription'] ) ? $params['wDescription'] : '';
 
 		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
-			$params['wVertical'], $params[ 'wDescription' ], $categories, $allAges, time(),
+			$params['wVertical'], $wikiDescription , $categories, $allAges, time(),
 			$this->getContext()->getRequest()->getIP(),
 			$fandomCreatorCommunityId );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
