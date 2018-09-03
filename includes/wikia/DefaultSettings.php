@@ -1433,6 +1433,12 @@ $wgAdDriverWadILCountries = null;
 $wgEnableCMPCountries = null;
 
 /**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
