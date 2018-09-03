@@ -37,7 +37,8 @@ class CrossWikiCore extends AbstractWikiService {
 			$this->getVisualizationInfo(),
 			$this->getTopArticles(),
 			$this->getLicenseInformation(),
-			$this->getIsPromotedWiki()
+			$this->getIsPromotedWiki(),
+			$this->getIsHiddenWiki()
 		);
 	}
 
@@ -243,6 +244,20 @@ class CrossWikiCore extends AbstractWikiService {
 
 		return [
 			"promoted_wiki_b" => !empty( $wgForceWikiIncludeInSearch )
+		];
+	}
+
+	/**
+	 * Get a flag that prevents a wiki from showing up in wiki search results.
+	 *
+	 * @see PLATFORM-3659
+	 * @return array
+	 */
+	protected function getIsHiddenWiki() {
+		global $wgExcludeWikiFromSearch;
+
+		return [
+			'hidden_wiki_b' => !empty( $wgExcludeWikiFromSearch )
 		];
 	}
 

@@ -6,7 +6,7 @@
  * @group SeoIntegration
  */
 class RobotsIntegrationTest extends WikiaBaseTest {
-	const SHOWCASE_ADTEST_PAGE_LINK = 'http://showcase.adtest.wikia.com/wiki/Wikia_Ad_Testing';
+	const SHOWCASE_ADTEST_PAGE_LINK = 'http://adtest.showcase.wikia.com/wiki/Wikia_Ad_Testing';
 	const ADTEST_PAGE_LINK = 'http://adtest.wikia.com/wiki/Wikia_Ad_Testing';
 	const NO_INDEX_NO_FOLLOW = '<meta name="robots" content="noindex,nofollow" />';
 	const NO_INDEX_FOLLOW = '<meta name="robots" content="noindex,follow" />';
