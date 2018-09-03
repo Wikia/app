@@ -19,7 +19,7 @@ class CrossWikiCoreTest extends BaseTest
 	public function testExecute() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation', 'getIsPromotedWiki'] )
+		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation', 'getIsPromotedWiki', 'getIsHiddenWiki'] )
 		                ->getMock();
 
 
