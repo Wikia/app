@@ -17,8 +17,8 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		$firstEntity = $notify[ 'grouped' ][ 0 ];
 
 		// for debugging purposes, remove when XW-5224 resolved
-		if ( !( $firstEntity instanceof WallNotificationEntity ) ||
-			!( $firstEntity instanceof WallNotificationAdminEntity ) ||
+		if ( !( $firstEntity instanceof WallNotificationEntity ) &&
+			!( $firstEntity instanceof WallNotificationAdminEntity ) &&
 			!( $firstEntity instanceof WallNotificationOwnerEntity ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->notice(
 				'Wall notification entity has wrong type',
@@ -44,8 +44,8 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		$authors = [ ];
 		foreach ( $notify[ 'grouped' ] as $notify_entity ) {
 			// for debugging purposes, remove when XW-5224 resolved
-			if ( !( $notify_entity instanceof WallNotificationEntity ) ||
-				!( $notify_entity instanceof WallNotificationAdminEntity ) ||
+			if ( !( $notify_entity instanceof WallNotificationEntity ) &&
+				!( $notify_entity instanceof WallNotificationAdminEntity ) &&
 				!( $notify_entity instanceof WallNotificationOwnerEntity ) ) {
 				\Wikia\Logger\WikiaLogger::instance()->notice(
 					'Wall notification entity has wrong type',
