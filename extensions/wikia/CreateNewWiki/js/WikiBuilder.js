@@ -150,7 +150,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			data: {
 				themeSettings: ThemeDesigner.settings,
 				wikiId: cityId,
-				token: editToken || mw.user.tokens.get('editToken')
+				token: editToken
 			}
 		}).then(function(res) {
 			gotoMainPage(res.showWikiUrl);
