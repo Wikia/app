@@ -19,6 +19,10 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 			TOP_RIGHT_BOXAD: {
 				uid: '5b2d1649b2-188',
 				style: 'margin-bottom: 10px;'
+			},
+			BOTTOM_LEADERBOARD: {
+				uid: '5b7f2041a8-188',
+				style: ''
 			}
 		};
 
