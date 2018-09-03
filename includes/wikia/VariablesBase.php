@@ -8695,6 +8695,13 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
+ * Exclude wiki from Global Search
+ * @see extensions/wikia/Search/classes/IndexService/CrossWikiCore.php
+ * @var bool $wgExcludeWikiFromSearch
+ */
+$wgExcludeWikiFromSearch = false;
+
+/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
