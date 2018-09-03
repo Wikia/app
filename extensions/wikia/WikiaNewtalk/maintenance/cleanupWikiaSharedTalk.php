@@ -26,4 +26,6 @@ do {
 
 } while ( $affectedRows > 0 );
 
-echo sprintf( "%s: dropped %d rows from shared_newtalks\n", date( 'r' ), $rows );
+\Wikia\Logger\WikiaLogger::instance()->info('Dropped old rows from shared_newtalks', [
+	'rows' => $rows
+]);

@@ -6,6 +6,8 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.lookup.bidders',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -17,6 +19,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
 	'ext.wikia.adEngine.geo',
@@ -30,6 +33,8 @@ require([
 	adEngineRunner,
 	pageLevelParams,
 	adTracker,
+	slotsContext,
+	bidders,
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
@@ -41,6 +46,7 @@ require([
 	slotTweaker,
 	adInfoListener,
 	scrollDepthTracker,
+	adLogicZoneParams,
 	babDetection,
 	wadRecRunner,
 	geo,
@@ -69,19 +75,27 @@ require([
 			slotRegistry,
 			null,
 			pageLevelParams.getPageLevelParams(),
+			adLogicZoneParams,
 			adContext,
 			btfBlocker,
 			'oasis',
-			trackingOptIn
+			trackingOptIn,
+			babDetection,
+			slotsContext
 		);
-		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-		if (billTheLizard) {
-			billTheLizard.call();
-		}
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
 		if (context.opts.babDetectionDesktop) {
 			adEngineBridge.checkAdBlocking(babDetection);
+		}
+
+		if (bidders.isEnabled()) {
+			bidders.runBidding();
+		}
+
+		if (billTheLizard) {
+			billTheLizard.call();
 		}
 
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {

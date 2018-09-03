@@ -95,6 +95,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverPrebidAdEngine3Countries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';

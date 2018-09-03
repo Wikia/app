@@ -238,13 +238,6 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		// check if user has confirmed e-mail
-		if ( !$wgUser->isEmailConfirmed() ) {
-			$this->setEmailNotConfirmedErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		// check if user is blocked
 		if ( $wgUser->isBlocked() ) {
 			$this->setUserIsBlockedErrorResponse( $wgUser );
@@ -448,14 +441,6 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-anon-user' )->parse() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
-	}
-
-	private function setEmailNotConfirmedErrorResponse() {
-		$this->warning("CreateWiki: user's email not confirmed" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
 	}
 
 	private function setUserIsBlockedErrorResponse( User $user ) {

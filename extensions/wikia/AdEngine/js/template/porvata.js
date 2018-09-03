@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
 	DOMElementTweaker,
@@ -28,6 +29,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	log,
 	win,
 	mercuryListener,
+	bidders,
 	prebid
 ) {
 	'use strict';
@@ -106,7 +108,9 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			hasDirectAd = false;
-			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			fallbackBid = bidders && bidders.isEnabled()
+				? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders)
+				: prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
@@ -184,7 +188,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (prebid && params.hbAdId) {
-			params.bid = prebid.getBidByAdId(params.hbAdId);
+			params.bid = bidders && bidders.isEnabled() ? bidders.getBidByAdId(params.hbAdId) : prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}

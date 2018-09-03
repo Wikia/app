@@ -65,7 +65,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaInfoboxBuilderDialog.super.prototype.initialize.call(this);
 
-	require(['wikia.loader', 'wikia.mustache', 'wikia.location'], function (loader, mustache, location) {
+	require(['wikia.loader', 'wikia.mustache', 'mw'], function (loader, mustache, mw) {
 		loader({
 			type: loader.MULTI,
 			resources: {
@@ -74,7 +74,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			}
 		}).done(function (assets) {
 			var html = mustache.render(assets.mustache[0], {
-				iframeUrl: location.origin + '/infobox-builder/',
+				iframeUrl: mw.config.get('wgServer') + mw.config.get('wgScriptPath') + '/infobox-builder/',
 				classes: 've-ui-infobox-builder'
 			});
 
