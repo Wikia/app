@@ -98,6 +98,7 @@ class WallNotificationEntity {
 		$key = self::getMemcKey( $id );
 		$data = F::app()->wg->Memc->get( $key );
 
+		var_dump("WallNotificationEntity::getById", $data);
 		if ( empty( $data ) ) {
 			return self::createFromId( $id );
 		} else {
@@ -161,6 +162,7 @@ class WallNotificationEntity {
 			$this->threadTitleFull = $response['threadTitleFull'];
 			$this->data = $response['data'];
 
+			var_dump("WallNotificationEntity::loadDataFromRevIdOnWiki", $this->data);
 			return true;
 		}
 
