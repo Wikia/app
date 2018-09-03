@@ -27,11 +27,13 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
 		$wikiVertical = '3';
+		$wikiDescription = 'Awesome description';
 
 		$requestParams = array("wName" => $wikiName,
 			"wDomain" => $wikiDomain,
 			"wLanguage" => $wikiLanguage,
-			"wVertical" => $wikiVertical);
+			"wVertical" => $wikiVertical,
+			"wDescription" => $wikiDescription);
 
 		$userMock = $this->mockClassWithMethods(
 			User::class,
