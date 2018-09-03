@@ -62,12 +62,16 @@ describe('AdContext', function () {
 	}
 
 	beforeEach(function () {
-		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo', 'getSamplingResults'];
+		var geoAPI = [
+			'isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo',
+			'getSamplingResults', 'mapSamplingResults'
+		];
 		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
+		mocks.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
 		mocks.instantGlobals = {};
 	});
 
