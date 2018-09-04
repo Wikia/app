@@ -42,6 +42,12 @@ $ ./php-tests.sh ../extensions/wikia/Example # run tests for Example only
 $ ./php-tests.sh ../extensions/wikia/Example/tests/MyTest.php # run only MyTest
 ```
 
+### Running a single unit test
+If you simply want to run  subset of unit tests that do not depend on db, you can use the `run-test.php` script directly:
+```
+x@dev-x:/usr/wikia/source/app/tests$ SERVER_DBNAME=firefly php run-test.php ../extensions/wikia/CreateNewWiki/tests/
+```
+
 ### Best practices
 If you add a test which relies on PHP extensions to function (e.g. a test that involves rendering mustache templates),
 check if the extension is loaded in the test setup phase.
