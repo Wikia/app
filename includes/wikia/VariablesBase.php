@@ -8792,14 +8792,6 @@ $wgWikiFactoryDomains = [
 ];
 
 /**
- * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
- * if it received a request with one of the mapped alternative domains.
- * @see $wgWikiFactoryDomains
- * @var bool $wgWikiFactoryRedirectForAlternateDomains
- */
-$wgWikiFactoryRedirectForAlternateDomains = true;
-
-/**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
  * @see extensions/wikia/RTE
  * @var Array $wgWysiwygDisabledNamespaces
