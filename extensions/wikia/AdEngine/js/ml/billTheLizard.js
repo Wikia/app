@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 ], function (adContext, pageLevelParams, bridge, geo, executor, deviceDetect, instantGlobals, log, trackingOptIn) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard';
+	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard',
+		ready = false;
 
 	if (!bridge.billTheLizard) {
 		return;
@@ -56,15 +57,22 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		trackingOptIn.pushToUserConsentQueue(function () {
 			return bridge.billTheLizard.call()
 				.then(function () {
+					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
 				}, function () {
+					ready = true;
 					log(['reject'], log.levels.debug, logGroup);
 				});
 		});
 	}
 
+	function hasResponse() {
+		return ready;
+	}
+
 	return {
 		call: call,
+		hasResponse: hasResponse,
 		serialize: function () {
 			return bridge.billTheLizard.serialize();
 		}

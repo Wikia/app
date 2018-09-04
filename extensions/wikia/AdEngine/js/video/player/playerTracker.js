@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
+	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
 	adContext,
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	log,
 	win,
 	bidHelper,
+	billTheLizard,
 	floater
 ) {
 	'use strict';
@@ -60,7 +62,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_1': canFloat,
 				'additional_2': floatingState,
 				'vast_id': params.vastId || emptyValue.string,
-				'video_id': params.videoId || ''
+				'video_id': params.videoId || '',
+				'bill': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
 			};
 
 		if (bidHelper && params.bid) {
