@@ -3,6 +3,10 @@
  * Sends informative emails about activity on wikis to their owners. 
  *
  * Usage: SERVER_ID=177 php FounderEmailsMaintenance.php --event=daysPassed|viewsDigest|completeDigest
+ *
+ * daysPassed - emails to founders of wikis after a number of days of their inactivity
+ * viewsDigest - basic information about views
+ * completeDigest - complete information about views, edits, etc.
  */
 require_once __DIR__ . '/../../../maintenance/Maintenance.php';
 
