@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 					if (playerEvent === 'adRequest' || playerEvent === 'adError') {
 						skipCtpAudioUpdate = true;
 
-						const vastParams = event.tag ? vastParser.parse(event.tag) : null;
+						var vastParams = event.tag ? vastParser.parse(event.tag) : null;
 
 						if (vastParams && vastParams.customParams) {
 							params.withCtp = vastParams.customParams.ctp === 'yes';
