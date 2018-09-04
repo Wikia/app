@@ -1,8 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker'
+	'ext.wikia.adEngine.video.player.playerTracker',
+	'ext.wikia.adEngine.video.vastParser'
 ], function (
-	playerTracker
+	playerTracker,
+	vastParser
 ) {
 	'use strict';
 	var playerName = 'jwplayer',
@@ -35,26 +37,33 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 
 		var skipCtpAudioUpdate = false;
 
-		function updateCtpAudio() {
-			if (skipCtpAudioUpdate) {
-				skipCtpAudioUpdate = false;
-			} else {
-				params.withCtp = !player.getConfig().autostart;
-				params.withAudio = !player.getConfig().mute;
-			}
-		}
-
-		updateCtpAudio();
+		params.withCtp = !player.getConfig().autostart;
+		params.withAudio = !player.getConfig().mute;
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
 				var errorCode;
 
 				if (['adRequest', 'adError', 'ready', 'videoStart'].indexOf(playerEvent) !== -1) {
-					updateCtpAudio();
+					if (skipCtpAudioUpdate) {
+						skipCtpAudioUpdate = false;
+					} else {
+						if (params.withCtp) {
+							params.withCtp = !player.getConfig().autostart;
+						}
+
+						params.withAudio = !player.getMute();
+					}
 
 					if (playerEvent === 'adRequest' || playerEvent === 'adError') {
 						skipCtpAudioUpdate = true;
+
+						const vastParams = event.tag ? vastParser.parse(event.tag) : null;
+
+						if (vastParams && vastParams.customParams) {
+							params.withCtp = vastParams.customParams.ctp === 'yes';
+							params.withAudio = vastParams.customParams.audio === 'yes';
+						}
 					}
 
 					if (playerEvent === 'adError') {
