@@ -67,9 +67,6 @@
 
 <?= $trackingOptIn ?>
 
-<script>
-    require(['ext.wikia.adEngine.ml.billTheLizard'], console.log);
-</script>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $billTheLizard ?>
