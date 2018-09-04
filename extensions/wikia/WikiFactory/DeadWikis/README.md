@@ -17,7 +17,7 @@ All rules need to be meet in order to mark a wiki for deletion. The deletion its
 
 ## How it's run?
 
-The script is run every day from Monday to Thursday on Kubernetes.
+There's a Kubernetes cron job entry:
 
 ```
 mw-cj-wiki-factory-dead-wikis            0 10 * * 1,2,3,4   False     0         <none>          3h
