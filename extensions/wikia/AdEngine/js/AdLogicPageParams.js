@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.location',
 	'wikia.log',
 	'wikia.trackingOptIn',
@@ -12,7 +12,19 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, zoneParams, doc, geo, loc, log, trackingOptIn, Querystring, win, abTest, krux) {
+], function (
+	adContext,
+	zoneParams,
+	doc,
+	geo,
+	loc,
+	log,
+	trackingOptIn,
+	Querystring,
+	win,
+	abTest,
+	krux
+) {
 	'use strict';
 
 	var context = {},
@@ -101,7 +113,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			refHostname,
 			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
 			wikiDomains = [
-				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
+				'wikia.com', 'fandom.com', 'ffxiclopedia.org', 'jedipedia.de',
 				'memory-alpha.org', 'uncyclopedia.org',
 				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
 			],
@@ -193,8 +205,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		if (krux && targeting.enableKruxTargeting) {
-			params.u = krux.getUser();
-			params.ksgmnt = krux.getSegments();
+			if (context.opts.kruxNewParams) {
+				params.kuid = krux.getUser();
+				params.ksg = krux.getSegments();
+			} else {
+				params.u = krux.getUser();
+				params.ksgmnt = krux.getSegments();
+			}
 		}
 
 		if (targeting.wikiIsTop1000) {
@@ -204,6 +221,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		if (cid) {
 			params.cid = cid;
 		}
+
+		params.labrador = context.opts.labradorDfp;
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
 		extend(params, runtimeParams);

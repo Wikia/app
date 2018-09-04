@@ -12,8 +12,8 @@ class WikiFactoryLoader {
 
 	/** @var mixed $mServerName SERVER_NAME as provided by apache */
 	private $mServerName;
-	/** @var string $pathParams The part of the request path excluding the language code, without a leading slash */
-	private $pathParams = '';
+	/** @var array parsedUrl Parsed request url with language code removed from the path */
+	private $parsedUrl = '';
 	/** @var string $langCode Language code given in request path, if present, without a leading slash  */
 	private $langCode = '';
 
@@ -48,7 +48,7 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -70,22 +70,18 @@ class WikiFactoryLoader {
 		if ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
+			$fullUrl =  self::getCurrentRequestUri( $server );
+			$this->parsedUrl = parse_url( $fullUrl );
 
-			$fullUrl =  preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
-				$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
-			$path = parse_url( $fullUrl, PHP_URL_PATH );
-
-			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
+			$slash = strpos( $this->parsedUrl['path'], '/', 1 ) ?: strlen( $this->parsedUrl['path'] );
 
 			if ( $slash ) {
 				$languages = Language::getLanguageNames();
-				$langCode = substr( $path, 1, $slash - 1 );
+				$langCode = substr( $this->parsedUrl['path'], 1, $slash - 1 );
 
 				if ( isset( $languages[$langCode] ) ) {
 					$this->langCode = $langCode;
-					$this->pathParams = substr( $path, $slash + 1 ) ?: '';
-				} else {
-					$this->pathParams = substr( $path, 1 );
+					$this->parsedUrl['path'] = substr( $this->parsedUrl['path'], $slash ) ?: '/';
 				}
 			}
 
@@ -115,18 +111,19 @@ class WikiFactoryLoader {
 		 *
 		 * muppets.wikia.org => muppets.wikia.com
 		 *
-		 * additionally we remove www. before matching
+		 * additionally we remove www. prefix
 		 */
-
-		// remove www from domain
-		$name = preg_replace( "/^www\./", "", $this->mServerName );
 
 		foreach ( $wikiFactoryDomains as $domain ) {
 			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
-			if ( $domain !== "wikia.com" && strpos( $this->mServerName, $domain ) === $tldLength ) {
+			if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
 				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = str_replace( $domain, "wikia.com", $name );
+				$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
+				// remove extra www. prefix from domain
+				if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {  // skip canonical wikia global host
+					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				}
 				$this->mAlternativeDomainUsed = true;
 				break;
 			}
@@ -139,6 +136,25 @@ class WikiFactoryLoader {
 		 * never from cache
 		 */
 		$this->mAlwaysFromDB = $this->mCommandLine || $wgDevelEnvironment;
+	}
+
+	/**
+	 * Return current request uri received by the HTTP server.
+	 *
+	 * @param $server array of server variables (usually $_SERVER)
+	 * @param $localEnvUrl if true, includes staging/dev env part of the address, when false, returns wiki canonical url
+	 * @param $detectHttps detect and return https requests based on Fastly headers
+	 */
+	public static function getCurrentRequestUri( $server, $localEnvUrl=false, $detectHttps=false ) {
+		$uri = preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
+			$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
+		if ( $localEnvUrl ) {
+			$uri = WikiFactory::getLocalEnvURL( $uri );
+		}
+		if ( $detectHttps && !empty( $server['HTTP_FASTLY_FF'] ) && !empty( $server['HTTP_FASTLY_SSL'] ) ) {
+			$uri = wfHttpToHttps( $uri );
+		}
+		return $uri;
 	}
 
 	/**
@@ -190,7 +206,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
+			   $wgArticlePath, $wgEnableHTTPSForAnons, $wgFandomBaseDomain;
 
 		wfProfileIn(__METHOD__);
 
@@ -204,6 +220,12 @@ class WikiFactoryLoader {
 		if ( !Hooks::run( 'WikiFactory::execute', [ $this ] ) ) {
 			wfProfileOut(__METHOD__);
 			return $this->mWikiID;
+		}
+
+		// Override wikia.com related config early when requesting a fandom.com wiki
+		if ( strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
+			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
+			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
 		}
 
 		/**
@@ -368,15 +390,23 @@ class WikiFactoryLoader {
 			}
 		}
 
-		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
-		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
-		$wgCityId = $this->mWikiID;
+		// Important note: we have to call getVarValueByName before setting $wgCityId global
+		// otherwise getVarValueByName just uses locally set globals and returns empty value here
+		$wgEnableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $this->mWikiID );
 
 		/**
 		 * save default var values for Special:WikiFactory
 		 */
 		if ( $this->mWikiID == Wikia::COMMUNITY_WIKI_ID ) {
 			$this->mSaveDefaults = true;
+		}
+
+		// Emit surrogate keys now so every wiki response is covered
+		$surrogateKey = Wikia::wikiSurrogateKey( $this->mWikiID );
+		if ( $surrogateKey ) {
+			// also add mediawiki-specific key
+			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
+			Wikia::setSurrogateKeysHeaders( $surrogateKeys, true );
 		}
 
 		/**
@@ -400,50 +430,59 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
+		$cond2 = $this->mAlternativeDomainUsed &&
+			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
 
-		if( ( $cond1 || $cond2 ) && $wgWikiFactoryRedirectForAlternateDomains ) {
-			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
+			wfHttpsAllowedForURL( $redirectUrl ) &&
+			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
+		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
-				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
-				 wfHttpsAllowedForURL( $redirectUrl )
-			) {
+		if ( $cond1 || $cond2 || $shouldUpgradeToHttps ) {
+			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
-			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
-
-			$queryParams = $_GET;
-			$localArticlePathClean = str_replace( '$1', '', $wgArticlePath );
-			if ( !empty( $localArticlePathClean ) &&
-				!empty( $queryParams['title'] ) &&
-				startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
-				// skip the 'title' which is part of the $target, but append remaining parameters
-				unset( $queryParams['title'] );
+			if ( isset( $this->parsedUrl['path'] ) ) {
+				$redirectUrl .= $this->parsedUrl['path'];
+			}
+			if ( isset( $this->parsedUrl['query'] ) ) {
+				$redirectUrl .= '?' . $this->parsedUrl['query'];
+			}
+			if ( isset( $this->parsedUrl['fragment'] ) ) {
+				$redirectUrl .= '#' . $this->parsedUrl['fragment'];
 			}
 
-			if ( !empty( $queryParams ) ) {
-				$target .= '?' . http_build_query( $queryParams );
-			}
+			$redirectedBy = [];
+			if ( $shouldUpgradeToHttps ) $redirectedBy[] = 'AnonsHTTPSUpgrade';
+			if ( $cond1 ) $redirectedBy[] = 'NotPrimary';
+			if ( $cond2 ) $redirectedBy[] = 'AlternativeDomain';
+			$redirectedBy = join( ' ', $redirectedBy );
 
-			header( "X-Redirected-By-WF: NotPrimary" );
-			header( 'Vary: Cookie,Accept-Encoding' );
-
-			global $wgCookiePrefix;
-			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
-				!empty( $_COOKIE[session_name()] ) ||
-				!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-				!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
-
-			if ( $hasAuthCookie ) {
-				header( 'Cache-Control: private, must-revalidate, max-age=0' );
+			global $wgSkipWFLRedirect;
+			if ( !empty( $wgSkipWFLRedirect ) ) {
+				RequestContext::getMain()->getOutput()->redirect(
+					$redirectUrl, 301, $redirectedBy );
 			} else {
-				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
-			}
+				header( 'X-Redirected-By-WF: ' . $redirectedBy );
+				header( 'Vary: Cookie,Accept-Encoding' );
 
-			header( "Location: {$target}", true, 301 );
-			wfProfileOut( __METHOD__ );
-			return false;
+				global $wgCookiePrefix;
+				$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+					!empty( $_COOKIE[session_name()] ) ||
+					!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+					!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
+				if ( $hasAuthCookie ) {
+					header( 'Cache-Control: private, must-revalidate, max-age=0' );
+				} else {
+					header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+				}
+
+				header( "Location: {$redirectUrl}", true, 301 );
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
 		}
 
 		/**
@@ -638,6 +677,8 @@ class WikiFactoryLoader {
 				}
 			}
 		}
+
+		$wgCityId = $this->mWikiID;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers

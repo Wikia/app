@@ -617,11 +617,6 @@ if ( !empty( $wgEnableLookupContribsExt ) ) {
 	include( "$IP/extensions/wikia/LookupUser/LookupUser.php" );
 }
 
-if( !empty( $wgEnableTorBlockExt ) ) {
-	include( "$IP/extensions/TorBlock/TorBlock.php" );
-	$wgTorIPs = [];
-}
-
 if( !empty( $wgEnableWhereIsExtensionExt ) ) {
 	include( "$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php" );
 }
@@ -1770,3 +1765,7 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // SUS-5473 | Expose a button on Special:Statistics allowing Wikia Staff members to schedule
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
+
+if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
+	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+}

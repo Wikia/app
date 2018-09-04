@@ -31,7 +31,6 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			mocks.document,
 			mocks.log,
 			mocks.trackingOptIn,
-			mocks.cmp,
 			mocks.window
 		);
 	}

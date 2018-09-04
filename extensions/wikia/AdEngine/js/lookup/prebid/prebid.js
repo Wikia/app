@@ -42,7 +42,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
 
-			if (!optIn) {
+			// Cleanup in ADEN-7500
+			if (!optIn && !adContext.get('bidders.prebidOptOut')) {
 				return;
 			}
 
@@ -160,6 +161,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 				});
 
 				slotParams = bidParams.adserverTargeting;
+
+				// ADEN-7436: AppNexus hb_uuid fix (adserverTargeting params are being set before cache key is returned)
+				slotParams.hb_uuid = slotParams.hb_uuid || bidParams.videoCacheKey || 'disabled';
 			}
 		}
 

@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.slot.service.viewabilityHandler',  [
 		options = options || {};
 
 		if (slot) {
-			if (slot.isViewed) {
+			if (slot.isViewed()) {
 				refreshSlot(slot.name, delay, options);
 			} else {
 				slot.post('viewed', function () {

@@ -238,23 +238,9 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		// check if user has confirmed e-mail
-		if ( !$wgUser->isEmailConfirmed() ) {
-			$this->setEmailNotConfirmedErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		// check if user is blocked
 		if ( $wgUser->isBlocked() ) {
 			$this->setUserIsBlockedErrorResponse( $wgUser );
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		// check if user is a tor node
-		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
-			$this->setUserIsTorNodeErrorResponse();
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -457,27 +443,11 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
 	}
 
-	private function setEmailNotConfirmedErrorResponse() {
-		$this->warning("CreateWiki: user's email not confirmed" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
-	}
-
 	private function setUserIsBlockedErrorResponse( User $user ) {
 		$this->warning("CreateWiki: user is blocked" );
 		$this->response->setCode( 403 );
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $user->blockedBy(), $user->blockedFor(), $user->getBlockId() )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-	}
-
-	private function setUserIsTorNodeErrorResponse() {
-		$this->warning("CreateWiki: user is blocked (TOR detected)" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
 	}
 

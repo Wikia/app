@@ -74,9 +74,10 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		// User pages for discussions
+		// Discussions user pages
 		'/d/u/',
-
+		// Discussions guidelines
+		'/d/g',
 		// Fandom old URLs
 		'/fandom?p=',
 
@@ -129,12 +130,21 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgRequest,
+		global $wgWikiaBaseDomain,
+			   $wgRequest,
 			   $wgRobotsTxtCustomRules,
+			   $wgServer,
 			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
-		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+		$this->accessAllowed = (
+			(
+				$wgWikiaEnvironment === WIKIA_ENV_PROD &&
+				// PLATFORM-3654 temporarily disable robots on fandom.com wikis
+				wfGetBaseDomainForHost( $wgServer ) === $wgWikiaBaseDomain
+			) ||
+			$wgRequest->getBool( 'forcerobots' )
+		);
 		$this->experiment = false;
 
 		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {

@@ -17,17 +17,10 @@ All rules need to be meet in order to mark a wiki for deletion. The deletion its
 
 ## How it's run?
 
-The script is run every day from Monday to Thursday on `cron-s1` and logs to `/var/log/crons/dead_wikis.log`.
+There's a Kubernetes cron job entry:
 
 ```
-cookbooks/cron/recipes/wiki_maintenance.rb
-64-cron "dead_wikis_deletion" do
-65-  user 'release'
-66-  minute "30"
-67-  hour "19"
-68-  weekday "1,2,3,4"
-69:  command "/usr/wikia/backend/bin/run_maintenance --id=177 /usr/bin/php --script='../extensions/wikia/WikiFactory/DeadWikis/maintenance.php --debug' > /var/log/crons/dead_wikis.log 2>&1"
-70-end
+mw-cj-wiki-factory-dead-wikis            0 10 * * 1,2,3,4   False     0         <none>          3h
 ```
 
 The script sends an email to `wikis-deleted-l@wikia-inc.com` with the list of wikis marked for deletion and of those that are likely to be marked in the future.

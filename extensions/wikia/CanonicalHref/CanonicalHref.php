@@ -9,26 +9,35 @@
  */
 
 $wgExtensionCredits['specialpage'][] = array(
-        'name' => 'Canonical Href',
-		'version' => '1.1',
-        'author' => array('Nick Sullivan nick at wikia-inc.com', 'Maciej Brencz', '[http://seancolombo.com Sean Colombo]'),
-        'descriptionmsg' => 'canonicalhref-desc',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CanonicalHref'
+	'name' => 'Canonical Href',
+	'version' => '1.1',
+	'author' => array( 'Nick Sullivan nick at wikia-inc.com', 'Maciej Brencz', '[http://seancolombo.com Sean Colombo]' ),
+	'descriptionmsg' => 'canonicalhref-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CanonicalHref'
 );
 
 //i18n
 $wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
+
 /**
  * @param OutputPage $out
  * @param Skin $skin
  * @return bool
- * @internal param $sk
+ * @throws FatalError
+ * @throws MWException
  */
 function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
-	// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
-	if ( $out->getRequest()->getVal( 'page' ) ) {
+	$statusCodesWithoutCanonicalHref = [ 404, 410 ];
+
+	if (
+		// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
+		$out->getRequest()->getVal( 'page' ) ||
+		// SUS-5546: Don't render a canonical href for the closed wiki page
+		$out->getTitle()->isSpecial( 'CloseWiki' ) ||
+		in_array( $out->mStatusCode, $statusCodesWithoutCanonicalHref )
+	) {
 		return true;
 	}
 

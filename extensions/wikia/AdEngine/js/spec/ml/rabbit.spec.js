@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.ml.rabbit'](
+			{},
 			{
 				getName: function () {
 					return 'foo';

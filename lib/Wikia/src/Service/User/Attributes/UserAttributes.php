@@ -22,6 +22,9 @@ class UserAttributes {
 	/** @var string[string] */
 	private $defaultAttributes;
 
+	/** @var Attribute[] $changedAttributes */
+	private $changedAttributes;
+
 	/**
 	 * @param AttributeService $attributeService
 	 * @param string[string] $defaultAttributes
@@ -30,6 +33,7 @@ class UserAttributes {
 		$this->attributeService = $attributeService;
 		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
+		$this->changedAttributes = [];
 	}
 
 	public function getAttributes( $userId ) {
@@ -81,35 +85,42 @@ class UserAttributes {
 	public function setAttribute( $userId, Attribute $attribute ) {
 		$this->loadAttributes( $userId );
 
+		$name = $attribute->getName();
+		$value = $attribute->getValue();
+
 		// If attribute value is null and default exists, set value to default
-		if ( is_null( $attribute->getValue() ) && isset( $this->defaultAttributes[$attribute->getName()] ) ) {
-			$attribute->setValue( $this->defaultAttributes[$attribute->getName()] );
+		if ( is_null( $value ) && isset( $this->defaultAttributes[$name] ) ) {
+			$attribute->setValue( $this->defaultAttributes[$name] );
 		}
 
-		$this->setInInstanceCache( $userId, $attribute );
+		// SRE-97: Only set the attribute if it was not set before or the value was changed
+		if ( !isset( $this->attributes[$userId][$name] ) || $this->attributes[$userId][$name] !== $value ) {
+			$this->changedAttributes[$name] = $attribute;
+			$this->attributes[$userId][$name] = $attribute->getValue();
+		}
 	}
 
 	public function save( $userId ) {
-		$attributes = $this->loadAttributes( $userId );
-
-		// TODO When bulk updates are complete, convert this to a single request.
-		// Ticket: SOC-1482
 		$savedAttributes = [];
-		foreach( $attributes as $name => $value ) {
+
+		foreach( $this->changedAttributes as $name => $attribute ) {
+			$value = $attribute->getValue();
+
 			if ( $this->isReadOnlyAttribute( $name ) ) {
 				continue;
 			}
 
 			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
-				$this->setInService( $userId, new Attribute( $name, $value ) );
 				$savedAttributes[$name] = $value;
 				if ( $name == 'avatar' ) {
 					$this->logIfBadAvatarVal( $value, $userId );
 				}
 			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
-				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
+				$this->deleteFromService( $userId, $attribute );
 			}
 		}
+
+		$this->attributeService->set( $userId, $savedAttributes );
 	}
 
 	private function isReadOnlyAttribute( $name ) {
@@ -151,23 +162,6 @@ class UserAttributes {
 			is_null( $value )
 		);
 	}
-
-	/**
-	 * @param $userId
-	 * @param Attribute $attribute
-	 */
-	private function setInService( $userId, $attribute ) {
-		$this->attributeService->set( $userId, $attribute );
-	}
-
-	/**
-	 * @param $userId
-	 * @param Attribute $attribute
-	 */
-	private function setInInstanceCache( $userId, Attribute $attribute ) {
-		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
-	}
-
 
 	public function deleteAttribute( $userId, Attribute $attribute ) {
 		$this->loadAttributes( $userId );

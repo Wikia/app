@@ -114,13 +114,13 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'option-ck-editor' => 'Классический редактор форматированного текста Фэндома (если есть)',
+	'option-ck-editor' => 'Классический редактор (если есть)',
 	'option-visual-editor' => 'Визуальный редактор',
 	'editor-preference-help' => 'На этой вики по умолчанию используется классический редактор. [[Справка:Редактирование|Подробнее]].',
 	'editor-preference' => 'Предпочитаемый редактор:',
 	'option-default-editor' => 'По умолчанию',
 	'option-source-editor' => 'Исходный код',
-	'editorpreference-desc' => 'Allows users to set their preference of editor',
+	'editorpreference-desc' => 'Позволяет участникам указывать предпочитаемый редактор',
 );
 
 $messages['vi'] = array(

@@ -1,0 +1,38 @@
+{
+	"_links": {
+		"self": {
+			"href": "/user/123"
+		}
+	},
+	"_embedded": {
+		"properties": [
+			{
+				"_links": {
+					"self": {
+						"href": "/user/123/attr/attribute_one"
+					}
+				},
+				"name": "attribute_one",
+				"value": "some default"
+			},
+			{
+				"_links": {
+					"self": {
+						"href": "/user/123/attr/attribute_two"
+					}
+				},
+				"name": "attribute_two",
+				"value": "other default"
+			},
+			{
+				"_links": {
+					"self": {
+						"href": "/user/123/attr/attribute_three"
+					}
+				},
+				"name": "attribute_three",
+				"value": "unchanged"
+			}
+		]
+	}
+}
