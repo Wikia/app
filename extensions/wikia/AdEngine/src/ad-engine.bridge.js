@@ -18,6 +18,7 @@ import {
 	universalAdPackage,
 	isProperGeo,
 	getSamplingResults,
+	getDfpLabradorKeyvals,
 	utils as adProductsUtils
 } from '@wikia/ad-products';
 
@@ -270,5 +271,6 @@ export {
 	universalAdPackage,
 	isProperGeo,
 	getSamplingResults,
-	slotService
+	slotService,
+	getDfpLabradorKeyvals,
 };
