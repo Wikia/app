@@ -40,6 +40,11 @@ class RecirculationApiController extends WikiaApiController {
 		] );
 	}
 
+	public function getPopularWikiArticles() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setData( WikiRecommendations::getPopularArticles() );
+	}
+
 	private function getDataServiceInstance($type, $cityId) {
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();

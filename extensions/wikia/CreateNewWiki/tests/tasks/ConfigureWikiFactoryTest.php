@@ -96,19 +96,23 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @param $dbName
 	 * @param $language
 	 * @param $url
+	 * @param $description
 	 * @param $expected
 	 * @dataProvider getStaticWikiFactoryVariablesDataProvider
 	 */
-	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $expected ) {
+	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url,
+													   $description, $expected ) {
 		$configureWFTask = new ConfigureWikiFactory( new TaskContext( [] ) );
 
-		$result = $configureWFTask->getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url );
+		$result = $configureWFTask->getStaticVariables(
+			$siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $description );
 		$this->assertEquals( $result, $expected );
 	}
 
 	public function getStaticWikiFactoryVariablesDataProvider() {
 		return [
-			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com',
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com', 'bar',
 				[
 					'wgSitename' => 'foo',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -119,9 +123,11 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
 				]
 			],
-			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
+			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com/', 'bar',
 				[
 					'wgSitename' => 'foo:',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -132,10 +138,12 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
 					'wgMetaNamespace' => 'foo',
 				]
 			],
-			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
+			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com/', 'bar',
 				[
 					'wgSitename' => 'foo_bar:fizz',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -146,7 +154,24 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
 					'wgMetaNamespace' => 'foo_barfizz',
+				]
+			],
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.fandom.com', 'bar',
+				[
+					'wgSitename' => 'foo',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgLocalInterwiki' => 'foo',
+					'wgLanguageCode' => 'en',
+					'wgEnableSectionEdit' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
+					'wgEnableHTTPSForAnons' => true,
 				]
 			]
 		];

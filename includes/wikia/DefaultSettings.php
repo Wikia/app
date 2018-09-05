@@ -1067,6 +1067,13 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
  * @name $wgAdDriverPrebidOptOutCountries
  * List of countries where Prebid is enabled for opted-out users.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1424,6 +1431,12 @@ $wgAdDriverWadILCountries = null;
  * List of countries to enable Consent Management module
  */
 $wgEnableCMPCountries = null;
+
+/**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
 
 /**
  * trusted proxy service registry

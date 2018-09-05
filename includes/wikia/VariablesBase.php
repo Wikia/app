@@ -1283,6 +1283,19 @@ $wgCreateDatabaseActiveCluster = 'c7';
 $wgCreateLanguageWikisWithPath = false;
 
 /**
+ * Whether to create new English wikis under the fandom.com domain.
+ * @var bool $wgCreateEnglishWikisOnFandomCom
+ */
+$wgCreateEnglishWikisOnFandomCom = false;
+
+/**
+ * Wiki description enter by the user on the CNW page. Removed after wiki is created
+ * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
+ * @var string $wgWikiDescription
+ */
+$wgWikiDescription = '';
+
+/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -8695,6 +8708,13 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
+ * Exclude wiki from Global Search
+ * @see extensions/wikia/Search/classes/IndexService/CrossWikiCore.php
+ * @var bool $wgExcludeWikiFromSearch
+ */
+$wgExcludeWikiFromSearch = false;
+
+/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8770,14 +8790,6 @@ $wgWikiFactoryDomains = [
 	'wikicities.net',
 	'wikicities.org'
 ];
-
-/**
- * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
- * if it received a request with one of the mapped alternative domains.
- * @see $wgWikiFactoryDomains
- * @var bool $wgWikiFactoryRedirectForAlternateDomains
- */
-$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
