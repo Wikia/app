@@ -147,6 +147,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
+		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
