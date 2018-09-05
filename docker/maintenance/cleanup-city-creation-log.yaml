@@ -1,0 +1,4 @@
+schedule: "15 8 * * *"
+args:
+- php
+- extensions/wikia/CreateNewWiki/maintenance/cleanupCityCreationLog.php
