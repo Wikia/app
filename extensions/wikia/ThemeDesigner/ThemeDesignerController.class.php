@@ -399,7 +399,7 @@ class ThemeDesignerController extends WikiaController {
 		foreach ( ThemeSettings::IMAGES as $imageSource ) {
 			// Background image might be a stock one, so there's no need force reupload of it by clearing
 			// the background-* fields
-			if ( $imageSource != 'background' || $this->isStockBackgroundUrl($data["$imageSource-image"]) !== true ) {
+			if ( $imageSource != 'background' || ( $this->isStockBackgroundUrl($data["$imageSource-image"]) !== true && $data["background-image-name"] != 'Wiki-background' ) ) {
 				if ( !empty( $data["$imageSource-image-name"] ) &&
 					strpos( $data["$imageSource-image-name"], 'Temp_file_' ) !== 0 ) {
 					unset( $data["$imageSource-image-name"] );
