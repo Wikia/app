@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 			},
 			BOTTOM_LEADERBOARD: {
 				uid: '5b8f13805d-188',
-				style: 'width:728px; margin-bottom:23px; text-align:center; z-index:100;',
+				style: 'margin-bottom:23px; z-index:100;',
 				lazy: true
 			}
 		};
