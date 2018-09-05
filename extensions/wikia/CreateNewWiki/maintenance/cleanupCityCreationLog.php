@@ -11,12 +11,15 @@
  */
 
 require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
-require_once __DIR__ . '/../CreateNewWiki_setup.php';
 
 class CleanupCityCreationLog extends Maintenance {
 
 	public function execute() {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgAutoloadClasses;
+
+		// we need to do this here, when MediaWiki autoloader is fully set up
+		require_once __DIR__ . '/../CreateNewWiki_setup.php';
+
 		$db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		$db->delete(
