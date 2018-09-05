@@ -17,6 +17,7 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		$firstEntity = $notify[ 'grouped' ][ 0 ];
 
 		$data = $firstEntity->data;
+
 		if ( isset( $data->type ) && ( $data->type === 'ADMIN' || $data->type === 'OWNER' ) ) {
 			$this->forward( get_class( $this ), 'NotificationAdmin' );
 			return;
@@ -24,21 +25,14 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 
 		$authors = [ ];
 		foreach ( $notify[ 'grouped' ] as $notify_entity ) {
-			if ( !empty( $notify_entity->data ) ) {
-				$authors[] = [
-					'displayname' => $notify_entity->data->msg_author_displayname,
-					'username' => $notify_entity->data->msg_author_username,
-					'avatar' => AvatarService::renderAvatar(
-						$firstEntity->data->msg_author_username,
-						AvatarService::AVATAR_SIZE_SMALL_PLUS
-					)
-				];
-			} else {
-				\Wikia\Logger\WikiaLogger::instance()->notice(
-					'Wall Notiffication entity has no data',
-					[ 'data' => $notify_entity->data ]
-				);
-			}
+			$authors[] = [
+				'displayname' => $notify_entity->data->msg_author_displayname,
+				'username' => $notify_entity->data->msg_author_username,
+				'avatar' => AvatarService::renderAvatar(
+					$firstEntity->data->msg_author_username,
+					AvatarService::AVATAR_SIZE_SMALL_PLUS
+				)
+			];
 		}
 
 		// 1 = 1 user,
