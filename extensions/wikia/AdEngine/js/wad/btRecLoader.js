@@ -14,41 +14,53 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		placementsMap = {
 			TOP_LEADERBOARD: {
 				uid: '5b33d3584c-188',
-				style: 'margin: 10px 0;'
+				style: 'margin:10px 0; z-index:100;',
+				lazy: false
 			},
 			TOP_RIGHT_BOXAD: {
 				uid: '5b2d1649b2-188',
-				style: 'margin-bottom: 10px;'
+				style: 'margin-bottom:10px; z-index:100;',
+				lazy: false
 			},
 			BOTTOM_LEADERBOARD: {
-				uid: '5b7f2041a8-188',
-				style: ''
+				uid: '5b8f13805d-188',
+				style: 'overflow:hidden; margin-bottom:23px; text-align:center; z-index:100;',
+				lazy: true
 			}
 		};
 
-	function markAdSlots(replace) {
+	function markAdSlots(replace, lazySlotName) {
 		Object
 			.keys(placementsMap)
 			.forEach(function (key) {
-				var slot = doc.getElementById(key);
+				if (
+					(!lazySlotName && !placementsMap[key].lazy) ||
+					(lazySlotName && lazySlotName === key && placementsMap[key].lazy)
+				) {
+					var slot = doc.getElementById(key);
 
-				if (slot) {
-					if (replace) {
-						DOMElementTweaker.addClass(slot, placementClass);
-						DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
-						DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
-					} else {
-						var node = doc.createElement('span');
+					if (slot) {
+						if (replace) {
+							DOMElementTweaker.addClass(slot, placementClass);
+							DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
+							DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
+						} else {
+							var node = doc.createElement('span');
 
-						DOMElementTweaker.addClass(node, placementClass);
-						DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
-						DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
-						DOMElementTweaker.hide(node, true);
+							DOMElementTweaker.addClass(node, placementClass);
+							DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
+							DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
+							DOMElementTweaker.hide(node, true);
 
-						slot.parentNode.insertBefore(node, slot.previousSibling);
+							slot.parentNode.insertBefore(node, slot.previousSibling);
+						}
 					}
 				}
 			});
+
+		if (lazySlotName) {
+			win.BT.clearThrough();
+		}
 	}
 
 	function injectScript() {
@@ -67,6 +79,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	}
 
 	return {
-		init: init
+		init: init,
+		markAdSlots: markAdSlots
 	};
 });
