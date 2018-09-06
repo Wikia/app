@@ -45,6 +45,9 @@ class TaskContext {
 	/** @var  int */
 	private $vertical;
 
+	/** @var  string */
+	private $description;
+
 	/** @var  array */
 	private $categories;
 
@@ -66,6 +69,9 @@ class TaskContext {
 	/** @var bool $shouldCreateLanguageWikiWithPath */
 	private $shouldCreateLanguageWikiWithPath;
 
+	/** @var bool $shouldCreateEnglishWikisOnFandomCom */
+	private $shouldCreateEnglishWikisOnFandomCom;
+
 	public function __construct( $params ) {
 		foreach ($params as $key => $value) {
 			if ( property_exists($this, $key) ) {
@@ -76,20 +82,22 @@ class TaskContext {
 		}
 	}
 
-	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $allAges, $taskId, $ip, $fandomCreatorCommunityId ) {
-		global $wgCreateLanguageWikisWithPath;
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $description, $categories, $allAges, $taskId, $ip, $fandomCreatorCommunityId ) {
+		global $wgCreateLanguageWikisWithPath, $wgCreateEnglishWikisOnFandomCom;
 
 		return new self( [
 			'inputWikiName' => $inputWikiName,
 			'inputDomain' => $inputDomain,
 			'language' => $language,
 			'vertical' => $vertical,
+			'description' => $description,
 			'categories' => $categories,
 			'allAges' => $allAges,
 			'taskId' => $taskId,
 			'ip' => $ip,
 			'fandomCreatorCommunityId' => $fandomCreatorCommunityId,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
+			'shouldCreateEnglishWikisOnFandomCom' => $wgCreateEnglishWikisOnFandomCom
 		] );
 	}
 
@@ -223,6 +231,10 @@ class TaskContext {
 		$this->starterDb = $db;
 	}
 
+	public function getDescription() {
+		return $this->description;
+	}
+
 	public function getSiteName() {
 		return $this->siteName;
 	}
@@ -265,5 +277,9 @@ class TaskContext {
 
 	public function shouldCreateLanguageWikiWithPath(): bool {
 		return $this->shouldCreateLanguageWikiWithPath;
+	}
+
+	public function shouldCreateEnglishWikisOnFandomCom(): bool {
+		return $this->shouldCreateEnglishWikisOnFandomCom;
 	}
 }

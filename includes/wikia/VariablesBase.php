@@ -85,24 +85,24 @@ $wgActionPaths = [];
  * @var Array $wgActions
  */
 $wgActions = [
-    'credits'        => true,
-    'delete'         => true,
-    'edit'           => true,
-    'history'        => true,
-    'info'           => true,
-    'markpatrolled'  => true,
-    'protect'        => true,
-    'purge'          => true,
-    'raw'            => true,
-    'render'         => true,
-    'revert'         => true,
-    'revisiondelete' => true,
-    'rollback'       => true,
-    'submit'         => true,
-    'unprotect'      => true,
-    'unwatch'        => true,
-    'view'           => true,
-    'watch'          => true,
+	'credits'        => true,
+	'delete'         => true,
+	'edit'           => true,
+	'history'        => true,
+	'info'           => true,
+	'markpatrolled'  => true,
+	'protect'        => true,
+	'purge'          => true,
+	'raw'            => true,
+	'render'         => true,
+	'revert'         => true,
+	'revisiondelete' => true,
+	'rollback'       => true,
+	'submit'         => true,
+	'unprotect'      => true,
+	'unwatch'        => true,
+	'view'           => true,
+	'watch'          => true,
 ];
 
 /**
@@ -638,7 +638,7 @@ $wgAutomatedTestsIPsList = [];
  * @var Array $wgAvailableAnswersLang
  */
 $wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
-    'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
+	'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
 
 /**
  * Languages supported by HAWelcome.
@@ -646,10 +646,10 @@ $wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
  * @var Array $wgEnableHAWelcomeExt
  */
 $wgAvailableHAWLang = [
-    'br', 'ca', 'de', 'en', 'es', 'fa', 'fi', 'fr', 'gl', 'he', 'hu', 'ia',
-    'id', 'it', 'ja', 'mk', 'nl', 'no', 'oc', 'pl', 'pms', 'pt', 'pt-br', 'ru',
-    'sv', 'tl', 'uk', 'vi', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
-    'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue' ];
+	'br', 'ca', 'de', 'en', 'es', 'fa', 'fi', 'fr', 'gl', 'he', 'hu', 'ia',
+	'id', 'it', 'ja', 'mk', 'nl', 'no', 'oc', 'pl', 'pms', 'pt', 'pt-br', 'ru',
+	'sv', 'tl', 'uk', 'vi', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
+	'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue' ];
 
 /**
  * Language - Help wiki mapping.
@@ -657,34 +657,34 @@ $wgAvailableHAWLang = [
  * @var Array $wgAvailableHelpLang
  */
 $wgAvailableHelpLang = [
-    'ca'           => 3487, // Catalan, Help wiki same as for Spanish (es)
-    'de'           => 1779,
-    'en'           => 177, /* default */
-    'es'           => 3487,
-    'fi'           => 3083,
-    'fr'           => 10261,
-    'it'           => 11250,
-    'ja'           => 3439,
-    'ko'           => 10465,
-    'nl'           => 10466,
-    'pl'           => 1686,
-    'pt'           => 696403,
-    'pt-br'        => 696403,
-    'ru'           => 3321,
-    'uk'           => 791363,
-    'vi'           => 423369,
-    'zh'           => 4079,
-    'zh-classical' => 4079,
-    'zh-cn'        => 4079,
-    'zh-hans'      => 4079,
-    'zh-hant'      => 4079,
-    'zh-hk'        => 4079,
-    'zh-min-nan'   => 4079,
-    'zh-mo'        => 4079,
-    'zh-my'        => 4079,
-    'zh-sg'        => 4079,
-    'zh-tw'        => 4079,
-    'zh-yue'       => 4079,
+	'ca'           => 3487, // Catalan, Help wiki same as for Spanish (es)
+	'de'           => 1779,
+	'en'           => 177, /* default */
+	'es'           => 3487,
+	'fi'           => 3083,
+	'fr'           => 10261,
+	'it'           => 11250,
+	'ja'           => 3439,
+	'ko'           => 10465,
+	'nl'           => 10466,
+	'pl'           => 1686,
+	'pt'           => 696403,
+	'pt-br'        => 696403,
+	'ru'           => 3321,
+	'uk'           => 791363,
+	'vi'           => 423369,
+	'zh'           => 4079,
+	'zh-classical' => 4079,
+	'zh-cn'        => 4079,
+	'zh-hans'      => 4079,
+	'zh-hant'      => 4079,
+	'zh-hk'        => 4079,
+	'zh-min-nan'   => 4079,
+	'zh-mo'        => 4079,
+	'zh-my'        => 4079,
+	'zh-sg'        => 4079,
+	'zh-tw'        => 4079,
+	'zh-yue'       => 4079,
 ];
 
 /**
@@ -721,32 +721,32 @@ $wgBetterDirectionality = true;
  * @var Array $wgBiggestCategoriesBlacklist
  */
 $wgBiggestCategoriesBlacklist = [
-    'Administración_del_sitio', 'Administration', 'Allgemeine_Vorlagen',
-    'Article', 'Article_management_templates', 'articles', 'Artikel-Vorlagen',
-    'attention', 'Ayuda', 'Banned', 'Begriffsklärung', 'Bildzitat', 'Browse',
-    'Candidatas_para_borrado', 'candidate', 'candidates', 'Category_templates',
-    'CC-by', 'CC-by-1.0', 'CC-by-2.0', 'CC-by-2.5', 'CC-by-sa', 'CC-by-sa-1.0',
-    'CC-by-sa-2.0', 'CC-by-sa-2.5', 'CC-sa-1.0', 'cleanup', 'Code-Vorlagen',
-    'Community', 'Comunidad', 'Contenidos', 'Content', 'Copy_edit', 'Copyright',
-    'Copyrighted_free_use', 'Datei-Vorlagen', 'Dateien', 'Dateien_nach_Lizenz',
-    'Dateien_von_flickr', 'Delete', 'deleting', 'deletion', 'Desambiguaciones',
-    'Desambiguaciones', 'Destruir', 'Dringende_Löschanträge', 'Emoticons',
-    'Esbozo', 'Esbozos', 'Fair_use', 'FAL', 'File', 'files', 'Forenbeiträge',
-    'Foros', 'Forum', 'Forums', 'General', 'General_wiki_templates', 'GFDL',
-    'GPL', 'Help', 'Help_desk', 'Hidden_categories', 'Image',
-    'Image_wiki_templates', 'images', 'Imágenes', 'infobox', 'Infobox-Vorlagen',
-    'Infobox_templates', 'Inhalt', 'Instandhaltung', 'Kategorie-Vorlagen',
-    'LGPL', 'Lizenz_unbekannt', 'Lizenzvorlagen', 'Löschanträge', 'merge',
-    'merged', 'Mesa_de_ayuda', 'need', 'needed', 'needing', 'needs',
-    'Neue_Seiten', 'nominated', 'nomination', 'Opisy_licencji', 'page', 'pages',
-    'Panel', 'panels', 'PD', 'Plantillas', 'Plantillas_de_categoría',
-    'Plantillas_de_imágenes', 'Plantillas_de_mantenimiento',
-    'Plantillas_generales', 'Policy', 'Políticas', 'Public_domain_files',
-    'Redirect', 'redirects', 'request', 'requested', 'requests', 'Screencap',
-    'screencaps', 'Screenshot', 'screenshots', 'Site_administration',
-    'Site_maintenance', 'Skript-Benutzerkonten_von_Wikia', 'Stub', 'stubs',
-    'Szablony', 'TagSynced', 'Template', 'Template_documentation', 'templated',
-    'templates', 'Vorlagen', 'Vídeos', 'Watercooler', 'wiki', 'wikify',
+	'Administración_del_sitio', 'Administration', 'Allgemeine_Vorlagen',
+	'Article', 'Article_management_templates', 'articles', 'Artikel-Vorlagen',
+	'attention', 'Ayuda', 'Banned', 'Begriffsklärung', 'Bildzitat', 'Browse',
+	'Candidatas_para_borrado', 'candidate', 'candidates', 'Category_templates',
+	'CC-by', 'CC-by-1.0', 'CC-by-2.0', 'CC-by-2.5', 'CC-by-sa', 'CC-by-sa-1.0',
+	'CC-by-sa-2.0', 'CC-by-sa-2.5', 'CC-sa-1.0', 'cleanup', 'Code-Vorlagen',
+	'Community', 'Comunidad', 'Contenidos', 'Content', 'Copy_edit', 'Copyright',
+	'Copyrighted_free_use', 'Datei-Vorlagen', 'Dateien', 'Dateien_nach_Lizenz',
+	'Dateien_von_flickr', 'Delete', 'deleting', 'deletion', 'Desambiguaciones',
+	'Desambiguaciones', 'Destruir', 'Dringende_Löschanträge', 'Emoticons',
+	'Esbozo', 'Esbozos', 'Fair_use', 'FAL', 'File', 'files', 'Forenbeiträge',
+	'Foros', 'Forum', 'Forums', 'General', 'General_wiki_templates', 'GFDL',
+	'GPL', 'Help', 'Help_desk', 'Hidden_categories', 'Image',
+	'Image_wiki_templates', 'images', 'Imágenes', 'infobox', 'Infobox-Vorlagen',
+	'Infobox_templates', 'Inhalt', 'Instandhaltung', 'Kategorie-Vorlagen',
+	'LGPL', 'Lizenz_unbekannt', 'Lizenzvorlagen', 'Löschanträge', 'merge',
+	'merged', 'Mesa_de_ayuda', 'need', 'needed', 'needing', 'needs',
+	'Neue_Seiten', 'nominated', 'nomination', 'Opisy_licencji', 'page', 'pages',
+	'Panel', 'panels', 'PD', 'Plantillas', 'Plantillas_de_categoría',
+	'Plantillas_de_imágenes', 'Plantillas_de_mantenimiento',
+	'Plantillas_generales', 'Policy', 'Políticas', 'Public_domain_files',
+	'Redirect', 'redirects', 'request', 'requested', 'requests', 'Screencap',
+	'screencaps', 'Screenshot', 'screenshots', 'Site_administration',
+	'Site_maintenance', 'Skript-Benutzerkonten_von_Wikia', 'Stub', 'stubs',
+	'Szablony', 'TagSynced', 'Template', 'Template_documentation', 'templated',
+	'templates', 'Vorlagen', 'Vídeos', 'Watercooler', 'wiki', 'wikify',
 ];
 
 /**
@@ -754,8 +754,8 @@ $wgBiggestCategoriesBlacklist = [
  * @var Array $wgBlobs001Cluster
  */
 $wgBlobs001Cluster = [
-    'geo-db-blobs-a-master.query.consul' => 0,
-    'geo-db-blobs-a-slave.query.consul' => 1000
+	'geo-db-blobs-a-master.query.consul' => 0,
+	'geo-db-blobs-a-slave.query.consul' => 1000
 ];
 
 /**
@@ -780,8 +780,8 @@ $wgBlockAllowsUTEdit = true;
  * @var Array $wgBlockCIDRLimit
  */
 $wgBlockCIDRLimit = [
-    'IPv4' => 16, # Blocks larger than a /16 (64k addresses) will not be allowed
-    'IPv6' => 19,
+	'IPv4' => 16, # Blocks larger than a /16 (64k addresses) will not be allowed
+	'IPv6' => 19,
 ];
 
 /**
@@ -823,37 +823,37 @@ $wgBreakFrames = false;
  * @var Array $wgBrowserBlackList
  */
 $wgBrowserBlackList = [
-    /**
-     * Netscape 2-4 detection
-     * The minor version may contain strings such as "Gold" or "SGoldC-SGI"
-     * Lots of non-netscape user agents have "compatible", so it's useful to check for that
-     * with a negative assertion. The [UIN] identifier specifies the level of security
-     * in a Netscape/Mozilla browser, checking for it rules out a number of fakers.
-     * The language string is unreliable, it is missing on NS4 Mac.
-     *
-     * Reference: http://www.psychedelix.com/agents/index.shtml
-     */
-    '/^Mozilla\/2\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
-    '/^Mozilla\/3\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
-    '/^Mozilla\/4\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
-    /**
-     * MSIE on Mac OS 9 is teh sux0r, converts þ to <thorn>, ð to <eth>, Þ to <THORN> and Ð to <ETH>
-     *
-     * Known useragents:
-     * - Mozilla/4.0 (compatible; MSIE 5.0; Mac_PowerPC)
-     * - Mozilla/4.0 (compatible; MSIE 5.15; Mac_PowerPC)
-     * - Mozilla/4.0 (compatible; MSIE 5.23; Mac_PowerPC)
-     * - [...]
-     *
-     * @see http://en.wikipedia.org/w/index.php?title=User%3A%C6var_Arnfj%F6r%F0_Bjarmason%2Ftestme&diff=12356041&oldid=12355864
-     * @see http://en.wikipedia.org/wiki/Template%3AOS9
-     */
-    '/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
-    /**
-     * Google wireless transcoder, seems to eat a lot of chars alive
-     * http://it.wikipedia.org/w/index.php?title=Luciano_Ligabue&diff=prev&oldid=8857361
-     */
-    '/^Mozilla\/4\.0 \(compatible; MSIE 6.0; Windows NT 5.0; Google Wireless Transcoder;\)/'
+	/**
+	 * Netscape 2-4 detection
+	 * The minor version may contain strings such as "Gold" or "SGoldC-SGI"
+	 * Lots of non-netscape user agents have "compatible", so it's useful to check for that
+	 * with a negative assertion. The [UIN] identifier specifies the level of security
+	 * in a Netscape/Mozilla browser, checking for it rules out a number of fakers.
+	 * The language string is unreliable, it is missing on NS4 Mac.
+	 *
+	 * Reference: http://www.psychedelix.com/agents/index.shtml
+	 */
+	'/^Mozilla\/2\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
+	'/^Mozilla\/3\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
+	'/^Mozilla\/4\.[^ ]+ [^(]*?\((?!compatible).*; [UIN]/',
+	/**
+	 * MSIE on Mac OS 9 is teh sux0r, converts þ to <thorn>, ð to <eth>, Þ to <THORN> and Ð to <ETH>
+	 *
+	 * Known useragents:
+	 * - Mozilla/4.0 (compatible; MSIE 5.0; Mac_PowerPC)
+	 * - Mozilla/4.0 (compatible; MSIE 5.15; Mac_PowerPC)
+	 * - Mozilla/4.0 (compatible; MSIE 5.23; Mac_PowerPC)
+	 * - [...]
+	 *
+	 * @see http://en.wikipedia.org/w/index.php?title=User%3A%C6var_Arnfj%F6r%F0_Bjarmason%2Ftestme&diff=12356041&oldid=12355864
+	 * @see http://en.wikipedia.org/wiki/Template%3AOS9
+	 */
+	'/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
+	/**
+	 * Google wireless transcoder, seems to eat a lot of chars alive
+	 * http://it.wikipedia.org/w/index.php?title=Luciano_Ligabue&diff=prev&oldid=8857361
+	 */
+	'/^Mozilla\/4\.0 \(compatible; MSIE 6.0; Windows NT 5.0; Google Wireless Transcoder;\)/'
 ];
 
 /**
@@ -1073,36 +1073,36 @@ $wgCheckUserLog = false;
 // TODO: Clean up after CK editor as default test is finished, used in app/includes/wikia/Extensions.php
 // list of test wikis on which CK editor is the default editor (unless user explicitly sets different one)
 $wgCKEdefaultEditorTestWikis = [
-    // group 1
-    544934, 14316, 130814, 14764, 490, 3469, 185111, 277, 38969, 1241752, 710900, 2569, 2180, 831, 105, 638551, 5975,
-    68154, 175043, 643102, 750919, 31618, 9768, 1268, 6527, 12244, 985887, 677654, 659, 653222, 1426824, 1139, 6279, 766,
-    271325, 667, 633820, 7193, 702401, 11344, 1166, 342218, 1030786, 312, 8221, 604797, 381, 824677, 134307, 212757,
-    166617, 997, 14161, 1346, 4097, 321995, 525179, 2583, 536811, 8322, 5473, 1573, 175944, 880093, 1458654, 912, 1049,
-    575144, 430, 1000027, 896, 1209305, 598369, 1138138, 977, 1163770, 11649, 12747, 1130468, 10178, 812244, 78127,
-    66452, 670464, 3534, 1766, 4531, 594035, 699353, 5481, 12113, 44531, 1377985, 38926, 2022, 6877, 617245, 807122,
-    718954, 4470, 427912, 310, 3066, 2531, 981708, 6708, 291796, 707903, 1013286, 1114574, 5682, 37152, 9637, 6139, 635,
-    586931, 13501, 790642, 749375, 6390, 891, 4907, 435087, 7052, 553933, 594611, 468156, 401001, 534, 793375, 601762,
-    1019331, 89210, 3395, 4267, 749, 1090910, 1473, 91051, 7439, 55445, 161263, 422454, 833147, 6521, 7639, 639206,
-    112657, 8035, 989, 480886, 1248, 1110714, 8311, 470973, 544777, 768449, 189030, 122722, 7542, 480276, 1051712,
-    614094, 1228271, 5618, 2459, 571430, 1097470, 1020891, 357399, 85103, 6342, 3212, 345416, 1304636, 989102, 2897,
-    759, 2514, 57800, 580383, 1134817, 770288, 1021507, 1061981, 590987, 284111, 101230, 360967, 11115, 1023891, 822,
-    792310, 12734, 593209, 265480, 1361490, 525359, 1055644, 1282596, 1199146, 5942, 1720, 8681, 392, 434195, 487467,
-    764816, 1863, 580809, 570658, 1280124, 1178, 150738, 2781, 916058,
-    // group 2
-    530, 1081, 2520, 1254589, 1249, 3443, 1079837, 5278, 1544, 621556, 255, 3775, 169605, 3510, 24357, 462, 5813, 1744,
-    769303, 458479, 35322, 22439, 867635, 260936, 1071836, 443588, 3313, 629, 2857, 376, 276141, 1332299, 13367, 608783,
-    401, 18751, 295658, 249133, 151693, 245424, 458381, 848200, 20780, 941394, 740935, 1012029, 51, 7434, 3405, 118480,
-    681379, 2866, 1153146, 2154, 1258949, 1114809, 801751, 11106, 724592, 9144, 3144, 1149584, 803756, 955166, 3489,
-    124137, 823, 1062439, 79888, 543435, 1407, 602, 297767, 1053611, 665, 281135, 44732, 6216, 87205, 5748, 95, 91319,
-    750, 6092, 204565, 27822, 47276, 140095, 7976, 146012, 453462, 123411, 10994, 5858, 1048673, 305850, 3626, 644564,
-    554951, 711765, 1024023, 1016456, 7727, 86644, 52685, 351990, 6236, 3289, 149192, 558403, 611971, 6546, 8015, 746358,
-    765031, 3468, 745286, 1425, 130547, 558705, 1903, 1109913, 120639, 1206155, 3155, 1264671, 1015651, 1030684, 39401,
-    2777, 1063533, 833670, 704662, 677670, 524772, 1391253, 6961, 296530, 547034, 636376, 7852, 9565, 1229499, 115238,
-    1368, 1365085, 9252, 767758, 6013, 1464550, 3989, 1362292, 437084, 2334, 133392, 764460, 63627, 1872, 936541, 4396,
-    410236, 2188, 5935, 744227, 281465, 1199421, 42426, 863039, 6786, 4156, 2794, 229033, 1204308, 2390, 114341, 2889,
-    642, 566695, 3502, 598051, 781890, 736299, 6840, 3207, 930697, 849806, 1036242, 38188, 912119, 1066675, 953630,
-    285136, 679923, 142503, 265126, 504037, 286083, 351776, 1393535, 3473, 73495, 1447835, 88531, 1084546, 6051, 643051,
-    11764, 7060, 1337446, 26903, 351441, 1065217, 1715, 4951, 60471, 1718, 13022
+	// group 1
+	544934, 14316, 130814, 14764, 490, 3469, 185111, 277, 38969, 1241752, 710900, 2569, 2180, 831, 105, 638551, 5975,
+	68154, 175043, 643102, 750919, 31618, 9768, 1268, 6527, 12244, 985887, 677654, 659, 653222, 1426824, 1139, 6279, 766,
+	271325, 667, 633820, 7193, 702401, 11344, 1166, 342218, 1030786, 312, 8221, 604797, 381, 824677, 134307, 212757,
+	166617, 997, 14161, 1346, 4097, 321995, 525179, 536811, 8322, 5473, 1573, 175944, 880093, 1458654, 912, 1049,
+	575144, 430, 1000027, 896, 1209305, 598369, 1138138, 977, 1163770, 11649, 12747, 1130468, 10178, 812244, 78127,
+	66452, 670464, 3534, 1766, 4531, 594035, 699353, 5481, 12113, 44531, 1377985, 38926, 2022, 6877, 617245, 807122,
+	718954, 4470, 427912, 310, 3066, 2531, 981708, 6708, 291796, 707903, 1013286, 1114574, 5682, 37152, 9637, 6139, 635,
+	586931, 13501, 790642, 749375, 6390, 891, 4907, 435087, 7052, 553933, 594611, 468156, 401001, 534, 793375, 601762,
+	1019331, 89210, 3395, 4267, 749, 1090910, 1473, 91051, 7439, 55445, 161263, 422454, 833147, 6521, 7639, 639206,
+	112657, 8035, 989, 480886, 1248, 1110714, 8311, 470973, 544777, 768449, 189030, 122722, 7542, 480276, 1051712,
+	614094, 1228271, 5618, 2459, 571430, 1097470, 1020891, 357399, 85103, 6342, 3212, 345416, 1304636, 989102, 2897,
+	759, 2514, 57800, 580383, 1134817, 770288, 1021507, 1061981, 590987, 284111, 101230, 360967, 11115, 1023891, 822,
+	792310, 12734, 593209, 265480, 1361490, 525359, 1055644, 1282596, 1199146, 5942, 1720, 8681, 392, 434195, 487467,
+	764816, 1863, 580809, 570658, 1280124, 1178, 150738, 2781, 916058,
+	// group 2
+	530, 1081, 2520, 1254589, 1249, 3443, 1079837, 5278, 1544, 621556, 255, 3775, 169605, 3510, 24357, 462, 5813, 1744,
+	769303, 458479, 35322, 22439, 867635, 260936, 1071836, 443588, 3313, 629, 2857, 376, 276141, 1332299, 13367, 608783,
+	401, 18751, 295658, 249133, 151693, 245424, 458381, 848200, 20780, 941394, 740935, 1012029, 51, 7434, 3405, 118480,
+	681379, 2866, 1153146, 2154, 1258949, 1114809, 801751, 11106, 724592, 9144, 3144, 1149584, 803756, 955166, 3489,
+	124137, 823, 1062439, 79888, 543435, 1407, 602, 297767, 1053611, 665, 281135, 44732, 6216, 87205, 5748, 95, 91319,
+	750, 6092, 204565, 27822, 47276, 140095, 7976, 146012, 453462, 123411, 10994, 5858, 1048673, 305850, 3626, 644564,
+	554951, 711765, 1024023, 1016456, 7727, 86644, 52685, 351990, 6236, 3289, 149192, 558403, 611971, 6546, 8015, 746358,
+	765031, 3468, 745286, 1425, 130547, 558705, 1903, 1109913, 120639, 1206155, 3155, 1264671, 1015651, 1030684, 39401,
+	2777, 1063533, 833670, 704662, 677670, 524772, 1391253, 6961, 296530, 547034, 636376, 7852, 9565, 1229499, 115238,
+	1368, 1365085, 9252, 767758, 6013, 1464550, 3989, 1362292, 437084, 2334, 133392, 764460, 63627, 1872, 936541, 4396,
+	410236, 2188, 5935, 744227, 281465, 1199421, 42426, 863039, 6786, 4156, 2794, 229033, 1204308, 2390, 114341, 2889,
+	642, 566695, 3502, 598051, 781890, 736299, 6840, 3207, 930697, 849806, 1036242, 38188, 912119, 1066675, 953630,
+	285136, 679923, 142503, 265126, 504037, 286083, 351776, 1393535, 3473, 73495, 1447835, 88531, 1084546, 6051, 643051,
+	11764, 7060, 1337446, 26903, 351441, 1065217, 1715, 4951, 60471, 1718, 13022
 ];
 
 /**
@@ -1283,6 +1283,19 @@ $wgCreateDatabaseActiveCluster = 'c7';
 $wgCreateLanguageWikisWithPath = false;
 
 /**
+ * Whether to create new English wikis under the fandom.com domain.
+ * @var bool $wgCreateEnglishWikisOnFandomCom
+ */
+$wgCreateEnglishWikisOnFandomCom = false;
+
+/**
+ * Wiki description enter by the user on the CNW page. Removed after wiki is created
+ * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
+ * @var string $wgWikiDescription
+ */
+$wgWikiDescription = '';
+
+/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -1298,17 +1311,17 @@ $wgCrossSiteAJAXdomainExceptions = [];
  * @var Array $wgCrossWikiaSearchExcludedWikis
  */
 $wgCrossWikiaSearchExcludedWikis = [
-    // Answers
-    11557,
-    // Uncyclopedias
-    425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
-    859, 2219, 1159, 2794, 2258, 1183, 1512,
-    // Community Central
-    177,
-    // Scratchpad
-    95,
-    // QA Wikis
-    13604, 40726, 46734, 43960, 43963, 43964, 43965, 43966, 43967, 43952,
+	// Answers
+	11557,
+	// Uncyclopedias
+	425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
+	859, 2219, 1159, 2794, 2258, 1183, 1512,
+	// Community Central
+	177,
+	// Scratchpad
+	95,
+	// QA Wikis
+	13604, 40726, 46734, 43960, 43963, 43964, 43965, 43966, 43967, 43952,
 ];
 
 /**
@@ -1332,8 +1345,8 @@ $wgDBAhandler = 'db3';
  * @var Array $wgDBArchiveCluster
  */
 $wgDBArchiveCluster = [
-    'geo-db-archive-master.query.consul' => 0,
-    'geo-db-archive-slave.query.consul' => 1000
+	'geo-db-archive-master.query.consul' => 0,
+	'geo-db-archive-slave.query.consul' => 1000
 ];
 
 /**
@@ -1514,13 +1527,13 @@ $wgDebugLogFile = '';
  * @var Array $wgDebugLogGroups
  */
 $wgDebugLogGroups = [
-    'ExternalStorage' => true,
-    'ExternalStoreDB' => true,
-    'MessageCache' => true,
-    'poolcounter' => true,  // errors from PoolCounterWork
-    'replication' => true,  // replication errros / excessive lags
-    'squid' => true,        // timeouts and errors from SquidPurgeClient
-    'createwiki' => true,   // CreateWiki process
+	'ExternalStorage' => true,
+	'ExternalStoreDB' => true,
+	'MessageCache' => true,
+	'poolcounter' => true,  // errors from PoolCounterWork
+	'replication' => true,  // replication errros / excessive lags
+	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
 ];
 
 /**
@@ -1618,78 +1631,78 @@ $wgDefaultSearchProfile = 'default';
  * @var Array $wgDefaultUserOptions
  */
 $wgDefaultUserOptions = [
-    'ccmeonemails' => 0,
-    'cols' => 80,
-    'date' => 'default',
-    'diffonly' => 0,
-    'disablemail' => 0,
-    'disablesuggest' => 0,
-    'editfont' => 'default',
-    'editondblclick' => 0,
-    /*
-     * Default editor is VisualEditor. This is used in
-     * app/extensions/wikia/EditorPreference/EditorPreference.class.php
-     */
-    'editor' => 2,
-    'editsection' => 1,
-    'editsectiononrightclick' => 0,
-    'enotifdiscussionsfollows' => 1,
-    'enotifdiscussionsvotes' => 1,
-    'enotifminoredits' => 1,
-    'enotifrevealaddr' => 0,
-    'enotifusertalkpages' => 1,
-    'enotifwatchlistpages' => 1,
-    'extendwatchlist' => 0,
-    'externaldiff' => 0,
-    'externaleditor' => 0,
-    'fancysig' => 0,
-    'forceeditsummary' => 0,
-    'gender' => 'unknown',
-    'hideminor' => 0,
-    'hidepatrolled' => 0,
-    'highlightbroken' => 1,
-    'htmlemails' => 1,
-    'imagesize' => 1,
-    'justify' => 0,
-    'math' => 1,
-    'minordefault' => 0,
-    'newpageshidepatrolled' => 0,
-    'nocache' => 0,
-    'noconvertlink' => 0,
-    'norollbackdiff' => 0,
-    'numberheadings' => 0,
-    'previewonfirst' => 0,
-    'previewontop' => 1,
-    'quickbar' => 5,
-    'rcdays' => 7,
-    'rclimit' => 50,
-    'rememberpassword' => 0,
-    'rows' => 25,
-    'searchlimit' => 20,
-    'showhiddencats' => 0,
-    'showjumplinks' => 1,
-    'shownumberswatching' => 1,
-    'showtoc' => 1,
-    'showtoolbar' => 1,
-    'skin' => 'oasis',
-    'stubthreshold' => 0,
-    'thumbsize' => 2,
-    'underline' => 2,
-    'uselivepreview' => 0,
-    'usenewrc' => 1,
-    'watchcreations' => 1,
-    'watchdefault' => 1,
-    'watchdeletion' => 0,
-    'watchlistdays' => 3.0,
-    'watchlistdigest' => 1,
-    'watchlisthideanons' => 0,
-    'watchlisthidebots' => 0,
-    'watchlisthideliu' => 0,
-    'watchlisthideminor' => 0,
-    'watchlisthideown' => 0,
-    'watchlisthidepatrolled' => 0,
-    'watchmoves' => 0,
-    'wllimit' => 250,
+	'ccmeonemails' => 0,
+	'cols' => 80,
+	'date' => 'default',
+	'diffonly' => 0,
+	'disablemail' => 0,
+	'disablesuggest' => 0,
+	'editfont' => 'default',
+	'editondblclick' => 0,
+	/*
+	 * Default editor is VisualEditor. This is used in
+	 * app/extensions/wikia/EditorPreference/EditorPreference.class.php
+	 */
+	'editor' => 2,
+	'editsection' => 1,
+	'editsectiononrightclick' => 0,
+	'enotifdiscussionsfollows' => 1,
+	'enotifdiscussionsvotes' => 1,
+	'enotifminoredits' => 1,
+	'enotifrevealaddr' => 0,
+	'enotifusertalkpages' => 1,
+	'enotifwatchlistpages' => 1,
+	'extendwatchlist' => 0,
+	'externaldiff' => 0,
+	'externaleditor' => 0,
+	'fancysig' => 0,
+	'forceeditsummary' => 0,
+	'gender' => 'unknown',
+	'hideminor' => 0,
+	'hidepatrolled' => 0,
+	'highlightbroken' => 1,
+	'htmlemails' => 1,
+	'imagesize' => 1,
+	'justify' => 0,
+	'math' => 1,
+	'minordefault' => 0,
+	'newpageshidepatrolled' => 0,
+	'nocache' => 0,
+	'noconvertlink' => 0,
+	'norollbackdiff' => 0,
+	'numberheadings' => 0,
+	'previewonfirst' => 0,
+	'previewontop' => 1,
+	'quickbar' => 5,
+	'rcdays' => 7,
+	'rclimit' => 50,
+	'rememberpassword' => 0,
+	'rows' => 25,
+	'searchlimit' => 20,
+	'showhiddencats' => 0,
+	'showjumplinks' => 1,
+	'shownumberswatching' => 1,
+	'showtoc' => 1,
+	'showtoolbar' => 1,
+	'skin' => 'oasis',
+	'stubthreshold' => 0,
+	'thumbsize' => 2,
+	'underline' => 2,
+	'uselivepreview' => 0,
+	'usenewrc' => 1,
+	'watchcreations' => 1,
+	'watchdefault' => 1,
+	'watchdeletion' => 0,
+	'watchlistdays' => 3.0,
+	'watchlistdigest' => 1,
+	'watchlisthideanons' => 0,
+	'watchlisthidebots' => 0,
+	'watchlisthideliu' => 0,
+	'watchlisthideminor' => 0,
+	'watchlisthideown' => 0,
+	'watchlisthidepatrolled' => 0,
+	'watchmoves' => 0,
+	'wllimit' => 250,
 ];
 
 /**
@@ -1971,20 +1984,20 @@ $wgDTD = 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd';
  * @var Array $wgDummyLanguageCodes
  */
 $wgDummyLanguageCodes = [
-    'als' => 'gsw',
-    'bat-smg' => 'sgs',
-    'be-x-old' => 'be-tarask',
-    'bh' => 'bho',
-    'fiu-vro' => 'vro',
-    'lol' => 'lol', # Used for In Context Translations
-    'no' => 'nb',
-    'qqq' => 'qqq', # Used for message documentation.
-    'qqx' => 'qqx', # Used for viewing message keys.
-    'roa-rup' => 'rup',
-    'simple' => 'en',
-    'zh-classical' => 'lzh',
-    'zh-min-nan' => 'nan',
-    'zh-yue' => 'yue',
+	'als' => 'gsw',
+	'bat-smg' => 'sgs',
+	'be-x-old' => 'be-tarask',
+	'bh' => 'bho',
+	'fiu-vro' => 'vro',
+	'lol' => 'lol', # Used for In Context Translations
+	'no' => 'nb',
+	'qqq' => 'qqq', # Used for message documentation.
+	'qqx' => 'qqx', # Used for viewing message keys.
+	'roa-rup' => 'rup',
+	'simple' => 'en',
+	'zh-classical' => 'lzh',
+	'zh-min-nan' => 'nan',
+	'zh-yue' => 'yue',
 ];
 
 /**
@@ -1994,9 +2007,9 @@ $wgDummyLanguageCodes = [
  * @var Array $wgDumpsDisabledWikis
  */
 $wgDumpsDisabledWikis = [
-    43339, // lyrics.wikia.com
-    60540, // fr.lyrics.wikia.com
-    78733, // websitewiki.wikia.com
+	43339, // lyrics.wikia.com
+	60540, // fr.lyrics.wikia.com
+	78733, // websitewiki.wikia.com
 ];
 
 /**
@@ -2013,89 +2026,89 @@ $wgEditEncoding = '';
  * @var Array $wgEditInterfaceWhitelist
  */
 $wgEditInterfaceWhitelist = [
-    // Interface messages
-    'Blockedtext',
-    'Blog-empty-user-blog',
-    'Categoryblacklist',
-    'Chat',
-    'Chat-ban-option-list',
-    'Chat-entry-point-guidelines',
-    'Chat-join-the-chat',
-    'Chat-live2',
-    'Chat-start-a-chat',
-    'Chat-status-away',
-    'Chat-user-joined',
-    'Chat-user-parted',
-    'Chat-user-was-banned',
-    'Chat-user-was-kicked',
-    'Chat-welcome-message',
-    'Community-corner',
-    'Community-to-do-list',
-    'Communitymessages-notice-msg',
-    'Communitypage-policy-module-link-page-name',
-    'Communitypage-subheader-welcome',
-    'Communitypage-tasks-header-welcome',
-    'Copyrightwarning',
-    'Createpage-with-video',
-    'Custom404page-noarticletext-alternative-found',
-    'Deletereason-dropdown',
-    'Description',
-    'Editor-template-list',
-    'Edittools',
-    'Edittools-upload',
-    'Emoticons',
-    'Filedelete-reason-dropdown',
-    'Forum-policies-and-faq',
-    'Global-navigation-local-search-placeholder',
-    'ImportJS',
-    'Ipboptions',
-    'Ipbreason-dropdown',
-    'Licenses',
-    'Mainpage',
-    'Moveddeleted-notice',
-    'Newarticletext',
-    'Noarticletext',
-    'Oasis-comments-header',
-    'Pagetitle',
-    'Pagetitle-view-mainpage',
-    'Photosblacklist',
-    'ProfileTags',
-    'Protect-dropdown',
-    'Recentchangestext',
-    'Sidebar',
-    'Sitenotice',
-    'Sitenotice_id',
-    'Smw_allows_pattern',
-    'Talkpageheader',
-    'Talkpagetext',
-    'Titleblacklist',
-    'TitleBlacklist',
-    'Uploadtext',
-    'User-identity-box-group-authenticated',
-    'User-identity-box-group-blocked',
-    'User-identity-box-group-bot',
-    'User-identity-box-group-bureaucrat',
-    'User-identity-box-group-chatmoderator',
-    'User-identity-box-group-content-moderator',
-    'User-identity-box-group-council',
-    'User-identity-box-group-founder',
-    'User-identity-box-group-helper',
-    'User-identity-box-group-rollback',
-    'User-identity-box-group-staff',
-    'User-identity-box-group-sysop',
-    'User-identity-box-group-threadmoderator',
-    'User-identity-box-group-voldev',
-    'User-identity-box-group-vstf',
-    'Userrights-groups-help',
-    'Welcome-bot-flag',
-    'Welcome-enabled',
-    'Welcome-message-anon',
-    'Welcome-message-user',
-    'Welcome-message-wall-anon',
-    'Welcome-message-wall-user',
-    'Welcome-user',
-    'Welcome-user-page',
-    'Wiki-navigation',
+	// Interface messages
+	'Blockedtext',
+	'Blog-empty-user-blog',
+	'Categoryblacklist',
+	'Chat',
+	'Chat-ban-option-list',
+	'Chat-entry-point-guidelines',
+	'Chat-join-the-chat',
+	'Chat-live2',
+	'Chat-start-a-chat',
+	'Chat-status-away',
+	'Chat-user-joined',
+	'Chat-user-parted',
+	'Chat-user-was-banned',
+	'Chat-user-was-kicked',
+	'Chat-welcome-message',
+	'Community-corner',
+	'Community-to-do-list',
+	'Communitymessages-notice-msg',
+	'Communitypage-policy-module-link-page-name',
+	'Communitypage-subheader-welcome',
+	'Communitypage-tasks-header-welcome',
+	'Copyrightwarning',
+	'Createpage-with-video',
+	'Custom404page-noarticletext-alternative-found',
+	'Deletereason-dropdown',
+	'Description',
+	'Editor-template-list',
+	'Edittools',
+	'Edittools-upload',
+	'Emoticons',
+	'Filedelete-reason-dropdown',
+	'Forum-policies-and-faq',
+	'Global-navigation-local-search-placeholder',
+	'ImportJS',
+	'Ipboptions',
+	'Ipbreason-dropdown',
+	'Licenses',
+	'Mainpage',
+	'Moveddeleted-notice',
+	'Newarticletext',
+	'Noarticletext',
+	'Oasis-comments-header',
+	'Pagetitle',
+	'Pagetitle-view-mainpage',
+	'Photosblacklist',
+	'ProfileTags',
+	'Protect-dropdown',
+	'Recentchangestext',
+	'Sidebar',
+	'Sitenotice',
+	'Sitenotice_id',
+	'Smw_allows_pattern',
+	'Talkpageheader',
+	'Talkpagetext',
+	'Titleblacklist',
+	'TitleBlacklist',
+	'Uploadtext',
+	'User-identity-box-group-authenticated',
+	'User-identity-box-group-blocked',
+	'User-identity-box-group-bot',
+	'User-identity-box-group-bureaucrat',
+	'User-identity-box-group-chatmoderator',
+	'User-identity-box-group-content-moderator',
+	'User-identity-box-group-council',
+	'User-identity-box-group-founder',
+	'User-identity-box-group-helper',
+	'User-identity-box-group-rollback',
+	'User-identity-box-group-staff',
+	'User-identity-box-group-sysop',
+	'User-identity-box-group-threadmoderator',
+	'User-identity-box-group-voldev',
+	'User-identity-box-group-vstf',
+	'Userrights-groups-help',
+	'Welcome-bot-flag',
+	'Welcome-enabled',
+	'Welcome-message-anon',
+	'Welcome-message-user',
+	'Welcome-message-wall-anon',
+	'Welcome-message-wall-user',
+	'Welcome-user',
+	'Welcome-user-page',
+	'Wiki-navigation',
 ];
 
 /**
@@ -2660,6 +2673,13 @@ $wgEnableFandomStoriesOnSearchResultPage = true;
  * @var bool $wgEnableFastLinkCache
  */
 $wgEnableFastLinkCache = true;
+
+/**
+ * Enable the FeedsAndPosts extension
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableFeedsAndPostsExt
+ */
+$wgEnableFeedsAndPostsExt = false;
 
 /**
  * Enable FileInfoFunctions extension.
@@ -3490,13 +3510,6 @@ $wgEnableSemanticScribuntoExt = false;
 $wgEnableSendGridPostback = true;
 
 /**
- * Enable SEO Link Hreflang extension.
- * @see extensions/wikia/SeoLinkHreflang
- * @var bool $wgEnableSeoLinkHreflangExt
- */
-$wgEnableSeoLinkHreflangExt = false;
-
-/**
  * If on, the sidebar navigation links are cached for users with the current
  * language set. This can save a touch of load on a busy site by shaving off
  * extra message lookups. However it is also fragile: changing the site
@@ -3913,13 +3926,13 @@ $wgEnableWikiaMobileSmartBanner = null;
  * @var Array $wgWikiaMobileSmartBannerConfig
  */
 $wgWikiaMobileSmartBannerConfig = [
-    'name' => 'Game Guides',
-    'icon' => 'https://static.wikia.nocookie.net/8af6c2f0-05aa-425c-a107-78c0551ca5e4',
-    'meta' => [
-        // The values below are public app IDs.
-        'apple-itunes-app' => 'app-id=422467074',
-        'google-play-app' => 'app-id=com.wikia.app.GameGuides'
-    ]
+	'name' => 'Game Guides',
+	'icon' => 'https://static.wikia.nocookie.net/8af6c2f0-05aa-425c-a107-78c0551ca5e4',
+	'meta' => [
+		// The values below are public app IDs.
+		'apple-itunes-app' => 'app-id=422467074',
+		'google-play-app' => 'app-id=com.wikia.app.GameGuides'
+	]
 ];
 
 /**
@@ -4366,14 +4379,14 @@ $wgFileBackends = [];
  * @var Array $wgFileBlacklist
  */
 $wgFileBlacklist = [
-    # HTML may contain cookie-stealing JavaScript and web bugs
-    'html', 'htm', 'js', 'jsb', 'mhtml', 'mht', 'xhtml', 'xht',
-    # PHP scripts may execute arbitrary code on the server
-    'php', 'phtml', 'php3', 'php4', 'php5', 'phps',
-    # Other types that may be interpreted by some servers
-    'shtml', 'jhtml', 'pl', 'py', 'cgi',
-    # May contain harmful executables for Windows victims
-    'exe', 'scr', 'dll', 'msi', 'vbs', 'bat', 'com', 'pif', 'cmd', 'vxd', 'cpl'
+	# HTML may contain cookie-stealing JavaScript and web bugs
+	'html', 'htm', 'js', 'jsb', 'mhtml', 'mht', 'xhtml', 'xht',
+	# PHP scripts may execute arbitrary code on the server
+	'php', 'phtml', 'php3', 'php4', 'php5', 'phps',
+	# Other types that may be interpreted by some servers
+	'shtml', 'jhtml', 'pl', 'py', 'cgi',
+	# May contain harmful executables for Windows victims
+	'exe', 'scr', 'dll', 'msi', 'vbs', 'bat', 'com', 'pif', 'cmd', 'vxd', 'cpl'
 ];
 
 /**
@@ -4402,7 +4415,7 @@ $wgFileCacheDirectory = false;
  * @var Array $wgFileExtensions
  */
 $wgFileExtensions = [ 'png', 'gif', 'jpg', 'jpeg', 'ico', 'pdf', 'svg', 'odt',
-    'ods', 'odp', 'odg', 'odc', 'odf', 'odi', 'odm' ];
+	'ods', 'odp', 'odg', 'odc', 'odf', 'odi', 'odm' ];
 
 /**
  * Metadata fields not shown on file pages.
@@ -4410,17 +4423,17 @@ $wgFileExtensions = [ 'png', 'gif', 'jpg', 'jpeg', 'ico', 'pdf', 'svg', 'odt',
  * @var Array $wgFilePageFilterMetaFields
  */
 $wgFilePageFilterMetaFields = [
-    'altvideoid' => 1,
-    'categoryid' => 1,
-    'jpegbitratecode' => 1,
-    'marketplaceid' => 1,
-    'sourceid' => 1,
-    'stdbitratecode' => 1,
-    'streamurl' => 1,
-    'thumbnail' => 1,
-    'uniquename' => 1,
-    'videoid' => 1,
-    'videourl' => 1,
+	'altvideoid' => 1,
+	'categoryid' => 1,
+	'jpegbitratecode' => 1,
+	'marketplaceid' => 1,
+	'sourceid' => 1,
+	'stdbitratecode' => 1,
+	'streamurl' => 1,
+	'thumbnail' => 1,
+	'uniquename' => 1,
+	'videoid' => 1,
+	'videourl' => 1,
 ];
 
 /**
@@ -4466,7 +4479,7 @@ $wgFilterCallback = false;
  * @var Array $wgFilterLogTypes
  */
 $wgFilterLogTypes = [
-    'patrol' => true
+	'patrol' => true
 ];
 
 /**
@@ -4517,16 +4530,16 @@ $wgFixMalayalamUnicode = true;
  * @var Array $wgFooterIcons
  */
 $wgFooterIcons = [
-    'copyright' => [
-        'copyright' => [], // placeholder for the built in copyright icon
-    ],
-    'poweredby' => [
-        'mediawiki' => [
-            'src' => null, // Defaults to "$wgStylePath/common/images/poweredby_mediawiki_88x31.png"
-            'url' => '//www.mediawiki.org/',
-            'alt' => 'Powered by MediaWiki',
-        ]
-    ],
+	'copyright' => [
+		'copyright' => [], // placeholder for the built in copyright icon
+	],
+	'poweredby' => [
+		'mediawiki' => [
+			'src' => null, // Defaults to "$wgStylePath/common/images/poweredby_mediawiki_88x31.png"
+			'url' => '//www.mediawiki.org/',
+			'alt' => 'Powered by MediaWiki',
+		]
+	],
 ];
 
 /**
@@ -4564,16 +4577,16 @@ $wgForeignFileRepos = [];
  * @var Array $wgGalleryOptions
  */
 $wgGalleryOptions = [
-    // Default number of images per-row in the gallery. 0: adapt to screensize.
-    'imagesPerRow' => 0,
-    // Width of the cells containing images in galleries (in pixels).
-    'imageWidth' => 120,
-    // Height of the cells containing images in galleries (in pixels).
-    'imageHeight' => 120,
-    // Length of caption to truncate (in characters).
-    'captionLength' => 25,
-    // Show the filesize in bytes in categories.
-    'showBytes' => true,
+	// Default number of images per-row in the gallery. 0: adapt to screensize.
+	'imagesPerRow' => 0,
+	// Width of the cells containing images in galleries (in pixels).
+	'imageWidth' => 120,
+	// Height of the cells containing images in galleries (in pixels).
+	'imageHeight' => 120,
+	// Length of caption to truncate (in characters).
+	'captionLength' => 25,
+	// Show the filesize in bytes in categories.
+	'showBytes' => true,
 ];
 
 /**
@@ -4598,138 +4611,138 @@ $wgGenerateThumbnailOnParse = false;
  * @var Array $wgGlobalUserPreferenceWhiteList
  */
 $wgGlobalUserPreferenceWhiteList = [
-    'literals' => [
-        'CategoryExhibitionDisplayType',
-        'CategoryExhibitionSortType',
-        'ccmeonemails',
-        'cols',
-        'contextchars',
-        'createpagedefaultblank',
-        'createpagepopupdisabled',
-        'date',
-        'diffonly',
-        'disablecategoryselect',
-        'disablelinksuggest',
-        'disablemail',
-        'disablesuggest',
-        'disablesyntaxhighlighting',
-        'disablewysiwyg',
-        'editfont',
-        'editondblclick',
-        'editor',
-        'editsection',
-        'editsectiononrightclick',
-        'editwidth',
-        'enableGoSearch',
-        'enableuserjs',
-        'enableWatchlistFeed',
-        'EnableWysiwyg',
-        'enotifdiscussionsfollows',
-        'enotifdiscussionsvotes',
-        'enotiffollowedpages',
-        'enotifminoredits',
-        'enotifrevealaddr',
-        'enotifusertalkpages',
-        'enotifwallthread',
-        'enotifwatchlistpages',
-        'enotifyme',
-        'extendwatchlist',
-        'externaldiff',
-        'externaleditor',
-        'forceeditsummary',
-        'hideEditsWikis',
-        'hidefollowedpages',
-        'hidefromattribution',
-        'hideminor',
-        'hidepatrolled',
-        'hidepersonalachievements',
-        'highlightbroken',
-        'htmlemails',
-        'https-opt-in',
-        'imageReviewSort',
-        'imagesize',
-        'justify',
-        'language',
-        'marketingallowed',
-        'math',
-        'memory-limit',
-        'minordefault',
-        'myhomedefaultview',
-        'myTools',
-        'newpageshidepatrolled',
-        'nocache',
-        'noconvertlink',
-        'norollbackdiff',
-        'NotConfirmedLogin',
-        'numberheadings',
-        'oasis-toolbar-promotions',
-        'previewonfirst',
-        'previewontop',
-        'quickbar',
-        'rcdays',
-        'RCFilters',
-        'rclimit',
-        'rememberpassword',
-        'riched_disable',
-        'riched_start_disabled',
-        'riched_toggle_remember_state',
-        'riched_use_popup',
-        'riched_use_toggle',
-        'rows',
-        'searchAllNamespaces',
-        'searcheverything',
-        'searchlimit',
-        'show_task_comments',
-        'showAds',
-        'showhiddencats',
-        'showjumplinks',
-        'shownumberswatching',
-        'showtoc',
-        'showtoolbar',
-        'skin',
-        'skinoverwrite',
-        'smw-prefs-ask-options-collapsed-default',
-        'smw-prefs-ask-options-tooltip-display',
-        'stubthreshold',
-        'thumbsize',
-        'timecorrection',
-        'underline',
-        'unsubscribed',
-        'upwiz_deflicense',
-        'uselivepreview',
-        'usenewrc',
-        'userlandingpage',
-        'variant',
-        'visualeditor-betatempdisable',
-        'visualeditor-enable',
-        'walldelete',
-        'wallshowsource',
-        'watchcreations',
-        'watchdefault',
-        'watchdeletion',
-        'watchlistdays',
-        'watchlistdigest',
-        'watchlistdigestclear',
-        'watchlisthideanons',
-        'watchlisthidebots',
-        'watchlisthideliu',
-        'watchlisthideminor',
-        'watchlisthideown',
-        'watchlisthidepatrolled',
-        'watchmoves',
-        'watchsubpages',
-        'widget_bookmark_pages',
-        'widgets',
-        'WikiaBarDisplayState',
-        'wllimit'
-    ],
-    'regexes' => [
-        '([a-z]+)-toolbar-contents$',
-        '^forum_sort_.*',
-        '^gadget-.*',
-        '^searchNs.*$',
-        '^wall_sort_.*',
-    ]
+	'literals' => [
+		'CategoryExhibitionDisplayType',
+		'CategoryExhibitionSortType',
+		'ccmeonemails',
+		'cols',
+		'contextchars',
+		'createpagedefaultblank',
+		'createpagepopupdisabled',
+		'date',
+		'diffonly',
+		'disablecategoryselect',
+		'disablelinksuggest',
+		'disablemail',
+		'disablesuggest',
+		'disablesyntaxhighlighting',
+		'disablewysiwyg',
+		'editfont',
+		'editondblclick',
+		'editor',
+		'editsection',
+		'editsectiononrightclick',
+		'editwidth',
+		'enableGoSearch',
+		'enableuserjs',
+		'enableWatchlistFeed',
+		'EnableWysiwyg',
+		'enotifdiscussionsfollows',
+		'enotifdiscussionsvotes',
+		'enotiffollowedpages',
+		'enotifminoredits',
+		'enotifrevealaddr',
+		'enotifusertalkpages',
+		'enotifwallthread',
+		'enotifwatchlistpages',
+		'enotifyme',
+		'extendwatchlist',
+		'externaldiff',
+		'externaleditor',
+		'forceeditsummary',
+		'hideEditsWikis',
+		'hidefollowedpages',
+		'hidefromattribution',
+		'hideminor',
+		'hidepatrolled',
+		'hidepersonalachievements',
+		'highlightbroken',
+		'htmlemails',
+		'https-opt-in',
+		'imageReviewSort',
+		'imagesize',
+		'justify',
+		'language',
+		'marketingallowed',
+		'math',
+		'memory-limit',
+		'minordefault',
+		'myhomedefaultview',
+		'myTools',
+		'newpageshidepatrolled',
+		'nocache',
+		'noconvertlink',
+		'norollbackdiff',
+		'NotConfirmedLogin',
+		'numberheadings',
+		'oasis-toolbar-promotions',
+		'previewonfirst',
+		'previewontop',
+		'quickbar',
+		'rcdays',
+		'RCFilters',
+		'rclimit',
+		'rememberpassword',
+		'riched_disable',
+		'riched_start_disabled',
+		'riched_toggle_remember_state',
+		'riched_use_popup',
+		'riched_use_toggle',
+		'rows',
+		'searchAllNamespaces',
+		'searcheverything',
+		'searchlimit',
+		'show_task_comments',
+		'showAds',
+		'showhiddencats',
+		'showjumplinks',
+		'shownumberswatching',
+		'showtoc',
+		'showtoolbar',
+		'skin',
+		'skinoverwrite',
+		'smw-prefs-ask-options-collapsed-default',
+		'smw-prefs-ask-options-tooltip-display',
+		'stubthreshold',
+		'thumbsize',
+		'timecorrection',
+		'underline',
+		'unsubscribed',
+		'upwiz_deflicense',
+		'uselivepreview',
+		'usenewrc',
+		'userlandingpage',
+		'variant',
+		'visualeditor-betatempdisable',
+		'visualeditor-enable',
+		'walldelete',
+		'wallshowsource',
+		'watchcreations',
+		'watchdefault',
+		'watchdeletion',
+		'watchlistdays',
+		'watchlistdigest',
+		'watchlistdigestclear',
+		'watchlisthideanons',
+		'watchlisthidebots',
+		'watchlisthideliu',
+		'watchlisthideminor',
+		'watchlisthideown',
+		'watchlisthidepatrolled',
+		'watchmoves',
+		'watchsubpages',
+		'widget_bookmark_pages',
+		'widgets',
+		'WikiaBarDisplayState',
+		'wllimit'
+	],
+	'regexes' => [
+		'([a-z]+)-toolbar-contents$',
+		'^forum_sort_.*',
+		'^gadget-.*',
+		'^searchNs.*$',
+		'^wall_sort_.*',
+	]
 ];
 
 /**
@@ -4740,8 +4753,8 @@ $wgGlobalUserPreferenceWhiteList = [
  * @var Array $wgGlobalWhitelistedFromAutoblocks
  */
 $wgGlobalWhitelistedFromAutoblocks = [
-        '38.127.199.5',  //chat-s2
-        '38.127.199.4'   //chat-s1
+		'38.127.199.5',  //chat-s2
+		'38.127.199.4'   //chat-s1
 ];
 // CONFIG_REVISION: make sure, it's still needed
 
@@ -4945,12 +4958,12 @@ $wgIllegalFileChars = ':';
  * @var Array $wgImageLimits
  */
 $wgImageLimits = [
-    [ 320, 240 ],
-    [ 640, 480 ],
-    [ 800, 600 ],
-    [ 1024, 768 ],
-    [ 1280, 1024 ],
-    [ 10000, 10000 ]
+	[ 320, 240 ],
+	[ 640, 480 ],
+	[ 800, 600 ],
+	[ 1024, 768 ],
+	[ 1280, 1024 ],
+	[ 10000, 10000 ]
 ];
 
 /**
@@ -5095,9 +5108,9 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
  * @var Array $wgInvalidRedirectTargets
  */
 $wgInvalidRedirectTargets = [
-    'Filepath',
-    'Mypage',
-    'Mytalk'
+	'Filepath',
+	'Mypage',
+	'Mytalk'
 ];
 
 /**
@@ -5113,9 +5126,9 @@ $wgInvalidUsernameCharacters = '@:';
  * @var Array $wgJavaScriptTestConfig
  */
 $wgJavaScriptTestConfig = [
-    'qunit' => [
-        'documentation' => '//www.mediawiki.org/wiki/Manual:JavaScript_unit_testing',
-    ],
+	'qunit' => [
+		'documentation' => '//www.mediawiki.org/wiki/Manual:JavaScript_unit_testing',
+	],
 ];
 
 /**
@@ -5373,11 +5386,11 @@ $wgLocalFileRepo = false;
  * @var Array $wgLocalisationCacheConf
  */
 $wgLocalisationCacheConf = [
-    'class' => 'LocalisationCache',
-    'store' => 'files',
-    'storeClass' => false,
-    'storeDirectory' => false,
-    'manualRecache' => true,
+	'class' => 'LocalisationCache',
+	'store' => 'files',
+	'storeClass' => false,
+	'storeDirectory' => false,
+	'manualRecache' => true,
 ];
 
 /**
@@ -5428,13 +5441,13 @@ $wgLocalTZoffset = null;
  * @var Array $wgLocalUserPreferenceWhiteList
  */
 $wgLocalUserPreferenceWhiteList = [
-    'regexes' => [
-        '^adoptionmails-([0-9]+)',
-        '^founderemails-complete-digest-([0-9]+)$',
-        '^founderemails-edits-([0-9]+)$',
-        '^founderemails-joins-([0-9]+)$',
-        '^founderemails-views-digest-([0-9]+)$',
-    ]
+	'regexes' => [
+		'^adoptionmails-([0-9]+)',
+		'^founderemails-complete-digest-([0-9]+)$',
+		'^founderemails-edits-([0-9]+)$',
+		'^founderemails-joins-([0-9]+)$',
+		'^founderemails-views-digest-([0-9]+)$',
+	]
 ];
 
 /**
@@ -5454,23 +5467,23 @@ $wgLockManagers = [];
  * @var Array $wgLogActions
  */
 $wgLogActions = [
-    'block/block'        => 'blocklogentry',
-    'block/unblock'      => 'unblocklogentry',
-    'block/reblock'      => 'reblock-logentry',
-    'protect/protect'    => 'protectedarticle',
-    'protect/modify'     => 'modifiedarticleprotection',
-    'protect/unprotect'  => 'unprotectedarticle',
-    'protect/move_prot'  => 'movedarticleprotection',
-    'rights/rights'      => 'rightslogentry',
-    'rights/autopromote' => 'rightslogentry-autopromote',
-    'upload/upload'      => 'uploadedimage',
-    'upload/overwrite'   => 'overwroteimage',
-    'upload/revert'      => 'uploadedimage',
-    'import/upload'      => 'import-logentry-upload',
-    'import/interwiki'   => 'import-logentry-interwiki',
-    'merge/merge'        => 'pagemerge-logentry',
-    'suppress/block'     => 'blocklogentry',
-    'suppress/reblock'   => 'reblock-logentry',
+	'block/block'        => 'blocklogentry',
+	'block/unblock'      => 'unblocklogentry',
+	'block/reblock'      => 'reblock-logentry',
+	'protect/protect'    => 'protectedarticle',
+	'protect/modify'     => 'modifiedarticleprotection',
+	'protect/unprotect'  => 'unprotectedarticle',
+	'protect/move_prot'  => 'movedarticleprotection',
+	'rights/rights'      => 'rightslogentry',
+	'rights/autopromote' => 'rightslogentry-autopromote',
+	'upload/upload'      => 'uploadedimage',
+	'upload/overwrite'   => 'overwroteimage',
+	'upload/revert'      => 'uploadedimage',
+	'import/upload'      => 'import-logentry-upload',
+	'import/interwiki'   => 'import-logentry-interwiki',
+	'merge/merge'        => 'pagemerge-logentry',
+	'suppress/block'     => 'blocklogentry',
+	'suppress/reblock'   => 'reblock-logentry',
 ];
 
 /**
@@ -5481,14 +5494,14 @@ $wgLogActions = [
  * @var Array $wgLogActionsHandlers
  */
 $wgLogActionsHandlers = [
-    // move, move_redir
-    'move/*'            => 'MoveLogFormatter',
-    // delete, restore, revision, event
-    'delete/*'          => 'DeleteLogFormatter',
-    'suppress/revision' => 'DeleteLogFormatter',
-    'suppress/event'    => 'DeleteLogFormatter',
-    'suppress/delete'   => 'DeleteLogFormatter',
-    'patrol/patrol'     => 'PatrolLogFormatter',
+	// move, move_redir
+	'move/*'            => 'MoveLogFormatter',
+	// delete, restore, revision, event
+	'delete/*'          => 'DeleteLogFormatter',
+	'suppress/revision' => 'DeleteLogFormatter',
+	'suppress/event'    => 'DeleteLogFormatter',
+	'suppress/delete'   => 'DeleteLogFormatter',
+	'patrol/patrol'     => 'PatrolLogFormatter',
 ];
 
 /**
@@ -5500,17 +5513,17 @@ $wgLogActionsHandlers = [
  * @var Array $wgLogHeaders
  */
 $wgLogHeaders = [
-    ''        => 'alllogstext',
-    'block'   => 'blocklogtext',
-    'protect' => 'protectlogtext',
-    'rights'  => 'rightslogtext',
-    'delete'  => 'dellogpagetext',
-    'upload'  => 'uploadlogpagetext',
-    'move'    => 'movelogpagetext',
-    'import'  => 'importlogpagetext',
-    'patrol'  => 'patrol-log-header',
-    'merge'   => 'mergelogpagetext',
-    'suppress' => 'suppressionlogtext',
+	''        => 'alllogstext',
+	'block'   => 'blocklogtext',
+	'protect' => 'protectlogtext',
+	'rights'  => 'rightslogtext',
+	'delete'  => 'dellogpagetext',
+	'upload'  => 'uploadlogpagetext',
+	'move'    => 'movelogpagetext',
+	'import'  => 'importlogpagetext',
+	'patrol'  => 'patrol-log-header',
+	'merge'   => 'mergelogpagetext',
+	'suppress' => 'suppressionlogtext',
 ];
 
 /**
@@ -5530,17 +5543,17 @@ $wgLoginLanguageSelector = true;
  * @var Array $wgLogNames
  */
 $wgLogNames = [
-    ''        => 'all-logs-page',
-    'block'   => 'blocklogpage',
-    'protect' => 'protectlogpage',
-    'rights'  => 'rightslog',
-    'delete'  => 'dellogpage',
-    'upload'  => 'uploadlogpage',
-    'move'    => 'movelogpage',
-    'import'  => 'importlogpage',
-    'patrol'  => 'patrol-log-page',
-    'merge'   => 'mergelog',
-    'suppress' => 'suppressionlog',
+	''        => 'all-logs-page',
+	'block'   => 'blocklogpage',
+	'protect' => 'protectlogpage',
+	'rights'  => 'rightslog',
+	'delete'  => 'dellogpage',
+	'upload'  => 'uploadlogpage',
+	'move'    => 'movelogpage',
+	'import'  => 'importlogpage',
+	'patrol'  => 'patrol-log-page',
+	'merge'   => 'mergelog',
+	'suppress' => 'suppressionlog',
 ];
 
 /**
@@ -5559,7 +5572,7 @@ $wgLogo = false;
  * @var Array $wgLogRestrictions
  */
 $wgLogRestrictions = [
-    'suppress' => 'suppressionlog'
+	'suppress' => 'suppressionlog'
 ];
 
 /**
@@ -5570,17 +5583,17 @@ $wgLogRestrictions = [
  * @var Array $wgLogTypes
  */
 $wgLogTypes = [
-    '',
-    'block',
-    'protect',
-    'rights',
-    'delete',
-    'upload',
-    'move',
-    'import',
-    'patrol',
-    'merge',
-    'suppress',
+	'',
+	'block',
+	'protect',
+	'rights',
+	'delete',
+	'upload',
+	'move',
+	'import',
+	'patrol',
+	'merge',
+	'suppress',
 ];
 
 /**
@@ -5791,18 +5804,18 @@ $wgMaxUploadSize = 1024 * 1024 * 10; // 10 MiB
  * @var Array $wgMediaHandlers
  */
 $wgMediaHandlers = [
-    'image/gif'      => 'GIFHandler',
-    'image/jpeg'     => 'JpegHandler',
-    'image/png'      => 'PNGHandler',
-    'image/svg'      => 'SvgHandler', // compat
-    'image/svg+xml'  => 'SvgHandler', // official
-    'image/tiff'     => 'TiffHandler',
-    'image/vnd.djvu' => 'DjVuHandler', // official
-    'image/x-bmp'    => 'BmpHandler',
-    'image/x-djvu'   => 'DjVuHandler', // compat
-    'image/x-ms-bmp' => 'BmpHandler',
-    'image/x-xcf'    => 'XCFHandler',
-    'image/x.djvu'   => 'DjVuHandler', // compat
+	'image/gif'      => 'GIFHandler',
+	'image/jpeg'     => 'JpegHandler',
+	'image/png'      => 'PNGHandler',
+	'image/svg'      => 'SvgHandler', // compat
+	'image/svg+xml'  => 'SvgHandler', // official
+	'image/tiff'     => 'TiffHandler',
+	'image/vnd.djvu' => 'DjVuHandler', // official
+	'image/x-bmp'    => 'BmpHandler',
+	'image/x-djvu'   => 'DjVuHandler', // compat
+	'image/x-ms-bmp' => 'BmpHandler',
+	'image/x-xcf'    => 'XCFHandler',
+	'image/x.djvu'   => 'DjVuHandler', // compat
 ];
 
 /**
@@ -5828,8 +5841,8 @@ $wgMemCachedPersistent = true;
  * @var Array $wgMemCachedServers
  */
 $wgMemCachedServers = [
-    0 => 'prod.twemproxy.service.consul:21000',
-    1 => 'prod.twemproxy.service.consul:31000',
+	0 => 'prod.twemproxy.service.consul:21000',
+	1 => 'prod.twemproxy.service.consul:31000',
 ];
 
 /**
@@ -5890,16 +5903,16 @@ $wgMimeType = 'text/html';
  * @var Array $wgMimeTypeBlacklist
  */
 $wgMimeTypeBlacklist = [
-    # HTML may contain cookie-stealing JavaScript and web bugs
-    'text/html', 'text/javascript', 'text/x-javascript', 'application/x-shellscript',
-    # PHP scripts may execute arbitrary code on the server
-    'application/x-php', 'text/x-php',
-    # Other types that may be interpreted by some servers
-    'text/x-python', 'text/x-perl', 'text/x-bash', 'text/x-sh', 'text/x-csh',
-    # Client-side hazards on Internet Explorer
-    'text/scriptlet', 'application/x-msdownload',
-    # Windows metafile, client-side vulnerability on some systems
-    'application/x-msmetafile',
+	# HTML may contain cookie-stealing JavaScript and web bugs
+	'text/html', 'text/javascript', 'text/x-javascript', 'application/x-shellscript',
+	# PHP scripts may execute arbitrary code on the server
+	'application/x-php', 'text/x-php',
+	# Other types that may be interpreted by some servers
+	'text/x-python', 'text/x-perl', 'text/x-bash', 'text/x-sh', 'text/x-csh',
+	# Client-side hazards on Internet Explorer
+	'text/scriptlet', 'application/x-msdownload',
+	# Windows metafile, client-side vulnerability on some systems
+	'application/x-msmetafile',
 ];
 
 /**
@@ -6099,7 +6112,7 @@ $wgOverrideSiteFeed = [];
  * @var Array $wgPagePropLinkInvalidations
  */
 $wgPagePropLinkInvalidations = [
-    'hiddencat' => 'categorylinks',
+	'hiddencat' => 'categorylinks',
 ];
 
 /**
@@ -6117,67 +6130,67 @@ $wgPagePropLinkInvalidations = [
  * @var Array $wgPageShareServices
  */
 $wgPageShareServices = [
-    [
-        'name' => 'line',
-        'title' => 'Line',
-        'href' => 'http://line.me/R/msg/text/?$title $url',
-        'languages:include' => [ 'ja' ],
-        'displayOnlyOnTouchDevices' => true,
-    ], [
-        'name' => 'vkontakte',
-        'title' => 'VK',
-        'href' => 'http://vkontakte.ru/share.php?url=$url',
-        'languages:include' => [ 'ru' ],
-    ], [
-        'name' => 'facebook',
-        'title' => 'Facebook',
-        'href' => 'https://www.facebook.com/sharer/sharer.php?u=$url',
-    ], [
-        'name' => 'odnoklassniki',
-        'title' => 'Odnoklassniki',
-        'href' => 'http://connect.odnoklassniki.ru/dk?cmd=WidgetSharePreview&st.cmd=WidgetSharePreview&st._aid=ExternalShareWidget_SharePreview&st.shareUrl=$url',
-        'languages:include' => [ 'ru' ],
-    ], [
-        'name' => 'twitter',
-        'title' => 'Twitter',
-        'href' => 'https://twitter.com/share?url=$url',
-        'languages:exclude' => [ 'zh' ],
-    ], [
-        'name' => 'googleplus',
-        'title' => 'Google+',
-        'href' => 'https://plus.google.com/share?url=$url',
-        'languages:include' => [ 'ja' ],
-    ], [
-        'name' => 'meneame',
-        'title' => 'Menéame',
-        'href' => 'http://meneame.net/submit.php?url=$url',
-        'languages:include' => [ 'es' ],
-    ], [
-        'name' => 'reddit',
-        'title' => 'Reddit',
-        'href' => 'http://www.reddit.com/submit?url=$url',
-        'languages:exclude' => [ 'ja', 'zh', 'de', 'fr', 'es', 'ru', 'pl' ],
-    ], [
-        'name' => 'tumblr',
-        'title' => 'Tumblr',
-        'href' => 'http://www.tumblr.com/share/link?url=$url',
-        'languages:exclude' => [ 'ja', 'zh', 'fr', 'ru', 'pl' ],
-    ], [
-        'name' => 'weibo',
-        'title' => 'Sina Weibo',
-        'href' => 'http://service.weibo.com/share/share.php?url=$url&title=$title',
-        'languages:include' => [ 'zh' ],
-    ], [
-        'name' => 'nk',
-        'title' => 'NK',
-        'href' => 'http://nk.pl/sledzik/widget?content=$url',
-        'languages:include' => [ 'pl' ],
-    ], [
-        'name' => 'wykop',
-        'title' => 'Wykop',
-        'href' => 'http://www.wykop.pl/dodaj/link/?url=$url&title=$title&desc=$description',
-        'languages:include' => [ 'pl' ],
-    ],
+	[
+		'name' => 'line',
+		'title' => 'Line',
+		'href' => 'http://line.me/R/msg/text/?$title $url',
+		'languages:include' => [ 'ja' ],
+		'displayOnlyOnTouchDevices' => true,
+	], [
+		'name' => 'vkontakte',
+		'title' => 'VK',
+		'href' => 'http://vkontakte.ru/share.php?url=$url',
+		'languages:include' => [ 'ru' ],
+	], [
+		'name' => 'facebook',
+		'title' => 'Facebook',
+		'href' => 'https://www.facebook.com/sharer/sharer.php?u=$url',
+	], [
+		'name' => 'odnoklassniki',
+		'title' => 'Odnoklassniki',
+		'href' => 'http://connect.odnoklassniki.ru/dk?cmd=WidgetSharePreview&st.cmd=WidgetSharePreview&st._aid=ExternalShareWidget_SharePreview&st.shareUrl=$url',
+		'languages:include' => [ 'ru' ],
+	], [
+		'name' => 'twitter',
+		'title' => 'Twitter',
+		'href' => 'https://twitter.com/share?url=$url',
+		'languages:exclude' => [ 'zh' ],
+	], [
+		'name' => 'googleplus',
+		'title' => 'Google+',
+		'href' => 'https://plus.google.com/share?url=$url',
+		'languages:include' => [ 'ja' ],
+	], [
+		'name' => 'meneame',
+		'title' => 'Menéame',
+		'href' => 'http://meneame.net/submit.php?url=$url',
+		'languages:include' => [ 'es' ],
+	], [
+		'name' => 'reddit',
+		'title' => 'Reddit',
+		'href' => 'http://www.reddit.com/submit?url=$url',
+		'languages:exclude' => [ 'ja', 'zh', 'de', 'fr', 'es', 'ru', 'pl' ],
+	], [
+		'name' => 'tumblr',
+		'title' => 'Tumblr',
+		'href' => 'http://www.tumblr.com/share/link?url=$url',
+		'languages:exclude' => [ 'ja', 'zh', 'fr', 'ru', 'pl' ],
+	], [
+		'name' => 'weibo',
+		'title' => 'Sina Weibo',
+		'href' => 'http://service.weibo.com/share/share.php?url=$url&title=$title',
+		'languages:include' => [ 'zh' ],
+	], [
+		'name' => 'nk',
+		'title' => 'NK',
+		'href' => 'http://nk.pl/sledzik/widget?content=$url',
+		'languages:include' => [ 'pl' ],
+	], [
+		'name' => 'wykop',
+		'title' => 'Wykop',
+		'href' => 'http://www.wykop.pl/dodaj/link/?url=$url&title=$title&desc=$description',
+		'languages:include' => [ 'pl' ],
+	],
 ];
 
 /**
@@ -6215,7 +6228,7 @@ $wgParserCacheExpireTime = 14 * 24 * 3600; // 14 days
  * @var Array $wgParserConf
  */
 $wgParserConf = [
-    'class' => 'Parser',
+	'class' => 'Parser',
 ];
 
 /**
@@ -6239,8 +6252,8 @@ $wgParserOutputHooks = [];
  * @var Array $wgParserTestFiles
  */
 $wgParserTestFiles = [
-    "$IP/tests/parser/parserTests.txt",
-    "$IP/tests/parser/extraParserTests.txt"
+	"$IP/tests/parser/parserTests.txt",
+	"$IP/tests/parser/extraParserTests.txt"
 ];
 
 /**
@@ -6275,8 +6288,8 @@ $wgPasswordAttemptThrottle = [ 'count' => 5, 'seconds' => 300 ];
  * @var Array $wgPasswordResetRoutes
  */
 $wgPasswordResetRoutes = [
-    'username' => true,
-    'email' => false,
+	'username' => true,
+	'email' => false,
 ];
 
 /**
@@ -6292,14 +6305,14 @@ $wgPasswordSender = 'community@fandom.com';
  * @see extensions/wikia/PhalanxII
  */
 $wgPhalanxSupportedLanguages = [
-    'all' => 'All languages',
-    'de'  => 'German',
-    'en'  => 'English',
-    'es'  => 'Spanish',
-    'fr'  => 'French',
-    'it'  => 'Italian',
-    'pl'  => 'Polish',
-    'ru'  => 'Russian',
+	'all' => 'All languages',
+	'de'  => 'German',
+	'en'  => 'English',
+	'es'  => 'Spanish',
+	'fr'  => 'French',
+	'it'  => 'Italian',
+	'pl'  => 'Polish',
+	'ru'  => 'Russian',
 ];
 
 /**
@@ -6381,27 +6394,27 @@ $wgPrettyUrlWithTitleAndQuery = true;
  * @var Array $wgPrivateUserAttributes
  */
 $wgPrivateUserAttributes = [
-    'birthday',
-    'disabled-user-email',
-    'disabled_date',
-    'favoritelisttoken',
-    'founderemails-counter',
-    'gender',
-    'LastAdoptionDate',
-    'new_email',
-    'realname',
-    'registrationCountry',
-    'renameData',
-    'requested-closure-date',
-    'SignUpRedirect',
-    'swl_email',
-    'swl_last_notify',
-    'swl_last_view',
-    'swl_last_watch',
-    'swl_mail_count',
-    'swl_watchlisttoplink',
-    'watchlistAccessKey',
-    'watchlisttoken',
+	'birthday',
+	'disabled-user-email',
+	'disabled_date',
+	'favoritelisttoken',
+	'founderemails-counter',
+	'gender',
+	'LastAdoptionDate',
+	'new_email',
+	'realname',
+	'registrationCountry',
+	'renameData',
+	'requested-closure-date',
+	'SignUpRedirect',
+	'swl_email',
+	'swl_last_notify',
+	'swl_last_view',
+	'swl_last_watch',
+	'swl_mail_count',
+	'swl_watchlisttoplink',
+	'watchlistAccessKey',
+	'watchlisttoken',
 ];
 
 /**
@@ -6487,10 +6500,10 @@ $wgProxyPorts = [ 80, 81, 1080, 3128, 6588, 8000, 8080, 8888, 65506 ];
  * @var Array $wgProxyWhitelist
  */
 $wgProxyWhitelist = [
-    '80.58.34.170',
-    '81.178.98.202',
-    '85.179.130.236',
-    '85.195.139.203',
+	'80.58.34.170',
+	'81.178.98.202',
+	'85.179.130.236',
+	'85.195.139.203',
 ];
 
 /**
@@ -6502,21 +6515,21 @@ $wgProxyWhitelist = [
  * @var Array $wgPublicUserAttributes
  */
 $wgPublicUserAttributes = [
-    'avatar',
-    'avatar_rev',
-    'bio',
-    'coverPhoto',
-    'fancysig',
-    'fbPage',
-    'location',
-    'name',
-    'nickname',
-    'occupation',
-    'twitter',
-    'UserProfilePagesV3_birthday',
-    'UserProfilePagesV3_gender',
-    'website',
-    'wordpressId',
+	'avatar',
+	'avatar_rev',
+	'bio',
+	'coverPhoto',
+	'fancysig',
+	'fbPage',
+	'location',
+	'name',
+	'nickname',
+	'occupation',
+	'twitter',
+	'UserProfilePagesV3_birthday',
+	'UserProfilePagesV3_gender',
+	'website',
+	'wordpressId',
 ];
 
 /**
@@ -6575,26 +6588,26 @@ $wgRateLimitLog = null;
  * @var Array $wgRateLimits
  */
 $wgRateLimits = [
-    'edit' => [
-        'newbie' => [ 6, 60 ],
-        'ip' => [ 6, 60 ],
-        // SUS-4775: apply edit rate limit - 40 edits/min for users, 80 edits/min for bots
-        'user' => [ 40, 60 ],
-        'bot' => [ 80, 60 ],
-    ],
-    'move' => [
-        'newbie' => [ 2, 240 ],
-        'user' => [ 2, 240 ],
-        // SUS-4775: apply page move rate limit - 20 moves/min for admins, 80 moves/min for bots
-        'sysop' => [ 20, 60 ],
-        'bot' => [ 80, 60 ],
-    ],
-    'emailuser' => [
-        'user' => [ 2, 86400 ],
-    ],
-    'mailpassword' => [
-        'ip' => [ 1, 43200 ],
-    ],
+	'edit' => [
+		'newbie' => [ 6, 60 ],
+		'ip' => [ 6, 60 ],
+		// SUS-4775: apply edit rate limit - 40 edits/min for users, 80 edits/min for bots
+		'user' => [ 40, 60 ],
+		'bot' => [ 80, 60 ],
+	],
+	'move' => [
+		'newbie' => [ 2, 240 ],
+		'user' => [ 2, 240 ],
+		// SUS-4775: apply page move rate limit - 20 moves/min for admins, 80 moves/min for bots
+		'sysop' => [ 20, 60 ],
+		'bot' => [ 80, 60 ],
+	],
+	'emailuser' => [
+		'user' => [ 2, 86400 ],
+	],
+	'mailpassword' => [
+		'ip' => [ 1, 43200 ],
+	],
 ];
 
 /**
@@ -6603,21 +6616,21 @@ $wgRateLimits = [
  * @var Array $wgRateLimitsExcludedIPs
  */
 $wgRateLimitsExcludedIPs = [
-    '10.8.44.30',
-    '10.8.44.102',
-    '10.8.44.103',
-    '10.8.44.104',
-    '10.8.44.105',
-    '10.8.44.106',
-    '10.8.44.107',
-    '87.204.220.63',
-    '217.168.136.164',
-    '74.120.190.9',
-    '217.168.136.164', // POZO1
-    '94.42.104.162', // POZO2
-    '91.102.115.110', // POZ03
-    '65.19.148.1', // SFO1
-    '64.71.157.42', // Transit IP for the x-connect to our provider for the SF office exit point in the SJC DC
+	'10.8.44.30',
+	'10.8.44.102',
+	'10.8.44.103',
+	'10.8.44.104',
+	'10.8.44.105',
+	'10.8.44.106',
+	'10.8.44.107',
+	'87.204.220.63',
+	'217.168.136.164',
+	'74.120.190.9',
+	'217.168.136.164', // POZO1
+	'94.42.104.162', // POZO2
+	'91.102.115.110', // POZ03
+	'65.19.148.1', // SFO1
+	'64.71.157.42', // Transit IP for the x-connect to our provider for the SF office exit point in the SJC DC
 ];
 
 /**
@@ -6815,14 +6828,14 @@ $wgRepositoryBaseUrl = 'https://commons.wikimedia.org/wiki/File:';
  * Maintenance scripts can still use these
  */
 $wgReservedUsernames = [
-    'MediaWiki default', // Default 'Main Page' and MediaWiki: message pages
-    'Conversion script', // Used for the old Wikipedia software upgrade
-    'Maintenance script', // Maintenance scripts which perform editing, image import script
-    'Template namespace initialisation script', // Used in 1.2->1.3 upgrade
-    'ScriptImporter', // Default user name used by maintenance/importSiteScripts.php
-    'msg:double-redirect-fixer', // Automatic double redirect fix
-    'msg:usermessage-editor', // Default user for leaving user messages
-    'msg:proxyblocker', // For Special:Blockme
+	'MediaWiki default', // Default 'Main Page' and MediaWiki: message pages
+	'Conversion script', // Used for the old Wikipedia software upgrade
+	'Maintenance script', // Maintenance scripts which perform editing, image import script
+	'Template namespace initialisation script', // Used in 1.2->1.3 upgrade
+	'ScriptImporter', // Default user name used by maintenance/importSiteScripts.php
+	'msg:double-redirect-fixer', // Automatic double redirect fix
+	'msg:usermessage-editor', // Default user for leaving user messages
+	'msg:proxyblocker', // For Special:Blockme
 ];
 
 /**
@@ -6845,17 +6858,17 @@ $wgResourceLoaderExperimentalAsyncLoading = false;
  * @var Array $wgResourceLoaderMaxage
  */
 $wgResourceLoaderMaxage = [
-    'versioned' => [
-        // Squid/Varnish but also any other public proxy cache between the
-        // client and MediaWiki
-        'server' => 30 * 24 * 3600, // 30 days
-        // On the client side (e.g. in the browser cache).
-        'client' => 30 * 24 * 3600, // 30 days
-    ],
-    'unversioned' => [
-        'server' => 5 * 60, // 5 minutes
-        'client' => 5 * 60, // 5 minutes
-    ],
+	'versioned' => [
+		// Squid/Varnish but also any other public proxy cache between the
+		// client and MediaWiki
+		'server' => 30 * 24 * 3600, // 30 days
+		// On the client side (e.g. in the browser cache).
+		'client' => 30 * 24 * 3600, // 30 days
+	],
+	'unversioned' => [
+		'server' => 5 * 60, // 5 minutes
+		'client' => 5 * 60, // 5 minutes
+	],
 ];
 
 /**
@@ -7137,8 +7150,8 @@ $wgSessionHandler = null;
  * @var Array $wgSessionMemCachedServers
  */
 $wgSessionMemCachedServers = [
-    0 => 'prod.twemproxy.service.consul:31001',
-    1 => 'prod.twemproxy.service.consul:21001',
+	0 => 'prod.twemproxy.service.consul:31001',
+	1 => 'prod.twemproxy.service.consul:21001',
 ];
 
 /**
@@ -7433,10 +7446,10 @@ $wgSortSpecialPages = true;
  * @var Array $wgSMTP
  */
 $wgSMTP = [
-    'host'   => 'relay-mailer-s2',
-    'port'   => 25,
-    'auth'   => false,
-    'IDHost' => ''
+	'host'   => 'prod.smtp.service.consul',
+	'port'   => 25,
+	'auth'   => false,
+	'IDHost' => ''
 ];
 
 /**
@@ -7494,8 +7507,8 @@ $wgSpecialContactEmail = 'support@wikia.zendesk.com';
  * @var Array $wgSpecialPageCacheUpdates
  */
 $wgSpecialPageCacheUpdates = [
-    'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ],
-    'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ],
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
 ];
 
 /**
@@ -7505,106 +7518,106 @@ $wgSpecialPageCacheUpdates = [
  * @var Array $wgSpecialPageGroups
  */
 $wgSpecialPageGroups = [
-    'DoubleRedirects'           => 'maintenance',
-    'BrokenRedirects'           => 'maintenance',
-    'Lonelypages'               => 'maintenance',
-    'Uncategorizedpages'        => 'maintenance',
-    'Uncategorizedcategories'   => 'maintenance',
-    'Uncategorizedimages'       => 'maintenance',
-    'Uncategorizedtemplates'    => 'maintenance',
-    'Unusedcategories'          => 'maintenance',
-    'Unusedimages'              => 'maintenance',
-    'Protectedpages'            => 'maintenance',
-    'Protectedtitles'           => 'maintenance',
-    'Unusedtemplates'           => 'maintenance',
-    'Withoutinterwiki'          => 'maintenance',
-    'Longpages'                 => 'maintenance',
-    'Shortpages'                => 'maintenance',
-    'Ancientpages'              => 'maintenance',
-    'Deadendpages'              => 'maintenance',
-    'Wantedpages'               => 'maintenance',
-    'Wantedcategories'          => 'maintenance',
-    'Wantedfiles'               => 'maintenance',
-    'Wantedtemplates'           => 'maintenance',
-    'Unwatchedpages'            => 'maintenance',
-    'Fewestrevisions'           => 'maintenance',
+	'DoubleRedirects'           => 'maintenance',
+	'BrokenRedirects'           => 'maintenance',
+	'Lonelypages'               => 'maintenance',
+	'Uncategorizedpages'        => 'maintenance',
+	'Uncategorizedcategories'   => 'maintenance',
+	'Uncategorizedimages'       => 'maintenance',
+	'Uncategorizedtemplates'    => 'maintenance',
+	'Unusedcategories'          => 'maintenance',
+	'Unusedimages'              => 'maintenance',
+	'Protectedpages'            => 'maintenance',
+	'Protectedtitles'           => 'maintenance',
+	'Unusedtemplates'           => 'maintenance',
+	'Withoutinterwiki'          => 'maintenance',
+	'Longpages'                 => 'maintenance',
+	'Shortpages'                => 'maintenance',
+	'Ancientpages'              => 'maintenance',
+	'Deadendpages'              => 'maintenance',
+	'Wantedpages'               => 'maintenance',
+	'Wantedcategories'          => 'maintenance',
+	'Wantedfiles'               => 'maintenance',
+	'Wantedtemplates'           => 'maintenance',
+	'Unwatchedpages'            => 'maintenance',
+	'Fewestrevisions'           => 'maintenance',
 
-    'Userlogin'                 => 'login',
-    'Userlogout'                => 'login',
-    'CreateAccount'             => 'login',
+	'Userlogin'                 => 'login',
+	'Userlogout'                => 'login',
+	'CreateAccount'             => 'login',
 
-    'Recentchanges'             => 'changes',
-    'Recentchangeslinked'       => 'changes',
-    'Watchlist'                 => 'changes',
-    'Newimages'                 => 'changes',
-    'Newpages'                  => 'changes',
-    'Log'                       => 'changes',
-    'Tags'                      => 'changes',
+	'Recentchanges'             => 'changes',
+	'Recentchangeslinked'       => 'changes',
+	'Watchlist'                 => 'changes',
+	'Newimages'                 => 'changes',
+	'Newpages'                  => 'changes',
+	'Log'                       => 'changes',
+	'Tags'                      => 'changes',
 
-    'Upload'                    => 'media',
-    'Listfiles'                 => 'media',
-    'MIMEsearch'                => 'media',
-    'FileDuplicateSearch'       => 'media',
-    'Filepath'                  => 'media',
+	'Upload'                    => 'media',
+	'Listfiles'                 => 'media',
+	'MIMEsearch'                => 'media',
+	'FileDuplicateSearch'       => 'media',
+	'Filepath'                  => 'media',
 
-    'Listusers'                 => 'users',
-    'Activeusers'               => 'users',
-    'Listgrouprights'           => 'users',
-    'BlockList'                 => 'users',
-    'Contributions'             => 'users',
-    'Emailuser'                 => 'users',
-    'Listadmins'                => 'users',
-    'Listbots'                  => 'users',
-    'Userrights'                => 'users',
-    'Block'                     => 'users',
-    'Unblock'                   => 'users',
-    'Preferences'               => 'users',
-    'ChangeEmail'               => 'users',
-    'ChangePassword'            => 'users',
-    'DeletedContributions'      => 'users',
-    'PasswordReset'             => 'users',
+	'Listusers'                 => 'users',
+	'Activeusers'               => 'users',
+	'Listgrouprights'           => 'users',
+	'BlockList'                 => 'users',
+	'Contributions'             => 'users',
+	'Emailuser'                 => 'users',
+	'Listadmins'                => 'users',
+	'Listbots'                  => 'users',
+	'Userrights'                => 'users',
+	'Block'                     => 'users',
+	'Unblock'                   => 'users',
+	'Preferences'               => 'users',
+	'ChangeEmail'               => 'users',
+	'ChangePassword'            => 'users',
+	'DeletedContributions'      => 'users',
+	'PasswordReset'             => 'users',
 
-    'Mostlinked'                => 'highuse',
-    'Mostlinkedcategories'      => 'highuse',
-    'Mostlinkedtemplates'       => 'highuse',
-    'Mostcategories'            => 'highuse',
-    'Mostimages'                => 'highuse',
-    'Mostrevisions'             => 'highuse',
+	'Mostlinked'                => 'highuse',
+	'Mostlinkedcategories'      => 'highuse',
+	'Mostlinkedtemplates'       => 'highuse',
+	'Mostcategories'            => 'highuse',
+	'Mostimages'                => 'highuse',
+	'Mostrevisions'             => 'highuse',
 
-    'Allpages'                  => 'pages',
-    'Prefixindex'               => 'pages',
-    'Listredirects'             => 'pages',
-    'Categories'                => 'pages',
-    'Disambiguations'           => 'pages',
+	'Allpages'                  => 'pages',
+	'Prefixindex'               => 'pages',
+	'Listredirects'             => 'pages',
+	'Categories'                => 'pages',
+	'Disambiguations'           => 'pages',
 
-    'Randompage'                => 'redirects',
-    'Randomredirect'            => 'redirects',
-    'Mypage'                    => 'redirects',
-    'Mytalk'                    => 'redirects',
-    'Mycontributions'           => 'redirects',
-    'Search'                    => 'redirects',
-    'LinkSearch'                => 'redirects',
+	'Randompage'                => 'redirects',
+	'Randomredirect'            => 'redirects',
+	'Mypage'                    => 'redirects',
+	'Mytalk'                    => 'redirects',
+	'Mycontributions'           => 'redirects',
+	'Search'                    => 'redirects',
+	'LinkSearch'                => 'redirects',
 
-    'ComparePages'              => 'pagetools',
-    'Movepage'                  => 'pagetools',
-    'MergeHistory'              => 'pagetools',
-    'Revisiondelete'            => 'pagetools',
-    'Undelete'                  => 'pagetools',
-    'Export'                    => 'pagetools',
-    'Import'                    => 'pagetools',
-    'Whatlinkshere'             => 'pagetools',
+	'ComparePages'              => 'pagetools',
+	'Movepage'                  => 'pagetools',
+	'MergeHistory'              => 'pagetools',
+	'Revisiondelete'            => 'pagetools',
+	'Undelete'                  => 'pagetools',
+	'Export'                    => 'pagetools',
+	'Import'                    => 'pagetools',
+	'Whatlinkshere'             => 'pagetools',
 
-    'Statistics'                => 'wiki',
-    'Version'                   => 'wiki',
-    'Lockdb'                    => 'wiki',
-    'Unlockdb'                  => 'wiki',
-    'Allmessages'               => 'wiki',
-    'Popularpages'              => 'wiki',
+	'Statistics'                => 'wiki',
+	'Version'                   => 'wiki',
+	'Lockdb'                    => 'wiki',
+	'Unlockdb'                  => 'wiki',
+	'Allmessages'               => 'wiki',
+	'Popularpages'              => 'wiki',
 
-    'Specialpages'              => 'other',
-    'Blockme'                   => 'other',
-    'Booksources'               => 'other',
-    'JavaScriptTest'            => 'other',
+	'Specialpages'              => 'other',
+	'Blockme'                   => 'other',
+	'Booksources'               => 'other',
+	'JavaScriptTest'            => 'other',
 ];
 
 /**
@@ -7662,26 +7675,26 @@ $wgSquidServers = [];
  * @var Array $wgSquidServersNoPurge
  */
 $wgSquidServersNoPurge = [
-    '10.12.0.0/16', # RES LAN
-    '10.14.0.0/16', # POZ LAN
-    '10.8.0.0/16', # SJC LAN
-    '23.235.32.0/20', # Fastly network
-    '38.127.199.0/24', # Wikia network
-    '43.249.72.0/22', # Fastly network
-    '65.19.148.0/24', # Wikia network
-    '74.120.184.0/21', # Wikia network
-    '91.102.115.96/28', # Wikia network
-    '103.244.50.0/24', # Fastly network
-    '103.245.222.0/23', # Fastly network
-    '103.245.224.0/24', # Fastly network
-    '104.156.80.0/20', # Fastly network
-    '127.1.0.0/16', # loopback
-    '157.52.64.0/18', # Fastly network
-    '172.111.64.0/18', # Fastly network
-    '185.31.16.0/22', # Fastly network
-    '199.27.72.0/21', # Fastly network
-    '202.21.128.0/24', # Fastly network
-    '203.57.145.0/24', # Fastly network
+	'10.12.0.0/16', # RES LAN
+	'10.14.0.0/16', # POZ LAN
+	'10.8.0.0/16', # SJC LAN
+	'23.235.32.0/20', # Fastly network
+	'38.127.199.0/24', # Wikia network
+	'43.249.72.0/22', # Fastly network
+	'65.19.148.0/24', # Wikia network
+	'74.120.184.0/21', # Wikia network
+	'91.102.115.96/28', # Wikia network
+	'103.244.50.0/24', # Fastly network
+	'103.245.222.0/23', # Fastly network
+	'103.245.224.0/24', # Fastly network
+	'104.156.80.0/20', # Fastly network
+	'127.1.0.0/16', # loopback
+	'157.52.64.0/18', # Fastly network
+	'172.111.64.0/18', # Fastly network
+	'185.31.16.0/22', # Fastly network
+	'199.27.72.0/21', # Fastly network
+	'202.21.128.0/24', # Fastly network
+	'203.57.145.0/24', # Fastly network
 ];
 
 /**
@@ -7691,20 +7704,20 @@ $wgSquidServersNoPurge = [
  * @var Array $wgStaffWelcomePostLanguageToUserId
  */
 $wgStaffWelcomePostLanguageToUserId = [
-    'de' => 26339491, // Mira Laime
-    'en' => 26339491, // Mira Laime
-    'es' => 12648798, // Luchofigo85
-    'fr' => 26442523, // Hypsoline
-    'it' => 3279487, // Leviathan_89
-    'ja' => 29395778, // Kuro0222
-    'ko' => 24883131, // Miri-Nae
-    'nl' => 4142476, // Yatalu
-    'pl' => 1117661, // Nanaki
-    'pt' => 5653518, // Ultragustavo25
-    'ru' => 1121346, // Kuzura
-    'vi' => 26041741, // KhangND
-    'zh-hans' => 11909873, // Cal-Boy
-    'zh-hant' => 56584     // Ffaarr
+	'de' => 26339491, // Mira Laime
+	'en' => 26339491, // Mira Laime
+	'es' => 12648798, // Luchofigo85
+	'fr' => 26442523, // Hypsoline
+	'it' => 3279487, // Leviathan_89
+	'ja' => 29395778, // Kuro0222
+	'ko' => 24883131, // Miri-Nae
+	'nl' => 4142476, // Yatalu
+	'pl' => 1117661, // Nanaki
+	'pt' => 5653518, // Ultragustavo25
+	'ru' => 1121346, // Kuzura
+	'vi' => 26041741, // KhangND
+	'zh-hans' => 11909873, // Cal-Boy
+	'zh-hant' => 56584     // Ffaarr
 ];
 
 /**
@@ -7754,8 +7767,8 @@ $wgSummarySpamRegex = [];
  * @var Array $wgSupportedCloseMyAccountLang
  */
 $wgSupportedCloseMyAccountLang = [ 'de', 'en', 'es', 'fr', 'it', 'ja', 'pl',
-    'pt', 'pt-br', 'ru', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
-    'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue',
+	'pt', 'pt-br', 'ru', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
+	'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue',
 ];
 
 /**
@@ -7782,13 +7795,13 @@ $wgSVGConverterPath = '';
  * @var Array $wgSVGConverters
  */
 $wgSVGConverters = [
-    'batik' => 'java -Djava.awt.headless=true -jar $path/batik-rasterizer.jar -w $width -d $output $input',
-    'ImageMagick' => '$path/convert -background white -thumbnail $widthx$height\! $input PNG:$output',
-    'ImagickExt' =>  [ 'SvgHandler::rasterizeImagickExt' ],
-    'imgserv' => '$path/imgserv-wrapper -i svg -o png -w$width $input $output',
-    'inkscape' => '$path/inkscape -z -w $width -f $input -e $output',
-    'rsvg' => '$path/rsvg -w$width -h$height $input $output',
-    'sodipodi' => '$path/sodipodi -z -w $width -f $input -e $output',
+	'batik' => 'java -Djava.awt.headless=true -jar $path/batik-rasterizer.jar -w $width -d $output $input',
+	'ImageMagick' => '$path/convert -background white -thumbnail $widthx$height\! $input PNG:$output',
+	'ImagickExt' =>  [ 'SvgHandler::rasterizeImagickExt' ],
+	'imgserv' => '$path/imgserv-wrapper -i svg -o png -w$width $input $output',
+	'inkscape' => '$path/inkscape -z -w $width -f $input -e $output',
+	'rsvg' => '$path/rsvg -w$width -h$height $input $output',
+	'sodipodi' => '$path/sodipodi -z -w $width -f $input -e $output',
 ];
 
 /**
@@ -8049,22 +8062,22 @@ $wgUploadStashScalerBaseUrl = false;
  * @var Array $wgUrlProtocols
  */
 $wgUrlProtocols = [
-    '//',
-    'ftp://',
-    'git://',
-    'gopher://',
-    'http://',
-    'https://',
-    'irc://',
-    'ircs://',
-    'mailto:',
-    'mms://',
-    'news:',
-    'nntp://',
-    'svn://',
-    'telnet://',
-    'worldwind://',
-    'xmpp:',
+	'//',
+	'ftp://',
+	'git://',
+	'gopher://',
+	'http://',
+	'https://',
+	'irc://',
+	'ircs://',
+	'mailto:',
+	'mms://',
+	'news:',
+	'nntp://',
+	'svn://',
+	'telnet://',
+	'worldwind://',
+	'xmpp:',
 ];
 
 /**
@@ -8399,7 +8412,7 @@ $wgVaryOnXFP = false;
  * @var Array $wgVerbatimBlacklist
  */
 $wgVerbatimBlacklist = [ 'AP', 'AP1', 'AP2', 'AP3', 'AP4',
-    'MP', 'MP1', 'MP2', 'MP3', 'MP4' ];
+	'MP', 'MP1', 'MP2', 'MP3', 'MP4' ];
 
 /**
  * Determines if the mime type of uploaded files should be checked.
@@ -8488,6 +8501,7 @@ $wgWikiaBarMainLanguages = [ 'de', 'en', 'es', 'fr' ];
  * @var string $wgWikiaBaseDomain
  */
 $wgWikiaBaseDomain = 'wikia.com';
+$wgFandomBaseDomain = 'fandom.com';
 
 /**
  * User accounts that are used as bots but do not have the bot flag.
@@ -8496,15 +8510,15 @@ $wgWikiaBaseDomain = 'wikia.com';
  * @var Array $wgWikiaBotLikeUsers
  */
 $wgWikiaBotLikeUsers = [
-    'CreateWiki script',
-    'Default',
-    'Fandom',
-    'FandomBot',
-    'Maintenance script',
-    'QATestsStaff',
-    'Wikia',
-    'WikiaBot',
-    'WikiaStaff',
+	'CreateWiki script',
+	'Default',
+	'Fandom',
+	'FandomBot',
+	'Maintenance script',
+	'QATestsStaff',
+	'Wikia',
+	'WikiaBot',
+	'WikiaStaff',
 ];
 
 /**
@@ -8681,10 +8695,17 @@ $wgWikiaSearchIsDefault = true;
  * @var Array $wgWikiaSearchSupportedLanguages
  */
 $wgWikiaSearchSupportedLanguages = [
-    'ar', 'bg', 'ca', 'cz', 'da', 'de', 'el', 'en', 'es', 'eu', 'fa', 'fi',
-    'fr', 'ga', 'gl', 'hi', 'hu', 'hy', 'id', 'it', 'ja', 'ko', 'lv', 'nl',
-    'no', 'pl', 'pt', 'ro', 'ru', 'sv', 'sv', 'th', 'tr', 'zh'
+	'ar', 'bg', 'ca', 'cz', 'da', 'de', 'el', 'en', 'es', 'eu', 'fa', 'fi',
+	'fr', 'ga', 'gl', 'hi', 'hu', 'hy', 'id', 'it', 'ja', 'ko', 'lv', 'nl',
+	'no', 'pl', 'pt', 'ro', 'ru', 'sv', 'sv', 'th', 'tr', 'zh'
 ];
+
+/**
+ * Exclude wiki from Global Search
+ * @see extensions/wikia/Search/classes/IndexService/CrossWikiCore.php
+ * @var bool $wgExcludeWikiFromSearch
+ */
+$wgExcludeWikiFromSearch = false;
 
 /**
  * Render some links with rel=nofollow attribute.
@@ -8739,37 +8760,29 @@ $wgWikicitiesReadOnly = false;
  * @var string[] $wgWikiFactoryDomains
  */
 $wgWikiFactoryDomains = [
-    # gTLDs
-    'wikia.net',
-    'wikia.org',
-    'wikia.info',
-    # ccTLDs
-    'wikia.at',
-    'wikia.be',
-    'wikia.ch',
-    'wikia.cn',
-    'wikia.de',
-    'wikia.jp',
-    'wikia.lt',
-    'wikia.no',
-    'wikia.pl',
-    'wikia.tw',
-    'wikia.co.uk',
-    'wikia.us',
-    'wikia.fr',
-    # legacy wikicities domains
-    'wikicities.com',
-    'wikicities.net',
-    'wikicities.org'
+	# gTLDs
+	'wikia.net',
+	'wikia.org',
+	'wikia.info',
+	# ccTLDs
+	'wikia.at',
+	'wikia.be',
+	'wikia.ch',
+	'wikia.cn',
+	'wikia.de',
+	'wikia.jp',
+	'wikia.lt',
+	'wikia.no',
+	'wikia.pl',
+	'wikia.tw',
+	'wikia.co.uk',
+	'wikia.us',
+	'wikia.fr',
+	# legacy wikicities domains
+	'wikicities.com',
+	'wikicities.net',
+	'wikicities.org'
 ];
-
-/**
- * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
- * if it received a request with one of the mapped alternative domains.
- * @see $wgWikiFactoryDomains
- * @var bool $wgWikiFactoryRedirectForAlternateDomains
- */
-$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
@@ -8806,11 +8819,11 @@ $wgXhtmlNamespaces = [];
  * @var Array $wgXMLMimeTypes
  */
 $wgXMLMimeTypes = [
-    'http://www.w3.org/2000/svg:svg' => 'image/svg+xml',
-    'svg' => 'image/svg+xml',
-    'http://www.lysator.liu.se/~alla/dia/:diagram' => 'application/x-dia-diagram',
-    'http://www.w3.org/1999/xhtml:html' => 'text/html', // application/xhtml+xml?
-    'html' => 'text/html', // application/xhtml+xml?
+	'http://www.w3.org/2000/svg:svg' => 'image/svg+xml',
+	'svg' => 'image/svg+xml',
+	'http://www.lysator.liu.se/~alla/dia/:diagram' => 'application/x-dia-diagram',
+	'http://www.w3.org/1999/xhtml:html' => 'text/html', // application/xhtml+xml?
+	'html' => 'text/html', // application/xhtml+xml?
 ];
 
 /**

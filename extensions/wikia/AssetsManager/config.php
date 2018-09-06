@@ -235,6 +235,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/build/geo.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
+		'//extensions/wikia/AdEngine/js/lookup/bidders.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
@@ -304,8 +305,8 @@ $config['adengine2_pr3b1d_js'] = [
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
 
-		// prebid library
-		'#group_pr3b1d_prod_js'
+		// Use Prebid.js built in @wikia/ad-products
+		'//extensions/wikia/AdEngine/js/build/prebid.js'
 	],
 ];
 
@@ -952,14 +953,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
-];
-
-// TODO remove this group and include file directly after ADEN-6797 release
-$config['pr3b1d_prod_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
-	]
 ];
 
 $config['wikiamobile_ads_js'] = [
@@ -2491,4 +2484,11 @@ $config['special_contact_forget_account_js'] = [
 	'assets' => [
 		'//extensions/wikia/SpecialContact2/SpecialContactForgetAccount.js',
 	],
+];
+
+$config['feeds_and_posts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+	]
 ];

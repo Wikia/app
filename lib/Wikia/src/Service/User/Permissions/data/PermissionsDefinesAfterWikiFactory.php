@@ -261,11 +261,6 @@ $wgGroupPermissions['staff']['createnewwiki'] = true;
 
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
 
-// permissions
-$wgGroupPermissions['staff']['finishcreate'] = true;
-$wgGroupPermissions['sysop']['finishcreate'] = true;
-$wgGroupPermissions['bureaucrat']['finishcreate'] = true;
-
 $wgGroupPermissions['*']['curatedcontent'] = false;
 $wgGroupPermissions['staff']['curatedcontent'] = true;
 $wgGroupPermissions['helper']['curatedcontent'] = true;

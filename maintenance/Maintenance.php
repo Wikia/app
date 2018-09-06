@@ -113,6 +113,7 @@ abstract class Maintenance {
 	private $mDb = null;
 
 	// Wikia change
+	/* @var Wikia\Logger\WikiaLogger */
 	protected $mLogger = null;
 
 	/**
@@ -325,7 +326,7 @@ abstract class Maintenance {
 
 		// Wikia change: log output if possible
 		if ( $this->mLogger instanceof Wikia\Logger\WikiaLogger ) {
-			$this->mLogger->info( $out );
+			$this->mLogger->info( trim( $out, "\n" ) );
 		}
 
 		if ( $this->mQuiet ) {

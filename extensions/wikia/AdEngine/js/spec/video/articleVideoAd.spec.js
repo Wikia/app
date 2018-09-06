@@ -11,9 +11,6 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 					adsFrequency: 3
 				}
 			},
-			adsTracking: {
-
-			},
 			adContext: {
 				get: function (name) {
 					var map = {
@@ -59,7 +56,6 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 			mocks.vastUrlBuilder,
 			mocks.megaAdUnitBuilder,
 			mocks.srcProvider,
-			mocks.adsTracking,
 			mocks.vastDebugger,
 			mocks.log
 		);

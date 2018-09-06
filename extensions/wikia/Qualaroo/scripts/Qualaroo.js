@@ -1,4 +1,4 @@
-require(['wikia.trackingOptIn'], function (trackingOptIn) {
+require(['wikia.trackingOptIn', 'mw'], function (trackingOptIn, mw) {
 	'use strict';
 
 	var _kiq = [],
@@ -6,15 +6,7 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 		setABTestProperties;
 
 	createCookie = function(cookieName) {
-		var cookieValue = cookieName + '=true;path=/;domain=',
-			hostName = window.location.host,
-			devDomainIndex = hostName.indexOf('wikia-dev');
-		if (devDomainIndex > -1) {
-			cookieValue += '.' + hostName.substr(devDomainIndex);
-		} else {
-			cookieValue += '.wikia.com';
-		}
-		document.cookie = cookieValue;
+		document.cookie = cookieName + '=true;path=/;domain=' + mw.config.get('wgCookieDomain');
 	};
 
 	setABTestProperties = function () {
@@ -37,19 +29,19 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 	function loadQualaroo () {
 		setTimeout(function(){
 			var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
-			s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
+			s.async = true; s.src = mw.config.get('wgQualarooUrl'); f.parentNode.insertBefore(s, f);
 		}, 1);
 	}
 
-	if (window.wgUser) {
-		_kiq.push(['identify', window.wgUser]);
+	if (mw.config.get('wgUser')) {
+		_kiq.push(['identify', mw.config.get('wgUser')]);
 	}
 
 	var dartGnreValues = window.dartGnreValues || [];
 
 	_kiq.push(['set', {
-		'userLanguage': window.wgUserLanguage,
-		'contentLanguage': window.wgContentLanguage,
+		'userLanguage': mw.config.get('wgUserLanguage'),
+		'contentLanguage': mw.config.get('wgContentLanguage'),
 		'pageType': window.wikiaPageType,
 		'isCorporatePage': (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
 		// canonical vertical only: 'Games', 'Entertainment', 'Lifestyle', 'Wikia'
@@ -57,7 +49,7 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 		// all verticals
 		'fullVerticalName': window.fullVerticalName,
 		'visitorType': window.visitorType,
-		'isLoggedIn': !!window.wgUserName,
+		'isLoggedIn': !!mw.config.get('wgUserName'),
 		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
 		'isContributor': window.isContributor,
 		'isCurrentWikiAdmin': window.isCurrentWikiAdmin,

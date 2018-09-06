@@ -101,13 +101,13 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
-			   $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-			   $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
-			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
-			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
-		       $wgFandomAppSmartBannerText;
+		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
+		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
+		       $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -121,11 +121,13 @@ class MercuryApi {
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
+			'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 			'enableLightweightContributions' => $wgEnableLightweightContributions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
@@ -140,11 +142,12 @@ class MercuryApi {
 			],
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'namespaces' => $wgContLang->getNamespaces(),
+			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 			'scriptPath' => $wgScriptPath,
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
-			'discussionColorOverride' => SassUtil::sanitizeColor($wgDiscussionColorOverride),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
@@ -155,9 +158,8 @@ class MercuryApi {
 					'url' => AnalyticsProviderNetzAthleten::URL
 				]
 			],
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
-			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
+			'twitterAccount' => $wgTwitterAccount,
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 
@@ -256,14 +258,28 @@ class MercuryApi {
 	 * @return string userName
 	 */
 	private function addUser( User $user  ) {
+		// TODO: clean me after new mobile bottom of a page is released and icache expires
+		$premiumBottom = (bool) RequestContext::getMain()->getRequest()->getVal('premiumBottom', false);
+
 		$userName = trim( $user->getName() );
 		if ( !isset( $this->users[$userName] ) ) {
+			if ($premiumBottom) {
+				if (AvatarService::isEmptyOrFirstDefault( $userName )) {
+					$avatarUrl = null;
+				} else {
+					$avatarUrl = AvatarService::getAvatarUrl(
+						$userName,
+						AvatarService::AVATAR_SIZE_SMALL_PLUS);
+				}
+			} else {
+				$avatarUrl = AvatarService::getAvatarUrl(
+					$userName,
+					AvatarService::AVATAR_SIZE_MEDIUM);
+			}
+
 			$this->users[$userName] = [
 				'id' => (int) $user->getId(),
-				'avatar' => AvatarService::getAvatarUrl(
-					$userName,
-					AvatarService::AVATAR_SIZE_MEDIUM
-				),
+				'avatar' => $avatarUrl,
 				'url' => AvatarService::getUrl( $userName ),
 			];
 		}

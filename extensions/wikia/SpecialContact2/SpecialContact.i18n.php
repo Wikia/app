@@ -2298,7 +2298,7 @@ Veel plezier!',
 Veel plezier!',
 	'specialcontact-intro-general' => 'Je kunt met dit formulier contact opnemen met [[w:project:Staff|FANDOM medewerkers]]. Beheerders van deze wiki kun je [[Special:ListAdmins|hier]] vinden.
 
-Aanvullende informatie over hoe je het beste contact met FANDOM op kunt nemen vindt je [[w:nl.community:Help:Contact opnemen met Fandom|hier]]. Als je vragen hebt voor andere gebruikers kun je ook op de [[w:c:nl.community:Special:Forum|FANDOM Community Forums]] terecht.
+Aanvullende informatie over hoe je het beste contact met FANDOM op kunt nemen vind je [[w:nl.community:Help:Contact opnemen met Fandom|hier]]. Als je vragen hebt voor andere gebruikers kun je ook op de [[w:c:nl.community:Special:Forum|FANDOM Community Forums]] terecht.
 
 Als je de voorkeur geeft aan normaal e-mailcontact of als je meerdere bijlagen heby kun je e-mailen naar [mailto:community@fandom.com community@fandom.com] (Engels).',
 	'specialcontact-desc' => 'FANDOMs contactformulier [[Special:Contact]]',
