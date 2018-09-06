@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
+	'wikia.tracker',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
 	require.optional('ext.wikia.adEngine.lookup.bidders'),
@@ -29,6 +30,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	browserDetect,
 	doc,
 	log,
+	tracker,
 	win,
 	mercuryListener,
 	bidders,
@@ -211,6 +213,12 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			callCollapse(params, 'disabled');
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
 			return;
 		}
 
