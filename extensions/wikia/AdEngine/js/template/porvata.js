@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.porvata', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTweaker',
@@ -16,6 +17,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
+	adContext,
 	DOMElementTweaker,
 	slotRegistry,
 	slotTweaker,
@@ -41,6 +43,13 @@ define('ext.wikia.adEngine.template.porvata', [
 		],
 		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
+
+	function callCollapse(params, adType) {
+		slotRegistry.get(params.slotName).collapse({
+			adType: adType || params.adType,
+			source: 'porvata'
+		});
+	}
 
 	function callHop(params, shouldSetStatus) {
 		if (shouldSetStatus) {
@@ -182,6 +191,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {Boolean} [params.setSlotStatusBasedOnVAST] - Decides whether slot status is dispatched manually or based on VAST response
 	 */
 	function show(params) {
+
 		var imaVpaidModeInsecure = 2,
 			settings;
 
@@ -197,6 +207,11 @@ define('ext.wikia.adEngine.template.porvata', [
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
 			callHop(params, true);
 
+			return;
+		}
+
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
+			callCollapse(params, 'disabled');
 			return;
 		}
 
