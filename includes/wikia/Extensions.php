@@ -864,6 +864,11 @@ if ( !empty( $wgEnableDiscussionsLog ) ) {
 }
 
 /**
+ * Enable 
+ */
+include( "$IP/extensions/wikia/MarkWikiAsClosed/MarkWikiAsClosed.setup.php" );
+
+/**
  * Enable Embeddable Discussions extension
  */
 if ( !empty( $wgEnableDiscussions ) ) {
