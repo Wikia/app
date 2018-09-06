@@ -1,5 +1,5 @@
 schedule: "50 20 * * *"
 args:
 - php
-- usr/wikia/slot1/current/src/extensions/wikia/FounderEmails/maintenance.php
+- /usr/wikia/slot1/current/src/extensions/wikia/FounderEmails/FounderEmailsMaintenance.php
 - --event=completeDigest
