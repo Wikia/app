@@ -29,44 +29,37 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 			}
 		};
 
-	function markAdSlots(replace, lazySlotName) {
+	function markAdSlots() {
 		Object
 			.keys(placementsMap)
 			.forEach(function (key) {
-				if (
-					(!lazySlotName && !placementsMap[key].lazy) ||
-					(lazySlotName && lazySlotName === key && placementsMap[key].lazy)
-				) {
-					var slot = doc.getElementById(key);
-
-					if (slot) {
-						var slotOperation = replace ? replaceSlot : duplicateSlot;
-
-						slotOperation(key, slot);
-					}
+				if (!placementsMap[key].lazy) {
+					duplicateSlot(key);
 				}
 			});
 	}
 
-	function replaceSlot(key, slot) {
-		DOMElementTweaker.addClass(slot, placementClass);
-		DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
-		DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
-	}
+	function duplicateSlot(slotName) {
+		var slot = doc.getElementById(slotName);
 
-	function duplicateSlot(key, slot) {
-		var node = doc.createElement('span');
+		if (slot) {
+			var node = doc.createElement('span');
 
-		DOMElementTweaker.addClass(node, placementClass);
-		DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
-		DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
-		DOMElementTweaker.hide(node, true);
+			DOMElementTweaker.addClass(node, placementClass);
+			DOMElementTweaker.setData(node, 'uid', placementsMap[slotName].uid);
+			DOMElementTweaker.setData(node, 'style', placementsMap[slotName].style);
+			DOMElementTweaker.hide(node, true);
 
-		slot.parentNode.insertBefore(node, slot.previousSibling);
+			slot.parentNode.insertBefore(node, slot.previousSibling);
+
+			return node;
+		}
+
+		return false;
 	}
 
 	function injectScript() {
-		markAdSlots(false);
+		markAdSlots();
 
 		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
 
@@ -77,7 +70,9 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	}
 
 	function triggerScript() {
-		win.BT.clearThrough();
+		if (win && win.BT && win.BT.clearThrough) {
+			win.BT.clearThrough();
+		}
 	}
 
 	function init() {
@@ -85,8 +80,8 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	}
 
 	return {
+		duplicateSlot: duplicateSlot,
 		init: init,
-		markAdSlots: markAdSlots,
 		triggerScript: triggerScript
 	};
 });

@@ -29,8 +29,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			if (!pushed && pushPos < scrollPosition) {
 				eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
 
-				if (babDetection.isBlocking()) {
-					btRecLoader.markAdSlots(false, slotName);
+				if (babDetection.isBlocking() && btRecLoader.duplicateSlot(slotName)) {
 					btRecLoader.triggerScript();
 				}
 
