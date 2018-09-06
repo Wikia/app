@@ -65,23 +65,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		return map;
 	}
 
-	function getNotApplicable() {
-		var notApplicable = [];
-
-		Object.keys(slots).forEach(function (slot) {
-			if (slots[slot] === false) {
-				notApplicable.push(slot);
-			}
-		});
-
-		return notApplicable;
-	}
-
 	setupSlots();
 
 	return {
 		filterSlotMap: filterSlotMap,
-		getNotApplicable: getNotApplicable,
 		isApplicable: isApplicable,
 		setStatus: setStatus
 	};

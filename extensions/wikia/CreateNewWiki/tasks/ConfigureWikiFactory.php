@@ -48,9 +48,11 @@ class ConfigureWikiFactory extends Task {
 		$sharedDBW = $this->taskContext->getSharedDBW();
 		$cityId = $this->taskContext->getCityId();
 		$url = $this->taskContext->getURL();
+		// save the description in WF variables so we don't have to pass it as a shell argument in SetMainPageContent
+		$description = $this->taskContext->getDescription();
 
 		$staticWikiFactoryVariables = $this->getStaticVariables(
-			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url
+			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url, $description
 		);
 		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $sharedDBW, $staticWikiFactoryVariables );
 
@@ -59,7 +61,7 @@ class ConfigureWikiFactory extends Task {
 		return TaskResult::createForSuccess();
 	}
 
-	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url ) {
+	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $description ) {
 		$wikiFactoryVariables = [
 			'wgSitename' => $siteName,
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
@@ -69,8 +71,14 @@ class ConfigureWikiFactory extends Task {
 			'wgLanguageCode' => $language,
 			'wgEnableSectionEdit' => true,
 			'wgOasisLoadCommonCSS' => true,
-			'wgEnablePortableInfoboxEuropaTheme' => true
+			'wgEnablePortableInfoboxEuropaTheme' => true,
+			'wgWikiDescription' => $description
 		];
+		global $wgFandomBaseDomain;
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
+			$wikiFactoryVariables['wgEnableHTTPSForAnons'] = true;
+		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		// Set wgMetaNamespace

@@ -3,7 +3,6 @@ export function getBiddersContext(skin) {
 			oasis: {
 				enabled: false,
 				timeout: 2000,
-				disabledSlots: [],
 				a9: {
 					enabled: false,
 					videoEnabled: false,

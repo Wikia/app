@@ -75,6 +75,7 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $domain
 	 * @param string $language
 	 * @param int $vertical
+	 * @param string $description
 	 * @param string[] $categories
 	 * @param bool $allAges
 	 * @param int $timestamp when was the task scheduled
@@ -82,7 +83,7 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $fandomCreatorCommunityId
 	 * @throws CreateWikiException an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical,
+	public function create( string $name, string $domain, string $language, int $vertical, string $description,
 	                        array $categories, bool $allAges, int $timestamp, string $ip, string $fandomCreatorCommunityId = null ) {
 		wfProfileIn( __METHOD__ );
 
@@ -96,7 +97,7 @@ class CreateWikiTask extends BaseTask {
 
 		$then = microtime( true );
 
-		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
+		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $description, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
