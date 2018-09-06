@@ -16,25 +16,7 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		/** @var WallNotificationEntity $firstEntity */
 		$firstEntity = $notify[ 'grouped' ][ 0 ];
 
-		// for debugging purposes, remove when XW-5224 resolved
-		if ( !( $firstEntity instanceof WallNotificationEntity ) ||
-			!( $firstEntity instanceof WallNotificationAdminEntity ) ||
-			!( $firstEntity instanceof WallNotificationOwnerEntity ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->notice(
-				'Wall notification entity has wrong type',
-				[ 'type' => gettype( $firstEntity ) ]
-			);
-		}
-
 		$data = $firstEntity->data;
-
-		// for debugging purposes, remove when XW-5224 resolved
-		if ( !( $data instanceof stdClass ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->notice(
-				'Wall notification entity data has wrong type',
-				[ 'type' => gettype( $data ) ]
-			);
-		}
 
 		if ( isset( $data->type ) && ( $data->type === 'ADMIN' || $data->type === 'OWNER' ) ) {
 			$this->forward( get_class( $this ), 'NotificationAdmin' );
@@ -43,40 +25,14 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 
 		$authors = [ ];
 		foreach ( $notify[ 'grouped' ] as $notify_entity ) {
-			// for debugging purposes, remove when XW-5224 resolved
-			if ( !( $notify_entity instanceof WallNotificationEntity ) ||
-				!( $notify_entity instanceof WallNotificationAdminEntity ) ||
-				!( $notify_entity instanceof WallNotificationOwnerEntity ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->notice(
-					'Wall notification entity has wrong type',
-					[ 'type' => gettype( $notify_entity ) ]
-				);
-			}
-
-			if ( !empty( $notify_entity->data ) ) {
-				// for debugging purposes, remove when XW-5224 resolved
-				if ( !( $notify_entity->data instanceof stdClass ) ) {
-					\Wikia\Logger\WikiaLogger::instance()->notice(
-						'Wall notification entity data has wrong type',
-						[ 'type' => gettype( $notify_entity->data ) ]
-					);
-				}
-
-				$authors[] = [
-					'displayname' => $notify_entity->data->msg_author_displayname,
-					'username' => $notify_entity->data->msg_author_username,
-					'avatar' => AvatarService::renderAvatar(
-						$firstEntity->data->msg_author_username,
-						AvatarService::AVATAR_SIZE_SMALL_PLUS
-					)
-				];
-			} else {
-				// for debugging purposes, remove when XW-5224 resolved
-				\Wikia\Logger\WikiaLogger::instance()->notice(
-					'Wall Notification entity has no data',
-					[ 'data' => $notify_entity->data ]
-				);
-			}
+			$authors[] = [
+				'displayname' => $notify_entity->data->msg_author_displayname,
+				'username' => $notify_entity->data->msg_author_username,
+				'avatar' => AvatarService::renderAvatar(
+					$firstEntity->data->msg_author_username,
+					AvatarService::AVATAR_SIZE_SMALL_PLUS
+				)
+			];
 		}
 
 		// 1 = 1 user,

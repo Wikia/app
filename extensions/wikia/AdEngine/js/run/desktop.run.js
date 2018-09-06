@@ -127,6 +127,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
@@ -136,6 +137,7 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	tracker,
 	trackingOptIn,
 	win
 ) {
@@ -143,7 +145,16 @@ require([
 
 	function initDesktopSlots() {
 		highImpact.init();
-		inContent.init('INCONTENT_PLAYER');
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
+		} else {
+			inContent.init('INCONTENT_PLAYER');
+		}
 		bottomLeaderboard.init();
 	}
 
