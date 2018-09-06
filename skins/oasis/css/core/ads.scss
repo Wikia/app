@@ -116,7 +116,8 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 			width: 100%;
 		}
 
-		.mobile-porvata .video-player > iframe {
+		.mobile-porvata .video-player > iframe,
+		.porvata-video .video-player > iframe {
 			// Hide Learn more text
 			z-index: -1;
 		}
@@ -130,7 +131,8 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 .bfab-template {
 	position: relative;
 
-	.mobile-porvata .video-player > iframe {
+	.mobile-porvata .video-player > iframe,
+	.porvata-video .video-player > iframe {
 		// Hide Learn more text
 		z-index: -1;
 	}
