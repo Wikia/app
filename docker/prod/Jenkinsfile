@@ -3,7 +3,8 @@ def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
-def rolloutStatus = 1
+def rolloutStatusSjc = 1
+def rolloutStatusRes = 1
 
 def slackChannel = "#mw-prod-deployment"
 
@@ -13,13 +14,23 @@ def render(String template, java.util.LinkedHashMap binding) {
     return engine.createTemplate(template).make(binding).toString()
 }
 
+def messageDetails(int rolloutStatus) {
+    if (rolloutStatus != 0) {
+        return [
+            emoji: ":siren:",
+            color: "#cc142c"
+        ]
+    } else {
+        return [
+            emoji: ":checkmark:",
+            color: "#36a64f"
+        ]
+    }
+}
+
 node("docker-daemon") {
     def appBranch = params.app.split('\\.')[0]
     def configBranch = params.config.split('\\.')[0]
-    def datacenter = params.datacenter
-    def environment = params.environment
-
-    def k8sContext = "kube-${datacenter}-${environment}"
 
     def appHash
     def configHash
@@ -94,11 +105,9 @@ node("docker-daemon") {
 
                 sh("docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
                 sh("docker build .. -f docker/prod/Dockerfile-php -t $mediawikiImage:$imageTag")
-                sh("docker build .. -f docker/base/Dockerfile-logger -t $loggerImage:latest")
 
                 sh("docker push $nginxImage:$imageTag")
                 sh("docker push $mediawikiImage:$imageTag")
-                sh("docker push $loggerImage:latest")
             } else {
                 println("Image tag ($imageTag) already exists")
             }
@@ -112,24 +121,36 @@ node("docker-daemon") {
     stage("Apply new k8s descriptor") {
         dir("app") {
             def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
-            def k8s = render(template, [
+            def sjc = render(template, [
                 'IMAGE_TAG': imageTag,
-                'ENVIRONMENT': environment,
-                'DATACENTER': datacenter,
+                'DATACENTER': 'sjc',
                 'APP_VERSION': params.app,
                 'CONFIG_VERSION': params.config
             ])
 
-            sh("""cat > docker/prod/k8s.yaml <<EOL
-${k8s}
+            sh("""cat > docker/prod/sjc.yaml <<EOL
+${sjc}
 EOL""")
 
-            sh("cat docker/prod/k8s.yaml")
+            def res = render(template, [
+                'IMAGE_TAG': imageTag,
+                'DATACENTER': 'res',
+                'APP_VERSION': params.app,
+                'CONFIG_VERSION': params.config
+            ])
+
+            sh("""cat > docker/prod/res.yaml <<EOL
+${res}
+EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            sh "kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s.yaml"
-            rolloutStatus = sh(returnStatus: true, script: "kubectl --context ${k8sContext} -n ${environment} rollout status deployment/mediawiki-'${environment}'")
+            # deploy to SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+            rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+            # deploy to RES
+            sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+            rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
         }
     }
 
@@ -141,22 +162,20 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            sh "kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s-cronjobs.yaml"
+            # cron jobs only run on SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
         }
     }
 
 	stage("Set and report job status") {
-		def emoji
-		def color
-		if (rolloutStatus != 0) {
+		if (rolloutStatusSjc != 0 || rolloutStatusRes != 0) {
 			currentBuild.result = "UNSTABLE"
-			emoji = ":siren:"
-			color = "#cc142c"
-		} else {
-			emoji = ":checkmark:"
-			color = "#36a64f"
 		}
 
-		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"${environment}\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"${datacenter}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+		sjcMsg = messageDetails(rolloutStatusSjc)
+		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${sjcMsg['color']}\", \"pretext\": \"${sjcMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"sjc\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+
+		resMsg = messageDetails(rolloutStatusRes)
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${resMsg['color']}\", \"pretext\": \"${resMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"res\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
 	}
 }
