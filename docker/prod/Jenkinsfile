@@ -145,10 +145,10 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            # deploy to SJC
+            // deploy to SJC
             sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
             rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
-            # deploy to RES
+            // deploy to RES
             sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
             rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
         }
@@ -162,7 +162,7 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            # cron jobs only run on SJC
+            // cron jobs only run on SJC
             sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
         }
     }
