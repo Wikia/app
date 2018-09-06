@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 
 				if (babDetection.isBlocking()) {
 					btRecLoader.markAdSlots(false, slotName);
+					btRecLoader.triggerScript();
 				}
 
 				pushed = true;

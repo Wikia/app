@@ -40,30 +40,34 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 					var slot = doc.getElementById(key);
 
 					if (slot) {
-						if (replace) {
-							DOMElementTweaker.addClass(slot, placementClass);
-							DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
-							DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
-						} else {
-							var node = doc.createElement('span');
+						var slotOperation = replace ? replaceSlot : duplicateSlot;
 
-							DOMElementTweaker.addClass(node, placementClass);
-							DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
-							DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
-							DOMElementTweaker.hide(node, true);
-
-							slot.parentNode.insertBefore(node, slot.previousSibling);
-						}
+						slotOperation(key, slot);
 					}
 				}
 			});
+	}
 
-		if (lazySlotName) {
-			win.BT.clearThrough();
-		}
+	function replaceSlot(key, slot) {
+		DOMElementTweaker.addClass(slot, placementClass);
+		DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
+		DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
+	}
+
+	function duplicateSlot(key, slot) {
+		var node = doc.createElement('span');
+
+		DOMElementTweaker.addClass(node, placementClass);
+		DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
+		DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
+		DOMElementTweaker.hide(node, true);
+
+		slot.parentNode.insertBefore(node, slot.previousSibling);
 	}
 
 	function injectScript() {
+		markAdSlots(false);
+
 		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
 
 		scriptLoader.loadScript(url, {
@@ -72,14 +76,17 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		});
 	}
 
-	function init() {
-		markAdSlots(false);
+	function triggerScript() {
+		win.BT.clearThrough();
+	}
 
+	function init() {
 		doc.addEventListener('bab.blocking', injectScript);
 	}
 
 	return {
 		init: init,
-		markAdSlots: markAdSlots
+		markAdSlots: markAdSlots,
+		triggerScript: triggerScript
 	};
 });
