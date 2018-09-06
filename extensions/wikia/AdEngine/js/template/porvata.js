@@ -191,7 +191,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {Boolean} [params.setSlotStatusBasedOnVAST] - Decides whether slot status is dispatched manually or based on VAST response
 	 */
 	function show(params) {
-
 		var imaVpaidModeInsecure = 2,
 			settings;
 
