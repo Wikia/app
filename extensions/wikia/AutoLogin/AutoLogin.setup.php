@@ -1,6 +1,6 @@
 <?php
 $wgExtensionCredits['other'][] = [
-	'name' => 'AutLogin Extension',
+	'name' => 'AutoLogin Extension',
 	'author' => [
 		'Platform Team @Wikia',
 	],
