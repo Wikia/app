@@ -159,19 +159,19 @@ Search for outdated video providers and report occurrences to ELK and JIRA.
 
 #### founder-emails-complete-digest.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails about views, edits, etc. to founders of wikis; completeDigest.
 
 #### founder-emails-days-passed.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails to founders of wikis after a number of days of their inactivity.
 
 #### founder-emails-views-digest.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails about views to founders of wikis.
 
