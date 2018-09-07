@@ -35,8 +35,6 @@ require([
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
 		featuredVideoSlotName = 'FEATURED',
-		inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
-		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
@@ -70,6 +68,8 @@ require([
 	}
 
 	function setupPlayer() {
+		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled();
+
 		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
