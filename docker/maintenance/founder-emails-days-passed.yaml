@@ -1,5 +1,6 @@
 schedule: "20 20 * * *"
+server_id: 1802109 # sus.wikia.com
 args:
 - php
-- usr/wikia/slot1/current/src/extensions/wikia/FounderEmails/maintenance.php
+- /usr/wikia/slot1/current/src/extensions/wikia/FounderEmails/FounderEmailMaintenance.php
 - --event=daysPassed
