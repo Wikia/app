@@ -107,7 +107,7 @@ class RemoveUserDataController extends WikiaController {
 			'userId' => $userId,
 			'logId' => $logEntry->id,
 			'created' => $logEntry->created,
-			'is_completed' => $wikisCompleted === $logEntry->number_of_wikis,
+			'is_completed' => $wikisCompleted === (int) $logEntry->number_of_wikis,
 		] );
 	}
 
