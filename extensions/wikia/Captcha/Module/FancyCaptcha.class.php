@@ -140,7 +140,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return array|bool
 	 */
-	public function pickImageDir( $directory, $levels ) {
+	private function pickImageDir( $directory, $levels ) {
 		if ( $levels ) {
 			$dirs = [];
 
@@ -178,7 +178,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return array|bool
 	 */
-	public function pickImageFromDir( $directory ) {
+	private function pickImageFromDir( $directory ) {
 		if ( !is_dir( $directory ) ) {
 			return false;
 		}
@@ -216,7 +216,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return int
 	 */
-	public function countFiles( $dirName ) {
+	private function countFiles( $dirName ) {
 		$dir = opendir( $dirName );
 		$count = 0;
 		while ( false !== ( $entry = readdir( $dir ) ) ) {
