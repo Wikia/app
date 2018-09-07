@@ -82,7 +82,7 @@ spec:
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
-              value: "${ENVIRONMENT}"
+              value: prod
             - name: LOG_SOCKET_ONLY
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
@@ -268,7 +268,7 @@ spec:
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
-              value: "${ENVIRONMENT}"
+              value: prod
             - name: LOG_SOCKET_ONLY
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
