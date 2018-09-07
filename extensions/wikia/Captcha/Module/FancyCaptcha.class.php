@@ -127,26 +127,20 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return mixed tuple of (salt key, text hash) or false if no image to find
 	 */
 	public function pickImage() {
-		global $wgCaptchaS3Bucket;
-
-		return $this->pickImageFromS3( $wgCaptchaS3Bucket );
+		return $this->pickCaptchaFromS3();
 	}
 
 	/**
-	 * @param string $bucket
 	 * @return array|bool
 	 */
-	private function pickImageFromS3( $bucket ) {
-		$objects = self::getCaptchaObjects( $bucket );
+	private function pickCaptchaFromS3() {
+		$objects = self::getCaptchaObjects();
 
 		// get a random file from the bucket
 		$n = mt_rand( 0, count( $objects ) - 1 );
 		$entry = $objects[$n];
 
-		// get image metadata
-		$s3 = self::getS3Client();
-		$tempFile = tempnam( wfTempDir(), 'captcha' );
-		$s3->getObject( $bucket, $entry, $tempFile );
+		$tempFile = self::fetchCaptchaObject( $entry );
 
 		$size = getimagesize( $tempFile );
 		unlink( $tempFile );
@@ -169,16 +163,17 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * Cache the list in memcache
 	 *
-	 * @param string $bucket
 	 * @return string[]
 	 */
-	private static function getCaptchaObjects( $bucket) {
+	private static function getCaptchaObjects() {
 		return \WikiaDataAccess::cache(
-			wfSharedMemcKey( __METHOD__ . $bucket ),
+			wfSharedMemcKey( __METHOD__ ),
 			\WikiaResponse::CACHE_STANDARD,
-			function() use ( $bucket ) {
+			function()  {
+				global $wgCaptchaS3Bucket;
+
 				$s3 = self::getS3Client();
-				return array_keys( $s3->getBucket( $bucket ) );
+				return array_keys( $s3->getBucket( $wgCaptchaS3Bucket ) );
 			}
 		);
 	}
@@ -198,6 +193,23 @@ class FancyCaptcha extends BaseCaptcha {
 	}
 
 	/**
+	 * Fetches provided captcha file from S3 storage,
+	 * saves it in a temporary file and returns its name
+	 *
+	 * @param string $name e.g. image_40aXXb2b_cef076XXa3a90064.png
+	 * @return string temporary file with a captcha image
+	 */
+	private static function fetchCaptchaObject( $name ) : string {
+		global $wgCaptchaS3Bucket;
+
+		$s3 = self::getS3Client();
+		$tempFile = tempnam( wfTempDir(), 'captcha' ) . '.png';
+		$s3->getObject( $wgCaptchaS3Bucket, $name, $tempFile );
+
+		return $tempFile;
+	}
+
+	/**
 	 * @return bool
 	 *
 	 * @throws \MWException
@@ -208,17 +220,25 @@ class FancyCaptcha extends BaseCaptcha {
 		$this->wg->Out->disable();
 
 		$info = $this->retrieveCaptcha();
+
+		# $info = ['salt' => '40a51b2b', 'hash' => 'cef076c8a3a90064']; var_dump(__METHOD__, $info);
+
 		if ( $info ) {
 			$info['viewed'] = wfTimestamp();
 			$this->storeCaptcha( $info );
 
 			$salt = $info['salt'];
 			$hash = $info['hash'];
-			$file = $this->imagePath( $salt, $hash );
+
+			// fetch selected captcha from S3 storage and stream it to the user
+			$name = $this->getImagePath( $salt, $hash );
+			$file = self::fetchCaptchaObject( $name );
 
 			if ( file_exists( $file ) ) {
 				header( "Cache-Control: private, s-maxage=0, max-age=3600" );
 				\StreamFile::stream( $file );
+
+				unlink( $file );
 				return true;
 			} else {
 				$error = 'File ' . $file . ' does not exist';
@@ -233,16 +253,14 @@ class FancyCaptcha extends BaseCaptcha {
 	}
 
 	/**
-	 * @param $salt
-	 * @param $hash
+	 * @param string $salt
+	 * @param string $hash
 	 *
 	 * @return string
 	 */
-	public function imagePath( $salt, $hash ) {
-		$file = $this->wg->CaptchaDirectory;
-		$file .= DIRECTORY_SEPARATOR;
-		$file .= "image_{$salt}_{$hash}.png";
-		return $file;
+	private function getImagePath( $salt, $hash ) {
+		global $wgCaptchaS3Path;
+		return sprintf( '%s/image_%s_%s.png', $wgCaptchaS3Path, $salt, $hash);
 	}
 
 	/**
@@ -275,7 +293,7 @@ class FancyCaptcha extends BaseCaptcha {
 		$pass = parent::passCaptcha();
 
 		if ( $pass && $this->wg->CaptchaDeleteOnSolve ) {
-			$filename = $this->imagePath( $info['salt'], $info['hash'] );
+			$filename = $this->getImagePath( $info['salt'], $info['hash'] );
 			if ( file_exists( $filename ) ) {
 				unlink( $filename );
 			}

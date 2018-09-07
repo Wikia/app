@@ -950,8 +950,10 @@ $wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
  * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
  * @see SUS-5790
  * @var string $wgCaptchaS3Bucket
+ * @var string $wgCaptchaS3Path
  */
 $wgCaptchaS3Bucket = 'fancy-captcha';
+$wgCaptchaS3Path = 'images-20111115';
 
 /**
  * Specify how category names should be sorted, when listed on a category page.
