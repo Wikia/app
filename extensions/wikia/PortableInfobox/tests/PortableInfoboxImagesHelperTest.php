@@ -119,8 +119,6 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 			'media-type' => 'image',
 			'width' => $resultDimensions[ 'width' ],
 			'height' => $resultDimensions[ 'height' ],
-			'originalHeight' => '',
-			'originalWidth' => '',
 			'fileName' => '',
 			'dataAttrs' => '[]'
 		];

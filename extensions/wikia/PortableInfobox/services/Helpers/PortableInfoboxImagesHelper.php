@@ -65,8 +65,6 @@ class PortableInfoboxImagesHelper {
 			'ref' => $ref,
 			'height' => intval( $imgTagDimensions['height'] ),
 			'width' => intval( $imgTagDimensions['width'] ),
-			'originalHeight' => $dataAttrs['height'] ?? '',
-			'originalWidth' => $dataAttrs['width'] ?? '',
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data['key'] ?? '' ),
