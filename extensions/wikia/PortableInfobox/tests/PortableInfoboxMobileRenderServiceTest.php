@@ -177,7 +177,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
@@ -454,7 +453,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
 									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
 				'description' => 'WikiaMobile: Only image. Image is not small- should render hero.',
@@ -465,7 +464,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
@@ -502,7 +500,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
 									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
 								</div>
 							</aside>',
 				'description' => 'WikiaMobile: Infobox with full hero module with title with HTML tags',
@@ -512,7 +510,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
@@ -556,17 +553,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
-						'isVideo' => false,
-						'mercuryComponentAttrs' => json_encode( [
-								'itemContext' => 'portable-infobox',
-								'ref' => 1
-						] )
+						'isVideo' => false
 					]
 				]
 			],
@@ -611,17 +603,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			],
@@ -720,17 +707,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			],
@@ -829,17 +811,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'url' => 'http://image.jpg',
 						'name' => 'test1',
 						'key' => 'test1',
-						'ref' => 44,
 						'width' => '200',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			]

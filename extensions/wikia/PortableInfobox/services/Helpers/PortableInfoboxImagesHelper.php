@@ -165,7 +165,6 @@ class PortableInfoboxImagesHelper {
 		);
 
 		$images[0]['isFirst'] = true;
-		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
 		];
@@ -193,8 +192,6 @@ class PortableInfoboxImagesHelper {
 			array_keys($images)
 		);
 
-		$images[0]['isFirst'] = true;
-		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
 			'dataAttrs' => json_encode( $dataAttrs ),
