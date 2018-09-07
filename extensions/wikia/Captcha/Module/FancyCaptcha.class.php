@@ -281,24 +281,4 @@ class FancyCaptcha extends BaseCaptcha {
 		# the default for edits
 		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 	}
-
-	/**
-	 * Determine if a captcha is correct. This will possibly delete the solved captcha image
-	 * if wgCaptchaDeleteOnSolve is true
-	 *
-	 * @return bool
-	 */
-	public function passCaptcha() {
-		$info = $this->retrieveCaptcha(); // get the captcha info before it gets deleted
-		$pass = parent::passCaptcha();
-
-		if ( $pass && $this->wg->CaptchaDeleteOnSolve ) {
-			$filename = $this->getImagePath( $info['salt'], $info['hash'] );
-			if ( file_exists( $filename ) ) {
-				unlink( $filename );
-			}
-		}
-
-		return $pass;
-	}
 }
