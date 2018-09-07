@@ -28,7 +28,7 @@ class MarkWikiAsClosedController extends WikiaController {
             WikiFactory::setFlags($wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE);
             WikiFactory::clearCache($wikiId);
         } else {
-            $this->info("Uexpected response: " . $res);
+            $this->info("Unexpected response: " . $res);
         }
     }
 
