@@ -40,13 +40,13 @@ node("docker-daemon") {
     def buildUser = "Anonymous"
 
     stage("Clone repositories") {
-		wrap([$class: 'BuildUser']) {
-			try {
-				buildUser = "${BUILD_USER}"
-			} catch (MissingPropertyException ex) {
-				buildUser = "Jenkins"
-			}
-		}
+        wrap([$class: 'BuildUser']) {
+            try {
+                buildUser = "${BUILD_USER}"
+            } catch (MissingPropertyException ex) {
+                buildUser = "Jenkins"
+            }
+        }
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
                 branch: appBranch,
@@ -114,9 +114,9 @@ node("docker-daemon") {
         }
     }
 
-	stage('Notify Slack Channel publish') {
-		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app branch <https://github.com/Wikia/app/tree/'${appBranch}'|'${appBranch}'> and config branch <https://github.com/Wikia/config/tree/'${configBranch}'|'${configBranch}'> is published by '${buildUser}'\", \"channel\": \"'${slackChannel}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
-	}
+    stage('Notify Slack Channel publish') {
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app branch <https://github.com/Wikia/app/tree/'${appBranch}'|'${appBranch}'> and config branch <https://github.com/Wikia/config/tree/'${configBranch}'|'${configBranch}'> is published by '${buildUser}'\", \"channel\": \"'${slackChannel}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
+    }
 
     stage("Apply new k8s descriptor") {
         dir("app") {
@@ -167,15 +167,15 @@ EOL""")
         }
     }
 
-	stage("Set and report job status") {
-		if (rolloutStatusSjc != 0 || rolloutStatusRes != 0) {
-			currentBuild.result = "UNSTABLE"
-		}
+    stage("Set and report job status") {
+        if (rolloutStatusSjc != 0 || rolloutStatusRes != 0) {
+            currentBuild.result = "UNSTABLE"
+        }
 
-		sjcMsg = messageDetails(rolloutStatusSjc)
-		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${sjcMsg['color']}\", \"pretext\": \"${sjcMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"sjc\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+        sjcMsg = messageDetails(rolloutStatusSjc)
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${sjcMsg['color']}\", \"pretext\": \"${sjcMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"sjc\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
 
-		resMsg = messageDetails(rolloutStatusRes)
+        resMsg = messageDetails(rolloutStatusRes)
         sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${resMsg['color']}\", \"pretext\": \"${resMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"res\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
-	}
+    }
 }
