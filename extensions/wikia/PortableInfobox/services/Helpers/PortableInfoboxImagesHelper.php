@@ -105,8 +105,6 @@ class PortableInfoboxImagesHelper {
 			'width' => $height,
 			'thumbnail' => $thumbnail,
 			'thumbnail2x' => $thumbnail2x,
-			'key' => urlencode( $data['key'] ?? '' ),
-			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'fileName' => $dataAttrs['fileName'] ?? '',
 			'dataAttrs' => json_encode( $dataAttrs )
 		] );
@@ -142,8 +140,6 @@ class PortableInfoboxImagesHelper {
 			'width' => $dataAttrs['width'],
 			'thumbnail' => $thumbnail,
 			'thumbnail2x' => $thumbnail2x,
-			'key' => urlencode( $data['key'] ?? '' ),
-			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'fileName' => $dataAttrs['fileName'] ?? '',
 			'dataAttrs' => json_encode( $dataAttrs )
 		] );

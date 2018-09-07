@@ -173,15 +173,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Simple infobox with title, image and key-value pair',
 				'mockParams' => [
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
 						'isVideo' => false
 					]
 				]
@@ -460,15 +456,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'isMercury' => false,
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
 						'isVideo' => false
 					]
 				]
@@ -508,14 +500,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					'isMercury' => false,
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image'
 					]
 				]
 			],
@@ -549,15 +538,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Mercury: Only image. Image is not small- should render hero.',
 				'mockParams' => [
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
 						'isVideo' => false
 					]
 				]
@@ -601,14 +586,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
 					]
 				]
 			],
@@ -705,14 +687,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
 					]
 				]
 			],
@@ -809,14 +788,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
 						'width' => '200',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
 					]
 				]
 			]
