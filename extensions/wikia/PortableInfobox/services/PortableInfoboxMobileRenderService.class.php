@@ -78,14 +78,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 					$images[] = $data[$i];
 				}
 			}
-		} else { // TODO: check if in case of single image extendMobileImageData may be used (original sizes)
-			for ( $i = 0; $i < $count; $i++ ) {
-				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
-				$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
+		} elseif ($count === 1) {
+			$data[0]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+			$data[0] = $helper->extendMobileImageDataScaleToWidth( $data[0], self::MOBILE_THUMBNAIL_WIDTH );
 
-				if ( !!$data[$i] ) {
-					$images[] = $data[$i];
-				}
+			if ( !!$data[0] ) {
+				$images[] = $data[0];
 			}
 		}
 

@@ -118,6 +118,43 @@ class PortableInfoboxImagesHelper {
 		] );
 	}
 
+	public function extendMobileImageDataScaleToWidth( $data, int $width ) {
+		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
+		$title = $data['name'];
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if (
+			!$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] )
+		) {
+			return false;
+		}
+
+		$ref = null;
+		$dataAttrs = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
+
+		$thumbnail = $file->getUrlGenerator()
+			->scaleToWidth($width)
+			->url();
+
+		$thumbnail2x = $file->getUrlGenerator()
+			->zoomCrop()
+			->scaleToWidth($width)
+			->url();
+
+		return array_merge( $data, [
+			'ref' => $ref,
+			'height' => $dataAttrs['height'],
+			'width' => $dataAttrs['width'],
+			'thumbnail' => $thumbnail,
+			'thumbnail2x' => $thumbnail2x,
+			'key' => urlencode( $data['key'] ?? '' ),
+			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
+			'fileName' => $dataAttrs['fileName'] ?? '',
+			'dataAttrs' => json_encode( $dataAttrs )
+		] );
+	}
 
 	/**
 	 * @param array $images

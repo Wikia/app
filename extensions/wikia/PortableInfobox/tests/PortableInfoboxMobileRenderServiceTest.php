@@ -15,10 +15,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
-			->setMethods( [ 'extendImageData', 'extendMobileImageData', 'getFileWidth' ] )
+			->setMethods( [ 'extendMobileImageDataScaleToWidth', 'extendMobileImageData', 'getFileWidth' ] )
 			->getMock();
 		$mock->expects( $this->any() )
-			->method( 'extendImageData' )
+			->method( 'extendMobileImageDataScaleToWidth' )
 			->will( $this->returnValue( $extendImageData ) );
 		$mock->expects( $this->any() )
 			->method( 'extendMobileImageData' )

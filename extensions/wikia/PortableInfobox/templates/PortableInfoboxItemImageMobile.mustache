@@ -7,11 +7,11 @@
 				data-srcset="{{thumbnail}}, {{thumbnail2x}} 2x"
 				data-sizes="auto"
 				alt="{{title}}"
-				{{#originalWidth}} width="{{originalWidth}}"{{/originalWidth}}
-				{{#originalHeight}} height="{{originalHeight}}"{{/originalHeight}} />
+				{{#width}} width="{{width}}"{{/width}}
+				{{#height}} height="{{height}}"{{/height}} />
 			<noscript>
-				<img src="{{url}}" alt="{{alt}}"{{#originalWidth}}
-				     width="{{originalWidth}}"{{/originalWidth}}{{#originalHeight}} height="{{originalHeight}}"{{/originalHeight}} />
+				<img src="{{url}}" alt="{{alt}}"{{#width}}
+				     width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} />
 			</noscript>
 			{{#caption}}
 				<figcaption>{{caption}}</figcaption>
