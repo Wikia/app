@@ -901,7 +901,7 @@ if( !empty($wgWikiaStarterLockdown) ) {
 	unset( $StarterLockdownNamespaces );
 }
 
-if( !empty($wgWikiaEnableFounderEmailsExt) ) {
+if( !empty($wgWikiaEnableFounderEmailsExt) || $wgCommandLineMode ) {
 	include("$IP/extensions/wikia/FounderEmails/FounderEmails.php");
 }
 
