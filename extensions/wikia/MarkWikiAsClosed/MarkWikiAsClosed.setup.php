@@ -1,5 +1,5 @@
 <?php
-$wgExtensionCredits['markwikiclosed'][] = [
+$wgExtensionCredits['api'][] = [
     'name' => 'MarkWikiAsClosed',
     'author' => [
         'bpiatek',
