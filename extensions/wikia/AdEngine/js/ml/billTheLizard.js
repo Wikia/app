@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 	function setupProjects() {
 		if (adContext.get('targeting.hasFeaturedVideo')) {
-			bridge.billTheLizard.projects.enable('queen_of_hearts');
+			bridge.billTheLizard.projectsHandler.enable('queen_of_hearts');
 		}
 	}
 
