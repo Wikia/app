@@ -140,7 +140,7 @@ class PortableInfoboxImagesHelper {
 
 		$thumbnail2x = $file->getUrlGenerator()
 			->zoomCrop()
-			->scaleToWidth($width)
+			->scaleToWidth($width * 2)
 			->url();
 
 		return array_merge( $data, [
