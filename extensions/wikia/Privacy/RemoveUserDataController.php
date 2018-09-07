@@ -57,13 +57,70 @@ class RemoveUserDataController extends WikiaController {
 		] );
 	}
 
+	/**
+	 * Returns the status (completed / not yet completed) of GDPR process for a given user ID
+	 *
+	 * @see SUS-5785
+	 */
+	public function getRemoveStatus() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$userId = (int) $this->getVal( 'userId' );
+		if ( empty( $userId ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$specialsDbr = self::getSpecialsDB();
+
+		$logEntry = $specialsDbr->selectRow(
+			RemovalAuditLog::LOG_TABLE,
+			[
+				'id',
+				'created',
+				'number_of_wikis',
+			],
+			[
+				'user_id' => $userId
+			],
+			__METHOD__
+		);
+
+		// there's no entry for a given user ID
+		if ( empty( $logEntry ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			return;
+		}
+
+		// count all completed per-wiki tasks
+		$wikisCompleted = (int) $specialsDbr->selectField(
+			RemovalAuditLog::DETAILS_TABLE,
+			'count(*)',
+			[
+				'log_id' => $logEntry->id
+			]
+		);
+
+		// we assume that the process is completed when all per-wiki tasks are done
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
+		$this->response->setValues( [
+			'userId' => $userId,
+			'logId' => $logEntry->id,
+			'created' => $logEntry->created,
+			'is_completed' => $wikisCompleted === (int) $logEntry->number_of_wikis,
+		] );
+	}
+
 	private function getUserWikis( int $userId ) {
-		global $wgSpecialsDB;
-		$specialsDbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+		$specialsDbr = self::getSpecialsDB();
 		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
 	}
 
-	
+
+	private static function getSpecialsDB() {
+		global $wgSpecialsDB;
+		return wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+	}
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
