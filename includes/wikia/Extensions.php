@@ -864,7 +864,7 @@ if ( !empty( $wgEnableDiscussionsLog ) ) {
 }
 
 /**
- * Enable 
+ * Enable
  */
 include( "$IP/extensions/wikia/MarkWikiAsClosed/MarkWikiAsClosed.setup.php" );
 

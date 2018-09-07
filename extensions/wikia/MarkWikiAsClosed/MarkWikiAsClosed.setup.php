@@ -1,6 +1,6 @@
 <?php
-$wgExtensionCredits['parserhook'][] = [
-    'name' => 'Mark Wiki As Closed',
+$wgExtensionCredits['markwikiclosed'][] = [
+    'name' => 'MarkWikiAsClosed',
     'author' => [
         'bpiatek',
     ],
