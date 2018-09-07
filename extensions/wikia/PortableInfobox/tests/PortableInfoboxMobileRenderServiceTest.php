@@ -159,7 +159,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="SomeFile.jpg" width="400" height="200"/><noscript>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 											<img src="http://image.jpg" alt="" width="400" height="200"/>
 										</noscript>
 										</a>
@@ -173,6 +173,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Simple infobox with title, image and key-value pair',
 				'mockParams' => [
 					'extendImageData' => [
+						'url' => 'http://image.jpg',
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
@@ -448,7 +449,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
 									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="someFile.jpg"  data-image-key="somefile.jpg" data-image-name="somefile.jpg" data-params=\'[{"name":"somefile.jpg", "full":"http://image.jpg"}]\' />
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="somefile.jpg"  data-image-key="somefile.jpg" data-image-name="somefile.jpg" data-params=\'[{"name":"somefile.jpg", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
 				'description' => 'WikiaMobile: Only image. Image is not small- should render hero.',
