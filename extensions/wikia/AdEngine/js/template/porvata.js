@@ -177,6 +177,25 @@ define('ext.wikia.adEngine.template.porvata', [
 			(browserDetect.getBrowser().indexOf('Chrome') !== -1 && browserDetect.getBrowserVersion() >= 54);
 	}
 
+	function trackDisabledOustream() {
+		if (window.M && window.M.tracker) {
+			window.M.tracker.UniversalAnalytics.track(
+				'wgDisableIncontentPlayer',
+				tracker.ACTIONS.DISABLE,
+				true,
+				0,
+				true
+			);
+		} else {
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
+		}
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
@@ -213,12 +232,8 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			callCollapse(params, 'disabled');
-			tracker.track({
-				category: 'wgDisableIncontentPlayer',
-				trackingMethod: 'analytics',
-				action: tracker.ACTIONS.DISABLE,
-				label: true
-			});
+			trackDisabledOustream();
+
 			return;
 		}
 
