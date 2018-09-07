@@ -946,6 +946,14 @@ $wgCapitalLinks = true;
 $wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
 
 /**
+ * Amazon's S3 storage with captcha files
+ * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
+ * @see SUS-5790
+ * @var string $wgCaptchaS3Bucket
+ */
+$wgCaptchaS3Bucket = 'fancy-captcha';
+
+/**
  * Specify how category names should be sorted, when listed on a category page.
  * A sorting scheme is also known as a collation.
  *

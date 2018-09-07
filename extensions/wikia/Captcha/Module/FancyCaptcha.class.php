@@ -9,7 +9,6 @@ namespace Captcha\Module;
  */
 class FancyCaptcha extends BaseCaptcha {
 
-	const DIRECTORY_LEVELS = 0;
 	const CAPTCHA_LOADED_ID = 'wpCaptchaWord';
 	const CAPTCHA_FIELD = 'wpCaptchaWord';
 
@@ -128,104 +127,74 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return mixed tuple of (salt key, text hash) or false if no image to find
 	 */
 	public function pickImage() {
-		return $this->pickImageDir(
-			$this->wg->CaptchaDirectory,
-			self::DIRECTORY_LEVELS
-		);
+		global $wgCaptchaS3Bucket;
+
+		return $this->pickImageFromS3( $wgCaptchaS3Bucket );
 	}
 
 	/**
-	 * @param $directory
-	 * @param $levels
-	 *
+	 * @param string $bucket
 	 * @return array|bool
 	 */
-	private function pickImageDir( $directory, $levels ) {
-		if ( $levels ) {
-			$dirs = [];
+	private function pickImageFromS3( $bucket ) {
+		$objects = self::getCaptchaObjects( $bucket );
 
-			// Check which subdirs are actually present...
-			$dir = opendir( $directory );
-			if ( !$dir ) {
-				return false;
-			}
-			while ( false !== ( $entry = readdir( $dir ) ) ) {
-				if ( ctype_xdigit( $entry ) && strlen( $entry ) == 1 ) {
-					$dirs[] = $entry;
-				}
-			}
-			closedir( $dir );
+		// get a random file from the bucket
+		$n = mt_rand( 0, count( $objects ) - 1 );
+		$entry = $objects[$n];
 
-			$place = mt_rand( 0, count( $dirs ) - 1 );
-			// In case all dirs are not filled,
-			// cycle through next digits...
-			for ( $j = 0; $j < count( $dirs ); $j++ ) {
-				$char = $dirs[( $place + $j ) % count( $dirs )];
-				$imageDir = $this->pickImageDir( "$directory/$char", $levels - 1 );
-				if ( $imageDir ) {
-					return $imageDir;
-				}
-			}
-			// Didn't find any images in this directory... empty?
-			return false;
-		} else {
-			return $this->pickImageFromDir( $directory );
-		}
-	}
+		// get image metadata
+		$s3 = self::getS3Client();
+		$tempFile = tempnam( wfTempDir(), 'captcha' );
+		$s3->getObject( $bucket, $entry, $tempFile );
 
-	/**
-	 * @param string $directory
-	 *
-	 * @return array|bool
-	 */
-	private function pickImageFromDir( $directory ) {
-		if ( !is_dir( $directory ) ) {
-			return false;
-		}
-		$n = mt_rand( 0, $this->countFiles( $directory ) - 1 );
-		$dir = opendir( $directory );
+		$size = getimagesize( $tempFile );
+		unlink( $tempFile );
 
-		$count = 0;
+		preg_match( '/image_([0-9a-f]+)_([0-9a-f]+)\\.png$/', $entry, $matches );
 
-		$entry = readdir( $dir );
-		$pick = false;
-		while ( false !== $entry ) {
-			$entry = readdir( $dir );
-			if ( preg_match( '/^image_([0-9a-f]+)_([0-9a-f]+)\\.png$/', $entry, $matches ) ) {
-				$size = getimagesize( "$directory/$entry" );
-				$pick = [
-					'salt' => $matches[1],
-					'hash' => $matches[2],
-					'width' => $size[0],
-					'height' => $size[1],
-					'viewed' => false,
-				];
-				if ( $count++ == $n ) {
-					break;
-				}
-			}
-		}
-		closedir( $dir );
+		$pick = [
+			'salt' => $matches[1],
+			'hash' => $matches[2],
+			'width' => $size[0],
+			'height' => $size[1],
+			'viewed' => false,
+		];
+
 		return $pick;
 	}
 
 	/**
-	 * Count the number of files in a directory.
+	 * Get the list of available captcha images from S3 storage.
 	 *
-	 * @param string $dirName
+	 * Cache the list in memcache
 	 *
-	 * @return int
+	 * @param string $bucket
+	 * @return string[]
 	 */
-	private function countFiles( $dirName ) {
-		$dir = opendir( $dirName );
-		$count = 0;
-		while ( false !== ( $entry = readdir( $dir ) ) ) {
-			if ( $entry != '.' && $entry != '..' ) {
-				$count++;
+	private static function getCaptchaObjects( $bucket) {
+		return \WikiaDataAccess::cache(
+			wfSharedMemcKey( __METHOD__ . $bucket ),
+			\WikiaResponse::CACHE_STANDARD,
+			function() use ( $bucket ) {
+				$s3 = self::getS3Client();
+				return array_keys( $s3->getBucket( $bucket ) );
 			}
-		}
-		closedir( $dir );
-		return $count;
+		);
+	}
+
+	/**
+	 * Get PHP client to access S3 storage
+	 *
+	 * @return \S3
+	 */
+	private static function getS3Client() {
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
+		$s3 = new \S3( $wgAWSAccessKey, $wgAWSSecretKey );
+		\S3::setExceptions( true );
+
+		return $s3;
 	}
 
 	/**
@@ -272,10 +241,6 @@ class FancyCaptcha extends BaseCaptcha {
 	public function imagePath( $salt, $hash ) {
 		$file = $this->wg->CaptchaDirectory;
 		$file .= DIRECTORY_SEPARATOR;
-		for ( $i = 0; $i < self::DIRECTORY_LEVELS; $i++ ) {
-			$file .= $hash { $i } ;
-			$file .= DIRECTORY_SEPARATOR;
-		}
 		$file .= "image_{$salt}_{$hash}.png";
 		return $file;
 	}
