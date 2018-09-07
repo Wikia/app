@@ -62,15 +62,12 @@ class PortableInfoboxImagesHelper {
 		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
 
 		return array_merge( $data, [
-			'ref' => $ref,
 			'height' => intval( $imgTagDimensions['height'] ),
 			'width' => intval( $imgTagDimensions['width'] ),
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
-			'fileName' => $dataAttrs['fileName'] ?? '',
-			'dataAttrs' => json_encode( $dataAttrs )
 		] );
 	}
 
@@ -104,7 +101,6 @@ class PortableInfoboxImagesHelper {
 		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
 
 		return array_merge( $data, [
-			'ref' => $ref,
 			'height' => $width,
 			'width' => $height,
 			'thumbnail' => $thumbnail,
@@ -142,7 +138,6 @@ class PortableInfoboxImagesHelper {
 			->url();
 
 		return array_merge( $data, [
-			'ref' => $ref,
 			'height' => $dataAttrs['height'],
 			'width' => $dataAttrs['width'],
 			'thumbnail' => $thumbnail,
@@ -159,6 +154,28 @@ class PortableInfoboxImagesHelper {
 	 * @return array
 	 */
 	public function extendImageCollectionData( $images ) {
+		$images = array_map(
+			function ( $image, $index ) {
+				$image['dataRef'] = $index;
+
+				return $image;
+			},
+			$images,
+			array_keys($images)
+		);
+
+		$images[0]['isFirst'] = true;
+		$images[count($images) - 1]['isLast'] = true;
+		return [
+			'images' => $images,
+		];
+	}
+
+	/**
+	 * @param array $images
+	 * @return array
+	 */
+	public function extendMobileImageCollectionData( $images ) {
 		$dataAttrs = array_map(
 			function ( $image ) {
 				return json_decode( $image['dataAttrs'] );
@@ -180,9 +197,7 @@ class PortableInfoboxImagesHelper {
 		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
-			'firstImage' => $images[0],
 			'dataAttrs' => json_encode( $dataAttrs ),
-			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon') // TODO: clean it after premium layout released on mobile wiki and icache expired
 		];
 	}
 
