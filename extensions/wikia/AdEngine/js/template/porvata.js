@@ -178,8 +178,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function trackDisabledOustream() {
-		if (window.M && window.M.tracker) {
-			window.M.tracker.UniversalAnalytics.track(
+		if (win.M && win.M.tracker) {
+			win.M.tracker.UniversalAnalytics.track(
 				'wgDisableIncontentPlayer',
 				tracker.ACTIONS.DISABLE,
 				true,
