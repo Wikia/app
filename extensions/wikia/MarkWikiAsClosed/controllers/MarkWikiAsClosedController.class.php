@@ -9,7 +9,7 @@ class MarkWikiAsClosedController extends WikiaController {
         $this->response->setFormat( WikiaResponse::FORMAT_JSON );
     }
 
-    public static function markWikiAsClosed() {
+    public function markWikiAsClosed() {
 
         \Wikia\Logger\WikiaLogger::instance()->info("++++++++++ TEST");
 //        $wikiId = $this->request->getVal(self::WIKI_ID);
@@ -28,7 +28,7 @@ class MarkWikiAsClosedController extends WikiaController {
     }
 
     public function allowsExternalRequests() {
-        return false;
+        return true;
     }
 
 }
