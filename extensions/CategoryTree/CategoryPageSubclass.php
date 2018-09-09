@@ -48,9 +48,9 @@ class CategoryTreeCategoryViewer extends CategoryViewer {
 
 		$tree = $this->getCategoryTree();
 
-		$this->children[] = $tree->renderNodeInfo( $title, $cat );
+		$this->members[] = $tree->renderNodeInfo( $title, $cat );
 
-		$this->children_start_char[] = $this->getSubcategorySortChar( $title, $sortkey );
+		$this->members_start_char[] = $this->getSubcategorySortChar( $title, $sortkey );
 	}
 
 	function clearCategoryState() {
