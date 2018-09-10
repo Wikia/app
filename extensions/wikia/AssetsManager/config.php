@@ -59,7 +59,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
-		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -118,52 +117,8 @@ $config['adengine2_desktop_js'] = [
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
-		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js'
-	],
-];
-
-$config['adengine2_rabbit_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/ml/dataSourceFactory.js',
-		'//extensions/wikia/AdEngine/js/ml/inputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
-		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
-		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
-	],
-];
-
-$config['adengine2_rabbit_desktop_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_adengine2_rabbit_js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopDataSource.js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/queenDesktop.js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/queenDesktopDataSource.js',
-		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
-	],
-];
-
-$config['adengine2_rabbit_mobile_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_adengine2_rabbit_js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobile.js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobileDataSource.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensLogisticRegression.js',
 	],
 ];
 
@@ -236,7 +191,10 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/build/geo.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
+		'//extensions/wikia/AdEngine/js/lookup/bidders.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
+		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
+		'//extensions/wikia/AdEngine/js/ml/billTheLizardExecutor.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
@@ -257,8 +215,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/krux.js',
-		'#group_adengine2_rabbit_desktop_js'
+		'//resources/wikia/modules/krux.js'
 	],
 ];
 
@@ -305,8 +262,8 @@ $config['adengine2_pr3b1d_js'] = [
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
 
-		// prebid library
-		'#group_pr3b1d_prod_js'
+		// Use Prebid.js built in @wikia/ad-products
+		'//extensions/wikia/AdEngine/js/build/prebid.js'
 	],
 ];
 
@@ -859,7 +816,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
-		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
@@ -947,21 +903,12 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
-		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
 		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
-];
-
-// TODO remove this group and include file directly after ADEN-6797 release
-$config['pr3b1d_prod_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
-	]
 ];
 
 $config['wikiamobile_ads_js'] = [
@@ -2493,4 +2440,11 @@ $config['special_contact_forget_account_js'] = [
 	'assets' => [
 		'//extensions/wikia/SpecialContact2/SpecialContactForgetAccount.js',
 	],
+];
+
+$config['feeds_and_posts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+	]
 ];

@@ -31,7 +31,7 @@
 					</span>
 					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
 					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
-					.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiaBaseDomain ) ?></span>
+					.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiBaseDomain ) ?></span>
 					<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
 					<div class="wiki-domain-error error-msg"></div>
 				</div>

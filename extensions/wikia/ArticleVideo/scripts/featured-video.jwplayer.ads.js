@@ -1,3 +1,4 @@
+/*global define, require*/
 define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
@@ -12,6 +13,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.wrappers.prebid'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.lookup.prebid')
 ], function (
 	adContext,
@@ -27,6 +29,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	log,
 	win,
 	prebidWrapper,
+	bidders,
 	prebid
 ) {
 	'use strict';
@@ -44,7 +47,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && adContext.get('bidders.prebid')) {
+		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
 			return prebid.getSlotParams(featuredVideoSlotName);
 		}
 
@@ -71,7 +74,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				return;
 			}
 
-			var bid = prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders && bidders.isEnabled()
+				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
+				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';
@@ -111,6 +116,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				correlator = Math.round(Math.random() * 10000000000);
 				trackingParams.adProduct = 'featured-video';
+				trackingParams.videoId = currentMedia.mediaid;
 				videoDepth += 1;
 
 				if (prebidParams) {
@@ -138,6 +144,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Midroll position reached', log.levels.info, logGroup);
 				if (videoDepth > 0 && articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
+					playerState.muted = player.getMute();
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'midroll',
@@ -154,6 +161,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Postroll position reached', log.levels.info, logGroup);
 				if (videoDepth > 0 && articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
+					playerState.muted = player.getMute();
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'postroll',
@@ -172,7 +180,6 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			player.on('adRequest', function (event) {
 				var vastParams = parseVastParamsFromEvent(event);
 				slotRegistry.storeScrollY(featuredVideoSlotName);
-
 				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 

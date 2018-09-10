@@ -5,10 +5,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
-	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
+], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
@@ -37,7 +36,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
 				audio: playerState.muted ? 'no' : 'yes',
-				ctp: playerState.autoplay ? 'no' : 'yes'
+				ctp: playerState.autoplay || videoDepth > 1 ? 'no' : 'yes'
 			};
 
 		if (slotTargeting) {
@@ -52,9 +51,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			});
 		}
 
-		if (!playerState.autoplay) {
+		if (slotParams.ctp === 'yes') {
 			slotNameSuffix = '-ctp';
-		} else if (!playerState.muted) {
+		} else if (slotParams.audio === 'yes') {
 			slotNameSuffix = '-audio';
 		}
 

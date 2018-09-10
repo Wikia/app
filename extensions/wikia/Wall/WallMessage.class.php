@@ -238,27 +238,23 @@ class WallMessage {
 	 * @param string $summary
 	 * @param bool $force
 	 * @param bool $preserveMetadata
-	 * @return string
+	 * @return Status
 	 */
-	public function doSaveComment( $body, $user, $summary = '', $force = false, $preserveMetadata = false ) {
-		wfProfileIn( __METHOD__ );
-
+	public function doSaveComment( $body, $user, $summary = '', $force = false, $preserveMetadata = false ): Status {
 		if ( $this->canEdit( $user ) || $force ) {
-			$this->getArticleComment()->doSaveComment( $body, $user,  0, true, $summary, $preserveMetadata );
+			/** @var Status $status */
+			list( $status, ) = $this->getArticleComment()->doSaveComment( $body, $user,  0, true, $summary,
+				$preserveMetadata );
+
+			if ( $status->isOK() && !$this->isMain() ) {
+				// after changing reply invalidate thread cache
+				$this->getThread()->invalidateCache();
+			}
+
+			return $status;
 		}
-		if ( !$this->isMain() ) {
-			// after changing reply invalidate thread cache
-			$this->getThread()->invalidateCache();
-		}
 
-		$articleComment = $this->getArticleComment();
-
-		// parse the new / updated message
-		$articleComment->setRawText( $body );
-		$out = $articleComment->getTransformedParsedText();
-
-		wfProfileOut( __METHOD__ );
-		return $out;
+		return Status::newFatal( 'permissionserrors' );
 	}
 
 	protected function doSaveMetadata( $user, $summary = '', $force = false ) {
@@ -524,8 +520,12 @@ class WallMessage {
 	public function setRelatedTopics( $user, $relatedTopics ) {
 		if ( $this->isMain() ) {
 			$this->getArticleComment()->setMetaData( 'related_topics', implode( '|', $relatedTopics ) );
-			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ), true );
-			$this->storeRelatedTopicsInDB( $relatedTopics );
+			$status = $this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ), true );
+
+			// SUS-223: Set topics relation only if edit went through
+			if ( $status->isOK() ) {
+				$this->storeRelatedTopicsInDB( $relatedTopics );
+			}
 		}
 		return true;
 	}

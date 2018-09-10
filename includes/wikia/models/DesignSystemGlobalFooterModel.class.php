@@ -306,6 +306,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getFandomOverview() {
 		$out = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-overview-header'
+				]
+			],
 			'links' => [ ]
 		];
 

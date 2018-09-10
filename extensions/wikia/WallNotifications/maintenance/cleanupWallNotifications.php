@@ -119,8 +119,6 @@ class CleanUpWallNotifications extends Maintenance {
 				$deleted = $dbw->affectedRows();
 				$affected_rows += $deleted;
 
-				$this->output( '.' );
-
 				wfWaitForSlaves( $dbw->getDBname() );
 
 			} while( $deleted > 0 );

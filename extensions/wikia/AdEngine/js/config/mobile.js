@@ -2,13 +2,11 @@
 define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
-	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	require.optional('wikia.instantGlobals')
 ], function (
 	adContext,
 	directGptMobile,
-	evolve2,
 	remnantGptMobile,
 	instantGlobals
 ) {
@@ -35,18 +33,11 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		switch (context.forcedProvider) {
-			case 'evolve2':
-				return [evolve2];
-		}
-
 		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
 		}
 
-		if (context.providers.evolve2 && evolve2.canHandleSlot(slotName)) {
-			providerList.push(evolve2);
-		} else if (gptEnabled) {
+		if (gptEnabled) {
 			providerList.push(directGptMobile);
 
 			if (context.opts.premiumOnly) {

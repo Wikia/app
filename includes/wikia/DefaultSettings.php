@@ -998,6 +998,13 @@ $wgAdDriverA9VideoBidderCountries = [];
 $wgAdDriverA9BidderCountries = null;
 
 /**
+ * @name $wgAdDriverA9OptOutCountries
+ * List of countries where A9 is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9OptOutCountries = null;
+
+/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
@@ -1058,6 +1065,20 @@ $wgAdDriverAppNexusDfpCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
+ * @name $wgAdDriverPrebidOptOutCountries
+ * List of countries where Prebid is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidOptOutCountries = null;
 
 /**
  * @name $wgAdDriverAolBidderCountries
@@ -1200,19 +1221,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
  * Enable new mobile_in_content slot after infobox placement
  */
 $wgAdDriverUseAdsAfterInfobox = false;
-
-/**
- * @name $wgAdDriverUseEvolve2
- * Whether to enable AdProviderEvolve2 (true) or not (false)
- */
-$wgAdDriverUseEvolve2 = true;
-
-/**
- * @name $wgAdDriverEvolve2Countries
- * List of countries with enabled Evolve2 module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverEvolve2Countries = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1401,6 +1409,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
@@ -1413,16 +1427,16 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
- * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
- * List of countries to switch BLB with PreFooter on mobile
- */
-$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
 $wgEnableCMPCountries = null;
+
+/**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
 
 /**
  * trusted proxy service registry
@@ -1700,7 +1714,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1746,9 +1760,9 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
-// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-// to be removed after we make sure it works fine
-$wgSurrogateKeysProdWikis = [
-	1721212,    // mech-internal-https-test
-	1558829     // rikitiki
-];
+/**
+ * @name $wgProcessTasksOnKubernetes
+ * When enabled, tasks will be processed on kubernetes.
+ * This will only work on production.
+ */
+$wgProcessTasksOnKubernetes = false;

@@ -54,7 +54,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 
 	it('prepareAdUnit returns data in correct shape', function () {
 		expect(getAppNexus().prepareAdUnit('TOP_LEADERBOARD', {
-			placementId: 'foo'
+			placementId: 'foo',
+			context: 'outstream'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
 			mediaTypes: {

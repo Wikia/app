@@ -41,8 +41,6 @@ $messages['en'] = array(
 	'cnw-error-anon-user-header' => 'Please log in',
 	'cnw-error-anon-user' => 'Creating wikis for anons is disabled. Please [[Special:UserLogin|log in]] and try again.',
 	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
-	'cnw-error-unconfirmed-email-header' => 'Your e-mail has not been confirmed',
-	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
 	'autocreatewiki' => 'Create a new wiki',
 	'createwiki' => 'Create a new wiki',
 	'autocreatewiki-language-top' => 'Supported languages',
@@ -131,8 +129,6 @@ $messages['qqq'] = array(
 	'cnw-error-anon-user-header' => 'Header for error dialog, displayed when when anon user tries to create new wiki.
 {{Identical|Please log in}}',
 	'cnw-error-anon-user' => 'Error message when anon user tries to create new wiki.',
-	'cnw-error-unconfirmed-email-header' => 'Message header for modal box',
-	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
 	'autocreatewiki-language-top' => 'When the user is choosing the wiki\'s language from a dropdown menu, the most commonly chosen languages are listed in a separate section of the menu. This message is the title for that \\"Top Languages\\" section. The $1 parameter is a  basic number (ex. 7 or 12) that matches the number of languages in the \\"Top Languages\\" section.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
 	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation.
@@ -210,8 +206,6 @@ $messages['ar'] = array(
 	'cnw-error-anon-user-header' => 'من فضلك سجل الدخول',
 	'cnw-error-anon-user' => 'إنشاء الويكي للمجهولين معطل. من فضلط [[Special:UserLogin|سجل الدخول]] وحاول مجددًا.',
 	'cnw-error-torblock' => 'إنشاء الويكي عن طريق شبكة تور غير مسموح.',
-	'cnw-error-unconfirmed-email-header' => 'لم يتم تأكيد البريد الإلكتروني الخاص بك',
-	'cnw-error-unconfirmed-email' => 'ينبغي تأكيد البريد الإلكتروني الخاص بك لإنشاء ويكي.',
 	'autocreatewiki' => 'أنشئ ويكي جديدة',
 	'createwiki' => 'إنشاء ويكي جديد',
 	'autocreatewiki-language-top' => ' أحسن $1 لغة',
@@ -397,8 +391,6 @@ $messages['br'] = array(
 	'cnw-error-blocked-header' => 'Kont stanket',
 	'cnw-error-anon-user-header' => 'Kevreit mar plij',
 	'cnw-error-torblock' => "N'eo ket aotreet krouiñ wikioù dre ar rouedad Tor.",
-	'cnw-error-unconfirmed-email-header' => "N'eo ket bet kadarnaet ho postel",
-	'cnw-error-unconfirmed-email' => "Ret eo d'ho postel bezañ kadarnaet evit krouiñ ur Wiki.",
 	'autocreatewiki' => 'Krouiñ ur Wiki nevez.',
 	'createwiki' => 'Krouiñ ur Wiki nevez',
 	'autocreatewiki-language-top' => 'Ar $1 yezh implijetañ',
@@ -474,8 +466,6 @@ $messages['ca'] = array(
 	'cnw-error-anon-user-header' => 'Entreu',
 	'cnw-error-anon-user' => 'Els anònims no poden crear wikis. Si us plau, [[Special:UserLogin|entra a la sessió]] i intenta-ho de nou.',
 	'cnw-error-torblock' => 'No està permès crear wikis mitjançant la xarxa Tor.',
-	'cnw-error-unconfirmed-email-header' => "El teu correu electrònic no s'ha confirmat",
-	'cnw-error-unconfirmed-email' => 'Has de confirmar el teu correu electrònic per crear un wiki.',
 	'autocreatewiki' => 'Crea un nou wiki',
 	'createwiki' => 'Crear un nou wiki',
 	'autocreatewiki-language-top' => 'Top $1 de llengües',
@@ -565,8 +555,6 @@ $messages['cs'] = array(
 	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
 	'cnw-error-blocked-header' => 'Účet zablokován',
 	'cnw-error-anon-user-header' => 'Přihlaste se prosím',
-	'cnw-error-unconfirmed-email-header' => 'Váš e-mail nebyl potvrzen',
-	'cnw-error-unconfirmed-email' => 'Váš e-mail musí být potvrzen před vytvořením Wiki.',
 	'autocreatewiki' => 'Vytvořit novou wiki',
 	'createwiki' => 'Vytvořit novou wiki',
 	'autocreatewiki-language-top' => '$1 největších jazyků',
@@ -681,8 +669,6 @@ $messages['de'] = array(
 	'cnw-error-anon-user-header' => 'Melde dich bitte an',
 	'cnw-error-anon-user' => 'Das Erstellen von Wikis für anonyme Benutzer wurde deaktiviert. Bitte [[Special:UserLogin|melde dich an]] und versuche es erneut.',
 	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
-	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
-	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => 'Dein Wiki wird erstellt. Währenddessen kannst du dein Farbschema ändern.',
 	'cnw-theme-show-wiki' => 'Zeig mir mein Wiki',
@@ -732,6 +718,8 @@ Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Inf
 Viel Glück mit deinem Projekt, <br /><br />
 <a href="http://de.community.wikia.com/wiki/User:$4">$3</a><br />
 Das FANDOM-Community-Team<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
+	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
 );
 
 $messages['de-formal'] = array(
@@ -805,8 +793,6 @@ $messages['el'] = array(
 	'cnw-error-general-heading' => 'Μας συγχωρήτε',
 	'cnw-error-general' => 'Ουπς, κάτι πήγε στραβά από μέρους μας! Παρακαλούμε ξαναπροσπαθήστε ή [[Special:Contact|επικοινωνήστε μαζί μας]] για βοήθεια.',
 	'cnw-error-torblock' => 'Η δημιουργία wiki μέσω του Tor Network δεν επιτρέπεται.',
-	'cnw-error-unconfirmed-email-header' => 'Το e-mail σας δεν έχει επιβεβαιωθεί',
-	'cnw-error-unconfirmed-email' => 'Το e-mail σας πρέπει να επιβεβαιωθεί για να δημιουργήσετε ένα wiki.',
 	'cnw-error-wiki-limit-header' => 'Περάστηκε το όριο wiki',
 	'cnw-error-wiki-limit' => 'Γειά σας, είστε περιορισμένοι σε {{PLURAL:$1|$1 δημιουργία wiki|$1 δημιουργίες wiki}} καθημερινά. Περιμένετε 24 ώρες πριν να δημιουργήσετε άλλο ένα wiki.',
 	'cnw-name-wiki-creative' => 'Το Wikia είναι το καλύτερο μέρος για να δημιουργήσεις μία κοινότητα σε σχέση με αυτό που αγαπάς.',
@@ -883,8 +869,6 @@ $messages['es'] = array(
 	'cnw-error-anon-user-header' => 'Por favor, inicia sesión',
 	'cnw-error-anon-user' => 'Se ha desactivado la creación de wikis por parte de usuarios anónimos. [[{{#Special:UserLogin}}|Inicia sesión]] e inténtalo de nuevo.',
 	'cnw-error-torblock' => 'No está permitido crear wikis a través de la red Tor.',
-	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
-	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear un wiki.',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => 'Creando tu wiki. Puedes cambiar el diseño durante este tiempo.',
 	'cnw-theme-show-wiki' => 'Muéstrame mi wiki',
@@ -933,6 +917,8 @@ Hemos añadido cierta información y consejos en tu <a href="$5"> Página de dis
 Buena suerte con el proyecto, < br /><br /> 
 <a href="http://comunidad.wikia.com/wiki/Usuario:$4">$3</a>< br /> 
 Equipo comunitario de FANDOM< br /></p>',
+	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear un wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
 );
 
 $messages['et'] = array(
@@ -972,8 +958,6 @@ $messages['fa'] = array(
 	'cnw-theme-creative' => 'از نمونه‌های زیر یک قالب را انتخاب کنید. شما این امکان را دارید تا پیش‌نمایشی از قالب انتخابی خود را مشاهده کنید.',
 	'cnw-theme-instruction' => 'شما همچنین می‌توانید قالب اختصاصی خود را بعدا با کمک "ابزارهای من" ایجاد کنید.',
 	'cnw-error-anon-user-header' => 'لطفاً وارد شوید',
-	'cnw-error-unconfirmed-email-header' => 'ایمیل شما تایید نشده است',
-	'cnw-error-unconfirmed-email' => 'برای ساخت یک ویکی باید ایمیل شما تایید شود.',
 	'autocreatewiki' => 'ایجاد ویکی جدید',
 	'createwiki' => 'ایجاد ویکی جدید',
 	'autocreatewiki-language-top' => '$1 زبان برتر',
@@ -1038,8 +1022,6 @@ $messages['fi'] = array(
 	'cnw-error-anon-user-header' => 'Ole hyvä ja kirjaudu sisään',
 	'cnw-error-anon-user' => 'Anonyymi käyttäjä ei voi luoda wikiä. [[Special:UserLogin|Kirjaudu sisään]] ja yritä uudelleen.',
 	'cnw-error-torblock' => 'Wikin luonti Tor-verkkoa käyttäen ei ole sallittu.',
-	'cnw-error-unconfirmed-email-header' => 'Sähköpostiosoitettasi ei ole vahvistettu',
-	'cnw-error-unconfirmed-email' => 'Sähköpostiosoitteesi on vahvistettava ennen wikin luomista.',
 	'cnw-desc-select-categories' => 'Valitse lisää luokkia',
 	'cnw-desc-select-vertical' => 'Valitse napaluokka',
 	'autocreatewiki' => 'Luo uusi Wiki',
@@ -1132,8 +1114,6 @@ $messages['fr'] = array(
 	'cnw-error-anon-user-header' => 'Veuillez vous connecter',
 	'cnw-error-anon-user' => 'Les utilisateurs anonymes ne peuvent pas créer de wikis. Veuillez [[Special:UserLogin|vous connecter]] et réessayer.',
 	'cnw-error-torblock' => "La création de wikis via le réseau Tor n'est pas autorisée.",
-	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
-	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wiki, vous devez confirmer votre adresse e-mail.',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => 'Création du wiki en cours. Vous pouvez changer de thème au cours de cette période.',
 	'cnw-theme-show-wiki' => 'Me montrer mon wiki',
@@ -1190,6 +1170,8 @@ Pour vous aider à vous lancer, nous avons ajouté des informations et des astuc
 Bonne réussite dans votre projet,<br /><br />
 <a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a><br />
 L\'équipe de la communauté FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wiki, vous devez confirmer votre adresse e-mail.',
+	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
 );
 
 $messages['fy'] = array(
@@ -1233,8 +1215,6 @@ $messages['gl'] = array(
 	'cnw-error-anon-user-header' => 'Inicia a sesión',
 	'cnw-error-anon-user' => 'A creación de wikis está desactivada para os anónimos. [[Special:UserLogin|Inicia a sesión]] e inténtao de novo.',
 	'cnw-error-torblock' => 'Non está permitido crear wikis a través da rede Tor.',
-	'cnw-error-unconfirmed-email-header' => 'Non confirmou o seu correo electrónico',
-	'cnw-error-unconfirmed-email' => 'Debe confirmar o seu correo electrónico para crear un wiki.',
 	'autocreatewiki' => 'Crear un novo wiki',
 	'createwiki' => 'Crear un novo wiki',
 	'autocreatewiki-language-top' => 'As $1 linguas máis empregadas',
@@ -1307,8 +1287,6 @@ $messages['he'] = array(
 	'cnw-error-anon-user-header' => 'נא להיכנס לחשבון',
 	'cnw-error-anon-user' => 'למשתמשים אנונימיים לא ניתן ליצור ויקיות. נא [[Special:UserLogin|להיכנס לחשבון]] ולנסות שוב.',
 	'cnw-error-torblock' => 'יצירת ויקיות דרך רשת Tor אסורה.',
-	'cnw-error-unconfirmed-email-header' => 'כתובת הדוא"ל שלך לא אומתה',
-	'cnw-error-unconfirmed-email' => 'יש לאמת את כתובת הדוא"ל שלך על מנת ליצור ויקי.',
 	'autocreatewiki' => 'צור אתר וויקי חדש',
 	'createwiki' => 'צור אתר וויקי חדש',
 	'autocreatewiki-language-top' => '$1 השפות המובילות',
@@ -1490,8 +1468,6 @@ $messages['id'] = array(
 	'cnw-error-anon-user-header' => 'Silahkan masuk log',
 	'cnw-error-anon-user' => 'Membuat wiki untuk anonim dinonaktifkan. Silahkan [[Special:UserLogin|masuk log]] dan coba lagi.',
 	'cnw-error-torblock' => 'Membuat wiki melalui Jaringan Tor tidak diperbolehkan.',
-	'cnw-error-unconfirmed-email-header' => 'Surel Anda tidak dikonfirmasi',
-	'cnw-error-unconfirmed-email' => 'Surel Anda harus dikonfirmasi untuk membuat Wiki.',
 	'autocreatewiki' => 'Buat wiki Baru',
 	'createwiki' => 'Buat wiki baru',
 	'autocreatewiki-language-top' => 'Bahasa yang didukung',
@@ -1574,8 +1550,6 @@ $messages['it'] = array(
 	'cnw-error-blocked' => 'Sei stato bloccato da $1. La motivazione fornita è la seguente: $2. (ID di riferimento del blocco: $3)',
 	'cnw-error-anon-user-header' => 'Accedi, per favore',
 	'cnw-error-torblock' => 'Non è permesso creare wiki tramite la rete Tor.',
-	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
-	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wiki.',
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'Scegli un hub:',
 	'cnw-desc-select-categories' => 'Seleziona una o più categorie aggiuntive',
@@ -1630,6 +1604,8 @@ Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina
 Buona fortuna con il tuo progetto,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Team della community di FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
 );
 
 $messages['ja'] = array(
@@ -1659,7 +1635,6 @@ $messages['ja'] = array(
 	'cnw-error-general-heading' => '申し訳ありません',
 	'cnw-error-blocked-header' => 'アカウントがブロックされています',
 	'cnw-error-anon-user-header' => 'ログインしてください',
-	'cnw-error-unconfirmed-email' => 'FANDOMコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'このWikiが属するハブ：',
 	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
@@ -1670,7 +1645,6 @@ $messages['ja'] = array(
 	'cnw-error-blocked' => '$1さんによりブロックされています。理由：$2（参照用ブロックID：$3）。',
 	'cnw-error-anon-user' => '未登録ユーザーはFANDOMコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
 	'cnw-error-torblock' => 'Torネットワーク経由でFANDOMコミュニティを作成することはできません。',
-	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
 	'cnw-theme-loading-state' => 'Wikiを作成中です。この間に必要であればテーマを変更していただけます。',
 	'cnw-theme-show-wiki' => 'Wikiを表示',
 	'cnw-next-create-wiki' => '新しいWikiを作成する',
@@ -1719,6 +1693,8 @@ FANDOMをお楽しみいただく上で、ぜひこれらの記事を役立て�
 今後ともFANDOMをよろしくお願いいたします。<br /><br />
 <a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
 FANDOMコミュニティ・チーム<br /></p>',
+	'cnw-error-unconfirmed-email' => 'FANDOMコミュニティを作成するには、メールの認証を行っていただく必要があります。',
+	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
 );
 
 $messages['km'] = array(
@@ -1774,8 +1750,6 @@ $messages['kn'] = array(
 	'cnw-error-wiki-limit-header' => 'ವಿಕಿ ತನ್ನ ಮಿತಿಯನ್ನು ಮುಟ್ಟಿದೆ',
 	'cnw-error-blocked-header' => 'ಖಾತೆಯನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ',
 	'cnw-error-anon-user-header' => 'ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ',
-	'cnw-error-unconfirmed-email-header' => 'ನಿಮ್ಮ ಮಿಂಚಂಚೆ ದೃಢಪಡಿಸಲಾಗಿಲ್ಲ',
-	'cnw-error-unconfirmed-email' => 'ವಿಕಿಯನ್ನು ರಚಿಸಲು ನಿಮ್ಮ ಮಿಂಚಂಚೆಯು ದೃಢಪಡಬೇಕಾಗಿದೆ.',
 );
 
 $messages['ko'] = array(
@@ -1814,8 +1788,6 @@ $messages['ko'] = array(
 	'cnw-error-anon-user-header' => '로그인하세요',
 	'cnw-error-anon-user' => '익명이 위키를 만드는 것은 비활성화되어 있습니다. [[Special:UserLogin|로그인]]하고 나서 다시 시도하세요.',
 	'cnw-error-torblock' => '토르 네트워크를 사용하여 위키를 생성하는 것은 금지되어 있습니다.',
-	'cnw-error-unconfirmed-email-header' => '이메일이 확인되지 않았습니다',
-	'cnw-error-unconfirmed-email' => '위키를 만들려면 이메일을 확인해야 합니다.',
 	'autocreatewiki' => '새 위키 만들기',
 	'createwiki' => '새 위키 만들기',
 	'autocreatewiki-language-all' => '모든 언어',
@@ -1933,7 +1905,6 @@ $messages['lb'] = array(
 	'cnw-error-general-heading' => 'Eis Entschëllegungen',
 	'cnw-error-blocked-header' => 'Benotzerkont gespaart',
 	'cnw-error-anon-user-header' => 'Loggt Iech w.e.g. an',
-	'cnw-error-unconfirmed-email-header' => 'Är E-Mail-Adress gouf net confirméiert',
 	'autocreatewiki' => 'Eng nei Wiki uleeën',
 	'createwiki' => 'Eng nei Wiki uleeën',
 	'autocreatewiki-language-top' => 'Top $1 Sproochen',
@@ -1966,8 +1937,6 @@ $messages['lki'] = array(
 	'cnw-badword-header' => 'مآوو بووسینا',
 	'cnw-error-blocked-header' => 'حساوو بَسِریئائۀ',
 	'cnw-error-anon-user-header' => 'لطفن بوونه نؤم',
-	'cnw-error-unconfirmed-email-header' => 'رایانامۀت تأیید نِؤیۀ',
-	'cnw-error-unconfirmed-email' => 'رایانامۀت بائد تأیید بوو ئۀرا ویکی سازین',
 );
 
 $messages['lol'] = array(
@@ -2010,8 +1979,6 @@ $messages['lol'] = array(
 	'cnw-error-anon-user-header' => 'crwdns15102:0crwdne15102:0',
 	'cnw-error-anon-user' => 'crwdns15103:0crwdne15103:0',
 	'cnw-error-torblock' => 'crwdns15104:0crwdne15104:0',
-	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
-	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
 	'autocreatewiki' => 'crwdns61625:0crwdne61625:0',
 	'createwiki' => 'crwdns61626:0crwdne61626:0',
 	'autocreatewiki-language-top' => 'crwdns66789:0crwdne66789:0',
@@ -2033,6 +2000,8 @@ $messages['lol'] = array(
 	'autocreatewiki-welcometalk-wall' => 'crwdns66793:0{{subst:SITENAME}}crwdne66793:0',
 	'autocreatewiki-welcometalk' => 'crwdns66794:0crwdne66794:0',
 	'autocreatewiki-welcomebody-HTML' => 'crwdns66795:0crwdne66795:0',
+	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
+	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
 );
 
 $messages['lrc'] = array(
@@ -2117,8 +2086,6 @@ $messages['mk'] = array(
 	'cnw-error-anon-user-header' => 'Најавете се',
 	'cnw-error-anon-user' => 'Создавањето на викија од анонимни корисници е оневозможено. [[Special:UserLogin|Најавете се]] и пробајте пак.',
 	'cnw-error-torblock' => 'Не е дозволено создавање на викија преку Tor-мрежа.',
-	'cnw-error-unconfirmed-email-header' => 'Вашата е-пошта не е потврдена',
-	'cnw-error-unconfirmed-email' => 'Вашата е-пошта треба да е потврдена за да можете да направите Вики.',
 	'autocreatewiki' => 'Создај ново вики',
 	'createwiki' => 'Создај ново вики',
 	'autocreatewiki-language-top' => 'Најуспешни $1 јазици',
@@ -2180,8 +2147,6 @@ $messages['ml'] = array(
 
 $messages['mn'] = array(
 	'createnewwiki-desc' => 'Вики үүсгэх хялбар хэрэгсэл (wizard)',
-	'cnw-error-unconfirmed-email-header' => 'Таны имэйл баталгаажуулагдаагүй байна',
-	'cnw-error-unconfirmed-email' => 'Вики үүсгэхийн тулд имэйл чинь баталгаажуулагдсан байх ёстой',
 );
 
 $messages['ms'] = array(
@@ -2220,8 +2185,6 @@ $messages['ms'] = array(
 	'cnw-error-anon-user-header' => 'Sila log masuk',
 	'cnw-error-anon-user' => 'Pengguna awanama dilarang membuka wiki. Sila [[Special:UserLogin|log masuk]] dan cuba lagi.',
 	'cnw-error-torblock' => 'Pembentukan wiki melalui Tor Network tidak dibenarkan.',
-	'cnw-error-unconfirmed-email-header' => 'E-mel anda belum disahkan',
-	'cnw-error-unconfirmed-email' => 'Alamat e-mel anda perlu disahkan untuk membuka wiki.',
 	'autocreatewiki' => 'Cipta wiki baru',
 	'createwiki' => 'Cipta wiki baru',
 	'autocreatewiki-language-top' => '$1 bahasa teratas',
@@ -2267,8 +2230,6 @@ $messages['mzn'] = array(
 
 $messages['nap'] = array(
 	'createnewwiki-desc' => "Procedura guidata p' 'a criazione 'e na wiki",
-	'cnw-error-unconfirmed-email-header' => "Ll'e-mail d' 'o tujo nun è stato cunfermato",
-	'cnw-error-unconfirmed-email' => "Ll'e-mail d' 'o tujo s'ha dda cunfermà pe' crià 'a Wiki.",
 );
 
 $messages['nb'] = array(
@@ -2358,50 +2319,48 @@ $messages['ne'] = array(
 );
 
 $messages['nl'] = array(
-	'createnewwiki-desc' => 'Wizard wiki aanmaken',
+	'createnewwiki-desc' => 'Wizard voor het maken van een wiki',
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
 	'cnw-title' => 'Nieuwe wiki aanmaken',
 	'cnw-name-wiki-headline' => 'Wiki oprichten',
-	'cnw-name-wiki-creative' => 'Wikia is de beste plaats om een website te bouwen en een gemeenschap te laten groeien om het onderwerp dat je aan het hart gaat.',
+	'cnw-name-wiki-creative' => 'Of het gaat om een community voor wereldwijd entertainment of om je persoonlijke project, een goede en unieke naam is belangrijk:',
 	'cnw-name-wiki-label' => 'Geef je wiki een naam',
 	'cnw-name-wiki-domain-label' => 'Geef je wiki een adres',
 	'cnw-name-wiki-submit-error' => 'Je moet beide bovenstaande velden invullen om door te kunnen gaan.',
 	'cnw-desc-headline' => 'Waar gaat je wikia over?',
-	'cnw-desc-creative' => 'Je omschrijving zal mensen helpen je wikia te vinden',
-	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van uw wiki.',
+	'cnw-desc-creative' => 'Met een goede omschrijving kunnen mensen je wiki makkelijker vinden.',
+	'cnw-desc-placeholder' => 'Zorg dat dit mooi is! Dit wordt weergegeven op de hoofdpagina van je wiki.',
 	'cnw-desc-select-vertical' => 'Selecteer een Hubcategorie',
 	'cnw-desc-select-categories' => 'Selecteer extra categorieën',
 	'cnw-desc-select-one' => 'Maak een keuze',
-	'cnw-desc-all-ages' => 'Is this community directed to children under the age of 13?',
-	'cnw-desc-lang' => 'Taal',
+	'cnw-desc-all-ages' => 'Is deze community gericht op kinderen jonger dan 13 jaar?',
+	'cnw-desc-lang' => 'Taal van je wiki',
 	'cnw-desc-wiki-submit-error' => 'Kies een categorie',
-	'cnw-theme-headline' => 'Ontwerp uw wiki',
-	'cnw-theme-creative' => 'Kies hieronder een vormgeving. Als je een vormgeving selecteert, wordt een voorvertoning weergegeven.',
-	'cnw-theme-instruction' => 'Je kunt je thema of ontwerp altijd later aanpassen via "Mijn hulpmiddelen".',
-	'cnw-welcome-headline' => 'Gefeliciteerd. U hebt de wiki $1 aangemaakt',
+	'cnw-theme-headline' => 'Ontwerp je wiki',
+	'cnw-theme-creative' => 'Kies hieronder een vormgeving die het best past bij je wiki.',
+	'cnw-theme-instruction' => 'Je kunt je ontwerp altijd later aanpassen via de "Themaontwerper".',
+	'cnw-welcome-headline' => 'Gefeliciteerd. Je hebt de wiki $1 aangemaakt',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.',
-	'cnw-error-general-heading' => 'Fout tijdens het aanmaken van een nieuwe wiki',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of [[Special:Contact|neem contact met ons op]] voor hulp.',
+	'cnw-error-general-heading' => 'Onze excuses',
 	'cnw-badword-header' => 'Pas op!',
-	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
+	'cnw-badword-msg' => 'Hallo. Gebruik geen ongewenste woorden in je wikibeschrijving: $1',
 	'cnw-error-wiki-limit-header' => 'De wikilimiet is bereikt',
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
-	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
-	'cnw-error-anon-user-header' => 'Meld u aan',
-	'cnw-error-anon-user' => "Het aanmaken voor wiki's is uitgeschakeld voor anonieme gebruikers. [[Special:UserLogin|Meld u aan]] en probeer het opnieuw.",
+	'cnw-error-blocked' => 'Je bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
+	'cnw-error-anon-user-header' => 'Meld je aan',
+	'cnw-error-anon-user' => "Anonieme gebruikers kunnen geen wiki's aanmaken. [[Special:UserLogin|Meld je aan]] en probeer het opnieuw.",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
-	'cnw-error-unconfirmed-email-header' => 'Uw e-mailadres is niet bevestigd',
-	'cnw-error-unconfirmed-email' => 'Uw e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-name-wiki-language' => '',
-	'cnw-next-create-wiki' => 'Create my wiki',
-	'cnw-theme-loading-state' => 'Creating your wiki. You may change your theme during this time.',
-	'cnw-theme-show-wiki' => 'Show me my wiki',
-	'autocreatewiki' => 'Begin een nieuwe wiki',
-	'createwiki' => 'Nieuwe wiki aanmaken',
-	'autocreatewiki-language-top' => 'Supported languages',
+	'cnw-next-create-wiki' => 'Mijn wiki maken',
+	'cnw-theme-loading-state' => 'Je wiki wordt aangemaakt. Je kan nog steeds het ontwerp wijzigen.',
+	'cnw-theme-show-wiki' => 'Toon me mijn wiki',
+	'autocreatewiki' => 'Maak een nieuwe wiki',
+	'createwiki' => 'Maak een nieuwe wiki',
+	'autocreatewiki-language-top' => 'Ondersteunde talen',
 	'autocreatewiki-language-all' => 'Alle talen',
 	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-empty-field' => 'Vul dit veld in.',
@@ -2409,28 +2368,28 @@ $messages['nl'] = array(
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
 	'autocreatewiki-violate-policy' => 'Deze wikinaam bevat een woord dat ons beleid voor namen schendt.',
 	'autocreatewiki-name-taken' => 'Er bestaat al een wiki met dit adres.
-U kunt meehelpen op <a href=\\"http://$1.wikia.com\\">http://$1.wikia.com</a> of een ander adres kiezen.',
+Je kunt meehelpen op <a href=\\"http://$1.wikia.com\\">http://$1.wikia.com</a> of een ander adres kiezen.',
 	'autocreatewiki-name-too-short' => 'Dit adres is te kort.
-Kies alstublieft een adres met tenminste drie tekens.',
+Kies een adres met tenminste drie tekens.',
 	'autocreatewiki-name-too-long' => 'Het adres is te lang.
 Kies een naam met hoogstens vijftig tekens.',
 	'autocreatewiki-empty-wikiname' => 'De naam van de wiki kan niet leeg zijn.',
 	'autocreatewiki-category-label' => 'Categorie:',
 	'autocreatewiki-welcometalk-log' => 'Welkomstbericht',
-	'autocreatewiki-regex-error-comment' => 'gebruikt in wiki $1 (volledige tekst: $2)',
+	'autocreatewiki-regex-error-comment' => 'gebruikt op wiki $1 (volledige tekst: $2)',
 	'autocreatewiki-protect-reason' => 'Onderdeel van de officiële interface',
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk-wall' => "Hallo!
-We zijn blij dat {{SITENAME}} nu onderdeel is van de Wikiagemeenschap.
+We zijn blij dat {{SITENAME}} nu onderdeel is van de FANDOM-gemeenschap.
 
 Er is nog veel te doen, dus hier zijn wat handige tips om je wiki verder te helpen:
-* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies je voor je wiki in kunt schakelen, waaronder chat, speldjes en nog veel meer.
-* Ga langs bij de [[w:c:nl.community|Centrale Wikia community]] om op de hoogte te blijven via onze [[w:c:nl.community:Categorie:Staff_blogs|medewerkersblog]], stel vragen op ons [[w:c:nl.community:Special:Forum|community forum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen.
-* Tenslotte kunt u onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van Wikia te leren kennen.
+* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies je voor je wiki in kunt schakelen, waaronder chat, gallerijen en nog veel meer.
+* Ga langs bij de [[w:c:nl.community|Centrale Wikia community]] om op de hoogte te blijven via onze [[w:c:nl.community:Categorie:Staff_blogs|medewerkersblog]], stel vragen op ons [[w:c:nl.community:Special:Forum|community forum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met andere gebruikers.
+* Tenslotte kun je onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van FANDOM te leren kennen.
 
-Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Veel plezier!",
+Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van FANDOM. Veel plezier!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikia-gemeenschap!
+<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de FANDOM-gemeenschap!
 
 Je hebt nu een hele website tot je beschikking hebt die je met informatie, afbeeldingen en video over je favoriete onderwerp kunt gaan vullen. Maar nu staart een lege pagina je aan. Spannend, toch? Hier volgen wat tips om je op weg te helpen.
 
@@ -2443,12 +2402,14 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
 -- [[User:\$2|\$3]] <staff /></div>",
-	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
-The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
-Good luck with the project,<br /><br />
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />
+Je wiki is nu beschikbaar op <a href="$1">$1</a>.  We hopen dat je snel aan de slag gaat!<br /><br />
+We hebben nog wat extra informatie en tips op je <a href="$5">prikbord</a> om je op weg te helpen. Als je vragen hebt kun je reageren op deze email of onze hulppagina\'s verkennen.<br /><br />
+Veel success met je project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Je e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
+	'cnw-error-unconfirmed-email-header' => 'Je e-mailadres is niet bevestigd',
 );
 
 $messages['nl-informal'] = array(
@@ -2555,8 +2516,6 @@ $messages['pl'] = array(
 	'cnw-error-anon-user-header' => 'Zaloguj się',
 	'cnw-error-anon-user' => 'Utworzyć wiki mogą jedynie zarejestrowani użytkownicy. [[Special:UserLogin|Zaloguj się]] i spróbuj ponownie.',
 	'cnw-error-torblock' => 'Tworzenie wiki za pośrednictwem sieci Tor nie jest dozwolone.',
-	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
-	'cnw-error-unconfirmed-email' => 'Musisz mieć potwierdzony adres e-mail, aby stworzyć wiki.',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => 'Tworzymy twoją wiki. Możesz w tym czasie zmienić jej motyw.',
 	'cnw-theme-show-wiki' => 'Pokaż mi moją wiki',
@@ -2607,6 +2566,8 @@ Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji
 Powodzenia,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Zespół Społeczności portalu FANDOM<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Musisz mieć potwierdzony adres e-mail, aby stworzyć wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
 );
 
 $messages['pms'] = array(
@@ -2751,8 +2712,6 @@ $messages['pt'] = array(
 	'cnw-error-anon-user-header' => 'Por favor, inicie sessão',
 	'cnw-error-anon-user' => 'A criação de wikis para usuários anônimos está desativada. Por favor, [[Special:UserLogin|faça login]] e tente novamente.',
 	'cnw-error-torblock' => 'A criação de wikis usando a rede Tor não é permitida.',
-	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
-	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wiki.',
 	'autocreatewiki' => 'Crie uma nova wiki',
 	'createwiki' => 'Crie uma nova wiki',
 	'autocreatewiki-language-top' => 'Idiomas Suportados',
@@ -2798,6 +2757,8 @@ Nós adicionamos algumas informações e dicas em seu <a href="$5">mural de mens
 Boa sorte com o projeto, <br />< br / >
 <a href="http://comunidade.wikia.com/wiki/User:$4">$3</a><br />
  Equipe da comunidade FANDOM <br /></p>',
+	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
 );
 
 $messages['ro'] = array(
@@ -2880,8 +2841,6 @@ $messages['ru'] = array(
 	'cnw-error-anon-user-header' => 'Пожалуйста, войдите в систему',
 	'cnw-error-anon-user' => 'Создание вики анонимными участниками отключено. Пожалуйста, [[Special:UserLogin|войдите в систему]] и повторите попытку.',
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
-	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
-	'cnw-error-unconfirmed-email' => 'Чтобы создать вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => 'Идёт создание вики. Сейчас вы можете изменить тему оформления.',
 	'cnw-theme-show-wiki' => 'Перейти на мою вики',
@@ -2930,6 +2889,8 @@ $messages['ru'] = array(
 Созданная вами вики доступна по адресу <a href="$1">$1</a>. Мы надеемся, что вы скоро начнете её развивать. <br /><br />
 Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке ФЭНДОМА</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br /> 
 Команда ФЭНДОМА<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Чтобы создать вики, необходимо подтвердить адрес электронной почты.',
+	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
 );
 
 $messages['sa'] = array(
@@ -2978,8 +2939,6 @@ Fynd answers, advice, n mair oan <a href="http://community.wikia.com">Communitie
 	'cnw-error-anon-user-header' => 'Please log in',
 	'cnw-error-anon-user' => 'Creautin wikis fer anons is disabled. Please [[Special:UserLogin|log in]] n gie it anither gae.',
 	'cnw-error-torblock' => 'Creautin wikis bi wa o the Tor Network is no alloued.',
-	'cnw-error-unconfirmed-email-header' => 'Yer e-mail haes no been confirmed',
-	'cnw-error-unconfirmed-email' => 'Yer e-mail shid be confirmed tae creaut ae Wiki.',
 );
 
 $messages['sl'] = array(
@@ -3016,8 +2975,6 @@ $messages['sr-ec'] = array(
 	'cnw-error-blocked-header' => 'Налог је блокиран',
 	'cnw-error-blocked' => '{{GENDER:$1|Блокирао вас је корисник|Блокирала вас је корисница|Блокирао вас је корисник}} $1. Наведени разлог гласи: $2 (назнака блокаде: $3).',
 	'cnw-error-torblock' => 'Није дозвољено стварање викија преко Тор мреже.',
-	'cnw-error-unconfirmed-email-header' => 'Ваша е-пошта није потврђен',
-	'cnw-error-unconfirmed-email' => 'Ваша е-пошта мора бити потврђена да би направили Вики',
 	'autocreatewiki' => 'Направи нову викију',
 	'createwiki' => 'Направи нову викију',
 	'autocreatewiki-language-top' => 'Најбољих $1 језика',
@@ -3066,8 +3023,6 @@ $messages['sv'] = array(
 	'cnw-error-anon-user-header' => 'Var god logga in',
 	'cnw-error-anon-user' => 'Anonyma användare kan inte skapa wikis. Var god [[Special:UserLogin|logga in]] och försök igen.',
 	'cnw-error-torblock' => 'Skapa wikis via Tor-nätverket är inte tillåtet.',
-	'cnw-error-unconfirmed-email-header' => 'Din e-postadress har inte bekräftats',
-	'cnw-error-unconfirmed-email' => 'Din e-postadress bör bekräftas för att skapa en wiki.',
 	'autocreatewiki' => 'Skapa en ny Wiki',
 	'createwiki' => 'Begär en ny wiki',
 	'autocreatewiki-language-top' => 'Toppen $1 språk',
@@ -3141,7 +3096,6 @@ $messages['ta'] = array(
 	'cnw-next' => 'அடுத்து',
 	'cnw-back' => 'பின்செல்க',
 	'cnw-desc-lang' => 'மொழி',
-	'cnw-error-unconfirmed-email-header' => 'உங்கள் மின்னஞ்சல் உறுதி செய்யப்படவில்லை',
 	'autocreatewiki-language-all' => 'அனைத்து மொழிகள்',
 	'autocreatewiki-title-template' => '$1 விக்கி',
 	'autocreatewiki-category-label' => 'பகுப்பு:',
@@ -3182,8 +3136,6 @@ $messages['te'] = array(
 	'cnw-error-anon-user-header' => 'దయచేసి లాగినవండి',
 	'cnw-error-anon-user' => 'అజ్ఞాతలు వికీని సృష్టించడాన్ని అచేతనం చేసాం. [[Special:UserLogin|లాగినై]] మళ్ళీ ప్రయత్నించండి.',
 	'cnw-error-torblock' => 'Tor నెట్‍వర్కు ద్వారా వికీలను సృష్టించడానికి అనుమతి లేదు.',
-	'cnw-error-unconfirmed-email-header' => 'మీ ఈమెయిలు ధృవీకరించబడలేదు',
-	'cnw-error-unconfirmed-email' => 'ఒక వికీని సృష్టించడానికి మీ ఈమెయిలు ధృవీకరించబడాలి.',
 	'autocreatewiki-language-all' => 'అన్ని భాషలు',
 	'autocreatewiki-title-template' => '$1 వికీ',
 	'autocreatewiki-category-label' => 'వర్గం:',
@@ -3413,8 +3365,6 @@ $messages['uk'] = array(
 	'cnw-error-anon-user-header' => 'Будь ласка, увійдіть',
 	'cnw-error-anon-user' => 'Створення вікі для анонімів вимкнено. Будь ласка, [[Special:UserLogin|увійдіть]] і повторіть спробу.',
 	'cnw-error-torblock' => 'Не допускається створення вікі через мережу Tor.',
-	'cnw-error-unconfirmed-email-header' => 'Вашу адресу електронної пошти не підтверджено',
-	'cnw-error-unconfirmed-email' => 'Ваша адреса електронної пошти повинні бути підтверджена для створення вікі.',
 	'autocreatewiki' => 'Створити нову Вікі',
 	'createwiki' => 'Створити нову Вікі',
 	'autocreatewiki-language-top' => '$1 {{PLURAL:$1|найважливіша мова|найважливіші мови|найважливіших мов}}',
@@ -3494,8 +3444,6 @@ $messages['vi'] = array(
 	'cnw-error-anon-user-header' => 'Xin vui lòng đăng nhập',
 	'cnw-error-anon-user' => 'Tạo wiki cho người dùng vô danh bị vô hiệu hóa. Xin vui lòng [[Special:UserLogin|đăng nhập]] và thử lại.',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor không được cho phép.',
-	'cnw-error-unconfirmed-email-header' => 'Thư điện tử của bạn chưa được xác nhận',
-	'cnw-error-unconfirmed-email' => 'Thư điện tử của bạn cần được xác nhận để tạo lập một Wiki.',
 	'autocreatewiki' => 'Tạo wiki mới',
 	'autocreatewiki-title-template' => 'Wikia $1',
 );
@@ -3536,8 +3484,6 @@ $messages['zh-hans'] = array(
 	'cnw-error-anon-user-header' => '请登入',
 	'cnw-error-anon-user' => '无法由匿名用户创建维基。请先[[Special:UserLogin|登入]]，然后再试。',
 	'cnw-error-torblock' => '不允许通过Tor创建维基。',
-	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
-	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
 	'cnw-name-wiki-language' => '',
 	'cnw-theme-loading-state' => '创建你的维基。在此期间，你可以更改主题样式。',
 	'cnw-theme-show-wiki' => '展示我的维基站',
@@ -3589,6 +3535,8 @@ $messages['zh-hans'] = array(
 祝您编辑一切顺利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM社区团队<br /></p>',
+	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
+	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
 );
 
 $messages['zh-hant'] = array(
@@ -3631,8 +3579,6 @@ $messages['zh-hant'] = array(
 	'cnw-next-create-wiki' => '創建我的Wiki',
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-categories' => '選擇其它類別',
-	'cnw-error-unconfirmed-email-header' => '你的電子郵件尚未認證。',
-	'cnw-error-unconfirmed-email' => '必須先認證你的電子郵件才能創建Wiki。',
 	'autocreatewiki' => '創建新的 Wiki',
 	'createwiki' => '創建新的 Wiki',
 	'autocreatewiki-language-top' => '支援語言',
@@ -3680,5 +3626,7 @@ $messages['zh-hant'] = array(
 祝您編輯一切順利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 FANDOM社區團隊<br /></p>',
+	'cnw-error-unconfirmed-email' => '必須先認證你的電子郵件才能創建Wiki。',
+	'cnw-error-unconfirmed-email-header' => '你的電子郵件尚未認證。',
 );
 
