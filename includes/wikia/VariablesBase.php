@@ -1043,14 +1043,6 @@ $wgChatPrivateServerOverride = null;
 $wgChatPublicHost = 'chat.wikia-services.com:443';
 
 /**
- * Override to $wgChatPublicHost for development and testing purposes.
- * @see $wgChatPublicHost
- * @see extensions/wikia/Chat2/ChatConfig.class.php
- * @var string $wgChatPublicHostOverride
- */
-$wgChatPublicHostOverride = null;
-
-/**
  * This is a flag to determine whether or not to check file extensions on
  * upload. WARNING: setting this to false is insecure for public wikis.
  * @var bool $wgCheckFileExtensions
