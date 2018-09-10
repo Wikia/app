@@ -56,10 +56,6 @@ class PortableInfoboxImagesHelper {
 		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
 		}
-		$ref = null;
-
-		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
 
 		return array_merge( $data, [
 			'height' => intval( $imgTagDimensions['height'] ),
@@ -83,8 +79,6 @@ class PortableInfoboxImagesHelper {
 			return false;
 		}
 
-		$ref = null;
-
 		$thumbnail = $file->getUrlGenerator()
 			->zoomCrop()
 			->width($width)
@@ -98,7 +92,7 @@ class PortableInfoboxImagesHelper {
 			->url();
 
 		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$dataAttrs ] );
 
 		return array_merge( $data, [
 			'height' => $width,
@@ -122,16 +116,14 @@ class PortableInfoboxImagesHelper {
 			return false;
 		}
 
-		$ref = null;
 		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$dataAttrs ] );
 
 		$thumbnail = $file->getUrlGenerator()
 			->scaleToWidth($width)
 			->url();
 
 		$thumbnail2x = $file->getUrlGenerator()
-			->zoomCrop()
 			->scaleToWidth($width * 2)
 			->url();
 
