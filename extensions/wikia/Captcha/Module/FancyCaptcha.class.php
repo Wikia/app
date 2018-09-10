@@ -221,8 +221,6 @@ class FancyCaptcha extends BaseCaptcha {
 
 		$info = $this->retrieveCaptcha();
 
-		# $info = ['salt' => '40a51b2b', 'hash' => 'cef076c8a3a90064']; var_dump(__METHOD__, $info);
-
 		if ( $info ) {
 			$info['viewed'] = wfTimestamp();
 			$this->storeCaptcha( $info );
