@@ -56,6 +56,7 @@ cat travis/php_unit_tests_banner.txt && php -v && php $PHP_PARAMS -d xdebug.cove
 	--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation $1 && cat travis/php_integration_tests_banner.txt && \
 	php -v && php $PHP_PARAMS -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--stderr --configuration=phpunit.xml \
+	--debug \
 	--group Integration $1
 
 RESULT=$?
