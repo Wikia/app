@@ -1203,13 +1203,6 @@ $wgConsulDataCenters = [
 ];
 
 /**
- * Slack webhook URL for JavaScript Review Tool.
- * @see extensions/wikia/ContentReview
- * @var string $wgContentReviewSlackWebhook
- */
-$wgContentReviewSlackWebhook = 'https://hooks.slack.com/services/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';
-
-/**
  * Default cookie expiration time. Setting to 0 makes all cookies session-only.
  * @var int $wgCookieExpiration
  */
