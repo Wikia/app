@@ -4,6 +4,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
@@ -15,6 +16,7 @@ require([
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.trackingOptIn',
 	'wikia.window',
@@ -24,6 +26,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
+	slotsContext,
 	geo,
 	slotStateMonitor,
 	a9,
@@ -35,6 +38,7 @@ require([
 	actionHandler,
 	slotRegistry,
 	adInfoListener,
+	adLogicZoneParams,
 	babDetection,
 	trackingOptIn,
 	win,
@@ -54,12 +58,16 @@ require([
 			slotRegistry,
 			mercuryListener,
 			pageLevelParams.getPageLevelParams(),
+			adLogicZoneParams,
 			adContext,
 			btfBlocker,
 			'mercury',
-			trackingOptIn
+			trackingOptIn,
+			babDetection,
+			slotsContext
 		);
 	});
+
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
 	function passFVLineItemIdToUAP() {
@@ -87,15 +95,7 @@ require([
 	}
 
 	mercuryListener.onLoad(function () {
-		if (adContext.get('bidders.a9')) {
-			a9.call();
-		}
-
-		if (adContext.get('bidders.prebid')) {
-			prebid.call();
-		}
-
-		passFVLineItemIdToUAP();
+		callOnConsecutivePageView();
 
 		adInfoListener.run();
 		slotStateMonitor.run();

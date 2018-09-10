@@ -939,11 +939,14 @@ $wgCapitalLinkOverrides = [];
 $wgCapitalLinks = true;
 
 /**
- * Image repository for FancyCaptch
+ * Amazon's S3 storage with captcha files
  * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
- * @var string $wgCaptchaDirectory
+ * @see SUS-5790
+ * @var string $wgCaptchaS3Bucket
+ * @var string $wgCaptchaS3Path
  */
-$wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
+$wgCaptchaS3Bucket = 'fancy-captcha';
+$wgCaptchaS3Path = 'images-20111115';
 
 /**
  * Specify how category names should be sorted, when listed on a category page.
@@ -1281,6 +1284,19 @@ $wgCreateDatabaseActiveCluster = 'c7';
  * @var bool $wgCreateLanguageWikisWithPath
  */
 $wgCreateLanguageWikisWithPath = false;
+
+/**
+ * Whether to create new English wikis under the fandom.com domain.
+ * @var bool $wgCreateEnglishWikisOnFandomCom
+ */
+$wgCreateEnglishWikisOnFandomCom = false;
+
+/**
+ * Wiki description enter by the user on the CNW page. Removed after wiki is created
+ * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
+ * @var string $wgWikiDescription
+ */
+$wgWikiDescription = '';
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -3495,13 +3511,6 @@ $wgEnableSemanticScribuntoExt = false;
  * @var bool $wgEnableSendGridPostback
  */
 $wgEnableSendGridPostback = true;
-
-/**
- * Enable SEO Link Hreflang extension.
- * @see extensions/wikia/SeoLinkHreflang
- * @var bool $wgEnableSeoLinkHreflangExt
- */
-$wgEnableSeoLinkHreflangExt = false;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current
@@ -8695,6 +8704,13 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
+ * Exclude wiki from Global Search
+ * @see extensions/wikia/Search/classes/IndexService/CrossWikiCore.php
+ * @var bool $wgExcludeWikiFromSearch
+ */
+$wgExcludeWikiFromSearch = false;
+
+/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8770,14 +8786,6 @@ $wgWikiFactoryDomains = [
 	'wikicities.net',
 	'wikicities.org'
 ];
-
-/**
- * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
- * if it received a request with one of the mapped alternative domains.
- * @see $wgWikiFactoryDomains
- * @var bool $wgWikiFactoryRedirectForAlternateDomains
- */
-$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
