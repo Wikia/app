@@ -939,13 +939,6 @@ $wgCapitalLinkOverrides = [];
 $wgCapitalLinks = true;
 
 /**
- * Image repository for FancyCaptch
- * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
- * @var string $wgCaptchaDirectory
- */
-$wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
-
-/**
  * Amazon's S3 storage with captcha files
  * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
  * @see SUS-5790
