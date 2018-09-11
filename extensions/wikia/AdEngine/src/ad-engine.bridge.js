@@ -204,6 +204,7 @@ function unifySlotInterface(slot) {
 	});
 
 	slot.pre('viewed', (event) => {
+		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
 	});
 
