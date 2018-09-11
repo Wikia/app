@@ -108,26 +108,7 @@ class ArticleAsJson {
 	public static function getDataAttrsForGallery( $media ) {
 		return array_map(
 			function ( $m ) {
-				$result = [
-					'type' => $m['type'],
-					'url' => $m['url'],
-					'title' => $m['title'],
-					'isLinkedByUser' => $m['isLinkedByUser'],
-					'href' => $m['href'],
-					'isVideo' => $m['isVideo'],
-					'width' => $m['width'],
-					'height' => $m['height'],
-				];
-
-				if ( array_key_exists( 'embed', $m ) ) {
-					$result['embed'] = $m['embed'];
-				}
-
-				if ( array_key_exists( 'caption', $m ) ) {
-					$result['caption'] = $m['caption'];
-				}
-
-				return $result;
+				return self::getDataAttrsForImage($m);
 			},
 			$media
 		);
