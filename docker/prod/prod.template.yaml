@@ -304,6 +304,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mediawiki-tasks
+  labels:
+      app: mediawiki-tasks
 spec:
   selector:
     app: mediawiki-tasks

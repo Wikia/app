@@ -114,7 +114,7 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
 		$this->response->setVal( 'wikiRecommendations',
-			WikiRecommendations::getRecommendations( $wgLanguageCode ) );
+			WikiRecommendations::getRecommendedWikis( $wgLanguageCode ) );
 		$this->response->setVal( 'canShowDiscussions', $canShowDiscussions );
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
