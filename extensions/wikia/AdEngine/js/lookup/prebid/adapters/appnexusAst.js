@@ -15,22 +15,18 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		slots = {
 			oasis: {
 				FEATURED: {
-					placementId: '13684967',
-					context: 'instream'
+					placementId: '13684967'
 				},
 				INCONTENT_PLAYER: {
-					placementId: '11543172',
-					context: 'outstream'
+					placementId: '11543172'
 				}
 			},
 			mercury: {
 				FEATURED: {
-					placementId: '13705871',
-					context: 'instream'
+					placementId: '13705871'
 				},
 				MOBILE_IN_CONTENT: {
-					placementId: '11543173',
-					context: 'outstream'
+					placementId: '11543173'
 				}
 			}
 		};
