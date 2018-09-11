@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 			code: slotName,
 			mediaTypes: {
 				video: {
-					context: config.context,
+					context: 'instream',
 					playerSize: [640, 480]
 				}
 			},
