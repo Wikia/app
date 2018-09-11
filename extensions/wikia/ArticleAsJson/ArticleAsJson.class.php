@@ -426,9 +426,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onExtendPortableInfoboxImageData( $data, &$media ) {
-		// TODO: pass title as param to hook instead of creating instance for the second time
-		$title = Title::newFromText( $data['name'] );
+	public static function onExtendPortableInfoboxImageData($title, $data, &$media ) {
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];

@@ -92,7 +92,7 @@ class PortableInfoboxImagesHelper {
 			->url();
 
 		$mediaObject = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$mediaObject ] );
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $file->getTitle(), $data, &$mediaObject ] );
 
 		return array_merge( $data, [
 			'height' => $width,
@@ -117,7 +117,7 @@ class PortableInfoboxImagesHelper {
 		}
 
 		$mediaObj = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$mediaObj ] );
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $file->getTitle(), $data, &$mediaObj ] );
 
 		$thumbnail = $file->getUrlGenerator()
 			->scaleToWidth($width)
