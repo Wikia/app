@@ -20,9 +20,6 @@ $wgAutoloadClasses[ 'ScrollboxTemplate' ] = __DIR__ . '/handlers/ScrollboxTempla
 $wgAutoloadClasses[ 'NavigationTemplate' ] = __DIR__ . '/handlers/NavigationTemplate.class.php';
 $wgAutoloadClasses[ 'ArticleHTMLCleanup' ] = __DIR__ . '/handlers/ArticleHTMLCleanup.class.php';
 
-// other handlers
-$wgAutoloadClasses[ 'DataTables' ] = __DIR__ . '/handlers/DataTables.class.php';
-
 // hooks
 $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
 $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'DataTables::markTranscludedTables';
