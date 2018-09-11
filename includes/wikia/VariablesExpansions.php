@@ -548,7 +548,7 @@ $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
  * @var Array $wgTaskBroker
  */
 $wgTaskBroker = [
-    'host' => 'prod.rabbit.service.sjc.consul',
+    'host' => 'prod.rabbit.service.consul',
     'port' => 5672,
     'user' => $wgRabbitUser,
     'pass' => $wgRabbitPass,
