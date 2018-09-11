@@ -42,6 +42,10 @@ class WebResponse implements \Wikia\HTTP\Response {
 		// SUS-5793: avoid large headers blowing out the nginx's FastCGI buffer and resulting in a HTTP 500 error
 		if ( strlen( $string ) > self::MAX_HEADER_LENGTH ) {
 			$string = substr( $string, 0, self::MAX_HEADER_LENGTH );
+
+			\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . '- header was too long', [
+				'header_value' => substr( $string, 0, 128 )
+			] );
 		}
 
 		header( $string, $replace, $http_response_code );
