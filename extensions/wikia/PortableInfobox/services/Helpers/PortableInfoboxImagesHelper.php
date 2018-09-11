@@ -91,16 +91,16 @@ class PortableInfoboxImagesHelper {
 			->height($height * 2)
 			->url();
 
-		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$dataAttrs ] );
+		$mediaObject = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$mediaObject ] );
 
 		return array_merge( $data, [
 			'height' => $width,
 			'width' => $height,
 			'thumbnail' => $thumbnail,
 			'thumbnail2x' => $thumbnail2x,
-			'fileName' => $dataAttrs['fileName'] ?? '',
-			'dataAttrs' => json_encode( $dataAttrs )
+			'fileName' => $mediaObject['fileName'] ?? '',
+			'dataAttrs' => json_encode( \ArticleAsJson::getDataAttrsForImage( $mediaObject ) ),
 		] );
 	}
 
@@ -116,8 +116,8 @@ class PortableInfoboxImagesHelper {
 			return false;
 		}
 
-		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$dataAttrs ] );
+		$mediaObj = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$mediaObj ] );
 
 		$thumbnail = $file->getUrlGenerator()
 			->scaleToWidth($width)
@@ -128,12 +128,12 @@ class PortableInfoboxImagesHelper {
 			->url();
 
 		return array_merge( $data, [
-			'height' => $dataAttrs['height'],
-			'width' => $dataAttrs['width'],
+			'height' => $mediaObj['height'],
+			'width' => $mediaObj['width'],
 			'thumbnail' => $thumbnail,
 			'thumbnail2x' => $thumbnail2x,
-			'fileName' => $dataAttrs['fileName'] ?? '',
-			'dataAttrs' => json_encode( $dataAttrs )
+			'fileName' => $mediaObj['fileName'] ?? '',
+			'dataAttrs' => json_encode( \ArticleAsJson::getDataAttrsForImage( $mediaObj ) ),
 		] );
 	}
 
