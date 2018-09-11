@@ -2523,13 +2523,6 @@ $wgEnableCustom404PageExt = null;
 $wgEnableCustom404PageExtInLanguages = [ 'en' ];
 
 /**
- * Enable special handling of data tables.
- * @see includes/wikia/parser/templatetypes/handlers/DataTables.class.php
- * @var bool $wgEnableDataTablesParsing
- */
-$wgEnableDataTablesParsing = true;
-
-/**
  * Enable Embeddable Discussions extension.
  * @see extensions/wikia/EmbeddableDiscussions
  * @var bool $wgEnableDiscussions
