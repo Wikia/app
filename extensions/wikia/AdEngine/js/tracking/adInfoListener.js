@@ -150,6 +150,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 
 				switch (adType) {
 					case 'blocked':
+					case 'disabled':
 					case 'viewport-conflict':
 					case 'sticked':
 					case 'unsticked':

@@ -25,7 +25,6 @@ require([
 	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -52,7 +51,6 @@ require([
 	geo,
 	trackingOptIn,
 	win,
-	billTheLizard,
 	fvLagger
 ) {
 	'use strict';
@@ -92,10 +90,6 @@ require([
 
 		if (bidders.isEnabled()) {
 			bidders.runBidding();
-		}
-
-		if (billTheLizard) {
-			billTheLizard.call();
 		}
 
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {

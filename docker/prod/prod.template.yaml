@@ -82,7 +82,7 @@ spec:
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
-              value: "${ENVIRONMENT}"
+              value: prod
             - name: LOG_SOCKET_ONLY
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
@@ -268,7 +268,7 @@ spec:
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
-              value: "${ENVIRONMENT}"
+              value: prod
             - name: LOG_SOCKET_ONLY
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
@@ -310,7 +310,12 @@ spec:
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler

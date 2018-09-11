@@ -23,7 +23,7 @@ export default {
 			enabled: true,
 			host: 'https://services.wikia.com',
 			endpoint: 'bill-the-lizard/predict',
-			models: [],
+			projects: {},
 			parameters: {},
 			timeout: 2000
 		}
