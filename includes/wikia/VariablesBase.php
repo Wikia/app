@@ -8828,3 +8828,10 @@ $wgXMLMimeTypes = [
  * @var Array $wgYoukuConfig
  */
 $wgYoukuConfig['playerColor'] = 0;
+
+/**
+ * Used for test wikis copied on prod. Top articles data should use pageviews of the original wiki.
+ * @see PLATFORM-3671
+ * @var int $wgPlatform3671DataMartCityId
+ */
+$wgPlatform3671DataMartCityId = 0;
