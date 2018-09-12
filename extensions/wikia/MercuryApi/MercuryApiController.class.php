@@ -47,23 +47,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns local navigation data for current wiki
-	 *
-	 * @return array
-	 */
-	private function getNavigation() {
-		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
-
-		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [];
-		} else {
-			$localNavigation = $navData['navigation']['wiki'];
-		}
-
-		return $localNavigation;
-	}
-
-	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
@@ -122,15 +105,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$navigation = $this->getNavigation();
 
-		if ( empty( $navigation ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->notice(
-				'Fallback to empty navigation'
-			);
-		}
-
-		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
