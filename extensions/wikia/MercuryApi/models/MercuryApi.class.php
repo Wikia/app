@@ -94,6 +94,49 @@ class MercuryApi {
 		return $row->cntr;
 	}
 
+	public function getMobileWikiVariables() {
+		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname, $wgDefaultSkin,
+		       $wgLanguageCode, $wgSitename, $wgCdnRootUrl, $wgRecommendedVideoABTestPlaylist,
+		       $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
+
+		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
+
+		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'cacheBuster' => (int) $wgStyleVersion,
+			'cdnRootUrl' => $wgCdnRootUrl,
+			'contentNamespaces' => array_values( $wgContentNamespaces ),
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+			'favicon' => Wikia::getFaviconFullUrl(),
+			'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
+			'id' => (int) $wgCityId,
+			'language' => [
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
+			],
+			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+			'namespaces' => $wgContLang->getNamespaces(),
+			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
+			'siteMessage' => $this->getSiteMessage(),
+			'siteName' => $wgSitename,
+			'tracking' => [
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'comscore' => [
+					'c7Value' => AnalyticsProviderComscore::getC7Value(),
+				],
+				'netzathleten' => [
+					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
+					'url' => AnalyticsProviderNetzAthleten::URL
+				]
+			],
+			'twitterAccount' => $wgTwitterAccount,
+		];
+	}
+
 	/**
 	 * @desc Get Current wiki settings
 	 *
