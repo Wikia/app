@@ -25,4 +25,11 @@ class FeedsAndPostsHooks {
 
 		return true;
 	}
+
+	public static function onMakeGlobalVariablesScript( array &$vars ) {
+		if ( self::shouldLoadAssets() ) {
+			$vars['canLoadFeedsAndPosts'] = true;
+		}
+		return true;
+	}
 }
