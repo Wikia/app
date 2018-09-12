@@ -104,15 +104,16 @@ class ReverseLookupApi
      * Finds all users that has the global preference set to a value
      *
      * @param string $preference_name The preference name to search for, if not value provided it will return all users that have the named preference (required)
+     * @param string $x_wikia_internal_request  (required)
      * @param string $value The preference value (optionally provided) (optional)
      * @param int $limit How many results to return (optional, default to 1000)
      * @param int $user_id_continue Find results after userId (results returned in ascending order) (optional, default to 0)
      * @return string[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function findUsersWithGlobalPreference($preference_name, $value = null, $limit = null, $user_id_continue = null)
+    public function findUsersWithGlobalPreference($preference_name, $x_wikia_internal_request, $value = null, $limit = null, $user_id_continue = null)
     {
-        list($response) = $this->findUsersWithGlobalPreferenceWithHttpInfo($preference_name, $value, $limit, $user_id_continue);
+        list($response) = $this->findUsersWithGlobalPreferenceWithHttpInfo($preference_name, $x_wikia_internal_request, $value, $limit, $user_id_continue);
         return $response;
     }
 
@@ -122,17 +123,22 @@ class ReverseLookupApi
      * Finds all users that has the global preference set to a value
      *
      * @param string $preference_name The preference name to search for, if not value provided it will return all users that have the named preference (required)
+     * @param string $x_wikia_internal_request  (required)
      * @param string $value The preference value (optionally provided) (optional)
      * @param int $limit How many results to return (optional, default to 1000)
      * @param int $user_id_continue Find results after userId (results returned in ascending order) (optional, default to 0)
      * @return Array of string[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function findUsersWithGlobalPreferenceWithHttpInfo($preference_name, $value = null, $limit = null, $user_id_continue = null)
+    public function findUsersWithGlobalPreferenceWithHttpInfo($preference_name, $x_wikia_internal_request, $value = null, $limit = null, $user_id_continue = null)
     {
         // verify the required parameter 'preference_name' is set
         if ($preference_name === null) {
             throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling findUsersWithGlobalPreference');
+        }
+        // verify the required parameter 'x_wikia_internal_request' is set
+        if ($x_wikia_internal_request === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $x_wikia_internal_request when calling findUsersWithGlobalPreference');
         }
         // parse inputs
         $resourcePath = "/reverse-lookup/global/{preferenceName}/users";
@@ -157,6 +163,10 @@ class ReverseLookupApi
         // query params
         if ($user_id_continue !== null) {
             $queryParams['userIdContinue'] = $this->apiClient->getSerializer()->toQueryValue($user_id_continue);
+        }
+        // header params
+        if ($x_wikia_internal_request !== null) {
+            $headerParams['X-Wikia-Internal-Request'] = $this->apiClient->getSerializer()->toHeaderValue($x_wikia_internal_request);
         }
         // path params
         if ($preference_name !== null) {
@@ -207,13 +217,14 @@ class ReverseLookupApi
      * finds wikis where at least one user has a local preference set to a value
      *
      * @param string $preference_name The preference name to search for (required)
+     * @param string $x_wikia_internal_request  (required)
      * @param string $value The preference value (optional, default to 1)
      * @return string[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function findWikisWithLocalPreference($preference_name, $value = null)
+    public function findWikisWithLocalPreference($preference_name, $x_wikia_internal_request, $value = null)
     {
-        list($response) = $this->findWikisWithLocalPreferenceWithHttpInfo($preference_name, $value);
+        list($response) = $this->findWikisWithLocalPreferenceWithHttpInfo($preference_name, $x_wikia_internal_request, $value);
         return $response;
     }
 
@@ -223,15 +234,20 @@ class ReverseLookupApi
      * finds wikis where at least one user has a local preference set to a value
      *
      * @param string $preference_name The preference name to search for (required)
+     * @param string $x_wikia_internal_request  (required)
      * @param string $value The preference value (optional, default to 1)
      * @return Array of string[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function findWikisWithLocalPreferenceWithHttpInfo($preference_name, $value = null)
+    public function findWikisWithLocalPreferenceWithHttpInfo($preference_name, $x_wikia_internal_request, $value = null)
     {
         // verify the required parameter 'preference_name' is set
         if ($preference_name === null) {
             throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling findWikisWithLocalPreference');
+        }
+        // verify the required parameter 'x_wikia_internal_request' is set
+        if ($x_wikia_internal_request === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $x_wikia_internal_request when calling findWikisWithLocalPreference');
         }
         // parse inputs
         $resourcePath = "/reverse-lookup/local/{preferenceName}/wikis";
@@ -248,6 +264,10 @@ class ReverseLookupApi
         // query params
         if ($value !== null) {
             $queryParams['value'] = $this->apiClient->getSerializer()->toQueryValue($value);
+        }
+        // header params
+        if ($x_wikia_internal_request !== null) {
+            $headerParams['X-Wikia-Internal-Request'] = $this->apiClient->getSerializer()->toHeaderValue($x_wikia_internal_request);
         }
         // path params
         if ($preference_name !== null) {
