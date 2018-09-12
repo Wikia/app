@@ -121,7 +121,6 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables = $this->mercuryApi->getMobileWikiVariables();
 
 		$wikiVariables['basePath'] = $this->wg->Server;
-		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
 		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
 
 		if ( !empty( $this->wg->ArticlePath ) ) {
@@ -152,6 +151,41 @@ class MercuryApiController extends WikiaController {
 
 		$wikiVariables['qualarooUrl'] =
 			( $this->wg->develEnvironment ) ? $this->wg->qualarooDevUrl : $this->wg->qualarooUrl;
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
+	}
+
+	private function prepareWikiVariablesForDiscussions() {
+		$wikiVariables = $this->mercuryApi->getDiscussionsWikiVariables();
+
+		$wikiVariables['basePath'] = $this->wg->Server;
+		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
+		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
+
+		if ( !empty( $this->wg->ArticlePath ) ) {
+			$wikiVariables['articlePath'] = str_replace( '$1', '', $this->wg->ArticlePath );
+		} else {
+			$wikiVariables['articlePath'] = '/wiki/';
+		}
+
+		$smartBannerConfig = $this->getSmartBannerConfig();
+		if ( !is_null( $smartBannerConfig ) ) {
+			$wikiVariables['smartBanner'] = $smartBannerConfig;
+		}
+
+		$wikiVariables['specialRobotPolicy'] = null;
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
+		}
+
+		$htmlTitle = new WikiaHtmlTitle();
+		$wikiVariables['htmlTitle'] = [
+			'separator' => $htmlTitle->getSeparator(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
+		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
 
@@ -219,6 +253,24 @@ class MercuryApiController extends WikiaController {
 			->setHeaders( $this->response );
 
 		$wikiVariables = $this->prepareWikiVariablesForMobileWiki();
+
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		// cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
+
+	/**
+	 * @desc Returns wiki variables for the current wikia
+	 *
+	 */
+	public function getDiscussionsWikiVariables() {
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
+
+		$wikiVariables = $this->prepareWikiVariablesForDiscussions();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
