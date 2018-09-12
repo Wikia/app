@@ -36,11 +36,6 @@ function runBackups( $from, $to, $full, $options ) {
 	$both = isset( $options[ "both" ] );
 
 	/**
-	 * store backup in another folder, not available for users
-	 */
-	$hide = isset( $options[ "hide" ] );
-
-	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
 	 * if we have db param defined we first resolve which id is connected to this
 	 * database
