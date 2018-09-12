@@ -30,7 +30,7 @@ class DataWarehouseEventProducer {
 				$this->mKey = self::UNDELETE_CATEGORY;
 				break;
 		}
-		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );
+		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '', '{}' ) );
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 

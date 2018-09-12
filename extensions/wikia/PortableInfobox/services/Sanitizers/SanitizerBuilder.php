@@ -19,7 +19,6 @@ class SanitizerBuilder {
 			case 'image':
 				return new NodeImageSanitizer();
 			case 'hero-mobile':
-			case 'hero-mobile-old': // TODO: clean it after premium layout released on mobile wiki and icache expired
 			case 'hero-mobile-wikiamobile':
 				return new NodeHeroImageSanitizer();
 			default:
