@@ -106,12 +106,7 @@ class ArticleAsJson {
 	}
 
 	public static function getDataAttrsForGallery( $media ) {
-		return array_map(
-			function ( $m ) {
-				return self::getDataAttrsForImage($m);
-			},
-			$media
-		);
+		return array_map("self::getDataAttrsForImage", $media );
 	}
 
 	private static function prepareGalleryRows( $media ): array {
