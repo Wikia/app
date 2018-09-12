@@ -326,6 +326,7 @@ $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/Sit
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
 $wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
+$wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
 
 // services hooks
@@ -1067,6 +1068,13 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
  * @name $wgAdDriverPrebidOptOutCountries
  * List of countries where Prebid is enabled for opted-out users.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1402,6 +1410,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
@@ -1418,6 +1432,12 @@ $wgAdDriverWadILCountries = null;
  * List of countries to enable Consent Management module
  */
 $wgEnableCMPCountries = null;
+
+/**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
 
 /**
  * trusted proxy service registry
@@ -1695,7 +1715,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1740,3 +1760,10 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+
+/**
+ * @name $wgProcessTasksOnKubernetes
+ * When enabled, tasks will be processed on kubernetes.
+ * This will only work on production.
+ */
+$wgProcessTasksOnKubernetes = false;

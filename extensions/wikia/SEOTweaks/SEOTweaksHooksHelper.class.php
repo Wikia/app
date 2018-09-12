@@ -304,7 +304,8 @@ class SEOTweaksHooksHelper {
 		if (
 			!$user->isAnon() ||
 			!$title->isRedirect() ||
-			isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no'
+			( isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no' ) ||
+			in_array( $request->getVal( 'action', 'view' ), [ 'raw', 'render' ] )
 		) {
 			return true;
 		}
@@ -312,7 +313,11 @@ class SEOTweaksHooksHelper {
 		unset( $queryParams['title'] );
 		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
 
-		$output->redirect( $targetUrl, '301', 'CanonicalTitle' );
+		// check for the redirect loops
+		$currentUrl = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
+		if ( $currentUrl !== $targetUrl ) {
+			$output->redirect( $targetUrl, '301', 'CanonicalTitle' );
+		}
 
 		return true;
 	}

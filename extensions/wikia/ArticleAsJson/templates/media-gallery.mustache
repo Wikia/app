@@ -1,6 +1,16 @@
-<div class="article-media-gallery gallery"
-	{{#galleryAttrs}}data-attrs="{{galleryAttrs}}"{{/galleryAttrs}}>
-{{#media}}
-    {{> gallery-thumbnail}}
-{{/media}}
+<div class="article-media-gallery"{{#galleryAttrs}} data-attrs="{{galleryAttrs}}"{{/galleryAttrs}}>
+	{{#rows}}
+		{{#typeRow1}}
+			{{> media-gallery-row1}}
+		{{/typeRow1}}
+		{{#typeRow2}}
+			{{> media-gallery-row2}}
+		{{/typeRow2}}
+		{{#typeRow3}}
+			{{> media-gallery-row3}}
+		{{/typeRow3}}
+	{{/rows}}
+	{{#viewMoreLabel}}
+		<button class="wds-button wds-is-secondary article-media-gallery__view-more">{{viewMoreLabel}}</button>
+	{{/viewMoreLabel}}
 </div>

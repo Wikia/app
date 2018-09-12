@@ -47,7 +47,7 @@ class SetupWikiCities extends Task {
 	}
 
 	public function addToCityList() {
-		global $wgCreateDatabaseActiveCluster;
+		global $wgCreateDatabaseActiveCluster, $wgWikiaBaseDomain, $wgFandomBaseDomain;
 		$founder = $this->taskContext->getFounder();
 
 		$insertFields = [
@@ -70,18 +70,31 @@ class SetupWikiCities extends Task {
 	}
 
 	public function addToCityDomains() {
-		return $this->taskContext->getSharedDBW()->insert(
-			"city_domains",
+		global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+		$host = parse_url( $this->taskContext->getURL(), PHP_URL_HOST );
+		$domains = [
 			[
-				[
-					'city_id' => $this->taskContext->getCityId(),
-					'city_domain' => $this->taskContext->getDomain()
-				], [
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => $this->taskContext->getDomain()
+			]
+		];
+		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
+			// for fandom.com wiki, create a secondary wikia.com domain for redirects
+			$wikiaDomain = str_replace( '.' . $wgFandomBaseDomain,
+				'.' . $wgWikiaBaseDomain,
+				$this->taskContext->getDomain() );
+			$domains[] = [
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => $wikiaDomain
+			];
+		} else {
+			// legacy www. subdomain for wikia.com wikis
+			$domains[] = [
 				'city_id' => $this->taskContext->getCityId(),
 				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-			]
-			],
-			__METHOD__
-		);
+			];
+		}
+
+		return $this->taskContext->getSharedDBW()->insert( "city_domains", $domains, __METHOD__ );
 	}
 }

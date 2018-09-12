@@ -303,6 +303,13 @@ class OutputPage extends ContextSource {
 		}
 	}
 
+	public function cancelRedirect( $cancelProtocolRedirect = true ) {
+		$this->mRedirect = '';
+		if ( $cancelProtocolRedirect ) {
+			$this->mRedirectProtocol = PROTO_CURRENT;
+		}
+	}
+
 	/**
 	 * Get the URL to redirect to, or an empty string if not redirect URL set
 	 *
@@ -2111,6 +2118,21 @@ class OutputPage extends ContextSource {
 			$code = $this->mRedirectCode;
 
 			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code, &$this->redirectedBy ) ) ) {
+				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
+				// Check for the POST requests, as those are allowed to redirect to the same url (see PLATFORM-3646)
+				if ( !$this->getRequest()->wasPosted() && $current == $redirect ) {
+					$response->header( 'HTTP/1.1 508 Loop Detected' );
+					$response->header( 'X-Reason: Redirect loop detected' );
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'Redirect loop detected', [
+							'currentUrl' => $current,
+							'targetUrl' => $redirect,
+							'redirectedBy' => join( ' ', $this->redirectedBy )
+						]
+					);
+					wfProfileOut( __METHOD__ );
+					return;
+				}
 				if( $code == '301' || $code == '303' ) {
 					if( !$wgDebugRedirects ) {
 						$message = HttpStatus::getMessage( $code );

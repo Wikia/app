@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
 			context.targeting.skin === 'oasis' &&
-			!areDelayServicesBlocked();
+			!context.opts.delayBlocked;
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -96,6 +96,7 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
@@ -145,18 +146,20 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
+		context.opts.delayBlocked = areDelayServicesBlocked();
 		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo && isEnabled('wgAdDriverSrcPremiumCountries');
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
 
 		updateAdContextBidders(context);
 		updateAdContextRabbitExperiments(context);
 
-		// showcase.*
+		// *.showcase.wikia.com
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
@@ -208,7 +211,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
-		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && isEnabled('wgAdDriverFVDelayCountries');
+		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
 		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
@@ -235,7 +238,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -246,25 +249,6 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
-	}
-
-	function getDfpLabradorKeyvals(wfKeyvals) {
-		if (!wfKeyvals || !wfKeyvals.length) {
-			return '';
-		}
-
-		var labradorDfpKeys = [],
-			labradorVariables = geo.getSamplingResults();
-
-		wfKeyvals.forEach(function (keyval) {
-			keyval = keyval.split(':');
-
-			if (labradorVariables.indexOf(keyval[0]) !== -1) {
-				labradorDfpKeys.push(keyval[1]);
-			}
-		});
-
-		return labradorDfpKeys.join(',');
 	}
 
 	function addCallback(callback) {

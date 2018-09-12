@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\Search\TopWikiArticles;
 
 class RecirculationController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -85,7 +84,7 @@ class RecirculationController extends WikiaController {
 
 		$themeSettings = new ThemeSettings();
 		$canShowDiscussions = RecirculationHooks::canShowDiscussions( $wgCityId, true );
-		$topWikiArticles = $this->getTopWikiArticles();
+		$topWikiArticles = WikiRecommendations::getPopularArticles();
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;
 		// we do not show n&s articles on non-english wikis
@@ -115,7 +114,7 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
 		$this->response->setVal( 'wikiRecommendations',
-			WikiRecommendations::getRecommendations( $wgLanguageCode ) );
+			WikiRecommendations::getRecommendedWikis( $wgLanguageCode ) );
 		$this->response->setVal( 'canShowDiscussions', $canShowDiscussions );
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
@@ -125,26 +124,6 @@ class RecirculationController extends WikiaController {
 			$this->response->getView()->setTemplatePath( __DIR__ .
 			                                             '/templates/RecirculationController_FooterInternaltional.php' );
 		}
-	}
-
-	private function getTopWikiArticles() {
-		global $wgCityId;
-
-		$topWikiArticles = TopWikiArticles::getArticlesWithCache( $wgCityId, false );
-		// do not show itself
-		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) {
-			return $item['id'] !== RequestContext::getMain()->getTitle()->getArticleID();
-		} );
-		// show max 3 elements
-		$topWikiArticles = array_slice( $topWikiArticles, 0, 3 );
-		// add index to items to render it by mustache template
-		$index = 1;
-		foreach ( $topWikiArticles as &$wikiArticle ) {
-			$wikiArticle['index'] = $index;
-			$index ++;
-		}
-
-		return $topWikiArticles;
 	}
 
 	public function container( $params ) {

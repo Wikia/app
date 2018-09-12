@@ -15,10 +15,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
-			->setMethods( [ 'extendImageData', 'getFileWidth' ] )
+			->setMethods( [ 'extendMobileImageDataScaleToWidth', 'extendMobileImageData', 'getFileWidth' ] )
 			->getMock();
 		$mock->expects( $this->any() )
-			->method( 'extendImageData' )
+			->method( 'extendMobileImageDataScaleToWidth' )
+			->will( $this->returnValue( $extendImageData ) );
+		$mock->expects( $this->any() )
+			->method( 'extendMobileImageData' )
 			->will( $this->returnValue( $extendImageData ) );
 		$mock->expects( $this->any() )
 			->method( 'getFileWidth' )
@@ -156,7 +159,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 											<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 										</noscript>
 										</a>
@@ -177,8 +180,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -467,8 +468,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -516,8 +515,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -545,7 +542,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-item pi-hero">
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -562,8 +559,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -603,7 +598,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -619,8 +614,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -697,7 +690,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -730,8 +723,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -808,8 +799,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
-												<img src="http://image.jpg" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'200\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="200" height="200"/><noscript>
+												<img src="http://image.jpg" alt="" width="200" height="200"/>
 											</noscript>
 										</a>
 									</figure>
@@ -841,8 +832,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '200',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
