@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	if (window.document.cookie.indexOf('cookiesync_done') === -1) {
+	if (window.document.cookie.indexOf('cookiesync_done') === -1 && window.document.cookie.indexOf('tracking-opt-in-status') !== -1) {
 		var iframe = document.createElement('iframe');
 		iframe.style.display = "none";
 		iframe.src = "<?= $url; ?>";
