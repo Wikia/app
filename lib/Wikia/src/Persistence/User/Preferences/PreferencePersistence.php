@@ -216,7 +216,7 @@ class PreferencePersistence {
 
 	private function findWikisWithLocalPreference( ReverseLookupApi $api, $preferenceName, $value ) {
 		$profilerStart = $this->startProfile();
-		$wikiList = $api->findWikisWithLocalPreference( $preferenceName, $value );
+		$wikiList = $api->findWikisWithLocalPreference( $preferenceName, "1", $value );
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
@@ -229,7 +229,7 @@ class PreferencePersistence {
 	}
 
 	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
-		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
+		$userList = $api->findUsersWithGlobalPreference( $preferenceName, "1", $value );
 		return $userList;
 	}
 
