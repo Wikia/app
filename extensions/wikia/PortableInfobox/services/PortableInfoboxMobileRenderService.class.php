@@ -102,7 +102,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				$templateName = 'image-mobile';
 			} else {
 				// more than one image means image collection
-				$data = $helper->extendImageCollectionData( $images );
+				$data = $helper->extendMobileImageCollectionData( $images );
 				$templateName = 'image-collection-mobile';
 			}
 		}

@@ -1,7 +1,6 @@
 <?php
 
 class ArticleAsJson {
-	static $media = [ ];
 	static $heroImage = null;
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
@@ -363,8 +362,6 @@ class ArticleAsJson {
 				$media[] = $mediaObj;
 			}
 
-			self::$media[] = $media;
-
 			if ( !empty( $media ) ) {
 				$out = self::createMarker( $media, true );
 			} else {
@@ -379,13 +376,12 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onExtendPortableInfoboxImageData( $data, &$ref, &$dataAttrs ) {
+	public static function onExtendPortableInfoboxImageData( $data, &$dataAttrs ) {
 		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			$mediaObj = self::createMediaObject( $details, $title->getText(), $data['caption'] );
-			self::$media[] = $mediaObj;
 			$dataAttrs = $mediaObj;
 
 			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
@@ -424,8 +420,6 @@ class ArticleAsJson {
 				self::$heroImage['thumbnail1by1'] = $thumbnail1by1;
 				self::$heroImage['thumbnail1by1Size'] = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH;
 			}
-
-			$ref = count( self::$media ) - 1;
 		}
 
 		return true;
@@ -469,8 +463,6 @@ class ArticleAsJson {
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
 			$media['srcset'] = self::getSrcset( $media['url'], intval( $media['width'] ) );
 			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], 340 );
-
-			self::$media[] = $media;
 
 			$res = self::createMarker( $media );
 
@@ -529,9 +521,6 @@ class ArticleAsJson {
 		global $wgArticleAsJson;
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
-			foreach ( self::$media as &$media ) {
-				self::linkifyMediaCaption( $parser, $media );
-			}
 
 			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
