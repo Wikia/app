@@ -1,9 +1,10 @@
 require([
 	'wikia.window',
-], function (window) {
+	'wikia.cookies',
+], function (window, cookie) {
 	'use strict';
 
-	if (window.document.cookie.indexOf('cookiesync_done') === -1 && window.document.cookie.indexOf('tracking-opt-in-status') !== -1) {
+	if (cookie.get('cookiesync_done') === null && cookie.get('tracking-opt-in-status') !== null) {
 		var iframe = window.document.createElement('iframe');
 		iframe.style.display = "none";
 		iframe.src = mw.config.get('wgCookieSyncerApiUrl');;
