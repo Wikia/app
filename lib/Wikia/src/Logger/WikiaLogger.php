@@ -119,9 +119,10 @@ class WikiaLogger implements LoggerInterface {
 		global $wgCommandLineMode;
 
 		if ($wgCommandLineMode) {
-			$context = [ 'memory' => memory_get_peak_usage ( true ) ];
-			$this->addStacktraceIfMissing($context);
-			$this->info('MW_MAINTENANCE_MEMORY_USAGE', $context);
+			$this->info(
+				'MW_MAINTENANCE_MEMORY_USAGE',
+				[ 'memory' => memory_get_peak_usage ( true ) ]
+			);
 		}
 	}
 
