@@ -2492,3 +2492,11 @@ $config['feeds_and_posts_js'] = [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
 	]
 ];
+
+$config['cookiesyncer_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CookieSyncer/js/cookiesyncer.js',
+	],
+];
