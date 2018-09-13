@@ -11,14 +11,23 @@ When a user clicks "Request a dump":
 
 ### Nagios check
 
-We have a Nagios check that keeps track of a length of the queue of unprocessed dump requests. It issues the following query:
+We have a Nagios checks that keeps track of a length of the queue of pending and failed dump requests. They issue the following queries:
 
 ```sql
-mysql>select count(distinct dump_wiki_id) as queue_size from dumps where dump_completed is null;
+-- pending dump requests (i.e. to be processed)
+mysql>SELECT COUNT(distinct dump_wiki_id) AS queue_size FROM dumps WHERE dump_completed IS NULL AND dump_hold = 'N'
 +------------+
 | queue_size |
 +------------+
 |        670 |
++------------+
+
+-- failed dump requests
+mysql>SELECT COUNT(distinct dump_wiki_id) AS queue_size FROM dumps WHERE dump_completed IS NULL AND dump_hold = 'Y'
++------------+
+| queue_size |
++------------+
+|          5 |
 +------------+
 ```
 
