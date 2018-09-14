@@ -9,4 +9,4 @@ else
 	LINT_BASE="$TRAVIS_BRANCH"
 fi
 
-git diff ${LINT_BASE}..HEAD --name-only | xargs --no-run-if-empty -t composer run lint
+git diff ${LINT_BASE}..HEAD --diff-filter=ACM --name-only | xargs --no-run-if-empty -t composer run lint
