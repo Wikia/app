@@ -1195,13 +1195,6 @@ $wgConsulDataCenters = [
 ];
 
 /**
- * Slack webhook URL for JavaScript Review Tool.
- * @see extensions/wikia/ContentReview
- * @var string $wgContentReviewSlackWebhook
- */
-$wgContentReviewSlackWebhook = 'https://hooks.slack.com/services/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';
-
-/**
  * Default cookie expiration time. Setting to 0 makes all cookies session-only.
  * @var int $wgCookieExpiration
  */
@@ -2520,13 +2513,6 @@ $wgEnableCustom404PageExt = null;
  * @var Array $wgEnableCustom404PageExtInLanguages
  */
 $wgEnableCustom404PageExtInLanguages = [ 'en' ];
-
-/**
- * Enable special handling of data tables.
- * @see includes/wikia/parser/templatetypes/handlers/DataTables.class.php
- * @var bool $wgEnableDataTablesParsing
- */
-$wgEnableDataTablesParsing = true;
 
 /**
  * Enable Embeddable Discussions extension.
@@ -8827,3 +8813,10 @@ $wgXMLMimeTypes = [
  * @var Array $wgYoukuConfig
  */
 $wgYoukuConfig['playerColor'] = 0;
+
+/**
+ * Used for test wikis copied on prod. Top articles data should use pageviews of the original wiki.
+ * @see PLATFORM-3671
+ * @var int $wgDataMartOriginalCityId
+ */
+$wgDataMartOriginalCityId = 0;
