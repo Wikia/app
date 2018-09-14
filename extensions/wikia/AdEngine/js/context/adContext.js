@@ -7,10 +7,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.cookies',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, instantGlobals, geo, sampler, w, Querystring) {
+], function (browserDetect, cookies, instantGlobals, geo, pageInfoTracker, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -268,6 +269,13 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext((w.ads && w.ads.context) ? w.ads.context : {});
+
+	// Track Labrador values to DW
+	var labradorPropValue = geo.getSamplingResults().join(';');
+
+	if (context && context.opts && context.opts.enableAdInfoLog && labradorPropValue) {
+		pageInfoTracker.trackProp('labrador', labradorPropValue);
+	}
 
 	return {
 		get: get,
