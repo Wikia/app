@@ -33,6 +33,7 @@ describe('AdContext', function () {
 				getVal: noop
 			},
 			wikiaCookies: {},
+			pageInfoTracker: {},
 			sampler: {
 				sample: function () {
 					return false;
@@ -50,6 +51,7 @@ describe('AdContext', function () {
 			mocks.wikiaCookies,
 			mocks.instantGlobals,
 			mocks.geo,
+			mocks.pageInfoTracker,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
