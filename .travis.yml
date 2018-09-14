@@ -23,8 +23,7 @@ before_script:
   - phpenv config-add tests/travis/php.ini
 script:
   - cd tests && ./php-tests.sh
-  - cd .. && composer run lint
-
+  - cd .. && ./tests/lint-changed-files.sh
 # cache compiled version of pecl extensions
 cache:
   directories:
