@@ -12,8 +12,8 @@
 namespace Symfony\Component\Yaml\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 
 class DumperTest extends TestCase
@@ -125,7 +125,7 @@ EOF;
                     // TODO
                 } else {
                     eval('$expected = '.trim($test['php']).';');
-                    $this->assertSame($expected, $this->parser->parse($this->dumper->dump($expected, 10), Yaml::PARSE_KEYS_AS_STRINGS), $test['test']);
+                    $this->assertSame($expected, $this->parser->parse($this->dumper->dump($expected, 10)), $test['test']);
                 }
             }
         }
@@ -210,7 +210,7 @@ EOF;
     {
         $dump = $this->dumper->dump(array('foo' => new A(), 'bar' => 1), 0, 0, Yaml::DUMP_OBJECT);
 
-        $this->assertEquals('{ foo: !php/object:O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}, bar: 1 }', $dump, '->dump() is able to dump objects');
+        $this->assertEquals('{ foo: !php/object \'O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}\', bar: 1 }', $dump, '->dump() is able to dump objects');
     }
 
     /**
@@ -220,7 +220,7 @@ EOF;
     {
         $dump = $this->dumper->dump(array('foo' => new A(), 'bar' => 1), 0, 0, false, true);
 
-        $this->assertEquals('{ foo: !php/object:O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}, bar: 1 }', $dump, '->dump() is able to dump objects');
+        $this->assertEquals('{ foo: !php/object \'O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}\', bar: 1 }', $dump, '->dump() is able to dump objects');
     }
 
     public function testObjectSupportDisabledButNoExceptions()
@@ -443,7 +443,8 @@ YAML;
         $data = array(
             'data' => array(
                 'single_line' => 'foo bar baz',
-                'multi_line' => "foo\nline with trailing spaces:\n  \nbar\r\ninteger like line:\n123456789\nempty line:\n\nbaz",
+                'multi_line' => "foo\nline with trailing spaces:\n  \nbar\ninteger like line:\n123456789\nempty line:\n\nbaz",
+                'multi_line_with_carriage_return' => "foo\nbar\r\nbaz",
                 'nested_inlined_multi_line_string' => array(
                     'inlined_multi_line' => "foo\nbar\r\nempty line:\n\nbaz",
                 ),
@@ -451,6 +452,22 @@ YAML;
         );
 
         $this->assertSame(file_get_contents(__DIR__.'/Fixtures/multiple_lines_as_literal_block.yml'), $this->dumper->dump($data, 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
+    }
+
+    public function testDumpMultiLineStringAsScalarBlockWhenFirstLineHasLeadingSpace()
+    {
+        $data = array(
+            'data' => array(
+                'multi_line' => "    the first line has leading spaces\nThe second line does not.",
+            ),
+        );
+
+        $this->assertSame(file_get_contents(__DIR__.'/Fixtures/multiple_lines_as_literal_block_leading_space_in_first_line.yml'), $this->dumper->dump($data, 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
+    }
+
+    public function testCarriageReturnIsMaintainedWhenDumpingAsMultiLineLiteralBlock()
+    {
+        $this->assertSame("- \"a\\r\\nb\\nc\"\n", $this->dumper->dump(array("a\r\nb\nc"), 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
     }
 
     /**
