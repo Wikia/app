@@ -17,7 +17,9 @@ addons:
 install:
   - pecl channel-update pecl.php.net
   - pecl install uopz mustache
-before_script: phpenv config-add tests/travis/php.ini
+before_script:
+  - sudo mysql_upgrade
+  - phpenv config-add tests/travis/php.ini
 script:
   - cd tests && ./php-tests.sh
   - cd .. && composer run lint
