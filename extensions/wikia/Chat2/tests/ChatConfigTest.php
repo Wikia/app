@@ -7,9 +7,9 @@ class ChatConfigTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetApiServerDataProvider
+	 * @dataProvider getApiServerDataProvider
 	 */
-	public function getApiServer( $wgChatPrivateServerOverride, $expected ) {
+	public function testGetApiServer( $wgChatPrivateServerOverride, $expected ) {
 		$this->mockGlobalVariable( 'wgChatPrivateServerOverride', $wgChatPrivateServerOverride );
 
 		$consulHosts = [
