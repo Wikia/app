@@ -11,7 +11,7 @@ When a user clicks "Request a dump":
 
 ### Nagios check
 
-We have a Nagios checks that keeps track of a length of the queue of pending and failed dump requests. They issue the following queries:
+We have Nagios checks that keep track of a length of the queue of pending and failed dump requests. They issue the following queries:
 
 ```sql
 -- pending dump requests (i.e. to be processed)
@@ -34,3 +34,14 @@ mysql>SELECT COUNT(distinct dump_wiki_id) AS queue_size FROM dumps WHERE dump_co
 ### Logs
 
 The task script logs to Kibana, you can search by `@context.task_call:"Wikia\\Tasks\\Tasks\\DumpsOnDemandTask"`. Refer to it when Nagios check fails.
+
+
+### SQL queries
+
+
+```sql
+DumpsOnDemand::getLatestDumpInfo 99.73% [ap] db:wikicities | SELECT dump_completed,dump_compression FROM `dumps` WHERE (dump_completed IS NOT NULL) AND dump_wiki_id = X ORDER BY dump_completed DESC LIMIT N
+Wikia\Tasks\Tasks\DumpsOnDemandTask::dump 0.04% [cron] db:wikicities | UPDATE `dumps` SET dump_compression = X,dump_hold = X,dump_errors = X WHERE dump_wiki_id = X AND (dump_completed IS NULL) AND dump_hold = X
+Wikia\Tasks\Tasks\DumpsOnDemandTask::dump 0.05% [task] db:wikicities | SELECT dump_hold FROM `dumps` WHERE dump_wiki_id = X ORDER BY dump_requested DESC LIMIT N
+DumpsOnDemand::queueDump 0.07% [ap] db:wikicities | INSERT INTO `dumps` (dump_wiki_id,dump_user_id,dump_requested,dump_closed) VALUES (XYZ)
+```
