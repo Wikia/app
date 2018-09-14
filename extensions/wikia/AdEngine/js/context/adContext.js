@@ -127,6 +127,18 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdCountries');
 	}
 
+	function trackLabrador() {
+		// Need to be placed always after all lABrador wgVars checks
+		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+
+		// Track Labrador values to DW
+		var labradorPropValue = geo.getSamplingResults().join(';');
+
+		if (context.opts.enableAdInfoLog && labradorPropValue) {
+			pageInfoTracker.trackProp('labrador', labradorPropValue);
+		}
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -238,8 +250,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 
-		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		if (context.targeting.skin === 'oasis') {
+			trackLabrador();
+		}
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -270,18 +283,12 @@ define('ext.wikia.adEngine.adContext', [
 
 	setContext((w.ads && w.ads.context) ? w.ads.context : {});
 
-	// Track Labrador values to DW
-	var labradorPropValue = geo.getSamplingResults().join(';');
-
-	if (context && context.opts && context.opts.enableAdInfoLog && labradorPropValue) {
-		pageInfoTracker.trackProp('labrador', labradorPropValue);
-	}
-
 	return {
 		get: get,
 		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext,
+		trackLabrador: trackLabrador,
 		isEnabled: isEnabled
 	};
 });

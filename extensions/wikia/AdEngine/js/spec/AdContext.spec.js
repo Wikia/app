@@ -631,7 +631,12 @@ describe('AdContext', function () {
 			wgAdDriverLABradorDfpKeyvals: ['wgAdDriverRubiconDfpCountries_A_50:rub-dfp-test']
 		};
 
-		getModule();
+		getModule().setContext({
+			targeting: {
+				skin: 'oasis'
+			}
+		});
+
 		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
 	});
 });
