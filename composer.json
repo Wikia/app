@@ -69,14 +69,15 @@
     "mediawiki/maps": "5.2.0.3",
     "mcustiel/phiremock": "^1.9",
     "tpyo/amazon-s3-php-class": "^0.5.1",
-    "overtrue/phplint": "^1.1",
-    "wikimedia/scoped-callback": "^2.0"
+    "wikimedia/scoped-callback": "^2.0",
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "jakub-onderka/php-console-highlighter": "^0.3.2"
   },
   "require-dev": {
     "ext-yaml": "*",
     "ext-xdebug": "*"
   },
   "scripts": {
-    "lint": "phplint . --exclude lib/composer --exclude lib/vendor --exclude lib/Swagger --exclude /templates/ --no-cache"
+    "lint": "parallel-lint -s --exclude lib/composer --exclude lib/vendor --exclude lib/Swagger --exclude tests"
   }
 }

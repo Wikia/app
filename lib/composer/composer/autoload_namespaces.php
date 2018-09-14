@@ -12,6 +12,8 @@ return array(
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Net' => array($vendorDir . '/pear/net_socket', $vendorDir . '/wikia/net_smtp2', $vendorDir . '/wikia/net_socket2'),
     'Mail' => array($vendorDir . '/pear/mail_mime'),
+    'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
+    'JakubOnderka\\PhpConsoleColor' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'File' => array($vendorDir . '/wikia/file_ogg'),
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
