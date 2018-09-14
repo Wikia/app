@@ -92,6 +92,6 @@ class Starters {
 	 * @return SwiftStorage
 	 */
 	public static function getStarterDumpStorage() {
-		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET );
+		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', WIKIA_DC_SJC );
 	}
 }
