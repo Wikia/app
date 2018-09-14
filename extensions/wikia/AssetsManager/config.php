@@ -13,6 +13,7 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
+		'//extensions/wikia/CookieSyncer/js/cookiesyncer.js',
 	],
 ];
 
@@ -2491,12 +2492,4 @@ $config['feeds_and_posts_js'] = [
 	'assets' => [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
 	]
-];
-
-$config['cookiesyncer_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//extensions/wikia/CookieSyncer/js/cookiesyncer.js',
-	],
 ];

@@ -11,7 +11,6 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['CookieSyncerHooks'] = __DIR__ . '/CookieSyncerHooks.class.php';
 
 $wgHooks['WikiaSkinTopScripts'][] = 'CookieSyncerHooks::addCookieSyncerJsVariable';
-$wgHooks['BeforePageDisplay'][] = 'CookieSyncerHooks::onBeforePageDisplay';
 
 $urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 $wgCookieSyncerApiUrl = $urlProvider->getUrl( 'cookie-syncer' ) . '/frame';
