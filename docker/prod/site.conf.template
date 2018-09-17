@@ -49,7 +49,7 @@ server {
     }
 
     location ~ [^/]\.php(/|$) {
-        fastcgi_read_timeout 180s;
+        fastcgi_read_timeout ${FASTCGI_READ_TIMEOUT};
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass localhost:9000;
         fastcgi_index index.php;
