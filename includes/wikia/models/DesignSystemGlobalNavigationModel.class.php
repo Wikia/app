@@ -95,27 +95,31 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	private function fixHostForUrl( $url, $cityId = null ) {
+	private function usePrimaryDomainInUrl( $url, $cityId = null ) {
+		global $wgServer, $wgWikiaBaseDomainRegex;
 		$cityUrl = "";
 
 		if ( $cityId == null ) {
-			global $wgServer;
 			$cityUrl = $wgServer;
 		} else {
 			$cityUrl = WikiFactory::cityIDtoUrl( $cityUrl );
 			// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
 		}
 
-		$urlHost = parse_url( $url, PHP_URL_HOST );
-		$cityUrlHost = parse_url( $cityUrl, PHP_URL_HOST );
-
-		if ( $urlHost === false || $cityUrlHost === false || $urlHost === $cityUrlHost ) {
+		$urlParts = [];
+		$cityUrlParts = [];
+		if (
+			preg_match('/' . $wgWikiaBaseDomainRegex . '/', $url, $urlParts ) === 0 ||
+			preg_match( '/'. $wgWikiaBaseDomainRegex . '/', $cityUrl, $cityUrlParts ) === 0 ||
+			$urlParts[1] === $cityUrlParts[1]
+		) {
 			return $url;
 		}
 
-		$finalUrl = http_build_url( $url, [ 'host' => $cityUrlHost ] );
+		$count = 0;
+		$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1,$count);
 
-		if ( $finalUrl == false ) {
+		if ( $finalUrl == null || $count !== 1 ) {
 			return $url;
 		}
 
@@ -128,7 +132,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 		if ( $useWikiPrimaryDomain ) {
-			$url = $this->fixHostForUrl( $url );
+			$url = $this->usePrimaryDomainInUrl( $url );
 		}
 		return $url;
 	}
