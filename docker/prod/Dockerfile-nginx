@@ -10,6 +10,8 @@ ADD docker/prod/nginx.conf /etc/nginx/nginx.conf
 ADD docker/prod/site.conf.template /etc/nginx/conf.d/site.conf.template
 
 # static mediawiki files
+ADD apple-touch-icon.png /usr/wikia/slot1/current/src/apple-touch-icon.png
+
 ADD skins /usr/wikia/slot1/current/src/skins
 ADD resources /usr/wikia/slot1/current/src/resources
 ADD extensions /usr/wikia/slot1/current/src/extensions
