@@ -40,7 +40,6 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
-		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -182,6 +181,7 @@ $config['adengine2_top_js'] = [
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine/dist/bidders.js',
+		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
 		'//extensions/wikia/AdEngine/dist/geo.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
