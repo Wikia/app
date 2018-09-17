@@ -9,3 +9,4 @@ $wgAutoloadClasses['FeedsAndPostsHooks'] =  __DIR__ . '/FeedsAndPostsHooks.class
 
 // Hooks
 $wgHooks['OasisSkinAssetGroups'][] = 'FeedsAndPostsHooks::onOasisSkinAssetGroups';
+$wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVariablesScript';

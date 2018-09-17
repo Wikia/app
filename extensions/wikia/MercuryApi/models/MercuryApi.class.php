@@ -236,7 +236,7 @@ class MercuryApi {
 		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath, $wgEnableDiscussionsPolls,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
 		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
-		       $wgQualarooUrl, $wgArticlePath;
+		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -284,6 +284,10 @@ class MercuryApi {
 				'vertical' => WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId)['short'],
 			]
 		);
+
+		if ( !empty( $wgFandomCreatorCommunityId ) ) {
+			$wikiVariables['fandomCreatorCommunityId'] = $wgFandomCreatorCommunityId;
+		}
 
 		// Used to determine GA tracking
 		if ( !empty( $wgIsGASpecialWiki ) ) {

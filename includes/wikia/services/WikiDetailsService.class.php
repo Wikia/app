@@ -163,9 +163,17 @@ class WikiDetailsService extends WikiService {
 		$wikiObj = WikiFactory::getWikiByID( $id );
 		if ( $wikiObj ) {
 			$exists = true;
+
+			// convert city_url to https url for https-enabled wikis
+			$city_url = WikiFactory::getLocalEnvURL( $wikiObj->city_url );
+			$enableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $id );
+			if ( !empty( $enableHTTPSForAnons ) && wfHttpsAllowedForURL( $city_url ) ) {
+				$city_url = wfHttpToHttps( $city_url );
+			}
+
 			return [
 				'title' => $wikiObj->city_title,
-				'url' => WikiFactory::getLocalEnvURL( $wikiObj->city_url ),
+				'url' => $city_url,
 			];
 		}
 		return [];
