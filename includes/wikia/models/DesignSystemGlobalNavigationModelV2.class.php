@@ -92,10 +92,41 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	private function getHref( $hrefKey, $protocolRelative = false ) {
+	private function fixHostForUrl( $url, $cityId = null ) {
+		$cityUrl = "";
+
+		if ( $cityId == null ) {
+			global $wgServer;
+			$cityUrl = $wgServer;
+		} else {
+			$cityUrl = WikiFactory::cityIDtoUrl( $cityUrl );
+			// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
+		}
+
+		$urlHost = parse_url( $url, PHP_URL_HOST );
+		$cityUrlHost = parse_url( $cityUrl, PHP_URL_HOST );
+		print_r("u: $urlHost, c: $cityUrlHost\n");
+
+		if ( $urlHost === false || $cityUrlHost === false || $urlHost === $cityUrlHost ) {
+			return $url;
+		}
+
+		$finalUrl = http_build_url( $url, [ 'host' => $cityUrlHost ] );
+
+		if ( $finalUrl == false ) {
+			return $url;
+		}
+
+		return $finalUrl;
+	}
+
+	private function getHref( $hrefKey, $protocolRelative = false, $fixHost = false ) {
 		$url = DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
+		}
+		if ( $fixHost ) {
+			$url = $this->fixHostForUrl( $url );
 		}
 		return $url;
 	}
@@ -215,7 +246,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$logOutLink = [
 			'type' => 'link-logout',
-			'href' => $this->getHref( 'user-logout' ),
+			'href' => $this->getHref( 'user-logout', false, true ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
