@@ -21,49 +21,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Gets smart banner config from WF and cleans it up
-	 */
-	private function getSmartBannerConfig() {
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) && !empty( $this->wg->WikiaMobileSmartBannerConfig ) ) {
-			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
-
-			unset( $smartBannerConfig['author'] );
-			$meta = $smartBannerConfig['meta'];
-			unset( $smartBannerConfig['meta'] );
-			$smartBannerConfig['appId'] = [
-				'ios' => str_replace( 'app-id=', '', $meta['apple-itunes-app'] ),
-				'android' => str_replace( 'app-id=', '', $meta['google-play-app'] ),
-			];
-
-			$smartBannerConfig['appScheme'] = [
-				'ios' => $meta['ios-scheme'] ?? null,
-				'android' => $meta['android-scheme'] ?? null,
-			];
-
-			return $smartBannerConfig;
-		}
-
-		return null;
-	}
-
-	/**
-	 * @desc Returns local navigation data for current wiki
-	 *
-	 * @return array
-	 */
-	private function getNavigation() {
-		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
-
-		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [];
-		} else {
-			$localNavigation = $navData['navigation']['wiki'];
-		}
-
-		return $localNavigation;
-	}
-
-	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
@@ -117,68 +74,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
-	/**
-	 * @desc Prepares wiki variables for the current wikia
-	 */
-	private function prepareWikiVariables() {
-		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$navigation = $this->getNavigation();
-
-		if ( empty( $navigation ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->notice(
-				'Fallback to empty navigation'
-			);
-		}
-
-		$wikiVariables['localNav'] = $navigation;
-		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
-		$wikiVariables['basePath'] = $this->wg->Server;
-		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
-		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
-
-		// Used to determine GA tracking
-		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
-			$wikiVariables['isGASpecialWiki'] = true;
-		}
-
-		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables['articlePath'] = str_replace( '$1', '', $this->wg->ArticlePath );
-		} else {
-			$wikiVariables['articlePath'] = '/wiki/';
-		}
-
-		$smartBannerConfig = $this->getSmartBannerConfig();
-		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables['smartBanner'] = $smartBannerConfig;
-		}
-
-		// get wiki image from Curated Main Pages (SUS-474)
-		$communityData = ( new CommunityDataService( $this->wg->CityId ) )->getCommunityData();
-		if ( !empty( $communityData['image_id'] ) ) {
-			$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], self::WIKI_IMAGE_SIZE );
-			$wikiVariables['image'] = $url;
-		}
-
-		$wikiVariables['specialRobotPolicy'] = null;
-		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
-		if ( !empty( $robotPolicy ) ) {
-			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
-		}
-
-		$htmlTitle = new WikiaHtmlTitle();
-		$wikiVariables['htmlTitle'] = [
-			'separator' => $htmlTitle->getSeparator(),
-			'parts' => array_values( $htmlTitle->getAllParts() ),
-		];
-
-		$wikiVariables['qualarooUrl'] =
-			( $this->wg->develEnvironment ) ? $this->wg->qualarooDevUrl : $this->wg->qualarooUrl;
-
-		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
-
-		return $wikiVariables;
-	}
-
 	public function getMobileWikiVariables() {
 		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
 			->setAllowMethod( [ 'GET' ] )
@@ -230,7 +125,7 @@ class MercuryApiController extends WikiaController {
 			->setAllowMethod( [ 'GET' ] )
 			->setHeaders( $this->response );
 
-		$wikiVariables = $this->prepareWikiVariables();
+		$wikiVariables = $this->mercuryApi->getWikiVariables();;
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

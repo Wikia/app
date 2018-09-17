@@ -229,67 +229,131 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
-		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
-		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist,
-		       $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
+		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDefaultSkin,
+		       $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
+		       $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
+		       $wgDiscussionColorOverride, $wgEnableNewAuth, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath, $wgEnableDiscussionsPolls,
+		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
+		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
+		       $wgQualarooUrl, $wgArticlePath;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
-		return [
-			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
-			'cacheBuster' => (int) $wgStyleVersion,
-			'cdnRootUrl' => $wgCdnRootUrl,
-			'contentNamespaces' => array_values( $wgContentNamespaces ),
-			'dbName' => $wgDBname,
-			'defaultSkin' => $wgDefaultSkin,
-			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
-			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
-			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
-			'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
-			'enableCommunityData' => $wgEnableCommunityData,
-			'enableDiscussions' => $wgEnableDiscussions,
-			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
-			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
-			'enableLightweightContributions' => $wgEnableLightweightContributions,
-			'enableNewAuth' => $wgEnableNewAuth,
-			'favicon' => Wikia::getFaviconFullUrl(),
-			'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
-			'homepage' => $this->getHomepageUrl(),
-			'id' => (int) $wgCityId,
-			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
-			'isDarkTheme' => SassUtil::isThemeDark(),
-			'language' => [
-				'content' => $wgLanguageCode,
-				'contentDir' => $wgContLang->getDir()
-			],
-			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
-			'namespaces' => $wgContLang->getNamespaces(),
-			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
-			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
-			'scriptPath' => $wgScriptPath,
-			'siteMessage' => $this->getSiteMessage(),
-			'siteName' => $wgSitename,
-			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
-			'tracking' => [
-				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'comscore' => [
-					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				]
-			],
-			'twitterAccount' => $wgTwitterAccount,
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
-		];
+		$navigation = $this->getNavigation();
+		if ( empty( $navigation ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->notice(
+				'Fallback to empty navigation'
+			);
+		}
+
+		$wikiVariables = array_merge(
+			$this->getCommonVariables(),
+			[
+				'cacheBuster' => (int) $wgStyleVersion,
+				'cdnRootUrl' => $wgCdnRootUrl,
+				'contentNamespaces' => array_values( $wgContentNamespaces ),
+				'defaultSkin' => $wgDefaultSkin,
+				'disableAnonymousEditing' => $wgDisableAnonymousEditing,
+				'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+				'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
+				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
+				'enableCommunityData' => $wgEnableCommunityData,
+				'enableDiscussions' => $wgEnableDiscussions,
+				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
+				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
+				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableLightweightContributions' => $wgEnableLightweightContributions,
+				'enableNewAuth' => $wgEnableNewAuth,
+				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
+				'homepage' => $this->getHomepageUrl(),
+				'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
+				'isDarkTheme' => SassUtil::isThemeDark(),
+				'localNav' => $navigation,
+				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+				'namespaces' => $wgContLang->getNamespaces(),
+				'qualarooUrl' => ( $wgDevelEnvironment ) ? $wgQualarooDevUrl : $wgQualarooUrl,
+				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
+				'scriptPath' => $wgScriptPath,
+				'siteMessage' => $this->getSiteMessage(),
+				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+				'twitterAccount' => $wgTwitterAccount,
+				'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
+				'vertical' => WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId)['short'],
+			]
+		);
+
+		// Used to determine GA tracking
+		if ( !empty( $wgIsGASpecialWiki ) ) {
+			$wikiVariables['isGASpecialWiki'] = true;
+		}
+
+		if ( !empty( $wgArticlePath ) ) {
+			$wikiVariables['articlePath'] = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$wikiVariables['articlePath'] = '/wiki/';
+		}
+
+		$smartBannerConfig = $this->getSmartBannerConfig();
+		if ( !is_null( $smartBannerConfig ) ) {
+			$wikiVariables['smartBanner'] = $smartBannerConfig;
+		}
+
+		// get wiki image from Curated Main Pages (SUS-474)
+		$communityData = ( new CommunityDataService( $wgCityId ) )->getCommunityData();
+		if ( !empty( $communityData['image_id'] ) ) {
+			$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], self::WIKI_IMAGE_SIZE );
+			$wikiVariables['image'] = $url;
+		}
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
+	}
+
+	/**
+	 * @desc Returns local navigation data for current wiki
+	 *
+	 * @return array
+	 */
+	private function getNavigation() {
+		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+
+		if ( !isset( $navData['navigation']['wiki'] ) ) {
+			$localNavigation = [];
+		} else {
+			$localNavigation = $navData['navigation']['wiki'];
+		}
+
+		return $localNavigation;
+	}
+
+	/**
+	 * @desc Gets smart banner config from WF and cleans it up
+	 */
+	private function getSmartBannerConfig() {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) && !empty( $this->wg->WikiaMobileSmartBannerConfig ) ) {
+			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
+
+			unset( $smartBannerConfig['author'] );
+			$meta = $smartBannerConfig['meta'];
+			unset( $smartBannerConfig['meta'] );
+			$smartBannerConfig['appId'] = [
+				'ios' => str_replace( 'app-id=', '', $meta['apple-itunes-app'] ),
+				'android' => str_replace( 'app-id=', '', $meta['google-play-app'] ),
+			];
+
+			$smartBannerConfig['appScheme'] = [
+				'ios' => $meta['ios-scheme'] ?? null,
+				'android' => $meta['android-scheme'] ?? null,
+			];
+
+			return $smartBannerConfig;
+		}
+
+		return null;
 	}
 
 	/**
