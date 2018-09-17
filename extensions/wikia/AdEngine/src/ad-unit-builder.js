@@ -1,5 +1,5 @@
 import { context, utils } from '@wikia/ad-engine';
-import { getAdProductInfo } from '@wikia/ad-products';
+import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 
 export default class AdUnitBuilder {
 	static build(slot) {
