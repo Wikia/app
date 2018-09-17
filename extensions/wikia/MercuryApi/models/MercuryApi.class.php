@@ -8,6 +8,7 @@ class MercuryApi {
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
 	const CACHE_TIME_TRENDING_ARTICLES = 60 * 60 * 24;
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
+	const WIKI_IMAGE_SIZE = 500;
 
 	/**
 	 * Aggregated list of comments users
@@ -94,111 +95,132 @@ class MercuryApi {
 		return $row->cntr;
 	}
 
+	private function getCommonVariables() {
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
+
+		$htmlTitle = new WikiaHtmlTitle();
+
+		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'basePath' => $wgServer,
+			'dbName' => $wgDBname,
+			'favicon' => Wikia::getFaviconFullUrl(),
+			'id' => (int) $wgCityId,
+			'htmlTitle' => [
+				'separator' => $htmlTitle->getSeparator(),
+				'parts' => array_values( $htmlTitle->getAllParts() ),
+			],
+			'language' => [
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
+			],
+			'siteName' => $wgSitename,
+			'specialRobotPolicy' => !empty( $robotPolicy ) ? $robotPolicy : null,
+			'surrogateKey' => Wikia::wikiSurrogateKey( $wgCityId ),
+			'tracking' => [
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'comscore' => [
+					'c7Value' => AnalyticsProviderComscore::getC7Value(),
+				],
+				'netzathleten' => [
+					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
+					'url' => AnalyticsProviderNetzAthleten::URL
+				]
+			],
+		];
+	}
+
 	public function getMobileWikiVariables() {
-		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname, $wgDefaultSkin,
-		       $wgLanguageCode, $wgSitename, $wgCdnRootUrl, $wgRecommendedVideoABTestPlaylist,
-		       $wgFandomAppSmartBannerText, $wgTwitterAccount, $wgEnableFeedsAndPostsExt;
+		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
+		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
+		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
-		return [
-			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
-			'cacheBuster' => (int) $wgStyleVersion,
-			'cdnRootUrl' => $wgCdnRootUrl,
-			'contentNamespaces' => array_values( $wgContentNamespaces ),
-			'dbName' => $wgDBname,
-			'defaultSkin' => $wgDefaultSkin,
-			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
-			'favicon' => Wikia::getFaviconFullUrl(),
-			'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
-			'id' => (int) $wgCityId,
-			'language' => [
-				'content' => $wgLanguageCode,
-				'contentDir' => $wgContLang->getDir()
-			],
-			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
-			'namespaces' => $wgContLang->getNamespaces(),
-			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
-			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
-			'siteMessage' => $this->getSiteMessage(),
-			'siteName' => $wgSitename,
-			'tracking' => [
-				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'comscore' => [
-					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				]
-			],
-			'twitterAccount' => $wgTwitterAccount,
-		];
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
+		$wikiVariables = array_merge(
+			$this->getCommonVariables(),
+			[
+				'articlePath' => $articlePath,
+				'cacheBuster' => (int) $wgStyleVersion,
+				'cdnRootUrl' => $wgCdnRootUrl,
+				'contentNamespaces' => array_values( $wgContentNamespaces ),
+				'defaultSkin' => $wgDefaultSkin,
+				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
+				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+				'namespaces' => $wgContLang->getNamespaces(),
+				'qualarooUrl' => $wgDevelEnvironment ? $wgQualarooDevUrl : $wgQualarooUrl,
+				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
+				'siteMessage' => $this->getSiteMessage(),
+				'twitterAccount' => $wgTwitterAccount,
+			]
+		);
+
+		// get wiki image from Curated Main Pages (SUS-474)
+		$communityData = ( new CommunityDataService( $wgCityId ) )->getCommunityData();
+
+		if ( !empty( $communityData['image_id'] ) ) {
+			$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], self::WIKI_IMAGE_SIZE );
+			$wikiVariables['image'] = $url;
+		}
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
 	}
 
 	public function getDiscussionsWikiVariables() {
-		global $wgCityId, $wgContLang, $wgDBname, $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
-		       $wgDiscussionColorOverride, $wgLanguageCode, $wgSitename, $wgEnableDiscussionsPolls,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
+		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
+		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
 
-		return [
-			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
-			'dbName' => $wgDBname,
-			'defaultSkin' => $wgDefaultSkin,
-			'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
-			'enableDiscussions' => $wgEnableDiscussions,
-			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
-			'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
-			'enableLightweightContributions' => $wgEnableLightweightContributions,
-			'favicon' => Wikia::getFaviconFullUrl(),
-			'id' => (int) $wgCityId,
-			'language' => [
-				'content' => $wgLanguageCode,
-				'contentDir' => $wgContLang->getDir()
-			],
-			'siteMessage' => $this->getSiteMessage(),
-			'siteName' => $wgSitename,
-			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
-			'tracking' => [
-				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'comscore' => [
-					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				]
-			],
-		];
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
+		$wikiVariables = array_merge(
+			$this->getCommonVariables(),
+			[
+				'articlePath' => $articlePath,
+				'defaultSkin' => $wgDefaultSkin,
+				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
+				'enableDiscussions' => $wgEnableDiscussions,
+				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
+				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
+				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableLightweightContributions' => $wgEnableLightweightContributions,
+				'siteMessage' => $this->getSiteMessage(),
+				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+			]
+		);
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
 	}
 
 	public function getAnnouncementsVariables() {
-		global $wgCityId, $wgContLang, $wgDBname, $wgLanguageCode, $wgSitename;
+		$wikiVariables = array_merge(
+			$this->getCommonVariables(),
+			[
+				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() )
+			]
+		);
 
-		return [
-			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
-			'dbName' => $wgDBname,
-			'favicon' => Wikia::getFaviconFullUrl(),
-			'id' => (int) $wgCityId,
-			'language' => [
-				'content' => $wgLanguageCode,
-				'contentDir' => $wgContLang->getDir()
-			],
-			'siteName' => $wgSitename,
-			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
-			'tracking' => [
-				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'comscore' => [
-					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				]
-			],
-		];
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
 	}
 
 	/**
