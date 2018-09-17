@@ -108,7 +108,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$urlHost = parse_url( $url, PHP_URL_HOST );
 		$cityUrlHost = parse_url( $cityUrl, PHP_URL_HOST );
-		print_r("u: $urlHost, c: $cityUrlHost\n");
 
 		if ( $urlHost === false || $cityUrlHost === false || $urlHost === $cityUrlHost ) {
 			return $url;
