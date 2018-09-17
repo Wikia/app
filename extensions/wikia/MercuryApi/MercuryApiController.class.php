@@ -192,6 +192,29 @@ class MercuryApiController extends WikiaController {
 		return $wikiVariables;
 	}
 
+	private function prepareWikiVariablesForAnnouncements() {
+		$wikiVariables = $this->mercuryApi->getAnnouncementsVariables();
+
+		$wikiVariables['basePath'] = $this->wg->Server;
+		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
+
+		$wikiVariables['specialRobotPolicy'] = null;
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
+		}
+
+		$htmlTitle = new WikiaHtmlTitle();
+		$wikiVariables['htmlTitle'] = [
+			'separator' => $htmlTitle->getSeparator(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
+		];
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
+		return $wikiVariables;
+	}
+
 	/**
 	 * @desc Prepares wiki variables for the current wikia
 	 */
@@ -261,16 +284,26 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
-	/**
-	 * @desc Returns wiki variables for the current wikia
-	 *
-	 */
 	public function getDiscussionsWikiVariables() {
 		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
 			->setAllowMethod( [ 'GET' ] )
 			->setHeaders( $this->response );
 
 		$wikiVariables = $this->prepareWikiVariablesForDiscussions();
+
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		// cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
+
+	public function getAnnouncementsWikiVariables() {
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
+
+		$wikiVariables = $this->prepareWikiVariablesForAnnouncements();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

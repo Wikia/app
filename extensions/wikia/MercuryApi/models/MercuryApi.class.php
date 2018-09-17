@@ -174,6 +174,33 @@ class MercuryApi {
 		];
 	}
 
+	public function getAnnouncementsVariables() {
+		global $wgCityId, $wgContLang, $wgDBname, $wgLanguageCode, $wgSitename;
+
+		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'dbName' => $wgDBname,
+			'favicon' => Wikia::getFaviconFullUrl(),
+			'id' => (int) $wgCityId,
+			'language' => [
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
+			],
+			'siteName' => $wgSitename,
+			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+			'tracking' => [
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'comscore' => [
+					'c7Value' => AnalyticsProviderComscore::getC7Value(),
+				],
+				'netzathleten' => [
+					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
+					'url' => AnalyticsProviderNetzAthleten::URL
+				]
+			],
+		];
+	}
+
 	/**
 	 * @desc Get Current wiki settings
 	 *
