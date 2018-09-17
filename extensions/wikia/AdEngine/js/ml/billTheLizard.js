@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					var rabbitPropValue = serialize();
 
 					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
-						pageInfoTracker.trackProp('rabbit', rabbitPropValue);
+						pageInfoTracker.trackProp('btl', rabbitPropValue);
 					}
 				}, function () {
 					ready = true;

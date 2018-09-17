@@ -33,7 +33,6 @@ describe('AdContext', function () {
 				getVal: noop
 			},
 			wikiaCookies: {},
-			pageInfoTracker: {},
 			sampler: {
 				sample: function () {
 					return false;
@@ -51,7 +50,6 @@ describe('AdContext', function () {
 			mocks.wikiaCookies,
 			mocks.instantGlobals,
 			mocks.geo,
-			mocks.pageInfoTracker,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -631,11 +629,7 @@ describe('AdContext', function () {
 			wgAdDriverLABradorDfpKeyvals: ['wgAdDriverRubiconDfpCountries_A_50:rub-dfp-test']
 		};
 
-		getModule().setContext({
-			targeting: {
-				skin: 'oasis'
-			}
-		});
+		getModule();
 
 		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
 	});
