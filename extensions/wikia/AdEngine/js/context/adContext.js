@@ -149,7 +149,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.delayBlocked = areDelayServicesBlocked();
 		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
-		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
+		context.opts.premiumOnly = context.targeting.hasFeaturedVideo && isEnabled('wgAdDriverSrcPremiumCountries');
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 
