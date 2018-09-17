@@ -939,6 +939,9 @@ $wgAutoloadLocalClasses = array(
 	# maintenance/term
 	'AnsiTermColorer'  => 'maintenance/term/MWTerm.php',
 	'DummyTermColorer' => 'maintenance/term/MWTerm.php',
+
+	# maintenance/utils
+	'MaintenanceStatus' => 'maintenance/utils/Status.php',
 );
 
 

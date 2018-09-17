@@ -49,6 +49,15 @@ if ( !$maintClass || !class_exists( $maintClass ) ) {
 /** @var Maintenance $maintenance */
 $maintenance = new $maintClass();
 
+// check if specific task is already running (in case k8s will accidentally create two instances of cron job)
+if ($maintenance->status->isRunning()) {
+	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass is already running, aborting.");
+
+	return;
+} else {
+	$maintenance->status->markAsStarted();
+}
+
 // Basic sanity checks and such
 $maintenance->setup();
 
@@ -133,14 +142,20 @@ try {
 
 	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
 		getMaintenanceRuntimeStatistics() );
+
+	$maintenance->status->markAsFinished();
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
 	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $mwe ) );
+
+	$maintenance->status->markAsAborted();
 	exit( 1 );
 } catch ( Exception $e ) {
 	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $e ) );
+
+	$maintenance->status->markAsAborted();
 	throw $e;
 }
 

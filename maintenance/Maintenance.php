@@ -109,7 +109,7 @@ abstract class Maintenance {
 	// Generic options which might or not be supported by the script
 	private $mDependantParameters = array();
 
-	// Used by getDD() / setDB()
+	// Used by getDB() / setDB()
 	private $mDb = null;
 
 	// Wikia change
@@ -125,6 +125,8 @@ abstract class Maintenance {
 
 	private $runtimeStatistics = [];
 
+	public $status = null;
+
 	/**
 	 * Default constructor. Children should call this *first* if implementing
 	 * their own constructors
@@ -135,6 +137,8 @@ abstract class Maintenance {
 		$IP = strval( getenv( 'MW_INSTALL_PATH' ) ) !== ''
 			? getenv( 'MW_INSTALL_PATH' )
 			: realpath( dirname( __FILE__ ) . '/..' );
+
+		$this->status = new MaintenanceStatus($this->getName());
 
 		$this->addDefaultParams();
 		register_shutdown_function( array( $this, 'outputChanneled' ), false );
