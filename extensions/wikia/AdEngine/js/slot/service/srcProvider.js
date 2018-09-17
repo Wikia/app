@@ -21,10 +21,6 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 			return getRecSrc();
 		}
 
-		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
-			return ['premium', originalSrc];
-		}
-
 		return addTestPrefixForTestWiki(originalSrc, extra);
 	}
 
