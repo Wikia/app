@@ -210,7 +210,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-sign-in',
 				],
-				'href' => $this->getHref( 'user-signin' ),
+				'href' => $this->getHref( 'user-signin', false, true ),
 				'param-name' => 'redirect',
 				'tracking-label' => 'account.sign-in',
 			],
