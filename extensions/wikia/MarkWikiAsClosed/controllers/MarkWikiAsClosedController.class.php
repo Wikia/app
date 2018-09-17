@@ -24,13 +24,7 @@ class MarkWikiAsClosedController extends WikiaController {
 			// No wikiId or reason given: Bad Request
 			$this->response->setCode( 400 );
 		} else {
-			try {
-				$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
-			}
-			catch ( Solarium_Client_HttpException $exception ) {
-				// This is horrible hack due to Solar not working on dev
-				$this->error( "Solar not working properly", [ 'exception' => $exception ] );
-			}
+			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
 
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId,
