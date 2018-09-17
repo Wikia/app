@@ -4,66 +4,58 @@ use Wikia\Logger\Loggable;
 
 class MarkWikiAsClosedController extends WikiaController {
 
-    use Loggable;
+	use Loggable;
 
-    const WIKI_ID = 'wikiId';
-    const REASON = 'reason';
+	const WIKI_ID = 'wikiId';
+	const REASON = 'reason';
 
-    public function init() {
-        $this->assertCanAccessController();
-        $this->response->setFormat(WikiaResponse::FORMAT_JSON);
-    }
+	public function init() {
+		$this->assertCanAccessController();
+	}
 
-    public function markWikiAsClosed() {
-        try {
-            $this->markWikiClosed();
-        } catch (WikiaBaseException $exception) {
-            // This is normally done in WikiaDispatcher::dispatch(),
-            // but because it's an internal request, we would return 200 and only log error to ELK stack
-            $this->response->setCode( $exception->getCode() );
-            $this->response->setVal(
-                'exception',
-                [
-                    'message' => $exception->getMessage(),
-                    'code' => $exception->getCode()
-                ]
-            );
-        }
-    }
+	public function markWikiAsClosed() {
+		$context = $this->getContext();
+		$request = $context->getRequest();
 
-    private function markWikiClosed() {
-        $wikiId = $this->request->getVal(self::WIKI_ID);
-        $reason = $this->request->getVal(self::REASON);
-        if (empty($wikiId) || empty($reason)) {
-            throw new BadRequestException();
-        }
+		$wikiId = $request->getVal( self::WIKI_ID );
+		$reason = $request->getVal( self::REASON );
 
-        try {
-            $res = WikiFactory::setPublicStatus(WikiFactory::CLOSE_ACTION, $wikiId, $reason);
-        } catch (Solarium_Client_HttpException $exception) {
-            // This is horrible hack due to Solar not working on dev
-            $this->info("Solar not working properly");
-        }
+		if ( is_null( $wikiId ) || is_null( $reason ) ) {
+			// No wikiId or reason given: Bad Request
+			$this->response->setCode( 400 );
+		} else {
+			try {
+				$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
+			}
+			catch ( Solarium_Client_HttpException $exception ) {
+				// This is horrible hack due to Solar not working on dev
+				$this->error( "Solar not working properly", [ 'exception' => $exception ] );
+			}
 
+			if ( $res === WikiFactory::CLOSE_ACTION ) {
+				WikiFactory::setFlags( $wikiId,
+					WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
+				WikiFactory::clearCache( $wikiId );
+				$this->response->setCode( 200 );
+			} else {
+				$this->response->setCode( 500 );
+			}
+		}
 
-        if ($res === WikiFactory::CLOSE_ACTION) {
-            WikiFactory::setFlags($wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE);
-            WikiFactory::clearCache($wikiId);
-        } else {
-            $this->error("Unexpected response: " . $res);
-        }
-    }
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
 
-    /**
-     * Make sure to only allow authorized POST methods.
-     * @throws WikiaHttpException
-     */
-    public function assertCanAccessController() {
-        if (!$this->request->isInternal()) {
-            throw new ForbiddenException('Access to this controller is restricted');
-        }
-        if (!$this->request->wasPosted()) {
-            throw new MethodNotAllowedException('Only POST allowed');
-        }
-    }
+	/**
+	 * Make sure to only allow authorized POST methods.
+	 * @throws WikiaHttpException
+	 */
+	public function assertCanAccessController() {
+		if ( !$this->getContext()->getRequest()->isWikiaInternalRequest() ) {
+			throw new ForbiddenException( 'Access to this controller is restricted' );
+		}
+		if ( !$this->getContext()->getRequest()->wasPosted() ) {
+			throw new MethodNotAllowedException( 'Only POST allowed' );
+		}
+	}
 }
