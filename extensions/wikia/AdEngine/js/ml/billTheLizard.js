@@ -6,12 +6,13 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
 	'ext.wikia.adEngine.services',
-  'ext.wikia.adEngine.tracking.pageInfoTracker',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.trackingOptIn'
 ], function (
+	adEngine3,
 	adContext,
 	pageLevelParams,
 	bridge,
