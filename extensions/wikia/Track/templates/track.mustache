@@ -50,7 +50,8 @@
 					'&pv_number_global=' + window.pvNumberGlobal;
 
 			if (optIn) {
-				trackUrl += '&u=' + window.wgTrackID;
+                {{!-- window.wgTrackID isn't available yet as this script is inlined at the top --}}
+				trackUrl += '&u=' + '{{trackID}}';
 			} else {
 				trackUrl += '&u=-1';
 			}
