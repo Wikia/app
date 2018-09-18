@@ -387,15 +387,13 @@ class WallNotificationsEveryone extends WallNotifications {
 	/**
 	 * Clears notification queues and expired notifications
 	 *
-	 * Called by the maintenance.php script
+	 * Called by the cleanupNotificationsQueue.php maintenance script
 	 *
 	 * @param bool $onlyCache - clears only users' cache
+	 * @return int number of rows removed
 	 */
-	public function clearQueue( $onlyCache = false ) {
-		// TODO: it causes db deadlocks - bugid 97359
+	public function clearQueue( $onlyCache = false ) : int {
 		// this should be called at most once a day in a background task
-		wfProfileIn( __METHOD__ );
-
 		$preparedDbExpireTime = $this->getDbExpireDate();
 
 		// Remove expired notifications
@@ -409,13 +407,24 @@ class WallNotificationsEveryone extends WallNotifications {
 			}
 		}
 
-		// TODO: performance of this queries
+		$removedRows = 0;
+
 		if ( !$onlyCache ) {
 			$db = $this->getDB( true );
-			$db->query( 'DELETE FROM ' . self::WALL_NOTIFICATIONS_QUEUE_TABLE . ' WHERE event_date < ' . $preparedDbExpireTime );
-			$db->query( 'DELETE FROM ' . self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE . ' WHERE event_date < ' . $preparedDbExpireTime );
+
+			$conds = [
+				sprintf( 'event_date < %s', $preparedDbExpireTime )
+			];
+
+			$db->delete( self::WALL_NOTIFICATIONS_QUEUE_TABLE, $conds, __METHOD__ );
+			$removedRows += $db->affectedRows();
+
+			$db->delete( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE, $conds, __METHOD__ );
+			$removedRows += $db->affectedRows();
+
 			$db->commit();
 		}
-		wfProfileOut( __METHOD__ );
+
+		return $removedRows;
 	}
 }

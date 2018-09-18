@@ -69,6 +69,7 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
+<?= $billTheLizard ?>
 <?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>

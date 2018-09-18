@@ -50,7 +50,8 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
-					'cdnApiUrl' => $wg->wgCdnApiUrl
+					'cdnApiUrl' => $wg->wgCdnApiUrl,
+					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

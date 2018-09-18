@@ -3,7 +3,6 @@ export function getBiddersContext(skin) {
 			oasis: {
 				enabled: false,
 				timeout: 2000,
-				disabledSlots: [],
 				a9: {
 					enabled: false,
 					videoEnabled: false,
@@ -109,12 +108,10 @@ export function getBiddersContext(skin) {
 						debugPlacementId: '5768085',
 						slots: {
 							FEATURED: {
-								placementId: '13684967',
-								context: 'instream'
+								placementId: '13684967'
 							},
 							INCONTENT_PLAYER: {
-								placementId: '11543172',
-								context: 'outstream'
+								placementId: '11543172'
 							}
 						}
 					},

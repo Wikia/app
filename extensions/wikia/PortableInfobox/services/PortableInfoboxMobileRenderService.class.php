@@ -65,14 +65,11 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	}
 
 	protected function renderImage( $data ) {
-		// TODO: clean it after premium layout released on mobile wiki and icache expired
-		$isPremiumizedInfobox = !empty(RequestContext::getMain()->getRequest()->getVal('premiumLayout', false));
-
 		$images = [ ];
 		$count = count( $data );
 		$helper = $this->getImageHelper();
 
-		if ( $isPremiumizedInfobox && $count > 1 ) {
+		if ( $count > 1 ) {
 			for ( $i = 0; $i < $count; $i++ ) {
 				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
 				$data[$i] = $helper->extendMobileImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
@@ -81,14 +78,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 					$images[] = $data[$i];
 				}
 			}
-		} else { // TODO: clean it after premium layout released on mobile wiki and icache expired
-			for ( $i = 0; $i < $count; $i++ ) {
-				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
-				$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
+		} elseif ($count === 1) {
+			$data[0]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+			$data[0] = $helper->extendMobileImageDataScaleToWidth( $data[0], self::MOBILE_THUMBNAIL_WIDTH );
 
-				if ( !!$data[$i] ) {
-					$images[] = $data[$i];
-				}
+			if ( !!$data[0] ) {
+				$images[] = $data[0];
 			}
 		}
 
@@ -107,13 +102,8 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				$templateName = 'image-mobile';
 			} else {
 				// more than one image means image collection
-				$data = $helper->extendImageCollectionData( $images );
-
-				if ( $isPremiumizedInfobox ) {
-					$templateName = 'image-collection-mobile';
-				} else {
-					$templateName = 'image-collection-mobile-old';
-				}
+				$data = $helper->extendMobileImageCollectionData( $images );
+				$templateName = 'image-collection-mobile';
 			}
 		}
 
@@ -144,9 +134,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		// TODO: clean it after premium layout released on mobile wiki and icache expired
-		$isPremiumizedInfobox = !empty(RequestContext::getMain()->getRequest()->getVal('premiumLayout', false));
-
 		$helper = $this->getImageHelper();
 		$template = '';
 
@@ -157,21 +144,14 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		if ( isset( $data['image'] ) ) {
 			$image = $data['image'][0];
 			$image['context'] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			if ( $isPremiumizedInfobox ) { // TODO: clean it after premium layout released on mobile wiki and icache expired
-				$image = $helper->extendMobileImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
-			} else {
-				$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
-			}
+			$image = $helper->extendMobileImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
+
 			$data['image'] = $image;
 
 			if ( !$this->isMercury() ) {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
-				if ( $isPremiumizedInfobox ) { // TODO: clean it after premium layout released on mobile wiki and icache expired
-					return $this->renderItem( 'hero-mobile', $data );
-				} else {
-					return $this->renderItem( 'hero-mobile-old', $data );
-				}
+				return $this->renderItem( 'hero-mobile', $data );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );

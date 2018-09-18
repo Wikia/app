@@ -25,7 +25,6 @@ require([
 	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -52,7 +51,6 @@ require([
 	geo,
 	trackingOptIn,
 	win,
-	billTheLizard,
 	fvLagger
 ) {
 	'use strict';
@@ -94,10 +92,6 @@ require([
 			bidders.runBidding();
 		}
 
-		if (billTheLizard) {
-			billTheLizard.call();
-		}
-
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 			fvLagger.addResponseListener(function (lineItemId) {
 				win.loadCustomAd({
@@ -133,6 +127,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
@@ -142,6 +137,7 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	tracker,
 	trackingOptIn,
 	win
 ) {
@@ -149,7 +145,16 @@ require([
 
 	function initDesktopSlots() {
 		highImpact.init();
-		inContent.init('INCONTENT_PLAYER');
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
+		} else {
+			inContent.init('INCONTENT_PLAYER');
+		}
 		bottomLeaderboard.init();
 	}
 

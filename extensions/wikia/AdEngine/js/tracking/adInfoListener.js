@@ -30,6 +30,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			TOP_RIGHT_BOXAD: true,
 			INCONTENT_BOXAD_1: true,
 			INCONTENT_PLAYER: true,
+			INVISIBLE_SKIN: true,
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
 			MOBILE_IN_CONTENT: true,
@@ -149,6 +150,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 
 				switch (adType) {
 					case 'blocked':
+					case 'disabled':
 					case 'viewport-conflict':
 					case 'sticked':
 					case 'unsticked':

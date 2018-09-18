@@ -1,5 +1,6 @@
 require([
 	'jquery',
+	'mw',
 	'wikia.window',
 	'wikia.log',
 	'wikia.nirvana',
@@ -11,6 +12,7 @@ require([
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
+             mw,
              window,
              log,
              nirvana,
@@ -73,6 +75,11 @@ require([
 		};
 
 	function prepareRailRecirculation(options) {
+		if (mw.config.get('canLoadFeedsAndPosts')) {
+			// If Feeds & Posts will load, don't display the rail recirc
+			return;
+		}
+
 		var request;
 		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION_SOURCE', 'TOPIC_FEED') &&
 			getCurationCMSTopic();
