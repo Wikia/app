@@ -138,8 +138,6 @@ abstract class Maintenance {
 			? getenv( 'MW_INSTALL_PATH' )
 			: realpath( dirname( __FILE__ ) . '/..' );
 
-		$this->status = new MaintenanceStatus($this->getName());
-
 		$this->addDefaultParams();
 		register_shutdown_function( array( $this, 'outputChanneled' ), false );
 	}
@@ -889,6 +887,10 @@ abstract class Maintenance {
 		}
 		# Same with these
 		$wgCommandLineMode = true;
+
+		# MaintenanceStatus comes from a separate file (listed in AutoLoader.php) and we need to set it
+		# here as `finalSetup` is called after AutoLoader is included.
+		$this->status = new MaintenanceStatus($this->getName());
 
 		// Wikia change
 		$this->mLogger = Wikia\Logger\WikiaLogger::instance();

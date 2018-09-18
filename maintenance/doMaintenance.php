@@ -49,15 +49,6 @@ if ( !$maintClass || !class_exists( $maintClass ) ) {
 /** @var Maintenance $maintenance */
 $maintenance = new $maintClass();
 
-// check if specific task is already running (in case k8s will accidentally create two instances of cron job)
-if ($maintenance->status->isRunning()) {
-	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass is already running, aborting.");
-
-	return;
-} else {
-	$maintenance->status->markAsStarted();
-}
-
 // Basic sanity checks and such
 $maintenance->setup();
 
@@ -109,6 +100,16 @@ if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 	require( MWInit::interpretedPath( 'AdminSettings.php' ) );
 }
 $maintenance->finalSetup();
+
+// check if specific task is already running (in case k8s will accidentally create two instances of cron job)
+if ($maintenance->status->isRunning()) {
+	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass is already running, aborting.");
+
+	return;
+} else {
+	$maintenance->status->markAsStarted();
+}
+
 // Some last includes
 require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 
