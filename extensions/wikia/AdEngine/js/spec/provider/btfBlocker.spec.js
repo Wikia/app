@@ -42,7 +42,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.bridge,
 			mocks.messageListener,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
