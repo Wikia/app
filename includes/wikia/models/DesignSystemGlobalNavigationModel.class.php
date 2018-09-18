@@ -95,15 +95,29 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	public function usePrimaryDomainInUrl( $url, $cityId = null ) {
-		global $wgServer, $wgWikiaBaseDomainRegex, $wgDevDomain, $wgDevelEnvironment;
-
+	protected function getDomainForCityId( $cityId ) {
+		global $wgServer;
 		if ( $cityId == null ) {
-			$cityUrl = $wgServer;
+			return $wgServer;
 		} else {
-			$cityUrl = WikiFactory::cityIDtoUrl( $cityId );
-			// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
+			return  WikiFactory::cityIDtoUrl( $cityId );
 		}
+	}
+
+	protected function getDevDomain() {
+		global $wgDevDomain, $wgDevelEnvironment;
+		if ( !$wgDevelEnvironment || empty( $wgDevDomain ) ) {
+			return false;
+		}
+
+		return $wgDevDomain;
+	}
+
+	public function usePrimaryDomainInUrl( $url, $cityId = null ) {
+		global $wgWikiaBaseDomainRegex;
+
+		$cityUrl = $this->getDomainForCityId( $cityId );
+		// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
 
 		$urlParts = [];
 		$cityUrlParts = [];
@@ -116,9 +130,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		}
 
 		$count = 0;
+		$devDomain = $this->getDevDomain();
 
-		if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
-			$finalUrl = preg_replace( '/' . $wgWikiaBaseDomainRegex . '/', $wgDevDomain, $url, 1, $count );
+		if ( $devDomain ) {
+			$finalUrl = preg_replace( '/' . $wgWikiaBaseDomainRegex . '/', $devDomain, $url, 1, $count );
 		} else {
 			$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1, $count );
 		}
