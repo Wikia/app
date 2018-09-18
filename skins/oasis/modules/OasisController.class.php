@@ -145,6 +145,7 @@ class OasisController extends WikiaController {
 		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+		$this->cookieSyncEnabled = AutoLoginService::cookieSyncEnabled( $request );
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $request->getVal('wiki-welcome');
