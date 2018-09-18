@@ -122,7 +122,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$urlParts = [];
 		$cityUrlParts = [];
 		if (
-			preg_match('/' . $wgWikiaBaseDomainRegex . '/', $url, $urlParts ) === 0 ||
+			preg_match( '/' . $wgWikiaBaseDomainRegex . '/', $url, $urlParts ) === 0 ||
 			preg_match( '/'. $wgWikiaBaseDomainRegex . '/', $cityUrl, $cityUrlParts ) === 0 ||
 			$urlParts[1] === $cityUrlParts[1]
 		) {

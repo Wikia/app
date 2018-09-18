@@ -15,8 +15,8 @@ class UsePrimaryDomainInUrlTest extends TestCase
 	 */
 	public function testGetHref( $server, $devDomain, $url, $cityId, $expectedResult ) {
 		$model = $this->createPartialMock(DesignSystemGlobalNavigationModelV2::class, ['getDomainForCityId', 'getDevDomain']);
-		$model->expects($this->atMost(1))->method('getDomainForCityId')->with($cityId)->willReturn($server);
-		$model->expects($this->atMost(1))->method('getDevDomain')->willReturn($devDomain);
+		$model->expects( $this->atMost(1 ) )->method('getDomainForCityId' )->with( $cityId )->willReturn( $server );
+		$model->expects( $this->atMost(1 ) )->method('getDevDomain' )->willReturn( $devDomain );
 
 		$result = $model->usePrimaryDomainInUrl( $url, $cityId );
 
