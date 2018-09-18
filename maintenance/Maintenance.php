@@ -890,7 +890,7 @@ abstract class Maintenance {
 
 		# MaintenanceStatus comes from a separate file (listed in AutoLoader.php) and we need to set it
 		# here as `finalSetup` is called after AutoLoader is included.
-		$this->status = new MaintenanceStatus($this->getName());
+		$this->status = new MaintenanceStatus( $this->getName() );
 
 		// Wikia change
 		$this->mLogger = Wikia\Logger\WikiaLogger::instance();
