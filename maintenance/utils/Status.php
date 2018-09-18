@@ -9,7 +9,7 @@ class MaintenanceStatus {
 	private $TTL = 7200; // 2h in seconds
 
 	public function __construct($taskName) {
-		$this->cacheKey = $taskName . '_status';
+		$this->cacheKey = wfMemcKey($taskName . '_status');
 	}
 
 	public function markAsStarted() {
