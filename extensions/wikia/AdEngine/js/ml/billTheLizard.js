@@ -6,11 +6,25 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
 	'ext.wikia.adEngine.services',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.trackingOptIn'
-], function (adEngine3, adContext, pageLevelParams, geo, executor, services, deviceDetect, instantGlobals, log, trackingOptIn) {
+], function (
+	adEngine3,
+	adContext,
+	pageLevelParams,
+	bridge,
+	geo,
+	executor,
+	services,
+	pageInfoTracker,
+	deviceDetect,
+	instantGlobals,
+	log,
+	trackingOptIn
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard',
@@ -60,6 +74,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 				.then(function () {
 					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
+
+					var rabbitPropValue = serialize();
+
+					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
+						pageInfoTracker.trackProp('btl', rabbitPropValue);
+					}
 				}, function () {
 					ready = true;
 					log(['reject'], log.levels.debug, logGroup);
@@ -71,11 +91,13 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		return ready;
 	}
 
+	function serialize() {
+		return services.billTheLizard.serialize();
+	}
+
 	return {
 		call: call,
 		hasResponse: hasResponse,
-		serialize: function () {
-			return services.billTheLizard.serialize();
-		}
+		serialize: serialize
 	};
 });
