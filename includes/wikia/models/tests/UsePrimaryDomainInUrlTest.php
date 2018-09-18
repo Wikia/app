@@ -16,10 +16,13 @@ class UsePrimaryDomainInUrlTest extends TestCase
 	 */
 	public function testGetHref( $server, $devDomain, $url, $cityId, $expectedResult ) {
 		$model = new DesignSystemGlobalNavigationModelV2( 1, DesignSystemGlobalFooterModel::PRODUCT_WIKIS );
+
 		$this->mockGlobalVariable('wgServer', $server );
 		$this->mockGlobalVariable('wgDevDomain', $devDomain );
 
 		$result = $model->usePrimaryDomainInUrl( $url, $cityId );
+
+		$this->unsetGlobals();
 
 		$this->assertEquals( $expectedResult, $result );
 	}
