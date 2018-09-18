@@ -92,14 +92,13 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	private function usePrimaryDomainInUrl( $url, $cityId = null ) {
-		global $wgServer, $wgWikiaBaseDomainRegex;
-		$cityUrl = "";
+	public function usePrimaryDomainInUrl( $url, $cityId = null ) {
+		global $wgServer, $wgWikiaBaseDomainRegex, $wgDevDomain, $wgDevelEnvironment;
 
 		if ( $cityId == null ) {
 			$cityUrl = $wgServer;
 		} else {
-			$cityUrl = WikiFactory::cityIDtoUrl( $cityUrl );
+			$cityUrl = WikiFactory::cityIDtoUrl( $cityId );
 			// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
 		}
 
@@ -114,7 +113,12 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		}
 
 		$count = 0;
-		$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1,$count);
+
+		if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
+			$finalUrl = preg_replace( '/' . $wgWikiaBaseDomainRegex . '/', $wgDevDomain, $url, 1, $count );
+		} else {
+			$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1, $count );
+		}
 
 		if ( $finalUrl == null || $count !== 1 ) {
 			return $url;
