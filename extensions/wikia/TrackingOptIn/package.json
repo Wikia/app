@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@wikia/tracking-opt-in": "^1.0.32",
+    "@wikia/tracking-opt-in": "github:wikia/tracking-opt-in#675927bf6f472d086184ecb8f7ef2a3125d59f8e",
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "consent-string": "^1.2.4"
