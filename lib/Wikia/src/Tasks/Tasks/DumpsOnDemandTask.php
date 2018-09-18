@@ -29,7 +29,7 @@ class DumpsOnDemandTask extends BaseTask {
 
 		$this->info( "Creating dumps for wiki #{$wikiId}." );
 
-		$sCommand = sprintf( 'SERVER_ID=%d php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3 2>&1', \Wikia::COMMUNITY_WIKI_ID, $IP, $wgWikiaLocalSettingsPath, $wikiId );
+		$sCommand = sprintf( 'SERVER_ID=%d php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --s3 2>&1', \Wikia::COMMUNITY_WIKI_ID, $IP, $wgWikiaLocalSettingsPath, $wikiId );
 		$this->info( "Running {$sCommand}" );
 
 		$sOutput = wfShellExec( $sCommand, $iStatus );

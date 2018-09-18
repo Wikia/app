@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import EventEmitter from 'eventemitter3';
 import {
 	client,
 	context,
@@ -10,16 +10,13 @@ import {
 	utils
 } from '@wikia/ad-engine';
 import {
-	bidders,
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
-	billTheLizard,
 	universalAdPackage,
-	isProperGeo,
 	getSamplingResults,
 	utils as adProductsUtils
-} from '@wikia/ad-products';
+} from '@wikia/ad-engine/dist/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
@@ -61,7 +58,7 @@ function init(
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 
-	overrideSlotService(slotRegistry, legacyBtfBlocker);
+	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
@@ -111,7 +108,6 @@ function init(
 				lang: [adLogicZoneParams.getLanguage()]
 			});
 
-			context.set('bidders.disabledSlots', slotsContext.getNotApplicable());
 			context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 			context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
@@ -132,7 +128,7 @@ function init(
 	}
 }
 
-function overrideSlotService(slotRegistry, legacyBtfBlocker) {
+function overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext) {
 	const slotsCache = {};
 
 	slotService.get = (slotName) => {
@@ -155,9 +151,8 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 		legacyBtfBlocker.unblock(slotName);
 		slotRegistry.enable(slotName);
 	};
-	slotService.disable = (slotName) => {
-		slotRegistry.disable(slotName);
-	};
+	slotService.disable = (slotName) => slotRegistry.disable(slotName);
+	slotService.getState = (slotName) => slotsContext.isApplicable(slotName);
 }
 
 function syncSlotsStatus(slotRegistry, slotsInContext) {
@@ -205,6 +200,7 @@ function unifySlotInterface(slot) {
 	});
 
 	slot.pre('viewed', (event) => {
+		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
 	});
 
@@ -261,8 +257,6 @@ function passSlotEvent(slotName, eventName) {
 }
 
 export {
-	bidders,
-	billTheLizard,
 	init,
 	GptSizeMap,
 	loadCustomAd,
@@ -270,7 +264,5 @@ export {
 	passSlotEvent,
 	context,
 	universalAdPackage,
-	isProperGeo,
-	getSamplingResults,
-	slotService
+	slotService,
 };

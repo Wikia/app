@@ -5,10 +5,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
-	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
+], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,

@@ -113,6 +113,7 @@ abstract class Maintenance {
 	private $mDb = null;
 
 	// Wikia change
+	/* @var Wikia\Logger\WikiaLogger */
 	protected $mLogger = null;
 
 	/**

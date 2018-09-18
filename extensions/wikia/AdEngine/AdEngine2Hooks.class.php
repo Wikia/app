@@ -147,14 +147,16 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
+		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 
 		// news&stories variables only
+		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2BfabStickinessCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
-		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
-		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 		$vars[] = 'wgAdDriverF2DisableSraCountries';
+		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
+		$vars[] = 'wgAdDriverF2VideoF15nMap';
 
 		return true;
 	}

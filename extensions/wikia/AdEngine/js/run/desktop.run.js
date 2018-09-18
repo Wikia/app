@@ -18,6 +18,7 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
@@ -25,7 +26,6 @@ require([
 	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
@@ -45,6 +45,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	adInfoListener,
+	pageInfoTracker,
 	scrollDepthTracker,
 	adLogicZoneParams,
 	babDetection,
@@ -52,7 +53,6 @@ require([
 	geo,
 	trackingOptIn,
 	win,
-	billTheLizard,
 	fvLagger
 ) {
 	'use strict';
@@ -94,10 +94,6 @@ require([
 			bidders.runBidding();
 		}
 
-		if (billTheLizard) {
-			billTheLizard.call();
-		}
-
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 			fvLagger.addResponseListener(function (lineItemId) {
 				win.loadCustomAd({
@@ -113,6 +109,13 @@ require([
 			wadRecRunner.init();
 			adInfoListener.run();
 			slotStateMonitor.run();
+
+			// Track Labrador values to DW
+			var labradorPropValue = geo.getSamplingResults().join(';');
+
+			if (context.opts.enableAdInfoLog && labradorPropValue) {
+				pageInfoTracker.trackProp('labrador', labradorPropValue);
+			}
 
 			// Ads
 			win.adslots2 = win.adslots2 || [];
@@ -133,6 +136,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
@@ -142,6 +146,7 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	tracker,
 	trackingOptIn,
 	win
 ) {
@@ -149,7 +154,16 @@ require([
 
 	function initDesktopSlots() {
 		highImpact.init();
-		inContent.init('INCONTENT_PLAYER');
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
+		} else {
+			inContent.init('INCONTENT_PLAYER');
+		}
 		bottomLeaderboard.init();
 	}
 

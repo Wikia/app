@@ -143,7 +143,7 @@
 					userId = -1;
 
 			if (isOptedIn) {
-				userId = window.trackID || window.wgTrackID || 0;
+				userId = window.wgTrackID;
 			}
 
 			timeout = timeout || 3000;
