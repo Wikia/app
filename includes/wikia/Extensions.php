@@ -1765,3 +1765,6 @@ include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesSche
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
+
+// PLATFORM-3619 |
+include "$IP/extensions/wikia/CookieSyncer/CookieSyncer.setup.php";
