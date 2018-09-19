@@ -242,6 +242,7 @@ spec:
             - containerPort: 8080
           resources:
             limits:
+              cpu: 1
               memory: 200Mi
             requests:
               cpu: 100m
@@ -275,16 +276,17 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "6"
+              cpu: 6
               memory: 1200Mi
             requests:
-              cpu: "3"
+              cpu: 1
               memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
           resources:
             limits:
+              cpu: 1
               memory: 200Mi
             requests:
               cpu: 100m
@@ -295,6 +297,7 @@ spec:
             - containerPort: 9253
           resources:
             limits:
+              cpu: 1
               memory: 200Mi
             requests:
               cpu: 50m
@@ -331,13 +334,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 10
-  minReplicas: 2
+  maxReplicas: 20
+  minReplicas: 10
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 50
+      targetAverageUtilization: 30
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
