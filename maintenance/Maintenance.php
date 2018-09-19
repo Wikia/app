@@ -294,6 +294,22 @@ abstract class Maintenance {
 	}
 
 	/**
+	 * Generates cache key used in MaintenanceStatus class.
+	 *
+	 * We're relying on cache key in order to block concurrent execution of the same script in the context
+	 * of the same wiki.
+	 *
+	 * Having script's name as cache key is suitable in most cases, however there might be situations, where certain
+	 * scripts can be run in parallel with different parameters. In such case it's necessary to override this method
+	 * in specific task's class.
+	 *
+	 * @return String
+	 */
+	public function generateCacheKey() {
+		return $this->getName();
+	}
+
+	/**
 	 * Return input from stdin.
 	 * @param $len Integer: the number of bytes to read. If null,
 	 *        just return the handle. Maintenance::STDIN_ALL returns
@@ -890,7 +906,7 @@ abstract class Maintenance {
 
 		# MaintenanceStatus comes from a separate file (listed in AutoLoader.php) and we need to set it
 		# here as `finalSetup` is called after AutoLoader is included.
-		$this->status = new MaintenanceStatus( $this->getName() );
+		$this->status = new MaintenanceStatus( $this->generateCacheKey() );
 
 		// Wikia change
 		$this->mLogger = Wikia\Logger\WikiaLogger::instance();

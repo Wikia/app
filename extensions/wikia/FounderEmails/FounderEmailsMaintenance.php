@@ -36,6 +36,15 @@ class FounderEmailsMaintenance extends Maintenance {
 			);
 		}
 	}
+
+	/**
+	 * Allow concurrent executions of this script with different 'event' options
+	 *
+	 * @return String
+	 */
+	public function generateCacheKey() {
+		return parent::generateCacheKey() . '_' . $this->getOption( 'event' );
+	}
 }
 
 $maintClass = 'FounderEmailsMaintenance';

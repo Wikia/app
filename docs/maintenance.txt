@@ -55,3 +55,9 @@ That's it. In the execute() method, you have access to all of the normal
 MediaWiki functions, so you can get a DB connection, use the cache, etc.
 For full docs on the Maintenance class, see the auto-generated docs at
 http://svn.wikimedia.org/doc/classMaintenance.html
+
+Note:
+By default same maintenance tasks cannot be run on the same wiki in parallel.
+In order to allow such behavior (eg. for running same task with different params) you have to implement
+custom `generateCacheKey` method that will return unique key for each setup.
+See example in FounderEmailsMaintenance.php.
