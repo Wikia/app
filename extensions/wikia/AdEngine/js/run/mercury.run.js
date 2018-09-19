@@ -16,6 +16,7 @@ require([
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.trackingOptIn',
@@ -38,6 +39,7 @@ require([
 	actionHandler,
 	slotRegistry,
 	adInfoListener,
+	pageInfoTracker,
 	adLogicZoneParams,
 	babDetection,
 	trackingOptIn,
@@ -92,6 +94,13 @@ require([
 		}
 
 		passFVLineItemIdToUAP();
+
+		// Track Labrador values to DW
+		var labradorPropValue = geo.getSamplingResults().join(';');
+
+		if (context.opts.enableAdInfoLog && labradorPropValue) {
+			pageInfoTracker.trackProp('labrador', labradorPropValue);
+		}
 	}
 
 	mercuryListener.onLoad(function () {

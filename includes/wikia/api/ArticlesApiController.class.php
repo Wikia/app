@@ -136,7 +136,7 @@ class ArticlesApiController extends WikiaApiController {
 		// This DataMartService method has
 		// separate caching
 		$articles = DataMartService::getTopArticlesByPageview(
-			$this->wg->CityId,
+			!empty( $this->wg->DataMartOriginalCityId ) ? $this->wg->DataMartOriginalCityId : $this->wg->CityId,
 			$ids,
 			$namespaces,
 			false,

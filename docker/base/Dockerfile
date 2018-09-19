@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -y \
     liblua5.1-0-dev \
     # SUS-5500 | provides mysqldump needed by dumpStarters.php script
     default-mysql-client \
+    # SUS-5807 | required by DumpsOnDemandTask
+    p7zip-full \
     # needed by sass, this installs libsass-3.4.3, matches with https://github.com/absalomedia/sassphp/releases/tag/0.5.10
     && apt-get install -y libsass-dev \
     # cleanup
@@ -128,7 +130,7 @@ RUN php-fpm --test
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-# run "sha1sum Dockerfile" to update this value whenn this file changes
-ENV WIKIA_BASE_IMAGE_HASH=8a16e38
+# run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
+ENV WIKIA_BASE_IMAGE_HASH=eb11f0c
 
 WORKDIR /usr/wikia/slot1/current/src

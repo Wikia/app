@@ -630,6 +630,7 @@ describe('AdContext', function () {
 		};
 
 		getModule();
+
 		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
 	});
 });

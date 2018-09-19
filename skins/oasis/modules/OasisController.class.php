@@ -57,6 +57,7 @@ class OasisController extends WikiaController {
 		$this->internalTracker = Track::getViewJS();
 		$this->comScore = null;
 		$this->quantServe = null;
+		$this->billTheLizard = null;
 		$this->a9 = null;
 		$this->prebid = null;
 		$this->il = null;
@@ -144,6 +145,7 @@ class OasisController extends WikiaController {
 		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+		$this->cookieSyncEnabled = AutoLoginService::cookieSyncEnabled( $request );
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $request->getVal('wiki-welcome');
@@ -243,6 +245,7 @@ class OasisController extends WikiaController {
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->billTheLizard = AnalyticsEngine::track('BillTheLizard', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->il = AdEngine2Controller::getILBootstrapCode();

@@ -54,13 +54,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 
 	it('prepareAdUnit returns data in correct shape', function () {
 		expect(getAppNexus().prepareAdUnit('TOP_LEADERBOARD', {
-			placementId: 'foo',
-			context: 'outstream'
+			placementId: 'foo'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
 			mediaTypes: {
 				video: {
-					context: 'outstream',
+					context: 'instream',
 					playerSize: [640, 480]
 				}
 			},

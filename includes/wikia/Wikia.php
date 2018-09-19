@@ -348,15 +348,9 @@ class Wikia {
 	 * @deprecated use WikiaLogger instead
 	 */
 	static public function logBacktrace($method) {
-		$backtrace = trim(strip_tags(wfBacktrace()));
-		$message = str_replace("\n", '/', $backtrace);
-
-		// add URL when logging from AJAX requests
-		if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
-			$message .= " URL: {$_SERVER['REQUEST_URI']}";
-		}
-
-		Wikia::log($method, false, $message, true /* $force */);
+		\Wikia\Logger\WikiaLogger::instance()->info( $method, [
+			'exception' => new Exception()
+		] );
 	}
 
 	/**
