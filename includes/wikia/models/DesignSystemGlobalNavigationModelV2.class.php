@@ -152,12 +152,12 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $finalUrl;
 	}
 
-	private function getHref( $hrefKey, $protocolRelative = false, $useWikiPrimaryDomain = false ) {
+	private function getHref( $hrefKey, $protocolRelative = false, $useWikiBaseDomain = false ) {
 		$url = DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
-		if ( $useWikiPrimaryDomain ) {
+		if ( $useWikiBaseDomain ) {
 			$url = $this->useWikiBaseDomainInUrl( $url );
 		}
 		return $url;
