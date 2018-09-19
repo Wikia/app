@@ -94,7 +94,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	protected function getDomainForCityId( $cityId ) {
 		global $wgServer;
-		if ( $cityId == null ) {
+		if ( $cityId === null ) {
 			return $wgServer;
 		} else {
 			return  WikiFactory::cityIDtoUrl( $cityId );
@@ -114,7 +114,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		global $wgWikiaBaseDomainRegex;
 
 		$cityUrl = $this->getDomainForCityId( $cityId );
-		// Should probably check for HTTPS in some cases (for now all processed links should be HTTPS or relative
 
 		$urlParts = [];
 		$cityUrlParts = [];
