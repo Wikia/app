@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class UsePrimaryDomainInUrlTest extends TestCase
+class useWikiBaseDomainInUrlTest extends TestCase
 {
 	/**
 	 * @dataProvider getUrlProvider

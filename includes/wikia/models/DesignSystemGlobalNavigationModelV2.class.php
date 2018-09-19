@@ -110,7 +110,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $wgDevDomain;
 	}
 
-	public function usePrimaryDomainInUrl( $url, $cityId = null ) {
+	/**
+	 * Function will substitute primary domain in the given url to the domain given (or current)
+	 * wiki is setup for (i.e. wikia.com or fandom.com). This will allow to have proper domains in the urls when
+	 * link is stored as .wiki.com but the wiki is running on other domain.
+	 *
+	 * @example https://www.wikia.com/signin -> https://www.fandom.com/signin
+	 *
+	 * @param $url string source url to be updated
+	 * @param null $cityId int id of the wiki for the base domain used in the substitution (null will use current wiki)
+	 * @return string final url with base domain substituted (or original url in case of some errors)
+	 */
+	public function useWikiBaseDomainInUrl( $url, $cityId = null ) {
 		global $wgWikiaBaseDomainRegex;
 
 		$cityUrl = $this->getDomainForCityId( $cityId );
@@ -147,7 +158,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 		if ( $useWikiPrimaryDomain ) {
-			$url = $this->usePrimaryDomainInUrl( $url );
+			$url = $this->useWikiBaseDomainInUrl( $url );
 		}
 		return $url;
 	}
