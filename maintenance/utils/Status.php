@@ -13,25 +13,25 @@ class MaintenanceStatus {
 	}
 
 	public function markAsStarted() {
-		$this->setCachedStatus( MaintenanceStatus::STARTED );
+		$this->setCachedStatus( self::STARTED );
 	}
 
 	public function markAsFinished() {
-		$this->setCachedStatus( MaintenanceStatus::FINISHED );
+		$this->setCachedStatus( self::FINISHED );
 	}
 
 	public function markAsAborted() {
-		$this->setCachedStatus( MaintenanceStatus::ABORTED );
+		$this->setCachedStatus( self::ABORTED );
 	}
 
 	public function isRunning() {
-		return $this->getCachedStatus() === MaintenanceStatus::STARTED;
+		return $this->getCachedStatus() === self::STARTED;
 	}
 
 	private function setCachedStatus( $status ) {
 		global $wgMemc;
 
-		$wgMemc->set( $this->cacheKey, $status, MaintenanceStatus::TTL );
+		$wgMemc->set( $this->cacheKey, $status, self::TTL );
 	}
 
 	private function getCachedStatus() {
