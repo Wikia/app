@@ -246,6 +246,10 @@ spec:
             requests:
               cpu: 100m
               memory: 50Mi
+          env:
+            # SUS-5819 longer timeout for tasks
+            - name: FASTCGI_READ_TIMEOUT
+              value: "3600s"
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
           livenessProbe:
