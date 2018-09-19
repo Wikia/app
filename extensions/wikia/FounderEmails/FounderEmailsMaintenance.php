@@ -38,7 +38,7 @@ class FounderEmailsMaintenance extends Maintenance {
 	}
 
 	/**
-	 * Allow concurrent executions of this script with different 'event' options
+	 * Used for allowing concurrent executions of this script with different 'event' options
 	 *
 	 * @return String
 	 */
