@@ -44,6 +44,7 @@ $wgAutoloadClasses['WikiFactoryVariableParser'] = __DIR__ . '/WikiFactoryVariabl
 $wgAutoloadClasses['WikiFactoryVariableParseException'] = __DIR__ . '/WikiFactoryVariableParseException.php';
 $wgAutoloadClasses['ApiWikiFactorySaveVariable'] = __DIR__ . '/api/ApiWikiFactorySaveVariable.php';
 $wgAutoloadClasses['ApiWikiFactoryRemoveVariable'] = __DIR__ . '/api/ApiWikiFactoryRemoveVariable.php';
+$wgAutoloadClasses['MarkWikiAsClosedController'] = __DIR__ . '/api/MarkWikiAsClosedController.class.php';
 $wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
 $wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
 
