@@ -18,7 +18,7 @@ class useWikiBaseDomainInUrlTest extends TestCase
 		$model->expects( $this->atMost(1 ) )->method('getDomainForCityId' )->with( $cityId )->willReturn( $server );
 		$model->expects( $this->atMost(1 ) )->method('getDevDomain' )->willReturn( $devDomain );
 
-		$result = $model->usePrimaryDomainInUrl( $url, $cityId );
+		$result = $model->useWikiBaseDomainInUrl( $url, $cityId );
 
 		$this->assertEquals( $expectedResult, $result );
 	}
