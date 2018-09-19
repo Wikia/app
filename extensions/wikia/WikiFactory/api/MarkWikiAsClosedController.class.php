@@ -20,6 +20,8 @@ class MarkWikiAsClosedController extends WikiaController {
 		$wikiId = $request->getVal( self::WIKI_ID );
 		$reason = $request->getVal( self::REASON );
 
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		if ( !is_numeric( $wikiId ) || empty( $reason ) ) {
 			// No wikiId or reason given: Bad Request
 			$this->response->setCode( 400 );
@@ -33,13 +35,16 @@ class MarkWikiAsClosedController extends WikiaController {
 					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
 				WikiFactory::clearCache( $wikiId );
 				$this->response->setCode( 200 );
+
+				return;
 			} else {
 				$this->response->setCode( 500 );
 				$this->info("could not mark Wiki to be closed in MW. Wiki id: " . $wikiId);
+
+				return;
 			}
 		}
 
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	/**
