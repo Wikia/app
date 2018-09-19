@@ -1768,3 +1768,6 @@ include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
+
+// PLATFORM-3619 |
+include "$IP/extensions/wikia/CookieSyncer/CookieSyncer.setup.php";
