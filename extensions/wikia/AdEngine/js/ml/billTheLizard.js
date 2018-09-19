@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
 			pageParams = pageLevelParams.getPageLevelParams();
 
-		adEngine3.context.set('services.billTheLizard.parameters', {
+		adEngine3.context.set('services.billTheLizard.parameters.queen_of_hearts', {
 			device: deviceDetect.getDevice(pageParams),
 			esrb: pageParams.esrb || null,
 			geo: geo.getCountryCode() || null,
