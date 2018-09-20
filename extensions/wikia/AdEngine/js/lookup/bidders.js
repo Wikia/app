@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.bidders',
+		timeout,
 		biddingCompleted = false,
 		onResponseCallbacks = [];
 
@@ -23,8 +24,12 @@ define('ext.wikia.adEngine.lookup.bidders', [
 		onResponseCallbacks.push(callback);
 	}
 
-	function markAsReady() {
-		if (!biddingCompleted && adEngineBidders.bidders.hasAllResponses()) {
+	function markAsReady(timeOut) {
+		if (timeOut || (!biddingCompleted && adEngineBidders.bidders.hasAllResponses())) {
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+
 			biddingCompleted = true;
 			onResponseCallbacks.start();
 		}
@@ -38,8 +43,12 @@ define('ext.wikia.adEngine.lookup.bidders', [
 		});
 	}
 
-	function runBidding() {
+	function runBidding(maxTimeout) {
 		log('A9 and Prebid bidding started:', 'debug', logGroup);
+
+		timeout = setTimeout(function () {
+			markAsReady(true);
+		}, maxTimeout);
 
 		adEngineBidders.bidders.requestBids({
 			responseListener: markAsReady

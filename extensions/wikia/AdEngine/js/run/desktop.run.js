@@ -91,7 +91,7 @@ require([
 		}
 
 		if (bidders.isEnabled()) {
-			bidders.runBidding();
+			bidders.runBidding(adEngineRunner.getTimeout());
 		}
 
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
