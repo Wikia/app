@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, setTimeout, clearTimeout*/
 define('ext.wikia.adEngine.lookup.bidders', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.bidders',
