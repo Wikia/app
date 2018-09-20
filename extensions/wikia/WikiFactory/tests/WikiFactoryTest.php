@@ -30,10 +30,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider prepareUrlToParseDataProvider
+	 * @dataProvider normalizeHostDataProvider
 	 */
-	public function testPrepareUrlToParse( $url, $expected ) {
-		$url = WikiFactory::prepareUrlToParse( $url );
+	public function testNormalizeHost( $environment, $host, $expected ) {
+		$this->mockEnvironment( $environment );
+		$url = WikiFactory::normalizeHost( $host );
 		$this->assertEquals( $expected, $url );
 	}
 
@@ -148,6 +149,12 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
+				'url' => 'https://muppet.fandom.com/wiki',
+				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us/wiki'
+			],
+			[
 				'env' => WIKIA_ENV_PROD,
 				'forcedEnv' => null,
 				'url' => '//www.wikia.com/wiki/test',
@@ -212,6 +219,30 @@ class WikiFactoryTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider prepareUrlToParseDataProvider
+	 */
+	public function testPrepareUrlToParse( $url, $expected ) {
+		$url = WikiFactory::prepareUrlToParse( $url );
+		$this->assertEquals( $expected, $url );
+	}
+
+	public function normalizeHostDataProvider() {
+		return [
+			[
+				'env' => WIKIA_ENV_DEV,
+				'url' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us',
+				'expected' => 'http://muppet.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'url' => 'http://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us',
+				'expected' => 'http://muppet.fandom.com'
+			],
+		];
+	}
+
 
 	public function testRenderValueOfVariableWithoutValue() {
 		$variable = new stdClass();

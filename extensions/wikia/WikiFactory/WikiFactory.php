@@ -1245,7 +1245,7 @@ class WikiFactory {
 	 * @return string normalized host name
 	 */
 	public static function normalizeHost( $host ) {
-		global $wgDevDomain, $wgWikiaBaseDomain;
+		global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
 		$baseDomain = wfGetBaseDomainForHost( $host );
 
 		// strip env-specific pre- and suffixes for staging environment
@@ -1253,8 +1253,9 @@ class WikiFactory {
 			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
 			".{$baseDomain}",
 			$host );
-		if ( !empty( $wgDevDomain ) ) {
-			$host = str_replace( ".{$wgDevDomain}", ".{$wgWikiaBaseDomain}", $host );
+		if ( !empty( $wgDevelEnvironment ) ) {
+			$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
+			$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
 		}
 		return $host;
 	}
@@ -1285,7 +1286,7 @@ class WikiFactory {
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
 		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain,
-			$wgDevDomain, $wgWikiaBaseDomainRegex;
+			$wgDevDomain, $wgWikiaBaseDomainRegex, $wgWikiaDevDomain, $wgFandomDevDomain;
 
 		// first - normalize URL
 		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
@@ -1307,8 +1308,17 @@ class WikiFactory {
 		$baseDomain = wfGetBaseDomainForHost( $server );
 
 		$server = static::normalizeHost( $server );
-		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server );
-		$server = str_replace( '.' . $wgFandomBaseDomain, '', $server );
+		$wikiaDomainUsed = false;
+		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {
+			$server = str_replace( ".{$wgWikiaBaseDomain}", '', $server );
+			$wikiaDomainUsed = true;
+
+		}
+		$fandomDomainUsed = false;
+		if ( endsWith($server, ".{$wgFandomBaseDomain}" ) ) {
+			$server = str_replace( ".{$wgFandomBaseDomain}", '', $server );
+			$fandomDomainUsed = true;
+		}
 
 		// determine the environment we want to get url for
 		$environment = (
@@ -1333,6 +1343,13 @@ class WikiFactory {
 				return "$protocol//" . $server . '.' . static::getExternalHostName() . '.' .
 				       $baseDomain . $address;
 			case WIKIA_ENV_DEV:
+				if ( $fandomDomainUsed ) {
+					return "$protocol//" . $server . '.' . $wgFandomDevDomain . $address;
+				}
+				if ( $wikiaDomainUsed ) {
+					return "$protocol//" . $server . '.' . $wgWikiaDevDomain . $address;
+				}
+				// Best guess - default to the current dev domain
 				return "$protocol//" . $server . '.' . $wgDevDomain . $address;
 		}
 
