@@ -10,6 +10,7 @@ services:
       - ../../../app/skins:/usr/wikia/slot1/current/src/skins
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions
+      - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png
     depends_on:
       - php-wikia
   php-wikia:

@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.messageListener',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, bridge, messageListener, lazyQueue, log, win) {
+], function (adContext, messageListener, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',

@@ -63,9 +63,9 @@ class ThemeSettings {
 
 		// background
 		$this->defaultSettings['background-image'] = '';
-		$this->defaultSettings['background-image-height'] = null;
+		$this->defaultSettings['background-image-height'] = 0;
 		$this->defaultSettings['background-image-name'] = '';
-		$this->defaultSettings['background-image-width'] = null;
+		$this->defaultSettings['background-image-width'] = 0;
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-dynamic'] = true;

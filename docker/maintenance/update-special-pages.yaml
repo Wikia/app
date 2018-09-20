@@ -1,4 +1,4 @@
-schedule: "0 4 * * *"
+schedule: "0 8 * * *"
 args:
 - php
 - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php

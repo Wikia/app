@@ -1682,10 +1682,6 @@ if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	include( "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php" );
 }
 
-if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
-	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
-}
-
 if ( !empty( $wgEnableSitemapPageExt ) ) {
 	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
 }
@@ -1765,6 +1761,9 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // SUS-5473 | Expose a button on Special:Statistics allowing Wikia Staff members to schedule
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
+
+// PLATFORM-3558 |
+include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
 
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
