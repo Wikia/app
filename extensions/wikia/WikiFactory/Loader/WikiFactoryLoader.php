@@ -102,10 +102,10 @@ class WikiFactoryLoader {
 		}
 		if ( $wgDevelEnvironment ) {
 			global $wgWikiaDevDomain, $wgFandomDevDomain;
-			if ( endsWith( $this->mServerName, '.' . $wgWikiaDevDomain ) ) {
-				$this->mServerName = str_replace( '.' . $wgWikiaDevDomain , '.' . $wgWikiaBaseDomain, $this->mServerName );
-			} elseif ( endsWith( $this->mServerName, '.' . $wgFandomDevDomain ) ) {
-				$this->mServerName = str_replace( '.' . $wgFandomDevDomain , '.' . $wgFandomBaseDomain, $this->mServerName );
+			if ( endsWith( $this->mServerName, $wgWikiaDevDomain ) ) {
+				$this->mServerName = str_replace( $wgWikiaDevDomain , $wgWikiaBaseDomain, $this->mServerName );
+			} elseif ( endsWith( $this->mServerName, $wgFandomDevDomain ) ) {
+				$this->mServerName = str_replace( $wgFandomDevDomain , $wgFandomBaseDomain, $this->mServerName );
 			}
 		} else {
 
