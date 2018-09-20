@@ -138,6 +138,7 @@ class WikiFactoryLoader {
 		}
 
 		WikiFactory::isUsed( true );
+
 		/**
 		 * if run via commandline always take data from database,
 		 * never from cache
