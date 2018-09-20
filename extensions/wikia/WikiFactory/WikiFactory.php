@@ -1308,13 +1308,12 @@ class WikiFactory {
 		$baseDomain = wfGetBaseDomainForHost( $server );
 
 		$server = static::normalizeHost( $server );
-		$wikiaDomainUsed = false;
+
+		$wikiaDomainUsed = $fandomDomainUsed = false;
 		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {
 			$server = str_replace( ".{$wgWikiaBaseDomain}", '', $server );
 			$wikiaDomainUsed = true;
-
 		}
-		$fandomDomainUsed = false;
 		if ( endsWith($server, ".{$wgFandomBaseDomain}" ) ) {
 			$server = str_replace( ".{$wgFandomBaseDomain}", '', $server );
 			$fandomDomainUsed = true;
