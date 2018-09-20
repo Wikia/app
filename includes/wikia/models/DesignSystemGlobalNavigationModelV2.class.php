@@ -92,16 +92,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	protected function getDomainForCityId( $cityId ) {
-		global $wgServer;
-		if ( $cityId === null ) {
-			return $wgServer;
-		} else {
-			return  WikiFactory::cityIDtoUrl( $cityId );
-		}
-	}
-
-	protected function getDevDomain() {
+	private function getDevDomain() {
 		global $wgDevDomain, $wgDevelEnvironment;
 		if ( !$wgDevelEnvironment || empty( $wgDevDomain ) ) {
 			return false;
@@ -118,19 +109,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	 * @example https://www.wikia.com/signin -> https://www.fandom.com/signin
 	 *
 	 * @param $url string source url to be updated
-	 * @param null $cityId int id of the wiki for the base domain used in the substitution (null will use current wiki)
 	 * @return string final url with base domain substituted (or original url in case of some errors)
 	 */
-	public function useWikiBaseDomainInUrl( $url, $cityId = null ) {
-		global $wgWikiaBaseDomainRegex;
-
-		$cityUrl = $this->getDomainForCityId( $cityId );
+	public function useWikiBaseDomainInUrl( $url ) {
+		global $wgWikiaBaseDomainRegex, $wgServer;
 
 		$urlParts = [];
 		$cityUrlParts = [];
 		if (
 			preg_match( '/' . $wgWikiaBaseDomainRegex . '/', $url, $urlParts ) === 0 ||
-			preg_match( '/'. $wgWikiaBaseDomainRegex . '/', $cityUrl, $cityUrlParts ) === 0 ||
+			preg_match( '/'. $wgWikiaBaseDomainRegex . '/', $wgServer, $cityUrlParts ) === 0 ||
 			$urlParts[1] === $cityUrlParts[1]
 		) {
 			return $url;
