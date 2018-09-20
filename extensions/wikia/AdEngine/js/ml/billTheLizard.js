@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	adEngine3,
 	adContext,
 	pageLevelParams,
-	bridge,
 	geo,
 	executor,
 	services,
@@ -51,6 +50,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
 			pageParams = pageLevelParams.getPageLevelParams();
 
+		adEngine3.context.set('services.billTheLizard', {
+			enabled: true,
+			host: 'https://services.wikia.com',
+			endpoint: 'bill-the-lizard/predict',
+			timeout: 2000
+		});
 		adEngine3.context.set('services.billTheLizard.parameters', {
 			device: deviceDetect.getDevice(pageParams),
 			esrb: pageParams.esrb || null,
@@ -65,6 +70,11 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		});
 		adEngine3.context.set('services.billTheLizard.projects', config.projects);
 		adEngine3.context.set('services.billTheLizard.timeout', config.timeout || 0);
+
+		if (window.wgServicesExternalDomain) {
+			adEngine3.context.set('services.billTheLizard.host',
+				window.wgServicesExternalDomain.replace(/\/$/, ''));
+		}
 
 		setupProjects();
 		setupExecutor();
