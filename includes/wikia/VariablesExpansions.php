@@ -197,7 +197,7 @@ $wgDBbackendpassword = $wgDBbackendAdminPassword;
  * @var Array $wgEditEventsRabbitConfig
  */
 $wgEditEventsRabbitConfig = [
-    'host' => 'prod.rabbit.service.sjc.consul',
+    'host' => 'prod.rabbit.service.consul',
     'port' => 5672,
     'user' => $wgRabbitUser,
     'pass' => $wgRabbitPass,
