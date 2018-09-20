@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			return services.billTheLizard.call()
+			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
 					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
