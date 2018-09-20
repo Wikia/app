@@ -240,7 +240,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-register',
 				],
-				'href' => $this->getHref( 'user-register' ),
+				'href' => $this->getHref( 'user-register', false, true ),
 				'param-name' => 'redirect',
 				'tracking-label' => 'account.register',
 			]

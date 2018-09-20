@@ -266,7 +266,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-anon-register-description',
 					],
-					'href' => $this->getHref( 'user-register' ),
+					'href' => $this->getHref( 'user-register', false, true ),
 					'param-name' => 'redirect',
 					'tracking_label' => 'account.register',
 				],
