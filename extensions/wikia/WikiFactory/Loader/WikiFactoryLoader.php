@@ -124,7 +124,7 @@ class WikiFactoryLoader {
 			foreach ( $wikiFactoryDomains as $domain ) {
 				$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
-				if ( $domain !== $wgWikiaBaseDomain /* i nie jest fandomBaseDomain...?*/ && strpos( $this->mServerName, $domain ) === $tldLength ) {
+				if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
 					$this->mOldServerName = $this->mServerName;
 					$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
 					// remove extra www. prefix from domain
