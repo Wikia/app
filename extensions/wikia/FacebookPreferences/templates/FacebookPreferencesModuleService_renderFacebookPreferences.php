@@ -11,4 +11,8 @@
 			<?= wfMessage( 'prefs-fbconnect-disconnect-prefstext' )->escaped(); ?>
 		</span>
 	</div>
+	<div id="googleConnectPreferences">
+		<p><?= wfMessage( 'fbconnect-disconnect-account-link' )->parse(); ?></p>
+		<iframe src="http://www.wikia.com/google-connect"></iframe>
+	</div>
 </div>

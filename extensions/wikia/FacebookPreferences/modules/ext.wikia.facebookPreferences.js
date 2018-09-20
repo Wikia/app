@@ -136,4 +136,12 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 				.fail(showGenericError);
 		});
 	});
+
+	window.addEventListener('message', function (event) {
+		var data = JSON.parse(event.data);
+
+		if (data && data.externalAuth && data.externalAuth.redirect) {
+			window.location.href = data.externalAuth.redirect;
+		}
+	});
 });
