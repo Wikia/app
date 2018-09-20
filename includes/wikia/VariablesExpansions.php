@@ -194,13 +194,9 @@ $wgDBbackendpassword = $wgDBbackendAdminPassword;
 /**
  * RabbitMQ configuration for Edit Events Pipeline.
  * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var Array $wgEditEventsRabbitConfig
+ * @var array $wgEditEventsRabbitConfig
  */
 $wgEditEventsRabbitConfig = [
-    'host' => 'prod.rabbit.service.sjc.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
     'vhost' => 'data-warehouse',
     'exchange' => 'mediawiki-edit-events',
     'deadExchange' => 'zombie.v0.1',
@@ -228,6 +224,28 @@ $wgExtensionsDirectory = "$IP/extensions";
  * @var string $wgFlowerUrl
  */
 $wgFlowerUrl = "http://celery-flower.$wgWikiaDatacenter.k8s.wikia.net";
+
+/**
+ * RabbitMQ configuration for ImageReview.
+ * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
+ * @var array $wgImageReview
+ */
+$wgImageReview = [
+	'vhost' => 'dc-file-sync',
+	'exchange' => 'amq.topic',
+	'deadExchange' => 'zombie.v0.1'
+];
+
+/**
+ * RabbitMQ configuration for Indexing Pipeline.
+ * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
+ * @var array $wgIndexingPipeline
+ */
+$wgIndexingPipeline = [
+	'vhost' => 'indexer',
+	'exchange' => 'events',
+	'deadExchange' => 'zombie.v0.1',
+];
 
 /**
  * Localized central wikis.
@@ -502,6 +520,16 @@ $wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:
 $wgParserCacheType = CACHE_MEMCACHED;
 
 /**
+ * Phalanx RabbitMQ configuration.
+ * @see extensions/wikia/PhalanxII
+ * @var array $wgPhalanxQueue
+ */
+$wgPhalanxQueue = [
+	'vhost' => 'phalanx',
+	'exchange' => 'phalanx',
+];
+
+/**
  * Which namespaces have special treatment where they should be preview-on-open
  * Internaly only Category: pages apply, but using this extensions (e.g.
  * Semantic MediaWiki) can specify namespaces of pages they have special
@@ -543,16 +571,12 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
- * RabbitMQ configurarion.
- * @see lib/Wikia/src/Tasks/AsyncTaskList.php
- * @var Array $wgTaskBroker
+ * Whether to disable the background tasks broker for MediaWiki.
+ * @see lib/Wikia/src/Factory/RabbitFactory.php
+ * @see lib/Wikia/src/Rabbit/TasksRabbitPublisher.php
+ * @var bool $wgTaskBrokerDisabled
  */
-$wgTaskBroker = [
-    'host' => 'prod.rabbit.service.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-];
+$wgTaskBrokerDisabled = false;
 
 /**
  * Configuration file for external Tidy.

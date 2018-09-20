@@ -13,6 +13,7 @@ namespace Wikia\Tasks\Queues;
 class Queue {
 	const NAME = 'Queue';
 
+	const MAIN_QUEUE_NAME = 'mediawiki_main';
 	const RTBF_QUEUE_NAME = 'mediawiki_rtbf';
 
 	private $name;
