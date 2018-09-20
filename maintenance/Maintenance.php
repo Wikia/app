@@ -112,6 +112,10 @@ abstract class Maintenance {
 	// Used by getDD() / setDB()
 	private $mDb = null;
 
+	// Wikia change
+	/* @var Wikia\Logger\WikiaLogger */
+	protected $mLogger = null;
+
 	/**
 	 * List of all the core maintenance scripts. This is added
 	 * to scripts added by extensions in $wgMaintenanceScripts
@@ -319,6 +323,12 @@ abstract class Maintenance {
 	 *     function outputChanneled.
 	 */
 	protected function output( $out, $channel = null ) {
+
+		// Wikia change: log output if possible
+		if ( $this->mLogger instanceof Wikia\Logger\WikiaLogger ) {
+			$this->mLogger->info( trim( $out, "\n" ) );
+		}
+
 		if ( $this->mQuiet ) {
 			return;
 		}
@@ -875,6 +885,9 @@ abstract class Maintenance {
 		}
 		# Same with these
 		$wgCommandLineMode = true;
+
+		// Wikia change
+		$this->mLogger = Wikia\Logger\WikiaLogger::instance();
 
 		/**
 		 * Wikia change - begin

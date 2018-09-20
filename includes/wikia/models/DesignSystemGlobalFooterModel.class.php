@@ -30,11 +30,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data = [
 			'header' => [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
+				// 'image' is deprecated, use 'image-data' instead	
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+					'name' => 'wds-company-logo-fandom-white',
 				],
 				'href' => $this->getHref( 'fandom-logo' ),
 				'title' => [
@@ -306,6 +306,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getFandomOverview() {
 		$out = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-overview-header'
+				]
+			],
 			'links' => [ ]
 		];
 

@@ -131,16 +131,6 @@ $wgGroupPermissions['user']['createclass'] = true;
 
 $wgGroupPermissions['user']['torunblocked'] = true;
 
-
-/* note: because TorBlock.php gives [user][torunblocked]=true without asking us,
- * we cant set this false in WF local permissions, so need switch to kill when needed.
- */
-if( !empty( $wgEnableTorBlockExt ) ) {
-	if( !empty($wgWikiaRemoveUserTorunblocked) ) {
-		$wgGroupPermissions['user']['torunblocked'] = false;
-	}
-}
-
 /*
  * permissions setup
  */
@@ -270,11 +260,6 @@ $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
-
-// permissions
-$wgGroupPermissions['staff']['finishcreate'] = true;
-$wgGroupPermissions['sysop']['finishcreate'] = true;
-$wgGroupPermissions['bureaucrat']['finishcreate'] = true;
 
 $wgGroupPermissions['*']['curatedcontent'] = false;
 $wgGroupPermissions['staff']['curatedcontent'] = true;

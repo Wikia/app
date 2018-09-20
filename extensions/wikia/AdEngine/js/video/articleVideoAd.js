@@ -5,10 +5,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
-	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
+], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
@@ -23,17 +22,21 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerMuted, bidParams) {
+	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerState, bidParams) {
+		playerState = playerState || {};
+
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
+			slotNameSuffix = '',
 			slotParams = {
 				passback: featuredVideoPassback,
 				pos: slotName,
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
-				audio: playerMuted ? 'no' : 'yes'
+				audio: playerState.muted ? 'no' : 'yes',
+				ctp: playerState.autoplay || videoDepth > 1 ? 'no' : 'yes'
 			};
 
 		if (slotTargeting) {
@@ -48,7 +51,13 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			});
 		}
 
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
+		if (slotParams.ctp === 'yes') {
+			slotNameSuffix = '-ctp';
+		} else if (slotParams.audio === 'yes') {
+			slotNameSuffix = '-audio';
+		}
+
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, slotNameSuffix);
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 

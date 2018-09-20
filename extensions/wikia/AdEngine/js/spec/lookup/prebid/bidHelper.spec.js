@@ -40,4 +40,26 @@ describe('ext.wikia.adEngine.lookup.prebid.bidHelper', function () {
 			expect(mocks.bidHelper.transformPriceFromCpm).toHaveBeenCalledWith(bid.cpm, 20);
 		});
 	});
+
+	it('should call priceGranularityHelper with maxCpm: 50 when bidder code in [appnexusAst, rubicon]', function () {
+		var module = getModule();
+
+		spyOn(mocks.bidHelper, 'transformPriceFromCpm');
+
+		[
+			{
+				bidder: 'appnexusAst',
+				cpm: 24.00
+			},
+			{
+				bidder: 'rubicon',
+				cpm: 52.00
+			}
+		].forEach(function (bid) {
+
+			module.transformPriceFromBid(bid);
+
+			expect(mocks.bidHelper.transformPriceFromCpm).toHaveBeenCalledWith(bid.cpm, 20);
+		});
+	});
 });

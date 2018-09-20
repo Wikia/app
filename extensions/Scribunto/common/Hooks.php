@@ -212,6 +212,7 @@ class ScribuntoHooks {
 	public static function reportLimits( $parser, &$report ) {
 		if ( Scribunto::isParserEnginePresent( $parser ) ) {
 			$engine = Scribunto::getParserEngine( $parser );
+			$report .= sprintf( "Lua engine used: %s\n", get_class( $engine ) );  // Wikia change
 			$report .= $engine->getLimitReport();
 		}
 		return true;

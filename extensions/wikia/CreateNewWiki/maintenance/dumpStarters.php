@@ -82,7 +82,7 @@ class DumpStarters extends Maintenance {
 		$info = $dbr->getLBInfo();
 
 		// dump tables data only
-		$cmd = sprintf( "%s --no-create-info --set-gtid-purged=OFF -h%s -u%s -p%s %s %s",
+		$cmd = sprintf( "%s --no-create-info -h%s -u%s -p%s %s %s",
 			"/usr/bin/mysqldump",
 			$info[ "host"      ],
 			$info[ "user"      ],
@@ -92,6 +92,14 @@ class DumpStarters extends Maintenance {
 		);
 
 		$dump = wfShellExec( $cmd, $retVal );
+
+		// SUS-5500 | clean up the dump
+		$dump = str_replace( "\nSET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;", '', $dump );
+		$dump = str_replace( "\nSET @@SESSION.SQL_LOG_BIN= 0;", '', $dump );
+		$dump = str_replace( "\nSET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;", '', $dump );
+
+		// SET @@GLOBAL.GTID_PURGED='018e4e66-f918-11e6-8a27-00163ed20501:1-1713138, ...;
+		$dump = preg_replace( '#SET @@GLOBAL.GTID_PURGED=[^;]+;#', '', $dump );
 
 		if ( $retVal > 0 ) {
 			throw new DumpStartersException( "Unable to generate a SQL dump of '{$starter}' (using {$info['host']})" );

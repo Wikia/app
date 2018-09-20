@@ -3,17 +3,10 @@
 namespace Wikia\CreateNewWiki\Tasks;
 
 class SetupWikiCitiesTest extends \WikiaBaseTest {
-	/** @var TaskContext|\PHPUnit_Framework_MockObject_MockObject $taskContextMock */
-	private $taskContextMock;
 
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
-
-		$this->taskContextMock = $this->getMockBuilder(TaskContext::class )
-			->disableOriginalConstructor()
-			->setMethods( [ 'setCityId', 'getSharedDBW' ] )
-			->getMock();
 	}
 
 	/**
@@ -25,9 +18,16 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testRun( $addToCityListReturn, $setCityIdCalled, $insertId, $addToCityDomainsReturn, $expected ) {
+
+		/** @var TaskContext|\PHPUnit_Framework_MockObject_MockObject $taskContextMock */
+		$taskContextMock = $this->getMockBuilder( TaskContext::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'setCityId', 'getSharedDBW' ] )
+			->getMock();
+
 		$setupWikiCitiesTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\SetupWikiCities' )
 			->enableOriginalConstructor()
-			->setConstructorArgs( [ $this->taskContextMock ] )
+			->setConstructorArgs( [ $taskContextMock ] )
 			->setMethods( [ 'addToCityList', 'addToCityDomains' ] )
 			->getMock();
 
@@ -47,7 +47,7 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 			->method( 'insertId' )
 			->willReturn( $insertId );
 
-		$this->taskContextMock
+		$taskContextMock
 			->expects( $this->any() )
 			->method( 'getSharedDBW' )
 			->willReturn( $sharedDBWMock );
@@ -55,7 +55,7 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
 
-		$this->taskContextMock
+		$taskContextMock
 			->expects( $this->$setCityIdCalled() )
 			->method( 'setCityId' );
 
@@ -70,6 +70,57 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 			[ true, 'once', 0, null, 'error' ],
 			[ true, 'once', 99, 0, 'error' ],
 			[ true, 'once', 99, true, 'ok' ]
+		];
+	}
+
+	/**
+	 * @dataProvider addToCityDomainsProvider
+	 * @param $cityDomain
+	 * @param $expectedDomains
+	 */
+	public function testAddToCityDomains( $cityDomain, $expectedDomains ) {
+		$taskContext = $this->getMockBuilder( TaskContext::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'setCityId', 'getSharedDBW', 'getCityId' ] )
+			->getMock();
+
+		$taskContext->setUrl( 'http://' . $cityDomain . '/' );
+		$taskContext->setDomain( $cityDomain );
+		$taskContext
+			->expects( $this->any() )
+			->method( 'getCityId' )
+			->willReturn( 321 );
+
+		$mockedDB = $this->getMockBuilder( 'stdObject' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'insert' ] )
+			->getMock();
+
+		$taskContext
+			->expects( $this->any() )
+			->method( 'getSharedDBW' )
+			->willReturn( $mockedDB );
+
+		$expectedDbValues = [];
+		foreach($expectedDomains as $domain) {
+			$expectedDbValues[] = ['city_id' => 321, 'city_domain' => $domain];
+
+		}
+		$mockedDB
+			->expects( $this->once() )
+			->method( 'insert' )
+			->with( "city_domains", $expectedDbValues, $this->anything() );
+
+		$setupWikiCitiesTask = new \Wikia\CreateNewWiki\Tasks\SetupWikiCities( $taskContext );
+
+		$setupWikiCitiesTask->addToCityDomains();
+
+	}
+
+	public function addToCityDomainsProvider() {
+		return [
+			[ 'wiki1.wikia.com', [ 'wiki1.wikia.com', 'www.wiki1.wikia.com' ] ],
+			[ 'wiki1.fandom.com', [ 'wiki1.fandom.com', 'wiki1.wikia.com' ] ],
 		];
 	}
 }

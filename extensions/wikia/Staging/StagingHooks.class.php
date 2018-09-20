@@ -21,9 +21,10 @@ class StagingHooks {
 	 * @param $out
 	 * @param $redirect
 	 * @param $code
+	 * @param $redirectedBy
 	 * @return bool
 	 */
-	static public function onBeforePageRedirect( $out, &$redirect, &$code ) {
+	static public function onBeforePageRedirect( $out, &$redirect, &$code, &$redirectedBy ) {
 		if ( !empty( $_SERVER['HTTP_X_STAGING'] ) ) {
 			$stagingEnvName = $_SERVER['HTTP_X_STAGING'];
 			$parts = parse_url( $redirect );
@@ -34,6 +35,7 @@ class StagingHooks {
 			) {
 				$parts['host'] = str_replace( '.wikia.com', '.' . $stagingEnvName . '.wikia.com', $parts['host'] );
 				$redirect = http_build_url( '', $parts );
+				$redirectedBy[] = 'StagingHook';
 			}
 		}
 

@@ -58,6 +58,41 @@ $wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
 $wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
 
 /**
+ * Name of the Kubernetes deployment, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesDeploymentName
+ */
+$wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
+
+/**
+ * Kubernetes namespace name, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesNamespace
+ */
+$wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
+
+/**
+ * Proxy to use for CURL requests.
+ * @see PLATFORM-1745
+ * @see includes/wikia/CurlMultiClient.php
+ * @see includes/HttpFunctions.php
+ * @var string $wgHTTPProxy
+ */
+if ( !empty( $wgKubernetesDeploymentName ) ) {
+	// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+	$wgHTTPProxy = "$wgKubernetesDeploymentName.$wgKubernetesNamespace:80";
+}
+else {
+	// SUS-5675 | TODO: remove when we switch fully to Kubernetes
+	$wgHTTPProxy = 'prod.border.service.consul:80';
+}
+
+/**
+ * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
+ * This is only enabled if app itself is running on Kubernetes.
+ * @var bool $wgUseKubernetesInternalIngress
+ */
+$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
+
+/**
  * Some environments share components (e.g. preview, verify, sandbox and stable
  * use prod databases). This variable represents that.
  * @var string $wgRealEnvironment
@@ -103,9 +138,7 @@ $wgServer = WebRequest::detectServer();
  * redirect loops when "pretty URLs" are used.
  * @var bool $wgUsePathInfo
  */
-$wgUsePathInfo = ( strpos(php_sapi_name(), 'cgi') === false ) &&
-        ( strpos(php_sapi_name(), 'apache2filter') === false ) &&
-        ( strpos(php_sapi_name(), 'isapi') === false );
+$wgUsePathInfo = ( php_sapi_name() == 'apache2handler' ) || ( php_sapi_name() == 'fpm-fcgi' ); # Wikia change - SUS-5825
 
 /**
  * Show EXIF data, on by default if available. Requires PHP's EXIF extension.

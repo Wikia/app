@@ -169,8 +169,8 @@ if ( !defined( 'MW_NO_SETUP' ) ) {
 /* @var $wgRequest WebRequest */
 if(wfReadOnly() && is_object($wgRequest) && $wgRequest->wasPosted()) {
 	if (
-		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'datacenter') === false ) &&
-		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'api.php') === false )
+		( strpos(strtolower($_SERVER['REQUEST_URI']), 'datacenter') === false ) &&
+		!in_array( strtolower( $_SERVER['SCRIPT_NAME'] ), [ '/api.php', '/wikia.php' ] )
 	) {
 
 		// SUS-2627: emit a proper HTTP error code indicating that something went wrong

@@ -5,10 +5,11 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
+	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
 	adContext,
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	log,
 	win,
 	bidHelper,
+	billTheLizard,
 	floater
 ) {
 	'use strict';
@@ -54,12 +56,15 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
+				'ctp': params.withCtp ? 1 : 0,
 				'audio': params.withAudio ? 1 : 0,
 				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
-				'vast_id': params.vastId || emptyValue.string
+				'vast_id': params.vastId || emptyValue.string,
+				'video_id': params.videoId || '',
+				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
 			};
 
 		if (bidHelper && params.bid) {

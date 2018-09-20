@@ -13,9 +13,11 @@ class ApiDocsServiceFactory {
 	
 	/**
 	 * Will create cached ApiDocsService.
-	 * @see Wikia\ApiDocs\Services\ApiDocsService
-	 * @see Wikia\ApiDocs\Services\CachingApiDocsService
+	 * @see \Wikia\ApiDocs\Services\ApiDocsService
+	 * @see \Wikia\ApiDocs\Services\CachingApiDocsService
+	 * @param \WikiaRequest $request
 	 * @return IApiDocsService
+	 * @throws \NotFoundApiException
 	 */
 	public function getApiDocsService( $request ) {
 		global $IP, $wgStyleVersion;

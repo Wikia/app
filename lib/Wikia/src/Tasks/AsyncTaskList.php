@@ -17,6 +17,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Queues\DumpsOnDemandQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
@@ -97,6 +98,9 @@ class AsyncTaskList {
 	 */
 	public function setQueue( $queue ) {
 		switch ( $queue ) {
+			case DumpsOnDemandQueue::NAME:
+				$queue = new DumpsOnDemandQueue();
+				break;
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
 				break;
@@ -256,34 +260,24 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment, $wgDevDomain;
+		global $wgWikiaEnvironment, $wgDevDomain, $wgProcessTasksOnKubernetes;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = wfGetEffectiveHostname();
-			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
-				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
+				$executor['runner'] = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
-				$executionRunner = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executor['runner'] = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
-				$executionRunner = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
-			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
-				wfDebug( __METHOD__ . " - fallback to remote_shell execution mode on {$host}!\n" );
-
-				$executionMethod = 'remote_shell';
-				$executionRunner = [
-					$host,
-					'php',
-					realpath( $IP . '/maintenance/wikia/task_runner.php' ),
-				];
+				$executor['runner'] = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			}
-
-			$executor['method'] = $executionMethod;
-			$executor['runner'] = $executionRunner;
+		} elseif ( $wgProcessTasksOnKubernetes ) {
+			# SUS-5562 use k8s to process task
+			$executor['runner'] = ["http://mediawiki-tasks/proxy.php"];
 		}
 
 		return $executor;

@@ -326,6 +326,7 @@ $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/Sit
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
 $wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
+$wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
 
 // services hooks
@@ -976,6 +977,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -989,6 +997,13 @@ $wgAdDriverA9VideoBidderCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverA9BidderCountries = null;
+
+/**
+ * @name $wgAdDriverA9OptOutCountries
+ * List of countries where A9 is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9OptOutCountries = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane
@@ -1039,11 +1054,32 @@ $wgAdDriverRubiconPrebidCountries = null;
 $wgAdDriverRubiconDfpCountries = null;
 
 /**
+ * @name $wgAdDriverAppNexusDfpCountries
+ * Enables AppNexus via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusDfpCountries = null;
+
+/**
  * @name $wgAdDriverPrebidBidderCountries
  * List of countries where prebid bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
+ * @name $wgAdDriverPrebidOptOutCountries
+ * List of countries where Prebid is enabled for opted-out users.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidOptOutCountries = null;
 
 /**
  * @name $wgAdDriverAolBidderCountries
@@ -1136,6 +1172,20 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
 $wgAdDriverPubMaticBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAdditionalVastSizeCountries
+ * List of countries where vast requests has additional size 480x360.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdditionalVastSizeCountries = null;
+
+/**
+ * @name $wgAdDriverKargoBidderCountries
+ * List of countries where Kargo prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKargoBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1172,19 +1222,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
  * Enable new mobile_in_content slot after infobox placement
  */
 $wgAdDriverUseAdsAfterInfobox = false;
-
-/**
- * @name $wgAdDriverUseEvolve2
- * Whether to enable AdProviderEvolve2 (true) or not (false)
- */
-$wgAdDriverUseEvolve2 = true;
-
-/**
- * @name $wgAdDriverEvolve2Countries
- * List of countries with enabled Evolve2 module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverEvolve2Countries = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1334,6 +1371,13 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 $wgAdDriverKruxCountries = null;
 
 /**
+ * @name $wgAdDriverKruxNewParamsCountries
+ * List of countries where Krux will use new parameters (kuid and ksg)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxNewParamsCountries = null;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1366,6 +1410,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverF2DisableSraCountries
+ * List of countries where Single Request Architecture is disabled on news&stories
+ */
+$wgAdDriverF2DisableSraCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
@@ -1382,6 +1432,12 @@ $wgAdDriverWadILCountries = null;
  * List of countries to enable Consent Management module
  */
 $wgEnableCMPCountries = null;
+
+/**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
 
 /**
  * trusted proxy service registry
@@ -1659,7 +1715,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1705,9 +1761,9 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
-// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-// to be removed after we make sure it works fine
-$wgSurrogateKeysProdWikis = [
-	1721212,    // mech-internal-https-test
-	1558829     // rikitiki
-];
+/**
+ * @name $wgProcessTasksOnKubernetes
+ * When enabled, tasks will be processed on kubernetes.
+ * This will only work on production.
+ */
+$wgProcessTasksOnKubernetes = false;

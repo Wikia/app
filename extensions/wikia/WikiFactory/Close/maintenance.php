@@ -4,32 +4,31 @@
  * @package MediaWiki
  * @addtopackage maintenance
  *
+ * @group cronjobs
+ * @see wiki-factory-close-marked-wikis.yaml
+ *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
-ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
-
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
-use Wikia\Logger\WikiaLogger;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
-require_once( "commandLine.inc" );
-require_once( "Archive/Tar.php" );
+require_once( __DIR__ . "/../../../../maintenance/commandLine.inc" );
 
 class CloseWikiMaintenance {
+
+	use Wikia\Logger\Loggable;
 
 	const CLOSE_WIKI_DELAY = 30;
 
 	private $mOptions;
 
 	/**
-	 * constructor
-	 *
-	 * @access public
+	 * @param array $options
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 		$this->mOptions = $options;
 	}
 
@@ -90,47 +89,40 @@ class CloseWikiMaintenance {
 		);
 
 		$this->info( 'wikis to remove', [
-			'wikis' => $sth->numRows()
+			'wikis' => $sth->numRows(),
+			'query' => $dbr->lastQuery()
 		] );
-
-		$this->log( 'Wikis to remove: ' . $sth->numRows() );
-		$this->log( $dbr->lastQuery() );
-
-		$this->log( 'Will start in 5 seconds...' );
-		sleep(5);
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
 			$hide     = false;
-			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
 			$cityid   = intval( $row->city_id );
 			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
-			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
+			$this->debug( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
 			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
 				// "Hide Database and Image Dump
-				$this->log( "Images and DB dump should be hidden" );
+				$this->info( "Images and DB dump should be hidden" );
 				$hide = true;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
-				$this->log( "Dumping database on remote host" );
-
 				$script = ( $hide )
-					? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3"
-					: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3";
+					? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --s3"
+					: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --s3";
 
-				$this->log( $script );
-				$output = wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
-				$xdumpok = empty( $retval ) ? true : false;
+				$this->info( "Dumping database on remote host", [
+					'script' => $script
+				]);
+				wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
 				/**
 				 * reset flag
 				 */
@@ -138,7 +130,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
-					$this->log( "Dumping images on remote host" );
+					$this->info( "Dumping images on remote host" );
 					try {
 						$source = $this->tarFiles( $dbname, $cityid );
 
@@ -146,24 +138,25 @@ class CloseWikiMaintenance {
 							try {
 								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
 							} catch ( S3Exception $ex ) {
-								$this->log( "putToAmazonS3 command failed - " . $ex->getMessage() );
-								echo "Can't copy images to remote host. Please, fix that and rerun";
+								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun", [
+									'exception' => $ex->getMessage()
+								]);
 								die( 1 );
 							}
 
-							$this->log( "{$source} copied to S3 Amazon" );
+							$this->info( "{$source} copied to S3 Amazon" );
 							unlink( $source );
 						}
 
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 					}
 					catch( Exception $e ) {
-						/**
-						 * actually it's better to die than remove
-						 * images later without backup
-						 */
-						$this->log( $e->getMessage() );
-						echo "Can't copy images to remote host. Source {$source} is not defined";
+						$this->error( "Can't create tar archive with images",
+							[
+								'exception' => $e->getMessage(),
+								'city_id' => $cityid,
+							]
+						);
 					}
 				}
 			}
@@ -176,7 +169,7 @@ class CloseWikiMaintenance {
 				 * clear wikifactory tables, condition for city_public should
 				 * be always true there but better safe than sorry
 				 */
-				$this->log( "Cleaning the shared database" );
+				$this->info( "Cleaning the shared database" );
 
 				WikiFactory::copyToArchive( $row->city_id );
 				$dbw = WikiFactory::db( DB_MASTER );
@@ -196,7 +189,7 @@ class CloseWikiMaintenance {
 					),
 					__METHOD__
 				);
-				$this->log( "{$row->city_id} removed from WikiFactory tables" );
+				$this->info( "{$row->city_id} removed from WikiFactory tables" );
 
 				$this->cleanupSharedData( intval( $row->city_id ) );
 
@@ -222,11 +215,10 @@ class CloseWikiMaintenance {
 					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit( __METHOD__ );
-					$this->log("{$row->city_dbname} dropped from cluster {$cluster}");
+					$this->info("{$row->city_dbname} dropped from cluster {$cluster}");
 				}
 				catch (Exception $e) {
-					$this->log("{$row->city_dbname} database drop failed! {$e->getMessage()}");
-					$this->info( 'drop database', [
+					$this->error( 'drop database failed', [
 						'cluster'   => $cluster,
 						'dbname'    => $row->city_dbname,
 						'exception' => $e,
@@ -239,7 +231,7 @@ class CloseWikiMaintenance {
 				 */
 				$indexer = new Wikia\Search\Indexer();
 				$indexer->deleteWikiDocs( $row->city_id );
-				$this->log( "Wiki documents removed from index" );
+				$this->info( "Wiki documents removed from index" );
 
 				/**
 				 * let other extensions remove entries for closed wiki
@@ -248,7 +240,7 @@ class CloseWikiMaintenance {
 					Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
 				} catch ( Exception $ex ) {
 					// SUS-4606 | catch exceptions instead of stopping the script
-					WikiaLogger::instance()->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
+					$this->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
 						'exception' => $ex,
 						'wiki_id' => (int) $row->city_id
 					] );
@@ -274,7 +266,7 @@ class CloseWikiMaintenance {
 				'dbname'  => $dbname,
 			] );
 
-			$this->log( "$dbname: completed" );
+			$this->info( "$dbname: completed" );
 
 			$this->removeDiscussions($cityid);
 
@@ -287,7 +279,7 @@ class CloseWikiMaintenance {
 			sleep( $sleep );
 		}
 
-		$this->log( 'Done' );
+		$this->info( 'Done' );
 	}
 
 	/**
@@ -309,7 +301,7 @@ class CloseWikiMaintenance {
 		$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
 
 		if ( $isEmpty ) {
-			$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
+			$this->info( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
 			return false;
 		}
 
@@ -319,14 +311,16 @@ class CloseWikiMaintenance {
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$container = substr( $path, 0, -7 ); // eg. poznan/pl
 
-		$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
+		$this->info( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
 
 		wfMkdirParents( $directory );
 		$time = wfTime();
 
 		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 		// but use SwiftStorage instead (SUS-4537)
-		$objects = $swiftStorage->getContainer()->list_objects_recursively(
+		$swiftContainerObj = $swiftStorage->getContainer();
+
+		$objects = $swiftContainerObj->list_objects_recursively(
 			ltrim( $swiftStorage->getPathPrefix(), '/' ) );
 
 		foreach( $objects as $object ) {
@@ -340,12 +334,12 @@ class CloseWikiMaintenance {
 			wfMkdirParents( dirname( $directory . $object ) );
 
 			// fetch files one by one
-			( new CF_Object( $swiftStorage->getContainer(), $object ) )
+			( new CF_Object( $swiftContainerObj, $object ) )
 				->save_to_filename( $directory . $object );
 		}
 
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}", true, true );
+		$this->debug( "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}" );
 
 		/**
 		 * @name dumpfile
@@ -358,14 +352,18 @@ class CloseWikiMaintenance {
 		$tar = new Archive_Tar( $tarfile );
 
 		if( ! $tar ) {
-			$this->log( "Cannot open {$tarfile}" );
+			$this->error( "Cannot open {$tarfile}" );
 			echo "Cannot open {$tarfile}";
 			die( 1 );
 		}
 		$files = $this->getDirTree( $directory );
 
 		if( is_array( $files ) && count( $files ) ) {
-			$this->log( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
+			$this->info( sprintf(
+					"Packing %d files from {$directory} to {$tarfile}",
+					count( $files )
+				)
+			);
 			$res = $tar->create( $files );
 
 			if ( $res !== true ) {
@@ -375,12 +373,12 @@ class CloseWikiMaintenance {
 			$result = $tarfile;
 		}
 		else {
-			$this->log( "List of files in {$directory} is empty" );
+			$this->info( "List of files in {$directory} is empty" );
 			throw new WikiaException( "List of files in {$directory} is empty" );
 		}
 
 		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
-		$this->log( "Removing '{$directory}' directory" );
+		$this->info( "Removing '{$directory}' directory" );
 		wfRecursiveRemoveDir( $directory );
 
 		return $result;
@@ -389,20 +387,19 @@ class CloseWikiMaintenance {
 	/**
 	 * Get images list from folder, recursive, skip thumbnails directory
 	 *
+	 * @param string $dir
 	 * @return array
 	 */
 	private function getDirTree( $dir ) {
 
 		$files = array();
 
-		wfProfileIn( __METHOD__ );
-
 		if( is_dir( $dir ) ) {
 			$dirs = array_diff( scandir( $dir ), array( ".", ".." ) );
 		    foreach( $dirs as $d ) {
 				$path = $dir . "/" . $d;
 				if( is_dir( $path ) ) {
-					$files = array_merge( $files, $this->getDirTree( $path, $files ) );
+					$files = array_merge( $files, $this->getDirTree( $path ) );
 				}
 				else {
 					$include =
@@ -415,7 +412,6 @@ class CloseWikiMaintenance {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 
 		return $files;
 	}
@@ -430,7 +426,7 @@ class CloseWikiMaintenance {
 	private function removeBucket( int $cityId ) {
 		try {
 			$swift = \Wikia\SwiftStorage::newFromWiki( $cityId );
-			$this->log( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
+			$this->info( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
 
 			// get the list of all objects in wiki images sub-bucket
 			$path = ltrim( $swift->getPathPrefix(), '/' );
@@ -441,9 +437,7 @@ class CloseWikiMaintenance {
 				$swift->getContainer()->delete_object( $object );
 			}
 		} catch ( Exception $ex ) {
-			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
-
-			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS files failed', [
+			$this->error( 'Removing DFS files failed', [
 				'exception' => $ex,
 				'city_id' => $cityId
 			] );
@@ -491,7 +485,7 @@ class CloseWikiMaintenance {
 	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
 		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
 
-		$this->log( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+		$this->info( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
 
 		// throttle delete queries
 		if ( $db->affectedRows() > 0 ) {
@@ -499,28 +493,17 @@ class CloseWikiMaintenance {
 		}
 	}
 
-	private function log( string $message ) {
-		$this->info( $message );
-	}
-
-	/**
-	 * @param string $msg
-	 * @param array $context
-	 */
-	private function info( string $msg, array $context = [] ) {
-		// send logs to stdout as well
-		Wikia::log( __CLASS__, false, $msg, true, true );
-
-		\Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
-	}
-
 	private function removeDiscussions( int $cityId ) {
+		global $wgTheSchwartzSecretToken;
+
 		try {
-			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+			$this->getSitesApi()->hardDeleteSite( $cityId, $wgTheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
-			WikiaLogger::instance()
-				->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
+			$this->error( "Failed to hard delete Discussion site", [
+				'exception' => $e,
+				'city_id' => $cityId,
+			] );
 		}
 	}
 
@@ -545,6 +528,8 @@ class CloseWikiMaintenance {
  * --first			-- run only once for first wiki in queue
  * --limit=<limit>	-- run for <limit> wikis
  */
+global $IP, $options;
+
 $wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
 $maintenance = new CloseWikiMaintenance( $options );
 $maintenance->execute();

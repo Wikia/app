@@ -176,7 +176,7 @@
 
 					ThemeDesigner.set('theme', targetObject.attr('data-theme'));
 					if (ThemeDesigner.checkBgImageIsSet()) {
-						ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
+						ThemeDesigner.loadImage(ThemeDesigner.settings['background-image'], 'background-image');
 					} else {
 						ThemeDesigner.checkBgIsDynamic(0);
 					}
@@ -414,7 +414,6 @@
 				});
 
 			} else if (type === 'image') {
-
 				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
 				// add admin background
 				if (ThemeDesigner.settings['user-' + swatchName]) {

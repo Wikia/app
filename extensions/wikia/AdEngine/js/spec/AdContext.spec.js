@@ -19,8 +19,11 @@ describe('AdContext', function () {
 					return 100;
 				}
 			},
-			adsGeo: {},
-			geo: {},
+			geo: {
+				mapSamplingResults: function() {
+					return [];
+				}
+			},
 			instantGlobals: {},
 			win: {},
 			Querystring: function () {
@@ -38,7 +41,6 @@ describe('AdContext', function () {
 			callback: noop
 		},
 		queryParams = [
-			'evolve2',
 			'turtle'
 		];
 
@@ -46,9 +48,8 @@ describe('AdContext', function () {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.browserDetect,
 			mocks.wikiaCookies,
-			mocks.geo,
 			mocks.instantGlobals,
-			mocks.adsGeo,
+			mocks.geo,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -61,13 +62,16 @@ describe('AdContext', function () {
 	}
 
 	beforeEach(function () {
-		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo'];
+		var geoAPI = [
+			'isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo',
+			'getSamplingResults', 'mapSamplingResults'
+		];
 		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
-		mocks.adsGeo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
-		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
+		mocks.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
 		mocks.instantGlobals = {};
 	});
 
@@ -356,44 +360,6 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.showcase).toBeFalsy();
 	});
 
-	it('enables evolve2 provider when country in instantGlobals.wgAdDriverEvolve2Countries', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						evolve2: true
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeFalsy();
-	});
-
-	it('disables evolve2 provider when provider is disabled by wg var', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						evolve2: false
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.evolve2).toBeFalsy();
-	});
-
 	it('enables FAN provider when provider is enabled by wg var', function () {
 		var adContext;
 		mocks.win = {
@@ -533,7 +499,7 @@ describe('AdContext', function () {
 				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
 			},
 			testedBidder: 'appnexusAst',
-			expectedResult: false
+			expectedResult: true
 		},
 		{
 			hasFeaturedVideo: false,
@@ -657,20 +623,14 @@ describe('AdContext', function () {
 		expect(getModule().get('opts..showAds')).toBeUndefined();
 	});
 
-	it('uses default geo', function () {
+	it('checks which lABrador keyvals should be sent to DFP', function () {
 		mocks.instantGlobals = {
-			wgAdDriverNewGeoCountries: [],
+			wgAdDriverRubiconDfpCountries: ['XX/50'],
+			wgAdDriverLABradorDfpKeyvals: ['wgAdDriverRubiconDfpCountries_A_50:rub-dfp-test']
 		};
+
 		getModule();
-		expect(mocks.geo.isProperGeo.calls.count()).toBeGreaterThan(1);
+
+		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
 	});
-
-	it('uses ads lABrador geo if is enabled', function () {
-		mocks.instantGlobals = {
-			wgAdDriverNewGeoCountries: ['CURRENT_COUNTRY'],
-		};
-
-		getModule();
-		expect(mocks.geo.isProperGeo.calls.count()).toEqual(1);
-	})
 });

@@ -15,10 +15,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
-			->setMethods( [ 'extendImageData', 'getFileWidth' ] )
+			->setMethods( [ 'extendMobileImageDataScaleToWidth', 'extendMobileImageData', 'getFileWidth' ] )
 			->getMock();
 		$mock->expects( $this->any() )
-			->method( 'extendImageData' )
+			->method( 'extendMobileImageDataScaleToWidth' )
+			->will( $this->returnValue( $extendImageData ) );
+		$mock->expects( $this->any() )
+			->method( 'extendMobileImageData' )
 			->will( $this->returnValue( $extendImageData ) );
 		$mock->expects( $this->any() )
 			->method( 'getFileWidth' )
@@ -156,8 +159,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
-											<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img src="http://image.jpg" alt="" width="400" height="200"/>
 										</noscript>
 										</a>
 									</figure>
@@ -170,18 +173,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Simple infobox with title, image and key-value pair',
 				'mockParams' => [
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
 						'isVideo' => false
 					]
 				]
@@ -284,7 +280,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">test label</h3>
 										<div class="pi-data-value pi-font">test value</div>
@@ -335,7 +333,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<section class="pi-item pi-group pi-border-color">
 									<table class="pi-horizontal-group">
 										<caption
-										class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">Test header</caption>
+										class="pi-secondary-font pi-secondary-background pi-item-spacing"><span class="pi-header">Test header</span></caption>
 										<thead>
 											<tr>
 												<th
@@ -451,25 +449,19 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
 									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="somefile.jpg"  data-image-key="somefile.jpg" data-image-name="somefile.jpg" data-params=\'[{"name":"somefile.jpg", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
 				'description' => 'WikiaMobile: Only image. Image is not small- should render hero.',
 				'mockParams' => [
 					'isMercury' => false,
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 1,
+						'fileName' => 'somefile.jpg',
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
 						'isVideo' => false
 					]
 				]
@@ -501,7 +493,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
 									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="somefile.jpg" data-image-key="somefile.jpg" data-image-name="somefile.jpg" data-params=\'[{"name":"somefile.jpg", "full":"http://image.jpg"}]\'/>
 								</div>
 							</aside>',
 				'description' => 'WikiaMobile: Infobox with full hero module with title with HTML tags',
@@ -509,17 +501,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					'isMercury' => false,
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 44,
+						'fileName' => 'somefile.jpg',
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image'
 					]
 				]
 			],
@@ -543,8 +530,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-item pi-hero">
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
-												<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
 									</figure>
@@ -553,23 +540,12 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Mercury: Only image. Image is not small- should render hero.',
 				'mockParams' => [
 					'extendImageData' => [
-						'alt' => 'image alt',
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'media-type' => 'image',
-						'isVideo' => false,
-						'mercuryComponentAttrs' => json_encode( [
-								'itemContext' => 'portable-infobox',
-								'ref' => 1
-						] )
+						'isVideo' => false
 					]
 				]
 			],
@@ -601,7 +577,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -612,21 +588,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			],
@@ -695,7 +661,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'400\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -706,7 +672,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value 1</div>
 								</div>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 										<div class="pi-data-value pi-font">test value 2</div>
@@ -721,21 +689,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			],
@@ -804,8 +762,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
-												<img src="http://image.jpg" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-12 -12 48 48\' fill=\'%23fff\' width=\'200\' height=\'200\'%3e%3cg fill-rule=\'evenodd\'%3e%3cpath d=\'M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z\'/%3e%3cpath d=\'M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2\'/%3e%3c/g%3e%3c/svg%3e" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="200" height="200"/><noscript>
+												<img src="http://image.jpg" alt="" width="200" height="200"/>
 											</noscript>
 										</a>
 									</figure>
@@ -815,7 +773,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value 1</div>
 								</div>
 								<section class="pi-item pi-group pi-border-color">
-									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-header-wrapper pi-item-spacing">
+										<h2 class="pi-item pi-header pi-secondary-font pi-secondary-background">Test Header</h2>
+									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 										<div class="pi-data-value pi-font">test value 2</div>
@@ -830,21 +790,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 44,
 						'width' => '200',
 						'height' => '200',
-						'originalWidth' => '400',
-						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
-						'media-type' => 'image',
-						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 44
-						] )
 					]
 				]
 			]

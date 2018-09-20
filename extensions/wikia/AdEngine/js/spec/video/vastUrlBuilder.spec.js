@@ -8,6 +8,11 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	var AD_UNIT_QUERY_PARAM = '&iu=',
 		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
 		mocks = {
+			adContext: {
+				get: function () {
+					return false;
+				}
+			},
 			adUnitBuilder: {
 				build: function () {
 					return 'my/ad/unit';
@@ -40,10 +45,11 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 				pos: 'SLOT_NAME'
 			},
 			trackingOptIn: {}
-	};
+		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
+			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,

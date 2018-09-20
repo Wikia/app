@@ -121,7 +121,19 @@ class MercuryApiArticleHandler {
 		}
 
 		try {
-			return F::app()->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()['items'];
+			return array_map(
+				function ( $userDetails ) {
+					if ( AvatarService::isEmptyOrFirstDefault( $userDetails['name'] ) ) {
+						$userDetails['avatar'] = null;
+					}
+
+					return $userDetails;
+				},
+				F::app()
+					->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ), 'size' => AvatarService::AVATAR_SIZE_SMALL_PLUS ] )
+					->getData()['items']
+			);
+
 		} catch ( NotFoundApiException $e ) {
 			// getDetails throws NotFoundApiException when no contributors are found
 			// and we want the article even if we don't have the contributors

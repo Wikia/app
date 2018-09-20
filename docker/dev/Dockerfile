@@ -1,6 +1,6 @@
 # This is a Docker image for  Wikia's MediaWiki app that can be used locally by a developer.
 # Simply mount your app and config repositories clone (refer to README.md)
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:d41d8cd98f00b204e9800998ecf8427e
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c
 
 # install dev dependencies
 

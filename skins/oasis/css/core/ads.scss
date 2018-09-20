@@ -1,4 +1,4 @@
-@import 'extensions/wikia/AdEngine/js/build/bridge.scss';
+@import 'extensions/wikia/AdEngine/dist/bridge.scss';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/transition';
 @import 'layout';
@@ -115,11 +115,6 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 			height: auto;
 			width: 100%;
 		}
-
-		.mobile-porvata .video-player > iframe {
-			// Hide Learn more text
-			z-index: -1;
-		}
 	}
 
 	.wds-community-header {
@@ -129,11 +124,6 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 
 .bfab-template {
 	position: relative;
-
-	.mobile-porvata .video-player > iframe {
-		// Hide Learn more text
-		z-index: -1;
-	}
 }
 
 #TOP_LEADERBOARD {
@@ -185,6 +175,11 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
+		z-index: $wikia-top-ads-index;
+	}
+
+	&.sticky-bfab {
+		width: inherit;
 	}
 
 	overflow: hidden;
