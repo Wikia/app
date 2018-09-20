@@ -60,4 +60,20 @@ Note:
 By default same maintenance tasks cannot be run on the same wiki in parallel.
 In order to allow such behavior (eg. for running same task with different params) you have to implement
 custom `generateCacheKey` method that will return unique key for each setup.
-See example in FounderEmailsMaintenance.php.
+Example:
+
+class DemoMaint extends Maintenance {
+
+  public $param = "Some random param";
+
+  public function __construct() {
+    parent::__construct();
+  }
+
+  public function execute() {
+  }
+
+  public function generateCacheKey() {
+    return parent::generateCacheKey() . '_' . $this->param;
+  }
+}
