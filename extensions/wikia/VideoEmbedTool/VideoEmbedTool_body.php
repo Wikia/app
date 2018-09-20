@@ -221,6 +221,8 @@ class VideoEmbedTool {
 			$nameSanitized = $titleFile->getBaseText();
 			$title = $titleFile;
 
+			$description = trim( urldecode( $wgRequest->getVal( 'description' ) ) );
+
 			$extra = 0;
 			$metadata = array();
 			while( '' != $wgRequest->getVal( 'metadata' . $extra ) ) {
@@ -231,7 +233,7 @@ class VideoEmbedTool {
 			$parts = explode( '/',$provider );
 			$provider = $parts[1];
 			$oTitle = null;
-			$status = $this->uploadVideoAsFile( $provider, $id, $nameSanitized, $oTitle );
+			$status = $this->uploadVideoAsFile( $provider, $id, $nameSanitized, $description, $oTitle );
 			if ( !$status->ok ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					__METHOD__ . '::thumbnail-upload-failed',
@@ -247,12 +249,6 @@ class VideoEmbedTool {
 				return wfMessage( 'wva-thumbnail-upload-failed' )->plain();
 			}
 		}
-
-		$description = trim( urldecode( $wgRequest->getVal( 'description' ) ) );
-
-		// Set the video descriptions
-		$vHelper = new VideoHandlerHelper();
-		$vHelper->setVideoDescription( $oTitle, $description );
 
 		$message = wfMessage( 'vet-single-success' )->plain();
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
@@ -353,11 +349,12 @@ class VideoEmbedTool {
 	 * @param $oTitle
 	 * @return mixed FileRepoStatus or FALSE on error
 	 */
-	private function uploadVideoAsFile( $provider, $videoId, $videoName, &$oTitle ) {
+	private function uploadVideoAsFile( $provider, $videoId, $videoName, $description, &$oTitle ) {
 		$oUploader = new VideoFileUploader();
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $videoName );
+		$oUploader->setDescription( $description );
 
 		return $oUploader->upload( $oTitle );
 	}
