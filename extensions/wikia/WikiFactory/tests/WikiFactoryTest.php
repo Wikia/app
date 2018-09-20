@@ -243,7 +243,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		];
 	}
 
-
 	public function testRenderValueOfVariableWithoutValue() {
 		$variable = new stdClass();
 
