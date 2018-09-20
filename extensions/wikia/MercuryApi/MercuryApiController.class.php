@@ -47,23 +47,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns local navigation data for current wiki
-	 *
-	 * @return array
-	 */
-	private function getNavigation() {
-		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
-
-		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [];
-		} else {
-			$localNavigation = $navData['navigation']['wiki'];
-		}
-
-		return $localNavigation;
-	}
-
-	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
@@ -122,15 +105,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$navigation = $this->getNavigation();
 
-		if ( empty( $navigation ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->notice(
-				'Fallback to empty navigation'
-			);
-		}
-
-		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
@@ -360,6 +335,7 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
 					$data['categories'] = [];
+					$data['languageLinks'] = [];
 					/*
 					 * Categories with empty article doesn't allow us to get details.
 					 * In this case we return mocked data that allows mercury to operate correctly. HTML title etc.
@@ -378,17 +354,21 @@ class MercuryApiController extends WikiaController {
 					// XW-4866 Make all main page content available on mobile to improve SEO.
 					// Temporary solution, should be removed around Q318.
 					if ( !empty( $articleData['content'] ) ) {
-						$data['article'] = $articleData;
+						$data['article']['content'] = $articleData['content'];
+						$data['article']['displayTitle'] = $articleData['displayTitle'];
+						$data['article']['heroImage'] = $articleData['heroImage'];
 						$data['article']['hasPortableInfobox'] = !empty(
-						\Wikia::getProps(
-							$title->getArticleID(),
-							PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME
-						)
+							\Wikia::getProps(
+								$title->getArticleID(),
+								PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME
+							)
 						);
 					}
 				} else {
 					if ( !empty( $articleData['content'] ) ) {
-						$data['article'] = $articleData;
+						$data['article']['content'] = $articleData['content'];
+						$data['article']['displayTitle'] = $articleData['displayTitle'];
+						$data['article']['heroImage'] = $articleData['heroImage'];
 						$data['article']['hasPortableInfobox'] = !empty(
 						\Wikia::getProps(
 							$title->getArticleID(),

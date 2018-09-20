@@ -84,15 +84,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 				wsi: 'olar'
 			},
 			{
-				env: {
-					pageType: 'article',
-					skin: 'oasis',
-					src: 'premium',
-					slotName: 'INCONTENT_PLAYER'
-				},
-				wsi: 'oiap'
-			},
-			{
 				env: {},
 				wsi: 'xxxx'
 			},
@@ -149,12 +140,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					src: 'rec'
 				},
 				wsi: 'xxxr'
-			},
-			{
-				env: {
-					src: 'premium'
-				},
-				wsi: 'xxxp'
 			},
 			{
 				env: {
