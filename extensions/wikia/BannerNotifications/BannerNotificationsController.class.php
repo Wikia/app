@@ -297,6 +297,16 @@ class BannerNotificationsController extends WikiaController {
 	public static function onBeforePageDisplay( \OutputPage $out ): bool {
 		$user = $out->getUser();
 
+		/** @var WebRequest $wgRequest */
+		global $wgRequest;
+		$bannerText = $wgRequest->getVal('bannerText', "Wiki domains will be changing from wikia.com to fandom.com in early 2019. <a href=\"https://community.wikia.com/wiki/User_blog:Brandon_Rhea/Wiki_domains_will_be_changing_from_wikia.com_to_fandom.com_in_early_2019\">Click here</a> if you want to learn more.");
+		$bannerType = $wgRequest->getVal('bannerType', self::CONFIRMATION_NOTIFY);
+
+		self::addConfirmation(
+			$bannerText,
+			$bannerType
+		);
+
 		if ( $user->isLoggedIn() ) {
 			$message = null;
 
