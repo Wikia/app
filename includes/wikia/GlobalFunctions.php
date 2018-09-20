@@ -1503,14 +1503,15 @@ function wfHttpsToHttp( $url ) {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	global $wgWikiaDevDomain, $wgFandomDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
 	}
 
-	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
-		$server = str_replace( ".{$wgDevDomain}", '', $host );
+	if ( $wgDevelEnvironment ) {
+		$server = str_replace( ".{$wgWikiaDevDomain}", '', $host );
+		$server = str_replace( ".{$wgFandomDevDomain}", '', $server );
 	} else {
 		$baseDomain = wfGetBaseDomainForHost( $host );
 
