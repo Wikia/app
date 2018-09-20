@@ -54,22 +54,21 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			enabled: true,
 			host: 'https://services.wikia.com',
 			endpoint: 'bill-the-lizard/predict',
-			timeout: 2000
+			parameters: {
+				device: deviceDetect.getDevice(pageParams),
+				esrb: pageParams.esrb || null,
+				geo: geo.getCountryCode() || null,
+				ref: pageParams.ref || null,
+				s0v: pageParams.s0v || null,
+				s2: pageParams.s2 || null,
+				top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
+				wiki_id: adContext.get('targeting.wikiId') || null,
+				video_id: featuredVideoData.mediaId || null,
+				video_tags: featuredVideoData.videoTags || null
+			},
+			projects: config.projects,
+			timeout: config.timeout || 0
 		});
-		adEngine3.context.set('services.billTheLizard.parameters', {
-			device: deviceDetect.getDevice(pageParams),
-			esrb: pageParams.esrb || null,
-			geo: geo.getCountryCode() || null,
-			ref: pageParams.ref || null,
-			s0v: pageParams.s0v || null,
-			s2: pageParams.s2 || null,
-			top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
-			wiki_id: adContext.get('targeting.wikiId') || null,
-			video_id: featuredVideoData.mediaId || null,
-			video_tags: featuredVideoData.videoTags || null
-		});
-		adEngine3.context.set('services.billTheLizard.projects', config.projects);
-		adEngine3.context.set('services.billTheLizard.timeout', config.timeout || 0);
 
 		if (window.wgServicesExternalDomain) {
 			adEngine3.context.set('services.billTheLizard.host',
