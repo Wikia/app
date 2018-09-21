@@ -1561,12 +1561,13 @@ function wfGetBaseDomainForHost( $host ) {
 function wfDoesURLHaveFandomDomain( $url ): bool {
 	global $wgFandomBaseDomain;
 
+	$host = parse_url( $url, PHP_URL_HOST );
+
 	// e.g. not existing wikis
-	if ( empty( $url ) ) {
+	if ( empty( $host ) ) {
 		return false;
 	}
 
-	$host = parse_url( $url, PHP_URL_HOST );
 	$host = WikiFactory::normalizeHost( $host );
 
 	return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
