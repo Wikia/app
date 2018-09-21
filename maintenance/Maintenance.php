@@ -125,6 +125,11 @@ abstract class Maintenance {
 
 	private $runtimeStatistics = [];
 
+	/**
+	 * Related to $status. Set it to true to disallow running the same task in parallel. See docs for details.
+	 */
+	public $noConcurrency = false;
+
 	public $status = null;
 
 	/**

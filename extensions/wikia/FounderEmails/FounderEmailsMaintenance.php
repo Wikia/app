@@ -18,6 +18,8 @@ class FounderEmailsMaintenance extends Maintenance {
 		'completeDigest'
 	];
 
+	public $noConcurrency = true;
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'event', 'Specifies which type of events to process.', true, true, 'e' );

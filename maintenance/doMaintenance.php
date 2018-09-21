@@ -102,7 +102,7 @@ if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 $maintenance->finalSetup();
 
 // check if specific task is already running (in case k8s will accidentally create two instances of cron job)
-if ( $maintenance->status->isRunning() ) {
+if ( $maintenance->noConcurrency && $maintenance->status->isRunning() ) {
 	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass is already running, aborting." );
 
 	return;
