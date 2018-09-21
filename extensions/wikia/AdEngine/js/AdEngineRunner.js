@@ -153,7 +153,6 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	}
 
 	return {
-		run: run,
-		getTimeout: getTimeout
+		run: run
 	};
 });
