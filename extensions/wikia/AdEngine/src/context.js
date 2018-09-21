@@ -18,7 +18,6 @@ export default {
 		outstream: 'none',
 		uap: 'none',
 	},
-	services: {},
 	slotGroups: {
 		LB: ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 		MR: ['TOP_RIGHT_BOXAD'],
