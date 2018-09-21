@@ -23,20 +23,28 @@ class FounderEmailsMaintenance extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'event', 'Specifies which type of events to process.', true, true, 'e' );
+		$this->addOption( 'dry-run', 'Dry-run mode, make no changes' );
 	}
 
 	public function execute() {
-		$event = $this->getOption( 'event' );
-		if ( in_array( $event, $this->events ) ) {
-			$this->output( "Sending Founder Emails ($event)" . PHP_EOL );
-			FounderEmails::getInstance()->processEvents( $event, false );
+		if ($this->hasOption('dry-run')) {
+			$this->output( "Dry-run mode, no emails will be sent, sleep for 15 seconds!\n" );
+
+			sleep(15);
 		} else {
-			$this->error(
-				sprintf( "Unsupported event type: %s. Supported event types: %s." . PHP_EOL,
-					$event, implode( ', ', $this->events )
-				)
-			);
+			$event = $this->getOption( 'event' );
+			if ( in_array( $event, $this->events ) ) {
+				$this->output( "Sending Founder Emails ($event)" . PHP_EOL );
+				FounderEmails::getInstance()->processEvents( $event, false );
+			} else {
+				$this->error(
+					sprintf( "Unsupported event type: %s. Supported event types: %s." . PHP_EOL,
+						$event, implode( ', ', $this->events )
+					)
+				);
+			}
 		}
+
 	}
 
 	/**
