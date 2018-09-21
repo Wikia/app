@@ -434,9 +434,15 @@ class WikiFactoryLoader {
 			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
-			wfHttpsAllowedForURL( $redirectUrl ) &&
-			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
+		$shouldUseHttps = wfHttpsAllowedForURL( $redirectUrl ) &&
+			(
+				wfDoesURLHaveFandomDomain( $redirectUrl ) ||
+				$wgEnableHTTPSForAnons ||
+				!empty( $_SERVER['HTTP_FASTLY_SSL'] )
+			) &&
+			// don't redirect internal clients
+			!empty( $_SERVER['HTTP_FASTLY_FF'] );
+
 		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
 		if ( $cond1 || $cond2 || $shouldUpgradeToHttps ) {

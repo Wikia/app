@@ -74,11 +74,6 @@ class ConfigureWikiFactory extends Task {
 			'wgEnablePortableInfoboxEuropaTheme' => true,
 			'wgWikiDescription' => $description
 		];
-		global $wgFandomBaseDomain;
-		$host = parse_url( $url, PHP_URL_HOST );
-		if ( wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain ) {
-			$wikiFactoryVariables['wgEnableHTTPSForAnons'] = true;
-		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		// Set wgMetaNamespace
