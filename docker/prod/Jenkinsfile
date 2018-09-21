@@ -9,9 +9,9 @@ def rolloutStatusRes = 1
 def slackChannel = "#mw-prod-deployment"
 
 def render(String template, java.util.LinkedHashMap binding) {
-    def engine = new groovy.text.SimpleTemplateEngine()
+	def engine = new groovy.text.SimpleTemplateEngine()
 
-    return engine.createTemplate(template).make(binding).toString()
+	return engine.createTemplate(template).make(binding).toString()
 }
 
 def messageDetails(int rolloutStatus) {
@@ -29,24 +29,44 @@ def messageDetails(int rolloutStatus) {
 }
 
 node("docker-daemon") {
-    def appBranch = params.app.split('\\.')[0]
-    def configBranch = params.config.split('\\.')[0]
+	def appBranch = params.app.split('\\.')[0]
+	def configBranch = params.config.split('\\.')[0]
+	def buildUser = "Anonymous"
+	def imageExists = false
+	def appHash
+	def configHash
+	def imageTag
 
-    def appHash
-    def configHash
-    def imageExists = false
-    def imageTag
+	stage("Prompt for a version") {
+		def deploymentInfo
 
-    def buildUser = "Anonymous"
+		withDockerContainer(kubectlImage) {
+			deploymentInfo = sh(
+				script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",returnStdout: true
+			)
+		}
 
-    stage("Clone repositories") {
-        wrap([$class: 'BuildUser']) {
-            try {
-                buildUser = "${BUILD_USER}"
-            } catch (MissingPropertyException ex) {
-                buildUser = "Jenkins"
-            }
-        }
+		def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+		def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+
+		if (params.force != true) {
+			timeout(time: 120, unit: 'SECONDS') {
+				userInput = input(
+					id: 'version_check',
+					message: "Updating\napp - ${prevAppVersion} ==> ${appBranch} \nconfig - ${prevConfigVersion} ==> ${configBranch}"
+				)
+			}
+		}
+	}
+
+	stage("Clone repositories") {
+		wrap([$class: 'BuildUser']) {
+			try {
+				buildUser = "${BUILD_USER}"
+			} catch (MissingPropertyException ex) {
+				buildUser = "Jenkins"
+			}
+		}
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
                 branch: appBranch,
