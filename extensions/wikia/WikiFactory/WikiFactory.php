@@ -575,7 +575,7 @@ class WikiFactory {
 		$dbr = static::db( DB_SLAVE );
 
 		$url = parse_url( $wgServer );
-		$server = static::normalizeHost( $url['host'] );
+		$server = wfNormalizeHost( $url['host'] );
 		$where = [
 			$dbr->makeList( [
 				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
@@ -1238,29 +1238,6 @@ class WikiFactory {
 	}
 
 	/**
-	 * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
-	 * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
-	 *
-	 * @param $host
-	 * @return string normalized host name
-	 */
-	public static function normalizeHost( $host ) {
-		global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
-		$baseDomain = wfGetBaseDomainForHost( $host );
-
-		// strip env-specific pre- and suffixes for staging environment
-		$host = preg_replace(
-			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
-			".{$baseDomain}",
-			$host );
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
-			$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
-		}
-		return $host;
-	}
-
-	/**
 	 * getLocalEnvURL
 	 *
 	 * return URL specific to current env:
@@ -1307,7 +1284,7 @@ class WikiFactory {
 
 		$baseDomain = wfGetBaseDomainForHost( $server );
 
-		$server = static::normalizeHost( $server );
+		$server = wfNormalizeHost( $server );
 
 		$wikiaDomainUsed = $fandomDomainUsed = false;
 		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {

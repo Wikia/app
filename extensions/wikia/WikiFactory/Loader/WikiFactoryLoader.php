@@ -439,7 +439,7 @@ class WikiFactoryLoader {
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
 		$cond2 = $this->mAlternativeDomainUsed &&
-			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
+			( $url['host'] != wfNormalizeHost( $this->mOldServerName ) );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&

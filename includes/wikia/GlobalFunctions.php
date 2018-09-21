@@ -1558,3 +1558,26 @@ function wfGetBaseDomainForHost( $host ) {
 
 	return $wgWikiaBaseDomain;
 }
+
+/**
+ * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
+ * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
+ *
+ * @param $host
+ * @return string normalized host name
+ */
+function wfNormalizeHost( $host ) {
+	global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
+	$baseDomain = wfGetBaseDomainForHost( $host );
+
+	// strip env-specific pre- and suffixes for staging environment
+	$host = preg_replace(
+		'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
+		".{$baseDomain}",
+		$host );
+	if ( !empty( $wgDevelEnvironment ) ) {
+		$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
+		$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
+	}
+	return $host;
+}

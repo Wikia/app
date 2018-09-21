@@ -29,15 +29,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $url );
 	}
 
-	/**
-	 * @dataProvider normalizeHostDataProvider
-	 */
-	public function testNormalizeHost( $environment, $host, $expected ) {
-		$this->mockEnvironment( $environment );
-		$url = WikiFactory::normalizeHost( $host );
-		$this->assertEquals( $expected, $url );
-	}
-
 	public function getLocalEnvURLDataProvider() {
 		return [
 			[
@@ -226,21 +217,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function testPrepareUrlToParse( $url, $expected ) {
 		$url = WikiFactory::prepareUrlToParse( $url );
 		$this->assertEquals( $expected, $url );
-	}
-
-	public function normalizeHostDataProvider() {
-		return [
-			[
-				'env' => WIKIA_ENV_DEV,
-				'url' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us',
-				'expected' => 'http://muppet.wikia.com'
-			],
-			[
-				'env' => WIKIA_ENV_DEV,
-				'url' => 'http://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us',
-				'expected' => 'http://muppet.fandom.com'
-			],
-		];
 	}
 
 	public function testRenderValueOfVariableWithoutValue() {
