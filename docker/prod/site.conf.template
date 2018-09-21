@@ -53,7 +53,12 @@ server {
         return 403;
     }
 
-    location ~ [^/]\.php(/|$) {
+    # SUS-5842 rewrite URLs that point to not existing PHP files
+    # they are highly likely wiki articles
+    # e.g. https://scratchpad.wikia.com/wiki/Scratchpad:Parameters_to_index.php
+
+    # known MediaWiki PHP endpoints
+    location ~ ^/(api|health|index|load|extensions/wikia/Tasks/proxy/proxy|redirect-canonical|wikia|wikia-robots-txt)\.php {
         fastcgi_read_timeout ${FASTCGI_READ_TIMEOUT};
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass localhost:9000;
