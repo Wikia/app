@@ -1558,6 +1558,16 @@ function wfGetBaseDomainForHost( $host ) {
 	return $wgWikiaBaseDomain;
 }
 
+/**
+ * Returns true for URLs with fandom domain, some examples:
+ * - https://starwars.fandom.com/wiki/Yoda
+ * - starwars.fandom.com/wiki/Yoda
+ * - starwars.fandom-dev.pl/
+ * - starwars.fandom-dev.us
+ *
+ * @param $url
+ * @return bool
+ */
 function wfDoesURLHaveFandomDomain( $url ): bool {
 	global $wgFandomBaseDomain;
 
