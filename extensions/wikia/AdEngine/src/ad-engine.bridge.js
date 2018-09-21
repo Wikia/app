@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import EventEmitter from 'eventemitter3';
 import {
 	client,
 	context,
@@ -10,17 +10,13 @@ import {
 	utils
 } from '@wikia/ad-engine';
 import {
-	bidders,
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
-	billTheLizard,
 	universalAdPackage,
-	isProperGeo,
 	getSamplingResults,
-	getDfpLabradorKeyvals,
 	utils as adProductsUtils
-} from '@wikia/ad-products';
+} from '@wikia/ad-engine/dist/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
@@ -71,11 +67,6 @@ function init(
 
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
-
-	if (window.wgServicesExternalDomain) {
-		context.set('services.billTheLizard.host',
-			window.wgServicesExternalDomain.replace(/\/$/, ''));
-	}
 
 	legacyContext.addCallback(() => {
 		context.set('slots', getSlotsContext(legacyContext, skin));
@@ -261,8 +252,6 @@ function passSlotEvent(slotName, eventName) {
 }
 
 export {
-	bidders,
-	billTheLizard,
 	init,
 	GptSizeMap,
 	loadCustomAd,
@@ -270,8 +259,5 @@ export {
 	passSlotEvent,
 	context,
 	universalAdPackage,
-	isProperGeo,
-	getSamplingResults,
 	slotService,
-	getDfpLabradorKeyvals,
 };

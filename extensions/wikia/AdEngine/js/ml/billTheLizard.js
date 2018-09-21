@@ -1,33 +1,47 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.billTheLizard', [
+	'ext.wikia.adEngine',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
+	'ext.wikia.adEngine.services',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.trackingOptIn'
-], function (adContext, pageLevelParams, bridge, geo, executor, deviceDetect, instantGlobals, log, trackingOptIn) {
+], function (
+	adEngine3,
+	adContext,
+	pageLevelParams,
+	geo,
+	executor,
+	services,
+	pageInfoTracker,
+	deviceDetect,
+	instantGlobals,
+	log,
+	trackingOptIn
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard',
 		ready = false;
 
-	if (!bridge.billTheLizard) {
+	if (!services.billTheLizard) {
 		return;
 	}
 
 	function setupProjects() {
 		if (adContext.get('targeting.hasFeaturedVideo')) {
-			bridge.billTheLizard.projectsHandler.enable('queen_of_hearts');
+			services.billTheLizard.projectsHandler.enable('queen_of_hearts');
 		}
 	}
 
 	function setupExecutor() {
 		executor.methods.forEach(function (methodName) {
-			bridge.billTheLizard.executor.register(methodName, executor[methodName]);
+			services.billTheLizard.executor.register(methodName, executor[methodName]);
 		});
 	}
 
@@ -36,29 +50,47 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
 			pageParams = pageLevelParams.getPageLevelParams();
 
-		bridge.context.set('services.billTheLizard.parameters', {
-			device: deviceDetect.getDevice(pageParams),
-			esrb: pageParams.esrb || null,
-			geo: geo.getCountryCode() || null,
-			ref: pageParams.ref || null,
-			s0v: pageParams.s0v || null,
-			s2: pageParams.s2 || null,
-			top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
-			wiki_id: adContext.get('targeting.wikiId') || null,
-			video_id: featuredVideoData.mediaId || null,
-			video_tags: featuredVideoData.videoTags || null
+		adEngine3.context.set('services.billTheLizard', {
+			enabled: true,
+			host: 'https://services.wikia.com',
+			endpoint: 'bill-the-lizard/predict',
+			parameters: {
+				queen_of_hearts: {
+					device: deviceDetect.getDevice(pageParams),
+					esrb: pageParams.esrb || null,
+					geo: geo.getCountryCode() || null,
+					ref: pageParams.ref || null,
+					s0v: pageParams.s0v || null,
+					s2: pageParams.s2 || null,
+					top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
+					wiki_id: adContext.get('targeting.wikiId') || null,
+					video_id: featuredVideoData.mediaId || null,
+					video_tags: featuredVideoData.videoTags || null
+				}
+			},
+			projects: config.projects,
+			timeout: config.timeout || 0
 		});
-		bridge.context.set('services.billTheLizard.projects', config.projects);
-		bridge.context.set('services.billTheLizard.timeout', config.timeout || 0);
+
+		if (window.wgServicesExternalDomain) {
+			adEngine3.context.set('services.billTheLizard.host',
+				window.wgServicesExternalDomain.replace(/\/$/, ''));
+		}
 
 		setupProjects();
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			return bridge.billTheLizard.call()
+			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
 					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
+
+					var rabbitPropValue = serialize();
+
+					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
+						pageInfoTracker.trackProp('btl', rabbitPropValue);
+					}
 				}, function () {
 					ready = true;
 					log(['reject'], log.levels.debug, logGroup);
@@ -70,11 +102,13 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		return ready;
 	}
 
+	function serialize() {
+		return services.billTheLizard.serialize();
+	}
+
 	return {
 		call: call,
 		hasResponse: hasResponse,
-		serialize: function () {
-			return bridge.billTheLizard.serialize();
-		}
+		serialize: serialize
 	};
 });

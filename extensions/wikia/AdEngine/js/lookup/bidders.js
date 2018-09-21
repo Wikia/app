@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.bidders', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.bidders',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adEngineBridge, lazyQueue, log) {
+], function (adContext, adEngineBidders, lazyQueue, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.bidders',
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	}
 
 	function isEnabled() {
-		return adContext.get('bidders.prebidAE3');
+		return adContext.get('bidders.prebidAE3') && adContext.get('opts.showAds');
 	}
 
 	function addResponseListener(callback) {
@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	}
 
 	function markAsReady() {
-		if (!biddingCompleted && adEngineBridge.bidders.hasAllResponses()) {
+		if (!biddingCompleted && adEngineBidders.bidders.hasAllResponses()) {
 			biddingCompleted = true;
 			onResponseCallbacks.start();
 		}
@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	function runBidding() {
 		log('A9 and Prebid bidding started:', 'debug', logGroup);
 
-		adEngineBridge.bidders.requestBids({
+		adEngineBidders.bidders.requestBids({
 			responseListener: markAsReady
 		});
 	}
@@ -50,15 +50,15 @@ define('ext.wikia.adEngine.lookup.bidders', [
 
 	return {
 		addResponseListener: addResponseListener,
-		getBidByAdId: adEngineBridge.bidders.prebidHelper.getBidByAdId,
-		getCurrentSlotPrices: adEngineBridge.bidders.getCurrentSlotPrices,
-		getDfpSlotPrices: adEngineBridge.bidders.getDfpSlotPrices,
+		getBidByAdId: adEngineBidders.bidders.prebidHelper.getBidByAdId,
+		getCurrentSlotPrices: adEngineBidders.bidders.getCurrentSlotPrices,
+		getDfpSlotPrices: adEngineBidders.bidders.getDfpSlotPrices,
 		getName: getName,
-		getPrebid: adEngineBridge.bidders.prebidHelper.getPrebid,
-		getWinningVideoBidBySlotName: adEngineBridge.bidders.prebidHelper.getWinningVideoBidBySlotName,
+		getPrebid: adEngineBidders.bidders.prebidHelper.getPrebid,
+		getWinningVideoBidBySlotName: adEngineBidders.bidders.prebidHelper.getWinningVideoBidBySlotName,
 		isEnabled: isEnabled,
 		runBidding: runBidding,
-		updateSlotTargeting: adEngineBridge.bidders.updateSlotTargeting,
+		updateSlotTargeting: adEngineBidders.bidders.updateSlotTargeting,
 		wasCalled: isEnabled
 	};
 });

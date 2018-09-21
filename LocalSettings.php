@@ -138,9 +138,7 @@ $wgServer = WebRequest::detectServer();
  * redirect loops when "pretty URLs" are used.
  * @var bool $wgUsePathInfo
  */
-$wgUsePathInfo = ( strpos(php_sapi_name(), 'cgi') === false ) &&
-        ( strpos(php_sapi_name(), 'apache2filter') === false ) &&
-        ( strpos(php_sapi_name(), 'isapi') === false );
+$wgUsePathInfo = ( php_sapi_name() == 'apache2handler' ) || ( php_sapi_name() == 'fpm-fcgi' ); # Wikia change - SUS-5825
 
 /**
  * Show EXIF data, on by default if available. Requires PHP's EXIF extension.
