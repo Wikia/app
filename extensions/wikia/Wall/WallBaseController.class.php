@@ -499,7 +499,7 @@ class WallBaseController extends WikiaService {
 			$wallMessage->load();
 
 			if ( $wallMessage->isWallOwner( $this->wg->User ) ) {
-				$wallName = wfMessage( 'wall-message-mywall' )->escaped();
+				$wallName = wfMessage( 'wall-message-mywall' )->text();
 			} else {
 
 				$wallOwner = $wallMessage->getWallOwner()->getName();
@@ -509,7 +509,7 @@ class WallBaseController extends WikiaService {
 
 			$wallUrl = $wallMessage->getWallUrl();
 
-			$messageTitle = htmlspecialchars( $wallMessage->getMetaTitle() );
+			$messageTitle = $wallMessage->getMetaTitle();
 			$isRemoved = $wallMessage->isRemove();
 			$isDeleted = $wallMessage->isAdminDelete();
 			$this->response->setVal( 'isRemoved', $isRemoved );
