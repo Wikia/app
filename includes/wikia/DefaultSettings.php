@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
+require_once ( $IP."/maintenance/utils/Status.php" );
 
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
