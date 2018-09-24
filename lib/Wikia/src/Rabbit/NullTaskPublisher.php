@@ -4,6 +4,9 @@ namespace Wikia\Rabbit;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 
+/**
+ * A no-op task publisher implementation that is used if the task broker is disabled.
+ */
 class NullTaskPublisher implements TaskPublisher {
 
 	use Loggable;

@@ -14,6 +14,7 @@ class Queue {
 	const NAME = 'Queue';
 
 	const MAIN_QUEUE_NAME = 'mediawiki_main';
+	const SMW_QUEUE_NAME = 'mediawiki_smw';
 	const RTBF_QUEUE_NAME = 'mediawiki_rtbf';
 
 	private $name;

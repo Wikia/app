@@ -18,7 +18,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var ConnectionManager $rabbitConnectionManager */
 	private $rabbitConnectionManager;
 
-	/** @var AsyncTaskList[] $tasks */
+	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
 	public function __construct( ConnectionManager $rabbitConnectionManager ) {
@@ -52,7 +52,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
 
-			foreach ( $this->tasks as $task ) {
+			while ( $task = array_pop( $this->tasks ) ) {
 				$queue = $task->getQueue()->name();
 				$payload = $task->serialize();
 
