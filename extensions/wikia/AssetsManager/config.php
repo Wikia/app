@@ -2459,5 +2459,14 @@ $config['fandom_com_migration_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
-	]
+	],
+
+/**
+ * We allow logged in users to create account without logging out
+ */
+$config['storage_access_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/SafariStorageAccessPoC/js/SafariStorageAccessPoC.js',
+	],
 ];

@@ -1764,3 +1764,7 @@ if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+if ( !empty( $wgEnableSafariStorageAccessPoC ) ) {
+	include "$IP/extensions/wikia/SafariStorageAccessPoC/SafariStorageAccessPoC.setup.php";
+}

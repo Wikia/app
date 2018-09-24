@@ -8882,3 +8882,11 @@ $wgFandomComMigrationDone = false;
  * when we migrate wikis from .wikia.com to .fandom.com domain.
  */
 $wgEnableResetTrackingPreferencesPage = false;
+
+/**
+ * Enable Safari Storage Access API PoC page
+ * @see PLATFORM-3705
+ * @var bool $wgEnableSafariStorageAccessPoC
+ */
+
+$wgEnableSafariStorageAccessPoC = false;
