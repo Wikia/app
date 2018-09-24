@@ -25,7 +25,7 @@ node("docker-daemon") {
 	def configHash
 	def imageTag
 
-	stage("Prompt for a version") {
+	stage("Log version") {
 		def deploymentInfo
 
 		withDockerContainer(kubectlImage) {
@@ -40,14 +40,7 @@ node("docker-daemon") {
 		def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
 		def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
 
-		if (params.force != true) {
-			timeout(time: 120, unit: 'SECONDS') {
-				userInput = input(
-					id: 'version_check',
-					message: "Updating\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}"
-				)
-			}
-		}
+		println("Updating\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
 	}
 
 	stage("Clone repositories") {
