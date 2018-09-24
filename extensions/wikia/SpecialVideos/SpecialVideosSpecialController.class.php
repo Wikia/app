@@ -37,6 +37,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'specialvideos-page-title' )->text() );
 		$this->getContext()->getOutput()->setHTMLTitle( wfMessage( 'specialvideos-html-title' )->text() );
 
+		// For search engines
+		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
+
 		$helper = new SpecialVideosHelper();
 
 		// Add meta description tag to HTML source
