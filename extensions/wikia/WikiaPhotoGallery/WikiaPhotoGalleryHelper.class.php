@@ -185,6 +185,7 @@ class WikiaPhotoGalleryHelper {
 		$linkAttribs = array(
 			'class' => 'image lightbox',
 			'href' => $url,
+			'rel' => 'nofollow',
 			'title' => $text,
 		);
 

@@ -49,7 +49,7 @@
 			<input class="lightbox-article-input" />
 		</div>
 
-		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
+		<h1><a href="{{fileUrl}}" rel="nofollow">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}

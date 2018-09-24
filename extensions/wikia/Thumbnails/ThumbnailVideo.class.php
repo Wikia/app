@@ -116,6 +116,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
 		$linkAttribs = array(
 			'href' => $videoTitle->getLocalURL(),
+			'rel' => 'nofollow'
 		);
 
 		if ( !empty( $options['id'] ) ) {
