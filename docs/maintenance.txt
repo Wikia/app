@@ -56,7 +56,7 @@ MediaWiki functions, so you can get a DB connection, use the cache, etc.
 For full docs on the Maintenance class, see the auto-generated docs at
 http://svn.wikimedia.org/doc/classMaintenance.html
 
-Note:
+Notes:
 By default we allow running same maintenance tasks on the same wiki in parallel.
 
 In order to disallow such behaviour you have to set $noConcurrency flag to true in specific task.
