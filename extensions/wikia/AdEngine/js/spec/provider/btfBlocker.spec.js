@@ -52,7 +52,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getFakeProvider() {
 		return {
 			config: {
-				atfSlots: [
+				firstCallSlots: [
 					'ATF_SLOT'
 				],
 				highlyViewableSlots: [

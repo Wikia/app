@@ -16,10 +16,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.disableBtf = false;
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
-	var btfQueue = [],
-		btfQueueStarted = false,
-		pendingAtfSlots = [], // ATF slots pending for response
-		fillInSlotCallbacks = {};
+	var secondCallQueue = [],
+		secondCallQueueStarted = false,
+		firstCallSlots = []; // first call slots pending for response
+	var fillInSlotCallbacks = {};
 
 	function disableBtfByMessage(msg) {
 		win.ads.runtime.disableBtf = Boolean(msg.disableBtf);
@@ -30,17 +30,17 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		unblockedSlots.push(slotName);
 	}
 
-	function isBTFDisabledByCreative() {
-		return win.ads.runtime.disableBtf;
+	function isSecondCallEnabled() {
+		return !win.ads.runtime.disableBtf;
 	}
 
 	function decorate(fillInSlot, config) {
 
 		// Update state on each pv on Mercury
 		adContext.addCallback(function () {
-			btfQueue = [];
-			btfQueueStarted = false;
-			pendingAtfSlots = [];
+			secondCallQueue = [];
+			secondCallQueueStarted = false;
+			firstCallSlots = [];
 			win.ads.runtime.disableBtf = false;
 			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
@@ -49,15 +49,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		});
 
 		// as soon as we know that user has adblock, unblock BTF slots
-		win.addEventListener('wikia.blocking', startBtfQueue);
+		win.addEventListener('wikia.blocking', startSecondCallSlots);
 
-		function processBtfSlot(slot) {
-			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
-				config.highlyViewableSlots.map(unblock);
-			}
-
-			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
+		function processSecondCallSlots(slot) {
+			if (unblockedSlots.indexOf(slot.name) > -1 || isSecondCallEnabled()) {
 				log(['Filling slot', slot.name], log.levels.info, logGroup);
 				fillInSlotCallbacks[slot.name](slot);
 				return;
@@ -69,32 +64,55 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 		}
 
-		function startBtfQueue() {
-			log('startBtfQueue', log.levels.info.debug, logGroup);
+		function startSecondCallSlots() {
+			log('startSecondCallSlots', log.levels.info.debug, logGroup);
 
-			if (btfQueueStarted) {
+			if (secondCallQueueStarted) {
 				return;
 			}
 
-			lazyQueue.makeQueue(btfQueue, processBtfSlot);
-			btfQueue.start();
+			lazyQueue.makeQueue(secondCallQueue, processSecondCallSlots);
 
-			btfQueueStarted = true;
+			// highly viewable slots can be unblocked in second call
+			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+				config.highlyViewableSlots
+					.forEach(function(slot) {
+						log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
+					})
+					.map(unblock);
+			}
+
+			// ATF slots are always called in second call if not called in first
+			if (config.atfSlots) {
+				config.atfSlots
+					// remove slot already called in first call
+					.filter(function(slot) {
+						return config.firstCallSlots.indexOf(slot.name) === -1;
+					})
+					// unblock slot
+					.forEach(function(slot) {
+						log(['Filling ATF slot in second call', slot.name], log.levels.info, logGroup);
+						unblock(slot.name(slot));
+					});
+			}
+
+			secondCallQueue.start();
+
+			secondCallQueueStarted = true;
 		}
 
 		function onSlotResponse(slotName) {
 			log(['onSlotResponse', slotName], log.levels.info.debug, logGroup);
 
-			// Remove slot from pendingAtfSlots
-			var index = pendingAtfSlots.indexOf(slotName);
-
+			// Remove slot from firstCallSlots
+			var index = firstCallSlots.indexOf(slotName);
 			if (index > -1) {
-				pendingAtfSlots.splice(index, 1);
+				firstCallSlots.splice(index, 1);
 
-				// If pendingAtfSlots is empty, start BTF slots
-				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
-				if (pendingAtfSlots.length === 0) {
-					startBtfQueue();
+				// If firstCallSlots is empty, start BTF slots
+				log(['remove from firstCallSlots', firstCallSlots, slotName], log.levels.debug, logGroup);
+				if (firstCallSlots.length === 0) {
+					startSecondCallSlots();
 				}
 			}
 		}
@@ -119,9 +137,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			// For the above the fold slot:
-			if (config && config.atfSlots && config.atfSlots.indexOf(slot.name) > -1) {
-				pendingAtfSlots.push(slot.name);
+			// For the first call slot:
+			if (config && config.firstCallSlots && config.firstCallSlots.indexOf(slot.name) > -1) {
+				firstCallSlots.push(slot.name);
 
 				slot.pre('renderEnded', fillInSlotOnResponse);
 				slot.pre('collapse', fillInSlotOnResponse);
@@ -132,9 +150,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			// For the below the fold slot:
+			// For the second call slots:
 			fillInSlotCallbacks[slot.name] = fillInSlot;
-			btfQueue.push(slot);
+			secondCallQueue.push(slot);
 		}
 
 		return fillInSlotWithDelay;
