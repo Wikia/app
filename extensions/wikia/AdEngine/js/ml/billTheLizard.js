@@ -55,16 +55,18 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			host: 'https://services.wikia.com',
 			endpoint: 'bill-the-lizard/predict',
 			parameters: {
-				device: deviceDetect.getDevice(pageParams),
-				esrb: pageParams.esrb || null,
-				geo: geo.getCountryCode() || null,
-				ref: pageParams.ref || null,
-				s0v: pageParams.s0v || null,
-				s2: pageParams.s2 || null,
-				top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
-				wiki_id: adContext.get('targeting.wikiId') || null,
-				video_id: featuredVideoData.mediaId || null,
-				video_tags: featuredVideoData.videoTags || null
+				queen_of_hearts: {
+					device: deviceDetect.getDevice(pageParams),
+					esrb: pageParams.esrb || null,
+					geo: geo.getCountryCode() || null,
+					ref: pageParams.ref || null,
+					s0v: pageParams.s0v || null,
+					s2: pageParams.s2 || null,
+					top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
+					wiki_id: adContext.get('targeting.wikiId') || null,
+					video_id: featuredVideoData.mediaId || null,
+					video_tags: featuredVideoData.videoTags || null
+				}
 			},
 			projects: config.projects,
 			timeout: config.timeout || 0
@@ -79,7 +81,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			return services.billTheLizard.call()
+			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
 					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
