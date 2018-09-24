@@ -6555,6 +6555,18 @@ $wgQueryCacheLimit = 1000;
 $wgQueryPageDefaultLimit = 50;
 
 /**
+ * Hostname of the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitHost
+ */
+$wgRabbitHost = 'prod.rabbit.service.consul';
+
+/**
+ * Port used by the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitPort
+ */
+$wgRabbitPort = 5672;
+
+/**
  * Set to a filename to log rate limiter hits.
  * @var string $wgRateLimitLog
  */
