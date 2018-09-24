@@ -13,7 +13,7 @@ require(['jquery'], function ($) {
 			window.fp.default(fpContainer, {
 				communityName: wikiName,
 				communityId: wgCityId,
-				dbName: wgDBname,
+				dbName: wgDBname
 			});
 		});
 	});
