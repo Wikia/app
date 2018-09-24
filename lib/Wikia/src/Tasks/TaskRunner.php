@@ -23,11 +23,29 @@ class TaskRunner {
 	private $startTime;
 	private $endTime;
 
-	function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
+	/**
+	 * @param \WebRequest $request
+	 * @return self
+	 */
+	static function newFromRequest( \WebRequest $request ) {
+		return new self(
+			$request->getVal('wiki_id'),
+			$request->getVal('task_id'),
+			$request->getVal('task_list'),
+			$request->getVal('call_order'),
+			$request->getVal('created_by')
+		);
+	}
+
+	private function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
 		$createdBy = json_decode( $createdBy, true );
+
+		WikiaLogger::instance()->pushContext( [
+			'task_id' => $this->taskId
+		] );
 
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
@@ -40,7 +58,7 @@ class TaskRunner {
 
 			try {
 				$task->init();
-			} catch ( Exception $e ) {
+			} catch ( \Exception $e ) {
 				$this->exception = $e;
 				break;
 			}
@@ -69,7 +87,7 @@ class TaskRunner {
 
 				if ( preg_match( '/^#([0-9]+)$/', trim( $arg ), $match ) ) {
 					if ( !isset( $this->results[$match[1]] ) ) {
-						throw new InvalidArgumentException;
+						throw new \InvalidArgumentException;
 					}
 
 					$args[$i] = $this->results[$match[1]];
@@ -78,7 +96,7 @@ class TaskRunner {
 
 			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task)."::{$method}"] );
 			$result = $task->execute( $method, $args );
-			if ( $result instanceof Exception ) {
+			if ( $result instanceof \Exception ) {
 				WikiaLogger::instance()->error( 'Exception: ' . $result->getMessage(), [
 					'exception' => $result,
 				] );
@@ -86,7 +104,7 @@ class TaskRunner {
 			WikiaLogger::instance()->popContext();
 			$this->results [] = $result;
 
-			if ( $result instanceof Exception ) {
+			if ( $result instanceof \Exception ) {
 				break;
 			}
 		}
@@ -94,10 +112,7 @@ class TaskRunner {
 		$this->endTime = microtime( true );
 	}
 
-	/**
-	 * @return float
-	 */
-	public function runTime() {
+	public function runTime() : float {
 		return $this->endTime - $this->startTime;
 	}
 
@@ -107,7 +122,7 @@ class TaskRunner {
 		];
 
 		$result = $this->results[count( $this->results ) - 1];
-		if ( $result instanceof Exception ) {
+		if ( $result instanceof \Exception ) {
 			$json->status = 'failure';
 			$json->reason = $result->getMessage();
 		} else {
@@ -115,5 +130,9 @@ class TaskRunner {
 		}
 
 		return $json;
+	}
+
+	public function getTaskId() : string {
+		return $this->taskId;
 	}
 }
