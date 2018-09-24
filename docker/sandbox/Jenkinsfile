@@ -2,7 +2,7 @@
 // 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
 // 2. Setup different ENV variables in Dockerfile-php
 
-def sandbox = "sandbox-sus2"
+def sandbox = params.sandbox_name
 def environment = "sandbox"
 def datacenter = "sjc"
 
@@ -106,6 +106,18 @@ node("docker-daemon") {
 				sh("cp docker/.dockerignore ..")
 
 				sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+
+				// SUS-5853 - temporarily create docker image descriptor
+				def template = sh(script: 'cat docker/sandbox/Dockerfile-php.template', returnStdout: true)
+				def dockerImage = render(template, [
+					'SANDBOX_NAME': sandbox,
+					'SANDBOX_ENVIRONMENT': environment,
+					'SANDBOX_DATACENTER': datacenter
+				])
+
+				sh("""cat > docker/sandbox/Dockerfile-php <<EOL
+${dockerImage}
+EOL""")
 				sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
 
 				sh("docker push $nginxImage:$imageTag")
