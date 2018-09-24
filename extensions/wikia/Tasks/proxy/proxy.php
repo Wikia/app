@@ -43,6 +43,9 @@ $runner = Wikia\Tasks\TaskRunner::newFromRequest( $wgRequest );
 $runner->run();
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
-$resp = new AjaxResponse( json_encode( $runner->format() ) );
-$resp->sendHeaders();
-$resp->printText();
+$response = new AjaxResponse( json_encode( $runner->format() ) );
+
+$response->setContentType('application/json; charset=utf-8');
+$response->sendHeaders();
+
+$response->printText();
