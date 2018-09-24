@@ -12,7 +12,9 @@ namespace Wikia\Tasks;
 use Wikia\Logger\WikiaLogger;
 
 class TaskRunner {
-	const TASK_NOTIFY_TIMEOUT = 120; // number of seconds required before we notify flower of our job status
+	// number of seconds required before we notify flower of our job status
+	// keep in sync with HTTP request timeout in celery-workers
+	const TASK_NOTIFY_TIMEOUT = 120;
 
 	private $taskId;
 	private $taskList = [];
@@ -22,6 +24,7 @@ class TaskRunner {
 	private $exception;
 	private $startTime;
 	private $endTime;
+	private $createdAt;
 
 	/**
 	 * @param \WebRequest $request
@@ -29,19 +32,21 @@ class TaskRunner {
 	 */
 	static function newFromRequest( \WebRequest $request ) {
 		return new self(
-			$request->getVal('wiki_id'),
+			$request->getInt('wiki_id'),
 			$request->getVal('task_id'),
 			$request->getVal('task_list'),
 			$request->getVal('call_order'),
-			$request->getVal('created_by')
+			$request->getVal('created_by'),
+			$request->getVal('created_at')
 		);
 	}
 
-	private function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
+	private function __construct( int $wikiId, $taskId, $taskList, $callOrder, $createdBy, float $createdAt ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
 		$createdBy = json_decode( $createdBy, true );
+		$this->createdAt = $createdAt;
 
 		WikiaLogger::instance()->pushContext( [
 			'task_id' => $this->taskId
@@ -110,6 +115,33 @@ class TaskRunner {
 		}
 
 		$this->endTime = microtime( true );
+
+		// TODO: push tasks metrics to InfluxDB
+		WikiaLogger::instance()->info( __METHOD__ . '::completed', [
+			'took' => $this->runTime(),
+			'delay' => microtime( true ) - $this->createdAt,
+			'state' => $this->format()->status,
+		] );
+
+		// notify Flower about tasks that take longer to execute then
+		// HTTP timeout set in celery-workers
+		// Flower will first report a failure (due to HTTP timeout), let's update him
+		global $wgFlowerUrl;
+
+		if ($this->runTime() > self::TASK_NOTIFY_TIMEOUT) {
+			$result = $this->format();
+
+			\Http::post( "{$wgFlowerUrl}/api/task/status/{$this->getTaskId()}", [
+				'noProxy' => true,
+				'postData' => json_encode( [
+					'kwargs' => [
+						'completed' => time(),
+						'state' => $result->status,
+						'result' => ( $result->status == 'success' ? $result->retval : $result->reason ),
+					],
+				] ),
+			] );
+		}
 	}
 
 	public function runTime() : float {

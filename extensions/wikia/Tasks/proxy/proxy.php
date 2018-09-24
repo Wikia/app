@@ -38,30 +38,8 @@ putenv('MW_INSTALL_PATH=' . $IP);
 
 require ( $IP . '/includes/WebStart.php' );
 
-#var_dump($wgCityId, $_POST, $wgRequest, \Wikia\Tracer\WikiaTracer::instance()->getEnvVariables());
-
+// finally, execute the task
 $runner = Wikia\Tasks\TaskRunner::newFromRequest( $wgRequest );
 $runner->run();
 
-$result = $runner->format();
-
-if ($runner->runTime() > Wikia\Tasks\TaskRunner::TASK_NOTIFY_TIMEOUT) {
-	Http::post( "{$wgFlowerUrl}/api/task/status/{$runner->getTaskId()}", [
-		'noProxy' => true,
-		'postData' => json_encode( [
-			'kwargs' => [
-				'completed' => time(),
-				'state' => $result->status,
-				'result' => ( $result->status == 'success' ? $result->retval : $result->reason ),
-			],
-		] ),
-	] );
-}
-
-Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-	'took' => $runner->runTime(),
-	'delay' => microtime( true ) - (float) $wgRequest->getVal('created_at'),
-	'state' => $result->status,
-] );
-
-echo json_encode( $result );
+echo json_encode( $runner->format() );
