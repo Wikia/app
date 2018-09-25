@@ -20,12 +20,11 @@ $GLOBALS['wgAutoloadClasses']['UpdateFounderProgressTask'] = __DIR__ . '/UpdateF
 $wgExtensionMessagesFiles['FounderProgressBar'] =__DIR__ . '/FounderProgressBar.i18n.php';
 
 // Hooks
-$GLOBALS['wgHooks']['ArticleSaveComplete'][] = 'FounderProgressBarHooks::onArticleSaveComplete';
-$GLOBALS['wgHooks']['UploadComplete'][] = 'FounderProgressBarHooks::onUploadComplete';
-$GLOBALS['wgHooks']['UploadWordmarkComplete'][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
-$GLOBALS['wgHooks']['AddNewAccount'][] = 'FounderProgressBarHooks::onAddNewAccount';
-$GLOBALS['wgHooks']['AfterVideoFileUploaderUpload'][] = 'FounderProgressBarHooks::onAfterVideoFileUploaderUpload';
+$GLOBALS['wgHooks']['ArticleSaveComplete'][] = 'FounderProgressBarHooks::ArticleSaveComplete';
+$GLOBALS['wgHooks']['UploadComplete'][] = 'FounderProgressBarHooks::UploadComplete';
+$GLOBALS['wgHooks']['UploadWordmarkComplete'][] = 'FounderProgressBarHooks::UploadWordmarkComplete';
+$GLOBALS['wgHooks']['AddNewAccount'][] = 'FounderProgressBarHooks::AddNewAccount';
+$GLOBALS['wgHooks']['AfterVideoFileUploaderUpload'][] = 'FounderProgressBarHooks::AfterVideoFileUploaderUpload';
 
 // On wiki creation or WikiFactory enable add db columns
-$GLOBALS['wgHooks']['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::onWikiCreation";
-
+$GLOBALS['wgHooks']['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::WikiCreation";
