@@ -95,61 +95,15 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getDevDomain() {
-		global $wgDevDomain, $wgDevelEnvironment;
-		if ( !$wgDevelEnvironment || empty( $wgDevDomain ) ) {
-			return false;
-		}
-
-		return $wgDevDomain;
-	}
-
-	/**
-	 * Function will substitute primary domain in the given url to the domain given (or current)
-	 * wiki is setup for (i.e. wikia.com or fandom.com). This will allow to have proper domains in the urls when
-	 * link is stored as .wiki.com but the wiki is running on other domain.
-	 *
-	 * @example https://www.wikia.com/signin -> https://www.fandom.com/signin
-	 *
-	 * @param $url string source url to be updated
-	 * @return string final url with base domain substituted (or original url in case of some errors)
-	 */
-	public function useWikiBaseDomainInUrl( $url ) {
-		global $wgWikiaBaseDomainRegex, $wgServer;
-
-		$urlParts = [];
-		$cityUrlParts = [];
-		if (
-			preg_match( '/' . $wgWikiaBaseDomainRegex . '/', $url, $urlParts ) === 0 ||
-			preg_match( '/'. $wgWikiaBaseDomainRegex . '/', $wgServer, $cityUrlParts ) === 0 ||
-			$urlParts[1] === $cityUrlParts[1]
-		) {
-			return $url;
-		}
-
-		$count = 0;
-		$devDomain = $this->getDevDomain();
-
-		if ( $devDomain ) {
-			$finalUrl = preg_replace( '/[^.]+\.' . $wgWikiaBaseDomainRegex . '/', $devDomain, $url, 1, $count );
-		} else {
-			$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1, $count );
-		}
-
-		if ( $finalUrl == null || $count !== 1 ) {
-			return $url;
-		}
-
-		return $finalUrl;
-	}
-
 	private function getHref( $hrefKey, $protocolRelative = false, $useWikiBaseDomain = false ) {
+		global $wgServer;
+
 		$url = DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 		if ( $useWikiBaseDomain ) {
-			$url = $this->useWikiBaseDomainInUrl( $url );
+			$url = wfForceBaseDomain( $url, $wgServer );
 		}
 		return $url;
 	}

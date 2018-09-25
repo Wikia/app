@@ -1581,3 +1581,41 @@ function wfNormalizeHost( $host ) {
 	}
 	return $host;
 }
+
+/**
+ * @param $url string full string to be modified
+ * @param $targetServer string host which will be used as na replacement (i.e. $wgServer)
+ * @return string modified string if successful or original url in case of some failure
+ * @throws Exception
+ */
+function wfForceBaseDomain( $url, $targetServer ) {
+	global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+
+	$urlHost = parse_url( $url, PHP_URL_HOST );
+	$targetHost = parse_url( $targetServer, PHP_URL_HOST );
+
+	if ( $urlHost === false || $targetHost === false ) {
+		return $url;
+	}
+
+	$normalizedUrlHost = wfNormalizeHost( $urlHost );
+	$urlBaseDomain = wfGetBaseDomainForHost( $normalizedUrlHost );
+	$targetBaseDomain = wfGetBaseDomainForHost( wfNormalizeHost( $targetHost ) );
+	if ( $urlBaseDomain === $targetBaseDomain ) {
+		return $url;
+	}
+
+	$count = 0;
+	if ( $targetBaseDomain === $wgFandomBaseDomain ) {
+		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+	} else {
+		$finalHost = str_replace(".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count);
+	}
+
+	if ( $count !== 1 ) {
+		return $url;
+	}
+
+	$finalUrl = http_build_url( $url, [ 'host' => $finalHost, ] );
+	return WikiFactory::getLocalEnvURL( $finalUrl );
+}
