@@ -40,7 +40,7 @@ class FandomCreatorApi {
 	}
 
 	public function getSitemap( $communityId ) {
-		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$communityId}/sitemap" );
+		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$communityId}/navigation" );
 		if ( !$response->status->isOK() ) {
 			return null;
 		}
