@@ -1,12 +1,46 @@
 <html>
 <head>
     <script>
-        function onSyncCookies() {
-            alert('well, not yet');
+        function syncCookies() {
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', '{{sessionUrl}}');
+            xmlHttpRequest.setRequestHeader('X-Wikia-AutoLogin', '1');
+            xmlHttpRequest.withCredentials = true;
+            if (window.parent !== window) {
+                xmlHttpRequest.onreadystatechange = function () {
+                    if (xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
+                        // In iframes, the Referer header will always be the URL
+                        if (xmlHttpRequest.status === 200) {
+                            {{> login_done_js}}
+                        } else {
+                            window.parent.postMessage('is_anon', document.referrer);
+                        }
+                    }
+                };
+            }
+            xmlHttpRequest.send();
+        };
+
+        function onSyncAccessTokenCookie() {
+            if (document.requestStorageAccess) {
+                var promise = document.requestStorageAccess();
+                promise.then(
+                    function () {
+                        alert('Debug: storage access granted!');
+                        syncCookies();
+                    },
+                    function () {
+                        alert('Debug: storage access denied!');
+                    }
+                );
+            } else {
+                syncCookies();
+            }
         }
     </script>
 </head>
 <body>
-<button onClick="onSyncCookies();">Sync the cookie!</button>
+<p>Hi from the syncing iframe</p>
+<button onClick="onSyncAccessTokenCookie();">Sync the access token cookie!</button>
 </body>
 </html>

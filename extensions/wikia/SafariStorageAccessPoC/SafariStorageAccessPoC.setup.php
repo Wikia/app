@@ -18,6 +18,11 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SafariStorageAccessPoCController'] =  $dir . 'SafariStorageAccessPoCController.class.php';
 
 /**
+ * Hooks
+ */
+$wgHooks['WikiaSkinTopScripts'][] = 'SafariStorageAccessPoCController::addSafariPoCVars';
+
+/**
 * special pages
 */
 $wgSpecialPages['SafariStorageAccessPoC'] = 'SafariStorageAccessPoCController';

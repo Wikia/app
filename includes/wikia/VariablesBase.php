@@ -8890,3 +8890,5 @@ $wgEnableResetTrackingPreferencesPage = false;
  */
 
 $wgEnableSafariStorageAccessPoC = false;
+$wgSafariStorageAccessPoCPassiveSync = false;
+

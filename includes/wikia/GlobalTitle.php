@@ -916,9 +916,14 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
+		global $wgWikiaDevDomain;
 		$baseKey = 'globaltitlev1';
 		if ( $this->usingHTTPS() ) {
 			$baseKey .= ':https';
+		}
+		// don't share cross-wikis links on devboxes for this PoC
+		if ( !empty( $wgWikiaDevDomain ) ) {
+			$baseKey .= $wgWikiaDevDomain;
 		}
 		return wfSharedMemcKey( $baseKey, $this->mCityId );
 	}

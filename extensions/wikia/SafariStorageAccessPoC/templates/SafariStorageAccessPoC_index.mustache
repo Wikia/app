@@ -1,9 +1,3 @@
-{{#showSetCookieButton}}
-    <button onClick="SafariStorageAccessPoC.setTestCookie('{{cookieName}}', '{{cookieDomain}}', '{{cookieExpires}}');">Set test cookie</button>
-{{/showSetCookieButton}}
-{{#showSyncFrame}}
-    <iframe src="{{frameUrl}}" />
-{{/showSyncFrame}}
-{{#cookieSet}}
-    <p>Cookie <b>{{cookieName}}</b> is set on this domain!</p>
-{{/cookieSet}}
+{{^isAnon}}
+    <p>You are logged in, nothing to do here :)</p>
+{{/isAnon}}
