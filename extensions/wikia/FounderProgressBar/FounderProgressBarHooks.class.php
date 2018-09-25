@@ -264,6 +264,6 @@ class FounderProgressBarHooks {
 			self::$instance = new self( new FounderProgressBarModel() );
 		}
 
-		return call_user_func_array( [ self::$instance, $name ], $arguments );
+		return call_user_func_array( [ self::$instance, "on$name" ], $arguments );
 	}
 }
