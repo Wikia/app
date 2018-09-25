@@ -109,7 +109,7 @@ abstract class Maintenance {
 	// Generic options which might or not be supported by the script
 	private $mDependantParameters = array();
 
-	// Used by getDD() / setDB()
+	// Used by getDB() / setDB()
 	private $mDb = null;
 
 	// Wikia change
@@ -124,6 +124,13 @@ abstract class Maintenance {
 	protected static $mCoreScripts = null;
 
 	private $runtimeStatistics = [];
+
+	/**
+	 * Related to $status. Set it to true to disallow running the same task in parallel. See docs for details.
+	 */
+	public $noConcurrency = false;
+
+	public $status = null;
 
 	/**
 	 * Default constructor. Children should call this *first* if implementing
@@ -289,6 +296,22 @@ abstract class Maintenance {
 	 */
 	public function getName() {
 		return $this->mSelf;
+	}
+
+	/**
+	 * Generates cache key used in MaintenanceStatus class.
+	 *
+	 * We're relying on cache key in order to block concurrent execution of the same script in the context
+	 * of the same wiki.
+	 *
+	 * Having script's name as cache key is suitable in most cases, however there might be situations, where certain
+	 * scripts can be run in parallel with different parameters. In such case it's necessary to override this method
+	 * in specific task's class.
+	 *
+	 * @return String
+	 */
+	public function generateCacheKey() {
+		return $this->getName();
 	}
 
 	/**
@@ -885,6 +908,10 @@ abstract class Maintenance {
 		}
 		# Same with these
 		$wgCommandLineMode = true;
+
+		# MaintenanceStatus comes from a separate file (listed in AutoLoader.php) and we need to set it
+		# here as `finalSetup` is called after AutoLoader is included.
+		$this->status = new MaintenanceStatus( $this->generateCacheKey() );
 
 		// Wikia change
 		$this->mLogger = Wikia\Logger\WikiaLogger::instance();

@@ -27,7 +27,7 @@ args: # required
 
 ```
 
-To generate YAML for ALL cron jobs (except ones that start with 'example'):
+To generate YAML for ALL cron jobs (except ones from 'examples' directory):
 
 ```sh
 ./cronjobs-generator.sh
@@ -36,7 +36,7 @@ To generate YAML for ALL cron jobs (except ones that start with 'example'):
 
 ### Applying YAML files
 
-> [Set up `kubectl`](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/208011308/Kubernetes+access+for+Engineers)
+> [Set up `kubectl`](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/401440847/Kubernetes+access+for+Engineers)
 
 In order to apply descriptor you need to map directory with YAML files to kubectl container.
 
