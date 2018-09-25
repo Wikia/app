@@ -1,0 +1,67 @@
+# To satisfy integrity constraints
+city_list:
+  - city_id: 1
+    city_url: http://unittest.wikia.com
+    city_sitename: wikia
+    city_vertical: 5 # Lifestyle
+    city_cluster: c1
+    city_dbname: unittest
+  - city_id: 2
+    city_url: http://memory-alpha.wikia.com
+    city_sitename: memory-alpha
+    city_vertical: 5 # Lifestyle
+    city_cluster: c2
+    city_dbname: memoryalpha
+  - city_id: 3
+    city_url: http://fandom.wikia.com
+    city_sitename: Fandom
+    city_vertical: 0
+    city_cluster: c3
+    city_dbname: fandom
+founder_progress_bar_tasks:
+  - wiki_id: 1
+    task_id: 510 # FT_BONUS_PHOTO_ADD_10
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+  - wiki_id: 1
+    task_id: 520 # FT_BONUS_PAGE_ADD_5
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+  - wiki_id: 1
+    task_id: 540 # FT_BONUS_EDIT_50
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+  - wiki_id: 2
+    task_id: 10 # FT_PAGE_ADD_10
+    task_count: 10
+    task_completed: 1
+    task_skipped: 0
+  - wiki_id: 2
+    task_id: 20 # FT_THEMEDESIGNER_VISIT
+    task_count: 1
+    task_completed: 1
+    task_skipped: 0
+  - wiki_id: 2
+    task_id: 30 # FT_MAINPAGE_EDIT
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+  - wiki_id: 3
+    task_id: 10 # FT_PAGE_ADD_10
+    task_count: 10
+    task_completed: 1
+    task_skipped: 0
+  - wiki_id: 3
+    task_id: 20 # FT_THEMEDESIGNER_VISIT
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+  - wiki_id: 3
+    task_id: 30 # FT_MAINPAGE_EDIT
+    task_count: 0
+    task_completed: 0
+    task_skipped: 0
+
