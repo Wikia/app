@@ -140,15 +140,13 @@
 				requestParameters = [],
 				p,
 				params,
-				userId = -1,
-				wikiVariables = M && M.getFromHeadDataStore && M.getFromHeadDataStore('wikiVariables'),
-				trackingDimensions = M && M.getFromHeadDataStore && M.getFromHeadDataStore('trackingDimensions');
-
-			if (isOptedIn) {
-				userId = window.wgTrackID
-					|| (M && M.getFromHeadDataStore && parseInt(M.getFromHeadDataStore('userId'), 10))
-					|| 0;
-			}
+				userId = isOptedIn ? (
+					window.wgTrackID
+					|| ( M && M.getFromHeadDataStore && parseInt( M.getFromHeadDataStore( 'userId' ), 10 ) )
+					|| 0
+				) : -1,
+				wikiVariables = M && M.getFromHeadDataStore && M.getFromHeadDataStore( 'wikiVariables' ) || {},
+				trackingDimensions = M && M.getFromHeadDataStore && M.getFromHeadDataStore( 'trackingDimensions' ) || [];
 
 			timeout = timeout || 3000;
 
@@ -165,13 +163,13 @@
 
 			// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 			params = {
-				'c': window.wgCityId || (wikiVariables && wikiVariables.id),
-				'x': window.wgDBname || (wikiVariables && wikiVariables.dbName),
-				'a': window.wgArticleId || (trackingDimensions && trackingDimensions[21]),
-				'lc': window.wgContentLanguage || (wikiVariables && wikiVariables.language.content),
-				'n': window.wgNamespaceNumber || (trackingDimensions && trackingDimensions[25]),
+				'c': window.wgCityId || wikiVariables.id,
+				'x': window.wgDBname || wikiVariables.dbName,
+				'a': window.wgArticleId || trackingDimensions[ 21 ],
+				'lc': window.wgContentLanguage || wikiVariables.language.content,
+				'n': window.wgNamespaceNumber || trackingDimensions[ 25 ],
 				'u': userId,
-				's': window.skin || (data && data.kv_skin) || (trackingDimensions && trackingDimensions[4]),
+				's': window.skin || trackingDimensions[ 4 ],
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 ),
 				'pv_unique_id': window.pvUID
