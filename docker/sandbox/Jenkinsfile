@@ -3,8 +3,8 @@
 // 2. Setup different ENV variables in Dockerfile-php
 
 def sandbox = params.sandbox_name
+def datacenter = params.datacenter
 def environment = "sandbox"
-def datacenter = "sjc"
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -30,7 +30,7 @@ node("docker-daemon") {
 
 		withDockerContainer(kubectlImage) {
 			deploymentInfo = sh(
-				script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-" +
+				script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
 				sandbox
 				+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
 				returnStdout: true
@@ -152,8 +152,8 @@ EOL""")
 		}
 
 		withDockerContainer(kubectlImage) {
-			sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
+			sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
 		}
 	}
 
