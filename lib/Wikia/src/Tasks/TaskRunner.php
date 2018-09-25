@@ -52,6 +52,17 @@ class TaskRunner {
 			'task_id' => $this->taskId
 		] );
 
+		// make sure tasks use a dedicated database user
+		// port of PLATFORM-2025 change from Maintenance.php
+		global $wgLBFactoryConf, $wgDBtasksuser, $wgDBtaskspass;
+
+		if ( isset( $wgLBFactoryConf['serverTemplate'] ) ) {
+			$wgLBFactoryConf['serverTemplate']['user'] = $wgDBtasksuser;
+			$wgLBFactoryConf['serverTemplate']['password'] = $wgDBtaskspass;
+
+			\LBFactory::destroyInstance();
+		}
+
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
