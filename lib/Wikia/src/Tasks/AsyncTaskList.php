@@ -266,7 +266,7 @@ class AsyncTaskList {
 		];
 
 		// we want to use k8s on a percentage of all communities, so we need a global value for that percentage
-		$percentOfTasksOnKubernetes = \WikiFactory::getVarByName("wgPercentOfTasksOnKubernetes", static::DEFAULT_WIKI_ID );
+		$percentOfTasksOnKubernetes = \WikiFactory::getVarValueByName("wgPercentOfTasksOnKubernetes", static::DEFAULT_WIKI_ID );
 		
 		$shouldGoToKubernetes = $wgProcessTasksOnKubernetes
 			|| ( $percentOfTasksOnKubernetes && $this->wikiId % 100 < $percentOfTasksOnKubernetes );
