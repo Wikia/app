@@ -8890,5 +8890,5 @@ $wgEnableResetTrackingPreferencesPage = false;
  */
 
 $wgEnableSafariStorageAccessPoC = false;
-$wgSafariStorageAccessPoCPassiveSync = false;
+$wgSafariStorageAccessPoCPassiveSync = true;	// skip the button, just sync the cookies...
 
