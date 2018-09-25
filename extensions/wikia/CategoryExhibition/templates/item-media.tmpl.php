@@ -7,6 +7,7 @@
 			   data-ref="<?= Sanitizer::encodeAttribute( $row['data-ref'] ); ?>"
 			   class="<?= Sanitizer::encodeAttribute( $row['class'] ); ?>"
 			   title="<?= Sanitizer::encodeAttribute( $row['title'] ); ?>"
+			   rel="nofollow"
 			>
 				<? if ( $row['isVideo'] == true ): ?>
 					<span class="thumbnail-play-icon-container">
@@ -35,7 +36,8 @@
 	<div class="title">
 		<a href="<?= Sanitizer::encodeAttribute( $row['url'] ); ?>"
 		   class="<?= Sanitizer::encodeAttribute( $row['class'] ); ?>"
-		   title="<?= Sanitizer::encodeAttribute( $row['title'] ); ?>">
+		   title="<?= Sanitizer::encodeAttribute( $row['title'] ); ?>"
+		   rel="nofollow">
 			<?= htmlspecialchars( $row['title'] ); ?>
 		</a>
 	</div>

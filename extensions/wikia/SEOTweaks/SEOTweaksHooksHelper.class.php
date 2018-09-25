@@ -158,7 +158,7 @@ class SEOTweaksHooksHelper {
 
 		$ns = MWNamespace::getSubject( $title->getNamespace() );
 
-		if ( in_array( $ns, [ NS_MEDIAWIKI, NS_TEMPLATE ] ) ) {
+		if ( in_array( $ns, [ NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE ] ) ) {
 			$policy = [
 				'index' => 'noindex',
 				'follow' => 'follow'
