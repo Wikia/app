@@ -129,6 +129,7 @@ $GLOBALS['wgHooks']['BlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
 $GLOBALS['wgHooks']['UnBlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
 
 $GLOBALS['wgHooks']['CategoryViewer::beforeCategoryData'][] = 'WallHooksHelper::onBeforeCategoryData';
+$GLOBALS['wgHooks']['CategoryPage3::beforeCategoryData'][] = 'WallHooksHelper::onBeforeCategoryData';
 
 $GLOBALS['wgHooks']['GetRailModuleSpecialPageList'][] = 'WallHooksHelper::onGetRailModuleSpecialPageList';
 $GLOBALS['wgHooks']['SpecialWikiActivityExecute'][] = 'WallHooksHelper::onSpecialWikiActivityExecute';
