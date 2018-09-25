@@ -12,7 +12,7 @@
 		</span>
 	</div>
 	<div id="googleConnectPreferences">
-		<p><?= wfMessage( 'fbconnect-disconnect-account-link' )->parse(); ?></p>
-		<iframe src="http://www.wikia.com/google-connect"></iframe>
+		<p><?= wfMessage( 'google-convert' )->escaped(); ?></p>
+		<iframe src="<?= $googleConnectAuthUrl; ?>"></iframe>
 	</div>
 </div>

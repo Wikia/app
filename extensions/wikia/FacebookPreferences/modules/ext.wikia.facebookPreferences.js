@@ -116,6 +116,10 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 		return dfd;
 	}
 
+	function redirectTo(url) {
+		window.location.href = url;
+	}
+
 	$(function () {
 		$('#facebook-connect-button').on('click', function (event) {
 			event.preventDefault();
@@ -140,8 +144,8 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 	window.addEventListener('message', function (event) {
 		var data = JSON.parse(event.data);
 
-		if (data && data.externalAuth && data.externalAuth.redirect) {
-			window.location.href = data.externalAuth.redirect;
+		if (data && data.externalAuth && data.externalAuth.redirectUrl) {
+			redirectTo(data.externalAuth.redirectUrl);
 		}
 	});
 });

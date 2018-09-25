@@ -19,13 +19,15 @@ class FacebookPreferencesModuleService extends WikiaService {
 	}
 
 	public function renderFacebookPreferences() {
-		global $fbAppId;
+		global $fbAppId, $wgServer;
 
 		$context = $this->getContext();
 		$out = $context->getOutput();
 
 		$out->addJsConfigVars( 'fbAppId', $fbAppId );
 		$out->addModules( 'ext.wikia.facebookPreferences' );
+
+		$this->setVal( 'googleConnectAuthUrl', WikiFactory::getLocalEnvURL( 'https://www.wikia.com/google-connect' ) );
 
 		try {
 			$user = $context->getUser();
