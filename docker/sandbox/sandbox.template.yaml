@@ -166,7 +166,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-    - host: "${SANDBOX_NAME}.wikia.com"
+    - host: "${SANDBOX_NAME}.wikia.com", "${SANDBOX_NAME}.fandom.com"
       http:
         paths:
           - path: /
