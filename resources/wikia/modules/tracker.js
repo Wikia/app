@@ -142,11 +142,11 @@
 				params,
 				userId = isOptedIn ? (
 					window.wgTrackID
-					|| ( M && M.getFromHeadDataStore && parseInt( M.getFromHeadDataStore( 'userId' ), 10 ) )
+					|| ( window.M && window.M.getFromHeadDataStore && parseInt( window.M.getFromHeadDataStore( 'userId' ), 10 ) )
 					|| 0
 				) : -1,
-				wikiVariables = M && M.getFromHeadDataStore && M.getFromHeadDataStore( 'wikiVariables' ) || {},
-				trackingDimensions = M && M.getFromHeadDataStore && M.getFromHeadDataStore( 'trackingDimensions' ) || [];
+				wikiVariables = window.M && window.M.getFromHeadDataStore && window.M.getFromHeadDataStore( 'wikiVariables' ) || {},
+				trackingDimensions = window.M && window.M.getFromHeadDataStore && window.M.getFromHeadDataStore( 'trackingDimensions' ) || [];
 
 			timeout = timeout || 3000;
 
