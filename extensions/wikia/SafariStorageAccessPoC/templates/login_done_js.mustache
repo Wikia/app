@@ -1,7 +1,8 @@
-window.parent.postMessage('poc_auth_worked', document.referrer);
-
 // set cookie to stop rendering this iframe
 var d = new Date();
 d.setTime(d.getTime() + (31536000*1000));
 var expires = "expires="+ d.toUTCString();
 window.document.cookie =  "autologin_done=1;" + expires + ";path=/; domain=.wikia-dev.pl";
+
+// let the main window know about the success, reload the page
+window.parent.postMessage('poc_auth_worked', document.referrer);
