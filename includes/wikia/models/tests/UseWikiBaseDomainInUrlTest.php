@@ -41,9 +41,21 @@ class UseWikiBaseDomainInUrlTest extends WikiaBaseTest {
 				'https://www.wladek.wikia-dev.pl/signin'
 			],
 			[
+				'https://muppet.wladek.wikia-dev.pl',
+				'wladek.wikia-dev.pl',
+				'https://www.wladek.wikia-dev.pl/signin',
+				'https://www.wladek.wikia-dev.pl/signin'
+			],
+			[
 				'https://muppet.wladek.fandom-dev.pl',
 				'wladek.fandom-dev.pl',
 				'https://www.wikia.com/signin',
+				'https://www.wladek.fandom-dev.pl/signin'
+			],
+			[
+				'https://muppet.wladek.fandom-dev.pl',
+				'wladek.fandom-dev.pl',
+				'https://www.wladek.wikia-dev.pl/signin',
 				'https://www.wladek.fandom-dev.pl/signin'
 			],
 			[

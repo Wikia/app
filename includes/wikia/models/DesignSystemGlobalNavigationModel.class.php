@@ -131,7 +131,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$devDomain = $this->getDevDomain();
 
 		if ( $devDomain ) {
-			$finalUrl = preg_replace( '/' . $wgWikiaBaseDomainRegex . '/', $devDomain, $url, 1, $count );
+			$finalUrl = preg_replace( '/[^.]+\.' . $wgWikiaBaseDomainRegex . '/', $devDomain, $url, 1, $count );
 		} else {
 			$finalUrl = preg_replace( '/' . $urlParts[1] . '/', $cityUrlParts[1], $url, 1, $count );
 		}
