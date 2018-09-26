@@ -128,7 +128,6 @@ class WikiFactoryLoader {
       if ( ! $wgCommandLineMode ) {
       print_r( $this->mServerName );
       print_r( $wgWikiaBaseDomain );
-      die( __FILE__ . __LINE__ );
       }
       
 
@@ -145,6 +144,13 @@ class WikiFactoryLoader {
 				break;
 			}
 		}
+      if ( ! $wgCommandLineMode ) {
+      echo "/";
+      print_r( $this->mServerName );
+      print_r( $wgWikiaBaseDomain );
+      die();
+      }
+      
 
 		WikiFactory::isUsed( true );
 
