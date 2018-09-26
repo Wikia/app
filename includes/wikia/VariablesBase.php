@@ -1277,11 +1277,11 @@ $wgCreateLanguageWikisWithPath = false;
 $wgCreateEnglishWikisOnFandomCom = false;
 
 /**
- * Wiki description enter by the user on the CNW page. Removed after wiki is created
- * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
- * @var string $wgWikiDescription
+ * The datacenter that hosts the starter dumps for CreateNewWiki
+ * @see \Wikia\CreateNewWiki\Starters
+ * @var string $wgCreateWikiStarterDumpsDatacenter
  */
-$wgWikiDescription = '';
+$wgCreateWikiStarterDumpsDatacenter = WIKIA_DC_SJC;
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -5170,13 +5170,6 @@ $wgJobTypesExcludedFromDefaultQueue = [];
 $wgJsMimeType = 'text/javascript';
 
 /**
- * Custom variables used by CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgLangCreationVariables
- */
-$wgLangCreationVariables = [];
-
-/**
  * Site language code, should be one of ./languages/Language(.*).php
  * @var string $wgLanguageCode
  */
@@ -7987,13 +7980,6 @@ $wgUDPProfilerHost = '127.0.0.1';
  * @var string $wgUDPProfilerPort
  */
 $wgUDPProfilerPort = '3811';
-
-/**
- * Additional variables for CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgUniversalCreationVariables
- */
-$wgUniversalCreationVariables = [];
 
 /**
  * Enable the UniversalEditButton for browsers that support it (currently only

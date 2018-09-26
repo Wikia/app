@@ -53,10 +53,10 @@ rm -rf build && mkdir -p build && mkdir -p build/logs
 
 cat travis/php_unit_tests_banner.txt && php -v && php $PHP_PARAMS -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--stderr --configuration=phpunit.xml \
-	--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation $1 && cat travis/php_integration_tests_banner.txt && \
+	--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation "$@" && cat travis/php_integration_tests_banner.txt && \
 	php -v && php $PHP_PARAMS -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--stderr --configuration=phpunit.xml \
-	--group Integration $1
+	--group Integration "$@"
 
 RESULT=$?
 
