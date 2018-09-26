@@ -6438,9 +6438,10 @@ $wgProfileToDatabase = false;
  * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
  * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
  *
- * @var string $wgPushgatewayHost
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgPrometheusPushgatewayHost
  */
-$wgPrometheusPushgatewayHost = 'http://pushgateway.k8s.wikia.net/';
+$wgPrometheusPushgatewayHost = 'pushgateway.k8s.wikia.net';
 
 /**
  * Groups that should not be affected by Special:ProtectSite lockdown.
