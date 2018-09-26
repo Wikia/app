@@ -287,23 +287,27 @@ class WikiDetailsService extends WikiService {
 	}
 
 	/**
+	 * Gets the count of threads for the given community's discussions, or returns null if discussions in not active
+	 * on that community
+	 *
 	 * @param int $id
-	 * @return int
+	 * @return mixed
 	 */
 	private function getDiscussionStats( $id ) {
 		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
 		$response = Http::get( "http://$discussionsServiceUrl/$id/forums", 'default', [ 'noProxy' => true ] );
-		$threadCount = 0;
+		$nullToIndicateDiscussionsNotActive = null;
 
 		if ($response === false) {
-			return $threadCount;
+			return $nullToIndicateDiscussionsNotActive;
 		}
 
 		$decodedResponse = json_decode( $response, true );
 		if ( json_last_error() !== JSON_ERROR_NONE || !isset( $decodedResponse['_embedded']['doc:forum'] ) ) {
-			return $threadCount;
+			return $nullToIndicateDiscussionsNotActive;
 		}
 
+		$threadCount = 0;
 		foreach ( $decodedResponse['_embedded']['doc:forum'] as $forum ) {
 			if ( isset( $forum['threadCount'] ) ) {
 				$threadCount += $forum['threadCount'];
