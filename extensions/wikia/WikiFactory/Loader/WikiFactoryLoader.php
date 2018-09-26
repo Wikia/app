@@ -121,7 +121,17 @@ class WikiFactoryLoader {
 		 * additionally we remove www. prefix
 		 */
 
+    global $wgCommandLineMode;
+
 		foreach ( $wikiFactoryDomains as $domain ) {
+
+      if ( ! $wgCommandLineMode ) {
+      print_r( $this->mServerName );
+      print_r( $wgWikiaBaseDomain );
+      die( __FILE__ . __LINE__ );
+      }
+      
+
 			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
 			if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
