@@ -12,20 +12,11 @@ class CategoryPage3Model {
 	/** @var string */
 	private $from;
 
-	/** @var string */
-	private $lastPage;
-
 	/** @var array */
 	private $members;
 
-	/** @var string */
-	private $nextPage;
-
-	/** @var string */
-	private $prevPage;
-
-	/** @var bool */
-	private $prevPageIsTheFirstPage;
+	/** @var CategoryPage3Pagination */
+	private $pagination;
 
 	/** @var Title */
 	private $title;
@@ -34,11 +25,8 @@ class CategoryPage3Model {
 		$this->category = Category::newFromTitle( $title );
 		$this->collation = Collation::singleton();
 		$this->from = $from;
-		$this->lastPage = null;
 		$this->members = [];
-		$this->nextPage = null;
-		$this->prevPage = null;
-		$this->prevPageIsTheFirstPage = false;
+		$this->pagination = new CategoryPage3Pagination( $title );
 		$this->title = $title;
 	}
 
@@ -53,13 +41,17 @@ class CategoryPage3Model {
 		$this->addPagesFromDbResults( $results );
 		$this->findPrevPage( $dbr );
 
-		if ( $this->nextPage ) {
+		if ( $this->pagination->getNextPageKey() ) {
 			$this->findLastPage( $dbr );
 		}
 	}
 
-	public function getMembers() {
+	public function getMembers(): array {
 		return $this->members;
+	}
+
+	public function getPagination(): CategoryPage3Pagination {
+		return $this->pagination;
 	}
 
 	/**
@@ -158,11 +150,11 @@ class CategoryPage3Model {
 
 		$lastRow = null;
 		$count = 0;
-		$this->prevPageIsTheFirstPage = true;
+		$this->pagination->setIsPrevPageTheFirstPage( true );
 
 		foreach ( $res as $row ) {
 			if ( ++$count > static::ITEMS_PER_PAGE_LIMIT ) {
-				$this->prevPageIsTheFirstPage = false;
+				$this->pagination->setIsPrevPageTheFirstPage( false );
 				break;
 			}
 
@@ -175,7 +167,7 @@ class CategoryPage3Model {
 		}
 
 		$title = Title::newFromRow( $lastRow );
-		$this->prevPage = $this->getHumanSortkey( $lastRow, $title );
+		$this->pagination->setPrevPageKey( $this->getHumanSortkey( $lastRow, $title ) );
 	}
 
 	private function findLastPage( DatabaseMysqli $dbr ) {
@@ -217,7 +209,7 @@ class CategoryPage3Model {
 		}
 
 		$title = Title::newFromRow( $lastRow );
-		$this->lastPage = $this->getHumanSortkey( $lastRow, $title );
+		$this->pagination->setLastPageKey( $this->getHumanSortkey( $lastRow, $title ) );
 	}
 
 	private function addPagesFromDbResults( ResultWrapper $results ) {
@@ -228,7 +220,7 @@ class CategoryPage3Model {
 			$humanSortkey = $this->getHumanSortkey( $row, $title );
 
 			if ( ++$count > static::ITEMS_PER_PAGE_LIMIT ) {
-				$this->nextPage = $humanSortkey;
+				$this->pagination->setNextPageKey( $humanSortkey );
 				break;
 			}
 

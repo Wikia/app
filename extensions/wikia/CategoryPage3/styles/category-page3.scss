@@ -2,4 +2,11 @@
 	&__members {
 		columns: 2;
 	}
+
+	&__pagination {
+		// TODO use a variable for the color
+		border-top: 1px solid #000;
+		margin-top: 20px;
+		padding-top: 20px;
+	}
 }

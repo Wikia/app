@@ -37,26 +37,25 @@ class CategoryPage3 extends CategoryPage {
 	}
 
 	private function addPaginationToHead() {
-		$paginationUrls = $this->getPaginationUrls();
+		$pagination = $this->model->getPagination();
 		$output = $this->getContext()->getOutput();
 
-		// TODO use class instead of array
-		if ( !empty ( $paginationUrls['prev'] ) ) {
+		if ( !empty ( $pagination->getPrevPageUrl() ) ) {
 			$output->addHeadItem(
 				'rel_prev',
 				"\t" . Html::element( 'link', [
 					'rel' => 'prev',
-					'href' => $paginationUrls['prev'],
+					'href' => $pagination->getPrevPageUrl(),
 				] ) . PHP_EOL
 			);
 		}
 
-		if ( !empty ( $paginationUrls['next'] ) ) {
+		if ( !empty ( $pagination->getNextPageUrl() ) ) {
 			$output->addHeadItem(
 				'rel_next',
 				"\t" . Html::element( 'link', [
 					'rel' => 'next',
-					'href' => $paginationUrls['next'],
+					'href' => $pagination->getNextPageUrl(),
 				] ) . PHP_EOL
 			);
 		}
@@ -70,15 +69,12 @@ class CategoryPage3 extends CategoryPage {
 		$mustache = new PhpEngine();
 
 		$templateVars = [
-			'members' => $this->model->getMembers()
+			'members' => $this->model->getMembers(),
+			'pagination' => $this->model->getPagination()
 		];
 
 		return $mustache->clearData()
 			->setData( $templateVars )
 			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3.php' );
-	}
-
-	private function getPaginationUrls() {
-		//TODO
 	}
 }
