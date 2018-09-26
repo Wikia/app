@@ -63,8 +63,8 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 			editToken = mw.user.tokens.get('editToken');
 
 		return nirvana.sendRequest({
-			controller: 'FacebookPreferences',
-			method: 'linkAccount',
+			controller: 'AuthPreferences',
+			method: 'linkFacebookAccount',
 			data: {
 				accessToken: accessToken,
 				token: editToken
@@ -76,8 +76,8 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 		var editToken = mw.user.tokens.get('editToken');
 
 		return nirvana.sendRequest({
-			controller: 'FacebookPreferences',
-			method: 'unlinkAccount',
+			controller: 'AuthPreferences',
+			method: 'unlinkFacebookAccount',
 			data: {
 				token: editToken
 			}

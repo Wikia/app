@@ -6,7 +6,7 @@ use Wikia\Logger\Loggable;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 use Wikia\Util\Assert;
 
-class FacebookPreferencesModuleService extends WikiaService {
+class AuthPreferencesModuleService extends WikiaService {
 	use Loggable;
 
 	/** @var FacebookService $facebookService */
@@ -18,14 +18,14 @@ class FacebookPreferencesModuleService extends WikiaService {
 		$this->facebookService = ServiceFactory::instance()->externalAuthFactory()->facebookService();
 	}
 
-	public function renderFacebookPreferences() {
-		global $fbAppId, $wgServer;
+	public function renderAuthPreferences() {
+		global $fbAppId;
 
 		$context = $this->getContext();
 		$out = $context->getOutput();
 
 		$out->addJsConfigVars( 'fbAppId', $fbAppId );
-		$out->addModules( 'ext.wikia.facebookPreferences' );
+		$out->addModules( 'ext.wikia.authPreferences' );
 
 		$this->setVal( 'googleConnectAuthUrl', WikiFactory::getLocalEnvURL( 'https://www.wikia.com/google-connect' ) );
 

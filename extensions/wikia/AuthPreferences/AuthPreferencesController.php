@@ -5,7 +5,7 @@ use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 
-class FacebookPreferencesController extends WikiaController {
+class AuthPreferencesController extends WikiaController {
 	use Loggable;
 
 	/** @var User $user */
@@ -31,7 +31,7 @@ class FacebookPreferencesController extends WikiaController {
 		}
 	}
 
-	public function linkAccount() {
+	public function linkFacebookAccount() {
 		$accessToken = $this->request->getVal( 'accessToken' );
 
 		try {
@@ -46,7 +46,7 @@ class FacebookPreferencesController extends WikiaController {
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
 	}
 
-	public function unlinkAccount() {
+	public function unlinkFacebookAccount() {
 		try {
 			$this->facebookService->unlinkAccount( $this->user );
 		} catch ( ApiException $apiException ) {
