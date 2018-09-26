@@ -48,6 +48,13 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
+
+    global $wgCommandLineMode;
+    if ( ! $wgCommandLineMode ) {
+      var_dump( $server );
+      die;
+    }
+
 		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain;
 
 		// initializations
