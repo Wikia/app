@@ -2101,18 +2101,24 @@ class OutputPage extends ContextSource {
 		$response = $this->getRequest()->response();
 
 		if ( $this->isRedirect() ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'SUS-5843-1', [ 'redirect' => $this->mRedirect ] );
 			if ( $this->mRedirect == '') {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}
 
+			\Wikia\Logger\WikiaLogger::instance()->error( 'SUS-5843-2', [ 'redirect' => $this->mRedirect ] );
 			if ( $this->mRedirectProtocol === PROTO_HTTP ) {
 				$this->mRedirect = wfHttpsToHttp( $this->mRedirect );
 			} elseif ( $this->mRedirectProtocol === PROTO_HTTPS ) {
 				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
 			}
 
+			\Wikia\Logger\WikiaLogger::instance()->error( 'SUS-5843-3', [ 'redirect' => $this->mRedirect ] );
+
 			# Standards require redirect URLs to be absolute
 			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
+
+			\Wikia\Logger\WikiaLogger::instance()->error( 'SUS-5843-4', [ 'redirect' => $this->mRedirect ] );
 
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
