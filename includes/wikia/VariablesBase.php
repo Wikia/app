@@ -6434,16 +6434,6 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
- * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
- * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
- *
- * @see lib/Wikia/src/Metrics/Collector.php
- * @var string $wgPrometheusPushgatewayHost
- */
-$wgPrometheusPushgatewayHost = 'pushgateway.k8s.wikia.net';
-
-/**
  * Groups that should not be affected by Special:ProtectSite lockdown.
  * @see extensions/wikia/SpecialProtectSite
  * @var Array $wgProtectsiteExempt
