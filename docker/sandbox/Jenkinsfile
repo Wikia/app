@@ -1,8 +1,4 @@
-// TODO
-// 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
-// 2. Setup different ENV variables in Dockerfile-php
-
-def sandbox = params.sandbox_name
+def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
 def datacenter = params.datacenter
 def environment = "sandbox"
 
