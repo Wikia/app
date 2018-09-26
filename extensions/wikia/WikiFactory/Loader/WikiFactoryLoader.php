@@ -427,6 +427,9 @@ class WikiFactoryLoader {
 		$cond1 = !empty( $this->mServerName ) &&
 				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'] ?? '', '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
+
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-5843', [ 'mServerName' => $this->mServerName, 'langCode' => $this->langCode, 'urlArray' => $url ] );
+
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
