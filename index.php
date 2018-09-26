@@ -1,4 +1,6 @@
 <?php
+
+$_SERVER['SERVER_NAME'] = 'sustainingtestfandom.fandom.com';
 /**
  * This is the main web entry point for MediaWiki.
  *
