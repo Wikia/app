@@ -13,10 +13,18 @@ class CategoryPage3 extends CategoryPage {
 	 */
 	private $model;
 
+	public function openShowCategory() {
+		// Use ResourceLoader for scripts because it uses single request to lazy load all scripts
+		$this->getContext()->getOutput()->addModules( 'ext.wikia.CategoryPage3.scripts' );
+
+		// Use AssetsManager for styles because it bundles all styles and blocks render so there is no FOUC
+		\Wikia::addAssetsToOutput( 'category_page3_scss' );
+	}
+
 	/**
 	 * @throws Exception
 	 */
-	function closeShowCategory() {
+	public function closeShowCategory() {
 		$context = $this->getContext();
 		$request = $context->getRequest();
 		$this->from = $request->getVal( 'from' );

@@ -2456,3 +2456,11 @@ $config['feeds_and_posts_js'] = [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
 	]
 ];
+
+$config['category_page3_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-page3.scss',
+	],
+];
