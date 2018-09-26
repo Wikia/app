@@ -1,8 +1,8 @@
 FROM artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c
 
-ENV WIKIA_DATACENTER="sjc"
-ENV WIKIA_ENVIRONMENT="sandbox"
-ENV HOSTNAME_OVERRIDE="sandbox-sus2"
+ENV WIKIA_DATACENTER="${SANDBOX_DATACENTER}"
+ENV WIKIA_ENVIRONMENT="${SANDBOX_ENVIRONMENT}"
+ENV HOSTNAME_OVERRIDE="${SANDBOX_NAME}"
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
