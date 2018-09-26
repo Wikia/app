@@ -2,9 +2,9 @@
 // 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
 // 2. Setup different ENV variables in Dockerfile-php
 
-def sandbox = "sandbox-sus2"
+def sandbox = params.sandbox_name
+def datacenter = params.datacenter
 def environment = "sandbox"
-def datacenter = "sjc"
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -30,7 +30,7 @@ node("docker-daemon") {
 
 		withDockerContainer(kubectlImage) {
 			deploymentInfo = sh(
-				script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-" +
+				script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
 				sandbox
 				+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
 				returnStdout: true
@@ -106,6 +106,18 @@ node("docker-daemon") {
 				sh("cp docker/.dockerignore ..")
 
 				sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+
+				// SUS-5853 - temporarily create docker image descriptor
+				def template = sh(script: 'cat docker/sandbox/Dockerfile-php.template', returnStdout: true)
+				def dockerImage = render(template, [
+					'SANDBOX_NAME': sandbox,
+					'SANDBOX_ENVIRONMENT': environment,
+					'SANDBOX_DATACENTER': datacenter
+				])
+
+				sh("""cat > docker/sandbox/Dockerfile-php <<EOL
+${dockerImage}
+EOL""")
 				sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
 
 				sh("docker push $nginxImage:$imageTag")
@@ -140,8 +152,8 @@ EOL""")
 		}
 
 		withDockerContainer(kubectlImage) {
-			sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
+			sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
 		}
 	}
 
