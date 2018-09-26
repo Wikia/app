@@ -35,7 +35,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		// FIXME add some way that the user's preferences can be respected
 		$apiParams['watchlist'] = $params['watch'] ? 'watch' : 'unwatch';
 
-		if ( $params['g-recaptcha-response'] ) {
+		if ( array_key_exists( 'g-recaptcha-response', $params ) && $params['g-recaptcha-response'] ) {
 			$apiParams['g-recaptcha-response'] = $params['g-recaptcha-response'];
 		}
 
