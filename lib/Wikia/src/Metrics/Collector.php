@@ -9,8 +9,8 @@ use Prometheus\Storage\InMemory;
 /**
  * This class can be used to push metrics to Prometheus via Pushgateway
  *
- * Metrics can be added via addGauge and addCounter methods.
- * These are collected and pushed to Pushgateway at the end of the MediaWiki request.
+ * Metrics can be added via addGauge() and addCounter() methods.
+ * These are collected and pushed to Pushgateway when push() method is called.
  *
  * @package Wikia\Metrics
  */
@@ -44,7 +44,7 @@ class Collector {
 		$this->registry = new CollectorRegistry( new InMemory() );
 	}
 
-	public function addGauge( string $name, float $value, array $labels, string $help ) {
+	public function addGauge( string $name, float $value, array $labels, string $help ) : self {
 		$gauge = $this->registry->getOrRegisterGauge(
 			self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
 		$gauge->set( $value, array_values( $labels ) );
@@ -52,7 +52,7 @@ class Collector {
 		return $this;
 	}
 
-	public function addCounter( string $name, array $labels, string $help ) {
+	public function addCounter( string $name, array $labels, string $help ) : self {
 		$counter = $this->registry->getOrRegisterCounter(
 			self::METRICS_NAMESPACE, $name, $help, $labels );
 		$counter->inc( array_values( $labels ) );
