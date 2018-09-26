@@ -126,8 +126,13 @@ class WikiFactoryLoader {
 		foreach ( $wikiFactoryDomains as $domain ) {
 
       if ( ! $wgCommandLineMode ) {
+      echo "<pre>";
       print_r( $this->mServerName );
+      echo "---";
       print_r( $wgWikiaBaseDomain );
+      echo "---";
+      print_r( $domain );
+      echo "</pre>";
       }
       
 
@@ -145,9 +150,11 @@ class WikiFactoryLoader {
 			}
 		}
       if ( ! $wgCommandLineMode ) {
-      echo "/";
+      echo "<pre>";
       print_r( $this->mServerName );
+      echo "---";
       print_r( $wgWikiaBaseDomain );
+      echo "</pre>";
       die();
       }
       
