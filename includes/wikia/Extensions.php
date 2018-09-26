@@ -1758,3 +1758,8 @@ include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
+
+// SEO-670 | SEO friendly category pages
+if ( !empty( $wgEnableCategoryPage3Ext ) ) {
+	include "$IP/extensions/wikia/CategoryPage3/CategoryPage3.setup.php";
+}
