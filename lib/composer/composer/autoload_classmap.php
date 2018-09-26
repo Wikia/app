@@ -2866,6 +2866,7 @@ return array(
     'Wikia\\Logger\\SyslogHandler' => $baseDir . '/lib/Wikia/src/Logger/SyslogHandler.php',
     'Wikia\\Logger\\WebProcessor' => $baseDir . '/lib/Wikia/src/Logger/WebProcessor.php',
     'Wikia\\Logger\\WikiaLogger' => $baseDir . '/lib/Wikia/src/Logger/WikiaLogger.php',
+    'Wikia\\Metrics\\Collector' => $baseDir . '/lib/Wikia/src/Metrics/Collector.php',
     'Wikia\\Persistence\\User\\Attributes\\AttributePersistence' => $baseDir . '/lib/Wikia/src/Persistence/User/Attributes/AttributePersistence.php',
     'Wikia\\Persistence\\User\\Preferences\\PreferencePersistence' => $baseDir . '/lib/Wikia/src/Persistence/User/Preferences/PreferencePersistence.php',
     'Wikia\\Search\\Config' => $baseDir . '/extensions/wikia/Search/classes/Config.php',

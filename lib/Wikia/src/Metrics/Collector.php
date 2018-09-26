@@ -1,0 +1,69 @@
+<?php
+
+namespace Wikia\Metrics;
+
+use Prometheus\PushGateway;
+use Prometheus\CollectorRegistry;
+use Prometheus\Storage\InMemory;
+
+/**
+ * This class can be used to push metrics to Prometheus via Pushgateway
+ *
+ * Metrics can be added via addGauge and addCounter methods.
+ * These are collected and pushed to Pushgateway at the end of the MediaWiki request.
+ *
+ * @package Wikia\Metrics
+ */
+class Collector {
+
+	// @see https://prometheus.io/docs/practices/naming/
+	const METRICS_NAMESPACE = 'mediawiki';
+
+	private $gateway;
+	private $registry;
+
+	static function getInstance() : self {
+		global $wgPrometheusPushgatewayHost;
+		static $instance = null;
+
+		if ( $instance === null ) {
+			$instance = new self( $wgPrometheusPushgatewayHost );
+		}
+
+		return $instance;
+	}
+
+	/**
+	 * Create a new instance of Collector class that will push metrics to
+	 * a provided Prometheus Pushgateway
+	 *
+	 * @param string $host Pushgateway address to push metrics to
+	 */
+	private function __construct( string $host ) {
+		$this->gateway = new PushGateway( $host );
+		$this->registry = new CollectorRegistry( new InMemory() );
+	}
+
+	public function addGauge( string $name, float $value, array $labels, string $help ) {
+		$gauge = $this->registry->getOrRegisterGauge(
+			self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
+		$gauge->set( $value, array_values( $labels ) );
+
+		return $this;
+	}
+
+	public function addCounter( string $name, array $labels, string $help ) {
+		$counter = $this->registry->getOrRegisterCounter(
+			self::METRICS_NAMESPACE, $name, $help, $labels );
+		$counter->inc( array_values( $labels ) );
+
+		return $this;
+	}
+
+	public function push( string $job ) {
+		$this->gateway->pushAdd( $this->registry, $job );
+
+		// empty the registry
+		$this->registry = new CollectorRegistry( new InMemory() );
+	}
+}

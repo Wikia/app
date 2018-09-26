@@ -3380,6 +3380,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Logger\\SyslogHandler' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/SyslogHandler.php',
         'Wikia\\Logger\\WebProcessor' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/WebProcessor.php',
         'Wikia\\Logger\\WikiaLogger' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/WikiaLogger.php',
+        'Wikia\\Metrics\\Collector' => __DIR__ . '/../../..' . '/lib/Wikia/src/Metrics/Collector.php',
         'Wikia\\Persistence\\User\\Attributes\\AttributePersistence' => __DIR__ . '/../../..' . '/lib/Wikia/src/Persistence/User/Attributes/AttributePersistence.php',
         'Wikia\\Persistence\\User\\Preferences\\PreferencePersistence' => __DIR__ . '/../../..' . '/lib/Wikia/src/Persistence/User/Preferences/PreferencePersistence.php',
         'Wikia\\Search\\Config' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/Config.php',
