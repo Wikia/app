@@ -1768,3 +1768,9 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * This will only work on production.
  */
 $wgProcessTasksOnKubernetes = false;
+
+/**
+ * @name $wgPercentOfTasksOnKubernetes
+ * Determines the percentage of wikis that send tasks to k8s.
+ */
+$wgPercentOfTasksOnKubernetes = 0;

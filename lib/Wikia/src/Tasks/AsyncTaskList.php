@@ -265,6 +265,12 @@ class AsyncTaskList {
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
+		// we want to use k8s on a percentage of all communities, so we need a global value for that percentage
+		$percentOfTasksOnKubernetes = \WikiFactory::getVarValueByName("wgPercentOfTasksOnKubernetes", static::DEFAULT_WIKI_ID );
+		
+		$shouldGoToKubernetes = $wgProcessTasksOnKubernetes
+			|| ( $percentOfTasksOnKubernetes && $this->wikiId % 100 < $percentOfTasksOnKubernetes );
+
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = wfGetEffectiveHostname();
 
@@ -275,7 +281,7 @@ class AsyncTaskList {
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
 				$executor['runner'] = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			}
-		} elseif ( $wgProcessTasksOnKubernetes ) {
+		} elseif ( $shouldGoToKubernetes ) {
 			# SUS-5562 use k8s to process task
 			$executor['runner'] = ["http://mediawiki-tasks/proxy.php"];
 		}

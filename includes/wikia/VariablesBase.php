@@ -1169,8 +1169,8 @@ $wgCompressRevisions = true;
  */
 $wgConsulDataCenters = [
 	'dev' => [
-		'sjc-dev',
-		'poz-dev',
+		'sjc',
+		'poz',
 	],
 	'prod' => [
 		'sjc',
