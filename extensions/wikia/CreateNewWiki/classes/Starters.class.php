@@ -92,6 +92,7 @@ class Starters {
 	 * @return SwiftStorage
 	 */
 	public static function getStarterDumpStorage() {
-		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET );
+		// SRE: these dumps live in SJC DC, make sure to always use SJC Swift
+		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', WIKIA_DC_SJC );
 	}
 }

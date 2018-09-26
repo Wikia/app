@@ -45,7 +45,7 @@ $wgHooks['LocalFileExecuteUrls']     []  = 'Wikia::onLocalFileExecuteUrls';
 # send ETag response header - BAC-1227
 $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 
-# Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
+# Add X-Backend-Response-Time response headers - BAC-550
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
@@ -65,6 +65,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 $wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::outputXServedBySHeader';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -348,15 +349,9 @@ class Wikia {
 	 * @deprecated use WikiaLogger instead
 	 */
 	static public function logBacktrace($method) {
-		$backtrace = trim(strip_tags(wfBacktrace()));
-		$message = str_replace("\n", '/', $backtrace);
-
-		// add URL when logging from AJAX requests
-		if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
-			$message .= " URL: {$_SERVER['REQUEST_URI']}";
-		}
-
-		Wikia::log($method, false, $message, true /* $force */);
+		\Wikia\Logger\WikiaLogger::instance()->info( $method, [
+			'exception' => new Exception()
+		] );
 	}
 
 	/**
@@ -1104,7 +1099,7 @@ class Wikia {
 		$stagingHeader = $request->getHeader('X-Staging');
 
 		if( !empty($stagingHeader) ) {
-			// we've got special cases like externaltest.* and showcase.* aliases:
+			// we've got special cases like *.externaltest.wikia.com and *.showcase.wikia.com aliases:
 			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
 			// those cases for backend look like production,
 			// therefore we don't want to base only on environment variables
@@ -1201,6 +1196,8 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
@@ -1208,6 +1205,16 @@ class Wikia {
 				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp' );
 		}
 		return true;
+	}
+
+	/**
+	 * Output X-Served-By header early enough so that all of our custom
+	 * entry-points are handled
+	 *
+	 * @param WebRequest $request
+	 */
+	static public function outputXServedBySHeader( WebRequest $request ) {
+		$request->response()->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
 	}
 
 	/**
@@ -1600,7 +1607,6 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
-		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
 
 		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
@@ -1613,12 +1619,11 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
+	 * Add X-Backend-Response-Time response headers to MediaWiki pages
 	 *
 	 * See BAC-550 for details
 	 *
 	 * @param OutputPage $out
-	 * @param Skin $sk
 	 * @return bool
 	 * @author macbre
 	 */
@@ -1628,7 +1633,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
+	 * Add X-Backend-Response-Time response headers to ResourceLoader
 	 *
 	 * See BAC-1319 for details
 	 *
@@ -1643,7 +1648,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
+	 * Add X-Backend-Response-Time response headers to wikia.php
 	 *
 	 * @param WikiaApp $app
 	 * @param WikiaResponse $response
@@ -1656,7 +1661,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to api.php
+	 * Add X-Backend-Response-Time response headers to api.php
 	 *
 	 * @param WebResponse $response
 	 * @return bool
@@ -1668,7 +1673,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 * Add X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
 	 *
 	 * @return bool
 	 * @author macbre

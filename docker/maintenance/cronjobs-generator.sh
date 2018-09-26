@@ -5,7 +5,7 @@
 ## e.g. ./cronjobs-generator.sh 05c4221.5c2dd23 | kubectl --context context -n environment apply -f -
 
 SCRIPT_FOLDER=$(dirname $(readlink -f $0))
-JOB_DESCRIPTIONS=(`ls $SCRIPT_FOLDER | grep -v 'example' | grep -v 'cronjob-template.yaml' | grep '\.yaml$'`)
+JOB_DESCRIPTIONS=(`ls $SCRIPT_FOLDER/*yaml | grep -v 'cronjob-template'`)
 LABEL=$1
 
 for job_description_file_name in "${JOB_DESCRIPTIONS[@]}"; do

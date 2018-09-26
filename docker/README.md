@@ -9,8 +9,8 @@ We assume that you have `app` and `config` repository cloned in the same directo
 
 ```sh
 # 1. build a base image
-docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:8a16e38 ./base
-docker push artifactory.wikia-inc.com/sus/php-wikia-base:8a16e38
+docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c ./base
+docker push artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c
 
 # 2. and then dev image
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
@@ -65,4 +65,4 @@ sudo dockerd
 
 #### Setting up `kubectl`
 
-Follow [these instructions](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/208011308/Kubernetes+access+for+Engineers).
+Follow [these instructions](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/401440847/Kubernetes+access+for+Engineers).

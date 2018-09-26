@@ -169,7 +169,6 @@ class PermissionsConfiguration {
 		'coppatool',
 		'createnewwiki',
 		'createwikilimitsexempt',  // user not bound by creation throttle
-		'finishcreate',
 		'dmcarequestmanagement',
 		'editaccount',
 		'emailsstorage',

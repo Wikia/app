@@ -1,26 +1,25 @@
 <?php
 
-$dir = __DIR__ . "/../../../../";
-require_once( $dir . 'maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 use Wikia\ContentReview\Models\ReviewModel;
 
+/**
+ * Publishes JS review statistics on a Slack channel
+ *
+ * @see https://wikia.slack.com/messages/C0A0ZUT9Q
+ */
 class ContentReviewStatus extends Maintenance {
 
 	private
 		$webhook,
 		$sla = 24;
 
-	public function __construct() {
-		parent::__construct();
-	}
-
 	public function execute() {
 		global $wgContentReviewSlackWebhook;
 
 		if ( empty( $wgContentReviewSlackWebhook ) ) {
 			$this->output( 'Webhook URL was not found.' );
-			return false;
 		}
 		$this->webhook = $wgContentReviewSlackWebhook;
 
@@ -33,6 +32,9 @@ class ContentReviewStatus extends Maintenance {
 			$logger->error( 'Updating JavaScript reviews status failed', [
 				'rspnsHdrs' => $response->getResponseHeaders(),
 			] );
+		}
+		else {
+			$this->output('Slack message sent.');
 		}
 	}
 
@@ -94,6 +96,8 @@ class ContentReviewStatus extends Maintenance {
 			'color' => $color,
 			'fields' => $fields,
 		];
+
+		$this->output( sprintf( "Will send the following message: %s\n", $text ) );
 
 		return $data;
 	}

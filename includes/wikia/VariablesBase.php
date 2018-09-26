@@ -939,11 +939,14 @@ $wgCapitalLinkOverrides = [];
 $wgCapitalLinks = true;
 
 /**
- * Image repository for FancyCaptch
+ * Amazon's S3 storage with captcha files
  * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
- * @var string $wgCaptchaDirectory
+ * @see SUS-5790
+ * @var string $wgCaptchaS3Bucket
+ * @var string $wgCaptchaS3Path
  */
-$wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
+$wgCaptchaS3Bucket = 'fancy-captcha';
+$wgCaptchaS3Path = 'images-20111115';
 
 /**
  * Specify how category names should be sorted, when listed on a category page.
@@ -1038,14 +1041,6 @@ $wgChatPrivateServerOverride = null;
  * @var string $wgChatPublicHost
  */
 $wgChatPublicHost = 'chat.wikia-services.com:443';
-
-/**
- * Override to $wgChatPublicHost for development and testing purposes.
- * @see $wgChatPublicHost
- * @see extensions/wikia/Chat2/ChatConfig.class.php
- * @var string $wgChatPublicHostOverride
- */
-$wgChatPublicHostOverride = null;
 
 /**
  * This is a flag to determine whether or not to check file extensions on
@@ -1174,8 +1169,8 @@ $wgCompressRevisions = true;
  */
 $wgConsulDataCenters = [
 	'dev' => [
-		'sjc-dev',
-		'poz-dev',
+		'sjc',
+		'poz',
 	],
 	'prod' => [
 		'sjc',
@@ -1198,13 +1193,6 @@ $wgConsulDataCenters = [
 		'res',
 	],
 ];
-
-/**
- * Slack webhook URL for JavaScript Review Tool.
- * @see extensions/wikia/ContentReview
- * @var string $wgContentReviewSlackWebhook
- */
-$wgContentReviewSlackWebhook = 'https://hooks.slack.com/services/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';
 
 /**
  * Default cookie expiration time. Setting to 0 makes all cookies session-only.
@@ -1281,6 +1269,19 @@ $wgCreateDatabaseActiveCluster = 'c7';
  * @var bool $wgCreateLanguageWikisWithPath
  */
 $wgCreateLanguageWikisWithPath = false;
+
+/**
+ * Whether to create new English wikis under the fandom.com domain.
+ * @var bool $wgCreateEnglishWikisOnFandomCom
+ */
+$wgCreateEnglishWikisOnFandomCom = false;
+
+/**
+ * Wiki description enter by the user on the CNW page. Removed after wiki is created
+ * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
+ * @var string $wgWikiDescription
+ */
+$wgWikiDescription = '';
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -2514,13 +2515,6 @@ $wgEnableCustom404PageExt = null;
 $wgEnableCustom404PageExtInLanguages = [ 'en' ];
 
 /**
- * Enable special handling of data tables.
- * @see includes/wikia/parser/templatetypes/handlers/DataTables.class.php
- * @var bool $wgEnableDataTablesParsing
- */
-$wgEnableDataTablesParsing = true;
-
-/**
  * Enable Embeddable Discussions extension.
  * @see extensions/wikia/EmbeddableDiscussions
  * @var bool $wgEnableDiscussions
@@ -3495,13 +3489,6 @@ $wgEnableSemanticScribuntoExt = false;
  * @var bool $wgEnableSendGridPostback
  */
 $wgEnableSendGridPostback = true;
-
-/**
- * Enable SEO Link Hreflang extension.
- * @see extensions/wikia/SeoLinkHreflang
- * @var bool $wgEnableSeoLinkHreflangExt
- */
-$wgEnableSeoLinkHreflangExt = false;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current
@@ -8695,6 +8682,13 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
+ * Exclude wiki from Global Search
+ * @see extensions/wikia/Search/classes/IndexService/CrossWikiCore.php
+ * @var bool $wgExcludeWikiFromSearch
+ */
+$wgExcludeWikiFromSearch = false;
+
+/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8772,14 +8766,6 @@ $wgWikiFactoryDomains = [
 ];
 
 /**
- * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
- * if it received a request with one of the mapped alternative domains.
- * @see $wgWikiFactoryDomains
- * @var bool $wgWikiFactoryRedirectForAlternateDomains
- */
-$wgWikiFactoryRedirectForAlternateDomains = true;
-
-/**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
  * @see extensions/wikia/RTE
  * @var Array $wgWysiwygDisabledNamespaces
@@ -8827,3 +8813,10 @@ $wgXMLMimeTypes = [
  * @var Array $wgYoukuConfig
  */
 $wgYoukuConfig['playerColor'] = 0;
+
+/**
+ * Used for test wikis copied on prod. Top articles data should use pageviews of the original wiki.
+ * @see PLATFORM-3671
+ * @var int $wgDataMartOriginalCityId
+ */
+$wgDataMartOriginalCityId = 0;

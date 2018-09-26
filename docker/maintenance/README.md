@@ -27,7 +27,7 @@ args: # required
 
 ```
 
-To generate YAML for ALL cron jobs (except ones that start with 'example'):
+To generate YAML for ALL cron jobs (except ones from 'examples' directory):
 
 ```sh
 ./cronjobs-generator.sh
@@ -36,7 +36,7 @@ To generate YAML for ALL cron jobs (except ones that start with 'example'):
 
 ### Applying YAML files
 
-> [Set up `kubectl`](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/208011308/Kubernetes+access+for+Engineers)
+> [Set up `kubectl`](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/401440847/Kubernetes+access+for+Engineers)
 
 In order to apply descriptor you need to map directory with YAML files to kubectl container.
 
@@ -66,6 +66,12 @@ kubectl --context kube-sjc-prod -n prod get cronJobs | grep mw-cj
 ```
 
 ### Development Notes on Cronjobs Migration
+
+#### cleanup-notifications-queue.yaml
+
+`extensions/wikia/WallNotifications/maintenance/cleanupNotificationsQueue.php`
+
+Removes old entries from dataware.wall_notification_queue* tables
 
 #### cleanup-phalanx-stats.yaml
 
@@ -153,19 +159,19 @@ Search for outdated video providers and report occurrences to ELK and JIRA.
 
 #### founder-emails-complete-digest.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails about views, edits, etc. to founders of wikis; completeDigest.
 
 #### founder-emails-days-passed.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails to founders of wikis after a number of days of their inactivity.
 
 #### founder-emails-views-digest.yaml
 
-`extensions/wikia/FounderEmails/maintenance.php`
+`extensions/wikia/FounderEmails/FounderEmailsMaintenance.php`
 
 Sends informative emails about views to founders of wikis.
 
@@ -193,6 +199,12 @@ Closes accounts permanently blocked in Phalanx.
 
 Scans users' activity for certain suspicious phrases and alerts ComSup.
 
+#### publish-content-review-status.yaml
+
+`extensions/wikia/ContentReview/maintenance/publishContentReviewStatus.php`
+
+Publishes JS review statistics on a Slack channel
+
 #### remove-qa-wikis.yaml
 
 `maintenance/wikia/removeQAWikis.php`
@@ -210,6 +222,12 @@ Reset weekly user rank on Special:Community.
 `extensions/wikia/AuthPages/maintenance/sendConfirmationReminder.php`
 
 Sends emails to users to remind them to authenticate / confirm their users.
+
+#### send-weekly-digest.yaml
+
+`maintenance/wikia/cronjobs/sendWeeklyDigest.php`
+
+This script sends the weekly digest to the users found in the global_watchlist table found in the dataware database.
 
 #### site-wide-messages-maintenance.yaml
 

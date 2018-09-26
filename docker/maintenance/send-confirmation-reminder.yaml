@@ -1,4 +1,4 @@
 schedule: "45 7 * * *"
 args:
 - php
-- extensions/wikia/AuthPages/maintenance/sendConfirmationReminder.php
+- /usr/wikia/slot1/current/src/extensions/wikia/AuthPages/maintenance/sendConfirmationReminder.php

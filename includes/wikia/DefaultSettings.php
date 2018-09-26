@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
+require_once ( $IP."/maintenance/utils/Status.php" );
 
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
@@ -326,6 +327,7 @@ $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/Sit
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
 $wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
+$wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
 
 // services hooks
@@ -1067,6 +1069,13 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverPrebidAdEngine3Countries
+ * List of countries where Prebid bidding platform from AdEngine3 is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidAdEngine3Countries = null;
+
+/**
  * @name $wgAdDriverPrebidOptOutCountries
  * List of countries where Prebid is enabled for opted-out users.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1426,6 +1435,12 @@ $wgAdDriverWadILCountries = null;
 $wgEnableCMPCountries = null;
 
 /**
+ * @name $wgDisableIncontentPlayer
+ * Flag disabling incontent player (for feed experiments)
+ */
+$wgDisableIncontentPlayer = false;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1746,3 +1761,16 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+
+/**
+ * @name $wgProcessTasksOnKubernetes
+ * When enabled, tasks will be processed on kubernetes.
+ * This will only work on production.
+ */
+$wgProcessTasksOnKubernetes = false;
+
+/**
+ * @name $wgPercentOfTasksOnKubernetes
+ * Determines the percentage of wikis that send tasks to k8s.
+ */
+$wgPercentOfTasksOnKubernetes = 0;

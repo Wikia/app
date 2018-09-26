@@ -7,67 +7,9 @@ class ChatConfigTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider getPublicHostDataProvider
+	 * @dataProvider getApiServerDataProvider
 	 */
-	public function testGetPublicHost( $environment, $wgChatPublicHostOverride, $expected ) {
-		$this->mockGlobalVariable( 'wgChatPublicHost', 'chat.wikia-services.com:80' );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', $environment );
-		$this->mockGlobalVariable( 'wgChatPublicHostOverride', $wgChatPublicHostOverride );
-
-		$chatConfig = ChatConfig::getPublicHost();
-
-		$this->assertEquals( $expected, $chatConfig );
-	}
-
-	public function getPublicHostDataProvider() {
-		return [
-			[
-				'environment' => 'dev',
-				'wgChatPublicHostOverride' => '',
-				'expected' => 'dev-chat.wikia-services.com:80'
-			],
-			[
-				'environment' => 'dev',
-				'wgChatPublicHostOverride' => 'dev-test:8080',
-				'expected' => 'dev-test:8080'
-			],
-			[
-				'environment' => 'sandbox',
-				'wgChatPublicHostOverride' => null,
-				'expected' => 'sandbox-chat.wikia-services.com:80'
-			],
-			[
-				'environment' => 'sandbox',
-				'wgChatPublicHostOverride' => 'sandbox-s1:9101',
-				'expected' => 'sandbox-s1:9101'
-			],
-			[
-				'environment' => 'preview',
-				'wgChatPublicHostOverride' => null,
-				'expected' => 'preview-chat.wikia-services.com:80'
-			],
-			[
-				'environment' => 'preview',
-				'wgChatPublicHostOverride' => 'sandbox-test:9101',
-				'expected' => 'sandbox-test:9101'
-			],
-			[
-				'environment' => 'prod',
-				'wgChatPublicHostOverride' => null,
-				'expected' => 'chat.wikia-services.com:80'
-			],
-			[
-				'environment' => 'prod',
-				'wgChatPublicHostOverride' => 'chat-machine:8000',
-				'expected' => 'chat-machine:8000'
-			],
-		];
-	}
-
-	/**
-	 * @dataProvider testGetApiServerDataProvider
-	 */
-	public function getApiServer( $wgChatPrivateServerOverride, $expected ) {
+	public function testGetApiServer( $wgChatPrivateServerOverride, $expected ) {
 		$this->mockGlobalVariable( 'wgChatPrivateServerOverride', $wgChatPrivateServerOverride );
 
 		$consulHosts = [

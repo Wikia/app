@@ -135,16 +135,18 @@
 		 */
 		function sendInternalTrackingEvent( event, data, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
-					script = document.createElement( 'script' ),
-					requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
-					requestParameters = [],
-					p,
-					params,
-					userId = -1;
-
-			if (isOptedIn) {
-				userId = window.trackID || window.wgTrackID || 0;
-			}
+				script = document.createElement( 'script' ),
+				requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
+				requestParameters = [],
+				p,
+				params,
+				userId = isOptedIn ? (
+					window.wgTrackID
+					|| ( window.M && window.M.getFromHeadDataStore && parseInt( window.M.getFromHeadDataStore( 'userId' ), 10 ) )
+					|| 0
+				) : -1,
+				wikiVariables = window.M && window.M.getFromHeadDataStore && window.M.getFromHeadDataStore( 'wikiVariables' ) || {},
+				trackingDimensions = window.M && window.M.getFromHeadDataStore && window.M.getFromHeadDataStore( 'trackingDimensions' ) || [];
 
 			timeout = timeout || 3000;
 
@@ -161,13 +163,13 @@
 
 			// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 			params = {
-				'c': window.wgCityId,
-				'x': window.wgDBname,
-				'a': window.wgArticleId,
-				'lc': window.wgContentLanguage,
-				'n': window.wgNamespaceNumber,
+				'c': window.wgCityId || wikiVariables.id,
+				'x': window.wgDBname || wikiVariables.dbName,
+				'a': window.wgArticleId || trackingDimensions[ 21 ],
+				'lc': window.wgContentLanguage || wikiVariables.language.content,
+				'n': window.wgNamespaceNumber || trackingDimensions[ 25 ],
 				'u': userId,
-				's': window.skin,
+				's': window.skin || trackingDimensions[ 4 ],
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 ),
 				'pv_unique_id': window.pvUID
