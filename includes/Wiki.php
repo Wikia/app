@@ -431,6 +431,7 @@ class MediaWiki {
 		$factory->commitMasterChanges();
 		// Output everything!
 		$this->context->getOutput()->output();
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-5843' );	
 		// Do any deferred jobs
 		DeferredUpdates::doUpdates( 'commit' );
 		wfProfileOut( __METHOD__ );
