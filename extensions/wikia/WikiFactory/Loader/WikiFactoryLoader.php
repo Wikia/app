@@ -214,7 +214,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgArticlePath, $wgEnableHTTPSForAnons, $wgFandomBaseDomain;
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgDevelEnvironment;
 
 		wfProfileIn(__METHOD__);
 
@@ -231,7 +231,7 @@ class WikiFactoryLoader {
 		}
 
 		// Override wikia.com related config early when requesting a fandom.com wiki
-		if ( strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
+		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
 		}
