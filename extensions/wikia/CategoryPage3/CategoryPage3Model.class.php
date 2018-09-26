@@ -18,9 +18,6 @@ class CategoryPage3Model {
 	/** @var array */
 	private $members;
 
-	/** @var array */
-	private $membersStartChar;
-
 	/** @var string */
 	private $nextPage;
 
@@ -39,7 +36,6 @@ class CategoryPage3Model {
 		$this->from = $from;
 		$this->lastPage = null;
 		$this->members = [];
-		$this->membersStartChar = [];
 		$this->nextPage = null;
 		$this->prevPage = null;
 		$this->prevPageIsTheFirstPage = false;
@@ -62,9 +58,8 @@ class CategoryPage3Model {
 		}
 	}
 
-	public function getDataForTemplate() {
-		// TODO
-		return [];
+	public function getMembers() {
+		return $this->members;
 	}
 
 	/**
@@ -126,8 +121,13 @@ class CategoryPage3Model {
 
 		$link = Linker::link( $title );
 
-		$this->members[] = $link;
-		$this->membersStartChar[] = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
+		$firstChar = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
+
+		if ( !isset( $this->members[ $firstChar ] ) ) {
+			$this->members[ $firstChar ] = [];
+		}
+
+		$this->members[ $firstChar ][] = $link;
 	}
 
 	private function findPrevPage( DatabaseMysqli $dbr ) {
@@ -167,6 +167,11 @@ class CategoryPage3Model {
 			}
 
 			$lastRow = $row;
+		}
+
+		// Happens when `from` is used but there is no previous page
+		if ( $lastRow === null ) {
+			return;
 		}
 
 		$title = Title::newFromRow( $lastRow );

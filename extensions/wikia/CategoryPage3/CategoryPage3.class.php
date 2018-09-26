@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Template\PHPEngine;
+
 class CategoryPage3 extends CategoryPage {
 	/**
 	 * @var String - query param used for pagination
@@ -57,10 +59,15 @@ class CategoryPage3 extends CategoryPage {
 	 * @throws Exception
 	 */
 	private function getHTML() {
-		$data = $this->model->getDataForTemplate();
-		$mustache = MustacheService::getInstance();
+		$mustache = new PhpEngine();
 
-		return $mustache->render( 'templates/CategoryPage3.mustache', $data );
+		$templateVars = [
+			'members' => $this->model->getMembers()
+		];
+
+		return $mustache->clearData()
+			->setData( $templateVars )
+			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3.php' );
 	}
 
 	private function getPaginationUrls() {
