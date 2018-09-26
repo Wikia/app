@@ -24,19 +24,23 @@ node("docker-daemon") {
 	stage("Log version") {
 		def deploymentInfo
 
-		withDockerContainer(kubectlImage) {
-			deploymentInfo = sh(
-				script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
-				sandbox
-				+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
-				returnStdout: true
-			)
+		try {
+			withDockerContainer(kubectlImage) {
+				deploymentInfo = sh(
+					script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
+					sandbox
+					+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+					returnStdout: true
+				)
+			}
+
+			def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+			def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+
+			println("Updating sandbox ${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
+		} catch (exc) {
+			println("Deploying new sandbox named ${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
 		}
-
-		def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-		def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-
-		println("Updating\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
 	}
 
 	stage("Clone repositories") {
