@@ -1,4 +1,6 @@
-def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
+// todo use it when border settings for handling `-k8s` suffix will be prepared
+// def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
+def sandbox = params.sandbox_name;
 def datacenter = params.datacenter
 def environment = "sandbox"
 
