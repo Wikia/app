@@ -5,10 +5,16 @@ require(['jquery'], function ($) {
 
 	$('#WikiaRail').one('afterLoad.rail', function() {
 		$.getScript(fpLibrary, function () {
+			var wikiName = $('meta[property="og:site_name"]').prop('content');
+
 			// Load FP into a newly inserted element
 			$('#wikia-recent-activity').after('<div class="rail-module feed-posts-module"></div>');
 			var fpContainer = $('.feed-posts-module').get(0);
-			window.fp.default(fpContainer);
+			window.fp.default(fpContainer, {
+				communityName: wikiName,
+				communityId: wgCityId,
+				dbName: wgDBname
+			});
 		});
 	});
 });

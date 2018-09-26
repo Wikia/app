@@ -151,8 +151,13 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return bool
 	 */
 	function selectDB( $db ) {
-		$this->mDBname = $db;
-		return $this->mConn->select_db( $db );
+		// SRE-105: Only change the DB explicitly if it was actually changed
+		if ( $this->mDBname !== $db ) {
+			$this->mDBname = $db;
+			return $this->mConn->select_db( $db );
+		}
+
+		return true;
 	}
 
 	/**
