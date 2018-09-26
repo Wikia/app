@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = [
 	'name' => 'Auth Preferences',
 	'author' => 'Wikia, Inc.',
-	'descriptionmsg' => 'authconnect-desc',
+	'descriptionmsg' => 'auth-prefs-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthPreferences',
 ];
 
@@ -27,7 +27,6 @@ $wgResourceModules['ext.wikia.authPreferences'] = [
 		'fbconnect-disconnect-info',
 		'fbconnect-unknown-error',
 		'fbconnect-error-fb-account-in-use',
-		'google-convert',
 	],
 	
 	'localBasePath' => __DIR__,

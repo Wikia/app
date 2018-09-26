@@ -11,7 +11,7 @@ class AuthPreferencesHooks {
 			'help' => $html,
 			'label' => '',
 			'type' => 'info',
-			'section' => 'fbconnect-prefstext/fbconnect-status-prefstext',
+			'section' => 'auth-prefstext/auth-connections-prefstext',
 		];
 
 		return true;

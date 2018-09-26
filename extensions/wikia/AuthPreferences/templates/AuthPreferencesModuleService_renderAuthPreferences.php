@@ -13,6 +13,6 @@
 	</div>
 	<div id="googleConnectPreferences">
 		<p><?= wfMessage( 'google-convert' )->escaped(); ?></p>
-		<iframe src="<?= $googleConnectAuthUrl; ?>"></iframe>
+		<iframe class="google-button" src="<?= $googleConnectAuthUrl; ?>"></iframe>
 	</div>
 </div>

@@ -2,6 +2,7 @@
     background: #4b6ea8;
     border: none;
     width: 25%;
+    box-sizing: border-box;
 }
 
 .wds-button.facebook-button:hover {
@@ -14,4 +15,9 @@
 
 .facebook-state-disconnected #fbDisconnectPreferences {
     display: none;
+}
+
+.google-button {
+    width: 25%;
+    height: 50px;
 }
