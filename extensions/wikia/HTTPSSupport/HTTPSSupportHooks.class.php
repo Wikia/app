@@ -117,7 +117,7 @@ class HTTPSSupportHooks {
 
 		return wfHttpsAllowedForURL( $url ) &&
 			(
-				wfDoesURLHaveFandomDomain( $url ) ||
+				wfHttpsEnabledForURL( $url ) ||
 				!empty( $wgEnableHTTPSForAnons ) ||
 				$user->isLoggedIn()
 			);

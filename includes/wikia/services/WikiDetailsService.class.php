@@ -169,7 +169,7 @@ class WikiDetailsService extends WikiService {
 			$enableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $id );
 			if (
 				wfHttpsAllowedForURL( $city_url ) &&
-				( wfDoesURLHaveFandomDomain( $city_url ) || !empty( $enableHTTPSForAnons ) )
+				( wfHttpsEnabledForURL( $city_url ) || !empty( $enableHTTPSForAnons ) )
 			) {
 				$city_url = wfHttpToHttps( $city_url );
 			}

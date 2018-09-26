@@ -436,7 +436,7 @@ class WikiFactoryLoader {
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = wfHttpsAllowedForURL( $redirectUrl ) &&
 			(
-				wfDoesURLHaveFandomDomain( $redirectUrl ) ||
+				wfHttpsEnabledForURL( $redirectUrl ) ||
 				$wgEnableHTTPSForAnons ||
 				!empty( $_SERVER['HTTP_FASTLY_SSL'] )
 			) &&
