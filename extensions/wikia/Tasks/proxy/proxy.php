@@ -49,3 +49,16 @@ $response->setContentType('application/json; charset=utf-8');
 $response->sendHeaders();
 
 $response->printText();
+
+// In FastCGI world we can flush the response immediately
+if ( function_exists( 'fastcgi_finish_request' ) ) {
+	fastcgi_finish_request();
+}
+
+// Execute any deferred updates
+DeferredUpdates::doUpdates();
+
+Hooks::run( 'RestInPeace' );
+
+// Commit any pending writes on master connections
+wfGetLBFactory()->commitMasterChanges();
