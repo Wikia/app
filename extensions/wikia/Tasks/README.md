@@ -8,8 +8,8 @@ This extension provides `proxy.php` entry point that is used by [Celery](https:/
 `proxy.php` gets HTTP requests from Celery using the following URLs:
 
 * devboxes - `http://tasks.<devbox name>.wikia-dev.pl/proxy.php`
-* sandboxes - `http://community.<sandbox name>.wikia.com/extensions/wikia/Tasks/proxy/proxy.phpp`
-* production - `http://prod.task.service.consul/proxy.php` (Apache) or `http://mediawiki-tasks/proxy.php` (Kubernetes)
+* sandboxes - `http://community.<sandbox name>.wikia.com/extensions/wikia/Tasks/proxy/proxy.php`
+* production - `http://prod.task.service.consul/proxy.php` (Apache) or `http://mediawiki-tasks/proxy.php` (Kubernetes) - this is handled by web-server rewrite
 
 Task parameters and metadata are passed as POST request fields.
 Additionally, ID of the wiki given task should be run for is passed via `X-Mw-Wiki-Id` HTTP request header.
