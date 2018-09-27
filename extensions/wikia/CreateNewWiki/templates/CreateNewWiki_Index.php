@@ -1,7 +1,7 @@
 <?php
 	$selectedLang = empty( $params['wikiLanguage'] ) ? $wg->LanguageCode : $params['wikiLanguage'];
 ?>
-<section id="CreateNewWiki">
+<section id="CreateNewWiki" class="<?= $allowCommunityBuilderOptIn ? 'with-optin' : ''?>">
 	<h1><?= wfMessage( 'cnw-title' )->escaped() ?></h1>
 
 	<ol class="steps">
@@ -9,75 +9,87 @@
 			<h2><?= wfMessage( 'cnw-name-wiki-headline' )->escaped() ?></h2>
 			<p class="creative"><?= wfMessage( 'cnw-name-wiki-creative' )->escaped() ?></p>
 
-			<form name="label-wiki-form">
-				<div class="wiki-name-container">
-					<?=
-					wfMessage('autocreatewiki-title-template')->rawParams(
-						Xml::element('input', [
-							'type' => 'text',
-							'name' => 'wiki-name',
-							'value' => $params['wikiName'],
-						])
-					)->escaped()
-					?>
-					<label class="floating-label" for="wiki-name">
-						<?= wfMessage( 'cnw-name-wiki-label' )->escaped() ?>
-					</label>
-					<div class="wiki-name-error error-msg"></div>
-				</div>
-				<div class="wiki-domain-container">
+			<div class="optin-wrapper">
+				<form name="label-wiki-form">
+					<div class="wiki-name-container">
+						<?=
+						wfMessage('autocreatewiki-title-template')->rawParams(
+							Xml::element('input', [
+								'type' => 'text',
+								'name' => 'wiki-name',
+								'value' => $params['wikiName'],
+							])
+						)->escaped()
+						?>
+						<label class="floating-label" for="wiki-name">
+							<?= wfMessage( 'cnw-name-wiki-label' )->escaped() ?>
+						</label>
+						<div class="wiki-name-error error-msg"></div>
+					</div>
+					<div class="wiki-domain-container">
 					<span class="domain-country">
 						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
 					</span>
-					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
-					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
-					.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiBaseDomain ) ?></span>
-					<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
-					<div class="wiki-domain-error error-msg"></div>
-				</div>
+						<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
+						<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
+						.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiBaseDomain ) ?></span>
+						<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
+						<div class="wiki-domain-error error-msg"></div>
+					</div>
 
-				<div class="cnw-select cnw-select-language">
-					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
-					<div class="wds-dropdown">
-						<div class="wds-dropdown__toggle">
-							<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
-								<span class="default-value">
+					<div class="cnw-select cnw-select-language">
+						<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
+						<div class="wds-dropdown">
+							<div class="wds-dropdown__toggle">
+								<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+									<span class="default-value">
 									 <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$selectedLang] ) ?>
 								</span>
-							<? endif ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
-						</div>
-						<div class="wds-dropdown__content wiki-language-dropdown">
-							<ul class="wds-list">
-								<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
-									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
-									<? foreach ( $aTopLanguages as $sLang ) : ?>
-										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
-											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
-										</li>
-									<? endforeach ?>
 								<? endif ?>
+								<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
+							</div>
+							<div class="wds-dropdown__content wiki-language-dropdown">
+								<ul class="wds-list">
+									<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
+										<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
+										<? foreach ( $aTopLanguages as $sLang ) : ?>
+											<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
+												<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
+											</li>
+										<? endforeach ?>
+									<? endif ?>
 
-								<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
-									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?></li>
-									<? ksort( $aLanguages );
-									foreach ( $aLanguages as $sLang => $sLangName ) : ?>
-										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
-											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
-										</li>
-									<? endforeach ?>
-								<? endif ?>
-							</ul>
+									<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+										<li class="spacer"><?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?></li>
+										<? ksort( $aLanguages );
+										foreach ( $aLanguages as $sLang => $sLangName ) : ?>
+											<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
+												<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
+											</li>
+										<? endforeach ?>
+									<? endif ?>
+								</ul>
+							</div>
 						</div>
+						<input type="hidden" name="wiki-language" value="<?= $selectedLang ?>">
 					</div>
-					<input type="hidden" name="wiki-language" value="<?= $selectedLang ?>">
-				</div>
 
-				<span class="submit-error error-msg"></span>
-				<nav class="controls">
-					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next wds-button wds-is-text">
-				</nav>
-			</form>
+					<span class="submit-error error-msg"></span>
+					<nav class="controls">
+						<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next wds-button wds-is-text">
+					</nav>
+				</form>
+				<div class="optin-prompt">
+					<div class="wds-text-transform-uppercase">
+						<span class="optin-prompt__tv">tv</span><br />
+						<span class="wds-midlight-aqua optin-prompt__community">community</span><br />
+						<span class="optin-prompt__builder">builder</span>
+					</div>
+					<p class="optin-prompt__copy">
+						We're working on a new experience to help you and your fellow fans bond around your favorite TV shows. Check it out today!
+					</p>
+				</div>
+			</div>
 		</li>
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>
@@ -177,6 +189,7 @@
 </section>
 <script>
 	window.WikiBuilderCfg = <?= json_encode( $wikiBuilderCfg ) ?>;
+	window.AllowCommunityBuilderOptIn = <?= json_encode( $allowCommunityBuilderOptIn ) ?>;
 	var themes = <?= json_encode( $wg->OasisThemes ) ?>;
 	var applicationThemeSettings = <?= json_encode( $applicationThemeSettings ) ?>;
 </script>

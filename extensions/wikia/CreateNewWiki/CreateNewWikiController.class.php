@@ -82,6 +82,9 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 		);
 
+		// TODO: read from global?
+		$this->allowCommunityBuilderOptIn = true && empty($_GET['hideCBOptIn']);
+
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
