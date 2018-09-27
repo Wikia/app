@@ -9,14 +9,20 @@ use GuzzleHttp\Client;
 class PushGateway
 {
     private $address;
+    private $connect_timeout;
+    private $timeout;
 
     /**
      * PushGateway constructor.
      * @param $address string host:port of the push gateway
+     * @param $connect_timeout int HTTP connection timeout
+     * @param $timeout int HTTP request timeout
      */
-    public function __construct($address)
+    public function __construct(string $address, int $connect_timeout = 10, int $timeout = 20)
     {
         $this->address = $address;
+        $this->connect_timeout = $connect_timeout;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -73,8 +79,8 @@ class PushGateway
             'headers' => array(
                 'Content-Type' => RenderTextFormat::MIME_TYPE
             ),
-            'connect_timeout' => 10,
-            'timeout' => 20,
+            'connect_timeout' => $this->connect_timeout,
+            'timeout' => $this->timeout,
         );
         if ($method != 'delete') {
             $renderer = new RenderTextFormat();

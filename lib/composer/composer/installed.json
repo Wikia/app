@@ -703,17 +703,17 @@
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "6.3.0",
-        "version_normalized": "6.3.0.0",
+        "version": "6.3.3",
+        "version_normalized": "6.3.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+            "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+            "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
             "shasum": ""
         },
         "require": {
@@ -723,17 +723,17 @@
         },
         "require-dev": {
             "ext-curl": "*",
-            "phpunit/phpunit": "^4.0 || ^5.0",
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
             "psr/log": "^1.0"
         },
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2017-06-22T18:50:49+00:00",
+        "time": "2018-04-22T15:46:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "6.2-dev"
+                "dev-master": "6.3-dev"
             }
         },
         "installation-source": "dist",
@@ -1050,55 +1050,6 @@
             "GPL-2.0+"
         ],
         "description": "Simple and minimalistic Geocoder interface with some basic implementations"
-    },
-    {
-        "name": "jimdo/prometheus_client_php",
-        "version": "v0.9.1",
-        "version_normalized": "0.9.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Jimdo/prometheus_client_php.git",
-            "reference": "cf3ea93197400a97464ff9bee78cf2169f035327"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Jimdo/prometheus_client_php/zipball/cf3ea93197400a97464ff9bee78cf2169f035327",
-            "reference": "cf3ea93197400a97464ff9bee78cf2169f035327",
-            "shasum": ""
-        },
-        "require": {
-            "guzzlehttp/guzzle": "^6.2",
-            "php": ">=5.6.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.1.0"
-        },
-        "suggest": {
-            "ext-apc": "Required if using APCu.",
-            "ext-redis": "Required if using Redis."
-        },
-        "time": "2017-11-06T11:00:07+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Prometheus\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Joscha",
-                "email": "joscha@schnipseljagd.org"
-            },
-            {
-                "name": "Jan Brauer",
-                "email": "jan.brauer@jimdo.com"
-            }
-        ]
     },
     {
         "name": "mcustiel/creature",
@@ -5682,6 +5633,56 @@
             ]
         },
         "notification-url": "https://packagist.org/downloads/"
+    },
+    {
+        "name": "wikia/prometheus_client_php",
+        "version": "v0.9.2",
+        "version_normalized": "0.9.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/prometheus_client_php.git",
+            "reference": "c6523defb044abef39288045f21195727f585f54"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Wikia/prometheus_client_php/zipball/c6523defb044abef39288045f21195727f585f54",
+            "reference": "c6523defb044abef39288045f21195727f585f54",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^6.2",
+            "php": ">=7.0",
+            "symfony/polyfill-apcu": "^1.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.1.0"
+        },
+        "suggest": {
+            "ext-apc": "Required if using APCu.",
+            "ext-redis": "Required if using Redis."
+        },
+        "time": "2018-09-27T08:29:59+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Prometheus\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Joscha",
+                "email": "joscha@schnipseljagd.org"
+            },
+            {
+                "name": "Jan Brauer",
+                "email": "jan.brauer@jimdo.com"
+            }
+        ]
     },
     {
         "name": "wikia/semantic-media-wiki",

@@ -4,9 +4,13 @@
 namespace Test\Prometheus\APC;
 
 use Prometheus\Storage\APC;
-use Test\Prometheus\AbstractCollectorRegistryTest;
+use Test\Prometheus\AbstractGaugeTest;
 
-class CollectorRegistryTest extends AbstractCollectorRegistryTest
+/**
+ * See https://prometheus.io/docs/instrumenting/exposition_formats/
+ * @requires extension apc
+ */
+class GaugeTest extends AbstractGaugeTest
 {
     public function configureAdapter()
     {

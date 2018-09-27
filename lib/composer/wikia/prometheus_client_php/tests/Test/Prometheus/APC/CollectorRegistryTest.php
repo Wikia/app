@@ -4,12 +4,12 @@
 namespace Test\Prometheus\APC;
 
 use Prometheus\Storage\APC;
-use Test\Prometheus\AbstractHistogramTest;
+use Test\Prometheus\AbstractCollectorRegistryTest;
 
 /**
- * See https://prometheus.io/docs/instrumenting/exposition_formats/
+ * @requires extension apc
  */
-class HistogramTest extends AbstractHistogramTest
+class CollectorRegistryTest extends AbstractCollectorRegistryTest
 {
 
     public function configureAdapter()
@@ -18,4 +18,3 @@ class HistogramTest extends AbstractHistogramTest
         $this->adapter->flushAPC();
     }
 }
-

@@ -4,9 +4,13 @@
 namespace Test\Prometheus\Redis;
 
 use Prometheus\Storage\Redis;
-use Test\Prometheus\AbstractCollectorRegistryTest;
+use Test\Prometheus\AbstractHistogramTest;
 
-class CollectorRegistryTest extends AbstractCollectorRegistryTest
+/**
+ * See https://prometheus.io/docs/instrumenting/exposition_formats/
+ * @requires extension redis
+ */
+class HistogramTest extends AbstractHistogramTest
 {
     public function configureAdapter()
     {

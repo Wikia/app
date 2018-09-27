@@ -4,17 +4,18 @@
 namespace Test\Prometheus\APC;
 
 use Prometheus\Storage\APC;
-use Test\Prometheus\AbstractGaugeTest;
+use Test\Prometheus\AbstractHistogramTest;
 
 /**
  * See https://prometheus.io/docs/instrumenting/exposition_formats/
+ * @requires extension apc
  */
-class GaugeTest extends AbstractGaugeTest
+class HistogramTest extends AbstractHistogramTest
 {
-
     public function configureAdapter()
     {
         $this->adapter = new APC();
         $this->adapter->flushAPC();
     }
 }
+
