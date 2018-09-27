@@ -67,14 +67,7 @@ class WikiFactoryLoader {
 
 		$this->mCommandLine = false;
 
-		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
-			// SUS-5816 | a special HTTP request with wiki ID forced via request header
-			$this->mCityID = (int) $server['HTTP_X_MW_WIKI_ID'];
-
-			// differ CDN caching on X-Mw-Wiki-Id request header value
-			RequestContext::getMain()->getOutput()->addVaryHeader( 'X-Mw-Wiki-Id' );
-		}
-		elseif ( !empty( $server['SERVER_NAME'] ) ) {
+		if ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 			$fullUrl =  self::getCurrentRequestUri( $server );
@@ -472,7 +465,7 @@ class WikiFactoryLoader {
 					$redirectUrl, 301, $redirectedBy );
 			} else {
 				header( 'X-Redirected-By-WF: ' . $redirectedBy );
-				header( RequestContext::getMain()->getOutput()->getVaryHeader() );
+				header( 'Vary: Cookie,Accept-Encoding' );
 
 				global $wgCookiePrefix;
 				$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||

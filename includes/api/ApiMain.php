@@ -410,13 +410,8 @@ class ApiMain extends ApiBase {
 	protected function sendCacheHeaders() {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
-		$out = $this->getOutput();
 
 		Hooks::run( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
-
-		if ( $wgVaryOnXFP ) {
-			$out->addVaryHeader( 'X-Forwarded-Proto' );
-		}
 
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
@@ -424,9 +419,13 @@ class ApiMain extends ApiBase {
 		}
 
 		if ( $this->mCacheMode == 'anon-public-user-private' ) {
-			$out->addVaryHeader( 'Cookie' );
-			$response->header( $out->getVaryHeader() );
+			$xfp = $wgVaryOnXFP ? ', X-Forwarded-Proto' : '';
+			$response->header( 'Vary: Accept-Encoding, Cookie' . $xfp );
 			if ( $wgUseXVO ) {
+				$out = $this->getOutput();
+				if ( $wgVaryOnXFP ) {
+					$out->addVaryHeader( 'X-Forwarded-Proto' );
+				}
 				$response->header( $out->getXVO() );
 				if ( $out->haveCacheVaryCookies() ) {
 					// Logged in, mark this request private
@@ -443,9 +442,12 @@ class ApiMain extends ApiBase {
 		}
 
 		// Send public headers
-		$response->header( $out->getVaryHeader() );
-		if ( $wgUseXVO ) {
-			$response->header( $out->getXVO() );
+		if ( $wgVaryOnXFP ) {
+			$response->header( 'Vary: Accept-Encoding, X-Forwarded-Proto' );
+			if ( $wgUseXVO ) {
+				// Bleeeeegh. Our header setting system sucks
+				$response->header( 'X-Vary-Options: Accept-Encoding;list-contains=gzip, X-Forwarded-Proto' );
+			}
 		}
 
 		// If nobody called setCacheMaxAge(), use the (s)maxage parameters

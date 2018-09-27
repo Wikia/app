@@ -45,7 +45,7 @@ $wgHooks['LocalFileExecuteUrls']     []  = 'Wikia::onLocalFileExecuteUrls';
 # send ETag response header - BAC-1227
 $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 
-# Add X-Backend-Response-Time response headers - BAC-550
+# Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
@@ -65,7 +65,6 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 $wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
-$wgHooks['WebRequestInitialized'][] = 'Wikia::outputXServedBySHeader';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -1208,16 +1207,6 @@ class Wikia {
 	}
 
 	/**
-	 * Output X-Served-By header early enough so that all of our custom
-	 * entry-points are handled
-	 *
-	 * @param WebRequest $request
-	 */
-	static public function outputXServedBySHeader( WebRequest $request ) {
-		$request->response()->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
-	}
-
-	/**
 	 * Add some extra request parameters to control memcache behavior @author: owen
 	 * mcache=none disables memcache for the duration of the request (not really that useful)
 	 * mcache=writeonly disables memcache reads for the duration of the request
@@ -1607,6 +1596,7 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
+		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
 
 		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
@@ -1619,11 +1609,12 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Backend-Response-Time response headers to MediaWiki pages
+	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
 	 *
 	 * See BAC-550 for details
 	 *
 	 * @param OutputPage $out
+	 * @param Skin $sk
 	 * @return bool
 	 * @author macbre
 	 */
@@ -1633,7 +1624,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Backend-Response-Time response headers to ResourceLoader
+	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
 	 *
 	 * See BAC-1319 for details
 	 *
@@ -1648,7 +1639,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Backend-Response-Time response headers to wikia.php
+	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
 	 *
 	 * @param WikiaApp $app
 	 * @param WikiaResponse $response
@@ -1661,7 +1652,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Backend-Response-Time response headers to api.php
+	 * Add X-Served-By and X-Backend-Response-Time response headers to api.php
 	 *
 	 * @param WebResponse $response
 	 * @return bool
@@ -1673,7 +1664,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
 	 *
 	 * @return bool
 	 * @author macbre
