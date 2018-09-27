@@ -513,6 +513,16 @@ $wgPreviewOnOpenNamespaces = [
 ];
 
 /**
+ * The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
+ * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
+ * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
+ *
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgPrometheusPushgatewayHost
+ */
+$wgPrometheusPushgatewayHost = "pushgateway-prod.$wgWikiaDatacenter.k8s.wikia.net";
+
+/**
  * Script used to scan IPs for open proxies.
  * @see includes/ProxyTools.php
  * @var string $wgProxyScriptPath
