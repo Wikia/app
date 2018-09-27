@@ -1,3 +1,6 @@
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/_wds-midlight';
+
 #CreateNewWiki.with-optin {
 	input[type=text] {
 		width: 294px;
@@ -23,15 +26,41 @@
 	font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
 	width: 240px;
 
+	&__tv {
+		background-color: $wds-fandom-color-navy;
+		color: $wds-fandom-color-link;
+		font-size: 24px;
+		font-weight: 400;
+		padding: 0 5px;
+	}
+
 	&__community {
+		@include wds-midlight(rgba($wds-fandom-color-link, .35));
+
+		color: $wds-fandom-color-navy;
 		font-size: 30px;
 		font-weight: 400;
 		line-height: 1.2;
 	}
 
+	&__builder {
+		background-color: rgba($wds-fandom-color-link, .35);
+		color: $wds-fandom-color-navy;
+		font-size: 18px;
+		padding: 0 3px;
+	}
+
 	&__copy {
-		margin: 8px 0 0 0 !important;
+		margin: 8px 0 13px 0 !important;
 		font-size: 14px;
 		line-height: 1.43;
+	}
+
+	&__link {
+		margin: 0 !important;
+		text-transform: uppercase;
+		font-size: 12px;
+		color: $wds-fandom-color-link;
+		font-weight: 700;
 	}
 }
