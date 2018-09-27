@@ -417,7 +417,9 @@ class MercuryApiController extends WikiaController {
 						default:
 							$data = array_merge(
 								$data,
-								MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article )
+								!empty( $article ) ?
+									MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article ) :
+									[]
 							);
 					}
 				}

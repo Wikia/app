@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
+require_once ( $IP."/maintenance/utils/Status.php" );
 
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
@@ -591,11 +592,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
  * Can not be define directly in extension since it is used in Parser.php and extension is not always enabled
  */
  define('NS_LEGACY_VIDEO', '400');
-
-/**
- * Tasks
- */
-require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
 /**
  * external databases
@@ -1767,3 +1763,9 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * This will only work on production.
  */
 $wgProcessTasksOnKubernetes = false;
+
+/**
+ * @name $wgPercentOfTasksOnKubernetes
+ * Determines the percentage of wikis that send tasks to k8s.
+ */
+$wgPercentOfTasksOnKubernetes = 0;
