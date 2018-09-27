@@ -41,7 +41,7 @@ class Collector {
 	 * @param string $host Pushgateway address to push metrics to
 	 */
 	private function __construct( string $host ) {
-		$this->gateway = new PushGateway( $host );
+		$this->gateway = new PushGateway( $host, 2, 5 );
 		$this->registry = new CollectorRegistry( new InMemory() );
 	}
 
