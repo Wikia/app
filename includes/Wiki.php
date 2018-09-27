@@ -423,31 +423,43 @@ class MediaWiki {
 	/**
 	 * Cleaning up request by doing deferred updates, DB transaction, and the output
 	 */
-	public function finalCleanup() {
-		wfProfileIn( __METHOD__ );
+	private function finalCleanup() {
+		// Either all DBs should commit or none
+		ignore_user_abort( true );
+
 		// Now commit any transactions, so that unreported errors after
 		// output() don't roll back the whole DB transaction
+		// Also have ChronologyProtector take care of recording master positions
 		$factory = wfGetLBFactory();
-		$factory->commitMasterChanges();
+		$factory->shutdown();
 		// Output everything!
 		$this->context->getOutput()->output();
-		// Do any deferred jobs
-		DeferredUpdates::doUpdates( 'commit' );
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
-	 * Ends this task peacefully
+	 * Perform post-request updates such as deferred updates, profiling etc.
+	 * If possible this method will be executed only after the response has been flushed.
 	 */
 	public function restInPeace() {
+		// If using FastCGI we can flush the output now and do any further updates without blocking
+		if ( function_exists( 'fastcgi_finish_request' ) ) {
+			fastcgi_finish_request();
+		} else {
+			// Either all DBs should commit or none
+			ignore_user_abort( true );
+		}
+
+		// Do any deferred jobs
+		DeferredUpdates::doUpdates();
+
 		Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
 
 		MessageCache::logMessages();
 		wfLogProfilingData();
+
 		// Commit and close up!
 		$factory = wfGetLBFactory();
 		$factory->commitMasterChanges();
-		$factory->shutdown();
 		wfDebug( "Request ended normally\n" );
 	}
 

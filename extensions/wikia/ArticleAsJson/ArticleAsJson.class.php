@@ -6,7 +6,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.38;
+	const CACHE_VERSION = 3.40;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -57,7 +57,7 @@ class ArticleAsJson {
 				self::MEDIA_THUMBNAIL_TEMPLATE,
 				[
 					'media' => $media,
-					'mediaAttrs' => json_encode( $media ),
+					'mediaAttrs' => json_encode( self::getDataAttrsForImage( $media ) ),
 					'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
 					'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
 					'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
@@ -67,19 +67,46 @@ class ArticleAsJson {
 	}
 
 	private static function renderGallery( $media ) {
-		$rows = self::prepareGalleryRows($media);
+		$rows = self::prepareGalleryRows( $media );
 
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
-					'galleryAttrs' => json_encode( $media ),
+					'galleryAttrs' => json_encode( self::getDataAttrsForGallery( $media ) ),
 					'rows' => $rows,
 					'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
 					'viewMoreLabel' => count($media) > 20 ? wfMessage('communitypage-view-more')->escaped() : false, // TODO:  XW-4793
 				]
 			)
 		);
+	}
+
+	public static function getDataAttrsForImage( $media ) {
+		$dataAttrs = [
+			'type' => $media['type'],
+			'url' => $media['url'],
+			'title' => $media['title'],
+			'isLinkedByUser' => $media['isLinkedByUser'],
+			'href' => $media['href'],
+			'isVideo' => $media['isVideo'],
+			'width' => $media['width'],
+			'height' => $media['height'],
+		];
+
+		if ( array_key_exists( 'embed', $media ) ) {
+			$dataAttrs['embed'] = $media['embed'];
+		}
+
+		if ( array_key_exists( 'caption', $media ) ) {
+			$dataAttrs['caption'] = $media['caption'];
+		}
+
+		return $dataAttrs;
+	}
+
+	public static function getDataAttrsForGallery( $media ) {
+		return array_map("self::getDataAttrsForImage", $media );
 	}
 
 	private static function prepareGalleryRows( $media ): array {
@@ -357,7 +384,6 @@ class ArticleAsJson {
 
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
-				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
 				$media[] = $mediaObj;
 			}
@@ -376,13 +402,12 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onExtendPortableInfoboxImageData( $data, &$dataAttrs ) {
-		$title = Title::newFromText( $data['name'] );
+	public static function onExtendPortableInfoboxImageData($title, $data, &$media ) {
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			$mediaObj = self::createMediaObject( $details, $title->getText(), $data['caption'] );
-			$dataAttrs = $mediaObj;
+			$media = $mediaObj;
 
 			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
 				self::$heroImage = $mediaObj;

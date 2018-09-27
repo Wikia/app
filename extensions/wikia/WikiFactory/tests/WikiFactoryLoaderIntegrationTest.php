@@ -79,6 +79,10 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 			'SERVER_NAME' => 'test1.wikia.com',
 			'REQUEST_URI' => 'http://test1.wikia.com/de/wiki/Bar',
 		] ];
+		yield [ 9, [
+			'HTTP_X_MW_WIKI_ID' => '9',  // this header takes precedence
+			'SERVER_NAME' => 'test1.wikia.com',
+		] ];
 	}
 
 	/**

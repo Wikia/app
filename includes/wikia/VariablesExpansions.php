@@ -218,9 +218,8 @@ $wgExtensionsDirectory = "$IP/extensions";
 
 /**
  * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
  * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
+ * @see lib/Wikia/src/Tasks/TaskRunner.php
  * @var string $wgFlowerUrl
  */
 $wgFlowerUrl = "http://celery-flower.$wgWikiaDatacenter.k8s.wikia.net";
@@ -540,6 +539,16 @@ $wgPhalanxQueue = [
 $wgPreviewOnOpenNamespaces = [
     NS_CATEGORY => true
 ];
+
+/**
+ * The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
+ * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
+ * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
+ *
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgPrometheusPushgatewayHost
+ */
+$wgPrometheusPushgatewayHost = "pushgateway-prod.$wgWikiaDatacenter.k8s.wikia.net";
 
 /**
  * Script used to scan IPs for open proxies.

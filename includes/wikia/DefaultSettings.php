@@ -594,11 +594,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
  define('NS_LEGACY_VIDEO', '400');
 
 /**
- * Tasks
- */
-require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
-
-/**
  * external databases
  */
 $wgContentReviewDB = 'content_review';
