@@ -71,30 +71,29 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			lazyQueue.makeQueue(secondCallQueue, processSecondCallSlots);
-
 			// highly viewable slots can be unblocked in second call
 			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				config.highlyViewableSlots
-					.forEach(function(slot) {
-						log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
-					})
-					.map(unblock);
+				config.highlyViewableSlots.forEach(function(slotName) {
+					log(['Unblocking HiVi slots', slotName], log.levels.info, logGroup);
+					unblock(slotName);
+				});
 			}
 
 			// ATF slots are always called in second call if not called in first
 			if (config.atfSlots) {
 				config.atfSlots
-					// remove slot already called in first call
-					.filter(function(slot) {
-						return config.firstCallSlots.indexOf(slot.name) === -1;
-					})
-					// unblock slot
-					.forEach(function(slot) {
-						log(['Filling ATF slot in second call', slot.name], log.levels.info, logGroup);
-						unblock(slot.name(slot));
-					});
+				// remove slot already called in first call
+				.filter(function(slot) {
+					return config.firstCallSlots.indexOf(slot.name) === -1;
+				})
+				// unblock slot
+				.forEach(function(slot) {
+					log(['Filling ATF slot in second call', slot.name], log.levels.info, logGroup);
+					unblock(slot.name(slot));
+				});
 			}
+
+			lazyQueue.makeQueue(secondCallQueue, processSecondCallSlots);
 
 			secondCallQueue.start();
 
