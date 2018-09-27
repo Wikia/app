@@ -20,8 +20,8 @@ class UrlHelpersTest extends WikiaBaseTest {
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'url' => 'http://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us',
-				'expected' => 'http://muppet.fandom.com'
+				'url' => 'https://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us',
+				'expected' => 'https://muppet.fandom.com'
 			],
 		];
 	}
