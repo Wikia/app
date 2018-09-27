@@ -26,7 +26,7 @@ class CategoryPage3Model {
 		$this->collation = Collation::singleton();
 		$this->from = $from;
 		$this->members = [];
-		$this->pagination = new CategoryPage3Pagination( $title );
+		$this->pagination = new CategoryPage3Pagination( $title, $from );
 		$this->title = $title;
 	}
 

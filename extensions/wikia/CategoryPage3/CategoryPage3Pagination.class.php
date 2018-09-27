@@ -2,7 +2,7 @@
 
 class CategoryPage3Pagination {
 	/** @var string */
-	private $firstPageUrl;
+	private $from;
 
 	/** @var string */
 	private $lastPageKey;
@@ -28,8 +28,8 @@ class CategoryPage3Pagination {
 	/** @var Title */
 	private $title;
 
-	public function __construct( Title $title ) {
-		$this->firstPageUrl = null;
+	public function __construct( Title $title, $from ) {
+		$this->from = $from;
 		$this->lastPageKey = null;
 		$this->nextPageKey = null;
 		$this->prevPageKey = null;
@@ -41,9 +41,7 @@ class CategoryPage3Pagination {
 	 * @return bool
 	 */
 	public function isEmpty(): bool {
-		return empty( $this->firstPageUrl ) &&
-			empty( $this->lastPageUrl ) &&
-			empty( $this->nextPageUrl ) &&
+		return empty( $this->nextPageUrl ) &&
 			empty( $this->prevPageUrl );
 	}
 
@@ -51,7 +49,11 @@ class CategoryPage3Pagination {
 	 * @return string
 	 */
 	public function getFirstPageUrl() {
-		return $this->firstPageUrl;
+		if ( empty ( $this->from ) || $this->isPrevPageTheFirstPage ) {
+			return null;
+		}
+
+		return $this->title->getFullURL();
 	}
 
 	/**
@@ -76,13 +78,6 @@ class CategoryPage3Pagination {
 	 */
 	public function getNextPageUrl() {
 		return $this->nextPageUrl;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getLastPageKey() {
-		return $this->lastPageKey;
 	}
 
 	/**
@@ -113,19 +108,12 @@ class CategoryPage3Pagination {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getPrevPageKey() {
-		return $this->prevPageKey;
-	}
-
-	/**
 	 * @param string $prevPageKey
 	 */
 	public function setPrevPageKey( string $prevPageKey ) {
 		$this->prevPageKey = $prevPageKey;
 
-		if ( $this->isPrevPageTheFirstPage() ) {
+		if ( $this->isPrevPageTheFirstPage ) {
 			$this->prevPageUrl = $this->title->getFullURL();
 		} else {
 			$this->prevPageUrl = $this->title->getFullURL( [
@@ -139,13 +127,6 @@ class CategoryPage3Pagination {
 	 */
 	public function getPrevPageUrl() {
 		return $this->prevPageUrl;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isPrevPageTheFirstPage(): bool {
-		return $this->isPrevPageTheFirstPage;
 	}
 
 	/**
