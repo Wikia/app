@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	Roadblock,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -28,7 +29,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
 
 function init(
 	adTracker,
