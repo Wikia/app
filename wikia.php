@@ -45,9 +45,6 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 
 	$response = $app->sendExternalRequest( null, null, null );
 
-	// commit any open transactions just in case the controller forgot to
-	$app->commit();
-
 	// if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
 	// then force no cache to reflect api.php default behavior
 	$cacheControl = $response->getHeader( 'Cache-Control' );
@@ -81,10 +78,9 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 
 	$response->render();
 
-	wfLogProfilingData();
-
-	Hooks::run( 'RestInPeace' );
-
+	// Execute common request shutdown procedure
+	$mw = new MediaWiki();
+	$mw->restInPeace();
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }

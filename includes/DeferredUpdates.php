@@ -33,14 +33,9 @@ class DeferredUpdates {
 
 	/**
 	 * Do any deferred updates and clear the list
-	 *
-	 * @param $commit String: set to 'commit' to commit after every update to
-	 *                prevent lock contention
 	 */
-	public static function doUpdates( $commit = '' ) {
+	public static function doUpdates() {
 		global $wgDeferredUpdateList;
-
-		wfProfileIn( __METHOD__ );
 
 		$updates = array_merge( $wgDeferredUpdateList, self::$updates );
 
@@ -50,21 +45,11 @@ class DeferredUpdates {
 			return;
 		}
 
-		$doCommit = $commit == 'commit';
-		if ( $doCommit ) {
-			$dbw = wfGetDB( DB_MASTER );
-		}
-
 		foreach ( $updates as $update ) {
 			$update->doUpdate();
-
-			if ( $doCommit && $dbw->trxLevel() ) {
-				$dbw->commit( __METHOD__ );
-			}
 		}
 
 		self::clearPendingUpdates();
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
