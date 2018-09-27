@@ -66,7 +66,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				]
 			},
 			fillInSlot: function (slot) {
-				console.log(slot);
 				mocks.methodCalledInsideFillInSlot();
 				slot.success();
 			}

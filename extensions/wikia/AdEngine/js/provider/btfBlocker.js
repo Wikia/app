@@ -83,13 +83,13 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			if (config.atfSlots) {
 				config.atfSlots
 				// remove slot already called in first call
-				.filter(function(slot) {
-					return config.firstCallSlots.indexOf(slot.name) === -1;
+				.filter(function(slotName) {
+					return config.firstCallSlots.indexOf(slotName) === -1;
 				})
 				// unblock slot
-				.forEach(function(slot) {
-					log(['Filling ATF slot in second call', slot.name], log.levels.info, logGroup);
-					unblock(slot.name(slot));
+				.forEach(function(slotName) {
+					log(['Filling ATF slot in second call', slotName], log.levels.info, logGroup);
+					unblock(slotName);
 				});
 			}
 
