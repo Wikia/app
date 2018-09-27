@@ -27,14 +27,6 @@
 	font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
 	width: 240px;
 
-	&__tv {
-		background-color: $wds-fandom-color-navy;
-		color: $wds-fandom-color-link;
-		font-size: 24px;
-		font-weight: 400;
-		padding: 0 5px;
-	}
-
 	&__community {
 		@include wds-midlight(rgba($wds-fandom-color-link, .35));
 
