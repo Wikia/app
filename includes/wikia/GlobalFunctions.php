@@ -1552,7 +1552,7 @@ function wfHttpsEnabledForURL( $url ): bool {
 		return false;
 	}
 
-	$host = WikiFactory::wfNormalizeHost( $host );
+	$host = wfNormalizeHost( $host );
 
 	return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
 }
