@@ -97,7 +97,7 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	public function communityBuilderOptInPrompt() {
-
+		// needed so the dispatcher doesn't whine
 	}
 
 	private function setupVerticalsAndCategories() {
