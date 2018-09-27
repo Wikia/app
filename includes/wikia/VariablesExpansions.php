@@ -192,17 +192,6 @@ $wgDBbackenduser = $wgDBbackendAdminUser;
 $wgDBbackendpassword = $wgDBbackendAdminPassword;
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-    'vhost' => 'data-warehouse',
-    'exchange' => 'mediawiki-edit-events',
-    'deadExchange' => 'zombie.v0.1',
-];
-
-/**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
  * extensions with HipHop, set $wgExtensionsDirectory correctly, and use code
  * like:
@@ -223,28 +212,6 @@ $wgExtensionsDirectory = "$IP/extensions";
  * @var string $wgFlowerUrl
  */
 $wgFlowerUrl = "http://celery-flower.$wgWikiaDatacenter.k8s.wikia.net";
-
-/**
- * RabbitMQ configuration for ImageReview.
- * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
- * @var array $wgImageReview
- */
-$wgImageReview = [
-	'vhost' => 'dc-file-sync',
-	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
-];
-
-/**
- * RabbitMQ configuration for Indexing Pipeline.
- * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
- * @var array $wgIndexingPipeline
- */
-$wgIndexingPipeline = [
-	'vhost' => 'indexer',
-	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
-];
 
 /**
  * Localized central wikis.
@@ -517,16 +484,6 @@ $wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:
  * @var int $wgParserCacheType
  */
 $wgParserCacheType = CACHE_MEMCACHED;
-
-/**
- * Phalanx RabbitMQ configuration.
- * @see extensions/wikia/PhalanxII
- * @var array $wgPhalanxQueue
- */
-$wgPhalanxQueue = [
-	'vhost' => 'phalanx',
-	'exchange' => 'phalanx',
-];
 
 /**
  * Which namespaces have special treatment where they should be preview-on-open
