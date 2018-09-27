@@ -48,7 +48,7 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -107,32 +107,40 @@ class WikiFactoryLoader {
 			// nothing can be done at this point
 			throw new InvalidArgumentException( "Cannot tell which wiki it is (neither SERVER_NAME, SERVER_ID nor SERVER_DBNAME is defined)" );
 		}
+		if ( $wgDevelEnvironment ) {
+			global $wgWikiaDevDomain, $wgFandomDevDomain;
+			if ( endsWith( $this->mServerName, $wgWikiaDevDomain ) ) {
+				$this->mServerName = str_replace( $wgWikiaDevDomain , $wgWikiaBaseDomain, $this->mServerName );
+			} elseif ( endsWith( $this->mServerName, $wgFandomDevDomain ) ) {
+				$this->mServerName = str_replace( $wgFandomDevDomain , $wgFandomBaseDomain, $this->mServerName );
+			}
+		} else {
 
-		/**
-		 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
-		 *
-		 * handle additional domains, we have plenty of domains which should
-		 * redirect to <wikia>.wikia.com. They should be added to
-		 * $wgWikiFactoryDomains variable (which is simple list). When
-		 * additional domain is detected we do simple replace:
-		 *
-		 * muppets.wikia.org => muppets.wikia.com
-		 *
-		 * additionally we remove www. prefix
-		 */
+			/**
+			 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+			 *
+			 * handle additional domains, we have plenty of domains which should
+			 * redirect to <wikia>.wikia.com. They should be added to
+			 * $wgWikiFactoryDomains variable (which is simple list). When
+			 * additional domain is detected we do simple replace:
+			 *
+			 * muppets.wikia.org => muppets.wikia.com
+			 *
+			 * additionally we remove www. prefix
+			 */
+			foreach ( $wikiFactoryDomains as $domain ) {
+				$tldLength = strlen( $this->mServerName ) - strlen( $domain );
 
-		foreach ( $wikiFactoryDomains as $domain ) {
-			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
-
-			if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
-				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
-				// remove extra www. prefix from domain
-				if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {  // skip canonical wikia global host
-					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
+					$this->mOldServerName = $this->mServerName;
+					$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
+					// remove extra www. prefix from domain
+					if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {  // skip canonical wikia global host
+						$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+					}
+					$this->mAlternativeDomainUsed = true;
+					break;
 				}
-				$this->mAlternativeDomainUsed = true;
-				break;
 			}
 		}
 
@@ -213,7 +221,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgArticlePath, $wgEnableHTTPSForAnons, $wgFandomBaseDomain;
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgDevelEnvironment;
 
 		wfProfileIn(__METHOD__);
 
@@ -230,7 +238,7 @@ class WikiFactoryLoader {
 		}
 
 		// Override wikia.com related config early when requesting a fandom.com wiki
-		if ( strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
+		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
 		}
@@ -438,7 +446,7 @@ class WikiFactoryLoader {
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
 		$cond2 = $this->mAlternativeDomainUsed &&
-			( $url['host'] != WikiFactory::normalizeHost( $this->mOldServerName ) );
+			( $url['host'] != wfNormalizeHost( $this->mOldServerName ) );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
