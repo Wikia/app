@@ -55,7 +55,7 @@ class Collector {
 
 	public function addCounter( string $name, array $labels, string $help ) : self {
 		$counter = $this->registry->getOrRegisterCounter(
-			self::METRICS_NAMESPACE, $name, $help, $labels );
+			self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
 		$counter->inc( array_values( $labels ) );
 
 		return $this;
