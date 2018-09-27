@@ -84,6 +84,9 @@ class CreateNewWikiController extends WikiaController {
 
 		// TODO: read from global?
 		$this->allowCommunityBuilderOptIn = true && empty($_GET['hideCBOptIn']);
+		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
+			'';
 
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
@@ -91,6 +94,10 @@ class CreateNewWikiController extends WikiaController {
 		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function communityBuilderOptInPrompt() {
+
 	}
 
 	private function setupVerticalsAndCategories() {
