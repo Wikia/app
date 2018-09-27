@@ -71,6 +71,12 @@ class WikiFactoryLoader {
 			// SUS-5816 | a special HTTP request with wiki ID forced via request header
 			$this->mCityID = (int) $server['HTTP_X_MW_WIKI_ID'];
 
+			// fill all required fields so that caching works correctly in
+			// WikiFactoryLoader::execute()
+			$this->parsedUrl = parse_url( WikiFactory::getWikiByID( $this->mCityID )->city_url );
+			$this->mServerName = $this->parsedUrl['host'];
+			$this->langCode = $this->parsedUrl['path'];
+
 			// differ CDN caching on X-Mw-Wiki-Id request header value
 			RequestContext::getMain()->getOutput()->addVaryHeader( 'X-Mw-Wiki-Id' );
 		}
@@ -150,7 +156,7 @@ class WikiFactoryLoader {
 		 * if run via commandline always take data from database,
 		 * never from cache
 		 */
-		$this->mAlwaysFromDB = $this->mCommandLine || $wgDevelEnvironment;
+		$this->mAlwaysFromDB = $this->mCommandLine || $this->mAlwaysFromDB;
 	}
 
 	/**

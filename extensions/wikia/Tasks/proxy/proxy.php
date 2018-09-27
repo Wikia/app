@@ -49,3 +49,7 @@ $response->setContentType('application/json; charset=utf-8');
 $response->sendHeaders();
 
 $response->printText();
+
+// Execute common request shutdown procedure
+$mw = new MediaWiki();
+$mw->restInPeace();

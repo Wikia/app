@@ -1361,11 +1361,6 @@ class WikiFactory {
 	 */
 	static public function getWikiByID( int $id, $master = false ) {
 
-		if ( ! static::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return false;
-		}
-
 		// SUS-2983 | do not make queries when provided city_id will not return any row
 		if ( empty( $id ) ) {
 			return false;
