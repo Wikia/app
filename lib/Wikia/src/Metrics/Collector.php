@@ -5,6 +5,7 @@ namespace Wikia\Metrics;
 use Prometheus\PushGateway;
 use Prometheus\CollectorRegistry;
 use Prometheus\Storage\InMemory;
+use Wikia\Logger\WikiaLogger;
 
 /**
  * This class can be used to push metrics to Prometheus via Pushgateway
@@ -61,7 +62,14 @@ class Collector {
 	}
 
 	public function push( string $job ) {
-		$this->gateway->pushAdd( $this->registry, $job );
+		try {
+			$this->gateway->pushAdd( $this->registry, $job );
+		}
+		catch ( \RuntimeException $ex ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $ex
+			] );
+		}
 
 		// empty the registry
 		$this->registry = new CollectorRegistry( new InMemory() );
