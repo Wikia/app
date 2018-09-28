@@ -77,6 +77,7 @@ function init(
 	if (legacyContext.get('bidders.prebidAE3')) {
 		context.set('bidders', getBiddersContext(skin));
 
+		context.set('bidders.a9.dealsEnabled', legacyContext.get('bidders.a9Deals'));
 		context.set('bidders.a9.enabled', legacyContext.get('bidders.a9'));
 		context.set('bidders.a9.videoEnabled', legacyContext.get('bidders.a9Video'));
 
