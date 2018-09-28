@@ -1,5 +1,4 @@
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
-@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/_wds-midlight';
 
 @mixin optin-button-link {
 	font-size: 0;
@@ -75,8 +74,10 @@
 	}
 
 	&__community {
-		@include wds-midlight(rgba($wds-fandom-color-link, .35));
-
+		background-size: 1px 10px;
+		background-image: linear-gradient(90deg, rgba($wds-fandom-color-link, .35), rgba($wds-fandom-color-link, .35));
+		background-position: 0 .65em;
+		background-repeat: repeat-x;
 		color: $wds-fandom-color-navy;
 		font-size: 30px;
 		font-weight: 400;
