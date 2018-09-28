@@ -79,6 +79,21 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 
 		viewedOptInModal = true;
 		optInModal.show();
+		optInModal.on('click', function(e) {
+			if (e.currentTarget === e.target) {
+				closeModal();
+			}
+		});
+		optInModal.find('.optin-modal__learn-more').on('click', closeModal);
+		optInModal.find('.optin-modal__close').on('click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			closeModal();
+		});
+	}
+
+	function closeModal() {
+		optInModal.hide();
 	}
 
 	return {
