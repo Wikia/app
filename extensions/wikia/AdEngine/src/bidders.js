@@ -4,28 +4,39 @@ export function getBiddersContext(skin) {
 				enabled: false,
 				timeout: 2000,
 				a9: {
+					dealsEnabled: false,
 					enabled: false,
 					videoEnabled: false,
 					amazonId: '3115',
 					slots: {
-						BOTTOM_LEADERBOARD: [
-							[728, 90],
-							[970, 250]
-						],
-						INCONTENT_BOXAD_1: [
-							[300, 250],
-							[300, 600]
-						],
-						TOP_LEADERBOARD: [
-							[728, 90],
-							[970, 250]
-						],
-						TOP_RIGHT_BOXAD: [
-							[300, 250],
-							[300, 600]
-						]
-					},
-					slotsVideo: ['FEATURED']
+						BOTTOM_LEADERBOARD: {
+							sizes: [
+								[728, 90],
+								[970, 250]
+							]
+						},
+						INCONTENT_BOXAD_1: {
+							sizes: [
+								[300, 250],
+								[300, 600]
+							]
+						},
+						TOP_LEADERBOARD: {
+							sizes: [
+								[728, 90],
+								[970, 250]
+							]
+						},
+						TOP_RIGHT_BOXAD: {
+							sizes: [
+								[300, 250],
+								[300, 600]
+							]
+						},
+						FEATURED: {
+							type: 'video'
+						}
+					}
 				},
 				prebid: {
 					enabled: false,
