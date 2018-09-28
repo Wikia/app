@@ -25,7 +25,8 @@ class CreateNewWikiController extends WikiaController {
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
-			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain;
+			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain,
+			   $wgAllowCommunityBuilderCNWPrompt;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -83,7 +84,7 @@ class CreateNewWikiController extends WikiaController {
 		);
 
 		// TODO: read from global?
-		$this->allowCommunityBuilderOptIn = true && empty($_GET['hideCBOptIn']);
+		$this->allowCommunityBuilderOptIn = !empty($wgAllowCommunityBuilderCNWPrompt) && empty($_GET['hideCBOptIn']);
 		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
 			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
 			'';
