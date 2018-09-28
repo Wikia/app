@@ -83,7 +83,7 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 		);
 
-		$this->allowCommunityBuilderOptIn = true; //!empty($wgAllowCommunityBuilderCNWPrompt) && empty($_GET['hideCBOptIn']);
+		$this->allowCommunityBuilderOptIn = !empty($wgAllowCommunityBuilderCNWPrompt);
 		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
 			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
 			'';
