@@ -1,6 +1,6 @@
 export function getConfig() {
 	return {
-    slotsToDisable: [],
+		slotsToDisable: [],
 		slotsToEnable: [
 			'BOTTOM_LEADERBOARD'
 		]
