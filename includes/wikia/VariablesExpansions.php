@@ -192,21 +192,6 @@ $wgDBbackenduser = $wgDBbackendAdminUser;
 $wgDBbackendpassword = $wgDBbackendAdminPassword;
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var Array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-    'host' => 'prod.rabbit.service.sjc.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => 'data-warehouse',
-    'exchange' => 'mediawiki-edit-events',
-    'deadExchange' => 'zombie.v0.1',
-];
-
-/**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
  * extensions with HipHop, set $wgExtensionsDirectory correctly, and use code
  * like:
@@ -552,16 +537,12 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
- * RabbitMQ configurarion.
- * @see lib/Wikia/src/Tasks/AsyncTaskList.php
- * @var Array $wgTaskBroker
+ * Whether to disable the background tasks broker for MediaWiki.
+ * @see lib/Wikia/src/Factory/RabbitFactory.php
+ * @see lib/Wikia/src/Rabbit/TasksRabbitPublisher.php
+ * @var bool $wgTaskBrokerDisabled
  */
-$wgTaskBroker = [
-    'host' => 'prod.rabbit.service.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-];
+$wgTaskBrokerDisabled = false;
 
 /**
  * Configuration file for external Tidy.
