@@ -44,20 +44,28 @@
 	.optin-prompt {
 		display: block;
 	}
+
+	#DescWiki {
+		textarea {
+			padding: 0;
+			height: 150px;
+		}
+	}
 }
 
 .optin-wrapper {
 	display: flex;
+	align-items: center;
 
 	> *:first-child {
 		flex-grow: 1;
-		width: 380px;
+		width: 380px !important;
 	}
 }
 
 .optin-prompt {
 	display: none;
-	margin: 10px 0 0 30px;
+	margin: 0 0 0 30px;
 	text-align: center;
 	font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
 	width: 240px;

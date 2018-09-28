@@ -86,88 +86,88 @@
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
-			<div class="optin-wrapper">
-				<form name="desc-form" class="clearfix">
+			<form name="desc-form" class="clearfix">
+				<div class="optin-wrapper">
 					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
-					<div class="checkbox" id="all-ages-div">
-						<label>
-							<div class="checkbox-styled">
-								<input id="allAges" type="checkbox" name="all-ages" value="1">
-								<label for="allAges"></label>
-							</div>
-							<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
-						</label>
-					</div>
-
-					<!-- Hub Category / Vertical -->
-					<div class="cnw-select cnw-select-vertical">
-						<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
-						<div class="wds-dropdown">
-							<div class="wds-dropdown__toggle">
-								<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
-								<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
-							</div>
-							<div class="wds-dropdown__content wiki-vertical-dropdown">
-								<ul class="wds-list">
-									<li id="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></li>
-									<?php
-									foreach ( $verticals as $vertical ) {
-										?>
-										<li
-											id="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
-											data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
-											data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
-											<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
-										</li>
-										<?php
-									}
-									?>
-								</ul>
-							</div>
+					<?= $communityBuilderPrompt ?>
+				</div>
+				<div class="checkbox" id="all-ages-div">
+					<label>
+						<div class="checkbox-styled">
+							<input id="allAges" type="checkbox" name="all-ages" value="1">
+							<label for="allAges"></label>
 						</div>
-						<input type="hidden" name="wiki-vertical" value="-1">
-					</div>
-					<div class="wiki-vertical-error error-msg"></div>
+						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+					</label>
+				</div>
 
-					<!-- Additional Categories -->
-					<div class="select-container categories-sets">
-						<h3><?= wfMessage( 'cnw-desc-select-categories' )->escaped() ?></h3>
-						<?php
-						foreach ( $categoriesSets as $setId => $categoriesSet ) {
-							$setId = Sanitizer::encodeAttribute( $setId );
-							?>
-
-							<div class="categories-set" id="categories-set-<?= $setId ?>">
+				<!-- Hub Category / Vertical -->
+				<div class="cnw-select cnw-select-vertical">
+					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
+						</div>
+						<div class="wds-dropdown__content wiki-vertical-dropdown">
+							<ul class="wds-list">
+								<li id="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></li>
 								<?php
-								foreach ( $categoriesSet as $category ) {
+								foreach ( $verticals as $vertical ) {
 									?>
-									<label class="category-label">
-										<div class="checkbox-styled">
-											<? $categoryShort = Sanitizer::encodeAttribute( $category['short'] ); ?>
-											<input id="<?= $categoryShort ?>-<?= $setId ?>" type="checkbox"
-												   value="<?= Sanitizer::encodeAttribute( $category['id'] ) ?>"
-												   data-short="<?= $categoryShort ?>">
-											<label for="<?= $categoryShort ?>-<?= $setId ?>"></label>
-										</div>
-										<span><?= Sanitizer::escapeHtmlAllowEntities( $category['name'] ) ?></span>
-									</label>
+									<li
+										id="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
+										data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
+										data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
+										<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
+									</li>
 									<?php
 								}
 								?>
-							</div>
-							<?php
-						}
-						?>
+							</ul>
+						</div>
 					</div>
+					<input type="hidden" name="wiki-vertical" value="-1">
+				</div>
+				<div class="wiki-vertical-error error-msg"></div>
 
-					<span class="submit-error error-msg"></span>
-					<nav class="controls">
-						<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back wds-button wds-is-text">
-						<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next wds-button wds-is-text" disabled>
-					</nav>
-				</form>
-				<?= $communityBuilderPrompt ?>
-			</div>
+				<!-- Additional Categories -->
+				<div class="select-container categories-sets">
+					<h3><?= wfMessage( 'cnw-desc-select-categories' )->escaped() ?></h3>
+					<?php
+					foreach ( $categoriesSets as $setId => $categoriesSet ) {
+						$setId = Sanitizer::encodeAttribute( $setId );
+						?>
+
+						<div class="categories-set" id="categories-set-<?= $setId ?>">
+							<?php
+							foreach ( $categoriesSet as $category ) {
+								?>
+								<label class="category-label">
+									<div class="checkbox-styled">
+										<? $categoryShort = Sanitizer::encodeAttribute( $category['short'] ); ?>
+										<input id="<?= $categoryShort ?>-<?= $setId ?>" type="checkbox"
+											   value="<?= Sanitizer::encodeAttribute( $category['id'] ) ?>"
+											   data-short="<?= $categoryShort ?>">
+										<label for="<?= $categoryShort ?>-<?= $setId ?>"></label>
+									</div>
+									<span><?= Sanitizer::escapeHtmlAllowEntities( $category['name'] ) ?></span>
+								</label>
+								<?php
+							}
+							?>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+
+				<span class="submit-error error-msg"></span>
+				<nav class="controls">
+					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back wds-button wds-is-text">
+					<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next wds-button wds-is-text" disabled>
+				</nav>
+			</form>
 		</li>
 		<li id="ThemeWiki" class="step">
 			<h2><?= wfMessage( 'cnw-theme-headline' )->escaped() ?></h2>
