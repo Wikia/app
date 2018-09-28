@@ -87,6 +87,9 @@ class CreateNewWikiController extends WikiaController {
 		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
 			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
 			'';
+		$this->communityBuilderModal = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderModal') :
+			'';
 
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
@@ -97,6 +100,10 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	public function communityBuilderOptInPrompt() {
+		// needed so the dispatcher doesn't whine
+	}
+
+	public function communityBuilderModal() {
 		// needed so the dispatcher doesn't whine
 	}
 

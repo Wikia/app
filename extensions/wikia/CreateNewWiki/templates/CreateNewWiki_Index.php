@@ -1,6 +1,7 @@
 <?php
 	$selectedLang = empty( $params['wikiLanguage'] ) ? $wg->LanguageCode : $params['wikiLanguage'];
 ?>
+<?= $communityBuilderModal ?>
 <section id="CreateNewWiki" class="<?= $allowCommunityBuilderOptIn ? 'with-optin' : ''?>">
 	<h1><?= wfMessage( 'cnw-title' )->escaped() ?></h1>
 

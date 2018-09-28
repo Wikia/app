@@ -1,6 +1,41 @@
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/_wds-midlight';
 
+@mixin optin-button-link {
+	font-size: 0;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	.wds-button {
+		&:not(.wds-is-text) {
+			border-color: $wds-fandom-color-link;
+			background-color: $wds-fandom-color-link;
+
+			&:hover {
+				border-color: #008A8A !important;
+				background-color: #008A8A !important;
+			}
+		}
+
+		&:hover {
+			background-image: none;
+		}
+
+		&.wds-is-text {
+			&, &:focus {
+				color: $wds-fandom-color-link;
+			}
+
+			&:hover {
+				background-color: $wds-color-white;
+				color: #008A8A !important;
+			}
+		}
+	}
+}
+
 #CreateNewWiki.with-optin {
 	input[type=text] {
 		width: 294px;
@@ -27,6 +62,10 @@
 	font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
 	width: 240px;
 
+	a {
+		@include optin-button-link;
+	}
+
 	&__community {
 		@include wds-midlight(rgba($wds-fandom-color-link, .35));
 
@@ -48,12 +87,41 @@
 		font-size: 14px;
 		line-height: 1.43;
 	}
+}
 
-	&__link {
-		margin: 0 !important;
-		text-transform: uppercase;
-		font-size: 12px;
-		color: $wds-fandom-color-link;
-		font-weight: 700;
+.optin-modal {
+	background-color: rgba(0, 0, 0, .57);
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 5001101; // more than the global nav
+
+	a {
+		@include optin-button-link;
+	}
+
+	&__dialog-wrapper {
+		background-color: $wds-color-white;
+		height: 400px;
+		width: 400px;
+		border-radius: 4px;
+		margin: 0 auto;
+		transform: translateY(50%);
+		padding: 25px 30px 30px;
+		font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
+		text-align: center;
+	}
+
+	&__copy {
+		color: $wds-color-black;
+		font-size: 16px;
+		line-height: 1.63;
+	}
+
+	&__learn-more button {
+		margin-top: 18px;
 	}
 }

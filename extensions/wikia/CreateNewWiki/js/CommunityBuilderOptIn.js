@@ -16,8 +16,12 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 			return;
 		}
 
+		// move the modal because otherwise it can't stack on top of the global nav
+		$(document.body).append($('.optin-modal').detach());
+
 		sectionWrapper = $sectionWrapper;
 		optInPrompts = $('.optin-prompt');
+		optInModal = $('.optin-modal');
 
 		updateLanguage($languageInput.val());
 
@@ -74,7 +78,7 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		}
 
 		viewedOptInModal = true;
-		console.log('look at this modal!');
+		optInModal.show();
 	}
 
 	return {
