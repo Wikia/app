@@ -1,3 +1,4 @@
+<!-- hardcoded english because the opt in is only active when the new community language is english -->
 <div class="optin-modal">
 	<div class="optin-modal__dialog-wrapper">
 		<img

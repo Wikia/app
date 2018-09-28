@@ -1,3 +1,4 @@
+<!-- hardcoded english because the opt in is only active when the new community language is english -->
 <div class="optin-prompt">
 	<div class="wds-text-transform-uppercase">
 		<span class="optin-prompt__community">community</span><br />
