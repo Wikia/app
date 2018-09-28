@@ -8876,3 +8876,10 @@ $wgYoukuConfig['playerColor'] = 0;
  * @var int $wgDataMartOriginalCityId
  */
 $wgDataMartOriginalCityId = 0;
+
+/**
+ * whether or not create new wiki prompts users to alternatively create their community
+ * in the community builder (fandom creator)
+ * @see https://wikia-inc.atlassian.net/browse/CAKE-2151
+ */
+$wgAllowCommunityBuilderCNWPrompt = false;
