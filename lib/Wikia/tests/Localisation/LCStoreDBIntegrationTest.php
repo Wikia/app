@@ -6,40 +6,36 @@ namespace Wikia\Localisation;
  */
 class LCStoreDBIntegrationTest extends \WikiaDatabaseTest {
 
-	/** @var \LCStore $lcStoreDb */
-	private $lcStoreDb;
-
-	protected function setUp() {
-		parent::setUp();
-
-		$this->lcStoreDb = new LCStoreDB( 'test-prefix' );
-	}
-
 	public function testPersistData() {
-		$this->assertNull( $this->lcStoreDb->get( 'en', 'test-message' ) );
-		$this->assertEquals( 'teszt', $this->lcStoreDb->get( 'hu', 'test-message' ) );
+		$lcStoreDb = new LCStoreDB( 'test-prefix' );
 
-		$this->lcStoreDb->startWrite( 'en' );
-		$this->lcStoreDb->set( 'test-message', 'testing' );
-		$this->lcStoreDb->set( 'other-message', 'foo' );
-		$this->lcStoreDb->finishWrite();
+		$this->assertNull( $lcStoreDb->get( 'en', 'test-message' ) );
+		$this->assertEquals( 'teszt', $lcStoreDb->get( 'hu', 'test-message' ) );
 
-		$this->assertEquals( 'testing', $this->lcStoreDb->get( 'en', 'test-message' ) );
-		$this->assertEquals( 'foo', $this->lcStoreDb->get( 'en', 'other-message' ) );
+		$lcStoreDb->startWrite( 'en' );
+		$lcStoreDb->set( 'test-message', 'testing' );
+		$lcStoreDb->set( 'other-message', 'foo' );
+		$lcStoreDb->finishWrite();
 
-		$this->assertEquals( 'teszt', $this->lcStoreDb->get( 'hu', 'test-message' ) );
+		$this->assertEquals( 'testing', $lcStoreDb->get( 'en', 'test-message' ) );
+		$this->assertEquals( 'foo', $lcStoreDb->get( 'en', 'other-message' ) );
+
+		$this->assertEquals( 'teszt', $lcStoreDb->get( 'hu', 'test-message' ) );
 	}
 
-	public function testCannotSetBeforeStartWrite() {
-		$this->expectException( \MWException::class );
+	public function testOtherPrefixIsNotAffected() {
+		$lcStoreDb = new LCStoreDB( 'test-prefix' );
+		$otherStore = new LCStoreDB( 'other-prefix' );
 
-		$this->lcStoreDb->set( 'test-message', 'testing' );
-	}
+		$this->assertNull( $lcStoreDb->get( 'en', 'test-message' ) );
+		$this->assertEquals( 'test', $otherStore->get( 'en', 'test-message' ) );
 
-	public function testCannotWriteInvalidCode() {
-		$this->expectException( \MWException::class );
+		$lcStoreDb->startWrite( 'en' );
+		$lcStoreDb->set( 'test-message', 'testing' );
+		$lcStoreDb->finishWrite();
 
-		$this->lcStoreDb->startWrite( false );
+		$this->assertEquals( 'test', $otherStore->get( 'en', 'test-message' ) );
+		$this->assertEquals( 'testing', $lcStoreDb->get( 'en', 'test-message' ) );
 	}
 
 	protected function getDataSet() {

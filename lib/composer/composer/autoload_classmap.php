@@ -2857,6 +2857,7 @@ return array(
     'Wikia\\HTTP\\Response' => $baseDir . '/lib/Wikia/src/HTTP/Response.php',
     'Wikia\\Localisation\\CachedLCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/CachedLCStoreDB.php',
     'Wikia\\Localisation\\LCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/LCStoreDB.php',
+    'Wikia\\Localisation\\LCStoreRedis' => $baseDir . '/lib/Wikia/src/Localisation/LCStoreRedis.php',
     'Wikia\\Logger\\ContextSource' => $baseDir . '/lib/Wikia/src/Logger/ContextSource.php',
     'Wikia\\Logger\\Hooks' => $baseDir . '/lib/Wikia/src/Logger/Hooks.php',
     'Wikia\\Logger\\Loggable' => $baseDir . '/lib/Wikia/src/Logger/Loggable.php',
