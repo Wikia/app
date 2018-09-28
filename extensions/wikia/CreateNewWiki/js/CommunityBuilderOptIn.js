@@ -5,13 +5,15 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		optInPrompts,
 		sectionWrapper,
 		optInModal,
+		nameInput,
+		domainInput,
 		viewedOptInModal = false,
 		PROMPT_ENABLED_WRAPPER_CLASS = 'with-optin',
 		ENABLED_ON_LANGUAGES = ['en'],
 		SHOW_MODAL_ON_HUBS = ['1'],
 		SHOW_MODAL_ON_CATEGORIES = ['anime', 'tv'];
 
-	function init($sectionWrapper, $languageInput, $hubInput) {
+	function init($sectionWrapper, $languageInput, $hubInput, $nameInput, $domainInput) {
 		if (!window.AllowCommunityBuilderOptIn) {
 			return;
 		}
@@ -20,6 +22,8 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		$(document.body).append($('.optin-modal').detach());
 
 		sectionWrapper = $sectionWrapper;
+		nameInput = $nameInput;
+		domainInput = $domainInput;
 		optInPrompts = $('.optin-prompt');
 		optInModal = $('.optin-modal');
 
@@ -56,6 +60,30 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		}
 	}
 
+	function onClickUseCommunityBuilder(event) {
+		event.preventDefault();
+
+		var domainName = domainInput.val().trim(),
+			displayName = nameInput.val().trim(),
+			submit = true;
+
+		if (!domainName || !displayName) {
+			submit = false;
+		}
+
+		var params = [
+			'domain='+encodeURIComponent(domainName),
+			'display='+encodeURIComponent(displayName),
+			'template=TV'
+		];
+
+		if (submit) {
+			params.push('submit=true');
+		}
+
+		window.location = 'http://community-builder.wikia.com/community/create?'+params.join('&');
+	}
+
 	function updateLanguage(language) {
 		currentLanguage = language;
 
@@ -84,7 +112,7 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 				closeModal();
 			}
 		});
-		optInModal.find('.optin-modal__learn-more').on('click', closeModal);
+		optInModal.find('.optin-modal__affirm').on('click', onClickUseCommunityBuilder);
 		optInModal.find('.optin-modal__close').on('click', function(e) {
 			e.preventDefault();
 			e.stopPropagation();

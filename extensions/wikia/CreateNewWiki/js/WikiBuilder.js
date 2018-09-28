@@ -63,7 +63,7 @@ define(
 		checkNextButtonStep1();
 		bindEventHandlers();
 		initFloatingLabelsPosition();
-		communityBuilderOptIn.init(wb, wikiLanguage, wikiVertical);
+		communityBuilderOptIn.init(wb, wikiLanguage, wikiVertical, wikiName, wikiDomain);
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {

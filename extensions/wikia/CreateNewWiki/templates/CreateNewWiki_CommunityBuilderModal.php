@@ -7,7 +7,7 @@
 		<p class="optin-modal__copy">
 			Want to create a new community for your favorite anime or TV show? Try out the Community Builder and start building your community today!
 		</p>
-		<a class="optin-modal__learn-more" target="_blank" href="http://community-builder.wikia.com">
+		<a class="optin-modal__affirm" href="#">
 			<button class="wds-button">
 				use community builder
 			</button>
