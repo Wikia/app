@@ -536,11 +536,8 @@ var NodeChatUsers = Backbone.View.extend({
 
 	// Only show chevron in public chat if there is anyone to talk to
 	toggleChevron: function(list) {
-		var chevron = $('#Rail .public .chevron');
-		if (list.children().length > 1) {
-			chevron.show();
-		} else {
-			chevron.hide();
+		if (list.children().length =< 1) {
+			$('#Rail .public .chevron').hide();
 		}
 	},
 
