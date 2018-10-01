@@ -1,9 +1,6 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define(
-		'ext.createNewWiki.builder',
-		['ext.createNewWiki.helper', 'ext.createNewWiki.communityBuilderOptIn', 'wikia.tracker'],
-		function (helper, communityBuilderOptIn, tracker) {
+define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper, tracker) {
 	'use strict';
 
 	var wntimer = false,
@@ -63,7 +60,6 @@ define(
 		checkNextButtonStep1();
 		bindEventHandlers();
 		initFloatingLabelsPosition();
-		communityBuilderOptIn.init(wb, wikiLanguage, wikiVertical, wikiName, wikiDomain);
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {

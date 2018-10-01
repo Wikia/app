@@ -2209,7 +2209,6 @@ $config['create_new_wiki_js'] = [
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
 		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
-		'//extensions/wikia/CreateNewWiki/js/CommunityBuilderOptIn.js',
 		'//resources/wikia/libraries/vignette/vignette.js',
 	],
 ];
@@ -2218,7 +2217,6 @@ $config['create_new_wiki_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss',
-		'//extensions/wikia/CreateNewWiki/css/CommunityBuilderOptIn.scss',
 	],
 ];
 
