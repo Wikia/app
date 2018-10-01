@@ -18,6 +18,7 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
@@ -44,6 +45,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	adInfoListener,
+	pageInfoTracker,
 	scrollDepthTracker,
 	adLogicZoneParams,
 	babDetection,
@@ -107,6 +109,13 @@ require([
 			wadRecRunner.init();
 			adInfoListener.run();
 			slotStateMonitor.run();
+
+			// Track Labrador values to DW
+			var labradorPropValue = geo.getSamplingResults().join(';');
+
+			if (context.opts.enableAdInfoLog && labradorPropValue) {
+				pageInfoTracker.trackProp('labrador', labradorPropValue);
+			}
 
 			// Ads
 			win.adslots2 = win.adslots2 || [];

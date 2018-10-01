@@ -2123,6 +2123,7 @@ class OutputPage extends ContextSource {
 				if ( !$this->getRequest()->wasPosted() && $current == $redirect ) {
 					$response->header( 'HTTP/1.1 508 Loop Detected' );
 					$response->header( 'X-Reason: Redirect loop detected' );
+					$response->header( 'X-Redirected-By: ' . join( ' ', $this->redirectedBy) );
 					\Wikia\Logger\WikiaLogger::instance()->error(
 						'Redirect loop detected', [
 							'currentUrl' => $current,

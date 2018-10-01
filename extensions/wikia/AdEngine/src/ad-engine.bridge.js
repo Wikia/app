@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	Roadblock,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -28,7 +29,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
 
 function init(
 	adTracker,
@@ -68,11 +69,6 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
-	if (window.wgServicesExternalDomain) {
-		context.set('services.billTheLizard.host',
-			window.wgServicesExternalDomain.replace(/\/$/, ''));
-	}
-
 	legacyContext.addCallback(() => {
 		context.set('slots', getSlotsContext(legacyContext, skin));
 		syncSlotsStatus(slotRegistry, context.get('slots'));
@@ -81,6 +77,7 @@ function init(
 	if (legacyContext.get('bidders.prebidAE3')) {
 		context.set('bidders', getBiddersContext(skin));
 
+		context.set('bidders.a9.dealsEnabled', legacyContext.get('bidders.a9Deals'));
 		context.set('bidders.a9.enabled', legacyContext.get('bidders.a9'));
 		context.set('bidders.a9.videoEnabled', legacyContext.get('bidders.a9Video'));
 

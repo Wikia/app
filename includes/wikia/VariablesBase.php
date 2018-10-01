@@ -1043,14 +1043,6 @@ $wgChatPrivateServerOverride = null;
 $wgChatPublicHost = 'chat.wikia-services.com:443';
 
 /**
- * Override to $wgChatPublicHost for development and testing purposes.
- * @see $wgChatPublicHost
- * @see extensions/wikia/Chat2/ChatConfig.class.php
- * @var string $wgChatPublicHostOverride
- */
-$wgChatPublicHostOverride = null;
-
-/**
  * This is a flag to determine whether or not to check file extensions on
  * upload. WARNING: setting this to false is insecure for public wikis.
  * @var bool $wgCheckFileExtensions
@@ -1177,8 +1169,8 @@ $wgCompressRevisions = true;
  */
 $wgConsulDataCenters = [
 	'dev' => [
-		'sjc-dev',
-		'poz-dev',
+		'sjc',
+		'poz',
 	],
 	'prod' => [
 		'sjc',
@@ -2016,6 +2008,17 @@ $wgDumpsDisabledWikis = [
  * @var string $wgEditEncoding
  */
 $wgEditEncoding = '';
+
+/**
+ * RabbitMQ configuration for Edit Events Pipeline.
+ * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
+ * @var array $wgEditEventsRabbitConfig
+ */
+$wgEditEventsRabbitConfig = [
+	'vhost' => 'data-warehouse',
+	'exchange' => 'mediawiki-edit-events',
+	'deadExchange' => 'zombie.v0.1',
+];
 
 /**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
@@ -4962,6 +4965,17 @@ $wgImageLimits = [
 $wgImageMagickConvertCommand = '/usr/bin/convert';
 
 /**
+ * RabbitMQ configuration for ImageReview.
+ * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
+ * @var array $wgImageReview
+ */
+$wgImageReview = [
+	'vhost' => 'dc-file-sync',
+	'exchange' => 'amq.topic',
+	'deadExchange' => 'zombie.v0.1'
+];
+
+/**
  * An image can be used as a thumbnail of an article if it is used less than
  * this many times.
  * @see extensions/wikia/ImageServing/drivers/ImageServingDriverMainNS.class.php
@@ -5023,6 +5037,18 @@ $wgImportTargetNamespace = null;
  * @var bool $wgIncludeLegacyJavaScript
  */
 $wgIncludeLegacyJavaScript = true;
+
+
+/**
+ * RabbitMQ configuration for Indexing Pipeline.
+ * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
+ * @var array $wgIndexingPipeline
+ */
+$wgIndexingPipeline = [
+	'vhost' => 'indexer',
+	'exchange' => 'events',
+	'deadExchange' => 'zombie.v0.1',
+];
 
 /**
  * Internal server name as known to Squid, if different.
@@ -6289,6 +6315,16 @@ $wgPasswordResetRoutes = [
 $wgPasswordSender = 'community@fandom.com';
 
 /**
+ * Phalanx RabbitMQ configuration.
+ * @see extensions/wikia/PhalanxII
+ * @var array $wgPhalanxQueue
+ */
+$wgPhalanxQueue = [
+	'vhost' => 'phalanx',
+	'exchange' => 'phalanx',
+];
+
+/**
  * Languages for which admins can create blocks and filters.
  * @var Array $wgPhalanxSupportedLanguages
  * @see extensions/wikia/PhalanxII
@@ -6561,6 +6597,18 @@ $wgQueryCacheLimit = 1000;
  * @var int $wgQueryPageDefaultLimit
  */
 $wgQueryPageDefaultLimit = 50;
+
+/**
+ * Hostname of the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitHost
+ */
+$wgRabbitHost = 'prod.rabbit.service.consul';
+
+/**
+ * Port used by the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitPort
+ */
+$wgRabbitPort = 5672;
 
 /**
  * Set to a filename to log rate limiter hits.
@@ -8828,3 +8876,10 @@ $wgYoukuConfig['playerColor'] = 0;
  * @var int $wgDataMartOriginalCityId
  */
 $wgDataMartOriginalCityId = 0;
+
+/**
+ * whether or not create new wiki prompts users to alternatively create their community
+ * in the community builder (fandom creator)
+ * @see CAKE-2151
+ */
+$wgAllowCommunityBuilderCNWPrompt = false;

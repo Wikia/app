@@ -16,9 +16,14 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.disableBtf = false;
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
-	messageListener.register({dataKey: 'disableBtf', infinite: true}, function (msg) {
+	var btfQueue = [],
+		btfQueueStarted = false,
+		pendingAtfSlots = [], // ATF slots pending for response
+		fillInSlotCallbacks = {};
+
+	function disableBtfByMessage(msg) {
 		win.ads.runtime.disableBtf = Boolean(msg.disableBtf);
-	});
+	}
 
 	function unblock(slotName) {
 		log(['unblocking', slotName], log.levels.info, logGroup);
@@ -28,11 +33,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function isBTFDisabledByCreative() {
 		return win.ads.runtime.disableBtf;
 	}
-
-	var btfQueue = [],
-		btfQueueStarted = false,
-		pendingAtfSlots = []; // ATF slots pending for response
-	var fillInSlotCallbacks = {};
 
 	function decorate(fillInSlot, config) {
 
@@ -44,6 +44,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			win.ads.runtime.disableBtf = false;
 			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
+
+			messageListener.register({dataKey: 'disableBtf', infinite: true}, disableBtfByMessage);
 		});
 
 		// as soon as we know that user has adblock, unblock BTF slots
@@ -137,6 +139,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		return fillInSlotWithDelay;
 	}
+
+	messageListener.register({dataKey: 'disableBtf', infinite: true}, disableBtfByMessage);
 
 	return {
 		decorate: decorate,
