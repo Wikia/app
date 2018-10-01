@@ -1,13 +1,18 @@
-define('ext.createNewWiki.communityBuilderOptIn', [], function() {
+define('ext.createNewWiki.communityBuilderOptIn', ['wikia.tracker'], function(tracker) {
 	'use strict';
 
 	var currentLanguage,
 		optInPrompts,
+		learnMoreLinks,
 		sectionWrapper,
 		optInModal,
 		nameInput,
 		domainInput,
 		viewedOptInModal = false,
+		track = tracker.buildTrackingFunction({
+			category: 'community-builder-opt-in',
+			trackingMethod: 'analytics'
+		}),
 		PROMPT_ENABLED_WRAPPER_CLASS = 'with-optin',
 		ENABLED_ON_LANGUAGES = ['en'],
 		SHOW_MODAL_ON_HUBS = ['1'],
@@ -26,11 +31,13 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		domainInput = $domainInput;
 		optInPrompts = $('.optin-prompt');
 		optInModal = $('.optin-modal');
+		learnMoreLinks = $('.optin-prompt__link');
 
 		updateLanguage($languageInput.val());
 
 		$languageInput.on('change', onLanguageInputChange);
 		$hubInput.on('change', onHubInputChange);
+		learnMoreLinks.on('click', onLearnMoreClick);
 		bindCategoryCheckboxes();
 	}
 
@@ -81,7 +88,21 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 			params.push('submit=true');
 		}
 
-		window.location = 'http://community-builder.wikia.com/community/create?'+params.join('&');
+		track({
+			action: tracker.ACTIONS.CLICK,
+			label: 'use-opt-in'
+		});
+
+		setTimeout(function() {
+			window.location = 'http://community-builder.wikia.com/community/create?'+params.join('&');
+		}, 50);
+	}
+
+	function onLearnMoreClick() {
+		track({
+			action: tracker.ACTIONS.CLICK,
+			label: 'learn-more'
+		});
 	}
 
 	function updateLanguage(language) {
@@ -106,6 +127,10 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 		}
 
 		viewedOptInModal = true;
+		track({
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'opt-in-modal'
+		});
 		optInModal.show();
 		optInModal.on('click', function(e) {
 			if (e.currentTarget === e.target) {
@@ -121,6 +146,10 @@ define('ext.createNewWiki.communityBuilderOptIn', [], function() {
 	}
 
 	function closeModal() {
+		track({
+			action: tracker.ACTIONS.CLICK,
+			label: 'close-modal'
+		});
 		optInModal.hide();
 	}
 
