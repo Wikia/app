@@ -36,6 +36,15 @@ $IP = realpath( __DIR__ . '/../../../../' );
 // see a comment in WebStart.php on why MW_MSTALL_PATH is set here
 putenv('MW_INSTALL_PATH=' . $IP);
 
+/**
+ * SUS-5862 | set a flag to put MediaWiki database access layer in auto-commit mode
+ * i.e. mimic the behaviour of command-line maintenance scripts
+ *
+ * Database-heavy offline tasks will have problems with large transactions
+ * being committed at the end of the proxy.php processing
+ */
+$wgCommandLineMode = true;
+
 require ( $IP . '/includes/WebStart.php' );
 
 // finally, execute the task
