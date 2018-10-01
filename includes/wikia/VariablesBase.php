@@ -8883,3 +8883,17 @@ $wgDataMartOriginalCityId = 0;
  * @see CAKE-2151
  */
 $wgAllowCommunityBuilderCNWPrompt = false;
+
+/**
+ * Date of migration to a fandom.com domain, triggers a banner notification
+ * @see SEO-669
+ * @var string $wgFandomComMigrationDate
+ */
+$wgFandomComMigrationDate = null;
+
+/**
+ * Whether the community was migrated to a fandom.com domain, triggers a banner notification
+ * @see SEO-669
+ * @var bool $wgFandomComMigrationDone
+ */
+$wgFandomComMigrationDone = false;
