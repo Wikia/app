@@ -54,11 +54,6 @@
 
 .optin-wrapper {
 	display: flex;
-
-	> *:first-child {
-		flex-grow: 1;
-		width: 380px !important;
-	}
 }
 
 .optin-prompt {
@@ -70,6 +65,11 @@
 
 	a {
 		@include optin-button-link;
+	}
+
+	&__left-column {
+		flex-grow: 1;
+		width: 380px !important;
 	}
 
 	&__community {

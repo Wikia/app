@@ -11,7 +11,7 @@
 			<p class="creative"><?= wfMessage( 'cnw-name-wiki-creative' )->escaped() ?></p>
 
 			<div class="optin-wrapper">
-				<form name="label-wiki-form">
+				<form name="label-wiki-form" class="optin-prompt__left-column">
 					<div class="wiki-name-container">
 						<?=
 						wfMessage('autocreatewiki-title-template')->rawParams(
@@ -88,7 +88,7 @@
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
 			<form name="desc-form" class="clearfix">
 				<div class="optin-wrapper">
-					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
+					<textarea id="Description" class="optin-prompt__left-column" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 					<?= $communityBuilderPrompt ?>
 				</div>
 				<div class="checkbox" id="all-ages-div">
