@@ -131,6 +131,11 @@ define('ext.wikia.adEngine.lookup.a9', [
 					return slot !== null
 				});
 
+			if (a9Slots.length === 0) {
+				onResponse();
+				return;
+			}
+
 			log(['call - fetchBids', a9Slots], 'debug', logGroup);
 
 			win.apstag.fetchBids({
@@ -232,7 +237,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isSlotSupported(slotName) {
-		return slots[slotName];
+		return !!slots[slotName];
 	}
 
 	function getBestSlotPrice(slotName) {
