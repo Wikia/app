@@ -11,6 +11,7 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['FandomComMigrationHooks'] = __DIR__ . '/FandomComMigrationHooks.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'FandomComMigrationHooks::onBeforePageDisplay';
+$wgHooks['MercuryWikiVariables'][] = 'FandomComMigrationHooks::onMercuryWikiVariables';
 $wgHooks['OasisSkinAssetGroups'][] = 'FandomComMigrationHooks::onOasisSkinAssetGroups';
 $wgHooks['WikiaSkinTopScripts'][] = 'FandomComMigrationHooks::onWikiaSkinTopScripts';
 
