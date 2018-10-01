@@ -85,6 +85,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
@@ -112,7 +113,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
-		$vars[] = 'wgAdDriverMobileStickyAndSwapCountries';
 
 		/**
 		 * Disaster Recovery
