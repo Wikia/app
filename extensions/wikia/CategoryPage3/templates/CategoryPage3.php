@@ -6,6 +6,9 @@
 			<?php foreach ( $members as $member ) : ?>
 				<?php /** @var CategoryPage3Member $member */ ?>
 				<li>
+					<?php if ( $member->isSubcategory() ) : ?>
+						<?= DesignSystemHelper::renderSvg('wds-icons-pages-small', 'wds-icon-small') ?>
+					<?php endif; ?>
 					<?php if ( $member->getImage() ) : ?>
 						<img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
 							 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"

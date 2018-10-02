@@ -56,7 +56,7 @@ class CategoryPage3Model {
 				$this->members,
 				function ( $member ) {
 					/** @var CategoryPage3Member $member */
-					return $member->getTitle()->getNamespace() !== NS_CATEGORY;
+					return !$member->isSubcategory();
 				}
 			)
 		);

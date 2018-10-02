@@ -38,4 +38,8 @@ class CategoryPage3Member {
 	public function getTitle(): Title {
 		return $this->title;
 	}
+
+	public function isSubcategory(): bool {
+		return $this->getTitle()->getNamespace() === NS_CATEGORY;
+	}
 }
