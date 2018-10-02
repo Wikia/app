@@ -38,7 +38,7 @@ class TaskRunner {
 			$request->getVal('task_list'),
 			$request->getVal('call_order'),
 			$request->getVal('created_by'),
-			$request->getVal('created_at')
+			$request->getVal('created_at', microtime( true ) )
 		);
 	}
 
