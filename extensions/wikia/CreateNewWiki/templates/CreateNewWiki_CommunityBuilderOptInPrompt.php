@@ -8,7 +8,7 @@
 		We're working on a new experience to help you and your fellow fans bond around your favorite anime and TV shows. Check it out today!
 	</p>
 	<a class="optin-prompt__link" target="_blank" href="http://community-builder.wikia.com">
-		<button class="wds-button wds-is-text">
+		<button type="button" class="wds-button wds-is-text">
 			learn more
 		</button>
 	</a>
