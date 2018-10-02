@@ -11,7 +11,7 @@ require([
 ) {
 	'use strict';
 
-	var wgFandomComMigrationDate = mw.config.get('wgFandomComMigrationDate');
+	var wgFandomComMigrationScheduled = mw.config.get('wgFandomComMigrationScheduled');
 	var wgFandomComMigrationDone = mw.config.get('wgFandomComMigrationDone');
 
 	var afterMigrationClosedStorageKey = 'fandom-com-migration-after-closed';
@@ -26,7 +26,7 @@ require([
 	}
 
 	function shouldShowBeforeMigrationNotification() {
-		return wgFandomComMigrationDate && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
+		return wgFandomComMigrationScheduled && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function showAfterMigrationNotification() {
@@ -45,7 +45,7 @@ require([
 
 	function showBeforeMigrationNotification() {
 		var banner = new BannerNotification(
-			mw.message('fandom-com-migration-before', wgFandomComMigrationDate).parse(),
+			mw.message('fandom-com-migration-before').parse(),
 			'warn',
 			null
 		);

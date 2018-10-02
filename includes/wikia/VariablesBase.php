@@ -8885,11 +8885,11 @@ $wgDataMartOriginalCityId = 0;
 $wgAllowCommunityBuilderCNWPrompt = false;
 
 /**
- * Date of migration to a fandom.com domain, triggers a banner notification
+ * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
  * @see SEO-669
- * @var string $wgFandomComMigrationDate
+ * @var string $wgFandomComMigrationScheduled
  */
-$wgFandomComMigrationDate = null;
+$wgFandomComMigrationScheduled = false;
 
 /**
  * Whether the community was migrated to a fandom.com domain, triggers a banner notification
