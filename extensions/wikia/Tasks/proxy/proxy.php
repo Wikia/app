@@ -47,8 +47,12 @@ $wgCommandLineMode = true;
 
 require ( $IP . '/includes/WebStart.php' );
 
+// we forced command line mode, explicitly construct a WebRequest object
+// instead of relying on $wgRequest
+$request = new FauxRequest( $_POST, true );
+
 // finally, execute the task
-$runner = Wikia\Tasks\TaskRunner::newFromRequest( $wgRequest );
+$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
 $runner->run();
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
