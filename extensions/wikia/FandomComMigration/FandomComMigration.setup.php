@@ -17,7 +17,9 @@ $wgHooks['WikiaSkinTopScripts'][] = 'FandomComMigrationHooks::onWikiaSkinTopScri
 
 $wgExtensionMessagesFiles['FandomComMigration'] = __DIR__ . '/FandomComMigration.i18n.php';
 
-JSMessages::registerPackage( 'FandomComMigration', [
-	'fandom-com-migration-after',
-	'fandom-com-migration-before'
-] );
+$wgResourceModules['ext.fandomComMigration'] = [
+	'messages' => [
+		'fandom-com-migration-after',
+		'fandom-com-migration-before'
+	]
+];

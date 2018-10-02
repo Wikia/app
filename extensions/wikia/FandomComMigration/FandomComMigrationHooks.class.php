@@ -4,7 +4,7 @@ class FandomComMigrationHooks {
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( static::isEnabled() ) {
-			JSMessages::enqueuePackage( 'FandomComMigration', JSMessages::EXTERNAL );
+			$out->addModules( 'ext.fandomComMigration' );
 		}
 
 		return true;

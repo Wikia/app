@@ -2,14 +2,12 @@ require([
 	'jquery',
 	'mw',
 	'wikia.cache',
-	'BannerNotification',
-	'JSMessages'
+	'BannerNotification'
 ], function (
 	$,
 	mw,
 	cache,
-	BannerNotification,
-	msg
+	BannerNotification
 ) {
 	'use strict';
 
@@ -33,7 +31,7 @@ require([
 
 	function showAfterMigrationNotification() {
 		var banner = new BannerNotification(
-			msg('fandom-com-migration-after'),
+			mw.message('fandom-com-migration-after').parse(),
 			'warn',
 			null
 		);
@@ -47,7 +45,7 @@ require([
 
 	function showBeforeMigrationNotification() {
 		var banner = new BannerNotification(
-			msg('fandom-com-migration-before', wgFandomComMigrationDate),
+			mw.message('fandom-com-migration-before', wgFandomComMigrationDate).parse(),
 			'warn',
 			null
 		);
