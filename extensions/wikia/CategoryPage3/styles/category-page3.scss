@@ -3,6 +3,11 @@
 		columns: 2;
 	}
 
+	&__member-thumbnail {
+		height: 30px;
+		width: 40px;
+	}
+
 	&__pagination {
 		// TODO use a variable for the color
 		border-top: 1px solid #000;

@@ -10,6 +10,7 @@ $wgExtensionCredits['other'][] = [
 
 $wgAutoloadClasses['CategoryPage3'] = __DIR__ . '/CategoryPage3.class.php';
 $wgAutoloadClasses['CategoryPage3Hooks'] = __DIR__ . '/CategoryPage3Hooks.class.php';
+$wgAutoloadClasses['CategoryPage3Member'] = __DIR__ . '/CategoryPage3Member.class.php';
 $wgAutoloadClasses['CategoryPage3Model'] = __DIR__ . '/CategoryPage3Model.class.php';
 $wgAutoloadClasses['CategoryPage3Pagination'] = __DIR__ . '/CategoryPage3Pagination.class.php';
 

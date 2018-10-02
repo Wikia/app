@@ -12,7 +12,7 @@ class CategoryPage3Model {
 	/** @var string */
 	private $from;
 
-	/** @var array */
+	/** @var CategoryPage3Member[] */
 	private $members;
 
 	/** @var CategoryPage3Pagination */
@@ -46,8 +46,34 @@ class CategoryPage3Model {
 		}
 	}
 
-	public function getMembers(): array {
-		return $this->members;
+	/**
+	 * @param $thumbWidth
+	 * @param $thumbHeight
+	 */
+	public function loadImages( $thumbWidth, $thumbHeight ) {
+		$pageIds = array_keys( $this->members );
+		$imageServing = new ImageServing( $pageIds, $thumbWidth, array( 'w' => $thumbWidth, 'h' => $thumbHeight ) );
+
+		foreach ( $imageServing->getImages( 1 ) as $pageId => $images ) {
+			$member = $this->members[ $pageId ];
+			$member->setImage( $images[0]['url'] );
+		}
+	}
+
+	public function getMembersGroupedByChar(): array {
+		$membersGroupedByChar = [];
+
+		foreach ( $this->members as $member ) {
+			$firstChar = $member->getFirstChar();
+
+			if ( !isset( $membersGroupedByChar[ $firstChar ] ) ) {
+				$membersGroupedByChar[ $firstChar ] = [];
+			}
+
+			$membersGroupedByChar[ $firstChar ][] = $member;
+		}
+
+		return $membersGroupedByChar;
 	}
 
 	public function getPagination(): CategoryPage3Pagination {
@@ -111,15 +137,9 @@ class CategoryPage3Model {
 	private function addPage( Title $title, $sortkey ) {
 		global $wgContLang;
 
-		$link = Linker::link( $title );
-
 		$firstChar = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
 
-		if ( !isset( $this->members[ $firstChar ] ) ) {
-			$this->members[ $firstChar ] = [];
-		}
-
-		$this->members[ $firstChar ][] = $link;
+		$this->members[ $title->getArticleID() ] = new CategoryPage3Member( $title, $firstChar );
 	}
 
 	private function findPrevPage( DatabaseMysqli $dbr ) {

@@ -31,6 +31,7 @@ class CategoryPage3 extends CategoryPage {
 
 		$this->model = new CategoryPage3Model( $context->getTitle(), $this->from );
 		$this->model->loadData();
+		$this->model->loadImages( 40, 30 );
 
 		$this->addPaginationToHead();
 		$context->getOutput()->addHTML( $this->getHTML() );
@@ -69,7 +70,7 @@ class CategoryPage3 extends CategoryPage {
 		$mustache = new PhpEngine();
 
 		$templateVars = [
-			'members' => $this->model->getMembers(),
+			'membersGroupedByChar' => $this->model->getMembersGroupedByChar(),
 			'pagination' => $this->model->getPagination()
 		];
 

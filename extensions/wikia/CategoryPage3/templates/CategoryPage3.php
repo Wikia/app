@@ -1,10 +1,19 @@
 <div class="category-page__members">
-	<?php /** @var array $members */ ?>
-	<?php foreach ( $members as $firstChar => $items ) : ?>
+	<?php /** @var array $membersGroupedByChar */ ?>
+	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>
         <h3><?= $firstChar ?></h3>
         <ul>
-			<?php foreach ( $items as $item ) : ?>
-                <li><?= $item ?></li>
+			<?php foreach ( $members as $member ) : ?>
+				<?php /** @var CategoryPage3Member $member */ ?>
+				<li>
+					<?php if ( $member->getImage() ) : ?>
+						<img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
+							 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
+							 class="category-page__member-thumbnail"
+						>
+					<?php endif; ?>
+					<?= Linker::linkKnown( $member->getTitle() ) ?>
+				</li>
 			<?php endforeach; ?>
         </ul>
 	<?php endforeach; ?>
