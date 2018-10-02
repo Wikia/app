@@ -51,7 +51,15 @@ class CategoryPage3Model {
 	 * @param $thumbHeight
 	 */
 	public function loadImages( $thumbWidth, $thumbHeight ) {
-		$pageIds = array_keys( $this->members );
+		$pageIds = array_keys(
+			array_filter(
+				$this->members,
+				function ( $member ) {
+					/** @var CategoryPage3Member $member */
+					return $member->getTitle()->getNamespace() !== NS_CATEGORY;
+				}
+			)
+		);
 		$imageServing = new ImageServing( $pageIds, $thumbWidth, array( 'w' => $thumbWidth, 'h' => $thumbHeight ) );
 
 		foreach ( $imageServing->getImages( 1 ) as $pageId => $images ) {
