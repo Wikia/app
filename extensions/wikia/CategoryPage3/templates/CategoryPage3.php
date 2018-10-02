@@ -1,3 +1,6 @@
+<p class="category-page__total-number">
+	All items (<?= $totalNumberOfMembers; ?>)
+</p>
 <div class="category-page__members">
 	<?php /** @var array $membersGroupedByChar */ ?>
 	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>

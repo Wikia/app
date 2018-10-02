@@ -1,7 +1,7 @@
 <?php
 
 class CategoryPage3Model {
-	const ITEMS_PER_PAGE_LIMIT = 200;
+	const MEMBERS_PER_PAGE_LIMIT = 200;
 
 	/** @var Category */
 	private $category;
@@ -21,6 +21,9 @@ class CategoryPage3Model {
 	/** @var Title */
 	private $title;
 
+	/** @var int */
+	private $totalNumberOfMembers;
+
 	public function __construct( Title $title, $from ) {
 		$this->category = Category::newFromTitle( $title );
 		$this->collation = Collation::singleton();
@@ -28,6 +31,7 @@ class CategoryPage3Model {
 		$this->members = [];
 		$this->pagination = new CategoryPage3Pagination( $title, $from );
 		$this->title = $title;
+		$this->totalNumberOfMembers = 0;
 	}
 
 	/**
@@ -37,8 +41,9 @@ class CategoryPage3Model {
 	public function loadData() {
 		$dbr = wfGetDB( DB_SLAVE, 'category' );
 
-		$results = $this->runQuery( $dbr );
+		$results = $this->getMembersFromDB( $dbr );
 		$this->addPagesFromDbResults( $results );
+		$this->findTotalNumberOfMembers( $dbr );
 		$this->findPrevPage( $dbr );
 
 		if ( $this->pagination->getNextPageKey() ) {
@@ -88,6 +93,10 @@ class CategoryPage3Model {
 		return $this->pagination;
 	}
 
+	public function getTotalNumberOfMembers(): int {
+		return $this->totalNumberOfMembers;
+	}
+
 	/**
 	 * @param $dbr
 	 * @return array
@@ -117,7 +126,7 @@ class CategoryPage3Model {
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function runQuery( DatabaseMysqli $dbr ): ResultWrapper {
+	private function getMembersFromDB( DatabaseMysqli $dbr ): ResultWrapper {
 		$extraConditions = $this->getExtraConditionsForQuery( $dbr );
 
 		return $dbr->select(
@@ -132,7 +141,7 @@ class CategoryPage3Model {
 			__METHOD__,
 			[
 				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
-				'LIMIT' => static::ITEMS_PER_PAGE_LIMIT + 1,
+				'LIMIT' => static::MEMBERS_PER_PAGE_LIMIT + 1,
 				'ORDER BY' => 'cl_sortkey',
 			],
 			[
@@ -148,6 +157,19 @@ class CategoryPage3Model {
 		$firstChar = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
 
 		$this->members[ $title->getArticleID() ] = new CategoryPage3Member( $title, $firstChar );
+	}
+
+	private function findTotalNumberOfMembers( DatabaseMysqli $dbr ) {
+		$totalNumberOfMembers = $dbr->selectField(
+			'categorylinks',
+			'count(0)',
+			[
+				'cl_to' => $this->title->getDBkey()
+			],
+			__METHOD__
+		);
+
+		$this->totalNumberOfMembers = $totalNumberOfMembers;
 	}
 
 	private function findPrevPage( DatabaseMysqli $dbr ) {
@@ -168,7 +190,7 @@ class CategoryPage3Model {
 			__METHOD__,
 			[
 				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
-				'LIMIT' => static::ITEMS_PER_PAGE_LIMIT + 1,
+				'LIMIT' => static::MEMBERS_PER_PAGE_LIMIT + 1,
 				'ORDER BY' => 'cl_sortkey DESC',
 			],
 			[
@@ -181,7 +203,7 @@ class CategoryPage3Model {
 		$this->pagination->setIsPrevPageTheFirstPage( true );
 
 		foreach ( $res as $row ) {
-			if ( ++$count > static::ITEMS_PER_PAGE_LIMIT ) {
+			if ( ++$count > static::MEMBERS_PER_PAGE_LIMIT ) {
 				$this->pagination->setIsPrevPageTheFirstPage( false );
 				break;
 			}
@@ -199,16 +221,7 @@ class CategoryPage3Model {
 	}
 
 	private function findLastPage( DatabaseMysqli $dbr ) {
-		$totalCount = $dbr->selectField(
-			'categorylinks',
-			'count(0)',
-			[
-				'cl_to' => $this->title->getDBkey()
-			],
-			__METHOD__
-		);
-
-		$lastPageMembersCount = $totalCount % static::ITEMS_PER_PAGE_LIMIT;
+		$lastPageMembersCount = $this->totalNumberOfMembers % static::MEMBERS_PER_PAGE_LIMIT;
 
 		$res = $dbr->select(
 			[ 'page', 'categorylinks' ],
@@ -247,7 +260,7 @@ class CategoryPage3Model {
 			$title = Title::newFromRow( $row );
 			$humanSortkey = $this->getHumanSortkey( $row, $title );
 
-			if ( ++$count > static::ITEMS_PER_PAGE_LIMIT ) {
+			if ( ++$count > static::MEMBERS_PER_PAGE_LIMIT ) {
 				$this->pagination->setNextPageKey( $humanSortkey );
 				break;
 			}

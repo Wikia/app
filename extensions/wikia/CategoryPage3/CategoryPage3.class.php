@@ -71,7 +71,8 @@ class CategoryPage3 extends CategoryPage {
 
 		$templateVars = [
 			'membersGroupedByChar' => $this->model->getMembersGroupedByChar(),
-			'pagination' => $this->model->getPagination()
+			'pagination' => $this->model->getPagination(),
+			'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
 		];
 
 		return $mustache->clearData()
