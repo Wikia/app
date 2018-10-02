@@ -167,7 +167,10 @@ class WikiDetailsService extends WikiService {
 			// convert city_url to https url for https-enabled wikis
 			$city_url = WikiFactory::getLocalEnvURL( $wikiObj->city_url );
 			$enableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $id );
-			if ( !empty( $enableHTTPSForAnons ) && wfHttpsAllowedForURL( $city_url ) ) {
+			if (
+				wfHttpsAllowedForURL( $city_url ) &&
+				( wfHttpsEnabledForURL( $city_url ) || !empty( $enableHTTPSForAnons ) )
+			) {
 				$city_url = wfHttpToHttps( $city_url );
 			}
 

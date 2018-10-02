@@ -59,9 +59,9 @@ class SitemapHooks {
 	private static function shouldCancelRedirect( $currentHost, Title $targetTitle ): bool {
 		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
 
-		$currentHost = WikiFactory::normalizeHost( $currentHost );
+		$currentHost = wfNormalizeHost( $currentHost );
 		$targetUrlParsed = parse_url( wfExpandUrl( $targetTitle->getFullURL(), PROTO_CURRENT ) );
-		$targetHost = WikiFactory::normalizeHost( $targetUrlParsed['host'] );
+		$targetHost = wfNormalizeHost( $targetUrlParsed['host'] );
 
 		if ( strpos( $currentHost, ".{$wgWikiaBaseDomain}" ) === false ||
 			strpos( $targetHost, ".{$wgFandomBaseDomain}" ) === false
