@@ -36,10 +36,23 @@ $IP = realpath( __DIR__ . '/../../../../' );
 // see a comment in WebStart.php on why MW_MSTALL_PATH is set here
 putenv('MW_INSTALL_PATH=' . $IP);
 
+/**
+ * SUS-5862 | set a flag to put MediaWiki database access layer in auto-commit mode
+ * i.e. mimic the behaviour of command-line maintenance scripts
+ *
+ * Database-heavy offline tasks will have problems with large transactions
+ * being committed at the end of the proxy.php processing
+ */
+$wgCommandLineMode = true;
+
 require ( $IP . '/includes/WebStart.php' );
 
+// we forced command line mode, explicitly construct a WebRequest object
+// instead of relying on $wgRequest
+$request = new FauxRequest( $_POST, true );
+
 // finally, execute the task
-$runner = Wikia\Tasks\TaskRunner::newFromRequest( $wgRequest );
+$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
 $runner->run();
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
