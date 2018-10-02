@@ -31,7 +31,7 @@ class ActionButton {
 		$this->user = $requestContext->getUser();
 		$this->request = $requestContext->getRequest();
 
-		$this->pageStatsService = PageStatsService::newFromTitle( $this->title );
+		$this->pageStatsService = new PageStatsService( $this->title );
 
 		$this->prepareActionButton();
 

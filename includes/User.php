@@ -1993,7 +1993,9 @@ class User implements JsonSerializable {
 		// Wikia change - end
 
 		if ( $changed ) {
-			$this->invalidateCache();
+
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$this->touch();
 		}
 	}
 
@@ -2912,7 +2914,9 @@ class User implements JsonSerializable {
 	public function addWatch( $title ) {
 		$wl = WatchedItem::fromUserTitle( $this, $title );
 		$wl->addWatch();
-		$this->invalidateCache();
+
+		// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+		$this->touch();
 	}
 
 	/**
@@ -2922,7 +2926,9 @@ class User implements JsonSerializable {
 	public function removeWatch( $title ) {
 		$wl = WatchedItem::fromUserTitle( $this, $title );
 		$wl->removeWatch();
-		$this->invalidateCache();
+
+		// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+		$this->touch();
 	}
 
 	/**
@@ -4033,8 +4039,12 @@ class User implements JsonSerializable {
 			 * @author Kamil Koterba
 			 */
 
-			$userStatsService = new UserStatsService( $this->getId() );
-			$userStatsService->increaseEditsCount();
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$task = \Wikia\Tasks\Tasks\IncrementEditCountTask::newLocalTask();
+			$task->createdBy( $this );
+			$task->call( 'increaseEditCount' );
+
+			$task->queue();
 			/* end of change */
 		}
 	}

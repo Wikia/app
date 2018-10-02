@@ -318,23 +318,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) === '1' ) ;
 
 			if ( !$wasNotificationSent ) {
-				$userEditStatus = static::getUserEditsStatus( $editor, true );
-				/*
-					If there is at least one edit, flag that we should not send this email anymore;
-					either first email is sent out as a result of this request,
-					or there was more than 1 edit so we will never need to send it again
-				 */
-				switch ( $userEditStatus ) {
-					case self::NO_EDITS:
-						return true;
-						break;
-					case self::FIRST_EDIT:
-						$isRegisteredUserFirstEdit = true;
-						static::setFirstEmailSentFlag( $editor->getName() );
-						break;
-					case self::MULTIPLE_EDITS:
-						static::setFirstEmailSentFlag( $editor->getName() );
-				}
+				$service = new UserStatsService( $editorId );
+				$editCount = $service->getEditCountWiki();
+
+				$isRegisteredUserFirstEdit = ( $editCount === 0 );
+
+				// Flag that we should not send this email anymore;
+				// either first email is sent out as a result of this request,
+				// or there was more than 1 edit so we will never need to send it again
+				static::setFirstEmailSentFlag( $editor->getName() );
 			}
 		} else {
 			// Anon user

@@ -55,7 +55,7 @@ class PortableInfoboxHooks {
 	/**
 	 * Purge memcache before edit
 	 *
-	 * @param $article Page|WikiPage
+	 * @param $article WikiPage
 	 * @param $user
 	 * @param $text
 	 * @param $summary
@@ -67,8 +67,13 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
+	public static function onArticleSaveComplete(
+		WikiPage $article, $user, $text, $summary, $minor, $watchthis, $sectionanchor, int $flags,
+		$revision, &$status, $baseRevId
+	): bool {
+		// SRE-109: The updated data will be saved by LinksUpdate, we just need to purge the cache
+		$service = PortableInfoboxDataService::newFromTitle( $article->getTitle() );
+		$service->purge();
 
 		return true;
 	}

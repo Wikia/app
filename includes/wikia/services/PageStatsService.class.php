@@ -4,42 +4,16 @@ class PageStatsService {
 	const CACHE_TTL = 86400;
 
 	private $mTitle = null;
-	private $pageId;
 
-	/**
-	 * Pass page ID of an article you want to get data about
-	 */
-	function __construct($pageId) {
-		$this->pageId = intval($pageId);
-	}
-
-	/**
-	 * @static
-	 * @param Title $title
-	 * @return PageStatsService
-	 */
-	public static function newFromTitle( $title ) {
-		$service = new self( $title->getArticleId() );
-		$service->mTitle = $title;
-
-		return $service;
+	public function __construct( Title $title ) {
+		$this->mTitle = $title;
 	}
 
 	/**
 	 * Get cache key for given entry
 	 */
 	private function getKey($entry) {
-		return wfMemcKey('services', 'pageheader', $entry, $this->pageId);
-	}
-
-	/**
-	 * Get title or create new from id
-	 */
-	private function getTitle() {
-		if(empty($this->mTitle)){
-			$this->mTitle = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
-		}
-		return $this->mTitle;
+		return wfMemcKey('services', 'pageheader', $entry, $this->mTitle->getArticleID() );
 	}
 
 	/**
@@ -63,17 +37,10 @@ class PageStatsService {
 		$flags, $revision, Status &$status, $baseRevId
 	): bool {
 
-		wfProfileIn(__METHOD__);
-
-		$articleId = $article->getId();
-
 		// tell service to invalidate cached data for edited page
-		$service = new self($articleId);
+		$service = new PageStatsService( $article->getTitle() );
 		$service->regenerateData();
 
-		wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -88,19 +55,16 @@ class PageStatsService {
 	static function onArticleDeleteComplete(
 		WikiPage $article, User $user, $reason, $articleId
 	): bool {
-		wfProfileIn(__METHOD__);
-
 		$title = $article->getTitle();
 
 		// tell service to invalidate cached data for deleted page
 		if (!empty($title)) {
-			$service = self::newFromTitle($title);
+			$service = new PageStatsService( $title );
 			$service->regenerateData();
 
 			wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
 		}
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -108,20 +72,8 @@ class PageStatsService {
 	 * Regenerate / invalidate service cache for current page
 	 */
 	public function regenerateData() {
-		global $wgMemc;
-
-		wfProfileIn(__METHOD__);
-
-		wfDebug(__METHOD__ . ": page #{$this->pageId}\n");
-
-		// invalidate cached data from getCurrentRevision()
-		$wgMemc->delete($this->getKey('current-revision'));
-
-		// invalidate cached data from getPreviousEdits()
-		$wgMemc->delete($this->getKey('previous-edits'));
-
 		// invalidate cached data from getCommentsCount()
-		$title = $this->getTitle();
+		$title = $this->mTitle;
 
 		if (!empty($title)) {
 			$pageName = $title->getPrefixedText();
@@ -144,12 +96,11 @@ class PageStatsService {
 				$contentPageName = $title->getPrefixedText();
 				wfDebug(__METHOD__ . ": talk page / article comment for '{$contentPageName}' has been touched\n");
 
-				$contentPageService = new self($title->getArticleId());
+				$contentPageService = new self( $title );
 				$contentPageService->regenerateCommentsCount();
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -159,8 +110,6 @@ class PageStatsService {
 	public function regenerateCommentsCount() {
 		global $wgMemc;
 		$wgMemc->delete($this->getKey('comments6'));
-
-		wfDebug(__METHOD__ . ": page #{$this->pageId}\n");
 	}
 
 	/**
@@ -178,11 +127,8 @@ class PageStatsService {
 
 		global $wgMemc;
 
-		if ( !is_null( $this->mTitle ) ) {
-			$title = $this->mTitle;
-		} else {
-			$title = Title::newFromId( $this->pageId );
-		}
+		$title = $this->mTitle;
+
 		// don't perform for talk pages or special pages
 		if (empty($title) || $title->isTalkPage() || $title->isSpecialPage() ) {
 			wfProfileOut(__METHOD__);
@@ -235,7 +181,6 @@ class PageStatsService {
 	 * Get timestamp of first revision
 	 */
 	public function getFirstRevisionTimestamp() {
-		wfProfileIn(__METHOD__);
 		global $wgMemc;
 
 		// try to get cached data
@@ -243,18 +188,19 @@ class PageStatsService {
 
 		$timestamp = $wgMemc->get($key);
 		if (empty($timestamp)) {
-			wfProfileIn(__METHOD__ . '::miss');
-
 			$dbr = wfGetDB(DB_SLAVE);
-			$timestamp = $dbr->selectField('revision', 'rev_timestamp', array('rev_page' => $this->pageId), __METHOD__, array('ORDER BY' => 'rev_timestamp'));
+			$timestamp = $dbr->selectField(
+				'revision',
+				'rev_timestamp',
+				[ 'rev_page' => $this->mTitle->getArticleID() ],
+				__METHOD__,
+				[ 'ORDER BY' => 'rev_timestamp' ]
+			);
 
 			$timestamp = wfTimestamp(TS_MW, $timestamp);
 			$wgMemc->set($key, $timestamp, self::CACHE_TTL);
-
-			wfProfileOut(__METHOD__ . '::miss');
 		}
 
-		wfProfileOut(__METHOD__);
 		return $timestamp;
 	}
 }

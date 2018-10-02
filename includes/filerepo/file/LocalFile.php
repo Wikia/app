@@ -1214,9 +1214,6 @@ class LocalFile extends File {
 			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
 			/* wikia change - end (VID-1568) */
 		}
-		else {
-			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
-		}
 
 		# Hooks, hooks, the magic of hooks...
 		Hooks::run( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );

@@ -1,0 +1,20 @@
+page:
+  - page_id: 1
+    page_namespace: 1
+    page_title: I am the talk page
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+  - page_id: 2
+    page_namespace: 0
+    page_title: I am the content page
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+site_stats:
+  - ss_row_id: 1
+    ss_total_pages: 0
+    ss_good_articles: 0
+    ss_total_edits: 0

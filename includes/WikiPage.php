@@ -1003,6 +1003,12 @@ class WikiPage extends Page implements IDBAccessObject {
 			$conditions['page_latest'] = $lastRevision;
 		}
 
+		// SRE-109: If the page has no previous revision (we're creating a new page)
+		// then the previous revision could not have been a redirect so there is no need to check for it
+		if ( $lastRevision === 0 ) {
+			$lastRevIsRedirect = false;
+		}
+
 		// Wikia change - begin
 		/**
 		 * PLATFORM-1311: page_latest can be set to zero only during page creation
@@ -1327,12 +1333,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
-		// <Wikia>
-		if ( is_string( $user ) ) {
-			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
-			Wikia::debugBacktrace( "MOLI: invalid User:" );
-		}
-		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -1485,7 +1485,11 @@ class WikiPage extends Page implements IDBAccessObject {
 				'text'       => $text,
 				'user'       => $user->getId(),
 				'user_text'  => $user->getName(),
-				'timestamp'  => $now
+				'timestamp'  => $now,
+
+				// SRE-109: We're creating a page so we know that the first revision will have no parents
+				// Not setting it explicitly will cause a pointless lookup on the master database
+				'parent_id'  => 0,
 			) );
 
 			try {
@@ -1659,8 +1663,11 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 
 		# Update the links tables
-		$u = new LinksUpdate( $this->mTitle, $editInfo->output );
-		$u->doUpdate();
+		// SRE-109: tell LinksUpdate if this is a new page and defer it till the end of the request
+		$linksUpdate = new LinksUpdate( $this->mTitle, $editInfo->output );
+		$linksUpdate->setWasPageNewlyCreated( $options['created'] );
+
+		DeferredUpdates::addUpdate( $linksUpdate );
 
 		Hooks::run( 'ArticleEditUpdates', [ $this, &$editInfo, $options['changed'] ] );
 
@@ -1681,21 +1688,14 @@ class WikiPage extends Page implements IDBAccessObject {
 		$title = $this->mTitle->getPrefixedDBkey();
 		$shortTitle = $this->mTitle->getDBkey();
 
-		if ( !$options['changed'] ) {
-			$good = 0;
-			$total = 0;
-		} elseif ( $options['created'] ) {
-			$good = (int)$this->isCountable( $editInfo );
-			$total = 1;
-		} elseif ( $options['oldcountable'] !== null ) {
-			$good = (int)$this->isCountable( $editInfo ) - (int)$options['oldcountable'];
-			$total = 0;
-		} else {
-			$good = 0;
-			$total = 0;
-		}
+		$isContent = $this->isCountable( $editInfo );
 
-		DeferredUpdates::addUpdate( new SiteStatsUpdate( 0, 1, $good, $total ) );
+		// SRE-109: Handle site stats update in an offline task
+		$task = \Wikia\Tasks\Tasks\SiteStatsUpdateTask::newLocalTask();
+		$task->title( $this->mTitle );
+		$task->call( 'onArticleEdit', $options['created'], $isContent );
+		$task->queue();
+
 		DeferredUpdates::addUpdate( new SearchUpdate( $id, $title, $text ) );
 
 		# If this is another user's talk page, update newtalk.
@@ -2443,8 +2443,11 @@ class WikiPage extends Page implements IDBAccessObject {
 			$other = $title->getTalkPage();
 		}
 
-		$other->invalidateCache();
-		$other->purgeSquid();
+		// SRE-109: Don't try to update data for non-existent pages
+		if ( $other->exists() ) {
+			$other->invalidateCache();
+			$other->purgeSquid();
+		}
 
 		$title->touchLinks();
 		$title->purgeSquid();
@@ -2895,8 +2898,8 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		if ( count( $templates_diff ) > 0 ) {
 			# Whee, link updates time.
-			$u = new LinksUpdate( $this->mTitle, $parserOutput, false );
-			$u->doUpdate();
+			// SRE-109: defer this update until the end of the request
+			DeferredUpdates::addUpdate( new LinksUpdate( $this->mTitle, $parserOutput, false ) );
 		}
 	}
 

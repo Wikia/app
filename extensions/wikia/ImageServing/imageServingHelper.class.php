@@ -9,25 +9,27 @@ class ImageServingHelper {
 
 	private static $hookOnOff = false; // parser hooks are off
 
-	/**
-	 * @param LinksUpdate $linksUpdate
-	 * @return bool return true to continue hooks flow
-	 */
-	public static function onLinksUpdateComplete( $linksUpdate ) {
-		wfProfileIn(__METHOD__);
-		$images = $linksUpdate->getImages();
-		$articleId = $linksUpdate->getTitle()->getArticleID();
+	public static function onArticleEditUpdates( WikiPage $wikiPage, $editInfo, bool $changed ) {
+		$images = $editInfo->output->getImages();
+		$title = $wikiPage->getTitle();
 
-		if(count($images) === 1) {
-			$images = array_keys($images);
-			self::buildIndex( $articleId, $images);
-			wfProfileOut(__METHOD__);
+		// SRE-109: Leave early if this is a talk page (or equivalent, like comment/Wall/Forum)
+		if ( $title->isTalkPage() ) {
 			return true;
 		}
 
-		$article = new Article($linksUpdate->getTitle());
-		self::buildAndGetIndex( $article );
-		wfProfileOut(__METHOD__);
+		$task = \Wikia\Tasks\Tasks\ImageServingTask::newLocalTask();
+		$task->title( $title );
+
+		// SRE-109: Don't trigger a re-parse if the article has only one image or no images at all
+		if ( count( $images ) <= 1 ) {
+			$task->call( 'createIndexFromImages', array_keys( $images ) );
+		} else {
+			$task->call( 'createIndexFromPageContent' );
+		}
+
+		$task->queue();
+
 		return true;
 	}
 
@@ -85,7 +87,7 @@ class ImageServingHelper {
 		return false;
 	}
 
-	private static function hookSwitch($onOff = true) {
+	public static function hookSwitch( bool $onOff = true ) {
 		self::$hookOnOff = $onOff;
 	}
 
@@ -104,76 +106,5 @@ class ImageServingHelper {
 		}
 
 		return $res;
-	}
-
-	/**
-	 * buildIndex - save image index in db
-	 *
-	 * @param int $articleId article ID
-	 * @param array|string $images
-	 * @param $ignoreEmpty boolean
-	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
-	 * @return mixed|bool set of images extracted from given article
-	 */
-	private static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
-		wfProfileIn(__METHOD__);
-
-		// BugId:95164: limit the number of images to be stored serialized in DB
-		// keep it under 65535 bytes
-		if (count($images) > self::IMAGES_PER_ARTICLE) {
-			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
-		}
-
-		array_walk( $images, function ( &$n ) { $n = urldecode( $n ); } );
-
-		if ($dryRun) {
-			wfProfileOut(__METHOD__);
-			return $images;
-		}
-
-		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
-
-		if( count($images) < 1 ) {
-			if( $ignoreEmpty) {
-				wfProfileOut(__METHOD__);
-				return false;
-			}
-			wfDeleteWikiaPageProp(WPP_IMAGE_SERVING, $articleId);
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-
-		wfSetWikiaPageProp(WPP_IMAGE_SERVING, $articleId, $images);
-		wfProfileOut(__METHOD__);
-		return $images;
-	}
-
-	/**
-	 * @param Article $article
-	 * @param bool $ignoreEmpty
-	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
-	 * @return mixed|bool set of images extracted from given article
-	 */
-	public static function buildAndGetIndex($article, $ignoreEmpty = false, $dryRun = false ) {
-		if(!($article instanceof Article)) {
-			return false;
-		}
-		wfProfileIn(__METHOD__);
-
-		$title = $article->getTitle();
-		$content = $article->getContent();
-
-		self::hookSwitch();
-		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
-		self::hookSwitch(false);
-
-		$out = array();
-		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
-		$imageList = $out[0];
-		Hooks::run( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
-		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
-
-		wfProfileOut(__METHOD__);
-		return $images;
 	}
 }

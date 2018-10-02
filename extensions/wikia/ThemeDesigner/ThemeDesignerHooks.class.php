@@ -3,20 +3,6 @@
 class ThemeDesignerHooks {
 
 	/**
-	 * @param $revision Revision
-	 * @return bool
-	 */
-	public static function onRevisionInsertComplete( $revision ) {
-
-		if ( $revision instanceof Revision ) {
-			$title = $revision->getTitle( true );
-			self::resetThemeBackgroundSettings( $title );
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param $article WikiPage
 	 * @return bool true
 	 */
@@ -42,6 +28,8 @@ class ThemeDesignerHooks {
 		if ( self::isFavicon( $image->getTitle() ) ) {
 			Wikia::invalidateFavicon();
 		}
+
+		self::resetThemeBackgroundSettings( $image->getTitle(), false );
 
 		return true;
 	}

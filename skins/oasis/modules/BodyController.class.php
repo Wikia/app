@@ -378,7 +378,7 @@ class BodyController extends WikiaController {
 					$talkPage = $this->wg->Title->getTalkPage();
 
 					// get number of revisions for talk page
-					$service = new PageStatsService( $this->wg->Title->getArticleID() );
+					$service = new PageStatsService( $this->wg->Title );
 					$comments = $service->getCommentsCount();
 
 					// render comments bubble

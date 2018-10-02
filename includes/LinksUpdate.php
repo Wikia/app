@@ -22,7 +22,7 @@
 
 use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
 
-class LinksUpdate {
+class LinksUpdate implements DeferrableUpdate {
 
 	/**@{{
 	 * @private
@@ -46,6 +46,12 @@ class LinksUpdate {
 		$mRecursive;     //!< Whether to queue jobs for recursive updates
 	/**@}}*/
 
+	/** @var bool $wasPageNewlyCreated */
+	private $wasPageNewlyCreated = false;
+
+	/** @var DatabaseBase $dbForReads */
+	private $dbForReads;
+
 	/**
 	 * Constructor
 	 *
@@ -62,6 +68,7 @@ class LinksUpdate {
 			$this->mOptions = array( 'FOR UPDATE' );
 		}
 		$this->mDb = wfGetDB( DB_MASTER );
+		$this->dbForReads = wfGetDB( DB_SLAVE );
 
 		if ( !is_object( $title ) ) {
 			throw new MWException( "The calling convention to LinksUpdate::LinksUpdate() has changed. " .
@@ -107,6 +114,14 @@ class LinksUpdate {
 	}
 
 	/**
+	 * SRE-109: tell LinksUpdate if this is a new page; default false
+	 * @param bool $wasPageNewlyCreated
+	 */
+	public function setWasPageNewlyCreated( bool $wasPageNewlyCreated ) {
+		$this->wasPageNewlyCreated = $wasPageNewlyCreated;
+	}
+
+	/**
 	 * Update link tables with outgoing links from an updated article
 	 */
 	public function doUpdate() {
@@ -131,13 +146,16 @@ class LinksUpdate {
 
 		wfProfileIn( __METHOD__ );
 
+		// SRE-109: If we're creating a new page, then there's been no content before
+		// so there's no use trying to fetch existing outgoing links.
+
 		# Page links
-		$existing = $this->getExistingLinks();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingLinks();
 		$this->incrTableUpdate( 'pagelinks', 'pl', $this->getLinkDeletions( $existing ),
 			$this->getLinkInsertions( $existing ) );
 
 		# Image links
-		$existing = $this->getExistingImages();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingImages();
 
 		$imageDeletes = $this->getImageDeletions( $existing );
 		/* Wikia change begin - @author: mech */
@@ -154,27 +172,27 @@ class LinksUpdate {
 		/* Wikia change end */
 
 		# External links
-		$existing = $this->getExistingExternals();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingExternals();
 		$this->incrTableUpdate( 'externallinks', 'el', $this->getExternalDeletions( $existing ),
 			$this->getExternalInsertions( $existing ) );
 
 		# Language links
-		$existing = $this->getExistingInterlangs();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingInterlangs();
 		$this->incrTableUpdate( 'langlinks', 'll', $this->getInterlangDeletions( $existing ),
 			$this->getInterlangInsertions( $existing ) );
 
 		# Inline interwiki links
-		$existing = $this->getExistingInterwikis();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingInterwikis();
 		$this->incrTableUpdate( 'iwlinks', 'iwl', $this->getInterwikiDeletions( $existing ),
 			$this->getInterwikiInsertions( $existing ) );
 
 		# Template links
-		$existing = $this->getExistingTemplates();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingTemplates();
 		$this->incrTableUpdate( 'templatelinks', 'tl', $this->getTemplateDeletions( $existing ),
 			$this->getTemplateInsertions( $existing ) );
 
 		# Category links
-		$existing = $this->getExistingCategories();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingCategories();
 
 		$categoryDeletes = $this->getCategoryDeletions( $existing );
 
@@ -196,7 +214,7 @@ class LinksUpdate {
 		Wikia::setVar('categoryInserts', $categoryInserts);
 
 		# Page properties
-		$existing = $this->getExistingProperties();
+		$existing = $this->wasPageNewlyCreated ? [] : $this->getExistingProperties();
 
 		$propertiesDeletes = $this->getPropertyDeletions( $existing );
 
@@ -318,15 +336,15 @@ class LinksUpdate {
 		 * large numbers of concurrent invalidations of the same page
 		 */
 		if ( !isset( $this->mInvalidationTimestamp ) ) {
-			$this->mInvalidationTimestamp = $this->mDb->timestamp();
+			$this->mInvalidationTimestamp = $this->dbForReads->timestamp();
 		}
 		$ids = array();
 
-		$res = $this->mDb->select( 'page', array( 'page_id' ),
+		$res = $this->dbForReads->select( 'page', array( 'page_id' ),
 			array(
 				'page_namespace' => $namespace,
-				'page_title IN (' . $this->mDb->makeList( $dbkeys ) . ')',
-				'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
+				'page_title IN (' . $this->dbForReads->makeList( $dbkeys ) . ')',
+				'page_touched < ' . $this->dbForReads->addQuotes( $this->mInvalidationTimestamp )
 			), __METHOD__
 		);
 		foreach ( $res as $row ) {
@@ -763,7 +781,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingLinks() {
-		$res = $this->mDb->select( 'pagelinks', array( 'pl_namespace', 'pl_title' ),
+		// SRE-109: Read existing outgoing page links from the slave
+		$res = $this->dbForReads->select( 'pagelinks', array( 'pl_namespace', 'pl_title' ),
 			array( 'pl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -781,7 +800,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingTemplates() {
-		$res = $this->mDb->select( 'templatelinks', array( 'tl_namespace', 'tl_title' ),
+		// SRE-109: Read existing outgoing template links from the slave
+		$res = $this->dbForReads->select( 'templatelinks', array( 'tl_namespace', 'tl_title' ),
 			array( 'tl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -799,7 +819,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingImages() {
-		$res = $this->mDb->select( 'imagelinks', array( 'il_to' ),
+		// SRE-109: Read existing outgoing image links from the slave
+		$res = $this->dbForReads->select( 'imagelinks', array( 'il_to' ),
 			array( 'il_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -814,7 +835,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingExternals() {
-		$res = $this->mDb->select( 'externallinks', array( 'el_to' ),
+		// SRE-109: Read existing outgoing external links from the slave
+		$res = $this->dbForReads->select( 'externallinks', array( 'el_to' ),
 			array( 'el_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -829,7 +851,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingCategories() {
-		$res = $this->mDb->select( 'categorylinks', array( 'cl_to', 'cl_sortkey_prefix' ),
+		// SRE-109: Read existing outgoing category links from the slave
+		$res = $this->dbForReads->select( 'categorylinks', array( 'cl_to', 'cl_sortkey_prefix' ),
 			array( 'cl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -845,7 +868,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingInterlangs() {
-		$res = $this->mDb->select( 'langlinks', array( 'll_lang', 'll_title' ),
+		// SRE-109: Read existing outgoing interlanguage links from the slave
+		$res = $this->dbForReads->select( 'langlinks', array( 'll_lang', 'll_title' ),
 			array( 'll_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -859,7 +883,8 @@ class LinksUpdate {
 	 * @return array (prefix => array(dbkey => 1))
 	 */
 	protected function getExistingInterwikis() {
-		$res = $this->mDb->select( 'iwlinks', array( 'iwl_prefix', 'iwl_title' ),
+		// SRE-109: Read existing outgoing interwiki links from the slave
+		$res = $this->dbForReads->select( 'iwlinks', array( 'iwl_prefix', 'iwl_title' ),
 			array( 'iwl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -877,7 +902,8 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingProperties() {
-		$res = $this->mDb->select( 'page_props', array( 'pp_propname', 'pp_value' ),
+		// SRE-109: Read existing page properties from the slave
+		$res = $this->dbForReads->select( 'page_props', array( 'pp_propname', 'pp_value' ),
 			array( 'pp_page' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {

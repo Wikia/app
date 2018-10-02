@@ -609,7 +609,9 @@ class BlogArticle extends Article {
 				$oWItem = WatchedItem::fromUserTitle( $oUser, $oCommentTitle );
 				$oWItem->removeWatch();
 			}
-			$oUser->invalidateCache();
+
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$oUser->touch();
 		}
 
 		wfProfileOut( __METHOD__ );

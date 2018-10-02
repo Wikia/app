@@ -185,8 +185,9 @@ class EmailNotification {
 
 	private function getWatchersToNotify( $notificationTimeoutSql ) {
 		$watchers = [];
-		$dbw = wfGetDB( DB_MASTER );
-		$res = $dbw->select(
+		// SRE-109: Get the set of users to notify from the slave
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
 			[ 'watchlist' ],
 			[ 'wl_user' ],
 			[

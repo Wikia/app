@@ -32,7 +32,7 @@ $wgImageServingDrivers = array(
 $wgAutoloadClasses['FakeImageGalleryImageServing'] = $dir . 'FakeImageGalleryImageServing.class.php';
 
 // hooks
-$wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
+$wgHooks['ArticleEditUpdates'][] = 'ImageServingHelper::onArticleEditUpdates';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::onImageBeforeProduceHTML';
 
 if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
