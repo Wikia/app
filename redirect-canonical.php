@@ -70,8 +70,6 @@ function guessTitle( $path ) {
 function getTargetUrl() {
 	// Extract the URL path from the REQUEST_URI
 	$requestUri = $_SERVER['REQUEST_URI'];
-
-	
 	if ( filter_var( $requestUri, FILTER_VALIDATE_URL ) ) {
 		// Possible when using proxies, like curl -x
 		$path = parse_url( $requestUri, PHP_URL_PATH );
@@ -108,9 +106,6 @@ function getTargetUrl() {
 
 // Issue the redirect
 $url = getTargetUrl();
-
-var_dump( $url );
-exit;
 
 header( 'Location: ' . $url, true, 301 );
 header ('X-Served-By: '. wfHostname() );
