@@ -8,5 +8,5 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'fandom-com-migration-after' => 'Notification text to display after the community is migrated to fandom.com domain',
-	'fandom-com-migration-before' => 'Notification text to display before the community is migrated to fandom.com domain',
+	'fandom-com-migration-before' => 'Notification text to display before the community is migrated to fandom.com domain. $1 is the migration date.',
 );
