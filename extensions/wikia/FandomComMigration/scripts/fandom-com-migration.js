@@ -18,16 +18,17 @@ require([
 
 	var afterMigrationClosedStorageKey = 'fandom-com-migration-after-closed';
 	var beforeMigrationClosedStorageKey = 'fandom-com-migration-before-closed';
+	var storageTrueValue = '1';
 
 	// Keep it for a year, it's more than enough
 	var localStorageTTL = 60 * 60 * 24 * 365;
 
 	function shouldShowAfterMigrationNotification() {
-		return wgFandomComMigrationDone && cache.get(afterMigrationClosedStorageKey) === null;
+		return wgFandomComMigrationDone && cache.get(afterMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function shouldShowBeforeMigrationNotification() {
-		return wgFandomComMigrationDate && cache.get(beforeMigrationClosedStorageKey) === null;
+		return wgFandomComMigrationDate && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function showAfterMigrationNotification() {
@@ -38,7 +39,7 @@ require([
 		);
 
 		banner.onCloseHandler = function () {
-			cache.set(afterMigrationClosedStorageKey, true, localStorageTTL);
+			cache.set(afterMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
 		}
 
 		banner.show();
@@ -52,7 +53,7 @@ require([
 		);
 
 		banner.onCloseHandler = function () {
-			cache.set(beforeMigrationClosedStorageKey, true, localStorageTTL);
+			cache.set(beforeMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
 		}
 
 		banner.show();
