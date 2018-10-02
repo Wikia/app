@@ -253,12 +253,17 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
+function readSessionId() {
+	utils.readSessionId();
+}
+
 export {
 	init,
 	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
+	readSessionId,
 	context,
 	universalAdPackage,
 	slotService,
