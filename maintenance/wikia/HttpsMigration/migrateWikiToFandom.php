@@ -30,7 +30,7 @@ class MigrateWikiToFandom extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgWikiaBaseDomain, $wgUser;
+		global $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgUser;
 
 		$fileName = $this->getArg( 0 );
 		$saveChanges = $this->hasOption( 'saveChanges' );
@@ -73,6 +73,13 @@ class MigrateWikiToFandom extends Maintenance {
 					$this->output( "Could not get the target domain for wiki with ID {$sourceWikiId}!\n" );
 					continue;
 				}
+			}
+
+			if ( strpos( $targetDomain, $wgFandomBaseDomain ) === false ||
+				substr_count( $targetDomain, '.' ) > 3
+			) {
+				$this->output( "Invalid target domain {$targetDomain} for the wiki with ID {$sourceWikiId}!\n" );
+				continue;
 			}
 
 			if ( $saveChanges ) {
