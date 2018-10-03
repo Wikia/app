@@ -382,9 +382,13 @@ class MWHttpRequest {
 			return;
 		}
 
-		global $wgHTTPProxy;
+		global $wgHTTPProxy, $wgSetOriginalHostHeader;
 		if ( $wgHTTPProxy ) {
-			$this->proxy = $wgHTTPProxy ;
+			$this->proxy = $wgHTTPProxy;
+			if ( $wgSetOriginalHostHeader ) {
+				// SUS-5861 when we proxy to the same k8s service, we need to set x-original-host so that nginx can set the proper hostname for PHP
+				$this->setHeader( 'X-Original-Host', $this->parsedUrl['host'] );
+			}
 		}
 	}
 

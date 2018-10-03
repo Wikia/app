@@ -79,6 +79,8 @@ $wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
 if ( !empty( $wgKubernetesDeploymentName ) ) {
 	// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
 	$wgHTTPProxy = "$wgKubernetesDeploymentName.$wgKubernetesNamespace:80";
+	// SUS-5861 if we're proxying through the internal host, set x-original-host
+	$wgSetOriginalHostHeader = true;
 }
 else {
 	// SUS-5675 | TODO: remove when we switch fully to Kubernetes
