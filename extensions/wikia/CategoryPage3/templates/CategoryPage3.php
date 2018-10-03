@@ -1,24 +1,26 @@
-<p class="category-page__total-number">
+<p class="wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">
 	All items (<?= $totalNumberOfMembers; ?>)
 </p>
 <div class="category-page__members">
 	<?php /** @var array $membersGroupedByChar */ ?>
 	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>
-        <h3><?= $firstChar ?></h3>
-        <ul>
+        <div class="category-page__first-char wds-font-size-xl wds-font-weight-bold"><?= $firstChar ?></div>
+        <ul class="category-page__members-for-char">
 			<?php foreach ( $members as $member ) : ?>
 				<?php /** @var CategoryPage3Member $member */ ?>
-				<li>
-					<?php if ( $member->isSubcategory() ) : ?>
-						<?= DesignSystemHelper::renderSvg('wds-icons-pages-small', 'wds-icon-small') ?>
-					<?php endif; ?>
-					<?php if ( $member->getImage() ) : ?>
-						<img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
-							 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
-							 class="category-page__member-thumbnail"
-						>
-					<?php endif; ?>
-					<?= Linker::linkKnown( $member->getTitle() ) ?>
+				<li class="category-page__member">
+					<div class="category-page__member-left">
+						<?php if ( $member->isSubcategory() ) : ?>
+							<?= DesignSystemHelper::renderSvg('wds-icons-pages-small', 'wds-icon-small') ?>
+						<?php endif; ?>
+						<?php if ( $member->getImage() ) : ?>
+							<img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
+								 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
+								 class="category-page__member-thumbnail"
+							>
+						<?php endif; ?>
+					</div>
+					<?= Linker::linkKnown( $member->getTitle(), null, [ 'class' => 'category-page__member-link' ] ) ?>
 				</li>
 			<?php endforeach; ?>
         </ul>

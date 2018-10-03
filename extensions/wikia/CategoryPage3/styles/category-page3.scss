@@ -1,17 +1,44 @@
-.category-page {
-	&__members {
-		columns: 2;
-	}
+@import 'skins/shared/mixins/columns';
 
-	&__member-thumbnail {
-		height: 30px;
-		width: 40px;
-	}
+// It's either that or !important for multiple selectors
+.WikiaArticle {
+	.category-page {
+		&__members {
+			@include column-count(2);
+		}
 
-	&__pagination {
-		// TODO use a variable for the color
-		border-top: 1px solid #000;
-		margin-top: 20px;
-		padding-top: 20px;
+		&__first-char {
+			border-bottom: 1px solid #ccc;
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		&__members-for-char {
+			break-before: avoid;
+			list-style: none;
+			margin-left: 0;
+		}
+
+		&__member-left {
+			display: inline-block;
+			width: 40px;
+		}
+
+		&__member-thumbnail {
+			height: 30px;
+			width: 40px;
+		}
+
+		&__member-link {
+			display: inline-block;
+			margin: 16px 0;
+		}
+
+		&__pagination {
+			// TODO use a variable for the color
+			border-top: 1px solid #000;
+			margin-top: 20px;
+			padding-top: 20px;
+		}
 	}
 }
