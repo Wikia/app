@@ -113,7 +113,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: extra.atfSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
+			fillInSlot: extra.firstCallSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
 		};
 	}
 
