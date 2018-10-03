@@ -80,6 +80,10 @@ class MigrateWikiToFandom extends Maintenance {
 
 				WikiFactory::setmainDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
+				// Banner notification about migration, see SEO-669
+				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
+				WikiFactory::setVarByName( 'wgFandomComMigrationDone', $sourceWikiId, true, 'Migration to fandom.com' );
+
 				$this->purgeCachesForWiki( $sourceWikiId );
 			}
 
