@@ -66,6 +66,7 @@ try {
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
 $response = new AjaxResponse( json_encode( $resp ) );
 
+header('X-Served-By: ' . wfHostname() );
 $response->setContentType('application/json; charset=utf-8');
 $response->sendHeaders();
 
