@@ -52,11 +52,19 @@ require ( $IP . '/includes/WebStart.php' );
 $request = new FauxRequest( $_POST, true );
 
 // finally, execute the task
-$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
-$runner->run();
+try {
+	$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
+	$runner->run();
+	$resp = $runner->format();
+} catch ( Throwable $ex ) {
+	$resp = [
+		'status' => 'failure',
+		'reason' => sprintf('%s: %s', get_class( $ex ), $ex->getMessage() ),
+	];
+}
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
-$response = new AjaxResponse( json_encode( $runner->format() ) );
+$response = new AjaxResponse( json_encode( $resp ) );
 
 $response->setContentType('application/json; charset=utf-8');
 $response->sendHeaders();
