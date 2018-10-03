@@ -304,7 +304,6 @@ $config['adengine2_video_ui_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/dynamicReveal.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/mouseEvents.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
