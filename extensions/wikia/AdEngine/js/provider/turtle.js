@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 ], function (log, btfBlocker, gptHelper, slotTweaker) {
 	'use strict';
 
-	var atfSlots = [
+	var firstCallSlots = [
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 		name: 'Turtle',
 		canHandleSlot: canHandleSlot,
 		fillInSlot: btfBlocker.decorate(fillInSlot, {
-			atfSlots: atfSlots
+			firstCallSlots: firstCallSlots
 		})
 	};
 });
