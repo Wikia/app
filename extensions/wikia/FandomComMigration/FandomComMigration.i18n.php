@@ -37,8 +37,8 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'fandom-com-migration-after' => '注意：あなたのコミュニティのドメインはfandom.comに変更されました。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/2019%E5%B9%B4%E5%88%9D%E9%A0%AD%E3%81%ABWiki%E3%81%AE%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E3%81%8Cwikia.com%E3%81%8B%E3%82%89fandom.com%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99]をご覧ください。',
-	'fandom-com-migration-before' => '注意：今後数週間にかけて、あなたのコミュニティなど複数のコミュニティのドメインがfandom.comに変更されます。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/2019%E5%B9%B4%E5%88%9D%E9%A0%AD%E3%81%ABWiki%E3%81%AE%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E3%81%8Cwikia.com%E3%81%8B%E3%82%89fandom.com%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99]をご覧ください。',
+	'fandom-com-migration-after' => '注意：あなたのコミュニティのドメインはfandom.comに変更されました。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/fandom.com%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E7%A7%BB%E8%A1%8C%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 FANDOMスタッフブログ]をご覧ください。',
+	'fandom-com-migration-before' => '注意：今後数週間にかけて、あなたのコミュニティなど複数のコミュニティのドメインがfandom.comに変更されます。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/fandom.com%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E7%A7%BB%E8%A1%8C%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 FANDOMスタッフブログ]をご覧ください。',
 );
 
 $messages['nl'] = array(
