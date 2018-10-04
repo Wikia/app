@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Service\Gateway\KubernetesExternalUrlProvider;
+
 class UserProfilePageHooks {
 
 	/**
@@ -48,7 +51,7 @@ class UserProfilePageHooks {
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		if ( BodyController::showUserPagesHeader( $out->getTitle() ) ) {
-			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+			$urlProvider = new KubernetesExternalUrlProvider();
 
 			$vars['wgUserAvatarServiceUrl'] = $urlProvider->getUrl( 'user-avatar' );
 			$vars['wgUserId'] = $out->getUser()->getId();

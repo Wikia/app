@@ -437,9 +437,6 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setVal( 'defaultAvatars', $this->getDefaultAvatars() );
 
-		$this->setVal( 'avatarName', $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ) );
-		$this->setVal( 'userId', $userId );
-		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE, 'avatar avatar-preview' ) );
 
 		wfProfileOut( __METHOD__ );
