@@ -81,6 +81,12 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 					updateCtpAudio(vastParams);
 				}
 
+				if (playerEvent === 'adError') {
+					errorCode = event && event.code;
+				}
+
+				track(params, trackingEventsMap[playerEvent], errorCode);
+
 				// Disable updating ctp and audio on video completed event
 				// It is a failsafe for the case where updating
 				// has not been disabled by calling updateCtpAudio with VAST params
@@ -93,12 +99,6 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 					isCtpAudioUpdateEnabled = false;
 					params.withCtp = false;
 				}
-
-				if (playerEvent === 'adError') {
-					errorCode = event && event.code;
-				}
-
-				track(params, trackingEventsMap[playerEvent], errorCode);
 			});
 		});
 	}
