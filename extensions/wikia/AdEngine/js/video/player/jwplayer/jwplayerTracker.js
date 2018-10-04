@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 				var errorCode;
 
 				// Update ctp and audio on the following events if isCtpAudioUpdateEnabled
-				if([
+				if ([
 					'ready',
 					'adRequest',
 					'adError',
