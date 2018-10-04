@@ -8882,7 +8882,7 @@ $wgDataMartOriginalCityId = 0;
  * in the community builder (fandom creator)
  * @see CAKE-2151
  */
-$wgAllowCommunityBuilderCNWPrompt = false;
+$wgAllowCommunityBuilderCNWPrompt = true;
 
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
