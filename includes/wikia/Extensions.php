@@ -1758,3 +1758,5 @@ include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
+
+include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";

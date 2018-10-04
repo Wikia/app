@@ -22,6 +22,9 @@ class ServiceFactory {
 
 	/** @var PermissionsFactory $permissionsFactory */
 	private $permissionsFactory;
+	
+	/** @var RabbitFactory $rabbitFactory */
+	private $rabbitFactory;
 
 	public function heliosFactory(): HeliosFactory {
 		if ( $this->heliosFactory === null ) {
@@ -69,6 +72,14 @@ class ServiceFactory {
 		}
 
 		return $this->permissionsFactory;
+	}
+	
+	public function rabbitFactory(): RabbitFactory {
+		if ( $this->rabbitFactory === null ) {
+			$this->rabbitFactory = new RabbitFactory( $this );
+		}
+
+		return $this->rabbitFactory;
 	}
 
 	public static function clearState() {

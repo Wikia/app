@@ -34,12 +34,10 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		],
 		outstreamIncontent = [
 			'dynamicReveal',
-			'mouseEvents',
 			'progressBar',
 			'volumeControl'
 		],
 		outstreamLeaderboard = [
-			'mouseEvents',
 			'progressBar',
 			'volumeControl'
 		],

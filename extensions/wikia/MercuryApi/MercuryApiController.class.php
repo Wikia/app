@@ -21,32 +21,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Gets smart banner config from WF and cleans it up
-	 */
-	private function getSmartBannerConfig() {
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) && !empty( $this->wg->WikiaMobileSmartBannerConfig ) ) {
-			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
-
-			unset( $smartBannerConfig['author'] );
-			$meta = $smartBannerConfig['meta'];
-			unset( $smartBannerConfig['meta'] );
-			$smartBannerConfig['appId'] = [
-				'ios' => str_replace( 'app-id=', '', $meta['apple-itunes-app'] ),
-				'android' => str_replace( 'app-id=', '', $meta['google-play-app'] ),
-			];
-
-			$smartBannerConfig['appScheme'] = [
-				'ios' => $meta['ios-scheme'] ?? null,
-				'android' => $meta['android-scheme'] ?? null,
-			];
-
-			return $smartBannerConfig;
-		}
-
-		return null;
-	}
-
-	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
@@ -100,63 +74,46 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
-	/**
-	 * @desc Prepares wiki variables for the current wikia
-	 */
-	private function prepareWikiVariables() {
-		$wikiVariables = $this->mercuryApi->getWikiVariables();
+	public function getMobileWikiVariables() {
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
 
-		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
-		$wikiVariables['basePath'] = $this->wg->Server;
-		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
-		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
+		$wikiVariables = $this->mercuryApi->getMobileWikiVariables();
 
-		// Used to determine GA tracking
-		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
-			$wikiVariables['isGASpecialWiki'] = true;
-		}
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !empty( $this->wg->FandomCreatorCommunityId ) ) {
-			$wikiVariables['fandomCreatorCommunityId'] = $this->wg->FandomCreatorCommunityId;
-		}
+		// cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
 
-		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables['articlePath'] = str_replace( '$1', '', $this->wg->ArticlePath );
-		} else {
-			$wikiVariables['articlePath'] = '/wiki/';
-		}
+	public function getDiscussionsWikiVariables() {
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
 
-		$smartBannerConfig = $this->getSmartBannerConfig();
-		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables['smartBanner'] = $smartBannerConfig;
-		}
+		$wikiVariables = $this->mercuryApi->getDiscussionsWikiVariables();
 
-		// get wiki image from Curated Main Pages (SUS-474)
-		$communityData = ( new CommunityDataService( $this->wg->CityId ) )->getCommunityData();
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !empty( $communityData['image_id'] ) ) {
-			$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], self::WIKI_IMAGE_SIZE );
-			$wikiVariables['image'] = $url;
-		}
+		// cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
 
-		$wikiVariables['specialRobotPolicy'] = null;
-		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
-		if ( !empty( $robotPolicy ) ) {
-			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
-		}
+	public function getAnnouncementsWikiVariables() {
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
 
-		$htmlTitle = new WikiaHtmlTitle();
-		$wikiVariables['htmlTitle'] = [
-			'separator' => $htmlTitle->getSeparator(),
-			'parts' => array_values( $htmlTitle->getAllParts() ),
-		];
+		$wikiVariables = $this->mercuryApi->getAnnouncementsVariables();
 
-		$wikiVariables['qualarooUrl'] =
-			( $this->wg->develEnvironment ) ? $this->wg->qualarooDevUrl : $this->wg->qualarooUrl;
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
-
-		return $wikiVariables;
+		// cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
 	/**
@@ -168,7 +125,7 @@ class MercuryApiController extends WikiaController {
 			->setAllowMethod( [ 'GET' ] )
 			->setHeaders( $this->response );
 
-		$wikiVariables = $this->prepareWikiVariables();
+		$wikiVariables = $this->mercuryApi->getWikiVariables();;
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -279,7 +236,7 @@ class MercuryApiController extends WikiaController {
 			'heroImage' => $articleAsJson->heroImage
 		];
 
-		$wikiVariables = $this->prepareWikiVariables();
+		$wikiVariables = $this->mercuryApi->getMobileWikiVariables();
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -417,7 +374,9 @@ class MercuryApiController extends WikiaController {
 						default:
 							$data = array_merge(
 								$data,
-								MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article )
+								!empty( $article ) ?
+									MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article ) :
+									[]
 							);
 					}
 				}

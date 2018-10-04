@@ -192,21 +192,6 @@ $wgDBbackenduser = $wgDBbackendAdminUser;
 $wgDBbackendpassword = $wgDBbackendAdminPassword;
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var Array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-    'host' => 'prod.rabbit.service.sjc.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => 'data-warehouse',
-    'exchange' => 'mediawiki-edit-events',
-    'deadExchange' => 'zombie.v0.1',
-];
-
-/**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
  * extensions with HipHop, set $wgExtensionsDirectory correctly, and use code
  * like:
@@ -222,9 +207,8 @@ $wgExtensionsDirectory = "$IP/extensions";
 
 /**
  * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
  * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
+ * @see lib/Wikia/src/Tasks/TaskRunner.php
  * @var string $wgFlowerUrl
  */
 $wgFlowerUrl = "http://celery-flower.$wgWikiaDatacenter.k8s.wikia.net";
@@ -514,6 +498,16 @@ $wgPreviewOnOpenNamespaces = [
 ];
 
 /**
+ * The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
+ * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
+ * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
+ *
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgPrometheusPushgatewayHost
+ */
+$wgPrometheusPushgatewayHost = "pushgateway-prod.$wgWikiaDatacenter.k8s.wikia.net";
+
+/**
  * Script used to scan IPs for open proxies.
  * @see includes/ProxyTools.php
  * @var string $wgProxyScriptPath
@@ -543,16 +537,12 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
- * RabbitMQ configurarion.
- * @see lib/Wikia/src/Tasks/AsyncTaskList.php
- * @var Array $wgTaskBroker
+ * Whether to disable the background tasks broker for MediaWiki.
+ * @see lib/Wikia/src/Factory/RabbitFactory.php
+ * @see lib/Wikia/src/Rabbit/TasksRabbitPublisher.php
+ * @var bool $wgTaskBrokerDisabled
  */
-$wgTaskBroker = [
-    'host' => 'prod.rabbit.service.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-];
+$wgTaskBrokerDisabled = false;
 
 /**
  * Configuration file for external Tidy.

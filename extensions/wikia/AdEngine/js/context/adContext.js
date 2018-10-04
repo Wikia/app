@@ -99,6 +99,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
 		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
@@ -225,8 +226,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
 
-		context.opts.areMobileStickyAndSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileStickyAndSwapCountries')
+		context.opts.isMobileBottomLeaderboardSwapEnabled = (
+			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
 		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';

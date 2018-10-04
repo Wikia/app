@@ -1,0 +1,151 @@
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+
+@mixin optin-button-link-anchor {
+	font-size: 0;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+@mixin optin-button-link {
+	.wds-button {
+		&:not(.wds-is-text) {
+			border-color: $wds-fandom-color-link;
+			background-color: $wds-fandom-color-link !important;
+
+			&:hover {
+				border-color: #008A8A !important;
+				background-color: #008A8A !important;
+			}
+		}
+
+		&:hover {
+			background-image: none;
+		}
+
+		&.wds-is-text {
+			&, &:focus {
+				color: $wds-fandom-color-link;
+			}
+
+			&:hover {
+				background-color: $wds-color-white;
+				color: #008A8A !important;
+			}
+		}
+	}
+}
+
+#CreateNewWiki.with-optin {
+	@include optin-button-link;
+
+	input[type=text] {
+		width: 294px;
+	}
+
+	.optin-prompt {
+		display: block;
+	}
+
+	#DescWiki {
+		textarea {
+			padding: 0;
+			height: 150px;
+		}
+	}
+
+	.checkbox-styled input[type=checkbox]:checked + label {
+		background-color: $wds-fandom-color-link;
+		border-color: $wds-fandom-color-link;
+	}
+
+	.wds-list li:not(.spacer):hover {
+		color: $wds-fandom-color-link;
+	}
+}
+
+.optin-wrapper {
+	display: flex;
+}
+
+.optin-prompt {
+	display: none;
+	margin: 0 0 0 30px;
+	text-align: center;
+	font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
+	width: 240px;
+
+	a {
+		@include optin-button-link-anchor;
+	}
+
+	&__left-column {
+		flex-grow: 1;
+		width: 380px !important;
+	}
+
+	&__community {
+		background-size: 1px 10px;
+		background-image: linear-gradient(90deg, rgba($wds-fandom-color-link, .35), rgba($wds-fandom-color-link, .35));
+		background-position: 0 .65em;
+		background-repeat: repeat-x;
+		color: $wds-fandom-color-navy;
+		font-size: 30px;
+		font-weight: 400;
+		line-height: 1.2;
+	}
+
+	&__builder {
+		background-color: rgba($wds-fandom-color-link, .35);
+		color: $wds-fandom-color-navy;
+		font-size: 18px;
+		padding: 0 3px;
+	}
+
+	&__copy {
+		margin: 8px 0 13px 0 !important;
+		font-size: 14px;
+		line-height: 1.43;
+	}
+}
+
+.optin-modal {
+	@include optin-button-link;
+
+	background-color: rgba(0, 0, 0, .57);
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 5001101; // more than the global nav
+
+	a {
+		@include optin-button-link-anchor;
+	}
+
+	&__dialog-wrapper {
+		background-color: $wds-color-white;
+		width: 400px;
+		border-radius: 4px;
+		margin: 0 auto;
+		transform: translateY(50%);
+		padding: 25px 30px 30px;
+		font-family: "Rubik","Helvetica Neue",Helvetica,Arial,sans-serif;
+		text-align: center;
+	}
+
+	&__copy {
+		color: $wds-color-black;
+		font-size: 16px;
+		line-height: 1.63;
+		font-weight: 300;
+		margin: 9px 0;
+	}
+
+	&__affirm button {
+		margin-top: 18px;
+	}
+}

@@ -594,11 +594,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
  define('NS_LEGACY_VIDEO', '400');
 
 /**
- * Tasks
- */
-require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
-
-/**
  * external databases
  */
 $wgContentReviewDB = 'content_review';
@@ -1768,3 +1763,9 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * This will only work on production.
  */
 $wgProcessTasksOnKubernetes = false;
+
+/**
+ * @name $wgPercentOfTasksOnKubernetes
+ * Determines the percentage of wikis that send tasks to k8s.
+ */
+$wgPercentOfTasksOnKubernetes = 0;

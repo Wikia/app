@@ -43,6 +43,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAppNexusWebAdsBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
+		$vars[] = 'wgAdDriverA9DealsCountries';
 		$vars[] = 'wgAdDriverA9OptOutCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
@@ -84,6 +85,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
@@ -111,7 +113,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
-		$vars[] = 'wgAdDriverMobileStickyAndSwapCountries';
 
 		/**
 		 * Disaster Recovery
@@ -156,6 +157,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2DisableSraCountries';
 		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
+		$vars[] = 'wgAdDriverF2VideoF15nCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nMap';
 
 		return true;
