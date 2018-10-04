@@ -5,16 +5,13 @@ function wikiaJWPlayerSharingPlugin(player, config, div) {
 	this.buttonID = 'wikiaSharing';
 	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
+	this.isDocumentHandlerMounted = false;
 
 	this.container.classList.add('wikia-jw__plugin');
 	this.wikiaSharingElement.classList.add('wikia-jw');
 	this.wikiaSharingElement.classList.add('wikia-jw-sharing');
 	this.addSharingContent(this.wikiaSharingElement);
 	this.container.appendChild(this.wikiaSharingElement);
-
-	document.addEventListener('click', this.documentClickHandler);
-	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
-	document.addEventListener('touchend', this.documentClickHandler);
 }
 
 wikiaJWPlayerSharingPlugin.prototype.isSharingMenuOrSharingButton = function (element) {
@@ -32,7 +29,13 @@ wikiaJWPlayerSharingPlugin.prototype.getSharingButtonElement = function () {
 
 wikiaJWPlayerSharingPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the sharing menu or sharing button and if sharing menu is open
-	if (!this.isSharingMenuOrSharingButton(event.target) && this.container.style.display) {
+	if (!this.isSharingMenuOrSharingButton(event.target) &&
+		this.container.style.display &&
+		this.isDocumentHandlerMounted
+	) {
+		document.removeEventListener('click', this.documentClickHandler);
+		document.removeEventListener('touchend', this.documentClickHandler);
+		this.isDocumentHandlerMounted = false;
 		this.close();
 	}
 };
@@ -46,8 +49,17 @@ wikiaJWPlayerSharingPlugin.prototype.addButton = function () {
 	this.player.addButton(sharingIcon.outerHTML, this.config.i18n.sharing, function (evt) {
 		if (!this.wikiaSharingElement.style.display) {
 			this.open(evt.currentTarget);
-		} else {
-			this.close();
+
+			// If not for setTimeout, click handler defined in addButton() would trigger the code below as well
+			setTimeout(function (){
+				if (!this.isDocumentHandlerMounted) {
+					document.addEventListener('click', this.documentClickHandler);
+					// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
+					document.addEventListener('touchend', this.documentClickHandler);
+
+					this.isDocumentHandlerMounted = true;
+				}
+			}.bind(this), 0);
 		}
 	}.bind(this), this.buttonID, 'wikia-jw-button');
 };

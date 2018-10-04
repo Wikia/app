@@ -146,8 +146,8 @@ in video custom parameter in jwplayer dashboard.
 ## Contributing
 * Clone repo
 * run `npm install`
-* run `npm run dev` to build project, watch for file changes and run server
-* we keep built project in dist folder, remember to run `npm run build`
+* run `npm run dev` to watch for file changes and run server
+* we keep built project in dist folder, remember to run `npm run build` to build your changes after your development is finished
 * after merging your PR to master:
 	* bump version with `npm version [patch|minor|major]`
 	* add tag with the version e.g. `git tag 1.2.0`
