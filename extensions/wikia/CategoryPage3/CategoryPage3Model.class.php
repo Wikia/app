@@ -9,6 +9,9 @@ class CategoryPage3Model {
 	/** @var Collation */
 	private $collation;
 
+	/** @var DatabaseMysqli */
+	private $dbr;
+
 	/** @var string */
 	private $from;
 
@@ -39,15 +42,15 @@ class CategoryPage3Model {
 	 * @throws MWException
 	 */
 	public function loadData() {
-		$dbr = wfGetDB( DB_SLAVE, 'category' );
+		$this->dbr = wfGetDB( DB_SLAVE, 'category' );
 
-		$results = $this->getMembersFromDB( $dbr );
+		$results = $this->getMembersFromDB();
 		$this->addPagesFromDbResults( $results );
-		$this->findTotalNumberOfMembers( $dbr );
-		$this->findPrevPage( $dbr );
+		$this->findTotalNumberOfMembers();
+		$this->findPrevPage();
 
 		if ( $this->pagination->getNextPageKey() ) {
-			$this->findLastPage( $dbr );
+			$this->findLastPage();
 		}
 	}
 
@@ -98,12 +101,11 @@ class CategoryPage3Model {
 	}
 
 	/**
-	 * @param $dbr
 	 * @return array
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function getExtraConditionsForQuery( DatabaseMysqli $dbr ): array {
+	private function getExtraConditionsForQuery(): array {
 		$extraConds = [];
 
 		if ( $this->from !== null ) {
@@ -111,7 +113,7 @@ class CategoryPage3Model {
 			// Note that if the collation in the database differs from the one
 			// set in $wgCategoryCollation, pagination might go totally haywire.
 			$extraConds[] =
-				'cl_sortkey >= ' . $dbr->addQuotes( $this->collation->getSortKey( $this->from ) );
+				'cl_sortkey >= ' . $this->dbr->addQuotes( $this->collation->getSortKey( $this->from ) );
 		}
 
 		// Allow other extensions to add more conditions, e.g. exclude namespaces
@@ -121,15 +123,14 @@ class CategoryPage3Model {
 	}
 
 	/**
-	 * @param DatabaseMysqli $dbr
 	 * @return ResultWrapper
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function getMembersFromDB( DatabaseMysqli $dbr ): ResultWrapper {
-		$extraConditions = $this->getExtraConditionsForQuery( $dbr );
+	private function getMembersFromDB(): ResultWrapper {
+		$extraConditions = $this->getExtraConditionsForQuery();
 
-		return $dbr->select(
+		return $this->dbr->select(
 			[ 'page', 'categorylinks', 'category' ],
 			[
 				'page_id', 'page_title', 'page_namespace', 'page_len',
@@ -155,12 +156,21 @@ class CategoryPage3Model {
 		global $wgContLang;
 
 		$firstChar = $wgContLang->convert( $this->collation->getFirstLetter( $sortkey ) );
-
 		$this->members[ $title->getArticleID() ] = new CategoryPage3Member( $title, $firstChar );
 	}
 
-	private function findTotalNumberOfMembers( DatabaseMysqli $dbr ) {
-		$totalNumberOfMembers = $dbr->selectField(
+	private function findTotalNumberOfMembers() {
+		$totalNumberOfMembers = WikiaDataAccess::cache(
+			$this->getMemcacheKey( __METHOD__ ),
+			WikiaResponse::CACHE_STANDARD,
+			array( $this, 'getTotalNumberOfMembersFromDB' )
+		);
+
+		$this->totalNumberOfMembers = $totalNumberOfMembers;
+	}
+
+	public function getTotalNumberOfMembersFromDB() {
+		return $this->dbr->selectField(
 			'categorylinks',
 			'count(0)',
 			[
@@ -168,16 +178,14 @@ class CategoryPage3Model {
 			],
 			__METHOD__
 		);
-
-		$this->totalNumberOfMembers = $totalNumberOfMembers;
 	}
 
-	private function findPrevPage( DatabaseMysqli $dbr ) {
+	private function findPrevPage() {
 		if ( $this->from === null ) {
 			return;
 		}
 
-		$res = $dbr->select(
+		$res = $this->dbr->select(
 			[ 'page', 'categorylinks' ],
 			[
 				'page_id', 'page_title', 'page_namespace', 'page_len', 'page_is_redirect',
@@ -185,7 +193,7 @@ class CategoryPage3Model {
 			],
 			[
 				'cl_to' => $this->title->getDBkey(),
-				'cl_sortkey < ' . $dbr->addQuotes( $this->collation->getSortKey( $this->from ) )
+				'cl_sortkey < ' . $this->dbr->addQuotes( $this->collation->getSortKey( $this->from ) )
 			],
 			__METHOD__,
 			[
@@ -220,10 +228,20 @@ class CategoryPage3Model {
 		$this->pagination->setPrevPageKey( $this->getHumanSortkey( $lastRow, $title ) );
 	}
 
-	private function findLastPage( DatabaseMysqli $dbr ) {
+	private function findLastPage() {
+		$lastPageKey = WikiaDataAccess::cache(
+			$this->getMemcacheKey( __METHOD__ ),
+			WikiaResponse::CACHE_STANDARD,
+			array( $this, 'getLastPageKeyFromDB' )
+		);
+
+		$this->pagination->setLastPageKey( $lastPageKey );
+	}
+
+	public function getLastPageKeyFromDB() {
 		$lastPageMembersCount = $this->totalNumberOfMembers % static::MEMBERS_PER_PAGE_LIMIT;
 
-		$res = $dbr->select(
+		$res = $this->dbr->select(
 			[ 'page', 'categorylinks' ],
 			[
 				'page_id', 'page_title', 'page_namespace', 'page_len', 'page_is_redirect',
@@ -250,7 +268,8 @@ class CategoryPage3Model {
 		}
 
 		$title = Title::newFromRow( $lastRow );
-		$this->pagination->setLastPageKey( $this->getHumanSortkey( $lastRow, $title ) );
+
+		return $this->getHumanSortkey( $lastRow, $title );
 	}
 
 	private function addPagesFromDbResults( ResultWrapper $results ) {
@@ -280,5 +299,13 @@ class CategoryPage3Model {
 		}
 
 		return $humanSortkey;
+	}
+
+	private function getMemcacheKey( String $method ): String {
+		return wfMemcKey(
+			$method,
+			$this->title->getDBkey(),
+			CategoryPage3CacheHelper::getTouched( $this->title )
+		);
 	}
 }

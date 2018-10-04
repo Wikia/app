@@ -9,11 +9,13 @@ $wgExtensionCredits['other'][] = [
 ];
 
 $wgAutoloadClasses['CategoryPage3'] = __DIR__ . '/CategoryPage3.class.php';
+$wgAutoloadClasses['CategoryPage3CacheHelper'] = __DIR__ . '/CategoryPage3CacheHelper.class.php';
 $wgAutoloadClasses['CategoryPage3Hooks'] = __DIR__ . '/CategoryPage3Hooks.class.php';
 $wgAutoloadClasses['CategoryPage3Member'] = __DIR__ . '/CategoryPage3Member.class.php';
 $wgAutoloadClasses['CategoryPage3Model'] = __DIR__ . '/CategoryPage3Model.class.php';
 $wgAutoloadClasses['CategoryPage3Pagination'] = __DIR__ . '/CategoryPage3Pagination.class.php';
 
+$wgHooks['AfterCategoriesUpdate'][] = 'CategoryPage3Hooks::onAfterCategoriesUpdate';
 $wgHooks['ArticleFromTitle'][] = 'CategoryPage3Hooks::onArticleFromTitle';
 
 $wgResourceModules['ext.wikia.CategoryPage3.scripts'] = [
