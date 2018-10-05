@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * This is an HTTP end-point that exposes metrics for Prometheus
+ *
+ * @see SUS-5855
+ */
+require __DIR__ . '/includes/WebStart.php'; // we want to load config to have $wgRedisHost
+
+use Prometheus\CollectorRegistry;
+use Prometheus\RenderTextFormat;
+
+$adapter = new Prometheus\Storage\Redis( [ 'host' => $wgRedisHost ] );
+
+$registry = new CollectorRegistry($adapter);
+$renderer = new RenderTextFormat();
+
+header('Content-Type: ' . RenderTextFormat::MIME_TYPE);
+echo $renderer->render($registry->getMetricFamilySamples());

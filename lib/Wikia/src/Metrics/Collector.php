@@ -2,16 +2,15 @@
 
 namespace Wikia\Metrics;
 
-use Prometheus\PushGateway;
 use Prometheus\CollectorRegistry;
-use Prometheus\Storage\InMemory;
-use Wikia\Logger\WikiaLogger;
+use Prometheus\Storage\Redis;
 
 /**
- * This class can be used to push metrics to Prometheus via Pushgateway
+ * This class can be used to push metrics to Prometheus.
  *
  * Metrics can be added via addGauge() and addCounter() methods.
- * These are collected and pushed to Pushgateway when push() method is called.
+ * These are stored temporarily in Redis and later collected by
+ * Prometheus which requests /metrics.php file.
  *
  * @package Wikia\Metrics
  */
@@ -20,29 +19,27 @@ class Collector {
 	// @see https://prometheus.io/docs/practices/naming/
 	const METRICS_NAMESPACE = 'mediawiki';
 
-	private $gateway;
 	private $registry;
 
 	static function getInstance() : self {
-		global $wgPrometheusPushgatewayHost;
+		global $wgRedisHost;
 		static $instance = null;
 
 		if ( $instance === null ) {
-			$instance = new self( $wgPrometheusPushgatewayHost );
+			$instance = new self( $wgRedisHost );
 		}
 
 		return $instance;
 	}
 
 	/**
-	 * Create a new instance of Collector class that will push metrics to
-	 * a provided Prometheus Pushgateway
+	 * Create a new instance of Collector class that will push metrics to Redis that will later
+	 * be collected by Prometheus
 	 *
-	 * @param string $host Pushgateway address to push metrics to
+	 * @param string $redisHost Redis server to store metrics before they will be collected by Prometheus
 	 */
-	private function __construct( string $host ) {
-		$this->gateway = new PushGateway( $host, 2, 5 );
-		$this->registry = new CollectorRegistry( new InMemory() );
+	private function __construct( string $redisHost ) {
+		$this->registry = new CollectorRegistry( new Redis( [ 'host' => $redisHost ] ) );
 	}
 
 	public function addGauge( string $name, float $value, array $labels, string $help ) : self {
@@ -59,19 +56,5 @@ class Collector {
 		$counter->inc( array_values( $labels ) );
 
 		return $this;
-	}
-
-	public function push( string $job ) {
-		try {
-			$this->gateway->pushAdd( $this->registry, $job );
-		}
-		catch ( \RuntimeException $ex ) {
-			WikiaLogger::instance()->error( __METHOD__, [
-				'exception' => $ex
-			] );
-		}
-
-		// empty the registry
-		$this->registry = new CollectorRegistry( new InMemory() );
 	}
 }
