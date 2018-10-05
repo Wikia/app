@@ -67,16 +67,47 @@ class CategoryPage3 extends CategoryPage {
 	 * @throws Exception
 	 */
 	private function getHTML() {
-		$mustache = new PhpEngine();
+		$membersGroupedByChar = $this->model->getMembersGroupedByChar();
+
+		$this->setBreakColumnAfterMiddleMember( $membersGroupedByChar );
 
 		$templateVars = [
-			'membersGroupedByChar' => $this->model->getMembersGroupedByChar(),
+			'membersGroupedByChar' => $membersGroupedByChar,
 			'pagination' => $this->model->getPagination(),
 			'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
 		];
 
-		return $mustache->clearData()
+		return ( new PhpEngine() )->clearData()
 			->setData( $templateVars )
 			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3.php' );
+	}
+
+	/**
+	 * This is messy and wouldn't be needed if this worked:
+	 * .category-page__first-char { break-after: avoid; }
+	 * but it doesn't, so we need to calculate the break manually
+	 *
+	 * @param $membersGroupedByChar
+	 */
+	private function setBreakColumnAfterMiddleMember( $membersGroupedByChar ) {
+		$numberOfHeaders = count( $membersGroupedByChar );
+		$numberOfMembers = count( $this->model->getMembers() );
+		$breakColumnAfter = floor( ( $numberOfHeaders + $numberOfMembers ) / 2 );
+
+		$count = 1;
+		foreach ( $membersGroupedByChar as $members ) {
+			/** @var CategoryPage3Member $member */
+			foreach ( $members as $member ) {
+				if ( $count >= $breakColumnAfter ) {
+					$member->setBreakColumnAfter( true );
+					return;
+				}
+
+				$count++;
+			}
+
+			// Headers take space too
+			$count++;
+		}
 	}
 }

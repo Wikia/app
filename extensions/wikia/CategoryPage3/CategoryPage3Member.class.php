@@ -1,40 +1,45 @@
 <?php
 
 class CategoryPage3Member {
+	/** @var bool */
+	private $breakColumnAfter;
+
+	/** @var string */
 	private $firstChar;
+
+	/** @var string */
 	private $image;
+
+	/** @var Title */
 	private $title;
 
 	public function __construct( Title $title, string $firstChar ) {
+		$this->breakColumnAfter = false;
 		$this->firstChar = $firstChar;
 		$this->image = null;
 		$this->title = $title;
 	}
 
-	/**
-	 * @return string
-	 */
+	public function isBreakColumnAfter(): bool {
+		return $this->breakColumnAfter;
+	}
+
+	public function setBreakColumnAfter( $breakColumnAfter ) {
+		$this->breakColumnAfter = $breakColumnAfter;
+	}
+
 	public function getFirstChar(): string {
 		return $this->firstChar;
 	}
 
-	/**
-	 * @return null
-	 */
 	public function getImage() {
 		return $this->image;
 	}
 
-	/**
-	 * @param null $image
-	 */
 	public function setImage( $image ) {
 		$this->image = $image;
 	}
 
-	/**
-	 * @return Title
-	 */
 	public function getTitle(): Title {
 		return $this->title;
 	}

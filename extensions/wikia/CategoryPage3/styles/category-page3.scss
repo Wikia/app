@@ -14,9 +14,12 @@
 		}
 
 		&__members-for-char {
-			break-before: avoid;
 			list-style: none;
 			margin-left: 0;
+		}
+
+		&__member-break-column-after {
+			break-after: column;
 		}
 
 		&__member-left {

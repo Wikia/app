@@ -76,6 +76,10 @@ class CategoryPage3Model {
 		}
 	}
 
+	public function getMembers(): array {
+		return $this->members;
+	}
+
 	public function getMembersGroupedByChar(): array {
 		$membersGroupedByChar = [];
 
