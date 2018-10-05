@@ -1277,13 +1277,6 @@ $wgCreateLanguageWikisWithPath = false;
 $wgCreateEnglishWikisOnFandomCom = false;
 
 /**
- * The datacenter that hosts the starter dumps for CreateNewWiki
- * @see \Wikia\CreateNewWiki\Starters
- * @var string $wgCreateWikiStarterDumpsDatacenter
- */
-$wgCreateWikiStarterDumpsDatacenter = WIKIA_DC_SJC;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
