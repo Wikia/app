@@ -30,7 +30,7 @@ require([
 	}
 
 	function showAfterMigrationNotification() {
-		mw.loader.using('ext.fandomComMigration').then(function () {
+		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
 				mw.message('fandom-com-migration-after').parse(),
 				'warn',
@@ -46,7 +46,7 @@ require([
 	}
 
 	function showBeforeMigrationNotification() {
-		mw.loader.using('ext.fandomComMigration').then(function () {
+		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
 				mw.message('fandom-com-migration-before').parse(),
 				'warn',
