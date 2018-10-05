@@ -3,7 +3,9 @@
 namespace Wikia\Metrics;
 
 use Prometheus\CollectorRegistry;
+use Prometheus\Exception\StorageException;
 use Prometheus\Storage\Redis;
+use Wikia\Logger\Loggable;
 
 /**
  * This class can be used to push metrics to Prometheus.
@@ -15,6 +17,8 @@ use Prometheus\Storage\Redis;
  * @package Wikia\Metrics
  */
 class Collector {
+
+	use Loggable;
 
 	// @see https://prometheus.io/docs/practices/naming/
 	const METRICS_NAMESPACE = 'mediawiki';
@@ -43,18 +47,29 @@ class Collector {
 	}
 
 	public function addGauge( string $name, float $value, array $labels, string $help ) : self {
-		$gauge = $this->registry->getOrRegisterGauge(
-			self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
-		$gauge->set( $value, array_values( $labels ) );
+		try {
+			$gauge = $this->registry->getOrRegisterGauge(
+				self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
+			$gauge->set( $value, array_values( $labels ) );
+		} catch ( StorageException $ex ) {
+			$this->error( __METHOD__, [
+				'exception' => $ex
+			] );
+		}
 
 		return $this;
 	}
 
 	public function addCounter( string $name, array $labels, string $help ) : self {
-		$counter = $this->registry->getOrRegisterCounter(
-			self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
-		$counter->inc( array_values( $labels ) );
-
+		try {
+			$counter = $this->registry->getOrRegisterCounter(
+				self::METRICS_NAMESPACE, $name, $help, array_keys( $labels ) );
+			$counter->inc( array_values( $labels ) );
+		} catch ( StorageException $ex ) {
+			$this->error( __METHOD__, [
+				'exception' => $ex
+			] );
+		}
 		return $this;
 	}
 }
