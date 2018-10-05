@@ -3,8 +3,16 @@
 // It's either that or !important for multiple selectors
 .WikiaArticle {
 	.category-page {
+		&__total-number {
+			border-top: 1px solid #ccc;
+			margin-bottom: 30px;
+			margin-top: 40px;
+			padding-top: 60px;
+		}
+
 		&__members {
 			@include column-count(2);
+			@include column-gap(28px);
 		}
 
 		&__first-char {
@@ -18,13 +26,30 @@
 			margin-left: 0;
 		}
 
+		&__member {
+			align-items: center;
+			display: flex;
+			padding: 9px 0;
+			margin: 0;
+		}
+
 		&__member-break-column-after {
 			break-after: column;
+			-webkit-column-break-after: always;
 		}
 
 		&__member-left {
-			display: inline-block;
+			display: flex;
+			flex-shrink: 0;
+			justify-content: center;
 			width: 40px;
+			word-break: break-all;
+
+			&-icon {
+				// 18px from .wds-icon-small + 2*6px
+				// we want to have the same height as for thumbnail to keep spacing consistent
+				padding: 6px 0;
+			}
 		}
 
 		&__member-thumbnail {
@@ -33,15 +58,14 @@
 		}
 
 		&__member-link {
-			display: inline-block;
-			margin: 16px 0;
+			padding-left: 12px;
 		}
 
 		&__pagination {
 			// TODO use a variable for the color
 			border-top: 1px solid #000;
-			margin-top: 20px;
-			padding-top: 20px;
+			margin-top: 31px;
+			padding-top: 29px;
 		}
 	}
 }

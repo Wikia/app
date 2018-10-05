@@ -1,4 +1,4 @@
-<p class="wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">
+<p class="category-page__total-number wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">
 	All items (<?= $totalNumberOfMembers; ?>)
 </p>
 <div class="category-page__members">
@@ -11,7 +11,10 @@
 				<li class="category-page__member<?= $member->isBreakColumnAfter() ? ' category-page__member-break-column-after' : '' ?>">
 					<div class="category-page__member-left">
 						<?php if ( $member->isSubcategory() ) : ?>
-							<?= DesignSystemHelper::renderSvg('wds-icons-pages-small', 'wds-icon-small') ?>
+							<?= DesignSystemHelper::renderSvg(
+								'wds-icons-pages-small',
+								'wds-icon-small category-page__member-left-icon'
+							) ?>
 						<?php endif; ?>
 						<?php if ( $member->getImage() ) : ?>
 							<img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
