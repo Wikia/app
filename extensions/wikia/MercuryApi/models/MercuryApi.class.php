@@ -323,7 +323,7 @@ class MercuryApi {
 	 * @return array
 	 */
 	private function getNavigation() {
-		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+		$navData = F::app()->sendRequest( 'NavigationApi', 'getData' )->getData();
 
 		if ( !isset( $navData['navigation']['wiki'] ) ) {
 			$localNavigation = [];
