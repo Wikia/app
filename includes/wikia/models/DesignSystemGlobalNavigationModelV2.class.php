@@ -92,10 +92,14 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	private function getHref( $hrefKey, $protocolRelative = false ) {
+	private function getHref( $hrefKey, $protocolRelative = false, $useWikiBaseDomain = false ) {
+		global $wgServer;
 		$url = DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
+		}
+		if ( $useWikiBaseDomain ) {
+			$url = wfForceBaseDomain( $url, $wgServer );
 		}
 		return $url;
 	}
@@ -179,7 +183,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-sign-in',
 				],
-				'href' => $this->getHref( 'user-signin' ),
+				'href' => $this->getHref( 'user-signin', false, true ),
 				'param-name' => 'redirect',
 				'tracking-label' => 'account.sign-in',
 			],
@@ -189,7 +193,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-register',
 				],
-				'href' => $this->getHref( 'user-register' ),
+				'href' => $this->getHref( 'user-register', false, true ),
 				'param-name' => 'redirect',
 				'tracking-label' => 'account.register',
 			]
@@ -215,7 +219,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$logOutLink = [
 			'type' => 'link-logout',
-			'href' => $this->getHref( 'user-logout' ),
+			'href' => $this->getHref( 'user-logout', false, true ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'

@@ -17,13 +17,13 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 	var context = adContext.getContext(),
 		sraEnabled = !context.opts.disableSra,
-		atfSlots = [
+		firstCallSlots = [
 			'TOP_LEADERBOARD',
 			'GPT_FLUSH'
 		];
 
 	if (sraEnabled) {
-		atfSlots.push('TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN');
+		firstCallSlots.push('TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN');
 	}
 
 	return factory.createProvider(
@@ -47,8 +47,12 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 			},
+			atfSlots: [
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD'
+			],
 			sraEnabled: sraEnabled,
-			atfSlots: atfSlots,
+			firstCallSlots: firstCallSlots,
 			getAdUnitBuilder: function () {
 				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},

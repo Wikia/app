@@ -128,6 +128,12 @@ class PoolCounter_Stub extends PoolCounter {
 abstract class PoolCounterWork {
 	protected $cacheable = false; //Does this override getCachedWork() ?
 
+	/** @var PoolCounter $poolCounter */
+	private $poolCounter;
+
+	/** @var string $key */
+	private $key;
+
 	/**
 	 * Actually perform the work, caching it if needed.
 	 */
@@ -165,7 +171,8 @@ abstract class PoolCounterWork {
 	function logError( Status $status ) {
 
 		WikiaLogger::instance()->error( 'poolcounter', [
-			'poolcounter_status' => $status
+			'poolcounter_status' => $status,
+			'poolcounter_key' => $this->key,
 		]);
 	}
 
@@ -226,5 +233,6 @@ abstract class PoolCounterWork {
 
 	function __construct( $type, $key ) {
 		$this->poolCounter = PoolCounter::factory( $type, $key );
+		$this->key = $key;
 	}
 }

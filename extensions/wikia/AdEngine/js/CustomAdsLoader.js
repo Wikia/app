@@ -3,7 +3,7 @@
 	'use strict';
 
 	var availableTemplates = ['bfaa', 'bfab', 'floatingRail', 'floor', 'floorAdhesion', 'interstitial', 'modal',
-			'playwire', 'porvata', 'roadblock', 'skin'],
+			'playwire', 'porvata', 'skin'],
 		dependencies = ['wikia.log'];
 
 	function getAdModule(name, allModules) {

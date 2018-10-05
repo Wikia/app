@@ -170,8 +170,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
-					'wgWikiDescription' => 'bar',
-					'wgEnableHTTPSForAnons' => true,
+					'wgWikiDescription' => 'bar'
 				]
 			]
 		];

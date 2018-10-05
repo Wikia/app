@@ -114,8 +114,13 @@ class HTTPSSupportHooks {
 
 	private static function httpsAllowed( User $user, string $url ): bool {
 		global $wgEnableHTTPSForAnons;
+
 		return wfHttpsAllowedForURL( $url ) &&
-			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
+			(
+				wfHttpsEnabledForURL( $url ) ||
+				!empty( $wgEnableHTTPSForAnons ) ||
+				$user->isLoggedIn()
+			);
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
