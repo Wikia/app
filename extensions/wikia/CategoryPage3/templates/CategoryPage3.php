@@ -4,7 +4,7 @@
 <div class="category-page__members">
 	<?php /** @var array $membersGroupedByChar */ ?>
 	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>
-        <div class="category-page__first-char wds-font-size-xl wds-font-weight-bold"><?= $firstChar ?></div>
+        <div class="category-page__first-char wds-font-size-xl wds-font-weight-bold"><?= htmlspecialchars( $firstChar ) ?></div>
         <ul class="category-page__members-for-char">
 			<?php foreach ( $members as $member ) : ?>
 				<?php /** @var CategoryPage3Member $member */ ?>
