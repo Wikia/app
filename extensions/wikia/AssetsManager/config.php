@@ -2455,3 +2455,10 @@ $config['feeds_and_posts_js'] = [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
 	]
 ];
+
+$config['fandom_com_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
+	]
+];
