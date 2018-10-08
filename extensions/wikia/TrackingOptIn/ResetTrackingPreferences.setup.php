@@ -3,8 +3,8 @@
 $GLOBALS['wgAutoloadClasses']['ResetTrackingPreferencesSpecialController'] = __DIR__ . '/ResetTrackingPreferencesSpecialController.class.php';
 $wgSpecialPages['ResetTrackingPreferences'] = 'ResetTrackingPreferencesSpecialController';
 
-$GLOBALS['wgResourceModules']['ext.wikia.trackingSettingsManager'] = [
-	'scripts' => [ 'js/ext.wikia.trackingSettingsManager.js' ],
+$GLOBALS['wgResourceModules']['ext.wikia.resetTrackingSettingsManager'] = [
+	'scripts' => [ 'js/ext.wikia.resetTrackingSettingsManager.js' ],
 	'styles' => [ 'styles/ext.wikia.trackingSettingsManager.css' ],
 	'messages' => [
 		'privacy-settings-button-toggle',

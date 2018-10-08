@@ -34,7 +34,7 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 		}
 
 		// Just show the buttons
-		$output->addModules( 'ext.wikia.trackingSettingsManager' );
+		$output->addModules( 'ext.wikia.resetTrackingSettingsManager' );
 	}
 
 	private function isValidReturnToTarget( $url ) {
