@@ -25,7 +25,6 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 			// Go to migration page
 		});
 
-		var articleContent = document.getElementById('mw-content-text');
 		articleContent.appendChild(trackingSettingsButtonFandom);
 	}
 
