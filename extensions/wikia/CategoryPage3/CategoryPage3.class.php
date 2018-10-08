@@ -31,6 +31,11 @@ class CategoryPage3 extends CategoryPage {
 
 		$this->model = new CategoryPage3Model( $context->getTitle(), $this->from );
 		$this->model->loadData();
+
+		if ( $this->model->getTotalNumberOfMembers() === 0 ) {
+			return;
+		}
+
 		$this->model->loadImages( 40, 30 );
 
 		$this->addPaginationToHead();
