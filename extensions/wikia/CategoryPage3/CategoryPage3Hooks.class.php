@@ -27,7 +27,7 @@ class CategoryPage3Hooks {
 	 * @return bool
 	 */
 	static public function onArticleFromTitle( &$title, &$article ): bool {
-		if ( !$title || $title->getNamespace() !== NS_CATEGORY ) {
+		if ( !$title || !$title->inNamespace( NS_CATEGORY ) ) {
 			return true;
 		}
 

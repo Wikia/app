@@ -45,6 +45,6 @@ class CategoryPage3Member {
 	}
 
 	public function isSubcategory(): bool {
-		return $this->getTitle()->getNamespace() === NS_CATEGORY;
+		return $this->getTitle()->inNamespace( NS_CATEGORY );
 	}
 }
