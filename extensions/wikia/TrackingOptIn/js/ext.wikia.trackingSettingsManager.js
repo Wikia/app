@@ -16,16 +16,17 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 		var articleContent = document.getElementById('mw-content-text');
 		articleContent.appendChild(trackingSettingsButton);
 
-		var trackingSettingsButtonFandom = document.createElement('button');
+		var fandomResetCookieForm = document.createElement('form');
+		fandomResetCookieForm.setAttribute('method', 'post');
+		fandomResetCookieForm.setAttribute('action','https://migration.fandom.com/wiki/Special:ResetTrackingPreferences');
 
+		var trackingSettingsButtonFandom = document.createElement('input');
+		trackingSettingsButtonFandom.setAttribute('type', 'submit');
 		trackingSettingsButtonFandom.classList.add('privacy-settings-button', 'wds-button');
+		trackingSettingsButtonFandom.value = mw.message('privacy-settings-button-toggle-fandom').text();
 
-		trackingSettingsButtonFandom.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
-		trackingSettingsButtonFandom.addEventListener('click', function () {
-			// Go to migration page
-		});
-
-		articleContent.appendChild(trackingSettingsButtonFandom);
+		fandomResetCookieForm.appendChild(trackingSettingsButtonFandom);
+		articleContent.appendChild(fandomResetCookieForm);
 	}
 
 	if (document.readyState !== 'loading') {
