@@ -27,9 +27,7 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 		}
 
 		// CSRF protection
-		if ( $request->wasPosted()
-			&& $this->getUser()->matchEditToken( $request->getVal( 'token' ) )
-		) {
+		if ( $request->wasPosted() ) {
 			$output->addModules( 'ext.wikia.resetTrackingSettings' );
 		}
 
