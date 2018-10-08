@@ -6,15 +6,15 @@ class CategoryPage3CacheHelper {
 	/**
 	 * Can be used as a part of memcache key
 	 *
-	 * @param $title
+	 * @param Title $title
 	 * @return bool|Object
 	 */
-	public static function getTouched( $title ) {
+	public static function getTouched( Title $title ) {
 		global $wgMemc;
 		return $wgMemc->get( static::getKey( $title ) );
 	}
 
-	public static function setTouched( $title ) {
+	public static function setTouched( Title $title ) {
 		global $wgMemc;
 		$wgMemc->set(
 			static::getKey( $title ),
