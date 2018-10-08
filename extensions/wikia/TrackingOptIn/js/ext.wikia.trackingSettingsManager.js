@@ -5,8 +5,7 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 	function createTrackingSettingsButton() {
 		var trackingSettingsButton = document.createElement('button');
 
-		trackingSettingsButton.classList.add('privacy-settings-button');
-		trackingSettingsButton.classList.add('wds-button');
+		trackingSettingsButton.classList.add('privacy-settings-button', 'wds-button');
 
 		trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle').text();
 		trackingSettingsButton.addEventListener('click', function () {
@@ -19,8 +18,7 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 
 		var trackingSettingsButtonFandom = document.createElement('button');
 
-		trackingSettingsButtonFandom.classList.add('privacy-settings-button');
-		trackingSettingsButtonFandom.classList.add('wds-button');
+		trackingSettingsButtonFandom.classList.add('privacy-settings-button', 'wds-button');
 
 		trackingSettingsButtonFandom.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
 		trackingSettingsButtonFandom.addEventListener('click', function () {
