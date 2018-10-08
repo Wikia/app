@@ -283,7 +283,7 @@ spec:
               cpu: 6
               memory: 2Gi
             requests:
-              cpu: 1
+              cpu: 2
               memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
@@ -338,7 +338,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 20
+  maxReplicas: 30
   minReplicas: 10
   metrics:
   - type: Resource

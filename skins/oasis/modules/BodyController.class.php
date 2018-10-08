@@ -105,22 +105,20 @@ class BodyController extends WikiaController {
 	/**
 	 * Decide whether to show user pages header on current page
 	 */
-	public static function showUserPagesHeader() {
-		$wg = F::app()->wg;
-
+	public static function showUserPagesHeader( Title $title ) {
 		// perform namespace and special page check
-		$isUserPage = in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() );
+		$isUserPage = $title->inNamespaces( self::getUserPagesNamespaces() );
 
 		$ret =
-			( $isUserPage && !$wg->Title->isSubpage() ) ||
-			$wg->Title->isSpecial( 'Following' ) ||
-			$wg->Title->isSpecial( 'Contributions' ) ||
-			$wg->Title->isSpecial( 'UserActivity' ) ||
+			( $isUserPage && !$title->isSubpage() ) ||
+			$title->isSpecial( 'Following' ) ||
+			$title->isSpecial( 'Contributions' ) ||
+			$title->isSpecial( 'UserActivity' ) ||
 			(
 				defined( 'NS_BLOG_ARTICLE' ) &&
-				$wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+				$title->getNamespace() == NS_BLOG_ARTICLE &&
 				// show user pages header only on user blog listing
-		        !$wg->Title->isSubpage()
+		        !$title->isSubpage()
 			);
 
 		return $ret;
@@ -285,7 +283,7 @@ class BodyController extends WikiaController {
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 
 		// show user pages header on this page?
-		if ( self::showUserPagesHeader() ) {
+		if ( self::showUserPagesHeader( $this->wg->Title ) ) {
 			$this->headerModuleName = 'UserPagesHeader';
 		// show corporate header on this page?
 		} else if (
