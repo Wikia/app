@@ -38,12 +38,12 @@
             </a>
 		<?php endif; ?>
 		<?php if ( !empty( $pagination->getPrevPageUrl() ) ): ?>
-            <a href="<?= $pagination->getPrevPageUrl() ?>" class="wds-button">
+            <a href="<?= $pagination->getPrevPageUrl() ?>" class="wds-button wds-is-secondary">
                 < Previous
             </a>
 		<?php endif; ?>
 		<?php if ( !empty( $pagination->getNextPageUrl() ) ): ?>
-            <a href="<?= $pagination->getNextPageUrl() ?>" class="wds-button">
+            <a href="<?= $pagination->getNextPageUrl() ?>" class="category-page__pagination-next wds-button wds-is-secondary">
                 Next >
             </a>
 		<?php endif; ?>

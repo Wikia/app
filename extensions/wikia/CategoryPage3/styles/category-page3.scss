@@ -1,10 +1,12 @@
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
 
 // It's either that or !important for multiple selectors
 .WikiaArticle {
 	.category-page {
 		&__total-number {
-			border-top: 1px solid #ccc;
+			border-top: 1px solid $color-page-border;
 			margin-bottom: 30px;
 			margin-top: 40px;
 			padding-top: 60px;
@@ -16,7 +18,7 @@
 		}
 
 		&__first-char {
-			border-bottom: 1px solid #ccc;
+			border-bottom: 1px solid $color-page-border;
 			margin: 0;
 			padding: 10px 0;
 		}
@@ -62,10 +64,20 @@
 		}
 
 		&__pagination {
-			// TODO use a variable for the color
-			border-top: 1px solid #000;
+			border-top: 1px solid $color-page-border;
+			display: flex;
+			justify-content: space-between;
 			margin-top: 31px;
 			padding-top: 29px;
+
+			&-next {
+				// First and previous on the left, next and last on the right
+				margin-left: auto;
+			}
+
+			.wds-is-text {
+				@include button-theming($color-buttons, $color-button-text, $color-secondary-button);
+			}
 		}
 	}
 }
