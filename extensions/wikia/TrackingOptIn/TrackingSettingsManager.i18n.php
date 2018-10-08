@@ -2,7 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'privacy-settings-button-toggle' => 'Reset your tracking preferences',
+	'privacy-settings-button-toggle' => 'Reset your tracking preferences on wikia.com',
+	'privacy-settings-button-toggle-fandom' => 'Reset your tracking preferences on fandom.com',
 );
 
 $messages['qqq'] = array(
