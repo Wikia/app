@@ -42,6 +42,7 @@
     "ext-mustache": "*",
     "ext-mysqli": "*",
     "ext-pcntl": "*",
+    "ext-redis": "*",
     "ext-simplexml": "*",
     "ext-sockets": "*",
     "ext-tideways": "*",
