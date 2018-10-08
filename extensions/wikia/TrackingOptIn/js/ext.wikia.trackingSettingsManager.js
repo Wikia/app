@@ -5,7 +5,8 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 	function createTrackingSettingsButton() {
 		var trackingSettingsButton = document.createElement('button');
 
-		trackingSettingsButton.classList.add('privacy-settings-button wds-button');
+		trackingSettingsButton.classList.add('privacy-settings-button');
+		trackingSettingsButton.classList.add('wds-button');
 
 		trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle').text();
 		trackingSettingsButton.addEventListener('click', function () {
@@ -16,17 +17,18 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 		var articleContent = document.getElementById('mw-content-text');
 		articleContent.appendChild(trackingSettingsButton);
 
-		var trackingSettingsButton = document.createElement('button');
+		var trackingSettingsButtonFandom = document.createElement('button');
 
-		trackingSettingsButton.classList.add('privacy-settings-button wds-button');
+		trackingSettingsButtonFandom.classList.add('privacy-settings-button');
+		trackingSettingsButtonFandom.classList.add('wds-button');
 
-		trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
-		trackingSettingsButton.addEventListener('click', function () {
+		trackingSettingsButtonFandom.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
+		trackingSettingsButtonFandom.addEventListener('click', function () {
 			// Go to migration page
 		});
 
 		var articleContent = document.getElementById('mw-content-text');
-		articleContent.appendChild(trackingSettingsButton);
+		articleContent.appendChild(trackingSettingsButtonFandom);
 	}
 
 	if (document.readyState !== 'loading') {
