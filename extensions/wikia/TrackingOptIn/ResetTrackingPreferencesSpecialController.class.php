@@ -26,7 +26,6 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 			$this->setVal( 'returnToMsg', $this->msg( 'returnto', $this->defaultReturnToTarget )->parse() );
 		}
 
-		// CSRF protection
 		if ( $request->wasPosted() ) {
 			$output->addModules( 'ext.wikia.resetTrackingSettings' );
 		}
