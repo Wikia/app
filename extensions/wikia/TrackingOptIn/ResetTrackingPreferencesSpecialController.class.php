@@ -38,7 +38,7 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 	private function isValidReturnToTarget( $url ) {
 		global $wgWikiaBaseDomainRegex;
 		$host = parse_url( $url, PHP_URL_HOST );
-		if ( empty( $host ) ) {
+		if ( $host === false || empty( $host ) ) {
 			return false;
 		}
 
