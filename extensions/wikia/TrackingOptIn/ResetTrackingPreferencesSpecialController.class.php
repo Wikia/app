@@ -4,6 +4,8 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	private $defaultReturnToTarget = 'https://www.wikia.com/Privacy_Policy';
+
 	public function __construct() {
 		parent::__construct( 'ResetTrackingPreferences' );
 	}
@@ -17,14 +19,31 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 		$request = $this->getRequest();
 		$output = $this->getOutput();
 
+		$returnTo = $request->getVal( 'returnto' );
+		if ( !empty( $returnTo ) && $this->isValidReturnToTarget( $returnTo ) ) {
+			$this->setVal( 'returnToMsg', $this->msg( 'returnto', $returnTo )->parse() );
+		} else {
+			$this->setVal( 'returnToMsg', $this->msg( 'returnto', $this->defaultReturnToTarget )->parse() );
+		}
+
 		// CSRF protection
 		if ( $request->wasPosted()
 			&& $this->getUser()->matchEditToken( $request->getVal( 'token' ) )
 		) {
 			$output->addModules( 'ext.wikia.resetTrackingSettings' );
-		} else {
-			// Just show the button
-			$output->addModules( 'ext.wikia.trackingSettingsManager' );
 		}
+
+		// Just show the buttons
+		$output->addModules( 'ext.wikia.trackingSettingsManager' );
+	}
+
+	private function isValidReturnToTarget( $url ) {
+		global $wgWikiaBaseDomainRegex;
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
+
+		return preg_match( '/\\.' . $wgWikiaBaseDomainRegex . '$/', $host );
 	}
 }
