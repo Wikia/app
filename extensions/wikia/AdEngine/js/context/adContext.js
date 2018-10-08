@@ -143,7 +143,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
 		context.rabbits = context.rabbits || {};
-		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
@@ -169,8 +168,6 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
-
-		context.providers.turtle = isEnabled('wgAdDriverTurtleCountries');
 
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
 

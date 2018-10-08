@@ -39,10 +39,7 @@ describe('AdContext', function () {
 				}
 			},
 			callback: noop
-		},
-		queryParams = [
-			'turtle'
-		];
+		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
@@ -239,19 +236,6 @@ describe('AdContext', function () {
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 		}
 	);
-
-	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
 
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
