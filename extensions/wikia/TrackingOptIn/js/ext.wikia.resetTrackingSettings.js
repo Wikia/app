@@ -8,7 +8,7 @@ require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, tracking
 	}
 
 	if (document.readyState !== 'loading') {
-		createTrackingSettingsButton();
+		resetTrackingSettings();
 	} else {
 		document.addEventListener('DOMContentLoaded', resetTrackingSettings);
 	}
