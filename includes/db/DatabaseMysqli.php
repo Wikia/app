@@ -305,6 +305,41 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	}
 
 	/**
+	 * Execute multiple SQL queries concatenated with a semicolon delimiter in a single operation
+	 *
+	 * @param string $sqlQuery queries to execute
+	 * @param string $method name of caller function
+	 * @return bool true if operation was successful
+	 * @throws DBQueryError
+	 */
+	public function multiQuery( string $sqlQuery, string $method ): bool {
+		$result = $this->mConn->multi_query( $sqlQuery );
+		$dbQueryError = null;
+
+		if ( $result ) {
+			// process potential errors for all subsequent components of the query
+			do {
+				$err = $this->lastError();
+
+				if ( $err ) {
+					// report error via DBError constructor
+					$dbQueryError = new DBQueryError( $this, $err, $this->lastErrno(), $sqlQuery, $method );
+				}
+
+			} while ( $this->mConn->next_result() );
+		} else {
+			// the very first query has failed
+			$dbQueryError = new DBQueryError( $this, $this->lastError(), $this->lastErrno(), $sqlQuery, $method );
+		}
+
+		if ( $dbQueryError ) {
+			throw $dbQueryError;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Give an id for the connection
 	 *
 	 * mysql driver used resource id, but mysqli objects cannot be cast to string.

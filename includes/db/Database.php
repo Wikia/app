@@ -3928,6 +3928,17 @@ abstract class DatabaseBase implements DatabaseType {
 		return $this->sampler;
 	}
 
+	/**
+	 * Execute multiple SQL queries concatenated with a semicolon delimiter in a single operation
+	 *
+	 * @param string $sqlQuery queries to execute
+	 * @param string $method name of caller function
+	 * @return bool true if operation was successful
+	 */
+	public function multiQuery( string $sqlQuery, string $method ): bool {
+		return false;
+	}
+
 	public function setSampler( BernoulliTrial $sampler ) {
 		$this->sampler = $sampler;
 	}

@@ -9,18 +9,16 @@ class ImportStarterData extends Task {
 
 	use Loggable;
 
-	public function check() {
-		global $wgPhpCli;
+	const ERR_OPEN_STARTER_DUMP_FAILED = 1;
+	const ERR_NO_PAGES_IMPORTED = 2;
+	const ERR_SQL_IMPORT_FAILED = 3;
+	const ERR_RUN_UPDATES_FAILED = 4;
 
-		// php-cli is required for spawning PHP maintenance scripts
-		if ( !$this->canExecute() ) {
-			return TaskResult::createForError( $wgPhpCli . " doesn't exist or is not an executable" );
-		} else {
-			return TaskResult::createForSuccess();
-		}
-	}
+	const MAX_REPLICATION_WAIT_MILLIS = 1250;
 
 	public function run() {
+		global $wgContLang;
+
 		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
 		$starterDatabase = Starters::getStarterByLanguage( $this->taskContext->getLanguage() );
 		$this->taskContext->setStarterDb( $starterDatabase );
@@ -28,53 +26,151 @@ class ImportStarterData extends Task {
 		// import a starter database XML dump from DFS
 		$then = microtime( true );
 
-		$retVal = $this->executeShell();
+		$language = $wgContLang->getCode();
+		$starter = Starters::getStarterByLanguage( $language );
 
-		if ( $retVal > 0 ) {
+		try {
+			$contentDumpStream = $this->getDump( Starters::getStarterContentDumpPath( $starter ) );
+
+			try {
+				$this->importDump( $contentDumpStream );
+			} finally {
+				fclose( $contentDumpStream );
+			}
+
+			$this->waitUntilMainPageExists();
+			$this->runUpdates();
+
+		} catch ( \CreateWikiException $ex ) {
+			$this->error( __METHOD__ - ' starter dump import failed', [ 'exception' => $ex ] );
 			return TaskResult::createForError( 'starter dump import failed', [
 				'starter' => $starterDatabase,
-				'retval' => $retVal
-			] );
-		}
-
-		if ( $retVal > 0 ) {
-			return TaskResult::createForError( 'starter dump import failed', [
-				'starter' => $starterDatabase,
-				'retval' => $retVal
 			] );
 		}
 
 		$took = microtime( true ) - $then;
-		TaskHelper::waitForSlaves( $this->taskContext, __METHOD__ );
 
 		return TaskResult::createForSuccess( [
-			'retval' => $retVal,
 			'starter' => $starterDatabase,
 			'took' => $took
 		] );
 	}
 
-	public function canExecute() : bool {
-		global $wgPhpCli;
+	/**
+	 * Get the stream with starter dump
+	 *
+	 * @param string $path remote path to a dump from
+	 * @return resource the stream with a dump
+	 * @throws \CreateWikiException
+	 */
+	private function getDump( $path ) {
+		$stream = fopen( "php://memory", "wb" );
 
-		wfShellExec( sprintf('%s -v', $wgPhpCli), $retVal );
+		if ( !is_resource( $stream ) ) {
+			throw new \CreateWikiException( "Unable to create a memory stream for starter database dump", self::ERR_OPEN_STARTER_DUMP_FAILED );
+		}
 
-		return $retVal === 0;
+		$swift = Starters::getStarterDumpStorage();
+		$res = $swift->read( $path, $stream );
+
+		if ( is_null( $res ) ) {
+			throw new \CreateWikiException( "Unable to fetch a dump from {$path}", self::ERR_OPEN_STARTER_DUMP_FAILED );
+		}
+
+		$stats = fstat( $stream );
+
+		$this->info( __METHOD__, [
+			'path' => $path,
+			'size' => $stats['size'],
+		] );
+
+		// prepare the stream to be read from, decompress the XML dump on the fly
+		rewind( $stream );
+		stream_filter_append( $stream, 'bzip2.decompress', STREAM_FILTER_READ );
+
+		return $stream;
 	}
 
-	public function executeShell() {
-		global $IP, $wgPhpCli;
+	/**
+	 * Import the provided XML dump
+	 *
+	 * @param resource $contentDumpStream stream with XML dump
+	 * @throws \CreateWikiException
+	 */
+	private function importDump( $contentDumpStream ) {
+		$then = microtime( true );
 
-		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
-			$this->taskContext->getCityId(),
-			$wgPhpCli,
-			"{$IP}/extensions/wikia/CreateNewWiki"
-		);
+		// first, import the articles content
+		$source = new \ImportStreamSource( $contentDumpStream );
+		$importer = new \WikiImporter( $source );
 
-		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );
-		wfShellExec( $cmd, $retVal );
+		$bulkRevisionImporter = new \BulkRevisionImporter( $this->taskContext );
 
-		return $retVal;
+		// We don't want to invoke tasks (namely run Page::doEditUpdates) on each insert to revision table
+		// The links will be updated by a run of refreshLinks.php script in post creation tasks
+		$importer->setNoUpdates( true );
+
+		$importer->setShouldCheckPermissions( false );
+
+		$importer->setRevisionCallback( [ $bulkRevisionImporter, 'addRevision' ] );
+
+		$importer->doImport();
+
+		$pagesCnt = $bulkRevisionImporter->doBulkImport();
+
+		if ( $pagesCnt === 0 ) {
+			throw new \CreateWikiException( 'No pages were imported', self::ERR_NO_PAGES_IMPORTED );
+		}
+
+		$this->info( __METHOD__, [
+			'pages' => $pagesCnt,
+			'took' => microtime( true ) - $then,
+		] );
+	}
+
+	/**
+	 * Update articles count
+	 *
+	 * @throws \CreateWikiException
+	 */
+	private function runUpdates() {
+		try {
+			$then = microtime(true);
+
+			$counter = new \SiteStatsInit( false );
+			$result = $counter->articles();
+
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->insert( 'site_stats', [ 'ss_row_id' => 1, 'ss_good_articles' => $result ], __METHOD__ );
+
+			$this->info(__METHOD__, [
+				'took' => microtime(true) - $then
+			]);
+		} catch( \Exception $ex ) {
+			throw new \CreateWikiException('runUpdates failed', self::ERR_RUN_UPDATES_FAILED, $ex);
+		}
+	}
+
+	/**
+	 * Wait until the main page exists on the local slave we're connected to
+	 */
+	private function waitUntilMainPageExists() {
+		$main = wfMessage( 'mainpage' )->inContentLanguage()->useDatabase( false )->text();
+		$title = \Title::newFromText( $main );
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$helper = new ReplicationWaitHelper( $dbr );
+		$helper->setCaller( __METHOD__ );
+		$helper->setMaxWaitTimeMillis( static::MAX_REPLICATION_WAIT_MILLIS );
+
+		$helper->waitUntil( function ( \DatabaseBase $dbr ) use ( $title ): bool {
+			return $dbr->selectField(
+				'page',
+				'page_id',
+				[ 'page_namespace' => $title->getNamespace(), 'page_title' => $title->getDBkey() ],
+				__METHOD__
+			);
+		} );
 	}
 }

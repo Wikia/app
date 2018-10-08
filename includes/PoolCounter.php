@@ -206,6 +206,10 @@ abstract class PoolCounterWork {
 					/* That someone else work didn't serve us.
 					 * Acquire the lock for me
 					 */
+					WikiaLogger::instance()->warning( 'poolcounter - no cached work found', [
+						'exception' => new Exception(),
+						'poolcounter_key' => $this->key,
+					] );
 					return $this->execute( true );
 				}
 				return $result;
