@@ -296,7 +296,10 @@ class WikiaUpdater {
 		$affectedRows = $dbw->affectedRows();
 
 		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
-		wfWaitForSlaves();
+
+		if ( $affectedRows ) {
+			wfWaitForSlaves();
+		}
 	}
 
 	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {

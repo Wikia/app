@@ -65,8 +65,6 @@ class UpdateMediaWiki extends Maintenance {
 
 		$this->output( "MediaWiki {$wgVersion} Updater\n\n" );
 
-		wfWaitForSlaves(); // let's not kill databases, shall we? ;) --tor
-
 		# Attempt to connect to the database as a privileged user
 		# This will vomit up an error if there are permissions problems
 		$db = wfGetDB( DB_MASTER );

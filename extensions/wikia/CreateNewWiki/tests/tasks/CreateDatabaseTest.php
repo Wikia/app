@@ -236,11 +236,17 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 
 	public function testCreatesDatabaseTaskRunsSuccessfully(  ) {
 		//given
-		$dbWMock = $this->getMock( 'DatabaseMysqli', [ 'query' ] );
+		$dbWMock = $this->getMock( 'DatabaseMysqli', [ 'query', 'addIdentifierQuotes', 'addQuotes' ] );
 		$this->mockGlobalFunction( 'wfGetDB', $dbWMock);
 		$dbWMock
-			->expects( $this->once() )
+			->expects( $this->atLeastOnce() )
 			->method( 'query' );
+		$dbWMock->expects( $this->any() )
+			->method( 'addIdentifierQuotes' )
+			->willReturnArgument( 0 );
+		$dbWMock->expects( $this->any() )
+			->method( 'addQuotes' )
+			->willReturnArgument( 0 );
 
 		$taskContext = new TaskContext( [ 'dbName' => 'testDB' ] );
 		$task = new CreateDatabase( $taskContext );
