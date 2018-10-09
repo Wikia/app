@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-prod
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -154,26 +155,6 @@ spec:
     path: /metrics
     interval: 10s
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: mediawiki-prod
-  labels:
-    app: mediawiki-prod
-  namespace: prod
-spec:
-  jobLabel: app
-  selector:
-    matchLabels:
-      app: mediawiki-prod
-  namespaceSelector:
-    matchNames:
-    - prod
-  endpoints:
-  - port: main
-    path: /metrics.php
-    interval: 10s
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -218,6 +199,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-tasks
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -397,7 +379,7 @@ spec:
   jobLabel: app
   selector:
     matchLabels:
-      app: mediawiki-tasks
+      type: mediawiki
   namespaceSelector:
     matchNames:
     - prod
