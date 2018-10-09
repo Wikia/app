@@ -371,9 +371,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: mediawiki-tasks
+  name: mediawiki
   labels:
-    app: mediawiki-tasks
+    app: mediawiki
+    type: mediawiki
   namespace: prod
 spec:
   jobLabel: app
