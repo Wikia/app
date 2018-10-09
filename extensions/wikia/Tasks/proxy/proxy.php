@@ -52,6 +52,8 @@ require ( $IP . '/includes/WebStart.php' );
 $request = new FauxRequest( $_POST, true );
 
 // finally, execute the task
+ob_start();
+
 try {
 	$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
 	$runner->run();
@@ -62,6 +64,8 @@ try {
 		'reason' => sprintf('%s: %s', get_class( $ex ), $ex->getMessage() ),
 	];
 }
+
+ob_end_clean();
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
 $response = new AjaxResponse( json_encode( $resp ) );

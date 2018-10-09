@@ -279,7 +279,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return;
 		}
 
-		if (['rubicon', 'saymedia', 'turtle'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
+		if (['rubicon', 'saymedia'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
 			shouldPollForSuccess = true;
 			expectAsyncCollapse = true;
 			expectAsyncHop = true;

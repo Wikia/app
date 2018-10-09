@@ -47,7 +47,12 @@ class CreateDatabase extends Task {
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->clusterDB );
 		$this->taskContext->setWikiDBW($dbw);
 
-		$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->taskContext->getDBname() ) );
+		$safeDbName = $dbw->addIdentifierQuotes( $this->taskContext->getDbName() );
+
+		$dbw->query( "CREATE DATABASE $safeDbName" );
+		$dbw->commit( __METHOD__ );
+
+		$this->waitUntilDatabaseExistsOnSlave();
 
 		return TaskResult::createForSuccess();
 	}
@@ -117,6 +122,20 @@ class CreateDatabase extends Task {
 		} else {
 			return false;
 		}
+	}
+
+	private function waitUntilDatabaseExistsOnSlave() {
+		$dbr = wfGetDB( DB_SLAVE, [], $this->clusterDB );
+		$safeDbName = $dbr->addQuotes( $this->taskContext->getDbName() );
+
+		$helper = new ReplicationWaitHelper( $dbr );
+		$helper->setCaller( __METHOD__ );
+
+		$helper->waitUntil( function ( \DatabaseBase $dbr ) use ( $safeDbName ): bool {
+			$res = $dbr->query( "SELECT schema_name FROM information_schema.schemata WHERE schema_name = $safeDbName" );
+
+			return $res && $res->numRows();
+		} );
 	}
 }
 
