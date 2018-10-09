@@ -13,6 +13,11 @@ class CategoryPage3 extends CategoryPage {
 	 */
 	private $model;
 
+	/**
+	 * @var array
+	 */
+	private $trendingPages;
+
 	public function openShowCategory() {
 		// Use ResourceLoader for scripts because it uses single request to lazy load all scripts
 		$this->getContext()->getOutput()->addModules( 'ext.wikia.CategoryPage3.scripts' );
@@ -37,6 +42,10 @@ class CategoryPage3 extends CategoryPage {
 		}
 
 		$this->model->loadImages( 40, 30 );
+
+		if ( empty( $this->from ) ) {
+			$this->trendingPages = CategoryPage3TrendingPages::getTrendingPages( $context->getTitle() );
+		}
 
 		$this->addPaginationToHead();
 		$context->getOutput()->addHTML( $this->getHTML() );
@@ -79,7 +88,8 @@ class CategoryPage3 extends CategoryPage {
 		$templateVars = [
 			'membersGroupedByChar' => $membersGroupedByChar,
 			'pagination' => $this->model->getPagination(),
-			'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
+			'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers(),
+			'trendingPages' => $this->trendingPages
 		];
 
 		return ( new PhpEngine() )->clearData()

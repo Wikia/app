@@ -1,3 +1,21 @@
+<?php if ( !empty( $trendingPages ) ) : ?>
+	<div class="category-page__trending-pages-header wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">Trending pages</div>
+	<ul class="category-page__trending-pages">
+		<?php foreach ( $trendingPages as $trendingPage ) : ?>
+			<li class="category-page__trending-page">
+				<a href="<?= $trendingPage['url'] ?>">
+					<figure>
+						<img src="<?= Sanitizer::encodeAttribute( $trendingPage['thumbnail'] ); ?>"
+							 alt="<?= Sanitizer::encodeAttribute( $trendingPage['title'] ); ?>"
+							 class="category-page__trending-page-thumbnail"
+						>
+						<figcaption class="category-page__trending-page-title wds-font-weight-bold"><?= htmlspecialchars( $trendingPage['title'] ) ?></figcaption>
+					</figure>
+				</a>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
 <p class="category-page__total-number wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">
 	All items (<?= $totalNumberOfMembers; ?>)
 </p>

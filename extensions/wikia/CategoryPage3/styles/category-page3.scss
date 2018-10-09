@@ -5,11 +5,37 @@
 // It's either that or !important for multiple selectors
 .WikiaArticle {
 	.category-page {
+		&__trending-pages-header {
+			margin-bottom: 12px;
+		}
+
+		&__trending-pages {
+			border-bottom: 1px solid $color-page-border;
+			display: -ms-grid;
+			display: grid;
+			// TODO check how it looks on IE 11
+			grid-gap: 20px;
+			-ms-grid-columns: 1fr 1fr 1fr 1fr;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			list-style: none;
+			margin: 0;
+			padding-bottom: 40px;
+		}
+
+		&__trending-page {
+			margin: 0;
+			// Same as the thumbnail width
+			width: 160px;
+
+			&-title {
+				color: $color-text;
+				margin-top: 5px;
+			}
+		}
+
 		&__total-number {
-			border-top: 1px solid $color-page-border;
 			margin-bottom: 30px;
 			margin-top: 40px;
-			padding-top: 60px;
 		}
 
 		&__members {

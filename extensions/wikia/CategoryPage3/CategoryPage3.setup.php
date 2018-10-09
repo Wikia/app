@@ -13,6 +13,7 @@ $wgAutoloadClasses['CategoryPage3CacheHelper'] = __DIR__ . '/CategoryPage3CacheH
 $wgAutoloadClasses['CategoryPage3Hooks'] = __DIR__ . '/CategoryPage3Hooks.class.php';
 $wgAutoloadClasses['CategoryPage3Member'] = __DIR__ . '/CategoryPage3Member.class.php';
 $wgAutoloadClasses['CategoryPage3Model'] = __DIR__ . '/CategoryPage3Model.class.php';
+$wgAutoloadClasses['CategoryPage3TrendingPages'] = __DIR__ . '/CategoryPage3TrendingPages.class.php';
 $wgAutoloadClasses['CategoryPage3Pagination'] = __DIR__ . '/CategoryPage3Pagination.class.php';
 
 $wgHooks['AfterCategoriesUpdate'][] = 'CategoryPage3Hooks::onAfterCategoriesUpdate';
