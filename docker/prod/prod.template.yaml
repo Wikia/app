@@ -154,6 +154,26 @@ spec:
     path: /metrics
     interval: 10s
 ---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-prod
+  labels:
+    app: mediawiki-prod
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-prod
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
+    interval: 10s
+---
 apiVersion: v1
 kind: Service
 metadata:
