@@ -385,3 +385,23 @@ spec:
   - port: metrics
     path: /metrics
     interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-tasks
+  labels:
+    app: mediawiki-tasks
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-tasks
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
+    interval: 10s
