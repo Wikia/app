@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-${SANDBOX_NAME}
+    type: mediawiki
 spec:
   replicas: 5
   strategy:
