@@ -44,7 +44,7 @@ class CategoryPage3TrendingPages {
 		$items = [];
 
 		foreach ( $data['items'] as $item ) {
-			$processedItem = static::processTrendingArticlesItem( $item );
+			$processedItem = static::processTrendingPagesItem( $item );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -62,7 +62,7 @@ class CategoryPage3TrendingPages {
 	 * @param $item
 	 * @return array|null
 	 */
-	private static function processTrendingArticlesItem( $item ) {
+	private static function processTrendingPagesItem( $item ) {
 		$requiredParams = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];

@@ -125,4 +125,34 @@ class CategoryPage3 extends CategoryPage {
 			$count++;
 		}
 	}
+
+	public static function getSrcset( string $url ): string {
+		// Based on how much space there is on different breakpoints
+		$widths = [ 160, 200 ];
+		$srcSetItems = [];
+
+		foreach ( $widths as $width ) {
+			$thumb = self::getThumbnailUrlForWidth( $url, $width );
+			$srcSetItems[] = "${thumb} ${width}w";
+		}
+
+		return implode( ',', $srcSetItems );
+	}
+
+	private static function getThumbnailUrlForWidth( string $url, int $width ): string {
+		// Keep 4:3 ratio
+		$height = floor( $width / 4 * 3 );
+
+		try {
+			$url = VignetteRequest::fromUrl( $url )
+				->topCrop()
+				->width( $width )
+				->height( $height )
+				->url();
+		} catch ( Exception $e ) {
+			$url = '';
+		}
+
+		return $url;
+	}
 }

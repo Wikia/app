@@ -6,6 +6,8 @@
 				<a href="<?= $trendingPage['url'] ?>">
 					<figure>
 						<img src="<?= Sanitizer::encodeAttribute( $trendingPage['thumbnail'] ); ?>"
+							 srcset="<?= CategoryPage3::getSrcset( $trendingPage['thumbnail'] ) ?>"
+							 sizes="auto"
 							 alt="<?= Sanitizer::encodeAttribute( $trendingPage['title'] ); ?>"
 							 class="category-page__trending-page-thumbnail"
 						>
