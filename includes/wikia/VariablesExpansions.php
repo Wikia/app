@@ -183,6 +183,13 @@ $wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
 
 /**
+ * The datacenter that hosts the starter dumps for CreateNewWiki
+ * @see \Wikia\CreateNewWiki\Starters
+ * @var string $wgCreateWikiStarterDumpsDatacenter
+ */
+$wgCreateWikiStarterDumpsDatacenter = WIKIA_DC_SJC;
+
+/**
  * Database user and password for Perl backend scripts.
  * @see SUS-3609 | Make backend scripts use "backend_admin" MySQL user instead of "mw_only"
  * @var string $wgDBbackenduser
