@@ -344,7 +344,7 @@ spec:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 30
+      targetAverageUtilization: 70
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
