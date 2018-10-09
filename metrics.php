@@ -16,4 +16,6 @@ $registry = new CollectorRegistry($adapter);
 $renderer = new RenderTextFormat();
 
 header('Content-Type: ' . RenderTextFormat::MIME_TYPE);
+header( 'Cache-Control: s-maxage=0, must-revalidate, max-age=0' );
+
 echo $renderer->render($registry->getMetricFamilySamples());
