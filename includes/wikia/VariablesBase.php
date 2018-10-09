@@ -1277,13 +1277,6 @@ $wgCreateLanguageWikisWithPath = false;
 $wgCreateEnglishWikisOnFandomCom = false;
 
 /**
- * Wiki description enter by the user on the CNW page. Removed after wiki is created
- * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
- * @var string $wgWikiDescription
- */
-$wgWikiDescription = '';
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -5170,13 +5163,6 @@ $wgJobTypesExcludedFromDefaultQueue = [];
 $wgJsMimeType = 'text/javascript';
 
 /**
- * Custom variables used by CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgLangCreationVariables
- */
-$wgLangCreationVariables = [];
-
-/**
  * Site language code, should be one of ./languages/Language(.*).php
  * @var string $wgLanguageCode
  */
@@ -7989,13 +7975,6 @@ $wgUDPProfilerHost = '127.0.0.1';
 $wgUDPProfilerPort = '3811';
 
 /**
- * Additional variables for CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgUniversalCreationVariables
- */
-$wgUniversalCreationVariables = [];
-
-/**
  * Enable the UniversalEditButton for browsers that support it (currently only
  * Firefox with an extension). See http://universaleditbutton.org for more
  * background information.
@@ -8882,7 +8861,7 @@ $wgDataMartOriginalCityId = 0;
  * in the community builder (fandom creator)
  * @see CAKE-2151
  */
-$wgAllowCommunityBuilderCNWPrompt = false;
+$wgAllowCommunityBuilderCNWPrompt = true;
 
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
@@ -8897,3 +8876,9 @@ $wgFandomComMigrationScheduled = false;
  * @var bool $wgFandomComMigrationDone
  */
 $wgFandomComMigrationDone = false;
+
+/**
+ * Whether we should enable tracking cookie reset page. This is needed in transition phase
+ * when we migrate wikis from .wikia.com to .fandom.com domain.
+ */
+$wgEnableResetTrackingPreferencesPage = false;

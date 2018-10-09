@@ -63,14 +63,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgAdDriverForceTurtleAd' ],
-				'expectedOpts' => [ ],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
-				'expectedProviders' => [ ],
-				'expectedForcedProvider' => 'turtle'
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => [ 'wgAdDriverTrackState' ],
 				'expectedOpts' => [ 'trackSlotState' => true ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ]

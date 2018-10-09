@@ -12,7 +12,7 @@ class TaskRunner {
 
 	use Loggable;
 
-	/** @var array Task[] */
+	/** @var Task[] $tasks */
 	private $tasks = [];
 
 	/** @var  TaskContext */
@@ -25,13 +25,10 @@ class TaskRunner {
 		$this->tasks[] = new CreateDatabase( $taskContext );
 		$this->tasks[] = new SetupWikiCities( $taskContext );
 		$this->tasks[] = new ConfigureWikiFactory( $taskContext );
-		$this->tasks[] = new LinkFandomCreatorCommunity( $taskContext );
 		$this->tasks[] = new CreateTables( $taskContext );
 		$this->tasks[] = new ImportStarterData( $taskContext );
-		$this->tasks[] = new SetMainPageContent( $taskContext );
 		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureCategories( $taskContext );
-		$this->tasks[] = new SetCustomSettings( $taskContext );
 		$this->tasks[] = new StartPostCreationTasks( $taskContext );
 		$this->tasks[] = new EnableDiscussionsTask( $taskContext );
 	}
@@ -41,7 +38,6 @@ class TaskRunner {
 	}
 
 	public function prepare() {
-		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting preparation of task ' . get_class( $task ) );
@@ -60,7 +56,6 @@ class TaskRunner {
 	}
 
 	public function check() {
-		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting check of task ' . get_class( $task ) );
@@ -79,7 +74,6 @@ class TaskRunner {
 	}
 
 	public function run() {
-		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting task ' . get_class( $task ) );

@@ -409,7 +409,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	
+
 	// SUS-5540: use the luasandbox extension as executor if it is available
 	if ( extension_loaded( 'luasandbox' ) ) {
 		$wgScribuntoDefaultEngine = 'luasandbox';
@@ -1727,6 +1727,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
+}
+
+if ( !empty( $wgEnableResetTrackingPreferencesPage ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/ResetTrackingPreferences.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

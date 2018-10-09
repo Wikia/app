@@ -13,23 +13,17 @@
 
 	<ul class="tab-content">
 		<li class="avatar">
-			<form id="usersAvatar" class="WikiaForm" name="usersAvatar" method="post" enctype="multipart/form-data"
-				action="<?= UserProfilePageController::getLocalUrl('onSubmitUsersAvatar', [ 'userId' => $userId ], 'json'); ?>">
+			<form id="avatar-upload-form" class="WikiaForm" method="post" enctype="multipart/form-data">
 
 				<?= $avatar; ?>
 
 				<fieldset class="avatar-options">
-					<? if ( $isUploadsPossible ): ?>
-						<div class="input-group">
-							<label for="UPPLightboxAvatar">
-								<button id="UPPLightboxAvatarUpload"><?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?></button>
-							</label>
-							<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
-							<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="">
-							<input type="hidden" name="UPPLightboxFbAvatar" id="UPPLightboxFbAvatar" value="">
-							<input type="hidden" name="MAX_FILE_SIZE" value="<?= $avatarMaxSize; ?>">
-						</div>
-					<? endif; ?>
+					<div class="input-group">
+						<label for="avatar-upload-input">
+							<?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?>
+						</label>
+						<input type="file" name="file" id="avatar-upload-input" accept="image/*" />
+					</div>
 
 					<? if ( !empty( $defaultAvatars ) ): ?>
 						<div class="input-group">
@@ -37,7 +31,7 @@
 							<ul class="sample-avatars">
 								<? foreach ( $defaultAvatars as $avatar ): ?>
 									<li>
-										<img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>">
+										<img width="40" height="40" src="<?= $avatar['url']; ?>" data-name="<?= Sanitizer::encodeAttribute( $avatar['name'] ); ?>" class="default-avatar" />
 									</li>
 								<? endforeach; ?>
 							</ul>
