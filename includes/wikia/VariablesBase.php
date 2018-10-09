@@ -8876,3 +8876,9 @@ $wgFandomComMigrationScheduled = false;
  * @var bool $wgFandomComMigrationDone
  */
 $wgFandomComMigrationDone = false;
+
+/**
+ * Whether we should enable tracking cookie reset page. This is needed in transition phase
+ * when we migrate wikis from .wikia.com to .fandom.com domain.
+ */
+$wgEnableResetTrackingPreferencesPage = false;
