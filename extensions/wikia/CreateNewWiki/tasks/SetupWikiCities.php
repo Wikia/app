@@ -138,7 +138,7 @@ class SetupWikiCities extends Task {
 		$wgServer = \WikiFactory::getLocalEnvURL( \WikiFactory::cityUrlToDomain( $url ) );
 		$wgScriptPath = \WikiFactory::cityUrlToLanguagePath( $url );
 		$wgScript = \WikiFactory::cityUrlToWgScript( $url );
-		$wgArticlePath = \WikiFactory::cityUrlToArticlePath( $url, $wikiId );
+		$wgArticlePath = \WikiFactory::cityUrlToArticlePath( $url );
 
 		// Ensure that we can connect to the new wiki DB via wfGetDB() and friends
 		$wgDBname = $this->taskContext->getDbName();

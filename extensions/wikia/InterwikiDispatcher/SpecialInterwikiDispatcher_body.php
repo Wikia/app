@@ -137,7 +137,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 				if ( $iCityId ) {
 					$sCityUrl = self::getCityUrl( $iCityId );
 					if ( !empty( $sCityUrl ) ) {
-						$sArticlePath = WikiFactory::cityUrlToArticlePath( $sCityUrl, $iCityId );
+						$sArticlePath = WikiFactory::cityUrlToArticlePath( $sCityUrl );
 
 						/* $wgScriptPath is already included in city_url
 						$sScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $iCityId);

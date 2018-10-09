@@ -643,17 +643,14 @@ class WikiFactory {
 
 	/**
 	 * Returns the article path relative to wiki domain.
-	 * todo: Remove $cityId param after corporate wikis are moved to N&S
 	 *
 	 * @param string $cityUrl
 	 * @param int $cityId
 	 *
 	 * @return string
 	 */
-	public static function cityUrlToArticlePath( $cityUrl, $cityId ) {
-		global $wgShortArticlePathWikis;
-		$path = in_array( $cityId, $wgShortArticlePathWikis ) ? '/$1' : '/wiki/$1';
-		return static::cityUrlToLanguagePath( $cityUrl ) . $path;
+	public static function cityUrlToArticlePath( $cityUrl ) {
+		return static::cityUrlToLanguagePath( $cityUrl ) . '/wiki/$1';
 	}
 
 	/**

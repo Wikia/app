@@ -162,7 +162,7 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		$cityUrl = WikiFactory::cityIDtoUrl( $wgHelpWikiId );
 		$sharedServer = WikiFactory::cityUrlToDomain( $cityUrl );
 		$sharedScript = WikiFactory::cityUrlToWgScript( $cityUrl );
-		$sharedArticlePath = WikiFactory::cityUrlToArticlePath( $cityUrl, $wgHelpWikiId );
+		$sharedArticlePath = WikiFactory::cityUrlToArticlePath( $cityUrl );
 
 		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
@@ -450,7 +450,7 @@ function SharedHelpArticleExists(Title $title) {
 					[ 'exception_message' => $e->getMessage() ]
 				);
 			}
-		
+
 			wfProfileOut( __METHOD__ . '::query');
 		}
 
