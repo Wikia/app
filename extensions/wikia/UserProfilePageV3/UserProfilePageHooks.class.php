@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Service\Gateway\KubernetesExternalUrlProvider;
+
 class UserProfilePageHooks {
 
 	/**
@@ -38,5 +41,20 @@ class UserProfilePageHooks {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Exposes variables required by profile edit modal to JS
+	 * 
+	 * @param array $vars
+	 * @param OutputPage $out
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		if ( BodyController::showUserPagesHeader( $out->getTitle() ) ) {
+			$urlProvider = new KubernetesExternalUrlProvider();
+
+			$vars['wgUserAvatarServiceUrl'] = $urlProvider->getUrl( 'user-avatar' );
+			$vars['wgUserId'] = $out->getUser()->getId();
+		}
 	}
 }

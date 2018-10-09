@@ -1388,13 +1388,6 @@ $wgAdDriverKruxNewParamsCountries = null;
 $wgHighValueCountries = null;
 
 /**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call Turtle ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTurtleCountries = null;
-
-/**
  * @name $wgAdDriverBabDetectionDesktopCountries
  * List of countries to call BlockAdBlock detection scripts on oasis
  */

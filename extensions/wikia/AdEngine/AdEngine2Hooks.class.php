@@ -111,7 +111,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
 		$vars[] = 'wgAdDriverStickySlotsLines';
-		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
 

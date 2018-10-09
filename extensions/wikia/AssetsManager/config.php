@@ -72,7 +72,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
@@ -2453,5 +2452,12 @@ $config['feeds_and_posts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+	]
+];
+
+$config['fandom_com_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	]
 ];

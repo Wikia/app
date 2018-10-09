@@ -92,7 +92,8 @@ class Starters {
 	 * @return SwiftStorage
 	 */
 	public static function getStarterDumpStorage() {
-		// SRE: these dumps live in SJC DC, make sure to always use SJC Swift
-		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', WIKIA_DC_SJC );
+		global $wgCreateWikiStarterDumpsDatacenter;
+		// SRE: make sure to always use proper Swift
+		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', $wgCreateWikiStarterDumpsDatacenter );
 	}
 }
