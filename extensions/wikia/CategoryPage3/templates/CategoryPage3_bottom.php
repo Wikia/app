@@ -1,5 +1,5 @@
 <?php if ( !empty( $trendingPages ) ) : ?>
-	<div class="category-page__trending-pages-header wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">Trending pages</div>
+	<div class="category-page__trending-pages-header">Trending pages</div>
 	<ul class="category-page__trending-pages">
 		<?php foreach ( $trendingPages as $trendingPage ) : ?>
 			<li class="category-page__trending-page">
@@ -11,21 +11,21 @@
 							 alt="<?= Sanitizer::encodeAttribute( $trendingPage['title'] ); ?>"
 							 class="category-page__trending-page-thumbnail"
 						>
-						<figcaption class="category-page__trending-page-title wds-font-weight-bold"><?= htmlspecialchars( $trendingPage['title'] ) ?></figcaption>
+						<figcaption class="category-page__trending-page-title"><?= htmlspecialchars( $trendingPage['title'] ) ?></figcaption>
 					</figure>
 				</a>
 			</li>
 		<?php endforeach; ?>
 	</ul>
 <?php endif; ?>
-<p class="category-page__total-number wds-font-size-base wds-font-weight-bold wds-text-transform-uppercase">
+<p class="category-page__total-number">
 	All items (<?= $totalNumberOfMembers; ?>)
 </p>
 <div class="category-page__members">
 	<?php /** @var array $membersGroupedByChar */ ?>
 	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>
 		<?php if ( $firstChar !== ' ' ): ?>
-			<div class="category-page__first-char wds-font-size-xl wds-font-weight-bold">
+			<div class="category-page__first-char">
 				<?= htmlspecialchars( $firstChar ) ?>
 			</div>
 		<?php endif; ?>

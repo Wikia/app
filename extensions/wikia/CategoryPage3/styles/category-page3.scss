@@ -1,4 +1,5 @@
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
 
@@ -26,8 +27,11 @@
 
 	.category-page {
 		&__trending-pages-header {
+			font-size: $wds-font-size-base;
+			font-weight: $wds-font-weight-bold;
 			margin-bottom: 12px;
 			margin-top: 50px;
+			text-transform: uppercase;
 		}
 
 		&__trending-pages {
@@ -52,13 +56,17 @@
 
 			&-title {
 				color: $color-text;
+				font-weight: $wds-font-weight-bold;
 				margin-top: 5px;
 			}
 		}
 
 		&__total-number {
+			font-size: $wds-font-size-base;
+			font-weight: $wds-font-weight-bold;
 			margin-bottom: 30px;
 			margin-top: 40px;
+			text-transform: uppercase;
 		}
 
 		&__members {
@@ -68,6 +76,8 @@
 
 		&__first-char {
 			border-bottom: 1px solid $color-page-border;
+			font-size: $wds-font-size-xl;
+			font-weight: $wds-font-weight-bold;
 			margin: 0;
 			padding: 10px 0;
 		}
