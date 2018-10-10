@@ -13,7 +13,9 @@ $messages['en'] = array(
 	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another FANDOM user account. Please connect with a different account or log in with Facebook and disconnect the original FANDOM account prior to connecting the $1 account.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your FANDOM and Facebook accounts are now connected.',
 	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Facebook.",
-	'google-convert' => 'Connect this account with Google',
+	'google-connect-account-connected' => 'Congratulations! Your FANDOM and Google accounts are now connected.',
+	'google-connect-account-disconnected' => 'Your Google account has been successfully disconnected from your FANDOM account.',
+	'google-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Google.",
 );
 
 $messages['qqq'] = array(

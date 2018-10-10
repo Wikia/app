@@ -2,29 +2,32 @@
 require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'], function ($, mw, loader, nirvana, BannerNotification) {
 	'use strict';
 
-	function showConnectSuccess() {
+	function notify(type) {
+		var messageArgs = Array.prototype.slice.call(arguments, 1);
+
+		new BannerNotification()
+			.setContent(mw.message.apply(null, messageArgs).escaped())
+			.setType(type)
+			.show();
+	}
+
+	function showFacebookConnectSuccess() {
 		$('.facebook-preferences')
 			.removeClass('facebook-state-disconnected')
 			.addClass('facebook-state-linked');
 
-		new BannerNotification()
-			.setContent(mw.message('fbconnect-preferences-connected').escaped())
-			.setType('confirm')
-			.show();
+		notify('confirm', 'fbconnect-preferences-connected');
 	}
 
-	function showDisconnectSuccess() {
+	function showFacebookDisconnectSuccess() {
 		$('.facebook-preferences')
 			.removeClass('facebook-state-linked')
 			.addClass('facebook-state-disconnected');
 
-		new BannerNotification()
-			.setContent(mw.message('fbconnect-disconnect-info').escaped())
-			.setType('confirm')
-			.show();
+		notify('confirm', 'fbconnect-disconnect-info');
 	}
 
-	function showConnectFailure(res) {
+	function showFacebookConnectFailure(res) {
 		// Prevent showing two error messages
 		if (!res) {
 			return;
@@ -33,29 +36,32 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 		if (res.status === 400) {
 			var userName = mw.user.name();
 
-			new BannerNotification()
-				.setContent(mw.message('fbconnect-error-fb-account-in-use', userName).escaped())
-				.setType('error')
-				.show();
+			notify('error', 'fbconnect-error-fb-account-in-use', userName);
 
 			return;
 		}
 
-		showGenericError();
+		showFacebookConnectGenericError();
 	}
 
-	function showAuthorizationFailure() {
-		new BannerNotification()
-			.setContent(mw.message('fbconnect-preferences-connected-error').escaped())
-			.setType('error')
-			.show();
+	function showFacebookAuthorizationFailure() {
+		notify('error', 'fbconnect-preferences-connected-error');
 	}
 
-	function showGenericError() {
-		new BannerNotification()
-			.setContent(mw.message('fbconnect-unknown-error').escaped())
-			.setType('error')
-			.show();
+	function showFacebookConnectGenericError() {
+		notify('error', 'fbconnect-unknown-error');
+	}
+
+	function showGoogleConnectSuccess() {
+		notify('confirm', 'google-connect-account-connected');
+	}
+
+	function showGoogleDisconnectSuccess() {
+		notify('confirm', 'google-connect-account-disconnected');
+	}
+
+	function showGoogleConnectGenericError() {
+		notify('error', 'google-connect-unknown-error');
 	}
 
 	function linkFacebookAccount(fbAuthResponse) {
@@ -126,26 +132,41 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 
 			loadFacebookSdk()
 				.then(promptUserToLogInWithFacebook)
-				.fail(showAuthorizationFailure)
+				.fail(showFacebookAuthorizationFailure)
 				.then(linkFacebookAccount)
-				.done(showConnectSuccess)
-				.fail(showConnectFailure);
+				.done(showFacebookConnectSuccess)
+				.fail(showFacebookConnectFailure);
 		});
 
 		$('#facebook-disconnect-button, #fbDisconnectPreferences a').on('click', function (event) {
 			event.preventDefault();
 
 			disconnectFacebookAccount()
-				.done(showDisconnectSuccess)
-				.fail(showGenericError);
+				.done(showFacebookDisconnectSuccess)
+				.fail(showFacebookConnectGenericError);
 		});
 	});
 
 	window.addEventListener('message', function (event) {
-		var data = JSON.parse(event.data);
+		var data = JSON.parse(event.data),
+			externalAuthData = data && data.externalAuth;
 
-		if (data && data.externalAuth && data.externalAuth.redirectUrl) {
-			redirectTo(data.externalAuth.redirectUrl);
+		if (externalAuthData) {
+			switch (true) {
+				case externalAuthData.redirectUrl:
+					redirectTo(externalAuthData.redirectUrl);
+					break;
+				case externalAuthData.googleConnectStatus === 'connected':
+					showGoogleConnectSuccess();
+					break;
+				case externalAuthData.googleConnectStatus === 'disconnected':
+					showGoogleDisconnectSuccess();
+					break;
+				case externalAuthData.googleConnectStatus === 'error':
+					showGoogleConnectGenericError();
+					break;
+				default:
+			}
 		}
 	});
 });
