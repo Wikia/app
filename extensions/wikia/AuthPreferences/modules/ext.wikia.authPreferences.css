@@ -1,8 +1,8 @@
 .wds-button.facebook-button, .wds-button.facebook-button:hover {
     background: #4b6ea8;
     border: none;
-    width: 25%;
     box-sizing: border-box;
+    width: 25%;
 }
 
 .wds-button.facebook-button:hover {
@@ -18,7 +18,8 @@
 }
 
 .google-button {
-    width: 25%;
-    height: 30px;
     border-radius: 2px;
+    height: 30px;
+    margin-top: 20px;
+    width: 25%;
 }
