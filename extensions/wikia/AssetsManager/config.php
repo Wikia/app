@@ -2461,6 +2461,7 @@ $config['fandom_com_migration_js'] = [
 	'assets' => [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	],
+];
 
 /**
  * We allow logged in users to create account without logging out
