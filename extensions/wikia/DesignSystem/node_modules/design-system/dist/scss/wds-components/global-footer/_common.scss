@@ -35,9 +35,8 @@ $footer-line-height: 1.3em;
 	}
 
 	&__bottom-bar {
-		@extend %wds-font-size-xs;
-
 		background: rgba($wds-color-night-sky, .5);
+		font-size: $wds-font-size-xs;
 		line-height: $footer-line-height;
 		min-height: 50px;
 		padding: 0 20px;
@@ -72,9 +71,8 @@ $footer-line-height: 1.3em;
 
 	// @todo To be moved to a separate component during XW-1618
 	&__button-link {
-		@extend %wds-font-weight-bold;
-
 		display: inline-block;
+		font-weight: $wds-font-weight-bold;
 		letter-spacing: .3px;
 		line-height: $footer-line-height;
 		min-height: 45px;
@@ -113,10 +111,9 @@ $footer-line-height: 1.3em;
 		&:active,
 		&:visited,
 		&:focus {
-			@extend %wds-font-size-s;
-			@extend %wds-font-weight-normal;
-
 			color: $wds-fandom-color-aqua;
+			font-size: $wds-font-size-s;
+			font-weight: $wds-font-weight-normal;
 			line-height: $footer-line-height;
 			text-decoration: none;
 			transition: color $wds-button-transition-duration;
@@ -142,16 +139,15 @@ $footer-line-height: 1.3em;
 			}
 
 			.wds-global-footer__link {
-				@extend %wds-font-size-xxl;
-				@extend %wds-font-weight-bold;
-				@extend %wds-text-transform-uppercase;
-
 				align-items: center;
 				display: flex;
+				font-size: $wds-font-size-xxl;
+				font-weight: $wds-font-weight-bold;
 				justify-content: space-between;
 				margin: 0;
 				padding: 0 0 5px;
 				text-decoration: none;
+				text-transform: uppercase;
 
 				div {
 					border-bottom: 2px solid $wds-color-white;
@@ -216,21 +212,19 @@ $footer-line-height: 1.3em;
 	}
 
 	&__section-header {
-		@extend %wds-font-size-xs;
-		@extend %wds-font-weight-bold;
-		@extend %wds-leading-none;
-		@extend %wds-text-transform-uppercase;
-
 		color: $wds-color-white;
+		font-size: $wds-font-size-xs;
+		font-weight: $wds-font-weight-bold;
+		line-height: $wds-line-height-none;
 		margin-bottom: 8px;
 		min-height: $section-header-height;
 		padding: 0;
+		text-transform: uppercase;
 	}
 
 	&__section-description {
-		@extend %wds-font-size-s;
-
 		color: $wds-color-white;
+		font-size: $wds-font-size-s;
 		line-height: $footer-line-height;
 		margin: 0;
 		padding: 0;

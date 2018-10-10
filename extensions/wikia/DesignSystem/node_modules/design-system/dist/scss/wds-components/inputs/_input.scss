@@ -1,0 +1,100 @@
+.wds-input {
+	margin: 30px 0 18px;
+	position: relative;
+
+	&:first-of-type {
+		margin-top: 18px;
+	}
+
+	&__field {
+		border: 0;
+		// keep value in sync with `BOTTOM_BORDER_WIDTH` from Input component
+		border-bottom: 1px solid $wds-color-blue-gray;
+		box-sizing: border-box;
+		color: $wds-color-dark-blue-gray;
+		font-size: $wds-typescale-size-base;
+		line-height: 1em;
+		padding: 0;
+		padding-bottom: 2px;
+		resize: none;
+		width: 100%;
+
+		&:focus { outline: 0; }
+	}
+
+	&.is-resize &__field {
+		resize: vertical;
+	}
+
+	textarea.wds-input__field {
+		line-height: 1.5em;
+	}
+
+	&__label {
+		color: $wds-color-blue-gray;
+		font-size: $wds-typescale-size-minus-2;
+		left: 0;
+		line-height: .75rem;
+		pointer-events: none;
+		position: absolute;
+		top: -16px;
+		transition: .2s ease all;
+	}
+
+	&__hint {
+		color: $wds-color-blue-gray;
+		font-size: $wds-typescale-size-minus-2;
+		line-height: .75rem;
+		margin-top: 6px;
+	}
+
+	&.is-empty > &__field {
+		border-bottom-color: $wds-color-blue-gray;
+		color: $wds-color-blue-gray;
+	}
+
+	&.is-empty > &__field ~ &__label {
+		font-size: $wds-typescale-size-base;
+		line-height: 1rem;
+		top: 0;
+	}
+
+	&.is-empty > &__hint {
+		color: $wds-color-blue-gray;
+	}
+
+	&.is-focused > &__field {
+		border-color: $wds-color-dark-blue-gray;
+	}
+
+	&.is-focused > &__hint {
+		color: $wds-color-dark-blue-gray;
+	}
+
+	&.has-error > &__label {
+		color: $wds-color-alert;
+	}
+
+	&.has-error > &__field {
+		border-bottom-color: $wds-color-alert;
+	}
+
+	&.has-error > &__hint {
+		color: $wds-color-alert;
+	}
+
+	&.is-disabled > &__field {
+		border-bottom-color: $wds-color-blue-gray;
+		border-bottom-style: dashed;
+		color: $wds-color-blue-gray;
+	}
+
+	&.is-readonly,
+	&.is-disabled {
+		cursor: not-allowed;
+	}
+
+	&.has-hint {
+		margin-bottom: 0;
+	}
+}

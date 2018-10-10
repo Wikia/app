@@ -5,6 +5,7 @@ $wds-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $wds-line-height: 1.5em;
 
 // Typescale sizes
+// @deprecated, use $wds-font-size- instead
 $wds-typescale-size-minus-3: 10px;
 $wds-typescale-size-minus-2: 12px;
 $wds-typescale-size-minus-1: 14px;
@@ -21,8 +22,33 @@ $wds-typescale-size-plus-7: 54px;
 $wds-fandom-font-family: Rubik, Helvetica, Arial, sans-serif;
 
 // Fandom font weights
+// @deprecated, use $wds-font-weight- instead
 $wds-fandom-font-weight-light: 300;
 $wds-fandom-font-weight-regular: 400;
 $wds-fandom-font-weight-medium: 500;
 $wds-fandom-font-weight-bold: 700;
 $wds-fandom-font-weight-black: 900;
+
+// Font weights
+$wds-font-weight-light: 300;
+$wds-font-weight-normal: 400;
+$wds-font-weight-medium: 500;
+$wds-font-weight-bold: 700;
+$wds-font-weight-black: 900;
+
+// Line heights
+$wds-line-height-none: 1;
+$wds-line-height-tight: 1.25;
+$wds-line-height-normal: 1.5;
+$wds-line-height-loose: 1.75;
+
+// Font sizes
+$wds-font-size-xxs: 10px;
+$wds-font-size-xs: 12px;
+$wds-font-size-s: 14px;
+$wds-font-size-base: 16px;
+$wds-font-size-l: 18px;
+$wds-font-size-xl: 24px;
+$wds-font-size-xxl: 28px;
+$wds-font-size-3xl: 36px;
+$wds-font-size-4xl: 52px;
