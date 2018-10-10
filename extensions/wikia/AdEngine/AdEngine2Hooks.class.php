@@ -110,6 +110,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
 
@@ -143,6 +144,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';

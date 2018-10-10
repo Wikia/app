@@ -1279,6 +1279,13 @@ $wgAdDriverScrollDepthTrackingCountries = null;
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverStickySlotsLines
+ * List of Google Ad Manager lines to apply Sticky Ad template
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverStickySlotsLines = [];
+
+/**
  * @name $wgAdDriverKILOCountries
  * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
