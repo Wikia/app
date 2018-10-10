@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-${SANDBOX_NAME}
+    type: mediawiki
 spec:
   replicas: 5
   strategy:
@@ -135,6 +136,26 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
     interval: 10s
 ---
 apiVersion: v1

@@ -14,6 +14,10 @@ $ kubectl --context kube-sjc-prod -n prod exec --container php -it mediawiki-san
 nobody@mediawiki-sandbox-xxxxxx-xxxxx:/usr/wikia/slot1/current/src$
 ```
 
+## Logs
+
+Search for `appname:"mediawiki" AND kubernetes.labels.app: "mediawiki-sandbox-XXX"` in `logstash-mediawiki-*` index.
+
 ## Naming
 
 Sandboxes deployed to k8s have `-k8s` suffix applied automatically if needed.

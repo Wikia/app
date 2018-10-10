@@ -140,8 +140,7 @@ class TaskRunner {
 			Collector::getInstance()
 				->addCounter('celery_tasks_total', $metrics_labels, 'Number of Celery tasks executed')
 				->addGauge('celery_tasks_duration_seconds', $task_duration, $metrics_labels, 'Time it took to execute the task')
-				->addGauge('celery_tasks_delay_seconds', $task_delay, $metrics_labels, 'How long task has waited in the queue before being executed')
-				->push('mediawiki_celery_tasks');
+				->addGauge('celery_tasks_delay_seconds', $task_delay, $metrics_labels, 'How long task has waited in the queue before being executed');
 
 			$this->results [] = $result;
 

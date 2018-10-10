@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-prod
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -198,6 +199,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-tasks
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -344,7 +346,7 @@ spec:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 30
+      targetAverageUtilization: 70
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -364,4 +366,25 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+    type: mediawiki
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      type: mediawiki
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
     interval: 10s

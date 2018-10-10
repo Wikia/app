@@ -166,7 +166,7 @@ require([
 		var markup = '';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
-			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + encodeURI(infoboxData.title) + '</a></li>';
+			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + mw.html.escape(infoboxData.title) + '</a></li>';
 		});
 
 		return markup;
