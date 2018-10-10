@@ -334,6 +334,9 @@ try {
     // we do not need the loader and the result in the global scope.
     unset( $oWiki, $result );
 } catch ( InvalidArgumentException $invalidArgumentException ) {
+	// SUS-5855 | the server could not understand the request due to invalid syntax, highly
+	// likely host is not set properly in a HTTP request
+	header( 'HTTP/1.1 400 Bad Request' );
 	echo $invalidArgumentException->getMessage() . PHP_EOL;
 	exit( 1 );
 }
