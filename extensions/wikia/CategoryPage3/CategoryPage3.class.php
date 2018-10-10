@@ -3,6 +3,10 @@
 use Wikia\Template\PHPEngine;
 
 class CategoryPage3 extends CategoryPage {
+	const LAYOUT_CATEGORY_EXHIBITION = 'category-exhibition';
+	const LAYOUT_CATEGORY_PAGE3 = 'category-page3';
+	const LAYOUT_MEDIAWIKI = 'mediawiki';
+
 	/**
 	 * @var String - query param used for pagination
 	 */
@@ -19,11 +23,17 @@ class CategoryPage3 extends CategoryPage {
 	private $trendingPages;
 
 	public function openShowCategory() {
+		$output = $this->getContext()->getOutput();
+
 		// Use ResourceLoader for scripts because it uses single request to lazy load all scripts
-		$this->getContext()->getOutput()->addModules( 'ext.wikia.CategoryPage3.scripts' );
+		$output->addModules( 'ext.wikia.CategoryPage3.scripts' );
 
 		// Use AssetsManager for styles because it bundles all styles and blocks render so there is no FOUC
 		\Wikia::addAssetsToOutput( 'category_page3_scss' );
+
+		if ( $this->getContext()->getUser()->isLoggedIn() ) {
+			$output->addHTML( $this->getLayoutSelectorHTML( static::LAYOUT_CATEGORY_PAGE3 ) );
+		}
 	}
 
 	/**
@@ -80,7 +90,7 @@ class CategoryPage3 extends CategoryPage {
 	 * @return string
 	 * @throws Exception
 	 */
-	private function getHTML() {
+	private function getHTML(): string {
 		$membersGroupedByChar = $this->model->getMembersGroupedByChar();
 
 		$this->setBreakColumnAfterMiddleMember( $membersGroupedByChar );
@@ -94,7 +104,7 @@ class CategoryPage3 extends CategoryPage {
 
 		return ( new PhpEngine() )->clearData()
 			->setData( $templateVars )
-			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3.php' );
+			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3_bottom.php' );
 	}
 
 	/**
@@ -154,5 +164,13 @@ class CategoryPage3 extends CategoryPage {
 		}
 
 		return $url;
+	}
+
+	private function getLayoutSelectorHTML( string $currentLayout ): string {
+		return ( new PhpEngine() )->clearData()
+			->setData( [
+				'currentLayout' => $currentLayout
+			] )
+			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3_top.php' );
 	}
 }

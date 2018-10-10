@@ -4,6 +4,26 @@
 
 // It's either that or !important for multiple selectors
 .WikiaArticle {
+	.category-layout-selector {
+		display: flex;
+		justify-content: space-between;
+		list-style: none;
+		margin: 0 0 10px auto;
+		width: 100px;
+
+		&__item {
+			cursor: pointer;
+		}
+
+		&__icon {
+			fill: $color-page-border;
+
+			&-active {
+				fill: $color-buttons;
+			}
+		}
+	}
+
 	.category-page {
 		&__trending-pages-header {
 			margin-bottom: 12px;
@@ -102,6 +122,10 @@
 			&-next {
 				// First and previous on the left, next and last on the right
 				margin-left: auto;
+			}
+
+			.wds-button {
+				@include button-theming($color-buttons, $color-button-text);
 			}
 
 			.wds-is-text {
