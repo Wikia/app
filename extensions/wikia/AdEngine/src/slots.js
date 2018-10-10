@@ -14,7 +14,6 @@ export function getSlotsContext(legacyContext, skin) {
 					],
 					options: {},
 					defaultSizes: [[2, 2]],
-					defaultTemplates: ['stickyAd'],
 					targeting: {
 						pos: 'TOP_LEADERBOARD',
 						loc: 'top'
