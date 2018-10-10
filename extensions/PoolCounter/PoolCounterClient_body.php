@@ -129,20 +129,25 @@ class PoolCounter_Client extends PoolCounter {
 		$responseType = $parts[0];
 		switch ( $responseType ) {
 			case 'LOCKED':
+				$this->onAcquire();
+				break;
 			case 'RELEASED':
+				$this->onRelease();
+				break;
 			case 'DONE':
 			case 'NOT_LOCKED':
 			case 'QUEUE_FULL':
 			case 'TIMEOUT':
 			case 'LOCK_HELD':
-				return Status::newGood( constant( "PoolCounter::$responseType" ) );
-
+				break;
 			case 'ERROR':
 			default:
 				$parts = explode( ' ', $parts[1], 2 );
 				$errorMsg = isset( $parts[1] ) ? $parts[1] : '(no message given)';
 				return Status::newFatal( 'poolcounter-remote-error', $errorMsg );
 		}
+
+		return Status::newGood( constant( "PoolCounter::$responseType" ) );
 	}
 
 	/**
@@ -150,6 +155,11 @@ class PoolCounter_Client extends PoolCounter {
 	 */
 	function acquireForMe() {
 		wfProfileIn( __METHOD__ );
+		$status = $this->precheckAcquire();
+		if ( !$status->isGood() ) {
+			return $status;
+		}
+
 		$status = $this->sendCommand( 'ACQ4ME', $this->key, $this->workers, $this->maxqueue, $this->timeout );
 		wfProfileOut( __METHOD__ );
 		return $status;
@@ -160,6 +170,11 @@ class PoolCounter_Client extends PoolCounter {
 	 */
 	function acquireForAnyone() {
 		wfProfileIn( __METHOD__ );
+		$status = $this->precheckAcquire();
+		if ( !$status->isGood() ) {
+			return $status;
+		}
+
 		$status = $this->sendCommand( 'ACQ4ANY', $this->key, $this->workers, $this->maxqueue, $this->timeout );
 		wfProfileOut( __METHOD__ );
 		return $status;
