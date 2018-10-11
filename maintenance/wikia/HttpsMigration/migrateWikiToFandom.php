@@ -91,6 +91,9 @@ class MigrateWikiToFandom extends Maintenance {
 				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
 				WikiFactory::setVarByName( 'wgFandomComMigrationDone', $sourceWikiId, true, 'Migration to fandom.com' );
 
+				// Update lastmod in sitemap timestamps
+				WikiFactory::setVarByName( 'wgDomainChangeDate', $sourceWikiId, wfTimestamp( TS_MW ), 'Migration to fandom.com' );
+
 				$this->purgeCachesForWiki( $sourceWikiId );
 			}
 
