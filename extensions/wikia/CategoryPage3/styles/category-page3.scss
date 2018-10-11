@@ -15,7 +15,13 @@
 		&__item {
 			border-right: 1px solid $color-page-border;
 			cursor: pointer;
+			fill: $color-page-border;
 			padding: 0 13px;
+
+			&.is-active {
+				cursor: default;
+				fill: $color-buttons;
+			}
 
 			&:last-child {
 				border-right: none;
@@ -24,12 +30,7 @@
 		}
 
 		&__icon {
-			fill: $color-page-border;
 			vertical-align: middle;
-
-			&-active {
-				fill: $color-buttons;
-			}
 		}
 	}
 

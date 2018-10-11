@@ -1,27 +1,24 @@
 <ul class="category-layout-selector">
 	<?php /** @var string $currentLayout */ ?>
-	<li class="category-layout-selector__item" title="Classic Categories">
+	<li title="Classic Categories"
+		class="category-layout-selector__item<?= $currentLayout === CategoryPage3::LAYOUT_MEDIAWIKI ? ' is-active' : '' ?>">
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-bullet-list-small',
-			$currentLayout === CategoryPage3::LAYOUT_MEDIAWIKI ?
-				'category-layout-selector__icon category-layout-selector__icon-active wds-icon-small' :
-				'category-layout-selector__icon wds-icon-small'
+			'category-layout-selector__icon wds-icon-small'
 		) ?>
 	</li>
-	<li class="category-layout-selector__item" title="Category Exhibition">
+	<li title="Category Exhibition"
+		class="category-layout-selector__item<?= $currentLayout === CategoryPage3::LAYOUT_CATEGORY_EXHIBITION ? ' is-active' : '' ?>">
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-grid-small',
-			$currentLayout === CategoryPage3::LAYOUT_CATEGORY_EXHIBITION ?
-				'category-layout-selector__icon category-layout-selector__icon-active wds-icon-small' :
-				'category-layout-selector__icon wds-icon-small'
+			'category-layout-selector__icon wds-icon-small'
 		) ?>
 	</li>
-	<li class="category-layout-selector__item" title="Dynamic Categories">
+	<li title="Dynamic Categories"
+		class="category-layout-selector__item<?= $currentLayout === CategoryPage3::LAYOUT_CATEGORY_PAGE3 ? ' is-active' : '' ?>">
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-pages-small',
-			$currentLayout === CategoryPage3::LAYOUT_CATEGORY_PAGE3 ?
-				'category-layout-selector__icon category-layout-selector__icon-active wds-icon-small' :
-				'category-layout-selector__icon wds-icon-small'
+			'category-layout-selector__icon wds-icon-small'
 		) ?>
 	</li>
 </ul>
