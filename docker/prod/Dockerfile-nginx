@@ -6,6 +6,7 @@ RUN chown -R nginx:nginx /etc/nginx && \
     mkdir /var/run/nginx && \
     chown nginx:nginx /var/run/nginx
 
+ADD docker/base/base.conf /etc/nginx/base.conf
 ADD docker/prod/nginx.conf /etc/nginx/nginx.conf
 ADD docker/prod/site.conf.template /etc/nginx/conf.d/site.conf.template
 

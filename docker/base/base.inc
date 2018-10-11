@@ -1,0 +1,41 @@
+root /usr/wikia/slot1/current/src;
+listen 8080;
+
+# filter out unwanted directories
+location ~ ^/(lib|serialized|tests|mw-config|includes|cache|maintenance|languages|config) {
+    return 403;
+}
+
+# # Normalize url e.g. /en/path -> /path
+location ~* "^/[a-z]{2,3}(-[a-z-]{2,13})?/.*" {
+    rewrite "^/(?:[a-z]{2,3}(-[a-z-]{2,13})?)/(?<path>.*)" /$path;
+}
+
+location / {
+    if ($redirect_uri) {
+        return 301 $redirect_uri;
+    }
+
+    if ($rewrite_uri) {
+        rewrite ^ $rewrite_uri;
+    }
+}
+
+# known MediaWiki PHP endpoints
+location ~ "^/(index|load|wikia|api|health|opensearch_desc|extensions/wikia/Tasks/proxy/proxy|redirect-canonical|server|wikia-robots-txt)\.php" {
+    fastcgi_read_timeout 180s;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass php-wikia:9000;
+    fastcgi_index index.php;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param PATH_INFO $fastcgi_path_info;
+
+    # make MediaWiki think we're running on a standard port
+    # otherwise we end up with redirects to port 8080
+    fastcgi_param SERVER_PORT 80;
+
+    fastcgi_param SERVER_NAME $host;
+}
+
+error_page 404 = /redirect-canonical.php;
