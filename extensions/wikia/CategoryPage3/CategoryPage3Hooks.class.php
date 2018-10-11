@@ -4,6 +4,18 @@ class CategoryPage3Hooks {
 
 	const COOKIE_NAME = 'category-page-layout';
 
+	private static $oldQueryParams = [
+		'display',
+		'filefrom',
+		'fileuntil',
+		'page',
+		'pagefrom',
+		'pageuntil',
+		'sort',
+		'subcatfrom',
+		'subcatuntil',
+	];
+
 	/**
 	 * @param $categoryInserts
 	 * @param $categoryDeletes
@@ -50,6 +62,41 @@ class CategoryPage3Hooks {
 			}
 		} else {
 			$article = new CategoryPage3( $title );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Redirect to the canonical category URL if any of the older
+	 * pagination URL params were used.
+	 *
+	 * @param Title $title
+	 * @param $unused
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $request
+	 * @param MediaWiki $mediawiki
+	 * @return bool
+	 */
+	static public function onBeforeInitialize(
+		Title $title, $unused, OutputPage $output,
+		User $user, WebRequest $request, MediaWiki $mediawiki
+	): bool {
+		if ( !$title->inNamespace( NS_CATEGORY ) ||
+			$user->isLoggedIn()
+		) {
+			return true;
+		}
+
+		$oldParamsUsed = array_intersect( static::$oldQueryParams, array_keys( $request->getQueryValues() ) );
+		if ( !empty( $oldParamsUsed ) ) {
+			if ( $title->isRedirect() ) {
+				$canonicalCategoryURL = $output->getWikiPage()->getRedirectTarget()->getFullURL();
+			} else {
+				$canonicalCategoryURL = $title->getFullURL();
+			}
+			$output->redirect( $canonicalCategoryURL, '301', 'CanonicalCategoryURL' );
 		}
 
 		return true;
