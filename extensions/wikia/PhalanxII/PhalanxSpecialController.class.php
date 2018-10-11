@@ -146,6 +146,61 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function blockUser() {
+		$request = $this->getContext()->getRequest();
+
+		if ( !$this->getContext()->getRequest()->isWikiaInternalRequest() ) {
+			throw new ForbiddenException( 'Access to this method is restricted' );
+		}
+		if ( !$this->getContext()->getRequest()->wasPosted() ) {
+			throw new MethodNotAllowedException( 'Only POST allowed' );
+		}
+
+		$data = [
+			// actual text we want to block
+			'text'       => $request->getText( 'wpPhalanxFilter' ),
+			// whether we want the filter to trigger only on exact matches (in this case YES)
+			'exact'      => 1,
+			// whether we want the filter to be case sensitive (it's generally safe to go with NO)
+			'case'       => 0,
+			// whether this filter is a regex (nope)
+			'regex'      => 0,
+			// date when block was added - i.e. NOW
+			'timestamp'  => wfTimestampNow(),
+
+			// this will show up in the UI as the user who added this block
+			// probably we should be making this request authenticated as FANDOM / FANDOMbot
+			// and then the block will be attributed to them
+			'author_id'  => $this->getUser()->getId(),
+
+			// reason that will be shown to user who is blocked
+			'reason'     => $request->getText( 'wpPhalanxReason' ),
+
+			// internal-only comment viewable only by staff etc., probably not needed here
+			'comment'    => '',
+			// whether to trigger the filter only on wikis of a given language (nope)
+			'lang'       => null,
+			// type of content that we want to block (it's always user here)
+			'type'       => Phalanx::TYPE_USER,
+
+			// not needed
+			'multitext'  => null,
+			// string description of the block duration (e.g. 1 day, 3 months, infinite)
+			// for users probably 'infinite' is best
+			'expire'     => $request->getText( 'wpPhalanxExpiry' ),
+		];
+
+		if ( !PhalanxHooks::onEditPhalanxBlock( $data ) ) {
+			$this->response->setCode(500);
+			return;
+		} else {
+			$this->response->setCode(200);
+		}
+
+		// success!
+	}
+
+
 	/**
 	 * Renders second tab - blocks testing
 	 */
