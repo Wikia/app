@@ -95,8 +95,13 @@
 	<!-- Combined JS files and head scripts -->
 	<?= $jsFiles ?>
 <? endif ?>
+UserLoggedIn: <?= $isUserLoggedIn ?>
+CookieSyncEnabled: <?= $cookieSyncEnabled ?>
 <? if ( $isUserLoggedIn && $cookieSyncEnabled ): ?>
 	<?= F::app()->renderView( 'AutoLoginService', 'Index' ) ?>
+<? endif ?>
+<? if ( !$isUserLoggedIn && $cookieSyncEnabled ): ?>
+	<?= F::app()->renderView( 'AutoLoginService', 'Passive' ) ?>
 <? endif ?>
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>

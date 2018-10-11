@@ -21,6 +21,14 @@ class AutoLoginService extends WikiaService {
 		$this->setVal( 'url', $this->getServiceUrl() );
 	}
 
+	public function passive() {
+		$this->setVal( 'url', $this->getServicePassiveUrl() );
+	}
+
+	protected function getServicePassiveUrl() {
+		return $this->kubernetesExternalUrlProvider->getAlternativeUrl( 'autologin' ) . '/passive_frame';
+	}
+
 	protected function getServiceUrl() {
 		return $this->kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
 	}
