@@ -15,6 +15,8 @@ $wgAutoloadClasses['CategoryPage3Member'] = __DIR__ . '/CategoryPage3Member.clas
 $wgAutoloadClasses['CategoryPage3Model'] = __DIR__ . '/CategoryPage3Model.class.php';
 $wgAutoloadClasses['CategoryPage3TrendingPages'] = __DIR__ . '/CategoryPage3TrendingPages.class.php';
 $wgAutoloadClasses['CategoryPage3Pagination'] = __DIR__ . '/CategoryPage3Pagination.class.php';
+$wgAutoloadClasses['CategoryPageMediawiki'] = __DIR__ . '/CategoryPageMediawiki.class.php';
+$wgAutoloadClasses['CategoryPageWithLayoutSelector'] = __DIR__ . '/CategoryPageWithLayoutSelector.class.php';
 
 $wgHooks['AfterCategoriesUpdate'][] = 'CategoryPage3Hooks::onAfterCategoriesUpdate';
 $wgHooks['ArticleFromTitle'][] = 'CategoryPage3Hooks::onArticleFromTitle';

@@ -11,7 +11,9 @@ require([
 		$('.category-layout-selector__item:not(.is-active)').click(function () {
 			var layoutSelected = this.getAttribute('data-category-layout');
 
-			cookies.set('category-page-layout', layoutSelected);
+			cookies.set('category-page-layout', layoutSelected, {
+				path: '/'
+			});
 			window.location.reload();
 		});
 	});

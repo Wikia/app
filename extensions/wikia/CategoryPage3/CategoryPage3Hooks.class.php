@@ -2,6 +2,8 @@
 
 class CategoryPage3Hooks {
 
+	const COOKIE_NAME = 'category-page-layout';
+
 	/**
 	 * @param $categoryInserts
 	 * @param $categoryDeletes
@@ -31,7 +33,24 @@ class CategoryPage3Hooks {
 			return true;
 		}
 
-		$article = new CategoryPage3( $title );
+		$request = $article->getContext()->getRequest();
+		$cookie = $request->getCookie( self::COOKIE_NAME, '' );
+
+		if ( !empty( $cookie ) ) {
+			switch ( $cookie ) {
+				case CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI:
+					$article = new CategoryPageMediawiki( $title );
+					break;
+				case CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION:
+					//TODO
+					//$article = new CategoryExhibitionPage( $title );
+					//break;
+				default:
+					$article = new CategoryPage3( $title );
+			}
+		} else {
+			$article = new CategoryPage3( $title );
+		}
 
 		return true;
 	}
