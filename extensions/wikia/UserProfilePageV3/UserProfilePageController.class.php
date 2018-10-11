@@ -52,7 +52,6 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
-		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/ext.wikia.userProfile.avatarManager.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
 
@@ -326,38 +325,6 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	/**
-	 * Sets user's avatar to one of the available defaults provided by us
-	 * @requestParam string avatar file name of default avatar
-	 */
-	public function saveDefaultAvatar() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		try {
-			$this->checkWriteRequest();
-		} catch ( \BadRequestException $bre ) {
-			$this->setTokenMismatchError();
-			return;
-		}
-
-		$context = $this->getContext();
-		$user = $context->getUser();
-
-		$avatar = Masthead::getDefaultAvatarUrl( $context->getRequest()->getVal( 'avatar' ), '' );
-
-		// remove old avatar file
-		$masthead = Masthead::newFromUser( $user );
-		if ( !$masthead->isDefault() ) {
-			$service = new UserAvatarsService( $user->getId() );
-			$service->remove();
-		}
-
-		// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
-		$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
-		$user->saveAttributes();
-		$user->invalidateCache();
-	}
-
-	/**
 	 * @brief Receives data from AJAX call, validates and saves new user data
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -414,13 +381,334 @@ class UserProfilePageController extends WikiaController {
 			return;
 		}
 
+		if ( !empty( $userData->avatarData ) ) {
+			$status = $this->saveUsersAvatar( $user->getId(), $userData->avatarData );
+			if ( $status !== true ) {
+				$this->setVal( 'errorMsg', $errorMsg );
+				$this->setVal( 'status', 'error' );
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+		}
+
 		wfProfileOut( __METHOD__ );
 		return;
+	}
+
+	/**
+	 * @brief Validates and saves new user's avatar
+	 *
+	 * @param integer $userId id of user which avatar is going to be saved; taken from request if not given
+	 * @param object $data data object with source of file and url/name of avatar's file; taken from request if not given
+	 *
+	 * @return bool
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	private function saveUsersAvatar( $userId = null, $data = null ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( is_null( $userId ) ) {
+			$user = User::newFromId( $this->getVal( 'userId' ) );
+		} else {
+			$user = User::newFromId( $userId );
+		}
+
+		$isAllowed = $this->canEdit( $user );
+
+		if ( is_null( $data ) ) {
+			$data = json_decode( $this->getVal( 'data' ) );
+		}
+
+		$success = true;
+
+		if ( $isAllowed && isset( $data->source ) && isset( $data->file ) ) {
+			switch ( $data->source ) {
+				case 'sample':
+					// remove old avatar file
+					Masthead::newFromUser( $user )->removeFile( false );
+
+					// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file, "" ) );
+					$user->saveSettings();
+					break;
+				case 'uploaded':
+					$url = $this->saveAvatarFromUrl( $user, $data->file );
+					if ( $url === '' ) {
+						$success = false;
+					}
+					break;
+				default:
+					break;
+			}
+
+			$this->clearAttributeCache( $userId );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $success;
 	}
 
 	private function clearAttributeCache( $userId ) {
 		$attributeService = ServiceFactory::instance()->attributesFactory()->userAttributes();
 		$attributeService->clearCache( $userId );
+	}
+
+	/**
+	 * @brief Gets avatar from url, saves it on server and resize it if needed then returns path
+	 *
+	 * @param User $user user object
+	 * @param string $url url to user's avatar
+	 * @param string $errorMsg reference to a string variable where errors messages are returned
+	 *
+	 * @return string
+	 *
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	private function saveAvatarFromUrl( User $user, $url ) {
+		wfProfileIn( __METHOD__ );
+
+		$userId = $user->getId();
+
+		$errorNo = $this->uploadByUrl(
+			$url,
+			[
+				'userId'    => $userId,
+				'username'  => $user->getName(),
+				'user'      => $user,
+				'localPath' => '',
+			]
+		);
+
+		$localPath = $this->getLocalPath( $user );
+		$res = '';
+		if ( $errorNo == UPLOAD_ERR_OK ) {
+			$res = $localPath;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @brief Submits avatar form and genarate url for preview
+	 *
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function onSubmitUsersAvatar() {
+
+		$this->response->setContentType( 'text/html; charset=utf-8' );
+
+		$user = User::newFromId( $this->getVal( 'userId' ) );
+
+		$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
+		$result = [ 'success' => false, 'error' => $errorMsg ];
+
+		if ( !$user->isAnon() && $this->request->wasPosted() ) {
+			$avatarUploadFiled = 'UPPLightboxAvatar';
+			$uploadError = $this->wg->Request->getUploadError( $avatarUploadFiled );
+
+			if ( $uploadError != 0 ) {
+				$thumbnail = $uploadError;
+			} else {
+				$fileName = $this->wg->Request->getFileTempname( $avatarUploadFiled );
+				$fileuploader = new WikiaTempFilesUpload();
+				$thumbnail = $this->storeInTempImage( $fileName, $fileuploader );
+			}
+
+			if ( false === $thumbnail || is_int( $thumbnail ) ) {
+				$result = [ 'success' => false, 'error' => $this->validateUpload( $thumbnail ) ];
+				$this->setVal( 'result', $result );
+				return;
+			}
+
+			$this->setVal( 'result', $result );
+
+			$avatarUrl = $thumbnail->url;
+			// look for an occurrence of a ? to know if we should append the query string with a ? or a &
+			$avatarUrl .= ( preg_match( '/\?/', $avatarUrl ) ? '&' : '?' ) . 'cb=' . date( 'U' );
+
+			$result = [ 'success' => true, 'avatar' => $avatarUrl ];
+			$this->setVal( 'result', $result );
+
+			return;
+		}
+
+		$result = [ 'success' => false, 'error' => $errorMsg ];
+		$this->setVal( 'result', $result );
+	}
+
+	/**
+	 * @param $fileName String
+	 * @param $fileuploader WikiaTempFilesUpload
+	 * @return bool|int|MediaTransformOutput
+	 */
+	protected function storeInTempImage( $fileName, $fileuploader ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( filesize( $fileName ) > self::AVATAR_MAX_SIZE ) {
+			wfProfileOut( __METHOD__ );
+			return UPLOAD_ERR_FORM_SIZE;
+		}
+
+		$tempName = $fileuploader->tempFileName( $this->wg->User );
+		$title = Title::makeTitle( NS_FILE, $tempName );
+		$localRepo = RepoGroup::singleton()->getLocalRepo();
+
+		/**
+		 * @var $ioh ImageOperationsHelper
+		 */
+		$ioh = new ImageOperationsHelper();
+
+		$out = $ioh->postProcessFile( $fileName );
+		if ( $out !== true ) {
+			wfProfileOut( __METHOD__ );
+			return $out;
+		}
+
+		$file = new FakeLocalFile( $title, $localRepo );
+		$status = $file->upload( $fileName, '', '' );
+
+		if ( $status->ok ) {
+			$width = min( self::AVATAR_DEFAULT_SIZE, $file->width );
+			$height = min( self::AVATAR_DEFAULT_SIZE, $file->height );
+
+			$thumbnail = $file->transform( [
+				'height' => $height,
+				'width'  => $width,
+			] );
+		} else {
+			$errors = $status->getErrorsArray();
+			$errMsg = 'Unable to upload temp file fo avatar. Error(s): ';
+			foreach ( $errors as $error ) {
+				$errMsg .= $error[ 0 ] . ', ';
+			}
+			$errMsg = rtrim( $errMsg, ', ' );
+
+			wfDebugLog( __METHOD__, $errMsg );
+			$thumbnail = false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $thumbnail;
+	}
+
+	/**
+	 * @brief Validates file upload (whenever it's regular upload or by-url upload) and sets status and errorMsg
+	 *
+	 * @param integer $errorNo variable being checked
+	 *
+	 * @return String
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	private function validateUpload( $errorNo ) {
+		switch ( $errorNo ) {
+			case UPLOAD_ERR_NO_FILE:
+				return wfMessage( 'user-identity-box-avatar-error-nofile' )->escaped();
+				break;
+
+			case UPLOAD_ERR_CANT_WRITE:
+				return wfMessage( 'user-identity-box-avatar-error-cantwrite' )->escaped();
+				break;
+
+			case UPLOAD_ERR_FORM_SIZE:
+				return wfMessage( 'user-identity-box-avatar-error-size', ( int )( self::AVATAR_MAX_SIZE / 1024 ) )->escaped();
+				break;
+			case UPLOAD_ERR_EXTENSION;
+				return wfMessage( 'userprofilepage-avatar-error-type', $this->wg->Lang->listToText( ImageOperationsHelper::getAllowedMime() ) )->escaped();
+				break;
+			case ImageOperationsHelper::UPLOAD_ERR_RESOLUTION:
+				return wfMessage( 'userprofilepage-avatar-error-resolution' )->escaped();
+				break;
+			default:
+				return wfMessage( 'user-identity-box-avatar-error' )->escaped();
+		}
+	}
+
+	/**
+	 * @brief get Local Path to avatar
+	 */
+	private function getLocalPath( $user ) {
+		/**
+		 * @var $oAvatarObj Masthead
+		 */
+		$oAvatarObj = Masthead::newFromUser( $user );
+		return $oAvatarObj->getLocalPath();
+	}
+
+	/**
+	 * @brief Saves the file on the server
+	 *
+	 * @param WebRequest $request WebRequest instance
+	 * @param array $userData user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
+	 * @param String $input name of file input in form
+	 * @param String $errorMsg optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 *
+	 * @return Integer an error code of operation
+	 *
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	private function uploadFile( $request, $userData, $input, &$errorMsg = '' ) {
+		wfProfileIn( __METHOD__ );
+
+		$errorNo = $this->wg->Request->getUploadError( $input );
+
+		if ( $errorNo != UPLOAD_ERR_OK ) {
+			wfProfileOut( __METHOD__ );
+			return $errorNo;
+		}
+
+		$errorMsg = '';
+
+		if ( class_exists( 'Masthead' ) ) {
+			/**
+			 * @var $oAvatarObj Masthead
+			 */
+			$oAvatarObj = Masthead::newFromUser( $userData[ 'user' ] );
+			$errorNo = $oAvatarObj->uploadFile( $this->wg->Request, 'UPPLightboxAvatar', $errorMsg );
+
+
+		} else {
+			$errorNo = UPLOAD_ERR_EXTENSION;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $errorNo;
+	}
+
+	/**
+	 * @desc While this is technically downloading the URL, the function's purpose is to be similar
+	 * to uploadFile, but instead of having the file come from the user's computer, it comes
+	 * from the supplied URL.
+	 *
+	 * @param String $url the full URL of an image to download and apply as the user's Avatar
+	 * @param array $userData user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
+	 * @param String $errorMsg optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 *
+	 * @return Integer error code of operation
+	 */
+	public function uploadByUrl( $url, $userData ) {
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return UPLOAD_ERR_CANT_WRITE;
+		}
+
+		// start by presuming there is no error
+		// $errorNo = UPLOAD_ERR_OK;
+		$user = $userData[ 'user' ];
+		if ( class_exists( 'Masthead' ) ) {
+			/**
+			 * @var $oAvatarObj Masthead
+			 */
+			$oAvatarObj = Masthead::newFromUser( $user );
+			$localPath = $this->getLocalPath( $user );
+			$errorNo = $oAvatarObj->uploadByUrl( $url );
+		} else {
+			$errorNo = UPLOAD_ERR_EXTENSION;
+		}
+
+		return $errorNo;
 	}
 
 	/**
@@ -436,8 +724,16 @@ class UserProfilePageController extends WikiaController {
 		$user = User::newFromId( $userId );
 
 		$this->setVal( 'defaultAvatars', $this->getDefaultAvatars() );
+		$this->setVal( 'isUploadsPossible',
+			$this->wg->EnableUploads &&
+			$this->wg->User->isAllowed( 'upload' ) &&
+			empty( $this->wg->AvatarsMaintenance )
+		);
 
-		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE, 'avatar avatar-preview' ) );
+		$this->setVal( 'avatarName', $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ) );
+		$this->setVal( 'userId', $userId );
+		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
+		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -468,10 +764,7 @@ class UserProfilePageController extends WikiaController {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
-				$this->defaultAvatars[] = [
-					'url' => ImagesService::getThumbUrlFromFileUrl( $avatarUrl, self::AVATAR_DEFAULT_SIZE ),
-					'name' => $image,
-				];
+				$this->defaultAvatars[] = [ 'name' => $image, 'url' => ImagesService::getThumbUrlFromFileUrl($avatarUrl, self::AVATAR_DEFAULT_SIZE) ];
 			}
 		}
 

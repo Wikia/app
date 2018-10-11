@@ -1,6 +1,6 @@
 require(
-	['jquery', 'mw', 'wikia.nirvana', 'wikia.window', 'wikia.tracker', 'bucky', 'BannerNotification', 'wikia.ui.factory', 'ext.wikia.userProfile.userAvatar'],
-	function ($, mw, nirvana, window, tracker, bucky, BannerNotification, uiFactory, avatarManager) {
+	['jquery', 'mw', 'wikia.nirvana', 'wikia.window', 'wikia.tracker', 'bucky', 'BannerNotification', 'wikia.ui.factory'],
+	function ($, mw, nirvana, window, tracker, bucky, BannerNotification, uiFactory) {
 	'use strict';
 
 	var UserProfilePage = {
@@ -133,7 +133,7 @@ require(
 							var modal = editProfileModal.$element,
 								tab = modal.find('.tabs a');
 
-							avatarManager.init();
+							UserProfilePage.registerAvatarHandlers(modal);
 							UserProfilePage.registerAboutMeHandlers(modal);
 
 							// attach handlers to modal events
@@ -240,6 +240,97 @@ require(
 		},
 
 		/**
+		 * Register handlers related to the Avatar tab of the user edit modal.
+		 * @param {object} modal UI component modal
+		 */
+		registerAvatarHandlers: function (modal) {
+			var $avatarUploadInput = modal.find('#UPPLightboxAvatar'),
+				$avatarUploadButton = modal.find('#UPPLightboxAvatarUpload'),
+				$avatarForm = modal.find('#usersAvatar'),
+				$sampleAvatars = modal.find('.sample-avatars');
+
+			// VOLDEV-83: Fix confusing file upload interface
+			$avatarUploadButton.on('click', function () {
+				$avatarUploadInput.click();
+			});
+
+			$avatarUploadInput.change(function () {
+				UserProfilePage.saveAvatarAIM($avatarForm);
+			});
+
+			$sampleAvatars.on('click', 'img', function (event) {
+				UserProfilePage.sampleAvatarChecked($(event.target));
+			});
+		},
+
+		sampleAvatarChecked: function (img) {
+			var image = $(img),
+				$modal = UserProfilePage.modal.$element,
+				avatarImg = $modal.find('img.avatar');
+
+			$modal.find('img.avatar').hide();
+			$modal.startThrobbing();
+
+			UserProfilePage.newAvatar = {
+				file: image.attr('class'),
+				source: 'sample',
+				userId: UserProfilePage.userId
+			};
+			UserProfilePage.wasDataChanged = true;
+
+			avatarImg.attr('src', image.attr('src'));
+			$modal.stopThrobbing();
+			avatarImg.show();
+		},
+
+		saveAvatarAIM: function (form) {
+			UserProfilePage.bucky.timer.start('saveAvatarAIMSuccess');
+			UserProfilePage.bucky.timer.start('saveAvatarAIMFail');
+			var $modal = UserProfilePage.modal.$element;
+
+			$.AIM.submit(form, {
+				onStart: function () {
+					$modal.startThrobbing();
+				},
+				onComplete: function (response) {
+					try {
+						response = JSON.parse(response);
+						var avatarImg = $modal.find('img.avatar');
+						if (response.result.success === true) {
+							avatarImg.attr('src', response.result.avatar);
+							UserProfilePage.newAvatar = {
+								file: response.result.avatar,
+								source: 'uploaded',
+								userId: UserProfilePage.userId
+							};
+							UserProfilePage.wasDataChanged = true;
+							UserProfilePage.bannerNotification.hide();
+						} else {
+							if (typeof (response.result.error) !== 'undefined') {
+								UserProfilePage.error(response.result.error);
+							}
+						}
+						$modal.stopThrobbing();
+
+						if (typeof (form[0]) !== 'undefined') {
+							form[0].reset();
+							UserProfilePage.bucky.timer.stop('saveAvatarAIMSuccess');
+						}
+					} catch (e) {
+						$modal.stopThrobbing();
+						form[0].reset();
+						UserProfilePage.bucky.timer.stop('saveAvatarAIMFail');
+					}
+				}
+			});
+
+			//unbind original html element handler to avoid loops
+			form.onsubmit = null;
+
+			$(form).submit();
+		},
+
+		/**
 		 * Register handlers related to the About Me tab of the user edit modal.
 		 * @param {object} modal UI component modal
 		 */
@@ -288,26 +379,22 @@ require(
 				userData.avatarData = UserProfilePage.newAvatar;
 			}
 
-			$.when(
-				nirvana.sendRequest({
-					controller: 'UserProfilePage',
-					method: 'saveUserData',
-					type: 'POST',
-					data: {
-						'userId': UserProfilePage.userId,
-						'data': JSON.stringify(userData),
-						'token': window.mw.user.tokens.get('editToken')
-					}
-				}),
-				avatarManager.saveAvatar()
-			).then(function (data) {
+			nirvana.sendRequest({
+				controller: 'UserProfilePage',
+				method: 'saveUserData',
+				type: 'POST',
+				data: {
+					'userId': UserProfilePage.userId,
+					'data': JSON.stringify(userData),
+					'token': window.mw.user.tokens.get('editToken')
+				}
+			}).then(function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
 					UserProfilePage.bucky.timer.stop('saveUserDataFail');
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
-					avatarManager.close();
 					UserProfilePage.modal.trigger('close');
 					UserProfilePage.bucky.timer.stop('saveUserDataSuccess');
 					UserProfilePage.bucky.flush();

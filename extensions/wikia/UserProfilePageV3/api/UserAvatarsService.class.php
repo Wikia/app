@@ -26,6 +26,42 @@ class UserAvatarsService {
 	}
 
 	/**
+	 * Upload a given file as an avatar for the current user
+	 *
+	 * Assumes the file to be in a PNG format
+	 *
+	 * @param string $filePath
+	 * @return int UPLOAD_* error code
+	 */
+	function upload( $filePath ) {
+		wfProfileIn( __METHOD__ );
+
+		try {
+			$response = $this->getApiClient()->putUserAvatar( $this->mUserId, $filePath );
+			wfDebug( __METHOD__ . ': resp - ' . json_encode( $response ) . "\n" );
+			wfDebug( __METHOD__ . ": <{$response->imageUrl}>\n" );
+
+			$this->info( 'Avatar uploaded', [
+				'guid' => $response->imageUrl
+			] );
+		}
+		catch ( ApiException $e ) {
+			wfDebug( __METHOD__ . ': error - ' . $e->getMessage() . "\n" );
+
+			$this->error( 'Avatar upload failed', [
+				'exception' => $e,
+				'response' => $e->getResponseBody()
+			] );
+
+			wfProfileOut( __METHOD__ );
+			return UPLOAD_ERR_CANT_WRITE;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return UPLOAD_ERR_OK;
+	}
+
+	/**
 	 * Remove the avatar for the current user
 	 *
 	 * @return bool the operation result
