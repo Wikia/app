@@ -1939,7 +1939,7 @@ class Wikia {
 	}
 
 	public static function purgeSurrogateKey( $key ) {
-		CeleryPurge::purgeBySurrogateKey( $key );
+		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key );
 	}
 
 	public static function isProductionEnv(): bool {
