@@ -51,6 +51,11 @@ class MigrateWikiToFandom extends Maintenance {
 
 			$sourceWikiId = $data[0];
 
+			if ( !WikiFactory::isPublic( $sourceWikiId ) ) {
+				$this->output( "Wiki with ID {$sourceWikiId} was not found or is closed!\n" );
+				continue;
+			}
+
 			$sourceDomain = wfNormalizeHost( parse_url( WikiFactory::cityIDtoDomain( $sourceWikiId ), PHP_URL_HOST ) );
 
 			if ( !$sourceDomain ) {
