@@ -22,6 +22,9 @@ class ServiceFactory {
 
 	/** @var PermissionsFactory $permissionsFactory */
 	private $permissionsFactory;
+
+	/** @var PurgerFactory $purgerFactory */
+	private $purgerFactory;
 	
 	/** @var RabbitFactory $rabbitFactory */
 	private $rabbitFactory;
@@ -72,6 +75,14 @@ class ServiceFactory {
 		}
 
 		return $this->permissionsFactory;
+	}
+
+	public function purgerFactory(): PurgerFactory {
+		if ( $this->purgerFactory === null ) {
+			$this->purgerFactory = new PurgerFactory( $this );
+		}
+
+		return $this->purgerFactory;
 	}
 	
 	public function rabbitFactory(): RabbitFactory {
