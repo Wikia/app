@@ -51,8 +51,12 @@ class ParsoidCacheUpdateTask extends BaseTask {
 
 		$oldid = $prev ? $title->getPreviousRevisionID( $title->getLatestRevID() ) : $title->getLatestRevID();
 
-		return $wgVisualEditorParsoidURL . '/' . wfExpandUrl( wfScript( 'api' ) ) . '/' .
+		$parsoidUrl = $wgVisualEditorParsoidURL . '/' . wfExpandUrl( wfScript( 'api' ) ) . '/' .
 			wfUrlencode( $title->getPrefixedDBkey() ) . '?oldid=' . $oldid;
+
+		WikiaLogger::instance()->info( "Parsoid URL: " .  $parsoidUrl );
+
+		return $parsoidUrl;
 	}
 
 	protected function checkCurlResults( $results ) {
@@ -155,6 +159,8 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		if ( $wgVisualEditorParsoidHTTPProxy ) {
 			$proxyOptions[ CURLOPT_PROXY ] = $wgVisualEditorParsoidHTTPProxy;
 		}
+
+		WikiaLogger::instance()->info( "Parsoid proxy: " . $wgVisualEditorParsoidHTTPProxy );
 		
 		return array_merge( $defaultOptions, $proxyOptions, $customOptions );
 	}
