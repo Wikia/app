@@ -8882,3 +8882,9 @@ $wgFandomComMigrationDone = false;
  * when we migrate wikis from .wikia.com to .fandom.com domain.
  */
 $wgEnableResetTrackingPreferencesPage = false;
+
+/**
+ * Wether we should load the FastlyInsights extension. The extension will then add the Fastly Insights
+ * script to pages - https://insights.fastlylabs.com
+ */
+$wgEnableFastlyInsights = false;
