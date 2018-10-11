@@ -16,6 +16,7 @@ define ( 'AVATAR_UPLOAD_FIELD', 'wkUserAvatar' );
  */
 $wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
 $wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
+$wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
 $wgAutoloadClasses['FavoriteWikisModel'] =  $dir . '/models/FavoriteWikisModel.class.php';
 
 $wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.class.php';
@@ -63,8 +64,6 @@ $wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleLis
 
 $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
-$wgHooks['MakeGlobalVariablesScript'][] = '\UserProfilePageHooks::onMakeGlobalVariablesScript';
-
 /**
  * messages
  */
@@ -76,9 +75,6 @@ $wgResourceModules['ext.UserProfilePage.Lightbox'] = [
 		'userprofilepage-edit-modal-header',
 		'user-identity-box-avatar-cancel',
 		'user-identity-box-avatar-save',
-		'user-identity-box-avatar-error-nofile',
-		'user-identity-box-avatar-error-size',
-		'user-identity-box-avatar-error',
 		'userprofilepage-closing-popup-header',
 		'userprofilepage-closing-popup-save-and-quit',
 		'userprofilepage-closing-popup-discard-and-quit',
