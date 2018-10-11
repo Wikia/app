@@ -634,7 +634,9 @@ class WikiFactoryLoader {
 		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
-		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath( $this->mCityUrl, $this->mWikiID );
+		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath(
+			$this->mCityUrl
+		);
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );

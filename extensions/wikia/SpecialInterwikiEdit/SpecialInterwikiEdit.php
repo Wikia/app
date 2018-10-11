@@ -510,7 +510,7 @@ function wfSIWEMakeInterlanguageUrl($wikiaID) {
 		return '';
 	}
 	$server = WikiFactory::cityUrlToDomain( $cityUrl );
-	$path = WikiFactory::cityUrlToArticlePath( $cityUrl, $wikiaID);
+	$path = WikiFactory::cityUrlToArticlePath( $cityUrl );
 
 	return $server . $path;
 }

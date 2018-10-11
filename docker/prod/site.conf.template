@@ -70,12 +70,5 @@ server {
         fastcgi_param SERVER_NAME $http_x_original_host;
     }
 
-    # SUS-5792: rewrite for legacy corporate pages with short article path
-    # see wgShortArticlePathWikis MediaWiki variable for the list of them
-    if ($http_x_original_host ~ "^(www|de|fr|pl|es|ja|ru|it)\.wikia\.com$") {
-      rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?api.php(.*)" /api.php$1 break;
-      rewrite ^/(.*)$ /index.php?title=$1 break;
-    }
-
     error_page 404 = /redirect-canonical.php;
 }

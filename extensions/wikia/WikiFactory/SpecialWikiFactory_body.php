@@ -373,7 +373,7 @@ class WikiFactoryPage extends SpecialPage {
 					"wgDBname" => WikiFactory::getWikiByID( $ezsuRemoteWikiId )->city_dbname,
 					"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $ezsuRemoteWikiId ),
 					"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $ezsuRemoteWikiId ),
-					"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl, $ezsuRemoteWikiId ) )
+					"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl ) )
 				);
 			}
 		}
@@ -417,7 +417,7 @@ class WikiFactoryPage extends SpecialPage {
 				"wgDBname" => WikiFactory::getWikiByID( $remoteWikiId )->city_dbname,
 				"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $remoteWikiId ),
 				"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $remoteWikiId ),
-				"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl, $remoteWikiId ) )
+				"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl ) )
 			);
 
 			// set variables
