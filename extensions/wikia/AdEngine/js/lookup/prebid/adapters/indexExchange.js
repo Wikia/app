@@ -51,8 +51,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					],
 					siteId: 185055
 				},

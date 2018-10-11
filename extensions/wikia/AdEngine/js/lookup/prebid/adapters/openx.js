@@ -43,8 +43,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 			mercury: {
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					],
 					unit: 538735699
 				},
