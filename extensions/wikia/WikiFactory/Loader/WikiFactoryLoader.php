@@ -48,7 +48,7 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgCommandLineMode;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -65,7 +65,15 @@ class WikiFactoryLoader {
 			$this->mAlwaysFromDB = 1;
 		}
 
-		$this->mCommandLine = false;
+		/**
+		 * Check if we're running in command line mode
+		 *
+		 * Set a default value of the flag below to avoid /proxy.php requests for closed wikis
+		 * to render a "this wiki is closed" web page
+		 *
+		 * @see SUS-6026
+		 */
+		$this->mCommandLine = $wgCommandLineMode;
 
 		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
 			// SUS-5816 | a special HTTP request with wiki ID forced via request header
