@@ -64,7 +64,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_2': floatingState,
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
+				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0,
+				'user_block_autoplay': params.withAudio
 			};
 
 		if (bidHelper && params.bid) {
