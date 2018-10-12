@@ -1117,7 +1117,6 @@ if ( !empty( $wgEnableWikiFeatures ) ) {
 			'wgEnableAjaxPollExt',
 			'wgEnableBlogArticles',
 			'wgEnableArticleCommentsExt',
-			'wgEnableCategoryExhibitionExt',
 			'wgEnableWallExt',
 			'wgEnablePortableInfoboxEuropaTheme'
 		),

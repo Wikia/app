@@ -55,7 +55,6 @@ class WikiFeaturesTest extends WikiaBaseTest {
 				'wgEnableAjaxPollExt',
 				'wgEnableBlogArticles',
 				'wgEnableArticleCommentsExt',
-				'wgEnableCategoryExhibitionExt',
 				'wgEnableWallExt',
 				'wgEnablePortableInfoboxEuropaTheme',
 			],
