@@ -6,15 +6,10 @@ require([
 
 	var isSafari = function () {
 		var ua = navigator.userAgent.toLowerCase();
-		if (ua.indexOf('safari') !== -1) {
-			if (ua.indexOf('chrome') === -1) {
-				return true;
-			}
-		}
-		return false;
+		return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
 	};
 
-	if (cookie.get('autologin_done') === null && mw.user.anonymous() && isSafari()) {
+	if (cookie.get('autologin_done') === '1' && mw.user.anonymous() && isSafari()) {
 		var iframe = window.document.createElement('iframe');
 		iframe.src = mw.config.get('wgPassiveAutologinUrl');
 		iframe.classList.add("auto-login-module-iframe");
