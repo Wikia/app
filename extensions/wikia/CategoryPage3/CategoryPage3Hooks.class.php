@@ -49,26 +49,17 @@ class CategoryPage3Hooks {
 			return true;
 		}
 
-		$request = $article->getContext()->getRequest();
-		$cookie = $request->getCookie( self::COOKIE_NAME, '' );
+		$layout = static::getLayout( $title, $article );
 
-		if ( !empty( $cookie ) ) {
-			switch ( $cookie ) {
-				case CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI:
-					$article = new CategoryPageMediawiki( $title );
-					break;
-				case CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION:
-					if ( !CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article ) ) {
-						$article = new CategoryExhibitionPage( $title );
-					} else {
-						$article = new CategoryPage3( $title );
-					}
-					break;
-				default:
-					$article = new CategoryPage3( $title );
-			}
-		} else {
-			$article = new CategoryPage3( $title );
+		switch ( $layout ) {
+			case CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI:
+				$article = new CategoryPageMediawiki( $title );
+				break;
+			case CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION:
+				$article = new CategoryExhibitionPage( $title );
+				break;
+			default:
+				$article = new CategoryPage3( $title );
 		}
 
 		return true;
@@ -90,24 +81,53 @@ class CategoryPage3Hooks {
 		Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
+		$article = Article::newFromTitle( $title, $output->getContext() );
+
+		if ( $title->isRedirect() ) {
+			$title = $article->getRedirectTarget();
+		}
+
 		if (
+			is_null( $title ) ||
 			!$title->inNamespace( NS_CATEGORY ) ||
-			// TODO check the current layout
-			$user->isLoggedIn()
+			static::getLayout( $title, $article ) !== CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
 		) {
 			return true;
 		}
 
 		$oldParamsUsed = array_intersect( static::$oldQueryParams, array_keys( $request->getQueryValues() ) );
+
 		if ( !empty( $oldParamsUsed ) ) {
 			if ( $title->isRedirect() ) {
 				$canonicalCategoryURL = $output->getWikiPage()->getRedirectTarget()->getFullURL();
 			} else {
 				$canonicalCategoryURL = $title->getFullURL();
 			}
+
 			$output->redirect( $canonicalCategoryURL, '301', 'CanonicalCategoryURL' );
 		}
 
 		return true;
+	}
+
+	static private function getLayout( Title $title, Article $article ) {
+		$context = $article->getContext();
+		$isAnon = $context->getUser()->isAnon();
+		$cookie = $context->getRequest()->getCookie( self::COOKIE_NAME, '' );
+
+		if ( $isAnon || empty( $cookie ) ) {
+			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
+		}
+
+		if ( $cookie === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ) {
+			return CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI;
+		} else if (
+			$cookie === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION &&
+			!CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article )
+		) {
+			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION;
+		}
+
+		return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
 	}
 }
