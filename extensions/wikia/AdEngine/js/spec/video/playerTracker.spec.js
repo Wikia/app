@@ -26,6 +26,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adTracker: {
 				trackDW: noop
 			},
+			autoplay: {
+				isAutoplayEnabled: function () {
+					return 1;
+				}
+			},
 			browserDetect: {
 				getOS: function () {
 					return 'Fake';
@@ -62,6 +67,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
+			mocks.autoplay,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
