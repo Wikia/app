@@ -98,13 +98,7 @@ class CategoryPage3Hooks {
 		$oldParamsUsed = array_intersect( static::$oldQueryParams, array_keys( $request->getQueryValues() ) );
 
 		if ( !empty( $oldParamsUsed ) ) {
-			if ( $title->isRedirect() ) {
-				$canonicalCategoryURL = $output->getWikiPage()->getRedirectTarget()->getFullURL();
-			} else {
-				$canonicalCategoryURL = $title->getFullURL();
-			}
-
-			$output->redirect( $canonicalCategoryURL, '301', 'CanonicalCategoryURL' );
+			$output->redirect( $title->getFullURL(), '301', 'CanonicalCategoryURL' );
 		}
 
 		return true;
