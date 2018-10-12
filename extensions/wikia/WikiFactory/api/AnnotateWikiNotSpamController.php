@@ -2,7 +2,7 @@
 
 use Wikia\Logger\Loggable;
 
-class AnnotateWikiNotSpamController {
+class AnnotateWikiNotSpamController extends WikiaController {
 
 	use Loggable;
 
