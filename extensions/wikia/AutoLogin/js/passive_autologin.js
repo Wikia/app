@@ -9,14 +9,14 @@ require([
 		return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
 	};
 
-	if (cookie.get('autologin_done') === '1' && mw.user.anonymous() && isSafari()) {
+	if (cookie.get('autologin_done') !== '2' && window.mw.user.anonymous() && isSafari()) {
 		var iframe = window.document.createElement('iframe');
-		iframe.src = mw.config.get('wgPassiveAutologinUrl');
+		iframe.src = window.mw.config.get('wgPassiveAutologinUrl');
 		iframe.classList.add("auto-login-module-iframe");
 		window.document.body.appendChild(iframe);
 
 		window.addEventListener('message', function (event) {
-			if (event.data === "is_authed") {
+			if (event.origin === window.mw.config.get('wgTrustedAutologinUrl') && event.data === "is_authed") {
 				window.location.reload();
 			}
 		}, false);
