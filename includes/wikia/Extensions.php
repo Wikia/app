@@ -1764,3 +1764,8 @@ if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+// SUS-5817
+if ( $wgEnableFastlyInsights ) {
+	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}
