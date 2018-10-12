@@ -14,7 +14,7 @@ require([
 		return false;
 	};
 
-	if (cookie.get('autologin_done') === null && isSafari()) {
+	if (cookie.get('autologin_done') === null && mw.user.anonymous() && isSafari()) {
 		var iframe = window.document.createElement('iframe');
 		iframe.src = mw.config.get('wgPassiveAutologinUrl');
 		iframe.classList.add("auto-login-module-iframe");
