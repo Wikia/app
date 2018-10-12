@@ -27,6 +27,9 @@ $wgResourceModules['ext.wikia.authPreferences'] = [
 		'fbconnect-disconnect-info',
 		'fbconnect-unknown-error',
 		'fbconnect-error-fb-account-in-use',
+		'google-connect-account-connected',
+		'google-connect-account-disconnected',
+		'google-connect-unknown-error'
 	],
 	
 	'localBasePath' => __DIR__,
