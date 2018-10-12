@@ -27,13 +27,9 @@ class AnnotateWikiNotSpamController {
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
-			$res = WikiFactory::setPublicStatus( WikiFactory::PUBLIC_WIKI, $wikiId, $reason );
+			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId );
 
 			if ( $res === WikiFactory::PUBLIC_WIKI ) {
-//				WikiFactory::setFlags( $wikiId,
-//					WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
-//					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
-//				WikiFactory::clearCache( $wikiId );
 				$this->response->setCode( 200 );
 
 				return;
