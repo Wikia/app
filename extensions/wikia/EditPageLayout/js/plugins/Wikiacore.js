@@ -3,7 +3,7 @@
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 		requires = ['core', 'noticearea', 'loadingstatus','pagecontrols', /*'restoreedit',*/ 'autoresizer','edittools',
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
-			'leaveconfirm', 'addfile', 'editorsurvey', 'flowtracking'];
+			'leaveconfirm', 'addfile', 'editorsurvey'];
 
 	if (window.enableWikitextSyntaxHighlighting) {
 		requires.push('syntaxhighlighterqueueinit');
