@@ -29,7 +29,7 @@ class AnnotateWikiNotSpamController extends WikiaController {
 		} else {
 			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId );
 
-			if ( $res === WikiFactory::PUBLIC_WIKI ) {
+			if ( $res === WikiFactory::LOG_STATUS ) {
 				$this->response->setCode( 200 );
 
 				return;
