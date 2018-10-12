@@ -3,8 +3,10 @@
 use Wikia\Service\Gateway\KubernetesExternalUrlProvider;
 
 class AutoLoginService extends WikiaService {
-
-	private $kubernetesExternalUrlProvider;
+	/**
+	 * @var KubernetesExternalUrlProvider
+	 */
+	private static $kubernetesExternalUrlProvider;
 
 	const SYNC_COOKIE_NAME = 'autologin_done';
 
@@ -12,24 +14,27 @@ class AutoLoginService extends WikiaService {
 		return $request->getCookie( self::SYNC_COOKIE_NAME, "" ) !== '1';
 	}
 
-	public function __construct() {
-		parent::__construct();
-		$this->kubernetesExternalUrlProvider = new KubernetesExternalUrlProvider();
+	/**
+	 * @param KubernetesExternalUrlProvider $kubernetesExternalUrlProvider
+	 */
+	public static function setKubernetesExternalUrlProvider( $kubernetesExternalUrlProvider ) {
+		self::$kubernetesExternalUrlProvider = $kubernetesExternalUrlProvider;
 	}
 
 	public function index() {
 		$this->setVal( 'url', $this->getServiceUrl() );
 	}
 
-	public function passive() {
-		$this->setVal( 'url', $this->getServicePassiveUrl() );
+	/**
+	 * @param array $vars JS variables to be added at the bottom of the page
+	 * @param $scripts
+	 */
+	public static function addCookieSyncerJsVariable( array &$vars, &$scripts ) {
+		$vars['wgPassiveAutologinUrl'] = self::$kubernetesExternalUrlProvider->getAlternativeUrl( 'autologin' ) . '/passive_frame';;
 	}
 
-	protected function getServicePassiveUrl() {
-		return $this->kubernetesExternalUrlProvider->getAlternativeUrl( 'autologin' ) . '/passive_frame';
-	}
 
 	protected function getServiceUrl() {
-		return $this->kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
+		return self::$kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
 	}
 }

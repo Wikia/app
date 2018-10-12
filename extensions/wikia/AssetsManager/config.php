@@ -13,6 +13,7 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
+		'//extensions/wikia/AutoLogin/js/passive_autologin.js',
 	],
 ];
 
