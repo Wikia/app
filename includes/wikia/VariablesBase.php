@@ -1950,6 +1950,14 @@ $wgDnsBlacklistUrls = [ 'http.dnsbl.sorbs.net.' ];
 $wgDocType = '-//W3C//DTD XHTML 1.0 Transitional//EN';
 
 /**
+ * Used to set a date when migrating a wiki to a different domain to force an
+ * updated lastmod timestamp in sitemaps.
+ * @see PLATFORM-3746
+ * @var string $wgDomainChangeDate
+ */
+$wgDomainChangeDate = null;
+
+/**
  * The URL of the document type declaration.  Ignored if $wgHtml5 is true,
  * since HTML5 has no DTD, and <!DOCTYPE html> doesn't actually have a DTD part
  * to put this variable's contents in.
