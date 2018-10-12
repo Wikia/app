@@ -4,6 +4,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.browserDetect',
 	'ext.wikia.adEngine.geo',
 	'wikia.log',
@@ -16,6 +17,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	pageLevel,
 	adTracker,
 	slotTargeting,
+	autoplay,
 	browserDetect,
 	geo,
 	log,
@@ -65,7 +67,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0,
-				'user_block_autoplay': params.withAudio
+				'user_block_autoplay': !autoplay.isAutoplayEnabled() ? 1 : 0
 			};
 
 		if (bidHelper && params.bid) {
