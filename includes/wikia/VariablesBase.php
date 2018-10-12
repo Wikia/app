@@ -2555,13 +2555,6 @@ $wgEnableDiscussionsLog = true;
 $wgEnableDiscussionsNavigation = false;
 
 /**
- * Allows submitting posts with Polls.
- * @see extensions/wikia/MercuryApi
- * @var bool $wgEnableDiscussionsPolls
- */
-$wgEnableDiscussionsPolls = true;
-
-/**
  * Enable DismissableSiteNotice extension.
  * @see /extensions/DismissableSiteNotice
  * @var bool wgEnableDismissableSiteNoticeExt
