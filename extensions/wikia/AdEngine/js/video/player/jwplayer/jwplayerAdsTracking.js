@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 
 		tracker.track(params, 'init');
 
-		player.on('adComplete', function () {
+		player.on('videoStart', function () {
 			clearParams(params);
 		});
 
