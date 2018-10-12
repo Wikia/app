@@ -21,7 +21,6 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			$this->cacheHelper->getTouched( $oTitle ),
 			// Display/sort params are passed to the subcategory, cache separately!
 			$this->urlParams->getSortParam(),
-			$this->urlParams->getDisplayParam(),
 			self::CACHE_VERSION
 		);
 
@@ -50,7 +49,6 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			'title' => $oTitle->getText(),
 			// Pass the display/sort params to the subcategory:
 			'url' => $oTitle->getLocalURL( [
-				'display' => $this->urlParams->getDisplayParam(),
 				'sort' => $this->urlParams->getSortParam(),
 			] ),
 			'img' => $imageUrl,

@@ -1014,11 +1014,6 @@ if (!empty( $wgEnablePaginatorExt )){
 	include( "$IP/extensions/wikia/Paginator/Paginator.setup.php" );
 }
 
-# Category Exhibition
-if (!empty($wgEnableCategoryExhibitionExt)) {
-		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
 /*
  * Send email from the app authenticated by a secret token
  */
@@ -1765,3 +1760,7 @@ include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
 if ( !empty( $wgEnableCategoryPage3Ext ) ) {
 	include "$IP/extensions/wikia/CategoryPage3/CategoryPage3.setup.php";
 }
+
+// Category Exhibition
+// If you want to delete this extension remember to update CategoryPage3
+include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );

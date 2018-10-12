@@ -3,7 +3,16 @@
 /**
  * Custom category page showing exhibition of pages, subcategories and media in the category
  */
-class CategoryExhibitionPage extends CategoryPageII {
+class CategoryExhibitionPage extends CategoryPageWithLayoutSelector {
+	public function openShowCategory() {
+		parent::openShowCategory();
+
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
+
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n" );
+	}
+
 	public function closeShowCategory() {
 		global $wgOut, $wgRequest, $wgUser;
 
@@ -29,7 +38,7 @@ class CategoryExhibitionPage extends CategoryPageII {
 			$paginators[] = $section->getPaginator();
 		}
 
-		if ( $urlParams->getDisplayParam() || $urlParams->getSortParam() ) {
+		if ( $urlParams->getSortParam() ) {
 			// One of display or sort params present in the URL.
 			// We want the bots to avoid those pages and stick to the default sorting options
 			$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -44,6 +53,10 @@ class CategoryExhibitionPage extends CategoryPageII {
 		}
 
 		$wgOut->addHTML( $r );
+	}
+
+	protected function getCurrentLayout() {
+		return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION;
 	}
 
 	/**

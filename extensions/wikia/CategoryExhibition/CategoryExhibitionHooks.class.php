@@ -9,51 +9,14 @@ class CategoryExhibitionHooks {
 	const EXHIBITION_LIMIT = 2000;
 
 	/**
-	 * @static
-	 * @param Title $title
-	 * @param Article $article
-	 * @return bool
-	 */
-	static public function onArticleFromTitle( &$title, &$article ) {
-		$app = F::app();
-
-		// Only touch category pages on Oasis
-		if ( !$app->checkSkin( 'oasis' ) || !$title || $title->getNamespace() !== NS_CATEGORY ) {
-			return true;
-		}
-
-		if ( self::isExhibitionDisabledForTitle( $title, $article ) ) {
-			return true;
-		}
-
-		$urlParams = new CategoryUrlParams( $app->wg->Request, $app->wg->User );
-
-		if ( $urlParams->getDisplayType() === 'page' ) {
-			$article = new CategoryPageII( $title );
-		} else {
-			$article = new CategoryExhibitionPage( $title );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Return true if the exhibition category type should be disabled on this page
 	 *
 	 * @param Title $title
 	 * @param Article $article
 	 * @return bool
 	 */
-	static private function isExhibitionDisabledForTitle( $title, $article ) {
+	static public function isExhibitionDisabledForTitle( $title, $article ) {
 		if ( !$article || MagicWord::get( CATEXHIBITION_DISABLED )->match( $article->getRawText() ) > 0 ) {
-			return true;
-		}
-
-		if ( $title->isRedirect() ) {
-			$title = $article->getRedirectTarget();
-		}
-
-		if ( is_null( $title ) || $title->getNamespace() !== NS_CATEGORY ) {
 			return true;
 		}
 

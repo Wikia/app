@@ -41,7 +41,11 @@ class CategoryPage3Hooks {
 	 * @return bool
 	 */
 	static public function onArticleFromTitle( $title, &$article ): bool {
-		if ( !$title || !$title->inNamespace( NS_CATEGORY ) ) {
+		if ( $title->isRedirect() ) {
+			$title = $article->getRedirectTarget();
+		}
+
+		if ( is_null( $title ) || !$title->inNamespace( NS_CATEGORY ) ) {
 			return true;
 		}
 
@@ -54,9 +58,12 @@ class CategoryPage3Hooks {
 					$article = new CategoryPageMediawiki( $title );
 					break;
 				case CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION:
-					//TODO
-					//$article = new CategoryExhibitionPage( $title );
-					//break;
+					if ( !CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article ) ) {
+						$article = new CategoryExhibitionPage( $title );
+					} else {
+						$article = new CategoryPage3( $title );
+					}
+					break;
 				default:
 					$article = new CategoryPage3( $title );
 			}
@@ -83,7 +90,9 @@ class CategoryPage3Hooks {
 		Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
-		if ( !$title->inNamespace( NS_CATEGORY ) ||
+		if (
+			!$title->inNamespace( NS_CATEGORY ) ||
+			// TODO check the current layout
 			$user->isLoggedIn()
 		) {
 			return true;

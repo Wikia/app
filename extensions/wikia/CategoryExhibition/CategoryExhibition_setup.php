@@ -39,7 +39,6 @@ $wgExtensionMessagesFiles[ 'CategoryPageII' ] = __DIR__ . '/i18n/CategoryExhibit
 define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');
 $wgHooks['LanguageGetMagic'][] = 'CategoryExhibitionHooks::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryExhibitionHooks::onInternalParseBeforeLinks';
-$wgHooks['ArticleFromTitle'][] = 'CategoryExhibitionHooks::onArticleFromTitle';
 $wgHooks['onArticleSaveComplete'][] = 'CategoryExhibitionHooks::onArticleSaveComplete';
 $wgHooks['AfterCategoriesUpdate'][] = 'CategoryExhibitionHooks::onAfterCategoriesUpdate';
 
