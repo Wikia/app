@@ -12,7 +12,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 	}
 
 	function showFacebookConnectSuccess() {
-		$('.facebook-preferences')
+		$('.auth-preferences')
 			.removeClass('facebook-state-disconnected')
 			.addClass('facebook-state-linked');
 
@@ -20,7 +20,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 	}
 
 	function showFacebookDisconnectSuccess() {
-		$('.facebook-preferences')
+		$('.auth-preferences')
 			.removeClass('facebook-state-linked')
 			.addClass('facebook-state-disconnected');
 
