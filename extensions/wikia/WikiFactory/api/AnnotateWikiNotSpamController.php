@@ -28,19 +28,15 @@ class AnnotateWikiNotSpamController extends WikiaController {
 			$this->info('no wikiId or reason parameter in request');
 		} else {
 			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId );
-
 			if ( $res ) {
 				$this->response->setCode( 200 );
-
 				return;
 			} else {
 				$this->response->setCode( 500 );
 				$this->info("could not annotate wiki NOT SPAM in MW. Wiki id: " . $wikiId);
-
 				return;
 			}
 		}
-
 	}
 
 
