@@ -268,7 +268,7 @@ abstract class PoolCounterWork {
 						'exception' => new Exception(),
 						'poolcounter_key' => $this->key,
 					] );
-					return $this->execute( true );
+					return $this->doWork();
 				}
 				return $result;
 
