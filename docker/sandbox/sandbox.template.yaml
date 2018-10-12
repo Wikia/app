@@ -49,6 +49,9 @@ spec:
             periodSeconds: 10
           ports:
             - containerPort: 8080
+          env:
+            - name: HOSTNAME_OVERRIDE
+              value: "${SANDBOX_NAME}"
           resources:
             limits:
               memory: 200Mi

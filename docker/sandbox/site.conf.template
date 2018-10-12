@@ -2,12 +2,9 @@ include /etc/nginx/conf.d/rewrites.conf;
 include /etc/nginx/conf.d/redirects.conf;
 include /etc/nginx/conf.d/wikia.com.conf;
 
-# ease debugging on rewrites defined below
-rewrite_log on;
-error_log  /var/log/nginx/error.log debug;
 
 server {
-    server_name lyrics.dev.wikia-local.com;
+    server_name lyrics.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -22,15 +19,7 @@ server {
 }
 
 server {
-    server_name gratis-wiki.dev.wikia-local.com;
-
-    include /etc/nginx/conf.d/base.inc;
-
-    rewrite ".*" de.wikia.com/Wikia permanent;
-}
-
-server {
-    server_name de.dev.wikia-local.com;
+    server_name de.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -45,7 +34,7 @@ server {
 }
 
 server {
-    server_name es.dev.wikia-local.com;
+    server_name es.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -57,7 +46,7 @@ server {
 }
 
 server {
-    server_name ja.dev.wikia-local.com;
+    server_name ja.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -69,7 +58,7 @@ server {
 
 
 server {
-    server_name fr.dev.wikia-local.com;
+    server_name fr.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -78,7 +67,7 @@ server {
 }
 
 server {
-    server_name pl.dev.wikia-local.com;
+    server_name pl.${HOSTNAME_OVERRIDE}.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -87,7 +76,7 @@ server {
 }
 
 server {
-    server_name www.dev.wikia-local.at dev.wikia-local.at www.dev.wikia-local.ch dev.wikia-local.ch www.dev.wikia-local.de dev.wikia-local.de;
+    server_name www.${HOSTNAME_OVERRIDE}.wikia.at wikia.at www.wikia.ch wikia.ch www.wikia.de wikia.de;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -96,7 +85,7 @@ server {
 
 
 server {
-    server_name www.dev.wikia-local.fr dev.wikia-local.fr;
+    server_name www.wikia.fr wikia.fr;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -105,7 +94,7 @@ server {
 
 
 server {
-    server_name www.dev.wikia-local.es dev.wikia-local.es;
+    server_name www.wikia.es wikia.es;
 
     include /etc/nginx/conf.d/base.inc;
 
@@ -113,29 +102,27 @@ server {
 }
 
 server {
-    server_name dev.wikia-local.com;
+    server_name wikia.com;
+
+    include /etc/nginx/conf.d/base.inc;
+
+    location ~ / {
+        return 301 $scheme://www.$host;
+    }
+}
+
+server {
+    server_name www.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 
     if ($wikia_redirect_uri) {
         return 301 $wikia_redirect_uri;
     }
-
-    return 301 $scheme://www.$host$request_uri;
 }
 
 server {
-    server_name www.dev.wikia-local.com;
-
-    include /etc/nginx/conf.d/base.inc;
-
-    if ($wikia_redirect_uri) {
-        return 301 $wikia_redirect_uri;
-    }
-}
-
-server {
-    server_name *.dev.wikia-local.com;
+    server_name *.wikia.com;
 
     include /etc/nginx/conf.d/base.inc;
 }

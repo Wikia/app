@@ -7,8 +7,13 @@ RUN chown -R nginx:nginx /etc/nginx && \
     chown nginx:nginx /var/run/nginx
 
 ADD docker/base/base.conf /etc/nginx/base.conf
+ADD docker/base/base.inc.template /etc/nginx/conf.d/base.inc.template
+Add docker/base/lang-path.conf /etc/nginx/conf.d/lang-path.conf
+Add docker/base/wikia.com.conf /etc/nginx/conf.d/wikia.com.conf
+Add docker/base/rewrites.conf /etc/nginx/conf.d/rewrites.conf
+Add docker/base/redirects.conf /etc/nginx/conf.d/redirects.conf
 ADD docker/prod/nginx.conf /etc/nginx/nginx.conf
-ADD docker/prod/site.conf.template /etc/nginx/conf.d/site.conf.template
+ADD docker/prod/site.conf /etc/nginx/conf.d/site.conf
 
 # static mediawiki files
 ADD apple-touch-icon.png /usr/wikia/slot1/current/src/apple-touch-icon.png

@@ -6,7 +6,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ../base/base.inc:/etc/nginx/conf.d/base.inc
+      - ../base/base.inc.template:/etc/nginx/conf.d/base.inc.template
       - ../base/lang-path.conf:/etc/nginx/conf.d/lang-path.conf
       - ../base/wikia.com.conf:/etc/nginx/conf.d/wikia.com.conf
       - ../base/rewrites.conf:/etc/nginx/conf.d/rewrites.conf
@@ -16,8 +16,11 @@ services:
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png
+    environment:
+      - FASTCGI_READ_TIMEOUT=180s
     depends_on:
       - php-wikia
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/base.inc.template > /etc/nginx/conf.d/base.inc '$$FASTCGI_READ_TIMEOUT' && exec nginx -g 'daemon off;'"
   php-wikia:
     image: php-wikia-dev
     volumes:
