@@ -166,7 +166,7 @@ class Result extends ReadWrite {
 	 */
 	public function getUrl() {
 		$url = $this->_fields['url'] ?? '';
-		if ( \WebRequest::detectProtocol() === 'https' ) {
+		if ( \WebRequest::detectProtocol() === 'https' && \wfHttpsAllowedForURL( $url ) ) {
 			$url = \wfHttpToHttps( $url );
 		}
 		return $url;
