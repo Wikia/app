@@ -152,6 +152,7 @@ ve.init.wikia.ViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
 		ns = mw.config.get( 'wgNamespaceNumber' );
 
+	// TODO anything we need to update?
 	if ( ns === 14 ) {
 		// Category
 		$elements = $( '#mw-content-text' ).children().filter( function () {

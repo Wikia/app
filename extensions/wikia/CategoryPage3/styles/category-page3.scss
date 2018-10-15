@@ -6,21 +6,25 @@
 // It's either that or !important for multiple selectors
 .WikiaArticle {
 	.category-layout-selector {
+		color: $color-page-border;
 		display: flex;
 		justify-content: flex-end;
 		line-height: initial;
 		list-style: none;
 		margin: 0 0 10px auto;
 
+		&__information {
+			margin-right: 10px;
+		}
+
 		&__item {
 			border-right: 1px solid $color-page-border;
 			cursor: pointer;
-			fill: $color-page-border;
 			padding: 0 13px;
 
 			&.is-active {
 				cursor: default;
-				fill: $color-buttons;
+				color: $color-buttons;
 			}
 
 			&:last-child {

@@ -6,6 +6,7 @@ $messages['en'] = array(
 	'category-page3-layout-selector-category-page3' => 'Dynamic Categories',
 	'category-page3-layout-selector-category-exhibition' => 'Category Exhibition',
 	'category-page3-layout-selector-mediawiki' => 'Classic Categories',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
 	'category-page3-pagination-previous' => 'Previous',
@@ -27,6 +28,7 @@ $messages['de'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['es'] = array(
@@ -39,6 +41,7 @@ $messages['es'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['fi'] = array(
@@ -51,6 +54,7 @@ $messages['fi'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['fr'] = array(
@@ -63,6 +67,7 @@ $messages['fr'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['it'] = array(
@@ -75,6 +80,7 @@ $messages['it'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['ja'] = array(
@@ -87,6 +93,7 @@ $messages['ja'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['nl'] = array(
@@ -99,6 +106,7 @@ $messages['nl'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['pl'] = array(
@@ -111,6 +119,7 @@ $messages['pl'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['pt'] = array(
@@ -123,6 +132,7 @@ $messages['pt'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['ru'] = array(
@@ -135,6 +145,7 @@ $messages['ru'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['zh-hans'] = array(
@@ -147,6 +158,7 @@ $messages['zh-hans'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
 $messages['zh-hant'] = array(
@@ -159,5 +171,6 @@ $messages['zh-hant'] = array(
 	'category-page3-pagination-last' => 'Last',
 	'category-page3-total-number' => 'All items ($1)',
 	'category-page3-pagination-first' => 'First',
+	'category-page3-layout-selector-information' => 'Choose from these options to temporarily change the layout of this category page. You can make the change permanent in your user preferences.',
 );
 
