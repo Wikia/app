@@ -153,7 +153,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 
 		if (externalAuthData) {
 			switch (true) {
-				case externalAuthData.redirectUrl:
+				case !!externalAuthData.redirectUrl:
 					redirectTo(externalAuthData.redirectUrl);
 					break;
 				case externalAuthData.googleConnectStatus === 'connected':
