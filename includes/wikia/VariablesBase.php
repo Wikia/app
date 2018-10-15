@@ -2704,13 +2704,6 @@ $wgEnableFirstContributionsExt = true;
 $wgEnableFlagClosedAccountsExt = true;
 
 /**
- * Enable FlowTracking extension (event tracking in create new page flow).
- * @see extensions/wikia/FlowTracking
- * @var bool $wgEnableFlowTracking
- */
-$wgEnableFlowTracking = true;
-
-/**
  * Enable Forum extension.
  * @see extensions/wikia/Forum
  * @var bool $wgEnableForumExt

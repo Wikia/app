@@ -1705,10 +1705,6 @@ if ( !isset($wgEnableNewAuthModal) && in_array( $wgLanguageCode, [ 'es', 'ru' ] 
 	$wgEnableNewAuthModal = true;
 }
 
-if ( !empty( $wgEnableFlowTracking ) ) {
-	include "$IP/extensions/wikia/FlowTracking/FlowTracking.setup.php";
-}
-
 if ( !empty( $wgEnableArticleFeaturedVideo ) || !empty( $wgEnableArticleRelatedVideo ) ) {
 	include "$IP/extensions/wikia/ArticleVideo/ArticleVideo.setup.php";
 }
