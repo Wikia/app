@@ -15,4 +15,4 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['AutoLoginService'] = __DIR__ . '/AutoLoginService.class.php';
 $kubernetesExternalUrlProvider = new KubernetesExternalUrlProvider();
 AutoLoginService::setKubernetesExternalUrlProvider($kubernetesExternalUrlProvider);
-$wgHooks['WikiaSkinTopScripts'][] = 'AutoLoginService::addCookieSyncerJsVariable';
+$wgHooks['WikiaSkinTopScripts'][] = 'AutoLoginService::onWikiaSkinTopScripts';

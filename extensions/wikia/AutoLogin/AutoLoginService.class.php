@@ -29,7 +29,7 @@ class AutoLoginService extends WikiaService {
 	 * @param array $vars JS variables to be added at the bottom of the page
 	 * @param $scripts
 	 */
-	public static function addCookieSyncerJsVariable( array &$vars, &$scripts ) {
+	public static function onWikiaSkinTopScripts( array &$vars, &$scripts ) {
 		$vars['wgPassiveAutologinUrl'] = self::$kubernetesExternalUrlProvider->getAlternativeUrl( 'autologin' ) . '/passive_frame';
 		$vars['wgTrustedAutologinUrl'] = rtrim( self::$kubernetesExternalUrlProvider->getAlternativeUrl( '' ), '/' );
 	}
