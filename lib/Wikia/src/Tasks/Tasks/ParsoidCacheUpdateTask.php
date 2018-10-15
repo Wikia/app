@@ -156,6 +156,6 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			$proxyOptions[ CURLOPT_PROXY ] = $wgVisualEditorParsoidHTTPProxy;
 		}
 		
-		return array_merge( $defaultOptions, $proxyOptions, $customOptions );
+		return array_replace( $defaultOptions, $proxyOptions, $customOptions );
 	}
 }
