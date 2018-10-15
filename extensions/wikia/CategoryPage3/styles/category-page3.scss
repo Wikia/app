@@ -141,6 +141,18 @@
 			&-next {
 				// First and previous on the left, next and last on the right
 				margin-left: auto;
+
+				.wds-icon {
+					-webkit-transform: rotate(-90deg);
+					transform: rotate(-90deg);
+				}
+			}
+
+			&-prev {
+				.wds-icon {
+					-webkit-transform: rotate(90deg);
+					transform: rotate(90deg);
+				}
 			}
 
 			.wds-button {

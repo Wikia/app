@@ -1,6 +1,6 @@
 <ul class="category-layout-selector">
 	<?php /** @var string $currentLayout */ ?>
-	<li title="Classic Categories"
+	<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-mediawiki' )->escaped() ) ?>"
 		class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ? ' is-active' : '' ?>"
 		data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ?>">
 		<?= DesignSystemHelper::renderSvg(
@@ -8,7 +8,7 @@
 			'category-layout-selector__icon wds-icon-small'
 		) ?>
 	</li>
-	<li title="Category Exhibition"
+	<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-category-exhibition' )->escaped() ) ?>"
 		class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ? ' is-active' : '' ?>"
 		data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ?>">
 		<?= DesignSystemHelper::renderSvg(
@@ -16,7 +16,7 @@
 			'category-layout-selector__icon wds-icon-small'
 		) ?>
 	</li>
-	<li title="Dynamic Categories"
+	<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-category-page3' )->escaped() ) ?>"
 		class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ? ' is-active' : '' ?>"
 		data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ?>">
 		<?= DesignSystemHelper::renderSvg(

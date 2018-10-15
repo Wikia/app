@@ -19,7 +19,7 @@
 	</ul>
 <?php endif; ?>
 <p class="category-page__total-number">
-	All items (<?= $totalNumberOfMembers; ?>)
+	<?= wfMessage( 'category-page3-total-number', $totalNumberOfMembers )->escaped() ?>
 </p>
 <div class="category-page__members">
 	<?php /** @var array $membersGroupedByChar */ ?>
@@ -64,22 +64,24 @@
     <div class="category-page__pagination">
 		<?php if ( !empty( $pagination->getFirstPageUrl() ) ): ?>
             <a href="<?= $pagination->getFirstPageUrl() ?>" class="wds-button wds-is-text">
-                First
+                <?= wfMessage( 'category-page3-pagination-first' )->escaped() ?>
             </a>
 		<?php endif; ?>
 		<?php if ( !empty( $pagination->getPrevPageUrl() ) ): ?>
-            <a href="<?= $pagination->getPrevPageUrl() ?>" class="wds-button wds-is-secondary">
-                < Previous
+            <a href="<?= $pagination->getPrevPageUrl() ?>" class="category-page__pagination-prev wds-button wds-is-secondary">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny' ); ?>
+				<span><?= wfMessage( 'category-page3-pagination-previous' )->escaped() ?></span>
             </a>
 		<?php endif; ?>
 		<?php if ( !empty( $pagination->getNextPageUrl() ) ): ?>
             <a href="<?= $pagination->getNextPageUrl() ?>" class="category-page__pagination-next wds-button wds-is-secondary">
-                Next >
+				<span><?= wfMessage( 'category-page3-pagination-next' )->escaped() ?></span>
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny' ); ?>
             </a>
 		<?php endif; ?>
 		<?php if ( !empty( $pagination->getLastPageUrl() ) ): ?>
             <a href="<?= $pagination->getLastPageUrl() ?>" class="wds-button wds-is-text">
-                Last
+				<?= wfMessage( 'category-page3-pagination-last' )->escaped() ?>
             </a>
 		<?php endif; ?>
     </div>
