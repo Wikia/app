@@ -88,7 +88,7 @@ class KubernetesExternalUrlProviderTest extends WikiaBaseTest {
 		string $wgServicesExternalAlternativeDomain, string $serviceName
 	) {
 		$this->mockDevEnv();
-		$this->mockGlobalVariable( '$wgServicesExternalAlternativeDomain', $wgServicesExternalAlternativeDomain );
+		$this->mockGlobalVariable( 'wgServicesExternalAlternativeDomain', $wgServicesExternalAlternativeDomain );
 		$kubernetesUrlProvider = new KubernetesExternalUrlProvider( );
 		$kubernetesUrlProvider->setLogger( new NullLogger() );
 
