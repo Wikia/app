@@ -161,7 +161,12 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		}
 
 		WikiaLogger::instance()->info( "Parsoid proxy: " . $wgVisualEditorParsoidHTTPProxy );
+		WikiaLogger::instance()->info( "CURLOPT_PROXY = " . CURLOPT_PROXY );
 		
-		return array_merge( $defaultOptions, $proxyOptions, $customOptions );
+		$allOptions = array_merge( $defaultOptions, $proxyOptions, $customOptions );
+
+		WikiaLogger::instance()->info( "ParsoidCacheUpdateTask request options: " . json_encode( $allOptions ) );
+
+		return $allOptions;
 	}
 }
