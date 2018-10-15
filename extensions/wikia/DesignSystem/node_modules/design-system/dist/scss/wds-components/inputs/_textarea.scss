@@ -1,0 +1,62 @@
+.wds-textarea {
+	$field-bottom-padding: 6px;
+
+	margin: 30px 0 18px;
+	position: relative;
+
+	&__field-wrapper {
+		position: relative;
+	}
+
+	&__field {
+		background-color: transparent;
+		border: 0;
+		border-bottom: 1px solid $wds-color-blue-gray;
+		box-sizing: border-box;
+		color: $wds-color-dark-blue-gray;
+		font-size: $wds-typescale-size-base;
+		line-height: 1rem;
+		outline: 0;
+		padding: 0 0 $field-bottom-padding;
+		resize: none;
+		width: 100%;
+
+		&::placeholder {
+			color: $wds-color-faint-gray;
+		}
+	}
+
+	&__hint {
+		color: $wds-color-faint-gray;
+		display: flex;
+		font-size: 12px;
+		justify-content: space-between;
+		line-height: 1;
+	}
+
+	&__length-hint {
+		bottom: $field-bottom-padding;
+		color: $wds-color-faint-gray;
+		font-size: 12px;
+		position: absolute;
+		right: 0;
+	}
+
+	&.wds-has-error {
+		.wds-textarea {
+			&__field {
+				border-color: $wds-fandom-color-red;
+			}
+
+			&__hint {
+				color: $wds-fandom-color-red;
+			}
+		}
+	}
+
+	&.wds-has-length-hint {
+		.wds-textarea__field {
+			padding-right: 50px;
+		}
+	}
+}
