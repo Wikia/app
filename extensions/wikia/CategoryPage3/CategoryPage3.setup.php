@@ -24,6 +24,8 @@ $wgHooks['BeforeInitialize'][] = 'CategoryPage3Hooks::onBeforeInitialize';
 $wgHooks['GetPreferences'][] = 'CategoryPage3Hooks::onGetPreferences';
 $wgHooks['UserGetDefaultOptions'][] = 'CategoryPage3Hooks::onUserGetDefaultOptions';
 
+$wgExtensionMessagesFiles[ 'CategoryPage3' ] = __DIR__ . '/CategoryPage3.i18n.php';
+
 $wgResourceModules['ext.wikia.CategoryPage3.scripts'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/CategoryPage3',
