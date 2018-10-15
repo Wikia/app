@@ -21,6 +21,8 @@ $wgAutoloadClasses['CategoryPageWithLayoutSelector'] = __DIR__ . '/CategoryPageW
 $wgHooks['AfterCategoriesUpdate'][] = 'CategoryPage3Hooks::onAfterCategoriesUpdate';
 $wgHooks['ArticleFromTitle'][] = 'CategoryPage3Hooks::onArticleFromTitle';
 $wgHooks['BeforeInitialize'][] = 'CategoryPage3Hooks::onBeforeInitialize';
+$wgHooks['GetPreferences'][] = 'CategoryPage3Hooks::onGetPreferences';
+$wgHooks['UserGetDefaultOptions'][] = 'CategoryPage3Hooks::onUserGetDefaultOptions';
 
 $wgResourceModules['ext.wikia.CategoryPage3.scripts'] = [
 	'localBasePath' => __DIR__,

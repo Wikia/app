@@ -3,6 +3,7 @@
 class CategoryPage3Hooks {
 
 	const COOKIE_NAME = 'category-page-layout';
+	const GLOBAL_PREFERENCE_NAME = 'category-page-layout';
 
 	private static $oldQueryParams = [
 		'display',
@@ -104,24 +105,69 @@ class CategoryPage3Hooks {
 		return true;
 	}
 
-	static private function getLayout( Title $title, Article $article ) {
-		$context = $article->getContext();
-		$isAnon = $context->getUser()->isAnon();
-		$cookie = $context->getRequest()->getCookie( self::COOKIE_NAME, '' );
+	public static function onGetPreferences( $user, &$defaultPreferences ) {
+		$preference = [
+			'label-message' => 'category-page3-layout-selector-label',
+			'section' => 'personal/appearance',
+			'type' => 'select'
+		];
 
-		if ( $isAnon || empty( $cookie ) ) {
+		$options = [];
+		$options[ wfMessage( 'category-page3-layout-selector-category-page3' )->escaped() ] = CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
+		$options[ wfMessage( 'category-page3-layout-selector-mediawiki' )->escaped() ] = CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI;
+		$options[ wfMessage( 'category-page3-layout-selector-category-exhibition' )->escaped() ] = CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION;
+		$preference['options'] = $options;
+
+		$defaultPreferences[ static::GLOBAL_PREFERENCE_NAME ] = $preference;
+
+		return true;
+	}
+
+	static public function onUserGetDefaultOptions( &$defaultOptions ) {
+		$defaultOptions[ static::GLOBAL_PREFERENCE_NAME ] = CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
+
+		return true;
+	}
+
+	static private function getLayout( Title $title, Article $article ): string {
+		$context = $article->getContext();
+		$user = $context->getUser();
+		$isAnon = $user->isAnon();
+
+		if ( $isAnon ) {
 			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
 		}
 
-		if ( $cookie === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ) {
+		$cookie = $context->getRequest()->getCookie( static::COOKIE_NAME, '' );
+
+		if ( !empty( $cookie ) ) {
+			$layoutFromCookie = static::getLayoutForKey( $title, $article, $cookie );
+
+			if ( $layoutFromCookie !== null ) {
+				return $layoutFromCookie;
+			}
+		}
+
+		$globalPreference = $user->getGlobalPreference(
+			static::GLOBAL_PREFERENCE_NAME,
+			CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
+		);
+
+		return static::getLayoutForKey( $title, $article, $globalPreference );
+	}
+
+	private static function getLayoutForKey( Title $title, Article $article, $key ): string {
+		if ( $key === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ) {
 			return CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI;
 		} else if (
-			$cookie === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION &&
+			$key === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION &&
 			!CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article )
 		) {
 			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION;
+		} else if ( $key === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ) {
+			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
 		}
 
-		return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
+		return null;
 	}
 }

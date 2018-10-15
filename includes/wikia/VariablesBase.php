@@ -4605,6 +4605,7 @@ $wgGenerateThumbnailOnParse = false;
  */
 $wgGlobalUserPreferenceWhiteList = [
 	'literals' => [
+		'category-page-layout',
 		'CategoryExhibitionSortType',
 		'ccmeonemails',
 		'cols',
