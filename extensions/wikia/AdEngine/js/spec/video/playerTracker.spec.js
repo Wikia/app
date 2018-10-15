@@ -5,6 +5,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	function noop() {
 	}
 
+	var autoplay = '0';
 	var mocks = {
 			adContext: {
 				getContext: function () {
@@ -52,7 +53,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			},
 			featuredVideoCookieService: {
 				getAutoplay: function() {
-					return '0';
+					return autoplay;
 				}
 			},
 			window: {
