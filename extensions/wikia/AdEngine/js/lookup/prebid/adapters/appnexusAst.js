@@ -14,11 +14,17 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
+				FEATURED: {
+					placementId: '13684967'
+				},
 				INCONTENT_PLAYER: {
 					placementId: '11543172'
 				}
 			},
 			mercury: {
+				FEATURED: {
+					placementId: '13705871'
+				},
 				MOBILE_IN_CONTENT: {
 					placementId: '11543173'
 				}
@@ -36,7 +42,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 			code: slotName,
 			mediaTypes: {
 				video: {
-					context: 'outstream',
+					context: 'instream',
 					playerSize: [640, 480]
 				}
 			},

@@ -1080,6 +1080,38 @@ class MediaWikiService {
 		return self::$pageIdsToFiles[$pageId];
 	}
 
+
+	/**
+	 * @param $pageIds
+	 */
+	public function initialPagesLoad( $pageIds ) {
+		$titles = \TitleBatch::newFromIds( $pageIds, DB_SLAVE );
+		/* @var \Title $title */
+		foreach ( $titles as $title ) {
+			$pageId = $title->getArticleID();
+			$article = new \Article( $title );
+			if ( $article === null ) {
+				continue;
+			}
+
+			$redirectTarget = null;
+			if ( $title->isRedirect() ) {
+				$redirectTarget = $article->getRedirectTarget();
+			}
+
+			if ( $redirectTarget ) {
+				self::$redirectArticles[$pageId] = $article;
+				$page = new \Article( $redirectTarget );
+				$newId = $page->getID();
+				self::$pageIdsToArticles[$newId] = $page;
+				self::$redirectsToCanonicalIds[$pageId] = $newId;
+				self::$pageIdsToArticles[$title->getArticleID()] = $page;
+			} else {
+				self::$pageIdsToArticles[$title->getArticleID()] = $article;
+			}
+		}
+	}
+
 	/**
 	 * Standard interface for this class's services to access a page
 	 *
@@ -1087,7 +1119,7 @@ class MediaWikiService {
 	 *
 	 * @return \Article|null
 	 */
-	protected function getPageFromPageId( $pageId ) {
+	public function getPageFromPageId( $pageId ) {
 
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
 
@@ -1207,7 +1239,7 @@ class MediaWikiService {
 	 *
 	 * @return \Title|null
 	 */
-	protected function getTitleFromPageId( $pageId ) {
+	public function getTitleFromPageId( $pageId ) {
 
 		if ( !isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );

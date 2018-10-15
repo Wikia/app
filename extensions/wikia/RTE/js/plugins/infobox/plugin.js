@@ -3,13 +3,13 @@ require([
 	'wikia.window',
 	'wikia.loader',
 	'wikia.mustache',
-	'wikia.location'
+	'mw'
 ], function (
 	$,
 	window,
 	loader,
 	mustache,
-	location
+	mw
 ) {
 	var infoboxBuilderMarkup = null,
 		infoboxBuilderScripts = null,
@@ -100,7 +100,7 @@ require([
 			}
 		}).done(function (assets) {
 			infoboxBuilderMarkup = mustache.render(assets.mustache[0], {
-				iframeUrl: location.origin + '/infobox-builder/',
+				iframeUrl: mw.config.get('wgServer') + mw.config.get('wgScriptPath') + '/infobox-builder/',
 				classes: 'ck-ui-infobox-builder'
 			});
 			infoboxBuilderScripts = assets.scripts;
@@ -166,7 +166,7 @@ require([
 		var markup = '';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
-			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + encodeURI(infoboxData.title) + '</a></li>';
+			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + mw.html.escape(infoboxData.title) + '</a></li>';
 		});
 
 		return markup;

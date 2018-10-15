@@ -28,7 +28,7 @@
 class WebResponse implements \Wikia\HTTP\Response {
 
 	const NO_COOKIE_PREFIX  = '';
-	const MAX_HEADER_LENGTH = 4096;
+	const MAX_HEADER_LENGTH = 2048;
 
 	/**
 	 * Output a HTTP header, wrapper for PHP's
@@ -39,8 +39,13 @@ class WebResponse implements \Wikia\HTTP\Response {
 	 */
 	public function header( $string, $replace = true, $http_response_code = null ) {
 		// PLATFORM-3070: In case of extremely long headers we should trim them to avoid problems with Fastly or other clients
+		// SUS-5793: avoid large headers blowing out the nginx's FastCGI buffer and resulting in a HTTP 500 error
 		if ( strlen( $string ) > self::MAX_HEADER_LENGTH ) {
 			$string = substr( $string, 0, self::MAX_HEADER_LENGTH );
+
+			\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . '- header was too long', [
+				'header_value' => substr( $string, 0, 128 )
+			] );
 		}
 
 		header( $string, $replace, $http_response_code );

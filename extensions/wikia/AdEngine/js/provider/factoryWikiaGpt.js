@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.lookup.services')
 ], function (
 	btfBlocker,
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	megaAdUnitBuilder,
 	slotRegistry,
 	log,
+	bidders,
 	lookups
 ) {
 	'use strict';
@@ -90,7 +92,15 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.src = src;
 			slotTargeting.rv = slotRegistry.getRefreshCount(slot.name).toString();
 
-			if (lookups) {
+			if (bidders && bidders.isEnabled()) {
+				var targeting = bidders.updateSlotTargeting(slot.name);
+
+				Object.keys(targeting).forEach(function (key) {
+					slotTargeting[key] = targeting[key];
+				});
+
+				slotRegistry.storeScrollY(slot.name);
+			} else if (lookups) {
 				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 				slotRegistry.storeScrollY(slot.name);
@@ -103,7 +113,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: extra.atfSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
+			fillInSlot: extra.firstCallSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
 		};
 	}
 

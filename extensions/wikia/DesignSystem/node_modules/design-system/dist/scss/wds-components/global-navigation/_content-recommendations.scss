@@ -1,0 +1,54 @@
+.wds-content-recommendations {
+	background: $wds-color-white;
+	flex-grow: 1;
+	overflow: auto;
+
+	&__header {
+		color: $wds-fandom-color-black;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: normal;
+		margin: 0 0;
+		padding: 20px 12px 0;
+		text-transform: uppercase;
+	}
+
+	&__card {
+		border-bottom: 1px solid $wds-fandom-color-middle-gray;
+		display: flex;
+		padding: 6px 0;
+		margin: 6px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			border-bottom: 0;
+		}
+
+		&-thumbnail {
+			border-radius: 3px;
+			margin: 6px;
+			height: 60px;
+			width: 60px;
+		}
+		&-info {
+			display: flex;
+			flex-direction: column;
+			margin: 6px;
+		}
+
+		&-title {
+			color: $wds-fandom-color-black;
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 1.5;
+		}
+
+		&-time {
+			color: $wds-fandom-color-dark-gray;
+			font-size: 12px;
+		}
+	}
+}

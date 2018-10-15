@@ -33,18 +33,24 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
+		$vars[] = 'wgAdDriverAdditionalVastSizeCountries';
 		$vars[] = 'wgAdDriverAdEngine3Countries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusDfpCountries';
 		$vars[] = 'wgAdDriverAppNexusWebAdsBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
+		$vars[] = 'wgAdDriverA9DealsCountries';
+		$vars[] = 'wgAdDriverA9OptOutCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
+		$vars[] = 'wgAdDriverBfabStickinessOasisCountries';
+		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
@@ -52,10 +58,10 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBlockDelayServicesCountries';
 		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
 		$vars[] = 'wgAdDriverCTPMobileRabbitCountries';
+		$vars[] = 'wgAdDriverCTPDesktopQueenCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
-		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
@@ -66,29 +72,34 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
+		$vars[] = 'wgAdDriverKargoBidderCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
+		$vars[] = 'wgAdDriverKruxNewParamsCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
+		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 		$vars[] = 'wgAdDriverLABradorTestCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
-		$vars[] = 'wgAdDriverNewGeoCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverPrebidAdEngine3Countries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
+		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
@@ -98,8 +109,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
-		$vars[] = 'wgAdDriverSrcPremiumCountries';
-		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
 
@@ -133,17 +144,42 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
+		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 
 		// news&stories variables only
-		$vars[] = 'wgAdDriverF2BabDetectionCountries';
-		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
+		$vars[] = 'wgAdDriverF2BabDetectionCountries';
+		$vars[] = 'wgAdDriverF2BfabStickinessCountries';
+		$vars[] = 'wgAdDriverF2DelayTimeout';
+		$vars[] = 'wgAdDriverF2DisableSraCountries';
+		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
+		$vars[] = 'wgAdDriverF2VideoF15nCountries';
+		$vars[] = 'wgAdDriverF2VideoF15nMap';
 
 		return true;
+	}
+
+	public static function onInstantGlobalsGetFandomCreatorVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
+		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
+		$vars[] = 'wgAdDriverVideoMidrollCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoPostrollCountries';
 	}
 
 	/**

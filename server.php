@@ -1,6 +1,6 @@
 <?php
 
 /**
- * just entry point. whole file is somwhere else
+ * just entry point. whole file is somewhere else
  */
-require_once( dirname( __FILE__ ) . "/extensions/3rdparty/LyricWiki/server.php" );
+require_once( __DIR__ . "/extensions/3rdparty/LyricWiki/server.php" );

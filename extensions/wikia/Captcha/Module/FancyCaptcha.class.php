@@ -9,7 +9,6 @@ namespace Captcha\Module;
  */
 class FancyCaptcha extends BaseCaptcha {
 
-	const DIRECTORY_LEVELS = 0;
 	const CAPTCHA_LOADED_ID = 'wpCaptchaWord';
 	const CAPTCHA_FIELD = 'wpCaptchaWord';
 
@@ -128,104 +127,86 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return mixed tuple of (salt key, text hash) or false if no image to find
 	 */
 	public function pickImage() {
-		return $this->pickImageDir(
-			$this->wg->CaptchaDirectory,
-			self::DIRECTORY_LEVELS
-		);
+		return $this->pickCaptchaFromS3();
 	}
 
 	/**
-	 * @param $directory
-	 * @param $levels
-	 *
 	 * @return array|bool
 	 */
-	public function pickImageDir( $directory, $levels ) {
-		if ( $levels ) {
-			$dirs = [];
+	private function pickCaptchaFromS3() {
+		$objects = self::getCaptchaObjects();
 
-			// Check which subdirs are actually present...
-			$dir = opendir( $directory );
-			if ( !$dir ) {
-				return false;
-			}
-			while ( false !== ( $entry = readdir( $dir ) ) ) {
-				if ( ctype_xdigit( $entry ) && strlen( $entry ) == 1 ) {
-					$dirs[] = $entry;
-				}
-			}
-			closedir( $dir );
+		// get a random file from the bucket
+		$n = mt_rand( 0, count( $objects ) - 1 );
+		$entry = $objects[$n];
 
-			$place = mt_rand( 0, count( $dirs ) - 1 );
-			// In case all dirs are not filled,
-			// cycle through next digits...
-			for ( $j = 0; $j < count( $dirs ); $j++ ) {
-				$char = $dirs[( $place + $j ) % count( $dirs )];
-				$imageDir = $this->pickImageDir( "$directory/$char", $levels - 1 );
-				if ( $imageDir ) {
-					return $imageDir;
-				}
-			}
-			// Didn't find any images in this directory... empty?
-			return false;
-		} else {
-			return $this->pickImageFromDir( $directory );
-		}
-	}
+		$tempFile = self::fetchCaptchaObject( $entry );
 
-	/**
-	 * @param string $directory
-	 *
-	 * @return array|bool
-	 */
-	public function pickImageFromDir( $directory ) {
-		if ( !is_dir( $directory ) ) {
-			return false;
-		}
-		$n = mt_rand( 0, $this->countFiles( $directory ) - 1 );
-		$dir = opendir( $directory );
+		$size = getimagesize( $tempFile );
+		unlink( $tempFile );
 
-		$count = 0;
+		preg_match( '/image_([0-9a-f]+)_([0-9a-f]+)\\.png$/', $entry, $matches );
 
-		$entry = readdir( $dir );
-		$pick = false;
-		while ( false !== $entry ) {
-			$entry = readdir( $dir );
-			if ( preg_match( '/^image_([0-9a-f]+)_([0-9a-f]+)\\.png$/', $entry, $matches ) ) {
-				$size = getimagesize( "$directory/$entry" );
-				$pick = [
-					'salt' => $matches[1],
-					'hash' => $matches[2],
-					'width' => $size[0],
-					'height' => $size[1],
-					'viewed' => false,
-				];
-				if ( $count++ == $n ) {
-					break;
-				}
-			}
-		}
-		closedir( $dir );
+		$pick = [
+			'salt' => $matches[1],
+			'hash' => $matches[2],
+			'width' => $size[0],
+			'height' => $size[1],
+			'viewed' => false,
+		];
+
 		return $pick;
 	}
 
 	/**
-	 * Count the number of files in a directory.
+	 * Get the list of available captcha images from S3 storage.
 	 *
-	 * @param string $dirName
+	 * Cache the list in memcache
 	 *
-	 * @return int
+	 * @return string[]
 	 */
-	public function countFiles( $dirName ) {
-		$dir = opendir( $dirName );
-		$count = 0;
-		while ( false !== ( $entry = readdir( $dir ) ) ) {
-			if ( $entry != '.' && $entry != '..' ) {
-				$count++;
+	private static function getCaptchaObjects() {
+		return \WikiaDataAccess::cache(
+			wfSharedMemcKey( __METHOD__ ),
+			\WikiaResponse::CACHE_STANDARD,
+			function()  {
+				global $wgCaptchaS3Bucket;
+
+				$s3 = self::getS3Client();
+				return array_keys( $s3->getBucket( $wgCaptchaS3Bucket ) );
 			}
-		}
-		closedir( $dir );
-		return $count;
+		);
+	}
+
+	/**
+	 * Get PHP client to access S3 storage
+	 *
+	 * @return \S3
+	 */
+	private static function getS3Client() {
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
+		$s3 = new \S3( $wgAWSAccessKey, $wgAWSSecretKey );
+		\S3::setExceptions( true );
+
+		return $s3;
+	}
+
+	/**
+	 * Fetches provided captcha file from S3 storage,
+	 * saves it in a temporary file and returns its name
+	 *
+	 * @param string $name e.g. image_40aXXb2b_cef076XXa3a90064.png
+	 * @return string temporary file with a captcha image
+	 */
+	private static function fetchCaptchaObject( $name ) : string {
+		global $wgCaptchaS3Bucket;
+
+		$s3 = self::getS3Client();
+		$tempFile = tempnam( wfTempDir(), 'captcha' ) . '.png';
+		$s3->getObject( $wgCaptchaS3Bucket, $name, $tempFile );
+
+		return $tempFile;
 	}
 
 	/**
@@ -239,17 +220,23 @@ class FancyCaptcha extends BaseCaptcha {
 		$this->wg->Out->disable();
 
 		$info = $this->retrieveCaptcha();
+
 		if ( $info ) {
 			$info['viewed'] = wfTimestamp();
 			$this->storeCaptcha( $info );
 
 			$salt = $info['salt'];
 			$hash = $info['hash'];
-			$file = $this->imagePath( $salt, $hash );
+
+			// fetch selected captcha from S3 storage and stream it to the user
+			$name = $this->getImagePath( $salt, $hash );
+			$file = self::fetchCaptchaObject( $name );
 
 			if ( file_exists( $file ) ) {
 				header( "Cache-Control: private, s-maxage=0, max-age=3600" );
 				\StreamFile::stream( $file );
+
+				unlink( $file );
 				return true;
 			} else {
 				$error = 'File ' . $file . ' does not exist';
@@ -264,20 +251,14 @@ class FancyCaptcha extends BaseCaptcha {
 	}
 
 	/**
-	 * @param $salt
-	 * @param $hash
+	 * @param string $salt
+	 * @param string $hash
 	 *
 	 * @return string
 	 */
-	public function imagePath( $salt, $hash ) {
-		$file = $this->wg->CaptchaDirectory;
-		$file .= DIRECTORY_SEPARATOR;
-		for ( $i = 0; $i < self::DIRECTORY_LEVELS; $i++ ) {
-			$file .= $hash { $i } ;
-			$file .= DIRECTORY_SEPARATOR;
-		}
-		$file .= "image_{$salt}_{$hash}.png";
-		return $file;
+	private function getImagePath( $salt, $hash ) {
+		global $wgCaptchaS3Path;
+		return sprintf( '%s/image_%s_%s.png', $wgCaptchaS3Path, $salt, $hash);
 	}
 
 	/**
@@ -297,25 +278,5 @@ class FancyCaptcha extends BaseCaptcha {
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
 		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
-	}
-
-	/**
-	 * Determine if a captcha is correct. This will possibly delete the solved captcha image
-	 * if wgCaptchaDeleteOnSolve is true
-	 *
-	 * @return bool
-	 */
-	public function passCaptcha() {
-		$info = $this->retrieveCaptcha(); // get the captcha info before it gets deleted
-		$pass = parent::passCaptcha();
-
-		if ( $pass && $this->wg->CaptchaDeleteOnSolve ) {
-			$filename = $this->imagePath( $info['salt'], $info['hash'] );
-			if ( file_exists( $filename ) ) {
-				unlink( $filename );
-			}
-		}
-
-		return $pass;
 	}
 }

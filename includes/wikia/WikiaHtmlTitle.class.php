@@ -57,7 +57,10 @@ class WikiaHtmlTitle {
 	public function getAllParts() {
 		$parts = array_merge(
 			$this->parts,
-			[$this->siteName, $this->brandName]
+			// Site name on corporate pages is FANDOM so it's redundant with brand name
+			WikiaPageType::isCorporatePage() ?
+				[ $this->brandName ] :
+				[ $this->siteName, $this->brandName ]
 		);
 
 		$stringParts = array_map( function( $part ) {

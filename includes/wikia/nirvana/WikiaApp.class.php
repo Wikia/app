@@ -708,22 +708,6 @@ class WikiaApp {
 
 		return self::$viewCache["P_". $controllerName . $method . $key];
 	}
-
-	/**
-	 * commit any open transactions, only if writes were done on connection and if it's a POST request
-	 */
-	public function commit(){
-		if ( $this->wg->Request->wasPosted() ) {
-			/**
-			 * @var $factory LBFactory
-			 */
-			$factory = wfGetLBFactory();
-			$factory->commitMasterChanges();  // commits only if writes were done on connection
-
-			// SUS-2757: Execute any deferred updates
-			DeferredUpdates::doUpdates( 'commit' );
-		}
-	}
 }
 
 /**

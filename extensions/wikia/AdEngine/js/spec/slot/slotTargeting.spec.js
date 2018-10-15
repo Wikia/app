@@ -39,6 +39,11 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					};
 				}
 			},
+			bidders = {
+				isEnabled: function () {
+					return false;
+				}
+			},
 			instantGlobals = {
 				wgAdDriverAbTestIdTargeting: 1
 			},
@@ -53,6 +58,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
+			bidders,
             prebid
         );
 	}
@@ -76,15 +82,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					slotName: 'TOP_LEADERBOARD'
 				},
 				wsi: 'olar'
-			},
-			{
-				env: {
-					pageType: 'article',
-					skin: 'oasis',
-					src: 'premium',
-					slotName: 'INCONTENT_PLAYER'
-				},
-				wsi: 'oiap'
 			},
 			{
 				env: {},
@@ -143,12 +140,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					src: 'rec'
 				},
 				wsi: 'xxxr'
-			},
-			{
-				env: {
-					src: 'premium'
-				},
-				wsi: 'xxxp'
 			},
 			{
 				env: {

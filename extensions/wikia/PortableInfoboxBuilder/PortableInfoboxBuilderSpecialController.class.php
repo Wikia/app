@@ -18,29 +18,42 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 * @param bool $function
 	 * @param string $file
 	 * @param bool $includable
+	 * @throws WikiaException
 	 */
 	public function __construct( $name = null, $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, $listed, $function, $file, $includable );
 	}
 
+	/**
+	 * @throws MWException
+	 */
 	public function index() {
-		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
+		$this->getOutput()->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
 		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
 	public function builder() {
+		global $wgScriptPath;
+
 		$title = $this->getPar();
 		OasisController::addHtmlClass( 'full-screen-page' );
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
 		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
-		$this->response->setVal( 'iframeUrl',
-			wfExpandUrl( sprintf( '/%s/%s',self::INFOBOX_BUILDER_MERCURY_ROUTE, $title) ) );
+		$this->response->setVal(
+			'iframeUrl',
+			wfExpandUrl(
+				sprintf( '%s/%s/%s', $wgScriptPath, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title )
+			)
+		);
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * @throws MWException
+	 */
 	public function sourceEditor() {
-		$this->wg->out->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
+		$this->getOutput()->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
 	}
 
 	/**

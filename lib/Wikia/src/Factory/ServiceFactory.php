@@ -23,6 +23,12 @@ class ServiceFactory {
 	/** @var PermissionsFactory $permissionsFactory */
 	private $permissionsFactory;
 
+	/** @var PurgerFactory $purgerFactory */
+	private $purgerFactory;
+	
+	/** @var RabbitFactory $rabbitFactory */
+	private $rabbitFactory;
+
 	public function heliosFactory(): HeliosFactory {
 		if ( $this->heliosFactory === null ) {
 			$this->heliosFactory = new HeliosFactory( $this );
@@ -69,6 +75,22 @@ class ServiceFactory {
 		}
 
 		return $this->permissionsFactory;
+	}
+
+	public function purgerFactory(): PurgerFactory {
+		if ( $this->purgerFactory === null ) {
+			$this->purgerFactory = new PurgerFactory( $this );
+		}
+
+		return $this->purgerFactory;
+	}
+	
+	public function rabbitFactory(): RabbitFactory {
+		if ( $this->rabbitFactory === null ) {
+			$this->rabbitFactory = new RabbitFactory( $this );
+		}
+
+		return $this->rabbitFactory;
 	}
 
 	public static function clearState() {

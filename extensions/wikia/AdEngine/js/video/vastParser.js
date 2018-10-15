@@ -6,24 +6,37 @@ define('ext.wikia.adEngine.video.vastParser', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.vastParser';
 
+	function getFirstNumber(possibleValues) {
+		var i, value;
+
+		for (i = 0; i < possibleValues.length; i++) {
+			value = possibleValues[i];
+
+			if (value && !isNaN(value)) {
+				return value;
+			}
+		}
+
+		return '';
+	}
+
 	function getAdInfo(imaAd) {
-		var adInfo = {},
-			wrapperCreativeIds,
-			wrapperIds;
+		var adInfo = {};
 
 		if (imaAd) {
 			adInfo.lineItemId = imaAd.getAdId();
 			adInfo.creativeId = imaAd.getCreativeId();
 			adInfo.contentType = imaAd.getContentType();
 
-			wrapperIds = imaAd.getWrapperAdIds();
-			if (wrapperIds.length) {
-				adInfo.lineItemId = wrapperIds[0];
+			var wrapperAdIds = imaAd.getWrapperAdIds(),
+				wrapperCreativeIds = imaAd.getWrapperCreativeIds();
+
+			if (wrapperAdIds && wrapperAdIds.length) {
+				adInfo.lineItemId = getFirstNumber(wrapperAdIds);
 			}
 
-			wrapperCreativeIds = imaAd.getWrapperCreativeIds();
-			if (wrapperCreativeIds.length) {
-				adInfo.creativeId = wrapperCreativeIds[0];
+			if (wrapperCreativeIds && wrapperCreativeIds.length) {
+				adInfo.creativeId = getFirstNumber(wrapperCreativeIds);
 			}
 		}
 

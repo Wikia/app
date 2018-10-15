@@ -1,24 +1,29 @@
 define('wikia.articleVideo.featuredVideo.autoplay', [
-	'ext.wikia.adEngine.adContext',
 	'wikia.abTest',
 	'wikia.articleVideo.featuredVideo.cookies',
-], function (adContext, abTest, featuredVideoCookieService) {
+	require.optional('ext.wikia.adEngine.ml.billTheLizardExecutor')
+], function (abTest, featuredVideoCookieService, billTheLizardExecutor) {
+	'use strict';
 	var inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY');
 
-	function isAutoplayEnabled() {
-		return featuredVideoCookieService.getAutoplay() !== '0' &&
-			// adContext.isEnabled('wgArticleVideoAutoplayCountries') &&
-			!adContext.get('rabbits.ctpDesktop') &&
-			!inFeaturedVideoClickToPlayABTest;
-	}
-
-	function inNextVideoAutoplayEnabled() {
-		// return adContext.isEnabled('wgArticleVideoNextVideoAutoplayCountries');
-		return true;
+	function isDisabledByQueenOfHearts() {
+		return billTheLizardExecutor && billTheLizardExecutor.isAutoPlayDisabled();
 	}
 
 	return {
-		isAutoplayEnabled: isAutoplayEnabled,
-		inNextVideoAutoplayEnabled: inNextVideoAutoplayEnabled
-	}
+		isAutoplayEnabled: function () {
+			return featuredVideoCookieService.getAutoplay() !== '0' &&
+				!isDisabledByQueenOfHearts() &&
+				!inFeaturedVideoClickToPlayABTest;
+		},
+		inNextVideoAutoplayEnabled: function () {
+			return true;
+		},
+		isAutoplayToggleShown: function () {
+			return !(
+				isDisabledByQueenOfHearts() ||
+				inFeaturedVideoClickToPlayABTest
+			);
+		}
+	};
 });

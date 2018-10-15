@@ -29,14 +29,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $url );
 	}
 
-	/**
-	 * @dataProvider prepareUrlToParseDataProvider
-	 */
-	public function testPrepareUrlToParse( $url, $expected ) {
-		$url = WikiFactory::prepareUrlToParse( $url );
-		$this->assertEquals( $expected, $url );
-	}
-
 	public function getLocalEnvURLDataProvider() {
 		return [
 			[
@@ -148,6 +140,12 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
+				'url' => 'https://muppet.fandom.com/wiki',
+				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us/wiki'
+			],
+			[
 				'env' => WIKIA_ENV_PROD,
 				'forcedEnv' => null,
 				'url' => '//www.wikia.com/wiki/test',
@@ -211,6 +209,14 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'http://community-name.wikia.com',
 			]
 		];
+	}
+
+	/**
+	 * @dataProvider prepareUrlToParseDataProvider
+	 */
+	public function testPrepareUrlToParse( $url, $expected ) {
+		$url = WikiFactory::prepareUrlToParse( $url );
+		$this->assertEquals( $expected, $url );
 	}
 
 	public function testRenderValueOfVariableWithoutValue() {

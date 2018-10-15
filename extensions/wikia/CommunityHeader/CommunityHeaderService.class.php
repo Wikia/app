@@ -14,11 +14,11 @@ class CommunityHeaderService extends WikiaService {
 	private $model;
 
 	public function init() {
-		global $wgCityId, $wgLang;
+		global $wgLang;
 
 		parent::init();
 
-		$this->model = new DesignSystemCommunityHeaderModel( $wgCityId, $wgLang->getCode() );
+		$this->model = new DesignSystemCommunityHeaderModel( $wgLang->getCode() );
 	}
 
 	public function index() {

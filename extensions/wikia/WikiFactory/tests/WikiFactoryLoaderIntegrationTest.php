@@ -79,6 +79,10 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 			'SERVER_NAME' => 'test1.wikia.com',
 			'REQUEST_URI' => 'http://test1.wikia.com/de/wiki/Bar',
 		] ];
+		yield [ 9, [
+			'HTTP_X_MW_WIKI_ID' => '9',  // this header takes precedence
+			'SERVER_NAME' => 'test1.wikia.com',
+		] ];
 	}
 
 	/**
@@ -111,7 +115,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
 		string $expectedRedirect, array $server
 	) {
-		$this->mockGlobalVariable( 'wgWikiFactoryRedirectForAlternateDomains', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], [ 'wikicities.com' ] );
@@ -236,6 +240,8 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testRegistersClosedWikiHandlerWhenWikiIsDisabled( int $expectedCityId, array $server ) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
+
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 

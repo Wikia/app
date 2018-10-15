@@ -24,16 +24,16 @@ class AttributePersistence {
 
 	/**
 	 * @param int $userId
-	 * @param Attribute $attribute
+	 * @param string[] $attributes map of attribute names to their values
 	 * @return true success, exception otherwise
 	 * @throws ForbiddenException
 	 * @throws NotFoundException
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function saveAttribute( $userId, Attribute $attribute ) {
+	public function saveAttributes( $userId, array $attributes ) {
 		try {
-			$this->getApi( $userId )->saveAttribute( $userId, $attribute->getName(), $attribute->getValue() );
+			$this->getApi( $userId )->saveAttributes( $userId, $attributes );
 			return true;
 		} catch ( ApiException $e ) {
 			$this->handleApiException($e);

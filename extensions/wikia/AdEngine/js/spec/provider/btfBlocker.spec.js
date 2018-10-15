@@ -29,7 +29,12 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		win: {
-			addEventListener: noop
+			addEventListener: noop,
+			ads: {
+				runtime: {
+
+				}
+			}
 		}
 	};
 
@@ -42,7 +47,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.bridge,
 			mocks.messageListener,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
@@ -53,7 +57,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getFakeProvider() {
 		return {
 			config: {
-				atfSlots: [
+				firstCallSlots: [
 					'ATF_SLOT'
 				],
 				highlyViewableSlots: [
@@ -168,15 +172,17 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	});
 
 	it('Process HIVI BTF slot when BTF is disabled and unblocking HIVI slots is enabled', function () {
+
 		var fillInSlot,
 			btfBlocker = getBtfBlocker(),
 			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
-		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
 		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
 		fillInSlot(btfSlot);
 

@@ -86,9 +86,12 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
 				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
+				view.onNotificationClick.attach(function (_, notificationDetails) {
+					this.markAsReadOnPageUnload(notificationDetails);
+				}.bind(this));
 				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
-				view.onMarkAsReadClick.attach(function (_, uri) {
-					this.markAsRead(uri);
+				view.onMarkAsReadClick.attach(function (_, notificationDetails) {
+					this.markAsRead(notificationDetails);
 				}.bind(this));
 			},
 
@@ -111,20 +114,69 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}.bind(this));
 			},
 
-			markAsRead: function (id) {
+			markAsRead: function (notificationDetails) {
+				if (!notificationDetails.isUnread) {
+					return;
+				}
+
 				$.ajax({
 					type: 'POST',
-					data: JSON.stringify([id.uri]),
+					data: JSON.stringify([notificationDetails.uri]),
 					dataType: 'json',
-					contentType: "application/json; charset=UTF-8",
+					contentType: 'application/json; charset=UTF-8',
 					url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
 					xhrFields: {
 						withCredentials: true
 					}
 				}).done(function () {
-					this._model.markAsRead(id.uri);
+					this._model.markAsRead(notificationDetails.uri);
 					this.updateUnreadCount();
 				}.bind(this));
+			},
+
+			markAsReadOnPageUnload: function (notificationDetails) {
+				if (!notificationDetails.isUnread) {
+					return;
+				}
+
+				var markAsReadUrl = this.getBaseUrl() + '/notifications/mark-as-read/by-uri';
+				var data = JSON.stringify([notificationDetails.uri]);
+
+				if (window.navigator.sendBeacon) {
+					try {
+						var blob = new Blob([data], {
+							type: 'application/json'
+						});
+
+						if (window.navigator.sendBeacon(markAsReadUrl, blob) === true) {
+							return;
+						}
+					} catch (exception) {
+						// See http://crbug.com/490015#c99
+						log(exception, log.levels.warning, common.logTag);
+					}
+				}
+
+				this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
+			},
+
+			sendBeaconFallback: function(notificationDetails, data, markAsReadUrl) {
+				notificationDetails.event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					data: data,
+					dataType: 'json',
+					contentType: 'application/json; charset=UTF-8',
+					// Keep it low as it's blocking user from navigating to the notification target
+					timeout: 500,
+					url: markAsReadUrl,
+					xhrFields: {
+						withCredentials: true
+					}
+				}).complete(function () {
+					window.location.href = notificationDetails.href;
+				});
 			},
 
 			markAllAsRead: function () {
@@ -137,7 +189,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					type: 'POST',
 					data: JSON.stringify({since: convertToIsoString(since)}),
 					dataType: 'json',
-					contentType: "application/json; charset=UTF-8",
+					contentType: 'application/json; charset=UTF-8',
 					url: this.getBaseUrl() + '/notifications/mark-all-as-read',
 					xhrFields: {
 						withCredentials: true

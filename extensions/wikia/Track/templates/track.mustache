@@ -27,21 +27,6 @@
 
 			if (beacon) {
 				window.beacon_id = beacon;
-			} else {
-				// something went terribly wrong
-				try {
-					var request = new XMLHttpRequest(),
-							data = {
-								name: 'MediaWiki.track',
-								description: 'wikia_beacon_id is empty',
-								client: 'oasis'
-							};
-					request.open('POST', '{{event-logger-url}}/error', true);
-					request.setRequestHeader('Content-type', 'application/json');
-					request.send(JSON.stringify(data));
-				} catch (error) {
-					// Ignore error sending log request
-				}
 			}
 
 			window.sessionId = sessionId ? sessionId : genUID();
@@ -65,7 +50,8 @@
 					'&pv_number_global=' + window.pvNumberGlobal;
 
 			if (optIn) {
-				trackUrl += '&u=' + window.wgTrackID;
+                {{!-- window.wgTrackID isn't available yet as this script is inlined at the top --}}
+				trackUrl += '&u=' + '{{trackID}}';
 			} else {
 				trackUrl += '&u=-1';
 			}

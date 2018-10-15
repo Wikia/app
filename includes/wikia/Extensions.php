@@ -3,16 +3,6 @@
 #  Overwrite some variables, load extensions, etc. Former CustomSettings.php  #
 ###############################################################################
 
-###############################################################################
-# DC specific settings                                                        #
-###############################################################################
-switch ($wgWikiaDatacenter) {
-	case "res":
-		# PLATFORM-1740: disable task queue in Reston, it was calling SJC broker
-		$wgTaskBroker = false;
-		break;
-}
-
 // TODO: Clean up after CK editor as default test is finished
 if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 	if ( in_array( intval( $wgCityId ), $wgCKEdefaultEditorTestWikis ) ) {
@@ -419,7 +409,14 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+
+	// SUS-5540: use the luasandbox extension as executor if it is available
+	if ( extension_loaded( 'luasandbox' ) ) {
+		$wgScribuntoDefaultEngine = 'luasandbox';
+	} else {
+		$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	}
+
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 
@@ -608,11 +605,6 @@ if ( !empty( $wgEnableLookupContribsExt ) || !empty( $wgEnableUserActivityExt ) 
 // Only load the LookupUser extention when specifically enabled
 if ( !empty( $wgEnableLookupContribsExt ) ) {
 	include( "$IP/extensions/wikia/LookupUser/LookupUser.php" );
-}
-
-if( !empty( $wgEnableTorBlockExt ) ) {
-	include( "$IP/extensions/TorBlock/TorBlock.php" );
-	$wgTorIPs = [];
 }
 
 if( !empty( $wgEnableWhereIsExtensionExt ) ) {
@@ -1680,10 +1672,6 @@ if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	include( "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php" );
 }
 
-if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
-	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
-}
-
 if ( !empty( $wgEnableSitemapPageExt ) ) {
 	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
 }
@@ -1741,6 +1729,10 @@ if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
+if ( !empty( $wgEnableResetTrackingPreferencesPage ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/ResetTrackingPreferences.setup.php";
+}
+
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
@@ -1763,3 +1755,17 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // SUS-5473 | Expose a button on Special:Statistics allowing Wikia Staff members to schedule
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
+
+// PLATFORM-3558 |
+include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
+
+if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
+	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+}
+
+include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+// SUS-5817
+if ( $wgEnableFastlyInsights ) {
+	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}

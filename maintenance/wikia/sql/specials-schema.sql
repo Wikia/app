@@ -20,18 +20,6 @@ CREATE TABLE `city_used_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `common_key_value`
---
-
-DROP TABLE IF EXISTS `common_key_value`;
-CREATE TABLE `common_key_value` (
-  `identifier` varchar(255) NOT NULL,
-  `content` mediumblob NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `discussion_reporting`
 --
 

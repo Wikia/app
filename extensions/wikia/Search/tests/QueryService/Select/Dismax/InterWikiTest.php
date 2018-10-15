@@ -8,7 +8,7 @@ use Wikia, ReflectionMethod, ReflectionProperty;
  * Tests interwiki search functionality
  */
 class InterWikiTest extends Wikia\Search\Test\BaseTest {
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09581 ms
@@ -36,7 +36,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$method->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10522 ms
@@ -46,12 +46,12 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( array( 'registerFilterQueries', ) )
 		                   ->getMock();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'registerFilterQueries' )
@@ -65,8 +65,8 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$register->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
-	
+
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10014 ms
@@ -78,12 +78,12 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'getConfig' ] )
 		                   ->getMock();
-		
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getId' ) )
 		                  ->getMock();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -116,7 +116,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$method->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10068 ms
@@ -131,7 +131,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( array( 'getConfig' ) )
 		                   ->getMockForAbstractClass();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -164,7 +164,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$reflPrep->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09779 ms
@@ -172,7 +172,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetFilterQueryString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array( 'getService' ) )
@@ -192,11 +192,11 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'articles_i:[50 TO *] AND -id:123',
+				'( articles_i:[50 TO *] OR promoted_wiki_b:true ) AND -id:123 AND -hidden_wiki_b:true',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09923 ms

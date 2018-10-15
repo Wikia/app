@@ -36,7 +36,7 @@ This project is published in packagist, so you just need to add it as a dependen
 
 ### Phar:
 
-You can also download the standalone phar application from [here](https://github.com/mcustiel/phiremock/releases/download/v1.8.0/phiremock.phar).
+You can also download the standalone phar application from [here](https://github.com/mcustiel/phiremock/releases/download/v1.9.1/phiremock.phar) to run on PHP7. There is also a [PHP5 version](https://github.com/mcustiel/phiremock/releases/download/v1.9.1/phiremock-php5.phar).
 
 ## Configuration
 Phiremock uses annotations internally. To be able to run the Phiremock client library, the annotations autoloader must be activated. To do this, you must add the next lines in the bootstrap file where you include your composer autoloader:
@@ -404,13 +404,16 @@ To reset all scenarios to the initial state (Scenario.START) use this simple met
     
     $phiremock->resetScenarios();
 ```
+
 #### API call:
+
 ```
 DELETE /__phiremock/scenarios HTTP/1.1
 Host: your.phiremock.host
 ```
 
 To define a scenario state in any moment:
+
 ```php
     use Mcustiel\Phiremock\Client\Phiremock;
     use Mcustiel\Phiremock\Domain\ScenarioState;
@@ -419,8 +422,10 @@ To define a scenario state in any moment:
     
     $phiremock->setScenarioState(new ScenarioState('saved', 'Scenario.START')));
 ```
+
 #### API call:
-```
+
+```php
 PUT /__phiremock/scenarios HTTP/1.1
 Host: your.phiremock.host
 
@@ -468,6 +473,44 @@ It could be the case a mock is not needed for certain call. For this specific ca
 ```
 In this case, Phiremock will POST `http://your.real.service/some/path/script.php` with the configured body and header and return it's response.
 
+### Compare JSON objects
+Phiremock supports comparing strict equality of json objects, in case it's used in the API.
+The comparison is object-wise, so it does not matter that indentation or spacing is different.
+
+#### Example:
+
+```php
+    use Mcustiel\Phiremock\Client\Phiremock;
+
+    $phiremock = new Phiremock('phiremock.server', '8080');
+    
+    $expectation = Phiremock::on(
+        A::posttRequest()->andUrl(Is::equalTo('/my/resource'))
+            ->andBody(Is::sameJsonObjectAs('{"some": "json", "here":[1, 2, 3]}'))
+            ->andHeader('Content-Type', Is::equalTo('application/json'))
+    )->then(
+        Respond::withStatusCode(201)->andBody('{"id": 1}')
+    );
+    $phiremock->createExpectation($expectation);
+```
+
+Also passing of arrays or \JsonSerializable objects is supported.
+
+```php
+    use Mcustiel\Phiremock\Client\Phiremock;
+
+    $phiremock = new Phiremock('phiremock.server', '8080');
+    
+    $expectation = Phiremock::on(
+        A::posttRequest()->andUrl(Is::equalTo('/my/resource'))
+            ->andBody(Is::sameJsonObjectAs(['some' => 'json', 'here' => [1, 2, 3]]))
+            ->andHeader('Content-Type', Is::equalTo('application/json'))
+    )->then(
+        Respond::withStatusCode(201)->andBody('{"id": 1}')
+    );
+    $phiremock->createExpectation($expectation);
+```
+
 ### Generate response body based in request data
 It could happen that you want to make your response dependent on data you receive in your request. For this cases
 you can use regexp matching for request url and/or body, and access the subpatterns matches from your response body specification
@@ -489,9 +532,31 @@ using `${body.matchIndex}` or `${url.matchIndex}` notation.
     );
     $phiremock->createExpectation($expectation);
 ```
+
+Also retrieving data from multiple matches is supported:
+
+```php
+ use Mcustiel\Phiremock\Client\Phiremock;
+
+    $phiremock = new Phiremock('phiremock.server', '8080');
+    
+    $expectation = Phiremock::on(
+        A::posttRequest()->andUrl(Is::matching('/peoples-brothers-list/json'))
+            ->andBody(Is::matching('%"name"\s*:\s*"([^"]*)",\s*"brothers"\s*:\s*(\d+)%'))
+            ->andHeader('Content-Type', Is::equalTo('application/json'))
+    )->then(
+        Respond::withStatusCode(200)->andBody(
+            '${body.1} has ${body.2} brothers, ${body.1.2} has ${body.2.2} brothers,'
+            . ' ${body.1.3} has ${body.2.3} brothers'
+        )
+    );
+    $phiremock->createExpectation($expectation);
+```
+
 ### Shorthand syntax for common requests
 Phiremock is a bit too much expressive to create requests and that is a bit annoying when writing simple stubs. For that,
 there is a simpler syntax using `Phiremock::onRequest` method.
+
 #### Example:
 
 ```php

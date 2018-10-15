@@ -24,8 +24,6 @@ class AdEngine2ContextService {
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
-			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
-
 			$langCode = $title->getPageLanguage()->getCode();
 
 			// 1 of 3 verticals
@@ -51,10 +49,9 @@ class AdEngine2ContextService {
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					// TODO remove after ADEN-6797 release
-					'prebidBidderUrl' => $prebidBidderUrl,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
-					'cdnApiUrl' => $wg->wgCdnApiUrl
+					'cdnApiUrl' => $wg->wgCdnApiUrl,
+					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -81,7 +78,6 @@ class AdEngine2ContextService {
 					'featuredVideo' => $featuredVideoDetails
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'evolve2' => $wg->AdDriverUseEvolve2,
 					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [

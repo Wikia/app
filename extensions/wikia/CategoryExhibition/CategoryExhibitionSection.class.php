@@ -245,7 +245,7 @@ abstract class CategoryExhibitionSection {
 			'height' => $this->thumbHeight,
 			'snippet' => $snippetText,
 			'title' => $oTitle->getText(),
-			'url' => $oTitle->getFullURL(),
+			'url' => $oTitle->getLocalURL(),
 		);
 
 		// will be purged elsewhere after edit

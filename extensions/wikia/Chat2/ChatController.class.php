@@ -17,7 +17,7 @@ class ChatController extends WikiaController {
 	const SOCKET_IO_RECONNECT_MAX_TRIES = 4;
 
 	public function executeIndex() {
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgScriptPath, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgScriptPath, $wgWikiaBaseDomain, $wgWikiaNocookieDomain, $wgChatPublicHost;
 
 		wfProfileIn( __METHOD__ );
 
@@ -56,8 +56,7 @@ class ChatController extends WikiaController {
 		}
 
 		// Set the hostname of the node server that the page will connect to.
-		$chathost = ChatConfig::getPublicHost();
-		$server = explode( ":", $chathost );
+		$server = explode( ":", $wgChatPublicHost );
 		$this->chatServerHost = $server[0];
 		$this->chatServerPort = $server[1];
 

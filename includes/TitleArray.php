@@ -43,7 +43,10 @@ class TitleArrayFromResult extends TitleArray {
 	 * @var ResultWrapper
 	 */
 	var $res;
-	var $key, $current;
+	var $key;
+
+	/** @var Title $current */
+	var $current;
 
 	function __construct( $res ) {
 		$this->res = $res;

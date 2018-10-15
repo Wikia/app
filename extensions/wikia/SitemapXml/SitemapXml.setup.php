@@ -42,8 +42,13 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Sitemap'] = $dir . 'Sitemap.i18n.php';
 $wgExtensionMessagesFiles['SitemapAlias'] = $dir . 'Sitemap.alias.php';
 $wgAutoloadClasses['SitemapPage'] = $dir . 'SpecialSitemap_body.php';
+$wgAutoloadClasses['SitemapHooks'] =  __DIR__ . '/SitemapHooks.class.php';
 $wgSpecialPages['Sitemap'] = 'SitemapPage';
 $wgSpecialPageGroups['Sitemap'] = 'wikia';
 
 $wgAutoloadClasses['SitemapXmlModel'] = __DIR__ . '/SitemapXmlModel.class.php';
 $wgAutoloadClasses['SitemapXmlController'] = __DIR__ . '/SitemapXmlController.class.php';
+
+$wgHooks['BeforeTitleRedirect'][] = 'SitemapHooks::onBeforeTitleRedirect';
+$wgHooks['TestCanonicalRedirect'][] = 'SitemapHooks::onTestCanonicalRedirect';
+$wgHooks['WebRequestPathInfoRouterAbort'][] = 'SitemapHooks::onWebRequestPathInfoRouterAbort';

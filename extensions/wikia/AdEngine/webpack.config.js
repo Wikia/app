@@ -8,17 +8,60 @@ const compact = (collection) => Array.from(collection).filter(v => v != null);
 module.exports = function (env) {
 	const hoistDependencies = env && env['hoist-dependencies'];
 
-	const bridge = {
+	const adEngine = {
 		mode: 'production',
 		context: __dirname,
 		entry: {
-			'bridge': './src/ad-engine.bridge.js',
+			'engine': './src/ad-engine.js',
 		},
 		output: {
-			path: path.resolve(__dirname, 'js/build'),
+			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].js',
 			libraryTarget: 'amd',
-			library: 'ext.wikia.adEngine.bridge'
+			library: 'ext.wikia.adEngine'
+		},
+		module: {
+			rules: [
+				{
+					test: /\.jsx?$/,
+					include: path.resolve(__dirname, 'src'),
+					use: 'babel-loader',
+				}
+			]
+		},
+		resolve: {
+			modules: compact([
+				hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
+				'node_modules'
+			])
+		},
+		performance: {
+			maxEntrypointSize: 500000
+		},
+		plugins: [
+			new webpack.optimize.ModuleConcatenationPlugin()
+		]
+	};
+
+	const packages = {
+		mode: 'production',
+		context: __dirname,
+		entry: {
+			'bidders': './src/ad-bidders.js',
+			'bridge': './src/ad-engine.bridge.js',
+			'geo': './src/ad-geo.js',
+			'services': './src/ad-services.js',
+		},
+		externals: {
+			'@wikia/ad-engine': {
+				amd: 'ext.wikia.adEngine'
+			}
+		},
+		output: {
+			path: path.resolve(__dirname, 'dist'),
+			filename: '[name].js',
+			libraryTarget: 'amd',
+			library: 'ext.wikia.adEngine.[name]'
 		},
 		module: {
 			rules: [
@@ -52,12 +95,15 @@ module.exports = function (env) {
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new CopyWebpackPlugin([
 				{
-					from: './node_modules/@wikia/ad-products/dist/geo.amd.js',
-					to: 'geo.js'
+					from: './node_modules/@wikia/ad-engine/lib/prebid.min.js',
+					to: 'prebid.js'
 				}
 			])
 		]
 	};
 
-	return bridge;
+	return [
+		adEngine,
+		packages
+	]
 };

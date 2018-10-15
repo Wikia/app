@@ -1,28 +1,86 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki-sandbox
+  name: mediawiki-${SANDBOX_NAME}
   namespace: prod
   labels:
-    app: mediawiki-sandbox
+    app: mediawiki-${SANDBOX_NAME}
+    type: mediawiki
 spec:
   replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  progressDeadlineSeconds: 180
   selector:
     matchLabels:
-      app: mediawiki-sandbox
+      app: mediawiki-${SANDBOX_NAME}
   template:
     metadata:
       labels:
-        app: mediawiki-sandbox
+        app: mediawiki-${SANDBOX_NAME}
+        app_version: "${APP_VERSION}"
+        config_version: "${CONFIG_VERSION}"
     spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 5
           env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-${SANDBOX_NAME}
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: WIKIA_DATACENTER
               value: "${SANDBOX_DATACENTER}"
             - name: WIKIA_ENVIRONMENT
@@ -35,31 +93,98 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "4"
-              memory: "1300Mi"
+              cpu: "6"
+              memory: 1200Mi
             requests:
-              cpu: "400m"
-              memory: "800Mi"
+              cpu: "3"
+              memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mediawiki-sandbox
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   selector:
-    app: mediawiki-sandbox
+    app: mediawiki-${SANDBOX_NAME}
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: mediawiki-sandbox-ingress
+  name: mediawiki-${SANDBOX_NAME}-ingress
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
@@ -67,5 +192,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: mediawiki-sandbox
+              serviceName: mediawiki-${SANDBOX_NAME}
               servicePort: 80

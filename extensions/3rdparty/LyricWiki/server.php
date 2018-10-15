@@ -84,6 +84,8 @@ if(!$SHUT_DOWN_API){
 
 wfDebug("LWSOAP: Done initializing MediaWiki.  Proceeding to SOAP-specific initialization.\n");
 
+header( 'X-Served-By: ' . wfHostname() );
+
 GLOBAL $wgUser;
 GLOBAL $server; // so that the functions can get the headers to log in.
 

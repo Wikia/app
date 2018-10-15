@@ -32,33 +32,34 @@ class HTTPSSupportHooks {
 	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
-	 * @param             $article
+	 * @param             $unused
 	 * @param  OutputPage $output
 	 * @param  User       $user
 	 * @param  WebRequest $request
 	 * @param  MediaWiki  $mediawiki
 	 * @return bool
 	 */
-	public static function onAfterInitialize( Title $title, $article, OutputPage $output,
+	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
-		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
+		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&  // don't redirect internal clients
+			// Don't redirect externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
+			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
+		) {
 			$requestURL = $request->getFullRequestURL();
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
-				$output->redirect( wfHttpToHttps( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTPS, '301', 'HTTPS-Upgrade' );
 				if ( $user->isAnon() ) {
 					$output->enableClientCache( false );
 				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
-				empty( $wgDisableHTTPSDowngrade ) &&
-				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-				!self::httpsEnabledTitle( $title )
+				self::shouldDowngradeRequest( $title, $request )
 			) {
-				$output->redirect( wfHttpsToHttp( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTP, 302, 'HTTPS-Downgrade' );
 				$output->enableClientCache( false );
 			}
 		}
@@ -66,38 +67,26 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
+	 * Handle downgrading anonymous requests for our robots.txt.
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
+	 * @param OutputPage $output
 	 * @return boolean
 	 */
-	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
-		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
-			return false;
+			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
+			$output->enableClientCache( false );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
-			return false;
+			$output->redirectProtocol( PROTO_HTTP, 302, 'Robots-HTTP-downgrade' );
+			$output->enableClientCache( false );
 		}
 		return true;
-	}
-
-	private static function httpsAllowed( User $user, string $url ): bool {
-		global $wgEnableHTTPSForAnons;
-		return wfHttpsAllowedForURL( $url ) &&
-			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
-	}
-
-	private static function httpsEnabledTitle( Title $title ): bool {
-		global $wgDBname;
-		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
-			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 
 	public static function parserUpgradeVignetteUrls( string &$url ) {
@@ -106,10 +95,51 @@ class HTTPSSupportHooks {
 		}
 	}
 
-	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
-		$response = $request->response();
-		$response->header( "Location: $url", true, 302 );
-		$response->header( 'X-Redirected-By: HTTPS-Support' );
-		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
+	/**
+	 * Make sure any "external" links to our own wikis that support HTTPS
+	 * are protocol-relative on output.
+	 *
+	 * @param  string  &$url
+	 * @param  string  &$text
+	 * @param  bool    &$link
+	 * @param  array   &$attribs
+	 * @return boolean
+	 */
+	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
+		if ( wfHttpsAllowedForURL( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+		return true;
+	}
+
+	private static function httpsAllowed( User $user, string $url ): bool {
+		global $wgEnableHTTPSForAnons;
+
+		return wfHttpsAllowedForURL( $url ) &&
+			(
+				wfHttpsEnabledForURL( $url ) ||
+				!empty( $wgEnableHTTPSForAnons ) ||
+				$user->isLoggedIn()
+			);
+	}
+
+	private static function httpsEnabledTitle( Title $title ): bool {
+		global $wgDBname;
+		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
+			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
+	}
+
+	private static function shouldDowngradeRequest( Title $title, WebRequest $request ): bool {
+		global $wgDisableHTTPSDowngrade;
+		return empty( $wgDisableHTTPSDowngrade ) &&
+			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+			!self::httpsEnabledTitle( $title ) &&
+			!self::isRawCSSorJS( $request );
+	}
+
+	private static function isRawCssOrJs( WebRequest $request ): bool {
+		global $wgJsMimeType;
+		return $request->getVal( 'action', 'view' ) === 'raw' &&
+			in_array( $request->getVal( 'ctype', '' ), [ $wgJsMimeType, 'text/css' ] );
 	}
 }

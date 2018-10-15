@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'Krux':
 				return new AnalyticsProviderKrux();
+			case 'BillTheLizard':
+				return new AnalyticsProviderBillTheLizard();
 			case 'A9':
 				return new AnalyticsProviderA9();
 			case 'Prebid':

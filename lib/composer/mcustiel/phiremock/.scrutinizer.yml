@@ -18,6 +18,9 @@ tools:
         excluded_dirs: [vendor, test]
 build:
     environment:
+        postgresql: false
+        mysql: false
+        redis: false
         php:
             version: 5.6.9
     tests:

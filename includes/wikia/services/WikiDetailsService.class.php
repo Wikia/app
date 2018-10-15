@@ -163,9 +163,20 @@ class WikiDetailsService extends WikiService {
 		$wikiObj = WikiFactory::getWikiByID( $id );
 		if ( $wikiObj ) {
 			$exists = true;
+
+			// convert city_url to https url for https-enabled wikis
+			$city_url = WikiFactory::getLocalEnvURL( $wikiObj->city_url );
+			$enableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $id );
+			if (
+				wfHttpsAllowedForURL( $city_url ) &&
+				( wfHttpsEnabledForURL( $city_url ) || !empty( $enableHTTPSForAnons ) )
+			) {
+				$city_url = wfHttpToHttps( $city_url );
+			}
+
 			return [
 				'title' => $wikiObj->city_title,
-				'url' => WikiFactory::getLocalEnvURL( $wikiObj->city_url ),
+				'url' => $city_url,
 			];
 		}
 		return [];
@@ -202,6 +213,8 @@ class WikiDetailsService extends WikiService {
 				'admins' => count( $this->getWikiAdminIds( $id ) )
 			],
 			'topUsers' => array_keys( $topUsers ),
+			'founding_user_id' => isset( $modelData[$id] ) ? $modelData[$id]['founding_user_id'] : '',
+			'creation_date' => isset( $modelData[$id] ) ? $modelData[$id]['creation_date'] : '',
 			'headline' => isset( $modelData[$id] ) ? $modelData[$id]['headline'] : '',
 			'title' => isset( $modelData [$id] ) ? $modelData[$id]['title'] : '',
 			'name' => isset( $modelData [$id] ) ? $modelData[$id]['name'] : '',

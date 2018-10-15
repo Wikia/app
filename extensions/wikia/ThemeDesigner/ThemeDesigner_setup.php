@@ -13,6 +13,7 @@ $dir = __DIR__;
 $wgAutoloadClasses['UploadBackgroundFromFile'] = "{$dir}/UploadBackgroundFromFile.class.php";
 $wgAutoloadClasses['UploadFaviconFromFile'] = "{$dir}/UploadFaviconFromFile.class.php";
 $wgAutoloadClasses['UploadWordmarkFromFile'] = "{$dir}/UploadWordmarkFromFile.class.php";
+$wgAutoloadClasses['ThemeDesignerBackgroundAssets'] = "$dir/ThemeDesignerBackgroundAssets.class.php";
 $wgAutoloadClasses['ThemeDesignerController'] = "$dir/ThemeDesignerController.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPreview.class.php";

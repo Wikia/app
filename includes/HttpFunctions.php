@@ -153,17 +153,15 @@ class Http {
 	}
 
 	/**
-	 * Check if the URL can be served by localhost
+	 * Check if the URL can be served by HTTP proxy
+	 *
+	 * Wikia change: SUS-5499 - remove check for command line mode as we do not use localhost as a HTTP proxy
 	 *
 	 * @param $url String: full url to check
 	 * @return Boolean
 	 */
 	public static function isLocalURL( $url ) {
-		global $wgCommandLineMode, $wgConf;
-
-		if ( $wgCommandLineMode ) {
-			return false;
-		}
+		global $wgConf;
 
 		// Extract host part
 		$matches = array();
@@ -428,6 +426,12 @@ class MWHttpRequest {
 					$this->parsedUrl['path'],
 					$this->parsedUrl['host']
 				);
+		}
+
+		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+		global $wgKubernetesNamespace;
+		if ( !empty( $wgKubernetesNamespace ) && Http::isLocalURL( $this->url ) ) {
+			$list[] = sprintf( 'X-Original-Host: %s', $this->parsedUrl['host'] );
 		}
 
 		foreach ( $this->reqHeaders as $name => $value ) {

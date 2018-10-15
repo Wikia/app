@@ -159,7 +159,9 @@ class WallNotificationEntity {
 			$this->parentTitleDbKey = $response['parentTitleDbKey'];
 			$this->msgText = $response['msgText'];
 			$this->threadTitleFull = $response['threadTitleFull'];
-			$this->data = $response['data'];
+			// The data property is treated in further processing as an object but HTTP response contains it in form of
+			// array, therefore casting is needed here
+			$this->data = (object) $response['data'];
 
 			return true;
 		}

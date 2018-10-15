@@ -110,14 +110,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 				'status' => 'ok',
 				'expectedException' => false
 			] ],
-			'User logged-in but without confirmed e-mail' => [ [
-				'validRequest' => true,
-				'userLogged' => true,
-				'userEmailConfirmed' => false,
-				'status' => 'error',
-				'expectedException' => false,
-				'expectedCode' => 403,
-			] ],
 			'User not logged-in and therefore without confirmed e-mail' => [ [
 				'validRequest' => true,
 				'userLogged' => false,

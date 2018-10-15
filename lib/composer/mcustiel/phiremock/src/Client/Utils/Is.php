@@ -61,4 +61,18 @@ class Is
     {
         return new Condition('contains', $value);
     }
+
+    /**
+     * @param string|array|\JsonSerializable $value
+     *
+     * @return \Mcustiel\Phiremock\Domain\Condition
+     */
+    public static function sameJsonObjectAs($value)
+    {
+        if (is_string($value)) {
+            return new Condition('isSameJsonObject', $value);
+        }
+
+        return new Condition('isSameJsonObject', json_encode($value));
+    }
 }

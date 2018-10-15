@@ -37,9 +37,9 @@ class FileSystem
         }
 
         return str_replace(
-            DIRECTORY_SEPARATOR,
+            \DIRECTORY_SEPARATOR,
             '/',
-            $existentPath . '/' . implode(DIRECTORY_SEPARATOR, $tail)
+            $existentPath . '/' . implode(\DIRECTORY_SEPARATOR, $tail)
         );
     }
 
@@ -50,7 +50,7 @@ class FileSystem
      */
     private function normalizePath($path)
     {
-        $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+        $path = str_replace(\DIRECTORY_SEPARATOR, '/', $path);
         if ('/' !== $path[0]) {
             $path = getcwd() . '/' . $path;
         }

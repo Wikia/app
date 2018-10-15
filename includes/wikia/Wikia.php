@@ -45,7 +45,7 @@ $wgHooks['LocalFileExecuteUrls']     []  = 'Wikia::onLocalFileExecuteUrls';
 # send ETag response header - BAC-1227
 $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 
-# Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
+# Add X-Backend-Response-Time response headers - BAC-550
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
@@ -65,6 +65,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 $wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::outputXServedBySHeader';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -285,55 +286,6 @@ class Wikia {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
-    /**
-     * fixDomainName
-     *
-     * It takes domain name as param, then checks if it contains more than one
-     * dot, then depending on that information adds .wikia.com domain or not.
-     * Additionally it lowercase name
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia-inc.com
-     *
-     * @param string $name Domain Name
-     * @param string $language default false - choosen language
-     * @param mixed  $type type of domain, default false = wikia.com
-     *
-     * @return string fixed domain name
-     */
-	static public function fixDomainName( $name, $language = false, $type = false ) {
-		global $wgWikiaBaseDomain;
-
-		if (empty( $name )) {
-			return $name;
-		}
-
-		$name = strtolower( $name );
-
-		$parts = explode(".", trim($name));
-		if( is_array( $parts ) && count( $parts ) <= 2 ) {
-			$allowLang = true;
-
-			if ( $type === 'answers' ) {
-				$domains = self::getAnswersDomains();
-				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
-					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
-					$allowLang = false;
-				} else {
-					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
-				}
-			} else {
-				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
-			}
-
-			if ( $language && $language != "en" && $allowLang ) {
-				$name = $language.".".$name;
-			}
-		}
-		return $name;
-	}
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
@@ -397,15 +349,9 @@ class Wikia {
 	 * @deprecated use WikiaLogger instead
 	 */
 	static public function logBacktrace($method) {
-		$backtrace = trim(strip_tags(wfBacktrace()));
-		$message = str_replace("\n", '/', $backtrace);
-
-		// add URL when logging from AJAX requests
-		if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
-			$message .= " URL: {$_SERVER['REQUEST_URI']}";
-		}
-
-		Wikia::log($method, false, $message, true /* $force */);
+		\Wikia\Logger\WikiaLogger::instance()->info( $method, [
+			'exception' => new Exception()
+		] );
 	}
 
 	/**
@@ -1153,7 +1099,7 @@ class Wikia {
 		$stagingHeader = $request->getHeader('X-Staging');
 
 		if( !empty($stagingHeader) ) {
-			// we've got special cases like externaltest.* and showcase.* aliases:
+			// we've got special cases like *.externaltest.wikia.com and *.showcase.wikia.com aliases:
 			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
 			// those cases for backend look like production,
 			// therefore we don't want to base only on environment variables
@@ -1250,13 +1196,25 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
 				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
-				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp' );
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp/app' );
 		}
 		return true;
+	}
+
+	/**
+	 * Output X-Served-By header early enough so that all of our custom
+	 * entry-points are handled
+	 *
+	 * @param WebRequest $request
+	 */
+	static public function outputXServedBySHeader( WebRequest $request ) {
+		$request->response()->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
 	}
 
 	/**
@@ -1649,7 +1607,6 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
-		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
 
 		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
@@ -1662,12 +1619,11 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
+	 * Add X-Backend-Response-Time response headers to MediaWiki pages
 	 *
 	 * See BAC-550 for details
 	 *
 	 * @param OutputPage $out
-	 * @param Skin $sk
 	 * @return bool
 	 * @author macbre
 	 */
@@ -1677,7 +1633,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
+	 * Add X-Backend-Response-Time response headers to ResourceLoader
 	 *
 	 * See BAC-1319 for details
 	 *
@@ -1692,7 +1648,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
+	 * Add X-Backend-Response-Time response headers to wikia.php
 	 *
 	 * @param WikiaApp $app
 	 * @param WikiaResponse $response
@@ -1705,7 +1661,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to api.php
+	 * Add X-Backend-Response-Time response headers to api.php
 	 *
 	 * @param WebResponse $response
 	 * @return bool
@@ -1717,7 +1673,7 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 * Add X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
 	 *
 	 * @return bool
 	 * @author macbre
@@ -1937,17 +1893,39 @@ class Wikia {
 	 * Generates surrogate key to be used for requests served from a wiki domain.
 	 *
 	 * Can be called at any point during the request handling as it does not rely on WF variables.
-	 * This method can return an empty value if wiki shouldn't use surrogate keys
 	 */
 	public static function wikiSurrogateKey( $wikiId ) {
-		global $wgSurrogateKeysProdWikis;
 		if ( self::isProductionEnv() ) {
-			if ( !in_array( $wikiId, $wgSurrogateKeysProdWikis ) ) {
-				return '';
-			}
 			return 'wiki-' . $wikiId;
 		}
 		return wfGetEffectiveHostname() . '-wiki-' . $wikiId;
+	}
+
+	/**
+	 * Send surrogate key(s) headers.
+	 *
+	 * Do not set the $replace param to true unless you're know what you're doing (this will
+	 * remove wiki surrogate keys).
+	 *
+	 * @param string|array $surrogateKeys Surrogate keys (array or space-delimited string)
+	 * @param bool $replace When false, new values will be added to the existing header
+	 */
+	public static function setSurrogateKeysHeaders( $surrogateKeys, $replace = false ) {
+		if ( !is_array( $surrogateKeys ) ) {
+			$surrogateKeys = [ $surrogateKeys ];
+		}
+		if ( !$replace ) {
+			// get existing surrogate keys
+			$headers = headers_list();
+			foreach ( $headers as $header ) {
+				if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
+					$surrogateKeys[] = trim( substr( $header, 14 ) );
+				}
+			}
+		}
+		$surrogateKey = implode( ' ', $surrogateKeys );
+		header( 'Surrogate-Key: ' . $surrogateKey );
+		header( 'X-Surrogate-Key: ' . $surrogateKey );
 	}
 
 	public static function surrogateKey( $args ) {
@@ -1961,7 +1939,7 @@ class Wikia {
 	}
 
 	public static function purgeSurrogateKey( $key ) {
-		CeleryPurge::purgeBySurrogateKey( $key );
+		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key );
 	}
 
 	public static function isProductionEnv(): bool {

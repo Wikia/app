@@ -27,7 +27,7 @@ abstract class AbstractWikiService extends AbstractService {
 	 * Assumes that we are not operating on a provided page ID
 	 *
 	 * @throws \Exception
-	 * @return string
+	 * @return array
 	 */
 	public function getStubbedWikiResponse() {
 		if ( $this->currentPageId !== null ) {

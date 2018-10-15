@@ -129,13 +129,6 @@
 		$image-width: 18px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: stumbleupon.png@664,0,99f4118143c669166c0db293e6f37e27
-	@if $imageName == 'stumbleupon' {
-		$image-x: 664px;
-		$image-y: 0px;
-		$image-width: 32px;
-		$image-height: 32px;
-	}
 	// @autosprite-image-details: twitter.png@708,0,c19a731dacef96fd8015f0beca90478b
 	@if $imageName == 'twitter' {
 		$image-x: 708px;
@@ -217,9 +210,6 @@
 	}
 	&.small-lightbox-white {
 		@include sprite-Lightbox('small_lightbox_white',$width,$height);
-	}
-	&.stumbleupon {
-		@include sprite-Lightbox('stumbleupon',$width,$height);
 	}
 	&.twitter {
 		@include sprite-Lightbox('twitter',$width,$height);

@@ -22,6 +22,8 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const BOT_GLOBAL_USER_GROUP = 'bot-global';
 
+	const TEST_WIKI_VARIABLE_NAME = 'wgIsTestWiki';
+
 	private $connections = [];
 
 	private function getDbSlave( $dbname ) {
@@ -72,7 +74,15 @@ class DWDimensionApiController extends WikiaApiController {
 		return null;
 	}
 
+	private function getTestWikisIDs() {
+		$testWikiVarId = WikiFactory::getVarIdByName( self::TEST_WIKI_VARIABLE_NAME );
+		return array_keys(
+			WikiFactory::getListOfWikisWithVar( $testWikiVarId, 'bool', '=', true )
+		);
+	}
+
 	public function getWikis() {
+		$testWikis = $this->getTestWikisIDs();
 		$db = $this->getSharedDbSlave();
 
 		$limit = min( $db->strencode( $this->getRequest()->getVal(
@@ -104,7 +114,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'vertical_name' => $this->getVerticalName( $allVerticals, $row->vertical_id ),
 				'cluster' => $row->cluster,
 				'created_at' => $row->created_at,
-				'deleted' => $row->deleted
+				'deleted' => $row->deleted,
+				'is_test_wiki' => intval(in_array($row->wiki_id, $testWikis))
 			];
 		}
 		$db->freeResult( $dbResult );

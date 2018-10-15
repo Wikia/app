@@ -95,14 +95,9 @@ function getTargetUrl() {
 		header( 'X-Redirected-By: redirect-canonical.php' );
 	}
 
-	// Preserve the query string
-	if ( isset( $_SERVER['REDIRECT_QUERY_STRING'] ) ) {
-		// Called from Apache's ErrorHandler
-		$qs = $_SERVER['REDIRECT_QUERY_STRING'];
-	} else {
-		// Called directly
-		$qs = $_SERVER['QUERY_STRING'];
-	}
+	// SUS-5838 | Preserve the query string
+	$qs = parse_url( $requestUri, PHP_URL_QUERY );
+
 	$url = wfAppendQuery( $url, $qs );
 
 	return $url;
@@ -111,5 +106,8 @@ function getTargetUrl() {
 
 // Issue the redirect
 $url = getTargetUrl();
-header( 'Location: ' . $url, 302 );
+
+header( 'Location: ' . $url, true, 301 );
+header ('X-Served-By: '. wfHostname() );
+
 echo sprintf( 'Moved to <a href="%s">%s</a>', htmlspecialchars( $url ), htmlspecialchars( $url ) );

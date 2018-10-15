@@ -16,7 +16,8 @@
  * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
  * 	backups for city_dbname = wikicities
  *
- * This script is executed by /extensions/wikia/WikiFactory/Dumps/maintenance/DumpsOnDemandCron.php
+ * This script is executed by /lib/Wikia/src/Tasks/Tasks/DumpsOnDemandTask.php
+ * and //extensions/wikia/WikiFactory/Close/maintenance.php
  */
 
 require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');
@@ -34,21 +35,6 @@ function runBackups( $from, $to, $full, $options ) {
 	 * shortcut for full & current together
 	 */
 	$both = isset( $options[ "both" ] );
-
-	/**
-	 * store backup in another folder, not available for users
-	 */
-	$hide = isset( $options[ "hide" ] );
-
-	/**
-	 * store backup in the system tmp dir
-	 */
-	$use_temp = isset( $options['tmp'] );
-
-	/**
-	 * send backup to Amazon S3 and delete the local copy
-	 */
-	$s3 = isset( $options['s3'] );
 
 	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
@@ -111,13 +97,11 @@ function runBackups( $from, $to, $full, $options ) {
 			array( "ORDER BY" => "city_id" )
 	);
 	while( $row = $dbw->fetchObject( $sth ) ) {
-		$basedir = getDirectory( $row->city_dbname, $hide, $use_temp );
-
 		if( $full || $both ) {
-			doDumpBackup( $row, sprintf("%s/%s_pages_full.xml.7z", $basedir, $row->city_dbname ), [ '--full' ] );
+			doDumpBackup( $row, sprintf("%s/%s_pages_full.xml.7z", sys_get_temp_dir(), $row->city_dbname ), [ '--full' ] );
 		}
 		if( !$full || $both ) {
-			doDumpBackup( $row, sprintf("%s/%s_pages_current.xml.7z", $basedir, $row->city_dbname ), [ '--current' ] );
+			doDumpBackup( $row, sprintf("%s/%s_pages_current.xml.7z", sys_get_temp_dir(), $row->city_dbname ), [ '--current' ] );
 		}
 	}
 }
@@ -187,33 +171,6 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 
 		exit( 2 );
 	}
-}
-
-/**
- * dump directory is created as
- *
- * <root>/<first letter>/<two first letters>/<database>
- */
-function getDirectory( $database, $hide = false, $use_temp = false ) {
-
-	$folder     = $use_temp ?  sys_get_temp_dir() : "data";
-	$subfolder  = $hide ? "dumps-hidden" : "dumps";
-	$database   = strtolower( $database );
-
-	$directory = sprintf(
-		"/%s/%s/%s/%s/%s",
-		$folder,
-		$subfolder,
-		substr( $database, 0, 1),
-		substr( $database, 0, 2),
-		$database
-	);
-	if( !is_dir( $directory ) ) {
-		Wikia::log( __METHOD__ , "dir", "create {$directory}", true, true );
-		wfMkdirParents( $directory );
-	}
-
-	return $directory;
 }
 
 // SUS-4313 | make this dependency obvious

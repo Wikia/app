@@ -14,7 +14,7 @@ class SwaggerModelProperty {
 	public function __construct($name, $property, $isRequired) {
 		$this->name = $name;
 		$this->required = $isRequired;
-		$this->description = $property->description ?: null;
+		$this->description = isset( $property->description ) ? $property->description : null;
 		$this->type = $this->parseType($property);
 		$this->items = $this->parseItems($property);
 	}

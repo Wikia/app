@@ -75,14 +75,15 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $domain
 	 * @param string $language
 	 * @param int $vertical
+	 * @param string $description
 	 * @param string[] $categories
 	 * @param bool $allAges
 	 * @param int $timestamp when was the task scheduled
 	 * @param string $ip IP address of a user that is creating the wiki
 	 * @param string $fandomCreatorCommunityId
-	 * @throws CreateWikiException an exception with status of operation set
+	 * @throws Exception an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical,
+	public function create( string $name, string $domain, string $language, int $vertical, string $description,
 	                        array $categories, bool $allAges, int $timestamp, string $ip, string $fandomCreatorCommunityId = null ) {
 		wfProfileIn( __METHOD__ );
 
@@ -96,7 +97,9 @@ class CreateWikiTask extends BaseTask {
 
 		$then = microtime( true );
 
-		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
+		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $description, $categories, $allAges, $this->getTaskId(), $ip, $fandomCreatorCommunityId );
+
+		$context->setFounder( $wgUser );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
@@ -110,7 +113,7 @@ class CreateWikiTask extends BaseTask {
 
 			$taskRunner->run();
 
-		} catch ( CreateWikiException $ex ) {
+		} catch ( Exception $ex ) {
 			// SUS-4383 | mark the wiki as not fully created and log the exception message
 			self::updateCreationLogEntry( $this->getTaskId(), [
 				'creation_ended' => wfTimestamp( TS_DB ),

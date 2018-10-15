@@ -1,0 +1,5 @@
+schedule: "0 10 * * *"
+server_id: 43339
+args:
+- php
+- /usr/wikia/slot1/current/src/extensions/3rdparty/LyricWiki/maintenance/LyricsWikiCrawler.php

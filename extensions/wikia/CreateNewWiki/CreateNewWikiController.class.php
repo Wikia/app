@@ -24,7 +24,9 @@ class CreateNewWikiController extends WikiaController {
 	const DAILY_USER_LIMIT         = 2;
 
 	public function index() {
-		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
+		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
+			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain,
+			   $wgAllowCommunityBuilderCNWPrompt;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -81,13 +83,28 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 		);
 
+		$this->allowCommunityBuilderOptIn = !empty($wgAllowCommunityBuilderCNWPrompt) || !empty($_GET['forceShowCBOptIn']);
+		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
+			'';
+		$this->communityBuilderModal = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderModal') :
+			'';
+
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
-		// use either wikia.com (production) or wikia-staging.com (staging)
-		$this->wikiaBaseDomain = $wgWikiaBaseDomain;
+		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function communityBuilderOptInPrompt() {
+		// needed so the dispatcher doesn't whine
+	}
+
+	public function communityBuilderModal() {
+		// needed so the dispatcher doesn't whine
 	}
 
 	private function setupVerticalsAndCategories() {
@@ -238,23 +255,9 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		// check if user has confirmed e-mail
-		if ( !$wgUser->isEmailConfirmed() ) {
-			$this->setEmailNotConfirmedErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		// check if user is blocked
 		if ( $wgUser->isBlocked() ) {
 			$this->setUserIsBlockedErrorResponse( $wgUser );
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		// check if user is a tor node
-		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
-			$this->setUserIsTorNodeErrorResponse();
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -283,9 +286,10 @@ class CreateNewWikiController extends WikiaController {
 
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
+		$wikiDescription = !empty( $params['wDescription'] ) ? $params['wDescription'] : '';
 
 		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
-			$params['wVertical'], $categories, $allAges, time(),
+			$params['wVertical'], $wikiDescription , $categories, $allAges, time(),
 			$this->getContext()->getRequest()->getIP(),
 			$fandomCreatorCommunityId );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
@@ -349,15 +353,10 @@ class CreateNewWikiController extends WikiaController {
 
 			if ( $completed === 1 ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-				$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $task_details->city_id );
-
-				$fullURL = $finishCreateTitle->getFullURL( [
-					'editToken' => $this->getContext()->getUser()->getEditToken()
-				] );
-				$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
-				$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-			}
-			else {
+				// if user was not logged in when starting the CNW process, the editToken is not available
+				// in client JS yet. Send it in the response so it can be used when calling finishCreate.
+				$this->response->setVal( 'editToken',  $this->getContext()->getUser()->getEditToken() );
+			} else {
 				// oh my, an error...
 				$this->response->setCode( 500 );
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
@@ -368,6 +367,35 @@ class CreateNewWikiController extends WikiaController {
 				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $task_details->exception_message );
 			}
 		}
+	}
+
+	/**
+	 * Sets the theme designer setting selected on the last step of CNW.
+	 * Returns the url for the created wiki.
+	 *
+	 * @throws BadRequestException in case edit token cannot be validated
+	 * @throws ForbiddenException when the current user is not the wiki founder
+	 */
+	public function finishCreateWiki() {
+		$this->checkWriteRequest();
+
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+
+		if ( intval( $wiki->city_founding_user ) !== $this->getContext()->getUser()->getId() ) {
+			throw new ForbiddenException();
+		}
+
+		$themeParams = $this->getVal( 'themeSettings' );
+
+		if ( !empty( $themeParams['color-body'] ) ) {
+			$themeSettings = new ThemeSettings( $wikiId );
+			$themeSettings->saveSettings( $themeParams );
+		}
+
+		$this->setVal( 'wikiUrl', $wiki->city_url );
+		$this->setVal( 'showWikiUrl',
+			wfAppendQuery( WikiFactory::getLocalEnvURL( $wiki->city_url ), 'wiki-welcome=1' ) );
 	}
 
 	/**
@@ -457,27 +485,11 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
 	}
 
-	private function setEmailNotConfirmedErrorResponse() {
-		$this->warning("CreateWiki: user's email not confirmed" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
-	}
-
 	private function setUserIsBlockedErrorResponse( User $user ) {
 		$this->warning("CreateWiki: user is blocked" );
 		$this->response->setCode( 403 );
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $user->blockedBy(), $user->blockedFor(), $user->getBlockId() )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-	}
-
-	private function setUserIsTorNodeErrorResponse() {
-		$this->warning("CreateWiki: user is blocked (TOR detected)" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
 	}
 

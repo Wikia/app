@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is requested by celery-workers. Requested wiki is passed via X-Mw-Wiki-Id HTTP header.
+ *
+ * @see SUS-5816
+ *
+ * @var WebRequest $wgRequest
+ */
+
 set_time_limit( 3600 );
 ini_set('display_errors', 0);
 
@@ -15,39 +24,58 @@ if ( empty( $_SERVER['HTTP_X_WIKIA_INTERNAL_REQUEST'] ) ) {
 	die;
 }
 
-$script = realpath( dirname( __FILE__ ) . '/../../../../maintenance/wikia/task_runner.php' );
-
-$taskId = escapeshellarg( $_POST['task_id'] );
-$wikiId = escapeshellarg( $_POST['wiki_id'] );
-$list = escapeshellarg( $_POST['task_list'] );
-$order = escapeshellarg( $_POST['call_order'] );
-$createdBy = escapeshellarg( $_POST['created_by'] );
-$createdAt = escapeshellarg( $_POST['created_at'] );
-
 // PLATFORM-2034: Forward client data to tasks spawned by MediaWiki
 $traceEnv = json_decode( $_POST['trace_env'] );
-$env = '';
-
 foreach($traceEnv as $key => $val) {
-	$env .= sprintf( '%s=%s ', $key, escapeshellarg( $val ) );
+	$_ENV[$key] = $val;
 }
 
-$command = "{$env}php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy} --created_at={$createdAt}";
+// Initialise common MediaWiki code
+$IP = realpath( __DIR__ . '/../../../../' );
 
-// @todo (PLATFORM-2759): For a long-term fix, initialize the MW stack here, remove the shell_exec and execute the
-//                        TaskRunnerMaintenance directly. For now I'm removing the lines below as the composer autoload
-//                        fails to load some classes without MW and the whole script crashed on devboxes.
-/*
-// can't use globals here, this doesn't execute within mediawiki
-if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
-	require_once( __DIR__ . '/../../../../lib/Wikia/autoload.php' );
-	require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
+// see a comment in WebStart.php on why MW_MSTALL_PATH is set here
+putenv('MW_INSTALL_PATH=' . $IP);
 
-	\Wikia\Logger\WikiaLogger::instance()->debug( 'Tasks - proxy.php', [
-		'cmd' => $command,
-		'data' => $_POST,
-	] );
+/**
+ * SUS-5862 | set a flag to put MediaWiki database access layer in auto-commit mode
+ * i.e. mimic the behaviour of command-line maintenance scripts
+ *
+ * Database-heavy offline tasks will have problems with large transactions
+ * being committed at the end of the proxy.php processing
+ */
+$wgCommandLineMode = true;
+
+require ( $IP . '/includes/WebStart.php' );
+
+// we forced command line mode, explicitly construct a WebRequest object
+// instead of relying on $wgRequest
+$request = new FauxRequest( $_POST, true );
+
+// finally, execute the task
+ob_start();
+
+try {
+	$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
+	$runner->run();
+	$resp = $runner->format();
+} catch ( Throwable $ex ) {
+	$resp = [
+		'status' => 'failure',
+		'reason' => sprintf('%s: %s', get_class( $ex ), $ex->getMessage() ),
+	];
 }
-*/
 
-echo shell_exec( $command );
+ob_end_clean();
+
+// wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
+$response = new AjaxResponse( json_encode( $resp ) );
+
+header('X-Served-By: ' . wfHostname() );
+$response->setContentType('application/json; charset=utf-8');
+$response->sendHeaders();
+
+$response->printText();
+
+// Execute common request shutdown procedure
+$mw = new MediaWiki();
+$mw->restInPeace();

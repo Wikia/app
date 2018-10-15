@@ -103,7 +103,7 @@ class UserAttributesTest extends TestCase {
 			->method( 'delete' )
 			->with( $this->userId, $this->defaultAttribute1 );
 
-		$this->service->expects( $this->exactly( 2 ) )
+		$this->service->expects( $this->once() )
 			->method( 'set' );
 
 		$userAttributes = new UserAttributes( $this->service, $this->defaultAttributes );

@@ -2,16 +2,6 @@
 
 class ChatConfig {
 
-	public static function getPublicHost() {
-		global $wgWikiaEnvironment, $wgChatPublicHost, $wgChatPublicHostOverride;
-
-		if ( !empty( $wgChatPublicHostOverride ) ) {
-			return $wgChatPublicHostOverride;
-		}
-
-		return ( $wgWikiaEnvironment === WIKIA_ENV_PROD ? '' : $wgWikiaEnvironment . '-' ) . $wgChatPublicHost;
-	}
-
 	public static function getApiServer() {
 		global $wgWikiaEnvironment, $wgChatPrivateServerOverride;
 

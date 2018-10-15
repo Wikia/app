@@ -94,7 +94,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			}
 		}
 
-		return $this->checkCurlResults( \CurlMultiClient::request( $requests ) );
+		return $this->checkCurlResults( \CurlMultiClient::request( $requests, $this->getRequestOptions() ) );
 	}
 
 	protected function invalidateTitle( \Title $title ) {
@@ -117,7 +117,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 				'Cache-control: no-cache' ) );
 			$this->wikiaLog( array( "action" => "invalidateTitle", "get_url" => $singleUrl ) );
 		}
-		$this->checkCurlResults( \CurlMultiClient::request( $requests ) );
+		$this->checkCurlResults( \CurlMultiClient::request( $requests, $this->getRequestOptions() ) );
 
 		# And now purge the previous revision so that we make efficient use of
 		# the Varnish cache space without relying on LRU. Since the URL
@@ -129,10 +129,8 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			$requests[ ] = array( 'url' => $singleUrl );
 			$this->wikiaLog( array( "action" => "invalidateTitle", "purge_url" => $singleUrl ) );
 		}
-		$options = \CurlMultiClient::getDefaultOptions();
-		$options[ CURLOPT_CUSTOMREQUEST ] = "PURGE";
 
-		return $this->checkCurlResults( \CurlMultiClient::request( $requests, $options ) );
+		return $this->checkCurlResults( \CurlMultiClient::request( $requests, $this->getRequestOptions( [CURLOPT_CUSTOMREQUEST => "PURGE"] ) ) );
 	}
 
 	private function wikiaLog( $data ) {
@@ -146,5 +144,18 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			$data['wgEnableVisualEditorUI'] = 'notset';
 		}
 		WikiaLogger::instance()->debug( "ParsoidCacheUpdateTask", $data );
+	}
+
+	private function getRequestOptions( $customOptions = [] ) {
+		global $wgVisualEditorParsoidHTTPProxy;
+
+		$defaultOptions = \CurlMultiClient::getDefaultOptions();
+		$proxyOptions = [];
+		// SUS-5841 use proper proxy for parsoid
+		if ( $wgVisualEditorParsoidHTTPProxy ) {
+			$proxyOptions[ CURLOPT_PROXY ] = $wgVisualEditorParsoidHTTPProxy;
+		}
+		
+		return array_merge( $defaultOptions, $proxyOptions, $customOptions );
 	}
 }

@@ -125,10 +125,7 @@ class PortableInfoboxRenderService {
 			$items = $this->createSmartGroups( $children, $rowItems );
 			$groupHTMLContent .= $this->renderChildren( $items );
 		} elseif ( $layout === 'horizontal' ) {
-			$groupHTMLContent .= $this->renderItem(
-				'horizontal-group-content',
-				$this->createHorizontalGroupData( $children )
-			);
+			$groupHTMLContent .= $this->renderHorizontalGroupContent( $children );
 		} else {
 			$groupHTMLContent .= $this->renderChildren( $children );
 		}
@@ -142,6 +139,13 @@ class PortableInfoboxRenderService {
 			'content' => $groupHTMLContent,
 			'cssClasses' => implode( ' ', $cssClasses )
 		] );
+	}
+
+	protected function renderHorizontalGroupContent( $groupContent ) {
+		return $this->renderItem(
+			'horizontal-group-content',
+			$this->createHorizontalGroupData( $groupContent )
+		);
 	}
 
 	/**
@@ -229,7 +233,7 @@ class PortableInfoboxRenderService {
 		return "{$backgroundColor}{$color}";
 	}
 
-	private function createHorizontalGroupData( $groupData ) {
+	protected function createHorizontalGroupData( $groupData ) {
 		$horizontalGroupData = [
 			'labels' => [ ],
 			'values' => [ ],

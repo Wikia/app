@@ -106,6 +106,12 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 					return $matches;
 				}
 
+				// Wikia change begin - PLATFORM-3724
+				if ( !Hooks::run( 'WebRequestPathInfoRouterAbort', [ $path ] ) ) {
+					return $matches;
+				}
+				// Wikia change end
+
 				$router = new PathRouter;
 
 				// Raw PATH_INFO style

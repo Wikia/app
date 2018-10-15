@@ -14,10 +14,15 @@ addons:
       - mysql-server
       - mysql-client
       - libmustache-dev
+services:
+  - rabbitmq
 install:
   - pecl channel-update pecl.php.net
   - pecl install uopz mustache
-before_script: phpenv config-add tests/travis/php.ini
+before_script:
+  # make sure indices are upgraded, see https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-23.html#mysqld-5-7-23-bug
+  - sudo mysql_upgrade
+  - phpenv config-add tests/travis/php.ini
 script:
   - cd tests && ./php-tests.sh
   - cd .. && composer run lint

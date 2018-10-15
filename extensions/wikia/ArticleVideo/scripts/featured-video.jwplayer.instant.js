@@ -10,7 +10,8 @@ require([
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.lookup.a9')
+	require.optional('ext.wikia.adEngine.lookup.a9'),
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
 	cookies,
@@ -23,7 +24,8 @@ require([
 	featuredVideoAds,
 	featuredVideoMoatTracking,
 	featuredVideoCookieService,
-	a9
+	a9,
+	bidders
 ) {
 	if (!videoDetails) {
 		return;
@@ -32,8 +34,7 @@ require([
 	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
-		inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
-		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
+		featuredVideoSlotName = 'FEATURED',
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
@@ -67,6 +68,8 @@ require([
 	}
 
 	function setupPlayer() {
+		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled();
+
 		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
@@ -79,7 +82,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: !adContext.get('rabbits.ctpDesktop') && !inFeaturedVideoClickToPlayABTest,
+				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(),
 				showQuality: true,
 				showCaptions: true
 			},
@@ -103,10 +106,10 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (a9 && adContext.get('bidders.a9Video')) {
+		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
 			a9.waitForResponseCallbacks(
 				function onSuccess() {
-					bidParams = a9.getSlotParams('FEATURED');
+					bidParams = a9.getSlotParams(featuredVideoSlotName);
 					setupPlayer();
 				},
 				function onTimeout() {
@@ -115,6 +118,11 @@ require([
 				},
 				responseTimeout
 			);
+		} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
+			bidders.addResponseListener(function () {
+				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				setupPlayer();
+			});
 		} else {
 			setupPlayer();
 		}

@@ -2,7 +2,7 @@
 <phpunit
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
-		bootstrap="run-test.php"
+		bootstrap="bootstrap.php"
 		backupGlobals="false"
 		backupStaticAttributes="false"
 		colors="true"
@@ -43,6 +43,9 @@
 		</testsuite>
 		<testsuite name="Semantic Drilldown Test Suite">
 			<directory>../extensions/SemanticDrilldown/tests/</directory>
+		</testsuite>
+		<testsuite name="PoolCounter Test Suite">
+			<directory>../extensions/PoolCounter/tests/</directory>
 		</testsuite>
 	</testsuites>
 	<groups>

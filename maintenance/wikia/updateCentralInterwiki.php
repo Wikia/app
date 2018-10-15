@@ -19,13 +19,13 @@ include_once( "updateCentralInterwiki.inc" );
 $wgUser = User::newFromName( Wikia::USER );
 
 if ( isset( $options['help'] ) || isset( $options['h']) ) {
-die( "Produces an SQL file from Central\'s Interwiki_map article.\n
+die( "Produces an SQL file from Central\'s Interwiki_map article - https://community.wikia.com/wiki/MediaWiki:Interwiki_map\n
 		  Usage: php updateCentralInterwiki.php [--o='file'|--p] [--verbose] [--force]
 
 		  Prints to stdout by default.
 
-		  --o        print to output file
-		  --p        print to stdout
+		  --o        write SQL dump to output file
+		  --p        print SQL dump to stdout
 		  --force    proceed, even if there were no changes to interwiki_map since last update
 		  --verbose  print out information on each operation\n\n");
 }
@@ -40,14 +40,14 @@ if ($verbose) echo "--force is " . ( $force ? "true" : "false" ) . "\n";
 $key = "ciw_timestamp";
 $ciw_timestamp = $wgMemc->get($key);
 if ($force || empty($ciw_timestamp)) {
-	$dbr = wfGetDB( DB_SLAVE, array(), 'wikicities');
+	$dbr = wfGetDB( DB_SLAVE );
 	$ciw_timestamp = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 8");
 	$wgMemc->set($key, $ciw_timestamp, 3600);
 	if ($verbose) echo "ciw_timestamp not from cache\n";
 }
 if ($verbose) echo "ciw_timestamp: {$ciw_timestamp}\n";
 
-$key = "ciw_sql";
+$key = "ciw_sql:1";
 list($ciw_sql_timestamp, $sql) = $wgMemc->get($key);
 if ($force || empty($ciw_sql_timestamp) || empty($sql) || $ciw_sql_timestamp < $ciw_timestamp) {
 	$ciw_sql_timestamp = $ciw_timestamp;
@@ -59,9 +59,8 @@ if ($verbose) echo "ciw_sql_timestamp: {$ciw_sql_timestamp}\n";
 
 if ( isset( $options['o'] ) ) {
 	# Output to file specified with -o
-	$file = fopen( $options['o'], "w" );
-	fwrite( $file, $sql );
-	fclose( $file );
+	file_put_contents($options['o'], $sql);
+	echo "Saved SQL to a file\n";
 } elseif ( isset( $options ['p'] ) ) {
 	# Output to stdout
 	print $sql;

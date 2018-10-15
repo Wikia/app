@@ -26,21 +26,28 @@ class AttributeService {
 	}
 
 	/**
-	 * Set attribute for the given user id.
+	 * Set attributes for the given user id.
 	 *
 	 * @param int $userId
-	 * @param Attribute $attribute
+	 * @param string[] $attributes map of attribute names to their values
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function set( $userId, Attribute $attribute ) {
-		if ( empty( $attribute ) || $userId === 0 ) {
-			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
+	public function set( $userId, array $attributes ) {
+		$nonEmptyAttributes = array_filter( $attributes );
+
+		// SRE-97: No attributes to save, nothing to do
+		if ( empty( $nonEmptyAttributes ) ) {
+			return true;
+		}
+
+		if ( $userId === 0 ) {
+			throw new \Exception( 'Invalid parameter: $userId must be > 0' );
 		}
 
 		try {
 			$profilerStart = $this->startProfile();
-			$ret = $this->persistenceAdapter->saveAttribute( $userId, $attribute );
+			$ret = $this->persistenceAdapter->saveAttributes( $userId, $nonEmptyAttributes );
 			$this->endProfile( AttributeService::PROFILE_EVENT, $profilerStart,
 				[ 'user_id' => intval($userId), 'method' => 'saveAttribute' ] );
 

@@ -364,7 +364,7 @@ class VideoHandlerController extends WikiaController {
 		 * The surrogate key allows us to purge the whole range of getVideoList responses with a single PURGE request.
 		 */
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
-		$this->wg->Out->tagWithSurrogateKeys( self::getVideoListSurrogateKey() );
+		Wikia::setSurrogateKeysHeaders( self::getVideoListSurrogateKey() );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "design-system": "Wikia/design-system#8514a95f8beef30d3074fc53cca1dbbcbc63fdaf",
-    "design-system-i18n": "Wikia/design-system-i18n#v2.0.0",
+    "design-system-i18n": "Wikia/design-system-i18n#v2.0.2",
     "grunt-mustache": "~0.1.5",
     "grunt": "~0.4.2"
   }

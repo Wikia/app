@@ -17,7 +17,6 @@ class SocialSharingService{
 		$this->register( 'FacebookSharing');
 		$this->register( 'TwitterSharing' );
 		$this->register( 'PlusoneSharing' );
-		$this->register( 'StumbleuponSharing' );
 		$this->register( 'RedditSharing' );
 		$this->register( 'EmailSharing' );
 	}
@@ -98,13 +97,6 @@ class PlusoneSharing extends SocialSharing{
 	function __construct(){
 		$this->urlTemplate = 'https://plus.google.com/share?hl=' . F::app()->wg->Lang->getCode() . '&url=$1';
 		$this->id = 'plusone';
-	}
-}
-
-class StumbleuponSharing extends SocialSharing{
-	function __construct(){
-		$this->urlTemplate = 'http://www.stumbleupon.com/submit?url=$1&title=$2';
-		$this->id = 'stumbleupon';
 	}
 }
 

@@ -7,27 +7,31 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 ], function (adContext, btRecLoader, iltRecLoader, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner';
+	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner',
+		recEnabled = '';
 
 	function init() {
 		log('WAD rec module initialized', 'debug', logGroup);
 
-		var recEnabled = false;
-
 		if (!recEnabled && adContext.get('opts.wadIL')) {
-			recEnabled = true;
+			recEnabled = 'il';
 
 			iltRecLoader.init();
 		}
 
 		if (!recEnabled && adContext.get('opts.wadBT')) {
-			recEnabled = true;
+			recEnabled = 'bt';
 
 			btRecLoader.init();
 		}
 	}
 
+	function isEnabled(name) {
+		return name === recEnabled;
+	}
+
 	return {
-		init: init
+		init: init,
+		isEnabled: isEnabled
 	};
 });

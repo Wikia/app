@@ -7,14 +7,6 @@ use Wikia\Logger\Loggable;
 class ConfigureUsers extends Task {
 	use Loggable;
 
-	public function prepare() {
-		global $wgUser;
-
-		$this->taskContext->setFounder( $wgUser );
-
-		return TaskResult::createForSuccess();
-	}
-
 	public function check() {
 		if ( $this->taskContext->getFounder()->isAnon() ) {
 			return TaskResult::createForError( "Founder is anon" );
@@ -37,13 +29,12 @@ class ConfigureUsers extends Task {
 		$founderId = $this->taskContext->getFounder()->getId();
 		$wikiDBW = $this->taskContext->getWikiDBW();
 
-		if ( empty($founderId) ) {
-			$this->warning( implode( ":", [ __METHOD__, "FounderId is empty" ] ) );
-			return false;
-		}
+		$rows = [
+			[ "ug_user" => $founderId, "ug_group" => "sysop" ],
+			[ "ug_user" => $founderId, "ug_group" => "bureaucrat" ]
+		];
 
-		$wikiDBW->replace( "user_groups", [ ], [ "ug_user" => $founderId, "ug_group" => "sysop" ] );
-		$wikiDBW->replace( "user_groups", [ ], [ "ug_user" => $founderId, "ug_group" => "bureaucrat" ] );
+		$wikiDBW->replace( "user_groups", [ ], $rows, __METHOD__ );
 
 		return true;
 	}

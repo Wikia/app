@@ -7,15 +7,23 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.wad.babDetection'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
-], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, prebid, babDetection, fvLagger) {
+], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, bidders, prebid, babDetection, fvLagger) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [a9, prebid, babDetection, fvLagger],
+		supportedModules = [babDetection, fvLagger],
 		timeout = getTimeout();
+
+	if (bidders && bidders.isEnabled()) {
+		supportedModules.push(bidders);
+	} else {
+		supportedModules.push(a9);
+		supportedModules.push(prebid);
+	}
 
 	function getDisplayAdTimeout() {
 		if (adContext.get('opts.overwriteDelayEngine')) {

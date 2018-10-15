@@ -1,5 +1,7 @@
 <?php
 
+use FluentSql\StaticSQL;
+
 class SitemapPageModel extends WikiaModel {
 
 	const SITEMAP_PAGE = 'Sitemap';
@@ -64,6 +66,7 @@ class SitemapPageModel extends WikiaModel {
 	 * @param string $from - from wiki (dbname)
 	 * @param string $to - to wiki (dbname)
 	 * @return array
+	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function getWikiList( $from, $to ) {
 		$limit = $this->getLimitPerPage();
@@ -81,6 +84,8 @@ class SitemapPageModel extends WikiaModel {
 			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
 			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
 				->AND_( 'city_list.city_created' )->LESS_THAN( 'curdate()' )
+				// PLATFORM-3654 temporarily hide fandom.com wikis from sitemap
+				->AND_( StaticSQL::RAW( 'city_list.city_url NOT LIKE "%.fandom.com%"' ) )
 			->ORDER_BY( 'title' )
 			->LIMIT( $limit );
 
@@ -164,6 +169,8 @@ class SitemapPageModel extends WikiaModel {
 			->FROM( 'city_list' )
 			->WHERE( 'city_public' )->EQUAL_TO( 1 )
 				->AND_( 'city_created' )->LESS_THAN( 'curdate()' )
+				// PLATFORM-3654 temporarily hide fandom.com wikis from sitemap
+				->AND_( StaticSQL::RAW( 'city_list.city_url NOT LIKE "%.fandom.com%"' ) )
 			->ORDER_BY( $order )
 			->LIMIT( $limit );
 

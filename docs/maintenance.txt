@@ -55,3 +55,31 @@ That's it. In the execute() method, you have access to all of the normal
 MediaWiki functions, so you can get a DB connection, use the cache, etc.
 For full docs on the Maintenance class, see the auto-generated docs at
 http://svn.wikimedia.org/doc/classMaintenance.html
+
+Notes:
+By default we allow running same maintenance tasks on the same wiki in parallel.
+
+In order to disallow such behaviour you have to set $noConcurrency flag to true in specific task.
+
+However `$noConcurrency = true` will prevent running the same task no matter what params you've supplied,
+so to run same task with different params in parallel you have to implement custom `generateCacheKey` method that
+will return unique key for each setup.
+Example:
+
+class DemoMaint extends Maintenance {
+
+  public $param = "Some random param";
+
+  public $noConcurrency = true;
+
+  public function __construct() {
+    parent::__construct();
+  }
+
+  public function execute() {
+  }
+
+  public function generateCacheKey() {
+    return parent::generateCacheKey() . '_' . $this->param;
+  }
+}

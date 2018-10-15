@@ -25,6 +25,7 @@ describe('adaptersRegistry', function () {
 			mocks.adapters.appnexusWebAds,
 			mocks.adapters.audienceNetwork,
 			mocks.adapters.indexExchange,
+			mocks.adapters.kargo,
 			mocks.adapters.beachfront,
 			mocks.adapters.onemobile,
 			mocks.adapters.openx,
@@ -48,6 +49,7 @@ describe('adaptersRegistry', function () {
 				fastlane: new AdapterMock('rubiconDisplay', true),
 				beachfront: new AdapterMock('beachfront', true),
 				indexExchange: new AdapterMock('indexExchange', true),
+				kargo: new AdapterMock('kargo', true),
 				onemobile: new AdapterMock('onemobile', true),
 				openx: new AdapterMock('openx', true),
 				pubmatic: new AdapterMock('pubmatic', true),
@@ -77,11 +79,12 @@ describe('adaptersRegistry', function () {
 				mocks.adapters.audienceNetwork,
 				mocks.adapters.beachfront,
 				mocks.adapters.indexExchange,
+				mocks.adapters.kargo,
 				mocks.adapters.onemobile,
 				mocks.adapters.openx,
 				mocks.adapters.pubmatic,
 				mocks.adapters.rubicon,
-				mocks.adapters.rubiconDisplay,
+				mocks.adapters.rubiconDisplay
 			];
 
 		expectedAdapters.forEach(function (adapter) {

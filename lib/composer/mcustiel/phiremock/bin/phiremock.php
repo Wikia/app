@@ -17,7 +17,7 @@
  */
 declare(ticks=1);
 
-if (PHP_SAPI !== 'cli') {
+if (\PHP_SAPI !== 'cli') {
     throw new \Exception('This is a standalone CLI application');
 }
 
@@ -51,7 +51,7 @@ $expectationsDirParam = isset($options['expectations-dir'])
     : (isset($options['e']) ? $options['e'] : null);
 $expectationsDir = $expectationsDirParam
     ? (new FileSystem())->getRealPath($expectationsDirParam)
-    : $di->get('homePathService')->getHomePath() . DIRECTORY_SEPARATOR . '.phiremock/expectations';
+    : $di->get('homePathService')->getHomePath() . \DIRECTORY_SEPARATOR . '.phiremock/expectations';
 
 $logger->debug("Phiremock's expectation dir: $expectationsDir");
 

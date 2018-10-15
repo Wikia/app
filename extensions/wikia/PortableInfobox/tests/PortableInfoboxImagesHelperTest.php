@@ -112,17 +112,12 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 	public function testCustomWidthLogic( $customWidth, $preferredWidth, $resultDimensions, $thumbnailDimensions, $thumbnail2xDimensions, $originalDimension ) {
 		$expected = [
 			'name' => 'test',
-			'ref' => null,
 			'thumbnail' => null,
 			'thumbnail2x' => null,
 			'key' => '',
 			'media-type' => 'image',
 			'width' => $resultDimensions[ 'width' ],
 			'height' => $resultDimensions[ 'height' ],
-			'originalHeight' => '',
-			'originalWidth' => '',
-			'fileName' => '',
-			'dataAttrs' => '[]'
 		];
 		$thumb = $this->getMockBuilder( 'ThumbnailImage' )
 			->disableOriginalConstructor()

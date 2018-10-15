@@ -5,8 +5,14 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-prod
+    type: mediawiki
 spec:
-  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  progressDeadlineSeconds: 180
   selector:
     matchLabels:
       app: mediawiki-prod
@@ -20,46 +26,162 @@ spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 5
           env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-prod
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
-              value: "${ENVIRONMENT}"
+              value: prod
             - name: LOG_SOCKET_ONLY
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "4"
-              memory: "1300Mi"
+              cpu: "6"
+              memory: 1200Mi
             requests:
-              cpu: "400m"
-              memory: "800Mi"
+              cpu: "3"
+              memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mediawiki-prod
+  namespace: prod
+  labels:
+    app: mediawiki-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mediawiki-prod
+  maxReplicas: 36
+  minReplicas: 2
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-prod
+  labels:
+    app: mediawiki-prod
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-prod
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mediawiki-prod
+  labels:
+    app: mediawiki-prod
 spec:
   selector:
     app: mediawiki-prod
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-prod-ingress
+  labels:
+    app: mediawiki-prod
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: kubernetes.wikia.com
@@ -69,3 +191,200 @@ spec:
             backend:
               serviceName: mediawiki-prod
               servicePort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-tasks
+  namespace: prod
+  labels:
+    app: mediawiki-tasks
+    type: mediawiki
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  progressDeadlineSeconds: 180
+  selector:
+    matchLabels:
+      app: mediawiki-tasks
+  template:
+    metadata:
+      labels:
+        app: mediawiki-tasks
+        app_version: "${APP_VERSION}"
+        config_version: "${CONFIG_VERSION}"
+    spec:
+      containers:
+        - name: nginx
+          image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 1
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+          env:
+            # SUS-5819 longer timeout for tasks
+            - name: FASTCGI_READ_TIMEOUT
+              value: "3600s"
+        - name: php
+          image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 5
+          env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-tasks
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: WIKIA_DATACENTER
+              value: "${DATACENTER}"
+            - name: WIKIA_ENVIRONMENT
+              value: prod
+            - name: LOG_SOCKET_ONLY
+              value: "yes"
+            - name: LOG_SOCKET_ADDRESS
+              value: "tcp://localhost:9999"
+          resources:
+            limits:
+              cpu: 6
+              memory: 2Gi
+            requests:
+              cpu: 2
+              memory: 800Mi
+        # MW log output, see K8s_LOGGING.md
+        - name: logger
+          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              cpu: 1
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+          resources:
+            limits:
+              cpu: 1
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-tasks
+  labels:
+      app: mediawiki-tasks
+spec:
+  selector:
+    app: mediawiki-tasks
+  ports:
+    - protocol: TCP
+      port: 80
+      name: main
+      targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mediawiki-tasks
+  namespace: prod
+  labels:
+    app: mediawiki-tasks
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mediawiki-tasks
+  maxReplicas: 30
+  minReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-tasks
+  labels:
+    app: mediawiki-tasks
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-tasks
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+    type: mediawiki
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      type: mediawiki
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
+    interval: 10s

@@ -4,6 +4,7 @@ namespace FandomCreator;
 
 use Wikia\Factory\ServiceFactory;
 use WikiaDispatchableObject;
+use WikiFactory;
 
 class Hooks {
 	const SERVICE_NAME = "content-graph-service";
@@ -39,6 +40,37 @@ class Hooks {
 		] );
 	}
 
+	public static function onDesignSystemCommunityHeaderModelGetData( &$data, $cityId ) {
+		$communityId =
+			WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
+
+		if ( !self::isValidCommunityId( $communityId ) ) {
+			return;
+		}
+
+		$sitemap = self::api()->getSitemap( $communityId );
+
+		if ( $sitemap === null ) {
+			return;
+		}
+
+		$discussionsLink = array_values( array_filter( $data['navigation'], function ( $item ) {
+			if ( isset( $item['title']['key'] ) &&
+			     $item['title']['key'] === 'community-header-discuss'
+			) {
+				return true;
+			}
+
+			return false;
+		} ) );
+
+		$data['navigation'] = self::convertToCommunityHeaderNavigation( $sitemap );
+
+		if ( isset( $discussionsLink[0] ) ) {
+			$data['navigation'][] = $discussionsLink[0];
+		}
+	}
+
 	public static function onDesignSystemApiGetAllElements( WikiaDispatchableObject $dispatchable, string $communityId ) {
 		if ( !self::isValidCommunityId( $communityId ) ) {
 			return;
@@ -51,7 +83,6 @@ class Hooks {
 
 		$data = $dispatchable->getResponse()->getData();
 		$data['community-header']['sitename']['title']['value'] = $community->displayName;
-		$data['community-header']['sitename']['href'] = '/';
 
 		if ( !empty( $community->theme->graphics->wordmark ) ) {
 			// need to recreate entirely in case it wasn't set by the DS api
@@ -76,21 +107,62 @@ class Hooks {
 			$data['community-header']['background_image'] = $community->theme->graphics->header;
 		}
 
-		// remove "explore" menu since it's forcefully added by the DS api. array_values is needed because array_filter
-		// turns the array into an assoc. array, so when json_encoded navigation is an object instead of an array
-		$data['community-header']['navigation'] = array_values( array_filter( $data['community-header']['navigation'], function( $navItem ) {
-			$type = isset( $navItem['type'] ) ? $navItem['type'] : false;
-			$titleType = isset( $navItem['title']['type'] ) ? $navItem['title']['type'] : false;
-			$titleKey = isset( $navItem['title']['key'] ) ? $navItem['title']['key'] : false;
+		$dispatchable->getResponse()->setData( $data );
+	}
 
-			if ( $type === 'dropdown' && $titleType === 'translatable-text' && $titleKey === 'community-header-explore' ) {
-				return false;
+	private static function convertToCommunityHeaderNavigation( $items, $level = 1 ) {
+		$convertedNavigation = [];
+		$moreItems = null;
+
+		foreach ( $items as $index => $item ) {
+			$convertedItem = [
+				'type' => 'dropdown',
+				'title' => [
+					'type' => 'text',
+					'value' => $item->name,
+				],
+				'href' => '/wiki/' . $item->id . '/' . self::slugify( $item->name ),
+				'tracking_label' => 'custom-level-' . $level,
+			];
+
+			if ( isset( $item->children ) ) {
+				$convertedItem['items'] =
+					self::convertToCommunityHeaderNavigation( $item->children, $level + 1 );
 			}
 
-			return true;
-		} ) );
+			if ( $index === 3 && $level === 1 ) {
+				$moreItems = [
+					'type' => 'dropdown',
+					'title' => [
+						'type' => 'text',
+						'value' => 'More',
+					],
+					'items' => [],
+				];
+			}
 
-		$dispatchable->getResponse()->setData( $data );
+			if ( $moreItems ) {
+				$moreItems['items'][] = $convertedItem;
+			} else {
+				$convertedNavigation[] = $convertedItem;
+			}
+		}
+
+		if ( $moreItems ) {
+			$convertedNavigation[] = $moreItems;
+		}
+
+		return $convertedNavigation;
+	}
+
+	// based on https://github.com/Wikia/fandom-creator/blob/ec6a223e238c7de3f426ec322e5caedfbacf0701/react-client/src/slugify.js
+	private static function slugify( $input ) {
+		$noPunctuation =
+			preg_replace( '/[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\'!"#$%&()*+,.\/:;<=>?@[\]^_`{|}~]/u',
+				'', $input );
+		$toLowercase = strtolower( $noPunctuation );
+
+		return preg_replace( '/(-|\s){1,}/', '-', $toLowercase );
 	}
 
 	public static function onMercuryApiGetWikiVariables( WikiaDispatchableObject $dispatchable, $communityId ) {

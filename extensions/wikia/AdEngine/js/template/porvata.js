@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.porvata', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTweaker',
@@ -11,10 +12,13 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
+	'wikia.tracker',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
+	adContext,
 	DOMElementTweaker,
 	slotRegistry,
 	slotTweaker,
@@ -26,8 +30,10 @@ define('ext.wikia.adEngine.template.porvata', [
 	browserDetect,
 	doc,
 	log,
+	tracker,
 	win,
 	mercuryListener,
+	bidders,
 	prebid
 ) {
 	'use strict';
@@ -39,6 +45,13 @@ define('ext.wikia.adEngine.template.porvata', [
 		],
 		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
+
+	function callCollapse(params, adType) {
+		slotRegistry.get(params.slotName).collapse({
+			adType: adType || params.adType,
+			source: 'porvata'
+		});
+	}
 
 	function callHop(params, shouldSetStatus) {
 		if (shouldSetStatus) {
@@ -106,7 +119,9 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			hasDirectAd = false;
-			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			fallbackBid = bidders && bidders.isEnabled()
+				? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders)
+				: prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
@@ -162,6 +177,25 @@ define('ext.wikia.adEngine.template.porvata', [
 			(browserDetect.getBrowser().indexOf('Chrome') !== -1 && browserDetect.getBrowserVersion() >= 54);
 	}
 
+	function trackDisabledOustream() {
+		if (win.M && win.M.tracker) {
+			win.M.tracker.UniversalAnalytics.track(
+				'wgDisableIncontentPlayer',
+				tracker.ACTIONS.DISABLE,
+				true,
+				0,
+				true
+			);
+		} else {
+			tracker.track({
+				category: 'wgDisableIncontentPlayer',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.DISABLE,
+				label: true
+			});
+		}
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
@@ -184,7 +218,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (prebid && params.hbAdId) {
-			params.bid = prebid.getBidByAdId(params.hbAdId);
+			params.bid = bidders && bidders.isEnabled() ? bidders.getBidByAdId(params.hbAdId) : prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}
@@ -192,6 +226,13 @@ define('ext.wikia.adEngine.template.porvata', [
 		if (!isVideoAutoplaySupported()) {
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
 			callHop(params, true);
+
+			return;
+		}
+
+		if (adContext.get('opts.isIncontentPlayerDisabled')) {
+			callCollapse(params, 'disabled');
+			trackDisabledOustream();
 
 			return;
 		}

@@ -9,7 +9,7 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 
 		$notify = $this->request->getVal( 'notify' );
 
-		if ( empty( $notify[ 'grouped' ][ 0 ] ) ) {
+		if ( empty( $notify['grouped'][0] ) || empty( $notify['grouped'][0]->data ) ) {
 			// do not render this notification, it's bugged
 			return;
 		}
@@ -17,6 +17,7 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		$firstEntity = $notify[ 'grouped' ][ 0 ];
 
 		$data = $firstEntity->data;
+
 		if ( isset( $data->type ) && ( $data->type === 'ADMIN' || $data->type === 'OWNER' ) ) {
 			$this->forward( get_class( $this ), 'NotificationAdmin' );
 			return;

@@ -24,4 +24,23 @@ class Matchers
     const EQUAL_TO = 'isEqualTo';
     const SAME_STRING = 'isSameString';
     const CONTAINS = 'contains';
+    const SAME_JSON = 'isSameJsonObject';
+
+    const VALID_MATCHERS = [
+        self::CONTAINS,
+        self::EQUAL_TO,
+        self::MATCHES,
+        self::SAME_JSON,
+        self::SAME_STRING,
+    ];
+
+    /**
+     * @param string $matcherName
+     *
+     * @return bool
+     */
+    public static function isValidMatcher($matcherName)
+    {
+        return in_array($matcherName, self::VALID_MATCHERS, true);
+    }
 }

@@ -116,11 +116,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.slotTargetingHelper,
 			mocks.slotTweaker,
 			mocks.doc,
-			{},
 			mocks.log,
 			undefined,
-			mocks.sraHelper,
-			undefined,
+			mocks.sraHelper
 		);
 	}
 

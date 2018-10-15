@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.instantGlobals',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
@@ -32,7 +31,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTargeting,
 	slotTweaker,
 	doc,
-	instantGlobals,
 	log,
 	rabbit,
 	sraHelper
@@ -92,15 +90,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
-			var abId,
-				rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+			var abId;
 
 			if (slotTargetingData.src) {
 				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
-			}
-
-			if (rabbitResults && rabbitResults.length) {
-				slotTargetingData.rabbit = rabbitResults;
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
@@ -114,6 +107,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
+			}
+
+			if (
+				slotTargetingData.pos === 'MOBILE_IN_CONTENT' &&
+				!adContext.get('targeting.hasFeaturedVideo') &&
+				getUapId() === 'none'
+			) {
+				slotTargetingData.pos = [slotTargetingData.pos, 'INCONTENT_PLAYER'];
 			}
 		}
 
@@ -134,7 +135,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!googleTag.isInitialized()) {
 			googleTag.init();
-			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			setupPageLevelParams();
 		}
 
 		if (!slot.isEnabled()) {
@@ -175,9 +176,16 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	function setupPageLevelParams() {
+		if (rabbit) {
+			adLogicPageParams.add('rabbit', rabbit.getTargetingValues());
+		}
+		googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+	}
+
 	adContext.addCallback(function () {
 		if (googleTag.isInitialized()) {
-			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			setupPageLevelParams();
 			uapContext.reset();
 		}
 	});

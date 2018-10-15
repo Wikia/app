@@ -2,6 +2,37 @@
 
 class ThemeDesignerController extends WikiaController {
 
+	/**
+	 * Check whether the given url points at one of the predefined ThemeDesigner backgrounds
+	 * in an environment-agnostic way
+	 *
+	 * @param String $backgroundUrl
+	 *
+	 * @return bool
+	 */
+	private function isStockBackgroundUrl( $backgroundUrl ) {
+		if ( empty($backgroundUrl) ) {
+			return false;
+		}
+
+		$backgroundUrlHost = parse_url($backgroundUrl, PHP_URL_HOST);
+		$resourcesDomainHost = parse_url($this->wg->resourceBasePath, PHP_URL_HOST);
+
+		// When the whole theme is applied, background image is a relative url, hence we need to
+		// detect if the hostname exists and compare it only when it does
+		if ( !empty( $backgroundUrlHost ) && $backgroundUrlHost != $resourcesDomainHost ) {
+			return false;
+		}
+
+		foreach( ThemeDesignerBackgroundAssets::$backgrounds as $bg ) {
+			if ( endsWith( $backgroundUrl, $bg['source'] ) ) {
+				return true;
+			};
+		}
+
+		return false;
+	}
+
 	public function init() {
 		$this->backgroundImageName = null;
 		$this->backgroundImageUrl = null;
@@ -366,23 +397,28 @@ class ThemeDesignerController extends WikiaController {
 
 		// SUS-2942: this data is calculated from temporary file, should not be set directly
 		foreach ( ThemeSettings::IMAGES as $imageSource ) {
-			if ( !empty( $data["$imageSource-image-name"] ) && strpos( $data["$imageSource-image-name"],'Temp_file_' ) !== 0 ) {
-				unset( $data["$imageSource-image-name"] );
+			// Background image might be a stock one, so there's no need force reupload of it by clearing
+			// the background-* fields
+			if ( $imageSource != 'background' || ( $this->isStockBackgroundUrl($data["$imageSource-image"]) !== true && $data["background-image-name"] != 'Wiki-background' ) ) {
+				if ( !empty( $data["$imageSource-image-name"] ) &&
+					strpos( $data["$imageSource-image-name"], 'Temp_file_' ) !== 0 ) {
+					unset( $data["$imageSource-image-name"] );
+				}
+
+				if ( !empty( $data["$imageSource-image"] ) ) {
+					unset( $data["$imageSource-image"] );
+				}
+
+				unset( $data["$imageSource-image-width"] );
+				unset( $data["$imageSource-image-height"] );
+
+				if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
+					unset( $data["$imageSource-image-url"] );
+				}
+
+				unset( $data["user-$imageSource-image"] );
+				unset( $data["user-$imageSource-image-thumb"] );
 			}
-
-			if ( !empty( $data["$imageSource-image"] ) ) {
-				unset( $data["$imageSource-image"] );
-			}
-
-			unset( $data["$imageSource-image-width"] );
-			unset( $data["$imageSource-image-height"] );
-
-			if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
-				unset( $data["$imageSource-image-url"] );
-			}
-
-			unset( $data["user-$imageSource-image"] );
-			unset( $data["user-$imageSource-image-thumb"] );
 		}
 
 		$themeSettings = new ThemeSettings();

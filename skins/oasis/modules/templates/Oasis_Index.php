@@ -4,7 +4,7 @@
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
 <?php if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ) : ?>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
 <?php else : ?>
 	<meta name="viewport" content="width=1200">
 <?php endif ?>
@@ -69,6 +69,7 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
+<?= $billTheLizard ?>
 <?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>
@@ -80,8 +81,6 @@
 
 	<?php
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
-		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'EVOLVE_FLUSH', 'pageTypes' => ['*']]);
-		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'TURTLE_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
 <? if( $jsAtBottom ): ?>
@@ -96,7 +95,9 @@
 	<!-- Combined JS files and head scripts -->
 	<?= $jsFiles ?>
 <? endif ?>
-
+<? if ( $isUserLoggedIn && $cookieSyncEnabled ): ?>
+	<?= F::app()->renderView( 'AutoLoginService', 'Index' ) ?>
+<? endif ?>
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
 <?= $bottomScripts ?>

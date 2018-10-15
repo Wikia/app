@@ -19,9 +19,10 @@
 namespace Mcustiel\Phiremock\Server\Http\RequestFilters;
 
 use Mcustiel\SimpleRequest\Exception\FilterErrorException;
+use Mcustiel\SimpleRequest\Filter\AbstractEmptySpecificationFilter;
 use Mcustiel\SimpleRequest\Interfaces\FilterInterface;
 
-class HeadersConditionsFilter implements FilterInterface
+class HeadersConditionsFilter extends AbstractEmptySpecificationFilter implements FilterInterface
 {
     /**
      * @var ConvertToCondition
@@ -41,7 +42,7 @@ class HeadersConditionsFilter implements FilterInterface
     public function filter($value)
     {
         if (null === $value) {
-            return;
+            return null;
         }
         $this->checkValueIsArrayOrThrowException($value);
 
@@ -51,16 +52,6 @@ class HeadersConditionsFilter implements FilterInterface
         }
 
         return $return;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Mcustiel\SimpleRequest\Interfaces\Specificable::setSpecification()
-     * @SuppressWarnings("unused")
-     */
-    public function setSpecification($specification = null)
-    {
     }
 
     /**

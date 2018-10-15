@@ -4,11 +4,11 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
+
+use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\QueryService\DependencyContainer;
 use Wikia\Util\GlobalStateWrapper;
-use Wikia\Logger\WikiaLogger;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -136,7 +136,7 @@ class ArticlesApiController extends WikiaApiController {
 		// This DataMartService method has
 		// separate caching
 		$articles = DataMartService::getTopArticlesByPageview(
-			$this->wg->CityId,
+			!empty( $this->wg->DataMartOriginalCityId ) ? $this->wg->DataMartOriginalCityId : $this->wg->CityId,
 			$ids,
 			$namespaces,
 			false,
@@ -891,7 +891,6 @@ class ArticlesApiController extends WikiaApiController {
 		return $category;
 	}
 
-
 	/**
 	 * @param      $namespaces
 	 * @param null $caller
@@ -988,6 +987,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
 			$content = $articleContent->content;
+			$languageLinks = $this->getLanguageLinks( $parsedArticle );
 			$wgArticleAsJson = false;
 		} else {
 			$wgArticleAsJson = false;
@@ -1009,13 +1009,36 @@ class ArticlesApiController extends WikiaApiController {
 		$result = [
 			'content' => $content,
 			'categories' => $categories,
+			'languageLinks' => $languageLinks,
 			// The same transformation that happens in OutputPage::setPageTitle:
 			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText()
 				?: $article->getTitle()->getText() ),
-			'heroImage' => $articleContent->heroImage
+			'heroImage' => $articleContent->heroImage,
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+	}
+
+	private function getLanguageLinks(ParserOutput $output) {
+		global $wgContLang;
+
+		$languageUrls = [];
+		foreach ( $output->getLanguageLinks() as $link ) {
+			$title = Title::newFromText( $link );
+
+			if ( $title ) {
+				$languageUrls[$title->getInterwiki()] = [
+					'href' => $title->getFullURL(),
+					'text' => $wgContLang->getLanguageName( $title->getInterwiki() ) != ''
+						? $wgContLang->getLanguageName( $title->getInterwiki() )
+						: $link ,
+				];
+			}
+		}
+
+		ksort( $languageUrls );
+
+		return array_values($languageUrls);
 	}
 
 	public function getPopular() {

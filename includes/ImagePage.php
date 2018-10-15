@@ -563,7 +563,8 @@ EOT
 			if ( !$this->getID() && $wgSend404Code ) {
 				// If there is no image, no shared image, and no description page,
 				// output a 404, to be consistent with articles.
-				$wgRequest->response()->header( 'HTTP/1.1 404 Not Found' );
+				// Wikia change - don't set the HTTP header manually
+				$wgOut->setStatusCode( 404 );
 			}
 		}
 		$wgOut->setFileVersion( $this->displayImg );

@@ -3,14 +3,12 @@
 /**
  * Script that removes articles from a wiki matching given prefix
  *
- * Use --quiet option when running on cron machines
- *
  * @author macbre
  * @file
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( __DIR__ . '/../Maintenance.php' );
 
 /**
  * Maintenance script class

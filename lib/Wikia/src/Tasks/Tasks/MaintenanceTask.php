@@ -14,11 +14,16 @@ class MaintenanceTask extends BaseTask {
 	public static function validatePath( string $script ) : bool {
 		global $IP;
 
-		$script = realpath( $IP. '/' . $script );
+		$scriptRealPath = realpath( $IP. '/' . $script );
+		$logContext = [
+			'IP' => $IP,
+			'script' => $script,
+			'scriptRealPath' => $scriptRealPath
+		];
 
-		Assert::true( file_exists( $script ), 'Provided script does not exist' );
-		Assert::true( endsWith( $script, '.php' ), '$script must end with .php' );
-		Assert::true( startsWith( $script, $IP ), 'Script path must be relative to app\'s root' );
+		Assert::true( file_exists( $scriptRealPath ), 'Provided script does not exist', $logContext );
+		Assert::true( endsWith( $scriptRealPath, '.php' ), '$script must end with .php', $logContext );
+		Assert::true( startsWith( $scriptRealPath, $IP ), 'Script path must be relative to app\'s root', $logContext );
 
 		return true;
 	}

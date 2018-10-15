@@ -7,6 +7,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		VIDEO_SLOT_NAME = 'FEATURED',
 		VIDEO_SLOT = {
 			slotID: VIDEO_SLOT_NAME,
+			slotName: VIDEO_SLOT_NAME,
 			mediaType: 'video'
 		};
 
@@ -31,7 +32,6 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			mocks.document,
 			mocks.log,
 			mocks.trackingOptIn,
-			mocks.cmp,
 			mocks.window
 		);
 	}
@@ -129,6 +129,14 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 				getAdsCallback: function (id, callback) {
 					callback();
 				},
+				targetingKeys: function () {
+					return [
+						'amznbid',
+						'amzniid',
+						'amznsz',
+						'amznp'
+					]
+				},
 				renderAd: noop,
 				getTokens: noop
 			}
@@ -159,6 +167,41 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 					amzniid: 'amzniid',
 					amznsz: '728x90',
 					amznp: 'amznp'
+				}
+			}
+		},
+		// Single slot with deals
+		{
+			skin: 'oasis',
+			deals: true,
+			input: [
+				{
+					slotID: 'TOP_LEADERBOARD',
+					helpers: {
+						targetingKeys: [
+							'amznbid',
+							'amzniid',
+							'amznsz',
+							'amznp',
+							'amzndeal_sp'
+						]
+					},
+					targeting: {
+						amznbid: 'amznbid',
+						amzniid: 'amzniid',
+						amznsz: '728x90',
+						amznp: 'amznp',
+						amzndeal_sp: 'yes'
+					}
+				}
+			],
+			expected: {
+				leaderboard: {
+					amznbid: 'amznbid',
+					amzniid: 'amzniid',
+					amznsz: '728x90',
+					amznp: 'amznp',
+					amzndeal_sp: 'yes'
 				}
 			}
 		},
@@ -212,8 +255,13 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 
 	Object.keys(testCases).forEach(function (k) {
 		it('calculate params for A9 slots #' + k, function () {
-			var a9 = getModule(),
-				testCase = testCases[k];
+			var testCase = testCases[k];
+
+			mockAdContext({
+				'bidders.a9Deals': testCase.deals,
+			});
+
+			var a9 = getModule();
 
 			mocks.targeting.skin = testCase.skin;
 
@@ -273,4 +321,29 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		expect(mocks.window.apstag.fetchBids.calls.first().args[0].slots).not.toContain(VIDEO_SLOT);
 	});
 
+	it('call apstag without deals', function () {
+		spyOn(mocks.window.apstag, 'fetchBids');
+		spyOn(mocks.window.apstag, 'init');
+		mockAdContext({
+			'bidders.a9Video': true,
+			'bidders.a9Deals': false,
+			'targeting.hasFeaturedVideo': true
+		});
+
+		getModule().call();
+		expect(mocks.window.apstag.init.calls.first().args[0].deals).toBeFalsy();
+	});
+
+	it('call apstag with deals', function () {
+		spyOn(mocks.window.apstag, 'fetchBids');
+		spyOn(mocks.window.apstag, 'init');
+		mockAdContext({
+			'bidders.a9Video': true,
+			'bidders.a9Deals': true,
+			'targeting.hasFeaturedVideo': true
+		});
+
+		getModule().call();
+		expect(mocks.window.apstag.init.calls.first().args[0].deals).toBeTruthy();
+	});
 });

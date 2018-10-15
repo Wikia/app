@@ -6,31 +6,68 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.trackingOptIn',
-	'wikia.cmp',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, trackingOptIn, cmp, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
 		config = {
 			oasis: {
-				BOTTOM_LEADERBOARD: [[728, 90], [970, 250]],
-				INCONTENT_BOXAD_1: [[300, 250], [300, 600]],
-				TOP_LEADERBOARD: [[728, 90], [970, 250]],
-				TOP_RIGHT_BOXAD: [[300, 250], [300, 600]]
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					]
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					]
+				},
+				TOP_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					]
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					]
+				},
+				FEATURED: {
+					type: 'video'
+				}
 			},
 			mercury: {
-				MOBILE_IN_CONTENT: [[300, 250], [320, 480]],
-				BOTTOM_LEADERBOARD: [[320, 50], [300, 250]],
-				MOBILE_TOP_LEADERBOARD: [[320, 50]]
+				MOBILE_IN_CONTENT: {
+					sizes: [
+						[300, 250]
+					]
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[320, 50],
+						[300, 250]
+					]
+				},
+				MOBILE_TOP_LEADERBOARD: {
+					sizes: [
+						[320, 50]
+					]
+				},
+				FEATURED: {
+					type: 'video'
+				}
 			}
 		},
-		VIDEO_SLOTS = ['FEATURED'],
 		amazonId = '3115',
 		bids = {},
 		loaded = false,
 		priceMap = {},
-		slots = [];
+		slots = {};
 
 	function insertScript() {
 		var a9Script = doc.createElement('script'),
@@ -50,15 +87,15 @@ define('ext.wikia.adEngine.lookup.a9', [
 	function call(skin, onResponse) {
 		function init(optIn, consentData) {
 			var apsConfig = {
-					pubID: amazonId,
-					videoAdServer: 'DFP'
-				},
-				a9Slots;
+				pubID: amazonId,
+				videoAdServer: 'DFP',
+				deals: !!adContext.get('bidders.a9Deals')
+			};
 
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
 
-			// force disabled if opt out, remove after CMP tests
-			if (!optIn) {
+			// Cleanup in ADEN-7500
+			if (!optIn && !adContext.get('bidders.a9OptOut')) {
 				return;
 			}
 
@@ -85,10 +122,17 @@ define('ext.wikia.adEngine.lookup.a9', [
 			priceMap = {};
 
 			slots = slotsContext.filterSlotMap(config[skin]);
-			a9Slots = Object.keys(slots).map(createSlotDefinition);
 
-			if (isVideoBidderEnabled()) {
-				a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+			var a9Slots = Object
+				.keys(slots)
+				.map(createSlotDefinition)
+				.filter(function (slot) {
+					return slot !== null
+				});
+
+			if (a9Slots.length === 0) {
+				onResponse();
+				return;
 			}
 
 			log(['call - fetchBids', a9Slots], 'debug', logGroup);
@@ -100,7 +144,18 @@ define('ext.wikia.adEngine.lookup.a9', [
 				log(['call - fetchBids response', currentBids], 'debug', logGroup);
 
 				currentBids.forEach(function (bid) {
-					bids[bid.slotID] = bid;
+					var bidTargeting = bid,
+						keys = win.apstag.targetingKeys();
+
+					if (apsConfig.deals) {
+						bidTargeting = bid.targeting;
+						keys = bid.helpers.targetingKeys;
+					}
+
+					bids[bid.slotID] = {};
+					keys.forEach(function (key) {
+						bids[bid.slotID][key] = bidTargeting[key];
+					});
 				});
 
 				onResponse();
@@ -108,9 +163,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 		}
 
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			// remove condition after CMP tests
-			if (cmp.isEnabled()) {
-				cmp.callCmp('getConsentData', null, function (consentData) {
+			if (win.__cmp) {
+				win.__cmp('getConsentData', null, function (consentData) {
 					init(optIn, consentData);
 				});
 			} else {
@@ -119,19 +173,23 @@ define('ext.wikia.adEngine.lookup.a9', [
 		});
 	}
 
-	function createSlotDefinition(slotName) {
-		return {
-			sizes: slots[slotName],
-			slotID: slotName,
-			slotName: slotName
-		};
-	}
 
-	function createVideoSlotDefinition(videoSlotName) {
-		return {
-			slotID: videoSlotName,
-			mediaType: 'video'
-		};
+	function createSlotDefinition(slotName) {
+		var config = slots[slotName],
+			definition = {
+				slotID: slotName,
+				slotName: slotName
+			};
+
+		if (!isVideoBidderEnabled() && config.type === 'video') {
+			return null;
+		} else if (config.type === 'video') {
+			definition.mediaType = 'video';
+		} else {
+			definition.sizes = config.sizes;
+		}
+
+		return definition;
 	}
 
 	function configureApstagCommand(command, args) {
@@ -168,20 +226,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function getSlotParams(slotName) {
-		var bid = bids[slotName];
-
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
-		if (!bid) {
-			return {};
-		}
-
-		return {
-			amznbid: bid.amznbid,
-			amzniid: bid.amzniid,
-			amznsz: bid.amznsz,
-			amznp: bid.amznp
-		};
+		return bids[slotName] || {};
 	}
 
 	function getPrices() {
@@ -189,7 +236,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isSlotSupported(slotName) {
-		return slots[slotName] || VIDEO_SLOTS.indexOf(slotName) >= 0;
+		return !!slots[slotName];
 	}
 
 	function getBestSlotPrice(slotName) {

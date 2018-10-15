@@ -51,10 +51,10 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 		$linkedFiles = $this->getLinkedFiles( $itemTitle );
 		if ( !empty( $linkedFiles ) ) {
 			$linkText = $linkedFiles->getText();
-			$linkFullUrl = $linkedFiles->getFullURL();
+			$linkUrl = $linkedFiles->getLocalURL();
 		} else {
 			$linkText = '';
-			$linkFullUrl = '';
+			$linkUrl = '';
 		}
 
 		return [
@@ -62,11 +62,11 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 			'title' => $itemTitle->getText(),
 			'key' => $itemTitle->getDBKey(),
 			'img' => (string) $imageSrc,
-			'url' => $itemTitle->getFullURL(),
+			'url' => $itemTitle->getLocalURL(),
 			'dimensions' => array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),
 			'class' => $elementClass,
 			'data-ref' => $itemTitle->getPrefixedURL(),
-			'targetUrl' => $linkFullUrl,
+			'targetUrl' => $linkUrl,
 			'targetText' => $linkText,
 			'isVideo' => $isVideo,
 		];

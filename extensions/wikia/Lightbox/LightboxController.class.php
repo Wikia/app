@@ -280,7 +280,6 @@ class LightboxController extends WikiaController {
 			$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 				'facebook',
 				'twitter',
-				'stumbleupon',
 				'reddit',
 				'plusone',
 			) );

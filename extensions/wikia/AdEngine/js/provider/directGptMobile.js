@@ -26,14 +26,14 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 				loc: 'footer',
 				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']
 			},
-			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480', loc: 'middle'},
+			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480', loc: 'middle', pos: 'MOBILE_IN_CONTENT'},
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50', loc: 'footer'}
 		},
 		{
 			getAdUnitBuilder: function () {
 				return adContext.get('opts.megaAdUnitBuilderEnabled') ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
-			atfSlots: [
+			firstCallSlots: [
 				'MOBILE_TOP_LEADERBOARD'
 			],
 			testSrc: 'test'

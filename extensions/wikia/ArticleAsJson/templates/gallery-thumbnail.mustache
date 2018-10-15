@@ -1,4 +1,4 @@
-<figure class="article-media-thumbnail{{#isOgg}} is-ogg{{/isOgg}}"{{#mediaAttr}} data-attrs="{{mediaAttr}}"{{/mediaAttr}} data-ref="{{galleryRef}}" data-file="{{fileName}}"{{#isLinkedByUser}} data-linkedbyuser="true"{{/isLinkedByUser}}>
+<figure class="article-media-thumbnail{{#isOgg}} is-ogg{{/isOgg}}" data-ref="{{galleryRef}}" data-file="{{fileName}}">
 	{{#isOgg}}
 		<a href="{{url}}">{{{downloadIcon}}}</a>
 	{{/isOgg}}
@@ -6,16 +6,13 @@
 	{{^isOgg}}
 		<a href="{{href}}">
 			<img class="article-media-placeholder lazyload"
-				src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 195 195'%2F%3E"
+				src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 48 48' fill='%23fff' width='{{thumbSize}}' height='{{thumbSize}}'%3e%3cg fill-rule='evenodd'%3e%3cpath d='M3 4h18v8.737l-3.83-3.191a.916.916 0 0 0-1.282.108l-4.924 5.744-3.891-3.114a.92.92 0 0 0-1.146 0L3 14.626V4zm19-2H2a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z'/%3e%3cpath d='M9 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2'/%3e%3c/g%3e%3c/svg%3e"
 				alt="{{title}}"
 				data-src="{{thumbnailUrl}}"
-				width="195"
-				height="195">
-			{{#isLinkedByUser}}
-				{{{chevronIcon}}}
-			{{/isLinkedByUser}}
+				width="{{thumbSize}}"
+				height="{{thumbSize}}">
 			<noscript>
-				<img src="{{thumbnailUrl}}" alt="{{title}}" width="195" height="195">
+				<img src="{{thumbnailUrl}}" alt="{{title}}" width="300" height="300">
 			</noscript>
 			{{#isVideo}}
 				<div class="video-icon-container">
@@ -32,7 +29,4 @@
 			{{/isVideo}}
 		</a>
 	{{/isOgg}}
-	{{#caption}}
-		<figcaption>{{{caption}}}</figcaption>
-	{{/caption}}
 </figure>

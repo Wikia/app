@@ -28,7 +28,9 @@ class CloseMyAccountMaintenance extends Maintenance {
 	public function getUsers() {
 		$preferenceService = ServiceFactory::instance()->preferencesFactory()->preferenceService();
 
-		return $preferenceService->findUsersWithGlobalPreferenceValue( CloseMyAccountHelper::REQUEST_CLOSURE_PREF );
+		return $preferenceService->findUsersWithGlobalPreferenceValue(
+			CloseMyAccountHelper::REQUEST_CLOSURE_PREF
+		);
 	}
 
 	public function closeAccounts( $users ) {

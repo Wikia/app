@@ -286,11 +286,6 @@ class Chat {
 			return false;
 		}
 
-		// If the TorBlock extension exists, user is an exitNode, and user does not have the torunblocked right
-		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() && !$subjectUser->isAllowed( 'torunblocked' ) ) {
-			return false;
-		}
-
 		return $subjectUser->isAllowed( 'chat' );
 	}
 

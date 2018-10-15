@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import EventEmitter from 'eventemitter3';
 import {
 	client,
 	context,
@@ -13,22 +13,23 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	Roadblock,
 	universalAdPackage,
-	isProperGeo,
 	getSamplingResults,
 	utils as adProductsUtils
-} from '@wikia/ad-products';
+} from '@wikia/ad-engine/dist/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
 import { getSlotsContext } from './slots';
+import { getBiddersContext } from './bidders';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
 
 function init(
 	adTracker,
@@ -36,12 +37,17 @@ function init(
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
+	adLogicZoneParams,
 	legacyContext,
 	legacyBtfBlocker,
 	skin,
-	trackingOptIn
+	trackingOptIn,
+	babDetection,
+	slotsContext
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
+
+	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
 
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
@@ -51,7 +57,7 @@ function init(
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 
-	overrideSlotService(slotRegistry, legacyBtfBlocker);
+	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
@@ -65,9 +71,59 @@ function init(
 		context.set('slots', getSlotsContext(legacyContext, skin));
 		syncSlotsStatus(slotRegistry, context.get('slots'));
 	});
+
+	if (legacyContext.get('bidders.prebidAE3')) {
+		context.set('bidders', getBiddersContext(skin));
+
+		context.set('bidders.a9.dealsEnabled', legacyContext.get('bidders.a9Deals'));
+		context.set('bidders.a9.enabled', legacyContext.get('bidders.a9'));
+		context.set('bidders.a9.videoEnabled', legacyContext.get('bidders.a9Video'));
+
+		if (legacyContext.get('bidders.prebid')) {
+			context.set('bidders.prebid.enabled', true);
+			context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
+			context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
+			context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
+			context.set('bidders.prebid.appnexusWebads.enabled', legacyContext.get('bidders.appnexusWebAds'));
+			context.set('bidders.prebid.audienceNetwork.enabled', legacyContext.get('bidders.audienceNetwork'));
+			context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
+			context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
+			context.set('bidders.prebid.kargo.enabled', legacyContext.get('bidders.kargo'));
+			context.set('bidders.prebid.onemobile.enabled', legacyContext.get('bidders.onemobile'));
+			context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
+			context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
+			context.set('bidders.prebid.rubicon.enabled', legacyContext.get('bidders.rubicon'));
+			context.set('bidders.prebid.rubiconDisplay.enabled', legacyContext.get('bidders.rubiconDisplay'));
+
+			context.set('bidders.prebid.targeting', {
+				src: [legacyContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile'],
+				s0: [adLogicZoneParams.getSite()],
+				s1: [legacyContext.get('targeting.wikiIsTop1000') ? adLogicZoneParams.getName() : 'not a top1k wiki'],
+				s2: [adLogicZoneParams.getPageType()],
+				lang: [adLogicZoneParams.getLanguage()]
+			});
+
+			context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
+			context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
+			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
+			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
+			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
+			context.set('custom.isCMPEnabled', legacyContext.get('opts.isCMPEnabled'));
+		}
+
+		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
+	}
+
+	if (skin === 'oasis' && babDetection.isBlocking()) {
+		context.set('bidders.prebid.appnexus.placements', context.get('bidders.prebid.appnexus.recPlacements'));
+
+		Object.keys(context.get('bidders.prebid.indexExchange.slots')).forEach((key) =>
+			context.set(`bidders.prebid.indexExchange.slots.${key}.siteId`,
+				context.get(`bidders.prebid.indexExchange.recPlacements.${key}`)));
+	}
 }
 
-function overrideSlotService(slotRegistry, legacyBtfBlocker) {
+function overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext) {
 	const slotsCache = {};
 
 	slotService.get = (slotName) => {
@@ -90,9 +146,8 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 		legacyBtfBlocker.unblock(slotName);
 		slotRegistry.enable(slotName);
 	};
-	slotService.disable = (slotName) => {
-		slotRegistry.disable(slotName);
-	};
+	slotService.disable = (slotName) => slotRegistry.disable(slotName);
+	slotService.getState = (slotName) => slotsContext.isApplicable(slotName);
 }
 
 function syncSlotsStatus(slotRegistry, slotsInContext) {
@@ -126,9 +181,21 @@ function unifySlotInterface(slot) {
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		},
-		getStatus: () => null
+		getStatus: () => null,
+		setStatus: (status) => {
+			if (['viewport-conflict', 'sticked', 'unsticked'].indexOf(status) > -1) {
+				const event = document.createEvent('CustomEvent');
+				event.initCustomEvent('adengine.slot.status', true, true, {
+					slot: slot,
+					status: status
+				});
+				window.dispatchEvent(event);
+			}
+		}
 	});
+
 	slot.pre('viewed', (event) => {
+		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
 	});
 
@@ -184,15 +251,18 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
+function readSessionId() {
+	utils.readSessionId();
+}
+
 export {
 	init,
 	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
+	readSessionId,
 	context,
 	universalAdPackage,
-	isProperGeo,
-	getSamplingResults,
-	slotService
+	slotService,
 };

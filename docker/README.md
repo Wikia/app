@@ -9,7 +9,8 @@ We assume that you have `app` and `config` repository cloned in the same directo
 
 ```sh
 # 1. build a base image
-docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce ./base
+docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:372bb48 ./base
+docker push artifactory.wikia-inc.com/sus/php-wikia-base:372bb48
 
 # 2. and then dev image
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
@@ -32,26 +33,6 @@ In order to run service locally you need to configure hosts. Add below line to `
 127.0.0.1	wikia-local.com dev.wikia-local.com muppet.dev.wikia-local.com
 ```
 
-## How to push base and dev images to Wikia's repository
-
-```sh
-docker tag php-wikia-base php-wikia-base:7.0.28
-
-docker tag php-wikia-base artifactory.wikia-inc.com/sus/php-wikia-base
-docker tag php-wikia-base artifactory.wikia-inc.com/sus/php-wikia-base:7.0.28
-
-docker push artifactory.wikia-inc.com/sus/php-wikia-base
-docker push artifactory.wikia-inc.com/sus/php-wikia-base:7.0.28
-
-
-docker tag php-wikia-dev php-wikia-dev:7.0.28
-
-docker tag php-wikia-dev artifactory.wikia-inc.com/sus/php-wikia-dev
-docker tag php-wikia-dev artifactory.wikia-inc.com/sus/php-wikia-dev:7.0.28
-
-docker push artifactory.wikia-inc.com/sus/php-wikia-dev
-docker push artifactory.wikia-inc.com/sus/php-wikia-dev:7.0.28
-```
 
 ## How to set up Docker on your machine
 
@@ -81,3 +62,7 @@ If docker service fails to start run the following to diagnose the problem:
 ```sh
 sudo dockerd
 ```
+
+#### Setting up `kubectl`
+
+Follow [these instructions](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/401440847/Kubernetes+access+for+Engineers).

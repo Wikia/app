@@ -106,14 +106,6 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		expect(zoneParams.getHostnamePrefix()).toBe('externaltest');
 	});
 
-	it('Hostname and domain for showcase.gta.wikia.com', function () {
-		setUpLocation('showcase.gta.wikia.com');
-		var zoneParams = getModule();
-
-		expect(zoneParams.getDomain()).toBe('wikiacom');
-		expect(zoneParams.getHostnamePrefix()).toBe('showcase');
-	});
-
 	it('Hostname and domain for gta.showcase.wikia.com', function () {
 		setUpLocation('gta.showcase.wikia.com');
 		var zoneParams = getModule();

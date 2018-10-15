@@ -62,7 +62,6 @@ class WikiFactory {
 	const db            	= "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   	= "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      	= "/tmp/wikifactory/wikis";
-	const WIKIA_TOP_DOMAIN 	= '.wikia.com';
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
@@ -497,14 +496,17 @@ class WikiFactory {
 	 * @return string
 	 */
 	static public function prepareUrlToParse( $url ) {
+		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
 		$httpPrefix = 'http://';
 
 		if ( strpos( $url, $httpPrefix ) === false ) {
 			$url = $httpPrefix . $url;
 		}
 
-		if ( strpos( $url, static::WIKIA_TOP_DOMAIN ) === false ) {
-			$url = $url . static::WIKIA_TOP_DOMAIN;
+		if ( strpos( $url, '.' . $wgWikiaBaseDomain ) === false &&
+			strpos( $url, '.' . $wgFandomBaseDomain ) === false
+		) {
+			$url = $url . '.' . $wgWikiaBaseDomain;
 		}
 
 		return $url;
@@ -573,7 +575,7 @@ class WikiFactory {
 		$dbr = static::db( DB_SLAVE );
 
 		$url = parse_url( $wgServer );
-		$server = static::normalizeHost( $url['host'] );
+		$server = wfNormalizeHost( $url['host'] );
 		$where = [
 			$dbr->makeList( [
 				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
@@ -1236,26 +1238,6 @@ class WikiFactory {
 	}
 
 	/**
-	 * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
-	 * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
-	 *
-	 * @param $host
-	 * @return string normalized host name
-	 */
-	protected static function normalizeHost( $host ) {
-		global $wgDevDomain, $wgWikiaBaseDomain;
-		// strip env-specific pre- and suffixes for staging environment
-		$host = preg_replace(
-			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) . '/',
-			static::WIKIA_TOP_DOMAIN,
-			$host );
-		if ( !empty( $wgDevDomain ) ) {
-			$host = str_replace( ".{$wgDevDomain}", static::WIKIA_TOP_DOMAIN, $host );
-		}
-		return $host;
-	}
-
-	/**
 	 * getLocalEnvURL
 	 *
 	 * return URL specific to current env:
@@ -1280,7 +1262,8 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaBaseDomainRegex;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain,
+			$wgDevDomain, $wgWikiaBaseDomainRegex, $wgWikiaDevDomain, $wgFandomDevDomain;
 
 		// first - normalize URL
 		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
@@ -1299,9 +1282,19 @@ class WikiFactory {
 			$address = '/' . $address;
 		}
 
-		$server = static::normalizeHost( $server );
-		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
-		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
+		$baseDomain = wfGetBaseDomainForHost( $server );
+
+		$server = wfNormalizeHost( $server );
+
+		$wikiaDomainUsed = $fandomDomainUsed = false;
+		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {
+			$server = str_replace( ".{$wgWikiaBaseDomain}", '', $server );
+			$wikiaDomainUsed = true;
+		}
+		if ( endsWith($server, ".{$wgFandomBaseDomain}" ) ) {
+			$server = str_replace( ".{$wgFandomBaseDomain}", '', $server );
+			$fandomDomainUsed = true;
+		}
 
 		// determine the environment we want to get url for
 		$environment = (
@@ -1315,17 +1308,24 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return "$protocol//" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.preview.' . $baseDomain . $address;
 			case WIKIA_ENV_VERIFY:
-				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.verify.' . $baseDomain . $address;
 			case WIKIA_ENV_STABLE:
-				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.stable.' . $baseDomain . $address;
 			case WIKIA_ENV_PROD:
-				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
+				return sprintf( '%s//%s.%s%s', $protocol, $server, $baseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return "$protocol//" . $server . '.' . static::getExternalHostName() .
-				       static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.' . static::getExternalHostName() . '.' .
+				       $baseDomain . $address;
 			case WIKIA_ENV_DEV:
+				if ( $fandomDomainUsed ) {
+					return "$protocol//" . $server . '.' . $wgFandomDevDomain . $address;
+				}
+				if ( $wikiaDomainUsed ) {
+					return "$protocol//" . $server . '.' . $wgWikiaDevDomain . $address;
+				}
+				// Best guess - default to the current dev domain
 				return "$protocol//" . $server . '.' . $wgDevDomain . $address;
 		}
 
@@ -1360,11 +1360,6 @@ class WikiFactory {
 	 * @return object|false: database row with wiki params
 	 */
 	static public function getWikiByID( int $id, $master = false ) {
-
-		if ( ! static::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return false;
-		}
 
 		// SUS-2983 | do not make queries when provided city_id will not return any row
 		if ( empty( $id ) ) {

@@ -1,0 +1,4 @@
+schedule: "15 9 * * 3"
+args:
+- php
+- /usr/wikia/slot1/current/src/extensions/wikia/PhalanxII/maintenance/cleanupPhalanxStats.php

@@ -38,11 +38,16 @@ class WikiImporter {
 	private $mImportUploads, $mImageBasePath;
 	private $mNoUpdates = false;
 
+	/** @var bool $shouldCheckPermissions */
+	private $shouldCheckPermissions = true;
+
 	/**
 	 * Creates an ImportXMLReader drawing from the source provided
 	 * @param $source
 	 */
 	function __construct( $source ) {
+		global $wgCommandLineMode;
+
 		$this->reader = new XMLReader();
 
 		stream_wrapper_register( 'uploadsource', 'UploadSourceAdapter' );
@@ -58,6 +63,15 @@ class WikiImporter {
 		$this->setUploadCallback( array( $this, 'importUpload' ) );
 		$this->setLogItemCallback( array( $this, 'importLogItem' ) );
 		$this->setPageOutCallback( array( $this, 'finishImportPage' ) );
+
+		$this->shouldCheckPermissions = !$wgCommandLineMode;
+	}
+
+	/**
+	 * @param bool $shouldCheckPermissions
+	 */
+	public function setShouldCheckPermissions( bool $shouldCheckPermissions ) {
+		$this->shouldCheckPermissions = $shouldCheckPermissions;
 	}
 
 	/**
@@ -790,8 +804,6 @@ class WikiImporter {
 	 * @return Array or false
 	 */
 	private function processTitle( $text ) {
-		global $wgCommandLineMode;
-
 		$workTitle = $text;
 		$origTitle = Title::newFromText( $workTitle );
 
@@ -812,11 +824,11 @@ class WikiImporter {
 		} elseif( !$title->canExist() ) {
 			$this->notice( 'import-error-special', $title->getPrefixedText() );
 			return false;
-		} elseif( !$title->userCan( 'edit' ) && !$wgCommandLineMode ) {
+		} elseif ( $this->shouldCheckPermissions && !$title->userCan( 'edit' ) ) {
 			# Do not import if the importing wiki user cannot edit this page
 			$this->notice( 'import-error-edit', $title->getPrefixedText() );
 			return false;
-		} elseif( !$title->exists() && !$title->userCan( 'create' ) && !$wgCommandLineMode ) {
+		} elseif ( $this->shouldCheckPermissions && !$title->exists() && !$title->userCan( 'create' ) ) {
 			# Do not import if the importing wiki user cannot create this page
 			$this->notice( 'import-error-create', $title->getPrefixedText() );
 			return false;

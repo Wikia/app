@@ -1,28 +1,72 @@
-def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
-def render(String template, java.util.LinkedHashMap binding) {
-    def engine = new groovy.text.SimpleTemplateEngine()
+def rolloutStatusSjc = 1
+def rolloutStatusRes = 1
 
-    return engine.createTemplate(template).make(binding).toString()
+def slackChannel = "#mw-prod-deployment"
+
+def render(String template, java.util.LinkedHashMap binding) {
+	def engine = new groovy.text.SimpleTemplateEngine()
+
+	return engine.createTemplate(template).make(binding).toString()
+}
+
+def messageDetails(int rolloutStatus) {
+    if (rolloutStatus != 0) {
+        return [
+            emoji: ":siren:",
+            color: "#cc142c"
+        ]
+    } else {
+        return [
+            emoji: ":checkmark:",
+            color: "#36a64f"
+        ]
+    }
 }
 
 node("docker-daemon") {
-    def appBranch = params.app.split('\\.')[0]
-    def configBranch = params.config.split('\\.')[0]
-    def datacenter = params.datacenter
-    def environment = params.environment
+	def appBranch = params.app.split('\\.')[0]
+	def configBranch = params.config.split('\\.')[0]
+	def buildUser = "Anonymous"
+	def imageExists = false
+	def appHash
+	def configHash
+	def imageTag
 
-    def k8sContext = "kube-${datacenter}-${environment}"
+	stage("Prompt for a version") {
+		def deploymentInfo
 
-    def appHash
-    def configHash
-    def imageExists = false
-    def imageTag
+		withDockerContainer(kubectlImage) {
+			deploymentInfo = sh(
+				script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",returnStdout: true
+			)
+		}
 
-    stage("Clone repositories") {
+		def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+		def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+
+		if (params.force != true) {
+			timeout(time: 120, unit: 'SECONDS') {
+				userInput = input(
+					id: 'version_check',
+					message: "Updating\napp - ${prevAppVersion} ==> ${appBranch} \nconfig - ${prevConfigVersion} ==> ${configBranch}"
+				)
+			}
+		}
+	}
+
+	stage("Clone repositories") {
+		wrap([$class: 'BuildUser']) {
+			try {
+				buildUser = "${BUILD_USER}"
+			} catch (MissingPropertyException ex) {
+				buildUser = "Jenkins"
+			}
+		}
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
                 branch: appBranch,
@@ -74,45 +118,84 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:372bb48")
 
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")
 
                 sh("docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
                 sh("docker build .. -f docker/prod/Dockerfile-php -t $mediawikiImage:$imageTag")
-                sh("docker build .. -f docker/base/Dockerfile-logger -t $loggerImage:latest")
 
                 sh("docker push $nginxImage:$imageTag")
                 sh("docker push $mediawikiImage:$imageTag")
-                sh("docker push $loggerImage:latest")
             } else {
                 println("Image tag ($imageTag) already exists")
             }
         }
     }
 
+    stage('Notify Slack Channel publish') {
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app branch <https://github.com/Wikia/app/tree/'${appBranch}'|'${appBranch}'> and config branch <https://github.com/Wikia/config/tree/'${configBranch}'|'${configBranch}'> is published by '${buildUser}'\", \"channel\": \"'${slackChannel}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
+    }
+
     stage("Apply new k8s descriptor") {
         dir("app") {
             def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
-            def k8s = render(template, [
+            def sjc = render(template, [
                 'IMAGE_TAG': imageTag,
-                'ENVIRONMENT': environment,
-                'DATACENTER': datacenter,
+                'DATACENTER': 'sjc',
                 'APP_VERSION': params.app,
                 'CONFIG_VERSION': params.config
             ])
 
-            sh("""cat > docker/prod/k8s.yaml <<EOL
-${k8s}
+            sh("""cat > docker/prod/sjc.yaml <<EOL
+${sjc}
 EOL""")
 
-            sh("cat docker/prod/k8s.yaml")
+            def res = render(template, [
+                'IMAGE_TAG': imageTag,
+                'DATACENTER': 'res',
+                'APP_VERSION': params.app,
+                'CONFIG_VERSION': params.config
+            ])
+
+            sh("""cat > docker/prod/res.yaml <<EOL
+${res}
+EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            sh """#!/bin/sh
-            kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s.yaml"""
+            // deploy to SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+            rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+            // deploy to RES
+            sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+            rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
         }
+    }
+
+    stage("Apply cron jobs") {
+        dir("app") {
+            // SUS-5531 - apply cron jobs via auto-generated YAML file
+            sh("cd docker/maintenance && bash cronjobs-generator.sh ${imageTag} > ../prod/k8s-cronjobs.yaml")
+            sh("cat docker/prod/k8s-cronjobs.yaml")
+        }
+
+        withDockerContainer(kubectlImage) {
+            // cron jobs only run on SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
+        }
+    }
+
+    stage("Set and report job status") {
+        if (rolloutStatusSjc != 0 || rolloutStatusRes != 0) {
+            currentBuild.result = "UNSTABLE"
+        }
+
+        sjcMsg = messageDetails(rolloutStatusSjc)
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${sjcMsg['color']}\", \"pretext\": \"${sjcMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"sjc\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+
+        resMsg = messageDetails(rolloutStatusRes)
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${resMsg['color']}\", \"pretext\": \"${resMsg['emoji']} MediaWiki rollout status\", \"channel\": \"${slackChannel}\", \"fields\": [ {\"title\": \"environment\", \"value\": \"prod\", \"short\": true }, {\"title\": \"datacenter\", \"value\": \"res\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
     }
 }

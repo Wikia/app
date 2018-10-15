@@ -151,8 +151,13 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return bool
 	 */
 	function selectDB( $db ) {
-		$this->mDBname = $db;
-		return $this->mConn->select_db( $db );
+		// SRE-105: Only change the DB explicitly if it was actually changed
+		if ( $this->mDBname !== $db ) {
+			$this->mDBname = $db;
+			return $this->mConn->select_db( $db );
+		}
+
+		return true;
 	}
 
 	/**
@@ -297,6 +302,41 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 
 	protected function mysqlPing() {
 		return $this->mConn->ping();
+	}
+
+	/**
+	 * Execute multiple SQL queries concatenated with a semicolon delimiter in a single operation
+	 *
+	 * @param string $sqlQuery queries to execute
+	 * @param string $method name of caller function
+	 * @return bool true if operation was successful
+	 * @throws DBQueryError
+	 */
+	public function multiQuery( string $sqlQuery, string $method ): bool {
+		$result = $this->mConn->multi_query( $sqlQuery );
+		$dbQueryError = null;
+
+		if ( $result ) {
+			// process potential errors for all subsequent components of the query
+			do {
+				$err = $this->lastError();
+
+				if ( $err ) {
+					// report error via DBError constructor
+					$dbQueryError = new DBQueryError( $this, $err, $this->lastErrno(), $sqlQuery, $method );
+				}
+
+			} while ( $this->mConn->next_result() );
+		} else {
+			// the very first query has failed
+			$dbQueryError = new DBQueryError( $this, $this->lastError(), $this->lastErrno(), $sqlQuery, $method );
+		}
+
+		if ( $dbQueryError ) {
+			throw $dbQueryError;
+		}
+
+		return $result;
 	}
 
 	/**

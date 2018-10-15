@@ -275,13 +275,13 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 		$_SESSION[$key] = $data;
 	}
 
-	/*
-	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
+	/**
+	 * Get data from $_SERVER['REQUEST_URI'], which is original path of the request, before mod_rewrite changed it.
 	 * Please be aware how our URL rewrites work before you think about using this.
 	 * @return string|null
 	 */
 	public function getScriptUrl() {
-		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
+		$scriptUrl = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : null;
 		return $scriptUrl;
 	}
 

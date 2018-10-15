@@ -20,6 +20,10 @@ $global-navigation-z-index: 5000101;
 
 .wds-global-navigation-wrapper {
 	height: $wds-global-navigation-height;
+
+	@media screen and (max-width: 768px) {
+		width: 768px;
+	}
 }
 
 .wds-global-navigation {
@@ -27,6 +31,15 @@ $global-navigation-z-index: 5000101;
 	top: 0;
 	width: 100%;
 	z-index: $global-navigation-z-index;
+
+	@media screen and (max-width: 768px) {
+		width: 768px;
+
+		.wds-global-navigation__links,
+		.wds-global-navigation__dropdown-controls {
+			display: flex;
+		}
+	}
 
 	&.bfaa-pinned {
 		position: relative;
@@ -77,6 +90,7 @@ $global-navigation-z-index: 5000101;
 }
 
 .wds-global-footer {
+	font-family: $wds-fandom-font-family;
 	position: relative;
 	z-index: 2;
 }

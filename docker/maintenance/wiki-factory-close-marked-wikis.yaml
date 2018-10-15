@@ -1,0 +1,6 @@
+schedule: "15 10 * * *"
+args:
+- php
+- /usr/wikia/slot1/current/src/extensions/wikia/WikiFactory/Close/maintenance.php
+- --sleep=3
+- --limit=5000

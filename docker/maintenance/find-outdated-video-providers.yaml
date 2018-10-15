@@ -1,0 +1,5 @@
+# SUS-3469 | identify outdated video providers by querying Solr index, Jira Reporter will file tickets
+schedule: "55 7 * * *"
+args:
+- php
+- /usr/wikia/slot1/current/src/extensions/wikia/VideoHandlers/maintenance/findOutdatedVideoProviders.php

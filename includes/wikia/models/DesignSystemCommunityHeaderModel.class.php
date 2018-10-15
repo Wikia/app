@@ -16,14 +16,19 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( string $cityId, string $langCode ) {
+	public function __construct( string $langCode ) {
+		global $wgCityId, $wgFandomCreatorCommunityId;
+
 		parent::__construct();
 
-		$this->productInstanceId = $cityId;
+		$this->productInstanceId = $wgCityId;
 		$this->langCode = $langCode;
-		$this->themeSettings = new ThemeSettings( $cityId );
-		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = wfProtocolUrlToRelative( GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL() );
+		$this->themeSettings = new ThemeSettings( $wgCityId );
+		$this->settings = $this->themeSettings->getSettings();
+		$this->mainPageUrl = empty( $wgFandomCreatorCommunityId )
+			? wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() )
+			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
+			: wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) );
 	}
 
 	public function getData(): array {
@@ -39,6 +44,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		if ( !empty( $this->getWordmarkData() ) ) {
 			$data[ 'wordmark' ] = $this->getWordmarkData();
 		}
+
+		Hooks::run( 'DesignSystemCommunityHeaderModelGetData', [ &$data, $this->productInstanceId ] );
 
 		return $data;
 	}
@@ -236,7 +243,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function getFullUrl( $pageTitle, $namespace, $protocolRelative = false ) {
-		$url = GlobalTitle::newFromText( $pageTitle, NS_SPECIAL, $this->productInstanceId )->getFullURL();
+		$url = Title::newFromText( $pageTitle, $namespace)->getFullURL();
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}

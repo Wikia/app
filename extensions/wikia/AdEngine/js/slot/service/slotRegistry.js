@@ -101,11 +101,15 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	});
 
 	function storeScrollY(slotName) {
-		scrollYOnDfpRequest[slotName] = win.scrollY || win.pageYOffset;
+		scrollYOnDfpRequest[slotName] = getCurrentScrollY();
 	}
 
 	function getScrollY(slotName) {
-		return scrollYOnDfpRequest[slotName];
+		return scrollYOnDfpRequest[slotName] || 0;
+	}
+
+	function getCurrentScrollY() {
+		return win.scrollY || win.pageYOffset;
 	}
 
 	return {
@@ -113,6 +117,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		disable: disable,
 		enable: enable,
 		get: get,
+		getCurrentScrollY: getCurrentScrollY,
 		getRefreshCount: getRefreshCount,
 		getScrollY: getScrollY,
 		reset: reset,

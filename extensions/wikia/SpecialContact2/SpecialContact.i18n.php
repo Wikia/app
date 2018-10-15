@@ -2298,7 +2298,7 @@ Veel plezier!',
 Veel plezier!',
 	'specialcontact-intro-general' => 'Je kunt met dit formulier contact opnemen met [[w:project:Staff|FANDOM medewerkers]]. Beheerders van deze wiki kun je [[Special:ListAdmins|hier]] vinden.
 
-Aanvullende informatie over hoe je het beste contact met FANDOM op kunt nemen vindt je [[w:nl.community:Help:Contact opnemen met Fandom|hier]]. Als je vragen hebt voor andere gebruikers kun je ook op de [[w:c:nl.community:Special:Forum|FANDOM Community Forums]] terecht.
+Aanvullende informatie over hoe je het beste contact met FANDOM op kunt nemen vind je [[w:nl.community:Help:Contact opnemen met Fandom|hier]]. Als je vragen hebt voor andere gebruikers kun je ook op de [[w:c:nl.community:Special:Forum|FANDOM Community Forums]] terecht.
 
 Als je de voorkeur geeft aan normaal e-mailcontact of als je meerdere bijlagen heby kun je e-mailen naar [mailto:community@fandom.com community@fandom.com] (Engels).',
 	'specialcontact-desc' => 'FANDOMs contactformulier [[Special:Contact]]',
@@ -2315,7 +2315,7 @@ Gebruik deze links om meer te leren hoe je FANDOM kunt gebruiken en aanpassen of
 	'specialcontact-seclink-adoption' => 'Ik wil beheerdersrechten verkrijgen',
 	'specialcontact-secheader-account' => 'Veranderingen aan de account',
 	'specialcontact-seclink-account-issue' => 'Ik heb geen toegang tot mijn account',
-	'specialcontact-seclink-close-account' => 'Disable my account',
+	'specialcontact-seclink-close-account' => 'Schakel mijn account uit',
 	'specialcontact-seclink-rename-account' => 'Ik wil mijn account hernoemen',
 	'specialcontact-seclink-blocked' => 'Mijn account is geblokkeerd',
 	'specialcontact-secheader-editing' => 'Meedoen op FANDOM',
@@ -2334,7 +2334,7 @@ Gebruik deze links om meer te leren hoe je FANDOM kunt gebruiken en aanpassen of
 	'specialcontact-sectitle-user-conflict' => 'Gebruikersproblemen',
 	'specialcontact-sectitle-adoption' => 'Beheerdersrechten',
 	'specialcontact-sectitle-account-issue' => 'Accountprobleem',
-	'specialcontact-sectitle-close-account' => 'Disable my account',
+	'specialcontact-sectitle-close-account' => 'Schakel mijn account uit',
 	'specialcontact-sectitle-rename-account' => 'Hernoem mijn account',
 	'specialcontact-sectitle-blocked' => 'Account geblokkeerd',
 	'specialcontact-sectitle-using-fandom' => 'FANDOM gebruiken',

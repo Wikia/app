@@ -69,12 +69,21 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		$count = count( $data );
 		$helper = $this->getImageHelper();
 
-		for ( $i = 0; $i < $count; $i++ ) {
-			$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
-			$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
+		if ( $count > 1 ) {
+			for ( $i = 0; $i < $count; $i++ ) {
+				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[$i] = $helper->extendMobileImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
 
-			if ( !!$data[$i] ) {
-				$images[] = $data[$i];
+				if ( !!$data[$i] ) {
+					$images[] = $data[$i];
+				}
+			}
+		} elseif ($count === 1) {
+			$data[0]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+			$data[0] = $helper->extendMobileImageDataScaleToWidth( $data[0], self::MOBILE_THUMBNAIL_WIDTH );
+
+			if ( !!$data[0] ) {
+				$images[] = $data[0];
 			}
 		}
 
@@ -93,7 +102,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				$templateName = 'image-mobile';
 			} else {
 				// more than one image means image collection
-				$data = $helper->extendImageCollectionData( $images );
+				$data = $helper->extendMobileImageCollectionData( $images );
 				$templateName = 'image-collection-mobile';
 			}
 		}
@@ -108,7 +117,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	}
 
 	protected function renderHeader( $data ) {
-		return $this->render( 'header', $data );
+        return $this->render( 'header-mobile', $data );
 	}
 
 	protected function render( $type, array $data ) {
@@ -135,7 +144,8 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		if ( isset( $data['image'] ) ) {
 			$image = $data['image'][0];
 			$image['context'] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
+			$image = $helper->extendMobileImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
+
 			$data['image'] = $image;
 
 			if ( !$this->isMercury() ) {
@@ -148,6 +158,13 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
+	}
+
+	protected function renderHorizontalGroupContent( $groupContent ) {
+		return $this->renderItem(
+			'horizontal-group-content-mobile',
+			$this->createHorizontalGroupData( $groupContent )
+		);
 	}
 
 	/**

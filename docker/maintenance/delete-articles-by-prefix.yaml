@@ -1,0 +1,6 @@
+schedule: "27 5 * * *"
+server_id: 203236  # mediawiki119 wiki
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/wikia/deleteArticlesByPrefix.php
+- --prefix=QAarticle

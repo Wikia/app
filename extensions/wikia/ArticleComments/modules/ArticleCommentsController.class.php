@@ -50,7 +50,7 @@ class ArticleCommentsController extends WikiaController {
 		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
 		// Uncomment this when surrogate key purging works
-		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
+		//Wikia::setSurrogateKeysHeaders( ArticleComment::getSurrogateKey( $articleId ) );
 
 		// When lazy loading this request it shouldn't be cached in the browser
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {

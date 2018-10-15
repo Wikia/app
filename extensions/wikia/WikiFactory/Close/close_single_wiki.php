@@ -17,6 +17,7 @@ use Wikia\Logger\WikiaLogger;
 
 class CloseSingleWiki extends Maintenance {
 	protected $delay = 5;
+	protected $dropIndex = false;
 	/**
 	 * constructor
 	 *
@@ -26,6 +27,7 @@ class CloseSingleWiki extends Maintenance {
 		parent::__construct();
 		$this->mDescription = 'Closes single wiki';
 		$this->addOption( 'delay', 'Set time before deletion starts (in seconds)', false, true, 'd' );
+		$this->addOption( 'drop-search-index', 'Should we delete search results from Solr', false, false, 's' );
 		$this->addOption( 'cluster', 'Which cluster to operate on', false, true, 'c');
 	}
 
@@ -33,6 +35,7 @@ class CloseSingleWiki extends Maintenance {
 		global $wgUser, $wgCityId;
 
 		$this->delay = $this->getOption( 'delay', 5 );
+		$this->dropIndex = $this->getOption( 'drop-search-index', false );
 		$cluster   = isset( $this->mOptions[ 'cluster' ] ) ? $this->mOptions[ 'cluster' ] : false; // eg. c6
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
@@ -130,12 +133,14 @@ class CloseSingleWiki extends Maintenance {
 			] );
 		}
 
-		/**
-		 * update search index
-		 */
-		$indexer = new Wikia\Search\Indexer();
-		$indexer->deleteWikiDocs( $wgCityId );
-		$this->output( 'Wiki documents removed from index' );
+		if ( $this->dropIndex ) {
+			/**
+			 * update search index
+			 */
+			$indexer = new Wikia\Search\Indexer();
+			$indexer->deleteWikiDocs( $wgCityId );
+			$this->output( 'Wiki documents removed from index' );
+		}
 
 		/**
 		 * let other extensions remove entries for closed wiki
@@ -229,6 +234,7 @@ class CloseSingleWiki extends Maintenance {
 
 	private function removeDiscussions( int $cityId ) {
 		try {
+			$this->getSitesApi()->softDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {

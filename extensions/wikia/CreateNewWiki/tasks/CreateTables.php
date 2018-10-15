@@ -55,21 +55,49 @@ class CreateTables extends Task {
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->taskContext->getDBname() );
 		$this->taskContext->setWikiDBW( $dbw );
 
-		foreach ( $this->sqlFiles as $file ) {
-			$this->debug( __METHOD__ . ": Populating database with {$file}" );
+		$dbw->multiQuery( $this->getSchemaSQL(), __METHOD__ );
+		$dbw->commit( __METHOD__ );
 
-			$success = $this->taskContext->getWikiDBW()->sourceFile( $file );
-			if ( $success !== true ) {
-				return TaskResult::createForError( "Failed to run sql script " . $file );
-			}
-		}
-
-		//Add stats entry
-		$this->taskContext->getWikiDBW()->insert( "site_stats", [ "ss_row_id" => "1" ], __METHOD__ );
-
-		// we need to wait for slaves to catch up
-		TaskHelper::waitForSlaves( $this->taskContext, __METHOD__ );
+		$this->waitUntilTableExistsOnSlave();
 
 		return TaskResult::createForSuccess();
+	}
+
+	/**
+	 * Create a concatenated SQL schema statement from the source files provided
+	 * @return string SQL statements delimited by semicolon + newline
+	 */
+	private function getSchemaSQL(): string {
+		$sql = '';
+
+		foreach ( $this->sqlFiles as $file ) {
+			$fp = fopen( $file, 'r' );
+
+			while ( ( $line = fgets( $fp ) ) !== false ) {
+				// Remove whitespace, exclude empty lines and SQL comments
+				$line = trim( $line );
+				if ( $line !== '' && substr( $line, 0, 2 ) !== '--' ) {
+					$sql .= " $line\n";
+				}
+			}
+
+			fclose( $fp );
+		}
+
+		return trim( $sql );
+	}
+
+	/**
+	 * Wait until the interwiki table has replicated to the slave we are currently connected to.
+	 */
+	private function waitUntilTableExistsOnSlave() {
+		$dbr = wfGetDB( DB_SLAVE,  [], $this->taskContext->getDBname() );
+
+		$helper = new ReplicationWaitHelper( $dbr );
+		$helper->setCaller( __METHOD__ );
+
+		$helper->waitUntil( function ( \DatabaseBase $dbr ): bool {
+			return $dbr->tableExists( 'interwiki', __METHOD__ );
+		} );
 	}
 }

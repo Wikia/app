@@ -4102,7 +4102,9 @@
         "image",
         "original_dimensions",
         "wordmark",
-        "wam_score"
+        "wam_score",
+        "founding_user_id",
+        "creation_date"
       ],
       "properties": {
         "headline": {
@@ -4180,6 +4182,15 @@
         "title": {
           "type": "string",
           "description": "Wikia title"
+        },
+        "founding_user_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia founder"
+        },
+        "creation_date": {
+          "type": "string",
+          "description": "Date and time of the creation of Wikia"
         }
       }
     },

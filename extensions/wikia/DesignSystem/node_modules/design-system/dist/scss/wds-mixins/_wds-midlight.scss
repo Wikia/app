@@ -1,0 +1,7 @@
+@mixin wds-midlight($background-color) {
+	background-image: linear-gradient(to top, $background-color 54%, transparent 54%, transparent 100%);
+	box-decoration-break: clone;
+	display: inline;
+	padding-left: 3px;
+	padding-right: 3px;
+}

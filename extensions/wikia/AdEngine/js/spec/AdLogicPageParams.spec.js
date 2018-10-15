@@ -344,7 +344,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.ar).toBe('3:4');
 	});
 
-	it('geo is set only when Wikia.Geo.getCountryCode returns value', function () {
+	it('geo is set only when ext.wikia.adEngine.geo.getCountryCode returns value', function () {
 		geoMock.getCountryCode = function() { return; };
 		var params = getParams();
 

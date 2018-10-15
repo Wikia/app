@@ -2418,7 +2418,7 @@ ___________________________________________<br />
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '-- $1',
 	'forum-wiki-activity-msg-name' => '$1板',
-	'forum-activity-module-heading' => 'フォーラムアクティビティ',
+	'forum-activity-module-heading' => 'フォーラム',
 	'forum-related-module-heading' => '関連スレッド',
 	'forum-activity-module-posted' => '$1 による返信の投稿: $2',
 	'forum-activity-module-started' => '$1 によるスレッドの作成: $2',

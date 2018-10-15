@@ -479,6 +479,8 @@ abstract class WikiaBaseTest extends TestCase {
 	protected function mockDevEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
 		$this->mockGlobalVariable( 'wgDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
+		$this->mockGlobalVariable( 'wgWikiaDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
+		$this->mockGlobalVariable( 'wgFandomDevDomain', self::MOCK_DEV_NAME . '.fandom-dev.us' );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )
 			->method( 'getExternalHostName' )

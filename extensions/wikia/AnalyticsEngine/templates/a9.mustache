@@ -3,7 +3,7 @@
 		'ext.wikia.adEngine.adContext',
 		'ext.wikia.adEngine.lookup.a9'
 	], function (adContext, a9) {
-		if (adContext.get('bidders.a9')) {
+		if (adContext.get('bidders.a9') && !adContext.get('bidders.prebidAE3')) {
 			a9.call();
 		}
 	});

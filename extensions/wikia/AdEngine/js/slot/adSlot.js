@@ -22,7 +22,10 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		return {
 			name: name,
 			container: container,
-			isViewed: false,
+			isViewedFlag: false,
+			isViewed: function () {
+				return this.isViewedFlag;
+			},
 			enabled: true,
 			isEnabled: registerHook('isEnabled'),
 			disable: registerHook('disable'),

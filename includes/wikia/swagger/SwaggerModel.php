@@ -12,7 +12,7 @@ class SwaggerModel {
 
 	private function parseProperties($model) {
 		$properties = [];
-		$required = $model->required ?: [];
+		$required = isset( $model->required ) ? $model->required : [];
 
 		foreach ($model->properties as $name => $property) {
 			$properties[$name] = new SwaggerModelProperty($name, $property, in_array($name, $required));

@@ -13,11 +13,8 @@ function yaml2json() {
 	ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))' $*
 }
 
-function json2yaml() {
-	ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' $*
-}
-
 job_description_file_name=$1
+LABEL=$2
 
 SCRIPT_FOLDER=$(dirname $(readlink -f $0))
 TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
@@ -25,7 +22,7 @@ JOB_JSON=`yaml2json $SCRIPT_FOLDER/$job_description_file_name`
 NAME=`basename "$job_description_file_name" .yaml`
 SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
 # we need to add 12 spaces of padding to align yaml in template
-ARGS=`echo "$JOB_JSON" | jq .args | json2yaml | sed -e 's/^/            /g'`
+ARGS=`echo "$JOB_JSON" | jq .args[] | sed -e 's/^/            - /g'`
 SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
 
 if [ "$SERVER_ID" = 'null' ]; then
@@ -42,8 +39,9 @@ if [ "$ARGS" = 'null' ]; then
 	exit 1;
 fi
 
-job_k8s_descriptor="${TEMPLATE/\{name\}/${NAME}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{args\}/${ARGS}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{server_id\}/${SERVER_ID}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{schedule\}/${SCHEDULE}}"
+job_k8s_descriptor="${TEMPLATE/\$\{name\}/${NAME}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{args\}/${ARGS}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{label\}/${LABEL}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{server_id\}/${SERVER_ID}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{schedule\}/${SCHEDULE}}"
 echo "$job_k8s_descriptor"

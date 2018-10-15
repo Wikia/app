@@ -92,7 +92,6 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		].join(';');
 	}
 
-
 	return {
 		setupPerformanceMap: setupPerformanceMap,
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,

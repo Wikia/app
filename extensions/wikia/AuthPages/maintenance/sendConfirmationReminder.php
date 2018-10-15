@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__ . '/../../../maintenance/Maintenance.php';
+use Wikia\Logger\WikiaLogger;
+
+require __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 /**
  * Maintenance script to send email confirmation reminder to users.
@@ -29,7 +31,7 @@ class SendConfirmationReminder extends Maintenance {
 			$total++;
 		}
 
-		$this->output( "Sent confirmation reminder email to $actual users out of $total total.\n" );
+		WikiaLogger::instance()->info( "Sent confirmation reminder email to $actual users out of $total total.\n" );
 	}
 
 	/**
@@ -63,7 +65,7 @@ class SendConfirmationReminder extends Maintenance {
 			$count++;
 		}
 
-		$this->output( "Found $count users to potentially send confirmation email to.\n" );
+		WikiaLogger::instance()->info( "Found $count users to potentially send confirmation email to.\n" );
 
 		return $recipients;
 	}

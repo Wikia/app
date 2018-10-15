@@ -1480,6 +1480,12 @@ function wfGetValueExcerpt( $value ) {
  * @return string
  */
 function wfProtocolUrlToRelative( $url ) {
+	global $wgForceProtocolLinks;
+
+	if ( $wgForceProtocolLinks === true ) {
+		return $url;
+	}
+
 	$pos = strpos( $url, '://' );
 	if ( $pos > 0 ) {
 		$url = substr_replace( $url, '', 0, $pos+1 );
@@ -1497,26 +1503,58 @@ function wfHttpsToHttp( $url ) {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	global $wgWikiaDevDomain, $wgFandomDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
 	}
 
-	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
-		$server = str_replace( ".{$wgDevDomain}", '', $host );
-	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-		$server = preg_replace(
-			'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $wgWikiaBaseDomain ) . '$/',
-			'',
-			$host
-		);
+	if ( $wgDevelEnvironment ) {
+		$server = str_replace( ".{$wgWikiaDevDomain}", '', $host );
+		$server = str_replace( ".{$wgFandomDevDomain}", '', $server );
 	} else {
-		$server = str_replace( ".{$wgWikiaBaseDomain}", '', $host );
+		$baseDomain = wfGetBaseDomainForHost( $host );
+
+		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+			$server = preg_replace(
+				'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $baseDomain ) . '$/',
+				'',
+				$host
+			);
+		} else {
+			$server = str_replace( ".{$baseDomain}", '', $host );
+		}
 	}
 
 	// Only allow single subdomain wikis through
 	return substr_count( $server, '.' ) === 0;
+}
+
+/**
+ * Returns true for URLs with fandom domain, some examples:
+ * - https://starwars.fandom.com/wiki/Yoda
+ * - starwars.fandom.com/wiki/Yoda
+ * - starwars.fandom-dev.pl/
+ * - starwars.fandom-dev.us
+ *
+ * In the future, it can be used to force HTTPS on other domains
+ *
+ * @param $url
+ * @return bool
+ */
+function wfHttpsEnabledForURL( $url ): bool {
+	global $wgFandomBaseDomain;
+
+	$host = parse_url( $url, PHP_URL_HOST );
+
+	// e.g. not existing wikis
+	if ( empty( $host ) ) {
+		return false;
+	}
+
+	$host = wfNormalizeHost( $host );
+
+	return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
 }
 
 /**
@@ -1537,4 +1575,74 @@ function wfStripProtocol( $url ) {
  */
 function wfGetEffectiveHostname() {
 	return getenv('HOSTNAME_OVERRIDE') ?: gethostname();
+}
+
+function wfGetBaseDomainForHost( $host ) {
+	global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+	if ( strpos( $host, ".{$wgFandomBaseDomain}" ) !== false ) {
+		return $wgFandomBaseDomain;
+	}
+
+	return $wgWikiaBaseDomain;
+}
+
+/**
+ * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
+ * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
+ *
+ * @param $host
+ * @return string normalized host name
+ */
+function wfNormalizeHost( $host ) {
+	global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
+	$baseDomain = wfGetBaseDomainForHost( $host );
+
+	// strip env-specific pre- and suffixes for staging environment
+	$host = preg_replace(
+		'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
+		".{$baseDomain}",
+		$host );
+	if ( !empty( $wgDevelEnvironment ) ) {
+		$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
+		$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
+	}
+	return $host;
+}
+
+/**
+ * @param $url string full string to be modified
+ * @param $targetServer string host which will be used as na replacement (i.e. $wgServer)
+ * @return string modified string if successful or original url in case of some failure
+ * @throws Exception
+ */
+function wfForceBaseDomain( $url, $targetServer ) {
+	global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+
+	$urlHost = parse_url( $url, PHP_URL_HOST );
+	$targetHost = parse_url( $targetServer, PHP_URL_HOST );
+
+	if ( $urlHost === false || $targetHost === false ) {
+		return $url;
+	}
+
+	$normalizedUrlHost = wfNormalizeHost( $urlHost );
+	$urlBaseDomain = wfGetBaseDomainForHost( $normalizedUrlHost );
+	$targetBaseDomain = wfGetBaseDomainForHost( wfNormalizeHost( $targetHost ) );
+	if ( $urlBaseDomain === $targetBaseDomain ) {
+		return $url;
+	}
+
+	$count = 0;
+	if ( $targetBaseDomain === $wgFandomBaseDomain ) {
+		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+	} else {
+		$finalHost = str_replace(".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count);
+	}
+
+	if ( $count !== 1 ) {
+		return $url;
+	}
+
+	$finalUrl = http_build_url( $url, [ 'host' => $finalHost, ] );
+	return WikiFactory::getLocalEnvURL( $finalUrl );
 }

@@ -1,6 +1,9 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper, tracker) {
+define(
+		'ext.createNewWiki.builder',
+		['ext.createNewWiki.helper', 'ext.createNewWiki.communityBuilderOptIn', 'wikia.tracker'],
+		function (helper, communityBuilderOptIn, tracker) {
 	'use strict';
 
 	var wntimer = false,
@@ -8,7 +11,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		createStatus = false,
 		createStatusMessage = false,
 		cityId = false,
-		finishCreateUrl = false,
+		editToken = null,
 		retryGoto = 0,
 		nameAjax = false,
 		domainAjax = false,
@@ -48,7 +51,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			trackingMethod: 'analytics'
 		}),
 		wikiaBaseDomain = window.wgWikiaBaseDomain,
+		fandomBaseDomain = window.wgFandomBaseDomain,
 		shouldCreateLanguageWikisWithPath = window.wgCreateLanguageWikisWithPath,
+		shouldCreateEnglishWikisOnFandomCom = window.wgCreateEnglishWikisOnFandomCom,
 		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
@@ -58,6 +63,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkNextButtonStep1();
 		bindEventHandlers();
 		initFloatingLabelsPosition();
+		communityBuilderOptIn.init(wb, wikiLanguage, wikiVertical, wikiName, wikiDomain);
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {
@@ -142,8 +148,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			action: tracker.ACTIONS.SUBMIT,
 			label: 'theme-selection-submitted'
 		});
-		saveState(ThemeDesigner.settings, function () {
-			gotoMainPage();
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'finishCreateWiki',
+			data: {
+				themeSettings: ThemeDesigner.settings,
+				wikiId: cityId,
+				token: editToken
+			}
+		}).then(function(res) {
+			gotoMainPage(res.showWikiUrl);
+		}, function() {
+			// well, theme designer call failed, but we can show the wiki
+			gotoMainPage('http://' + wikiDomain.val() + '.' + wikiBaseDomain.text() + '/?wiki-welcome=1');
 		});
 	}
 
@@ -303,12 +320,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkWikiName();
 		checkDomain();
 		var selected = $(this).val();
-
+		if (shouldCreateEnglishWikisOnFandomCom) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain);
+			} else {
+				wikiBaseDomain.text(fandomBaseDomain);
+			}
+		}
 		if (shouldCreateLanguageWikisWithPath) {
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
 				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
-			} else {
-				wikiBaseDomain.text(wikiaBaseDomain);
 			}
 		} else {
 			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
@@ -587,10 +608,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		}
 	}
 
-	function gotoMainPage() {
+	function gotoMainPage(targetUrl) {
 		nextButtons.attr('disabled', true);
-		if (createStatus && createStatus === 'ok' && finishCreateUrl) {
-			location.href = finishCreateUrl;
+		if (createStatus && createStatus === 'ok' && targetUrl) {
+			location.href = targetUrl;
 		} else if (!createStatus || (createStatus && createStatus === 'backenderror')) {
 			$.showModal(errorModalHeader, errorModalMessage);
 		} else if (retryGoto < 300) {
@@ -652,7 +673,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
 						cityId = res.cityId;
 						createStatus = res.status;
-						finishCreateUrl = res.finishCreateUrl;
+						editToken = res.editToken;
 
 						throbberWrapper.stopThrobbing();
 						throbberWrapper.removeClass('creating-wiki');

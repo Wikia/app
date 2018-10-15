@@ -3,7 +3,6 @@
 namespace Wikia\CreateNewWiki\Tasks;
 /**
  * Class ConfigureWikiFactoryTest
- * @group Integration
  */
 class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
@@ -96,19 +95,23 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @param $dbName
 	 * @param $language
 	 * @param $url
+	 * @param $description
 	 * @param $expected
 	 * @dataProvider getStaticWikiFactoryVariablesDataProvider
 	 */
-	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $expected ) {
+	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url,
+													   $description, $expected ) {
 		$configureWFTask = new ConfigureWikiFactory( new TaskContext( [] ) );
 
-		$result = $configureWFTask->getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url );
-		$this->assertEquals( $result, $expected );
+		$result = $configureWFTask->getStaticVariables(
+			$siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $description );
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function getStaticWikiFactoryVariablesDataProvider() {
 		return [
-			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com',
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com', 'bar',
 				[
 					'wgSitename' => 'foo',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -119,9 +122,19 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
+					'wgEnableDiscussions' => true,
+					'wgEnableDiscussionsNavigation' => true,
+					'wgArchiveWikiForums' => true,
+					'wgEnableRecirculationDiscussions' => true,
+					'wgEnableRelatedPagesExt' => true,
+					'wgEnableCategoryGalleriesExt' => true,
+					'wgEnableFounderProgressBarExt' => true,
+					'wgEnableWallExt' => true,
 				]
 			],
-			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
+			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com/', 'bar',
 				[
 					'wgSitename' => 'foo:',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -132,10 +145,20 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
 					'wgMetaNamespace' => 'foo',
+					'wgEnableDiscussions' => true,
+					'wgEnableDiscussionsNavigation' => true,
+					'wgArchiveWikiForums' => true,
+					'wgEnableRecirculationDiscussions' => true,
+					'wgEnableRelatedPagesExt' => true,
+					'wgEnableCategoryGalleriesExt' => true,
+					'wgEnableFounderProgressBarExt' => true,
+					'wgEnableWallExt' => true,
 				]
 			],
-			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
+			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.wikia.com/', 'bar',
 				[
 					'wgSitename' => 'foo_bar:fizz',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
@@ -146,29 +169,41 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
 					'wgMetaNamespace' => 'foo_barfizz',
+					'wgEnableDiscussions' => true,
+					'wgEnableDiscussionsNavigation' => true,
+					'wgArchiveWikiForums' => true,
+					'wgEnableRecirculationDiscussions' => true,
+					'wgEnableRelatedPagesExt' => true,
+					'wgEnableCategoryGalleriesExt' => true,
+					'wgEnableFounderProgressBarExt' => true,
+					'wgEnableWallExt' => true,
+				]
+			],
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en',
+				'https://foo.fandom.com', 'bar',
+				[
+					'wgSitename' => 'foo',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgLocalInterwiki' => 'foo',
+					'wgLanguageCode' => 'en',
+					'wgEnableSectionEdit' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgWikiDescription' => 'bar',
+					'wgEnableDiscussions' => true,
+					'wgEnableDiscussionsNavigation' => true,
+					'wgArchiveWikiForums' => true,
+					'wgEnableRecirculationDiscussions' => true,
+					'wgEnableRelatedPagesExt' => true,
+					'wgEnableCategoryGalleriesExt' => true,
+					'wgEnableFounderProgressBarExt' => true,
+					'wgEnableWallExt' => true,
 				]
 			]
-		];
-	}
-
-	/**
-	 * @param $staticVariables
-	 * @param $expected
-	 * @dataProvider getVariablesFromDBDataProvider
-	 */
-	public function testGetVariablesFromDB( $staticVariables, $expected ) {
-		$configureWFTask = new ConfigureWikiFactory( new TaskContext( [] ) );
-
-		$sharedDBWMock = $this->getMock( '\DatabaseMysqli', [ 'select', 'fetchObject', 'freeResult' ] );
-
-		$result = $configureWFTask->getVariablesFromDB( $sharedDBWMock, $staticVariables );
-		$this->assertEquals( $result, $expected );
-	}
-
-	public function getVariablesFromDBDataProvider() {
-		return [
-			[ [ ], [ ] ]
 		];
 	}
 }

@@ -31,6 +31,9 @@ define('wikia.trackingOptIn', [
 				zIndex: 9999999
 			});
 			geoRequiresConsent = instance.geoRequiresTrackingConsent();
+
+			// TODO: Remove this flag once we fully switch to CMP from TrackingOptIn - ADEN-7432
+			window.isConsentManagementProviderLoadedFromTrackingOptInModal = !!instance.consentManagementProvider;
 		} else {
 			optIn = true;
 			geoRequiresConsent = false;

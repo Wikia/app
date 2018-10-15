@@ -40,10 +40,11 @@ class InsightsSorting {
 	/**
 	 * Overrides the default values used for sorting and pagination
 	 *
+	 * @param array $articleData
 	 * @param array $params An array of URL parameters
 	 * @return array
 	 */
-	public function getSortedData( $articleData, $params ) {
+	public function getSortedData( $articleData, array $params = []) {
 		$sortParam = $params['sort'] ?? '';
 
 		if ( $sortParam || $this->config->showPageViews() ) {

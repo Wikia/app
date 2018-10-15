@@ -183,6 +183,13 @@ $wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
 
 /**
+ * The datacenter that hosts the starter dumps for CreateNewWiki
+ * @see \Wikia\CreateNewWiki\Starters
+ * @var string $wgCreateWikiStarterDumpsDatacenter
+ */
+$wgCreateWikiStarterDumpsDatacenter = WIKIA_DC_SJC;
+
+/**
  * Database user and password for Perl backend scripts.
  * @see SUS-3609 | Make backend scripts use "backend_admin" MySQL user instead of "mw_only"
  * @var string $wgDBbackenduser
@@ -190,21 +197,6 @@ $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
  */
 $wgDBbackenduser = $wgDBbackendAdminUser;
 $wgDBbackendpassword = $wgDBbackendAdminPassword;
-
-/**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var Array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-    'host' => 'prod.rabbit.service.sjc.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => 'data-warehouse',
-    'exchange' => 'mediawiki-edit-events',
-    'deadExchange' => 'zombie.v0.1',
-];
 
 /**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
@@ -222,9 +214,8 @@ $wgExtensionsDirectory = "$IP/extensions";
 
 /**
  * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
  * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
+ * @see lib/Wikia/src/Tasks/TaskRunner.php
  * @var string $wgFlowerUrl
  */
 $wgFlowerUrl = "http://celery-flower.$wgWikiaDatacenter.k8s.wikia.net";
@@ -521,6 +512,14 @@ $wgPreviewOnOpenNamespaces = [
 $wgProxyScriptPath = "$IP/maintenance/proxy_check.php";
 
 /**
+ * Shared instance of Redis master node
+ *
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgRedisHost
+ */
+$wgRedisHost = "geo-redisshared-prod-master.query.{$wgWikiaDatacenter}.consul";
+
+/**
  * Copyright icon.
  * @see includes/Skin.php
  * @global string $wgRightsIcon
@@ -543,16 +542,12 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
- * RabbitMQ configurarion.
- * @see lib/Wikia/src/Tasks/AsyncTaskList.php
- * @var Array $wgTaskBroker
+ * Whether to disable the background tasks broker for MediaWiki.
+ * @see lib/Wikia/src/Factory/RabbitFactory.php
+ * @see lib/Wikia/src/Rabbit/TasksRabbitPublisher.php
+ * @var bool $wgTaskBrokerDisabled
  */
-$wgTaskBroker = [
-    'host' => 'prod.rabbit.service.consul',
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-];
+$wgTaskBrokerDisabled = false;
 
 /**
  * Configuration file for external Tidy.

@@ -54,6 +54,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			bidders.a9,
 			null,
 			null,
+			null,
 			fvLagger
 		);
 	}

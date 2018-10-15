@@ -2,26 +2,38 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: "mediawiki-{name}"
+  name: "mw-cj-${name}"
 spec:
-  schedule: {schedule}
+  schedule: ${schedule}
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: logger
-            image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
           - name: php
-            image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
+            image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${label}
             env:
-             - name: SERVER_ID
-               value: {server_id}
-             - name: LOG_SOCKET_ONLY
-               value: "yes"
-             - name: LOG_SOCKET_ADDRESS
-               value: "tcp://localhost:9999"
+              # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+              - name: KUBERNETES_DEPLOYMENT_NAME
+                value: mediawiki-tasks
+              - name: KUBERNETES_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: SERVER_ID
+                value: "${server_id}"
+              - name: LOG_STDOUT_ONLY
+                value: "yes"
+            resources:
+              limits:
+                cpu: "6"
+                memory: 1200Mi
+              requests:
+                cpu: "3"
+                memory: 800Mi
             args:
-{args}
+${args}
           restartPolicy: Never
 

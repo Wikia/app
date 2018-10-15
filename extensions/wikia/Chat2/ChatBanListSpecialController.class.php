@@ -76,7 +76,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			}
 		}
 
-		$this->wg->Out->tagWithSurrogateKeys( self::getAxShowUsersSurrogateKey() );
+		Wikia::setSurrogateKeysHeaders( self::getAxShowUsersSurrogateKey() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( $result );

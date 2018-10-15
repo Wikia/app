@@ -92,6 +92,8 @@ class Starters {
 	 * @return SwiftStorage
 	 */
 	public static function getStarterDumpStorage() {
-		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET );
+		global $wgCreateWikiStarterDumpsDatacenter;
+		// SRE: make sure to always use proper Swift
+		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', $wgCreateWikiStarterDumpsDatacenter );
 	}
 }

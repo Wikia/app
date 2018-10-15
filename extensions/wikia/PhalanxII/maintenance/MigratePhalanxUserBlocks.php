@@ -82,7 +82,11 @@ class MigratePhalanxUserBlocks extends Maintenance {
 		return $userBlocks;
 	}
 
-	private function closeAccounts( $userBlocks ) {
+	/**
+	 * @param $userBlocks
+	 * @return int[]
+	 */
+	private function closeAccounts( $userBlocks ) : array {
 		$blockIdsClosed = [];
 
 		if ( empty( $userBlocks ) ) {
@@ -133,14 +137,17 @@ class MigratePhalanxUserBlocks extends Maintenance {
 		return true;
 	}
 
-	private function deletePhalanxBlocks( $blockIds ) {
-		if ( $this->dryRun ) {
-			return true;
+	/**
+	 * @param int[] $blockIds
+	 */
+	private function deletePhalanxBlocks( array $blockIds ) {
+		if ( $this->dryRun || empty( $blockIds ) ) {
+			return;
 		}
 
 		$dbw = $this->getPhalanxDB( DB_MASTER );
 
-		return $dbw->delete(
+		$dbw->delete(
 			'phalanx',
 			[
 				'p_id' => $blockIds,
@@ -166,7 +173,7 @@ class MigratePhalanxUserBlocks extends Maintenance {
 	private function setCurrentUser() {
 		global $wgUser;
 
-		$wgUser = User::newFromName( 'Fandom' );
+		$wgUser = User::newFromName( Wikia::USER );
 	}
 
 	private function getPhalanxDB( $db = DB_SLAVE ) {

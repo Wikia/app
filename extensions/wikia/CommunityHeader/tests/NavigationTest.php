@@ -25,11 +25,12 @@ class NavigationTest extends WikiaBaseTest {
 			$globals
 		) {
 			$globals[ 'wgServer' ] = self::DOMAIN;
+			$globals[ 'wgCityId' ] = self::WIKI_ID;
 
 			return $globals[ $variable ] ?? $GLOBALS[ $variable ] ?? false;
 		} );
 
-		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
+		$result = new Navigation( new DesignSystemCommunityHeaderModel( 'en' ) );
 
 		// used `array_values` to reset keys of array
 		$this->assertEquals( $expectedExploreItems, array_values( $result->exploreItems ) );
@@ -46,11 +47,12 @@ class NavigationTest extends WikiaBaseTest {
 			$globals
 		) {
 			$globals[ 'wgServer' ] = self::DOMAIN;
+			$globals[ 'wgCityId' ] = self::WIKI_ID;
 
 			return $globals[ $variable ] ?? $GLOBALS[ $variable ] ?? false;
 		} );
 
-		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
+		$result = new Navigation( new DesignSystemCommunityHeaderModel( 'en' ) );
 
 		$this->assertEquals( $expected, $result->discussLink );
 	}

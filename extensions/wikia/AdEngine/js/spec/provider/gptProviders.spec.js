@@ -76,6 +76,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
+			null,
 			mocks.lookups
 		);
 	}

@@ -32,7 +32,10 @@ define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
 				}, {
 					key: 'hb_uuid',
 					val: function (bidResponse) {
-						return adContext.get('bidders.rubiconDfp') ? bidResponse.videoCacheKey : 'disabled';
+						return (
+							bidResponse.bidderCode === 'appnexusAst' && adContext.get('bidders.appnexusDfp')) || (
+							bidResponse.bidderCode === 'rubicon' && adContext.get('bidders.rubiconDfp'))
+							? bidResponse.videoCacheKey : 'disabled';
 					}
 				}]
 			}

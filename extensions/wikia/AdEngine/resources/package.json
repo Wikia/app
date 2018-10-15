@@ -4,10 +4,7 @@
   "description": "Resources for adengine extension",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pushd node_modules/prebid.js && npm install && npm run build --production && popd",
-    "setup-prebid": "rm -rf node_modules && npm install && pushd node_modules/prebid.js && npm install && npm run build --production && popd && mkdir -p prebid && cp node_modules/prebid.js/build/dist/prebid.js prebid/prebid.min.js",
-    "build-prebid": "pushd node_modules/prebid.js && npm run build --production && popd && cp node_modules/prebid.js/build/dist/prebid.js prebid/prebid.min.js",
-    "build-prebid-dev": "pushd node_modules/prebid.js && gulp build-all --modules=modules.json && popd && cp node_modules/prebid.js/build/dist/prebid.js prebid/prebid.min.js && cp node_modules/prebid.js/build/dev/prebid.js prebid/prebid.js"
+    "build": "npm install && npm run build --production"
   },
   "repository": {
     "type": "git",
@@ -15,7 +12,6 @@
   },
   "author": "dianafa",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "prebid.js": "git+ssh://git@github.com/Wikia/Prebid.js.git"
+    "gulp": "^3.9.1"
   }
 }

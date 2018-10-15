@@ -173,7 +173,6 @@ class RegexResponseStrategy extends AbstractResponse implements ResponseStrategy
             // we don't need full matches
             unset($matches[0]);
             $responseBody = $this->replaceMatchesInBody($matches, $type, $responseBody);
-
         }
 
         return $responseBody;
@@ -188,17 +187,17 @@ class RegexResponseStrategy extends AbstractResponse implements ResponseStrategy
      */
     private function replaceMatchesInBody(array $matches, $type, $responseBody)
     {
-        $search  = [];
+        $search = [];
         $replace = [];
 
         foreach ($matches as $matchGroupId => $matchGroup) {
             // add first element as replacement for $(type.index)
-            $search[]  = "\${{$type}.{$matchGroupId}}";
+            $search[] = "\${{$type}.{$matchGroupId}}";
             $replace[] = reset($matchGroup);
             foreach ($matchGroup as $matchId => $match) {
                 // fix index to start with 1 instead of 0
-                $matchId++;
-                $search[]  = "\${{$type}.{$matchGroupId}.{$matchId}}";
+                ++$matchId;
+                $search[] = "\${{$type}.{$matchGroupId}.{$matchId}}";
                 $replace[] = $match;
             }
         }

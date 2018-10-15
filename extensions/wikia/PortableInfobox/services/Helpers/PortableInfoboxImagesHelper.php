@@ -56,23 +56,84 @@ class PortableInfoboxImagesHelper {
 		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
 		}
-		$ref = null;
-
-		$dataAttrs = [];
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
 
 		return array_merge( $data, [
-			'ref' => $ref,
 			'height' => intval( $imgTagDimensions['height'] ),
 			'width' => intval( $imgTagDimensions['width'] ),
-			'originalHeight' => $dataAttrs['height'] ?? '',
-			'originalWidth' => $dataAttrs['width'] ?? '',
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
-			'fileName' => $dataAttrs['fileName'] ?? '',
-			'dataAttrs' => json_encode( $dataAttrs )
+		] );
+	}
+
+	public function extendMobileImageData( $data, int $width, int $height ) {
+		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
+		$title = $data['name'];
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if (
+			!$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] )
+		) {
+			return false;
+		}
+
+		$thumbnail = $file->getUrlGenerator()
+			->zoomCrop()
+			->width($width)
+			->height($height)
+			->url();
+
+		$thumbnail2x = $file->getUrlGenerator()
+			->zoomCrop()
+			->width($width * 2)
+			->height($height * 2)
+			->url();
+
+		$mediaObject = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $file->getTitle(), $data, &$mediaObject ] );
+
+		return array_merge( $data, [
+			'height' => $width,
+			'width' => $height,
+			'thumbnail' => $thumbnail,
+			'thumbnail2x' => $thumbnail2x,
+			'fileName' => $mediaObject['fileName'] ?? '',
+			'dataAttrs' => json_encode( \ArticleAsJson::getDataAttrsForImage( $mediaObject ) ),
+		] );
+	}
+
+	public function extendMobileImageDataScaleToWidth( $data, int $width ) {
+		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
+		$title = $data['name'];
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if (
+			!$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] )
+		) {
+			return false;
+		}
+
+		$mediaObj = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $file->getTitle(), $data, &$mediaObj ] );
+
+		$thumbnail = $file->getUrlGenerator()
+			->scaleToWidth($width)
+			->url();
+
+		$thumbnail2x = $file->getUrlGenerator()
+			->scaleToWidth($width * 2)
+			->url();
+
+		return array_merge( $data, [
+			'height' => $mediaObj['height'],
+			'width' => $mediaObj['width'],
+			'thumbnail' => $thumbnail,
+			'thumbnail2x' => $thumbnail2x,
+			'fileName' => $mediaObj['fileName'] ?? '',
+			'dataAttrs' => json_encode( \ArticleAsJson::getDataAttrsForImage( $mediaObj ) ),
 		] );
 	}
 
@@ -81,6 +142,27 @@ class PortableInfoboxImagesHelper {
 	 * @return array
 	 */
 	public function extendImageCollectionData( $images ) {
+		$images = array_map(
+			function ( $image, $index ) {
+				$image['dataRef'] = $index;
+
+				return $image;
+			},
+			$images,
+			array_keys($images)
+		);
+
+		$images[0]['isFirst'] = true;
+		return [
+			'images' => $images,
+		];
+	}
+
+	/**
+	 * @param array $images
+	 * @return array
+	 */
+	public function extendMobileImageCollectionData( $images ) {
 		$dataAttrs = array_map(
 			function ( $image ) {
 				return json_decode( $image['dataAttrs'] );
@@ -98,13 +180,9 @@ class PortableInfoboxImagesHelper {
 			array_keys($images)
 		);
 
-		$images[0]['isFirst'] = true;
-		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
-			'firstImage' => $images[0],
 			'dataAttrs' => json_encode( $dataAttrs ),
-			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon')
 		];
 	}
 

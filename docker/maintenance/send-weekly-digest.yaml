@@ -1,0 +1,4 @@
+schedule: "6 0 * * 0"
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/wikia/cronjobs/sendWeeklyDigest.php

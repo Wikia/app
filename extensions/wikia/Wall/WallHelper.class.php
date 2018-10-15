@@ -61,15 +61,10 @@ class WallHelper {
 	/**
 	 * @brief Gets and returns user's object.
 	 *
-	 * @desc !IMPORTANT! It requires UserProfilePage class from UserProfilePageV3 extension.
-	 * It sends request to UserProfilePage controller which should return user object generated
-	 * from passed title.
-	 *
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	// TODO: remove call to UserProfilePage
 	public function getUser() {
 		$title = F::app()->wg->Title;
 		$ns = $title->getNamespace();

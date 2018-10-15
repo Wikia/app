@@ -9,23 +9,17 @@
 
 namespace Wikia\Tasks;
 
-use PhpAmqpLib\Channel\AMQPChannel;
-use PhpAmqpLib\Connection\AbstractConnection;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Exception\AMQPTimeoutException;
-use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Exception\AMQPRuntimeException;
-use PhpAmqpLib\Exception\AMQPExceptionInterface;
-use Wikia\Logger\WikiaLogger;
+use Wikia\Factory\ServiceFactory;
+use Wikia\Rabbit\TaskPublisher;
+use Wikia\Tasks\Queues\DumpsOnDemandQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
-use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
+use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
-use Wikia\Tracer\WikiaTracer;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
@@ -35,10 +29,7 @@ class AsyncTaskList {
 	const EXECUTOR_APP_NAME = 'mediawiki';
 
 	/** how long we're willing to wait for publishing to finish */
-	const ACK_WAIT_TIMEOUT_SECONDS = 3;
-
-	/** @var AbstractConnection connection to message broker */
-	protected $connection;
+	const ACK_WAIT_TIMEOUT_SECONDS = 0.3;
 
 	/** @var Queue the queue this task list will go into */
 	protected $queue;
@@ -55,9 +46,6 @@ class AsyncTaskList {
 	/** @var mixed user id and name of the user executing the task */
 	protected $createdBy = null;
 
-	/** @var int how long to delay execution (from now, in seconds) */
-	protected $delay = 0;
-
 	/** @var int the wiki id to execute the task in */
 	protected $wikiId = 0;
 
@@ -67,8 +55,20 @@ class AsyncTaskList {
 	/** @var array allows us to store information about this specific task */
 	protected $workId;
 
+	/** @var string unique ID identifying this task */
+	protected $id;
+
 	public function __construct() {
 		$this->wikiId = self::DEFAULT_WIKI_ID;
+		$this->id = $this->generateId();
+	}
+
+	/**
+	 * Get the unique ID of this task.
+	 * @return string
+	 */
+	public function getId(): string {
+		return $this->id;
 	}
 
 	/**
@@ -77,7 +77,7 @@ class AsyncTaskList {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority( PriorityQueue::NAME );
+		return $this->setQueue( PriorityQueue::NAME );
 	}
 
 	/**
@@ -97,6 +97,9 @@ class AsyncTaskList {
 	 */
 	public function setQueue( $queue ) {
 		switch ( $queue ) {
+			case DumpsOnDemandQueue::NAME:
+				$queue = new DumpsOnDemandQueue();
+				break;
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
 				break;
@@ -182,19 +185,6 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * set this task to execute sometime in the future instead of ASAP
-	 *
-	 * @param string $time any format supported by strtotime()
-	 * @return $this
-	 * @link http://php.net/strtotime
-	 */
-	public function delay( $time ) {
-		$this->delay = $time;
-
-		return $this;
-	}
-
-	/**
 	 * enable task de-duplication check
 	 *
 	 * @return $this
@@ -256,50 +246,40 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment, $wgDevDomain;
+		global $wgWikiaEnvironment, $wgDevDomain, $wgProcessTasksOnKubernetes;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
+		// we want to use k8s on a percentage of all communities, so we need a global value for that percentage
+		$percentOfTasksOnKubernetes = \WikiFactory::getVarValueByName("wgPercentOfTasksOnKubernetes", static::DEFAULT_WIKI_ID );
+		
+		$shouldGoToKubernetes = $wgProcessTasksOnKubernetes
+			|| ( $percentOfTasksOnKubernetes && $this->wikiId % 100 < $percentOfTasksOnKubernetes );
+
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = wfGetEffectiveHostname();
-			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
-				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
+				$executor['runner'] = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
-				$executionRunner = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executor['runner'] = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
-				$executionRunner = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
-			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
-				wfDebug( __METHOD__ . " - fallback to remote_shell execution mode on {$host}!\n" );
-
-				$executionMethod = 'remote_shell';
-				$executionRunner = [
-					$host,
-					'php',
-					realpath( $IP . '/maintenance/wikia/task_runner.php' ),
-				];
+				$executor['runner'] = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			}
-
-			$executor['method'] = $executionMethod;
-			$executor['runner'] = $executionRunner;
+		} elseif ( $shouldGoToKubernetes ) {
+			# SUS-5562 use k8s to process task
+			$executor['runner'] = ["http://mediawiki-tasks/proxy.php"];
 		}
 
 		return $executor;
 	}
 
 	/**
-	 * put this task list into the queue
-	 *
-	 * IMPORTANT: The provided channel must be in publish confirm mode
-	 *
-	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
-	 * @param string $priority which queue to add this task list to
-	 * @return string the task list's id
-	 * @throws AMQPExceptionInterface
+	 * Return a serialized form of this task that can be sent to Celery via RabbitMQ.
+	 * @return array
 	 */
-	public function queue( AMQPChannel $channel = null, $priority = null ) {
+	public function serialize(): array {
 		global $wgUser;
 
 		$this->initializeWorkId();
@@ -308,119 +288,36 @@ class AsyncTaskList {
 			$this->createdBy( $wgUser );
 		}
 
-		if ( is_string( $priority ) ) {
-			$this->setPriority( $priority );
-		}
-
-		$id = $this->generateId();
 		$workIdHash = sha1( json_encode( $this->workId ) );
-		$payload = (object) [
-			'id' => $id,
+
+		return [
+			'id' => $this->id,
 			'task' => $this->taskType,
 			'args' => $this->payloadArgs(),
-			'kwargs' => (object) [
+			'kwargs' => [
 				'created_ts' => time(),
 				'work_id' => $workIdHash,
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
 			]
 		];
-
-		if ( $this->delay ) {
-			$scheduledTime = strtotime( $this->delay );
-			if ( $scheduledTime !== false && $scheduledTime > time() ) {
-				$payload->eta = gmdate( 'c', $scheduledTime );
-			}
-		}
-
-		$message = new AMQPMessage( json_encode( $payload ), [
-			'content_type' => 'application/json',
-			'content-encoding' => 'UTF-8',
-			'immediate' => false,
-			'delivery_mode' => 2, // persistent
-			'app_id' => 'mediawiki',
-			'correlation_id' => WikiaTracer::instance()->getTraceId(),
-		] );
-
-		if ( $channel === null ) {
-			$exception = $connection = null;
-			try {
-				$connection = $this->connection();
-				$channel = $connection->channel();
-				/*
-				 * Allow basic_publish to fail in case the connection is blocked by rabbit, due to insufficient resources.
-				 * https://www.rabbitmq.com/alarms.html
-				 */
-				$channel->confirm_select();
-				$channel->basic_publish( $message, '', $this->getQueue()->name() );
-				$channel->wait_for_pending_acks(self::ACK_WAIT_TIMEOUT_SECONDS);
-
-				$channel->close();
-				$connection->close();
-			} catch ( AMQPExceptionInterface $e ) {
-				$exception = $e;
-			} catch ( \ErrorException $e ) {
-				$exception = $e;
-			}
-
-			if ( $exception !== null ) {
-				WikiaLogger::instance()->error( 'AsyncTaskList::queue', [
-					'exception' => $exception
-				] );
-				return null;
-			}
-		} else {
-			$channel->batch_basic_publish( $message, '', $this->getQueue()->name() );
-		}
-
-		$argsJson = json_encode($this->payloadArgs());
-		WikiaLogger::instance()->info( 'AsyncTaskList::queue ' . $id, [
-			'exception' => new \Exception(),
-			'spawn_task_id' => $id,
-			'spawn_task_type' => $this->taskType,
-			'spawn_task_work_id' => $workIdHash,
-			'spawn_task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
-			'spawn_task_queue' => $this->getQueue()->name(),
-		]);
-
-		return $id;
 	}
 
 	/**
-	 * @return AbstractConnection connection to message broker
-	 * @throws AMQPExceptionInterface
-	 */
-	protected function connection() {
-		if ( $this->connection == null ) {
-			$this->connection = self::getConnection();
-		}
-
-		return $this->connection;
-	}
-
-	/**
-	 * A helper for getting an AMQP connection
+	 * Schedule this task to be queued at the end of the request.
 	 *
-	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
-	 *
-	 * @return AbstractConnection connection to message broker
-	 * @throws AMQPRuntimeException
-	 * @throws AMQPTimeoutException
+	 * @see TaskPublisher
+	 * @deprecated just use TaskPublisher directly
+	 * @return string the task list's id
 	 */
-	protected static function getConnection() {
-		global $wgTaskBroker;
-
-		if ( empty( $wgTaskBroker ) ) {
-			throw new AMQPRuntimeException( 'Task broker is disabled' );
-		}
-
-		return new AMQPStreamConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+	public function queue() {
+		return ServiceFactory::instance()->rabbitFactory()->taskPublisher()->pushTask( $this );
 	}
 
 	/**
 	 * @return Queue queue this task list will go into
 	 */
-	protected function getQueue() {
+	public function getQueue(): Queue {
 		return $this->queue == null ? new Queue() : $this->queue;
 	}
 
@@ -433,51 +330,18 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * send a group of AsyncTaskList objects to the broker
+	 * Queue a group of AsyncTaskList objects to be sent to the broker
 	 *
-	 * @param array $taskLists AsyncTaskList objects to insert into the queue
-	 * @param string $priority which queue to add this task list to
-	 * @return array list of task ids
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * @param AsyncTaskList[] $taskLists AsyncTaskList objects to insert into the queue
+	 * @return string[] list of task ids
 	 */
-	public static function batch( $taskLists, $priority = null ) {
-		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
-				'exception' => $e,
-				'caller' => wfGetCallerClassMethod( [ __CLASS__, 'Wikia\\Tasks\\Tasks\\BaseTask' ] ),
-			] );
-
-			return null;
-		};
-
-		try {
-			$connection = self::getConnection();
-			$channel = $connection->channel();
-
-			// Allow basic_publish to fail in case the connection is blocked by rabbit, due to insufficient resources.
-			// https://www.rabbitmq.com/alarms.html
-			$channel->confirm_select();
-		} catch ( AMQPExceptionInterface $e ) {
-			return $logError( $e );
-		} catch ( \ErrorException $e ) {
-			return $logError( $e );
-		}
-
+	public static function batch( $taskLists ) {
 		$ids = [];
 
-		foreach ( $taskLists as $task ) {
-			/** @var AsyncTaskList $task */
-			$ids [] = $task->queue( $channel, $priority );
-		}
+		$publisher = ServiceFactory::instance()->rabbitFactory()->taskPublisher();
 
-		try {
-			$channel->publish_batch();
-			$channel->wait_for_pending_acks(self::ACK_WAIT_TIMEOUT_SECONDS);
-		} catch ( AMQPExceptionInterface $e ) {
-			return $logError( $e );
-		} catch ( \ErrorException $e ) {
-			return $logError( $e );
+		foreach ( $taskLists as $task ) {
+			$ids[] = $publisher->pushTask( $task );
 		}
 
 		return $ids;

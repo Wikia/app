@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 			code: 'TOP_LEADERBOARD',
 			mediaTypes: {
 				video: {
-					context: 'outstream',
+					context: 'instream',
 					playerSize: [640, 480]
 				}
 			},

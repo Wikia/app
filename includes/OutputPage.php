@@ -134,6 +134,10 @@ class OutputPage extends ContextSource {
 
 	var $mRedirectCode = '';
 
+	# start wikia change
+	var $mRedirectProtocol = PROTO_CURRENT;
+	# end wikia change
+
 	var $mFeedLinksAppendQuery = null;
 
 	/**
@@ -241,6 +245,7 @@ class OutputPage extends ContextSource {
 	 */
 	var $mRedirectsEnabled = true;
 	var $topScripts = '';
+	private $redirectedBy = [];
 
 
 	/**
@@ -257,13 +262,25 @@ class OutputPage extends ContextSource {
 		}
 	}
 
+	# start wikia change
+	public function redirectProtocol( $protocol, $responsecode = '302', $redirectedBy = null ) {
+		if ( $protocol === PROTO_HTTP || $protocol === PROTO_HTTPS ) {
+			$this->mRedirectProtocol = $protocol;
+			$this->mRedirectCode = $responsecode;
+			if ( !empty( $redirectedBy ) ) {
+				$this->redirectedBy[] = $redirectedBy;
+			}
+		}
+	}
+	# end wikia change
+
 	/**
 	 * Redirect to $url rather than displaying the normal page
 	 *
 	 * @param $url String: URL
 	 * @param $responsecode String: HTTP status code
 	 */
-	public function redirect( $url, $responsecode = '302' ) {
+	public function redirect( $url, $responsecode = '302', $redirectedBy = null ) {
 
 		# start wikia change
 		if( !$this->mRedirectsEnabled ) {
@@ -275,10 +292,21 @@ class OutputPage extends ContextSource {
 		$this->mRedirect = str_replace( "\n", '', $url );
 		$this->mRedirectCode = $responsecode;
 
+		if ( !empty( $redirectedBy ) ) {
+			$this->redirectedBy[] = $redirectedBy;
+		}
+
 		# start wikia change
 		# Cache permanent redirects for 20 minutes, see rt#18297
 		if( $responsecode == '301' ) {
 			$this->setSquidMaxage( 1200 );
+		}
+	}
+
+	public function cancelRedirect( $cancelProtocolRedirect = true ) {
+		$this->mRedirect = '';
+		if ( $cancelProtocolRedirect ) {
+			$this->mRedirectProtocol = PROTO_CURRENT;
 		}
 	}
 
@@ -1883,7 +1911,11 @@ class OutputPage extends ContextSource {
 	 *   /w/index.php?title=Main_page&variant=zh-cn should never be served.
 	 */
 	function addAcceptLanguage() {
-		$lang = $this->getTitle()->getPageLanguage();
+		$title = $this->getTitle();
+		if ( is_null( $title ) ) {
+			return;
+		}
+		$lang = $title->getPageLanguage();
 		if( !$this->getRequest()->getCheck( 'variant' ) && $lang->hasVariants() ) {
 			$variants = $lang->getVariants();
 			$aloption = array();
@@ -2050,6 +2082,9 @@ class OutputPage extends ContextSource {
 		return HttpStatus::getMessage( $code );
 	}
 
+	public function isRedirect() {
+		return $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT;
+	}
 	/**
 	 * Finally, all the text has been munged and accumulated into
 	 * the object, let's actually output it:
@@ -2065,14 +2100,40 @@ class OutputPage extends ContextSource {
 
 		$response = $this->getRequest()->response();
 
-		if ( $this->mRedirect != '' ) {
+		if ( $this->isRedirect() ) {
+			if ( $this->mRedirect == '') {
+				$this->mRedirect = $this->getRequest()->getFullRequestURL();
+			}
+
+			if ( $this->mRedirectProtocol === PROTO_HTTP ) {
+				$this->mRedirect = wfHttpsToHttp( $this->mRedirect );
+			} elseif ( $this->mRedirectProtocol === PROTO_HTTPS ) {
+				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
+			}
+
 			# Standards require redirect URLs to be absolute
-			$this->mRedirect = wfExpandUrl( $this->mRedirect, PROTO_CURRENT );
+			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
 
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
 
-			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
+			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code, &$this->redirectedBy ) ) ) {
+				$current = WikiFactoryLoader::getCurrentRequestUri( $_SERVER, true, true );
+				// Check for the POST requests, as those are allowed to redirect to the same url (see PLATFORM-3646)
+				if ( !$this->getRequest()->wasPosted() && $current == $redirect ) {
+					$response->header( 'HTTP/1.1 508 Loop Detected' );
+					$response->header( 'X-Reason: Redirect loop detected' );
+					$response->header( 'X-Redirected-By: ' . join( ' ', $this->redirectedBy) );
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'Redirect loop detected', [
+							'currentUrl' => $current,
+							'targetUrl' => $redirect,
+							'redirectedBy' => join( ' ', $this->redirectedBy )
+						]
+					);
+					wfProfileOut( __METHOD__ );
+					return;
+				}
 				if( $code == '301' || $code == '303' ) {
 					if( !$wgDebugRedirects ) {
 						$message = HttpStatus::getMessage( $code );
@@ -2086,7 +2147,8 @@ class OutputPage extends ContextSource {
 				$this->sendCacheControl();
 
 				// SUS-4175 | make the source of the redirect more obvious
-				$response->header( 'X-Redirected-By: mw-OutputPage::redirect' );
+				$this->redirectedBy[] = 'mw-OutputPage::redirect';
+				$response->header( 'X-Redirected-By: ' . join( ' ', $this->redirectedBy) );
 				# end wikia change
 
 				$response->header( "Content-Type: text/html; charset=utf-8" );
@@ -3780,20 +3842,6 @@ $templates
 					break 2;
 				}
 			}
-		}
-	}
-
-	/**
-	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
-	 * @author Wikia
-	 */
-	public function tagWithSurrogateKeys( $keyArr ) {
-		if(is_array($keyArr)) {
-			header( 'X-Surrogate-Key: ' . implode( $keyArr, ' '), false );
-			header( 'Surrogate-Key: ' . implode( $keyArr, ' '), false );
-		} else {
-			header( 'X-Surrogate-Key: ' . $keyArr, false );
-			header( 'Surrogate-Key: ' . $keyArr, false );
 		}
 	}
 

@@ -3308,7 +3308,7 @@ $messages['pl'] = array(
 	'oasis-button-wiki-activity-feed' => 'Zobacz całą aktywność >',
 	'oasis-button-wiki-activity-watchlist' => 'Tylko obserwowane',
 	'oasis-activity-watchlist-login' => 'Musisz się zalogować, aby zobaczyć wyłącznie swoje obserwowane strony.',
-	'oasis-activity-header' => 'Ostatnia aktywność na wiki',
+	'oasis-activity-header' => 'Ostatnia aktywność',
 	'oasis-related-video-header' => 'Podobne filmy',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|strona|strony|stron}} na<br /> tej wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Utwórz wiki',
@@ -3376,7 +3376,7 @@ $messages['pl'] = array(
 	'oasis-add-page' => 'Dodaj stronę',
 	'oasis-section-edit' => 'Edytuj',
 	'oasis-section-edit-alt' => 'Edytuj sekcję $1',
-	'oasis-popular-blogs-title' => 'Popularne posty<br />na blogach',
+	'oasis-popular-blogs-title' => 'Popularne&nbsp;wpisy na&nbsp;blogach',
 	'oasis-spotlights-rail-title' => 'Więcej z',
 	'themedesigner' => 'Kreator motywu',
 	'oasis-pages-on-wiki-header' => 'Strony na $1',
@@ -3492,6 +3492,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
 	'oasis-page-header-diff' => '<strong>Zmiany:</strong> $1',
 	'oasis-related-video-by-5min' => 'z 5min Video',
+	'oasis-spotlights-footer-title' => 'Więcej z Fandomu',
 );
 
 $messages['pms'] = array(

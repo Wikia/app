@@ -74,9 +74,10 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		// User pages for discussions
+		// Discussions user pages
 		'/d/u/',
-
+		// Discussions guidelines
+		'/d/g',
 		// Fandom old URLs
 		'/fandom?p=',
 
@@ -134,7 +135,7 @@ class WikiaRobots {
 			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
-		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+		$this->accessAllowed = $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' );
 		$this->experiment = false;
 
 		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {
@@ -160,7 +161,8 @@ class WikiaRobots {
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
 		       $wgScriptPath,
-		       $wgRequest;
+		       $wgRequest,
+		       $wgEnableHTTPSForAnons;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -170,7 +172,17 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
+			$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';
+			// Enforce HTTPS on wikis where it is enabled by default
+			if ( wfHttpsAllowedForURL( $sitemapUrl ) &&
+				(
+					wfHttpsEnabledForURL( $sitemapUrl ) ||
+					!empty( $wgEnableHTTPSForAnons )
+				)
+			) {
+				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
+			}
+			$robots->addSitemap( $sitemapUrl );
 		}
 
 		// Block namespaces
