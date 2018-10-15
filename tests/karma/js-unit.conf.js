@@ -164,10 +164,6 @@ module.exports = function (config) {
 			'extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js',
 			'extensions/wikia/PortableInfoboxBuilder/js/spec/PortableInfoboxBuilderTemplateClassificationHelper.spec.js',
 
-			// Flow Tracking
-			'extensions/wikia/FlowTracking/scripts/createPageTracking.js',
-			'extensions/wikia/FlowTracking/scripts/spec/createPageTracking.spec.js',
-
 			// Article Video
 			'extensions/wikia/ArticleVideo/scripts/*.js',
 			'extensions/wikia/ArticleVideo/scripts/spec/*.spec.js',

@@ -16,6 +16,8 @@ class WikiFactoryLoader {
 	private $parsedUrl = '';
 	/** @var string $langCode Language code given in request path, if present, without a leading slash  */
 	private $langCode = '';
+	/** @var bool $mWikiIdForced set to true if a wiki was forced via X-Mw-Wiki-Id header */
+	private $mWikiIdForced = false;
 
 	// Input variables used to identify wiki in CLI (e.g. maintenance script) context
 	private $mCityID;
@@ -48,7 +50,7 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgCommandLineMode;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -65,7 +67,15 @@ class WikiFactoryLoader {
 			$this->mAlwaysFromDB = 1;
 		}
 
-		$this->mCommandLine = false;
+		/**
+		 * Check if we're running in command line mode
+		 *
+		 * Set a default value of the flag below to avoid /proxy.php requests for closed wikis
+		 * to render a "this wiki is closed" web page
+		 *
+		 * @see SUS-6026
+		 */
+		$this->mCommandLine = $wgCommandLineMode;
 
 		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
 			// SUS-5816 | a special HTTP request with wiki ID forced via request header
@@ -76,6 +86,7 @@ class WikiFactoryLoader {
 			$this->parsedUrl = parse_url( WikiFactory::getWikiByID( $this->mCityID )->city_url );
 			$this->mServerName = $this->parsedUrl['host'];
 			$this->langCode = $this->parsedUrl['path'];
+			$this->mWikiIdForced = true;
 
 			// differ CDN caching on X-Mw-Wiki-Id request header value
 			RequestContext::getMain()->getOutput()->addVaryHeader( 'X-Mw-Wiki-Id' );
@@ -445,7 +456,7 @@ class WikiFactoryLoader {
 		$url = parse_url( $this->mCityUrl );
 
 		// check if domain from browser is different than main domain for wiki
-		$cond1 = !empty( $this->mServerName ) &&
+		$cond1 = !empty( $this->mServerName ) && $this->mWikiIdForced === false &&
 				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'] ?? '', '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**

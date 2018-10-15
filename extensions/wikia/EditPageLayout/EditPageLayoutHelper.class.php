@@ -343,7 +343,6 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
-			'extensions/wikia/EditPageLayout/js/plugins/FlowTracking.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',

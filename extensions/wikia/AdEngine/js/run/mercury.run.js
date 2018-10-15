@@ -95,6 +95,8 @@ require([
 
 		passFVLineItemIdToUAP();
 
+		adEngineBridge.readSessionId();
+
 		// Track Labrador values to DW
 		var labradorPropValue = geo.getSamplingResults().join(';');
 

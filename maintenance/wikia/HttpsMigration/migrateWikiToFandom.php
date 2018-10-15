@@ -51,6 +51,11 @@ class MigrateWikiToFandom extends Maintenance {
 
 			$sourceWikiId = $data[0];
 
+			if ( !WikiFactory::isPublic( $sourceWikiId ) ) {
+				$this->output( "Wiki with ID {$sourceWikiId} was not found or is closed!\n" );
+				continue;
+			}
+
 			$sourceDomain = wfNormalizeHost( parse_url( WikiFactory::cityIDtoDomain( $sourceWikiId ), PHP_URL_HOST ) );
 
 			if ( !$sourceDomain ) {
@@ -90,6 +95,9 @@ class MigrateWikiToFandom extends Maintenance {
 				// Banner notification about migration, see SEO-669
 				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
 				WikiFactory::setVarByName( 'wgFandomComMigrationDone', $sourceWikiId, true, 'Migration to fandom.com' );
+
+				// Update lastmod in sitemap timestamps
+				WikiFactory::setVarByName( 'wgDomainChangeDate', $sourceWikiId, wfTimestamp( TS_MW ), 'Migration to fandom.com' );
 
 				$this->purgeCachesForWiki( $sourceWikiId );
 			}

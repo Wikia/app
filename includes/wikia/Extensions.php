@@ -409,7 +409,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	
+
 	// SUS-5540: use the luasandbox extension as executor if it is available
 	if ( extension_loaded( 'luasandbox' ) ) {
 		$wgScribuntoDefaultEngine = 'luasandbox';
@@ -1699,10 +1699,6 @@ if ( !isset($wgEnableNewAuthModal) && in_array( $wgLanguageCode, [ 'es', 'ru' ] 
 	$wgEnableNewAuthModal = true;
 }
 
-if ( !empty( $wgEnableFlowTracking ) ) {
-	include "$IP/extensions/wikia/FlowTracking/FlowTracking.setup.php";
-}
-
 if ( !empty( $wgEnableArticleFeaturedVideo ) || !empty( $wgEnableArticleRelatedVideo ) ) {
 	include "$IP/extensions/wikia/ArticleVideo/ArticleVideo.setup.php";
 }
@@ -1721,6 +1717,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
+}
+
+if ( !empty( $wgEnableResetTrackingPreferencesPage ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/ResetTrackingPreferences.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
@@ -1754,6 +1754,11 @@ if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+// SUS-5817
+if ( $wgEnableFastlyInsights ) {
+	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}
 
 // SEO-670 | SEO friendly category pages
 if ( !empty( $wgEnableCategoryPage3Ext ) ) {

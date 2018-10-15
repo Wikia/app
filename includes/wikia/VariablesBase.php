@@ -1950,6 +1950,14 @@ $wgDnsBlacklistUrls = [ 'http.dnsbl.sorbs.net.' ];
 $wgDocType = '-//W3C//DTD XHTML 1.0 Transitional//EN';
 
 /**
+ * Used to set a date when migrating a wiki to a different domain to force an
+ * updated lastmod timestamp in sitemaps.
+ * @see PLATFORM-3746
+ * @var string $wgDomainChangeDate
+ */
+$wgDomainChangeDate = null;
+
+/**
  * The URL of the document type declaration.  Ignored if $wgHtml5 is true,
  * since HTML5 has no DTD, and <!DOCTYPE html> doesn't actually have a DTD part
  * to put this variable's contents in.
@@ -2702,13 +2710,6 @@ $wgEnableFirstContributionsExt = true;
  * @var bool $wgEnableFlagClosedAccountsExt
  */
 $wgEnableFlagClosedAccountsExt = true;
-
-/**
- * Enable FlowTracking extension (event tracking in create new page flow).
- * @see extensions/wikia/FlowTracking
- * @var bool $wgEnableFlowTracking
- */
-$wgEnableFlowTracking = true;
 
 /**
  * Enable Forum extension.
@@ -8884,3 +8885,15 @@ $wgFandomComMigrationScheduled = false;
  * @var bool $wgFandomComMigrationDone
  */
 $wgFandomComMigrationDone = false;
+
+/**
+ * Whether we should enable tracking cookie reset page. This is needed in transition phase
+ * when we migrate wikis from .wikia.com to .fandom.com domain.
+ */
+$wgEnableResetTrackingPreferencesPage = false;
+
+/**
+ * Wether we should load the FastlyInsights extension. The extension will then add the Fastly Insights
+ * script to pages - https://insights.fastlylabs.com
+ */
+$wgEnableFastlyInsights = false;

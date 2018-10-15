@@ -101,14 +101,17 @@ class SitemapXmlController extends WikiaController {
 		$response->setBody( $out );
 	}
 
-	private function getIso8601Timestamp( $touched ) {
-		return
-			$touched[0] . $touched[1] . $touched[2] . $touched[3] . '-' .
-			$touched[4] . $touched[5] . '-' .
-			$touched[6] . $touched[7] . 'T' .
-			$touched[8] . $touched[9] . ':' .
-			$touched[10] . $touched[11] . ':' .
-			$touched[12] . $touched[13] . 'Z';
+	private function getLastMod( $touched ) {
+		global $wgDomainChangeDate;
+		$touchedTime = strtotime( $touched );
+		if ( !empty( $wgDomainChangeDate ) ) {
+			$domainChangeTime = strtotime( $wgDomainChangeDate );
+			if ( $domainChangeTime > $touchedTime ) {
+				return date( 'Y-m-d\TH:i:s\Z', $domainChangeTime );
+			}
+		}
+
+		return date( 'Y-m-d\TH:i:s\Z', $touchedTime );
 	}
 
 	private function generateSitemapPage( $namespace, $page ) {
@@ -125,7 +128,7 @@ class SitemapXmlController extends WikiaController {
 
 		foreach ( $this->model->getItems( $namespace, $offset, $limit ) as $page ) {
 			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $page->page_title ) );
-			$lastmod = $this->getIso8601Timestamp( $page->page_touched );
+			$lastmod = $this->getLastMod( $page->page_touched );
 
 			$out .= '<url>' . PHP_EOL;
 			$out .= '<loc>' . $urlPrefix . $encodedTitle . '</loc>' . PHP_EOL;
@@ -155,7 +158,8 @@ class SitemapXmlController extends WikiaController {
 		}
 
 		if ( $wgEnableDiscussions ) {
-			$discussionsSitemapUrl = 'https://services.wikia.com/discussions-sitemap/sitemap/' . $wgCityId;
+			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+			$discussionsSitemapUrl = $urlProvider->getUrl( 'discussions-sitemap' ) . '/sitemap/' . $wgCityId;
 			$out .= '<sitemap><loc>' . $discussionsSitemapUrl . '</loc></sitemap>' . PHP_EOL;
 		}
 

@@ -335,7 +335,7 @@ class CuratedContentController extends WikiaController {
 					Hooks::run( 'CuratedContentSave', [ $sections ] );
 
 					// SUS-4254 | a dirty hack to trigger purges and wait a bit for them to happen
-					CeleryPurge::onRestInPeace();
+					\Wikia\Factory\ServiceFactory::instance()->rabbitFactory()->taskPublisher()->doUpdate();
 					sleep( 2 );
 				}
 			}
