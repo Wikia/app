@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * A simple parallel CURL client helper class
  */
@@ -49,6 +51,7 @@ class CurlMultiClient {
 		$handles = array();
 
 		if ( $options === null ) { // add default options
+			WikiaLogger::instance()->info( "Curl default options" );
 			$options = CurlMultiClient::getDefaultOptions();
 		}
 
@@ -64,6 +67,7 @@ class CurlMultiClient {
 			if ( isset( $row['headers'] ) ) {
 				$reqOptions[CURLOPT_HTTPHEADER] = $row['headers'];
 			}
+			WikiaLogger::instance()->info( "Curl request options: " . json_encode( $reqOptions ) );
 			curl_setopt_array( $handle, $reqOptions );
 
 			$handles[$k] = $handle;
