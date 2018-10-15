@@ -50,6 +50,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return slotName + '-' + src;
 				}
 			},
+			featuredVideoCookieService: {
+				getAutoplay: function() {
+					return '0';
+				}
+			},
 			window: {
 				pvUID: 'superFooUniqueID'
 			}
@@ -62,6 +67,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
+			mocks.featuredVideoCookieService,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
@@ -139,6 +145,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('price')).toEqual(-1);
 		expect(getTrackedValue('wsi')).toEqual('(none)');
 		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
+		expect(getTrackedValue('user_block_autoplay')).toEqual(1);
 	});
 
 	it('Track data with slot name', function () {
