@@ -38,7 +38,7 @@ $messages['fr'] = array(
 
 $messages['it'] = array(
 	'emailext-fbdisconnect-subject' => 'Il tuo account FANDOM adesso non è più collegato a Facebook!',
-	'emailext-fbdisconnect-summary' => 'Sembra che tu abbia appena disconnesso il tuo account FANDOM da Facebook. Abbiamo mantenuto tutti i tuoi contributi, messaggi e profilo intatti dal momento che sei una parte importante della community di FANDOM.',
+	'emailext-fbdisconnect-summary' => 'Sembra che tu abbia appena scollegato il tuo account FANDOM da Facebook. Abbiamo mantenuto tutti i tuoi contributi, messaggi e profilo intatti dal momento che sei una parte importante della community di FANDOM.',
 	'emailext-fbdisconnect-intro' => 'È possibile usare lo stesso nome utente, ma potrebbe essere necessario fare clic sul link qui di seguito per impostare la tua nuova password su FANDOM:',
 	'emailext-fbdisconnect-instructions' => "Se hai già impostato una password su FANDOM, non occorre fare altro. Puoi ignorare questo messaggio e continuare l'accesso a FANDOM con la vecchia password. In caso contrario, fai clic sul link qui sopra per impostare la tua nuova password su FANDOM.",
 );
