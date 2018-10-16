@@ -155,7 +155,7 @@ class ParserCache {
 	 * @return ParserOutput|false
 	 */
 	public function get( $article, $popts, $useOutdated = false ) {
-		global $wgCacheEpoch;
+		global $wgCacheEpoch, $wgPoolWorkArticleViewDebugMode;
 		wfProfileIn( __METHOD__ );
 
 		$canCache = $article->checkTouched();
@@ -169,6 +169,10 @@ class ParserCache {
 
 		$parserOutputKey = $this->getKey( $article, $popts, $useOutdated );
 		if ( $parserOutputKey === false ) {
+			if ( $wgPoolWorkArticleViewDebugMode ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: missing parser output key" );
+			}
+
 			wfIncrStats( 'pcache_miss_absent' );
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -182,10 +186,18 @@ class ParserCache {
 			$value = $this->mMemc->get( $parserOutputKey );
 		}
 		if ( !$value ) {
+			if ( $wgPoolWorkArticleViewDebugMode ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: missing parser output for key: $parserOutputKey" );
+			}
+
 			wfDebug( "ParserOutput cache miss.\n" );
 			wfIncrStats( "pcache_miss_absent" );
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		if ( $wgPoolWorkArticleViewDebugMode ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: parser output found for key: $parserOutputKey" );
 		}
 
 		wfDebug( "ParserOutput cache found.\n" );
