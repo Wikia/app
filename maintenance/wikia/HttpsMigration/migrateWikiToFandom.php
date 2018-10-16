@@ -51,6 +51,11 @@ class MigrateWikiToFandom extends Maintenance {
 
 			$sourceWikiId = $data[0];
 
+			if ( !WikiFactory::isPublic( $sourceWikiId ) ) {
+				$this->output( "Wiki with ID {$sourceWikiId} was not found or is closed!\n" );
+				continue;
+			}
+
 			$sourceDomain = wfNormalizeHost( parse_url( WikiFactory::cityIDtoDomain( $sourceWikiId ), PHP_URL_HOST ) );
 
 			if ( !$sourceDomain ) {
@@ -91,6 +96,9 @@ class MigrateWikiToFandom extends Maintenance {
 				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
 				WikiFactory::setVarByName( 'wgFandomComMigrationDone', $sourceWikiId, true, 'Migration to fandom.com' );
 
+				// Update lastmod in sitemap timestamps
+				WikiFactory::setVarByName( 'wgDomainChangeDate', $sourceWikiId, wfTimestamp( TS_MW ), 'Migration to fandom.com' );
+
 				$this->purgeCachesForWiki( $sourceWikiId );
 			}
 
@@ -129,9 +137,31 @@ class MigrateWikiToFandom extends Maintenance {
 
 		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
 
+		$dbName = WikiFactory::IDtoDB( $wikiId );
+
 		$keys = [
 			wfSharedMemcKey( 'globaltitlev1', $wikiId ),
 			wfSharedMemcKey( 'globaltitlev1:https', $wikiId ),
+			wfForeignMemcKey(
+				$dbName,
+				false,
+				'Wikia\Search\TopWikiArticles',
+				'WikiaSearch',
+				'topWikiArticles',
+				$wikiId,
+				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
+				false
+			),
+			wfForeignMemcKey(
+				$dbName,
+				false,
+				'Wikia\Search\TopWikiArticles',
+				'WikiaSearch',
+				'topWikiArticles',
+				$wikiId,
+				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
+				true
+			),
 		];
 
 		foreach ( $keys as $key ) {

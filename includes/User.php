@@ -4145,7 +4145,7 @@ class User implements JsonSerializable {
 	/**
 	 * Save this user's attributes into the attribute service.
 	 */
-	public function saveAttributes() {
+	protected function saveAttributes() {
 		$this->userAttributes()->save( $this->getId() );
 	}
 

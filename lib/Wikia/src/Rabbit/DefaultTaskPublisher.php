@@ -18,6 +18,9 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var ConnectionManager $rabbitConnectionManager */
 	private $rabbitConnectionManager;
 
+	/** @var TaskProducer[] $producers task producers registered for publish */
+	private $producers = [];
+
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
@@ -39,11 +42,21 @@ class DefaultTaskPublisher implements TaskPublisher {
 		return $task->getId();
 	}
 
+	public function registerProducer( TaskProducer $producer ) {
+		$this->producers[] = $producer;
+	}
+
 	/**
 	 * Publish queued tasks to RabbitMQ.
 	 * Called at the end of the request lifecycle.
 	 */
 	function doUpdate() {
+		foreach ( $this->producers as $producer ) {
+			foreach ( $producer->getTasks() as $task ) {
+				$this->tasks[] = $task;
+			}
+		}
+
 		// Quit early if there are no tasks to be published
 		if ( empty( $this->tasks ) ) {
 			return;

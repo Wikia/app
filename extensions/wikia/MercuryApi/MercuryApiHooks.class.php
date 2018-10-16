@@ -93,6 +93,7 @@ class MercuryApiHooks {
 		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Request from browser to MediaWiki
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL(), 'collapsibleSections' => '1' ] );
 			$urls[] = MercuryApiController::getUrl( 'getTrackingDimensions', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;

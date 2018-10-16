@@ -355,7 +355,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 		foreach( $argv as $key => $value ) {
 			if( substr($value, 0 , 8 ) === "--server" ) {
 				if( $value === "--server" ) {
-					// next artument is server url
+					// next argument is server url
 					if( isset( $argv[ $key + 1 ] ) ) {
 						$server = $argv[ $key + 1 ];
 					}
@@ -1705,10 +1705,6 @@ if ( !isset($wgEnableNewAuthModal) && in_array( $wgLanguageCode, [ 'es', 'ru' ] 
 	$wgEnableNewAuthModal = true;
 }
 
-if ( !empty( $wgEnableFlowTracking ) ) {
-	include "$IP/extensions/wikia/FlowTracking/FlowTracking.setup.php";
-}
-
 if ( !empty( $wgEnableArticleFeaturedVideo ) || !empty( $wgEnableArticleRelatedVideo ) ) {
 	include "$IP/extensions/wikia/ArticleVideo/ArticleVideo.setup.php";
 }
@@ -1764,3 +1760,8 @@ if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+// SUS-5817
+if ( $wgEnableFastlyInsights ) {
+	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}

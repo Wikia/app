@@ -45,6 +45,13 @@ putenv('MW_INSTALL_PATH=' . $IP);
  */
 $wgCommandLineMode = true;
 
+/**
+ * SUS-5867 | follow up to hack from SUS-5862, if script is not invoked via command line then the $argv and $argc are
+ * set to null. Since the mentioned hack mimics the command line mode, these two should be set as well
+ */
+$argv = [];
+$argc = 1;
+
 require ( $IP . '/includes/WebStart.php' );
 
 // we forced command line mode, explicitly construct a WebRequest object
