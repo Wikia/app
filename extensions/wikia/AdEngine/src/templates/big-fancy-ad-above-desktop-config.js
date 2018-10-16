@@ -1,6 +1,7 @@
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
 import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
+import AdUnitBuilder from './../ad-unit-builder';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -29,6 +30,7 @@ export const getConfig = () => ({
 		this.adSlot = adSlot;
 		this.slotParams = params;
 		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+		context.set(`slots.${adSlot.getSlotName()}.vast.adUnitId`, AdUnitBuilder.build(adSlot));
 		context.set('slots.BOTTOM_LEADERBOARD.viewportConflicts', []);
 
 		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');

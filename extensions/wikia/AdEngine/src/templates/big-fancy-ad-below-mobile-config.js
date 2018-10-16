@@ -1,4 +1,5 @@
 import { context } from '@wikia/ad-engine';
+import AdUnitBuilder from "../ad-unit-builder";
 
 function getNavbarHeight() {
 	const navbar = document.querySelector('.site-head-wrapper');
@@ -27,6 +28,7 @@ export function getConfig() {
 		topThreshold: getNavbarHeight(),
 		onInit(adSlot, params) {
 			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+			context.set(`slots.${adSlot.getSlotName()}.vast.adUnitId`, AdUnitBuilder.build(adSlot));
 		}
 	};
 }

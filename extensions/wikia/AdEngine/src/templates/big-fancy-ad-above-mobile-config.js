@@ -1,5 +1,6 @@
 import { context, slotTweaker } from '@wikia/ad-engine';
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
+import AdUnitBuilder from "../ad-unit-builder";
 
 const {
 	CSS_TIMING_EASE_IN_CUBIC,
@@ -58,6 +59,8 @@ export const getConfig = mercuryListener => ({
 		const wrapper = document.querySelector('.mobile-top-leaderboard');
 
 		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+		context.set(`slots.${adSlot.getSlotName()}.vast.adUnitId`, AdUnitBuilder.build(adSlot));
+
 		wrapper.style.opacity = '0';
 		slotTweaker.onReady(adSlot).then((iframe) => {
 			wrapper.style.opacity = '';
