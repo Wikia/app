@@ -7,8 +7,8 @@ use Wikia\Metrics\Collector;
 class AsyncKinesisProducerTask extends BaseTask {
 
 	public function putRecord( $streamName, $message ) {
-		global $wgAWSAccessKey, $wgAWSSecretKey, $wgWikiaEnvironment;
-		
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
 		$kinesis = new RetryingKinesisProducer(
 			new KinesisProducer($wgAWSAccessKey, $wgAWSSecretKey)
 		);
@@ -16,5 +16,3 @@ class AsyncKinesisProducerTask extends BaseTask {
 	}
 
 }
-
-

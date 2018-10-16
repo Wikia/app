@@ -386,12 +386,12 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
-		if ( ( ! Wikia::isDevEnv()) && ( $this->mParams['cityId'] % 100 == 28 ) ) { // enabled on 1% of wikis
+		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 1 // enabled on 1% of wikis
+		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
 			$this->mParams['action'] = $this->mKey;
-			$kinesis = new AsyncKinesisProducerTask();
-			( new AsyncTaskList() )
-				->add( $kinesis->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) ) )
-				->queue();
+			$task = AsyncKinesisProducerTask::newLocalTask();
+			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
+			$task->queue();
 		}
 		WikiaLogger::instance()->info( 'DW event sent', [
 			'method' => __METHOD__
