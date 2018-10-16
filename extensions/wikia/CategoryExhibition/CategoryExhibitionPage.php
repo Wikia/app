@@ -7,10 +7,25 @@ class CategoryExhibitionPage extends CategoryPageWithLayoutSelector {
 	public function openShowCategory() {
 		parent::openShowCategory();
 
-		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgRequest, $wgUser;
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n" );
+
+		$urlParams = new CategoryUrlParams( $wgRequest, $wgUser );
+		$urlParams->savePreference();
+
+		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$oTmpl->set_vars(
+			[
+				'path' => $wgTitle->getFullURL(),
+				'sortTypes' => $urlParams->getAllowedSortTypes(),
+				'current' => $urlParams->getSortType()
+			]
+		);
+		$formHtml = $oTmpl->render( 'form' );
+
+		$wgOut->addHTML( $formHtml );
 	}
 
 	public function closeShowCategory() {
