@@ -69,6 +69,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
 			};
 			if (featuredVideoCookieService) {
+				trackingData['user_block_autoplay'] = -1;
 				var cookieValue = featuredVideoCookieService.getAutoplay();
 				if (['0', '1'].indexOf(cookieValue) > -1) {
 					trackingData['user_block_autoplay'] = cookieValue === '0' ? 1 : 0;
