@@ -12,7 +12,7 @@ class AsyncKinesisProducerTask extends BaseTask {
 		$kinesis = new RetryingKinesisProducer(
 			new KinesisProducer($wgAWSAccessKey, $wgAWSSecretKey)
 		);
-		$kinesis->putRecord( $streamName, $message );
+		return $kinesis->putRecord( $streamName, $message );
 	}
 
 }
