@@ -6,7 +6,8 @@ class ApiAccessService {
 	const ENV_SANDBOX = 2;
 	const WIKIA_CORPORATE = 32;
 	const WIKIA_NON_CORPORATE = 64;
-	const URL_TEST = 128;	
+	const URL_TEST = 128;
+	const WIKIA_COMMUNITY = 256;
 
 	/**
 	 * @var WikiaRequest
@@ -72,12 +73,15 @@ class ApiAccessService {
 		if ( ($access & self::WIKIA_CORPORATE) && !($this->isCorporateWiki()) ) {
 			return false;
 		}
+		if ( ($access & self::WIKIA_COMMUNITY) && !($this->isCommunityCentralWiki()) ) {
+			return false;
+		}
 		$isTest = $this->isTestLocation();
 		//if access needs TEST in url, and it's using standard url deny access
 		if ( ($access & self::URL_TEST) && !$isTest ) {
 			return false;
 		}
-		$access = $access & ~(self::URL_TEST | self::WIKIA_CORPORATE | self::WIKIA_NON_CORPORATE );
+		$access = $access & ~(self::URL_TEST | self::WIKIA_CORPORATE | self::WIKIA_NON_CORPORATE | self::WIKIA_COMMUNITY);
 		//no access restriction found
 		if ( !$access ) {
 			return true;
@@ -113,5 +117,9 @@ class ApiAccessService {
 	 */
 	protected function isCorporateWiki() {
 		return WikiaPageType::isCorporatePage();
+	}
+
+	protected function isCommunityCentralWiki() {
+		return WikiaPageType::isCommunityCentralWiki();
 	}
 }

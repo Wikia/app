@@ -12,7 +12,6 @@ namespace Wikia\api;
 
 class ApiAccessServiceTest extends \WikiaBaseTest {
 	private $org_wgApiAccess;
-	private $wgApiEnvironment;
 
 	public function setUp() {
 		global $wgApiAccess, $wgApiEnvironment;
@@ -75,10 +74,10 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	 * @covers ApiAccessService::canUse
 	 * @dataProvider dp_canUse
 	 */
-	public function testCanUse( $access, $test, $env, $result, $isCorporate ) {
+	public function testCanUse( $access, $test, $env, $result, $isCorporate, $isCommunity ) {
 		$mock = $this->getMockBuilder( "\ApiAccessService" )
 			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'getApiAccess', 'isTestLocation', 'getEnvValue', 'isCorporateWiki' ] )
+			->setMethods( [ '__construct', 'getApiAccess', 'isTestLocation', 'getEnvValue', 'isCorporateWiki', 'isCommunityCentralWiki' ] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -93,6 +92,9 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'isCorporateWiki' )
 			->will( $this->returnValue( $isCorporate ) );
+		$mock->expects( $this->any() )
+			->method( 'isCommunityCentralWiki' )
+			->will( $this->returnValue($isCommunity) );
 
 			
 		$this->assertEquals( $result, $mock->canUse( '', '' ) );
@@ -117,16 +119,16 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
 	public function dp_canUse() {
 		return [
-			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, true,
-		                \ApiAccessService::ENV_DEVELOPMENT, true, false	],
-			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, false,
-		                \ApiAccessService::ENV_DEVELOPMENT, false, false	],
-			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true, false ],
-			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false, false ],
-			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, true, true ],
-			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, false, false ],
-			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, false, true ],
-			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, true, false ]
+			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, true, \ApiAccessService::ENV_DEVELOPMENT, true, false, false ],
+			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, false, \ApiAccessService::ENV_DEVELOPMENT, false, false, false ],
+			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true, false, false ],
+			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false, false, false ],
+			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, true, true, false ],
+			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, false, false, false ],
+			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, false, true, false ],
+			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, true, false, false ],
+			[ \ApiAccessService::WIKIA_COMMUNITY, false, 0, true, false, true ],
+			[ \ApiAccessService::WIKIA_COMMUNITY, false, 0, false, false, false ]
 		];
 	}
 
