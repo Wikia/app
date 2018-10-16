@@ -25,16 +25,6 @@ class AutoLoginService extends WikiaService {
 		$this->setVal( 'url', $this->getServiceUrl() );
 	}
 
-	/**
-	 * @param array $vars JS variables to be added at the bottom of the page
-	 * @param $scripts
-	 */
-	public static function onWikiaSkinTopScripts( array &$vars, &$scripts ) {
-		$vars['wgPassiveAutologinUrl'] = self::$kubernetesExternalUrlProvider->getAlternativeUrl( 'autologin' ) . '/passive_frame';
-		$vars['wgTrustedAutologinUrl'] = rtrim( self::$kubernetesExternalUrlProvider->getAlternativeUrl( '' ), '/' );
-	}
-
-
 	protected function getServiceUrl() {
 		return self::$kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
 	}
