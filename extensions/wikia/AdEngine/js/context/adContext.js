@@ -234,6 +234,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
+		context.opts.incontentPlayerRail = isEnabled('wgAdDriverIncontentPlayerRailCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);

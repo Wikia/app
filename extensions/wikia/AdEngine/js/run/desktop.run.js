@@ -152,8 +152,17 @@ require([
 ) {
 	'use strict';
 
+	/*function runOnPageReady(method) {
+		if (doc.readyState === 'complete') {
+			method();
+		} else {
+			win.addEventListener('load', method);
+		}
+	}*/
+
 	function initDesktopSlots() {
 		highImpact.init();
+
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			tracker.track({
 				category: 'wgDisableIncontentPlayer',
@@ -164,6 +173,7 @@ require([
 		} else {
 			inContent.init('INCONTENT_PLAYER');
 		}
+
 		bottomLeaderboard.init();
 	}
 
@@ -173,5 +183,6 @@ require([
 		} else {
 			win.addEventListener('load', initDesktopSlots);
 		}
+		//runOnPageReady(initDesktopSlots);
 	});
 });
