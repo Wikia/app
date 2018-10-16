@@ -2,6 +2,7 @@
 
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
+use Wikia\Tasks\AsyncTaskList;
 
 class DataWarehouseEventProducer {
 	protected static $rabbit;
@@ -12,7 +13,8 @@ class DataWarehouseEventProducer {
 		EDIT_CATEGORY       = 'log_edit',
 		CREATEPAGE_CATEGORY = 'log_create',
 		UNDELETE_CATEGORY   = 'log_undelete',
-		DELETE_CATEGORY     = 'log_delete';
+		DELETE_CATEGORY     = 'log_delete',
+		KINESIS_STREAM_NAME = 'mw_edit_json';
 
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
@@ -42,6 +44,7 @@ class DataWarehouseEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
+		$this->setBeacon( wfGetBeaconId() );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -375,10 +378,21 @@ class DataWarehouseEventProducer {
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
 	}
 
+	public function setBeacon( $beacon ) {
+		$this->mParams['beacon'] = $beacon;
+	}
+
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
+		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 1; // enabled on 1% of wikis
+		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
+			$this->mParams['action'] = $this->mKey;
+			$task = AsyncKinesisProducerTask::newLocalTask();
+			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
+			$task->queue();
+		}
 		WikiaLogger::instance()->info( 'DW event sent', [
 			'method' => __METHOD__
 		] );
