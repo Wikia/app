@@ -68,12 +68,14 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
-			mocks.featuredVideoCookieService,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
 			mocks.window,
-			mocks.bidHelper
+			mocks.bidHelper,
+			undefined,
+			undefined,
+			mocks.featuredVideoCookieService
 		);
 	}
 
@@ -90,6 +92,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		mocks.adTracker.trackDW.calls.reset();
 
 		tracker = getModule();
+		autoplay = '0';
 	});
 
 	it('Do not track data when tracking is disabled', function () {
@@ -240,5 +243,45 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
+	});
+
+	it('should set user_block_autoplay to 0 if featuredVideoAutoplay cookie is "1"', function () {
+		autoplay = '1';
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('user_block_autoplay')).toEqual(0);
+	});
+
+	it('should not set user_block_autoplay if featuredVideoCookie is not present', function () {
+		autoplay = null;
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('user_block_autoplay')).toBeUndefined();
+
+		// Cookie should be null if not present but let's be more bulletproof
+		autoplay = undefined;
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('user_block_autoplay')).toBeUndefined();
+	});
+
+	it('should not set user_block_autoplay if cookies module is not present', function () {
+		var serviceBefore = mocks.featuredVideoCookieService;
+
+		mocks.featuredVideoCookieService = undefined;
+		autoplay = undefined;
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('user_block_autoplay')).toBeUndefined();
+
+		mocks.featuredVideoCookieService = serviceBefore;
 	});
 });
