@@ -22,6 +22,7 @@ $wgHooks['AfterCategoriesUpdate'][] = 'CategoryPage3Hooks::onAfterCategoriesUpda
 $wgHooks['ArticleFromTitle'][] = 'CategoryPage3Hooks::onArticleFromTitle';
 $wgHooks['BeforeInitialize'][] = 'CategoryPage3Hooks::onBeforeInitialize';
 $wgHooks['GetPreferences'][] = 'CategoryPage3Hooks::onGetPreferences';
+$wgHooks['LinkerMakeExternalLink'][] = 'CategoryPage3Hooks::onLinkerMakeExternalLink';
 $wgHooks['UserGetDefaultOptions'][] = 'CategoryPage3Hooks::onUserGetDefaultOptions';
 
 $wgExtensionMessagesFiles[ 'CategoryPage3' ] = __DIR__ . '/CategoryPage3.i18n.php';

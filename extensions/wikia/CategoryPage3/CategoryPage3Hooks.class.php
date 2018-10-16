@@ -24,7 +24,7 @@ class CategoryPage3Hooks {
 	 * @return bool
 	 * @throws MWException
 	 */
-	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $title ): bool {
+	public static function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $title ): bool {
 		$categories = $categoryInserts + $categoryDeletes;
 
 		foreach ( array_keys( $categories ) as $categoryTitle ) {
@@ -41,7 +41,7 @@ class CategoryPage3Hooks {
 	 * @param Article $article
 	 * @return bool
 	 */
-	static public function onArticleFromTitle( $title, &$article ): bool {
+	public static function onArticleFromTitle( $title, &$article ): bool {
 		if ( $title->isRedirect() ) {
 			$title = $article->getRedirectTarget();
 		}
@@ -78,7 +78,7 @@ class CategoryPage3Hooks {
 	 * @param MediaWiki $mediawiki
 	 * @return bool
 	 */
-	static public function onBeforeInitialize(
+	public static function onBeforeInitialize(
 		Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
@@ -123,13 +123,51 @@ class CategoryPage3Hooks {
 		return true;
 	}
 
-	static public function onUserGetDefaultOptions( &$defaultOptions ) {
+	public static function onLinkerMakeExternalLink( string $url, string $text, string &$link, array $attribs ): bool {
+		global $wgCityId, $wgContLang, $wgFandomBaseDomain, $wgWikiaBaseDomain;
+
+		$host = parse_url( $url, PHP_URL_HOST );
+		$host = wfNormalizeHost( $host );
+
+		// External-external links
+		if ( !endsWith( $host, $wgFandomBaseDomain ) && !endsWith( $host, $wgWikiaBaseDomain ) ) {
+			return true;
+		}
+
+		// Not this wiki
+		if ( WikiFactory::UrlToID( $host ) !== $wgCityId ) {
+			return true;
+		}
+
+		$path = parse_url( $url, PHP_URL_PATH );
+		$categoryNsText = $wgContLang->getNsText( NS_CATEGORY );
+
+		// Not a category
+		if ( strpos( $path, $categoryNsText ) === false ) {
+			return true;
+		}
+
+		$queryParams = [];
+		parse_str( parse_url( $url, PHP_URL_QUERY ), $queryParams );
+		$paramsToHideFromCrawlers = array_merge( static::$oldQueryParams, [ 'from' ] );
+
+		// Not a problem
+		if ( empty ( array_intersect( array_keys( $queryParams ), $paramsToHideFromCrawlers ) ) ) {
+			return true;
+		}
+
+		$link = static::getNonCrawlableLink( $url, $text, $attribs );
+
+		return false;
+	}
+
+	public static function onUserGetDefaultOptions( &$defaultOptions ) {
 		$defaultOptions[ static::GLOBAL_PREFERENCE_NAME ] = CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
 
 		return true;
 	}
 
-	static private function getLayout( Title $title, Article $article ): string {
+	private static function getLayout( Title $title, Article $article ): string {
 		$context = $article->getContext();
 		$user = $context->getUser();
 		$isAnon = $user->isAnon();
@@ -169,5 +207,12 @@ class CategoryPage3Hooks {
 		}
 
 		return null;
+	}
+
+	private static function getNonCrawlableLink( $url, $text, $attribs ) {
+		$attribs['href'] = '#';
+		$attribs['onclick'] = 'window.location.assign("' . rawurlencode( $url ) . '"); return false;';
+
+		return Html::rawElement( 'a', $attribs, $text );
 	}
 }
