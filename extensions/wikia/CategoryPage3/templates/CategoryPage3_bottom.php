@@ -37,7 +37,7 @@
 						<?php if ( $member->isSubcategory() ) : ?>
 							<?= DesignSystemHelper::renderSvg(
 								'wds-icons-pages-small',
-								'wds-icon-small category-page__member-left-icon'
+								'wds-icon wds-icon-small category-page__member-left-icon'
 							) ?>
 						<?php endif; ?>
 						<?php if ( $member->getImage() ) : ?>
