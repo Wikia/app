@@ -33,6 +33,7 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 	private function getHTML(): string {
 		return ( new PhpEngine() )->clearData()
 			->setData( [
+				'categoryExhibitionAllowed' => $this->isCategoryExhibitionAllowed(),
 				'currentLayout' => $this->getCurrentLayout()
 			] )
 			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3_layoutSelector.php' );
@@ -43,5 +44,12 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 	 */
 	protected function getCurrentLayout() {
 		throw new Exception( 'getCurrentLayout method needs to be overriden' );
+	}
+
+	private function isCategoryExhibitionAllowed(): bool {
+		$title = $this->getContext()->getTitle();
+		$article = Article::newFromTitle( $title, $this->getContext() );
+
+		return !CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article );
 	}
 }

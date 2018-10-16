@@ -13,14 +13,16 @@
 			'category-layout-selector__icon wds-icon wds-icon-small'
 		) ?>
 	</li>
-	<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-category-exhibition' )->escaped() ) ?>"
-		class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ? ' is-active' : '' ?>"
-		data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ?>">
-		<?= DesignSystemHelper::renderSvg(
-			'wds-icons-grid-small',
-			'category-layout-selector__icon wds-icon wds-icon-small'
-		) ?>
-	</li>
+	<?php if ( $categoryExhibitionAllowed ) : ?>
+		<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-category-exhibition' )->escaped() ) ?>"
+			class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ? ' is-active' : '' ?>"
+			data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION ?>">
+			<?= DesignSystemHelper::renderSvg(
+				'wds-icons-grid-small',
+				'category-layout-selector__icon wds-icon wds-icon-small'
+			) ?>
+		</li>
+	<?php endif; ?>
 	<li title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-category-page3' )->escaped() ) ?>"
 		class="category-layout-selector__item<?= $currentLayout === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ? ' is-active' : '' ?>"
 		data-category-layout="<?= CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ?>">

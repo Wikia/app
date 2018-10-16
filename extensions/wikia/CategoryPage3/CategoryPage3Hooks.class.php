@@ -156,7 +156,7 @@ class CategoryPage3Hooks {
 		return static::getLayoutForKey( $title, $article, $globalPreference );
 	}
 
-	private static function getLayoutForKey( Title $title, Article $article, $key ): string {
+	private static function getLayoutForKey( Title $title, Article $article, $key ) {
 		if ( $key === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ) {
 			return CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI;
 		} else if (
