@@ -6363,6 +6363,19 @@ $wgPoolCounterConf = null;
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
 /**
+ * Whether to emit more detailed debug logs for a PoolWorkArticleView
+ * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
+ * @var bool $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugMode = false;
+
+/**
+ * The fraction of PoolWorkArticleView executions that should be executed with more detailed logging
+ * @var float $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugSampleRatio = 0.05;
+
+/**
  * Whether to preload the mediawiki.util module as blocking module in the top
  * queue. Before MediaWiki 1.19, modules used to load slower/less asynchronous
  * which allowed modules to lack dependencies on 'popular' modules that were
