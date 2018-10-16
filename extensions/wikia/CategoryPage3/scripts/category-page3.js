@@ -14,7 +14,7 @@ require([
 			cookies.set('category-page-layout', layoutSelected, {
 				path: '/'
 			});
-			window.location.reload();
+			window.location.reload(true);
 		});
 	});
 });
