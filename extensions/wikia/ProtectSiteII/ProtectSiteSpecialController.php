@@ -18,13 +18,22 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		$active = $this->model->getProtectionSettings();
 
-		$inputs = [
-			[
-				'type' => 'checkbox',
-				'label' => $this->msg( 'protectsite-label-prevent-users' )->escaped(),
-				'name' => 'prevent_users',
-				'checked' => ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
-			]
+		$inputs = [];
+
+		$inputs[] = [
+			'type' => 'radio',
+			'label' => $this->msg( 'protectsite-label-prevent-anons-only' )->escaped(),
+			'name' => 'prevent_users',
+			'checked' => !ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
+			'value' => 0,
+		];
+
+		$inputs[] = [
+			'type' => 'radio',
+			'label' => $this->msg( 'protectsite-label-prevent-users' )->escaped(),
+			'name' => 'prevent_users',
+			'checked' => ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
+			'value' => 1,
 		];
 
 		foreach ( ProtectSiteModel::getValidActions() as $action ) {
@@ -40,6 +49,25 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 				'checked' => ProtectSiteModel::isActionFlagSet( $active, $action ) ?: null,
 			];
 		}
+
+		$inputs[] = [
+			'type' => 'checkbox',
+			'label' => $this->msg( "protectsite-label-prevent-$action" )->escaped(),
+			'name' => 'suppress_expiry',
+		];
+
+		$inputs[] = [
+			'type' => 'text',
+			'label' => $this->msg( 'protectsite-label-expiry' )->escaped(),
+			'name' => 'expiry',
+			'value' => '1 hour',
+		];
+
+		$inputs[] = [
+			'type' => 'text',
+			'label' => $this->msg( 'protectsite-label-reason' )->escaped(),
+			'name' => 'reason',
+		];
 
 		$inputs[] = [
 			'type' => 'hidden',
@@ -71,6 +99,16 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		$this->checkWriteRequest();
 
+		$user = $this->getContext()->getUser();
+
+		if ( !$user->isAllowed( 'protectsite' ) ) {
+			throw new PermissionsError( 'protectsite' );
+		}
+
+		if ( $user->isBlocked() ){
+			throw new ForbiddenException();
+		}
+
 		$protection = 0;
 
 		foreach ( ProtectSiteModel::getValidActions() as $action ) {
@@ -79,9 +117,11 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		if ( $this->request->getCheck( 'prevent_users' ) ) {
+		if ( $this->request->getBool( 'prevent_users' ) ) {
 			$protection |= ProtectSiteModel::PREVENT_USERS_FLAG;
 		}
+
+		$reason = $this->request->getVal( 'reason', '' );
 
 		$model = new ProtectSiteModel();
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
@@ -92,10 +132,18 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			$expiresAt = strtotime( "+$expiry" );
 
 			$model->updateProtectionSettings( $protection, $expiresAt );
-			$log->addEntry( 'protect', $title, $expiry, [], $this->getContext()->getUser() );
+			$log->addEntry( 'protect', $title, $this->getReason( $expiry, $reason ), [], $user);
 		} else {
 			$model->unprotect();
-			$log->addEntry( 'unprotect', $title, '', [], $this->getContext()->getUser() );
+			$log->addEntry( 'unprotect', $title, $reason, [], $user );
 		}
+	}
+
+	private function getReason( string $expiry, string $reason ): string {
+		if ( !empty( $reason ) ) {
+			return "$expiry: $reason";
+		}
+
+		return $expiry;
 	}
 }
