@@ -51,16 +51,16 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		}
 
 		$inputs[] = [
-			'type' => 'checkbox',
-			'label' => $this->msg( "protectsite-label-prevent-$action" )->escaped(),
-			'name' => 'suppress_expiry',
-		];
-
-		$inputs[] = [
 			'type' => 'text',
 			'label' => $this->msg( 'protectsite-label-expiry' )->escaped(),
 			'name' => 'expiry',
 			'value' => '1 hour',
+		];
+
+		$inputs[] = [
+			'type' => 'checkbox',
+			'label' => $this->msg( "protectsite-label-suppress-expiry" )->escaped(),
+			'name' => 'suppress_expiry',
 		];
 
 		$inputs[] = [
