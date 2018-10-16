@@ -13,6 +13,7 @@ $wgExtensionCredits['other'][] = [
 ];
 
 $wgAutoloadClasses['AutoLoginService'] = __DIR__ . '/AutoLoginService.class.php';
+$wgAutoloadClasses['AutoLoginHooks'] = __DIR__ . '/AutoLoginHooks.class.php';
 $kubernetesExternalUrlProvider = new KubernetesExternalUrlProvider();
 AutoLoginService::setKubernetesExternalUrlProvider( $kubernetesExternalUrlProvider );
 AutoLoginHooks::setKubernetesExternalUrlProvider( $kubernetesExternalUrlProvider );
