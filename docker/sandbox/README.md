@@ -3,15 +3,12 @@
 Use Jenkins Pipeline. Read more on https://wikia-inc.atlassian.net/wiki/spaces/SUS/pages/378994735/Jenkins+Pipeline+-+deploy+mediawiki+to+sandbox
 
 
-## Console access to Kubernetes container
+## Sandbox shell access
 
-```sh
-$ kubectl --context kube-sjc-prod -n prod get pods | grep mediawiki-sandbox
+Use `sandbox_shell.sh` helper script:
+
 ```
-
-```sh
-$ kubectl --context kube-sjc-prod -n prod exec --container php -it mediawiki-sandbox-xxxxxx-xxxxx bash
-nobody@mediawiki-sandbox-xxxxxx-xxxxx:/usr/wikia/slot1/current/src$
+$ ./sandbox_shell.sh sandbox-sus2
 ```
 
 ## Logs
