@@ -68,6 +68,10 @@ class ProtectSiteModel extends WikiaModel {
 		$this->getSharedDB( DB_MASTER )->delete( 'protectsite', [ 'protection_expiry < NOW()' ], __METHOD__ );
 	}
 
+	public static function getValidActions(): array {
+		return array_keys( self::PROTECT_ACTIONS );
+	}
+
 	public static function isActionFlagSet( int $bitfield, string $action ): bool {
 		return ( $bitfield & self::PROTECT_ACTIONS[$action] ) > 0;
 	}

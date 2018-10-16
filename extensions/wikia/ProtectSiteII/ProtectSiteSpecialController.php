@@ -22,14 +22,12 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			[
 				'type' => 'checkbox',
 				'label' => $this->msg( 'protectsite-label-prevent-users' )->escaped(),
-				'attributes' => [
-					'name' => 'prevent_users',
-					'checked' => ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null
-				],
+				'name' => 'prevent_users',
+				'checked' => ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
 			]
 		];
 
-		foreach ( ProtectSiteModel::PROTECT_ACTIONS as $action ) {
+		foreach ( ProtectSiteModel::getValidActions() as $action ) {
 			// For grepping - possible message keys used here:
 			// protectsite-label-prevent-edit
 			// protectsite-label-prevent-create
@@ -38,10 +36,8 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			$inputs[] = [
 				'type' => 'checkbox',
 				'label' => $this->msg( "protectsite-label-prevent-$action" )->escaped(),
-				'attributes' => [
-					'name' => $action,
-					'checked' => ProtectSiteModel::isActionFlagSet( $active, $action ) ?: null,
-				],
+				'name' => $action,
+				'checked' => ProtectSiteModel::isActionFlagSet( $active, $action ) ?: null,
 			];
 		}
 
@@ -77,7 +73,7 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		$protection = 0;
 
-		foreach ( array_keys( ProtectSiteModel::PROTECT_ACTIONS ) as $action ) {
+		foreach ( ProtectSiteModel::getValidActions() as $action ) {
 			if ( $this->request->getCheck( $action ) ) {
 				$protection |= ProtectSiteModel::PROTECT_ACTIONS[$action];
 			}
