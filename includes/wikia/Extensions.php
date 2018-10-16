@@ -355,7 +355,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 		foreach( $argv as $key => $value ) {
 			if( substr($value, 0 , 8 ) === "--server" ) {
 				if( $value === "--server" ) {
-					// next artument is server url
+					// next argument is server url
 					if( isset( $argv[ $key + 1 ] ) ) {
 						$server = $argv[ $key + 1 ];
 					}
