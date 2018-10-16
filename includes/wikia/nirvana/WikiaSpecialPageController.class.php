@@ -36,7 +36,7 @@
  * @method bool isListed()
  * @method bool isRestricted()
  * @method bool listed( $x = null )
- * @method Message msg()
+ * @method Message msg( ...$args )
  * @method mixed name( $x = null )
  * @method outputHeader( $summaryMessageKey = '' )
  * @method mixed restriction( $x = null )
