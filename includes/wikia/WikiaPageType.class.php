@@ -262,9 +262,4 @@ class WikiaPageType {
 		global $wgCityId;
 		return ( new WikiaCorporateModel )->isCorporateWiki( $cityId ?: $wgCityId );
 	}
-
-	public static function isCommunityCentralWiki($cityId = null): bool {
-		global $wgCityId;
-		return COMMUNITY_CENTRAL_CITY_ID === $cityId ?: $wgCityId;
-	}
 }

@@ -1483,7 +1483,7 @@ $wgApiAccess = [
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WAMApiController' => ApiAccessService::WIKIA_COMMUNITY,
+	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
