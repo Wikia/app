@@ -5,7 +5,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	function noop() {
 	}
 
-	var autoplay = '0';
 	var mocks = {
 			adContext: {
 				getContext: function () {
@@ -51,11 +50,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return slotName + '-' + src;
 				}
 			},
-			featuredVideoCookieService: {
-				getAutoplay: function() {
-					return autoplay;
-				}
-			},
 			window: {
 				pvUID: 'superFooUniqueID'
 			}
@@ -75,7 +69,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.bidHelper,
 			undefined,
 			undefined,
-			mocks.featuredVideoCookieService
 		);
 	}
 
@@ -94,7 +87,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	beforeEach(function () {
 		mocks.adTracker.trackDW.calls.reset();
 
-		autoplay = '0';
 		tracker = getModule();
 	});
 
@@ -152,7 +144,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('price')).toEqual(-1);
 		expect(getTrackedValue('wsi')).toEqual('(none)');
 		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
-		expect(getTrackedValue('user_block_autoplay')).toEqual(1);
 	});
 
 	it('Track data with slot name', function () {
@@ -246,49 +237,5 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
-	});
-
-	it('should set user_block_autoplay to 0 if featuredVideoAutoplay cookie is "1"', function () {
-		autoplay = '1';
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('user_block_autoplay')).toEqual(0);
-	});
-
-	it('should set user_block_autoplay to -1 if featuredVideoCookie returns null', function () {
-		autoplay = null;
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('user_block_autoplay')).toEqual(-1);
-	});
-
-	it('should set user_block_autoplay to -1 if featuredVideoCookie returns undefined', function () {
-		// Cookie should be null if not present but let's be more bulletproof
-		autoplay = undefined;
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('user_block_autoplay')).toEqual(-1);
-	});
-
-	it('should not set user_block_autoplay if cookies module is not present', function () {
-		var serviceBefore = mocks.featuredVideoCookieService;
-
-		mocks.featuredVideoCookieService = undefined;
-		autoplay = undefined;
-
-		tracker = getModule();
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('user_block_autoplay')).toBeUndefined();
-
-		mocks.featuredVideoCookieService = serviceBefore;
 	});
 });

@@ -10,8 +10,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
-	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
-	require.optional('wikia.articleVideo.featuredVideo.cookies')
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
 	adContext,
 	pageLevel,
@@ -23,8 +22,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	win,
 	bidHelper,
 	billTheLizard,
-	floater,
-	featuredVideoCookieService
+	floater
 ) {
 	'use strict';
 	var context = adContext.getContext(),
@@ -68,17 +66,14 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
 			};
-			if (featuredVideoCookieService) {
-				trackingData['user_block_autoplay'] = -1;
-				var cookieValue = featuredVideoCookieService.getAutoplay();
-				if (['0', '1'].indexOf(cookieValue) > -1) {
-					trackingData['user_block_autoplay'] = cookieValue === '0' ? 1 : 0;
-				}
-			}
 
 		if (bidHelper && params.bid) {
 			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 			trackingData['vast_id'] = params.bid.creativeId || emptyValue.string;
+		}
+
+		if ([0, 1].indexOf(params.userBlockAutoplay) > -1) {
+			trackingData['user_block_autoplay'] = params.userBlockAutoplay;
 		}
 
 		return trackingData;

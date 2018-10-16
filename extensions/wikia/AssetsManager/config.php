@@ -2375,6 +2375,7 @@ $config['jwplayer_tag_ads_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 	],
 ];
