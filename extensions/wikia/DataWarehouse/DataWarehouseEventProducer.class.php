@@ -386,7 +386,7 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
-		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 1 // enabled on 1% of wikis
+		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 1; // enabled on 1% of wikis
 		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
 			$this->mParams['action'] = $this->mKey;
 			$task = AsyncKinesisProducerTask::newLocalTask();
