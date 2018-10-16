@@ -6,3 +6,5 @@ $wgAutoloadClasses['ProtectSiteSpecialController'] = __DIR__ . '/ProtectSiteSpec
 
 $wgSpecialPages['ProtectSite'] = 'ProtectSiteSpecialController';
 $wgSpecialPageGroups['ProtectSite'] = 'wikia';
+
+$wgHooks['getUserPermissionsErrorsExpensive'][] = '\ProtectSiteHooks::onGetUserPermissionsErrorsExpensive';

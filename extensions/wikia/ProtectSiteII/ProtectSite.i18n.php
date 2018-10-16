@@ -4,8 +4,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'protectsite-label-expiry' => 'Expires in',
-	'protectsite-label-prevent-anons-only' => 'Block only anonymous users from performing the selected actions',
-	'protectsite-label-prevent-users' => 'Block both registered and anonymous users from performing the selected actions',
 	'protectsite-label-prevent-edit' => 'Prevent page edits',
 	'protectsite-label-prevent-create' => 'Prevent page creations',
 	'protectsite-label-prevent-move' => 'Prevent page moves',

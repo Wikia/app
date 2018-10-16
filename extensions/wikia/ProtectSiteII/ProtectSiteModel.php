@@ -9,8 +9,6 @@ class ProtectSiteModel extends WikiaModel {
 		'upload' => 8,
 	];
 
-	const PREVENT_USERS_FLAG = 512;
-
 	/** @var int $protection */
 	private $protection;
 
@@ -74,9 +72,5 @@ class ProtectSiteModel extends WikiaModel {
 
 	public static function isActionFlagSet( int $bitfield, string $action ): bool {
 		return ( $bitfield & self::PROTECT_ACTIONS[$action] ) > 0;
-	}
-
-	public static function isPreventUsersFlagSet( int $bitfield ): bool {
-		return ( $bitfield & self::PREVENT_USERS_FLAG ) > 0;
 	}
 }

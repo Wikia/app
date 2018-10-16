@@ -20,22 +20,6 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		$inputs = [];
 
-		$inputs[] = [
-			'type' => 'radio',
-			'label' => $this->msg( 'protectsite-label-prevent-anons-only' )->escaped(),
-			'name' => 'prevent_users',
-			'checked' => !ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
-			'value' => 0,
-		];
-
-		$inputs[] = [
-			'type' => 'radio',
-			'label' => $this->msg( 'protectsite-label-prevent-users' )->escaped(),
-			'name' => 'prevent_users',
-			'checked' => ProtectSiteModel::isPreventUsersFlagSet( $active ) ?: null,
-			'value' => 1,
-		];
-
 		foreach ( ProtectSiteModel::getValidActions() as $action ) {
 			// For grepping - possible message keys used here:
 			// protectsite-label-prevent-edit
@@ -117,17 +101,13 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		if ( $this->request->getBool( 'prevent_users' ) ) {
-			$protection |= ProtectSiteModel::PREVENT_USERS_FLAG;
-		}
-
 		$reason = $this->request->getVal( 'reason', '' );
 
 		$model = new ProtectSiteModel();
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
 		$log = new LogPage( 'protect' );
 
-		if ( $protection ^ ProtectSiteModel::PREVENT_USERS_FLAG ) {
+		if ( $protection ) {
 			$expiry = $this->request->getVal( 'expiry' );
 			$expiresAt = strtotime( "+$expiry" );
 
@@ -137,6 +117,11 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			$model->unprotect();
 			$log->addEntry( 'unprotect', $title, $reason, [], $user );
 		}
+
+		$target = SpecialPage::getTitleFor( 'ProtectSite' );
+
+		$this->response->setCode( 303 );
+		$this->response->setHeader( 'Location', $target->getFullURL() );
 	}
 
 	private function getReason( string $expiry, string $reason ): string {

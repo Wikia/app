@@ -13,16 +13,12 @@ class ProtectSiteHooks {
 
 		$settings = self::getModel()->getProtectionSettings();
 
-		if ( ProtectSiteModel::isActionFlagSet( $settings, $action ) && self::isUserPrevented( $user, $settings ) ) {
+		if ( ProtectSiteModel::isActionFlagSet( $settings, $action ) && !$user->isAllowed( 'protectsite-exempt' ) ) {
 			$result = false;
 			return false;
 		}
 
 		return true;
-	}
-
-	private static function isUserPrevented( User $user, int $settings ): bool {
-		return $user->isAnon() || ( ProtectSiteModel::isPreventUsersFlagSet( $settings ) && !$user->isAllowed( 'protectsite-exempt' ) );
 	}
 
 	private static function getModel(): ProtectSiteModel {
