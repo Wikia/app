@@ -899,7 +899,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -2374,7 +2373,6 @@ $config['jwplayer_tag_ads_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 	],
@@ -2386,6 +2384,7 @@ $config['jwplayer_tag_js'] = [
 	'assets' => [
 		'#group_jwplayer_tag_ads_js',
 		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
 	],
 ];
