@@ -130,7 +130,10 @@ class CategoryPage3Hooks {
 		$host = wfNormalizeHost( $host );
 
 		// External-external links
-		if ( !endsWith( $host, $wgFandomBaseDomain ) && !endsWith( $host, $wgWikiaBaseDomain ) ) {
+		if (
+			!endsWith( $host, ".${$wgFandomBaseDomain}" ) &&
+			!endsWith( $host, ".${$wgWikiaBaseDomain}" )
+		) {
 			return true;
 		}
 
@@ -143,7 +146,7 @@ class CategoryPage3Hooks {
 		$categoryNsText = $wgContLang->getNsText( NS_CATEGORY );
 
 		// Not a category
-		if ( strpos( $path, $categoryNsText ) === false ) {
+		if ( strpos( $path, "${$categoryNsText}:" ) === false ) {
 			return true;
 		}
 
@@ -210,8 +213,9 @@ class CategoryPage3Hooks {
 	}
 
 	private static function getNonCrawlableLink( $url, $text, $attribs ) {
+		$urlEscaped = Xml::escapeJsString( rawurlencode( $url ) );
 		$attribs['href'] = '#';
-		$attribs['onclick'] = 'window.location.assign("' . rawurlencode( $url ) . '"); return false;';
+		$attribs['onclick'] = "window.location.assign('${$urlEscaped}'); return false;";
 
 		return Html::rawElement( 'a', $attribs, $text );
 	}
