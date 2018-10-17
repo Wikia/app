@@ -26,7 +26,6 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [], funct
 						callback(floatingContext);
 					}
 				});
-
 			},
 			onAttach: function (floatingContext) {
 				var elements = floatingContext.elements;

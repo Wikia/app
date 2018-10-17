@@ -1,5 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
@@ -7,11 +8,12 @@ define('ext.wikia.adEngine.slot.inContent', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
+], function (adContext, adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
-		selector = '#mw-content-text > h2';
+		selectorArticle = '#mw-content-text > h2',
+		selectorRail = '#top-right-boxad-wrapper';
 
 	function createInContentWrapper(slotName) {
 		var adHtml = doc.createElement('div'),
@@ -38,7 +40,8 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var header = doc.querySelectorAll(selector)[1],
+		var inRail = adContext.get('opts.incontentPlayerRail'),
+			header = inRail ? doc.querySelectorAll(selectorRail)[0] : doc.querySelectorAll(selectorArticle)[1],
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			slotNameGA = slotName.toLowerCase();
