@@ -2440,7 +2440,7 @@ $config['feeds_and_posts_js'] = [
 $config['feeds_and_posts_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
-		'//extensions/wikia/FeedsAndPosts/styles/index.js',
+		'//extensions/wikia/FeedsAndPosts/styles/index.scss',
 	]
 ];
 
