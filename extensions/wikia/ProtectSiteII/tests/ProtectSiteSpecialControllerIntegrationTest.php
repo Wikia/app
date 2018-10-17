@@ -78,11 +78,42 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	/**
-	 * @dataProvider paramsProvider
+	 * @dataProvider invalidTimeProvider
+	 * @param string $time
 	 *
-	 * @param array $params
+	 * @throws BadRequestException
 	 * @throws ForbiddenException
 	 * @throws PermissionsError
+	 */
+	public function testShouldRejectInvalidExpiryTime( string $time ) {
+		$this->expectException( BadRequestException::class );
+
+		$this->prepareRequestWithToken( [ 'edit' => 1, 'create' => 1, 'expiry' => $time ] );
+		$this->requestContext->setUser( $this->staffUser );
+
+		try {
+			$this->controller->saveProtectionSettings();
+		} catch ( BadRequestException $bre ) {
+			$this->assertEquals( ProtectSiteSpecialController::INVALID_EXPIRY, $bre->getDetails(), 'Invalid exception' );
+			$this->assertEquals( 0, $this->model->getProtectionSettings( static::TEST_WIKI_ID ), 'Settings should not have been set' );
+
+			throw $bre;
+		}
+	}
+
+	public function invalidTimeProvider() {
+		yield [ '1 day' ];
+		yield [ '2 weeks' ];
+		yield [ '3 years' ];
+	}
+
+	/**
+	 * @dataProvider paramsProvider
+	 * @param array $params
+	 *
+	 * @throws ForbiddenException
+	 * @throws PermissionsError
+	 * @throws BadRequestException
 	 */
 	public function testShouldSuccessfullySaveSettings( array $params ) {
 		$this->prepareRequestWithToken( $params );

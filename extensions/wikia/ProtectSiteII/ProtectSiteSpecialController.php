@@ -2,6 +2,11 @@
 
 class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
+	const PROTECTION_EXPIRY_VALUES = [
+		'1 hour', '2 hours', '4 hours', '8 hours', '12 hours',
+	];
+	const INVALID_EXPIRY = 'Invalid expiry time';
+
 	/** @var ProtectSiteModel $model */
 	private $model;
 
@@ -34,11 +39,20 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			];
 		}
 
+		$times = [];
+
+		foreach ( self::PROTECTION_EXPIRY_VALUES as $value ) {
+			$times[] = [
+				'value' => $value,
+			];
+		}
+
 		$inputs[] = [
-			'type' => 'text',
+			'type' => 'select',
 			'label' => $this->msg( 'protectsite-label-expiry' )->escaped(),
 			'name' => 'expiry',
 			'value' => '1 hour',
+			'options' => $times,
 		];
 
 		$inputs[] = [
@@ -124,6 +138,11 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		if ( $protection ^ ProtectSiteModel::PREVENT_ANONS_ONLY ) {
 			$expiry = $request->getVal( 'expiry', '1 hour' );
+
+			if ( !in_array( $expiry, self::PROTECTION_EXPIRY_VALUES ) ) {
+				throw new BadRequestException( self::INVALID_EXPIRY );
+			}
+
 			$expiresAt = strtotime( "+$expiry" );
 
 			$model->updateProtectionSettings( $this->wg->CityId, $protection, $expiresAt );
