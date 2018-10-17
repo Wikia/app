@@ -14,8 +14,10 @@ rewrite ^/api/(?:v1|test)/?$ /wikia.php?controller=ApiDocs&method=index break;
 rewrite ^/api/(?:v1|test)/([^/]*)/([^/]*) /wikia.php?controller=$1Api&method=get$2 break;
 
 # SUS-5798 / SUS-5824: alternative article paths - /wiki/index.php and /w
-rewrite "^/([a-z]{2,3}(-[a-z-]{2,12})?/)?w/(.*)$" $scheme://$host/$1wiki/$3 permanent;
-rewrite "^/([a-z]{2,3}(-[a-z-]{2,12})?/)?wiki/index.php/(.*)$" $scheme://$host/$1wiki/$3 permanent;
+# SUS-6051 | because of The Complex Way wiki domain is passed down to nginx
+#            we need to use /redirect-canonical.php to handle these redirects
+rewrite "^/([a-z]{2,3}(-[a-z-]{2,12})?/)?w/(.*)$" /redirect-canonical.php break;
+rewrite "^/([a-z]{2,3}(-[a-z-]{2,12})?/)?wiki/index.php/(.*)$" /redirect-canonical.php break;
 
 # rewrites for language wiki
 rewrite "^/[a-z]{2,3}(?:-[a-z-]{2,12})?/(sitemap.+\.xml[.gz]*)$" /index.php?title=Special:Sitemap/$1&uselang=en break;
