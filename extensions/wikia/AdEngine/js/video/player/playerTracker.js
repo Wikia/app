@@ -72,10 +72,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData['vast_id'] = params.bid.creativeId || emptyValue.string;
 		}
 
-		if ([-1, 0, 1].indexOf(params.userBlockAutoplay) > -1) {
-			trackingData['user_block_autoplay'] = params.userBlockAutoplay;
-		}
-
 		return trackingData;
 	}
 

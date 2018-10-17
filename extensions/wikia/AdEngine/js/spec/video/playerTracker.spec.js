@@ -66,9 +66,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.geo,
 			mocks.log,
 			mocks.window,
-			mocks.bidHelper,
-			undefined,
-			undefined,
+			mocks.bidHelper
 		);
 	}
 
@@ -80,11 +78,8 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		debug: 'debug'
 	};
 
-	beforeAll(function () {
-		spyOn(mocks.adTracker, 'trackDW');
-	});
-
 	beforeEach(function () {
+		spyOn(mocks.adTracker, 'trackDW');
 		mocks.adTracker.trackDW.calls.reset();
 
 		tracker = getModule();
