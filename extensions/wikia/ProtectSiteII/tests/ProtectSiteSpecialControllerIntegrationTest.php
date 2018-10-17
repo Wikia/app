@@ -21,6 +21,9 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	/** @var RequestContext $requestContext */
 	private $requestContext;
 
+	/** @var WikiaResponse $response */
+	private $response;
+
 	/** @var ProtectSiteSpecialController $controller */
 	private $controller;
 
@@ -33,10 +36,11 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 
 		$this->model = new ProtectSiteModel();
 		$this->requestContext = new RequestContext();
+		$this->response = new WikiaResponse( WikiaResponse::FORMAT_INVALID );
 
 		$this->controller = new ProtectSiteSpecialController();
 		$this->controller->setContext( $this->requestContext );
-		$this->controller->setResponse( new WikiaResponse( WikiaResponse::FORMAT_INVALID ) );
+		$this->controller->setResponse( $this->response );
 	}
 
 	public function testShouldRejectGetRequest() {
@@ -104,6 +108,8 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 		} else {
 			$this->assertFalse( $anonsOnly, 'Expected anons-only flag to not be set' );
 		}
+
+		$this->assertEquals( 303, $this->response->getCode(), 'Response should be a redirect' );
 	}
 
 	public function paramsProvider() {
