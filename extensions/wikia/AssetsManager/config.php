@@ -2433,7 +2433,14 @@ $config['special_contact_forget_account_js'] = [
 $config['feeds_and_posts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+		'//extensions/wikia/FeedsAndPosts/scripts/index.js',
+	]
+];
+
+$config['feeds_and_posts_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/styles/index.js',
 	]
 ];
 

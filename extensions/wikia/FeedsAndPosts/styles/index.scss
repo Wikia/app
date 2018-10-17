@@ -1,0 +1,28 @@
+.embedded-feed {
+	&__header {
+		align-items: center;
+		background: none;
+		color: inherit;
+		display: flex;
+
+		.wds-icon {
+			fill: rgba($color-text, .75);
+			margin-right: 7px;
+		}
+	}
+
+	&__item-title {
+		color: inherit;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	&__item-timestamp {
+		color: rgba($color-text, .75);
+		font-size: 12px;
+	}
+
+	&__see-more {
+		color: $color-text;
+	}
+}

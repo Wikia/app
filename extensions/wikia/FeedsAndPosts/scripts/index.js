@@ -12,8 +12,9 @@ require(['jquery'], function ($) {
 			var fpContainer = $('.feed-posts-module').get(0);
 			window.fp.default(fpContainer, {
 				communityName: wikiName,
-				communityId: wgCityId,
-				dbName: wgDBname
+				track: function () {
+					console.log('feeds track!');
+				}
 			});
 		});
 	});
