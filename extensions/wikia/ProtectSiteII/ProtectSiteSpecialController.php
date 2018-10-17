@@ -42,6 +42,12 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		];
 
 		$inputs[] = [
+			'type' => 'text',
+			'label' => $this->msg( 'protectsite-label-reason' )->escaped(),
+			'name' => 'reason',
+		];
+
+		$inputs[] = [
 			'type' => 'checkbox',
 			'label' => $this->msg( "protectsite-label-prevent-anons-only" )->escaped(),
 			'name' => 'prevent_anons_only',
@@ -52,12 +58,6 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			'type' => 'checkbox',
 			'label' => $this->msg( "protectsite-label-suppress-expiry" )->escaped(),
 			'name' => 'suppress_expiry',
-		];
-
-		$inputs[] = [
-			'type' => 'text',
-			'label' => $this->msg( 'protectsite-label-reason' )->escaped(),
-			'name' => 'reason',
 		];
 
 		$inputs[] = [
