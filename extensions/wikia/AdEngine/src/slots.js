@@ -35,6 +35,10 @@ export function getSlotsContext(legacyContext, skin) {
 						loc: 'top'
 					}
 				},
+				'INCONTENT_PLAYER': {
+					disabled: false,
+					slotName: 'INCONTENT_PLAYER'
+				},
 				'BOTTOM_LEADERBOARD': {
 					disabled: false,
 					slotName: 'BOTTOM_LEADERBOARD',
