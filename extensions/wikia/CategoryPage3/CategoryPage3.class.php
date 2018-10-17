@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Template\Engine;
 use Wikia\Template\PHPEngine;
 
 class CategoryPage3 extends CategoryPageWithLayoutSelector {
@@ -89,20 +90,56 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	 * @throws Exception
 	 */
 	private function getHTML(): string {
+		$html = '';
+		$engine = new PhpEngine();
+		$engine->setPrefix( 'extensions/wikia/CategoryPage3/templates/' );
+
+		$html .= $this->getHTMLForTrendingPages( $engine );
+		$html .= $this->getHTMLForMembersHeader( $engine );
+		$html .= $this->getHTMLForMembers( $engine );
+		$html .= $this->getHTMLForPagination( $engine );
+
+		return $html;
+	}
+
+	private function getHTMLForTrendingPages( Engine $engine ): string {
+		if ( empty( $this->trendingPages ) ) {
+			return '';
+		}
+
+		return $engine->clearData()
+			->setData( [
+				'trendingPages' => $this->trendingPages
+			] )
+			->render( 'trending-pages.php' );
+	}
+
+	private function getHTMLForMembersHeader( Engine $engine ): string {
+		return $engine->clearData()
+			->setData( [
+				'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
+			] )
+			->render( 'members-header.php' );
+	}
+
+	private function getHTMLForMembers( Engine $engine ): string {
 		$membersGroupedByChar = $this->model->getMembersGroupedByChar();
 
 		$this->setBreakColumnAfterMiddleMember( $membersGroupedByChar );
 
-		$templateVars = [
-			'membersGroupedByChar' => $membersGroupedByChar,
-			'pagination' => $this->model->getPagination(),
-			'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers(),
-			'trendingPages' => $this->trendingPages
-		];
+		return $engine->clearData()
+			->setData( [
+				'membersGroupedByChar' => $membersGroupedByChar
+			] )
+			->render( 'members.php' );
+	}
 
-		return ( new PhpEngine() )->clearData()
-			->setData( $templateVars )
-			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3_bottom.php' );
+	private function getHTMLForPagination( Engine $engine ): string {
+		return $engine->clearData()
+			->setData( [
+				'pagination' => $this->model->getPagination()
+			] )
+			->render( 'pagination.php' );
 	}
 
 	/**

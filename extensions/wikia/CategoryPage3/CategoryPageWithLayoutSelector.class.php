@@ -36,7 +36,7 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 				'categoryExhibitionAllowed' => $this->isCategoryExhibitionAllowed(),
 				'currentLayout' => $this->getCurrentLayout()
 			] )
-			->render( 'extensions/wikia/CategoryPage3/templates/CategoryPage3_layoutSelector.php' );
+			->render( 'extensions/wikia/CategoryPage3/templates/layout-selector.php' );
 	}
 
 	/**
