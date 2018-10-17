@@ -203,7 +203,7 @@ interface DatabaseType {
 abstract class DatabaseBase implements DatabaseType {
 
 	// @const log 5% of queries (increased from 1% in SUS-2974)
-	const QUERY_SAMPLE_RATE = 1;
+	const QUERY_SAMPLE_RATE = 0.05;
 
 	// @const log queries that took more than 15 seconds
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
