@@ -1,14 +1,12 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 	'ext.wikia.adEngine.video.player.playerTracker',
 	'ext.wikia.adEngine.video.vastParser',
-	'wikia.log',
-	require.optional('wikia.articleVideo.featuredVideo.cookies')
+	'wikia.log'
 ], function (
 	playerTracker,
 	vastParser,
-	log,
-	featuredVideoCookieService
+	log
 ) {
 	'use strict';
 	var playerName = 'jwplayer',
@@ -32,14 +30,6 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 		logGroup = 'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker';
 
 	function track(params, eventName, errorCode) {
-		if (featuredVideoCookieService) {
-			params.userBlockAutoplay = -1;
-			var cookieValue = featuredVideoCookieService.getAutoplay();
-			if (['0', '1'].indexOf(cookieValue) > -1) {
-				params.userBlockAutoplay = cookieValue === '0' ? 1 : 0;
-			}
-		}
-
 		playerTracker.track(params, playerName, eventName, errorCode);
 	}
 
