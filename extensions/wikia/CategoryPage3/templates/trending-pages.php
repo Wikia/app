@@ -1,4 +1,4 @@
-<div class="category-page__trending-pages-header">Trending pages</div>
+<div class="category-page__trending-pages-header"><?= wfMessage( 'category-page3-trending-pages' ) ?></div>
 <ul class="category-page__trending-pages">
 	<?php foreach ( $trendingPages as $trendingPage ) : ?>
 		<li class="category-page__trending-page">
