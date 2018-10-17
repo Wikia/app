@@ -16,7 +16,7 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		$this->checkPermissions();
 		$this->checkIfUserIsBlocked();
 
-		$active = $this->model->getProtectionSettings();
+		$active = $this->model->getProtectionSettings( $this->wg->CityId );
 
 		$inputs = [];
 
@@ -39,6 +39,13 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			'label' => $this->msg( 'protectsite-label-expiry' )->escaped(),
 			'name' => 'expiry',
 			'value' => '1 hour',
+		];
+
+		$inputs[] = [
+			'type' => 'checkbox',
+			'label' => $this->msg( "protectsite-label-prevent-anons-only" )->escaped(),
+			'name' => 'prevent_anons_only',
+			'checked' => ProtectSiteModel::isPreventAnonsOnlyFlagSet( $active ) ?: null,
 		];
 
 		$inputs[] = [
@@ -81,9 +88,11 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 	public function saveProtectionSettings() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$this->checkWriteRequest();
+		$context = $this->getContext();
+		$request = $context->getRequest();
+		$user = $context->getUser();
 
-		$user = $this->getContext()->getUser();
+		$request->assertValidWriteRequest( $user );
 
 		if ( !$user->isAllowed( 'protectsite' ) ) {
 			throw new PermissionsError( 'protectsite' );
@@ -96,25 +105,31 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		$protection = 0;
 
 		foreach ( ProtectSiteModel::getValidActions() as $action ) {
-			if ( $this->request->getCheck( $action ) ) {
+			if ( $request->getCheck( $action ) ) {
 				$protection |= ProtectSiteModel::PROTECT_ACTIONS[$action];
 			}
 		}
 
-		$reason = $this->request->getVal( 'reason', '' );
+		$anonsOnly = $request->getCheck( 'prevent_anons_only' );
+
+		if ( $anonsOnly ) {
+			$protection |= ProtectSiteModel::PREVENT_ANONS_ONLY;
+		}
+
+		$reason = $request->getVal( 'reason', '' );
 
 		$model = new ProtectSiteModel();
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
 		$log = new LogPage( 'protect' );
 
 		if ( $protection ) {
-			$expiry = $this->request->getVal( 'expiry' );
+			$expiry = $request->getVal( 'expiry' );
 			$expiresAt = strtotime( "+$expiry" );
 
-			$model->updateProtectionSettings( $protection, $expiresAt );
+			$model->updateProtectionSettings( $this->wg->CityId, $protection, $expiresAt );
 			$log->addEntry( 'protect', $title, $this->getReason( $expiry, $reason ), [], $user);
 		} else {
-			$model->unprotect();
+			$model->unprotect( $this->wg->CityId );
 			$log->addEntry( 'unprotect', $title, $reason, [], $user );
 		}
 

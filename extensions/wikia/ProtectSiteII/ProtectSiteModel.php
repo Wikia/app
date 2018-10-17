@@ -9,13 +9,13 @@ class ProtectSiteModel extends WikiaModel {
 		'upload' => 8,
 	];
 
-	/** @var int $protection */
-	private $protection;
+	const PREVENT_ANONS_ONLY = 512;
 
-	public function getProtectionSettings(): int {
-		if ( $this->protection === null ) {
-			global $wgCityId;
+	/** @var int[] $protection */
+	private $protection = [];
 
+	public function getProtectionSettings( int $wikiId ): int {
+		if ( !isset( $this->protection[$wikiId] ) ) {
 			$dbr = $this->getSharedDB();
 
 			$safeNow = $dbr->addQuotes( $dbr->timestamp() );
@@ -23,19 +23,17 @@ class ProtectSiteModel extends WikiaModel {
 			$result = $dbr->selectField(
 				'protectsite',
 				'protection_bitfield',
-				[ 'wiki_id' => $wgCityId, "protection_expiry < $safeNow" ],
+				[ 'wiki_id' => $wikiId, "protection_expiry > $safeNow" ],
 				__METHOD__
 			);
 
-			$this->protection = intval( $result );
+			$this->protection[$wikiId] = intval( $result );
 		}
 
-		return $this->protection;
+		return $this->protection[$wikiId];
 	}
 
-	public function updateProtectionSettings( int $settings, int $expiry ) {
-		global $wgCityId;
-
+	public function updateProtectionSettings( int $wikiId, int $settings, int $expiry ) {
 		$dbw = $this->getSharedDB( DB_MASTER );
 
 		$dbExpiry = $dbw->timestamp( $expiry );
@@ -43,7 +41,7 @@ class ProtectSiteModel extends WikiaModel {
 		$this->getSharedDB( DB_MASTER )->upsert(
 			'protectsite',
 			[
-				'wiki_id' => $wgCityId,
+				'wiki_id' => $wikiId,
 				'protection_bitfield' => $settings,
 				'protection_expiry' => $dbExpiry,
 			],
@@ -56,14 +54,12 @@ class ProtectSiteModel extends WikiaModel {
 		);
 	}
 
-	public function unprotect() {
-		global $wgCityId;
-
-		$this->getSharedDB( DB_MASTER )->delete( 'protectsite', [ 'wiki_id' => $wgCityId ], __METHOD__ );
+	public function unprotect( int $wikiId ) {
+		$this->getSharedDB( DB_MASTER )->delete( 'protectsite', [ 'wiki_id' => $wikiId ], __METHOD__ );
 	}
 
 	public function deleteExpiredSettings() {
-		$this->getSharedDB( DB_MASTER )->delete( 'protectsite', [ 'protection_expiry < NOW()' ], __METHOD__ );
+		$this->getSharedDB( DB_MASTER )->delete( 'protectsite', [ 'protection_expiry < NOW() - INTERVAL 7 DAY' ],__METHOD__ );
 	}
 
 	public static function getValidActions(): array {
@@ -72,5 +68,9 @@ class ProtectSiteModel extends WikiaModel {
 
 	public static function isActionFlagSet( int $bitfield, string $action ): bool {
 		return ( $bitfield & self::PROTECT_ACTIONS[$action] ) > 0;
+	}
+
+	public static function isPreventAnonsOnlyFlagSet( int $bitfield ): bool {
+		return ( $bitfield & self::PREVENT_ANONS_ONLY ) > 0;
 	}
 }
