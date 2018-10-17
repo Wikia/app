@@ -584,30 +584,31 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
+ * @author Nanaki
  */
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
-	'places-nearby' => 'Miejsca w pobliżu Twojego aktualnego położenia',
-	'places-desc' => 'Dodaje tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów, [[Special:Places|mapę wszystkich oznaczonych artykułów]] oraz [[Special:Nearby|listę pobliskich miejsc]]',
-	'places-in-category' => 'Miejsca w kategorii "$1"',
-	'places-on-map' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie',
-	'places-modal-go-to-special' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie ([[Special:Places|zobacz wszystkie]])',
+	'places-nearby' => 'Miejsca blisko ciebie',
+	'places-desc' => 'Udostępnia tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów, [[Special:Places|mapę wszystkich oznaczonych artykułów]] oraz [[Special:Nearby|listę pobliskich miejsc]].',
+	'places-in-category' => 'Miejsca w kategorii „$1”',
+	'places-on-map' => '{{PLURAL:$1|$1 miejsce|$1 miejsca|$1 miejsc}} na mapie',
+	'places-modal-go-to-special' => '{{PLURAL:$1|$1 miejsce|$1 miejsca|$1 miejsc}} na mapie ([[Special:Places|zobacz wszystkie]])',
 	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
 	'places-editor-search' => 'Szukaj',
 	'places-editor-title-create-new' => 'Dodaj tag geograficzny',
 	'places-editor-title-edit' => 'Edytuj tag geograficzny',
-	'places-editor-show-my-location' => 'Wskaż moje umiejscowienie',
-	'places-editor-geoposition' => 'Aktualna geolokalizacja:',
-	'places-geolocation-button-label' => 'Dodaj umiejscowienie',
-	'places-geolocation-modal-add-title' => 'Dodaj umiejscowienie',
+	'places-editor-show-my-location' => 'Wskaż moją lokalizację ',
+	'places-editor-geoposition' => 'Aktualna lokalizacja:',
+	'places-geolocation-button-label' => 'Dodaj miejsce',
+	'places-geolocation-modal-add-title' => 'Dodaj miejsce',
 	'places-geolocation-modal-error-title' => 'Błąd',
 	'places-geolocation-modal-error' => 'Wystąpił błąd podczas próby określenia twojej pozycji:<br />$1',
 	'places-geolocation-modal-not-available' => 'Ta funkcja jest obecnie dostępna tylko na urządzeniach przenośnych.<br /><br />Chcesz ją wypróbować? Odwiedź tę stronę za pomocą wybranego urządzenia przenośnego.',
 	'places-error-no-article' => 'Musisz określić stronę',
 	'places-error-no-matches' => 'Tag <places>: nie znaleziono stron pasujących do zapytania',
-	'places-error-place-already-exists' => 'Ta strona jest już geo oznaczona',
-	'places-updated-geolocation' => 'Geooznaczono tę stronę',
+	'places-error-place-already-exists' => 'Ta strona jest już oznaczona',
+	'places-updated-geolocation' => 'Strona została oznaczona',
 	'places-category-switch' => 'Wyłącz geotagowanie',
 	'places-category-switch-off' => 'Włącz geotagowanie',
 );
