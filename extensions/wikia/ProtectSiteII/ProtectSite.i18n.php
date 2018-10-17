@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'action-protectsite' => 'temporarily block various site modifications',
 	'protectsite-label-expiry' => 'Expires in',
 	'protectsite-label-prevent-anons-only' => 'Block only anonymous users from performing these actions',
 	'protectsite-label-prevent-edit' => 'Prevent page edits',
@@ -14,4 +15,6 @@ $messages['en'] = array(
 	'protectsite-legend' => 'Site protection settings',
 	'protectsite-save' => 'Save settings',
 	'protectsite-update-success' => 'Settings applied successfully',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
+	'right-protectsite-exempt' => 'Exempt from site-wide action restrictions',
 );

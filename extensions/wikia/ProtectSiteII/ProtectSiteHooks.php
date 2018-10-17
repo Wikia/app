@@ -6,12 +6,13 @@ class ProtectSiteHooks {
 	private static $model;
 
 	public static function onGetUserPermissionsErrorsExpensive( Title $title, User $user, string $action, &$result ): bool {
+		global $wgCityId;
 
 		if ( !isset( ProtectSiteModel::PROTECT_ACTIONS[$action] ) ) {
 			return true;
 		}
 
-		$settings = self::getModel()->getProtectionSettings();
+		$settings = self::getModel()->getProtectionSettings( $wgCityId );
 
 		if ( ProtectSiteModel::isActionFlagSet( $settings, $action ) && !self::isUserExempt( $settings, $user ) ) {
 			$result = false;

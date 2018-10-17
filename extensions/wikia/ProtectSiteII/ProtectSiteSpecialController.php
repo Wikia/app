@@ -122,12 +122,12 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
 		$log = new LogPage( 'protect' );
 
-		if ( $protection ) {
-			$expiry = $request->getVal( 'expiry' );
+		if ( $protection ^ ProtectSiteModel::PREVENT_ANONS_ONLY ) {
+			$expiry = $request->getVal( 'expiry', '1 hour' );
 			$expiresAt = strtotime( "+$expiry" );
 
 			$model->updateProtectionSettings( $this->wg->CityId, $protection, $expiresAt );
-			$log->addEntry( 'protect', $title, $this->getReason( $expiry, $reason ), [], $user);
+			$log->addEntry( 'protect', $title, $this->getReason( $expiry, $reason ), [ $expiry ], $user);
 		} else {
 			$model->unprotect( $this->wg->CityId );
 			$log->addEntry( 'unprotect', $title, $reason, [], $user );
