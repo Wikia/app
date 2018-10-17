@@ -48,6 +48,8 @@ $wgAutoloadClasses['MarkWikiAsClosedController'] = __DIR__ . '/api/MarkWikiAsClo
 $wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
 $wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
 
+$wgHooks['WikiFactoryPublicStatusChange'][] = __DIR__ . 'WikiStatusChangePublisher/WikiStatusChangeHooks.php';
+
 $wgResourceModules['ext.wikia.wikiFactory'] = [
 	'scripts' => [
 		'js/ext.wikia.wikiFactory.requestManager.js',

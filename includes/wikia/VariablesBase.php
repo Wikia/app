@@ -3914,6 +3914,11 @@ $wgWikiaMobileSmartBannerConfig = [
 	]
 ];
 
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
+];
+
 /**
  * Enable WikiaPhotoGallery extension.
  * @see extensions/wikia/WikiaPhotoGallery
