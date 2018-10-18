@@ -44,13 +44,20 @@ class CategoryPage3Model {
 	public function loadData() {
 		$this->dbr = wfGetDB( DB_SLAVE, 'category' );
 
-		$results = $this->getMembersFromDB();
-		$this->addPagesFromDbResults( $results );
 		$this->findTotalNumberOfMembers();
+		$results = $this->getMembersFromDB();
+
+		if ( $results->numRows() === 0 && $this->totalNumberOfMembers > 0 ) {
+			// `from` is larger than the last item, let's show the last page instead
+			$this->from = $this->getLastPageKey();
+			$results = $this->getMembersFromDB();
+		}
+
+		$this->addPagesFromDbResults( $results );
 		$this->findPrevPage();
 
 		if ( $this->pagination->getNextPageKey() ) {
-			$this->findLastPage();
+			$this->pagination->setLastPageKey( $this->getLastPageKey() );
 		}
 	}
 
@@ -232,14 +239,12 @@ class CategoryPage3Model {
 		$this->pagination->setPrevPageKey( $this->getHumanSortkey( $lastRow, $title ) );
 	}
 
-	private function findLastPage() {
-		$lastPageKey = WikiaDataAccess::cache(
+	private function getLastPageKey() {
+		return WikiaDataAccess::cache(
 			$this->getMemcacheKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
 			array( $this, 'getLastPageKeyFromDB' )
 		);
-
-		$this->pagination->setLastPageKey( $lastPageKey );
 	}
 
 	public function getLastPageKeyFromDB() {
