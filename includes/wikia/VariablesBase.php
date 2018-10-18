@@ -3914,6 +3914,11 @@ $wgWikiaMobileSmartBannerConfig = [
 	]
 ];
 
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
 $wgWikiStatusChangePublisher = [
 	'exchange' => 'wiki-status-changed',
 	'vhost' => 'events',

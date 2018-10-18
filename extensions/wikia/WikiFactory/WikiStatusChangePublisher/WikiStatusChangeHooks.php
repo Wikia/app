@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
 
 /**
@@ -22,7 +23,7 @@ class WikiStatusChangeHooks {
 
 		$connectionBase = new ConnectionBase( $wgWikiStatusChangePublisher );
 
-		$status = self::getStatus( $city_public );
+		$status = self::getStatus( $city_id, $city_public );
 		$routingKey = 'wiki.' . $city_id . ".status." . $status;
 
 		$connectionBase->publish( $routingKey, [
@@ -34,7 +35,7 @@ class WikiStatusChangeHooks {
 		return true;
 	}
 
-	private static function getStatus( int $status ) {
+	private static function getStatus( int $city_id, int $status ) {
 		switch ( $status ) {
 			case WikiFactory::CLOSE_ACTION:
 				return "closed";
@@ -42,6 +43,11 @@ class WikiStatusChangeHooks {
 				return "opened";
 			case WikiFactory::HIDE_ACTION:
 				return "hidden";
+			default:
+				WikiaLogger::instance()->error( "Failed to recognise wiki status change: " .
+				                                $status . ", for wiki: " . $city_id );
+
+				return "unrecognised";
 		}
 	}
 }
