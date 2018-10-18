@@ -3196,7 +3196,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 	 * @return bool
 	 */
 	function getCachedWork() {
-		$this->parserOutput = ParserCache::singleton()->get( $this->page, $this->parserOptions );
+		$parserCache = ParserCache::singleton();
+
+		// SRE-111: Clear out the options key from in memory cache so as not to get a false negative
+		// We lookup options key 2x, and if we got here then the first time was a miss so we have the miss cached in memory
+		// PoolCounter has notified us that the work is now done - so clear out the miss
+		$parserCache->clearOptionsKey( $this->page );
+
+		$this->parserOutput = $parserCache->get( $this->page, $this->parserOptions );
 
 		if ( $this->parserOutput === false ) {
 			wfDebug( __METHOD__ . ": parser cache miss\n" );
