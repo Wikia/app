@@ -87,10 +87,22 @@ function maybeMakeProtocolRelative(url) {
 	return url;
 }
 
+function maybeRedirectDevWikiCodeSubpage(url) {
+	if (
+        url.indexOf(mw.config.get('wgScript')) != -1 &&
+        (mw.config.get('wgCityId') == '7931' || url.indexOf('//dev.wikia.com') == 0) &&
+        url.indexOf('/code.js') != -1
+    ) {
+        return url.replace(/\/code\.js/, '.js')
+    }
+    return url;
+}
+
 window.importScript = function( page ) {
 	var uri = mw.config.get( 'wgScript' ) + '?title=' +
 		mw.util.wikiUrlencode( page ) +
 		'&action=raw&ctype=text/javascript';
+    uri = maybeRedirectDevWikiCodeSubpage(uri);
 	return importScriptURI( uri );
 };
 
@@ -726,11 +738,12 @@ if (skin != 'monaco' && skin != 'oasis') {
 // RT#9031
 
 window.importScriptPage = function( page, server ) {
-	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
+	var url = mw.config.get('wgScript') + '?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
 	if( typeof server == "string" ) {
 		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
 		else url = server + url;
 	}
+    url = maybeRedirectDevWikiCodeSubpage(url);
 	return importScriptURI(url);
 }
 
