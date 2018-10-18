@@ -5,7 +5,7 @@ use Swagger\Client\ApiException;
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 
-class FacebookPreferencesModuleServiceTest extends TestCase {
+class AuthPreferencesModuleServiceTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
 	private $userMock;
 
@@ -15,8 +15,8 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 	/** @var WikiaResponse $response */
 	private $response;
 
-	/** @var FacebookPreferencesModuleService $facebookPreferencesModule */
-	private $facebookPreferencesModule;
+	/** @var AuthPreferencesModuleService $authPreferencesModule */
+	private $authPreferencesModule;
 
 	protected function setUp() {
 		parent::setUp();
@@ -29,13 +29,13 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 		$context = new RequestContext();
 		$context->setUser( $this->userMock );
 
-		$this->facebookPreferencesModule = new FacebookPreferencesModuleService();
-		$this->facebookPreferencesModule->setContext( $context );
-		$this->facebookPreferencesModule->setResponse( $this->response );
+		$this->authPreferencesModule = new AuthPreferencesModuleService();
+		$this->authPreferencesModule->setContext( $context );
+		$this->authPreferencesModule->setResponse( $this->response );
 
-		$reflService = new ReflectionProperty( FacebookPreferencesModuleService::class, 'facebookService' );
+		$reflService = new ReflectionProperty( AuthPreferencesModuleService::class, 'facebookService' );
 		$reflService->setAccessible( true );
-		$reflService->setValue( $this->facebookPreferencesModule, $this->facebookServiceMock );
+		$reflService->setValue( $this->authPreferencesModule, $this->facebookServiceMock );
 	}
 
 	public function testRendersConnectedTemplateIfUserHasLinkedFacebookAccount() {
@@ -44,7 +44,7 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 			->with( $this->userMock )
 			->willReturn( new LinkedFacebookAccount() );
 
-		$this->facebookPreferencesModule->renderFacebookPreferences();
+		$this->authPreferencesModule->renderAuthPreferences();
 
 		$this->assertEquals( 'linked', $this->response->getVal( 'state' ) );
 	}
@@ -55,7 +55,7 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 			->with( $this->userMock )
 			->willThrowException( new ApiException() );
 
-		$this->facebookPreferencesModule->renderFacebookPreferences();
+		$this->authPreferencesModule->renderAuthPreferences();
 
 		$this->assertEquals( 'disconnected', $this->response->getVal( 'state' ) );
 	}

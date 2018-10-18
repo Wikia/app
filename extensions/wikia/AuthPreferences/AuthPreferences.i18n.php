@@ -7,11 +7,15 @@ $messages['en'] = array(
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your FANDOM account.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
-	'prefs-fbconnect-status-prefstext' => 'Status',
+	'prefs-auth-prefstext' => 'Connected Accounts',
+	'prefs-auth-connections-prefstext' => 'Connections',
 	'fbconnect-disconnect-account-link' => 'Your FANDOM account is currently connected to Facebook. You can [[#|disconnect]] your FANDOM account from Facebook. You will be able to continue using your FANDOM account as usual, with your history (edits, points, achievements) intact.',
 	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another FANDOM user account. Please connect with a different account or log in with Facebook and disconnect the original FANDOM account prior to connecting the $1 account.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your FANDOM and Facebook accounts are now connected.',
 	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Facebook.",
+	'google-connect-account-connected' => 'Congratulations! Your FANDOM and Google accounts are now connected.',
+	'google-connect-account-disconnected' => 'Your Google account has been successfully disconnected from your FANDOM account.',
+	'google-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Google.",
 );
 
 $messages['qqq'] = array(
@@ -37,6 +41,12 @@ $messages['de'] = array(
 	'fbconnect-error-fb-account-in-use' => 'Dieses Facebook-Konto ist bereits mit einem anderen FANDOM-Benutzerkonto verbunden. Bitte melde dich mit einem anderen Konto an oder logge dich bei Facebook ein und trenne das ursprüngliche FANDOM-Benutzerkonto davon bevor du stattdessen das Konto $1 verknüpfst.',
 	'fbconnect-preferences-connected' => 'Herzlichen Glückwunsch! Deine FANDOM- und Facebook-Benutzerkonten sind jetzt verknüpft.',
 	'fbconnect-preferences-connected-error' => 'Es tut uns leid, die Verbindung konnte nicht abgeschlossen werden. Bitte darauf achten, dass du mit dem FANDOM-Konto angemeldet bist und FANDOM die Erlaubnis für die Verbindung mit Facebook gegeben hast.',
+	'prefs-auth-prefstext' => 'Autorisierung',
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'google-connect-account-connected' => 'Herzlichen Glückwunsch! Deine FANDOM- und Google-Benutzerkonten sind jetzt verknüpft.',
+	'google-connect-unknown-error' => 'Es tut uns leid, die Verbindung konnte nicht abgeschlossen werden. Achte bitte darauf, dass du mit deinem FANDOM-Konto angemeldet bist und FANDOM die Erlaubnis für die Verbindung mit Google gegeben hast.',
+	'prefs-auth-connections-prefstext' => 'Verknüpfungen',
+	'google-connect-account-disconnected' => 'Dein Google-Konto wurde erfolgreich von deinem FANDOM-Konto getrennt.',
 );
 
 $messages['el'] = array(
@@ -53,6 +63,12 @@ $messages['es'] = array(
 	'fbconnect-error-fb-account-in-use' => 'Esta cuenta de Facebook ya está vinculada a otra cuenta de FANDOM. Por favor, vincúlala a una cuenta diferente o identifícate en Facebook y desvincula la cuenta original de FANDOM antes de vincular la cuenta $1.',
 	'fbconnect-preferences-connected' => '¡Felicidades! Tus cuentas en FANDOM y Facebook ya están vinculadas.',
 	'fbconnect-preferences-connected-error' => 'Lo sentimos, no pudimos completar el proceso. Asegúrate de estar identificado en tu cuenta de FANDOM y de que has dado permiso a FANDOM para vincularse a Facebook.',
+	'prefs-auth-prefstext' => 'Autorización',
+	'prefs-fbconnect-prefstext' => 'Conectarse con Facebook',
+	'google-connect-account-connected' => '¡Felicidades! Tus cuentas en FANDOM y Google ya están vinculadas.',
+	'google-connect-unknown-error' => 'Lo sentimos, no pudimos completar el proceso. Asegúrate de estar identificado en tu cuenta de FANDOM y de que has dado permiso a FANDOM para vincularse a Google.',
+	'prefs-auth-connections-prefstext' => 'Conexiones',
+	'google-connect-account-disconnected' => 'Tu cuenta de Google ha sido desvinculada satisfactoriamente de tu cuenta de FANDOM.',
 );
 
 $messages['fi'] = array(
@@ -75,7 +91,13 @@ $messages['fr'] = array(
 	'fbconnect-disconnect-account-link' => 'Votre compte FANDOM est actuellement relié à Facebook. Vous pouvez [[#|supprimer le lien]] entre votre compte FANDOM et Facebook. Vous pourrez continuer à utiliser votre compte FANDOM normalement, avec votre historique (modifications, points, distinctions) préservé.',
 	'fbconnect-error-fb-account-in-use' => 'Ce compte Facebook est déjà relié à un autre compte utilisateur FANDOM. Veuillez le relier à un autre compte ou vous connecter avec Facebook et retirer le lien avec le compte FANDOM actuel avant de relier le compte $1.',
 	'fbconnect-preferences-connected' => 'Félicitations ! Vos comptes FANDOM et Facebook sont maintenant reliés.',
-	'fbconnect-preferences-connected-error' => "Nous sommes désolés, nous n'avons pas pu effectuer la liaison. Veuillez vous assurer que vous être connecté avec votre compte FANDOM et que vous avez autorisé FANDOM à se connecter à Facebook.",
+	'fbconnect-preferences-connected-error' => "Nous sommes désolés, nous n'avons pas pu effectuer la liaison. Veuillez vous assurer que vous êtes connecté avec votre compte FANDOM et que vous avez autorisé FANDOM à se connecter à Facebook.",
+	'prefs-auth-prefstext' => 'Autorisation',
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'google-connect-account-connected' => 'Félicitations ! Vos comptes FANDOM et Google sont maintenant reliés.',
+	'google-connect-unknown-error' => "Nous sommes désolés, nous n'avons pas pu effectuer la liaison. Veuillez vous assurer que vous êtes connecté avec votre compte FANDOM et que vous avez autorisé FANDOM à se connecter à Google.",
+	'prefs-auth-connections-prefstext' => 'Connexions',
+	'google-connect-account-disconnected' => 'La liaison entre votre compte Google et votre compte FANDOM a été retirée.',
 );
 
 $messages['it'] = array(
@@ -88,6 +110,12 @@ $messages['it'] = array(
 	'fbconnect-error-fb-account-in-use' => "Questo account Facebook è già connesso con un altro account utente FANDOM. Per favore, connettiti con un account differente o accedi a Facebook e disconnetti l'account FANDOM originale prima di connettere l'account $1.",
 	'fbconnect-preferences-connected' => 'Congratulazioni! Il tuo account FANDOM e quello di Facebook sono ora connessi.',
 	'fbconnect-preferences-connected-error' => "Siamo spiacenti, non siamo riusciti a completare la connessione. Per favore, assicurati di aver effettuato l'accesso al tuo account FANDOM e che tu abbia permesso FANDOM di connettersi con Facebook.",
+	'prefs-auth-prefstext' => 'Autorizzazione',
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'google-connect-account-connected' => 'Congratulazioni! Il tuo account FANDOM e quello di Google sono adesso collegati.',
+	'google-connect-unknown-error' => "Siamo spiacenti, non siamo riusciti a completare la connessione. Per favore, assicurati di aver effettuato l'accesso al tuo account FANDOM e che tu abbia permesso FANDOM di connettersi con Google.",
+	'prefs-auth-connections-prefstext' => 'Connessioni',
+	'google-connect-account-disconnected' => 'Il tuo account di Google è stato scollegato con successo dal tuo account di FANDOM.',
 );
 
 $messages['ja'] = array(
@@ -100,7 +128,12 @@ $messages['ja'] = array(
 	'fbconnect-disconnect-account-link' => 'お使いのFANDOMアカウントは現在、Facebookに連携されています。FANDOMアカウントとFacebookの[[#|コネクトを解除]] することもできます。連携を解除しても、FANDOMアカウントは引き続き通常どおりにご利用いただけます。編集、ポイント、アチーブメントなどの履歴もそのまま残ります。',
 	'fbconnect-error-fb-account-in-use' => 'このFacebookアカウントは既に別のFANDOMアカウントに連携されています。$1さんのアカウントと連携させるには別のFacebookアカウントを使用するか、Facebookにログインして元のFANDOMアカウントとの連携を解除してください。',
 	'fbconnect-preferences-connected' => 'FANDOMアカウントとFacebookアカウントの連携が完了しました。',
-	'fbconnect-preferences-connected-error' => '申し訳ありませんが、コネクトを完了できませんでした。ウィキアアカウントにログイン済みであることと、ウィキアのFacebookへのコネクトを許可していることをご確認ください。',
+	'fbconnect-preferences-connected-error' => '申し訳ありませんが、コネクトを完了できませんでした。FANDOMアカウントにログイン済みであることと、FANDOMのFacebookへのコネクトを許可していることをご確認ください。',
+	'prefs-auth-prefstext' => '承認',
+	'google-connect-account-connected' => 'FANDOMアカウントとGoogleアカウントを連携しました。',
+	'google-connect-unknown-error' => '申し訳ありませんが、コネクトを完了できませんでした。FANDOMアカウントにログイン済みであることと、FANDOMのGoogleへのコネクトを許可していることをご確認ください。',
+	'prefs-auth-connections-prefstext' => 'アカウントの連携',
+	'google-connect-account-disconnected' => 'GoogleアカウントとFANDOMアカウントの連携が解除されました。',
 );
 
 $messages['ko'] = array(
@@ -132,6 +165,11 @@ $messages['pl'] = array(
 	'fbconnect-error-fb-account-in-use' => 'To konto Facebooka jest już połączone z innym kontem na portalu FANDOM. Połącz się z innym kontem lub zaloguj się do Facebooka i odłącz obecnie podłączone konto zanim połączysz z kontem $1.',
 	'fbconnect-preferences-connected' => 'Gratulacje! Twoje konta na portalu FANDOM i Facebooku zostały połączone.',
 	'fbconnect-preferences-connected-error' => 'Przykro nam, nie mogliśmy wykonać połączenia. Upewnij się, że zalogowałeś się do konta FANDOM i posiadasz dostęp, aby połączyć konto FANDOM z Facebookiem.',
+	'prefs-auth-prefstext' => 'Autoryzacja',
+	'google-connect-account-connected' => 'Gratulacje! Twoje konta FANDOM i Google zostały połączone.',
+	'google-connect-unknown-error' => 'Przykro nam, nie mogliśmy połączyć kont. Upewnij się, że zalogowałeś się do konta FANDOM i wyraziłeś zgodę, aby FANDOM połączył się z Google.',
+	'prefs-auth-connections-prefstext' => 'Połączenia',
+	'google-connect-account-disconnected' => 'Twoje konto Google zostało pomyślnie odłączone od konta na FANDOMIE.',
 );
 
 $messages['pt'] = array(
@@ -144,6 +182,11 @@ $messages['pt'] = array(
 	'fbconnect-error-fb-account-in-use' => 'Esta conta no Facebook já está conectada à outra conta de usuário do FANDOM. Por favor, conecte-se com outra conta ou inicie sua sessão com o Facebook e desconecte a conta original do FANDOM antes de conectar a conta $1.',
 	'fbconnect-preferences-connected' => 'Parabéns! As suas contas no FANDOM e no Facebook agora estão conectadas.',
 	'fbconnect-preferences-connected-error' => 'Desculpe-nos, mas não podemos completar a sua conexão. Por favor, verifique que você está logado na sua conta da FANDOM  e que a FANDOM tem permissão para se conectar com o Facebook.',
+	'prefs-auth-prefstext' => 'Autorização',
+	'google-connect-account-connected' => 'Parabéns! As suas contas FANDOM e Google agora estão conectadas.',
+	'google-connect-unknown-error' => 'Desculpe-nos, mas não podemos completar a sua conexão. Por favor, verifique se você está logado na sua conta do FANDOM  e que o FANDOM tem permissão para se conectar com o Google.',
+	'prefs-auth-connections-prefstext' => 'Conexões',
+	'google-connect-account-disconnected' => 'Sua conta no Google foi desconectada com êxito da sua conta no FANDOM.',
 );
 
 $messages['ru'] = array(
@@ -157,6 +200,11 @@ $messages['ru'] = array(
 	'fbconnect-error-fb-account-in-use' => 'Этот аккаунт на Facebook уже подключён к учётной записи другого участника на Фэндоме. Пожалуйста, подключите другой аккаунт или войдите в свою учётную запись на Фэндоме через Facebook и отвяжите её, чтобы соединить свой аккаунт на Facebook с новой учётной записью $1.',
 	'fbconnect-preferences-connected' => 'Вы подключили учётную запись на Фэндоме к Facebook.',
 	'fbconnect-preferences-connected-error' => 'Мы сожалеем, но подключение завершить не удалось. Убедитесь, что вы вошли в свою учётную запись Викия и дали разрешение соединить её с Facebook.',
+	'prefs-auth-prefstext' => 'Аккаунты',
+	'google-connect-account-connected' => 'Поздравляем! Вы подключили учётную запись на ФЭНДОМЕ к аккаунту Google.',
+	'google-connect-unknown-error' => 'Не удалось выполнить подключение. Убедитесь, что вы вошли в свою учётную запись на ФЭНДОМЕ и дали разрешение подключиться к вашему аккаунту Google.',
+	'prefs-auth-connections-prefstext' => 'Подключенные аккаунты',
+	'google-connect-account-disconnected' => 'Ваш аккаунт Google был отключён от учётной записи на ФЭНДОМЕ.',
 );
 
 $messages['vi'] = array(
@@ -182,6 +230,11 @@ $messages['zh-hans'] = array(
 	'fbconnect-error-fb-account-in-use' => '这个Facebook帐户已经连结到另一个FANDOM帐户。请使用另一个帐户进行连接，或者先登入Facebook并中断原本到帐户$1的连结。',
 	'fbconnect-preferences-connected' => '恭喜您！您的FANDOM和Facebook的帐户已经连结。',
 	'fbconnect-preferences-connected-error' => '抱歉，我们无法完成您的连结。请确认您已经登入FANDOM帐户，并且允许它连结到Facebook。',
+	'prefs-auth-prefstext' => '授权',
+	'google-connect-account-connected' => '恭喜您！您的FANDOM帐户已经成功和Google帐户连接。',
+	'google-connect-unknown-error' => '抱歉，我们无法完成此次连接。请确认您已经登入FANDOM帐户，并且授权FANDOM与Google建立连接。',
+	'prefs-auth-connections-prefstext' => '连接',
+	'google-connect-account-disconnected' => '你的Google帐户已成功中断与FANDOM帐户的连接。',
 );
 
 $messages['zh-hant'] = array(
@@ -194,4 +247,11 @@ $messages['zh-hant'] = array(
 	'fbconnect-error-fb-account-in-use' => '這個Facebook帳號已經連結到另一個FANDOM帳號。請連結到另一個帳號，或者先登入Facebook並中斷原本與帳號$1的連結。',
 	'fbconnect-convert' => '將此帳號與Facebook連結',
 	'fbconnect-unknown-error' => '未知的錯誤，請再試一次。',
+	'prefs-auth-prefstext' => '授權',
+	'fbconnect-preferences-connected-error' => '抱歉，我們無法完成您的連結。請確認您已經登入FANDOM帳戶，並且允許它連結到Facebook。',
+	'google-connect-account-connected' => '恭喜！您的FANDOM和Google帳戶已經連結。',
+	'google-connect-unknown-error' => '抱歉，我們無法完成您的連結。請確認您已經登入FANDOM帳戶，並且允許它連結到Google。',
+	'prefs-auth-connections-prefstext' => '連接',
+	'google-connect-account-disconnected' => '您的Google帳號已成功中斷與FANDOM帳號的連結。',
 );
+
