@@ -71,7 +71,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.wrappers.prebid'](
 			mocks.adContext,
-			undefined,
 			mocks.loc,
 			mocks.win
 		);
