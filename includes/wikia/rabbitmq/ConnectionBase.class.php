@@ -16,12 +16,10 @@ class ConnectionBase {
 
 	protected $vhost;
 	protected $exchange;
-	protected $deadExchange;
 
 	public function __construct( $wgConnectionCredentials ) {
 		$this->vhost = $wgConnectionCredentials[ 'vhost' ];
 		$this->exchange = $wgConnectionCredentials[ 'exchange' ];
-		$this->deadExchange = $wgConnectionCredentials[ 'deadExchange' ];
 	}
 
 	/**
