@@ -13,7 +13,7 @@ require(['jquery'], function ($) {
 			window.fp.default(fpContainer, {
 				communityName: wikiName,
 				track: function () {
-					console.log('feeds track!');
+					// TODO
 				}
 			});
 		});
