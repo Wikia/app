@@ -1,9 +1,6 @@
 <?php
 
 class CategoryPage3Member {
-	/** @var bool */
-	private $breakColumnAfter;
-
 	/** @var string */
 	private $firstChar;
 
@@ -14,18 +11,9 @@ class CategoryPage3Member {
 	private $title;
 
 	public function __construct( Title $title, string $firstChar ) {
-		$this->breakColumnAfter = false;
 		$this->firstChar = $firstChar;
 		$this->image = null;
 		$this->title = $title;
-	}
-
-	public function isBreakColumnAfter(): bool {
-		return $this->breakColumnAfter;
-	}
-
-	public function setBreakColumnAfter( $breakColumnAfter ) {
-		$this->breakColumnAfter = $breakColumnAfter;
 	}
 
 	public function getFirstChar(): string {

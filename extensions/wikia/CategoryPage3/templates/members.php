@@ -9,7 +9,7 @@
         <ul class="category-page__members-for-char">
 			<?php foreach ( $members as $member ) : ?>
 				<?php /** @var CategoryPage3Member $member */ ?>
-				<li class="category-page__member<?= $member->isBreakColumnAfter() ? ' category-page__member-break-column-after' : '' ?>">
+				<li class="category-page__member">
 					<div class="category-page__member-left">
 						<?php if ( $member->isSubcategory() ) : ?>
 							<?= DesignSystemHelper::renderSvg(

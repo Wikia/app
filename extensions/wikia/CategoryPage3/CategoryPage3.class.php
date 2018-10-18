@@ -124,14 +124,10 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	}
 
 	private function getHTMLForMembers( Engine $engine ): string {
-		$membersGroupedByChar = $this->model->getMembersGroupedByChar();
-
-		$this->setBreakColumnAfterMiddleMember( $membersGroupedByChar );
-
 		return $engine->clearData()
 			->setData( [
 				'hasSingleMember' => count( $this->model->getMembers() ) === 1,
-				'membersGroupedByChar' => $membersGroupedByChar
+				'membersGroupedByChar' => $this->model->getMembersGroupedByChar()
 			] )
 			->render( 'members.php' );
 	}
@@ -142,35 +138,6 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 				'pagination' => $this->model->getPagination()
 			] )
 			->render( 'pagination.php' );
-	}
-
-	/**
-	 * This is messy and wouldn't be needed if this worked:
-	 * .category-page__first-char { break-after: avoid; }
-	 * but it doesn't, so we need to calculate the break manually
-	 *
-	 * @param $membersGroupedByChar
-	 */
-	private function setBreakColumnAfterMiddleMember( $membersGroupedByChar ) {
-		$numberOfHeaders = count( $membersGroupedByChar );
-		$numberOfMembers = count( $this->model->getMembers() );
-		$breakColumnAfter = floor( ( $numberOfHeaders + $numberOfMembers ) / 2 );
-
-		$count = 1;
-		foreach ( $membersGroupedByChar as $members ) {
-			/** @var CategoryPage3Member $member */
-			foreach ( $members as $member ) {
-				if ( $count >= $breakColumnAfter ) {
-					$member->setBreakColumnAfter( true );
-					return;
-				}
-
-				$count++;
-			}
-
-			// Headers take space too
-			$count++;
-		}
 	}
 
 	public static function getSrcset( string $url ): string {

@@ -3,7 +3,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
-@import 'skins/shared/mixins/grid';
 @import 'skins/shared/mixins/transform';
 
 // It's either that or !important for multiple selectors
@@ -54,9 +53,13 @@
 		}
 
 		&__trending-pages {
-			@include grid();
-			@include grid-columns(1fr 1fr 1fr 1fr);
-			@include grid-gap(20px);
+			// Grid is totally broken in IE11, -ms-inline-flexbox is better
+			display: -ms-inline-flexbox;
+			-ms-flex-wrap: wrap;
+
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-gap: 20px;
 
 			border-bottom: 1px solid $color-page-border;
 			list-style: none;
@@ -118,6 +121,8 @@
 		}
 
 		&__first-char {
+			@include column-break-inside(avoid);
+
 			border-bottom: 1px solid $color-page-border;
 			font-size: $wds-font-size-xl;
 			font-weight: $wds-font-weight-bold;
@@ -136,18 +141,12 @@
 		}
 
 		&__member {
+			@include column-break-inside(avoid);
 			@include flexbox();
 
 			align-items: center;
 			padding: 9px 0;
 			margin: 0;
-		}
-
-		&__member-break-column-after {
-			@include column-break-after();
-
-			// There is no next group below so compensate
-			margin-bottom: -$space-between-groups;
 		}
 
 		&__member-left {
