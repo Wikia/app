@@ -11,7 +11,7 @@
  */
 class ParserCache {
 	private $mMemc;
-	const try116cache = false; /* Only useful $wgParserCacheExpireTime after updating to 1.17 */
+	const try116cache = true; /* Only useful $wgParserCacheExpireTime after updating to 1.17 */
 
 	/**
 	 * Get an instance of this object
