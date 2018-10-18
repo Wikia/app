@@ -45,8 +45,11 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 
 				if (adsManager) {
 					currentAd = adsManager.getCurrentAd();
-					vastHeight = currentAd.getVastMediaHeight();
-					vastWidth = currentAd.getVastMediaWidth();
+
+					if (currentAd) {
+						vastHeight = currentAd.getVastMediaHeight();
+						vastWidth = currentAd.getVastMediaWidth();
+					}
 
 					aspectRatio = (vastWidth && vastHeight) ? vastWidth / vastHeight : defaultAspectRatio;
 				}
