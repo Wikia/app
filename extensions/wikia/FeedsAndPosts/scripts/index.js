@@ -10,7 +10,7 @@ require(['jquery'], function ($) {
 			// Load FP into a newly inserted element
 			$('#recirculation-rail').append('<div class="rail-module feed-posts-module"></div>');
 			var fpContainer = $('.feed-posts-module').get(0);
-			window.fp.default(fpContainer, {
+			window.fandomEmbeddedFeeds.default(fpContainer, {
 				communityName: wikiName,
 				track: function () {
 					// TODO
