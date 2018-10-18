@@ -1,7 +1,7 @@
 /**
  * MediaWiki legacy wikibits
  */
-(function(){
+(function() {
 
 window.clientPC = navigator.userAgent.toLowerCase(); // Get client info
 window.is_gecko = /gecko/.test( clientPC ) &&
@@ -149,20 +149,6 @@ window.appendCSS = function( text ) {
 	document.getElementsByTagName('head')[0].appendChild( s );
 	return s;
 };
-
-// Special stylesheet links for Monobook only (see bug 14717)
-var skinpath = mw.config.get( 'stylepath' ) + '/' + mw.config.get( 'skin' );
-if ( mw.config.get( 'skin' ) === 'monobook' ) {
-	if ( opera6_bugs ) {
-		importStylesheetURI( skinpath + '/Opera6Fixes.css' );
-	} else if ( opera7_bugs ) {
-		importStylesheetURI( skinpath + '/Opera7Fixes.css' );
-	} else if ( opera95_bugs ) {
-		importStylesheetURI( skinpath + '/Opera9Fixes.css' );
-	} else if ( ff2_bugs ) {
-		importStylesheetURI( skinpath + '/FF2Fixes.css' );
-	}
-}
 
 if ( mw.config.get( 'wgBreakFrames' ) ) {
 	// Un-trap us from framesets
@@ -727,31 +713,30 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'oasis') {
-	//see RT#46116
-	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
-		addOnloadHook(function() { Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start();} );
-	}
-}
-
 // http://www.wikia.com/wiki/User:Dantman/global.js
 // RT#9031
 
-window.importScriptPage = function( page, server ) {
-	var url = mw.config.get('wgScript') + '?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
-	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
-		else url = server + url;
+window.importScriptPage = function(page, server) {
+	var url = mw.config.get('wgScript') + '?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/javascript';
+	if (typeof server === 'string') {
+		if (server.indexOf('://') === -1 && server.substring(0, 2) !== '//') {
+			url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		} else {
+			url = server + url;
+		}
 	}
 	url = maybeRedirectDevWikiCodeSubpage(url);
 	return importScriptURI(url);
 }
 
-window.importStylesheetPage= function( page, server ) {
-	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/css';
-	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
-		else url = server + url;
+window.importStylesheetPage = function(page, server) {
+	var url = '/index.php?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/css';
+	if (typeof server === 'string') {
+		if (server.indexOf('://') === -1 && server.substring(0, 2) !== '//') {
+			url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		} else {
+			url = server + url;
+		}
 	}
 	return importStylesheetURI(url);
 }
