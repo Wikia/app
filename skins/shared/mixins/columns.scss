@@ -24,6 +24,11 @@
 	column-break-inside: $value;
 }
 
+@mixin column-break-after() {
+	break-after: column;
+	-webkit-column-break-after: always;
+}
+
 @mixin column-span( $value ) {
 	-webkit-column-span: $value;
 	column-span: $value;

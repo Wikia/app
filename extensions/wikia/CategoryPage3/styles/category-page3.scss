@@ -2,13 +2,17 @@
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/grid';
+@import 'skins/shared/mixins/transform';
 
 // It's either that or !important for multiple selectors
 .WikiaArticle {
 	.category-layout-selector {
+		@include flexbox();
+		@include justify-content(flex-end);
+
 		color: $color-page-border;
-		display: flex;
-		justify-content: flex-end;
 		line-height: initial;
 		list-style: none;
 		margin: 0 0 10px auto;
@@ -50,13 +54,11 @@
 		}
 
 		&__trending-pages {
+			@include grid();
+			@include grid-columns(1fr 1fr 1fr 1fr);
+			@include grid-gap(20px);
+
 			border-bottom: 1px solid $color-page-border;
-			display: -ms-grid;
-			display: grid;
-			// TODO check how it looks on IE 11
-			grid-gap: 20px;
-			-ms-grid-columns: 1fr 1fr 1fr 1fr;
-			grid-template-columns: 1fr 1fr 1fr 1fr;
 			list-style: none;
 			margin: 0;
 			padding-bottom: 40px;
@@ -134,25 +136,26 @@
 		}
 
 		&__member {
+			@include flexbox();
+
 			align-items: center;
-			display: flex;
 			padding: 9px 0;
 			margin: 0;
 		}
 
 		&__member-break-column-after {
-			break-after: column;
-			-webkit-column-break-after: always;
+			@include column-break-after();
+
 			// There is no next group below so compensate
 			margin-bottom: -$space-between-groups;
 		}
 
 		&__member-left {
-			display: flex;
-			flex-shrink: 0;
-			justify-content: center;
+			@include flexbox();
+			@include flex-shrink(0);
+			@include justify-content(center);
+
 			width: 40px;
-			word-break: break-all;
 
 			&-icon {
 				color: rgba($color-text, .75);
@@ -174,9 +177,10 @@
 		}
 
 		&__pagination {
+			@include flexbox();
+			@include justify-content(space-between);
+
 			border-top: 1px solid $color-page-border;
-			display: flex;
-			justify-content: space-between;
 			margin-bottom: 20px;
 			padding-top: 30px;
 
@@ -185,8 +189,7 @@
 				margin-left: auto;
 
 				.wds-icon {
-					-webkit-transform: rotate(-90deg);
-					transform: rotate(-90deg);
+					@include transform-rotate(-90deg);
 				}
 			}
 
@@ -195,8 +198,7 @@
 				margin-right: auto;
 
 				.wds-icon {
-					-webkit-transform: rotate(90deg);
-					transform: rotate(90deg);
+					@include transform-rotate(90deg);
 				}
 			}
 
