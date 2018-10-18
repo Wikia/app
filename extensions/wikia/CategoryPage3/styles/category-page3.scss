@@ -39,6 +39,8 @@
 	}
 
 	.category-page {
+		$space-between-groups: 48px;
+
 		&__trending-pages-header {
 			font-size: $wds-font-size-base;
 			font-weight: $wds-font-weight-bold;
@@ -119,15 +121,16 @@
 			font-weight: $wds-font-weight-bold;
 			margin: 0;
 			padding: 10px 0;
-
-			&:not(:first-child) {
-				margin-top: 48px;
-			}
 		}
 
 		&__members-for-char {
 			list-style: none;
 			margin: 0;
+
+			&:not(:last-child) {
+				// Space between groups
+				margin-bottom: $space-between-groups;
+			}
 		}
 
 		&__member {
@@ -140,6 +143,8 @@
 		&__member-break-column-after {
 			break-after: column;
 			-webkit-column-break-after: always;
+			// There is no next group below so compensate
+			margin-bottom: -$space-between-groups;
 		}
 
 		&__member-left {
