@@ -40,10 +40,8 @@ class DataWarehouseEventProducer {
 		$this->setGeoRegion( $geo->region );
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
-		$this->setHostname( wfHostname() );
-		$this->setArchive( $archive );
 		$this->setLanguage();
-		$this->setCategory();
+		$this->setCategories();
 		$this->setBeacon( wfGetBeaconId() );
 	}
 
@@ -102,7 +100,6 @@ class DataWarehouseEventProducer {
 
 		$this->setPageId( $page_id ) ;
 		$this->setPageNamespace( $oTitle->getNamespace() );
-		$this->setPageTitle( $oTitle->getDBkey() );
 		$this->setRevisionId( $revision_id );
 		$this->setUserId( $oUser->getId() );
 		$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -166,7 +163,6 @@ class DataWarehouseEventProducer {
 		if ( $logid ) {
 			$this->setPageId( $page_id ) ;
 			$this->setPageNamespace( $oTitle->getNamespace() );
-			$this->setPageTitle( $oTitle->getDBkey() );
 			$this->setRevisionId( $oPage->getLatest() );
 			$this->setUserId( $oUser->getId() );
 			$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -286,16 +282,12 @@ class DataWarehouseEventProducer {
 		$this->mParams['geoContinent'] = $continent;
 	}
 
-	public function setCityId ( $city_id ) {
+	public function setCityId ( int $city_id ) {
 		$this->mParams['cityId'] = $city_id;
 	}
 
 	public function setServerName ( $server_name ) {
 		$this->mParams['serverName'] = $server_name;
-	}
-
-	public function setHostname ( $hostname ) {
-		$this->mParams['hostname'] = $hostname;
 	}
 
 	public function setPageId ( $page_id ) {
@@ -304,10 +296,6 @@ class DataWarehouseEventProducer {
 
 	public function setPageNamespace ( $page_namespace ) {
 		$this->mParams['pageNamespace'] = $page_namespace;
-	}
-
-	public function setPageTitle ( $title ) {
-		$this->mParams['pageTitle'] = $title;
 	}
 
 	public function setRevisionId ( $revision_id  ) {
@@ -362,10 +350,6 @@ class DataWarehouseEventProducer {
 		$this->mParams['totalWords'] = $total_words;
 	}
 
-	public function setArchive ( $archive ) {
-		$this->mParams['archive'] = intval( $archive );
-	}
-
 	public function setLanguage( $lang_code = '' ) {
 		if ( empty( $lang_code ) ) {
 			$lang_code = $this->app->wg->LanguageCode;
@@ -373,9 +357,11 @@ class DataWarehouseEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-	public function setCategory() {
-		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
-		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
+	public function setCategories() {
+		$hub = WikiFactoryHub::getInstance();
+		$categories = $hub->getWikiCategories( $this->app->wg->CityId );
+		$this->mParams['categories'] = array_map(
+			function( $category ) { return intval($category['cat_id']); }, $categories );
 	}
 
 	public function setBeacon( $beacon ) {
@@ -386,9 +372,9 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
-		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 1; // enabled on 1% of wikis
+		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 10; // enabled on 10% of wikis
 		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
-			$this->mParams['action'] = $this->mKey;
+			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
 			$task = AsyncKinesisProducerTask::newLocalTask();
 			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
 			$task->queue();
