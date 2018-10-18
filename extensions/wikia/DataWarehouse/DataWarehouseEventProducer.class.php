@@ -361,7 +361,7 @@ class DataWarehouseEventProducer {
 		$hub = WikiFactoryHub::getInstance();
 		$categories = $hub->getWikiCategories( $this->app->wg->CityId );
 		$this->mParams['categories'] = array_map(
-			function( $category ) { return $category['cat_id']; }, $categories );
+			function( $category ) { return intval($category['cat_id']); }, $categories );
 	}
 
 	public function setBeacon( $beacon ) {
