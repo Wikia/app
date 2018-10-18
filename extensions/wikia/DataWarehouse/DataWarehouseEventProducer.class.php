@@ -282,8 +282,8 @@ class DataWarehouseEventProducer {
 		$this->mParams['geoContinent'] = $continent;
 	}
 
-span class="pl-s1"> 	public function setCityId ( int $city_id ) {
-		$this->mParams['cityId'] = intval($city_id);
+	public function setCityId ( int $city_id ) {
+		$this->mParams['cityId'] = $city_id;
 	}
 
 	public function setServerName ( $server_name ) {
