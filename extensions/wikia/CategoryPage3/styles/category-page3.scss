@@ -105,10 +105,12 @@
 		}
 
 		&__members {
-			@include column-count(2);
-			@include column-gap(28px);
-
 			margin-bottom: 30px;
+
+			&:not(.has-single-member) {
+				@include column-count(2);
+				@include column-gap(28px);
+			}
 		}
 
 		&__first-char {

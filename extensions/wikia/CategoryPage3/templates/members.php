@@ -1,4 +1,4 @@
-<div class="category-page__members">
+<div class="category-page__members<?= $hasSingleMember ? ' has-single-member' : '' ?>">
 	<?php /** @var array $membersGroupedByChar */ ?>
 	<?php foreach ( $membersGroupedByChar as $firstChar => $members ) : ?>
 		<?php if ( $firstChar !== ' ' ): ?>

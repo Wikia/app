@@ -130,6 +130,7 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 
 		return $engine->clearData()
 			->setData( [
+				'hasSingleMember' => count( $this->model->getMembers() ) === 1,
 				'membersGroupedByChar' => $membersGroupedByChar
 			] )
 			->render( 'members.php' );
