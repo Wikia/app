@@ -12,7 +12,9 @@ $messages['en'] = array(
 	'category-page3-pagination-previous' => 'Previous',
 	'category-page3-pagination-next' => 'Next',
 	'category-page3-pagination-last' => 'Last',
-	'category-page3-trending-pages' => 'Trending pages'
+	'category-page3-trending-pages' => 'Trending pages',
+	'category-page3-shortcut-to-top' => 'Top',
+	'category-page3-shortcut-to-other' => 'Other',
 );
 
 $messages['qqq'] = array(

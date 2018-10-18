@@ -84,6 +84,26 @@
 			text-transform: uppercase;
 		}
 
+		&__alphabet-shortcuts {
+			font-weight: $wds-font-weight-bold;
+			list-style: none;
+			margin: 0 0 35px 0;
+			text-align: center;
+		}
+
+		&__alphabet-shortcut {
+			display: inline;
+
+			&:after {
+				$color-without-hash: str-slice(inspect($color-links), 2);
+				$bullet-svg: 'data:image/svg+xml,%3Csvg width="4" height="16" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle id="bullet" r="2" cy="8" cx="2" stroke-width="0" fill="%23#{$color-without-hash}"/%3E%3C/svg%3E';
+
+				content: " ";
+				letter-spacing: 10px;
+				background: url($bullet-svg) center center no-repeat;
+			}
+		}
+
 		&__members {
 			@include column-count(2);
 			@include column-gap(28px);

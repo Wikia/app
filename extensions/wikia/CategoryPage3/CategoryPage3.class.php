@@ -117,6 +117,7 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	private function getHTMLForMembersHeader( Engine $engine ): string {
 		return $engine->clearData()
 			->setData( [
+				'title' => $this->getTitle(),
 				'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
 			] )
 			->render( 'members-header.php' );
