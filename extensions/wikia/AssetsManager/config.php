@@ -167,10 +167,7 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
 ];
 
@@ -909,9 +906,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_jwplayer_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
 ];
 
@@ -2344,7 +2338,6 @@ $config['jwplayer_featured_video_ads_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.lagger.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
@@ -2357,7 +2350,6 @@ $config['jwplayer_tag_ads_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 	],
 ];

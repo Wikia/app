@@ -4,7 +4,7 @@ use Swagger\Client\ApiException;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 
-class FacebookPreferencesControllerTest extends TestCase {
+class AuthPreferencesControllerTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
 	private $userMock;
 
@@ -17,8 +17,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 	/** @var WikiaResponse $response */
 	private $response;
 
-	/** @var FacebookPreferencesController $facebookPreferencesController */
-	private $facebookPreferencesController;
+	/** @var AuthPreferencesController $authPreferencesController */
+	private $authPreferencesController;
 
 	protected function setUp() {
 		parent::setUp();
@@ -37,10 +37,10 @@ class FacebookPreferencesControllerTest extends TestCase {
 
 		ServiceFactory::instance()->externalAuthFactory()->setFacebookService( $this->facebookServiceMock );
 
-		$this->facebookPreferencesController = new FacebookPreferencesController();
-		$this->facebookPreferencesController->setContext( $context );
-		$this->facebookPreferencesController->setRequest( $this->requestMock );
-		$this->facebookPreferencesController->setResponse( $this->response );
+		$this->authPreferencesController = new AuthPreferencesController();
+		$this->authPreferencesController->setContext( $context );
+		$this->authPreferencesController->setRequest( $this->requestMock );
+		$this->authPreferencesController->setResponse( $this->response );
 	}
 
 	/**
@@ -59,8 +59,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->linkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->linkAccount();
 	}
 
 	/**
@@ -78,8 +78,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->linkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->linkFacebookAccount();
 	}
 
 	/**
@@ -98,8 +98,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->unlinkFacebookAccount();
 	}
 
 	/**
@@ -117,8 +117,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->unlinkFacebookAccount();
 	}
 
 	/**
@@ -137,8 +137,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->linkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->linkFacebookAccount();
 	}
 
 	/**
@@ -157,8 +157,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->unlinkFacebookAccount();
 	}
 
 	public function testLoggedInUserWithValidTokenCanUnLinkAccount() {
@@ -174,8 +174,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'unlinkAccount' )
 			->with( $this->userMock );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->unlinkFacebookAccount();
 
 		$this->assertEquals(
 			WikiaResponse::RESPONSE_CODE_OK,
@@ -199,8 +199,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->with( $this->userMock )
 			->willThrowException( $apiException );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->unlinkFacebookAccount();
 
 		$this->assertEquals(
 			WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
@@ -224,8 +224,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'linkAccount' )
 			->with( $this->userMock, $token );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->linkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->linkFacebookAccount();
 
 		$this->assertEquals(
 			WikiaResponse::RESPONSE_CODE_CREATED,
@@ -251,8 +251,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->with( $this->userMock, $token )
 			->willThrowException( $apiException );
 
-		$this->facebookPreferencesController->init();
-		$this->facebookPreferencesController->linkAccount();
+		$this->authPreferencesController->init();
+		$this->authPreferencesController->linkFacebookAccount();
 
 		$this->assertEquals(
 			WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
