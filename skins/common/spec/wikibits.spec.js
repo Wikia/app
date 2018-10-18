@@ -4,6 +4,7 @@ describe('wikibits', function() {
 	mw.config = new mw.Map();
 	var url1 = '/index.php?title=MediaWiki:UserTags/code.js&action=raw&ctype=text/javascript';
 	var url1expect = '/index.php?title=MediaWiki:UserTags.js&action=raw&ctype=text/javascript';
+	var url1expect2 = '//dev.wikia.com/index.php?title=MediaWiki:UserTags.js&action=raw&ctype=text/javascript';
 	var url2 = '/index.php?title=User:TK-999/common.js&action=raw&ctype=text/javascript';
 	var url3 = 'http://dev.wikia.com/index.php?title=MediaWiki:UserTags/code.js&action=raw&ctype=text/javascript';
 	var url3expect = '//dev.wikia.com/index.php?title=MediaWiki:UserTags/code.js&action=raw&ctype=text/javascript';
@@ -106,5 +107,36 @@ describe('wikibits', function() {
 		mw.config.set('wgCityId', '7931');
 		expect(window.importScript('MediaWiki:UserTags/code.js').getAttribute('src'))
 			.toEqual(url1expect);
+	});
+
+	it('should import a script using importScriptPage properly', function() {
+		// Reset mw.config values
+		mw.config = new mw.Map();
+		mw.config.set('wgReviewedScriptsTimestamp', tsReviewed);
+		mw.config.set('wgScript', '/index.php');
+		mw.config.set('wgScriptsTimestamp', tsScripts);
+		mw.config.set('wgWikiaBaseDomainRegex', '((wikia|fandom)\.com|(wikia|fandom)-dev\.(com|us|pl))');
+		mw.config.set('wgWikiaBaseDomain', 'wikia.com');
+
+		// Ensure proper local URL is being imported
+		expect(window.importScriptPage('MediaWiki:UserTags/code.js').getAttribute('src'))
+			.toEqual(url1);
+
+		// Ensure proper checking is done on the second parameter
+		window.loadedScripts = {};
+		expect(window.importScriptPage('MediaWiki:UserTags/code.js', {}).getAttribute('src'))
+			.toEqual(url1);
+
+		// Ensure proper local URL is being imported on Dev Wiki
+		window.loadedScripts = {};
+		mw.config.set('wgCityId', '7931');
+		expect(window.importScriptPage('MediaWiki:UserTags/code.js').getAttribute('src'))
+			.toEqual(url1expect);
+
+		// Ensure proper Dev Wiki URL is being imported
+		window.loadedScripts = {};
+		mw.config.set('wgCityId', '177');
+		expect(window.importScriptPage('MediaWiki:UserTags/code.js', 'dev').getAttribute('src'))
+			.toEqual(url1expect2);
 	});
 });

@@ -24,21 +24,16 @@ if (webkit_match) {
 
 // For accesskeys; note that FF3+ is included here!
 window.is_ff2 = /firefox\/[2-9]|minefield\/3/.test( clientPC );
-window.ff2_bugs = /firefox\/2/.test( clientPC );
 // These aren't used here, but some custom scripts rely on them
 window.is_ff2_win = is_ff2 && clientPC.indexOf('windows') != -1;
 window.is_ff2_x11 = is_ff2 && clientPC.indexOf('x11') != -1;
 
-window.is_opera = window.is_opera_preseven = window.is_opera_95 =
-	window.opera6_bugs = window.opera7_bugs = window.opera95_bugs = false;
+window.is_opera = window.is_opera_preseven = window.is_opera_95 = false;
 if (clientPC.indexOf('opera') != -1) {
 	window.is_opera = true;
 	window.is_opera_preseven = window.opera && !document.childNodes;
 	window.is_opera_seven = window.opera && document.childNodes;
 	window.is_opera_95 = /opera\/(9\.[5-9]|[1-9][0-9])/.test( clientPC );
-	window.opera6_bugs = is_opera_preseven;
-	window.opera7_bugs = is_opera_seven && !is_opera_95;
-	window.opera95_bugs = /opera\/(9\.5)/.test( clientPC );
 }
 // As recommended by <http://msdn.microsoft.com/en-us/library/ms537509.aspx>,
 // avoiding false positives from moronic extensions that append to the IE UA
@@ -90,20 +85,29 @@ function maybeMakeProtocolRelative(url) {
 function maybeRedirectDevWikiCodeSubpage(url) {
 	if (
 		url.indexOf(mw.config.get('wgScript')) != -1 &&
-		(mw.config.get('wgCityId') == '7931' || url.indexOf('//dev.wikia.com') == 0) &&
+		(
+			mw.config.get('wgCityId') === '7931' ||
+			// Check protocol-relative, HTTP and HTTPS versions of Dev Wiki links
+			// This is done via wgWikiaBaseDomain so fandom.com migration does
+			// not affect it and can't use wgWikiaBaseDomainRegex so it does
+			// not potentially affect devbox URLs such as dev.wikia-dev.pl
+			url.indexOf('//dev.' + mw.config.get('wgWikiaBaseDomain')) === 0 ||
+			url.indexOf('http://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0 ||
+			url.indexOf('https://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0
+		) &&
 		url.indexOf('/code.js') != -1
 	) {
-		return url.replace(/\/code\.js/, '.js')
+		return url.replace(/\/code\.(js|css)/, '.$1')
 	}
 	return url;
 }
 
-window.importScript = function( page ) {
-	var uri = mw.config.get( 'wgScript' ) + '?title=' +
-		mw.util.wikiUrlencode( page ) +
+window.importScript = function(page) {
+	var uri = mw.config.get('wgScript') + '?title=' +
+		mw.util.wikiUrlencode(page) +
 		'&action=raw&ctype=text/javascript';
 	uri = maybeRedirectDevWikiCodeSubpage(uri);
-	return importScriptURI( uri );
+	return importScriptURI(uri);
 };
 
 window.loadedScripts = {}; // included-scripts tracker
@@ -121,8 +125,12 @@ window.importScriptURI = function( url ) {
 	return s;
 };
 
-window.importStylesheet = function( page ) {
-	return importStylesheetURI( mw.config.get( 'wgScript' ) + '?action=raw&ctype=text/css&title=' + mw.util.wikiUrlencode( page ) );
+window.importStylesheet = function(page) {
+	var uri = mw.config.get('wgScript') + '?title=' +
+		mw.util.wikiUrlencode(page) +
+		'&action=raw&ctype=text/css';
+	uri = maybeRedirectDevWikiCodeSubpage(uri);
+	return importStylesheetURI(uri);
 };
 
 window.importStylesheetURI = function( url, media ) {
@@ -730,7 +738,7 @@ window.importScriptPage = function(page, server) {
 }
 
 window.importStylesheetPage = function(page, server) {
-	var url = '/index.php?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/css';
+	var url = mw.config.get('wgScript') + '?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/css';
 	if (typeof server === 'string') {
 		if (server.indexOf('://') === -1 && server.substring(0, 2) !== '//') {
 			url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
@@ -738,6 +746,7 @@ window.importStylesheetPage = function(page, server) {
 			url = server + url;
 		}
 	}
+	url = maybeRedirectDevWikiCodeSubpage(url);
 	return importStylesheetURI(url);
 }
 
