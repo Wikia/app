@@ -5,7 +5,8 @@ define('wikia.trackingOptIn', [
 	'wikia.log',
 	'wikia.trackingOptInModal'
 ], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
-	var optIn = false,
+	var modalInstance,
+		optIn = false,
 		geoRequiresConsent = true,
 		logGroup = 'wikia.trackingOptIn';
 
@@ -31,9 +32,7 @@ define('wikia.trackingOptIn', [
 				zIndex: 9999999
 			});
 			geoRequiresConsent = instance.geoRequiresTrackingConsent();
-
-			// TODO: Remove this flag once we fully switch to CMP from TrackingOptIn - ADEN-7432
-			window.isConsentManagementProviderLoadedFromTrackingOptInModal = !!instance.consentManagementProvider;
+			modalInstance = instance;
 		} else {
 			optIn = true;
 			geoRequiresConsent = false;
@@ -55,10 +54,17 @@ define('wikia.trackingOptIn', [
 		return geoRequiresConsent;
 	}
 
+	function reset() {
+		if (instantGlobals.wgEnableTrackingOptInModal) {
+			modalInstance.reset();
+		}
+	}
+
 	return {
 		init: init,
 		isOptedIn: isOptedIn,
 		pushToUserConsentQueue: pushToUserConsentQueue,
 		geoRequiresTrackingConsent: geoRequiresTrackingConsent,
+		reset: reset
 	};
 });
