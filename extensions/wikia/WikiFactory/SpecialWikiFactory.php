@@ -51,7 +51,7 @@ $wgAutoloadClasses['WikiStatusChangeHooks'] = __DIR__ . '/WikiStatusChangePublis
 $wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
 $wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
 
-$wgHooks['WikiFactoryPublicStatusChange'][] = 'WikiStatusChangeHooks';
+$wgHooks['WikiFactoryPublicStatusChange'][] = 'WikiStatusChangeHooks::onWikiFactoryPublicStatusChange';
 
 $wgResourceModules['ext.wikia.wikiFactory'] = [
 	'scripts' => [
