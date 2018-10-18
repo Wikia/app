@@ -1741,8 +1741,10 @@ $wgInlineStartupScript = false;
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
+// SUS-2164: Include Auth extensions - enabled globally
+include_once "$IP/extensions/wikia/AuthPreferences/AuthPreferences.setup.php";
+
 // SUS-2164: Include Facebook extensions - enabled globally
-include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension

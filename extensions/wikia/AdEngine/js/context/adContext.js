@@ -184,9 +184,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableAdInfoLog = isEnabled('wgAdDriverKikimoraTrackingCountries');
 		context.opts.playerTracking = isEnabled('wgAdDriverKikimoraPlayerTrackingCountries');
 
-		// CMP module
-		context.opts.isCMPEnabled = isEnabled('wgEnableCMPCountries');
-
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
