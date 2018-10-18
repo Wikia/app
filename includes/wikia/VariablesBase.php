@@ -2018,7 +2018,6 @@ $wgEditEncoding = '';
 $wgEditEventsRabbitConfig = [
 	'vhost' => 'data-warehouse',
 	'exchange' => 'mediawiki-edit-events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -4969,7 +4968,6 @@ $wgImageMagickConvertCommand = '/usr/bin/convert';
 $wgImageReview = [
 	'vhost' => 'dc-file-sync',
 	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
 ];
 
 /**
@@ -5044,7 +5042,6 @@ $wgIncludeLegacyJavaScript = true;
 $wgIndexingPipeline = [
 	'vhost' => 'indexer',
 	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
