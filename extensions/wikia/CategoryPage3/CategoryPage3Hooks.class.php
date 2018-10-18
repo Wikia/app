@@ -146,6 +146,9 @@ class CategoryPage3Hooks {
 		$categoryNsText = $wgContLang->getNsText( NS_CATEGORY );
 
 		// Not a category
+		// FIXME can $path be encoded here?
+		// If so, should we account for any case in which : might be %3A
+		// (maybe just by unencoding $path for the comparison)?
 		if ( strpos( $path, "${categoryNsText}:" ) === false ) {
 			return true;
 		}
@@ -213,7 +216,7 @@ class CategoryPage3Hooks {
 	}
 
 	private static function getNonCrawlableLink( $url, $text, $attribs ) {
-		$urlEscaped = Xml::escapeJsString( rawurlencode( $url ) );
+		$urlEscaped = Xml::escapeJsString( $url );
 		$attribs['href'] = '#';
 		$attribs['onclick'] = "window.location.assign('${urlEscaped}'); return false;";
 
