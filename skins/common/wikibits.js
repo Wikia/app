@@ -95,7 +95,10 @@ function maybeRedirectDevWikiCodeSubpage(url) {
 			url.indexOf('http://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0 ||
 			url.indexOf('https://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0
 		) &&
-		url.indexOf('/code.js') != -1
+		(
+			url.indexOf('/code.js') !== -1 ||
+			url.indexOf('/code.css') !== -1
+		)
 	) {
 		return url.replace(/\/code\.(js|css)/, '.$1')
 	}
@@ -111,17 +114,17 @@ window.importScript = function(page) {
 };
 
 window.loadedScripts = {}; // included-scripts tracker
-window.importScriptURI = function( url ) {
+window.importScriptURI = function(url) {
 	url = maybeMakeProtocolRelative(forceReviewedContent(url));
 
-	if ( loadedScripts[url] ) {
+	if (loadedScripts[url]) {
 		return null;
 	}
 	loadedScripts[url] = true;
-	var s = document.createElement( 'script' );
-	s.setAttribute( 'src', url );
-	s.setAttribute( 'type', 'text/javascript' );
-	document.getElementsByTagName('head')[0].appendChild( s );
+	var s = document.createElement('script');
+	s.setAttribute('src', url);
+	s.setAttribute('type', 'text/javascript');
+	document.getElementsByTagName('head')[0].appendChild(s);
 	return s;
 };
 
@@ -133,15 +136,15 @@ window.importStylesheet = function(page) {
 	return importStylesheetURI(uri);
 };
 
-window.importStylesheetURI = function( url, media ) {
-	var l = document.createElement( 'link' );
+window.importStylesheetURI = function(url, media) {
+	var l = document.createElement('link');
 	l.type = 'text/css';
 	l.rel = 'stylesheet';
 	l.href = maybeMakeProtocolRelative(url);
-	if( media ) {
+	if (media) {
 		l.media = media;
 	}
-	document.getElementsByTagName('head')[0].appendChild( l );
+	document.getElementsByTagName('head')[0].appendChild(l);
 	return l;
 };
 
