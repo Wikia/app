@@ -40,21 +40,28 @@ class InfoIconTemplate {
 	private static function getIconLink($image ) {
 		// SRE-117: Use process cache to avoid repeated expensive media queries
 		if ( !isset( self::$infoIconCache[$image] ) ) {
-			$title = Title::newFromText( $image );
+			self::$infoIconCache[$image] = self::makeIconLink( $image );
+		}
+
+		return self::$infoIconCache[$image];
+	}
+
+	private static function makeIconLink( $image ): string {
+		$title = Title::newFromText( $image );
+
+		if ( $title instanceof Title ) {
 			$file = wfFindFile( $title );
 
 			if ( $file && $file->exists() ) {
-				self::$infoIconCache[$image] = Linker::makeImageLink2(
+				return Linker::makeImageLink2(
 					$title,
 					$file,
 					[],
 					[ 'template-type' => TemplateClassificationService::TEMPLATE_INFOICON ]
 				);
-			} else {
-				self::$infoIconCache[$image] = '';
 			}
 		}
 
-		return self::$infoIconCache[$image];
+		return '';
 	}
 }
