@@ -26,9 +26,9 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 		$permissionsConfiguration = $this->permissionsService()->getConfiguration();
 		$queryGroups = $this->request->getArray( 'groups' );
 
-		// support querying for single group passed as special page /parameter
+		// support querying for multiple groups passed as special page /parameter
 		if ( !empty( $this->getPar() ) ) {
-			$queryGroups[] = $this->getPar();
+			$queryGroups = explode( ',', $this->getPar() );
 		}
 
 		$globalGroups = array_diff(
