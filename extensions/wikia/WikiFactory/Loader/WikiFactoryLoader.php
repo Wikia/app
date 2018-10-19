@@ -399,6 +399,13 @@ class WikiFactoryLoader {
 			$this->mCityCluster = $this->mDomain["cluster"];
 		}
 
+		if ( empty( $this->mWikiID ) && empty( $this->langCode ) ) {
+			$wikis = WikiFactory::getWikisUnderDomain( $this->mServerName );
+			if ( count( $wikis ) > 0 ) {
+				$this->mCityUrl = 'https://' . $this->mServerName;
+				$this->mIsWikiaActive = -3;	// wiki stub
+			}
+		}
 
 		/**
 		 * if wikia is not defined or is marked for closing we redirect to
@@ -548,7 +555,7 @@ class WikiFactoryLoader {
 		 * get info about city variables from memcached and then check,
 		 * maybe memcached is down and returned only error code
 		 */
-		if( empty( $this->mAlwaysFromDB ) ) {
+		if( empty( $this->mAlwaysFromDB ) && $this->mWikiID > 0 ) {
 			wfProfileIn( __METHOD__."-varscache" );
 			/**
 			 * first from serialized file
@@ -571,7 +578,7 @@ class WikiFactoryLoader {
 		/**
 		 * the list of variables is empty (cache miss), get them from the database
 		 */
-		if( empty( $this->mVariables ) ) {
+		if( empty( $this->mVariables ) && $this->mWikiID > 0  ) {
 			wfProfileIn( __METHOD__."-varsdb" );
 			$dbr = $this->getDB();
 			$oRes = $dbr->select(
