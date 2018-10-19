@@ -1316,6 +1316,21 @@ class Title {
 	}
 
 	/**
+	 * Cut off subpages from page text
+	 *
+	 * @return String Root name
+	 */
+	public function getRootText() {
+
+		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
+			return $this->getText();
+		}
+
+		$parts = explode( '/', $this->getText() );
+		return $parts[0];
+	}
+
+	/**
 	 * Get the lowest-level subpage name, i.e. the rightmost part after any slashes
 	 *
 	 * @return String Subpage name

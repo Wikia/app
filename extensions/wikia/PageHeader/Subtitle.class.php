@@ -257,7 +257,7 @@ class Subtitle {
 	private function getBlogArticleSubtitle( WikiaApp $app ) {
 		$language = RequestContext::getMain()->getLanguage();
 
-		$userName = $this->title->getBaseText();
+		$userName = $this->title->getRootText();
 		$avatar = DesignSystemHelper::renderAvatar( $userName, 30 );
 		$userPageUrl = AvatarService::getUrl( $userName );
 
