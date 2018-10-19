@@ -1,5 +1,9 @@
 <?php
 class InfoIconTemplate {
+
+	/** @var string[string] Process cache map of info icon image names to rendered links */
+	private static $infoIconCache = [];
+
 	/**
 	 * @desc sanitize infoicon template content, that is remove all non-images
 	 * from it's wikitext. Then, parse them and add to stripState with
@@ -20,7 +24,7 @@ class InfoIconTemplate {
 		
 		$output = '';
 		foreach ( $images as $image ) {
-			$output .= self::makeIconLink( $image );
+			$output .= self::getIconLink( $image );
 		}
 		$stripMarker = $parser->insertStripItem( $output );
 		return $stripMarker;
@@ -33,19 +37,24 @@ class InfoIconTemplate {
 	 * @return String
 	 * @throws \MWException
 	 */
-	private static function makeIconLink( $image ) {
-		$link = '';
-		$title = Title::newFromText( $image );
-		$file = wfFindFile( $title );
-		if ( $file && $file->exists() ) {
-			$link = Linker::makeImageLink2(
-				$title,
-				$file,
-				[],
-				[ 'template-type' => TemplateClassificationService::TEMPLATE_INFOICON ]
-			);
+	private static function getIconLink($image ) {
+		// SRE-117: Use process cache to avoid repeated expensive media queries
+		if ( !isset( self::$infoIconCache[$image] ) ) {
+			$title = Title::newFromText( $image );
+			$file = wfFindFile( $title );
+
+			if ( $file && $file->exists() ) {
+				self::$infoIconCache[$image] = Linker::makeImageLink2(
+					$title,
+					$file,
+					[],
+					[ 'template-type' => TemplateClassificationService::TEMPLATE_INFOICON ]
+				);
+			} else {
+				self::$infoIconCache[$image] = '';
+			}
 		}
 
-		return $link;
+		return self::$infoIconCache[$image];
 	}
 }

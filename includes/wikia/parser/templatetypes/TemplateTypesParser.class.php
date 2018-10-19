@@ -1,6 +1,10 @@
 <?php
 
 class TemplateTypesParser {
+
+	/** @var TemplateClassificationService $service */
+	private static $service;
+
 	private static $cachedTemplateTitles = [ ];
 
 	/**
@@ -157,7 +161,7 @@ class TemplateTypesParser {
 		global $wgCityId;
 
 		$type = ExternalTemplateTypesProvider::getInstance()
-			->setTCS( new \TemplateClassificationService )
+			->setTCS( self::getTemplateClassificationService() )
 			->getTemplateTypeFromTitle( $wgCityId, $title );
 
 		return $type;
@@ -203,5 +207,13 @@ class TemplateTypesParser {
 		}
 
 		return self::$cachedTemplateTitles[ $templateTitle ];
+	}
+
+	private static function getTemplateClassificationService(): TemplateClassificationService {
+		if ( !self::$service ) {
+			self::$service = new TemplateClassificationService();
+		}
+
+		return self::$service;
 	}
 }
