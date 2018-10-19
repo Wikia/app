@@ -117,6 +117,7 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	private function getHTMLForMembersHeader( Engine $engine ): string {
 		return $engine->clearData()
 			->setData( [
+				'alphabetShortcuts' => $this->getAlphabetShortcuts(),
 				'title' => $this->getTitle(),
 				'totalNumberOfMembers' => $this->model->getTotalNumberOfMembers()
 			] )
@@ -168,5 +169,31 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 		}
 
 		return $url;
+	}
+
+	private function getAlphabetShortcuts(): array {
+		$alphabetShortcuts = [];
+		$alphabetShortcuts[] = [
+			'from' => null,
+			// Doesn't make sense to always highlight it on the first page
+			'isActive' => false,
+			'label' => '#'
+		];
+
+		foreach ( range( 'A', 'Z' ) as $latinChar ) {
+			$alphabetShortcuts[] = [
+				'from' => $latinChar,
+				'isActive' => $latinChar === $this->from,
+				'label' => $latinChar
+			];
+		}
+
+		$alphabetShortcuts[] = [
+			'from' => '¡',
+			'isActive' => '¡' === $this->from,
+			'label' => wfMessage( 'category-page3-shortcut-to-other' )
+		];
+
+		return $alphabetShortcuts;
 	}
 }
