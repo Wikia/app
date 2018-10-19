@@ -13,14 +13,16 @@ define('ext.wikia.adEngine.slot.inContent', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		selectorArticle = '#mw-content-text > h2',
-		selectorRail = '#top-right-boxad-wrapper';
+		selectorRail = '#mw-content-text > :first-child',
+		inRail = adContext.get('opts.incontentPlayerRail');
 
 	function createInContentWrapper(slotName) {
 		var adHtml = doc.createElement('div'),
-			label = msg('adengine-advertisement');
+			label = msg('adengine-advertisement'),
+			innerHTMLStyle = inRail ? 'margin: 0' : '';
 
 		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" data-label="' + label + '"></div>';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" style="' + innerHTMLStyle + '" data-label="' + label + '"></div>';
 
 		return adHtml;
 	}
@@ -40,8 +42,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var inRail = adContext.get('opts.incontentPlayerRail'),
-			header = inRail ? doc.querySelectorAll(selectorRail)[0] : doc.querySelectorAll(selectorArticle)[1],
+		var header = inRail ? doc.querySelectorAll(selectorRail)[0] : doc.querySelectorAll(selectorArticle)[1],
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			slotNameGA = slotName.toLowerCase();

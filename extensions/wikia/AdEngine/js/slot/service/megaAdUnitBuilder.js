@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	var dfpId = '5441',
 		megaSlots = [
 			'INVISIBLE_SKIN',
+			'INCONTENT_PLAYER',
 			//ToDo ADEN-6864: Go global
 			//'BOTTOM_LEADERBOARD'
 		],
@@ -45,10 +46,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
-			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
+			'VIDEO': ['FEATURED', 'INCONTENT_PLAYER', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
 		};
 
-		// OTHER: 'INCONTENT_PLAYER'
 		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
