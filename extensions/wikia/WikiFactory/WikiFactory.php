@@ -558,10 +558,60 @@ class WikiFactory {
 	}
 
 	/**
-	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
-	 * hosted at the root of the domain, for language path wikis it will return an empty list.
+	 * Returns a list of wikis hosted under a given domain.
 	 *
 	 * If used often, put a caching layer on top of it.
+	 *
+	 * @param $domain wiki host (without the protocol nor path)
+	 * @param $rootCityId optional root wiki id to be removed from the results.
+	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
+	 */
+	public static function getWikisUnderDomain( $domain, $rootCityId = null ) {
+		//$domain = wfNormalizeHost( $domain ); // ? needed here?
+
+		$dbr = static::db( DB_SLAVE );
+
+		$cities = WikiaDataAccess::cache(
+			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
+			900,	// 15 minutes
+			function() use ($dbr, $domain) {
+				$where = [
+					$dbr->makeList( [
+						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyString() ),
+					], LIST_OR )
+				];
+
+				$dbResult = $dbr->select(
+					[ 'city_list' ],
+					[ 'city_id', 'city_url', 'city_dbname' ],
+					$where,
+					__METHOD__
+				);
+
+				$cities = [];
+				while ( $row = $dbr->fetchObject( $dbResult ) ) {
+					$cities[] = [
+						'city_id' => $row->city_id,
+						'city_url' => $row->city_url,
+						'city_dbname' => $row->city_dbname,
+					];
+				}
+				$dbr->freeResult( $dbResult );
+				return $cities;
+			}
+		);
+		if ( !empty( $rootCityId ) ) {
+			$cities = array_filter( $cities, function ($element) use ($rootCityId) {
+				return $element['city_id'] != $rootCityId;
+			} );
+		}
+		return $cities;
+	}
+
+	/**
+	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
+	 * hosted at the root of the domain, for language path wikis it will return an empty list.
 	 *
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
@@ -572,33 +622,9 @@ class WikiFactory {
 			return [];
 		}
 
-		$dbr = static::db( DB_SLAVE );
-
 		$url = parse_url( $wgServer );
 		$server = wfNormalizeHost( $url['host'] );
-		$where = [
-			$dbr->makeList( [
-				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
-				'city_url ' . $dbr->buildLike( "https://{$server}/", $dbr->anyString() ),
-			], LIST_OR ),
-			"city_id != $wgCityId",
-		];
-		$dbResult = $dbr->select(
-			[ 'city_list' ],
-			[ 'city_id', 'city_url', 'city_dbname' ],
-			$where,
-			__METHOD__
-		);
-		$result = [];
-		while ( $row = $dbr->fetchObject( $dbResult ) ) {
-			$result[] = [
-				'city_id' => $row->city_id,
-				'city_url' => $row->city_url,
-				'city_dbname' => $row->city_dbname,
-			];
-		}
-		$dbr->freeResult( $dbResult );
-		return $result;
+		return self::getWikisUnderDomain( $server, $wgCityId );
 	}
 
 	/**
