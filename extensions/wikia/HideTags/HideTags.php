@@ -30,6 +30,7 @@ function efHideTagsSetup(Parser $parser) {
 	$parser->setHook( 'imap', 'efHideTags' );
 	$parser->setHook( 'widget', 'efHideTags' );
 	$parser->setHook( 'youtube', 'efHideTags' ); // SUS-3285
+	$parser->setHook( 'maplib', 'efHideTags' ); // SUS-5237
 	/* copy above line and change tag name to hide additional tags */
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );

@@ -596,10 +596,6 @@ if (!empty($wgEnableLabeledSectionTransExt)) {
 	}
 }
 
-if (!empty($wgEnableMapLibExt)) {
-	include("$IP/extensions/3rdparty/MapLib/MapLib.php");
-}
-
 if (!empty($wgEnableVerbatimExt)) {
 	include( "$IP/extensions/3rdparty/Verbatim/Verbatim.php" );
 }
