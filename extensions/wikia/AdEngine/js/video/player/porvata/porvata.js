@@ -11,8 +11,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
-
-
 	function inject(videoSettings, onPlayerCreated) {
 		var params = videoSettings.getParams(),
 			isFirstPlay = true,

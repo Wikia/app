@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
+		'ext.wikia.adEngine.adContext',
 		'ext.wikia.adEngine.video.player.porvata.floaterConfiguration',
 		'ext.wikia.adEngine.video.player.porvata.floatingContextFactory',
 		'wikia.document',
 		'wikia.throttle',
 		'wikia.window'
-	], function (floaterConfiguration, floatingContextFactory, doc, throttle, win) {
+	], function (adContext, floaterConfiguration, floatingContextFactory, doc, throttle, win) {
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
@@ -80,6 +81,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 					floatingContext.stop();
 				} else {
 					endFloating(floatingContext);
+				}
+
+				if (adContext.get('opts.incontentPlayerRail')) {
+					floatingContext.elements.video.stop();
 				}
 			};
 		}
