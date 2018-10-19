@@ -403,7 +403,9 @@ class WikiFactoryLoader {
 			$wikis = WikiFactory::getWikisUnderDomain( $this->mServerName );
 			if ( count( $wikis ) > 0 ) {
 				$this->mCityUrl = 'https://' . $this->mServerName;
-				$this->mIsWikiaActive = -3;	// wiki stub
+				//$this->mIsWikiaActive = -3;	// wiki stub
+				// http->https redirects?
+				return -1;
 			}
 		}
 
@@ -555,7 +557,7 @@ class WikiFactoryLoader {
 		 * get info about city variables from memcached and then check,
 		 * maybe memcached is down and returned only error code
 		 */
-		if( empty( $this->mAlwaysFromDB ) && $this->mWikiID > 0 ) {
+		if( empty( $this->mAlwaysFromDB ) ) {
 			wfProfileIn( __METHOD__."-varscache" );
 			/**
 			 * first from serialized file
@@ -578,7 +580,7 @@ class WikiFactoryLoader {
 		/**
 		 * the list of variables is empty (cache miss), get them from the database
 		 */
-		if( empty( $this->mVariables ) && $this->mWikiID > 0  ) {
+		if( empty( $this->mVariables ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
 			$dbr = $this->getDB();
 			$oRes = $dbr->select(
