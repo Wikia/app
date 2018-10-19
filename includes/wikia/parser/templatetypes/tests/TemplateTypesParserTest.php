@@ -328,4 +328,9 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	protected function tearDown() {
+		parent::tearDown();
+		TemplateTypesParser::clearTemplateClassificationService();
+	}
 }

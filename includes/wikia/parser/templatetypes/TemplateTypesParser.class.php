@@ -216,4 +216,12 @@ class TemplateTypesParser {
 
 		return self::$service;
 	}
+
+	/**
+	 * Remove cached TCS instance
+	 * Used by tests
+	 */
+	public static function clearTemplateClassificationService() {
+		self::$service = null;
+	}
 }
