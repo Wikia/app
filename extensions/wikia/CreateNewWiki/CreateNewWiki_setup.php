@@ -1,6 +1,6 @@
 <?php
 
-$wgExtensionCredits['specialpage'][] = array(
+$GLOBALS['wgExtensionCredits']['specialpage'][] = array(
 	'name' => 'CreateNewWiki',
 	'descriptionmsg' => 'createnewwiki-desc',
 	'author' => [
@@ -14,44 +14,45 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = __DIR__ . '/';
 
 // class autoloads mappings
-$wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
-$wgAutoloadClasses['CreateWikiTask'] = $dir."/CreateWikiTask.php";
-$wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
-$wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.php';
+$GLOBALS['wgAutoloadClasses']['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
+$GLOBALS['wgAutoloadClasses']['CreateWikiTask'] = $dir."/CreateWikiTask.php";
+$GLOBALS['wgAutoloadClasses']['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
+$GLOBALS['wgAutoloadClasses']['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
+$GLOBALS['wgAutoloadClasses']['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.php';
 
 // Tasks related with new wiki creation
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\Task'] = __DIR__ . '/tasks/Task.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskContext'] = __DIR__ . '/tasks/TaskContext.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\Task'] = __DIR__ . '/tasks/Task.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\TaskContext'] = __DIR__ . '/tasks/TaskContext.php';
 
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureCategories'] = __DIR__ . '/tasks/ConfigureCategories.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureUsers'] = __DIR__ . '/tasks/ConfigureUsers.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureWikiFactory'] = __DIR__ . '/tasks/ConfigureWikiFactory.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateDatabase'] = __DIR__ . '/tasks/CreateDatabase.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\EnableDiscussionsTask'] = __DIR__ . '/tasks/EnableDiscussionsTask.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\LinkFandomCreatorCommunity'] = __DIR__ . '/tasks/LinkFandomCreatorCommunity.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetMainPageContent'] = __DIR__ . '/tasks/SetMainPageContent.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\StartPostCreationTasks'] = __DIR__ . '/tasks/StartPostCreationTasks.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\ReplicationWaitHelper'] = __DIR__ . '/tasks/ReplicationWaitHelper.php';
+
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\ConfigureCategories'] = __DIR__ . '/tasks/ConfigureCategories.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\ConfigureUsers'] = __DIR__ . '/tasks/ConfigureUsers.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\ConfigureWikiFactory'] = __DIR__ . '/tasks/ConfigureWikiFactory.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\CreateDatabase'] = __DIR__ . '/tasks/CreateDatabase.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\EnableDiscussionsTask'] = __DIR__ . '/tasks/EnableDiscussionsTask.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\StartPostCreationTasks'] = __DIR__ . '/tasks/StartPostCreationTasks.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
+$GLOBALS['wgAutoloadClasses']['Wikia\\CreateNewWiki\\Tasks\\TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
+
+$GLOBALS['wgAutoloadClasses']['BulkRevisionImporter'] = __DIR__ . '/classes/BulkRevisionImporter.php';
 
 // Nirvana controllers
-$wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
+$GLOBALS['wgAutoloadClasses']['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 
 // special page mapping
-$wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
+$GLOBALS['wgSpecialPages']['CreateNewWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
-$wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
-$wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
+$GLOBALS['wgExtensionMessagesFiles']['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 
 // setup functions
-$wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
+$GLOBALS['wgExtensionFunctions'][] = 'CreateNewWikiController::setupCreateNewWiki';
 
-$wgHooks['MakeGlobalVariablesScript'][] = '\CreateNewWikiHooks::onMakeGlobalVariablesScript';
+$GLOBALS['wgHooks']['MakeGlobalVariablesScript'][] = '\CreateNewWikiHooks::onMakeGlobalVariablesScript';

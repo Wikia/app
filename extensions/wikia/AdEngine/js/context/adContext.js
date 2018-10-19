@@ -143,7 +143,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
 		context.rabbits = context.rabbits || {};
-		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
@@ -170,8 +169,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		context.providers.turtle = isEnabled('wgAdDriverTurtleCountries');
-
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
 
 		// INVISIBLE_HIGH_IMPACT slot
@@ -186,9 +183,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.kikimoraViewabilityTracking = isEnabled('wgAdDriverKikimoraViewabilityTrackingCountries');
 		context.opts.enableAdInfoLog = isEnabled('wgAdDriverKikimoraTrackingCountries');
 		context.opts.playerTracking = isEnabled('wgAdDriverKikimoraPlayerTrackingCountries');
-
-		// CMP module
-		context.opts.isCMPEnabled = isEnabled('wgEnableCMPCountries');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
@@ -226,8 +220,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
 
-		context.opts.areMobileStickyAndSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileStickyAndSwapCountries')
+		context.opts.isMobileBottomLeaderboardSwapEnabled = (
+			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
 		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';

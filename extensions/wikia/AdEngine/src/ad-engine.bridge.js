@@ -47,9 +47,7 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	const bfabStickiness = legacyContext.get('opts.areMobileStickyAndSwapEnabled') ||
-		legacyContext.get('opts.isDesktopBfabStickinessEnabled');
-	context.set('options.bfabStickiness', bfabStickiness);
+	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
 
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
@@ -110,7 +108,7 @@ function init(
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
 			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
-			context.set('custom.isCMPEnabled', legacyContext.get('opts.isCMPEnabled'));
+			context.set('custom.isCMPEnabled', true);
 		}
 
 		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
@@ -253,12 +251,17 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
+function readSessionId() {
+	utils.readSessionId();
+}
+
 export {
 	init,
 	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
+	readSessionId,
 	context,
 	universalAdPackage,
 	slotService,

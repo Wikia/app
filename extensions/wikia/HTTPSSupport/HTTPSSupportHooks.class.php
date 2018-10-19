@@ -78,7 +78,7 @@ class HTTPSSupportHooks {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			$output->redirectProtocol( PROTO_HTTPS, 302, 'Robots-HTTPS-upgrade' );
+			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
 			$output->enableClientCache( false );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )

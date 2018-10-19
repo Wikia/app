@@ -54,7 +54,7 @@ class ConfigureWikiFactory extends Task {
 		$staticWikiFactoryVariables = $this->getStaticVariables(
 			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url, $description
 		);
-		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $sharedDBW, $staticWikiFactoryVariables );
+		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $staticWikiFactoryVariables );
 
 		$this->setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $staticWikiFactoryVariables );
 
@@ -72,7 +72,19 @@ class ConfigureWikiFactory extends Task {
 			'wgEnableSectionEdit' => true,
 			'wgOasisLoadCommonCSS' => true,
 			'wgEnablePortableInfoboxEuropaTheme' => true,
-			'wgWikiDescription' => $description
+			'wgWikiDescription' => $description,
+
+			// Enable Discussions
+			'wgEnableDiscussions' => true,
+			'wgEnableDiscussionsNavigation' => true,
+			'wgArchiveWikiForums' => true,
+			'wgEnableRecirculationDiscussions' => true,
+
+			// Features to enable for new wikis, moved here from wgUniversalCreationVariables
+			'wgEnableRelatedPagesExt' => true,
+			'wgEnableCategoryGalleriesExt' => true,
+			'wgEnableFounderProgressBarExt' => true,
+			'wgEnableWallExt' => true,
 		];
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
@@ -85,34 +97,47 @@ class ConfigureWikiFactory extends Task {
 			$wikiFactoryVariables[ 'wgWikiDirectedAtChildrenByFounder' ] = true;
 		}
 
+		// Language specific settings, moved here from wgLangCreationVariables
+		$language = $this->taskContext->getLanguage();
+
+		if ( $language === 'en' || $language === 'es' || $language === 'de' ) {
+			$wikiFactoryVariables['wgWikiaEnableFounderEmailsExt'] = true;
+		}
+
+		if ( $language === 'en' ) {
+			$wikiFactoryVariables['wgEnableArticleCommentsExt'] = true;
+		}
+
+		if ( $this->taskContext->isFandomCreatorCommunity() ) {
+			$wikiFactoryVariables['wgFandomCreatorCommunityId'] = $this->taskContext->getFandomCreatorCommunityId();
+		}
+
 		wfGetLBFactory()->sectionsByDB[$dbName] = \F::app()->wg->CreateDatabaseActiveCluster;
 
 		return $wikiFactoryVariables;
 	}
 
 	/**
-	 * @param \DatabaseBase $sharedDBW
-	 * @param $wikiFactoryVariables
-	 * @return array
+	 * @param string[] $wikiFactoryVariables
+	 * @return int[] map of variable names to variable IDs
 	 */
-	public function getVariablesFromDB( $sharedDBW, $wikiFactoryVariables ) {
-		wfProfileIn( __METHOD__ );
+	public function getVariablesFromDB( array $wikiFactoryVariables ): array {
+		global $wgExternalSharedDB;
 
-		$oRes = $sharedDBW->select(
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		$res = $dbr->select(
 			"city_variables_pool",
 			[ "cv_id, cv_name" ],
-			[ "cv_name in ('" . implode( "', '", array_keys( $wikiFactoryVariables ) ) . "')" ],
+			[ 'cv_name' => array_keys( $wikiFactoryVariables ) ],
 			__METHOD__
 		);
 
-		$wikiFactoryVarsFromDB = [ ];
+		$wikiFactoryVarsFromDB = [];
 
-		while ( $oRow = $sharedDBW->fetchObject( $oRes ) ) {
-			$wikiFactoryVarsFromDB[$oRow->cv_name] = $oRow->cv_id;
+		foreach ( $res as $row ) {
+			$wikiFactoryVarsFromDB[$row->cv_name] = $row->cv_id;
 		}
-		$sharedDBW->freeResult( $oRes );
-
-		wfProfileOut( __METHOD__ );
 
 		return $wikiFactoryVarsFromDB;
 	}
@@ -124,36 +149,26 @@ class ConfigureWikiFactory extends Task {
 	 * @param $wikiFactoryVariables
 	 */
 	private function setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $wikiFactoryVariables ) {
-		wfProfileIn( __METHOD__ );
+		$rows = [];
+
 		foreach ( $wikiFactoryVariables as $variable => $value ) {
-			/**
-			 * first, get id of variable
-			 */
+
 			$cvId = 0;
-			if ( isset($wikiFactoryVariablesFromDB[$variable]) ) {
+			if ( isset( $wikiFactoryVariablesFromDB[$variable] ) ) {
 				$cvId = $wikiFactoryVariablesFromDB[$variable];
 			}
 
-			/**
-			 * then, insert value for wikia
-			 */
-			if ( !empty($cvId) ) {
-				$sharedDBW->insert(
-					"city_variables",
-					[
-						"cv_value" => serialize( $value ),
-						"cv_city_id" => $cityId,
-						"cv_variable_id" => $cvId
-					],
-					__METHOD__
-				);
+			if ( !empty( $cvId ) ) {
+				$rows[] = [
+					"cv_value" => serialize( $value ),
+					"cv_city_id" => $cityId,
+					"cv_variable_id" => $cvId,
+				];
 			}
 		}
 
-
-
+		$sharedDBW->insert( 'city_variables', $rows, __METHOD__ );
 		$sharedDBW->commit( __METHOD__ ); // commit shared DB changes
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

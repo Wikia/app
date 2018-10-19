@@ -18,7 +18,7 @@ LABEL=$2
 
 SCRIPT_FOLDER=$(dirname $(readlink -f $0))
 TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
-JOB_JSON=`yaml2json $SCRIPT_FOLDER/$job_description_file_name`
+JOB_JSON=`yaml2json $job_description_file_name`
 NAME=`basename "$job_description_file_name" .yaml`
 SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
 # we need to add 12 spaces of padding to align yaml in template

@@ -471,6 +471,7 @@ if ( !defined( 'MW_NO_SESSION' ) && !$wgCommandLineMode ) {
 	}
 }
 
+/** @var Language $wgContLang */
 $wgContLang = Language::factory( $wgLanguageCode );
 $wgContLang->initEncoding();
 $wgContLang->initContLang();
@@ -480,17 +481,17 @@ $wgUser = RequestContext::getMain()->getUser(); # BackCompat
 Hooks::run( 'AfterSetupUser', array( $wgUser ) ); // Wikia change
 
 /**
- * @var Language
+ * @var Language $wgLang
  */
 $wgLang = new StubUserLang;
 
 /**
- * @var OutputPage
+ * @var OutputPage $wgOut
  */
 $wgOut = RequestContext::getMain()->getOutput(); # BackCompat
 
 /**
- * @var Parser
+ * @var Parser $wgParser
  */
 $wgParser = new StubObject( 'wgParser', $wgParserConf['class'], array( $wgParserConf ) );
 

@@ -22,4 +22,8 @@ class NullTaskPublisher implements TaskPublisher {
 	function doUpdate() {
 		$this->info( 'Task broker is disabled' );
 	}
+
+	public function registerProducer( TaskProducer $producer ) {
+		// no-op
+	}
 }

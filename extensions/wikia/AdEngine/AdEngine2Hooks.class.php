@@ -85,6 +85,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
@@ -109,10 +110,9 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
-		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
-		$vars[] = 'wgAdDriverMobileStickyAndSwapCountries';
 
 		/**
 		 * Disaster Recovery
@@ -144,6 +144,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
+		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';

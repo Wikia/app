@@ -94,6 +94,13 @@ if ( ! empty( $wgEnableWikisApi ) ) {
 	F::app()->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 }
 
+// During migration drop parser expiry on non-English wikis to 24 hours (PLATFORM-3765)
+if ( ( !wfHttpsAllowedForURL( $wgServer ) && !empty( $wgFandomComMigrationScheduled ) ) ||
+	( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
+) {
+	$wgParserCacheExpireTime = 24 * 3600;
+}
+
 /*
  * Code for http://lyrics.wikia.com/
  */
@@ -355,7 +362,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 		foreach( $argv as $key => $value ) {
 			if( substr($value, 0 , 8 ) === "--server" ) {
 				if( $value === "--server" ) {
-					// next artument is server url
+					// next argument is server url
 					if( isset( $argv[ $key + 1 ] ) ) {
 						$server = $argv[ $key + 1 ];
 					}
@@ -409,7 +416,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	
+
 	// SUS-5540: use the luasandbox extension as executor if it is available
 	if ( extension_loaded( 'luasandbox' ) ) {
 		$wgScribuntoDefaultEngine = 'luasandbox';
@@ -1705,10 +1712,6 @@ if ( !isset($wgEnableNewAuthModal) && in_array( $wgLanguageCode, [ 'es', 'ru' ] 
 	$wgEnableNewAuthModal = true;
 }
 
-if ( !empty( $wgEnableFlowTracking ) ) {
-	include "$IP/extensions/wikia/FlowTracking/FlowTracking.setup.php";
-}
-
 if ( !empty( $wgEnableArticleFeaturedVideo ) || !empty( $wgEnableArticleRelatedVideo ) ) {
 	include "$IP/extensions/wikia/ArticleVideo/ArticleVideo.setup.php";
 }
@@ -1727,6 +1730,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
+}
+
+if ( !empty( $wgEnableResetTrackingPreferencesPage ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/ResetTrackingPreferences.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
@@ -1757,4 +1764,11 @@ include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
 
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
+}
+
+include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+
+// SUS-5817
+if ( $wgEnableFastlyInsights ) {
+	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }

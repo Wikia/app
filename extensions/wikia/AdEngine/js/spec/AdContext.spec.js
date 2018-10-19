@@ -39,10 +39,7 @@ describe('AdContext', function () {
 				}
 			},
 			callback: noop
-		},
-		queryParams = [
-			'turtle'
-		];
+		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
@@ -76,18 +73,16 @@ describe('AdContext', function () {
 	});
 
 	it(
-		'fills getContext() with context, targeting, providers and forcedProvider ' +
+		'fills getContext() with context, targeting, providers ' +
 		'even for empty (or missing) ads.context',
 		function () {
 			var adContext = getModule();
 
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
-			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
-			expect(adContext.getContext().forcedProvider).toEqual(null);
 		}
 	);
 
@@ -240,19 +235,6 @@ describe('AdContext', function () {
 		}
 	);
 
-	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
-
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
@@ -285,24 +267,6 @@ describe('AdContext', function () {
 		});
 
 		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
-	});
-
-	it('query param is being passed to the adContext properly', function () {
-		spyOn(mocks.querystring, 'getVal');
-
-		Object.keys(queryParams).forEach(function (k) {
-			var adContext;
-
-			mocks.win = {};
-			mocks.instantGlobals = {};
-			mocks.querystring.getVal.and.returnValue(queryParams[k]);
-
-			adContext = getModule();
-			expect(mocks.querystring.getVal).toHaveBeenCalled();
-
-			adContext = adContext.getContext();
-			expect(adContext.forcedProvider).toEqual(queryParams[k]);
-		});
 	});
 
 	it('enables krux when country in instantGlobals.wgAdDriverKruxCountries', function () {

@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-prod
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -198,6 +199,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-tasks
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -283,7 +285,7 @@ spec:
               cpu: 6
               memory: 2Gi
             requests:
-              cpu: 1
+              cpu: 2
               memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
@@ -338,13 +340,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 20
+  maxReplicas: 30
   minReplicas: 10
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 30
+      targetAverageUtilization: 70
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -364,4 +366,25 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+    type: mediawiki
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      type: mediawiki
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
     interval: 10s

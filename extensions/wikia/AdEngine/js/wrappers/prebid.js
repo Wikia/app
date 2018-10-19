@@ -1,17 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.wrappers.prebid', [
 	'ext.wikia.adEngine.adContext',
-	// TODO: Remove wikia.cmp dependency after ADEN-7432
-	// at this point it's a way to load cmp module (just require it)
-	'wikia.cmp',
 	'wikia.location',
 	'wikia.window'
-], function (adContext, cmp, loc, win) {
+], function (adContext, loc, win) {
 	'use strict';
 
 	var validResponseStatusCode = 1,
 		errorResponseStatusCode = 2,
-		isCMPEnabled = adContext.get('opts.isCMPEnabled'),
 		prebidConfig = {
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,
@@ -19,6 +15,10 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 			bidderTimeout: 2000,
 			cache: {
 				url: 'https://prebid.adnxs.com/pbc/v1/cache'
+			},
+			consentManagement: {
+				cmpApi: 'iab',
+				allowAuctionWithoutConsent: false
 			},
 			userSync: {
 				iframeEnabled: true,
@@ -29,13 +29,6 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
-
-	if (isCMPEnabled) {
-		prebidConfig.consentManagement = {
-			cmpApi: 'iab',
-			allowAuctionWithoutConsent: false
-		};
-	}
 
 	if (!adContext.get('bidders.prebidAE3')) {
 		win.pbjs.que.push(function() {

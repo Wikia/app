@@ -181,7 +181,7 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
 
 		if ( !empty( $wgArticlePath ) ) {
 			$articlePath = str_replace( '$1', '', $wgArticlePath );
@@ -197,7 +197,6 @@ class MercuryApi {
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'siteMessage' => $this->getSiteMessage(),
@@ -233,7 +232,7 @@ class MercuryApi {
 		       $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
 		       $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
 		       $wgDiscussionColorOverride, $wgEnableNewAuth, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath, $wgEnableDiscussionsPolls,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
 		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
 		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
@@ -261,7 +260,6 @@ class MercuryApi {
 				'enableCommunityData' => $wgEnableCommunityData,
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,

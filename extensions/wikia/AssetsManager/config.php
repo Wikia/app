@@ -13,6 +13,7 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
+		'//extensions/wikia/AutoLogin/js/passive_autologin.js',
 	],
 ];
 
@@ -72,7 +73,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
@@ -168,10 +168,7 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
 ];
 
@@ -910,9 +907,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_jwplayer_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
 ];
 
@@ -2244,24 +2238,6 @@ $config['special_admindashboard_js'] = [
 	],
 ];
 
-/* Flow tracking */
-$config['flow_tracking_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//resources/wikia/modules/flowTracking.js'
-	],
-];
-
-/* Flow tracking */
-$config['flow_tracking_create_page_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/FlowTracking/scripts/createPageTracking.js',
-		'//extensions/wikia/FlowTracking/scripts/initCreatePageTracking.js',
-		'#group_flow_tracking_js'
-	],
-];
-
 $config['article_featured_video_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -2453,5 +2429,12 @@ $config['feeds_and_posts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+	]
+];
+
+$config['fandom_com_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	]
 ];

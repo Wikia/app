@@ -45,6 +45,13 @@ putenv('MW_INSTALL_PATH=' . $IP);
  */
 $wgCommandLineMode = true;
 
+/**
+ * SUS-5867 | follow up to hack from SUS-5862, if script is not invoked via command line then the $argv and $argc are
+ * set to null. Since the mentioned hack mimics the command line mode, these two should be set as well
+ */
+$argv = [];
+$argc = 1;
+
 require ( $IP . '/includes/WebStart.php' );
 
 // we forced command line mode, explicitly construct a WebRequest object
@@ -52,6 +59,8 @@ require ( $IP . '/includes/WebStart.php' );
 $request = new FauxRequest( $_POST, true );
 
 // finally, execute the task
+ob_start();
+
 try {
 	$runner = Wikia\Tasks\TaskRunner::newFromRequest( $request );
 	$runner->run();
@@ -62,6 +71,8 @@ try {
 		'reason' => sprintf('%s: %s', get_class( $ex ), $ex->getMessage() ),
 	];
 }
+
+ob_end_clean();
 
 // wrap JSON response in AjaxResponse class so that we will emit consistent set of headers
 $response = new AjaxResponse( json_encode( $resp ) );
