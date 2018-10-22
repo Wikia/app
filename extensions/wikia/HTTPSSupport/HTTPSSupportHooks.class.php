@@ -112,6 +112,36 @@ class HTTPSSupportHooks {
 		return true;
 	}
 
+	public static function onInterwikiLoadBeforeCache( &$row ): bool {
+		global $wgWikiaBaseDomain;
+		if ( !isset( $row['iw_url'] ) || strpos( $row['iw_url'], ".{$wgWikiaBaseDomain}" ) === false ) {
+			return true;
+		}
+
+		$parts = parse_url( $row['iw_url'] );
+
+		if ( empty( $parts['host'] ) ||
+			empty( $parts['path'] ) ||
+			$parts['path'] !== '/wiki/$1'
+		) {
+			return true;
+		}
+
+		$cityId = WikiFactory::DomainToID( $parts['host'] );
+		if ( empty( $cityId ) || !WikiFactory::isPublic( $cityId ) ) {
+			return true;
+		}
+
+		$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
+		if ( wfHttpsEnabledForURL( $currentUrl ) ) {
+			 $row['iw_url'] = rtrim( wfHttpToHttps( $currentUrl ), '/' ) . '/wiki/$1';
+		} elseif ( strpos( $currentUrl, 'http://' ) === 0 && wfHttpsAllowedForURL( $currentUrl ) ) {
+			 $row['iw_url'] = rtrim( wfProtocolUrlToRelative( $currentUrl ), '/' ) . '/wiki/$1';
+		}
+
+		return true;
+	}
+
 	private static function httpsAllowed( User $user, string $url ): bool {
 		global $wgEnableHTTPSForAnons;
 
