@@ -1,12 +1,13 @@
 /*jshint camelcase:false, maxdepth:4*/
 /*global define*/
 define('ext.wikia.adEngine.adLogicPageDimensions', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
-], function (slotTweaker, doc, log, throttle, win) {
+], function (adContext, slotTweaker, doc, log, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -30,6 +31,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		},
 		mediaQueriesMet,
 		matchMedia;
+
+	if (adContext.get('opts.incontentPlayerRail')) {
+		slotsToHideOnMediaQuery.INCONTENT_PLAYER = 'oneColumn';
+	}
 
 	function matchMediaMoz(query) {
 		return win.matchMedia(query).matches;

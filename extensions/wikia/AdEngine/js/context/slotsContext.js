@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.instantGlobals',
-	'wikia.log'
-], function (adContext, videoFrequencyMonitor, doc, instantGlobals, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, videoFrequencyMonitor, doc, instantGlobals, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
@@ -30,7 +31,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 				!isHome &&
 				isOasis &&
 				!context.targeting.hasFeaturedVideo &&
-				isInContentApplicable();
+				(adContext.get('opts.incontentPlayerRail') ? true : isInContentApplicable());
 
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
@@ -38,7 +39,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('BOTTOM_LEADERBOARD', context.targeting.skin === 'oasis');
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 		setStatus('INVISIBLE_HIGH_IMPACT_2', context.slots.invisibleHighImpact2);
-		setStatus('INCONTENT_PLAYER', adContext.get('opts.incontentPlayerRail') ? true : isIncontentEnabled);
+		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
 		setStatus('FEATURED', context.targeting.hasFeaturedVideo);
 
 		log(['Slots:', slots], log.levels.info, logGroup);
