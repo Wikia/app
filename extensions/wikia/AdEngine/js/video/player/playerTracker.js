@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': (params.slotName || emptyValue.string).toLowerCase(),
+				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,

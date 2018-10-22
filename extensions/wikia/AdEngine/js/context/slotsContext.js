@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.instantGlobals',
-	'wikia.log',
-	'wikia.window'
-], function (adContext, videoFrequencyMonitor, doc, instantGlobals, log, win) {
+	'wikia.log'
+], function (adContext, videoFrequencyMonitor, doc, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',

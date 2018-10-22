@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function getPosParameter(slotParams) {
-		var pos = (slotParams.pos || ''),
+		var pos = (slotParams.trackingpos || slotParams.pos || ''),
 			posArray = Array.isArray(pos) ? pos : pos.split(',');
 
 		return posArray[0].toLowerCase();
