@@ -6,8 +6,9 @@ require(['jquery', 'wikia.tracker'], function ($, tracker) {
 	var track = tracker.buildTrackingFunction({
 		trackingMethod: 'analytics'
 	});
+	var $rail = $('#WikiaRail');
 
-	$('#WikiaRail').one('afterLoad.rail', function () {
+	function loadEmbeddedFeed() {
 		$.getScript(fpLibrary, function () {
 			var wikiName = $('meta[property="og:site_name"]').prop('content');
 
@@ -19,5 +20,11 @@ require(['jquery', 'wikia.tracker'], function ($, tracker) {
 				track: track,
 			});
 		});
-	});
+	}
+
+	if ($rail.find('.loading').exists()) {
+		$rail.one('afterLoad.rail', loadEmbeddedFeed);
+	} else {
+		loadEmbeddedFeed();
+	}
 });
