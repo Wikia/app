@@ -9,10 +9,8 @@ metadata:
 spec:
   replicas: 5
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
+    type: Recreate
+    rollingUpdate: null
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
