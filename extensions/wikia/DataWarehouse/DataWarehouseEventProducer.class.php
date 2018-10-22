@@ -110,11 +110,6 @@ class DataWarehouseEventProducer {
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
-		$t = microtime(true);
-		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
-
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -370,10 +365,15 @@ class DataWarehouseEventProducer {
 
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
+
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
+		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
+
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
-		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 10; // enabled on 10% of wikis
-		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
+		if ( ! Wikia::isDevEnv() ) {
 			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
 			$task = AsyncKinesisProducerTask::newLocalTask();
 			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
