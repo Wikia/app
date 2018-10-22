@@ -2018,7 +2018,6 @@ $wgEditEncoding = '';
 $wgEditEventsRabbitConfig = [
 	'vhost' => 'data-warehouse',
 	'exchange' => 'mediawiki-edit-events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -3915,6 +3914,16 @@ $wgWikiaMobileSmartBannerConfig = [
 ];
 
 /**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
+];
+
+/**
  * Enable WikiaPhotoGallery extension.
  * @see extensions/wikia/WikiaPhotoGallery
  * @var bool $wgEnableWikiaPhotoGalleryExt
@@ -4959,7 +4968,6 @@ $wgImageMagickConvertCommand = '/usr/bin/convert';
 $wgImageReview = [
 	'vhost' => 'dc-file-sync',
 	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
 ];
 
 /**
@@ -5034,7 +5042,6 @@ $wgIncludeLegacyJavaScript = true;
 $wgIndexingPipeline = [
 	'vhost' => 'indexer',
 	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
