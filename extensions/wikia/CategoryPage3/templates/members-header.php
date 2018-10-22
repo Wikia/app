@@ -5,10 +5,9 @@
 <ul class="category-page__alphabet-shortcuts">
 	<?php foreach ( $alphabetShortcuts as $shortcut ) : ?>
 		<li class="category-page__alphabet-shortcut<?= $shortcut['isActive'] ? ' is-active': '' ?>">
-			<?php $url = Xml::escapeJsString( $title->getFullURL( [ 'from' => $shortcut['from'] ] ) ) ?>
 			<?= Html::rawElement( 'a', [
 				'href' => '#',
-				'onclick' => "window.location.assign('" . $url . "'); return false;"
+				'data-category-url' => $title->getFullURL( [ 'from' => $shortcut['from'] ] )
 			], $shortcut['label'] ) ?></li>
 		<?php // Don't put a newline before </li> or the bullets will disappear ?>
 	<?php endforeach; ?>
