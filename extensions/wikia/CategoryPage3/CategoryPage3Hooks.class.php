@@ -216,9 +216,8 @@ class CategoryPage3Hooks {
 	}
 
 	private static function getNonCrawlableLink( $url, $text, $attribs ) {
-		$urlEscaped = Xml::escapeJsString( $url );
 		$attribs['href'] = '#';
-		$attribs['onclick'] = "window.location.assign('${urlEscaped}'); return false;";
+		$attribs['data-category-url'] = $url;
 
 		return Html::rawElement( 'a', $attribs, $text );
 	}
