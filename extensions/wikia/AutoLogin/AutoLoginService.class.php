@@ -3,18 +3,22 @@
 use Wikia\Service\Gateway\KubernetesExternalUrlProvider;
 
 class AutoLoginService extends WikiaService {
-
-	private $kubernetesExternalUrlProvider;
+	/**
+	 * @var KubernetesExternalUrlProvider
+	 */
+	private static $kubernetesExternalUrlProvider;
 
 	const SYNC_COOKIE_NAME = 'autologin_done';
 
 	public static function cookieSyncEnabled( WebRequest $request ) {
-		return $request->getCookie( self::SYNC_COOKIE_NAME, "" ) !== '1';
+		return $request->getCookie( self::SYNC_COOKIE_NAME, "" ) !== '1' && $request->getCookie( self::SYNC_COOKIE_NAME, "" ) !== '2';
 	}
 
-	public function __construct() {
-		parent::__construct();
-		$this->kubernetesExternalUrlProvider = new KubernetesExternalUrlProvider();
+	/**
+	 * @param KubernetesExternalUrlProvider $kubernetesExternalUrlProvider
+	 */
+	public static function setKubernetesExternalUrlProvider( $kubernetesExternalUrlProvider ) {
+		self::$kubernetesExternalUrlProvider = $kubernetesExternalUrlProvider;
 	}
 
 	public function index() {
@@ -22,6 +26,6 @@ class AutoLoginService extends WikiaService {
 	}
 
 	protected function getServiceUrl() {
-		return $this->kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
+		return self::$kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
 	}
 }

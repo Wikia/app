@@ -2018,7 +2018,6 @@ $wgEditEncoding = '';
 $wgEditEventsRabbitConfig = [
 	'vhost' => 'data-warehouse',
 	'exchange' => 'mediawiki-edit-events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -2561,13 +2560,6 @@ $wgEnableDiscussionsLog = true;
  * @var bool $wgEnableDiscussionsNavigation
  */
 $wgEnableDiscussionsNavigation = false;
-
-/**
- * Allows submitting posts with Polls.
- * @see extensions/wikia/MercuryApi
- * @var bool $wgEnableDiscussionsPolls
- */
-$wgEnableDiscussionsPolls = true;
 
 /**
  * Enable DismissableSiteNotice extension.
@@ -3930,6 +3922,16 @@ $wgWikiaMobileSmartBannerConfig = [
 ];
 
 /**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
+];
+
+/**
  * Enable WikiaPhotoGallery extension.
  * @see extensions/wikia/WikiaPhotoGallery
  * @var bool $wgEnableWikiaPhotoGalleryExt
@@ -4974,7 +4976,6 @@ $wgImageMagickConvertCommand = '/usr/bin/convert';
 $wgImageReview = [
 	'vhost' => 'dc-file-sync',
 	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
 ];
 
 /**
@@ -5049,7 +5050,6 @@ $wgIncludeLegacyJavaScript = true;
 $wgIndexingPipeline = [
 	'vhost' => 'indexer',
 	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -6369,6 +6369,19 @@ $wgPoolCounterConf = null;
  * @var Array $wgPoolCounterServers
  */
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
+
+/**
+ * Whether to emit more detailed debug logs for a PoolWorkArticleView
+ * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
+ * @var bool $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugMode = false;
+
+/**
+ * The fraction of PoolWorkArticleView executions that should be executed with more detailed logging
+ * @var float $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugSampleRatio = 0.05;
 
 /**
  * Whether to preload the mediawiki.util module as blocking module in the top

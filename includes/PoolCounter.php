@@ -259,15 +259,16 @@ abstract class PoolCounterWork {
 				return $result;
 
 			case PoolCounter::DONE:
+				global $wgPoolWorkArticleViewDebugMode;
+				if ( $wgPoolWorkArticleViewDebugMode ) {
+					\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: looking up cached work for: {$this->key}" );
+				}
+
 				$result = $this->getCachedWork();
 				if ( $result === false ) {
 					/* That someone else work didn't serve us.
 					 * Acquire the lock for me
 					 */
-					WikiaLogger::instance()->warning( 'poolcounter - no cached work found', [
-						'exception' => new Exception(),
-						'poolcounter_key' => $this->key,
-					] );
 					return $this->doWork();
 				}
 				return $result;

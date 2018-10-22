@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@wikia/tracking-opt-in": "^1.0.32",
-    "axios": "^0.18.0",
-    "chalk": "^2.4.1",
-    "consent-string": "^1.2.4"
+    "@wikia/tracking-opt-in": "^1.0.39"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",

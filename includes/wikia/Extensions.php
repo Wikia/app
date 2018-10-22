@@ -94,6 +94,13 @@ if ( ! empty( $wgEnableWikisApi ) ) {
 	F::app()->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 }
 
+// During migration drop parser expiry on non-English wikis to 24 hours (PLATFORM-3765)
+if ( ( !wfHttpsAllowedForURL( $wgServer ) && !empty( $wgFandomComMigrationScheduled ) ) ||
+	( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
+) {
+	$wgParserCacheExpireTime = 24 * 3600;
+}
+
 /*
  * Code for http://lyrics.wikia.com/
  */
@@ -355,7 +362,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 		foreach( $argv as $key => $value ) {
 			if( substr($value, 0 , 8 ) === "--server" ) {
 				if( $value === "--server" ) {
-					// next artument is server url
+					// next argument is server url
 					if( isset( $argv[ $key + 1 ] ) ) {
 						$server = $argv[ $key + 1 ];
 					}
@@ -587,10 +594,6 @@ if (!empty($wgEnableLabeledSectionTransExt)) {
 	if (!empty($wgEnabledLabeledSectionTransVHeaders)) {
 		include("$IP/extensions/LabeledSectionTransclusion/lsth.php");
 	}
-}
-
-if (!empty($wgEnableMapLibExt)) {
-	include("$IP/extensions/3rdparty/MapLib/MapLib.php");
 }
 
 if (!empty($wgEnableVerbatimExt)) {
