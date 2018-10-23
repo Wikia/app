@@ -16,7 +16,7 @@ def render(String template, java.util.LinkedHashMap binding) {
 	return engine.createTemplate(template).make(binding).toString()
 }
 
-node("docker-builder-s3") {
+node("docker-builder-s4") {
 	def imageExists = false
 	def buildUser = "Anonymous"
 	def appHash
