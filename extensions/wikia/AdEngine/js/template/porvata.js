@@ -237,7 +237,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			return;
 		}
 
-		if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
+		if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
 			params.trackingpos = 'INCONTENT_PLAYER_RAIL';
 		}
 

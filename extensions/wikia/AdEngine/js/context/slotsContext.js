@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 				!isHome &&
 				isOasis &&
 				!context.targeting.hasFeaturedVideo &&
-				(adContext.get('opts.incontentPlayerRail') ? true : isInContentApplicable()) &&
+				(adContext.get('opts.incontentPlayerRail.enabled') ? true : isInContentApplicable()) &&
 				videoFrequencyMonitor.videoCanBeLaunched();
 
 		// those slots exists on all pages

@@ -17,12 +17,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
-			viewportListener = null,
-			outstreamConflictingSlots = [
-				'TOP_RIGHT_BOXAD',
-				'INCONTENT_BOXAD_1',
-				'BOTTOM_LEADERBOARD'
-			];
+			viewportListener = null;
 
 		function isFloatingEnabled(params) {
 			return params.floatingContext && params.floatingContext.isActive();
@@ -45,11 +40,11 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					}
 				});
 
-				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
+				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
 					floater.registerConflictCallback(
 						params.floatingContext.elements.ad,
 						trackViewportConflict,
-						outstreamConflictingSlots
+						adContext.get('opts.incontentPlayerRail.conflictingSlots')
 					);
 				}
 			}

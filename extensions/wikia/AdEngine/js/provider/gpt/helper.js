@@ -119,7 +119,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.pos = [slotTargetingData.pos, 'INCONTENT_PLAYER'];
 			}
 
-			if (slotTargetingData.pos === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
+			if (slotTargetingData.pos === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
 				slotTargetingData.trackingpos = 'INCONTENT_PLAYER_RAIL';
 			}
 		}

@@ -231,7 +231,14 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
-		context.opts.incontentPlayerRail = isEnabled('wgAdDriverIncontentPlayerRailCountries');
+		context.opts.incontentPlayerRail = {
+			enabled: isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			conflictingSlots: [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			]
+		};
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);

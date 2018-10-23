@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		selectorArticle = '#mw-content-text > h2',
 		selectorRail = '#mw-content-text > :first-child',
-		inRail = adContext.get('opts.incontentPlayerRail');
+		inRail = adContext.get('opts.incontentPlayerRail.enabled');
 
 	function createInContentWrapper(slotName) {
 		var adHtml = doc.createElement('div'),

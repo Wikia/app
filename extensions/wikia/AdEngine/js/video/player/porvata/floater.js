@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 					endFloating(floatingContext);
 				}
 
-				if (adContext.get('opts.incontentPlayerRail')) {
+				if (adContext.get('opts.incontentPlayerRail.enabled')) {
 					floatingContext.elements.video.stop();
 				}
 			};

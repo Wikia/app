@@ -175,7 +175,7 @@ require([
 				inContent.init('INCONTENT_PLAYER');
 			};
 
-			if (adContext.get('opts.incontentPlayerRail')) {
+			if (adContext.get('opts.incontentPlayerRail.enabled')) {
 				initInContent();
 			} else {
 				runOnPageReady(initInContent);

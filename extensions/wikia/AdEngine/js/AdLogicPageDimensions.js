@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		mediaQueriesMet,
 		matchMedia;
 
-	if (adContext.get('opts.incontentPlayerRail')) {
+	if (adContext.get('opts.incontentPlayerRail.enabled')) {
 		slotsToHideOnMediaQuery.INCONTENT_PLAYER = 'oneColumn';
 	}
 
