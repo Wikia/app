@@ -36,9 +36,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
 					floater.registerConflictCallback(params.floatingContext.elements.ad, function (conflictingAdSlot) {
-						tracker.track(Object.assign({}, params, {
-							conflictingAdSlot: conflictingAdSlot
-						}), 'viewport-conflict');
+						params.conflictingAdSlot = conflictingAdSlot;
+						tracker.track(params, 'viewport-conflict');
+						params.conflictingAdSlot = undefined;
 					});
 				}
 			}
