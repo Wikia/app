@@ -142,7 +142,10 @@ class CloseWikiMaintenance {
 									'exception' => $ex->getMessage(),
 									'dump_size_bytes' => filesize( $source ),
 								]);
-								die( 1 );
+								unlink( $source );
+
+								// SUS-6077 | move to a next wiki instead of failing the entire process
+								continue;
 							}
 
 							$this->info( "{$source} copied to S3 Amazon" );
@@ -158,6 +161,9 @@ class CloseWikiMaintenance {
 								'city_id' => $cityid,
 							]
 						);
+
+						// SUS-6077 | move to a next wiki instead of failing the entire process
+						continue;
 					}
 				}
 			}
