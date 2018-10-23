@@ -108,7 +108,7 @@ class DWDimensionApiController extends WikiaApiController {
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
 				'sitename' => $row->sitename,
-				'url' => $this->parseUrl( $row->url ),
+				'url' => $row->url,
 				'domain' => $this->parseUrl( $row->url ),
 				'title' => $row->title,
 				'founding_user_id' => $row->founding_user_id,
