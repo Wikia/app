@@ -54,8 +54,8 @@ require([
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			// featuredVideoAds(playerInstance, bidParams, slotTargeting);
-			// featuredVideoMoatTracking.track(playerInstance);
+			featuredVideoAds(playerInstance, bidParams, slotTargeting);
+			featuredVideoMoatTracking.track(playerInstance);
 		});
 
 		playerInstance.on('autoplayToggle', function (data) {
