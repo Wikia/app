@@ -402,8 +402,11 @@ class WikiFactoryLoader {
 		if ( empty( $this->mWikiID ) && empty( $this->langCode ) ) {
 			$wikis = WikiFactory::getWikisUnderDomain( $this->mServerName );
 			if ( count( $wikis ) > 0 ) {
-				$this->mCityUrl = 'https://' . $this->mServerName;
+				// comment this out if don't want to return 01 here
+				//$this->mCityUrl = 'https://' . $this->mServerName;
 				//$this->mIsWikiaActive = -3;	// wiki stub
+				//$this->mWikiID = -1;
+
 				// http->https redirects?
 				return -1;
 			}
