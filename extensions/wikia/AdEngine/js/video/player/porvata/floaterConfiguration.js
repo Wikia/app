@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 		'INCONTENT_PLAYER': {
 			enableKeyword: 'enableInContentFloating',
 			container: 'WikiaArticle',
-			floatingRailForced: context.opts.incontentPlayerRail,
+			floatingRailForced: context && context.opts && context.opts.incontentPlayerRail,
 			configure: function (floatingContext) {
 				var elements = floatingContext.elements;
 
