@@ -139,7 +139,8 @@ class CloseWikiMaintenance {
 								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
 							} catch ( S3Exception $ex ) {
 								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun", [
-									'exception' => $ex->getMessage()
+									'exception' => $ex->getMessage(),
+									'dump_size_bytes' => filesize( $source ),
 								]);
 								die( 1 );
 							}
