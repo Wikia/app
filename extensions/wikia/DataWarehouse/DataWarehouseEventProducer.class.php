@@ -36,13 +36,13 @@ class DataWarehouseEventProducer {
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 
-		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
 		$this->setGeoRegion( $geo->region );
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
 		$this->setLanguage();
 		$this->setCategories();
 		$this->setBeacon( wfGetBeaconId() );
+		$this->setEventTS( $this->getCurrentPreciseTimestamp()->format("Y-m-d\TH:i:s.uO") );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -317,10 +317,6 @@ class DataWarehouseEventProducer {
 		$this->mParams['isRedirect'] = intval( $is_redirect );
 	}
 
-	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
-	}
-
 	public function setRevisionTimestamp ( $revision_timestamp ) {
 		$this->mParams['revTimestamp'] = $revision_timestamp;
 	}
@@ -371,8 +367,6 @@ class DataWarehouseEventProducer {
 
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
-
-		$this->setEventTS( $this->getCurrentPreciseTimestamp()->format("Y-m-d\TH:i:s.uO") );
 
 		$data = json_encode( $this->mParams );
 		$this->getRabbit()->publish( $this->mKey, $data );
