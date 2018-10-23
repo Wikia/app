@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 		logGroup = 'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker';
 
 	function track(params, eventName, errorCode) {
-		if (featuredVideoCookieService) {
+		if (featuredVideoCookieService && params.slotName === 'FEATURED') {
 			params.userBlockAutoplay = -1;
 			var cookieValue = featuredVideoCookieService.getAutoplay();
 			if (['0', '1'].indexOf(cookieValue) > -1) {

@@ -10,6 +10,7 @@
  * @todo document
  */
 class ParserCache {
+	/** @var BagOStuff $mMemc */
 	private $mMemc;
 	const try116cache = false; /* Only useful $wgParserCacheExpireTime after updating to 1.17 */
 
@@ -178,6 +179,9 @@ class ParserCache {
 			return false;
 		}
 
+		// SRE-111: Clear in-memory cache for the parser output as well
+		$this->mMemc->clearLocalCache( $parserOutputKey );
+
 		$value = $this->mMemc->get( $parserOutputKey );
 		if ( self::try116cache && !$value && strpos( $value, '*' ) !== -1 ) {
 			wfDebug( "New format parser cache miss.\n" );
@@ -267,5 +271,9 @@ class ParserCache {
 		} else {
 			wfDebug( "Parser output was marked as uncacheable and has not been saved.\n" );
 		}
+	}
+
+	public function clearOptionsKey( $article ) {
+		$this->mMemc->clearLocalCache( $this->getOptionsKey( $article ) );
 	}
 }

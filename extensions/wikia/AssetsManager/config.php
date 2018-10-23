@@ -13,6 +13,7 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
+		'//extensions/wikia/AutoLogin/js/passive_autologin.js',
 	],
 ];
 
@@ -167,10 +168,7 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
 ];
 
@@ -907,11 +905,8 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
-		'#group_jwplayer_featured_video_ads_js',
+		'#group_jwplayer_mobile_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
-		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
-		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
-		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
 ];
 
@@ -2338,7 +2333,7 @@ $config['page_header_scss'] = [
 	],
 ];
 
-$config['jwplayer_featured_video_ads_js'] = [
+$config['jwplayer_mobile_featured_video_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
@@ -2357,7 +2352,6 @@ $config['jwplayer_tag_ads_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 	],
 ];
@@ -2435,7 +2429,14 @@ $config['special_contact_forget_account_js'] = [
 $config['feeds_and_posts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+		'//extensions/wikia/FeedsAndPosts/scripts/index.js',
+	]
+];
+
+$config['feeds_and_posts_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/styles/index.scss',
 	]
 ];
 
