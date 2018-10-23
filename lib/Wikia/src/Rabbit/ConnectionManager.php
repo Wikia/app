@@ -4,7 +4,7 @@ namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
-use PhpAmqpLib\Connection\AMQPSocketConnection;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use Wikia\Logger\Loggable;
 
@@ -62,7 +62,7 @@ class ConnectionManager {
 
 	private function getConnection( string $vHost ): AbstractConnection {
 		if ( !isset( $this->connections[$vHost] ) ) {
-			$this->connections[$vHost] = new AMQPSocketConnection(
+			$this->connections[$vHost] = new AMQPStreamConnection(
 				$this->host,
 				$this->port,
 				$this->user,
