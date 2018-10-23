@@ -81,6 +81,11 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 
+	protected function parseUrl($rowUrl) {
+		$urlWithoutScheme = str_replace( ['http://', 'https://'], '', $rowUrl );
+		return trim( $urlWithoutScheme, '/' );
+	}
+
 	public function getWikis() {
 		$testWikis = $this->getTestWikisIDs();
 		$db = $this->getSharedDbSlave();
@@ -103,8 +108,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
 				'sitename' => $row->sitename,
-				'url' => parse_url( $row->url, PHP_URL_HOST ),
-				'domain' => parse_url( $row->url, PHP_URL_HOST ),
+				'url' => $this->parseUrl( $row->url ),
+				'domain' => $this->parseUrl( $row->url ),
 				'title' => $row->title,
 				'founding_user_id' => $row->founding_user_id,
 				'public' => $row->public,
