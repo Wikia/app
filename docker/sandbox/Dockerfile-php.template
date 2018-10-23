@@ -9,6 +9,6 @@ ADD config /usr/wikia/slot1/current/config
 
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \
     chmod 777 /usr/wikia/slot1/current/cache/messages && \
-    SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=4
+    SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=32
 
 USER nobody
