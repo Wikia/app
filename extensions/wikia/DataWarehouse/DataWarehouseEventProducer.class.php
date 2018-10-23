@@ -363,15 +363,18 @@ class DataWarehouseEventProducer {
 		$this->mParams['beacon'] = $beacon;
 	}
 
+	protected function getCurrentPreciseTimestamp() {
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		return new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
+	}
+
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
 
-		$t = microtime(true);
-		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
+		$this->setEventTS( $this->getCurrentPreciseTimestamp()->format("Y-m-d\TH:i:s.uO") );
 
-		$data = json_encode($this->mParams);
+		$data = json_encode( $this->mParams );
 		$this->getRabbit()->publish( $this->mKey, $data );
 		if ( ! Wikia::isDevEnv() ) {
 			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
