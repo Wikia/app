@@ -62,6 +62,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
+				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0

@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.video.player.porvata', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
@@ -7,7 +8,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'wikia.log',
 	'wikia.viewportObserver',
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (googleIma, porvataPlayerFactory, tracker, doc, log, viewportObserver, floater) {
+], function (adContext, googleIma, porvataPlayerFactory, tracker, doc, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -32,6 +33,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						inViewportCallback(false);
 					}
 				});
+
+				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
+					floater.registerConflictCallback(params.floatingContext.elements.ad, function (conflictingAdSlot) {
+						tracker.track(Object.assign({}, params, {
+							conflictingAdSlot: conflictingAdSlot
+						}), 'viewport-conflict');
+					});
+				}
 			}
 		}
 

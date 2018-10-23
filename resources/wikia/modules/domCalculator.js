@@ -5,20 +5,45 @@ define('wikia.domCalculator', [
 ], function (doc, win) {
 	'use strict';
 
-	function getTopOffset(element) {
-		var topPos = 0,
+	/**
+	 * Returns element's offset of given element depending on offset parameter name
+	 * @param element DOM element
+	 * @param offsetParameter node element parameter to count overall offset
+	 * @returns {number}
+	 */
+	function getElementOffset(element, offsetParameter) {
+		var borderPos = 0,
 			elementWindow = element.ownerDocument.defaultView;
 
 		do {
-			topPos += element.offsetTop;
+
+			borderPos += element[offsetParameter];
 			element = element.offsetParent;
 		} while (element !== null);
 
 		if (elementWindow && elementWindow.frameElement) {
-			topPos += getTopOffset(elementWindow.frameElement);
+			borderPos += getElementOffset(elementWindow.frameElement, offsetParameter);
 		}
 
-		return topPos;
+		return borderPos;
+	}
+
+	/**
+	 * Returns element's offset of given element from the top of the page
+	 * @param element DOM element
+	 * @returns {number}
+	 */
+	function getTopOffset(element) {
+		return getElementOffset(element, 'offsetTop');
+	}
+
+	/**
+	 * Returns element's offset of given element from the left of the page
+	 * @param element DOM element
+	 * @returns {number}
+	 */
+	function getLeftOffset(element) {
+		return getElementOffset(element, 'offsetLeft');
 	}
 
 	/**
@@ -35,12 +60,56 @@ define('wikia.domCalculator', [
 			topViewport = scrollPosition + globalNavHeight,
 			bottomViewport = scrollPosition + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
 
-		return topElement >= (topViewport - elementHeight/2) &&
-			bottomElement <= (bottomViewport + elementHeight/2);
+		return topElement >= (topViewport - elementHeight / 2) &&
+			bottomElement <= (bottomViewport + elementHeight / 2);
+	}
+
+	function isBetween(number, from, length) {
+		return number >= from && number <= (from + length);
+	}
+
+	function getScrollX() {
+		return win.scrollX || win.pageXOffset;
+	}
+
+	function getScrollY() {
+		return win.scrollY || win.pageYOffset;
+	}
+
+	function isInConflict(floating, element) {
+		if (!floating || !element) {
+			return false;
+		}
+
+		floating = {
+			l: getLeftOffset(floating) + getScrollX(),
+			t: getTopOffset(floating) + getScrollY(),
+			w: floating.offsetWidth,
+			h: floating.offsetHeight
+		};
+		element = {
+			l: getLeftOffset(element),
+			t: getTopOffset(element),
+			w: element.offsetWidth,
+			h: element.offsetHeight
+		};
+
+		if (!floating.w || !floating.h || !element.w || !element.h) {
+			return false;
+		}
+
+		return isBetween(floating.l, element.l, element.w) && (
+			isBetween(floating.t, element.t, element.h) ||
+			isBetween(floating.t + floating.h, element.t, element.h) ||
+			(floating.t < element.t && floating.t + floating.h > element.t + element.h) ||
+			(floating.t > element.t && floating.t + floating.h < element.t + element.h)
+		);
 	}
 
 	return {
 		getTopOffset: getTopOffset,
+		getLeftOffset: getLeftOffset,
+		isInConflict: isInConflict,
 		isInViewport: isInViewport
 	};
 });

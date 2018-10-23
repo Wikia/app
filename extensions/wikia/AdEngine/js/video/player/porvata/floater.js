@@ -4,15 +4,23 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		'ext.wikia.adEngine.video.player.porvata.floaterConfiguration',
 		'ext.wikia.adEngine.video.player.porvata.floatingContextFactory',
 		'wikia.document',
+		'wikia.domCalculator',
 		'wikia.throttle',
 		'wikia.window'
-	], function (adContext, floaterConfiguration, floatingContextFactory, doc, throttle, win) {
+	], function (adContext, floaterConfiguration, floatingContextFactory, doc, domCalculator, throttle, win) {
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
 			wikiFloatingVideoSelector = '.video-container',
-			floatingContextCache = {};
+			floatingContextCache = {},
+			adSlotsInConflict = [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			],
+			activeAdSlotsInConflict = [],
+			activeAdSlotsCheck = false;
 
 		function updateDimensions(element, width, height) {
 			if (element) {
@@ -90,16 +98,14 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function enableFloating(floatingContext) {
-			var elements = floatingContext.elements,
-				width = 0,
-				height = 0;
+			var elements = floatingContext.elements;
 
 			floatingContext.beforeFloat();
 			elements.adContainer.classList.add(activeFloatingCssClass);
 
 			// Those values have to be set after setting active floating css class
-			width = floatingContext.getWidth();
-			height = floatingContext.getHeight();
+			var width = floatingContext.getWidth(),
+				height = floatingContext.getHeight();
 
 			updateDimensions(elements.imageContainer, width, height);
 
@@ -224,10 +230,46 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				floatingContextCache[slotName].elements.adContainer.classList.contains(activeFloatingCssClass);
 		}
 
+		function registerConflictCallback(element, callback) {
+			var conflictCallback = throttle(function() {
+				if (activeAdSlotsCheck) {
+					return;
+				}
+
+				activeAdSlotsCheck = true;
+
+				var currentConflicts = [];
+
+				adSlotsInConflict.forEach(function (adSlot) {
+					if (domCalculator.isInConflict(element, doc.getElementById(adSlot))) {
+						currentConflicts.push(adSlot);
+					}
+				});
+
+				currentConflicts.forEach(function (adSlot) {
+					if (activeAdSlotsInConflict.indexOf(adSlot) === -1) {
+						callback(adSlot + '_in');
+					}
+				});
+
+				activeAdSlotsInConflict.forEach(function (adSlot) {
+					if (currentConflicts.indexOf(adSlot) === -1) {
+						callback(adSlot + '_out');
+					}
+				});
+
+				activeAdSlotsInConflict = currentConflicts;
+				activeAdSlotsCheck = false;
+			}, 100);
+
+			win.addEventListener('scroll', conflictCallback);
+		}
+
 		return {
 			canFloat: canFloat,
 			makeFloat: makeFloat,
-			isFloating: isFloating
+			isFloating: isFloating,
+			registerConflictCallback: registerConflictCallback
 		};
 	}
 );
