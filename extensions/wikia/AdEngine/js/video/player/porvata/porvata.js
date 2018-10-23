@@ -17,10 +17,21 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
-			viewportListener = null;
+			viewportListener = null,
+			outstreamConflictingSlots = [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			];
 
 		function isFloatingEnabled(params) {
 			return params.floatingContext && params.floatingContext.isActive();
+		}
+
+		function trackViewportConflict(conflictingAdSlot) {
+			params.conflictingAdSlot = conflictingAdSlot;
+			tracker.track(params, 'viewport-conflict');
+			params.conflictingAdSlot = undefined;
 		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
@@ -35,11 +46,11 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 
 				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail')) {
-					floater.registerConflictCallback(params.floatingContext.elements.ad, function (conflictingAdSlot) {
-						params.conflictingAdSlot = conflictingAdSlot;
-						tracker.track(params, 'viewport-conflict');
-						params.conflictingAdSlot = undefined;
-					});
+					floater.registerConflictCallback(
+						params.floatingContext.elements.ad,
+						trackViewportConflict,
+						outstreamConflictingSlots
+					);
 				}
 			}
 		}

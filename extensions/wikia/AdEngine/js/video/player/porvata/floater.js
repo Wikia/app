@@ -14,11 +14,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			withArticleVideoCssClass = 'with-article-video',
 			wikiFloatingVideoSelector = '.video-container',
 			floatingContextCache = {},
-			adSlotsInConflict = [
-				'TOP_RIGHT_BOXAD',
-				'INCONTENT_BOXAD_1',
-				'BOTTOM_LEADERBOARD'
-			],
+			conflictingAdSlots = [],
 			activeAdSlotsInConflict = [],
 			activeAdSlotsCheck = false;
 
@@ -191,7 +187,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
-		 * Make video floating on the right rail.
+		 * Make video floating on the right rail
 		 *
 		 * @param video - video object
 		 * @param params - parameters that video receives
@@ -216,7 +212,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
-		 * Checks whether slot with given parameters can become floating.
+		 * Checks whether slot with given parameters can become floating
 		 *
 		 * @param params - parameters that video receives
 		 * @returns {boolean} - true when floater can make given video & slot floatable
@@ -225,12 +221,28 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return floaterConfiguration.canFloat(params);
 		}
 
+		/**
+		 * Checks whether slot with given name is floating
+		 *
+		 * @param slotName - parameters with slot name
+		 * @returns {boolean} - true when slot is currently floating
+		 */
 		function isFloating(slotName) {
 			return floatingContextCache[slotName] &&
 				floatingContextCache[slotName].elements.adContainer.classList.contains(activeFloatingCssClass);
 		}
 
-		function registerConflictCallback(element, callback) {
+		/**
+		 * Register callback which should to be executed whether floating slot will conflict with any of given ad slots
+		 *
+		 * @param element - floating ad slot
+		 * @param callback - function to be executed once conflict in/out alert will be raised
+		 * @param adSlots - ad slots which can conflict with floating ad slot
+		 * @returns {function} - onScroll listener callback
+		 */
+		function registerConflictCallback(element, callback, adSlots) {
+			conflictingAdSlots = adSlots;
+
 			var conflictCallback = throttle(function() {
 				if (activeAdSlotsCheck) {
 					return;
@@ -240,8 +252,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 				var currentConflicts = [];
 
-				adSlotsInConflict.forEach(function (adSlot) {
-					if (domCalculator.isInConflict(element, doc.getElementById(adSlot))) {
+				conflictingAdSlots.forEach(function (adSlot) {
+					if (domCalculator.isFloatingInConflict(element, doc.getElementById(adSlot))) {
 						currentConflicts.push(adSlot);
 					}
 				});
@@ -263,6 +275,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			}, 100);
 
 			win.addEventListener('scroll', conflictCallback);
+
+			return conflictCallback;
 		}
 
 		return {

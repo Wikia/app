@@ -6,58 +6,58 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 
 	var context = adContext.getContext(),
 		slotsConfiguration = {
-		'INCONTENT_PLAYER': {
-			enableKeyword: 'enableInContentFloating',
-			container: 'WikiaArticle',
-			floatingRailForced: context && context.opts && context.opts.incontentPlayerRail,
-			configure: function (floatingContext) {
-				var elements = floatingContext.elements;
+			'INCONTENT_PLAYER': {
+				enableKeyword: 'enableInContentFloating',
+				container: 'WikiaArticle',
+				floatingRailForced: context && context.opts && context.opts.incontentPlayerRail,
+				configure: function (floatingContext) {
+					var elements = floatingContext.elements;
 
-				elements.viewport = elements.ad.parentElement;
-				floatingContext.forceDoNotFloat();
-			},
-			floatLater: function (callback) {
-				var floatingContext = this,
-					video = this.elements.video;
+					elements.viewport = elements.ad.parentElement;
+					floatingContext.forceDoNotFloat();
+				},
+				floatLater: function (callback) {
+					var floatingContext = this,
+						video = this.elements.video;
 
-				video.addEventListener('wikiaSlotExpanded', function () {
-					floatingContext.preferred.width = video.container.scrollWidth;
-					floatingContext.preferred.height = video.container.scrollHeight;
-					floatingContext.floatAgain();
-					floatingContext.fireEvent('start');
+					video.addEventListener('wikiaSlotExpanded', function () {
+						floatingContext.preferred.width = video.container.scrollWidth;
+						floatingContext.preferred.height = video.container.scrollHeight;
+						floatingContext.floatAgain();
+						floatingContext.fireEvent('start');
 
-					if (floatingContext.isOutsideOfViewport()) {
-						callback(floatingContext);
+						if (floatingContext.isOutsideOfViewport()) {
+							callback(floatingContext);
+						}
+					});
+				},
+				onAttach: function (floatingContext) {
+					var elements = floatingContext.elements;
+
+					elements.ad.style.maxHeight = elements.ad.scrollHeight + 'px';
+					elements.viewport.style.removeProperty('height');
+					elements.providerContainer.style.removeProperty('height');
+
+					if (context.opts.incontentPlayerRail) {
+						elements.viewport.style.display = 'none';
 					}
-				});
-			},
-			onAttach: function (floatingContext) {
-				var elements = floatingContext.elements;
+				},
+				onBeforeDetach: function (floatingContext) {
+					var viewport = floatingContext.elements.viewport;
 
-				elements.ad.style.maxHeight = elements.ad.scrollHeight + 'px';
-				elements.viewport.style.removeProperty('height');
-				elements.providerContainer.style.removeProperty('height');
-
-				if (context.opts.incontentPlayerRail) {
-					elements.viewport.style.display = 'none';
+					if (context.opts.incontentPlayerRail) {
+						viewport.style.height = '0px';
+					} else {
+						// Magic 14 is related to #INCONTENT_WRAPPER > #INCONTENT_PLAYER margins
+						// and prevents jumping when video is going to float
+						viewport.style.height = (viewport.offsetHeight - 14) + 'px';
+					}
+				},
+				onDetach: function (floatingContext) {
+					floatingContext.elements.providerContainer.style.height = floatingContext.getHeight() + 'px';
 				}
-			},
-			onBeforeDetach: function (floatingContext) {
-				var viewport = floatingContext.elements.viewport;
-
-				if (context.opts.incontentPlayerRail) {
-					viewport.style.height = '0px';
-				} else {
-					// Magic 14 is related to #INCONTENT_WRAPPER > #INCONTENT_PLAYER margins
-					// and prevents jumping when video is going to float
-					viewport.style.height = (viewport.offsetHeight - 14) + 'px';
-				}
-			},
-			onDetach: function (floatingContext) {
-				floatingContext.elements.providerContainer.style.height = floatingContext.getHeight() + 'px';
 			}
-		}
-	};
+		};
 
 	function configure(floatingContext, params) {
 		var configuration = selectConfigurationUsing(params);

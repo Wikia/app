@@ -7,9 +7,10 @@ define('wikia.domCalculator', [
 
 	/**
 	 * Returns element's offset of given element depending on offset parameter name
-	 * @param element DOM element
-	 * @param offsetParameter node element parameter to count overall offset
-	 * @returns {number}
+	 *
+	 * @param element - DOM element
+	 * @param offsetParameter - node element parameter to count overall offset
+	 * @returns {number} - offset in pixels
 	 */
 	function getElementOffset(element, offsetParameter) {
 		var borderPos = 0,
@@ -30,8 +31,9 @@ define('wikia.domCalculator', [
 
 	/**
 	 * Returns element's offset of given element from the top of the page
-	 * @param element DOM element
-	 * @returns {number}
+	 *
+	 * @param element - DOM element
+	 * @returns {number} - offset in pixels
 	 */
 	function getTopOffset(element) {
 		return getElementOffset(element, 'offsetTop');
@@ -39,8 +41,9 @@ define('wikia.domCalculator', [
 
 	/**
 	 * Returns element's offset of given element from the left of the page
-	 * @param element DOM element
-	 * @returns {number}
+	 *
+	 * @param element - DOM element
+	 * @returns {number} - offset in pixels
 	 */
 	function getLeftOffset(element) {
 		return getElementOffset(element, 'offsetLeft');
@@ -50,6 +53,9 @@ define('wikia.domCalculator', [
 	 * Element is considered as in the viewport
 	 * when at least 50% of its height is in the viewport.
 	 * We take into account global navigation height as it covers page elements so they're not visible.
+	 *
+	 * @param element - DOM element
+	 * @returns {boolean} - true if element is in viewport
 	 */
 	function isInViewport(element) {
 		var globalNavHeight = 55, // keep in sync with $wds-global-navigation-height
@@ -64,19 +70,44 @@ define('wikia.domCalculator', [
 			bottomElement <= (bottomViewport + elementHeight / 2);
 	}
 
+	/**
+	 * Returns element's offset of given element from the left of the page
+	 *
+	 * @param number - number to check
+	 * @param from - range start
+	 * @param length - range length
+	 * @returns {boolean} - true if number is between from and from+length
+	 */
 	function isBetween(number, from, length) {
 		return number >= from && number <= (from + length);
 	}
 
+	/**
+	 * Returns viewport left offset
+	 *
+	 * @returns {number} - offset in pixels
+	 */
 	function getScrollX() {
 		return win.scrollX || win.pageXOffset;
 	}
 
+	/**
+	 * Returns viewport top offset
+	 *
+	 * @returns {number} - offset in pixels
+	 */
 	function getScrollY() {
 		return win.scrollY || win.pageYOffset;
 	}
 
-	function isInConflict(floating, element) {
+	/**
+	 * Checks if floating element is in conflict with given element
+	 *
+	 * @param floating - DOM element
+	 * @param element - DOM element
+	 * @returns {boolean} - true if floating is in conflict with element
+	 */
+	function isFloatingInConflict(floating, element) {
 		if (!floating || !element) {
 			return false;
 		}
@@ -109,7 +140,7 @@ define('wikia.domCalculator', [
 	return {
 		getTopOffset: getTopOffset,
 		getLeftOffset: getLeftOffset,
-		isInConflict: isInConflict,
+		isFloatingInConflict: isFloatingInConflict,
 		isInViewport: isInViewport
 	};
 });
