@@ -29,9 +29,11 @@ $wgExtensionFunctions[] = function () {
 
 			SpecialPageFactory::executePath( $wgTitle, $context );
 			$wgOut->output();
+			break;
 		default:
 			// TODO: display something here?
 			http_response_code( 404 );
+			break;
 	}
 
 	exit( 0 );
