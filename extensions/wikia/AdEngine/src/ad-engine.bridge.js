@@ -33,7 +33,6 @@ const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer
 
 function init(
 	adTracker,
-	geo,
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
@@ -53,7 +52,7 @@ function init(
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
-	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 

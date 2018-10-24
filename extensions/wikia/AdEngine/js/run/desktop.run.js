@@ -23,7 +23,6 @@ require([
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
-	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
@@ -50,7 +49,6 @@ require([
 	adLogicZoneParams,
 	babDetection,
 	wadRecRunner,
-	geo,
 	trackingOptIn,
 	win,
 	fvLagger
@@ -71,7 +69,6 @@ require([
 		// Custom ads (skins, footer, etc)
 		adEngineBridge.init(
 			adTracker,
-			geo,
 			slotRegistry,
 			null,
 			pageLevelParams.getPageLevelParams(),
@@ -111,7 +108,7 @@ require([
 			slotStateMonitor.run();
 
 			// Track Labrador values to DW
-			var labradorPropValue = geo.getSamplingResults().join(';');
+			var labradorPropValue = adEngineBridge.geo.getSamplingResults().join(';');
 
 			if (context.opts.enableAdInfoLog && labradorPropValue) {
 				pageInfoTracker.trackProp('labrador', labradorPropValue);

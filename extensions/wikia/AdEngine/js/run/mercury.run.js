@@ -5,7 +5,6 @@ require([
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -28,7 +27,6 @@ require([
 	pageLevelParams,
 	adTracker,
 	slotsContext,
-	geo,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -56,7 +54,6 @@ require([
 	adContext.addCallback(function () {
 		adEngineBridge.init(
 			adTracker,
-			geo,
 			slotRegistry,
 			mercuryListener,
 			pageLevelParams.getPageLevelParams(),
@@ -98,7 +95,7 @@ require([
 		adEngineBridge.readSessionId();
 
 		// Track Labrador values to DW
-		var labradorPropValue = geo.getSamplingResults().join(';');
+		var labradorPropValue = adEngineBridge.geo.getSamplingResults().join(';');
 
 		if (context.opts.enableAdInfoLog && labradorPropValue) {
 			pageInfoTracker.trackProp('labrador', labradorPropValue);
