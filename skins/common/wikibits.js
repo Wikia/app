@@ -87,13 +87,7 @@ function maybeRedirectDevWikiCodeSubpage(url) {
 		url.indexOf(mw.config.get('wgScript')) != -1 &&
 		(
 			mw.config.get('wgCityId') === '7931' ||
-			// Check protocol-relative, HTTP and HTTPS versions of Dev Wiki links
-			// This is done via wgWikiaBaseDomain so fandom.com migration does
-			// not affect it and can't use wgWikiaBaseDomainRegex so it does
-			// not potentially affect devbox URLs such as dev.wikia-dev.pl
-			url.indexOf('//dev.' + mw.config.get('wgWikiaBaseDomain')) === 0 ||
-			url.indexOf('http://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0 ||
-			url.indexOf('https://dev.' + mw.config.get('wgWikiaBaseDomain')) === 0
+			new RegExp('^(https?:)?\\/\\/dev\\.' + mw.config.get('wgWikiaBaseDomainRegex')).test(url)
 		) &&
 		(
 			url.indexOf('/code.js') !== -1 ||
