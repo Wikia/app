@@ -19,10 +19,10 @@ define('ext.wikia.adEngine.slot.inContent', [
 	function createInContentWrapper(slotName) {
 		var adHtml = doc.createElement('div'),
 			label = msg('adengine-advertisement'),
-			innerHTMLStyle = inRail ? 'margin: 0' : '';
+			innerHTMLClass = inRail ? ' in-rail' : '';
 
 		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" style="' + innerHTMLStyle + '" data-label="' + label + '"></div>';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden' + innerHTMLClass + '" data-label="' + label + '"></div>';
 
 		return adHtml;
 	}

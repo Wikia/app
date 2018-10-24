@@ -232,7 +232,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.incontentPlayerRail = {
-			enabled: isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
 			conflictingSlots: [
 				'TOP_RIGHT_BOXAD',
 				'INCONTENT_BOXAD_1',
