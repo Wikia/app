@@ -114,6 +114,8 @@ class CreateWikiTask extends BaseTask {
 			$taskRunner->run();
 
 		} catch ( Exception $ex ) {
+			$this->error( 'CNW process failed', [ 'exception' => $ex ] );
+
 			// SUS-4383 | mark the wiki as not fully created and log the exception message
 			self::updateCreationLogEntry( $this->getTaskId(), [
 				'creation_ended' => wfTimestamp( TS_DB ),
