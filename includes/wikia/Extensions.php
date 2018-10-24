@@ -1768,3 +1768,6 @@ include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
 if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }
+
+// SRE-116
+include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
