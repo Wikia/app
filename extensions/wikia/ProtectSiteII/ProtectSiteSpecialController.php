@@ -136,7 +136,7 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
 		$log = new LogPage( 'protect' );
 
-		if ( $protection ^ ProtectSiteModel::PREVENT_ANONS_ONLY ) {
+		if ( $protection && $protection ^ ProtectSiteModel::PREVENT_ANONS_ONLY ) {
 			$expiry = $request->getVal( 'expiry', '1 hour' );
 
 			if ( !in_array( $expiry, self::PROTECTION_EXPIRY_VALUES ) ) {
