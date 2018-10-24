@@ -6,7 +6,7 @@ $wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIn
 $wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
 
 $wgExtensionFunctions[] = function () {
-	global $wgTitle, $wgOut, $wgRequest;
+	global $wgTitle, $wgOut, $wgRequest, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
 
 	$indexPage = '/language-wikis';
 
@@ -23,6 +23,8 @@ $wgExtensionFunctions[] = function () {
 
 			$context->setTitle( $wgTitle );
 			$context->setSkin( Skin::newFromKey( 'oasis' ) );
+			$wgSuppressCommunityHeader = true;
+			$wgSuppressPageHeader = true;
 
 			SpecialPageFactory::executePath( $wgTitle, $context );
 			$wgOut->output();
