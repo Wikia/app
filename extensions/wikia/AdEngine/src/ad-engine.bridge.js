@@ -254,7 +254,7 @@ function readSessionId() {
 	utils.readSessionId();
 }
 
-const geo = utils;
+const geo = utils.geo;
 
 export {
 	init,
