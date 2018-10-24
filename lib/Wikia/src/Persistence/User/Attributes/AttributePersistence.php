@@ -13,6 +13,7 @@ use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
 class AttributePersistence {
+	const MAX_REQUEST_TIMEOUT_SECONDS = 1;
 	const SERVICE_NAME = "user-attribute";
 
 	/** @var ApiProvider */
@@ -111,8 +112,12 @@ class AttributePersistence {
 	 * @param int $userId
 	 * @return UsersAttributesApi
 	 */
-	private function getApi( $userId ) {
-		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+	private function getApi( $userId ): UsersAttributesApi {
+		/** @var UsersAttributesApi $api $api */
+		$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( static::MAX_REQUEST_TIMEOUT_SECONDS );
+
+		return $api;
 	}
 
 	/**
