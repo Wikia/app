@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	adEngine3,
 	adContext,
 	pageLevelParams,
-	bridge,
+	adEngineBridge,
 	executor,
 	services,
 	pageInfoTracker,
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 				queen_of_hearts: {
 					device: deviceDetect.getDevice(pageParams),
 					esrb: pageParams.esrb || null,
-					geo: bridge.geo.getCountryCode() || null,
+					geo: adEngineBridge.geo.getCountryCode() || null,
 					ref: pageParams.ref || null,
 					s0v: pageParams.s0v || null,
 					s2: pageParams.s2 || null,
