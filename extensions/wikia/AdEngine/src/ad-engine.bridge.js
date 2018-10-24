@@ -254,7 +254,9 @@ function readSessionId() {
 	utils.readSessionId();
 }
 
-export const adEngineBridge = {
+const geo = utils;
+
+export {
 	init,
 	GptSizeMap,
 	loadCustomAd,
@@ -264,5 +266,5 @@ export const adEngineBridge = {
 	context,
 	universalAdPackage,
 	slotService,
-	geo: utils.geo
+	geo,
 };
