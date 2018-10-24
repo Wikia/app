@@ -1768,3 +1768,7 @@ include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
 if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }
+
+if ( $wgEnableLanguageWikisIndex ) {
+	include "$IP/extensions/wikia/LanguageWikisIndex/LanguageWikisIndex.setup.php";
+}

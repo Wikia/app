@@ -238,7 +238,8 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment;
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment,
+			   $wgEnableLanguageWikisIndex;
 
 		wfProfileIn(__METHOD__);
 
@@ -407,6 +408,7 @@ class WikiFactoryLoader {
 				$this->mCityUrl = 'https://' . $this->mServerName;
 				$this->mIsWikiaActive = -3;	// wiki stub
 				$this->mWikiID = -1;
+				$wgEnableLanguageWikisIndex = true;
 			}
 		}
 

@@ -8902,3 +8902,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Set to true by WFL on fandom domains where there are language wikis without the English counterpart.
+ */
+$wgEnableLanguageWikisIndex = false;
