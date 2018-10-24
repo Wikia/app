@@ -1,10 +1,15 @@
 <?php
+/*
+ * Special page included on domain root when language wikis exist without the English wiki.
+ */
+$wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIndexController.class.php';
+$wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
+
 $wgExtensionFunctions[] = function () {
 	global $wgTitle, $wgOut, $wgRequest;
 
 	$indexPage = '/language-wikis';
 
-	$url = $wgRequest->getRequestURL();
 	switch( $wgRequest->getRequestURL() ) {
 		case '/':
 			$wgRequest->response()->header( 'Location: ' . $indexPage , 301 );
@@ -19,17 +24,12 @@ $wgExtensionFunctions[] = function () {
 			$context->setTitle( $wgTitle );
 			$context->setSkin( Skin::newFromKey( 'oasis' ) );
 
-
 			SpecialPageFactory::executePath( $wgTitle, $context );
 			$wgOut->output();
 		default:
+			// TODO: display something here?
 			http_response_code( 404 );
 	}
 
 	exit( 0 );
 };
-
-// Set up the new special page
-$wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIndexController.class.php';
-$wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
-
