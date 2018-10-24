@@ -120,7 +120,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			}
 
 			if (slotTargetingData.pos === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
-				slotTargetingData.trackingpos = 'INCONTENT_PLAYER_RAIL';
+				slotTargetingData.trackingpos = adContext.get('opts.incontentPlayerRail.trackingAlias');
 			}
 		}
 

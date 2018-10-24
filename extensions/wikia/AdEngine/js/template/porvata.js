@@ -238,7 +238,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 
 		if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
-			params.trackingpos = 'INCONTENT_PLAYER_RAIL';
+			params.trackingpos = adContext.get('opts.incontentPlayerRail.trackingAlias');
 		}
 
 		callSuccess(params, !params.setSlotStatusBasedOnVAST);

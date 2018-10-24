@@ -233,6 +233,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.incontentPlayerRail = {
 			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			trackingAlias: 'INCONTENT_PLAYER_RAIL',
 			conflictingSlots: [
 				'TOP_RIGHT_BOXAD',
 				'INCONTENT_BOXAD_1',
