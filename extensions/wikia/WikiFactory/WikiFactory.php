@@ -66,6 +66,9 @@ class WikiFactory {
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
 
+	// Language wikis index city_id in wikicities.city_list.
+	const LANGUAGE_WIKIS_INDEX = 3;
+
 	static public $types = [
 		"integer",
 		"long",
