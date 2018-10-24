@@ -12,7 +12,8 @@ $wgExtensionFunctions[] = function () {
 
 	switch( $wgRequest->getRequestURL() ) {
 		case '/':
-			$wgRequest->response()->header( 'Location: ' . $indexPage , 301 );
+			// use 302, maybe at some point an English wiki gets created
+			$wgRequest->response()->header( 'Location: ' . $indexPage , 302 );
 			break;
 		case $indexPage:
 			$wgOut->disallowUserJs();
