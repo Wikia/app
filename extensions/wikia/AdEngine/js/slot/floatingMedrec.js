@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.wad.btRecLoader',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'wikia.document',
 	'wikia.log',
@@ -10,6 +11,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 ], function (
 	adContext,
 	bridge,
+	btRecLoader,
 	viewabilityHandler,
 	doc,
 	log,
@@ -79,6 +81,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function hideRecirculation() {
 			recirculationElement.style.display = 'none';
+			btRecLoader.triggerScript();
 		}
 
 		function refreshAd(onSuccess) {

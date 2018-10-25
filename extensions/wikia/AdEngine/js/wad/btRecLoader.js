@@ -26,6 +26,11 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 				uid: '5b8f13805d-188',
 				style: 'margin-bottom:23px; z-index:100;',
 				lazy: true
+			},
+			INCONTENT_BOXAD_1: {
+				uid: '5bbe13967e-188',
+				style: '',
+				lazy: true
 			}
 		};
 

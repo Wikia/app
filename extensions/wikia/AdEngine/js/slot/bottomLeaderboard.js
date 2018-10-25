@@ -29,8 +29,8 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 
 			if (!pushed && pushPos < scrollPosition) {
 				eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
-
-				if (babDetection.isBlocking() && wadRecRunner.isEnabled('bt') && btRecLoader.duplicateSlot(slotName)) {
+				var babRecStatus = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
+				if (babRecStatus && btRecLoader.duplicateSlot(slotName)) {
 					btRecLoader.triggerScript();
 				}
 
