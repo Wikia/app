@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			isViewed: function () {
 				return this.isViewedFlag;
 			},
-			enabled: !sraHelper.isOptional(name),
+			enabled: !sraHelper.isRoadblockOnly(name),
 			isEnabled: registerHook('isEnabled'),
 			disable: registerHook('disable'),
 			enable: registerHook('enable'),
