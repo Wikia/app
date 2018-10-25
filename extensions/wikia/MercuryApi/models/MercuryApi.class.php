@@ -133,9 +133,10 @@ class MercuryApi {
 	}
 
 	public function getMobileWikiVariables() {
-		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
-		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin,
+		       $wgCdnRootUrl, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
+		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgEnableFeedsAndPostsEmbeddedFeed,
+		       $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -154,7 +155,8 @@ class MercuryApi {
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
 				'defaultSkin' => $wgDefaultSkin,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableFeedsAndPostsEmbeddedFeed' => $wgEnableFeedsAndPostsExt &&
+				                                     $wgEnableFeedsAndPostsEmbeddedFeed,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 				'namespaces' => $wgContLang->getNamespaces(),
@@ -180,8 +182,9 @@ class MercuryApi {
 	}
 
 	public function getDiscussionsWikiVariables() {
-		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
+		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
+		       $wgDiscussionColorOverride, $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt,
+		       $wgEnableFeedsAndPostsEmbeddedFeed, $wgArticlePath;
 
 		if ( !empty( $wgArticlePath ) ) {
 			$articlePath = str_replace( '$1', '', $wgArticlePath );
@@ -197,7 +200,8 @@ class MercuryApi {
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableFeedsAndPostsEmbeddedFeed' => $wgEnableFeedsAndPostsExt &&
+				                                     $wgEnableFeedsAndPostsEmbeddedFeed,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
@@ -235,7 +239,7 @@ class MercuryApi {
 		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
 		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
-		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
+		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsEmbeddedFeed;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -261,7 +265,8 @@ class MercuryApi {
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableFeedsAndPostsEmbeddedFeed' => $wgEnableFeedsAndPostsExt &&
+				                                     $wgEnableFeedsAndPostsEmbeddedFeed,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'enableNewAuth' => $wgEnableNewAuth,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,

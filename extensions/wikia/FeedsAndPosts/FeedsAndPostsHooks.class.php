@@ -7,12 +7,14 @@ class FeedsAndPostsHooks {
 	 *
 	 * @return bool
 	 */
-	private static function shouldLoadAssets() {
-		return WikiaPageType::isArticlePage();
+	private static function shouldShowEmbeddedFeed() {
+		global $wgEnableFeedsAndPostsEmbeddedFeed;
+
+		return $wgEnableFeedsAndPostsEmbeddedFeed && WikiaPageType::isArticlePage();
 	}
 
 	public static function onBeforePageDisplay() {
-		if ( self::shouldLoadAssets() ) {
+		if ( self::shouldShowEmbeddedFeed() ) {
 			\Wikia::addAssetsToOutput( 'feeds_and_posts_scss' );
 			\Wikia::addAssetsToOutput( 'feeds_and_posts_js' );
 		}
@@ -21,8 +23,8 @@ class FeedsAndPostsHooks {
 	}
 
 	public static function onMakeGlobalVariablesScript( array &$vars ) {
-		if ( self::shouldLoadAssets() ) {
-			$vars['canLoadFeedsAndPosts'] = true;
+		if ( self::shouldShowEmbeddedFeed() ) {
+			$vars['showEmbeddedFeed'] = true;
 		}
 		return true;
 	}

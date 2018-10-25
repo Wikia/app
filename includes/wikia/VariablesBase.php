@@ -2667,6 +2667,13 @@ $wgEnableFastLinkCache = true;
 $wgEnableFeedsAndPostsExt = false;
 
 /**
+ * Enable the Feeds & Posts Embedded Feed module
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableFeedsAndPostsExt
+ */
+$wgEnableFeedsAndPostsEmbeddedFeed = false;
+
+/**
  * Enable FileInfoFunctions extension.
  * @see extensions/wikia/ImageSizeInfoFunctions
  * @var bool $wgEnableFileInfoFunctionsExt
