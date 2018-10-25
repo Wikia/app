@@ -44,13 +44,22 @@ class JustUpdatedAPIProxy {
 	}
 
 	public function get() {
-		$recentChanges = $this->getRecentChanges();
+		return \WikiaDataAccess::cacheWithOptions(
+			wfMemcKey( 'feeds-just-updated' ),
+			function () {
+				$recentChanges = $this->getRecentChanges();
 
-		foreach($recentChanges as &$article) {
-			$article['image'] = $this->getImage($article['title']);
-		}
+				foreach($recentChanges as &$article) {
+					$article['image'] = $this->getImage($article['title']);
+				}
 
-		return $recentChanges;
+				return $recentChanges;
+			},
+			[
+				'command' => \WikiaDataAccess::USE_CACHE,
+				'cacheTTL' => \WikiaResponse::CACHE_VERY_SHORT,
+			]
+		);
 	}
 
 }
