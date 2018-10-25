@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			slotNameGA = slotName.toLowerCase();
 
 		if (!header) {
-			logMessage = 'missing second section ' + logWikiData;
+			logMessage = 'missing second section or rail column ' + logWikiData;
 		}
 
 		if (!slotsContext.isApplicable(slotName)) {

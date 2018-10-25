@@ -233,11 +233,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
-		 * Register callback which should to be executed whether floating slot will conflict with any of given ad slots
+		 * Add callback (second parameter) which should be executed whether floating slot (first parameter)
+		 * will conflict with any of given ad slots (third parameter)
 		 *
 		 * @param element - floating ad slot
 		 * @param callback - function to be executed once conflict in/out alert will be raised
-		 * @param adSlots - ad slots which can conflict with floating ad slot
+		 * @param adSlots - array of ad slots ids which can conflict with floating ad slot
 		 * @returns {function} - onScroll listener callback
 		 */
 		function registerConflictCallback(element, callback, adSlots) {

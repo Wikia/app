@@ -71,7 +71,7 @@ define('wikia.domCalculator', [
 	}
 
 	/**
-	 * Returns element's offset of given element from the left of the page
+	 * Checks if given number is in <from, from+length> interval
 	 *
 	 * @param number - number to check
 	 * @param from - range start
@@ -88,7 +88,7 @@ define('wikia.domCalculator', [
 	 * @returns {number} - offset in pixels
 	 */
 	function getScrollX() {
-		return win.scrollX || win.pageXOffset;
+		return win.scrollX || win.pageXOffset || 0;
 	}
 
 	/**
@@ -97,7 +97,7 @@ define('wikia.domCalculator', [
 	 * @returns {number} - offset in pixels
 	 */
 	function getScrollY() {
-		return win.scrollY || win.pageYOffset;
+		return win.scrollY || win.pageYOffset || 0;
 	}
 
 	/**

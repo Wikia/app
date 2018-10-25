@@ -24,9 +24,15 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		}
 
 		function trackViewportConflict(conflictingAdSlot) {
-			params.conflictingAdSlot = conflictingAdSlot;
-			tracker.track(params, 'viewport-conflict');
-			params.conflictingAdSlot = undefined;
+			var conflictParams = {
+				conflictingAdSlot: conflictingAdSlot
+			};
+
+			Object.keys(params).forEach(function(parameter) {
+				conflictParams[parameter] = params[parameter];
+			});
+
+			tracker.track(conflictParams, 'viewport-conflict');
 		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
