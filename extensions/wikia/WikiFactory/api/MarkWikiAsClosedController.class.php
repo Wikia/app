@@ -24,15 +24,14 @@ class MarkWikiAsClosedController extends WikiaController {
 		$reason = $request->getVal( self::REASON );
 		$userId = $request->getVal( self::USER_ID );
 
-		$wgUser = User::newFromId($userId);
-
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !is_numeric( $wikiId ) || empty( $reason ) ) {
-			// No wikiId or reason given: Bad Request
+		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId)) {
+			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
+			$wgUser = User::newFromId($userId);
 			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason);
 
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
