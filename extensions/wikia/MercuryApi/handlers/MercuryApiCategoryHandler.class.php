@@ -2,16 +2,28 @@
 
 class MercuryApiCategoryHandler {
 
+	const PARAM_CATEGORY_MEMBERS_FROM = 'categoryMembersFrom';
 	const PARAM_CATEGORY_MEMBERS_PAGE = 'categoryMembersPage';
 
 	const TRENDING_ARTICLES_LIMIT = 6;
 
 	private static $categoryModel;
 
+	private static function getCategoryModel( Title $title, $from ): CategoryPage3Model {
+		if ( !self::$categoryModel instanceof CategoryPage3Model ) {
+			self::$categoryModel = new CategoryPage3Model( $title, $from );
+			self::$categoryModel->loadData();
+			self::$categoryModel->loadImages( 40, 30 );
+		}
+
+		return self::$categoryModel;
+	}
+
 	/**
+	 * @deprecated
 	 * @return MercuryApiCategoryModel
 	 */
-	private static function getCategoryModel(): MercuryApiCategoryModel {
+	private static function getDeprecatedCategoryModel(): MercuryApiCategoryModel {
 		if ( !self::$categoryModel instanceof MercuryApiCategoryModel ) {
 			self::$categoryModel = new MercuryApiCategoryModel();
 		}
@@ -21,57 +33,72 @@ class MercuryApiCategoryHandler {
 
 	/**
 	 * @param Title $title
+	 * @param string $from
 	 * @param int $page
 	 * @param MercuryApi $mercuryApiModel
 	 *
 	 * @return array
 	 * @throws NotFoundApiException
 	 */
-	public static function getCategoryPageData( Title $title, int $page, MercuryApi $mercuryApiModel ): array {
-		$categoryDBKey = $title->getDBkey();
-		$categoryModel = self::getCategoryModel();
-		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
+	public static function getCategoryPageData( Title $title, $from, int $page, MercuryApi $mercuryApiModel ): array {
+		$categoryModel = self::getCategoryModel( $title, $from );
 
-		if ( empty( $membersGrouped ) ) {
+		if ( $categoryModel->getTotalNumberOfMembers() === 0 ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
+		$deprecatedCategoryModel = self::getDeprecatedCategoryModel();
+
 		return array_merge(
 			[
-				// TODO Remove after XW-2583 is released
-				'members' => $categoryModel::getCategoryMembersLegacy( $title ),
-				'membersGrouped' => $membersGrouped,
+				'members' => $categoryModel->getMembersGroupedByChar(),
+				// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
+				'membersGrouped' => $deprecatedCategoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page ),
+				'pagination' => $categoryModel->getPagination()->toArray(),
 				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
 					self::TRENDING_ARTICLES_LIMIT,
 					$title
-				),
+				)
 			],
-			$categoryModel::getPagination( $title, $page )
+			// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
+			$deprecatedCategoryModel::getPagination( $title, $page )
 		);
 	}
 
 	/**
 	 * @param Title $title
+	 * @param string $from
 	 * @param int $page
-	 *
 	 * @return array
 	 * @throws NotFoundApiException
 	 */
-	public static function getCategoryMembers( Title $title, int $page ): array {
-		$categoryModel = self::getCategoryModel();
-		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
+	public static function getCategoryMembers( Title $title, $from, int $page ): array {
+		$categoryModel = self::getCategoryModel( $title, $from );
 
-		if ( empty( $membersGrouped ) ) {
+		if ( $categoryModel->getTotalNumberOfMembers() === 0 ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
+		$deprecatedCategoryModel = self::getDeprecatedCategoryModel();
+
 		return array_merge(
-			[ 'membersGrouped' => $membersGrouped ],
-			$categoryModel::getPagination( $title, $page )
+			[
+				'members' => $categoryModel->getMembersGroupedByChar(),
+				// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
+				'membersGrouped' => $deprecatedCategoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page ),
+				'pagination' => $categoryModel->getPagination()->toArray()
+			],
+			// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
+			$deprecatedCategoryModel::getPagination( $title, $page )
 		);
 	}
 
+	public static function getCategoryMembersFromFromRequest( WikiaRequest $request ) {
+		return $request->getVal( self::PARAM_CATEGORY_MEMBERS_FROM, null );
+	}
+
 	/**
+	 * @deprecated Remove after SEO-670 is released on mobile-wiki and no cached code tries to use it anymore
 	 * @param WikiaRequest $request
 	 *
 	 * @return int
@@ -97,7 +124,7 @@ class MercuryApiCategoryHandler {
 		return [
 			'description' => '',
 			'id' => $title->getArticleID(),
-			'title'=> $title->getText(),
+			'title' => $title->getText(),
 			'url' => $title->getLocalURL()
 		];
 	}

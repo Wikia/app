@@ -1,6 +1,6 @@
 <?php
 
-class CategoryPage3Member {
+class CategoryPage3Member implements \JsonSerializable {
 	/** @var string */
 	private $firstChar;
 
@@ -34,5 +34,14 @@ class CategoryPage3Member {
 
 	public function isSubcategory(): bool {
 		return $this->getTitle()->inNamespace( NS_CATEGORY );
+	}
+
+	public function jsonSerialize() {
+		return [
+			'image' => $this->image,
+			'isCategory' => $this->title->inNamespace( NS_CATEGORY ),
+			'title' => $this->title->getText(),
+			'url' => $this->title->getLocalURL(),
+		];
 	}
 }

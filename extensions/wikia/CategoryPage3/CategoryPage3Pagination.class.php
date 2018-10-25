@@ -135,4 +135,17 @@ class CategoryPage3Pagination {
 	public function setIsPrevPageTheFirstPage( bool $isPrevPageTheFirstPage ) {
 		$this->isPrevPageTheFirstPage = $isPrevPageTheFirstPage;
 	}
+
+	public function toArray() {
+		return [
+			'isPrevPageTheFirstPage' => $this->isPrevPageTheFirstPage,
+			'firstPageUrl' => $this->getFirstPageUrl(),
+			'prevPageKey' => $this->prevPageKey,
+			'prevPageUrl' => $this->getPrevPageUrl(),
+			'nextPageKey' => $this->nextPageKey,
+			'nextPageUrl' => $this->getNextPageUrl(),
+			'lastPageKey' => $this->lastPageKey,
+			'lastPageUrl' => $this->getLastPageUrl()
+		];
+	}
 }

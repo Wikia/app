@@ -352,18 +352,23 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
-							$categoryMembersPage = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest(
+							$categoryMembersFrom = MercuryApiCategoryHandler::getCategoryMembersFromFromRequest(
 								$this->request
 							);
+							$deprecatedCategoryMembersPage = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest(
+								$this->request
+							);
+
 							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryPageData(
 								$title,
-								$categoryMembersPage,
+								$categoryMembersFrom,
+								$deprecatedCategoryMembersPage,
 								$this->mercuryApi
 							);
 
 							// We don't cache subsequent pages, because there is no good way to purge them
 							// TODO remove this when icache supports surrogate keys (OPS-10115)
-							if ( $categoryMembersPage > 1 ) {
+							if ( $deprecatedCategoryMembersPage > 1 || !empty( $categoryMembersFrom ) ) {
 								$cacheValidity = WikiaResponse::CACHE_DISABLED;
 							}
 
@@ -456,8 +461,9 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
+			$from = MercuryApiCategoryHandler::getCategoryMembersFromFromRequest( $this->request );
 			$page = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request );
-			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $page );
+			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $from, $page );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
