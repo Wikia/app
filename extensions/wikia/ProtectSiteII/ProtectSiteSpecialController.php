@@ -145,8 +145,12 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 			$expiresAt = strtotime( "+$expiry" );
 
+			if ( !$request->getCheck( 'suppress_expiry' ) ) {
+				$reason = empty( $reason ) ? $expiry : "$expiry: $reason";
+			}
+
 			$model->updateProtectionSettings( $this->wg->CityId, $protection, $expiresAt );
-			$log->addEntry( 'protect', $title, $this->getReason( $expiry, $reason ), [ $expiry ], $user);
+			$log->addEntry( 'protect', $title, $reason, [ $expiry ], $user);
 		} else {
 			$model->unprotect( $this->wg->CityId );
 			$log->addEntry( 'unprotect', $title, $reason, [], $user );
@@ -156,13 +160,5 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setCode( 303 );
 		$this->response->setHeader( 'Location', $target->getFullURL() );
-	}
-
-	private function getReason( string $expiry, string $reason ): string {
-		if ( !empty( $reason ) ) {
-			return "$expiry: $reason";
-		}
-
-		return $expiry;
 	}
 }
