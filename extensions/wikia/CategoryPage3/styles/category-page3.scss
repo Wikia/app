@@ -26,8 +26,8 @@
 			padding: 0 13px;
 
 			&.is-active {
-				cursor: default;
 				color: $color-buttons;
+				cursor: default;
 			}
 
 			&:last-child {
@@ -57,11 +57,10 @@
 			display: -ms-inline-flexbox;
 			-ms-flex-wrap: wrap;
 
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			grid-gap: 20px;
-
 			border-bottom: 1px solid $color-page-border;
+			display: grid;
+			grid-gap: 20px;
+			grid-template-columns: repeat(4, 1fr);
 			list-style: none;
 			margin: 0;
 			padding-bottom: 40px;
@@ -160,8 +159,8 @@
 			@include flexbox();
 
 			align-items: center;
-			padding: 9px 0;
 			margin: 0;
+			padding: 9px 0;
 		}
 
 		&__member-left {
@@ -172,7 +171,7 @@
 			width: 40px;
 
 			&-icon {
-				color: rgba($color-text, .75);
+				color: rgba($body-font-color, .75);
 				// 18px from .wds-icon-small + 2*6px
 				// we want to have the same height as for thumbnail to keep spacing consistent
 				padding: 6px 0;
