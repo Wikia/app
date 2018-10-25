@@ -1,6 +1,6 @@
 <?php
 /*
- * Special page included on domain root when language wikis exist without the English wiki.
+ * Special page included on domain root when language path wikis exist without the English wiki.
  */
 $wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIndexController.class.php';
 $wgAutoloadClasses['LanguageWikisIndexHooks'] = __DIR__ . '/LanguageWikisIndexHooks.class.php';
