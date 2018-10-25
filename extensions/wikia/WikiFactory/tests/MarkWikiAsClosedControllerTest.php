@@ -6,6 +6,7 @@
 class MarkWikiAsClosedControllerTest extends WikiaDatabaseTest {
 	const CITY_ID = 1;
 	const REASON = 'test';
+	const USER_ID = 'user';
 
 	/** @var RequestContext $requestContext */
 	private $requestContext;
@@ -27,7 +28,11 @@ class MarkWikiAsClosedControllerTest extends WikiaDatabaseTest {
 		$this->expectException( MethodNotAllowedException::class );
 
 		$fauxRequest =
-			new FauxRequest( [ 'wikiId' => static::CITY_ID, 'reason' => static::REASON ] );
+			new FauxRequest( [
+				'wikiId' => static::CITY_ID,
+				'reason' => static::REASON,
+				'reviewingUserId' => static::USER_ID,
+			] );
 		$fauxRequest->setHeader( \Wikia\Tracer\WikiaTracer::INTERNAL_REQUEST_HEADER_NAME, 1 );
 		$this->requestContext->setRequest( $fauxRequest );
 
@@ -48,7 +53,11 @@ class MarkWikiAsClosedControllerTest extends WikiaDatabaseTest {
 
 	public function testWikiIsClosed() {
 		$fauxRequest =
-			new FauxRequest( [ 'wikiId' => static::CITY_ID, 'reason' => static::REASON ], true );
+			new FauxRequest( [
+				'wikiId' => static::CITY_ID,
+				'reason' => static::REASON,
+				'reviewingUserId' => static::USER_ID,
+			], true );
 		$fauxRequest->setHeader( \Wikia\Tracer\WikiaTracer::INTERNAL_REQUEST_HEADER_NAME, 1 );
 		$this->requestContext->setRequest( $fauxRequest );
 
@@ -68,6 +77,7 @@ class MarkWikiAsClosedControllerTest extends WikiaDatabaseTest {
 		$this->requestContext->setRequest( new FauxRequest( [
 			'wikiId' => static::CITY_ID,
 			'reason' => static::REASON,
+			'reviewingUserId' => static::USER_ID,
 		], true ) );
 
 		$this->markWikiAsClosedController->init();
