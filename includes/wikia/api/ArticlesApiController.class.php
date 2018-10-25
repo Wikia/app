@@ -1267,6 +1267,8 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $params ) ) {
 			$params = md5( implode( '|', $params ) );
+		} else {
+			$params = '';
 		}
 
 		return wfMemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
