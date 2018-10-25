@@ -8903,7 +8903,4 @@ $wgEnableResetTrackingPreferencesPage = false;
  */
 $wgEnableFastlyInsights = false;
 
-/**
- * Set to true by WFL on fandom domains where there are language wikis without the English counterpart.
- */
-$wgEnableLanguageWikisIndex = false;
+$wgIncludeClosedWikiHandler = false;

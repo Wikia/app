@@ -570,7 +570,7 @@ class WikiFactory {
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
 	public static function getWikisUnderDomain( $domain, $rootCityId = null ) {
-		//$domain = wfNormalizeHost( $domain ); // ? needed here?
+		$domain = wfNormalizeHost( $domain );
 
 		$dbr = static::db( DB_SLAVE );
 
@@ -626,8 +626,7 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		$server = wfNormalizeHost( $url['host'] );
-		return self::getWikisUnderDomain( $server, $wgCityId );
+		return self::getWikisUnderDomain( $url['host'], $wgCityId );
 	}
 
 	/**
