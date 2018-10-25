@@ -6683,7 +6683,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.44.100'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'irc.service.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
