@@ -10,7 +10,14 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 		sraSlots = [
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD'
+		],
+		optionalSlots = [
+			'INVISIBLE_SKIN'
 		];
+
+	function isOptional(slotName) {
+		return optionalSlots.indexOf(slotName) !== -1;
+	}
 
 	function shouldFlush(slotName) {
 		if (sraSlots.indexOf(slotName) === -1) {
@@ -23,6 +30,7 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 	}
 
 	return {
+		isOptional: isOptional,
 		shouldFlush: shouldFlush
 	};
 });
