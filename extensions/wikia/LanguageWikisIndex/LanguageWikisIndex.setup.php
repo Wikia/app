@@ -6,6 +6,9 @@ $wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIn
 $wgAutoloadClasses['LanguageWikisIndexHooks'] = __DIR__ . '/LanguageWikisIndexHooks.class.php';
 $wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
 
-$wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
-$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
+if ( LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() ) {
+	$wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
+	$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
+}
+
 $wgHooks['ClosedWikiHandler'][] = 'LanguageWikisIndexHooks::onClosedWikiPage';

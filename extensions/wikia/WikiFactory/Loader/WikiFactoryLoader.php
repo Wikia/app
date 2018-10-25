@@ -375,7 +375,7 @@ class WikiFactoryLoader {
 						"cluster" => $oRow->city_cluster,
 					);
 				} else {
-					// no city found, check if this a language wikis index page
+					// no city found, check if this is a language wikis index page
 					if ( empty( $this->mWikiID ) && $this->hasLanguagePathWikis() ) {
 						// load the wikis index data from the DB and prepare this->mDomain so this gets cached for the
 						// requested domain
