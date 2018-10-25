@@ -10,15 +10,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	var dfpId = '5441',
 		megaSlots = [
 			'INVISIBLE_SKIN',
-			//ToDo ADEN-6864: Go global
-			//'BOTTOM_LEADERBOARD'
+			'BOTTOM_LEADERBOARD'
 		],
 		context;
-
-	//ToDo ADEN-6864: Go global
-	if (getContextTargeting().skin === 'mercury' || adContext.get('opts.isBLBMegaEnabled')) {
-		megaSlots.push('BOTTOM_LEADERBOARD');
-	}
 
 	function getContextTargeting() {
 		if (!context) {
