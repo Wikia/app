@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
 		pushed = false,
 		wikiaFooter,
+		btRec = babDetection.isBlocking() && wadRecRunner.isEnabled('bt'),
 
 		pushSlot = throttle(function () {
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
@@ -29,8 +30,8 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 
 			if (!pushed && pushPos < scrollPosition) {
 				eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
-				var babRecStatus = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
-				if (babRecStatus && btRecLoader.duplicateSlot(slotName)) {
+
+				if (btRec && btRecLoader.duplicateSlot(slotName)) {
 					btRecLoader.triggerScript();
 				}
 

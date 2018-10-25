@@ -1,21 +1,25 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.wad.btRecLoader',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
+	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.window'
 ], function (
 	adContext,
+	babDetection,
 	bridge,
 	btRecLoader,
 	viewabilityHandler,
 	doc,
 	log,
 	throttle,
+	wadRecRunner,
 	win
 ) {
 	'use strict';
@@ -38,7 +42,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			},
 			slotName = 'INCONTENT_BOXAD_1',
 			startPosition = placeHolderElement.offsetTop,
-			swapRecirculationAndAd;
+			swapRecirculationAndAd,
+			btRec = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
 
 		adSlot.className = 'wikia-ad';
 		adSlot.setAttribute('id', slotName);
@@ -81,7 +86,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function hideRecirculation() {
 			recirculationElement.style.display = 'none';
-			btRecLoader.triggerScript();
+			if (btRec && btRecLoader.duplicateSlot(slotName)) {
+				btRecLoader.triggerScript();
+			}
 		}
 
 		function refreshAd(onSuccess) {
