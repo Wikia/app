@@ -2664,14 +2664,14 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsExt = false;
+$wgEnableFeedsAndPostsExt = true;
 
 /**
  * Enable the Feeds & Posts Embedded Feed module
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsEmbeddedFeed = false;
+$wgEnableFeedsAndPostsEmbeddedFeed = true;
 
 /**
  * Enable FileInfoFunctions extension.
