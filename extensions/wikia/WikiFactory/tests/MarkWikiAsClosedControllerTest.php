@@ -6,7 +6,7 @@
 class MarkWikiAsClosedControllerTest extends WikiaDatabaseTest {
 	const CITY_ID = 1;
 	const REASON = 'test';
-	const USER_ID = 'user';
+	const USER_ID = 1;
 
 	/** @var RequestContext $requestContext */
 	private $requestContext;
