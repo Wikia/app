@@ -58,7 +58,7 @@ class LanguageWikisIndexHooks {
 	private static function handleRequest( $requestUrl ) {
 		global $wgTitle, $wgOut, $wgRequest, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
 
-		switch( parse_url( $requestUrl, PHP_URL_PATH) ) {
+		switch( parse_url( $requestUrl, PHP_URL_PATH ) ) {
 			case '/':
 				// use 302, maybe at some point an English wiki gets created
 				$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE , 302 );
