@@ -8,25 +8,29 @@ class AnnotateWikiNotSpamController extends WikiaController {
 
 	const WIKI_ID = 'wikiId';
 	const REASON = 'reason';
+	const USER_ID = 'reviewingUserId';
 
 	public function init() {
 		$this->assertCanAccessController();
 	}
 
 	public function annotateNotSpam() {
+		global $wgUser;
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
 		$wikiId = $request->getVal( self::WIKI_ID );
 		$reason = $request->getVal( self::REASON );
+		$userId = $request->getVal( self::USER_ID );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !is_numeric( $wikiId ) || empty( $reason ) ) {
-			// wikiId or reason given: Bad Request
+		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId)) {
+			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
+			$wgUser = User::newFromId($userId);
 			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId );
 			if ( $res ) {
 				$this->response->setCode( 200 );
