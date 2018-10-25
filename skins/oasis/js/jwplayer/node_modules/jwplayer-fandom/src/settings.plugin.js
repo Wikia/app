@@ -8,6 +8,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.buttonID = 'wikiaSettings';
 	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
+	this.isDocumentHandlerMounted = false;
 
 	this.container.classList.add('wikia-jw__plugin');
 	this.wikiaSettingsElement.classList.add('wikia-jw-settings');
@@ -18,10 +19,6 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
 	this.player.on('relatedVideoPlay', this.onCaptionsChange.bind(this));
 	this.player.once('ready', this.onCaptionsChange.bind(this));
-
-	document.addEventListener('click', this.documentClickHandler);
-	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
-	document.addEventListener('touchend', this.documentClickHandler);
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
@@ -39,7 +36,13 @@ wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the settings menu or settings button and if settings menu is open
-	if (!this.isSettingsMenuOrSettingsButton(event.target) && this.container.style.display) {
+	if (!this.isSettingsMenuOrSettingsButton(event.target) &&
+		this.container.style.display &&
+		this.isDocumentHandlerMounted
+	) {
+		document.removeEventListener('click', this.documentClickHandler);
+		document.removeEventListener('touchend', this.documentClickHandler);
+		this.isDocumentHandlerMounted = false;
 		this.close();
 	}
 };
@@ -52,8 +55,18 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function (evt) {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open(evt.currentTarget);
-		} else {
-			this.close();
+
+			// If not for setTimeout, click handler defined in addButton() would trigger the code below as well
+			setTimeout(function (){
+				if (!this.isDocumentHandlerMounted) {
+					document.addEventListener('click', this.documentClickHandler);
+					// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
+					document.addEventListener('touchend', this.documentClickHandler);
+
+					this.isDocumentHandlerMounted = true;
+				}
+			}.bind(this), 0);
+
 		}
 	}.bind(this), this.buttonID, 'wikia-jw-button');
 };

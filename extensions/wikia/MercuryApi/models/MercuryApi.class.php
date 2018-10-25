@@ -181,7 +181,7 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
 
 		if ( !empty( $wgArticlePath ) ) {
 			$articlePath = str_replace( '$1', '', $wgArticlePath );

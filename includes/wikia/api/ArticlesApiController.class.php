@@ -1257,8 +1257,15 @@ class ArticlesApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 
-	static private function getCacheKey( $name, $type, $params = '' ) {
-		if ( $params !== '' ) {
+	static private function getCacheKey( $name, $type, $params = [] ) {
+		global $wgScriptPath;
+		// Bump cache for communities with a language path so the URLs include
+		// the right path
+		if ( $wgScriptPath !== '' ) {
+			$params[] = $wgScriptPath;
+		}
+
+		if ( !empty( $params ) ) {
 			$params = md5( implode( '|', $params ) );
 		}
 
