@@ -80,6 +80,16 @@ abstract class DiscussionController extends EmailController {
 		return $this->wiki->city_url . 'd';
 	}
 
+	/**
+	 * Wrap the provided text in <nowiki> tags. This escapes the text preventing
+	 * it from being parsed as wikitext.
+	 * @param $text
+	 * @return string
+	 */
+	protected function wrapTextInNoWikiTags( $text ) {
+		return "<nowiki>" . $text . "</nowiki>";
+	}
+
 	protected static function getEmailSpecificFormFields() {
 		return [
 			'inputs' => [
@@ -126,7 +136,7 @@ class DiscussionReplyController extends DiscussionController {
 			return $this->getMessage(
 				'emailext-discussion-reply-with-title-subject',
 				$this->postUrl,
-				$this->threadTitle,
+				$this->wrapTextInNoWikiTags( $this->threadTitle ),
 				$this->wiki->city_url,
 				$this->wiki->city_title
 			)->parse();
@@ -234,7 +244,7 @@ class DiscussionUpvoteController extends DiscussionController {
 			return $this->getMessage(
 				self::MESSAGE_KEYS[$this->upVotes]['summary-with-title'],
 				$this->postUrl,
-				$this->postTitle,
+				$this->wrapTextInNoWikiTags( $this->postTitle ),
 				$this->wiki->city_url,
 				$this->wiki->city_title
 			);
