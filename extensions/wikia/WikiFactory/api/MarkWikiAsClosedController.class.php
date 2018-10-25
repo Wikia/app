@@ -8,17 +8,23 @@ class MarkWikiAsClosedController extends WikiaController {
 
 	const WIKI_ID = 'wikiId';
 	const REASON = 'reason';
+	const USER_ID = 'reviewingUserId';
 
 	public function init() {
 		$this->assertCanAccessController();
 	}
 
 	public function markWikiAsClosed() {
+		global $wgUser;
+
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
 		$wikiId = $request->getVal( self::WIKI_ID );
 		$reason = $request->getVal( self::REASON );
+		$userId = $request->getVal( self::USER_ID );
+
+		$wgUser = User::newFromId($userId);
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
@@ -27,7 +33,7 @@ class MarkWikiAsClosedController extends WikiaController {
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
-			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
+			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason);
 
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId,
@@ -44,7 +50,6 @@ class MarkWikiAsClosedController extends WikiaController {
 				return;
 			}
 		}
-
 	}
 
 	/**
