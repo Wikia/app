@@ -564,7 +564,6 @@ class WikiFactoryLoader {
 			if( ! $this->mCommandLine ) {
 				if ( $this->mCityDB ) {
 					$wgIncludeClosedWikiHandler = true;
-					//include __DIR__ . '/closedWikiHandler.php';
 				} else {
 					global $wgNotAValidWikia;
 					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );

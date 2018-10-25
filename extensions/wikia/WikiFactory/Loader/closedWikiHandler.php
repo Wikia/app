@@ -54,5 +54,7 @@ $wgHooks['AfterPageHeaderSubtitle'][] = function ( &$subtitle ): bool {
 };
 
 $wgHooks['GenerateRobotsRules'][] = function() {
+	// For closed wiki, don't put rules for domain root in robots.txt file.
+	// This is used only when there are language wikis left.
 	return false;
 };

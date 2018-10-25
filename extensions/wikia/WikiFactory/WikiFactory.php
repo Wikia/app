@@ -582,7 +582,8 @@ class WikiFactory {
 					$dbr->makeList( [
 						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyString() ),
 						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyString() ),
-					], LIST_OR )
+					], LIST_OR ),
+					'city_public' => 1
 				];
 
 				$dbResult = $dbr->select(
