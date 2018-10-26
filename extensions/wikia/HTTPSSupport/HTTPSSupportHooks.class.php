@@ -150,13 +150,13 @@ class HTTPSSupportHooks {
 		}
 
 		$style = preg_replace(
-			'/(["\'])(\/load\.php\?[^"\']+)(["\'])/Um',
+			'/(["\'])(\/load\.php\?[^"\']+)(\1)/Um',
 			'$1' . $wgScriptPath . '$2$3',
 			$style
 		);
 
 		$style = preg_replace(
-			'/(["\'])(\/[^"\']+ctype=text\/css[^"\']*)(["\'])/Um',
+			'/(["\'])(\/[^"\']+ctype=text\/css[^"\']*)(\1)/Um',
 			'$1' . $wgScriptPath . '$2$3',
 			$style
 		);
