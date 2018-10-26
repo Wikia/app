@@ -49,8 +49,7 @@ module.exports = function (env) {
 		entry: {
 			'bidders': './src/ad-bidders.js',
 			'bridge': './src/ad-engine.bridge.js',
-			'geo': './src/ad-geo.js',
-			'services': './src/ad-services.js',
+			'services': './src/ad-services.js'
 		},
 		externals: {
 			'@wikia/ad-engine': {
