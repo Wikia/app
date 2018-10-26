@@ -10,15 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 		sraSlots = [
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD'
-		],
-		// Slots used only in UAP:Roadblock template
-		roadblockOnlySlots = [
-			'INVISIBLE_SKIN'
 		];
-
-	function isRoadblockOnly(slotName) {
-		return roadblockOnlySlots.indexOf(slotName) !== -1;
-	}
 
 	function shouldFlush(slotName) {
 		if (sraSlots.indexOf(slotName) === -1) {
@@ -31,7 +23,6 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 	}
 
 	return {
-		isRoadblockOnly: isRoadblockOnly,
 		shouldFlush: shouldFlush
 	};
 });

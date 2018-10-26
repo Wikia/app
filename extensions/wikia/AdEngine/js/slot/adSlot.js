@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.adSlot', [
-	'ext.wikia.adEngine.provider.gpt.sraHelper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (sraHelper, adUnitBuilder, megaAdUnitBuilder, doc, log) {
+], function (adUnitBuilder, megaAdUnitBuilder, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
@@ -27,7 +26,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			isViewed: function () {
 				return this.isViewedFlag;
 			},
-			enabled: !sraHelper.isRoadblockOnly(name),
+			enabled: true,
 			isEnabled: registerHook('isEnabled'),
 			disable: registerHook('disable'),
 			enable: registerHook('enable'),
