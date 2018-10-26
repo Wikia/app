@@ -14,6 +14,7 @@ import {
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
 	Roadblock,
+	StickyAd,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -29,7 +30,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyAd];
 
 function init(
 	adTracker,
@@ -55,6 +56,12 @@ function init(
 	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
+
+	const stickySlotsLines = legacyContext.get('opts.stickySlotsLines');
+	if (stickySlotsLines && stickySlotsLines.length) {
+		context.set('templates.stickyAd.lineItemIds', stickySlotsLines);
+		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyAd');
+	}
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
@@ -158,7 +165,8 @@ function syncSlotsStatus(slotRegistry, slotsInContext) {
 }
 
 function unifySlotInterface(slot) {
-	const slotContext = context.get(`slots.${slot.name}`) || {targeting: {}};
+	const slotPath = `slots.${slot.name}`;
+	const slotContext = context.get(slotPath) || {targeting: {}};
 
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
@@ -177,8 +185,9 @@ function unifySlotInterface(slot) {
 			return (slotContext.viewportConflicts || []).length > 0;
 		},
 		isRepeatable: () => false,
+		getConfigProperty: (key) => context.get(`${slotPath}.${key}`),
 		setConfigProperty: (key, value) => {
-			context.set(`slots.${slot.name}.${key}`, value);
+			context.set(`${slotPath}.${key}`, value);
 		},
 		getStatus: () => null,
 		setStatus: (status) => {
@@ -190,12 +199,20 @@ function unifySlotInterface(slot) {
 				});
 				window.dispatchEvent(event);
 			}
-		}
+		},
 	});
 
 	slot.pre('viewed', (event) => {
 		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
+	});
+
+	slot.post('success', (event) => {
+		slot.lineItemId = slot.container.firstElementChild.getAttribute('data-gpt-line-item-id');
+		const templates = slot.getConfigProperty('defaultTemplates');
+		if (templates && templates.length) {
+			templates.forEach(template => templateService.init(template, slot));
+		}
 	});
 
 	return slot;
