@@ -64,8 +64,10 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function removeRecNode() {
-			recNode.style.display = 'none';
-			recNode.remove();
+			if (recNode) {
+				recNode.style.display = 'none';
+				recNode.remove();
+			}
 		}
 
 		function hasUserScrolledEnoughDistance(currentHeightPosition) {
