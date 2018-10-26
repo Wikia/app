@@ -7,11 +7,34 @@ class JustUpdatedAPIProxy {
 	const LIMIT = 4;
 	const MINOR_CHANGE_THRESHOLD = 100;
 
+	const IMAGE_WIDTH = 150;
+	const IMAGE_RATIO = 3/4;
+
 	private function requestAPI( $params ) {
 		$api = new \ApiMain( new \FauxRequest( $params ) );
 		$api->execute();
 
 		return $api->GetResultData();
+	}
+
+	private function getThumbnailUrl( $url ) {
+		try {
+			return \VignetteRequest::fromUrl( $url )
+				->zoomCrop()
+				->width( self::IMAGE_WIDTH )
+				->height( floor( self::IMAGE_WIDTH / self::IMAGE_RATIO ) )
+				->url();
+		}
+		catch ( \Exception $exception ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( "Invalid thumbnail url provided for recent updates module",
+					[
+						'thumbnailUrl' => $url,
+						'message' => $exception->getMessage(),
+					] );
+
+			return $url;
+		}
 	}
 
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
@@ -65,7 +88,7 @@ class JustUpdatedAPIProxy {
 		] );
 
 		if ( isset( $response['image']['imageserving'] ) ) {
-			return $response['image']['imageserving'];
+			return $this->getThumbnailUrl( $response['image']['imageserving'] );
 		}
 
 		return null;
