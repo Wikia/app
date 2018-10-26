@@ -14,12 +14,16 @@ class JustUpdatedAPIProxy {
 		return $api->GetResultData();
 	}
 
-	private function filterOutSmallChanges( $articles ) {
+	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];
 		$articlesWithMajorChange = [];
 
 		foreach ( $articles as &$article ) {
-			if ( abs( $article['newlen'] - $article['oldlen'] ) >= self::MINOR_CHANGE_THRESHOLD ) {
+			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
+
+			unset( $article['newlen'], $article['oldlen'], $article['ns'], $article['type'] );
+
+			if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
 				$articlesWithMajorChange[] = $article;
 			} else {
 				$articlesWithMinorChange[] = $article;
@@ -48,7 +52,7 @@ class JustUpdatedAPIProxy {
 		] );
 
 		if ( isset( $response['query']['recentchanges'] ) ) {
-			return $this->filterOutSmallChanges( $response['query']['recentchanges'] );
+			return $this->filterOutSmallChangesAndCleanUp( $response['query']['recentchanges'] );
 		}
 
 		return [];
