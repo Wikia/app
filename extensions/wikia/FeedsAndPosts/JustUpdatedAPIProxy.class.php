@@ -6,20 +6,22 @@ class JustUpdatedAPIProxy {
 
 	const LIMIT = 4;
 
-	private function requestAPI($params) {
-		$api = new \ApiMain(new \FauxRequest($params));
+	private function requestAPI( $params ) {
+		$api = new \ApiMain( new \FauxRequest( $params ) );
 		$api->execute();
 
 		return $api->GetResultData();
 	}
 
 	private function getRecentChanges() {
+		global $wgContentNamespaces;
+
 		$response = $this->requestAPI( [
 			'action' => 'query',
 			'list' => 'recentchanges',
 			'rcprop' => 'title',
 			'rcshow' => '!bot|!minor|!redirect',
-			'rcnamespace' => '0',
+			'rcnamespace' => implode( '|', $wgContentNamespaces ),
 			'rclimit' => self::LIMIT,
 		] );
 
@@ -30,7 +32,7 @@ class JustUpdatedAPIProxy {
 		return [];
 	}
 
-	private function getImage($title) {
+	private function getImage( $title ) {
 		$response = $this->requestAPI( [
 			'action' => 'imageserving',
 			'wisTitle' => $title,
@@ -44,22 +46,17 @@ class JustUpdatedAPIProxy {
 	}
 
 	public function get() {
-		return \WikiaDataAccess::cacheWithOptions(
-			wfMemcKey( 'feeds-just-updated' ),
-			function () {
-				$recentChanges = $this->getRecentChanges();
+		$cacheTTL = 3600; // an hour
 
-				foreach($recentChanges as &$article) {
-					$article['image'] = $this->getImage($article['title']);
-				}
+		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-just-updated' ), $cacheTTL, function () {
+			$recentChanges = $this->getRecentChanges();
 
-				return $recentChanges;
-			},
-			[
-				'command' => \WikiaDataAccess::USE_CACHE,
-				'cacheTTL' => \WikiaResponse::CACHE_VERY_SHORT,
-			]
-		);
+			foreach ( $recentChanges as &$article ) {
+				$article['image'] = $this->getImage( $article['title'] );
+			}
+
+			return $recentChanges;
+		} );
 	}
 
 }

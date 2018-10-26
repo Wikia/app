@@ -8,9 +8,7 @@ class FeedsAndPostsHooks {
 	 * @return bool
 	 */
 	private static function shouldShowEmbeddedFeed() {
-		global $wgEnableFeedsAndPostsEmbeddedFeed;
-
-		return $wgEnableFeedsAndPostsEmbeddedFeed && WikiaPageType::isArticlePage();
+		return WikiaPageType::isArticlePage();
 	}
 
 	public static function onBeforePageDisplay() {

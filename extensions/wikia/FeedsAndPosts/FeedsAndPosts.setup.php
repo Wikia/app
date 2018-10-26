@@ -7,7 +7,7 @@
 $dir = dirname( __FILE__ ) . '/';
 
 // Autoload
-$wgAutoloadClasses['FeedsAndPostsHooks'] =  __DIR__ . '/FeedsAndPostsHooks.class.php';
+$wgAutoloadClasses['FeedsAndPostsHooks'] = $dir . 'FeedsAndPostsHooks.class.php';
 
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
@@ -19,4 +19,5 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVaria
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
 
-$wgAutoloadClasses['Wikia\FeedsAndPosts\JustUpdatedAPIProxy'] = $dir . 'JustUpdatedAPIProxy.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\JustUpdatedAPIProxy'] =
+	$dir . 'JustUpdatedAPIProxy.class.php';
