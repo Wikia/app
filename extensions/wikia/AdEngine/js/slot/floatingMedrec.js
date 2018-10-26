@@ -53,7 +53,10 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (btRec === null) {
 				btRec = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
 			}
-			recNode = btRecLoader.duplicateSlot(slotName);
+
+			if (btRec) {
+				recNode = btRecLoader.duplicateSlot(slotName);
+			}
 
 			if (btRec && recNode) {
 				btRecLoader.triggerScript();
