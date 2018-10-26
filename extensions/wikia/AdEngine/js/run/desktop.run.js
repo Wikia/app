@@ -149,8 +149,17 @@ require([
 ) {
 	'use strict';
 
+	function runOnPageReady(method) {
+		if (doc.readyState === 'complete') {
+			method();
+		} else {
+			win.addEventListener('load', method);
+		}
+	}
+
 	function initDesktopSlots() {
-		highImpact.init();
+		runOnPageReady(highImpact.init);
+
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			tracker.track({
 				category: 'wgDisableIncontentPlayer',
@@ -159,16 +168,21 @@ require([
 				label: true
 			});
 		} else {
-			inContent.init('INCONTENT_PLAYER');
+			var initInContent = function () {
+				inContent.init('INCONTENT_PLAYER');
+			};
+
+			if (adContext.get('opts.incontentPlayerRail.enabled')) {
+				initInContent();
+			} else {
+				runOnPageReady(initInContent);
+			}
 		}
-		bottomLeaderboard.init();
+
+		runOnPageReady(bottomLeaderboard.init);
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (doc.readyState === 'complete') {
-			initDesktopSlots();
-		} else {
-			win.addEventListener('load', initDesktopSlots);
-		}
+		initDesktopSlots();
 	});
 });

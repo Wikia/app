@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': (params.slotName || emptyValue.string).toLowerCase(),
+				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
@@ -62,6 +62,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
+				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
