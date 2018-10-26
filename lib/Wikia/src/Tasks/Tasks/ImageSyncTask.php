@@ -1,8 +1,7 @@
 <?php
 
-namespace Wikia\SwiftSync;
+namespace Wikia\Tasks\Tasks;
 
-use Wikia\Tasks\Tasks\BaseTask;
 use \Wikia\SwiftStorage;
 
 /**
