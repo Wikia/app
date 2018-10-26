@@ -145,14 +145,18 @@ class HTTPSSupportHooks {
 	public static function onBeforeResourceLoaderCSSMinifier( &$style ) {
 		global $wgScriptPath;
 
+		if ( empty( $wgScriptPath ) ) {
+			return true;
+		}
+
 		$style = preg_replace(
-			'/(["\']){1}(\/load\.php\?.*)(["\']){1}/Um',
+			'/(["\'])(\/load\.php\?[^"\']+)(["\'])/Um',
 			'$1' . $wgScriptPath . '$2$3',
 			$style
 		);
 
 		$style = preg_replace(
-			'/(["\']){1}(\/.*ctype=text\/css.*)(["\']){1}/Um',
+			'/(["\'])(\/[^"\']+ctype=text\/css[^"\']*)(["\'])/Um',
 			'$1' . $wgScriptPath . '$2$3',
 			$style
 		);
