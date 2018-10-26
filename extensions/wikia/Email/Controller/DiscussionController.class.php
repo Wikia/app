@@ -87,7 +87,7 @@ abstract class DiscussionController extends EmailController {
 	 * @return string
 	 */
 	protected function wrapTextInNoWikiTags( $text ) {
-		return "<nowiki>" . $text . "</nowiki>";
+		return '<nowiki>' . $text . '</nowiki>';
 	}
 
 	protected static function getEmailSpecificFormFields() {
