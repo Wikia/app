@@ -84,15 +84,12 @@ function maybeMakeProtocolRelative(url) {
 
 function maybeRedirectDevWikiCodeSubpage(url) {
 	if (
-		url.indexOf(mw.config.get('wgScript')) != -1 &&
+		url.indexOf(mw.config.get('wgScript')) !== -1 &&
 		(
 			mw.config.get('wgCityId') === '7931' ||
 			new RegExp('^(https?:)?\\/\\/dev\\.' + mw.config.get('wgWikiaBaseDomainRegex')).test(url)
 		) &&
-		(
-			url.indexOf('/code.js') !== -1 ||
-			url.indexOf('/code.css') !== -1
-		)
+		/\/code\.(css|js)/.test(url)
 	) {
 		return url.replace(/\/code\.(js|css)/, '.$1')
 	}
