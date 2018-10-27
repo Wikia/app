@@ -40,16 +40,30 @@ class JustUpdatedAPIProxy {
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];
 		$articlesWithMajorChange = [];
+		$mainPageId = \Title::newMainPage()->getArticleID();
 
 		foreach ( $articles as &$article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
+			$articleId = $article['pageid'];
 
-			unset( $article['newlen'], $article['oldlen'], $article['ns'], $article['type'] );
+			unset(
+				$article['newlen'],
+				$article['oldlen'],
+				$article['ns'],
+				$article['type'],
+				$article['pageid'],
+				$article['rcid'],
+				$article['revid'],
+				$article['old_revid']
+			);
 
-			if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
-				$articlesWithMajorChange[] = $article;
-			} else {
-				$articlesWithMinorChange[] = $article;
+			// filter out main page
+			if ( $articleId !== $mainPageId ) {
+				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
+					$articlesWithMajorChange[] = $article;
+				} else {
+					$articlesWithMinorChange[] = $article;
+				}
 			}
 		}
 
@@ -67,7 +81,7 @@ class JustUpdatedAPIProxy {
 		$response = $this->requestAPI( [
 			'action' => 'query',
 			'list' => 'recentchanges',
-			'rcprop' => 'title|sizes',
+			'rcprop' => 'title|sizes|ids',
 			'rcshow' => '!bot|!minor|!redirect',
 			'rcnamespace' => implode( '|', $wgContentNamespaces ),
 			// load 20 times more items so we'll be able to filter out articles with minor changes
