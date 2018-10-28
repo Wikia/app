@@ -16,6 +16,7 @@ describe('wikibits', function() {
 	var url7expect = '//dev.wikia.com/index.php?title=MediaWiki:WikiaNavigationBarStyle/code.css&action=raw&ctype=text/css';
 	var url7expect2 = '//dev.wikia.com/index.php?title=MediaWiki:WikiaNavigationBarStyle.css&action=raw&ctype=text/css';
 	var url8 = 'http://platform.twitter.com/widgets.css';
+	var url9 = '//kocka.wikia.com/index.php?title=MediaWiki:UncategorizedFileListing/code.js&action=raw&ctype=text/javascript';
 	var tsScripts = '1539643173';
 	var tsReviewed = '1539734490';
 	var currentParam = '&current=' + tsScripts;
@@ -139,6 +140,8 @@ describe('wikibits', function() {
 		mw.config.set('wgCityId', '7931');
 		expect(window.importScriptPage('MediaWiki:UserTags/code.js').getAttribute('src'))
 			.toEqual(url1expect);
+		expect(window.importScriptPage('MediaWiki:UncategorizedFileListing/code.js', 'kocka').getAttribute('src'))
+			.toEqual(url9);
 
 		// Ensure proper Dev Wiki URL is being imported
 		window.loadedScripts = {};

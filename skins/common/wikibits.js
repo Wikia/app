@@ -86,7 +86,7 @@ function maybeRedirectDevWikiCodeSubpage(url) {
 	if (
 		url.indexOf(mw.config.get('wgScript')) != -1 &&
 		(
-			mw.config.get('wgCityId') === '7931' ||
+			(mw.config.get('wgCityId') === '7931' && url.indexOf(mw.config.get('wgScript')) === 0) ||
 			new RegExp('^(https?:)?\\/\\/dev\\.' + mw.config.get('wgWikiaBaseDomainRegex')).test(url)
 		) &&
 		(
