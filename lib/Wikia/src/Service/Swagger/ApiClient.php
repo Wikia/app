@@ -45,7 +45,8 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			},
 			function( $exception ) {
 				if ($exception instanceof \Swagger\Client\ApiException) {
-					if ($exception->getCode() == 502 || $exception->getCode() == 504) {
+					// code 0 is for connection/timeout errors
+					if ($exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0) {
 						return false;
 					}
 				}

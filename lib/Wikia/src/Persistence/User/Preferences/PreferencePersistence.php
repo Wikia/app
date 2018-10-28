@@ -24,6 +24,8 @@ class PreferencePersistence {
 
 	const SERVICE_NAME = "user-preference";
 
+	const MAX_REQUEST_TIMEOUT_SECONDS = 1;
+
 	/** @var ApiProvider */
 	private $apiProvider;
 
@@ -166,6 +168,8 @@ class PreferencePersistence {
 			new CircuitBreaker\Ratio(2, 5),	// success ratio
 			30.0);  // 30s for devbox tests
 		$api->getApiClient()->setCircuitBreaker( $circuitBreaker );
+
+		$api->getApiClient()->getConfig()->setCurlTimeout( static::MAX_REQUEST_TIMEOUT_SECONDS );
 
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,

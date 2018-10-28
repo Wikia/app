@@ -91,7 +91,7 @@ class AttributePersistence {
 			},
 			function( $exception ) {
 				if ($exception instanceof ApiException) {
-					if ($exception->getCode() == 502 || $exception->getCode() == 504) {
+					if ($exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0) {
 						return false;
 					}
 				}
