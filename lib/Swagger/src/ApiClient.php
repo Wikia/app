@@ -243,6 +243,15 @@ class ApiClient
             error_log("[DEBUG] HTTP Response body ~BEGIN~".PHP_EOL.print_r($http_body, true).PHP_EOL."~END~".PHP_EOL, 3, $this->config->getDebugFile());
         }
 
+        // CirciutBreaker PoC for devboxes
+        global $wgWikiaEnvironment;
+        if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && strpos( $url, 'user-preference' ) ) {
+           if (!empty($_GET['forcefailure'])) {
+                sleep(5);
+                $response_info['http_code'] = 504;
+           }
+        }
+
         // Handle the response
         if ($response_info['http_code'] == 0) {
             $curl_error_message = curl_error($curl);

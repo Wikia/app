@@ -5,6 +5,7 @@ namespace Wikia\Persistence\User\Attributes;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
 use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
+use Wikia\CircuitBreaker;
 use Wikia\Domain\User\Attribute;
 use Wikia\Service\ForbiddenException;
 use Wikia\Service\NotFoundException;
@@ -13,13 +14,22 @@ use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
 class AttributePersistence {
+	const MAX_REQUEST_TIMEOUT_SECONDS = 1;
 	const SERVICE_NAME = "user-attribute";
 
 	/** @var ApiProvider */
 	private $apiProvider;
 
+	/** @var CircuitBreaker\CircuitBreaker */
+	private $circuitBreaker;
+
 	public function __construct( ApiProvider $apiProvider ) {
 		$this->apiProvider = $apiProvider;
+		$this->circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker(self::SERVICE_NAME,
+			new CircuitBreaker\ApcuStorage(),
+			new CircuitBreaker\Ratio(3, 5),	// failure ratio
+			new CircuitBreaker\Ratio(2, 5),	// success ratio
+			10.0); // 10s for devbox tests
 	}
 
 	/**
@@ -73,7 +83,24 @@ class AttributePersistence {
 	 * @throws \Exception
 	 */
 	private function getAttributesFromApi( $userId ) {
-		$halResponse = $this->getApi( $userId )->getAllAttributes( $userId );
+		//$halResponse = $this->getApi( $userId )->getAllAttributes( $userId );
+		// example of using a circuit breaker for to wrap a single method call
+		$halResponse = $this->circuitBreaker->wrapCall(
+			function() use ($userId) {
+				return  $this->getApi( $userId )->getAllAttributes( $userId );
+			},
+			function( $exception ) {
+				if ($exception instanceof ApiException) {
+					if ($exception->getCode() == 502 || $exception->getCode() == 504) {
+						return false;
+					}
+				}
+				return true;
+			},
+			function() {
+				throw new ApiException("Circuit breaken open", 504);
+			});
+
 		$this->assertValidResponse( $halResponse );
 
 		return $halResponse->getEmbedded()->getProperties();
@@ -112,7 +139,12 @@ class AttributePersistence {
 	 * @return UsersAttributesApi
 	 */
 	private function getApi( $userId ) {
-		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		/** @var UsersAttributesApi $api $api */
+		$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+
+		$api->getApiClient()->getConfig()->setCurlTimeout( static::MAX_REQUEST_TIMEOUT_SECONDS );
+
+		return $api;
 	}
 
 	/**

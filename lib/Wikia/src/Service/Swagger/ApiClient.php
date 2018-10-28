@@ -4,6 +4,7 @@ namespace Wikia\Service\Swagger;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
+use Wikia\CircuitBreaker;
 use Wikia\Logger\Loggable;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -18,13 +19,44 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	/** @var string */
 	private $serviceName;
 
+	/** @var CircuitBreaker\CircuitBreaker */
+	private $circuitBreaker = null;
+
 	public function __construct(Configuration $config, BernoulliTrial $logSampler, $serviceName) {
 		parent::__construct($config);
 		$this->logSampler = $logSampler;
 		$this->serviceName = $serviceName;
 	}
 
+	public function setCircuitBreaker( CircuitBreaker\CircuitBreaker $circuitBreaker ) {
+		$this->circuitBreaker = $circuitBreaker;
+	}
+
 	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
+		if ( is_null( $this->circuitBreaker ) ) {
+			return $this->internalCallApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
+				$endpointPath);
+		}
+		return $this->circuitBreaker->wrapCall(
+			function() use ($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
+				$endpointPath) {
+				return $this->internalCallApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
+					$endpointPath);
+			},
+			function( $exception ) {
+				if ($exception instanceof \Swagger\Client\ApiException) {
+					if ($exception->getCode() == 502 || $exception->getCode() == 504) {
+						return false;
+					}
+				}
+				return true;
+			},
+			function() {
+				throw new \Swagger\Client\ApiException("Circuit breaken open", 504);
+			});
+	}
+
+	public function internalCallApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;

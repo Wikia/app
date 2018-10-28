@@ -8,6 +8,7 @@ use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
 use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
 use Swagger\Client\User\Preferences\Models\UserPreferences as SwaggerUserPreferences;
+use Wikia\CircuitBreaker;
 use Wikia\Domain\User\Preferences\LocalPreference;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\NotFoundException;
@@ -158,6 +159,14 @@ class PreferencePersistence {
 			$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, $class );
 		}
 
+		// example of wrapping the whole Api in a circuitbreaker
+		$circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker(self::SERVICE_NAME,
+			new CircuitBreaker\ApcuStorage(),
+			new CircuitBreaker\Ratio(3, 5),	// failure ratio
+			new CircuitBreaker\Ratio(2, 5),	// success ratio
+			30.0);  // 30s for devbox tests
+		$api->getApiClient()->setCircuitBreaker( $circuitBreaker );
+
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
@@ -187,6 +196,7 @@ class PreferencePersistence {
 	private function getPreferences( UserPreferencesApi $api, $userId ) {
 		$profilerStart = $this->startProfile();
 		$preferences = $api->getUserPreferences( $userId );
+
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
