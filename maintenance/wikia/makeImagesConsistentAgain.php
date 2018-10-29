@@ -129,7 +129,7 @@ class MakeImagesConsistentAgain extends Maintenance {
 
 		$res = $dbr->select(
 			[ 'filearchive', 'image' ],
-			[ 'fa_name', 'fa_archive_name', 'fa_storage_key' ],
+			[ 'fa_name', 'fa_archive_name', 'fa_storage_key', 'img_name' ],
 			[ "fa_deleted_timestamp > $safeFrom", "fa_timestamp < $safeUntil" ],
 			__METHOD__,
 			[],
