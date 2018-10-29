@@ -55,6 +55,7 @@ class MercuryApiCategoryHandler {
 				// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
 				'membersGrouped' => $deprecatedCategoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page ),
 				'pagination' => $categoryModel->getPagination()->toArray(),
+				'totalNumberOfMembers' => $categoryModel->getTotalNumberOfMembers(),
 				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
 					self::TRENDING_ARTICLES_LIMIT,
 					$title,
