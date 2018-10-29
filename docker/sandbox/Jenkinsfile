@@ -2,7 +2,7 @@
 // def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
 def sandbox = params.sandbox_name;
 def datacenter = params.datacenter
-def environment = "sandbox"
+def environment = params.sandbox_name.split('-')[0]
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
