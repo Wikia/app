@@ -57,7 +57,8 @@ class MercuryApiCategoryHandler {
 				'pagination' => $categoryModel->getPagination()->toArray(),
 				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
 					self::TRENDING_ARTICLES_LIMIT,
-					$title
+					$title,
+					true
 				)
 			],
 			// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
