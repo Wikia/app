@@ -15,8 +15,6 @@ class MarkWikiAsClosedController extends WikiaController {
 	}
 
 	public function markWikiAsClosed() {
-		global $wgUser;
-
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
@@ -31,8 +29,8 @@ class MarkWikiAsClosedController extends WikiaController {
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
-			$wgUser = User::newFromId($userId);
-			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason);
+			$user = User::newFromId($userId);
+			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason, $user);
 
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId,

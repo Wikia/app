@@ -1920,9 +1920,10 @@ class WikiFactory {
 	 * @param integer $city_id        wikia identifier in city_list
 	 *
 	 * @param string $reason
+	 * @param null $user
 	 * @return string: HTML form
 	 */
-	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
+	static public function setPublicStatus( $city_public, $city_id, $reason = "", $user = null ) {
 		global $wgWikicitiesReadOnly;
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1963,7 +1964,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id );
+		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id, $user);
 
 		wfProfileOut( __METHOD__ );
 
@@ -2267,10 +2268,15 @@ class WikiFactory {
 	 * @param bool|int $city_id default false    wiki id from city_list
 	 *
 	 * @param null $variable_id
+	 * @param null $user
 	 * @return boolean    status of insert operation
 	 */
-	static public function log( $type, $msg, $city_id = false, $variable_id = null ) {
+	static public function log( $type, $msg, $city_id = false, $variable_id = null, $user = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
+
+		if($user != null) {
+			$wgUser = $user;
+		}
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );

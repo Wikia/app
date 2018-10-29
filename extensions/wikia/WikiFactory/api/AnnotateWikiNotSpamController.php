@@ -15,7 +15,6 @@ class AnnotateWikiNotSpamController extends WikiaController {
 	}
 
 	public function annotateNotSpam() {
-		global $wgUser;
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
@@ -30,8 +29,8 @@ class AnnotateWikiNotSpamController extends WikiaController {
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
-			$wgUser = User::newFromId($userId);
-			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId );
+			$user = User::newFromId($userId);
+			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId, $user);
 			if ( $res ) {
 				$this->response->setCode( 200 );
 				return;
