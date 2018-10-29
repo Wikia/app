@@ -6,11 +6,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, instantGlobals, geo, sampler, w, Querystring) {
+], function (browserDetect, cookies, instantGlobals, adEngineBridge, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
-		return geo.isProperGeo(geos, name);
+		return adEngineBridge.geo.isProperGeo(geos, name);
 	}
 
 	function updateAdContextRabbitExperiments(context) {
@@ -231,9 +231,18 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
+		context.opts.incontentPlayerRail = {
+			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			trackingAlias: 'INCONTENT_PLAYER_RAIL',
+			conflictingSlots: [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			]
+		};
 
 		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

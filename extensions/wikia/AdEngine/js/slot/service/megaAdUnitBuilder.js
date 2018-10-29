@@ -14,6 +14,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		],
 		context;
 
+	if (adContext.get('opts.incontentPlayerRail.enabled')) {
+		megaSlots.push('INCONTENT_PLAYER');
+	}
+
 	function getContextTargeting() {
 		if (!context) {
 			context = adContext.getContext();
@@ -34,15 +38,12 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var map = {
 			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 			'MR': ['TOP_RIGHT_BOXAD'],
-			'PF': [
-				'MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD'
-			],
+			'PF': ['MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD'],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
-			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
+			'HiVi': ['INCONTENT_BOXAD_1', 'INCONTENT_PLAYER', 'MOBILE_IN_CONTENT'],
 			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
 		};
 
-		// OTHER: 'INCONTENT_PLAYER'
 		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
