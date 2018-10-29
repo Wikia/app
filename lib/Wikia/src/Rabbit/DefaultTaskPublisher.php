@@ -103,7 +103,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	private function logPublish( string $queue, array $payload ) {
 		$argsJson = json_encode( $payload['args'] );
 
-		$this->info( 'AsyncTaskList::queue', [
+		$this->info( 'Publishing task of type: ' . $payload['task'], [
 			'exception' => new \Exception(),
 			'spawn_task_id' => $payload['id'],
 			'spawn_task_type' => $payload['task'],
