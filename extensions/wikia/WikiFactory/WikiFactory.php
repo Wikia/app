@@ -1964,7 +1964,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id, $user);
+		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id, null, $user );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2274,10 +2274,6 @@ class WikiFactory {
 	static public function log( $type, $msg, $city_id = false, $variable_id = null, $user = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
 
-		if($user != null) {
-			$wgUser = $user;
-		}
-
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -2295,7 +2291,7 @@ class WikiFactory {
 			"city_list_log",
 			[
 				"cl_city_id" => $city_id,
-				"cl_user_id" => $wgUser->getId(),
+				"cl_user_id" => ($user != null) ? $user->getId() : $wgUser->getId(),
 				"cl_type" => $type,
 				"cl_text" => $msg,
 				"cl_var_id" => $variable_id,
