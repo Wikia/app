@@ -6,14 +6,8 @@ if( !empty( $wgDisableAnonymousEditing ) || !empty( $wgWikiDirectedAtChildrenByS
 	$wgGroupPermissions['*']['edit'] = false;
 }
 
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	$wgGroupPermissions['staff']['protectsite'] = true;
-	$wgGroupPermissions['helper']['protectsite'] = true;
-	$wgGroupPermissions['vstf']['protectsite'] = true;
-
-	if( !empty($wgWikiaProtectSiteLocal) ){
-		$wgGroupPermissions['sysop']['protectsite'] = true;
-	}
+if ( !empty( $wgWikiaProtectSiteLocal ) ) {
+	$wgGroupPermissions['sysop']['protectsite'] = true;
 }
 
 if (!empty($wgEnableSemanticMediaWikiExt)) {
