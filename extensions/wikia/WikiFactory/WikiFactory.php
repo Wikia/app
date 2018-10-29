@@ -66,6 +66,9 @@ class WikiFactory {
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
 
+	// Language wikis index city_id in wikicities.city_list.
+	const LANGUAGE_WIKIS_INDEX = 3;
+
 	static public $types = [
 		"integer",
 		"long",
@@ -567,7 +570,7 @@ class WikiFactory {
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
 	public static function getWikisUnderDomain( $domain, $rootCityId = null ) {
-		//$domain = wfNormalizeHost( $domain ); // ? needed here?
+		$domain = wfNormalizeHost( $domain );
 
 		$dbr = static::db( DB_SLAVE );
 
@@ -579,7 +582,8 @@ class WikiFactory {
 					$dbr->makeList( [
 						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyString() ),
 						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyString() ),
-					], LIST_OR )
+					], LIST_OR ),
+					'city_public' => 1
 				];
 
 				$dbResult = $dbr->select(
@@ -623,8 +627,7 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		$server = wfNormalizeHost( $url['host'] );
-		return self::getWikisUnderDomain( $server, $wgCityId );
+		return self::getWikisUnderDomain( $url['host'], $wgCityId );
 	}
 
 	/**

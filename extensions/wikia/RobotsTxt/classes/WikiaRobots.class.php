@@ -171,7 +171,7 @@ class WikiaRobots {
 			return $robots;
 		}
 
-		if ( $wgCityId > 0 ) {
+		if ( \Hooks::run( 'GenerateRobotsRules' ) ) {
 			// Sitemap
 			if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
 				$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';

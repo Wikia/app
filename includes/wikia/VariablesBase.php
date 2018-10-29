@@ -8902,3 +8902,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;
