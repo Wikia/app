@@ -38,22 +38,22 @@ class ApiClient extends \Swagger\Client\ApiClient {
 				$endpointPath);
 		}
 		return $this->circuitBreaker->wrapCall(
-			function() use ($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
-				$endpointPath) {
-				return $this->internalCallApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
-					$endpointPath);
+			function() use ( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
+				$endpointPath ) {
+				return $this->internalCallApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType,
+					$endpointPath );
 			},
 			function( $exception ) {
-				if ($exception instanceof \Swagger\Client\ApiException) {
+				if ( $exception instanceof \Swagger\Client\ApiException ) {
 					// code 0 is for connection/timeout errors
-					if ($exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0) {
+					if ( $exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0 ) {
 						return false;
 					}
 				}
 				return true;
 			},
 			function() {
-				throw new \Swagger\Client\ApiException("Circuit breaken open", 504);
+				throw new \Swagger\Client\ApiException( "Circuit breaken open", 504 );
 			});
 	}
 

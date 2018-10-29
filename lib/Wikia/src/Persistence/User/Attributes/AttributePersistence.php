@@ -25,11 +25,11 @@ class AttributePersistence {
 
 	public function __construct( ApiProvider $apiProvider ) {
 		$this->apiProvider = $apiProvider;
-		$this->circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker(self::SERVICE_NAME,
+		$this->circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker( self::SERVICE_NAME,
 			new CircuitBreaker\ApcuStorage(),
-			new CircuitBreaker\Ratio(3, 5),	// failure ratio
-			new CircuitBreaker\Ratio(2, 5),	// success ratio
-			10.0); // 10s for devbox tests
+			new CircuitBreaker\Ratio( 3, 5 ),	// failure ratio
+			new CircuitBreaker\Ratio( 2, 5 ),	// success ratio
+			10.0 ); // 10s for devbox tests
 	}
 
 	/**
@@ -86,19 +86,19 @@ class AttributePersistence {
 		//$halResponse = $this->getApi( $userId )->getAllAttributes( $userId );
 		// example of using a circuit breaker for to wrap a single method call
 		$halResponse = $this->circuitBreaker->wrapCall(
-			function() use ($userId) {
+			function() use ( $userId ) {
 				return  $this->getApi( $userId )->getAllAttributes( $userId );
 			},
 			function( $exception ) {
-				if ($exception instanceof ApiException) {
-					if ($exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0) {
+				if ( $exception instanceof ApiException ) {
+					if ( $exception->getCode() == 502 || $exception->getCode() == 504 || $exception->getCode() == 0 ) {
 						return false;
 					}
 				}
 				return true;
 			},
 			function() {
-				throw new ApiException("Circuit breaken open", 504);
+				throw new ApiException( "Circuit breaken open", 504 );
 			});
 
 		$this->assertValidResponse( $halResponse );

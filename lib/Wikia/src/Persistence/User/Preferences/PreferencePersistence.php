@@ -162,11 +162,11 @@ class PreferencePersistence {
 		}
 
 		// example of wrapping the whole Api in a circuitbreaker
-		$circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker(self::SERVICE_NAME,
+		$circuitBreaker = new CircuitBreaker\RatioBasedCircuitBreaker( self::SERVICE_NAME,
 			new CircuitBreaker\ApcuStorage(),
-			new CircuitBreaker\Ratio(3, 5),	// failure ratio
-			new CircuitBreaker\Ratio(2, 5),	// success ratio
-			30.0);  // 30s for devbox tests
+			new CircuitBreaker\Ratio( 3, 5 ),	// failure ratio
+			new CircuitBreaker\Ratio( 2, 5 ),	// success ratio
+			30.0 );  // 30s for devbox tests
 		$api->getApiClient()->setCircuitBreaker( $circuitBreaker );
 
 		$api->getApiClient()->getConfig()->setCurlTimeout( static::MAX_REQUEST_TIMEOUT_SECONDS );

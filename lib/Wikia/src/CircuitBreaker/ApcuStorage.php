@@ -6,8 +6,8 @@ class ApcuStorage implements DataStorage {
 	const PREFIX = 'circuitbreaker::';
 
 	public function __construct() {
-		if (!function_exists("apcu_fetch")) {
-			throw new \Exception('APCU not enabled!');
+		if ( !function_exists( 'apcu_fetch' ) ) {
+			throw new \Exception( 'APCU not enabled!' );
 		}
 	}
 
@@ -17,7 +17,7 @@ class ApcuStorage implements DataStorage {
 
 	public function store($key, $value) {
 		$result = apcu_store(self::PREFIX . $key, $value);
-		if ($result === false) {
+		if ( $result === false ) {
 			// TODO: LOG THE ERROR!
 		}
 	}
