@@ -78,7 +78,7 @@ class HTTPSSupportHooks {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			$output->redirectProtocol( PROTO_HTTPS, 302, 'Robots-HTTPS-upgrade' );
+			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
 			$output->enableClientCache( false );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
@@ -112,10 +112,45 @@ class HTTPSSupportHooks {
 		return true;
 	}
 
+	public static function onInterwikiLoadBeforeCache( &$row ): bool {
+		global $wgWikiaBaseDomain;
+		if ( !isset( $row['iw_url'] ) || strpos( $row['iw_url'], ".{$wgWikiaBaseDomain}" ) === false ) {
+			return true;
+		}
+
+		$parts = parse_url( $row['iw_url'] );
+
+		if ( empty( $parts['host'] ) ||
+			empty( $parts['path'] ) ||
+			$parts['path'] !== '/wiki/$1'
+		) {
+			return true;
+		}
+
+		$cityId = WikiFactory::DomainToID( $parts['host'] );
+		if ( empty( $cityId ) || !WikiFactory::isPublic( $cityId ) ) {
+			return true;
+		}
+
+		$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
+		if ( wfHttpsEnabledForURL( $currentUrl ) ) {
+			 $row['iw_url'] = rtrim( wfHttpToHttps( $currentUrl ), '/' ) . '/wiki/$1';
+		} elseif ( strpos( $currentUrl, 'http://' ) === 0 && wfHttpsAllowedForURL( $currentUrl ) ) {
+			 $row['iw_url'] = rtrim( wfProtocolUrlToRelative( $currentUrl ), '/' ) . '/wiki/$1';
+		}
+
+		return true;
+	}
+
 	private static function httpsAllowed( User $user, string $url ): bool {
 		global $wgEnableHTTPSForAnons;
+
 		return wfHttpsAllowedForURL( $url ) &&
-			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
+			(
+				wfHttpsEnabledForURL( $url ) ||
+				!empty( $wgEnableHTTPSForAnons ) ||
+				$user->isLoggedIn()
+			);
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {

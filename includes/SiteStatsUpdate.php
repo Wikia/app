@@ -71,7 +71,10 @@ class SiteStatsUpdate implements DeferrableUpdate {
 		$dbw = wfGetDB( DB_MASTER );
 		$lockKey = wfMemcKey( 'site_stats' ); // prepend wiki ID
 		$pd = [];
-		if ( $wgSiteStatsAsyncFactor ) {
+
+		// SRE-106: Only fetch pending deltas if we have an async factor of > 1
+		// Otherwise we never actually save any pending deltas into memcached
+		if ( $wgSiteStatsAsyncFactor > 1 ) {
 			// Lock the table so we don't have double DB/memcached updates
 			if ( !$dbw->lockIsFree( $lockKey, __METHOD__ )
 				|| !$dbw->lock( $lockKey, __METHOD__, 1 ) // 1 sec timeout
@@ -97,7 +100,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 		if ( $updates != '' ) {
 			$dbw->update( 'site_stats', [ $updates ], [], __METHOD__ );
 		}
-		if ( $wgSiteStatsAsyncFactor ) {
+		if ( $wgSiteStatsAsyncFactor > 1 ) {
 			// Decrement the async deltas now that we applied them
 			$this->removePendingDeltas( $pd );
 			// Commit the updates and unlock the table

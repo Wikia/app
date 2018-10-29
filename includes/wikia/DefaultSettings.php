@@ -235,7 +235,6 @@ $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/Sw
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
-$wgAutoloadClasses[ 'CeleryPurge'                     ] = "$IP/includes/cache/wikia/CeleryPurge.class.php";
 $wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transaction/Transaction.php";
 $wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transaction/TransactionTrace.php";
 $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transaction/TransactionClassifier.php";
@@ -243,7 +242,6 @@ $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/tr
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
 $wgHooks          [ 'AfterSmwfGetStore'               ][] = 'Transaction::onAfterSmwfGetStore';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
-$wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 $wgAutoloadClasses[ 'FileNamespaceSanitizeHelper'     ] = "$IP/includes/wikia/helpers/FileNamespaceSanitizeHelper.php";
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
@@ -592,11 +590,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
  * Can not be define directly in extension since it is used in Parser.php and extension is not always enabled
  */
  define('NS_LEGACY_VIDEO', '400');
-
-/**
- * Tasks
- */
-require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
 /**
  * external databases
@@ -1284,6 +1277,13 @@ $wgAdDriverScrollDepthTrackingCountries = null;
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverStickySlotsLines
+ * List of Google Ad Manager lines to apply Sticky Ad template
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverStickySlotsLines = [];
+
+/**
  * @name $wgAdDriverKILOCountries
  * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1384,13 +1384,6 @@ $wgAdDriverKruxNewParamsCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgHighValueCountries = null;
-
-/**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call Turtle ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTurtleCountries = null;
 
 /**
  * @name $wgAdDriverBabDetectionDesktopCountries
@@ -1622,6 +1615,13 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 $wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
+ * @name $wgAdDriverIncontentPlayerRailCountries
+ * Moves INCONTENT_PLAYER slot into rail section in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerRailCountries = null;
+
+/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1741,8 +1741,10 @@ $wgInlineStartupScript = false;
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
+// SUS-2164: Include Auth extensions - enabled globally
+include_once "$IP/extensions/wikia/AuthPreferences/AuthPreferences.setup.php";
+
 // SUS-2164: Include Facebook extensions - enabled globally
-include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension

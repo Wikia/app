@@ -42,4 +42,6 @@ $wgExternalServers['blobs'] = [[
 ]];
 
 $wgDevDomain = 'wikia.com';
+$wgWikiaDevDomain = 'wikia.com';
+$wgFandomDevDomain = 'fandom.com';
 $wgMysqlConnectionCharacterSet = 'latin1';

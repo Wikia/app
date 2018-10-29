@@ -46,7 +46,6 @@ class CreatePageHelper {
 						'url' => $wantedPageTitle->escapeLocalURL(
 							[
 								static::getPreferredEditorQueryParamName() => 'edit',
-								'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BUTTON,
 								'source' => 'redlink',
 							]
 						),

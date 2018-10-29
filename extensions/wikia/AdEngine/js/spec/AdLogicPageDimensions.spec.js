@@ -32,7 +32,9 @@ describe('AdLogicPageDimensions', function () {
 			logMock = noop,
 			documentMock = {documentElement: {scrollWidth: 1280}},
 			slotTweakerMock = {hide: noop, show: noop, hackChromeRefresh: noop},
+			adContextMock = {get: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				adContextMock,
 				slotTweakerMock,
 				documentMock,
 				logMock,
@@ -111,7 +113,9 @@ describe('AdLogicPageDimensions', function () {
 				show: function () { adWasShown = true; },
 				hackChromeRefresh: noop
 			},
+			adContextMock = {get: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				adContextMock,
 				slotTweakerMock,
 				documentMock,
 				logMock,

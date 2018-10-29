@@ -55,11 +55,14 @@ class DiscussionsActivator {
 			$this->sitesApi->getSite( $this->cityId );
 			return true;
 		} catch ( ApiException $e ) {
-			$this->logger->info( 'DISCUSSIONS Getting site caused an error',
-				[
-					'siteId' => $this->cityId,
-					'error' => $e->getMessage(),
-				] );
+			// SRE: 404 simply means the site doesn't exist (which is expected) so only log server-side errors
+			if ( $e->getCode() >= 500 ) {
+				$this->logger->info( 'DISCUSSIONS Getting site caused an error', [
+						'siteId' => $this->cityId,
+						'error' => $e->getMessage(),
+					] );
+			}
+
 			return false;
 		}
 	}

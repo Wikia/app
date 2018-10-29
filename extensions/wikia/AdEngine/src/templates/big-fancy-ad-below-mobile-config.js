@@ -21,7 +21,7 @@ export function getConfig() {
 		autoPlayAllowed: true,
 		defaultStateAllowed: true,
 		fullscreenAllowed: true,
-		stickinessAllowed: context.get('options.bfabStickiness'),
+		stickinessAllowed: false,
 		bfaaSlotName: 'MOBILE_TOP_LEADERBOARD',
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),

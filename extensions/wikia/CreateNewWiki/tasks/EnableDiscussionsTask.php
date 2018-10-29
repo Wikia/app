@@ -9,7 +9,6 @@ class EnableDiscussionsTask extends Task {
 	public function run() {
 		try {
 			$this->activateDiscussions();
-			$this->enableDiscussions();
 		} catch ( \Exception $e ) {
 			$this->logException( $e );
 		}
@@ -26,19 +25,6 @@ class EnableDiscussionsTask extends Task {
 			$this->taskContext->getSiteName(),
 			$this->taskContext->getLanguage()
 		) )->activateDiscussions();
-	}
-
-	/**
-	 * Sets the appropriate wg variables to make the new discussions
-	 * instance enabled and available on this new wiki.
-	 */
-	private function enableDiscussions() {
-		( new \DiscussionsVarToggler( $this->taskContext->getCityId() ) )
-			->setEnableDiscussions( true )
-			->setEnableDiscussionsNav( true )
-			->setArchiveWikiForums( true )
-			->setEnableRecircDiscussions( true )
-			->save();
 	}
 
 	private function logException( \Exception $e ) {

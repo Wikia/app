@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	Roadblock,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -28,11 +29,10 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
 
 function init(
 	adTracker,
-	geo,
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
@@ -46,15 +46,13 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	const bfabStickiness = legacyContext.get('opts.areMobileStickyAndSwapEnabled') ||
-		legacyContext.get('opts.isDesktopBfabStickinessEnabled');
-	context.set('options.bfabStickiness', bfabStickiness);
+	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
 
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
-	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 
@@ -76,6 +74,7 @@ function init(
 	if (legacyContext.get('bidders.prebidAE3')) {
 		context.set('bidders', getBiddersContext(skin));
 
+		context.set('bidders.a9.dealsEnabled', legacyContext.get('bidders.a9Deals'));
 		context.set('bidders.a9.enabled', legacyContext.get('bidders.a9'));
 		context.set('bidders.a9.videoEnabled', legacyContext.get('bidders.a9Video'));
 
@@ -108,7 +107,7 @@ function init(
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
 			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
-			context.set('custom.isCMPEnabled', legacyContext.get('opts.isCMPEnabled'));
+			context.set('custom.isCMPEnabled', true);
 		}
 
 		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
@@ -251,13 +250,21 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
+function readSessionId() {
+	utils.readSessionId();
+}
+
+const geo = utils;
+
 export {
 	init,
 	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
+	readSessionId,
 	context,
 	universalAdPackage,
 	slotService,
+	geo,
 };

@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			getAdUnitBuilder: function () {
 				return adContext.get('opts.megaAdUnitBuilderEnabled') ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
-			atfSlots: [
+			firstCallSlots: [
 				'MOBILE_TOP_LEADERBOARD'
 			],
 			testSrc: 'test'

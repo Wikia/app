@@ -26,9 +26,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			getAdContextForcedProvider: returnEmpty,
 			getInstantGlobals: returnEmpty,
 			getUserAgent: noop,
-			geo: {
-				getCountryCode: noop
-			},
 			trackingOptIn: {
 				isOptedIn: noop
 			},
@@ -53,15 +50,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				},
 				remnantGpt: {
 					name: 'remnant'
-				},
-				turtle: {
-					name: 'turtle',
-					canHandleSlot: noop
 				}
 			}
-		},
-		forcedProvidersMap = {
-			'turtle': mocks.providers.turtle.name
 		};
 
 	function getModule() {
@@ -69,13 +59,11 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.log,
 			{navigator: {userAgent: mocks.getUserAgent()}},
 			mocks.getInstantGlobals(),
-			mocks.geo,
 			mocks.trackingOptIn,
 			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
-			mocks.providers.remnantGpt,
-			mocks.providers.turtle
+			mocks.providers.remnantGpt
 		);
 	}
 
@@ -102,43 +90,5 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	it('only direct on premium-only page', function () {
 		mocks.opts.premiumOnly = true;
 		expect(getProviders('foo')).toEqual('direct');
-	});
-
-	it('Turtle: Turtle, Remnant', function () {
-		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('turtle,remnant');
-	});
-
-	it('Turtle cannot handle slot: Direct, Remnant', function () {
-		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
-		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('direct,remnant');
-	});
-
-	it('Turtle opted out: Direct, Remnant', function () {
-		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(false);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('direct,remnant');
-	});
-
-	it('Turtle country, wgSitewideDisableGpt on: Turtle', function () {
-		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		expect(getProviders('foo')).toEqual('turtle');
-	});
-
-	it('returns correct providers depending on forcedProvider', function () {
-		spyOn(mocks, 'getAdContextForcedProvider');
-
-		Object.keys(forcedProvidersMap).forEach(function (k) {
-			mocks.getAdContextForcedProvider.and.returnValue(k);
-			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
-		});
 	});
 });

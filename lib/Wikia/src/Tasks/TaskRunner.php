@@ -10,6 +10,7 @@ namespace Wikia\Tasks;
  */
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Metrics\Collector;
 
 class TaskRunner {
 	// number of seconds required before we notify flower of our job status
@@ -84,6 +85,8 @@ class TaskRunner {
 	}
 
 	function run() {
+		global $wgWikiaEnvironment;
+
 		$this->startTime = $this->endTime = microtime( true );
 		if ( $this->exception ) {
 			$this->results [] = $this->exception;
@@ -110,7 +113,12 @@ class TaskRunner {
 				}
 			}
 
-			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task)."::{$method}"] );
+			$task_call = sprintf('%s::%s', get_class( $task ) , $method );
+			$task_delay = microtime( true ) - $this->createdAt;
+			$task_duration = microtime( true );
+
+			WikiaLogger::instance()->pushContext( [ 'task_call' => $task_call ] );
+
 			$result = $task->execute( $method, $args );
 			if ( $result instanceof \Exception ) {
 				WikiaLogger::instance()->error( 'Exception: ' . $result->getMessage(), [
@@ -118,6 +126,22 @@ class TaskRunner {
 				] );
 			}
 			WikiaLogger::instance()->popContext();
+
+			// push metrics
+			$task_duration = microtime( true ) - $task_duration;
+
+			$metrics_labels = [
+				'task_call' => $task_call,
+				'task_status' => ( $result instanceof \Exception ) ? 'failed' : 'completed',
+				'env' => $wgWikiaEnvironment
+			];
+
+			// SUS-5855
+			Collector::getInstance()
+				->addCounter('celery_tasks_total', $metrics_labels, 'Number of Celery tasks executed')
+				->addGauge('celery_tasks_duration_seconds', $task_duration, $metrics_labels, 'Time it took to execute the task')
+				->addGauge('celery_tasks_delay_seconds', $task_delay, $metrics_labels, 'How long task has waited in the queue before being executed');
+
 			$this->results [] = $result;
 
 			if ( $result instanceof \Exception ) {
@@ -127,7 +151,6 @@ class TaskRunner {
 
 		$this->endTime = microtime( true );
 
-		// TODO: push tasks metrics to InfluxDB
 		WikiaLogger::instance()->info( __METHOD__ . '::completed', [
 			'took' => $this->runTime(),
 			'delay' => microtime( true ) - $this->createdAt,

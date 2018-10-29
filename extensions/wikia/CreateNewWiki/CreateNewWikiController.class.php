@@ -25,7 +25,8 @@ class CreateNewWikiController extends WikiaController {
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
-			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain;
+			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain,
+			   $wgAllowCommunityBuilderCNWPrompt;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -82,12 +83,28 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 		);
 
+		$this->allowCommunityBuilderOptIn = !empty($wgAllowCommunityBuilderCNWPrompt) || !empty($_GET['forceShowCBOptIn']);
+		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :
+			'';
+		$this->communityBuilderModal = $this->allowCommunityBuilderOptIn ?
+			F::app()->renderView('CreateNewWiki', 'CommunityBuilderModal') :
+			'';
+
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function communityBuilderOptInPrompt() {
+		// needed so the dispatcher doesn't whine
+	}
+
+	public function communityBuilderModal() {
+		// needed so the dispatcher doesn't whine
 	}
 
 	private function setupVerticalsAndCategories() {

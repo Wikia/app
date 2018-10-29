@@ -10,6 +10,7 @@
  * @todo document
  */
 class ParserCache {
+	/** @var BagOStuff $mMemc */
 	private $mMemc;
 	const try116cache = false; /* Only useful $wgParserCacheExpireTime after updating to 1.17 */
 
@@ -155,7 +156,7 @@ class ParserCache {
 	 * @return ParserOutput|false
 	 */
 	public function get( $article, $popts, $useOutdated = false ) {
-		global $wgCacheEpoch;
+		global $wgCacheEpoch, $wgPoolWorkArticleViewDebugMode;
 		wfProfileIn( __METHOD__ );
 
 		$canCache = $article->checkTouched();
@@ -169,10 +170,17 @@ class ParserCache {
 
 		$parserOutputKey = $this->getKey( $article, $popts, $useOutdated );
 		if ( $parserOutputKey === false ) {
+			if ( $wgPoolWorkArticleViewDebugMode ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: missing parser output key" );
+			}
+
 			wfIncrStats( 'pcache_miss_absent' );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+
+		// SRE-111: Clear in-memory cache for the parser output as well
+		$this->mMemc->clearLocalCache( $parserOutputKey );
 
 		$value = $this->mMemc->get( $parserOutputKey );
 		if ( self::try116cache && !$value && strpos( $value, '*' ) !== -1 ) {
@@ -182,10 +190,18 @@ class ParserCache {
 			$value = $this->mMemc->get( $parserOutputKey );
 		}
 		if ( !$value ) {
+			if ( $wgPoolWorkArticleViewDebugMode ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: missing parser output for key: $parserOutputKey" );
+			}
+
 			wfDebug( "ParserOutput cache miss.\n" );
 			wfIncrStats( "pcache_miss_absent" );
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		if ( $wgPoolWorkArticleViewDebugMode ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: parser output found for key: $parserOutputKey" );
 		}
 
 		wfDebug( "ParserOutput cache found.\n" );
@@ -255,5 +271,9 @@ class ParserCache {
 		} else {
 			wfDebug( "Parser output was marked as uncacheable and has not been saved.\n" );
 		}
+	}
+
+	public function clearOptionsKey( $article ) {
+		$this->mMemc->clearLocalCache( $this->getOptionsKey( $article ) );
 	}
 }

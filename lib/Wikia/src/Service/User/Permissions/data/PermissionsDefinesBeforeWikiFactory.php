@@ -369,3 +369,7 @@ $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
 $wgGroupPermissions['global-discussions-moderator']['block'] = true;
+
+$wgGroupPermissions['helper']['protectsite-exempt'] = true;
+$wgGroupPermissions['staff']['protectsite-exempt'] = true;
+$wgGroupPermissions['vstf']['protectsite-exempt'] = true;

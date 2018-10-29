@@ -6,11 +6,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, instantGlobals, geo, sampler, w, Querystring) {
+], function (browserDetect, cookies, instantGlobals, adEngineBridge, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
-		return geo.isProperGeo(geos, name);
+		return adEngineBridge.geo.isProperGeo(geos, name);
 	}
 
 	function updateAdContextRabbitExperiments(context) {
@@ -99,6 +99,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
 		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
@@ -142,7 +143,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
 		context.rabbits = context.rabbits || {};
-		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
@@ -169,8 +169,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		context.providers.turtle = isEnabled('wgAdDriverTurtleCountries');
-
 		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
 
 		// INVISIBLE_HIGH_IMPACT slot
@@ -185,9 +183,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.kikimoraViewabilityTracking = isEnabled('wgAdDriverKikimoraViewabilityTrackingCountries');
 		context.opts.enableAdInfoLog = isEnabled('wgAdDriverKikimoraTrackingCountries');
 		context.opts.playerTracking = isEnabled('wgAdDriverKikimoraPlayerTrackingCountries');
-
-		// CMP module
-		context.opts.isCMPEnabled = isEnabled('wgEnableCMPCountries');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
@@ -225,8 +220,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
 
-		context.opts.areMobileStickyAndSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileStickyAndSwapCountries')
+		context.opts.isMobileBottomLeaderboardSwapEnabled = (
+			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
 		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';
@@ -236,9 +231,18 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
+		context.opts.incontentPlayerRail = {
+			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			trackingAlias: 'INCONTENT_PLAYER_RAIL',
+			conflictingSlots: [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			]
+		};
 
 		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

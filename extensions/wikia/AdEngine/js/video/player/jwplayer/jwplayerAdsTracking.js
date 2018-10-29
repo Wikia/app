@@ -29,9 +29,12 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 	}
 
 	return function(player, params) {
+		params.withCtp = !player.getConfig().autostart;
+		params.withAudio = !player.getConfig().mute;
+
 		tracker.track(params, 'init');
 
-		player.on('adComplete', function () {
+		player.on('videoStart', function () {
 			clearParams(params);
 		});
 

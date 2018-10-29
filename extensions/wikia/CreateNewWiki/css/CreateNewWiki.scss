@@ -109,6 +109,10 @@
 		overflow-y: auto;
 		resize: none;
 		width: $cnw-textarea-width;
+
+		@include placeholder {
+			font-style: italic;
+		}
 	}
 
 	input[type=text] {

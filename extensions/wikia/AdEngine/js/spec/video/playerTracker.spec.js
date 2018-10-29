@@ -34,9 +34,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return 'Foo 9';
 				}
 			},
-			geo: {
-				getCountryCode: function () {
-					return 'XY';
+			bridge: {
+				geo: {
+					getCountryCode: function () {
+						return 'XY';
+					}
 				}
 			},
 			log: noop,
@@ -61,12 +63,14 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
+			mocks.bridge,
 			mocks.slotTargeting,
 			mocks.browserDetect,
-			mocks.geo,
 			mocks.log,
 			mocks.window,
-			mocks.bidHelper
+			mocks.bidHelper,
+			undefined,
+			undefined
 		);
 	}
 
@@ -78,8 +82,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		debug: 'debug'
 	};
 
-	beforeEach(function () {
+	beforeAll(function () {
 		spyOn(mocks.adTracker, 'trackDW');
+	});
+
+	beforeEach(function () {
 		mocks.adTracker.trackDW.calls.reset();
 
 		tracker = getModule();

@@ -11,7 +11,6 @@ namespace Wikia\Tasks\Tasks;
 
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
-use Wikia\Tasks\DeferredTaskQueueUpdate;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
@@ -43,9 +42,6 @@ abstract class BaseTask {
 
 	/** @var boolean wrapper for AsyncTaskList->dupCheck() */
 	private $dupCheck = false;
-
-	/** @var string wrapper for AsyncTaskList->delay() */
-	private $delay = null;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
@@ -149,7 +145,7 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$this->info( 'BaseTask::queue', [
+		$this->info( 'Queueing task to be published: ' . get_class( $this ), [
 			'task' => get_class( $this ),
 			'caller' => wfGetCallerClassMethod( __CLASS__ ),
 			'backtrace' => new \Exception()
@@ -167,7 +163,7 @@ abstract class BaseTask {
 	 *
 	 * @return array AsyncTaskList objects
 	 */
-	private function convertToTaskLists() {
+	public function convertToTaskLists() {
 		$wikiIds = (array) $this->wikiId;
 		$taskLists = [];
 
@@ -186,10 +182,6 @@ abstract class BaseTask {
 
 			if ( $this->dupCheck ) {
 				$taskList->dupCheck();
-			}
-
-			if ( $this->delay ) {
-				$taskList->delay( $this->delay );
 			}
 
 			if ( $this->createdBy ) {
@@ -385,26 +377,15 @@ abstract class BaseTask {
 		return $this;
 	}
 
-	/**
-	 * @see AsyncTaskList::delay
-	 * @param $time
-	 * @return $this
-	 */
-	public function delay( $time ) {
-		$this->delay = $time;
-		return $this;
-	}
-
 	// end AsyncTaskList wrappers
 
 	/**
 	 * queue a set of BaseTask objects
 	 *
 	 * @param BaseTask[] $tasks
-	 * @param string $priority which queue to add this task list to
 	 * @return array task ids
 	 */
-	public static function batch( array $tasks, $priority = null ) {
+	public static function batch( array $tasks ) {
 		if ( count( $tasks ) === 0 ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'BaseTask::batch', [
 				'exception' => new \Exception('Tasks list is empty')
@@ -425,14 +406,7 @@ abstract class BaseTask {
 			'backtrace' => new \Exception()
 		] );
 
-		return AsyncTaskList::batch( $taskLists, $priority );
-	}
-
-	/**
-	 * Schedule this task to be published to the queue after the main response has been flushed back to the client.
-	 */
-	public function scheduleAsDeferredUpdate() {
-		\DeferredUpdates::addUpdate( new DeferredTaskQueueUpdate( $this ) );
+		return AsyncTaskList::batch( $taskLists );
 	}
 
 	public static function newLocalTask(): BaseTask {

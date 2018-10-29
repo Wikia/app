@@ -1277,13 +1277,6 @@ $wgCreateLanguageWikisWithPath = false;
 $wgCreateEnglishWikisOnFandomCom = false;
 
 /**
- * Wiki description enter by the user on the CNW page. Removed after wiki is created
- * @see extensions/wikia/CreateNewWiki/maintenance/setMainPageContent.php
- * @var string $wgWikiDescription
- */
-$wgWikiDescription = '';
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -1957,6 +1950,14 @@ $wgDnsBlacklistUrls = [ 'http.dnsbl.sorbs.net.' ];
 $wgDocType = '-//W3C//DTD XHTML 1.0 Transitional//EN';
 
 /**
+ * Used to set a date when migrating a wiki to a different domain to force an
+ * updated lastmod timestamp in sitemaps.
+ * @see PLATFORM-3746
+ * @var string $wgDomainChangeDate
+ */
+$wgDomainChangeDate = null;
+
+/**
  * The URL of the document type declaration.  Ignored if $wgHtml5 is true,
  * since HTML5 has no DTD, and <!DOCTYPE html> doesn't actually have a DTD part
  * to put this variable's contents in.
@@ -2008,6 +2009,16 @@ $wgDumpsDisabledWikis = [
  * @var string $wgEditEncoding
  */
 $wgEditEncoding = '';
+
+/**
+ * RabbitMQ configuration for Edit Events Pipeline.
+ * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
+ * @var array $wgEditEventsRabbitConfig
+ */
+$wgEditEventsRabbitConfig = [
+	'vhost' => 'data-warehouse',
+	'exchange' => 'mediawiki-edit-events',
+];
 
 /**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
@@ -2543,13 +2554,6 @@ $wgEnableDiscussionsLog = true;
 $wgEnableDiscussionsNavigation = false;
 
 /**
- * Allows submitting posts with Polls.
- * @see extensions/wikia/MercuryApi
- * @var bool $wgEnableDiscussionsPolls
- */
-$wgEnableDiscussionsPolls = true;
-
-/**
  * Enable DismissableSiteNotice extension.
  * @see /extensions/DismissableSiteNotice
  * @var bool wgEnableDismissableSiteNoticeExt
@@ -2690,13 +2694,6 @@ $wgEnableFirstContributionsExt = true;
  * @var bool $wgEnableFlagClosedAccountsExt
  */
 $wgEnableFlagClosedAccountsExt = true;
-
-/**
- * Enable FlowTracking extension (event tracking in create new page flow).
- * @see extensions/wikia/FlowTracking
- * @var bool $wgEnableFlowTracking
- */
-$wgEnableFlowTracking = true;
 
 /**
  * Enable Forum extension.
@@ -3917,6 +3914,16 @@ $wgWikiaMobileSmartBannerConfig = [
 ];
 
 /**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
+];
+
+/**
  * Enable WikiaPhotoGallery extension.
  * @see extensions/wikia/WikiaPhotoGallery
  * @var bool $wgEnableWikiaPhotoGalleryExt
@@ -4954,6 +4961,16 @@ $wgImageLimits = [
 $wgImageMagickConvertCommand = '/usr/bin/convert';
 
 /**
+ * RabbitMQ configuration for ImageReview.
+ * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
+ * @var array $wgImageReview
+ */
+$wgImageReview = [
+	'vhost' => 'dc-file-sync',
+	'exchange' => 'amq.topic',
+];
+
+/**
  * An image can be used as a thumbnail of an article if it is used less than
  * this many times.
  * @see extensions/wikia/ImageServing/drivers/ImageServingDriverMainNS.class.php
@@ -5015,6 +5032,17 @@ $wgImportTargetNamespace = null;
  * @var bool $wgIncludeLegacyJavaScript
  */
 $wgIncludeLegacyJavaScript = true;
+
+
+/**
+ * RabbitMQ configuration for Indexing Pipeline.
+ * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
+ * @var array $wgIndexingPipeline
+ */
+$wgIndexingPipeline = [
+	'vhost' => 'indexer',
+	'exchange' => 'events',
+];
 
 /**
  * Internal server name as known to Squid, if different.
@@ -5134,13 +5162,6 @@ $wgJobTypesExcludedFromDefaultQueue = [];
  * @var string $wgJsMimeType
  */
 $wgJsMimeType = 'text/javascript';
-
-/**
- * Custom variables used by CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgLangCreationVariables
- */
-$wgLangCreationVariables = [];
 
 /**
  * Site language code, should be one of ./languages/Language(.*).php
@@ -6281,6 +6302,16 @@ $wgPasswordResetRoutes = [
 $wgPasswordSender = 'community@fandom.com';
 
 /**
+ * Phalanx RabbitMQ configuration.
+ * @see extensions/wikia/PhalanxII
+ * @var array $wgPhalanxQueue
+ */
+$wgPhalanxQueue = [
+	'vhost' => 'phalanx',
+	'exchange' => 'phalanx',
+];
+
+/**
  * Languages for which admins can create blocks and filters.
  * @var Array $wgPhalanxSupportedLanguages
  * @see extensions/wikia/PhalanxII
@@ -6330,6 +6361,19 @@ $wgPoolCounterConf = null;
  * @var Array $wgPoolCounterServers
  */
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
+
+/**
+ * Whether to emit more detailed debug logs for a PoolWorkArticleView
+ * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
+ * @var bool $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugMode = false;
+
+/**
+ * The fraction of PoolWorkArticleView executions that should be executed with more detailed logging
+ * @var float $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugSampleRatio = 0.05;
 
 /**
  * Whether to preload the mediawiki.util module as blocking module in the top
@@ -6555,6 +6599,18 @@ $wgQueryCacheLimit = 1000;
 $wgQueryPageDefaultLimit = 50;
 
 /**
+ * Hostname of the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitHost
+ */
+$wgRabbitHost = 'prod.rabbit.service.consul';
+
+/**
+ * Port used by the datacenter-local Rabbit cluster.
+ * @var string $wgRabbitPort
+ */
+$wgRabbitPort = 5672;
+
+/**
  * Set to a filename to log rate limiter hits.
  * @var string $wgRateLimitLog
  */
@@ -6627,7 +6683,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'prod.irc.service.sjc.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
@@ -7933,13 +7989,6 @@ $wgUDPProfilerHost = '127.0.0.1';
 $wgUDPProfilerPort = '3811';
 
 /**
- * Additional variables for CreateWiki task.
- * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
- * @var Array $wgUniversalCreationVariables
- */
-$wgUniversalCreationVariables = [];
-
-/**
  * Enable the UniversalEditButton for browsers that support it (currently only
  * Firefox with an extension). See http://universaleditbutton.org for more
  * background information.
@@ -8820,3 +8869,36 @@ $wgYoukuConfig['playerColor'] = 0;
  * @var int $wgDataMartOriginalCityId
  */
 $wgDataMartOriginalCityId = 0;
+
+/**
+ * whether or not create new wiki prompts users to alternatively create their community
+ * in the community builder (fandom creator)
+ * @see CAKE-2151
+ */
+$wgAllowCommunityBuilderCNWPrompt = true;
+
+/**
+ * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
+ * @see SEO-669
+ * @var string $wgFandomComMigrationScheduled
+ */
+$wgFandomComMigrationScheduled = false;
+
+/**
+ * Whether the community was migrated to a fandom.com domain, triggers a banner notification
+ * @see SEO-669
+ * @var bool $wgFandomComMigrationDone
+ */
+$wgFandomComMigrationDone = false;
+
+/**
+ * Whether we should enable tracking cookie reset page. This is needed in transition phase
+ * when we migrate wikis from .wikia.com to .fandom.com domain.
+ */
+$wgEnableResetTrackingPreferencesPage = false;
+
+/**
+ * Wether we should load the FastlyInsights extension. The extension will then add the Fastly Insights
+ * script to pages - https://insights.fastlylabs.com
+ */
+$wgEnableFastlyInsights = false;

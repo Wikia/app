@@ -4,38 +4,31 @@ define('ext.wikia.adEngine.config.desktop', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.turtle'
+	'ext.wikia.adEngine.provider.remnantGpt'
 ], function (
 	// regular dependencies
 	log,
 	window,
 	instantGlobals,
-	geo,
 	trackingOptIn,
 	adContext,
 	adDecoratorPageDimensions,
 
 	// AdProviders
 	adProviderDirectGpt,
-	adProviderRemnantGpt,
-	adProviderTurtle
+	adProviderRemnantGpt
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		context = adContext.getContext(),
-		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
-		forcedProviders = {
-			turtle:   [adProviderTurtle]
-		};
+		gptEnabled = !instantGlobals.wgSitewideDisableGpt;
 
 	function getDecorators() {
 		return [adDecoratorPageDimensions];
@@ -54,16 +47,7 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
-		// Force provider
-		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
-			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return forcedProviders[context.forcedProvider];
-		}
-
-		// First provider: Turtle or Direct GPT?
-		if (context.providers.turtle && isTrackingOptedIn && adProviderTurtle.canHandleSlot(slotName)) {
-			providerList.push(adProviderTurtle);
-		} else if (gptEnabled) {
+		if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 
 			if (context.opts.premiumOnly) {

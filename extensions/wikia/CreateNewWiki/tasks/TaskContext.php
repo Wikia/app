@@ -267,6 +267,34 @@ class TaskContext {
 		$this->founder = $founder;
 	}
 
+	/**
+	 * @param string $language
+	 */
+	public function setLanguage( string $language ) {
+		$this->language = $language;
+	}
+
+	/**
+	 * @param string $ip
+	 */
+	public function setIp( string $ip ) {
+		$this->ip = $ip;
+	}
+
+	/**
+	 * @param string $taskId
+	 */
+	public function setTaskId( string $taskId ) {
+		$this->taskId = $taskId;
+	}
+
+	/**
+	 * @param string $fandomCreatorCommunityId
+	 */
+	public function setFandomCreatorCommunityId( string $fandomCreatorCommunityId ) {
+		$this->fandomCreatorCommunityId = $fandomCreatorCommunityId;
+	}
+
 	public function isFandomCreatorCommunity() {
 		return !!$this->fandomCreatorCommunityId;
 	}

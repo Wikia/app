@@ -105,13 +105,8 @@ $processor = new ApiMain( $wgRequest, $wgEnableWriteAPI );
 // Process data & print results
 $processor->execute();
 
-// Execute any deferred updates
-DeferredUpdates::doUpdates();
-
 // Log what the user did, for book-keeping purposes.
 $endtime = microtime( true );
-wfProfileOut( 'api.php' );
-wfLogProfilingData();
 
 // Log the request
 if ( $wgAPIRequestLog ) {
@@ -132,10 +127,6 @@ if ( $wgAPIRequestLog ) {
 	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
 }
 
-Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
-
-// Shut down the database.  foo()->bar() syntax is not supported in PHP4: we won't ever actually
-// get here to worry about whether this should be = or =&, but the file has to parse properly.
-$lb = wfGetLBFactory();
-$lb->shutdown();
-
+// Execute common request shutdown procedure
+$mw = new MediaWiki();
+$mw->restInPeace();

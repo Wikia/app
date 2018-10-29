@@ -3076,13 +3076,28 @@ class PoolWorkArticleView extends PoolCounterWork {
 	 * @param $text String: text to parse or null to load it
 	 */
 	function __construct( Page $page, ParserOptions $parserOptions, $revid, $useParserCache, $text = null ) {
+		global $wgPoolWorkArticleViewDebugSampleRatio, $wgPoolWorkArticleViewDebugMode;
+
+		// SRE-111: Enable detailed sampling for some PoolWorkArticleView executions
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( $wgPoolWorkArticleViewDebugSampleRatio );
+
+		if ( $sampler->shouldSample() ) {
+			$wgPoolWorkArticleViewDebugMode = true;
+		}
+
 		$this->page = $page;
 		$this->revid = $revid;
 		$this->cacheable = $useParserCache;
 		$this->parserOptions = $parserOptions;
 		$this->text = $text;
 		$this->cacheKey = ParserCache::singleton()->getKey( $page, $parserOptions );
-		parent::__construct( 'ArticleView', $this->cacheKey . ':revid:' . $revid );
+		$poolCounterKey = "{$this->cacheKey}:revid:$revid";
+		parent::__construct( 'ArticleView', $poolCounterKey );
+		
+		if ( $wgPoolWorkArticleViewDebugMode ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: parser cache key: {$this->cacheKey}" );
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: poolcounter key: $poolCounterKey" );
+		}
 	}
 
 	/**
@@ -3181,7 +3196,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 	 * @return bool
 	 */
 	function getCachedWork() {
-		$this->parserOutput = ParserCache::singleton()->get( $this->page, $this->parserOptions );
+		$parserCache = ParserCache::singleton();
+
+		// SRE-111: Clear out the options key from in memory cache so as not to get a false negative
+		// We lookup options key 2x, and if we got here then the first time was a miss so we have the miss cached in memory
+		// PoolCounter has notified us that the work is now done - so clear out the miss
+		$parserCache->clearOptionsKey( $this->page );
+
+		$this->parserOutput = $parserCache->get( $this->page, $this->parserOptions );
 
 		if ( $this->parserOutput === false ) {
 			wfDebug( __METHOD__ . ": parser cache miss\n" );

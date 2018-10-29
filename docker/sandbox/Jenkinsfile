@@ -1,10 +1,8 @@
-// TODO
-// 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
-// 2. Setup different ENV variables in Dockerfile-php
-
-def sandbox = "sandbox-sus2"
+// todo use it when border settings for handling `-k8s` suffix will be prepared
+// def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
+def sandbox = params.sandbox_name;
+def datacenter = params.datacenter
 def environment = "sandbox"
-def datacenter = "sjc"
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -28,19 +26,23 @@ node("docker-daemon") {
 	stage("Log version") {
 		def deploymentInfo
 
-		withDockerContainer(kubectlImage) {
-			deploymentInfo = sh(
-				script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-" +
-				sandbox
-				+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
-				returnStdout: true
-			)
+		try {
+			withDockerContainer(kubectlImage) {
+				deploymentInfo = sh(
+					script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
+					sandbox
+					+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+					returnStdout: true
+				)
+			}
+
+			def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+			def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+
+			println("Updating sandbox ${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
+		} catch (exc) {
+			println("Deploying new sandbox named ${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
 		}
-
-		def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-		def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-
-		println("Updating\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
 	}
 
 	stage("Clone repositories") {
@@ -100,12 +102,24 @@ node("docker-daemon") {
 			}
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:da4390f")
 
 				// SUS-5284 - make the image a bit smaller
 				sh("cp docker/.dockerignore ..")
 
 				sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+
+				// SUS-5853 - temporarily create docker image descriptor
+				def template = sh(script: 'cat docker/sandbox/Dockerfile-php.template', returnStdout: true)
+				def dockerImage = render(template, [
+					'SANDBOX_NAME': sandbox,
+					'SANDBOX_ENVIRONMENT': environment,
+					'SANDBOX_DATACENTER': datacenter
+				])
+
+				sh("""cat > docker/sandbox/Dockerfile-php <<EOL
+${dockerImage}
+EOL""")
 				sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
 
 				sh("docker push $nginxImage:$imageTag")
@@ -140,8 +154,8 @@ EOL""")
 		}
 
 		withDockerContainer(kubectlImage) {
-			sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
+			sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
 		}
 	}
 

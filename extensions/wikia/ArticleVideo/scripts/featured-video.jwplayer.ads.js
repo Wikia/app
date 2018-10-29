@@ -61,9 +61,12 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			prerollPositionReached = false,
 			bidderEnabled = true,
 			playerState = {},
+			playlistItem = player.getPlaylist(),
+			videoId = playlistItem[player.getPlaylistIndex()].mediaid,
 			trackingParams = {
 				adProduct: 'featured-video',
-				slotName: featuredVideoSlotName
+				slotName: featuredVideoSlotName,
+				videoId: videoId
 			},
 			videoDepth = 0;
 
