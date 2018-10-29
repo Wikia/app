@@ -28,7 +28,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 		$this->rabbitConnectionManager = $rabbitConnectionManager;
 
 		// Schedule doUpdate() to be executed at the end of the request
-		\DeferredUpdates::addUpdate( $this );
+		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
 	}
 
 	/**

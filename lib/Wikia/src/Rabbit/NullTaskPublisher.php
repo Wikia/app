@@ -12,7 +12,8 @@ class NullTaskPublisher implements TaskPublisher {
 	use Loggable;
 
 	public function __construct() {
-		\DeferredUpdates::addUpdate( $this );
+		// Schedule doUpdate() to be executed at the end of the request
+		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
 	}
 
 	public function pushTask( AsyncTaskList $task ): string {
