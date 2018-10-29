@@ -44,25 +44,17 @@ class JustUpdatedAPIProxy {
 
 		foreach ( $articles as &$article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
-			$articleId = $article['pageid'];
 
-			unset(
-				$article['newlen'],
-				$article['oldlen'],
-				$article['ns'],
-				$article['type'],
-				$article['pageid'],
-				$article['rcid'],
-				$article['revid'],
-				$article['old_revid']
-			);
+			$resultArticle = [
+				'title' => $article['title'],
+			];
 
 			// filter out main page
-			if ( $articleId !== $mainPageId ) {
+			if ( $article['pageid'] !== $mainPageId ) {
 				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
-					$articlesWithMajorChange[] = $article;
+					$articlesWithMajorChange[] = $resultArticle;
 				} else {
-					$articlesWithMinorChange[] = $article;
+					$articlesWithMinorChange[] = $resultArticle;
 				}
 			}
 		}
