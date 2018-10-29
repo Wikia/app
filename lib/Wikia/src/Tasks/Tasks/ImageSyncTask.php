@@ -13,7 +13,6 @@ class ImageSyncTask extends BaseTask {
 
 	/**
 	 * @param array $tasks
-	 * @throws \WikiaException
 	 */
 	public function synchronize( array $tasks ) {
 		foreach($tasks as $task) {
@@ -25,9 +24,7 @@ class ImageSyncTask extends BaseTask {
 
 			if (!$res) {
 				$this->error( __METHOD__, $task);
-				throw new \WikiaException( __METHOD__ );
-			}
-			else {
+			} else {
 				$this->info( __METHOD__, $task);
 			}
 		}
