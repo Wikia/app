@@ -5,7 +5,7 @@ class MercuryApiCategoryHandler {
 	const PARAM_CATEGORY_MEMBERS_FROM = 'categoryMembersFrom';
 	const PARAM_CATEGORY_MEMBERS_PAGE = 'categoryMembersPage';
 
-	const TRENDING_ARTICLES_LIMIT = 6;
+	const TRENDING_ARTICLES_LIMIT = 8;
 
 	private static $categoryModel;
 
