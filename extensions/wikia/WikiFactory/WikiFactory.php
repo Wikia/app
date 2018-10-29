@@ -2693,10 +2693,11 @@ class WikiFactory {
 	 * @param integer	$city_id		wikia identifier in city_list
 	 * @param integer	$city_flags		binary flags
 	 * @param boolean	$skip			skip logging
-	 *
+	 * @param null 		$user
 	 * @return boolean, usually true when success
 	 */
-	static public function setFlags( $city_id, $city_flags, $skip=false, $reason = '' ) {
+	static public function setFlags( $city_id, $city_flags, $skip=false, $reason = '', $user = null
+	) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
@@ -2725,7 +2726,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
