@@ -128,10 +128,12 @@ class MakeImagesConsistentAgain extends Maintenance {
 		$safeUntil = $dbr->addQuotes( $dbr->timestamp( $this->getOption( 'until' ) ) );
 
 		$res = $dbr->select(
-			'filearchive',
+			[ 'filearchive', 'image' ],
 			[ 'fa_name', 'fa_archive_name', 'fa_storage_key' ],
 			[ "fa_deleted_timestamp > $safeFrom", "fa_timestamp < $safeUntil" ],
-			__METHOD__
+			__METHOD__,
+			[],
+			[ 'image' => [ 'LEFT JOIN', 'fa_name = img_name' ] ]
 		);
 
 		foreach ( $res as $row ) {
@@ -145,8 +147,8 @@ class MakeImagesConsistentAgain extends Maintenance {
 					'src' => '',
 					'dst' => "$zone/archive/$hashWithSlash" . $row->fa_archive_name,
 				];
-			} else {
-				// latest revision - delete latest image path
+			} elseif ( empty( $row->img_name ) ) {
+				// delete latest image path, only if no one uploaded a file with the same name since then
 				yield [
 					'op' => 'delete',
 					'src' => '',
@@ -154,6 +156,7 @@ class MakeImagesConsistentAgain extends Maintenance {
 				];
 			}
 
+			// store archived file
 			yield [
 				'op' => 'store',
 				'src' => '',
