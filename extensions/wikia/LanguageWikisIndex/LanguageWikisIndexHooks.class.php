@@ -49,8 +49,8 @@ class LanguageWikisIndexHooks {
 	}
 
 	/**
-	 * Handle wikis index page. For domain root, it redirects to the index page location. On the index page,
-	 * it renders the special page with the list of language wikis.
+	 * Handles request on empty/closed wikis. For domain root, it redirects to the index page location. On the index
+	 * page, it renders the special page with the list of language wikis.
 	 *
 	 * @param $requestUrl
 	 * @return bool True when the requestUrl was recognized and correct http response was sent

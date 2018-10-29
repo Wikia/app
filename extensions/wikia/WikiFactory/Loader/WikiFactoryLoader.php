@@ -397,14 +397,14 @@ class WikiFactoryLoader {
 							$this->mCityCluster = $oRow->city_cluster;
 							$this->mTimestamp = $oRow->city_factory_timestamp;
 							// note, the data below will be cached for 1 day ($this->mExpireDomainCacheTimeout)
-							$this->mDomain = array(
+							$this->mDomain = [
 								"id"     => $this->mWikiID,
 								"url"   => $this->mCityUrl,
 								"active" => $oRow->city_public,
 								"time"   => $oRow->city_factory_timestamp,
 								"db"     => $oRow->city_dbname,
 								"cluster" => $oRow->city_cluster,
-							);
+							];
 						}
 					}
 				}
