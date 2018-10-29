@@ -6478,26 +6478,11 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * Groups that should not be affected by Special:ProtectSite lockdown.
- * @see extensions/wikia/SpecialProtectSite
- * @var Array $wgProtectsiteExempt
- */
-$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
-
-/**
  * Enable ProtectSiteJS extension.
  * @see extensions/wikia/ProtectSiteJS
  * @var bool $wgEnableProtectSiteJSExt
  */
 $wgEnableProtectSiteJSExt = true;
-
-/**
- * The maximum time, site can be locked by the Protectsite extension.
- * @see /extensions/wikia/SpecialProtectSite
- * @var string $wgProtectsiteLimit
- *
- */
-$wgProtectsiteLimit = '12 hours';
 
 /**
  * Big list of banned IP addresses, in the keys not the values.
@@ -8630,13 +8615,6 @@ $wgWikiaEnableSharedHelpExt = true;
  * @var bool $wgWikiaEnableSharedTalkExt
  */
 $wgWikiaEnableSharedTalkExt = true;
-
-/**
- * Enable ProtectSite extension.
- * @see extensions/wikia/SpecialProtectSite
- * @var bool $wgWikiaEnableSpecialProtectSiteExt
- */
-$wgWikiaEnableSpecialProtectSiteExt = true;
 
 /**
  * Enable WikiFactory Redirector.
