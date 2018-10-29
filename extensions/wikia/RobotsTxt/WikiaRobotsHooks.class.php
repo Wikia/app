@@ -19,6 +19,6 @@ class WikiaRobotsHooks {
 	}
 
 	private static function isRobotsRequestUrl( $requestUrl ) {
-		return parse_url( $requestUrl, PHP_URL_PATH) == '/robots.txt';
+		return parse_url( $requestUrl, PHP_URL_PATH ) == '/robots.txt';
 	}
 }
