@@ -1,0 +1,72 @@
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+
+.language-wiki-index {
+	margin: 50px auto 0;
+	max-width: 710px;
+	text-align: center;
+
+	&__intro {
+		font-size: 22px;
+		font-weight: bold;
+		line-height: 24px;
+		margin: 20px auto;
+		max-width: 600px;
+	}
+
+	&__list-intro {
+		font-size: 20px;
+		line-height: 22px;
+		margin: 20px;
+	}
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 30px 0;
+	}
+
+	&__list-language {
+		margin-bottom: 10px;
+		width: 350px;
+	}
+
+	&__create-wiki {
+		background-color: $wds-fandom-color-light-gray;
+		display: flex;
+		flex-wrap: wrap;
+		margin: 20px 0;
+		padding: 15px 80px;
+	}
+
+	&__create-wiki-question {
+		margin: 0 auto;
+	}
+
+	&__create-wiki-link {
+		color: $wds-fandom-color-link;
+		font-weight: bold;
+		margin: 0 auto;
+		text-transform: uppercase;
+	}
+
+	&__create-wiki-link-icon {
+		transform: rotate(180deg);
+		vertical-align: text-top;
+	}
+
+	&__links {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 auto;
+		max-width: 600px;
+	}
+
+	&__links-item {
+		color: $wds-fandom-color-link;
+		width: 200px;
+	}
+
+	hr {
+		color: $wds-fandom-color-light-gray;
+	}
+}

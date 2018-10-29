@@ -6,9 +6,12 @@ $wgAutoloadClasses['LanguageWikisIndexController'] = __DIR__ . '/LanguageWikisIn
 $wgAutoloadClasses['LanguageWikisIndexHooks'] = __DIR__ . '/LanguageWikisIndexHooks.class.php';
 $wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
 
+$wgExtensionMessagesFiles['LanguageWikisIndex'] = __DIR__ . '/LanguageWikisIndex.i18n.php';
+
 if ( LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() ) {
 	$wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
 	$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
 }
 
 $wgHooks['ClosedWikiHandler'][] = 'LanguageWikisIndexHooks::onClosedWikiPage';
+$wgHooks['GetHTMLBeforeWikiaPage'][] = 'LanguageWikisIndexHooks::onGetHTMLBeforeWikiaPage';

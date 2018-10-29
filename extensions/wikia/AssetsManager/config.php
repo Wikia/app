@@ -2446,3 +2446,11 @@ $config['fandom_com_migration_js'] = [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	]
 ];
+
+$config['language_wikis_index_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LanguageWikisIndex/styles/language-wikis-index.scss',
+	],
+];
