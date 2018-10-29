@@ -2726,7 +2726,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id, $user );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id, null, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
