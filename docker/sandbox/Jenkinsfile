@@ -148,7 +148,7 @@ EOL""")
 				'SANDBOX_ENVIRONMENT': environment,
 				'SANDBOX_DATACENTER': datacenter,
 				'APP_VERSION': params.app_branch,
-				'CONFIG_VERSION': params.config_branch
+				'CONFIG_VERSION': params.config_branch,
 				'REPLICAS': replicas
 			])
 
