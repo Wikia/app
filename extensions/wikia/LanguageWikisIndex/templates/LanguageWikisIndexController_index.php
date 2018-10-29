@@ -1,5 +1,5 @@
 <div class="language-wiki-index">
-	<div class="language-wiki-index__intro"><?= wfMessage( 'languagewikisindex-intro' )->escaped(); ?></div>
+	<div class="language-wiki-index__intro"><?= $intro; ?></div>
 	<div class="language-wiki-index__list-intro">
 		<span class="wds-midlight-aqua"><?= wfMessage( 'languagewikisindex-list-intro' )->escaped(); ?></span>
 	</div>
