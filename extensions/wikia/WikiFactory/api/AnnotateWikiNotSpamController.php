@@ -30,7 +30,7 @@ class AnnotateWikiNotSpamController extends WikiaController {
 			$this->info('no wikiId or reason parameter in request');
 		} else {
 			$user = User::newFromId($userId);
-			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId, $user);
+			$res = WikiFactory::log( WikiFactory::LOG_STATUS, $reason, $wikiId, null,  $user);
 			if ( $res ) {
 				$this->response->setCode( 200 );
 				return;
