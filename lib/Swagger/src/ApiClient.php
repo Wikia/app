@@ -247,7 +247,7 @@ class ApiClient
         global $wgWikiaEnvironment;
         if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && strpos( $url, 'user-preference' ) ) {
            if (!empty($_GET['forcefailure'])) {
-                sleep(5);
+                sleep(3);
                 $response_info['http_code'] = 504;
            }
         }
