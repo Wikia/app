@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.adDecoratorPageDimensions', [
-	'ext.wikia.adEngine.adLogicPageDimensions', 'wikia.log'
+	'ext.wikia.adEngine.adLogicPageDimensions',
+	'wikia.log'
 ], function (adLogicPageDimensions, log) {
 	'use strict';
 

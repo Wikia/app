@@ -4,6 +4,8 @@
  */
 namespace Wikia\SwiftSync;
 
+use Wikia\Factory\ServiceFactory;
+
 /**
  * SwiftFileBackend helper class to sync stored/removed/renamed file with local FS
  *
@@ -12,13 +14,6 @@ namespace Wikia\SwiftSync;
  * @package SwiftSync
  */
 class Hooks {
-
-	/**
-	 * Stack of DFS operation to be pushed to tasks queue when an upload is completed
-	 *
-	 * @var array
-	 */
-	private static $stack = [];
 
 	/* save image into local repo */
 	public static function doStoreInternal( array $params, \Status $status ) {
@@ -29,7 +24,7 @@ class Hooks {
 		}
 
 		if ( $status->isGood() ) {
-			self::$stack[] =  self::normalizeParams( $params );
+			self::addOperation( $params );
 		}
 
 		return true;
@@ -38,7 +33,7 @@ class Hooks {
 	public static function doCopyInternal( array $params, \Status $status ) {
 
 		if ( $status->isGood() ) {
-			self::$stack[] =  self::normalizeParams( $params );
+			self::addOperation( $params );
 		}
 		return true;
 	}
@@ -59,25 +54,16 @@ class Hooks {
 		}
 
 		if ( $status->isGood() ) {
-			self::$stack[] =  self::normalizeParams( $params );
+			self::addOperation( $params );
 		}
+
 		return true;
 	}
 
-	/**
-	 * DFS operations triggered by the above hooks are now pushed to tasks queue.
-	 *
-	 * This hook is triggered at the end of request handling.
-	 *
-	 * @return bool
-	 */
-	public static function onRestInPeace() {
-		if ( !empty( self::$stack ) ) {
-			self::addTask( self::$stack );
-		}
-
-		self::$stack = [];
-		return true;
+	private static function addOperation( array $params ) {
+		ServiceFactory::instance()->swiftSyncFactory()->swiftSyncTaskProducer()->addOperation(
+			self::normalizeParams( $params )
+		);
 	}
 
 	/**
@@ -94,21 +80,6 @@ class Hooks {
 	public static function isTempFile( string $path) : bool {
 		// e.g. mwstore://swift-backend/easternlight/zh-tw/images/3/35/Temp_file_1516192811
 		return preg_match('#/Temp_file_[\d_]+$#', $path);
-	}
-
-	/**
-	 * Normalize provided parameters from file backend operation and queue a task via
-	 * RabbitMQ /Celery
-	 *
-	 * @see SUS-3611
-	 *
-	 * @param array $params
-	 */
-	private static function addTask( array $params ) {
-		$task = ImageSyncTask::newLocalTask();
-
-		$task->call( 'synchronize', $params );
-		$task->queue();
 	}
 
 	/**
