@@ -35,7 +35,7 @@ class MarkWikiAsClosedController extends WikiaController {
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId,
 					WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, $user );
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, false, null,  $user );
 				WikiFactory::clearCache( $wikiId );
 				$this->response->setCode( 200 );
 
