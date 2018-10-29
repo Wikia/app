@@ -341,7 +341,7 @@ spec:
     kind: Deployment
     name: mediawiki-tasks
   maxReplicas: 30
-  minReplicas: 10
+  minReplicas: 15
   metrics:
   - type: Resource
     resource:
