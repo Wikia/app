@@ -8,6 +8,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgCityId;
 		$this->specialPage->setHeaders();
 
 		Wikia::addAssetsToOutput( 'language_wikis_index_scss' );
@@ -24,6 +25,9 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'cnwLink', $createNewWikiLink );
 
+		$this->setVal( 'wikiIsCreatable', ( !$this->isClosedWiki() ||
+			( WikiFactory::getFlags( $wgCityId ) & WikiFactory::FLAG_FREE_WIKI_URL ) ) );
+
 		$this->setVal( 'links', [
 			'cnw' => $createNewWikiLink,
 			'fandom' => '//fandom.wikia.com',
@@ -32,6 +36,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	private function isClosedWiki() {
+		global $wgCityId;
 		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() &&
 			!WikiFactory::isPublic( $wgCityId );
 	}

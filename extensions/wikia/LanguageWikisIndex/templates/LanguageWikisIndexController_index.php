@@ -10,6 +10,7 @@
 		</div>
 		<?php endforeach; ?>
 	</div>
+	<?php if ( $wikiIsCreatable ): ?>
 	<div class="language-wiki-index__create-wiki">
 		<span class="language-wiki-index__create-wiki-question">
 			<?= wfMessage( 'languagewikisindex-cnw-question' )->escaped(); ?>
@@ -20,6 +21,7 @@
 				'wds-icon wds-icon-small language-wiki-index__create-wiki-link-icon' ) ?>
 		</a>
 	</div>
+	<?php endif; ?>
 	<hr />
 	<div class="language-wiki-index__links">
 		<?php
