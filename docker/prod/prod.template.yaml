@@ -228,18 +228,14 @@ spec:
                 - -c
                 - sleep 3
           livenessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 10
             timeoutSeconds: 5
-            periodSeconds: 20
           readinessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             timeoutSeconds: 5
-            periodSeconds: 10
           ports:
             - containerPort: 8080
           resources:
