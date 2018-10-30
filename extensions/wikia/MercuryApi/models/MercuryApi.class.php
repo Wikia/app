@@ -102,8 +102,15 @@ class MercuryApi {
 
 		$htmlTitle = new WikiaHtmlTitle();
 
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'articlePath' => $articlePath,
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
@@ -139,16 +146,10 @@ class MercuryApi {
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'cacheBuster' => (int) $wgStyleVersion,
 				'cdnRootUrl' => $wgCdnRootUrl,
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
