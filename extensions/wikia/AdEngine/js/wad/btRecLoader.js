@@ -52,6 +52,10 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		},
 		isDebug = qs().getVal('bt-rec-debug', '') === '1';
 
+	function getPlacementId(slotName) {
+		return placementsMap[slotName].uid || '';
+	}
+
 	function markAdSlots() {
 		Object
 			.keys(placementsMap)
@@ -95,7 +99,8 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		if (!isDebug) {
 			scriptLoader.loadScript(url, {
 				isAsync: false,
-				node: doc.head.lastChild
+				node: doc.head.lastChild,
+				onLoad: triggerScript
 			});
 		}
 	}
@@ -112,6 +117,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 
 	return {
 		duplicateSlot: duplicateSlot,
+		getPlacementId: getPlacementId,
 		init: init,
 		triggerScript: triggerScript
 	};

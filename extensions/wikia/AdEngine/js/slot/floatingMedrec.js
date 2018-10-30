@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			startPosition = placeHolderElement.offsetTop,
 			swapRecirculationAndAd,
 			btRec = null,
-			recNode = null;
+			recSelector = 'div[id*="' + btRecLoader.getPlacementId(slotName) + '"]';
 
 		adSlot.className = 'wikia-ad';
 		adSlot.setAttribute('id', slotName);
@@ -54,9 +54,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			recNode = btRecLoader.duplicateSlot(slotName);
-
-			if (recNode) {
+			if (btRecLoader.duplicateSlot(slotName)) {
 				btRecLoader.triggerScript();
 			}
 
@@ -66,6 +64,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function removeRecNode() {
+			var recNode = doc.querySelector(recSelector);
+
 			if (recNode) {
 				recNode.style.display = 'none';
 				recNode.remove();
