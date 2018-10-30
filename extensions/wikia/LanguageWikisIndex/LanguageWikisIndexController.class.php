@@ -32,8 +32,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	private function isClosedWiki() {
-		global $wgCityId;
-		return $wgCityId !== WikiFactory::LANGUAGE_WIKIS_INDEX &&
+		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() &&
 			!WikiFactory::isPublic( $wgCityId );
 	}
 }
