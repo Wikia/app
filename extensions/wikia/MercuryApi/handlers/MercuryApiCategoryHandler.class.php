@@ -41,8 +41,6 @@ class MercuryApiCategoryHandler {
 	 * @throws NotFoundApiException
 	 */
 	public static function getCategoryPageData( Title $title, $from, int $page, MercuryApi $mercuryApiModel ): array {
-		global $wgContentNamespaces;
-
 		$categoryModel = self::getCategoryModel( $title, $from );
 
 		if ( $categoryModel->getTotalNumberOfMembers() === 0 ) {
