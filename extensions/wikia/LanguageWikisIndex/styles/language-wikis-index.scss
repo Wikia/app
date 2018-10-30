@@ -84,12 +84,7 @@ $language-wikis-index-header-background-width-small-breakpoint: 471px;
 }
 
 .language-wikis-index-header {
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
 	background-color: $language-wikis-index-header-background-color;
-	background-position: right center;
-	background-repeat: no-repeat;
-	background-size: contain;
 	height: $language-wikis-index-header-background-height;
 	margin: 0 auto;
 	position: relative;
@@ -114,22 +109,6 @@ $language-wikis-index-header-background-width-small-breakpoint: 471px;
 
 		@media #{$breakpoint-large-up} {
 			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
-		}
-	}
-
-	&::before {
-		background: linear-gradient(to right, rgba($language-wikis-index-header-background-color, .5), rgba($language-wikis-index-header-background-color, .5)),
-			linear-gradient(to left, rgba($language-wikis-index-header-background-color, 0) 200px, $language-wikis-index-header-background-color $language-wikis-index-header-background-width);
-		content: '';
-		display: block;
-		height: 100%;
-		position: absolute;
-		width: 100%;
-		z-index: -1;
-
-		@media #{$wds-breakpoint-l-down} {
-			background: linear-gradient(to right, rgba($language-wikis-index-header-background-color, .5), rgba($language-wikis-index-header-background-color, .5)),
-				linear-gradient(to left, rgba($language-wikis-index-header-background-color, 0) 200px, $language-wikis-index-header-background-color $language-wikis-index-header-background-width-small-breakpoint);
 		}
 	}
 }
