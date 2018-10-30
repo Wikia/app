@@ -42,15 +42,11 @@ class CategoryPage3Hooks {
 	 * @return bool
 	 */
 	public static function onArticleFromTitle( $title, &$article ): bool {
-		if ( $title->isRedirect() ) {
-			$title = $article->getRedirectTarget();
-		}
-
 		if ( is_null( $title ) || !$title->inNamespace( NS_CATEGORY ) ) {
 			return true;
 		}
 
-		$layout = static::getLayout( $title, $article );
+		$layout = static::getLayout( $title, $article->getPage(), $article->getContext() );
 
 		switch ( $layout ) {
 			case CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI:
@@ -82,16 +78,16 @@ class CategoryPage3Hooks {
 		Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
-		$article = Article::newFromTitle( $title, $output->getContext() );
+		$wikiPage = new WikiPage( $title );
 
 		if ( $title->isRedirect() ) {
-			$title = $article->getRedirectTarget();
+			$title = $wikiPage->getRedirectTarget();
 		}
 
 		if (
 			is_null( $title ) ||
 			!$title->inNamespace( NS_CATEGORY ) ||
-			static::getLayout( $title, $article ) !== CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
+			static::getLayout( $title, $wikiPage, $output->getContext() ) !== CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
 		) {
 			return true;
 		}
@@ -173,8 +169,7 @@ class CategoryPage3Hooks {
 		return true;
 	}
 
-	private static function getLayout( Title $title, Article $article ): string {
-		$context = $article->getContext();
+	private static function getLayout( Title $title, WikiPage $wikiPage, IContextSource $context ): string {
 		$user = $context->getUser();
 		$isAnon = $user->isAnon();
 
@@ -185,7 +180,7 @@ class CategoryPage3Hooks {
 		$cookie = $context->getRequest()->getCookie( static::COOKIE_NAME, '' );
 
 		if ( !empty( $cookie ) ) {
-			$layoutFromCookie = static::getLayoutForKey( $title, $article, $cookie );
+			$layoutFromCookie = static::getLayoutForKey( $title, $wikiPage, $cookie );
 
 			if ( $layoutFromCookie !== null ) {
 				return $layoutFromCookie;
@@ -197,15 +192,15 @@ class CategoryPage3Hooks {
 			CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
 		);
 
-		return static::getLayoutForKey( $title, $article, $globalPreference );
+		return static::getLayoutForKey( $title, $wikiPage, $globalPreference );
 	}
 
-	private static function getLayoutForKey( Title $title, Article $article, $key ) {
+	private static function getLayoutForKey( Title $title, WikiPage $wikiPage, $key ) {
 		if ( $key === CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI ) {
 			return CategoryPageWithLayoutSelector::LAYOUT_MEDIAWIKI;
 		} else if (
 			$key === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION &&
-			!CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article )
+			!CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $wikiPage )
 		) {
 			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_EXHIBITION;
 		} else if ( $key === CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 ) {

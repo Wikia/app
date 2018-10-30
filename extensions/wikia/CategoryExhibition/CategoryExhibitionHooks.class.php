@@ -12,11 +12,11 @@ class CategoryExhibitionHooks {
 	 * Return true if the exhibition category type should be disabled on this page
 	 *
 	 * @param Title $title
-	 * @param Article $article
+	 * @param WikiPage $wikiPage
 	 * @return bool
 	 */
-	static public function isExhibitionDisabledForTitle( $title, $article ) {
-		if ( !$article || MagicWord::get( CATEXHIBITION_DISABLED )->match( $article->getRawText() ) > 0 ) {
+	static public function isExhibitionDisabledForTitle( $title, $wikiPage ) {
+		if ( !$wikiPage || MagicWord::get( CATEXHIBITION_DISABLED )->match( $wikiPage->getRawText() ) > 0 ) {
 			return true;
 		}
 
@@ -84,6 +84,7 @@ class CategoryExhibitionHooks {
 	 * @param $categoryDeletes
 	 * @param Title $title
 	 * @return bool
+	 * @throws MWException
 	 */
 	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $title ) {
 		$categories = $categoryInserts + $categoryDeletes;

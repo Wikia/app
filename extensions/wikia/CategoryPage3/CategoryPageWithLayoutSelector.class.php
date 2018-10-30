@@ -48,8 +48,8 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 
 	private function isCategoryExhibitionAllowed(): bool {
 		$title = $this->getContext()->getTitle();
-		$article = Article::newFromTitle( $title, $this->getContext() );
+		$wikiPage = new WikiPage( $title );
 
-		return !CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $article );
+		return !CategoryExhibitionHooks::isExhibitionDisabledForTitle( $title, $wikiPage );
 	}
 }
