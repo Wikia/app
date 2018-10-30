@@ -643,15 +643,21 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( int $limit = 10, Title $category = null, bool $withImagesOnly = false ) {
-		global $wgContentNamespaces;
-
+	public function getTrendingPagesData(
+		int $limit,
+		Title $category,
+		bool $withImagesOnly,
+		array $namespaces = []
+	) {
 		$params = [
 			'abstract' => false,
 			'expand' => true,
-			'limit' => $limit,
-			'namespaces' => implode( ',', $wgContentNamespaces )
+			'limit' => $limit
 		];
+
+		if ( !empty( $namespaces ) ) {
+			$params['namespaces'] = implode( ',', $namespaces );
+		}
 
 		if ( $category instanceof Title ) {
 			$params['category'] = $category->getText();
@@ -661,7 +667,7 @@ class MercuryApi {
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = self::processTrendingArticlesData( $rawData, $withImagesOnly );
+			$data = self::processTrendingPagesData( $rawData, $withImagesOnly );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -710,7 +716,7 @@ class MercuryApi {
 		];
 	}
 
-	public function processTrendingArticlesData( $data, bool $withImagesOnly = false ) {
+	public function processTrendingPagesData( $data, bool $withImagesOnly = false ) {
 		if ( !isset( $data['items'] ) || !is_array( $data['items'] ) ) {
 			return null;
 		}
@@ -718,7 +724,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data['items'] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item, $withImagesOnly );
+			$processedItem = $this->processTrendingPagesItem( $item, $withImagesOnly );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -735,7 +741,7 @@ class MercuryApi {
 	 * @param bool $withImagesOnly - if true, skip items without thumbnail
 	 * @return array
 	 */
-	public function processTrendingArticlesItem( $item, bool $withImagesOnly ) {
+	public function processTrendingPagesItem( $item, bool $withImagesOnly ) {
 		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];

@@ -41,6 +41,8 @@ class MercuryApiCategoryHandler {
 	 * @throws NotFoundApiException
 	 */
 	public static function getCategoryPageData( Title $title, $from, int $page, MercuryApi $mercuryApiModel ): array {
+		global $wgContentNamespaces;
+
 		$categoryModel = self::getCategoryModel( $title, $from );
 
 		if ( $categoryModel->getTotalNumberOfMembers() === 0 ) {
@@ -56,7 +58,14 @@ class MercuryApiCategoryHandler {
 				'membersGrouped' => $deprecatedCategoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page ),
 				'pagination' => $categoryModel->getPagination()->toArray(),
 				'totalNumberOfMembers' => $categoryModel->getTotalNumberOfMembers(),
-				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
+				// TODO Remove after SEO-670 is released on mobile-wiki and no cached JS tries to use it anymore
+				'trendingArticles' => $mercuryApiModel->getTrendingPagesData(
+					self::TRENDING_ARTICLES_LIMIT,
+					$title,
+					false,
+					$wgContentNamespaces
+				),
+				'trendingPages' => $mercuryApiModel->getTrendingPagesData(
 					self::TRENDING_ARTICLES_LIMIT,
 					$title,
 					true

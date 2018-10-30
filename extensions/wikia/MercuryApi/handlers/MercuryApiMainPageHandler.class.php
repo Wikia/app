@@ -5,9 +5,16 @@ use Wikia\Logger\WikiaLogger;
 class MercuryApiMainPageHandler {
 
 	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
+		global $wgContentNamespaces;
+
 		$mainPageData = [ ];
 		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null );
-		$trendingArticles = $mercuryApiModel->getTrendingArticlesData();
+		$trendingArticles = $mercuryApiModel->getTrendingPagesData(
+			10,
+			null,
+			false,
+			$wgContentNamespaces
+		);
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 		$wikiDescription = self::getWikiDescription();
