@@ -15,7 +15,8 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'langWikis', WikiFactory::getLanguageWikis() );
 
-		if ( $this->isClosedWiki() ) {
+		$isClosed = $this->isClosedWiki();
+		if ( $isClosed ) {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro-closed' )->escaped() );
 		} else {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro' )->escaped() );
@@ -25,7 +26,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'cnwLink', $createNewWikiLink );
 
-		$this->setVal( 'wikiIsCreatable', ( !$this->isClosedWiki() ||
+		$this->setVal( 'wikiIsCreatable', ( !$isClosed ||
 			( WikiFactory::getFlags( $wgCityId ) & WikiFactory::FLAG_FREE_WIKI_URL ) ) );
 
 		$this->setVal( 'links', [
