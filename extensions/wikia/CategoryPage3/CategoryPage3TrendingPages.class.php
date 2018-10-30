@@ -10,12 +10,15 @@ class CategoryPage3TrendingPages {
 	const THUMBNAIL_WIDTH = 160;
 
 	public static function getTrendingPages( Title $title ) {
+		global $wgContentNamespaces;
+
 		$params = [
 			'abstract' => false,
 			'category' => $title->getText(),
 			'expand' => true,
 			'height' => static::THUMBNAIL_HEIGHT,
 			'limit' => static::LIMIT,
+			'namespaces' => implode( ',', $wgContentNamespaces ),
 			'width' => static::THUMBNAIL_WIDTH,
 		];
 

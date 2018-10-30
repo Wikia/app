@@ -62,8 +62,7 @@ class MercuryApiCategoryHandler {
 				'trendingArticles' => $mercuryApiModel->getTrendingPagesData(
 					self::TRENDING_ARTICLES_LIMIT,
 					$title,
-					false,
-					$wgContentNamespaces
+					false
 				),
 				'trendingPages' => $mercuryApiModel->getTrendingPagesData(
 					self::TRENDING_ARTICLES_LIMIT,

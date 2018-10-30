@@ -643,21 +643,15 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingPagesData(
-		int $limit,
-		Title $category,
-		bool $withImagesOnly,
-		array $namespaces = []
-	) {
+	public function getTrendingPagesData( int $limit, Title $category, bool $withImagesOnly	) {
+		global $wgContentNamespaces;
+
 		$params = [
 			'abstract' => false,
 			'expand' => true,
-			'limit' => $limit
+			'limit' => $limit,
+			'namespaces' => implode( ',', $wgContentNamespaces )
 		];
-
-		if ( !empty( $namespaces ) ) {
-			$params['namespaces'] = implode( ',', $namespaces );
-		}
 
 		if ( $category instanceof Title ) {
 			$params['category'] = $category->getText();
