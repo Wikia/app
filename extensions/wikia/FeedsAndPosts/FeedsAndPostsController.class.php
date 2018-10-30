@@ -1,10 +1,10 @@
 <?php
 
-use Wikia\FeedsAndPosts\JustUpdatedAPIProxy;
+use Wikia\FeedsAndPosts\WikiRecentChangesAPIProxy;
 
 class FeedsAndPostsController extends WikiaController {
-	public function getJustUpdated() {
+	public function getWikiRecentChanges() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setValues( ( new JustUpdatedAPIProxy() )->get() );
+		$this->response->setValues( ( new WikiRecentChangesAPIProxy() )->get() );
 	}
 }
