@@ -2,7 +2,9 @@ FROM nginx:1.14.0
 
 RUN chown -R nginx:nginx /etc/nginx && \
     chown nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx
+    chown -R nginx:nginx /var/log/nginx && \
+    mkdir /var/run/nginx && \
+    chown nginx:nginx /var/run/nginx
 
 ADD docker/base/base.inc /etc/nginx/conf.d/base.inc
 ADD docker/base/nginx.conf /etc/nginx/nginx.conf
