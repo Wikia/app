@@ -171,6 +171,10 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
+#bottomLeaderboardWrapper {
+	text-align: center;
+}
+
 #BOTTOM_LEADERBOARD {
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);

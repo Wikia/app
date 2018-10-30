@@ -49,17 +49,19 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		adSlot.className = 'wikia-ad';
 		adSlot.setAttribute('id', slotName);
 
-		function applyRec() {
-			if (btRec === null) {
-				btRec = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
+		function applyRec(onSuccess) {
+			if (!btRec) {
+				return;
 			}
 
-			if (btRec) {
-				recNode = btRecLoader.duplicateSlot(slotName);
-			}
+			recNode = btRecLoader.duplicateSlot(slotName);
 
-			if (btRec && recNode) {
+			if (recNode) {
 				btRecLoader.triggerScript();
+			}
+
+			if (onSuccess) {
+				onSuccess();
 			}
 		}
 
@@ -77,6 +79,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function wasItEnoughTimeSinceLastRefresh() {
 			var timeDifference = (new Date()) - refreshInfo.lastRefreshTime;
+
 			return timeDifference > refreshInfo.refreshDelay;
 		}
 
@@ -104,12 +107,10 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function showRecirculation() {
 			recirculationElement.style.display = 'block';
-			removeRecNode();
 		}
 
 		function hideRecirculation() {
 			recirculationElement.style.display = 'none';
-			applyRec();
 		}
 
 		function refreshAd(onSuccess) {
@@ -118,16 +119,23 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			});
 		}
 
+		function onSlotFirstLoad() {
+			hideRecirculation();
+			refreshInfo.lastRefreshTime = (new Date()).getTime();
+		}
+
 		swapRecirculationAndAd = throttle(function () {
 			if (shouldSwitchModules(placeHolderElement.offsetTop)) {
 				updateModulesRefreshInformation(placeHolderElement.offsetTop);
 				if (refreshInfo.adVisible) {
 					log(['swapRecirculationAndAd', 'Hide ad, show recirculation '], 'debug', logGroup);
 					adSlot.classList.add('hidden');
+					removeRecNode();
 					showRecirculation();
 				} else {
 					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
 					refreshAd(hideRecirculation);
+					applyRec(hideRecirculation);
 				}
 
 				refreshInfo.adVisible = !refreshInfo.adVisible;
@@ -136,26 +144,28 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		onScroll = throttle(function () {
 			if (startPosition < placeHolderElement.offsetTop && shouldSwitchModules(placeHolderElement.offsetTop)) {
-				updateModulesRefreshInformation(placeHolderElement.offsetTop);
 				log(['checkAndPushAd', 'Enabling floating medrec'], 'debug', logGroup);
+				updateModulesRefreshInformation(placeHolderElement.offsetTop);
+
+				win.removeEventListener('scroll', onScroll);
+				win.addEventListener('scroll', swapRecirculationAndAd);
 
 				placeHolderElement.appendChild(adSlot);
 
-				win.addEventListener('scroll', swapRecirculationAndAd);
-
-				refreshInfo.refreshAdPos = placeHolderElement.offsetTop;
-				// Give add some time to call success. Otherwise swap with recirculation
+				// Give some time to call success. Otherwise swap with recirculation
 				refreshInfo.lastRefreshTime = (new Date()).getTime() + refreshInfo.refreshDelay;
+				refreshInfo.refreshAdPos = placeHolderElement.offsetTop;
+
+				if (btRec === null) {
+					btRec = babDetection.isBlocking() && wadRecRunner.isEnabled('bt');
+				}
 
 				win.adslots2.push({
 					slotName: slotName,
-					onSuccess: function () {
-						hideRecirculation();
-						refreshInfo.lastRefreshTime = (new Date()).getTime();
-					}
+					onSuccess: onSlotFirstLoad
 				});
 
-				win.removeEventListener('scroll', onScroll);
+				applyRec(onSlotFirstLoad);
 			}
 		});
 
