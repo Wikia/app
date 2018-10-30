@@ -20,10 +20,7 @@ class LanguageWikisIndexHooks {
 			return;
 		}
 
-		if ( !self::handleRequest( $requestUrl ) ) {
-			// for unknown urls on empty domain root, return the 404 code
-			http_response_code( 404 );
-		}
+		self::handleRequest( $requestUrl, true );
 		exit( 0 );
 	}
 
@@ -53,9 +50,10 @@ class LanguageWikisIndexHooks {
 	 * page, it renders the special page with the list of language wikis.
 	 *
 	 * @param $requestUrl
+	 * @param $redirectAll if true, all unknown urls will be redirected to index page. in that case true is returned.
 	 * @return bool True when the requestUrl was recognized and correct http response was sent
 	 */
-	private static function handleRequest( $requestUrl ) {
+	private static function handleRequest( $requestUrl, $redirectAll = false ) {
 		global $wgTitle, $wgOut, $wgRequest, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
 
 		switch ( parse_url( $requestUrl, PHP_URL_PATH ) ) {
@@ -79,6 +77,11 @@ class LanguageWikisIndexHooks {
 				SpecialPageFactory::executePath( $wgTitle, $context );
 				$wgOut->output();
 				return true;
+			default:
+				if ( $redirectAll ) {
+					$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE , 302 );
+					return true;
+				}
 		}
 		return false;
 	}
