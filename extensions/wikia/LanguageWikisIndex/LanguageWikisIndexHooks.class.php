@@ -43,7 +43,7 @@ class LanguageWikisIndexHooks {
 		if ( self::isEmptyDomainWithLanguageWikis() && $path === self::WIKIS_INDEX_PAGE ) {
 			$beforeWikiaPageHtml .= Html::element(
 				'header',
-				[ 'class' => 'wds-community-header' ],
+				[ 'class' => 'language-wikis-index-header' ],
 				''
 			);
 		}
