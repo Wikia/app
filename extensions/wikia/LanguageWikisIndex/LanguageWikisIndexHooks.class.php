@@ -61,8 +61,8 @@ class LanguageWikisIndexHooks {
 	}
 
 	/**
-	 * Handle wikis index page. For domain root, it redirects to the index page location. On the index page,
-	 * it renders the special page with the list of language wikis.
+	 * Handles request on empty/closed wikis. For domain root, it redirects to the index page location. On the index
+	 * page, it renders the special page with the list of language wikis.
 	 *
 	 * @param $requestUrl
 	 * @return bool True when the requestUrl was recognized and correct http response was sent
@@ -70,7 +70,7 @@ class LanguageWikisIndexHooks {
 	private static function handleRequest( $requestUrl ) {
 		global $wgTitle, $wgOut, $wgRequest, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
 
-		switch( parse_url( $requestUrl, PHP_URL_PATH ) ) {
+		switch ( parse_url( $requestUrl, PHP_URL_PATH ) ) {
 			case '/':
 				// use 302, maybe at some point an English wiki gets created
 				$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE , 302 );
