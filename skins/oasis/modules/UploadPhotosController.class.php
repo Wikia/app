@@ -15,18 +15,15 @@ class UploadPhotosController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 	}
-
-	/**
-	 * This method hacks the normal nirvana dispatcher chain because of AIM and application/json mimetype incompatibility
-	 * Talk to Hyun or Inez
-	 */
+	
 	public function upload() {
-		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
 
-		if(!$wgUser->isLoggedIn()) {
-			echo 'Not logged in';
-			exit();
+		$this->response->setContentType( 'text/plain; charset=utf-8' );
+
+		if ( !$wgUser->isLoggedIn() ) {
+			$this->response->setBody( 'Not logged in' );
+			return;
 		}
 
 		$this->checkWriteRequest();
@@ -86,12 +83,7 @@ class UploadPhotosController extends WikiaController {
 			}
 		}
 
-		echo json_encode($this->getResponse()->getData());
-		header('content-type: text/plain; charset=utf-8');
-
-		wfProfileOut(__METHOD__);
-
-		exit();	//end hack
+		$this->response->setBody( json_encode($this->getResponse()->getData() ) );
 	}
 
 	public function executeExistsWarning($params) {

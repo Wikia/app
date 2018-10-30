@@ -290,7 +290,7 @@ class DataWarehouseEventProducer {
 	}
 
 	public function setPageNamespace ( $page_namespace ) {
-		$this->mParams['pageNamespace'] = $page_namespace;
+		$this->mParams['pageNamespace'] = intval( $page_namespace );
 	}
 
 	public function setRevisionId ( $revision_id  ) {

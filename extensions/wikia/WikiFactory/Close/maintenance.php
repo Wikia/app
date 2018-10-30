@@ -139,9 +139,13 @@ class CloseWikiMaintenance {
 								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
 							} catch ( S3Exception $ex ) {
 								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun", [
-									'exception' => $ex->getMessage()
+									'exception' => $ex->getMessage(),
+									'dump_size_bytes' => filesize( $source ),
 								]);
-								die( 1 );
+								unlink( $source );
+
+								// SUS-6077 | move to a next wiki instead of failing the entire process
+								continue;
 							}
 
 							$this->info( "{$source} copied to S3 Amazon" );
@@ -157,6 +161,9 @@ class CloseWikiMaintenance {
 								'city_id' => $cityid,
 							]
 						);
+
+						// SUS-6077 | move to a next wiki instead of failing the entire process
+						continue;
 					}
 				}
 			}
