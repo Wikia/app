@@ -79,6 +79,7 @@
 				color: $color-text;
 				font-weight: $wds-font-weight-bold;
 				margin-top: 5px;
+				word-break: break-word;
 			}
 		}
 
@@ -187,6 +188,7 @@
 
 		&__member-link {
 			padding-left: 12px;
+			word-break: break-word;
 		}
 
 		&__pagination {
