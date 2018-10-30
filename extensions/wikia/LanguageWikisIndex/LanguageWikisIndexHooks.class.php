@@ -38,6 +38,25 @@ class LanguageWikisIndexHooks {
 		return true;	// proceed with rendering the closed wiki page
 	}
 
+	public static function onGetHTMLBeforeWikiaPage( &$beforeWikiaPageHtml ) {
+		global $wgCityId;
+		$path = parse_url( RequestContext::getMain()->getRequest()->getRequestURL(), PHP_URL_PATH );
+		if (
+			(
+				self::isEmptyDomainWithLanguageWikis() ||
+				( !WikiFactory::isPublic( $wgCityId ) && count( WikiFactory::getLanguageWikis() ) > 0 )
+			)
+			&& $path === self::WIKIS_INDEX_PAGE
+		) {
+			$beforeWikiaPageHtml .= Html::element(
+				'header',
+				[ 'class' => 'language-wikis-index-header' ],
+				''
+			);
+		}
+		return true;
+	}
+
 	public static function isEmptyDomainWithLanguageWikis() {
 		global $wgCityId;
 		// we recognize an empty domain root with orphaned language path wikis by "fake" city id set by

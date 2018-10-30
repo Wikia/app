@@ -8,11 +8,31 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-
 		$this->specialPage->setHeaders();
 
-		$this->response->setTemplateEngine( \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		Wikia::addAssetsToOutput( 'language_wikis_index_scss' );
 
+		$this->setVal( 'langWikis', WikiFactory::getLanguageWikis() );
+
+		if ( $this->isClosedWiki() ) {
+			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro-closed' )->escaped() );
+		} else {
+			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro' )->escaped() );
+		}
+
+		$createNewWikiLink = GlobalTitle::newFromText( 'CreateNewWiki', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID )->getFullURL();
+
+		$this->setVal( 'cnwLink', $createNewWikiLink );
+
+		$this->setVal( 'links', [
+			'cnw' => $createNewWikiLink,
+			'fandom' => '//fandom.wikia.com',
+			'fandom-university' => GlobalTitle::newFromText( 'FANDOM University', NS_MAIN, Wikia::COMMUNITY_WIKI_ID )->getFullURL(),
+		] );
 	}
 
+	private function isClosedWiki() {
+		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() &&
+			!WikiFactory::isPublic( $wgCityId );
+	}
 }

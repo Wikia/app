@@ -588,7 +588,7 @@ class WikiFactory {
 
 				$dbResult = $dbr->select(
 					[ 'city_list' ],
-					[ 'city_id', 'city_url', 'city_dbname' ],
+					[ 'city_id', 'city_url', 'city_dbname', 'city_lang', 'city_title' ],
 					$where,
 					__METHOD__
 				);
@@ -599,6 +599,8 @@ class WikiFactory {
 						'city_id' => $row->city_id,
 						'city_url' => $row->city_url,
 						'city_dbname' => $row->city_dbname,
+						'city_lang' => $row->city_lang,
+						'city_title' => $row->city_title,
 					];
 				}
 				$dbr->freeResult( $dbResult );
