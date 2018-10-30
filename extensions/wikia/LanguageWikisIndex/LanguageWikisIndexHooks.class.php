@@ -57,6 +57,14 @@ class LanguageWikisIndexHooks {
 		return true;
 	}
 
+	public static function onWikiaCanonicalHref( &$canonicalUrl ) {
+		if ( RequestContext::getMain()->getTitle()->isSpecial( 'LanguageWikisIndex' ) ) {
+			$canonicalUrl = wfExpandUrl( self::WIKIS_INDEX_PAGE );
+		}
+
+		return true;
+	}
+
 	public static function isEmptyDomainWithLanguageWikis() {
 		global $wgCityId;
 		// we recognize an empty domain root with orphaned language path wikis by "fake" city id set by

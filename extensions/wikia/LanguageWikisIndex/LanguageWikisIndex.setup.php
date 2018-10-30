@@ -15,3 +15,4 @@ if ( LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() ) {
 
 $wgHooks['ClosedWikiHandler'][] = 'LanguageWikisIndexHooks::onClosedWikiPage';
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'LanguageWikisIndexHooks::onGetHTMLBeforeWikiaPage';
+$wgHooks['WikiaCanonicalHref'][] = 'LanguageWikisIndexHooks::onWikiaCanonicalHref';
