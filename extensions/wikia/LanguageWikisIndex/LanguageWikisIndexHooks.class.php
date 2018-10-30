@@ -39,8 +39,15 @@ class LanguageWikisIndexHooks {
 	}
 
 	public static function onGetHTMLBeforeWikiaPage( &$beforeWikiaPageHtml ) {
+		global $wgCityId;
 		$path = parse_url( RequestContext::getMain()->getRequest()->getRequestURL(), PHP_URL_PATH );
-		if ( self::isEmptyDomainWithLanguageWikis() && $path === self::WIKIS_INDEX_PAGE ) {
+		if (
+			(
+				self::isEmptyDomainWithLanguageWikis() ||
+				( !WikiFactory::isPublic( $wgCityId ) && count( WikiFactory::getLanguageWikis() ) > 0 )
+			)
+			&& $path === self::WIKIS_INDEX_PAGE
+		) {
 			$beforeWikiaPageHtml .= Html::element(
 				'header',
 				[ 'class' => 'language-wikis-index-header' ],

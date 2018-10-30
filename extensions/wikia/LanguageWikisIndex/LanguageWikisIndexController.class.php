@@ -8,15 +8,13 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgIncludeClosedWikiHandler;
-
 		$this->specialPage->setHeaders();
 
 		Wikia::addAssetsToOutput( 'language_wikis_index_scss' );
 
 		$this->setVal( 'langWikis', WikiFactory::getLanguageWikis() );
 
-		if ( !empty( $wgIncludeClosedWikiHandler ) ) {
+		if ( $this->isClosedWiki() ) {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro-closed' )->escaped() );
 		} else {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro' )->escaped() );
@@ -33,4 +31,9 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 		] );
 	}
 
+	private function isClosedWiki() {
+		global $wgCityId;
+		return $wgCityId !== WikiFactory::LANGUAGE_WIKIS_INDEX &&
+			!WikiFactory::isPublic( $wgCityId );
+	}
 }
