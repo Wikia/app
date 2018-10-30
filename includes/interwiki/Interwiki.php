@@ -165,6 +165,9 @@ class Interwiki {
 
 		$row = $db->fetchRow( $db->select( 'interwiki', '*', array( 'iw_prefix' => $prefix ),
 			__METHOD__ ) );
+		// Wikia change - begin
+		Hooks::run( 'InterwikiLoadBeforeCache', [ &$row ] );
+		// Wikia change - end
 		$iw = Interwiki::loadFromArray( $row );
 		if ( $iw ) {
 			$mc = array(
@@ -340,7 +343,7 @@ class Interwiki {
 			$url = str_replace( "$1", wfUrlencode( $title ), $url );
 		}
 
-		if ( wfHttpsAllowedForURL( $url ) ) {
+		if ( strpos( $url, 'http://' ) === 0 && wfHttpsAllowedForURL( $url ) ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 

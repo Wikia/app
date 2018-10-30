@@ -240,4 +240,18 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			label: data.socialNetwork
 		});
 	});
+
+	playerInstance.on('playerResumedByBrowserTabSwitch', function () {
+		track({
+			action: 'view',
+			label: 'player-resumed-by-browser-tab-switch'
+		});
+	});
+
+	playerInstance.on('playerPausedByBrowserTabSwitch', function () {
+		track({
+			action: 'view',
+			label: 'player-paused-by-browser-tab-switch'
+		});
+	});
 }

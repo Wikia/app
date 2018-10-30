@@ -45,6 +45,7 @@
 	}
 
 	&__close {
+		box-sizing: content-box;
 		cursor: pointer;
 		padding: 18px;
 	}

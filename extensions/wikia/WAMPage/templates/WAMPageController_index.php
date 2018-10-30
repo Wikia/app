@@ -12,7 +12,7 @@
 					$sWikiImageUrl = Sanitizer::encodeAttribute( $wiki['wiki_image'] );
 					$sWikiVerticalName = wfMessage( $verticalsNamesMsgKeys[$wiki['vertical_id']] )->escaped();
 			?>
-				<a href="http://<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
+				<a href="<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
 					<figure class="vertical-bg-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $wiki['vertical_id'] ] ) ?>">
 						<? if( !empty( $sWikiImageUrl ) ): ?>
 							<img src="<?= $sWikiImageUrl ?>" alt="<?= $sWikiTitle ?>" title="<?= $sWikiTitle ?>" />
@@ -103,7 +103,7 @@
 							<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
 						</td>
 						<td><?=$wiki['peak_vertical_wam_rank']?></td>
-						<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
+						<td><a href="<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 						<? if ( !$isSingleVertical ) : ?>
 							<td><?=$wiki['vertical_name']?></td>
 							<td><?=$wiki['vertical_wam_rank']?></td>

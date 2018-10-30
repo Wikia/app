@@ -10,10 +10,6 @@
 		position: relative;
 	}
 
-	&__toggle-chevron:not(:only-child) {
-		margin-left: 5px;
-	}
-
 	&__content {
 		background-color: $wds-color-white;
 		border: $wds-dropdown-border-width solid $wds-color-faint-gray;

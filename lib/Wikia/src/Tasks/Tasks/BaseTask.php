@@ -145,7 +145,7 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$this->info( 'BaseTask::queue', [
+		$this->info( 'Queueing task to be published: ' . get_class( $this ), [
 			'task' => get_class( $this ),
 			'caller' => wfGetCallerClassMethod( __CLASS__ ),
 			'backtrace' => new \Exception()

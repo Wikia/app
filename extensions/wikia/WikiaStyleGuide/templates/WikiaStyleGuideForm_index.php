@@ -76,12 +76,6 @@
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
 							<? break; ?>
-							<? case 'submit': ?>
-								<input type="submit" <?= $inputAttributes ?>>
-							<? break; ?>
-							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>>
-								<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
 							<? break; ?>
@@ -106,6 +100,9 @@
 							<? case 'text': ?>
 							<? case 'url': ?>
 							<? case 'email': ?>
+							<? case 'submit': ?>
+							<? case 'checkbox': ?>
+							<? case 'radio': ?>
 								<input type="<?= $type ?>" <?= $inputAttributes ?>>
 							<? break; ?>
 							<? case 'textarea': ?>

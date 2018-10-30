@@ -5,8 +5,10 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 	var mocks = {
 		adEngineBridge: {
-			getSamplingResults: function () {
-				return [];
+			geo: {
+				getSamplingResults: function () {
+					return [];
+				}
 			}
 		},
 		adTracker: {

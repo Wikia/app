@@ -2,7 +2,12 @@
 // def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
 def sandbox = params.sandbox_name;
 def datacenter = params.datacenter
-def environment = "sandbox"
+def environment = params.sandbox_name.split('-')[0]
+def replicas = 1
+
+if (environment == 'preview') {
+	replicas = 4
+}
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -101,8 +106,8 @@ node("docker-daemon") {
 				imageExists = true
 			}
 
-            if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:372bb48")
+			if (!imageExists) {
+					sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:da4390f")
 
 				// SUS-5284 - make the image a bit smaller
 				sh("cp docker/.dockerignore ..")
@@ -143,7 +148,8 @@ EOL""")
 				'SANDBOX_ENVIRONMENT': environment,
 				'SANDBOX_DATACENTER': datacenter,
 				'APP_VERSION': params.app_branch,
-				'CONFIG_VERSION': params.config_branch
+				'CONFIG_VERSION': params.config_branch,
+				'REPLICAS': replicas
 			])
 
 			sh("""cat > docker/sandbox/k8s.yaml <<EOL
