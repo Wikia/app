@@ -9,7 +9,7 @@ $messages['en'] = [
 	'languagewikisindex-list-intro' => 'This is the list of communities under this domain',
 	'languagewikisindex-cnw-question' => 'Do you want to start the wiki under the domain?',
 	'languagewikisindex-cnw-link-text' => 'Create it now',
-	'languagewikisindex-links-cnw' => 'Create a Wiki',
+	'languagewikisindex-links-cnw' => 'Start a Wiki',
 	'languagewikisindex-links-fandom' => 'Check out FANDOM.com',
 	'languagewikisindex-links-fandom-university' => 'FANDOM University',
 ];
