@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function removeRecNode() {
 			var recNode = doc.querySelector(recSelector);
-
+console.log(recSelector, recNode);
 			if (recNode) {
 				recNode.style.display = 'none';
 				recNode.remove();
