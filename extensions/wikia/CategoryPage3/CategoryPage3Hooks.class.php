@@ -142,9 +142,6 @@ class CategoryPage3Hooks {
 		$categoryNsText = $wgContLang->getNsText( NS_CATEGORY );
 
 		// Not a category
-		// FIXME can $path be encoded here?
-		// If so, should we account for any case in which : might be %3A
-		// (maybe just by unencoding $path for the comparison)?
 		if ( strpos( $path, "${categoryNsText}:" ) === false ) {
 			return true;
 		}
