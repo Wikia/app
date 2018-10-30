@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 			},
 			INCONTENT_BOXAD_1: {
 				uid: '5bbe13967e-188',
-				style: '',
+				style: 'z-index:100;',
 				size: {
 					width: 300,
 					height: 250
