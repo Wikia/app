@@ -8,12 +8,20 @@ class LanguageWikisIndexHooks {
 	 * Extension setup function, called on every request
 	 */
 	public static function onExtensionFunctions() {
+		global $wgRequest, $wgCityId;
+		$requestUrl = $wgRequest->getRequestURL();
+
 		if ( !self::isEmptyDomainWithLanguageWikis() ) {
+			// on active wikis the `/language-wikis` path should redirect to the main page
+			if ( parse_url( $requestUrl, PHP_URL_PATH ) === self::WIKIS_INDEX_PAGE &&
+				WikiFactory::isPublic( $wgCityId ) ) {
+
+				$mainPage = Title::newMainPage();
+				self::redirect( $mainPage->getFullURL() );
+				exit( 0 );
+			}
 			return;
 		}
-		global $wgRequest;
-
-		$requestUrl = $wgRequest->getRequestURL();
 
 		// allow some other extensions (like robots) to render their content instead
 		if ( !Hooks::run( 'ShowLanguageWikisIndex', [ $requestUrl ] ) ) {
@@ -81,11 +89,11 @@ class LanguageWikisIndexHooks {
 	 * @return bool True when the requestUrl was recognized and correct http response was sent
 	 */
 	private static function handleRequest( $requestUrl, $redirectAll = false ) {
-		global $wgTitle, $wgOut, $wgRequest, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
+		global $wgTitle, $wgOut, $wgSuppressCommunityHeader, $wgSuppressPageHeader;
 
 		switch ( parse_url( $requestUrl, PHP_URL_PATH ) ) {
 			case '/':
-				$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, true, 301 );
+				self::redirect( self::WIKIS_INDEX_PAGE );
 				return true;
 			case self::WIKIS_INDEX_PAGE:
 				// render the Special::LanguageWikisIndex page
@@ -106,10 +114,16 @@ class LanguageWikisIndexHooks {
 				return true;
 			default:
 				if ( $redirectAll ) {
-					$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, true, 301 );
+					self::redirect( self::WIKIS_INDEX_PAGE );
 					return true;
 				}
 		}
 		return false;
+	}
+
+	private static function redirect( $target ) {
+		global $wgRequest;
+		$wgRequest->response()->header( 'Location: ' . $target, true, 301 );
+		header( 'X-Redirected-By: LanguageWikisIndex' );
 	}
 }

@@ -8,8 +8,8 @@ $wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
 
 $wgExtensionMessagesFiles['LanguageWikisIndex'] = __DIR__ . '/LanguageWikisIndex.i18n.php';
 
+$wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
 if ( LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() ) {
-	$wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
 	$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
 }
 
