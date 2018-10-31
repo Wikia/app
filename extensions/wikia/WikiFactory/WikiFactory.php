@@ -1311,8 +1311,6 @@ class WikiFactory {
 				return "$protocol//" . $server . '.preview.' . $baseDomain . $address;
 			case WIKIA_ENV_VERIFY:
 				return "$protocol//" . $server . '.verify.' . $baseDomain . $address;
-			case WIKIA_ENV_STABLE:
-				return "$protocol//" . $server . '.stable.' . $baseDomain . $address;
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s//%s.%s%s', $protocol, $server, $baseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
