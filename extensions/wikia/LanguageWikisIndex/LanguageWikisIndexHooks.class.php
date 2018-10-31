@@ -89,6 +89,7 @@ class LanguageWikisIndexHooks {
 				return true;
 			case self::WIKIS_INDEX_PAGE:
 				// render the Special::LanguageWikisIndex page
+				$wgOut->setStatusCode( 200 );
 				$wgOut->disallowUserJs();
 
 				$wgTitle = SpecialPage::getTitleFor( 'LanguageWikisIndex' );
