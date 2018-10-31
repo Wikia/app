@@ -40,33 +40,43 @@ class WikiRecentChangesAPIProxy {
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];
 		$articlesWithMajorChange = [];
-		$titles = [];
+		$titlesMap = [];
 		$mainPageId = \Title::newMainPage()->getArticleID();
 
 		foreach ( $articles as &$article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
 			$title = $article['title'];
-			$resultArticle = [
-				'title' => $title,
-			];
 
 			// filter out main page
-			if ( $article['pageid'] !== $mainPageId && empty( $titles[$title] ) ) {
+			if ( $article['pageid'] !== $mainPageId && empty( $titlesMap[$title] ) ) {
 				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
-					$articlesWithMajorChange[] = $resultArticle;
+					$articlesWithMajorChange[] = $article;
 				} else {
-					$articlesWithMinorChange[] = $resultArticle;
+					$articlesWithMinorChange[] = $article;
 				}
-				$titles[$title] = true;
+				$titlesMap[$title] = true;
 			}
 		}
 
-		if ( count( $articlesWithMajorChange ) >= 4 ) {
-			return array_slice( $articlesWithMajorChange, 0, self::LIMIT );
+		$resultArticles = array_slice( $articlesWithMajorChange, 0, self::LIMIT );
+
+		if ( count( $resultArticles ) < 4 ) {
+			$resultArticles =
+				array_slice( array_merge( $articlesWithMajorChange, $articlesWithMinorChange ), 0,
+					self::LIMIT );
 		}
 
-		return array_slice( array_merge( $articlesWithMajorChange, $articlesWithMinorChange ), 0,
-			self::LIMIT );
+		$resultTitles =
+			\TitleBatch::newFromIds( array_map( function ( $article ) {
+				return $article['pageid'];
+			}, $resultArticles ), DB_SLAVE );
+
+		return array_map( function ( $title ) {
+			return [
+				'title' => $title->getText(),
+				'url' => $title->getLocalURL(),
+			];
+		}, $resultTitles );
 	}
 
 	private function getRecentChanges() {
