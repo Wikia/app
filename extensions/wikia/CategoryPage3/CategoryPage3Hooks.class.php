@@ -30,7 +30,10 @@ class CategoryPage3Hooks {
 			$title = Title::newFromText( $categoryTitle, NS_CATEGORY );
 
 			CategoryPage3CacheHelper::setTouched( $title );
-			Wikia::purgeSurrogateKey( CategoryPage3CacheHelper::getSurrogateKey( $title ) );
+			Wikia::purgeSurrogateKey(
+				CategoryPage3CacheHelper::getSurrogateKey( $title ),
+				'mobile_wiki'
+			);
 		}
 
 		return true;
