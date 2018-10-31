@@ -11,6 +11,8 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 		global $wgCityId;
 		$this->specialPage->setHeaders();
 
+		$this->getOutput()->setRobotPolicy( 'noindex,follow' );
+
 		Wikia::addAssetsToOutput( 'language_wikis_index_scss' );
 
 		$this->setVal( 'langWikis', WikiFactory::getLanguageWikis() );
