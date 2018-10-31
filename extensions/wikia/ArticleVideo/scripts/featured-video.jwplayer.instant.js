@@ -5,10 +5,9 @@ require([
 	'wikia.trackingOptIn',
 	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
-	'wikia.articleVideo.featuredVideo.ads',
+	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
@@ -20,7 +19,6 @@ require([
 	trackingOptIn,
 	abTest,
 	adContext,
-	adJwplayerTracker,
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoAds,
@@ -55,7 +53,7 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams, slotTargeting);
+		featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
 		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -67,21 +65,11 @@ require([
 		});
 	}
 
-	function trackSetup(willAutoplay, willMute) {
-		adJwplayerTracker.track({
-			adProduct: 'featured-video',
-			slotName: featuredVideoSlotName,
-			videoId: videoDetails.playlist,
-			withAudio: !willMute,
-			withCtp: !willAutoplay
-		}, 'setup');
-	}
-
 	function setupPlayer() {
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		trackSetup(willAutoplay, willMute);
+		featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
 
 		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
