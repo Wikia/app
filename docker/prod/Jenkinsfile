@@ -323,8 +323,8 @@ node("docker-daemon") {
       build job: 'tag-jira-tickets', parameters: [
         string(name: 'app_name', value: 'app'),
         string(name: 'env', value: 'prod'),
-        string(name: 'previous_release', value: prevAppVersion),
-        string(name: 'current_release', value: params.app),
+        string(name: 'previous_release', value: currentAppVersion),
+        string(name: 'current_release', value: nextAppVersion),
         [$class: 'LabelParameterValue', name: 'node', label: 'linux']
       ],
       wait: false
@@ -332,7 +332,7 @@ node("docker-daemon") {
 
     stage('Trigger tests') {
       build job: 'app-prod-push-event', parameters: [
-        string(name: 'release', value: params.app),
+        string(name: 'release', value: nextAppVersion),
         string(name: 'datacenter', value: 'sjc')
       ],
         wait: false
