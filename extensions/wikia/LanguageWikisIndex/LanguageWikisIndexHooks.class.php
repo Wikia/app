@@ -85,7 +85,7 @@ class LanguageWikisIndexHooks {
 
 		switch ( parse_url( $requestUrl, PHP_URL_PATH ) ) {
 			case '/':
-				$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, 301 );
+				$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, true, 301 );
 				return true;
 			case self::WIKIS_INDEX_PAGE:
 				// render the Special::LanguageWikisIndex page
@@ -105,7 +105,7 @@ class LanguageWikisIndexHooks {
 				return true;
 			default:
 				if ( $redirectAll ) {
-					$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, 301 );
+					$wgRequest->response()->header( 'Location: ' . self::WIKIS_INDEX_PAGE, true, 301 );
 					return true;
 				}
 		}
