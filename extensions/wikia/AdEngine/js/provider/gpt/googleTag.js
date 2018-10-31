@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function dispatchEvent(event, methodName) {
 		var slot,
-			slotName = adSlot.getShortSlotName(event.slot.getName());
+			slotName = adSlot.getShortSlotName(event.slot.getAdUnitPath());
 
 		log(['dispatchEvent', event], log.levels.info, logGroup);
 		slot = slotRegistry.get(slotName);
