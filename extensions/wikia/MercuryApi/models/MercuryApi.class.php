@@ -96,7 +96,7 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
@@ -184,16 +184,9 @@ class MercuryApi {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
 		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
 
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
-
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'defaultSkin' => $wgDefaultSkin,
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
