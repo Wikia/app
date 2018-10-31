@@ -32,7 +32,7 @@ class CategoryPage3Hooks {
 			CategoryPage3CacheHelper::setTouched( $title );
 			Wikia::purgeSurrogateKey(
 				CategoryPage3CacheHelper::getSurrogateKey( $title ),
-				'mobile_wiki'
+				'mercury'
 			);
 		}
 
