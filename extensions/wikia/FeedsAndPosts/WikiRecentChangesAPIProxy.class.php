@@ -40,22 +40,24 @@ class WikiRecentChangesAPIProxy {
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];
 		$articlesWithMajorChange = [];
+		$titles = [];
 		$mainPageId = \Title::newMainPage()->getArticleID();
 
 		foreach ( $articles as &$article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
-
+			$title = $article['title'];
 			$resultArticle = [
-				'title' => $article['title'],
+				'title' => $title,
 			];
 
 			// filter out main page
-			if ( $article['pageid'] !== $mainPageId ) {
+			if ( $article['pageid'] !== $mainPageId && empty( $titles[$title] ) ) {
 				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
 					$articlesWithMajorChange[] = $resultArticle;
 				} else {
 					$articlesWithMinorChange[] = $resultArticle;
 				}
+				$titles[$title] = true;
 			}
 		}
 
