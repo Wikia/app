@@ -1,8 +1,5 @@
 FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
-ENV WIKIA_DATACENTER="sjc"
-ENV WIKIA_ENVIRONMENT="prod"
-
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
 
