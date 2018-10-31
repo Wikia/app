@@ -4,7 +4,7 @@
 class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'LanguageWikisIndex' );
+		parent::__construct( 'LanguageWikisIndex', '', false );
 	}
 
 	public function index() {
