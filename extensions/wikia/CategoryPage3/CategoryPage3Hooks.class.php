@@ -20,17 +20,17 @@ class CategoryPage3Hooks {
 	/**
 	 * @param $categoryInserts
 	 * @param $categoryDeletes
-	 * @param $title
 	 * @return bool
 	 * @throws MWException
 	 */
-	public static function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $title ): bool {
+	public static function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes/*, $title*/ ): bool {
 		$categories = $categoryInserts + $categoryDeletes;
 
 		foreach ( array_keys( $categories ) as $categoryTitle ) {
 			$title = Title::newFromText( $categoryTitle, NS_CATEGORY );
 
 			CategoryPage3CacheHelper::setTouched( $title );
+			Wikia::purgeSurrogateKey( CategoryPage3CacheHelper::getSurrogateKey( $title ) );
 		}
 
 		return true;

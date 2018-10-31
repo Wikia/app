@@ -23,6 +23,10 @@ class CategoryPage3CacheHelper {
 		);
 	}
 
+	public static function getSurrogateKey( Title $title ): string {
+		return  Wikia::surrogateKey( 'category-page3-' . $title->getArticleID() );
+	}
+
 	private static function getKey( Title $title ) {
 		$key = wfMemcKey( 'category_page3_touched', md5( $title->getDBKey() ) );
 		return $key;

@@ -248,8 +248,6 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
-		$cacheValidity = WikiaResponse::CACHE_STANDARD;
-
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [
@@ -366,12 +364,7 @@ class MercuryApiController extends WikiaController {
 								$this->mercuryApi
 							);
 
-							// We don't cache subsequent pages, because there is no good way to purge them
-							// TODO remove this when icache supports surrogate keys (OPS-10115)
-							if ( $deprecatedCategoryMembersPage > 1 || !empty( $categoryMembersFrom ) ) {
-								$cacheValidity = WikiaResponse::CACHE_DISABLED;
-							}
-
+							Wikia::setSurrogateKeysHeaders( CategoryPage3CacheHelper::getSurrogateKey( $title ) );
 							break;
 						case NS_FILE:
 							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
@@ -413,7 +406,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( $cacheValidity );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'data', $data );
 	}
 
@@ -464,6 +457,7 @@ class MercuryApiController extends WikiaController {
 			$from = MercuryApiCategoryHandler::getCategoryMembersFromFromRequest( $this->request );
 			$page = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request );
 			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $from, $page );
+			Wikia::setSurrogateKeysHeaders( CategoryPage3CacheHelper::getSurrogateKey( $title ) );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -480,9 +474,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		// We don't cache it, because there is no easy way to purge all pages
-		// TODO start caching when icache supports surrogate keys (OPS-10115)
-		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'data', $data );
 	}
 
