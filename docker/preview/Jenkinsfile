@@ -334,6 +334,10 @@ node("docker-daemon") {
       }
     }
 
+    stage('Create selenium-tests preview branch') {
+      build 'create-preview-test-run'
+    }
+
     stage('Tag Jira tickets') {{
       build job: 'tag-jira-tickets', parameters: [
           string(name: 'app_name', value: 'app'),

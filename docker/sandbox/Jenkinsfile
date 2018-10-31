@@ -2,7 +2,6 @@
 // def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
 def sandbox = params.sandbox_name;
 def datacenter = params.datacenter
-def environment = params.sandbox_name.split('-')[0]
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -29,7 +28,7 @@ node("docker-daemon") {
     try {
       withDockerContainer(kubectlImage) {
         deploymentInfo = sh(
-          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-sandbox-" +
           sandbox
           + " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
           returnStdout: true
@@ -39,9 +38,9 @@ node("docker-daemon") {
       def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
       def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
 
-      println("Updating sandbox ${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
+      println("Updating sandbox sandbox-${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
     } catch (exc) {
-      println("Deploying new sandbox named ${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
+      println("Deploying new sandbox named sandbox-${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
     }
   }
 
@@ -146,8 +145,8 @@ node("docker-daemon") {
       def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
       def k8s = render(template, [
         'IMAGE_TAG': imageTag,
-        'SANDBOX_NAME': sandbox,
-        'SANDBOX_ENVIRONMENT': environment,
+        'SANDBOX_NAME': 'sandbox-' + sandbox,
+        'SANDBOX_ENVIRONMENT': 'sandbox',
         'SANDBOX_DATACENTER': datacenter,
         'APP_VERSION': params.app_branch,
         'CONFIG_VERSION': params.config_branch,
@@ -163,7 +162,7 @@ EOL""")
 
     withDockerContainer(kubectlImage) {
       sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
+      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-sandbox-'${sandbox}'")
     }
   }
 
@@ -179,6 +178,6 @@ EOL""")
       color = "#36a64f"
     }
 
-    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"sandbox-${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
   }
 }
