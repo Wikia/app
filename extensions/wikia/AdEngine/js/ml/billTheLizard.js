@@ -81,6 +81,10 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
+			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (query) {
+				pageInfoTracker.trackProp('btl_request', query);
+			});
+
 			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
 					ready = true;
@@ -88,7 +92,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 					var rabbitPropValue = serialize();
 
-					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
+					if (rabbitPropValue) {
 						pageInfoTracker.trackProp('btl', rabbitPropValue);
 					}
 				}, function () {
