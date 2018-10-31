@@ -2664,8 +2664,7 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-// TODO set me back to false
-$wgEnableFeedsAndPostsExt = true;
+$wgEnableFeedsAndPostsExt = false;
 
 /**
  * Enable FileInfoFunctions extension.
