@@ -143,6 +143,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
 		context.rabbits = context.rabbits || {};
+		context.templates = context.templates || {};
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
@@ -239,6 +240,8 @@ define('ext.wikia.adEngine.adContext', [
 				'BOTTOM_LEADERBOARD'
 			]
 		};
+
+		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
