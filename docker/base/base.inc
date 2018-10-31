@@ -39,7 +39,7 @@ rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?wiki/(.*)" /index.php?title=$1 brea
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/?)?$" /index.php break;
 
 # handle cachebuster URLs and default favicon on devboxes and local machines
-rewrite ^/(__cb\d+/)?(skins|resources|extensions)/(.+) /$2/$3 break;
+rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?(__cb\d+/)?(skins|resources|extensions)/(.+)" /$2/$3 break;
 rewrite ^/favicon.ico /skins/common/images/favicon.ico break;
 
 # filter out unwanted directories

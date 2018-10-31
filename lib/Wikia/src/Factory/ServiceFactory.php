@@ -29,6 +29,9 @@ class ServiceFactory {
 	/** @var RabbitFactory $rabbitFactory */
 	private $rabbitFactory;
 
+	/** @var SwiftSyncFactory $swiftSyncFactory */
+	private $swiftSyncFactory;
+
 	public function heliosFactory(): HeliosFactory {
 		if ( $this->heliosFactory === null ) {
 			$this->heliosFactory = new HeliosFactory( $this );
@@ -91,6 +94,14 @@ class ServiceFactory {
 		}
 
 		return $this->rabbitFactory;
+	}
+
+	public function swiftSyncFactory(): SwiftSyncFactory {
+		if ( $this->swiftSyncFactory === null ) {
+			$this->swiftSyncFactory = new SwiftSyncFactory( $this );
+		}
+
+		return $this->swiftSyncFactory;
 	}
 
 	public static function clearState() {
