@@ -11,7 +11,7 @@ require([
 		// Handles middle click, ctrl+click and regular click
 		$('a[data-category-url-encoded]').on('mousedown', function () {
 			var $this = $(this);
-			var url = window.atob( $this.attr('data-category-url-encoded') );
+			var url = window.atob($this.attr('data-category-url-encoded'));
 			$this.attr('href', url);
 		});
 	});
