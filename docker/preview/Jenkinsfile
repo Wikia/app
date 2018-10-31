@@ -155,22 +155,26 @@ node("docker-daemon") {
   }
 
   stage("Create new release branches") {
-    dir("app") {
-      createReleaseBranch(appReleaseBranch)
-    }
+    sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      dir("app") {
+        createReleaseBranch(appReleaseBranch)
+      }
 
-    dir("config") {
-      createReleaseBranch(configReleaseBranch)
+      dir("config") {
+        createReleaseBranch(configReleaseBranch)
+      }
     }
   }
 
   stage("Create release tags") {
-    dir("app") {
-      createTag(appReleaseTag)
-    }
+    sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      dir("app") {
+        createTag(appReleaseTag)
+      }
 
-    dir("config") {
-      createTag(configReleaseTag)
+      dir("config") {
+        createTag(configReleaseTag)
+      }
     }
   }
 
