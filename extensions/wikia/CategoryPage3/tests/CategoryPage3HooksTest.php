@@ -1,11 +1,214 @@
 <?php
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class CategoryPage3HooksTest extends WikiaBaseTest {
 	const ORIGINAL_LINK = 'original-link';
 
 	protected function setUp() {
 		$this->setupFile = __DIR__ . '/../CategoryPage3Hooks.class.php';
 		parent::setUp();
+	}
+
+	/**
+	 * @dataProvider onArticleFromTitleDataProvider
+	 *
+	 * @param bool $isCategory
+	 * @param bool $isAnon
+	 * @param bool $isCategoryExhibitionDisabledForTitle
+	 * @param $cookie
+	 * @param $preference
+	 * @param $expectedClass
+	 * @param string $message
+	 */
+	public function testOnArticleFromTitle(
+		bool $isCategory,
+		bool $isAnon,
+		bool $isCategoryExhibitionDisabledForTitle,
+		$cookie,
+		$preference,
+		$expectedClass,
+		string $message
+	) {
+		// Mock request
+		$requestMock = $this->getMockBuilder( 'WebRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCookie' ] )
+			->getMock();
+
+		$requestMock->expects( $this->atMost( 1 ) )
+			->method( 'getCookie' )
+			->willReturn( $cookie );
+
+		// Mock user
+		$userMock = $this->getMockBuilder( 'User' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getGlobalPreference', 'isAnon' ] )
+			->getMock();
+
+		$userMock->expects( $this->atMost( 1 ) )
+			->method( 'getGlobalPreference' )
+			->willReturnCallback( function ( $_, $default ) use ( $preference ) {
+				return empty( $preference ) ? $default : $preference;
+			} );
+
+		$userMock->expects( $this->atMost( 1 ) )
+			->method( 'isAnon' )
+			->willReturn( $isAnon );
+
+		// Mock context
+		$contextMock = $this->getMockBuilder( 'RequestContext' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getRequest', 'getUser' ] )
+			->getMock();
+
+		$contextMock->expects( $this->atMost( 1 ) )
+			->method( 'getRequest' )
+			->willReturn( $requestMock );
+
+		$contextMock->expects( $this->atMost( 1 ) )
+			->method( 'getUser' )
+			->willReturn( $userMock );
+
+		// Mock title
+		/** @var Title|MockObject $titleMock */
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'inNamespace' ] )
+			->getMock();
+
+		$titleMock->expects( $this->once() )
+			->method( 'inNamespace' )
+			->willReturn( $isCategory );
+
+		// Mock article
+		/** @var Article|MockObject $articleMock */
+		$articleMock = $this->getMockBuilder( 'Article' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getPage', 'getContext' ] )
+			->getMock();
+
+		$articleMock->expects( $this->atMost( 1 ) )
+			->method( 'getPage' )
+			->willReturn( new WikiPage( $titleMock ) );
+
+		$articleMock->expects( $this->atMost( 1 ) )
+			->method( 'getContext' )
+			->willReturn( $contextMock );
+
+		$this->mockStaticMethod(
+			'CategoryExhibitionHooks',
+			'isExhibitionDisabledForTitle',
+			$isCategoryExhibitionDisabledForTitle
+		);
+
+		// Run
+		CategoryPage3Hooks::onArticleFromTitle( $titleMock, $articleMock );
+
+		// Assert
+		$this->assertInstanceOf( $expectedClass, $articleMock, $message );
+	}
+
+	public function onArticleFromTitleDataProvider() {
+		// $isCategory
+		// $isAnon
+		// $isCategoryExhibitionDisabledForTitle
+		// $cookie
+		// $preference
+		// $expectedClass
+		// $message
+		return [
+			[
+				true,
+				true,
+				false,
+				'mediawiki',
+				null,
+				CategoryPage3::class,
+				'Category NS shows CategoryPage3 for anons even if they have a cookie set'
+			],
+			[
+				false,
+				true,
+				false,
+				null,
+				null,
+				MockObject::class,
+				'Non-category NS is ignored by the hook'
+			],
+			[
+				true,
+				false,
+				false,
+				'mediawiki',
+				'category-exhibition',
+				CategoryPageMediawiki::class,
+				'Users can override layout to vanilla MediaWiki using a cookie'
+			],
+			[
+				true,
+				false,
+				false,
+				'category-exhibition',
+				'mediawiki',
+				CategoryExhibitionPage::class,
+				'Users can override layout to CategoryExhibition using a cookie'
+			],
+			[
+				true,
+				false,
+				true,
+				'category-exhibition',
+				null,
+				CategoryPage3::class,
+				'Users can\'t force CategoryExhibition using a cookie if it\'s disabled for the title'
+			],
+			[
+				true,
+				false,
+				false,
+				'category-page3',
+				'mediawiki',
+				CategoryPage3::class,
+				'Users can override layout to CategoryPage3 using a cookie'
+			],
+			[
+				true,
+				false,
+				false,
+				'corrupted-cookie',
+				'mediawiki',
+				CategoryPageMediawiki::class,
+				'Users can override layout to vanilla MediaWiki by using a preference'
+			],
+			[
+				true,
+				false,
+				false,
+				null,
+				'category-exhibition',
+				CategoryExhibitionPage::class,
+				'Users can override layout to CategoryExhibition by using a preference'
+			],
+			[
+				true,
+				false,
+				true,
+				null,
+				'category-exhibition',
+				CategoryPage3::class,
+				'Users can\'t force CategoryExhibition using a preference if it\'s disabled for the title'
+			],
+			[
+				true,
+				false,
+				false,
+				null,
+				'category-page3',
+				CategoryPage3::class,
+				'Display CategoryPage3 if it\'s set in preferences'
+			]
+		];
 	}
 
 	/**
@@ -18,7 +221,8 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 		// Mock
 		$languageMock = $this->getMockBuilder( 'Language' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getNsText' ] )->getMock();
+			->setMethods( [ 'getNsText' ] )
+			->getMock();
 		$languageMock->expects( $this->atMost( 1 ) )
 			->method( 'getNsText' )
 			->willReturn( 'Category' );
@@ -31,7 +235,7 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 					'first.wikia.com' => 1,
 					'second.fandom.com' => 2
 				];
-				return $hostToCityId[$host];
+				return $hostToCityId[ $host ];
 			} );
 
 		$this->mockGlobalVariable( 'wgContLang', $languageMock );
