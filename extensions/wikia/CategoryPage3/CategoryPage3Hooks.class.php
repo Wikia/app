@@ -159,7 +159,10 @@ class CategoryPage3Hooks {
 			return true;
 		}
 
-		$link = static::getUncrawlableLink( $url, $text, $attribs );
+		$attribs['href'] = '#';
+		$attribs['rel'] = 'nofollow';
+		$attribs['data-category-url-encoded'] = base64_encode( $url );
+		$link = Html::rawElement( 'a', $attribs, $text );
 
 		return false;
 	}
@@ -209,13 +212,5 @@ class CategoryPage3Hooks {
 		}
 
 		return null;
-	}
-
-	private static function getUncrawlableLink( $url, $text, $attribs ) {
-		$attribs['href'] = '#';
-		$attribs['rel'] = 'nofollow';
-		$attribs['data-category-url-encoded'] = base64_encode( $url );
-
-		return Html::rawElement( 'a', $attribs, $text );
 	}
 }
