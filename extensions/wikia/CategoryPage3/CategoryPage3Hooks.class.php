@@ -159,7 +159,7 @@ class CategoryPage3Hooks {
 			return true;
 		}
 
-		$link = static::getNonCrawlableLink( $url, $text, $attribs );
+		$link = static::getUncrawlableLink( $url, $text, $attribs );
 
 		return false;
 	}
@@ -211,7 +211,7 @@ class CategoryPage3Hooks {
 		return null;
 	}
 
-	private static function getNonCrawlableLink( $url, $text, $attribs ) {
+	private static function getUncrawlableLink( $url, $text, $attribs ) {
 		$attribs['href'] = '#';
 		$attribs['rel'] = 'nofollow';
 		$attribs['data-category-url-encoded'] = base64_encode( $url );
