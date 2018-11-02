@@ -8,6 +8,7 @@ class MarkWikiAsClosedController extends WikiaController {
 
 	const WIKI_ID = 'wikiId';
 	const REASON = 'reason';
+	const USER_ID = 'reviewingUserId';
 
 	public function init() {
 		$this->assertCanAccessController();
@@ -19,20 +20,22 @@ class MarkWikiAsClosedController extends WikiaController {
 
 		$wikiId = $request->getVal( self::WIKI_ID );
 		$reason = $request->getVal( self::REASON );
+		$userId = $request->getVal( self::USER_ID );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !is_numeric( $wikiId ) || empty( $reason ) ) {
-			// No wikiId or reason given: Bad Request
+		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId)) {
+			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
 		} else {
-			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
+			$user = User::newFromId($userId);
+			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason, $user);
 
 			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId,
 					WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, false, null,  $user );
 				WikiFactory::clearCache( $wikiId );
 				$this->response->setCode( 200 );
 
@@ -44,7 +47,6 @@ class MarkWikiAsClosedController extends WikiaController {
 				return;
 			}
 		}
-
 	}
 
 	/**

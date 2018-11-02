@@ -1951,9 +1951,10 @@ class WikiFactory {
 	 * @param integer $city_id        wikia identifier in city_list
 	 *
 	 * @param string $reason
+	 * @param null $user
 	 * @return string: HTML form
 	 */
-	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
+	static public function setPublicStatus( $city_public, $city_id, $reason = "", $user = null ) {
 		global $wgWikicitiesReadOnly;
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1994,7 +1995,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id );
+		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id, null, $user );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2298,9 +2299,10 @@ class WikiFactory {
 	 * @param bool|int $city_id default false    wiki id from city_list
 	 *
 	 * @param null $variable_id
+	 * @param null $user
 	 * @return boolean    status of insert operation
 	 */
-	static public function log( $type, $msg, $city_id = false, $variable_id = null ) {
+	static public function log( $type, $msg, $city_id = false, $variable_id = null, $user = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
@@ -2320,7 +2322,7 @@ class WikiFactory {
 			"city_list_log",
 			[
 				"cl_city_id" => $city_id,
-				"cl_user_id" => $wgUser->getId(),
+				"cl_user_id" => ($user != null) ? $user->getId() : $wgUser->getId(),
 				"cl_type" => $type,
 				"cl_text" => $msg,
 				"cl_var_id" => $variable_id,
@@ -2722,10 +2724,11 @@ class WikiFactory {
 	 * @param integer	$city_id		wikia identifier in city_list
 	 * @param integer	$city_flags		binary flags
 	 * @param boolean	$skip			skip logging
-	 *
+	 * @param null 		$user
 	 * @return boolean, usually true when success
 	 */
-	static public function setFlags( $city_id, $city_flags, $skip=false, $reason = '' ) {
+	static public function setFlags( $city_id, $city_flags, $skip=false, $reason = '', $user = null
+	) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
@@ -2754,7 +2757,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id, null, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
