@@ -19,5 +19,9 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVaria
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
 
-$wgAutoloadClasses['Wikia\FeedsAndPosts\WikiRecentChangesAPIProxy'] =
-	$dir . 'WikiRecentChangesAPIProxy.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\MediaWikiAPI'] =
+	$dir . 'MediaWikiAPI.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\WikiRecentChanges'] =
+	$dir . 'WikiRecentChanges.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\TopArticles'] =
+	$dir . 'TopArticles.class.php';

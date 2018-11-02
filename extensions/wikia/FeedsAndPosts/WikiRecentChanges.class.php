@@ -2,40 +2,13 @@
 
 namespace Wikia\FeedsAndPosts;
 
-class WikiRecentChangesAPIProxy {
+class WikiRecentChanges extends MediaWikiAPI {
 
 	const LIMIT = 4;
 	const MINOR_CHANGE_THRESHOLD = 100;
 
 	const IMAGE_WIDTH = 150;
-	const IMAGE_RATIO = 3/4;
-
-	private function requestAPI( $params ) {
-		$api = new \ApiMain( new \FauxRequest( $params ) );
-		$api->execute();
-
-		return $api->GetResultData();
-	}
-
-	private function getThumbnailUrl( $url ) {
-		try {
-			return \VignetteRequest::fromUrl( $url )
-				->zoomCrop()
-				->width( self::IMAGE_WIDTH )
-				->height( floor( self::IMAGE_WIDTH / self::IMAGE_RATIO ) )
-				->url();
-		}
-		catch ( \Exception $exception ) {
-			\Wikia\Logger\WikiaLogger::instance()
-				->warning( "Invalid thumbnail url provided for recent updates module",
-					[
-						'thumbnailUrl' => $url,
-						'message' => $exception->getMessage(),
-					] );
-
-			return $url;
-		}
-	}
+	const IMAGE_RATIO = 3 / 4;
 
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];
@@ -99,19 +72,6 @@ class WikiRecentChangesAPIProxy {
 		return [];
 	}
 
-	private function getImage( $title ) {
-		$response = $this->requestAPI( [
-			'action' => 'imageserving',
-			'wisTitle' => $title,
-		] );
-
-		if ( isset( $response['image']['imageserving'] ) ) {
-			return $this->getThumbnailUrl( $response['image']['imageserving'] );
-		}
-
-		return null;
-	}
-
 	public function get() {
 		$cacheTTL = 3600; // an hour
 
@@ -119,7 +79,8 @@ class WikiRecentChangesAPIProxy {
 			$recentChanges = $this->getRecentChanges();
 
 			foreach ( $recentChanges as &$article ) {
-				$article['image'] = $this->getImage( $article['title'] );
+				$article['image'] =
+					$this->getImage( $article['title'], self::IMAGE_WIDTH, self::IMAGE_RATIO );
 			}
 
 			return $recentChanges;
