@@ -18,6 +18,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		},
 		adContext: {
 			addCallback: noop,
+			get: noop,
 			getContext: function () {
 				return mocks.context;
 			}
@@ -99,7 +100,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		expect(getContext().isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
 	});
 
-	it('disable INCONTENT_PLAYER by vide frequency capping', function () {
+	it('disable INCONTENT_PLAYER by video frequency capping', function () {
 		mocks.videoFrequencyMonitor.canLaunchVideo = false;
 
 		expect(getContext().isApplicable('INCONTENT_PLAYER')).toBeFalsy();

@@ -1,0 +1,7 @@
+protectsite:
+  - wiki_id: 2
+    protection_bitfield: 2
+    protection_expiry: 20180101000000
+  - wiki_id: 3
+    protection_bitfield: 2
+    protection_expiry: 20300101000000

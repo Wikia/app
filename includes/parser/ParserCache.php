@@ -179,6 +179,9 @@ class ParserCache {
 			return false;
 		}
 
+		// SRE-111: Clear in-memory cache for the parser output as well
+		$this->mMemc->clearLocalCache( $parserOutputKey );
+
 		$value = $this->mMemc->get( $parserOutputKey );
 		if ( self::try116cache && !$value && strpos( $value, '*' ) !== -1 ) {
 			wfDebug( "New format parser cache miss.\n" );

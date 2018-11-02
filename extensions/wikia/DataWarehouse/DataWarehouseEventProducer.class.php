@@ -36,13 +36,13 @@ class DataWarehouseEventProducer {
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 
-		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
 		$this->setGeoRegion( $geo->region );
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
 		$this->setLanguage();
 		$this->setCategories();
 		$this->setBeacon( wfGetBeaconId() );
+		$this->setEventTS( $this->getCurrentPreciseTimestamp()->format("Y-m-d\TH:i:s.uO") );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -109,11 +109,6 @@ class DataWarehouseEventProducer {
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-
-		$t = microtime(true);
-		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
 
 		wfProfileOut( __METHOD__ );
 
@@ -295,7 +290,7 @@ class DataWarehouseEventProducer {
 	}
 
 	public function setPageNamespace ( $page_namespace ) {
-		$this->mParams['pageNamespace'] = $page_namespace;
+		$this->mParams['pageNamespace'] = intval( $page_namespace );
 	}
 
 	public function setRevisionId ( $revision_id  ) {
@@ -320,10 +315,6 @@ class DataWarehouseEventProducer {
 
 	public function setIsRedirect ( $is_redirect ) {
 		$this->mParams['isRedirect'] = intval( $is_redirect );
-	}
-
-	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
 	}
 
 	public function setRevisionTimestamp ( $revision_timestamp ) {
@@ -368,12 +359,18 @@ class DataWarehouseEventProducer {
 		$this->mParams['beacon'] = $beacon;
 	}
 
+	protected function getCurrentPreciseTimestamp() {
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		return new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
+	}
+
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
-		$data = json_encode($this->mParams);
+
+		$data = json_encode( $this->mParams );
 		$this->getRabbit()->publish( $this->mKey, $data );
-		$isCanary = ($this->mParams['cityId'] - 28 ) % 100 < 10; // enabled on 10% of wikis
-		if ( ( ! Wikia::isDevEnv()) && $isCanary ) { 
+		if ( ! Wikia::isDevEnv() ) {
 			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
 			$task = AsyncKinesisProducerTask::newLocalTask();
 			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );

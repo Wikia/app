@@ -8,5 +8,5 @@
 $wgAutoloadClasses['FeedsAndPostsHooks'] =  __DIR__ . '/FeedsAndPostsHooks.class.php';
 
 // Hooks
-$wgHooks['OasisSkinAssetGroups'][] = 'FeedsAndPostsHooks::onOasisSkinAssetGroups';
+$wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVariablesScript';

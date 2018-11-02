@@ -436,6 +436,18 @@ CREATE TABLE `phalanx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `protectsite`
+--
+
+DROP TABLE IF EXISTS `protectsite`;
+CREATE TABLE `protectsite` (
+  `wiki_id` int(9) NOT NULL AUTO_INCREMENT,
+  `protection_bitfield` int(11) NOT NULL DEFAULT '0',
+  `protection_expiry` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wiki_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `shared_newtalks`
 --
 
@@ -580,4 +592,4 @@ CREATE TABLE `user_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-07-13 10:12:53
+-- Dump completed on 2018-10-17 13:13:09

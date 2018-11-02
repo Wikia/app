@@ -181,7 +181,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
-		'//extensions/wikia/AdEngine/dist/geo.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
@@ -799,7 +798,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
-		'//extensions/wikia/AdEngine/dist/geo.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -2431,7 +2429,14 @@ $config['special_contact_forget_account_js'] = [
 $config['feeds_and_posts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/FeedsAndPosts/js/feedsAndPosts.js',
+		'//extensions/wikia/FeedsAndPosts/scripts/index.js',
+	]
+];
+
+$config['feeds_and_posts_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/styles/index.scss',
 	]
 ];
 

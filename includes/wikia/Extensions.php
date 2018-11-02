@@ -1397,12 +1397,6 @@ $wgFileBackends['swift-backend'] = array(
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
 
-// This extension is enabled globally and handles Sync between datacenters
-// It does work on devboxes if you need to enable for testing, but we are not running the sync script
-if ( empty( $wgDevelEnvironment ) ) {
-	include( "{$IP}/extensions/wikia/SwiftSync/SwiftSync.setup.php" );
-}
-
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }
@@ -1761,6 +1755,15 @@ include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
 // SUS-5817
 if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}
+
+// SRE-116
+include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
+
+// This extension is enabled globally and handles Sync between datacenters
+// It does work on devboxes if you need to enable for testing, but we are not running the sync script
+if ( empty( $wgDevelEnvironment ) ) {
+	include "$IP/lib/Wikia/src/SwiftSync/SwiftSync.setup.php";
 }
 
 // SEO-670 | SEO friendly category pages

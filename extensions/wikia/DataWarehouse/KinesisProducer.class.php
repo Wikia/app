@@ -2,7 +2,7 @@
 class AwsCredentialScope {
 	function __construct( $timestamp, $region, $service ) {
 		$this->parts = array(
-			date( 'Ymd', $timestamp ),
+			gmdate( 'Ymd', $timestamp ),
 			$region,
 			$service,
 			'aws4_request'
@@ -44,7 +44,7 @@ class KinesisProducer {
 			"content-type:%s\nhost:%s\nx-amz-date:%s\nx-amz-target:%s\n",
 			self::CONTENT_TYPE,
 			$this->host,
-			date( 'Ymd\THis\Z', $timestamp ),
+			gmdate( 'Ymd\THis\Z', $timestamp ),
 			self::PUT_RECORD_AMZ_TARGET
 		);
 	}
@@ -62,7 +62,7 @@ class KinesisProducer {
 		$signingKey = $credentialScope->sign( $this->secretKey );
 		$stringToSign = implode( "\n", array(
 			self::SIGNING_ALGORITHM,
-			date( 'Ymd\THis\Z', $timestamp ),
+			gmdate( 'Ymd\THis\Z', $timestamp ),
 			$credentialScope->describe(),
 			hash( 'sha256', $this->getCanonicalRequest( $timestamp, $requestHash ) )
 		));
@@ -92,7 +92,7 @@ class KinesisProducer {
 
 		$requestHeaders = array(
 			'Content-Type: ' . self::CONTENT_TYPE,
-			'X-Amz-Date: ' . date( 'Ymd\THis\Z', $timestamp ),
+			'X-Amz-Date: ' . gmdate( 'Ymd\THis\Z', $timestamp ),
 			'X-Amz-Target: ' . self::PUT_RECORD_AMZ_TARGET,
 			'Authorization: ' . $this->getAuthorizationHeader( $timestamp, $requestHash )
 		);

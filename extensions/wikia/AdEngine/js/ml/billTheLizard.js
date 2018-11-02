@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
 	'ext.wikia.adEngine.services',
 	'ext.wikia.adEngine.tracking.pageInfoTracker',
@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	adEngine3,
 	adContext,
 	pageLevelParams,
-	geo,
+	adEngineBridge,
 	executor,
 	services,
 	pageInfoTracker,
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 				queen_of_hearts: {
 					device: deviceDetect.getDevice(pageParams),
 					esrb: pageParams.esrb || null,
-					geo: geo.getCountryCode() || null,
+					geo: adEngineBridge.geo.getCountryCode() || null,
 					ref: pageParams.ref || null,
 					s0v: pageParams.s0v || null,
 					s2: pageParams.s2 || null,
@@ -81,6 +81,10 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
+			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (query) {
+				pageInfoTracker.trackProp('btl_request', query);
+			});
+
 			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
 					ready = true;
@@ -88,7 +92,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 					var rabbitPropValue = serialize();
 
-					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
+					if (rabbitPropValue) {
 						pageInfoTracker.trackProp('btl', rabbitPropValue);
 					}
 				}, function () {
