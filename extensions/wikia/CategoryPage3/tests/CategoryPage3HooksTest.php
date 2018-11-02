@@ -109,7 +109,7 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 		$this->assertInstanceOf( $expectedClass, $articleMock, $message );
 	}
 
-	public function onArticleFromTitleDataProvider() {
+	public function onArticleFromTitleDataProvider(): Generator {
 		// $isCategory
 		// $isAnon
 		// $isCategoryExhibitionDisabledForTitle
@@ -117,97 +117,95 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 		// $preference
 		// $expectedClass
 		// $message
-		return [
-			[
-				true,
-				true,
-				false,
-				'mediawiki',
-				null,
-				CategoryPage3::class,
-				'Category NS shows CategoryPage3 for anons even if they have a cookie set'
-			],
-			[
-				false,
-				true,
-				false,
-				null,
-				null,
-				MockObject::class,
-				'Non-category NS is ignored by the hook'
-			],
-			[
-				true,
-				false,
-				false,
-				'mediawiki',
-				'category-exhibition',
-				CategoryPageMediawiki::class,
-				'Users can override layout to vanilla MediaWiki using a cookie'
-			],
-			[
-				true,
-				false,
-				false,
-				'category-exhibition',
-				'mediawiki',
-				CategoryExhibitionPage::class,
-				'Users can override layout to CategoryExhibition using a cookie'
-			],
-			[
-				true,
-				false,
-				true,
-				'category-exhibition',
-				null,
-				CategoryPage3::class,
-				'Users can\'t force CategoryExhibition using a cookie if it\'s disabled for the title'
-			],
-			[
-				true,
-				false,
-				false,
-				'category-page3',
-				'mediawiki',
-				CategoryPage3::class,
-				'Users can override layout to CategoryPage3 using a cookie'
-			],
-			[
-				true,
-				false,
-				false,
-				'corrupted-cookie',
-				'mediawiki',
-				CategoryPageMediawiki::class,
-				'Users can override layout to vanilla MediaWiki by using a preference'
-			],
-			[
-				true,
-				false,
-				false,
-				null,
-				'category-exhibition',
-				CategoryExhibitionPage::class,
-				'Users can override layout to CategoryExhibition by using a preference'
-			],
-			[
-				true,
-				false,
-				true,
-				null,
-				'category-exhibition',
-				CategoryPage3::class,
-				'Users can\'t force CategoryExhibition using a preference if it\'s disabled for the title'
-			],
-			[
-				true,
-				false,
-				false,
-				null,
-				'category-page3',
-				CategoryPage3::class,
-				'Display CategoryPage3 if it\'s set in preferences'
-			]
+		yield [
+			true,
+			true,
+			false,
+			'mediawiki',
+			null,
+			CategoryPage3::class,
+			'Category NS shows CategoryPage3 for anons even if they have a cookie set'
+		];
+		yield [
+			false,
+			true,
+			false,
+			null,
+			null,
+			MockObject::class,
+			'Non-category NS is ignored by the hook'
+		];
+		yield [
+			true,
+			false,
+			false,
+			'mediawiki',
+			'category-exhibition',
+			CategoryPageMediawiki::class,
+			'Users can override layout to vanilla MediaWiki using a cookie'
+		];
+		yield [
+			true,
+			false,
+			false,
+			'category-exhibition',
+			'mediawiki',
+			CategoryExhibitionPage::class,
+			'Users can override layout to CategoryExhibition using a cookie'
+		];
+		yield [
+			true,
+			false,
+			true,
+			'category-exhibition',
+			null,
+			CategoryPage3::class,
+			'Users can\'t force CategoryExhibition using a cookie if it\'s disabled for the title'
+		];
+		yield [
+			true,
+			false,
+			false,
+			'category-page3',
+			'mediawiki',
+			CategoryPage3::class,
+			'Users can override layout to CategoryPage3 using a cookie'
+		];
+		yield [
+			true,
+			false,
+			false,
+			'corrupted-cookie',
+			'mediawiki',
+			CategoryPageMediawiki::class,
+			'Users can override layout to vanilla MediaWiki by using a preference'
+		];
+		yield [
+			true,
+			false,
+			false,
+			null,
+			'category-exhibition',
+			CategoryExhibitionPage::class,
+			'Users can override layout to CategoryExhibition by using a preference'
+		];
+		yield [
+			true,
+			false,
+			true,
+			null,
+			'category-exhibition',
+			CategoryPage3::class,
+			'Users can\'t force CategoryExhibition using a preference if it\'s disabled for the title'
+		];
+		yield [
+			true,
+			false,
+			false,
+			null,
+			'category-page3',
+			CategoryPage3::class,
+			'Display CategoryPage3 if it\'s set in preferences'
 		];
 	}
 
@@ -252,33 +250,31 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedLink, $link );
 	}
 
-	public function onLinkerMakeExternalLinkDataProvider() {
-		return [
-			[
-				'http://first.wikia.com/wiki/Category:A?from=B',
-				1,
-				'<a href="#" rel="nofollow" data-category-url-encoded="aHR0cDovL2ZpcnN0Lndpa2lhLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1C"></a>'
-			],
-			[
-				'https://second.fandom.com/wiki/Category:A?from=B&action=raw',
-				2,
-				'<a href="#" rel="nofollow" data-category-url-encoded="aHR0cHM6Ly9zZWNvbmQuZmFuZG9tLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1CJmFjdGlvbj1yYXc="></a>'
-			],
-			[
-				'http://first.wikia.com/wiki/Category:A?action=raw',
-				1,
-				static::ORIGINAL_LINK
-			],
-			[
-				'http://first.wikia.com/wiki/Category:A?from=B',
-				2,
-				static::ORIGINAL_LINK
-			],
-			[
-				'https://google.com/wiki/Category:A',
-				1,
-				static::ORIGINAL_LINK
-			]
+	public function onLinkerMakeExternalLinkDataProvider(): Generator {
+		yield [
+			'http://first.wikia.com/wiki/Category:A?from=B',
+			1,
+			'<a href="#" rel="nofollow" data-category-url-encoded="aHR0cDovL2ZpcnN0Lndpa2lhLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1C"></a>'
+		];
+		yield [
+			'https://second.fandom.com/wiki/Category:A?from=B&action=raw',
+			2,
+			'<a href="#" rel="nofollow" data-category-url-encoded="aHR0cHM6Ly9zZWNvbmQuZmFuZG9tLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1CJmFjdGlvbj1yYXc="></a>'
+		];
+		yield [
+			'http://first.wikia.com/wiki/Category:A?action=raw',
+			1,
+			static::ORIGINAL_LINK
+		];
+		yield [
+			'http://first.wikia.com/wiki/Category:A?from=B',
+			2,
+			static::ORIGINAL_LINK
+		];
+		yield [
+			'https://google.com/wiki/Category:A',
+			1,
+			static::ORIGINAL_LINK
 		];
 	}
 }
