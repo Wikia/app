@@ -2361,7 +2361,6 @@ $wgEnableCategoryIntersectionExt = false;
  * Enable CategoryPage3 extension which replaces category pages with a SEO friendly version
  * @see extensions/wikia/CategoryPage3/
  * @var bool $wgEnableCategoryPage3Ext
- * FIXME decide if this should be false and rolled out in batches
  */
 $wgEnableCategoryPage3Ext = true;
 
