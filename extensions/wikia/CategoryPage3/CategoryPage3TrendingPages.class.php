@@ -60,9 +60,9 @@ class CategoryPage3TrendingPages {
 	 * Would be nice to always get the LIMIT but it requires large refactor of ArticlesApi::getTop()
 	 *
 	 * @param $item
-	 * @return array|null
+	 * @return array
 	 */
-	private static function processTrendingPagesItem( $item ) {
+	private static function processTrendingPagesItem( $item ): array {
 		$requiredParams = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];
@@ -72,7 +72,7 @@ class CategoryPage3TrendingPages {
 				if ( !empty( $item[ $param ] ) ) {
 					$processedItem[ $param ] = $item[ $param ];
 				} else {
-					return null;
+					return [];
 				}
 			}
 		}

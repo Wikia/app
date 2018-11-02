@@ -19,6 +19,9 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	 */
 	private $trendingPages;
 
+	const MEMBER_THUMB_WIDTH = 40;
+	const MEMBER_THUMB_HEIGHT = 30;
+
 	public function openShowCategory() {
 		parent::openShowCategory();
 
@@ -41,7 +44,7 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 			return;
 		}
 
-		$this->model->loadImages( 40, 30 );
+		$this->model->loadImages( self::MEMBER_THUMB_WIDTH, self::MEMBER_THUMB_HEIGHT );
 
 		if ( empty( $this->from ) ) {
 			$this->trendingPages = CategoryPage3TrendingPages::getTrendingPages( $context->getTitle() );

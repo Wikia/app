@@ -4,8 +4,9 @@ class MercuryApiCategoryHandler {
 
 	const PARAM_CATEGORY_MEMBERS_FROM = 'categoryMembersFrom';
 	const PARAM_CATEGORY_MEMBERS_PAGE = 'categoryMembersPage';
-
 	const TRENDING_ARTICLES_LIMIT = 8;
+	const THUMB_WIDTH = 40;
+	const THUMB_HEIGHT = 30;
 
 	private static $categoryModel;
 
@@ -13,7 +14,7 @@ class MercuryApiCategoryHandler {
 		if ( !self::$categoryModel instanceof CategoryPage3Model ) {
 			self::$categoryModel = new CategoryPage3Model( $title, $from );
 			self::$categoryModel->loadData();
-			self::$categoryModel->loadImages( 40, 30 );
+			self::$categoryModel->loadImages( self::THUMB_WIDTH, self::THUMB_HEIGHT );
 		}
 
 		return self::$categoryModel;

@@ -75,7 +75,7 @@ class CategoryPage3Model {
 				}
 			)
 		);
-		$imageServing = new ImageServing( $pageIds, $thumbWidth, array( 'w' => $thumbWidth, 'h' => $thumbHeight ) );
+		$imageServing = new ImageServing( $pageIds, $thumbWidth, [ 'w' => $thumbWidth, 'h' => $thumbHeight ] );
 
 		foreach ( $imageServing->getImages( 1 ) as $pageId => $images ) {
 			$member = $this->members[ $pageId ];
@@ -174,7 +174,7 @@ class CategoryPage3Model {
 		$totalNumberOfMembers = WikiaDataAccess::cache(
 			$this->getMemcacheKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
-			array( $this, 'getTotalNumberOfMembersFromDB' )
+			[ $this, 'getTotalNumberOfMembersFromDB' ]
 		);
 
 		$this->totalNumberOfMembers = $totalNumberOfMembers;
@@ -243,7 +243,7 @@ class CategoryPage3Model {
 		return WikiaDataAccess::cache(
 			$this->getMemcacheKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
-			array( $this, 'getLastPageKeyFromDB' )
+			[ $this, 'getLastPageKeyFromDB' ]
 		);
 	}
 

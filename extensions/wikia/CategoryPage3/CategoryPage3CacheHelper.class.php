@@ -1,7 +1,7 @@
 <?php
 
 class CategoryPage3CacheHelper {
-	const EXPIRATION_TIME = 60 * 60;
+	const EXPIRATION_TIME_SECONDS = 60 * 60;
 
 	/**
 	 * Can be used as a part of memcache key
@@ -18,8 +18,8 @@ class CategoryPage3CacheHelper {
 		global $wgMemc;
 		$wgMemc->set(
 			static::getKey( $title ),
-			time() . rand( 0, 9999 ),
-			static::EXPIRATION_TIME
+			time(),
+			static::EXPIRATION_TIME_SECONDS
 		);
 	}
 

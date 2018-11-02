@@ -2,10 +2,12 @@
 
 use Wikia\Template\PHPEngine;
 
-class CategoryPageWithLayoutSelector extends CategoryPage {
+abstract class CategoryPageWithLayoutSelector extends CategoryPage {
 	const LAYOUT_CATEGORY_EXHIBITION = 'category-exhibition';
 	const LAYOUT_CATEGORY_PAGE3 = 'category-page3';
 	const LAYOUT_MEDIAWIKI = 'mediawiki';
+
+	abstract protected function getCurrentLayout();
 
 	/**
 	 * @throws Exception
@@ -35,13 +37,6 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 				'currentLayout' => $this->getCurrentLayout()
 			] )
 			->render( 'extensions/wikia/CategoryPage3/templates/layout-selector.php' );
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	protected function getCurrentLayout() {
-		throw new Exception( 'getCurrentLayout method needs to be overriden' );
 	}
 
 	private function isCategoryExhibitionAllowed(): bool {
