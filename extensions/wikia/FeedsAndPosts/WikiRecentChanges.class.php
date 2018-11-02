@@ -44,12 +44,12 @@ class WikiRecentChanges extends MediaWikiAPI {
 				return $article['pageid'];
 			}, $resultArticles ), DB_SLAVE );
 
-		return array_map( function ( $title ) {
+		return array_values( array_map( function ( $title ) {
 			return [
 				'title' => $title->getText(),
 				'url' => $title->getLocalURL(),
 			];
-		}, $resultTitles );
+		}, $resultTitles ) );
 	}
 
 	private function getRecentChanges() {
