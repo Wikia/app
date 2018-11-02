@@ -27,8 +27,8 @@ $wgHooks['UserGetDefaultOptions'][] = 'CategoryPage3Hooks::onUserGetDefaultOptio
 
 $wgExtensionMessagesFiles[ 'CategoryPage3' ] = __DIR__ . '/CategoryPage3.i18n.php';
 
-$wgResourceModules['ext.wikia.CategoryPage3.scripts'] = [
+$wgResourceModules['ext.wikia.CategoryPage3.categoryLayoutSelector.scripts'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/CategoryPage3',
-	'scripts' => 'scripts/category-page3.js',
+	'scripts' => 'scripts/category-layout-selector.js',
 ];

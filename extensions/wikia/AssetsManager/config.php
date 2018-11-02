@@ -2457,3 +2457,11 @@ $config['category_page3_scss'] = [
 		'//extensions/wikia/CategoryPage3/styles/category-page3.scss',
 	],
 ];
+
+$config['category_page3_layout_selector_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
+	],
+];

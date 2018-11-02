@@ -14,12 +14,10 @@ class CategoryPageWithLayoutSelector extends CategoryPage {
 		$output = $this->getContext()->getOutput();
 
 		// Use ResourceLoader for scripts because it uses single request to lazy load all scripts
-		// TODO split scripts when we have alphabet shortcuts
-		$output->addModules( 'ext.wikia.CategoryPage3.scripts' );
+		$output->addModules( 'ext.wikia.CategoryPage3.categoryLayoutSelector.scripts' );
 
 		// Use AssetsManager for styles because it bundles all styles and blocks render so there is no FOUC
-		// TODO extract layout selector styles
-		\Wikia::addAssetsToOutput( 'category_page3_scss' );
+		\Wikia::addAssetsToOutput( 'category_page3_layout_selector_scss' );
 
 		if ( $this->getContext()->getUser()->isLoggedIn() ) {
 			$output->addHTML( $this->getHTML() );

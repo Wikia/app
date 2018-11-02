@@ -22,11 +22,6 @@ class CategoryPage3 extends CategoryPageWithLayoutSelector {
 	public function openShowCategory() {
 		parent::openShowCategory();
 
-		$output = $this->getContext()->getOutput();
-
-		// Use ResourceLoader for scripts because it uses single request to lazy load all scripts
-		$output->addModules( 'ext.wikia.CategoryPage3.scripts' );
-
 		// Use AssetsManager for styles because it bundles all styles and blocks render so there is no FOUC
 		\Wikia::addAssetsToOutput( 'category_page3_scss' );
 	}
