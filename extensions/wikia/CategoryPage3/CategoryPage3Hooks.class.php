@@ -45,11 +45,13 @@ class CategoryPage3Hooks {
 	 * @param Article $article
 	 * @return bool
 	 */
-	public static function onArticleFromTitle( $title, &$article ): bool {
+	public static function onArticleFromTitle( $title, Article &$article ): bool {
 		if ( is_null( $title ) || !$title->inNamespace( NS_CATEGORY ) ) {
 			return true;
 		}
 
+		// This will break if CategoryTree extension is ever disabled as $article would be null
+		// Now it's being created in efCategoryTreeArticleFromTitle()
 		$layout = static::getLayout( $title, $article->getPage(), $article->getContext() );
 
 		switch ( $layout ) {
