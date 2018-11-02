@@ -75,7 +75,7 @@ class WikiRecentChanges extends MediaWikiAPI {
 	public function get() {
 		$cacheTTL = 3600; // an hour
 
-		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-just-updated' ), $cacheTTL, function () {
+		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-recent-changes' ), $cacheTTL, function () {
 			$recentChanges = $this->getRecentChanges();
 
 			foreach ( $recentChanges as &$article ) {
