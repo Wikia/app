@@ -1,9 +1,9 @@
 <div class="category-gallery-form">
 	<?= wfMessage( 'category-exhibition-sorttype' )->escaped(); ?>
 	<?php
-	$dropdown = array();
+	$dropdown = [];
 	foreach ( $sortTypes as $sortType ) {
-		$el = array();
+		$el = [];
 		if ( $current == $sortType ) {
 			$el["class"] = "selected";
 		}
@@ -15,11 +15,11 @@
 	?>
 	<?= F::app()->renderView( 'MenuButton',
 		'Index',
-		array(
-			'action' => array( "text" => wfMessage( 'category-exhibition-' . $current )->escaped(), "id" => "category-exhibition-form-current" ),
+		[
+			'action' => [ "text" => wfMessage( 'category-exhibition-' . $current )->escaped(), "id" => "category-exhibition-form-current" ],
 			'class' => 'secondary',
 			'dropdown' => $dropdown,
 			'name' => 'sortType'
-		)
+		]
 	); ?>
 </div>

@@ -7,31 +7,37 @@ class CategoryExhibitionPage extends CategoryPageWithLayoutSelector {
 	public function openShowCategory() {
 		parent::openShowCategory();
 
-		global $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgRequest, $wgUser;
+		global $wgJsMimeType, $wgExtensionsPath;
 
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n" );
+		$context = $this->getContext();
+		$output = $context->getOutput();
+		$context->getTitle();
+		$context->getRequest();
+		$context->getUser();
 
-		$urlParams = new CategoryUrlParams( $wgRequest, $wgUser );
+		$output->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
+		$output->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n" );
+
+		$urlParams = new CategoryUrlParams( $context->getRequest(), $context->getUser() );
 		$urlParams->savePreference();
 
 		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
 		$oTmpl->set_vars(
 			[
-				'path' => $wgTitle->getFullURL(),
+				'path' => $context->getTitle()->getFullURL(),
 				'sortTypes' => $urlParams->getAllowedSortTypes(),
 				'current' => $urlParams->getSortType()
 			]
 		);
 		$formHtml = $oTmpl->render( 'form' );
 
-		$wgOut->addHTML( $formHtml );
+		$output->addHTML( $formHtml );
 	}
 
 	public function closeShowCategory() {
-		global $wgOut, $wgRequest, $wgUser;
+		$context = $this->getContext();
 
-		$urlParams = new CategoryUrlParams( $wgRequest, $wgUser );
+		$urlParams = new CategoryUrlParams( $context->getRequest(), $context->getUser() );
 		$urlParams->savePreference();
 
 		$sections = [
@@ -56,10 +62,10 @@ class CategoryExhibitionPage extends CategoryPageWithLayoutSelector {
 		if ( $urlParams->getSortParam() ) {
 			// One of display or sort params present in the URL.
 			// We want the bots to avoid those pages and stick to the default sorting options
-			$wgOut->setRobotPolicy( 'noindex,nofollow' );
+			$context->getOutput()->setRobotPolicy( 'noindex,nofollow' );
 		} else {
 			// Default sorting options, let's add pagination info for robots
-			$this->addPaginationToHead( $wgOut, $paginators );
+			$this->addPaginationToHead( $context->getOutput(), $paginators );
 		}
 
 		// Give a proper message if category is empty
@@ -67,7 +73,7 @@ class CategoryExhibitionPage extends CategoryPageWithLayoutSelector {
 			$r = wfMsgExt( 'category-empty', array( 'parse' ) );
 		}
 
-		$wgOut->addHTML( $r );
+		$context->getOutput()->addHTML( $r );
 	}
 
 	protected function getCurrentLayout() {
