@@ -28,12 +28,13 @@ class CategoryPage3Hooks {
 
 		foreach ( array_keys( $categories ) as $categoryTitle ) {
 			$title = Title::newFromText( $categoryTitle, NS_CATEGORY );
-
 			CategoryPage3CacheHelper::setTouched( $title );
-			Wikia::purgeSurrogateKey(
-				CategoryPage3CacheHelper::getSurrogateKey( $title ),
-				'mercury'
-			);
+
+			$surrogateKey = CategoryPage3CacheHelper::getSurrogateKey( $title );
+			// CDN
+			Wikia::purgeSurrogateKey( $surrogateKey );
+			// icache
+			Wikia::purgeSurrogateKey( $surrogateKey, 'mercury' );
 		}
 
 		return true;
