@@ -45,7 +45,7 @@ class CategoryPage3Hooks {
 	 * @param Article $article
 	 * @return bool
 	 */
-	public static function onArticleFromTitle( $title, Article &$article ): bool {
+	public static function onArticleFromTitle( $title, &$article ): bool {
 		if ( is_null( $title ) || !$title->inNamespace( NS_CATEGORY ) ) {
 			return true;
 		}
