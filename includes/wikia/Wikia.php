@@ -1943,8 +1943,8 @@ class Wikia {
 		return 'mw-' . implode( '-', func_get_args() );
 	}
 
-	public static function purgeSurrogateKey( $key ) {
-		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key );
+	public static function purgeSurrogateKey( $key, $service = 'mediawiki' ) {
+		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key, $service );
 	}
 
 	public static function isProductionEnv(): bool {
