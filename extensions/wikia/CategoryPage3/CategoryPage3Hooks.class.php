@@ -198,7 +198,11 @@ class CategoryPage3Hooks {
 			CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3
 		);
 
-		return static::getLayoutForKey( $title, $wikiPage, $globalPreference );
+		$layoutFromGlobalPreference = static::getLayoutForKey( $title, $wikiPage, $globalPreference );
+
+		return empty( $layoutFromGlobalPreference ) ?
+			CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3 :
+			$layoutFromGlobalPreference;
 	}
 
 	private static function getLayoutForKey( Title $title, WikiPage $wikiPage, $key ) {
@@ -213,6 +217,7 @@ class CategoryPage3Hooks {
 			return CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
 		}
 
+		// Happens only when users try to get CategoryExhibition and we don't allow it
 		return null;
 	}
 }
