@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+use FandomCreator\CommunitySetup;
 
 class DWDimensionApiController extends WikiaApiController {
 	use PermissionsServiceAccessor;
@@ -81,7 +82,17 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 
-	protected function parseUrl($rowUrl) {
+	protected function getFandomCreatorWikis( $limit, $afterWikiId ) {
+		$communityMap = [];
+		$fcCommunities = WikiFactory::getVariableForAllWikis( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $limit, $afterWikiId );
+		return array_reduce( $fcCommunities,
+			function( $acc, $pair ) {
+				$acc[ $pair[ 'city_id' ] ] = $pair[ 'value' ];
+				return $acc;
+			} , [] );
+	}
+
+	protected function parseUrl( $rowUrl ) {
 		$urlWithoutScheme = str_replace( ['http://', 'https://'], '', $rowUrl );
 		return trim( $urlWithoutScheme, '/' );
 	}
@@ -97,7 +108,9 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$query = str_replace( '$city_id', $afterWikiId,
 			DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
-		$query = str_replace( '$limit', $limit, $query);
+		$query = str_replace( '$limit', $limit, $query );
+
+		$fcCommunityIdMap = $this->getFandomCreatorWikis( $limit, $afterWikiId );
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
 
@@ -120,7 +133,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'cluster' => $row->cluster,
 				'created_at' => $row->created_at,
 				'deleted' => $row->deleted,
-				'is_test_wiki' => intval(in_array($row->wiki_id, $testWikis))
+				'is_test_wiki' => intval( in_array( $row->wiki_id, $testWikis ) ),
+				'fc_community_id' => isset( $fcCommunityIdMap[ $row->wiki_id ] ) ? $fcCommunityIdMap[ $row->wiki_id ] : null,
 			];
 		}
 		$db->freeResult( $dbResult );
