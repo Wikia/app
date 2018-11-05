@@ -47,30 +47,35 @@ def generateReleaseVersion(String branchName) {
     .trim()
     .tokenize('-')[1]
 
-  // retrieve release version from release branch eg. 757
-  tagFromBranch = branchName.tokenize('-')[1]
+  return prevTag
 
-  if (!prevTag.isEmpty()) {
-    prevMajorVersion = prevTag.tokenize('.')[0]// eg. 34
+  // Disabled for now so we can run it right after old release pipeline for now
 
-    // fallback - if it's not possible to retrieve version from release branch, set it to previous major version
-    if (tagFromBranch.isEmpty()) {
-      tagFromBranch = prevMajorVersion
-    }
+  // // retrieve release version from release branch eg. 757
+  // tagFromBranch = branchName.tokenize('-')[1]
 
-    if (tagFromBranch <= prevMajorVersion) {
-      return bump_minor(prevMajorVersion, prevTag)
-    } else {
-      return "${tagFromBranch}.001"
-    }
-  } else {
-    return "1.001"
+  // if (!prevTag.isEmpty()) {
+  //   prevMajorVersion = prevTag.tokenize('.')[0]// eg. 34
+
+  //   // fallback - if it's not possible to retrieve version from release branch, set it to previous major version
+  //   if (tagFromBranch.isEmpty()) {
+  //     tagFromBranch = prevMajorVersion
+  //   }
+
+  //   if (tagFromBranch <= prevMajorVersion) {
+  //     return bump_minor(prevMajorVersion, prevTag)
+  //   } else {
+  //     return "${tagFromBranch}.001"
+  //   }
+  // } else {
+  //   return "1.001"
   }
 }
 
 def createReleaseBranch(String releaseBranch) {
   sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
-  sh(script: "git push --set-upstream origin ${releaseBranch}")
+  //TODO: uncomment when this will become main deploy pipeline
+  // sh(script: "git push --set-upstream origin ${releaseBranch}")
 }
 
 // tag: release-xxx.xxx
@@ -137,6 +142,7 @@ node("docker-daemon") {
 
   try {
     stage('Upload, download and push translations to dev') {
+      //TODO: uncomment when this will become main deploy pipeline
       //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
 
       // node('sandbox-i18n01') {
@@ -225,11 +231,13 @@ node("docker-daemon") {
     stage("Create release tags") {
       sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
         dir("app") {
-          createTag(appReleaseTag)
+          //TODO: uncomment when this will become main deploy pipeline
+          // createTag(appReleaseTag)
         }
 
         dir("config") {
-          createTag(configReleaseTag)
+          //TODO: uncomment when this will become main deploy pipeline
+          // createTag(configReleaseTag)
         }
       }
     }
@@ -340,26 +348,29 @@ node("docker-daemon") {
     }
 
     stage('Create selenium-tests preview branch') {
-      build 'create-preview-test-run'
+      //TODO: uncomment when this will become main deploy pipeline
+      // build 'create-preview-test-run'
     }
 
-    stage('Tag Jira tickets') {{
-      build job: 'tag-jira-tickets', parameters: [
-          string(name: 'app_name', value: 'app'),
-          string(name: 'env', value: 'preview'),
-          string(name: 'previous_release', value: prevAppVersion),
-          string(name: 'current_release', value: params.app),
-          [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-      ],
-      wait: false
-    }}
+    stage('Tag Jira tickets') {
+      //TODO: uncomment when this will become main deploy pipeline
+      // build job: 'tag-jira-tickets', parameters: [
+      //     string(name: 'app_name', value: 'app'),
+      //     string(name: 'env', value: 'preview'),
+      //     string(name: 'previous_release', value: prevAppVersion),
+      //     string(name: 'current_release', value: params.app),
+      //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+      // ],
+      // wait: false
+    }
 
-    stage('Trigger tests') {{
-      build job: 'app-preview-push-event', parameters: [
-        string(name: 'release', value: params.app),
-        string(name: 'datacenter', value: 'sjc')],
-        wait: false
-    }}
+    stage('Trigger tests') {
+      //TODO: uncomment when this will become main deploy pipeline
+      // build job: 'app-preview-push-event', parameters: [
+      //   string(name: 'release', value: params.app),
+      //   string(name: 'datacenter', value: 'sjc')],
+      //   wait: false
+    }
 
     stage("Set and report job status") {
       def emoji
