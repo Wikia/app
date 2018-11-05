@@ -1300,7 +1300,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PROD:
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
-		case WIKIA_ENV_STABLE:
 		case WIKIA_ENV_SANDBOX:
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
@@ -1402,12 +1401,6 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
-
-// This extension is enabled globally and handles Sync between datacenters
-// It does work on devboxes if you need to enable for testing, but we are not running the sync script
-if ( empty( $wgDevelEnvironment ) ) {
-	include( "{$IP}/extensions/wikia/SwiftSync/SwiftSync.setup.php" );
-}
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
@@ -1771,3 +1764,9 @@ if ( $wgEnableFastlyInsights ) {
 
 // SRE-116
 include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
+
+// This extension is enabled globally and handles Sync between datacenters
+// It does work on devboxes if you need to enable for testing, but we are not running the sync script
+if ( empty( $wgDevelEnvironment ) ) {
+	include "$IP/lib/Wikia/src/SwiftSync/SwiftSync.setup.php";
+}

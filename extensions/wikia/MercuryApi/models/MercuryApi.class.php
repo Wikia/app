@@ -96,14 +96,21 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
 		$htmlTitle = new WikiaHtmlTitle();
 
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'articlePath' => $articlePath,
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
@@ -135,20 +142,13 @@ class MercuryApi {
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'cacheBuster' => (int) $wgStyleVersion,
 				'cdnRootUrl' => $wgCdnRootUrl,
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
@@ -181,18 +181,11 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'defaultSkin' => $wgDefaultSkin,
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,

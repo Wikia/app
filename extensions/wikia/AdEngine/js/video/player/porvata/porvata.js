@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.video.player.porvata', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
@@ -7,7 +8,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'wikia.log',
 	'wikia.viewportObserver',
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (googleIma, porvataPlayerFactory, tracker, doc, log, viewportObserver, floater) {
+], function (adContext, googleIma, porvataPlayerFactory, tracker, doc, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -22,6 +23,18 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			return params.floatingContext && params.floatingContext.isActive();
 		}
 
+		function trackViewportConflict(conflictingAdSlot) {
+			var conflictParams = {
+				conflictingAdSlot: conflictingAdSlot
+			};
+
+			Object.keys(params).forEach(function(parameter) {
+				conflictParams[parameter] = params[parameter];
+			});
+
+			tracker.track(conflictParams, 'viewport-conflict');
+		}
+
 		function tryEnablingFloating(video, inViewportCallback) {
 			if (floater && floater.canFloat(params)) {
 				params.floatingContext = floater.makeFloat(video, params, {
@@ -32,6 +45,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						inViewportCallback(false);
 					}
 				});
+
+				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
+					floater.registerConflictCallback(
+						params.floatingContext.elements.ad,
+						trackViewportConflict,
+						adContext.get('opts.incontentPlayerRail.conflictingSlots')
+					);
+				}
 			}
 		}
 

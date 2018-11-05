@@ -17,7 +17,8 @@ export function getSlotsContext(legacyContext, skin) {
 					targeting: {
 						pos: 'TOP_LEADERBOARD',
 						loc: 'top'
-					}
+					},
+					defaultTemplates: []
 				},
 				'TOP_RIGHT_BOXAD': {
 					disabled: false,

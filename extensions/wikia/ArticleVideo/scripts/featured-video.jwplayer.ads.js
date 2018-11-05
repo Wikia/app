@@ -1,12 +1,12 @@
 /*global define, require*/
-define('wikia.articleVideo.featuredVideo.ads', [
+define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
-	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
+	'ext.wikia.adEngine.video.player.jwplayer.adsTracker',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
@@ -22,7 +22,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	slotRegistry,
 	srcProvider,
 	articleVideoAd,
-	adsTracking,
+	adsTracker,
 	vastDebugger,
 	vastParser,
 	fvLagger,
@@ -54,7 +54,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return {};
 	}
 
-	return function (player, bidParams, slotTargeting) {
+	function init(player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
@@ -210,6 +210,30 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			fvLagger.markAsReady(null);
 		}
 
-		adsTracking(player, trackingParams);
+		adsTracker.register(player, trackingParams);
+	}
+
+	function trackSetup(mediaId, willAutoplay, willMute) {
+		adsTracker.track({
+			adProduct: 'featured-video',
+			slotName: featuredVideoSlotName,
+			src: srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER'),
+			videoId: mediaId,
+			withAudio: !willMute,
+			withCtp: !willAutoplay
+		}, 'setup');
+	}
+
+	return {
+		init: init,
+		trackSetup: trackSetup
 	};
+});
+
+// We need to keep it in order to be compatible with ads function on mobile-wiki
+// TODO: Remove once we switch globally to AE3 on mobile-wiki
+define('wikia.articleVideo.featuredVideo.ads', [
+	'wikia.articleVideo.featuredVideo.adsConfiguration'
+], function (ads) {
+	return ads.init;
 });

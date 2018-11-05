@@ -122,6 +122,18 @@ class Track {
 		return $script;
 	}
 
+	public static function getTrackingCookiesJS() {
+		global $wgDevelEnvironment;
+
+		if ( !empty( $wgDevelEnvironment ) ) {
+			return '';
+		}
+
+		return ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->render('tracking_cookies.mustache');
+	}
+
 	public static function event( $event_type, $param = null ) {
 		if ( !self::shouldTrackEvents() ) {
 			return false;

@@ -1,7 +1,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'ext.wikia.adEngine.utils.device',
@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (
 	adTracker,
-	geo,
+	bridge,
 	slotRegistry,
 	pageLayout,
 	deviceDetect,
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function getPosParameter(slotParams) {
-		var pos = (slotParams.pos || ''),
+		var pos = (slotParams.trackingpos || slotParams.pos || ''),
 			posArray = Array.isArray(pos) ? pos : pos.split(',');
 
 		return posArray[0].toLowerCase();
@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'btl': (billTheLizard && billTheLizard.serialize()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': geo.getSamplingResults().join(';'),
+			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};
 

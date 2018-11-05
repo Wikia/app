@@ -19,9 +19,11 @@ describe('AdContext', function () {
 					return 100;
 				}
 			},
-			geo: {
-				mapSamplingResults: function() {
-					return [];
+			bridge: {
+				geo: {
+					mapSamplingResults: function() {
+						return [];
+					}
 				}
 			},
 			instantGlobals: {},
@@ -46,7 +48,7 @@ describe('AdContext', function () {
 			mocks.browserDetect,
 			mocks.wikiaCookies,
 			mocks.instantGlobals,
-			mocks.geo,
+			mocks.bridge,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -63,12 +65,12 @@ describe('AdContext', function () {
 			'isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo',
 			'getSamplingResults', 'mapSamplingResults'
 		];
-		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
+		mocks.bridge.geo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
-		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
-		mocks.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
-		mocks.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
+		mocks.bridge.geo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.bridge.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
+		mocks.bridge.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
 		mocks.instantGlobals = {};
 	});
 
