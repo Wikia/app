@@ -4,3 +4,7 @@ To test MW on Kubernetes you can:
 - add X-Mw-Kubernetes header to your test request (e.g. via cURL or browser extension)
 
 cURL example: `curl -svo/dev/null -H "X-Mw-Kubernetes: 1" -L http://de.god-of-war.wikia.com/wiki/God_of_War_Wiki?foo=bar`
+
+## Production shell access
+
+Use `prod_shell.sh` helper script.

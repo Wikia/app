@@ -21,7 +21,7 @@ class CreateNewWikiTask extends BaseTask {
 	private $wikiLang;
 
 	public function init() {
-		global $IP, $wgForceMasterDatabase;
+		global $wgForceMasterDatabase;
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -29,7 +29,6 @@ class CreateNewWikiTask extends BaseTask {
 		parent::init();
 
 		$this->title = \Title::newFromText( NS_MAIN, "Main" );
-		require_once( "$IP/extensions/CheckUser/install.inc" );
 	}
 
 	public function postCreationSetup( $params ) {
@@ -65,7 +64,6 @@ class CreateNewWikiTask extends BaseTask {
 			$this->setWelcomeTalkPage();
 		}
 
-		$this->populateCheckUserTables();
 		$this->protectKeyPages();
 
 		$hookParams = [
@@ -99,19 +97,9 @@ class CreateNewWikiTask extends BaseTask {
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run updateSpecialPages.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
-		$this->info( "Remove edit lock" );
-		$variable = \WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
-		if ( isset( $variable->cv_variable_id ) ) {
-			\WikiFactory::removeVarById( $variable->cv_variable_id, $wgCityId );
-			\WikiFactory::clearCache( $wgCityId );
-		}
-
 		// SUS-3264 | set up events_local_users entries directly, instead of calling backend script
 		$this->info( "Setting up events_local_users table entries" );
 		\ListusersData::populateEventsLocalUsers( $wgCityId );
-
-		$wgMemc = wfGetMainCache();
-		$wgMemc->delete( \WikiFactory::getVarsKey( $wgCityId ) );
 
 		return true;
 	}
@@ -120,7 +108,7 @@ class CreateNewWikiTask extends BaseTask {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $parserMemc, $wgContLanguageCode;
+		global $wgSitename;
 
 		$source = wfMsgForContent( 'Mainpage' );
 		$target = $wgSitename;
@@ -198,18 +186,6 @@ class CreateNewWikiTask extends BaseTask {
 				}
 			}
 		}
-
-		/**
-		 * clear skin cache for rt#63874
-		 *
-		 * @todo establish what $code is exactly in this case
-		 */
-		$parserMemc->delete( wfMemcKey( 'sidebar', $wgContLanguageCode ) );
-
-		$parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
-		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
 	}
 
 	/**
@@ -353,15 +329,6 @@ class CreateNewWikiTask extends BaseTask {
 		}
 		$wgUser = $saveUser; // Restore user object after creating talk message
 		return true;
-	}
-
-	/**
-	 * tables are created in first step. there we only fill them
-	 */
-	private function populateCheckUserTables() {
-		$dbw = wfGetDB( DB_MASTER );
-		create_cu_changes( $dbw, true );
-		create_cu_log( $dbw );
 	}
 
 	/**

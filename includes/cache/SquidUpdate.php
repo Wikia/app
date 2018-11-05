@@ -111,7 +111,7 @@ class SquidUpdate {
 		// wikia change start
 		global $wgPurgeSquidViaCelery;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			CeleryPurge::purge( $urlArr );
+			\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addUrls( $urlArr );
 			return;
 		}
 		// wikia change end

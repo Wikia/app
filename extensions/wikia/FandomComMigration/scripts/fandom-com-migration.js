@@ -30,31 +30,35 @@ require([
 	}
 
 	function showAfterMigrationNotification() {
-		var banner = new BannerNotification(
-			mw.message('fandom-com-migration-after').parse(),
-			'warn',
-			null
-		);
+		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
+			var banner = new BannerNotification(
+				mw.message('fandom-com-migration-after').parse(),
+				'warn',
+				null
+			);
 
-		banner.onCloseHandler = function () {
-			cache.set(afterMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
-		}
+			banner.onCloseHandler = function () {
+				cache.set(afterMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
+			}
 
-		banner.show();
+			banner.show();
+		});
 	}
 
 	function showBeforeMigrationNotification() {
-		var banner = new BannerNotification(
-			mw.message('fandom-com-migration-before').parse(),
-			'warn',
-			null
-		);
+		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
+			var banner = new BannerNotification(
+				mw.message('fandom-com-migration-before').parse(),
+				'warn',
+				null
+			);
 
-		banner.onCloseHandler = function () {
-			cache.set(beforeMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
-		}
+			banner.onCloseHandler = function () {
+				cache.set(beforeMigrationClosedStorageKey, storageTrueValue, localStorageTTL);
+			}
 
-		banner.show();
+			banner.show();
+		});
 	}
 
 	$(function () {

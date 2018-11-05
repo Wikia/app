@@ -5,6 +5,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-prod
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -90,10 +91,10 @@ spec:
           resources:
             limits:
               cpu: "6"
-              memory: 1200Mi
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
               cpu: "3"
-              memory: 800Mi
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -126,8 +127,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-prod
-  maxReplicas: 36
-  minReplicas: 2
+  maxReplicas: 50
+  minReplicas: 20
   metrics:
   - type: Resource
     resource:
@@ -198,6 +199,7 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-tasks
+    type: mediawiki
 spec:
   strategy:
     type: RollingUpdate
@@ -226,18 +228,14 @@ spec:
                 - -c
                 - sleep 3
           livenessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 10
             timeoutSeconds: 5
-            periodSeconds: 20
           readinessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             timeoutSeconds: 5
-            periodSeconds: 10
           ports:
             - containerPort: 8080
           resources:
@@ -280,11 +278,11 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: 6
-              memory: 2Gi
+              cpu: "6"
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: 1
-              memory: 800Mi
+              cpu: "3"
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -338,13 +336,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 20
-  minReplicas: 10
+  maxReplicas: 30
+  minReplicas: 15
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 30
+      targetAverageUtilization: 70
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -364,4 +362,25 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+    type: mediawiki
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      type: mediawiki
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
     interval: 10s

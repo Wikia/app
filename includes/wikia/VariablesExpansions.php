@@ -183,6 +183,13 @@ $wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
 
 /**
+ * The datacenter that hosts the starter dumps for CreateNewWiki
+ * @see \Wikia\CreateNewWiki\Starters
+ * @var string $wgCreateWikiStarterDumpsDatacenter
+ */
+$wgCreateWikiStarterDumpsDatacenter = WIKIA_DC_SJC;
+
+/**
  * Database user and password for Perl backend scripts.
  * @see SUS-3609 | Make backend scripts use "backend_admin" MySQL user instead of "mw_only"
  * @var string $wgDBbackenduser
@@ -502,21 +509,19 @@ $wgPreviewOnOpenNamespaces = [
 ];
 
 /**
- * The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
- * Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics
- * to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
- *
- * @see lib/Wikia/src/Metrics/Collector.php
- * @var string $wgPrometheusPushgatewayHost
- */
-$wgPrometheusPushgatewayHost = "pushgateway-prod.$wgWikiaDatacenter.k8s.wikia.net";
-
-/**
  * Script used to scan IPs for open proxies.
  * @see includes/ProxyTools.php
  * @var string $wgProxyScriptPath
  */
 $wgProxyScriptPath = "$IP/maintenance/proxy_check.php";
+
+/**
+ * Shared instance of Redis master node
+ *
+ * @see lib/Wikia/src/Metrics/Collector.php
+ * @var string $wgRedisHost
+ */
+$wgRedisHost = "geo-redisshared-prod-master.query.{$wgWikiaDatacenter}.consul";
 
 /**
  * Copyright icon.
@@ -539,6 +544,13 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
  * @var string $wgServicesExternalDomain
  */
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
+
+/**
+ * External alternative services domain.
+ * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
+ * @var string $wgServicesExternalAlternativeDomain
+ */
+$wgServicesExternalAlternativeDomain = "https://services.$wgFandomBaseDomain/";
 
 /**
  * Whether to disable the background tasks broker for MediaWiki.

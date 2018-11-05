@@ -60,19 +60,8 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 
 		$consumer = $this->createDeliveryVerifier( $task, $list );
 
-		$this->channel->basic_consume(
-			Queue::MAIN_QUEUE_NAME,
-			getmypid(),
-			false,
-			false,
-			false,
-			false,
-			$consumer
-		);
-
-		while ( count( $this->channel->callbacks ) ) {
-			$this->channel->wait( null, false, static::CONSUME_TIMEOUT_SECONDS );
-		}
+		$this->registerConsumer( Queue::MAIN_QUEUE_NAME, $consumer );
+		$this->waitForConsumers();
 	}
 
 	public function testPublishTasksToDifferentQueues() {
@@ -135,6 +124,35 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		$this->assertEquals( 2, $received, 'Expected to receive exactly two messages' );
 	}
 
+	public function testShouldPublishTaskFromTaskProducer() {
+		$task = ( new TestTask() )->wikiId( 123 );
+		$task->call( 'job' );
+
+		/** @var AsyncTaskList $list */
+		list( $list ) = $task->convertToTaskLists();
+
+		$producer = new class( $list ) implements TaskProducer {
+
+			private $task;
+
+			public function __construct( AsyncTaskList $task ) {
+				$this->task = $task;
+			}
+
+			public function getTasks() {
+				yield $this->task;
+			}
+		};
+
+		$this->defaultTaskPublisher->registerProducer( $producer );
+		$this->defaultTaskPublisher->doUpdate();
+
+		$consumer = $this->createDeliveryVerifier( $task, $list );
+
+		$this->registerConsumer( Queue::MAIN_QUEUE_NAME, $consumer );
+		$this->waitForConsumers();
+	}
+
 	/**
 	 * Create a consumer that verifies the delivery of the given task and then de-registers itself
 	 *
@@ -194,5 +212,7 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		$this->channel->queue_delete( Queue::SMW_QUEUE_NAME );
 		$this->rabbitConnectionManager->close();
 		$this->channel = null;
+
+		\DeferredUpdates::clearPendingUpdates();
 	}
 }

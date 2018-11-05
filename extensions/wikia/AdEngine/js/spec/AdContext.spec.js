@@ -19,9 +19,11 @@ describe('AdContext', function () {
 					return 100;
 				}
 			},
-			geo: {
-				mapSamplingResults: function() {
-					return [];
+			bridge: {
+				geo: {
+					mapSamplingResults: function() {
+						return [];
+					}
 				}
 			},
 			instantGlobals: {},
@@ -39,17 +41,14 @@ describe('AdContext', function () {
 				}
 			},
 			callback: noop
-		},
-		queryParams = [
-			'turtle'
-		];
+		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.browserDetect,
 			mocks.wikiaCookies,
 			mocks.instantGlobals,
-			mocks.geo,
+			mocks.bridge,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -66,28 +65,26 @@ describe('AdContext', function () {
 			'isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo',
 			'getSamplingResults', 'mapSamplingResults'
 		];
-		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
+		mocks.bridge.geo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
-		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
-		mocks.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
-		mocks.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
+		mocks.bridge.geo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.bridge.geo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
+		mocks.bridge.geo.mapSamplingResults.and.returnValue('rub-dfp-test');
 		mocks.instantGlobals = {};
 	});
 
 	it(
-		'fills getContext() with context, targeting, providers and forcedProvider ' +
+		'fills getContext() with context, targeting, providers ' +
 		'even for empty (or missing) ads.context',
 		function () {
 			var adContext = getModule();
 
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
-			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
-			expect(adContext.getContext().forcedProvider).toEqual(null);
 		}
 	);
 
@@ -240,19 +237,6 @@ describe('AdContext', function () {
 		}
 	);
 
-	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
-
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
@@ -285,24 +269,6 @@ describe('AdContext', function () {
 		});
 
 		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
-	});
-
-	it('query param is being passed to the adContext properly', function () {
-		spyOn(mocks.querystring, 'getVal');
-
-		Object.keys(queryParams).forEach(function (k) {
-			var adContext;
-
-			mocks.win = {};
-			mocks.instantGlobals = {};
-			mocks.querystring.getVal.and.returnValue(queryParams[k]);
-
-			adContext = getModule();
-			expect(mocks.querystring.getVal).toHaveBeenCalled();
-
-			adContext = adContext.getContext();
-			expect(adContext.forcedProvider).toEqual(queryParams[k]);
-		});
 	});
 
 	it('enables krux when country in instantGlobals.wgAdDriverKruxCountries', function () {

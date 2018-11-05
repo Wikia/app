@@ -5,13 +5,12 @@ metadata:
   namespace: prod
   labels:
     app: mediawiki-${SANDBOX_NAME}
+    type: mediawiki
 spec:
-  replicas: 5
+  replicas: ${REPLICAS}
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
+    type: Recreate
+    rollingUpdate: null
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
@@ -93,10 +92,10 @@ spec:
           resources:
             limits:
               cpu: "6"
-              memory: 1200Mi
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
               cpu: "3"
-              memory: 800Mi
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -135,6 +134,26 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
+    interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: main
+    path: /metrics.php
     interval: 10s
 ---
 apiVersion: v1

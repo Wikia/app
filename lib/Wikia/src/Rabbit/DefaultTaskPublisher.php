@@ -18,6 +18,9 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var ConnectionManager $rabbitConnectionManager */
 	private $rabbitConnectionManager;
 
+	/** @var TaskProducer[] $producers task producers registered for publish */
+	private $producers = [];
+
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
@@ -25,7 +28,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 		$this->rabbitConnectionManager = $rabbitConnectionManager;
 
 		// Schedule doUpdate() to be executed at the end of the request
-		\DeferredUpdates::addUpdate( $this );
+		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
 	}
 
 	/**
@@ -39,11 +42,21 @@ class DefaultTaskPublisher implements TaskPublisher {
 		return $task->getId();
 	}
 
+	public function registerProducer( TaskProducer $producer ) {
+		$this->producers[] = $producer;
+	}
+
 	/**
 	 * Publish queued tasks to RabbitMQ.
 	 * Called at the end of the request lifecycle.
 	 */
 	function doUpdate() {
+		foreach ( $this->producers as $producer ) {
+			foreach ( $producer->getTasks() as $task ) {
+				$this->tasks[] = $task;
+			}
+		}
+
 		// Quit early if there are no tasks to be published
 		if ( empty( $this->tasks ) ) {
 			return;
@@ -90,7 +103,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	private function logPublish( string $queue, array $payload ) {
 		$argsJson = json_encode( $payload['args'] );
 
-		$this->info( 'AsyncTaskList::queue', [
+		$this->info( 'Publishing task of type: ' . $payload['task'], [
 			'exception' => new \Exception(),
 			'spawn_task_id' => $payload['id'],
 			'spawn_task_type' => $payload['task'],

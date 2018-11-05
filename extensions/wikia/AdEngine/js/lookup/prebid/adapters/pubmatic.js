@@ -66,8 +66,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					],
 					ids: [
 						'/5441/MOBILE_IN_CONTENT_300x250@300x250',

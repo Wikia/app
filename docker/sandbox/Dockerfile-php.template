@@ -1,4 +1,4 @@
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:eb11f0c
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
 ENV WIKIA_DATACENTER="${SANDBOX_DATACENTER}"
 ENV WIKIA_ENVIRONMENT="${SANDBOX_ENVIRONMENT}"

@@ -12,7 +12,8 @@ class NullTaskPublisher implements TaskPublisher {
 	use Loggable;
 
 	public function __construct() {
-		\DeferredUpdates::addUpdate( $this );
+		// Schedule doUpdate() to be executed at the end of the request
+		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
 	}
 
 	public function pushTask( AsyncTaskList $task ): string {
@@ -21,5 +22,9 @@ class NullTaskPublisher implements TaskPublisher {
 
 	function doUpdate() {
 		$this->info( 'Task broker is disabled' );
+	}
+
+	public function registerProducer( TaskProducer $producer ) {
+		// no-op
 	}
 }

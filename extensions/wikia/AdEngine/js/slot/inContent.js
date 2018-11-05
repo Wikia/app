@@ -1,5 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
@@ -7,18 +8,21 @@ define('ext.wikia.adEngine.slot.inContent', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
+], function (adContext, adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
-		selector = '#mw-content-text > h2';
+		selectorArticle = '#mw-content-text > h2',
+		selectorRail = '#mw-content-text > :first-child',
+		inRail = adContext.get('opts.incontentPlayerRail.enabled');
 
 	function createInContentWrapper(slotName) {
 		var adHtml = doc.createElement('div'),
-			label = msg('adengine-advertisement');
+			label = msg('adengine-advertisement'),
+			innerHTMLClass = inRail ? ' in-rail' : '';
 
 		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" data-label="' + label + '"></div>';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden' + innerHTMLClass + '" data-label="' + label + '"></div>';
 
 		return adHtml;
 	}
@@ -38,13 +42,13 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var header = doc.querySelectorAll(selector)[1],
+		var header = inRail ? doc.querySelectorAll(selectorRail)[0] : doc.querySelectorAll(selectorArticle)[1],
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			slotNameGA = slotName.toLowerCase();
 
 		if (!header) {
-			logMessage = 'missing second section ' + logWikiData;
+			logMessage = 'missing second section or rail column ' + logWikiData;
 		}
 
 		if (!slotsContext.isApplicable(slotName)) {
