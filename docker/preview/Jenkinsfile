@@ -40,7 +40,7 @@ def bump_minor(String prevMajorVersion, String prevTag) {
 // - <latest-tag>-<number-of-commits-since-last-tag>-<10-chars-hash-of-last-commit> - when something was added since last tagged commit
 // - <latest-tag> - when last commit is the tagged one
 // - <full-commit hash> - when tag does not exist
-def generateReleaseVersion(String branchName) {
+def generateReleaseVersion() {
   // get most recent tag reachable from commit
   // eg. release-757.001-12-ga0e0e73245 -> 757.001
   prevTag = sh(script: "git describe --abbrev=10 --always", returnStdout: true)
@@ -52,7 +52,7 @@ def generateReleaseVersion(String branchName) {
   // Disabled for now so we can run it right after old release pipeline for now
 
   // // retrieve release version from release branch eg. 757
-  // tagFromBranch = branchName.tokenize('-')[1]
+  // tagFromBranch = prevTag.tokenize('.')[0]
 
   // if (!prevTag.isEmpty()) {
   //   prevMajorVersion = prevTag.tokenize('.')[0]// eg. 34
