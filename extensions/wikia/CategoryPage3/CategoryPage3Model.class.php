@@ -254,6 +254,11 @@ class CategoryPage3Model {
 	public function getLastPageKeyFromDB() {
 		$lastPageMembersCount = $this->totalNumberOfMembers % $this->membersPerPageLimit;
 
+		// For example totalNumberOfMembers = 400 and membersPerPageLimit = 200
+		if ( $lastPageMembersCount === 0 ) {
+			$lastPageMembersCount = $this->membersPerPageLimit;
+		}
+
 		$res = $this->dbr->select(
 			[ 'page', 'categorylinks' ],
 			[
