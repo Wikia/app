@@ -129,8 +129,13 @@ node("docker-daemon") {
   def configHash
   def imageTag
 
-  def appTag
-  def configTag
+  def appReleaseVersion
+  def appReleaseTag
+  def appReleaseBranch
+
+  def configReleaseVersion
+  def configReleaseTag
+  def configReleaseBranch
 
   wrap([$class: 'BuildUser']) {
     try {
@@ -398,7 +403,7 @@ node("docker-daemon") {
     throw e
   } finally {
     stage('Set and report job status') {
-      if (rolloutStatusSjc != 0 || rolloutStatusRes != 0) {
+      if (rolloutStatus != 0) {
         currentBuild.result = "UNSTABLE"
       }
 
