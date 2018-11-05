@@ -1131,13 +1131,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
 
 /**
- * @name $wgAdDriverBottomLeaderBoardMegaCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardMegaCountries = null;
-
-/**
  * @name $wgAdDriverBottomLeaderBoardViewportCountries
  * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1615,6 +1608,13 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 $wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
+ * @name $wgAdDriverIncontentPlayerRailCountries
+ * Moves INCONTENT_PLAYER slot into rail section in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerRailCountries = null;
+
+/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1734,8 +1734,10 @@ $wgInlineStartupScript = false;
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
+// SUS-2164: Include Auth extensions - enabled globally
+include_once "$IP/extensions/wikia/AuthPreferences/AuthPreferences.setup.php";
+
 // SUS-2164: Include Facebook extensions - enabled globally
-include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension

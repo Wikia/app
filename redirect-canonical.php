@@ -29,6 +29,15 @@ require_once( dirname( __FILE__ ) . '/includes/WebStart.php' );
 function guessTitle( $path ) {
 	$path = trim( rawurldecode( $path ), '/ _' );
 
+	// SUS-6051 | /w/Foo and /wiki/index.php/Foo URLs need to be handled by PHP logic
+	// in order to use a proper wiki domain on sandboxes
+	if ( startsWith( $path, 'w/' ) ) {
+		$path = substr( $path, 2 );
+	}
+	if ( startsWith( $path, 'wiki/index.php/' ) ) {
+		$path = substr( $path, 15 );
+	}
+
 	// Hack to better recover Mercury modular home pages URLs
 	// (they have double-encoded URLs for some reason)
 	if ( startsWith( $path, 'main/' ) ) {

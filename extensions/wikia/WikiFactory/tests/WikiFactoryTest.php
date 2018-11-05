@@ -44,12 +44,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'http://muppet.verify.wikia.com/wiki/Muppet'
 			],
 			[
-				'env' => WIKIA_ENV_STABLE,
-				'forcedEnv' => null,
-				'url' => 'http://muppet.wikia.com/wiki/Muppet',
-				'expected' => 'http://muppet.stable.wikia.com/wiki/Muppet'
-			],
-			[
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki',
@@ -102,18 +96,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'forcedEnv' => WIKIA_ENV_PROD,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.wikia.com'
-			],
-			[
-				'env' => WIKIA_ENV_STABLE,
-				'forcedEnv' => null,
-				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.stable.wikia.com'
-			],
-			[
-				'env' => WIKIA_ENV_STABLE,
-				'forcedEnv' => null,
-				'url' => 'http://gta.stable.wikia.com/wiki/test',
-				'expected' => 'http://gta.stable.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,

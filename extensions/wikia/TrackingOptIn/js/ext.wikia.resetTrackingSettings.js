@@ -1,10 +1,9 @@
 /*global require*/
-require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, trackingOptInModal, mw) {
+require(['wikia.trackingOptIn'], function (trackingOptIn) {
 	'use strict';
 
 	function resetTrackingSettings() {
-		cmp.reset();
-		trackingOptInModal.init({ zIndex: 9999999 }).reset();
+		trackingOptIn.reset();
 	}
 
 	if (document.readyState !== 'loading') {

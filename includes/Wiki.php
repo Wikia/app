@@ -441,6 +441,9 @@ class MediaWiki {
 	 * If possible this method will be executed only after the response has been flushed.
 	 */
 	public function restInPeace() {
+		// SUS-6164 | move emitting of profiling data before fastcgi_finish_request is called
+		wfLogProfilingData();
+
 		// If using FastCGI we can flush the output now and do any further updates without blocking
 		if ( function_exists( 'fastcgi_finish_request' ) ) {
 			fastcgi_finish_request();
@@ -455,7 +458,6 @@ class MediaWiki {
 		Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
 
 		MessageCache::logMessages();
-		wfLogProfilingData();
 
 		// Commit and close up!
 		$factory = wfGetLBFactory();

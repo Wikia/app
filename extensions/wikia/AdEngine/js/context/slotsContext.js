@@ -17,6 +17,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	function isInContentApplicable() {
+		if (adContext.get('opts.incontentPlayerRail.enabled')) {
+			return true;
+		}
+
 		var header = doc.querySelectorAll('#mw-content-text > h2')[1];
 
 		return header && header.offsetWidth >= header.parentNode.offsetWidth;

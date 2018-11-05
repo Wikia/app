@@ -96,14 +96,21 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
 		$htmlTitle = new WikiaHtmlTitle();
 
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'articlePath' => $articlePath,
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
@@ -135,20 +142,13 @@ class MercuryApi {
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'cacheBuster' => (int) $wgStyleVersion,
 				'cdnRootUrl' => $wgCdnRootUrl,
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
@@ -181,23 +181,15 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'defaultSkin' => $wgDefaultSkin,
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'siteMessage' => $this->getSiteMessage(),
@@ -233,7 +225,7 @@ class MercuryApi {
 		       $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
 		       $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
 		       $wgDiscussionColorOverride, $wgEnableNewAuth, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath, $wgEnableDiscussionsPolls,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
 		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
 		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
@@ -261,7 +253,6 @@ class MercuryApi {
 				'enableCommunityData' => $wgEnableCommunityData,
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,

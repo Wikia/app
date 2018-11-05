@@ -67,12 +67,19 @@ define('wikia.trackingOptIn', [
 		return true;
 	}
 
+	function reset() {
+		if (win.M.resetTrackingOptIn) {
+			win.M.resetTrackingOptIn();
+		}
+	}
+
 	return {
 		init: function () {
 			log(['Placeholder for init', optIn], log.levels.info, logGroup);
 		},
 		isOptedIn: isOptedIn,
 		pushToUserConsentQueue: pushToUserConsentQueue,
-		geoRequiresTrackingConsent: geoRequiresTrackingConsent
+		geoRequiresTrackingConsent: geoRequiresTrackingConsent,
+		reset: reset
 	}
 });

@@ -45,3 +45,5 @@ $wgDevDomain = 'wikia.com';
 $wgWikiaDevDomain = 'wikia.com';
 $wgFandomDevDomain = 'fandom.com';
 $wgMysqlConnectionCharacterSet = 'latin1';
+// there is no IRC server in tests
+$wgRC2UDPEnabled = false;

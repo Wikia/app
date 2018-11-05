@@ -2,6 +2,7 @@
 
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
+use Wikia\Tasks\AsyncTaskList;
 
 class DataWarehouseEventProducer {
 	protected static $rabbit;
@@ -12,7 +13,8 @@ class DataWarehouseEventProducer {
 		EDIT_CATEGORY       = 'log_edit',
 		CREATEPAGE_CATEGORY = 'log_create',
 		UNDELETE_CATEGORY   = 'log_undelete',
-		DELETE_CATEGORY     = 'log_delete';
+		DELETE_CATEGORY     = 'log_delete',
+		KINESIS_STREAM_NAME = 'mw_edit_json';
 
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
@@ -34,14 +36,13 @@ class DataWarehouseEventProducer {
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 
-		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
 		$this->setGeoRegion( $geo->region );
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
-		$this->setHostname( wfHostname() );
-		$this->setArchive( $archive );
 		$this->setLanguage();
-		$this->setCategory();
+		$this->setCategories();
+		$this->setBeacon( wfGetBeaconId() );
+		$this->setEventTS( $this->getCurrentPreciseTimestamp()->format("Y-m-d\TH:i:s.uO") );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -99,7 +100,6 @@ class DataWarehouseEventProducer {
 
 		$this->setPageId( $page_id ) ;
 		$this->setPageNamespace( $oTitle->getNamespace() );
-		$this->setPageTitle( $oTitle->getDBkey() );
 		$this->setRevisionId( $revision_id );
 		$this->setUserId( $oUser->getId() );
 		$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -109,11 +109,6 @@ class DataWarehouseEventProducer {
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-
-		$t = microtime(true);
-		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
 
 		wfProfileOut( __METHOD__ );
 
@@ -163,7 +158,6 @@ class DataWarehouseEventProducer {
 		if ( $logid ) {
 			$this->setPageId( $page_id ) ;
 			$this->setPageNamespace( $oTitle->getNamespace() );
-			$this->setPageTitle( $oTitle->getDBkey() );
 			$this->setRevisionId( $oPage->getLatest() );
 			$this->setUserId( $oUser->getId() );
 			$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -283,7 +277,7 @@ class DataWarehouseEventProducer {
 		$this->mParams['geoContinent'] = $continent;
 	}
 
-	public function setCityId ( $city_id ) {
+	public function setCityId ( int $city_id ) {
 		$this->mParams['cityId'] = $city_id;
 	}
 
@@ -291,20 +285,12 @@ class DataWarehouseEventProducer {
 		$this->mParams['serverName'] = $server_name;
 	}
 
-	public function setHostname ( $hostname ) {
-		$this->mParams['hostname'] = $hostname;
-	}
-
 	public function setPageId ( $page_id ) {
 		$this->mParams['pageId'] = $page_id;
 	}
 
 	public function setPageNamespace ( $page_namespace ) {
-		$this->mParams['pageNamespace'] = $page_namespace;
-	}
-
-	public function setPageTitle ( $title ) {
-		$this->mParams['pageTitle'] = $title;
+		$this->mParams['pageNamespace'] = intval( $page_namespace );
 	}
 
 	public function setRevisionId ( $revision_id  ) {
@@ -331,10 +317,6 @@ class DataWarehouseEventProducer {
 		$this->mParams['isRedirect'] = intval( $is_redirect );
 	}
 
-	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
-	}
-
 	public function setRevisionTimestamp ( $revision_timestamp ) {
 		$this->mParams['revTimestamp'] = $revision_timestamp;
 	}
@@ -359,10 +341,6 @@ class DataWarehouseEventProducer {
 		$this->mParams['totalWords'] = $total_words;
 	}
 
-	public function setArchive ( $archive ) {
-		$this->mParams['archive'] = intval( $archive );
-	}
-
 	public function setLanguage( $lang_code = '' ) {
 		if ( empty( $lang_code ) ) {
 			$lang_code = $this->app->wg->LanguageCode;
@@ -370,15 +348,34 @@ class DataWarehouseEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-	public function setCategory() {
-		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
-		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
+	public function setCategories() {
+		$hub = WikiFactoryHub::getInstance();
+		$categories = $hub->getWikiCategories( $this->app->wg->CityId );
+		$this->mParams['categories'] = array_map(
+			function( $category ) { return intval($category['cat_id']); }, $categories );
+	}
+
+	public function setBeacon( $beacon ) {
+		$this->mParams['beacon'] = $beacon;
+	}
+
+	protected function getCurrentPreciseTimestamp() {
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		return new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
 	}
 
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
-		$data = json_encode($this->mParams);
+
+		$data = json_encode( $this->mParams );
 		$this->getRabbit()->publish( $this->mKey, $data );
+		if ( ! Wikia::isDevEnv() ) {
+			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
+			$task = AsyncKinesisProducerTask::newLocalTask();
+			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
+			$task->queue();
+		}
 		WikiaLogger::instance()->info( 'DW event sent', [
 			'method' => __METHOD__
 		] );

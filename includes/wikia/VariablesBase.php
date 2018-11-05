@@ -2018,7 +2018,6 @@ $wgEditEncoding = '';
 $wgEditEventsRabbitConfig = [
 	'vhost' => 'data-warehouse',
 	'exchange' => 'mediawiki-edit-events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -2555,13 +2554,6 @@ $wgEnableDiscussionsLog = true;
 $wgEnableDiscussionsNavigation = false;
 
 /**
- * Allows submitting posts with Polls.
- * @see extensions/wikia/MercuryApi
- * @var bool $wgEnableDiscussionsPolls
- */
-$wgEnableDiscussionsPolls = true;
-
-/**
  * Enable DismissableSiteNotice extension.
  * @see /extensions/DismissableSiteNotice
  * @var bool wgEnableDismissableSiteNoticeExt
@@ -2702,13 +2694,6 @@ $wgEnableFirstContributionsExt = true;
  * @var bool $wgEnableFlagClosedAccountsExt
  */
 $wgEnableFlagClosedAccountsExt = true;
-
-/**
- * Enable FlowTracking extension (event tracking in create new page flow).
- * @see extensions/wikia/FlowTracking
- * @var bool $wgEnableFlowTracking
- */
-$wgEnableFlowTracking = true;
 
 /**
  * Enable Forum extension.
@@ -3929,6 +3914,16 @@ $wgWikiaMobileSmartBannerConfig = [
 ];
 
 /**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
+];
+
+/**
  * Enable WikiaPhotoGallery extension.
  * @see extensions/wikia/WikiaPhotoGallery
  * @var bool $wgEnableWikiaPhotoGalleryExt
@@ -4973,7 +4968,6 @@ $wgImageMagickConvertCommand = '/usr/bin/convert';
 $wgImageReview = [
 	'vhost' => 'dc-file-sync',
 	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
 ];
 
 /**
@@ -5048,7 +5042,6 @@ $wgIncludeLegacyJavaScript = true;
 $wgIndexingPipeline = [
 	'vhost' => 'indexer',
 	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -6370,6 +6363,19 @@ $wgPoolCounterConf = null;
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
 /**
+ * Whether to emit more detailed debug logs for a PoolWorkArticleView
+ * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
+ * @var bool $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugMode = false;
+
+/**
+ * The fraction of PoolWorkArticleView executions that should be executed with more detailed logging
+ * @var float $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugSampleRatio = 0.05;
+
+/**
  * Whether to preload the mediawiki.util module as blocking module in the top
  * queue. Before MediaWiki 1.19, modules used to load slower/less asynchronous
  * which allowed modules to lack dependencies on 'popular' modules that were
@@ -6677,7 +6683,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'prod.irc.service.sjc.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
@@ -8896,3 +8902,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;

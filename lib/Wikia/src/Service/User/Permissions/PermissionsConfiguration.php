@@ -214,6 +214,7 @@ class PermissionsConfiguration {
 		'newwikislist',
 		'restricted_promote',
 		'protectsite',
+		'protectsite-exempt',
 		'stafflog',
 		'unblockable',
 		'tagsreport',

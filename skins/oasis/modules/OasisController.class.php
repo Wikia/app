@@ -54,6 +54,7 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->trackingOptIn = TrackingOptIn::renderScript();
 		// FIXME SUS-4812 get this out of here
+		$this->trackingCookies = Track::getTrackingCookiesJS();
 		$this->internalTracker = Track::getViewJS();
 		$this->comScore = null;
 		$this->quantServe = null;
