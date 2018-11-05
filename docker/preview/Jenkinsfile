@@ -382,21 +382,6 @@ node("docker-daemon") {
       //   wait: false
     }
 
-    stage("Set and report job status") {
-      def emoji
-      def color
-      if (rolloutStatus != 0) {
-        currentBuild.result = "UNSTABLE"
-        emoji = ":siren:"
-        color = "#cc142c"
-      } else {
-        emoji = ":checkmark:"
-        color = "#36a64f"
-      }
-
-      sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
-    }
-
   } catch (e) {
     // If there was an exception thrown, the build failed
     currentBuild.result = "FAILED"
