@@ -143,6 +143,14 @@ class ArticlesApiController extends WikiaApiController {
 			self::MAX_ITEMS + 1 // compensation for Main Page
 		);
 
+		var_dump( 'articlesApi' );
+		var_dump( !empty( $this->wg->DataMartOriginalCityId ) ? $this->wg->DataMartOriginalCityId
+			: $this->wg->CityId, $ids, $namespaces, false,
+			self::MAX_ITEMS + 1 // compensation for Main Page
+		);
+		var_dump( $articles );
+		die();
+
 		$collection = [];
 
 		if ( !empty( $articles ) ) {

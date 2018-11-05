@@ -71,8 +71,12 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	private function setTemplateValues( InsightsModel $model, $params ) {
+		var_dump( $model, $params );
 		$insightsContext = new InsightsContext( $model, $params );
 		$content = $insightsContext->getContent();
+
+		var_dump( $content );
+		die();
 
 		if ( empty( $content ) ) {
 			$this->setEmptyTemplate( $model );

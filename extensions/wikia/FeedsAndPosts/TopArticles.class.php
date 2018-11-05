@@ -15,8 +15,14 @@ class TopArticles extends MediaWikiAPI {
 		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-top-articles' ), $cacheTTL, function () {
 			$responseData = [];
 			$mainPageId = \Title::newMainPage()->getArticleID();
+			$model = new \InsightsPopularPagesModel();
+			var_dump( 'getTopArticles' );
+			var_dump( $model );
 			$insightData =
-				( new \InsightsContext( new \InsightsPopularPagesModel() ) )->fetchData();
+				( new \InsightsContext( $model ) )->getContent();
+
+			var_dump( $insightData );
+			die();
 
 			foreach ( $insightData as $articleId => $articleData ) {
 				if ( count( $responseData ) === self::LIMIT ) {
