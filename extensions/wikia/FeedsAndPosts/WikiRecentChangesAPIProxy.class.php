@@ -24,8 +24,7 @@ class WikiRecentChangesAPIProxy {
 				->width( self::IMAGE_WIDTH )
 				->height( floor( self::IMAGE_WIDTH / self::IMAGE_RATIO ) )
 				->url();
-		}
-		catch ( \Exception $exception ) {
+		} catch ( \Exception $exception ) {
 			\Wikia\Logger\WikiaLogger::instance()
 				->warning( "Invalid thumbnail url provided for recent updates module",
 					[
@@ -43,7 +42,7 @@ class WikiRecentChangesAPIProxy {
 		$titlesMap = [];
 		$mainPageId = \Title::newMainPage()->getArticleID();
 
-		foreach ( $articles as &$article ) {
+		foreach ( $articles as $article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
 			$title = $article['title'];
 
@@ -62,8 +61,11 @@ class WikiRecentChangesAPIProxy {
 
 		if ( count( $resultArticles ) < self::LIMIT ) {
 			$resultArticles =
-				array_slice( array_merge( $articlesWithMajorChange, $articlesWithMinorChange ), 0,
-					self::LIMIT );
+				array_slice(
+					array_merge( $articlesWithMajorChange, $articlesWithMinorChange ),
+					0,
+					self::LIMIT
+				);
 		}
 
 		$resultTitles =
