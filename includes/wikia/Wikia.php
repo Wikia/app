@@ -1925,7 +1925,6 @@ class Wikia {
 		}
 		$surrogateKey = implode( ' ', $surrogateKeys );
 		header( 'Surrogate-Key: ' . $surrogateKey );
-		header( 'X-Surrogate-Key: ' . $surrogateKey );
 	}
 
 	public static function surrogateKey( $args ) {
