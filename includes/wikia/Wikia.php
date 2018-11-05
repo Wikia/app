@@ -70,6 +70,11 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::outputXServedBySHeader';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
+# ResourceLoader and api on empty/closed English wikis
+$wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
+$wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
+
+
 use Wikia\Tracer\WikiaTracer;
 
 /**
@@ -1950,5 +1955,12 @@ class Wikia {
 	public static function isDevEnv(): bool {
 		global $wgWikiaEnvironment;
 		return $wgWikiaEnvironment === WIKIA_ENV_DEV;
+	}
+
+	public static function onClosedOrEmptyWikiDomains( $requestUrl ) {
+		if ( $_SERVER['SCRIPT_NAME'] == '/load.php' ) {
+			return false;
+		}
+		return true;
 	}
 }
