@@ -18,20 +18,20 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-wrap([$class: 'BuildUser']) {
-  try {
-    buildUser = "${BUILD_USER}"
-  } catch (MissingPropertyException ex) {
-    buildUser = "Jenkins"
-  }
-}
-
 node("docker-daemon") {
   def imageExists = false
   def buildUser = "Anonymous"
   def appHash
   def configHash
   def imageTag
+
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
 
   stage("Fetch version") {
     def deploymentInfo

@@ -68,14 +68,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
 }
 
-wrap([$class: 'BuildUser']) {
-  try {
-    buildUser = "${BUILD_USER}"
-  } catch (MissingPropertyException ex) {
-    buildUser = "Jenkins"
-  }
-}
-
 stage('Slack notify start') {
   notifyBuild('STARTED')
 }
@@ -96,6 +88,14 @@ node("docker-daemon") {
   def appHash
   def configHash
   def imageTag
+
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
 
   try {
     stage('Fetch version') {

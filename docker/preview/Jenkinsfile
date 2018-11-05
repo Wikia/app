@@ -113,14 +113,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
 }
 
-wrap([$class: 'BuildUser']) {
-  try {
-    buildUser = "${BUILD_USER}"
-  } catch (MissingPropertyException ex) {
-    buildUser = "Jenkins"
-  }
-}
-
 stage('Slack notify start') {
   notifyBuild('STARTED')
 }
@@ -134,6 +126,14 @@ node("docker-daemon") {
 
   def appTag
   def configTag
+
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
 
   try {
     stage('Upload, download and push translations to dev') {
