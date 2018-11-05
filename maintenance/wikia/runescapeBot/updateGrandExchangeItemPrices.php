@@ -3,6 +3,10 @@
 require_once( __DIR__ . '/../../Maintenance.php' );
 require_once( __DIR__ . '/runescapeBot.setup.php' );
 
+/**
+ * Script which updates the price for all items on runescape and oldschoolrunescape
+ * based on the latest prices from the runescape API.
+ */
 class UpdateGrandExchangeItemPrices extends Maintenance {
 
 	const PAUSE_TIME_IN_SECONDS = 2.5;
@@ -41,6 +45,8 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		$this->botUser = User::newFromName( self::BOT_USERNAME );
 		$this->topItemsTradeCount = $this->runescapeApi->getTopItems();
 
+		// "Grand Exchange" is the name of the runescape marketplace. All items that need
+		// to be updated are in the "Grand Exchange" category
 		$pages = $this->pageFetcher->fetchAllGrandExchangePages();
 		foreach ( $pages as $page) {
 			try {
@@ -127,8 +133,15 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	 */
 	private function updateIndexPages() {
 		foreach( self::INDEX_PAGES as $indexPage ) {
-			$this->purgePage( $indexPage );
-			$indexValue = $this->getIndexValuFromTemplatePage( $indexPage );
+			$templatePage = $this->getWikiPageForTitle( $this->getTemplateTitle( $indexPage ) );
+
+			// This script updates both runescape and oldschoolrunescape, but only runescape has the index
+			// pages which need updating. Check to make sure the page exists before trying to update it
+			if ( !$templatePage->exists() ) {
+				continue;
+			}
+
+			$indexValue = $this->getIndexValueFromTemplatePage( $indexPage );
 			$timeStamp = $this->getTimeStampForRuneScape();
 			$indexDataPage = $this->getWikiPageForTitle( $this->getDataTitleForIndexPage( $indexPage ) );
 			$item = new GrandExchangeItem( $timeStamp, $indexValue, -1 );
@@ -137,20 +150,13 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	}
 
 	/**
-	 * @param $pageTitle
-	 * @throws MWException
-	 */
-	private function purgePage( $pageTitle ) {
-		$this->getWikiPageForTitle( $pageTitle )->doPurge();
-	}
-
-	/**
-	 * @param $page
+	 * @param WikiPage $templatePage
 	 * @return mixed
-	 * @throws MWException
 	 */
-	private function getIndexValuFromTemplatePage( $page ) {
-		$templatePage = $this->getWikiPageForTitle( $this->getTemplateTitle( $page ) );
+	private function getIndexValueFromTemplatePage( WikiPage $templatePage ) {
+		// purge the page first as the index value is calculated based on prices we've just updated
+		// on other pages
+		$templatePage->doPurge();
 		return $this->extractIndexFromParsedContent( $templatePage );
 	}
 
@@ -165,11 +171,18 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		return $matches[1];
 	}
 
+	/**
+	 * Grab the latest update timestamp from Runescape. We can get this value from any item since they're all updated
+	 * once a day and share a latest update timestamp. We'll just use the top most traded item since we have its ID
+	 * already stored in our topItemsTradeCount array.
+	 *
+	 * @return int
+	 */
 	private function getTimeStampForRuneScape() {
 		try {
 			return $this->runescapeApi->getItemId( $this->getFirstItemIdFromTop100Items() )->getTimeStamp();
 		} catch (Exception $e) {
-			$this->logError( "unable to fetch timestamp from runescape, using default", null );
+			$this->logError( "unable to fetch timestamp from runescape, using default" );
 			return time();
 		}
 	}
@@ -231,21 +244,11 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	}
 
 	private function logError( string $errorMessage,  $context = [] ) {
-		$message = sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage );
-		$this->output( $message . ": " . $context['page'] . "\n" );
-		Wikia\Logger\WikiaLogger::instance()->warning(
-			$message,
-			$context
-		);
+		$this->mLogger->error( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
 	}
 
 	private function logInfo( $infoMessage, $context = [] ) {
-		$message = sprintf( self::LOG_MESSAGE_TEMPLATE, $infoMessage );
-		$this->output( $message . ": " . $context['page'] . "\n" );
-		Wikia\Logger\WikiaLogger::instance()->info(
-			$message,
-			$context
-		);
+		$this->mLogger->info( sprintf( self::LOG_MESSAGE_TEMPLATE, $infoMessage ), $context );
 	}
 
 	/**
