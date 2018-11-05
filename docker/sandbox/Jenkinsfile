@@ -2,7 +2,8 @@
 // def sandbox = params.sandbox.endsWith("-k8s") ?  params.sandbox : params.sandbox + '-k8s';
 
 //support both long names sandbox-xw1 and short names xw1
-def sandbox = params.sandbox.tokenize('-').pop();
+def tokens = params.sandbox.tokenize('-')
+def sandbox = tokens[tokens.size() - 1]
 def datacenter = params.datacenter
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
