@@ -241,6 +241,12 @@ Removes expired SiteWideMessages from MySQL.
 
 Warms up semantic query cache for SemanticMediaWiki's Concept pages.
 
+#### runescape-price-update-bot.yaml
+
+`maintenance/runescape-price-update-bot.yaml`
+
+Updates prices of items on runescape and oldschoolrunescape wikis using data from Jagex API
+
 #### update-special-pages.yaml
 
 `maintenance/updateSpecialPages.php`
