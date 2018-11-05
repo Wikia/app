@@ -69,7 +69,7 @@ def generateReleaseVersion(String branchName) {
   //   }
   // } else {
   //   return "1.001"
-  }
+  // }
 }
 
 def createReleaseBranch(String releaseBranch) {
@@ -166,17 +166,22 @@ node("docker-daemon") {
     }
 
     stage("Clone repositories") {
-      dir("app") {
-        git url: "git@github.com:Wikia/app.git",
-          branch: 'origin/dev',
-          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-      }
-
-      dir("config") {
-        git url: "git@github.com:Wikia/config.git",
-          branch: 'origin/dev',
-          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-      }
+      parallel (
+        "app": {
+          dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+              branch: 'origin/dev',
+              credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          }
+        },
+        "config": {
+          dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+              branch: 'origin/dev',
+              credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          }
+        }
+      )
     }
 
     stage("Calculate next release branch and version") {
