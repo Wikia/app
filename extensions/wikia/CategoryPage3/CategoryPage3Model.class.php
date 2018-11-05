@@ -1,7 +1,7 @@
 <?php
 
 class CategoryPage3Model {
-	const MEMBERS_PER_PAGE_LIMIT = 200;
+	const DEFAULT_MEMBERS_PER_PAGE_LIMIT = 200;
 
 	/** @var Category */
 	private $category;
@@ -18,6 +18,9 @@ class CategoryPage3Model {
 	/** @var CategoryPage3Member[] */
 	private $members;
 
+	/** @var int */
+	private $membersPerPageLimit;
+
 	/** @var CategoryPage3Pagination */
 	private $pagination;
 
@@ -32,6 +35,7 @@ class CategoryPage3Model {
 		$this->collation = Collation::singleton();
 		$this->from = $from;
 		$this->members = [];
+		$this->membersPerPageLimit = static::DEFAULT_MEMBERS_PER_PAGE_LIMIT;
 		$this->pagination = new CategoryPage3Pagination( $title, $from );
 		$this->title = $title;
 		$this->totalNumberOfMembers = 0;
@@ -153,7 +157,7 @@ class CategoryPage3Model {
 			__METHOD__,
 			[
 				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
-				'LIMIT' => static::MEMBERS_PER_PAGE_LIMIT + 1,
+				'LIMIT' => $this->membersPerPageLimit + 1,
 				'ORDER BY' => 'cl_sortkey',
 			],
 			[
@@ -209,7 +213,7 @@ class CategoryPage3Model {
 			__METHOD__,
 			[
 				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
-				'LIMIT' => static::MEMBERS_PER_PAGE_LIMIT + 1,
+				'LIMIT' => $this->membersPerPageLimit + 1,
 				'ORDER BY' => 'cl_sortkey DESC',
 			],
 			[
@@ -222,7 +226,7 @@ class CategoryPage3Model {
 		$this->pagination->setIsPrevPageTheFirstPage( true );
 
 		foreach ( $res as $row ) {
-			if ( ++$count > static::MEMBERS_PER_PAGE_LIMIT ) {
+			if ( ++$count > $this->membersPerPageLimit ) {
 				$this->pagination->setIsPrevPageTheFirstPage( false );
 				break;
 			}
@@ -248,7 +252,7 @@ class CategoryPage3Model {
 	}
 
 	public function getLastPageKeyFromDB() {
-		$lastPageMembersCount = $this->totalNumberOfMembers % static::MEMBERS_PER_PAGE_LIMIT;
+		$lastPageMembersCount = $this->totalNumberOfMembers % $this->membersPerPageLimit;
 
 		$res = $this->dbr->select(
 			[ 'page', 'categorylinks' ],
@@ -288,7 +292,7 @@ class CategoryPage3Model {
 			$title = Title::newFromRow( $row );
 			$humanSortkey = $this->getHumanSortkey( $row, $title );
 
-			if ( ++$count > static::MEMBERS_PER_PAGE_LIMIT ) {
+			if ( ++$count > $this->membersPerPageLimit ) {
 				$this->pagination->setNextPageKey( $humanSortkey );
 				break;
 			}
@@ -316,5 +320,13 @@ class CategoryPage3Model {
 			$this->title->getDBkey(),
 			CategoryPage3CacheHelper::getTouched( $this->title )
 		);
+	}
+
+	/**
+	 * To be used in tests
+	 * @param int $membersPerPageLimit
+	 */
+	public function setMembersPerPageLimit( int $membersPerPageLimit ) {
+		$this->membersPerPageLimit = $membersPerPageLimit;
 	}
 }
