@@ -62,7 +62,6 @@ Enjoy your time at {{SITENAME}}!
 
 $3",
 	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
 
 If you need help getting started, check out our [[Help:Getting Started|help pages]] or contact me or [[Special:Listusers/sysop|another admin]] here. For general help, you could also stop by [[w:c:community:main page|Community Central]] to explore the [[w:c:community:Special:Forum|forums]] and [[w:c:community:Blog:Wikia_Staff_Blog|blogs]].
@@ -145,7 +144,6 @@ $messages['ar'] = array(
 
 إن احتجت المساعدة، تصفح [[Help:Contents|صفحات المساعدة]] أولاً ثم قم بزيارة [[w:c:community|المجتمع المركزي]] لمعرفة المزيد. تحرير سعيد! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|منتدى المساعدة]] | [[w:sblog|المدونة]])</small>',
-	'hawelcomeedit' => 'تعديل رسالة الترحيب',
 	'welcome-message-wall-user' => 'مرحبًا بك في {{SITENAME}}! شكرًا لتحريرك صفحة [[:$1]].
 
 اترك لي رسالة إن أردت مساعدتي بأي شيء!',
@@ -200,7 +198,6 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
 Gallout a rit lezel ur gemennadenn din ma c'hallan sikour ac'hanoc'h d'ober tra pe dra !",
@@ -241,7 +238,6 @@ Recomanem a tots els col·laboradors que [[Special:UserLogin|es registrin i cre�
 
 Si necessites ajuda, visita primer les nostres [[Help:Contents|pàgines d'ajuda]] i després la [[w:c:community|Central de la comunitat]] per saber més. Que t'ho passis bé editant! $3",
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fòrums d'ajuda]] | [[w:sblog|blog]])</small>",
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
 
 Si us plau, si tens algun dubte deixa un missatge al meu mur i t'intentaré ajudar.",
@@ -254,7 +250,6 @@ Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'a
 
 Si us plau, deixa un missatge al meu mur si et puc ajudar en alguna cosa!",
 	'welcome-message-wall-anon-staff' => "Hola,
-
 Benvingut a {{SITENAME}} i gràcies per la teva edició a la pàgina [[:$1]]!
 
 Per què no et '''[[Special:UserLogin|crees un compte d'usuari i t'identifiques]]'''?, D'aquesta manera serà molt més fàcil saber quines pàgines has editat i atribuir-te la feina, podràs accedir a moltes funcionalitats de Wikia i donar-te a conèixer a la comunitat de {{SITENAME}}.
@@ -303,7 +298,6 @@ Je to snadný způsob, jak sledovat své příspěvky a komunikovat s komunitou.
 Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navštívit [[wikia:Forum:Community Central Forum|fórum na Community
 Central Wiki]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fórum podpory]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 $messages['de'] = array(
@@ -368,7 +362,6 @@ Viel Spaß bei {{SITENAME}}!
 
 $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:c:de.c:Special:Forum|Hilfe]] | [[w:c:de.c:Blog:Wikia Deutschland News|Blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[Hilfe:Einführung|Hilfeseiten]] an oder nimm hier Kontakt zu mir oder einem [[Spezial:Benutzer/sysop|anderen Admin]] auf. Allgemeine Unterstützung erhältst du auch in der [[w:c:de.community|Community Deutschland]], wo du die [[w:c:de.community:Spezial:Forum|Foren]] und [[w:c:de.community:Blog:Fandom_Deutschland_News|Blogs]] durchforsten kannst.
@@ -443,7 +436,6 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
 
 $messages['diq'] = array(
 	'welcome-message-log' => 'Cıkerdoğê newey rê xeyrvatış',
-	'hawelcomeedit' => 'HAXeyrAmeyVurnayış',
 	'welcome-message-wall-anon' => "Merheba, Şıma xeyr ameyê {{SITENAME}}! pela [[:$1]] vurnayê deye şıma rê teşekur kemê.
 
 '''[[Special:Userlogin|Şıma ra recay ma dekewe sita yana xorê jew nameyê karberiyo newe  vırazê]]'''. Şıma eno hesaba şenê merdumana irtibat kewê u iştıraxin bıkerê deye tewr rehat ju raya.
@@ -511,7 +503,6 @@ Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]] <staff /> <small>([[w:c:es.c:special:forums|foro de ayuda]] | [[w:c:es.c:Blog:Noticias_de_Wikia|blog del staff]])</small>',
-	'hawelcomeedit' => 'HaWelcomeEdit',
 	'welcome-message-wall-user' => 'Hola, soy un administrador de la comunidad {{SITENAME}}. ¡Bienvenido y muchas gracias por tu edición en [[:$1]]!
 
  Si necesitas ayuda para comenzar, revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o [[$2|contáctame a mi]] o a [[Special:Listusers/sysop|otro administrador de la comunidad]]. Si necesitas ayuda general, ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]] y [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog]].
@@ -608,12 +599,10 @@ Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3"
 	'welcome-message-user-staff' => '==Tervetuloa==
 
 Hei,
-
 Tervetuloa sivustolle {{SITENAME}}. Kiitos, että muokkasit sivua [[:$1]]. Jos tarvitset apua, aloita katsomalla meidän [[Help:Contents|ohjesivujamme]]. Käy [[w:c:community|Community Centralissa]] pysyäksesi ajan tasalla [[w:c:community:Blog:Wikia_Staff_Blog|henkilökunnan blogista]], kysyäksesi kysymyksiä meidän [[w:c:community:Special:Forum|yhteisöfoorumeillamme]], osallistuaksesi [[w:c:community:Help:Webinars|webinaarisarjoihimme]], tai keskustellaksesi muiden wikialaisten kanssa. Iloisia muokkaamisia! $3',
 	'welcome-message-anon-staff' => '== Tervetuloa ==
 
 Hei,
-
 Tervetuloa sivustolle {{SITENAME}} ja kiitos, että muokkasit sivua [[:$1]]. Suosittelemme kaikille osallistujille [[Toiminnot:Kirjaudu_sisään|käyttäjätunnuksen luomista]] jotta voisit helpommin pitää lukua muokkauksistasi, päästä käsiksi useampiin Wikia-ominaisuuksiin sekä tutustua tämän wikin yhteisöön.
 
 Mikäli tarvitset apua, tutustu ensin [[Ohje:Sisällöt|ohjesivuihin]] ja vieraile sitten [[w:c:yhteiso|Yhteisöwikissä]] saadaksesi lisätietoja. Mukavaa muokkaamista! $3',
@@ -629,7 +618,6 @@ $messages['fo'] = array(
 
 Skriva eini boð á [[$2|mínari kjaksíðu]] um eg kann hjálpa tær við nøkrum! $3',
 	'welcome-message-log' => 'bjóða nýggjum redaktørum vælkomnum',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hey, vælkomin til {{SITENAME}}! Takk fyri tína rætting til [[:$1]] síðuna.
 
 Skriva mær eini boð um eg kann hjálpa tær við nøkrum!',
@@ -692,7 +680,6 @@ Passez un bon moment sur {{SITENAME}} !
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:fr:Special:Forum|forum d’aide]] | [[w:fr:Blog:Actualité Wikia|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
 
 Si vous avez besoin d'aide pour vous lancer, consultez nos [[Aide:Commencer|pages d'aide]]. Vous pouvez également me contacter ou contacter un [[Special:Listusers/sysop|autre administrateur]] de la communauté. Pour obtenir de l'aide d'ordre général, rendez-vous sur la page du [[w:c:communaute|Centre des communautés]], d'où vous pourrez explorer les [[w:c:communaute:Special:Forum|forums]] et les [[w:c:communaute:Blog:Actualité_Wikia|blogs]].
@@ -765,7 +752,6 @@ Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:
 
 Se necesita axuda, consulte as [[Help:Contents|páxinas de axuda]] e logo visite a [[w:c:community|central da comunidade]] para aprender máis cousas. Páseo ben! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina "[[:$1]]".
 
 Por favor, déixame unha mensaxe se necesitas axuda con algunha cousa!',
@@ -893,7 +879,6 @@ Salute, benvenite a {{SITENAME}}. Gratias pro tu modification del pagina [[:$1]]
 
 Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de adjuta]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].
 
 Non hesita de lassar me un message si io pote adjutar te con alcun cosa!',
@@ -940,7 +925,6 @@ Silakan tinggalkan pesan pada [[$2|halaman pembicaraan saya]] jika saya dapat me
 	'welcome-message-anon-staff' => '==Selamat datang==
 
 Hai,
-
 Selamat datang ke {{SITENAME}} dan terima kasih atas suntingan Anda pada halaman [[:$1]]. Kami mendorong semua kontributor untuk [[Special:UserLogin|membuat nama pengguna]], sehingga Anda dapat melacak kontribusi Anda, mengakses lebih banyak fitur Wikia, dan dapat mengetahui seluruh komunitas {{SITENAME}}.
 
 Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]] kami dan kemudian mengunjungi [[w:c:community|Pusat Komunitas]] untuk mempelajari lebih lanjut. Selamat menyunting! $3',
@@ -948,7 +932,6 @@ Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]
 
 Silakan meninggalkan pesan jika saya dapat membantu dalam hal apapun!',
 	'welcome-message-wall-anon-staff' => 'Hai,
-
 Selamat datang ke {{SITENAME}} dan terima kasih atas suntingan Anda pada halaman [[:$1]]. Kami mendorong semua kontributor untuk [[Special:UserLogin|membuat nama pengguna]], sehingga Anda dapat melacak kontribusi Anda, mengakses lebih banyak fitur Wikia, dan dapat mengetahui seluruh komunitas {{SITENAME}}.
 
 Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]] kami dan kemudian mengunjungi [[w:c:community|Pusat Komunitas]] untuk mempelajari lebih lanjut. Selamat menyunting!',
@@ -1047,7 +1030,6 @@ Divertiti su {{SITENAME}}!",
 	'welcome-user' => '@latest',
 	'welcome-bot' => '@bot',
 	'welcome-enabled' => 'page-user message-anon message-user',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-description' => 'Sends a welcome message to users after their first edits',
 	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
 );
@@ -1141,7 +1123,6 @@ FANDOMを利用をはじめるにあたりご不明な点がございました�
 	'welcome-bot' => '@bot',
 	'welcome-enabled' => 'page-user message-anon message-user',
 	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
 );
 
@@ -1177,12 +1158,11 @@ $messages['ko'] = array(
 );
 
 $messages['ku-latn'] = array(
-	'hawelcomeedit' => 'HAWelcomeEdit',
+
 );
 
 $messages['lb'] = array(
 	'welcome-message-log' => 'Begréissung vun engem neien Auteur',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 $messages['mk'] = array(
@@ -1221,7 +1201,6 @@ $messages['mk'] = array(
 
 Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здраво и добре дојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 Оставете ми порака на ако ви треба било каква помош!',
@@ -1270,22 +1249,18 @@ Sila tinggalkan pesanan di [[$2|laman perbincangan saya]] jika anda memerlukan b
 	'welcome-message-user-staff' => '==Selamat datang==
 
 Selamat sejahtera,
-
 Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]]. Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu. Kunjungi [[w:c:community|Community Central]] untuk mengikuti perkembangan melalui [[w:c:community:Blog:Wikia_Staff_Blog|blog kakitangan]], mengemukakan soalan di [[w:c:community:Special:Forum|forum]], menyertai [[w:c:community:Help:Webinars|siri webinar]], atau bersembang secara langsung dengan ahli-ahli Wikia yang lain. Selamat menyunting! $3',
 	'welcome-message-anon-staff' => '==Selamat datang==
 
 Selamat sejahtera,
-
 Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]]. Kami menggalakkan semua penyumbang untuk [[Special:UserLogin|membuat nama pengguna]] supaya anda dapat mengikuti sumbangan anda, mengakses lebih banyak ciri Wikia serta berkenalan dengan ahli-ahli komuniti {{SITENAME}} yang lain.
 
 Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu, kemudian kunjungi [[w:c:community|Community Central]] untuk keterangan lanjut. Selamat menyunting! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum bantuan]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
 
 Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!',
 	'welcome-message-wall-user-staff' => 'Selamat sejahtera,
-
 Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]]. Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu. Kunjungi [[w:c:community|Community Central]] untuk mengikuti perkembangan melalui [[w:c:community:Blog:Wikia_Staff_Blog|blog kakitangan]], mengemukakan soalan di [[w:c:community:Special:Forum|forum]], menyertai [[w:c:community:Help:Webinars|siri webinar]], atau bersembang secara langsung dengan ahli-ahli Wikia yang lain. Selamat menyunting!',
 	'welcome-message-wall-anon' => "Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
 
@@ -1293,7 +1268,6 @@ Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]
 
 Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!",
 	'welcome-message-wall-anon-staff' => 'Selamat sejahtera,
-
 Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]]. Kami menggalakkan semua penyumbang untuk [[Special:UserLogin|membuat nama pengguna]] supaya anda dapat mengikuti sumbangan anda, mengakses lebih banyak ciri Wikia serta berkenalan dengan ahli-ahli komuniti {{SITENAME}} yang lain.
 
 Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu, kemudian kunjungi [[w:c:community|Community Central]] untuk keterangan lanjut. Selamat menyunting!',
@@ -1339,7 +1313,6 @@ Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
 Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hei, velkommen til {{SITENAME}}! Takk for at du redigerte siden [[:$1]].
 
 Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!',
@@ -1399,12 +1372,10 @@ Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]
 
 Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[MediaWiki:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HA Welkom bewerken',
 	'welcome-message-wall-user' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
 Laat een bericht voor me achter als ik ergens mee kan helpen.',
 	'welcome-message-wall-user-staff' => "Hallo,
-
 Welkom bij {{SITENAME}} en dank u wel voor het bewerken van de [[:$1]] pagina. Als u hulp nodig heeft, begin dan met het bekijken van onze [[Help:Contents|help pagina's]]. Bezoek [[w:c:community|de centrale gemeenschap]] om op de hoogte te blijven van onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkers blog]], stel uw vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinar series]], of chat live met mede Wikianen. Veel plezier met bewerken!",
 	'welcome-message-wall-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
 
@@ -1486,12 +1457,10 @@ S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|pagin
 	'welcome-message-anon-staff' => "== Benvenguda ==
 
 Bonjorn,
-
 Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
 
 S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum d’ajuda]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Bonjorn, benvenguda sus {{SITENAME}} ! Mercés d'aver modificat la pagina [[:$1]].
 
 Daissatz-me un messatge se vos pòdi ajudar per qué que siá !",
@@ -1507,7 +1476,6 @@ S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|pagin
 
 Trantalhetz pas a daissar un messatge se vos pòdi ajudar per qué que siá !",
 	'welcome-message-wall-anon-staff' => "Bonjorn,
-
 Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
 
 S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions!",
@@ -1579,7 +1547,6 @@ Miłego pobytu na {{SITENAME}}!
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Cześć, jestem administratorem społeczności {{SITENAME}}! Dziękujemy Ci za edycję na stronie [[:$1]]!
 
 Jeżeli potrzebujesz pomocy na początku przygody z Fandomem, zajrzyj na [[Pomoc:Podstawy|strony pomocy]] lub skontaktuj się bezpośrednio ze mną lub [[Special:Listusers/sysop|innym administratorem]] tej wiki. Podstawową pomoc uzyskasz również w [[w:c:spolecznosc|Centrum Społeczności]], gdzie możesz zajrzeć na [[w:c:spolecznosc:Specjalna:Forum|forum]] i [[w:c:spolecznosc:Blog:Wikia News|blogi]].
@@ -1660,12 +1627,10 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
 
 Për piasì ch'am lassa un mëssagi se i peuss giuté con cheicòs!",
 	'welcome-message-wall-user-staff' => "Cerea,
-
 Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. S'a l'ha damanca d'agiut, ch'a ancamin-a an dasend n'ociada a nòstre [[Help:Contents|pàgine d'agiut]]. Ch'a vìsita la [[w:c:community|Sentral dla Comunità]] për ten-se anformà con nòstr [[w:c:community:Blog:Wikia_Staff_Blog|ëscartari d'anformassion]], ch'a ciama dle chestion an s'nòstra [[w:c:community:Special:Forum|piassa dla comunità]], ch'a partìssipa a la nòstra [[w:c:community:Help:Webinars|serie ëd seminari an sl'aragnà]], o ch'a ciaciara dal viv con dj'amis Wikian. Bon-e modìfiche!",
 	'welcome-message-wall-anon' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
 
@@ -1673,7 +1638,6 @@ Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. S'a
 
 Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
 	'welcome-message-wall-anon-staff' => "Cerea,
-
 Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. I ancoragioma tuti ij contributor a [[Special:UserLogin|creé në stranòm]], parèj a peul ten-e ël cont ëd soe contribussion, acede a d'àutre caraterìstiche ëd Wikia e conòsse ël rest ëd la comunità ëd {{SITENAME}}.
 
 S'a l'ha damanca d'agiut, ch'a daga për prima còsa n'ociada a nòstra [[Help:Contents|pàgina d'agiut]] e peui ch'a vìsita la [[w:c:community|Sentral dla comunità]] për amprende ëd pi. Bon-e modìfiche!",
@@ -1755,7 +1719,6 @@ Divirta-se em {{SITENAME}}
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Olá, eu sou um administrador da comunidade {{SITENAME}}. Bem-vindo e obrigado por sua edição de [[: $1]]!
 
 '''[[Especial:Criar uma conta|Por favor inicie sua sessão e crie um nome de usuário]]'''. É uma maneira fácil de manter o controle de suas contribuições e ajuda você a comunicar-se com o resto da comunidade.
@@ -1797,7 +1760,6 @@ Divirta-se em {{SITENAME}}!",
 $messages['roa-tara'] = array(
 	'welcome-message-log' => 'Bovègne a le condrebbutore nuève',
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum d'aijute]] | [[w:sblog|blog]])</small>",
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-description' => "Manne 'nu messàgge de bovègne a le utinde apprisse ca onne fatte 'u prime cangiamende",
 );
 
@@ -1861,7 +1823,6 @@ $3',
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здравствуйте и добро пожаловать на {{SITENAME}}. Я являюсь администратором этой вики и благодарю вас за вашу правку на странице «[[:$1]]». 
 
 Если у вас есть вопросы, посмотрите [[Справка:Начало|страницы справки]], а также обращайтесь ко мне или к [[Служебная:Listusers/sysop|другим администраторам]] сообщества. Найти ответы на общие вопросы можно на [[w:c:ru.community:Special:Forum|форуме]] и в [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогах сотрудников]] на [[w:c:ru.community|Вики Сообщества]].
@@ -1976,7 +1937,6 @@ Hej, välkommen till {{SITENAME}}. Tack för ditt redigera till [[:$1]] sidan.
 
 Om du behöver hjälp, och det finns inga lokala administratörer här kanske du vill besöka [[wikia:Forum:Community Central Forum|forumen på Community Central Wiki]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|hjälpforum]] | [[w:sblog|blogg]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hej, välkommen till {{SITENAME}}! Tack för din redigering på sidan [[:$1]].
 
 Lämna ett meddelande på min diskussionssida om jag kan hjälpa till med något!',
@@ -2066,7 +2026,6 @@ $messages['th'] = array(
 
 ถ้าคุณต้องการให้ช่วย และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|กระดานช่วยเหลือ]] | [[w:sblog|บล๊อก]])</small>',
-	'hawelcomeedit' => 'ยินดีต้อนรับสู่ HA',
 );
 
 $messages['tl'] = array(
@@ -2107,7 +2066,6 @@ Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pah
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
 dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3",
 	'staffsig-text' => ' [[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|poro ng tulong]] | [[w:sblog|blog]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
 
 Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!',
@@ -2201,7 +2159,6 @@ $messages['uk'] = array(
 
 Творчих успіхів! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|форум допомоги]] | [[w:sblog|блог]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Вітаємо вас на {{SITENAME}}! Дякуємо за ваші редагування на сторінці [[:$1]].
 
 Будь ласка, залишіть мені повідомлення, якщо я можу вам допомогти!',
@@ -2255,7 +2212,6 @@ Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận]] của tôi 
 	'welcome-message-user-staff' => '==Hoan nghênh==
 
 Xin chào,
-
 Hoan nghênh vì bạn đã đến thăm {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]]. Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, xin hãy bắt đầu vào [[Help:Mục lục|trang trợ giúp]] hoặc có lẽ bạn sẽ cần đến [[w:vi:Special:Forum|Diễn đàn Cộng đồng wikia]]. Bạn cũng có thể xem qua [[w:vi:Blog:Trang chủ|blog cộng đồng]] của chúng tôi để cập nhật với những tin tức và sự kiện hoặc tham gia tán gẫu với những Wikian khác. Biên tập vui vẻ! $3',
 	'welcome-message-anon-staff' => "==Xin chào==
 
@@ -2271,7 +2227,6 @@ Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần 
 
 Biên tập vui vẻ! $3",
 	'staffsig-text' => '<noinclude>[[w:forums|help forum]][[w:sblog|blog]]</noinclude>[[{{ns:user}}:$1|$2]]<staff /> <small>(<a href="http://congdong.wikia.com/wiki/Special:Forum">diễn đàn trợ giúp</a> | <a href="http://congdong.wikia.com/wiki/Blog:Trang_chủ">blog</a> | <a href="http://congdong.wikia.com/wiki/Trang_Chính">Cộng đồng Wikia tiếng Việt</a>)</small>',
-	'hawelcomeedit' => 'Sửa đổi thông điệp chào đón',
 	'welcome-message-wall-user' => 'Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn sửa đổi của bạn tại trang [[:$1]].
 
 Xin vui lòng để lại cho tôi một tin nhắn nếu tôi có thể giúp với bất cứ điều gì!',
@@ -2356,7 +2311,6 @@ $3',
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /><small>（[[w:forums|帮助论坛]] | [[w:sblog|博客]]）</small>',
-	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
 如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
@@ -2448,7 +2402,6 @@ $3',
 
 $3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|論壇求助]] | [[w:sblog|部落格]])</small>',
-	'hawelcomeedit' => '歡迎工具編輯',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理員！歡迎您參與這個社群，並且感謝您對頁面[[:$1]]所作的編輯。
 
 如果您需要幫助，請訪問[[Help:Getting Started|幫助頁面]]，或者聯絡我們以及[[Special:Listusers/sysop|另外一位管理員]]。如果您需要一般性的幫助，請訪問[[w:c:zh.community|社區中心]]、[[w:c:zh.community:Special:Forum|中心論壇]]以及[[w:c:zh.community:博客:社区中心|員工網誌]]了解更多內容。

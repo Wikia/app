@@ -1294,7 +1294,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PROD:
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
-		case WIKIA_ENV_STABLE:
 		case WIKIA_ENV_SANDBOX:
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
