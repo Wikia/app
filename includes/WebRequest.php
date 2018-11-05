@@ -1364,7 +1364,7 @@ class FauxRequest extends WebRequest {
 	}
 
 	public function getRequestURL() {
-		return '/wiki/Operative';
+		$this->notImplemented( __METHOD__ );
 	}
 
 	/**

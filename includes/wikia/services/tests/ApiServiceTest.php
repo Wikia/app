@@ -37,7 +37,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 		$this->mockGlobalVariable( "wgDevelEnvironment", false );
 
 		# user data doesn't matter, just make sure loginAsJson is called and the data is passed along to Http::get
-		$fakeUserData = [ "curlOptions" => "COOKIE_STUFF", 'headers' => [] ];
+		$fakeUserData = [ "curlOptions" => "COOKIE_STUFF" ];
 		$this->mockStaticMethod( "ApiService", "loginAsUser", $fakeUserData );
 
 		$fakeJson = '{"a": "b"}'; // any non-null json formatted data

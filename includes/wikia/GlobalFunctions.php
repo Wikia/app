@@ -1502,18 +1502,6 @@ function wfHttpsToHttp( $url ) {
 	return preg_replace( '/^https:\/\//', 'http://', $url );
 }
 
-function wfGetStagingEnvForUrl( $url ) : string {
-	$host = parse_url( $url, PHP_URL_HOST );
-	if ( $host === false ) {
-		return false;
-	}
-	$pattern = '/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.(?:wikia|fandom)\\.com$/';
-	if ( preg_match( $pattern, $host, $matches ) ) {
-		return $matches[1];
-	}
-	return '';
-}
-
 function wfHttpsAllowedForURL( $url ): bool {
 	global $wgWikiaDevDomain, $wgFandomDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
