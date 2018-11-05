@@ -74,6 +74,7 @@ class BannerNotificationsController extends WikiaController {
 
 			\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . " - {$message}\n", [
 				'session_id' => session_id(),
+				'session_data' => json_encode( $_SESSION ),
 			] );
 		}
 	}
@@ -92,6 +93,7 @@ class BannerNotificationsController extends WikiaController {
 	public function executeConfirmation() {
 		\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, [
 			'session_id' => session_id(),
+			'session_data' => json_encode( $_SESSION ),
 		] );
 
 		if ( !empty( $_SESSION[self::SESSION_KEY] ) ) {
