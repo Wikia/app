@@ -345,8 +345,8 @@ node("docker-daemon") {
         ])
 
         sh("""cat > docker/sandbox/k8s.yaml <<EOL
-  ${k8s}
-  EOL""")
+${k8s}
+EOL""")
 
         sh("cat docker/sandbox/k8s.yaml")
       }
