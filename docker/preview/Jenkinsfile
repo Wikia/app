@@ -119,7 +119,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 }
 
 stage('Slack notify start') {
-  notifyBuild('STARTED')
+  // notifyBuild('STARTED')
 }
 
 node("docker-daemon") {
@@ -402,7 +402,7 @@ node("docker-daemon") {
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result)
+      // notifyBuild(currentBuild.result)
     }
   }
 }
