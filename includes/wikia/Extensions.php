@@ -1762,12 +1762,6 @@ if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }
 
-include "$IP/extensions/wikia/LanguageWikisIndex/LanguageWikisIndex.setup.php";
-
-if ( $wgIncludeClosedWikiHandler ) {
-	include "$IP/extensions/wikia/WikiFactory/Loader/closedWikiHandler.php";
-}
-
 // SRE-116
 include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
 

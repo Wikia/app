@@ -1,30 +1,23 @@
 <?php
 
-$wgAutoloadClasses['CloseWikiPage'] = __DIR__ . '/../Close/SpecialCloseWiki_body.php';
-$wgSpecialPages['CloseWiki'] = 'CloseWikiPage';
+$GLOBALS['wgAutoloadClasses']['CloseWikiPage'] = __DIR__ . '/../Close/SpecialCloseWiki_body.php';
+$GLOBALS['wgSpecialPages']['CloseWiki'] = 'CloseWikiPage';
 
-$wgSuppressCommunityHeader = true;
-$wgAllowSiteCSSOnRestrictedPages = false;
-$wgInlineStartupScript = true;
+$GLOBALS['wgSuppressCommunityHeader'] = true;
+$GLOBALS['$wgAllowSiteCSSOnRestrictedPages'] = false;
+$GLOBALS['wgInlineStartupScript'] = true;
 
 // load ALL ResourceLoader modules from shared domain
-$wgLoadScript = $wgCdnRootUrl . $wgLoadScript;
+$GLOBALS['wgLoadScript'] = $GLOBALS['wgCdnRootUrl'] . $GLOBALS['wgLoadScript'];
 
 // reset theme
-SassUtil::$oasisSettings = $wgOasisThemes['oasis'];
+SassUtil::$oasisSettings = $GLOBALS['wgOasisThemes']['oasis'];
 
 /**
  * SUS-4734: Hijack MediaWiki execution early on to render the closed wiki error page
  */
-$wgExtensionFunctions[] = function () {
-	global $wgRequest, $wgTitle, $wgOut, $wgDBname;
-
-	$requestUrl = $wgRequest->getRequestURL();
-
-	// allow some other extensions  to render their content instead
-	if ( !Hooks::run( 'ClosedWikiHandler', [ $requestUrl ] ) ) {
-		return;
-	}
+$GLOBALS['wgExtensionFunctions'][] = function () {
+	global $wgTitle, $wgOut, $wgDBname;
 
 	$wgTitle = SpecialPage::getTitleFor( 'CloseWiki', "information/$wgDBname" );
 
@@ -48,13 +41,7 @@ $wgExtensionFunctions[] = function () {
  * @param $subtitle
  * @return bool
  */
-$wgHooks['AfterPageHeaderSubtitle'][] = function ( &$subtitle ): bool {
+$GLOBALS['wgHooks']['AfterPageHeaderSubtitle'][] = function ( &$subtitle ): bool {
 	$subtitle = '';
-	return false;
-};
-
-$wgHooks['GenerateRobotsRules'][] = function() {
-	// For closed wiki, don't put rules for domain root in robots.txt file.
-	// This is used only when there are language wikis left.
 	return false;
 };

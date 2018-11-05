@@ -57,15 +57,10 @@ class ApiService {
 			return false;
 		}
 
-		$options = [ 'headers' => [] ];
+		$options = [];
 		if ( startsWith( $cityUrl, "https://" ) ) {
 			$cityUrl = wfHttpsToHttp( $cityUrl );
-			$options[ 'headers' ][ 'Fastly-SSL' ] = 1;
-		}
-
-		$staging = wfGetStagingEnvForUrl( $cityUrl );
-		if ( $staging ) {
-			$options[ 'headers' ][ 'X-Staging' ] = $staging;
+			$options[ 'headers' ] = [ 'Fastly-SSL' => 1, ];
 		}
 
 		// request JSON format of API response
