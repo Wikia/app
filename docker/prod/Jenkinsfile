@@ -257,7 +257,7 @@ node("docker-daemon") {
         if (!imageExists) {
           // SUS-5284 - make the image a bit smaller
           sh("cp docker/.dockerignore ..")
-          sh("docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+          sh("docker build . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
           sh("docker push $nginxImage:$imageTag")
         } else {
           println("Nginx image tag ($imageTag) already exists")

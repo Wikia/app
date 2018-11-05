@@ -175,7 +175,7 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-              branch: 'dev',
+              branch: 'SUS-5787',
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
           }
         },
