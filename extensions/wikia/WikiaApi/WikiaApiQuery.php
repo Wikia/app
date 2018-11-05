@@ -534,13 +534,6 @@ class WikiaApiQuery extends ApiQueryBase {
 		return true;
 	}
 
-	#---
-	public function deleteCacheData($key) {
-		global $wgMemc;
-		$wgMemc->delete(md5($key));
-		return true;
-	}
-
 	/*
 	 *
 	 * user's verification

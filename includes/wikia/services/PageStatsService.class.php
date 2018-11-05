@@ -108,17 +108,9 @@ class PageStatsService {
 	 * Regenerate / invalidate service cache for current page
 	 */
 	public function regenerateData() {
-		global $wgMemc;
-
 		wfProfileIn(__METHOD__);
 
 		wfDebug(__METHOD__ . ": page #{$this->pageId}\n");
-
-		// invalidate cached data from getCurrentRevision()
-		$wgMemc->delete($this->getKey('current-revision'));
-
-		// invalidate cached data from getPreviousEdits()
-		$wgMemc->delete($this->getKey('previous-edits'));
 
 		// invalidate cached data from getCommentsCount()
 		$title = $this->getTitle();
