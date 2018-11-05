@@ -13,12 +13,22 @@ class TopArticles extends MediaWikiAPI {
 		$cacheTTL = 3600; // an hour
 
 		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-top-articles' ), $cacheTTL, function () {
+			global $wgContentNamespaces;
+
 			$responseData = [];
 			$mainPageId = \Title::newMainPage()->getArticleID();
-			$insightData =
-				( new \InsightsContext( new \InsightsPopularPagesModel() ) )->fetchData();
+			$params = [
+				'abstract' => false,
+				'expand' => true,
+				'limit' => self::LIMIT,
+				'namespaces' => implode( ',', $wgContentNamespaces )
+			];
+			
+			$data = \F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
 
-			foreach ( $insightData as $articleId => $articleData ) {
+			var_dump($data); die();
+
+			foreach ( $data['items'] as $articleId => $articleData ) {
 				if ( count( $responseData ) === self::LIMIT ) {
 					break;
 				}
