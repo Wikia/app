@@ -12,11 +12,13 @@ class TopArticles extends MediaWikiAPI {
 	public function get() {
 		$cacheTTL = 3600; // an hour
 
-		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-top-articles' ), $cacheTTL, function () {
+//		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-top-articles' ), $cacheTTL, function () {
 			$responseData = [];
 			$mainPageId = \Title::newMainPage()->getArticleID();
 			$insightData =
 				( new \InsightsContext( new \InsightsPopularPagesModel() ) )->fetchData();
+
+			var_dump($insightData); die();
 
 			foreach ( $insightData as $articleId => $articleData ) {
 				if ( count( $responseData ) === self::LIMIT ) {
@@ -35,7 +37,7 @@ class TopArticles extends MediaWikiAPI {
 			}
 
 			return $responseData;
-		} );
+//		} );
 	}
 
 }
