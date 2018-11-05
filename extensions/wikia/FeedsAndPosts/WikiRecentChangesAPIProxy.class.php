@@ -47,7 +47,7 @@ class WikiRecentChangesAPIProxy {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
 			$title = $article['title'];
 
-			// filter out main page
+			// filter out main page and pages we've already seen
 			if ( $article['pageid'] !== $mainPageId && empty( $titlesMap[$title] ) ) {
 				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
 					$articlesWithMajorChange[] = $article;
