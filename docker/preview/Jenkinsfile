@@ -229,7 +229,7 @@ node("docker-daemon") {
     stage("Create new release branches") {
       sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
         dir("app") {
-          createReleaseBranch(appReleaseBranch)
+          createReleaseBranch('SUS-5758')
         }
 
         dir("config") {
