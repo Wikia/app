@@ -56,24 +56,26 @@ node("docker-daemon") {
   }
 
   stage("Clone repositories") {
-    dir("app") {
-      git url: "git@github.com:Wikia/app.git",
-        branch: params.app_branch,
-        credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+    parallel {
+      dir("app") {
+        git url: "git@github.com:Wikia/app.git",
+          branch: params.app_branch,
+          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-      appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+        appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-      println("Wikia/app commit: $appHash")
-    }
+        println("Wikia/app commit: $appHash")
+      }
 
-    dir("config") {
-      git url: "git@github.com:Wikia/config.git",
-        branch: params.config_branch,
-        credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+      dir("config") {
+        git url: "git@github.com:Wikia/config.git",
+          branch: params.config_branch,
+          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-      configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+        configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-      println("Wikia/config commit: $configHash")
+        println("Wikia/config commit: $configHash")
+      }
     }
 
     imageTag = "$appHash.$configHash"
@@ -82,60 +84,64 @@ node("docker-daemon") {
   }
 
   stage("Bump cachebuster and version") {
-    dir("app") {
-      sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
-      sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
-    }
-
-    dir("config") {
-      sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
-    }
-  }
-
-  stage("Build and push php image") {
-    dir("app") {
-      def status = sh(script: """
-        curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-        -w "%{http_code}" -s -I -o /dev/null \
-        -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
-      """, returnStdout: true).trim()
-
-      if (status == "200") {
-        imageExists = true
+    parallel {
+      dir("app") {
+        sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+        sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
       }
 
-      if (!imageExists) {
-        // SUS-5284 - make the image a bit smaller
-        sh("cp docker/.dockerignore ..")
-        sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
-        sh("docker push $mediawikiImage:$imageTag")
-      } else {
-        println("Php image tag ($imageTag) already exists")
+      dir("config") {
+        sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
       }
     }
   }
 
-  stage("Build and push nginx image") {
-    dir("app") {
-      def status = sh(script: """
-        curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-        -w "%{http_code}" -s -I -o /dev/null \
-        -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-nginx/${imageTag}"
-      """, returnStdout: true).trim()
+  parallel {
+    stage("Build and push php image") {
+      dir("app") {
+        def status = sh(script: """
+          curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+          -w "%{http_code}" -s -I -o /dev/null \
+          -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
+        """, returnStdout: true).trim()
 
-      if (status == "200") {
-        imageExists = true
+        if (status == "200") {
+          imageExists = true
+        }
+
+        if (!imageExists) {
+          // SUS-5284 - make the image a bit smaller
+          sh("cp docker/.dockerignore ..")
+          sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+          sh("docker push $mediawikiImage:$imageTag")
+        } else {
+          println("Php image tag ($imageTag) already exists")
+        }
       }
+    }
 
-      if (!imageExists) {
-        // SUS-5284 - make the image a bit smaller
-        sh("cp docker/.dockerignore ..")
+    stage("Build and push nginx image") {
+      dir("app") {
+        def status = sh(script: """
+          curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+          -w "%{http_code}" -s -I -o /dev/null \
+          -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-nginx/${imageTag}"
+        """, returnStdout: true).trim()
 
-        sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+        if (status == "200") {
+          imageExists = true
+        }
 
-        sh("docker push $nginxImage:$imageTag")
-      } else {
-        println("Nginx image tag ($imageTag) already exists")
+        if (!imageExists) {
+          // SUS-5284 - make the image a bit smaller
+          sh("cp docker/.dockerignore ..")
+
+          sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+
+          sh("docker push $nginxImage:$imageTag")
+        } else {
+          println("Nginx image tag ($imageTag) already exists")
+        }
       }
     }
   }
