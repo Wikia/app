@@ -60,7 +60,7 @@ class WikiRecentChangesAPIProxy {
 
 		$resultArticles = array_slice( $articlesWithMajorChange, 0, self::LIMIT );
 
-		if ( count( $resultArticles ) < 4 ) {
+		if ( count( $resultArticles ) < self::LIMIT ) {
 			$resultArticles =
 				array_slice( array_merge( $articlesWithMajorChange, $articlesWithMinorChange ), 0,
 					self::LIMIT );
