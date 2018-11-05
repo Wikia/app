@@ -56,27 +56,31 @@ node("docker-daemon") {
   }
 
   stage("Clone repositories") {
-    parallel {
-      dir("app") {
-        git url: "git@github.com:Wikia/app.git",
-          branch: params.app_branch,
-          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+    parallel (
+      "app": {
+        dir("app") {
+          git url: "git@github.com:Wikia/app.git",
+            branch: params.app_branch,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-        appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+          appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-        println("Wikia/app commit: $appHash")
+          println("Wikia/app commit: $appHash")
+        }
       }
 
-      dir("config") {
-        git url: "git@github.com:Wikia/config.git",
-          branch: params.config_branch,
-          credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+      "config": {
+        dir("config") {
+          git url: "git@github.com:Wikia/config.git",
+            branch: params.config_branch,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-        configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+          configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-        println("Wikia/config commit: $configHash")
+          println("Wikia/config commit: $configHash")
+        }
       }
-    }
+    )
 
     imageTag = "$appHash.$configHash"
 
@@ -84,16 +88,20 @@ node("docker-daemon") {
   }
 
   stage("Bump cachebuster and version") {
-    parallel {
-      dir("app") {
-        sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
-        sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
+    parallel (
+      "app": {
+        dir("app") {
+          sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+          sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
+        }
       }
 
-      dir("config") {
-        sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
+      "config": {
+        dir("config") {
+          sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
+        }
       }
-    }
+    )
   }
 
   parallel {
