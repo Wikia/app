@@ -18,6 +18,14 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
+wrap([$class: 'BuildUser']) {
+  try {
+    buildUser = "${BUILD_USER}"
+  } catch (MissingPropertyException ex) {
+    buildUser = "Jenkins"
+  }
+}
+
 node("docker-daemon") {
   def imageExists = false
   def buildUser = "Anonymous"
@@ -25,7 +33,7 @@ node("docker-daemon") {
   def configHash
   def imageTag
 
-  stage("Log version") {
+  stage("Fetch version") {
     def deploymentInfo
 
     try {
@@ -48,13 +56,6 @@ node("docker-daemon") {
   }
 
   stage("Clone repositories") {
-    wrap([$class: 'BuildUser']) {
-      try {
-        buildUser = "${BUILD_USER}"
-      } catch (MissingPropertyException ex) {
-        buildUser = "Jenkins"
-      }
-    }
     dir("app") {
       git url: "git@github.com:Wikia/app.git",
         branch: params.app_branch,

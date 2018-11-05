@@ -113,6 +113,18 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
 }
 
+wrap([$class: 'BuildUser']) {
+  try {
+    buildUser = "${BUILD_USER}"
+  } catch (MissingPropertyException ex) {
+    buildUser = "Jenkins"
+  }
+}
+
+stage('Slack notify start') {
+  notifyBuild('STARTED')
+}
+
 node("docker-daemon") {
   def imageExists = false
   def buildUser = "Anonymous"
@@ -148,13 +160,6 @@ node("docker-daemon") {
     }
 
     stage("Clone repositories") {
-      wrap([$class: 'BuildUser']) {
-        try {
-          buildUser = "${BUILD_USER}"
-        } catch (MissingPropertyException ex) {
-          buildUser = "Jenkins"
-        }
-      }
       dir("app") {
         git url: "git@github.com:Wikia/app.git",
           branch: 'origin/dev',
@@ -182,7 +187,7 @@ node("docker-daemon") {
       }
     }
 
-    stage("Log version") {
+    stage("Fetch version") {
       def deploymentInfo
 
       withDockerContainer(kubectlImage) {

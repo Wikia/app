@@ -68,6 +68,18 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
 }
 
+wrap([$class: 'BuildUser']) {
+  try {
+    buildUser = "${BUILD_USER}"
+  } catch (MissingPropertyException ex) {
+    buildUser = "Jenkins"
+  }
+}
+
+stage('Slack notify start') {
+  notifyBuild('STARTED')
+}
+
 node("docker-daemon") {
   def currentAppBranch
   def currentConfigBranch
@@ -84,10 +96,6 @@ node("docker-daemon") {
   def appHash
   def configHash
   def imageTag
-
-  stage('Slack notify start') {
-      notifyBuild('STARTED')
-  }
 
   try {
     stage('Fetch version') {
@@ -138,14 +146,6 @@ node("docker-daemon") {
     }
 
     stage("Clone repositories") {
-      wrap([$class: 'BuildUser']) {
-          try {
-              buildUser = "${BUILD_USER}"
-          } catch (MissingPropertyException ex) {
-              buildUser = "Jenkins"
-          }
-      }
-
       def appBranch = currentAppBranch
       def configBranch = currentConfigBranch
 
