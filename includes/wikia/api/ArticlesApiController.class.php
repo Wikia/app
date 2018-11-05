@@ -133,6 +133,14 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
+		var_dump(
+			!empty( $this->wg->DataMartOriginalCityId ) ? $this->wg->DataMartOriginalCityId : $this->wg->CityId,
+			$ids,
+			$namespaces,
+			false,
+			self::MAX_ITEMS + 1 // compensation for Main Page
+		);
+
 		// This DataMartService method has
 		// separate caching
 		$articles = DataMartService::getTopArticlesByPageview(
@@ -142,6 +150,10 @@ class ArticlesApiController extends WikiaApiController {
 			false,
 			self::MAX_ITEMS + 1 // compensation for Main Page
 		);
+
+		var_dump( $articles );
+
+		die();
 
 		$collection = [];
 
