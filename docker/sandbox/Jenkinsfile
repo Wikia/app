@@ -67,7 +67,7 @@ node("docker-daemon") {
 
           println("Wikia/app commit: $appHash")
         }
-      }
+      },
 
       "config": {
         dir("config") {
@@ -94,7 +94,7 @@ node("docker-daemon") {
           sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
           sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
         }
-      }
+      },
 
       "config": {
         dir("config") {
