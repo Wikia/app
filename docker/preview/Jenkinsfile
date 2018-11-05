@@ -339,8 +339,8 @@ node("docker-daemon") {
           'SANDBOX_NAME': 'preview',
           'SANDBOX_ENVIRONMENT': 'preview',
           'SANDBOX_DATACENTER': datacenter,
-          'APP_VERSION': params.app_branch,
-          'CONFIG_VERSION': params.config_branch,
+          'APP_VERSION': appReleaseVersion,
+          'CONFIG_VERSION': configReleaseVersion,
           'REPLICAS': 4
         ])
 
