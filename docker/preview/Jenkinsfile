@@ -80,14 +80,14 @@ def createReleaseBranch(String releaseBranch) {
 
 // tag: release-xxx.xxx
 def createTag(String tag) {
-  doesTagExist = sh(script: "git tag --list ${{tag}}", returnStdout: true).trim()
+  doesTagExist = sh(script: "git tag --list ${tag}", returnStdout: true).trim()
 
   if (!doesTagExist.isEmpty()) {
-    println("Creating ${{tag}} tag")
-    sh(script: "git tag --annotate --message ${{tag}} ${{tag}}")
-    sh(script: "git push origin ${{tag}}")
+    println("Creating ${tag} tag")
+    sh(script: "git tag --annotate --message ${tag} ${tag}")
+    sh(script: "git push origin ${tag}")
   } else {
-    println("Tag ${{tag}} already exists")
+    println("Tag ${tag} already exists")
   }
 }
 
