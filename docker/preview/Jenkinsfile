@@ -170,14 +170,14 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-              branch: 'origin/dev',
+              branch: 'dev',
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
           }
         },
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-              branch: 'origin/dev',
+              branch: 'dev',
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
           }
         }
