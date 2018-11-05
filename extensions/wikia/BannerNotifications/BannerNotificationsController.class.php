@@ -72,7 +72,9 @@ class BannerNotificationsController extends WikiaController {
 				'options' => $options
 			];
 
-			\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . " - {$message}\n" );
+			\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . " - {$message}\n", [
+				'session_id' => session_id(),
+			] );
 		}
 	}
 
@@ -88,6 +90,10 @@ class BannerNotificationsController extends WikiaController {
 	 * Show confirmation stored in user session
 	 */
 	public function executeConfirmation() {
+		\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, [
+			'session_id' => session_id(),
+		] );
+
 		if ( !empty( $_SESSION[self::SESSION_KEY] ) ) {
 			$notifications = [];
 
