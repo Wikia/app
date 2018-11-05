@@ -51,19 +51,12 @@ class NotificationsController extends WikiaController {
 	 * Show notifications
 	 */
 	public function executeIndex() {
-		global $wgEnableArticleFeaturedVideo;
+		// render notifications
+		$this->notifications = self::$notificationsStack;
 
-		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		if ( !empty( $wgEnableArticleFeaturedVideo ) && !ArticleVideoContext::isFeaturedVideoEmbedded( $articleId ) ) {
-			// render notifications
-			$this->notifications = self::$notificationsStack;
-
-			// add CSS class to <body> (add padding to the bottom of article content)
-			if ( !empty( $this->notifications ) ) {
-				OasisController::addBodyClass( 'notifications' );
-			}
-		} else {
-			$this->skipRendering();
+		// add CSS class to <body> (add padding to the bottom of article content)
+		if ( !empty( $this->notifications ) ) {
+			OasisController::addBodyClass( 'notifications' );
 		}
 	}
 
