@@ -163,7 +163,11 @@ class RefreshLinks extends Maintenance {
 						$this->output( "$id\n" );
 						wfWaitForSlaves();
 					}
-					self::fixLinksFromArticle( $id );
+					try {
+						self::fixLinksFromArticle( $id );
+					} catch (Exception $e) {
+						$this->output("Couldn't refresh $id: $e" );
+					}
 				}
 			}
 		}
