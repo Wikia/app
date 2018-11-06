@@ -1012,11 +1012,6 @@ if (!empty( $wgEnablePaginatorExt )){
 	include( "$IP/extensions/wikia/Paginator/Paginator.setup.php" );
 }
 
-# Category Exhibition
-if (!empty($wgEnableCategoryExhibitionExt)) {
-		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
 /*
  * Send email from the app authenticated by a secret token
  */
@@ -1120,7 +1115,6 @@ if ( !empty( $wgEnableWikiFeatures ) ) {
 			'wgEnableAjaxPollExt',
 			'wgEnableBlogArticles',
 			'wgEnableArticleCommentsExt',
-			'wgEnableCategoryExhibitionExt',
 			'wgEnableWallExt',
 			'wgEnablePortableInfoboxEuropaTheme'
 		),
@@ -1771,3 +1765,12 @@ include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
 if ( empty( $wgDevelEnvironment ) ) {
 	include "$IP/lib/Wikia/src/SwiftSync/SwiftSync.setup.php";
 }
+
+// SEO-670 | SEO friendly category pages
+if ( !empty( $wgEnableCategoryPage3Ext ) ) {
+	include "$IP/extensions/wikia/CategoryPage3/CategoryPage3.setup.php";
+}
+
+// Category Exhibition
+// If you want to delete this extension remember to update CategoryPage3
+include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );

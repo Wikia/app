@@ -730,17 +730,17 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider processTrendingArticlesDataDataProvider
+	 * @dataProvider processTrendingPagesDataDataProvider
 	 *
 	 * @param $expected
 	 * @param $data
 	 */
-	public function testProcessTrendingArticlesData( $expected, $data ) {
+	public function testProcessTrendingPagesData( $expected, $data ) {
 		/* @var MercuryApi|PHPUnit_Framework_MockObject_MockObject $mercuryApiMock */
 		$mercuryApiMock =
-			$this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'processTrendingArticlesItem' ] )->getMock();
+			$this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'processTrendingPagesItem' ] )->getMock();
 
-		$mercuryApiMock->expects( $this->any() )->method( 'processTrendingArticlesItem' )->will(
+		$mercuryApiMock->expects( $this->any() )->method( 'processTrendingPagesItem' )->will(
 			$this->returnCallback(
 				function ( $item ) {
 					return $item . ' processed';
@@ -748,10 +748,10 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$this->assertEquals( $expected, $mercuryApiMock->processTrendingArticlesData( $data ) );
+		$this->assertEquals( $expected, $mercuryApiMock->processTrendingPagesData( $data ) );
 	}
 
-	public function processTrendingArticlesDataDataProvider() {
+	public function processTrendingPagesDataDataProvider() {
 		return [
 			[
 				'$expected' => null,

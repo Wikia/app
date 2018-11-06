@@ -1942,7 +1942,7 @@ class Wikia {
 		return 'mw-' . implode( '-', func_get_args() );
 	}
 
-	public static function purgeSurrogateKey( $key, $service = 'mediawiki' ) {
+	public static function purgeSurrogateKey( string $key, string $service = 'mediawiki' ) {
 		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key, $service );
 	}
 
