@@ -217,11 +217,11 @@ node("docker-daemon") {
         )
       }
 
-      def prevAppVersion = sh(
+      def prevAppTag = sh(
         script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
         returnStdout: true
       )
-      def prevConfigVersion = sh(
+      def prevConfigTag = sh(
         script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
         returnStdout: true
       )
@@ -230,7 +230,7 @@ node("docker-daemon") {
         timeout(time: 120, unit: 'SECONDS') {
           userInput = input(
             id: 'version_check',
-            message: "Updating preview\napp - ${prevAppVersion} ==> ${appReleaseVersion} \nconfig - ${prevConfigVersion} ==> ${configReleaseVersion}"
+            message: "Updating preview\napp - ${prevAppTag} ==> ${appReleaseTag} \nconfig - ${prevConfigTag} ==> ${configReleaseTag}"
           )
         }
       }
@@ -370,8 +370,8 @@ node("docker-daemon") {
           'SANDBOX_NAME': 'preview',
           'SANDBOX_ENVIRONMENT': 'preview',
           'SANDBOX_DATACENTER': datacenter,
-          'APP_VERSION': appReleaseVersion,
-          'CONFIG_VERSION': configReleaseVersion,
+          'APP_VERSION': appReleaseTag,
+          'CONFIG_VERSION': configReleaseTag,
           'REPLICAS': 4
         ])
 
