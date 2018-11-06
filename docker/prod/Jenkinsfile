@@ -43,8 +43,10 @@ def createTag() {
       if (doesTagExist.isEmpty()) {
         println("Creating ${newTag} tag")
         //TODO: Uncomment
-        // sh(script: "git tag --annotate --message ${newTag} ${newTag}")
-        // sh(script: "git push origin ${newTag}")
+        //sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        //  sh(script: "git tag --annotate --message ${newTag} ${newTag}")
+        //  sh(script: "git push origin ${newTag}")
+        //}
       } else {
         println("Tag ${newTag} already exists")
       }
@@ -178,8 +180,8 @@ node("docker-daemon") {
       if (params.source == 'preview') {
         // when releasing what is currently on preview
         // checkout a tag instead of a branch
-        appBranch = nextAppTag
-        configBranch = nextConfigTag
+        appBranch = nextAppBranch
+        configBranch = nextConfigBranch
       } else {
         // when releasing a hot fix
         // checkout a current branch that is on prod
@@ -195,11 +197,8 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: 'dev',
+                branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-            appBranch = "SUS-5787" // temp override
-            sh "git checkout ${appBranch}"
-            sh "git pull"
 
             nextAppTag = createTag()
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -210,11 +209,8 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: 'dev',
+                branch: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-
-            sh "git checkout ${configBranch}"
-            sh "git pull"
 
             nextConfigTag = createTag()
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
