@@ -143,8 +143,8 @@ node("docker-daemon") {
             println("nextAppTag: ${nextAppTag}, nextConfigTag: ${nextConfigTag}")
 
             //e.g release-230
-            nextAppBranch = nextAppTag.split('.')[0]
-            nextConfigBranch = nextConfigTag.split('.')[0]
+            nextAppBranch = nextAppTag.tokenize('.')[0]
+            nextConfigBranch = nextConfigTag.tokenize('.')[0]
           }
         },
         "prod": {
@@ -168,8 +168,8 @@ node("docker-daemon") {
           println("currentAppTag: ${currentAppTag}, currentConfigTag: ${currentConfigTag}")
 
           //e.g release-229
-          currentAppBranch = currentAppTag.split('.')[0]
-          currentConfigBranch = currentConfigTag.split('.')[0]
+          currentAppBranch = currentAppTag.tokenize('.')[0]
+          currentConfigBranch = currentConfigTag.tokenize('.')[0]
         }
       )
     }
