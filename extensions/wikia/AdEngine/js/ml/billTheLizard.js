@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.trackingOptIn',
-	'wikia.window',
+	'wikia.window'
 ], function (
 	adEngine3,
 	adContext,
@@ -96,6 +96,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					viewport_height: bucketizeViewportHeight(Math.max(
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
+					lang: zoneParams.getLanguage(),
 				}
 			},
 			projects: config.projects,

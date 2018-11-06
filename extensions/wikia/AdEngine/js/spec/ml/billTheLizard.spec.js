@@ -1,5 +1,4 @@
 /*global describe, it, expect, modules*/
-// TODO: Remove unused globals
 describe('ext.wikia.adEngine.ml.billTheLizard', function () {
 	'use strict';
 
