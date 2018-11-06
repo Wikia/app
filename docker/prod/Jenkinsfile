@@ -34,6 +34,8 @@ def createTag() {
     if (anyNewCommits.isEmpty()) {
       // no new commits
       println("No new commits - redeploy: ${currentLatestTag}")
+
+      return currentLatestTag
     } else {
       //e.g. 220.002
       def prevVersion = currentLatestTag.replace('release-', '')
