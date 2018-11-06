@@ -42,8 +42,9 @@ def createTag() {
 
       if (doesTagExist.isEmpty()) {
         println("Creating ${newTag} tag")
-        sh(script: "git tag --annotate --message ${newTag} ${newTag}")
-        sh(script: "git push origin ${newTag}")
+        //TODO: Uncomment
+        // sh(script: "git tag --annotate --message ${newTag} ${newTag}")
+        // sh(script: "git push origin ${newTag}")
       } else {
         println("Tag ${newTag} already exists")
       }
@@ -186,7 +187,7 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: appBranch,
+                branch: 'SUS-5758',
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             nextAppTag = createTag()
@@ -316,8 +317,9 @@ node("docker-daemon") {
 ${sjc}
 EOL""")
               // deploy to SJC
-              sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
-              rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+              //TODO: Uncomment
+              // sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+              // rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
             },
             "res": {
               def res = render(template, [
@@ -331,8 +333,9 @@ EOL""")
 ${res}
 EOL""")
               // deploy to RES
-              sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
-              rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+              //TODO: Uncomment
+              // sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+              // rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
             }
           )
         }
@@ -348,29 +351,32 @@ EOL""")
 
       withDockerContainer(kubectlImage) {
         // cron jobs only run on SJC
-        sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
+        //TODO: Uncomment
+        // sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
       }
     }
 
-    stage('Tag Jira tickets') {{
-      build job: 'tag-jira-tickets',
-        parameters: [
-          string(name: 'app_name', value: 'app'),
-          string(name: 'env', value: 'prod'),
-          string(name: 'previous_release', value: currentAppVersion),
-          string(name: 'current_release', value: nextAppVersion),
-          [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-        ],
-        wait: false
-    }}
+    stage('Tag Jira tickets') {
+      //TODO: Uncomment
+      // build job: 'tag-jira-tickets',
+      //   parameters: [
+      //     string(name: 'app_name', value: 'app'),
+      //     string(name: 'env', value: 'prod'),
+      //     string(name: 'previous_release', value: currentAppVersion),
+      //     string(name: 'current_release', value: nextAppVersion),
+      //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+      //   ],
+      //   wait: false
+    }
 
     stage('Trigger tests') {
-      build job: 'app-prod-push-event',
-        parameters: [
-          string(name: 'release', value: nextAppVersion),
-          string(name: 'datacenter', value: 'sjc')
-        ],
-        wait: false
+      //TODO: Uncomment
+      // build job: 'app-prod-push-event',
+      //   parameters: [
+      //     string(name: 'release', value: nextAppVersion),
+      //     string(name: 'datacenter', value: 'sjc')
+      //   ],
+      //   wait: false
     }
 
   } catch (e) {
