@@ -2,13 +2,33 @@
 
 namespace Wikia\FeedsAndPosts;
 
-class WikiRecentChanges extends MediaWikiAPI {
+class WikiRecentChanges {
 
 	const LIMIT = 4;
 	const MINOR_CHANGE_THRESHOLD = 100;
 
 	const IMAGE_WIDTH = 150;
 	const IMAGE_RATIO = 3 / 4;
+
+	private function requestAPI( $params ) {
+		$api = new \ApiMain( new \FauxRequest( $params ) );
+		$api->execute();
+
+		return $api->GetResultData();
+	}
+
+	private function getImage( $title, $width, $ratio ) {
+		$response = $this->requestAPI( [
+			'action' => 'imageserving',
+			'wisTitle' => $title,
+		] );
+
+		if ( isset( $response['image']['imageserving'] ) ) {
+			return Thumbnails::getThumbnailUrl( $response['image']['imageserving'], $width, $ratio );
+		}
+
+		return null;
+	}
 
 	private function filterOutSmallChangesAndCleanUp( $articles ) {
 		$articlesWithMinorChange = [];

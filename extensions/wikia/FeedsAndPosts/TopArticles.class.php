@@ -2,7 +2,7 @@
 
 namespace Wikia\FeedsAndPosts;
 
-class TopArticles extends MediaWikiAPI {
+class TopArticles {
 
 	const LIMIT = 12;
 
@@ -23,23 +23,19 @@ class TopArticles extends MediaWikiAPI {
 				'limit' => self::LIMIT,
 				'namespaces' => implode( ',', $wgContentNamespaces )
 			];
-			
 			$data = \F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
 
-			var_dump($data); die();
-
-			foreach ( $data['items'] as $articleId => $articleData ) {
+			foreach ( $data['items'] as $articleData ) {
 				if ( count( $responseData ) === self::LIMIT ) {
 					break;
 				}
 
-				$title = $articleData['link']['title'];
-
-				if ( $mainPageId !== $articleId ) {
+				if ( $mainPageId !== $articleData['id'] ) {
 					$responseData[] = [
-						'title' => $title,
-						'url' => $articleData['link']['url'],
-						'image' => $this->getImage( $title, self::IMAGE_WIDTH, self::IMAGE_RATIO ),
+						'title' => $articleData['title'],
+						'url' => $articleData['url'],
+						'image' => Thumbnails::getThumbnailUrl( $articleData['thumbnail'],
+							self::IMAGE_WIDTH, self::IMAGE_RATIO ),
 					];
 				}
 			}
