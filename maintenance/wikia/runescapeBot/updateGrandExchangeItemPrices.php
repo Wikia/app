@@ -180,7 +180,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	private function getTimeStampForRuneScape() {
 		try {
 			return $this->runescapeApi->getItemById( $this->getFirstItemIdFromTop100Items() )->getTimeStamp();
-		} catch (Exception $e) {
+		} catch ( Exception $e ) {
 			$this->logError( "unable to fetch timestamp from runescape, using default" );
 			return time();
 		}
