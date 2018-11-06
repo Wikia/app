@@ -1201,7 +1201,6 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
 
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
