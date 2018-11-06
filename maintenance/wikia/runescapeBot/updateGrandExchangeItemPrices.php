@@ -71,7 +71,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		$modulePage = $this->getWikiPageForTitle( $this->getModulePageTitle( $pageTitle ) );
 		$dataPage = $this->getWikiPageForTitle( $this->getDataPageTitle( $pageTitle ) );
 		$itemId = $this->getItemId( $modulePage->getRawText() );
-		$grandExchangeItem = $this->runescapeApi->getItemId( $itemId );
+		$grandExchangeItem = $this->runescapeApi->getItemById( $itemId );
 
 		$this->updateModulePage( $modulePage, $grandExchangeItem );
 		$this->updateDataPage( $dataPage, $grandExchangeItem );
@@ -180,7 +180,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	 */
 	private function getTimeStampForRuneScape() {
 		try {
-			return $this->runescapeApi->getItemId( $this->getFirstItemIdFromTop100Items() )->getTimeStamp();
+			return $this->runescapeApi->getItemById( $this->getFirstItemIdFromTop100Items() )->getTimeStamp();
 		} catch (Exception $e) {
 			$this->logError( "unable to fetch timestamp from runescape, using default" );
 			return time();

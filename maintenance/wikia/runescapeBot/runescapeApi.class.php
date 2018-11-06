@@ -11,7 +11,7 @@ class RunescapeApi {
 	 * @return GrandExchangeItem
 	 * @throws Exception
 	 */
-	public function getItemId( string $itemId ) : GrandExchangeItem  {
+	public function getItemById(string $itemId ) : GrandExchangeItem  {
 		$response = $this->makeRequestAndRetryOnFailure( sprintf( self::API_URL_TEMPLATE, $itemId ) );
 		if ( $response === false ) {
 			throw new Exception( "Error fetching data from runescape API" );
