@@ -36,11 +36,11 @@ class WikiRecentChanges {
 		$titlesMap = [];
 		$mainPageId = \Title::newMainPage()->getArticleID();
 
-		foreach ( $articles as &$article ) {
+		foreach ( $articles as $article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
 			$title = $article['title'];
 
-			// filter out main page
+			// filter out main page and pages we've already seen
 			if ( $article['pageid'] !== $mainPageId && empty( $titlesMap[$title] ) ) {
 				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
 					$articlesWithMajorChange[] = $article;
@@ -53,10 +53,13 @@ class WikiRecentChanges {
 
 		$resultArticles = array_slice( $articlesWithMajorChange, 0, self::LIMIT );
 
-		if ( count( $resultArticles ) < 4 ) {
+		if ( count( $resultArticles ) < self::LIMIT ) {
 			$resultArticles =
-				array_slice( array_merge( $articlesWithMajorChange, $articlesWithMinorChange ), 0,
-					self::LIMIT );
+				array_slice(
+					array_merge( $articlesWithMajorChange, $articlesWithMinorChange ),
+					0,
+					self::LIMIT
+				);
 		}
 
 		$resultTitles =
