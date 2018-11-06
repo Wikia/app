@@ -13,7 +13,7 @@ class Thumbnails {
 		}
 		catch ( \Exception $exception ) {
 			\Wikia\Logger\WikiaLogger::instance()
-				->warning( "Invalid thumbnail url provided for feeds and posts module", [
+				->debug( "Invalid thumbnail url provided for feeds and posts module", [
 					'thumbnailUrl' => $url,
 					'message' => $exception->getMessage(),
 				] );
