@@ -136,11 +136,11 @@ node("docker-daemon") {
             nextAppTag = sh(
               script: "echo \"${previewDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
               returnStdout: true
-            )
+            ).trim()
             nextConfigTag = sh(
-              script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\)r.*/\\1/'",
+              script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
               returnStdout: true
-            )
+            ).trim()
 
             //e.g release-230
             nextAppBranch = nextAppTag.split('.')[0]
@@ -159,11 +159,11 @@ node("docker-daemon") {
           currentAppTag = sh(
             script: "echo \"${currentDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
             returnStdout: true
-          )
+          ).trim()
           currentConfigTag = sh(
             script: "echo \"${currentDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
             returnStdout: true
-          )
+          ).trim()
 
           //e.g release-229
           currentAppBranch = currentAppTag.split('.')[0]
