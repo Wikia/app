@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.ml.billTheLizard', function () {
 			billTheLizard: true
 		},
 		pageInfoTracker: {},
-		zoneParams: {},
+		browserDetect: {},
 		deviceDetect: {},
 		instantGlobals: {},
 		log: {},
@@ -28,7 +28,7 @@ describe('ext.wikia.adEngine.ml.billTheLizard', function () {
 			mocks.executor,
 			mocks.services,
 			mocks.pageInfoTracker,
-			mocks.zoneParams,
+			mocks.browserDetect,
 			mocks.deviceDetect,
 			mocks.instantGlobals,
 			mocks.log,

@@ -7,8 +7,8 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
 	'ext.wikia.adEngine.services',
 	'ext.wikia.adEngine.tracking.pageInfoTracker',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.device',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.log',
@@ -22,8 +22,8 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	executor,
 	services,
 	pageInfoTracker,
-	zoneParams,
 	deviceDetect,
+	browserDetect,
 	doc,
 	instantGlobals,
 	log,
@@ -96,7 +96,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					viewport_height: bucketizeViewportHeight(Math.max(
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
-					lang: zoneParams.getLanguage(),
+					lang: pageParams.lang,
+					pv: pageParams.pv || '',
+					pv_global: win.pvNumberGlobal || 1,
+					os: browserDetect.getOS(),
+					browser: browserDetect.getBrowser() || 'unknown',
+					npa: pageParams.npa
 				}
 			},
 			projects: config.projects,
