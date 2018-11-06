@@ -636,7 +636,7 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingPagesData( int $limit, Title $category, bool $withImagesOnly	) {
+	public function getTrendingPagesData( int $limit, $category, bool $withImagesOnly	) {
 		global $wgContentNamespaces;
 
 		$params = [
