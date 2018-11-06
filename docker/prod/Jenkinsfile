@@ -199,6 +199,7 @@ node("docker-daemon") {
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
             appBranch = "SUS-5787" // temp override
             sh "git checkout ${appBranch}"
+            sh "git pull"
 
             nextAppTag = createTag()
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -213,6 +214,7 @@ node("docker-daemon") {
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             sh "git checkout ${configBranch}"
+            sh "git pull"
 
             nextConfigTag = createTag()
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
