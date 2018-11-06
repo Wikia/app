@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Interfaces\IRequest;
+
 class MercuryApiCategoryHandler {
 
 	const PARAM_CATEGORY_MEMBERS_FROM = 'categoryMembersFrom';
@@ -102,7 +104,7 @@ class MercuryApiCategoryHandler {
 		);
 	}
 
-	public static function getCategoryMembersFromFromRequest( WikiaRequest $request ) {
+	public static function getCategoryMembersFromFromRequest( IRequest $request ) {
 		return $request->getVal( self::PARAM_CATEGORY_MEMBERS_FROM, null );
 	}
 

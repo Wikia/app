@@ -169,8 +169,33 @@ class CategoryPage3Hooks {
 		return false;
 	}
 
+	public static function onMercuryArticleDetails( Article $article, &$articleDetails ): bool {
+		$out = $article->getContext()->getOutput();
+		$from = MercuryApiCategoryHandler::getCategoryMembersFromFromRequest(
+			$out->getRequest()
+		);
+		$canonicalUrl = static::getCanonicalUrl( $out, $from );
+
+		if ( !empty( $canonicalUrl ) ) {
+			$articleDetails['url'] = $canonicalUrl;
+		}
+
+		return true;
+	}
+
 	public static function onUserGetDefaultOptions( &$defaultOptions ) {
 		$defaultOptions[ static::GLOBAL_PREFERENCE_NAME ] = CategoryPageWithLayoutSelector::LAYOUT_CATEGORY_PAGE3;
+
+		return true;
+	}
+
+	public static function onWikiaCanonicalHref( &$url, OutputPage $out ): bool {
+		$from = $out->getRequest()->getVal( 'from' );
+		$canonicalUrl = static::getCanonicalUrl( $out, $from );
+
+		if ( !empty( $canonicalUrl ) ) {
+			$url = $canonicalUrl;
+		}
 
 		return true;
 	}
@@ -219,5 +244,19 @@ class CategoryPage3Hooks {
 
 		// Happens only when users try to get CategoryExhibition and we don't allow it
 		return null;
+	}
+
+	private static function getCanonicalUrl( OutputPage $out, $from ) {
+		$title = $out->getTitle();
+
+		if ( !$title->inNamespace( NS_CATEGORY ) ) {
+			return null;
+		}
+
+		if ( empty( $from ) ) {
+			return null;
+		}
+
+		return $title->getFullURL( [ 'from' => $from ] );
 	}
 }

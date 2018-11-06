@@ -381,8 +381,6 @@ class MercuryApiController extends WikiaController {
 			} elseif ( $title->getNamespace() == NS_SPECIAL ) {
 				$data['isSpecialRandom'] = $title->isSpecial('Randompage');
 			}
-
-			\Hooks::run( 'MercuryPageData', [ $title, &$data ] );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 

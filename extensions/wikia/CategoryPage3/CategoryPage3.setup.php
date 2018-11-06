@@ -23,7 +23,9 @@ $wgHooks['ArticleFromTitle'][] = 'CategoryPage3Hooks::onArticleFromTitle';
 $wgHooks['BeforeInitialize'][] = 'CategoryPage3Hooks::onBeforeInitialize';
 $wgHooks['GetPreferences'][] = 'CategoryPage3Hooks::onGetPreferences';
 $wgHooks['LinkerMakeExternalLink'][] = 'CategoryPage3Hooks::onLinkerMakeExternalLink';
+$wgHooks['MercuryArticleDetails'][] = 'CategoryPage3Hooks::onMercuryArticleDetails';
 $wgHooks['UserGetDefaultOptions'][] = 'CategoryPage3Hooks::onUserGetDefaultOptions';
+$wgHooks['WikiaCanonicalHref'][] = 'CategoryPage3Hooks::onWikiaCanonicalHref';
 
 $wgExtensionMessagesFiles[ 'CategoryPage3' ] = __DIR__ . '/CategoryPage3.i18n.php';
 
