@@ -14,6 +14,8 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
+// prevMajorVersion - e.g. 220
+// prevTag - e.g. 220.001
 def bump_minor(String prevMajorVersion, String prevTag) {
   prevMinorVersion = prevTag.tokenize('.')[1].replaceFirst("^0*", "")
 

@@ -6,39 +6,55 @@ def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 def rolloutStatusSjc = 1
 def rolloutStatusRes = 1
 
-def slackChannel = "#mw-prod-deployment"
-
 def render(String template, java.util.LinkedHashMap binding) {
   def engine = new groovy.text.SimpleTemplateEngine()
 
   return engine.createTemplate(template).make(binding).toString()
 }
 
-// tag: release-xxx.xxx
-def createTag(String tag) {
-  doesTagExist = sh(script: "git tag --list ${{tag}}", returnStdout: true).trim()
+// prevMajorVersion - e.g. 220
+// prevTag - e.g. 220.001
+def bump_minor(String prevMajorVersion, String prevTag) {
+  prevMinorVersion = prevTag.tokenize('.')[1].replaceFirst("^0*", "")
 
-  if (!doesTagExist.isEmpty()) {
-    println("Creating ${{tag}} tag")
-    sh(script: "git tag --annotate --message ${{tag}} ${{tag}}")
-    sh(script: "git push origin ${{tag}}")
-  } else {
-    println("Tag ${{tag}} already exists")
-  }
+  nextMinorVersion = (prevMinorVersion.toInteger() + 1).toString().padLeft(3, '0')
+
+  return "${prevMajorVersion}.${nextMinorVersion}"
 }
 
-def messageDetails(int rolloutStatus) {
-  if (rolloutStatus != 0) {
-    return [
-      emoji: ":siren:",
-      color: "#cc142c"
-    ]
+// Creates new tag if some commits were made to a release branch
+def createTag() {
+  // e.g release-220.005
+  def currentLatestTag = sh(script: "git describe --abbrev=0", returnStdout: true).trim()
+
+  if (params.source == 'hotfix') {
+    def anyNewCommits = sh(script: "git log HEAD...${currentLatestTag}", returnStdout: true).trim()
+
+    if (anyNewCommits.isEmpty()) {
+      // no new commits
+      println("No new commits - redeploy: ${currentLatestTag}")
+    } else {
+      //e.g. 220.002
+      def prevVersion = currentLatestTag.replace('release-').tokenize('.')
+      def newTag = "release-" + bump_minor(prevVersion[0], prevVersion)
+
+      doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
+
+      if (doesTagExist.isEmpty()) {
+        println("Creating ${newTag} tag")
+        sh(script: "git tag --annotate --message ${newTag} ${newTag}")
+        sh(script: "git push origin ${newTag}")
+      } else {
+        println("Tag ${newTag} already exists")
+      }
+
+      return newTag
+    }
   } else {
-    return [
-      emoji: ":checkmark:",
-      color: "#36a64f"
-    ]
+    println("Releasing a tag from preview - skip creating a new tag")
   }
+
+  return currentLatestTag
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
@@ -65,7 +81,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   // Send notifications
-  slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  println("Sending slack msg to #release-progress: ${summary}")
 }
 
 stage('Slack notify start') {
@@ -84,7 +101,6 @@ node("docker-daemon") {
   def nextConfigTag
 
   def buildUser = "Anonymous"
-  def imageExists = false
   def appHash
   def configHash
   def imageTag
@@ -101,98 +117,103 @@ node("docker-daemon") {
     stage('Fetch version') {
       def deploymentInfo
 
-      // when from preview fetch version from preview
-      // when from hotfix fetch version from prod
+      parallel (
+        "preview": {
+          // when source=preview fetch version from preview
+          if (params.source == 'preview') {
+            withDockerContainer(kubectlImage) {
+              previewDeploymentInfo = sh(
+                script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+                returnStdout: true
+              )
+            }
 
-      if (params.source == 'preview') {
-        withDockerContainer(kubectlImage) {
-          previewDeploymentInfo = sh(
-            script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+            //e.g. release-230.001
+            nextAppTag = sh(
+              script: "echo \"${previewDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
+              retunStdout: true
+            )
+            nextConfigTag = sh(
+              script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\)r.*/\\1/'",
+              returnStdout: true
+            )
+
+            //e.g release-230
+            nextAppBranch = nextAppTag.split('.')[0]
+            nextConfigBranch = nextConfigTag.split('.')[0]
+          }
+        },
+        "prod": {
+          withDockerContainer(kubectlImage) {
+            currentDeploymentInfo = sh(
+              script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+              returnStdout: true
+            )
+          }
+
+          //e.g release-229.001
+          currentAppTag = sh(
+            script: "echo \"${currentDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
             returnStdout: true
           )
+          currentConfigTag = sh(
+            script: "echo \"${currentDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
+            returnStdout: true
+          )
+
+          //e.g release-229
+          currentAppBranch = currentAppTag.split('.')[0]
+          currentConfigBranch = currentConfigTag.split('.')[0]
         }
-
-        nextAppTag = sh(
-          script: "echo \"${previewDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
-          retunStdout: true
-        )
-        nextConfigTag = sh(
-          script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\)r.*/\\1/'",
-          returnStdout: true
-        )
-
-        nextAppBranch = nextAppTag.split('.')[0]
-        nextConfigBranch = nextConfigTag.split('.')[0]
-      }
-
-      withDockerContainer(kubectlImage) {
-        currentDeploymentInfo = sh(
-          script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",
-          returnStdout: true
-        )
-      }
-
-      currentAppTag = sh(
-        script: "echo \"${currentDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
-        returnStdout: true
       )
-      currentConfigTag = sh(
-        script: "echo \"${currentDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
-        returnStdout: true
-      )
-
-      currentAppBranch = currentAppTag.split('.')[0]
-      currentConfigBranch = currentConfigTag.split('.')[0]
     }
 
     stage("Clone repositories") {
-      def appBranch = currentAppBranch
-      def configBranch = currentConfigBranch
-
-      if (nextAppBranch) {
-        appBranch = nextAppBranch
+      if (params.source == 'preview') {
+        // when releasing what is currently on preview
+        // checkout a tag instead of a branch
+        def appBranch = nextAppTag
+        def configBranch = nextConfigTag
+      } else {
+        // when releasing a hot fix
+        // checkout a current branch that is on prod
+        // so we'll be able to create new tag if necessary
+        def appBranch = currentAppBranch
+        def configBranch = currentConfigBranch
       }
 
-      if (nextConfigBranch) {
-        configBranch = nextConfigBranch
-      }
+      parallel (
+        "app": {
+          dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: appBranch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-      dir("app") {
-        git url: "git@github.com:Wikia/app.git",
-            branch: appBranch,
-            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+            nextAppTag = createTag()
+            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-        //todo: if the same release branch create new tag
+            println("Wikia/app commit: $appHash")
+          }
+        },
+        "config": {
+          dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+                branch: configBranch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-        createTag(nextAppTag)
+            nextConfigTag = createTag()
+            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-        appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-
-        println("Wikia/app commit: $appHash")
-      }
-
-      dir("config") {
-        git url: "git@github.com:Wikia/config.git",
-            branch: configBranch,
-            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-
-        //todo: if the same release branch create new tag
-        createTag(nextConfigTag)
-
-        configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-
-        println("Wikia/config commit: $configHash")
-      }
+            println("Wikia/config commit: $configHash")
+          }
+        }
+      )
 
       imageTag = "$appHash.$configHash"
 
       println("Image tag: $imageTag")
       println("App Tag: $nextAppTag")
       println("Config Tag: $nextConfigTag")
-    }
-
-    stage("Calculate next tag") {
-
     }
 
     stage("Prompt for a version") {
@@ -207,102 +228,114 @@ node("docker-daemon") {
     }
 
     stage("Bump cachebuster and version") {
-      dir("app") {
-        def cacheBuster = new Date().getTime()
+      parallel (
+        "app": {
+          dir("app") {
+            def cacheBuster = new Date().getTime()
 
-        sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
-        sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
-      }
-
-      dir("config") {
-        sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
-      }
+            sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
+            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
+          }
+        },
+        "config": {
+          dir("config") {
+            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
+          }
+        }
+      )
     }
 
-    stage("Build and push php image") {
-      dir("app") {
-        def status = sh(script: """
-          curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-          -w "%{http_code}" -s -I -o /dev/null \
-          -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
-        """, returnStdout: true).trim()
+    parallel (
+      "php": {
+        stage("Build and push php image") {
+          dir("app") {
+            def imageExists = false
+            def status = sh(script: """
+              curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+              -w "%{http_code}" -s -I -o /dev/null \
+              -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
+            """, returnStdout: true).trim()
 
-        if (status == "200") {
-          imageExists = true
+            if (status == "200") {
+              imageExists = true
+            }
+
+            if (!imageExists) {
+              // SUS-5284 - make the image a bit smaller
+              sh("cp docker/.dockerignore ..")
+              sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+              sh("docker push $mediawikiImage:$imageTag")
+            } else {
+              println("Php image tag ($imageTag) already exists")
+            }
+          }
         }
+      },
+      "nginx": {
+        stage("Build and push nginx image") {
+          dir("app") {
+            def imageExists = false
+            def status = sh(script: """
+              curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+              -w "%{http_code}" -s -I -o /dev/null \
+              -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-prod-nginx/${imageTag}"
+            """, returnStdout: true).trim()
 
-        if (!imageExists) {
-          // SUS-5284 - make the image a bit smaller
-          sh("cp docker/.dockerignore ..")
-          sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
-          sh("docker push $mediawikiImage:$imageTag")
-        } else {
-          println("Php image tag ($imageTag) already exists")
+            if (status == "200") {
+              imageExists = true
+            }
+
+            if (!imageExists) {
+              // SUS-5284 - make the image a bit smaller
+              sh("cp docker/.dockerignore ..")
+              sh("docker build . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+              sh("docker push $nginxImage:$imageTag")
+            } else {
+              println("Nginx image tag ($imageTag) already exists")
+            }
+          }
         }
       }
-    }
-
-    stage("Build and push nginx image") {
-      dir("app") {
-        def status = sh(script: """
-          curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-          -w "%{http_code}" -s -I -o /dev/null \
-          -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-prod-nginx/${imageTag}"
-        """, returnStdout: true).trim()
-
-        if (status == "200") {
-          imageExists = true
-        }
-
-        if (!imageExists) {
-          // SUS-5284 - make the image a bit smaller
-          sh("cp docker/.dockerignore ..")
-          sh("docker build . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
-          sh("docker push $nginxImage:$imageTag")
-        } else {
-          println("Nginx image tag ($imageTag) already exists")
-        }
-      }
-    }
-
-    stage('Notify Slack Channel publish') {
-      sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app branch <https://github.com/Wikia/app/tree/'${appBranch}'|'${appBranch}'> and config branch <https://github.com/Wikia/config/tree/'${configBranch}'|'${configBranch}'> is published by '${buildUser}'\", \"channel\": \"'${slackChannel}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
-    }
+    )
 
     stage("Apply new k8s descriptor") {
       dir("app") {
         def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
-        def sjc = render(template, [
-          'IMAGE_TAG': imageTag,
-          'DATACENTER': 'sjc',
-          'APP_VERSION': nextAppTag,
-          'CONFIG_VERSION': nextConfigTag
-        ])
 
-        sh("""cat > docker/prod/sjc.yaml <<EOL
-  ${sjc}
-  EOL""")
+        withDockerContainer(kubectlImage) {
+          parallel (
+            "sjc": {
+              def sjc = render(template, [
+                'IMAGE_TAG': imageTag,
+                'DATACENTER': 'sjc',
+                'APP_VERSION': nextAppTag,
+                'CONFIG_VERSION': nextConfigTag
+              ])
 
-        def res = render(template, [
-          'IMAGE_TAG': imageTag,
-          'DATACENTER': 'res',
-          'APP_VERSION': nextAppTag,
-          'CONFIG_VERSION': nextConfigTag
-        ])
+              sh("""cat > docker/prod/sjc.yaml <<EOL
+${sjc}
+EOL""")
+              // deploy to SJC
+              sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+              rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+            },
+            "res": {
+              def res = render(template, [
+                'IMAGE_TAG': imageTag,
+                'DATACENTER': 'res',
+                'APP_VERSION': nextAppTag,
+                'CONFIG_VERSION': nextConfigTag
+              ])
 
-        sh("""cat > docker/prod/res.yaml <<EOL
-  ${res}
-  EOL""")
-      }
-
-      withDockerContainer(kubectlImage) {
-        // deploy to SJC
-        sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
-        rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
-
-        // deploy to RES
-        sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
-        rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+              sh("""cat > docker/prod/res.yaml <<EOL
+${res}
+EOL""")
+              // deploy to RES
+              sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+              rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+            }
+          )
+        }
       }
     }
 
@@ -320,21 +353,23 @@ node("docker-daemon") {
     }
 
     stage('Tag Jira tickets') {{
-      build job: 'tag-jira-tickets', parameters: [
-        string(name: 'app_name', value: 'app'),
-        string(name: 'env', value: 'prod'),
-        string(name: 'previous_release', value: currentAppVersion),
-        string(name: 'current_release', value: nextAppVersion),
-        [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-      ],
-      wait: false
+      build job: 'tag-jira-tickets',
+        parameters: [
+          string(name: 'app_name', value: 'app'),
+          string(name: 'env', value: 'prod'),
+          string(name: 'previous_release', value: currentAppVersion),
+          string(name: 'current_release', value: nextAppVersion),
+          [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+        ],
+        wait: false
     }}
 
     stage('Trigger tests') {
-      build job: 'app-prod-push-event', parameters: [
-        string(name: 'release', value: nextAppVersion),
-        string(name: 'datacenter', value: 'sjc')
-      ],
+      build job: 'app-prod-push-event',
+        parameters: [
+          string(name: 'release', value: nextAppVersion),
+          string(name: 'datacenter', value: 'sjc')
+        ],
         wait: false
     }
 
