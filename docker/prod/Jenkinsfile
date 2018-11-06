@@ -180,25 +180,24 @@ node("docker-daemon") {
         // checkout a tag instead of a branch
         appBranch = nextAppTag
         configBranch = nextConfigTag
-        appCheckoutBranch = "refs/tags/${appBranch}"
-        configCheckoutBranch = "refs/tags/${configBranch}"
       } else {
         // when releasing a hot fix
         // checkout a current branch that is on prod
         // so we'll be able to create new tag if necessary
-        appBranch = appCheckoutBranch = currentAppBranch
-        configBranch = configCheckoutBranch = currentConfigBranch
+        appBranch = currentAppBranch
+        configBranch = currentConfigBranch
       }
 
-      println("App branch: ${appCheckoutBranch}")
-      println("Config branch: ${configCheckoutBranch}")
+      println("App branch: ${appBranch}")
+      println("Config branch: ${configBranch}")
 
       parallel (
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: 'SUS-5758',
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+            appBranch = "SUS-5787" // temp override
+            sh "git checkout ${appBranch}"
 
             nextAppTag = createTag()
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -209,8 +208,9 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: configCheckoutBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+            sh "git checkout ${configBranch}"
 
             nextConfigTag = createTag()
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
