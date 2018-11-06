@@ -566,15 +566,14 @@ class WikiFactory {
 	 * If used often, put a caching layer on top of it.
 	 *
 	 * @param $domain wiki host (without the protocol nor path)
-	 * @param $rootCityId optional root wiki id to be removed from the results.
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
-	public static function getWikisUnderDomain( $domain, $rootCityId = null ) {
+	public static function getWikisUnderDomain( $domain ) {
 		$domain = wfNormalizeHost( $domain );
 
 		$dbr = static::db( DB_SLAVE );
 
-		$cities = WikiaDataAccess::cache(
+		return WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
 			900,	// 15 minutes
 			function() use ($dbr, $domain) {
@@ -607,12 +606,6 @@ class WikiFactory {
 				return $cities;
 			}
 		);
-		if ( !empty( $rootCityId ) ) {
-			$cities = array_filter( $cities, function ($element) use ($rootCityId) {
-				return $element['city_id'] != $rootCityId;
-			} );
-		}
-		return $cities;
 	}
 
 	/**
@@ -622,14 +615,14 @@ class WikiFactory {
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
 	public static function getLanguageWikis() {
-		global $wgScriptPath, $wgServer, $wgCityId;
+		global $wgScriptPath, $wgServer;
 
 		if ( $wgScriptPath !== '' ) {
 			return [];
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'], $wgCityId );
+		return self::getWikisUnderDomain( $url['host'] );
 	}
 
 	/**
