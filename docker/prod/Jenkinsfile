@@ -33,22 +33,23 @@ def createTag(String currentBranch) {
   if (params.source == 'hotfix') {
     def anyNewCommits = sh(script: "git log HEAD...${currentLatestTag}", returnStdout: true).trim()
     println(anyNewCommits)
+    def latestCommitOnCurrentRelease = sh(
+      script: "git show-ref ${currentBranch} -s",
+      returnStdout: true
+    ).trim()
+    //e.g. release-220.002
+    def latestTagOnCurrentRelease = sh(
+      script: "git describe ${latestCommitOnCurrentRelease}",
+      returnStdout: true
+    ).trim()
+
 
     if (anyNewCommits.isEmpty()) {
       // no new commits
-      println("No new commits - redeploy: ${currentLatestTag}")
+      println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
 
-      return currentLatestTag
+      return latestTagOnCurrentRelease
     } else {
-      def latestCommitOnCurrentRelease = sh(
-        script: "git show-ref ${currentBranch} -s",
-        returnStdout: true
-      ).trim()
-      //e.g. release-220.002
-      def latestTagOnCurrentRelease = sh(
-        script: "git describe ${latestCommitOnCurrentRelease}",
-        returnStdout: true
-      ).trim()
       def prevVersion = latestTagOnCurrentRelease.replace('release-', '')
       //e.g. release-220.003
       def newTag = "release-" + bump_minor(prevVersion)
