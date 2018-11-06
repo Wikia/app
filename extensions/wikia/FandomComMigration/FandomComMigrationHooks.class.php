@@ -50,9 +50,9 @@ class FandomComMigrationHooks {
 
 		if ( $wgFandomComMigrationDone && !empty( $wgDomainChangeDate ) ) {
 			$migrationDateTime = new DateTime( $wgDomainChangeDate );
-			$twoWeeksAgo = ( new DateTime() )->sub( new DateInterval( 'P14D' ) );
+			$weekAgo = ( new DateTime() )->sub( new DateInterval( 'P7D' ) );
 
-			return $migrationDateTime > $twoWeeksAgo;
+			return $migrationDateTime > $weekAgo;
 		}
 
 		return !empty( $wgFandomComMigrationScheduled );
