@@ -24,12 +24,15 @@ def bump_minor(String prevVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createTag() {
+// e.g. currentBranch - release-220
+def createTag(String currentBranch) {
   // e.g release-220.005
   def currentLatestTag = sh(script: "git describe --abbrev=0", returnStdout: true).trim()
+  println("Current latest tag: ${currentLatestTag}")
 
   if (params.source == 'hotfix') {
     def anyNewCommits = sh(script: "git log HEAD...${currentLatestTag}", returnStdout: true).trim()
+    println(anyNewCommits)
 
     if (anyNewCommits.isEmpty()) {
       // no new commits
@@ -37,8 +40,11 @@ def createTag() {
 
       return currentLatestTag
     } else {
-      //e.g. 220.002
-      def prevVersion = currentLatestTag.replace('release-', '')
+      def latestCommitOnCurrentRelease = sh "git show-ref ${currentBranch}"
+      //e.g. release-220.002
+      def latestTagOnCurrentRelease = sh "git describe ${latestCommitOnCurrentRelease}"
+      def prevVersion = latestTagOnCurrentRelease.replace('release-', '')
+      //e.g. release-220.003
       def newTag = "release-" + bump_minor(prevVersion)
 
       doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
@@ -203,7 +209,7 @@ node("docker-daemon") {
                 branch: 'SUS-5787',
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextAppTag = createTag()
+            nextAppTag = createTag(appBranch)
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
@@ -215,7 +221,7 @@ node("docker-daemon") {
                 branch: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextConfigTag = createTag()
+            nextConfigTag = createTag(configBranch)
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
