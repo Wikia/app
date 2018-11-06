@@ -214,11 +214,6 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
  * load extensions by using configuration variables
  */
 
-#--- 1. Special::ProtectSite
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
-}
-
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
