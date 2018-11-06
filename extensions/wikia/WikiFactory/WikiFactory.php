@@ -615,14 +615,14 @@ class WikiFactory {
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
 	public static function getLanguageWikis() {
-		global $wgScriptPath, $wgServer, $wgCityId;
+		global $wgScriptPath, $wgServer;
 
 		if ( $wgScriptPath !== '' ) {
 			return [];
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'], $wgCityId );
+		return self::getWikisUnderDomain( $url['host'] );
 	}
 
 	/**
