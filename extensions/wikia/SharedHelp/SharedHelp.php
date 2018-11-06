@@ -20,8 +20,6 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SharedHelp'
 );
 
-$wgExtensionMessagesFiles['SharedHelp'] =  __DIR__ . '/SharedHelp.i18n.php';
-
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
@@ -60,12 +58,9 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		return true;
 	}
 
-	wfProfileIn(__METHOD__);
-
 	# Do not process if explicitly told not to
 	$mw = MagicWord::get('MAG_NOSHAREDHELP');
 	if ( $mw->match( $text ) || strpos( $text, NOSHAREDHELP_MARKER ) !== false ) {
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -90,7 +85,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 
 		# Try to get content from memcache
 		if ( isset( $sharedArticle['exists'] ) && $sharedArticle['exists'] == 0 ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		} elseif ( !empty( $sharedArticle['cachekey'] ) ) {
 			wfDebug( "SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n" );
@@ -120,14 +114,12 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 			if ( $content === false ) {
 				$sharedArticle = [ 'exists' => 0, 'timestamp' => wfTimestamp() ];
 				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
-				wfProfileOut(__METHOD__);
 				return true;
 			}
 
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
 				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
-				wfProfileOut(__METHOD__);
 				return true;
 			} else {
 				$contentA = explode("\n", $content);
@@ -141,7 +133,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		}
 
 		if ( empty( $content ) ) {
-			wfProfileOut(__METHOD__);
 			return true;
 		} else {
 			// So we don't return 404s for local requests to these pages as they have content (BugID: 44611)
@@ -206,7 +197,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
 	return true;
 }
 
@@ -262,11 +252,11 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
  *
  * @param Title $title
  * @return bool
+ * @throws DBUnexpectedError
  * @see SharedHelpHook
  */
 function SharedHelpArticleExists(Title $title) {
 	global $wgMemc, $wgHelpWikiId;
-	wfProfileIn(__METHOD__);
 
 	$exists = false;
 
@@ -291,8 +281,6 @@ function SharedHelpArticleExists(Title $title) {
 		if ( !empty($sharedArticle['timestamp']) ) {
 			$exists =  true;
 		} else {
-			wfProfileIn( __METHOD__ . '::query');
-
 			try {
 				$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($wgHelpWikiId) );
 				$res = $dbr->select(
@@ -311,15 +299,12 @@ function SharedHelpArticleExists(Title $title) {
 					}
 				}
 			}
-
 			catch ( DBConnectionError $e ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'TechnicalDebtHotSpot',
 					[ 'exception_message' => $e->getMessage() ]
 				);
 			}
-		
-			wfProfileOut( __METHOD__ . '::query');
 		}
 
 		if ($exists) {
@@ -327,7 +312,6 @@ function SharedHelpArticleExists(Title $title) {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
 	return $exists;
 }
 
@@ -362,7 +346,7 @@ function efSharedHelpRemoveMagicWord( Parser $parser, string &$text, &$strip_sta
 }
 
 
-/*
+/**
  * Replace meta information for canonical link
  * Article from shared help should point to it's origin
  */
