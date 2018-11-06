@@ -130,6 +130,7 @@ abstract class Maintenance {
 	 */
 	public $noConcurrency = false;
 
+	/* @var $status MaintenanceStatus */
 	public $status = null;
 
 	/**

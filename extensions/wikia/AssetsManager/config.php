@@ -13,7 +13,9 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
-		'//extensions/wikia/AutoLogin/js/passive_autologin.js',
+		// Parametrized links to category pages might be everywhere and we need to catch 'em all
+		'#group_category_page3_alphabet_shortcuts_js',
+		'//extensions/wikia/AutoLogin/js/passive_autologin.js'
 	],
 ];
 
@@ -2443,4 +2445,36 @@ $config['fandom_com_migration_js'] = [
 	'assets' => [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	]
+];
+
+$config['language_wikis_index_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LanguageWikisIndex/styles/language-wikis-index.scss',
+	],
+];
+
+$config['category_page3_alphabet_shortcuts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/scripts/alphabet-shortcuts.js',
+	],
+];
+
+$config['category_page3_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-page3.scss',
+	],
+];
+
+$config['category_page3_layout_selector_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
+	],
 ];

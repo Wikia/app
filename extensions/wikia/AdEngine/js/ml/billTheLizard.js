@@ -90,10 +90,11 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					ready = true;
 					log(['respond'], log.levels.debug, logGroup);
 
-					var rabbitPropValue = serialize();
+					var values = serialize();
 
-					if (rabbitPropValue) {
-						pageInfoTracker.trackProp('btl', rabbitPropValue);
+					if (values) {
+						pageLevelParams.add('btl', adEngine3.context.get('targeting.btl'));
+						pageInfoTracker.trackProp('btl', values);
 					}
 				}, function () {
 					ready = true;

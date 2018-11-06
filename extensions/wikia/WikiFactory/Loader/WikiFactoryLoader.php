@@ -238,7 +238,8 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment;
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment,
+			   $wgIncludeClosedWikiHandler;
 
 		wfProfileIn(__METHOD__);
 
@@ -266,7 +267,6 @@ class WikiFactoryLoader {
 		 * See BugId: 12474
 		 */
 		$wgContLang = new StubObject('wgContLang');
-
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -374,6 +374,38 @@ class WikiFactoryLoader {
 						"db"     => $oRow->city_dbname,
 						"cluster" => $oRow->city_cluster,
 					);
+				} elseif ( empty( $this->mWikiID ) && $this->hasLanguagePathWikis() ) {
+					// // no city was found but this is a language wikis index page
+
+					// load the wikis index data from the DB and prepare this->mDomain so this gets cached for the
+					// requested domain
+					$oRow = $dbr->selectRow( ["city_list"],
+						array(
+							"city_public",
+							"city_factory_timestamp",
+							"city_dbname",
+							"city_cluster"
+						),
+						[ "city_id" => WikiFactory::LANGUAGE_WIKIS_INDEX ],
+						__METHOD__ . ':languagewikisindex'
+					);
+					if( isset( $oRow->city_dbname ) ) {
+						$this->mWikiID = WikiFactory::LANGUAGE_WIKIS_INDEX;
+						$this->mCityUrl = 'https://' . $this->mServerName;
+						$this->mIsWikiaActive = $oRow->city_public;
+						$this->mCityDB   = $oRow->city_dbname;
+						$this->mCityCluster = $oRow->city_cluster;
+						$this->mTimestamp = $oRow->city_factory_timestamp;
+						// note, the data below will be cached for 1 day ($this->mExpireDomainCacheTimeout)
+						$this->mDomain = [
+							"id"     => $this->mWikiID,
+							"url"   => $this->mCityUrl,
+							"active" => $oRow->city_public,
+							"time"   => $oRow->city_factory_timestamp,
+							"db"     => $oRow->city_dbname,
+							"cluster" => $oRow->city_cluster,
+						];
+					}
 				}
 			}
 			if( empty($this->mAlwaysFromDB) && !empty( $this->mWikiID ) ) {
@@ -399,7 +431,6 @@ class WikiFactoryLoader {
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
 			$this->mCityCluster = $this->mDomain["cluster"];
 		}
-
 
 		/**
 		 * if wikia is not defined or is marked for closing we redirect to
@@ -531,7 +562,7 @@ class WikiFactoryLoader {
 		if( empty( $this->mIsWikiaActive ) || $this->mIsWikiaActive == -2 /* spam */ ) {
 			if( ! $this->mCommandLine ) {
 				if ( $this->mCityDB ) {
-					include __DIR__ . '/closedWikiHandler.php';
+					$wgIncludeClosedWikiHandler = true;
 				} else {
 					global $wgNotAValidWikia;
 					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
@@ -873,6 +904,19 @@ class WikiFactoryLoader {
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
+	}
+
+	/**
+	 * Check whether the current wiki is at the root of the domain and has language wikis hosted under path prefixes.
+	 * @return bool
+	 */
+	private function hasLanguagePathWikis() {
+		if ( empty( $this->langCode ) ) {
+			if ( count( WikiFactory::getWikisUnderDomain( $this->mServerName, $this->mWikiID ) ) > 0 ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
