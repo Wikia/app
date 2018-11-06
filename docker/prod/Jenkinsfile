@@ -106,6 +106,9 @@ node("docker-daemon") {
   def configHash
   def imageTag
 
+  def appBranch
+  def configBranch
+
   wrap([$class: 'BuildUser']) {
     try {
       buildUser = "${BUILD_USER}"
@@ -173,18 +176,20 @@ node("docker-daemon") {
       if (params.source == 'preview') {
         // when releasing what is currently on preview
         // checkout a tag instead of a branch
-        def appBranch = nextAppTag
-        def configBranch = nextConfigTag
+        appBranch = nextAppTag
+        configBranch = nextConfigTag
+        appCheckoutBranch = "refs/tags/${appBranch}"
+        configCheckoutBranch = "refs/tags/${configBranch}"
       } else {
         // when releasing a hot fix
         // checkout a current branch that is on prod
         // so we'll be able to create new tag if necessary
-        def appBranch = currentAppBranch
-        def configBranch = currentConfigBranch
+        appBranch = appCheckoutBranch = currentAppBranch
+        configBranch = configCheckoutBranch = currentConfigBranch
       }
 
-      println("App branch: ${appBranch}")
-      println("Config branch: ${configBranch}")
+      println("App branch: ${appCheckoutBranch}")
+      println("Config branch: ${configCheckoutBranch}")
 
       parallel (
         "app": {
@@ -202,7 +207,7 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: configBranch,
+                branch: configCheckoutBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             nextConfigTag = createTag()

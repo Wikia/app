@@ -226,7 +226,6 @@ node("docker-daemon") {
         returnStdout: true
       )
 
-
       if (params.force != true) {
         timeout(time: 120, unit: 'SECONDS') {
           userInput = input(
