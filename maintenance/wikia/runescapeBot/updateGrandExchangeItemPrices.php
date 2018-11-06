@@ -46,8 +46,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 
 		// "Grand Exchange" is the name of the runescape marketplace. All items that need
 		// to be updated are in the "Grand Exchange" category
-		$pages = $this->pageFetcher->fetchAllGrandExchangePages();
-		foreach ( $pages as $page) {
+		foreach ( $this->pageFetcher->fetchAllGrandExchangePages() as $page ) {
 			try {
 				$this->updatePricePagesForArticle( $page );
 			} catch	( Exception $e ) {
