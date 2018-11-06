@@ -580,8 +580,8 @@ class WikiFactory {
 			function() use ($dbr, $domain) {
 				$where = [
 					$dbr->makeList( [
-						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyString() ),
-						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
 					], LIST_OR ),
 					'city_public' => 1
 				];
