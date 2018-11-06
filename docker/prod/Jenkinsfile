@@ -328,6 +328,7 @@ node("docker-daemon") {
               sh("""cat > docker/prod/sjc.yaml <<EOL
 ${sjc}
 EOL""")
+              sh("cat docker/prod/sjc.yaml")
               // deploy to SJC
               //TODO: Uncomment
               // sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
@@ -344,6 +345,8 @@ EOL""")
               sh("""cat > docker/prod/res.yaml <<EOL
 ${res}
 EOL""")
+
+              sh("cat docker/prod/res.yaml")
               // deploy to RES
               //TODO: Uncomment
               // sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
