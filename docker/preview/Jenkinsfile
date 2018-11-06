@@ -73,7 +73,7 @@ def generateReleaseVersion() {
 }
 
 def createReleaseBranch(String releaseBranch) {
-  sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
+  // sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
   //TODO: uncomment when this will become main deploy pipeline
   // sh(script: "git push --set-upstream origin ${releaseBranch}")
 }
