@@ -2447,6 +2447,14 @@ $config['fandom_com_migration_js'] = [
 	]
 ];
 
+$config['language_wikis_index_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LanguageWikisIndex/styles/language-wikis-index.scss',
+	],
+];
+
 $config['category_page3_alphabet_shortcuts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],

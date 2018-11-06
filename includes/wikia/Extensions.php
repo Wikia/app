@@ -214,11 +214,6 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
  * load extensions by using configuration variables
  */
 
-#--- 1. Special::ProtectSite
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
-}
-
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
@@ -1754,6 +1749,12 @@ include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
 // SUS-5817
 if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
+}
+
+include "$IP/extensions/wikia/LanguageWikisIndex/LanguageWikisIndex.setup.php";
+
+if ( $wgIncludeClosedWikiHandler ) {
+	include "$IP/extensions/wikia/WikiFactory/Loader/closedWikiHandler.php";
 }
 
 // SRE-116

@@ -1158,7 +1158,6 @@ $messages['ko'] = array(
 );
 
 $messages['ku-latn'] = array(
-
 );
 
 $messages['lb'] = array(
