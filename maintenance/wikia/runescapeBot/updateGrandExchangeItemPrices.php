@@ -10,7 +10,6 @@ require_once( __DIR__ . '/runescapeBot.setup.php' );
 class UpdateGrandExchangeItemPrices extends Maintenance {
 
 	const PAUSE_TIME_IN_SECONDS = 2.5;
-	const BOT_USERNAME = "FandomBot";
 	const LOG_MESSAGE_TEMPLATE = "RUNESCAPE_BOT -- %s";
 	const MODULE_PREFIX = "Module:Exchange/";
 	const TEMPLATE_PREFIX = "Template:";
@@ -42,7 +41,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	 * @throws Exception
 	 */
 	public function execute() {
-		$this->botUser = User::newFromName( self::BOT_USERNAME );
+		$this->botUser = User::newFromName( Wikia::BOT_USER );
 		$this->topItemsTradeCount = $this->runescapeApi->getTopItems();
 
 		// "Grand Exchange" is the name of the runescape marketplace. All items that need
