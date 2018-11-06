@@ -195,6 +195,7 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
+                branch: 'dev',
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
             appBranch = "SUS-5787" // temp override
             sh "git checkout ${appBranch}"
@@ -208,6 +209,7 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
+                branch: 'dev',
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             sh "git checkout ${configBranch}"
