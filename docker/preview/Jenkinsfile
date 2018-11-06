@@ -217,8 +217,15 @@ node("docker-daemon") {
         )
       }
 
-      def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-      def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+      def prevAppVersion = sh(
+        script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
+        returnStdout: true
+      )
+      def prevConfigVersion = sh(
+        script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
+        returnStdout: true
+      )
+
 
       if (params.force != true) {
         timeout(time: 120, unit: 'SECONDS') {

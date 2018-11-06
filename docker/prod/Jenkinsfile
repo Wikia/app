@@ -132,7 +132,7 @@ node("docker-daemon") {
             //e.g. release-230.001
             nextAppTag = sh(
               script: "echo \"${previewDeploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
-              retunStdout: true
+              returnStdout: true
             )
             nextConfigTag = sh(
               script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\)r.*/\\1/'",
@@ -370,7 +370,7 @@ EOL""")
     }
 
     stage('Trigger tests') {
-      //TODO: Uncomment
+        //TODO: Uncomment
       // build job: 'app-prod-push-event',
       //   parameters: [
       //     string(name: 'release', value: nextAppVersion),
