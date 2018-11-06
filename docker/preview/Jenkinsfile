@@ -14,10 +14,11 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-// prevMajorVersion - e.g. 220
-// prevTag - e.g. 220.001
-def bump_minor(String prevMajorVersion, String prevTag) {
-  prevMinorVersion = prevTag.tokenize('.')[1].replaceFirst("^0*", "")
+// prevVersion - e.g. 220.001
+def bump_minor(String prevVersion) {
+  prevReleaseTokens = prevVersion.tokenize('.')
+  prevMajorVersion = prevReleaseTokens[0]
+  prevMinorVersion = prevReleaseTokens[1].replaceFirst("^0*", "")
 
   nextMinorVersion = (prevMinorVersion.toInteger() + 1).toString().padLeft(3, '0')
 
@@ -63,7 +64,7 @@ def generateReleaseVersion() {
   //   }
 
   //   if (tagFromBranch <= prevMajorVersion) {
-  //     return bump_minor(prevMajorVersion, prevTag)
+  //     return bump_minor(prevTag)
   //   } else {
   //     return "${tagFromBranch}.001"
   //   }
