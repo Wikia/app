@@ -3414,7 +3414,7 @@ class WikiFactory {
 	 * get environment-ready url from city_id
 	 * @param int $city_id	wiki id
 	 * @param boolean $master	use master or slave connection
-	 * @return url in city_list with sandbox/devbox subdomain added if needed
+	 * @return string url in city_list with sandbox/devbox subdomain added if needed
 	 */
 	static public function cityIDtoUrl( $city_id, $master = false ) {
 		if ( !static::isUsed() ) {
@@ -3432,7 +3432,7 @@ class WikiFactory {
 	 *
 	 * @param int $city_id	wiki id
 	 * @param boolean $master	use master or slave connection
-	 * @return city domain
+	 * @return string city domain
 	 */
 	static public function cityIDtoDomain( $city_id, $master = false ) {
 		$url = static::cityIDtoUrl( $city_id, $master );
