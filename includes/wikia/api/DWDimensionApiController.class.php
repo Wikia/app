@@ -134,7 +134,7 @@ class DWDimensionApiController extends WikiaApiController {
 				'created_at' => $row->created_at,
 				'deleted' => $row->deleted,
 				'is_test_wiki' => intval( in_array( $row->wiki_id, $testWikis ) ),
-				'fc_community_id' => isset( $fcCommunityIdMap[ $row->wiki_id ] ) ? $fcCommunityIdMap[ $row->wiki_id ] : null,
+				'fc_community_id' => $fcCommunityIdMap[ $row->wiki_id ] ?? null,
 			];
 		}
 		$db->freeResult( $dbResult );
