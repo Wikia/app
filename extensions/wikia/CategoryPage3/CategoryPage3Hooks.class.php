@@ -174,7 +174,7 @@ class CategoryPage3Hooks {
 		$from = MercuryApiCategoryHandler::getCategoryMembersFromFromRequest(
 			$out->getRequest()
 		);
-		$canonicalUrl = static::getCanonicalUrl( $out, $from );
+		$canonicalUrl = static::getCanonicalUrl( $out, $from, false );
 
 		if ( !empty( $canonicalUrl ) ) {
 			$articleDetails['url'] = $canonicalUrl;
@@ -191,7 +191,7 @@ class CategoryPage3Hooks {
 
 	public static function onWikiaCanonicalHref( &$url, OutputPage $out ): bool {
 		$from = $out->getRequest()->getVal( 'from' );
-		$canonicalUrl = static::getCanonicalUrl( $out, $from );
+		$canonicalUrl = static::getCanonicalUrl( $out, $from, true );
 
 		if ( !empty( $canonicalUrl ) ) {
 			$url = $canonicalUrl;
@@ -246,7 +246,7 @@ class CategoryPage3Hooks {
 		return null;
 	}
 
-	private static function getCanonicalUrl( OutputPage $out, $from ) {
+	private static function getCanonicalUrl( OutputPage $out, $from, $useFullUrl ) {
 		$title = $out->getTitle();
 
 		if ( !$title->inNamespace( NS_CATEGORY ) ) {
@@ -257,6 +257,10 @@ class CategoryPage3Hooks {
 			return null;
 		}
 
-		return $title->getFullURL( [ 'from' => $from ] );
+		if ( $useFullUrl ) {
+			return $title->getFullURL( [ 'from' => $from ] );
+		} else {
+			return $title->getLocalURL( [ 'from' => $from ] );
+		}
 	}
 }
