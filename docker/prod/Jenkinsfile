@@ -119,8 +119,6 @@ node("docker-daemon") {
 
   try {
     stage('Fetch version') {
-      def deploymentInfo
-
       parallel (
         "preview": {
           // when source=preview fetch version from preview
@@ -141,6 +139,8 @@ node("docker-daemon") {
               script: "echo \"${previewDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
               returnStdout: true
             ).trim()
+
+            println("nextAppTag: ${nextAppTag}, nextConfigTag: ${nextConfigTag}")
 
             //e.g release-230
             nextAppBranch = nextAppTag.split('.')[0]
@@ -164,6 +164,8 @@ node("docker-daemon") {
             script: "echo \"${currentDeploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
             returnStdout: true
           ).trim()
+
+          println("currentAppTag: ${currentAppTag}, currentConfigTag: ${currentConfigTag}")
 
           //e.g release-229
           currentAppBranch = currentAppTag.split('.')[0]
