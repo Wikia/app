@@ -115,7 +115,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   // Send notifications
-  slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
 }
 
 stage('Slack notify start') {
@@ -149,24 +149,24 @@ node("docker-daemon") {
       //TODO: uncomment when this will become main deploy pipeline
       //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
 
-      // node('sandbox-i18n01') {
-      //   sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-      //       git branch: 'dev',
-      //         credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
-      //         url: 'git@github.com:Wikia/app.git'
+      //node('sandbox-i18n01') {
+      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      //    git branch: 'dev',
+      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
+      //      url: 'git@github.com:Wikia/app.git'
 
-      //       sh '''
-      //       git clean -f
-      //       git pull origin dev
-      //       git config --global user.email 'jenkins@fandom.com'
-      //       git config --global user.name 'Sir Jenkins'
-      //       sudo /usr/local/bin/downloadAppMasterTranslations.sh
-      //       git add --all
-      //       git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
-      //       git push -u origin dev
-      //       '''
-      //   }
-      // }
+      //    sh '''
+      //    git clean -f
+      //    git pull origin dev
+      //    git config --global user.email 'jenkins@fandom.com'
+      //    git config --global user.name 'Sir Jenkins'
+      //    sudo /usr/local/bin/downloadAppMasterTranslations.sh
+      //    git add --all
+      //    git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
+      //    git push -u origin dev
+      //    '''
+      //  }
+      //}
     }
 
     stage("Clone repositories") {
@@ -297,7 +297,9 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+            def cacheBuster = new Date().getTime()
+
+            sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
             sh('echo "' + appReleaseTag + '@' + appHash + '" > wikia.version.txt')
           }
         },

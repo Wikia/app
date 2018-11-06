@@ -91,7 +91,9 @@ node("docker-daemon") {
     parallel (
       "app": {
         dir("app") {
-          sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+          def cacheBuster = new Date().getTime()
+
+          sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
           sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
         }
       },
