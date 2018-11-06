@@ -107,8 +107,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		} else {# If getting content from memcache failed (invalidate) then just download it via HTTP
 			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf( $urlTemplate, urlencode( $title->getDBkey() ) );
-
-			/* @var MWHttpRequest $resp */
 			$content = Http::get( $articleUrl );
 
 			if ( $content === false ) {
