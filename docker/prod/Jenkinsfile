@@ -35,7 +35,7 @@ def createTag() {
       println("No new commits - redeploy: ${currentLatestTag}")
     } else {
       //e.g. 220.002
-      def prevVersion = currentLatestTag.replace('release-').tokenize('.')
+      def prevVersion = currentLatestTag.replace('release-', '').tokenize('.')
       def newTag = "release-" + bump_minor(prevVersion[0], prevVersion)
 
       doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
