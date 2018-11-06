@@ -404,7 +404,10 @@ export function getBiddersContext(skin) {
 					wikiaVideo: {
 						enabled: false,
 						slots: {
-							FEATURED: {},
+							FEATURED: {
+								videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
+								customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+							},
 							INCONTENT_PLAYER: {
 								videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
 								customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
