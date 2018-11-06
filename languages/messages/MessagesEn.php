@@ -182,9 +182,9 @@ $dateFormats = array(
 $bookstoreList = array(
 
 	'Amazon.com' => 'http://www.amazon.com/gp/search/?field-isbn=$1',
-        'Amazon.de' => 'http://www.amazon.de/s?search-alias=stripbooks&field-keywords=$1',
-        'Amazon.fr' => 'http://astore.amazon.fr/www.amazon.fr-21/detail/$1',
-        'Amazon.co.uk' => 'http://astore.amazon.co.uk/dozertractfor-21/detail/$1',
+        'Amazon.de' => 'http://www.amazon.de/gp/search/?field-isbn=$1',
+        'Amazon.fr' => 'http://www.amazon.fr/gp/search/?field-isbn=$1',
+        'Amazon.co.uk' => 'http://www.amazon.co.uk/gp/search/?field-isbn=$1',
         'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
         'Barnes & Noble' => 'http://shop.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
 	'Google Book Search' => 'http://www.google.com/search?tbs=bks:1&q=isbn:$1',
