@@ -117,7 +117,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 }
 
 stage('Slack notify start') {
-  // notifyBuild('STARTED')
+  notifyBuild('STARTED')
 }
 
 node("docker-daemon") {
@@ -233,7 +233,7 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createReleaseBranch('SUS-5758')
+              createReleaseBranch(appReleaseBranch)
             }
           },
           "config": {
@@ -354,10 +354,6 @@ node("docker-daemon") {
       }
     )
 
-    stage('Notify Slack Channel publish') {
-      sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
-    }
-
     stage("Apply new k8s descriptor") {
       dir("app") {
         def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
@@ -419,7 +415,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      // notifyBuild(currentBuild.result)
+      notifyBuild(currentBuild.result)
     }
   }
 }
