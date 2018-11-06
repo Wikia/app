@@ -14,13 +14,13 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'SharedHelp',
-	'version' => '0.25',
+	'version' => '0.26',
 	'descriptionmsg' => 'sharedhelp-desc',
 	'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SharedHelp'
 );
 
-$wgExtensionMessagesFiles['SharedHelp'] =  dirname( __FILE__ ) . '/SharedHelp.i18n.php';
+$wgExtensionMessagesFiles['SharedHelp'] =  __DIR__ . '/SharedHelp.i18n.php';
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
@@ -33,92 +33,13 @@ $wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 $wgHooks['WantedPages::getExcludedNamespaces'][] = 'SharedHelpWantedPagesSql';
 
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
-define( 'SHAREDHELP_CACHE_VERSION', '2' );
-
-class SharedHttp {
-	static function get( $url, $timeout = 'default' ) {
-		return self::request( "GET", $url, $timeout );
-	}
-
-	static function post( $url, $timeout = 'default' ) {
-		return self::request( "POST", $url, $timeout );
-	}
-
-	// TODO: use MediaWiki's HTTP class
-	static function request( $method, $url, $timeout = 'default' ) {
-		global $wgHTTPTimeout, $wgVersion, $wgTitle, $wgDevelEnvironment;
-		wfProfileIn(__METHOD__);
-
-		wfDebug( __METHOD__ . ": $method $url\n" );
-		# Use curl if available
-		if ( function_exists( 'curl_init' ) ) {
-			$c = curl_init( $url );
-
-			if (empty($wgDevelEnvironment)) {
-				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
-			}
-
-			if ( $timeout == 'default' ) {
-				$timeout = $wgHTTPTimeout;
-			}
-			curl_setopt( $c, CURLOPT_TIMEOUT, $timeout );
-
-			curl_setopt( $c, CURLOPT_HEADER, true );
-			curl_setopt( $c, CURLOPT_FOLLOWLOCATION, false );
-
-			curl_setopt( $c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion" );
-			if ( $method == 'POST' )
-				curl_setopt( $c, CURLOPT_POST, true );
-			else
-				curl_setopt( $c, CURLOPT_CUSTOMREQUEST, $method );
-
-			# Set the referer to $wgTitle, even in command-line mode
-			# This is useful for interwiki transclusion, where the foreign
-			# server wants to know what the referring page is.
-			# $_SERVER['REQUEST_URI'] gives a less reliable indication of the
-			# referring page.
-			if ( is_object( $wgTitle ) ) {
-				curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
-			}
-
-			$requestTime = microtime( true );
-
-			ob_start();
-			curl_exec( $c );
-			$text = ob_get_contents();
-			ob_end_clean();
-
-			// log HTTP requests
-			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
-
-			$params = [
-				'statusCode' => curl_getinfo( $c, CURLINFO_HTTP_CODE ),
-				'reqMethod' => $method,
-				'reqUrl' => $url,
-				'caller' => __CLASS__,
-				'requestTimeMS' => $requestTime
-			];
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
-
-			# Don't return the text of error messages, return false on error
-			if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {
-				$text = false;
-			}
-			# Don't return truncated output
-			if ( curl_errno( $c ) != CURLE_OK ) {
-				$text = false;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return array( $text, $c );
-	}
-}
+define( 'SHAREDHELP_CACHE_VERSION', 3 );
 
 /**
  * @param OutputPage $out
- * @param $text
+ * @param string $text
  * @return bool
+ * @throws MWException
  */
 function SharedHelpHook( OutputPage $out, string &$text ): bool {
 	global $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
@@ -185,13 +106,16 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 				}
 			}
 		}
+
 		if(!empty($content)) {
 			# get rid of magic word editsection (non parsed piece causing double section headers)
 			$content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
 		} else {# If getting content from memcache failed (invalidate) then just download it via HTTP
 			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf( $urlTemplate, urlencode( $title->getDBkey() ) );
-			list($content, $c) = SharedHttp::get($articleUrl);
+
+			/* @var MWHttpRequest $resp */
+			$content = Http::get( $articleUrl );
 
 			if ( $content === false ) {
 				$sharedArticle = [ 'exists' => 0, 'timestamp' => wfTimestamp() ];
@@ -200,42 +124,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 				return true;
 			}
 
-			# if we had redirect, then store it somewhere
-			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
-				if(preg_match("/^Location: ([^\n]+)/m", $content, $dest_url)) {
-					$destinationUrl = $dest_url[1];
-				}
-			}
-
-			global $wgServer, $wgArticlePath;
-			$helpNs = $wgContLang->getNsText(NS_HELP);
-
-			if (!empty ($_SESSION ['SH_redirected'])) {
-				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );
-				$redir = Linker::linkKnown( $from_link, '', [ 'rel' => 'nofollow' ], 'redirect=no' );
-				$s = wfMessage( 'redirectedfrom', $redir )->text();
-				$out->setSubtitle( $s );
-				$_SESSION ['SH_redirected'] = '';
-			}
-
-			if(isset($destinationUrl)) {
-				$destinationPageIndex = strpos( $destinationUrl, "$helpNs:" );
-				# if $helpNs was not found, assume we're on help.wikia.com and try again
-				if ( $destinationPageIndex === false )
-					$destinationPageIndex = strpos( $destinationUrl, MWNamespace::getCanonicalName(NS_HELP) . ":" );
-				$destinationPage = substr( $destinationUrl, $destinationPageIndex );
-				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
-				if ( 'no' != $out->getRequest()->getVal( 'redirect' ) ) {
-					$_SESSION ['SH_redirected'] = $title->getText();
-					$out->redirect( $link );
-					$wasRedirected = true;
-				} else {
-					$content = "\n\n" . $out->msg( 'shared_help_was_redirect' )->rawParams( "<a href=" . $link . ">$destinationPage</a>" )->escaped();
-				}
-			} else {
-				$tmp = explode("\r\n\r\n", $content, 2);
-				$content = isset($tmp[1]) ? $tmp[1] : '';
-			}
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
 				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
@@ -250,7 +138,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
 				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
 			}
-			curl_close( $c );
 		}
 
 		if ( empty( $content ) ) {
@@ -305,25 +192,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 					$localArticlePathClean . $wgMetaNamespace,
 					$content
 				);
-			}
-
-			/* Tomasz Odrobny #36016 */
-			$sharedRedirectsArticlesKey = wfSharedMemcKey(
-				'sharedRedirectsArticles',
-				$wgHelpWikiId,
-				md5( MWNamespace::getCanonicalName( $title->getNamespace() ) . ':' . $title->getDBkey() )
-			);
-			$articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
-
-			if ( $articleLink == null ){
-				$articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $title->getDBkey();
-				$apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
-				$file = @file_get_contents($apiUrl, FALSE );
-				$APIOut = json_decode($file);
-				if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){
-					$articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
-				}
-				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
 			}
 
 			// "this text is stored..."
