@@ -40,9 +40,15 @@ def createTag(String currentBranch) {
 
       return currentLatestTag
     } else {
-      def latestCommitOnCurrentRelease = sh "git show-ref ${currentBranch}"
+      def latestCommitOnCurrentRelease = sh(
+        script: "git show-ref ${currentBranch} -s",
+        returnStdout: true
+      ).trim()
       //e.g. release-220.002
-      def latestTagOnCurrentRelease = sh "git describe ${latestCommitOnCurrentRelease}"
+      def latestTagOnCurrentRelease = sh(
+        script: "git describe ${latestCommitOnCurrentRelease}",
+        returnStdout: true
+      ).trim()
       def prevVersion = latestTagOnCurrentRelease.replace('release-', '')
       //e.g. release-220.003
       def newTag = "release-" + bump_minor(prevVersion)
