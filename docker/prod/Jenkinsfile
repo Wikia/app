@@ -183,6 +183,9 @@ node("docker-daemon") {
         def configBranch = currentConfigBranch
       }
 
+      println("App branch: ${appBranch}")
+      println("Config branch: ${configBranch}")
+
       parallel (
         "app": {
           dir("app") {
