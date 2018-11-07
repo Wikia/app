@@ -1,12 +1,12 @@
 <?php
 
-use Wikia\FeedsAndPosts\WikiRecentChanges;
+use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\TopArticles;
 
 class FeedsAndPostsController extends WikiaController {
-	public function getWikiRecentChanges() {
+	public function getRecentChanges() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setValues( ( new WikiRecentChanges() )->get() );
+		$this->response->setValues( ( new RecentChanges() )->get() );
 	}
 
 	public function getTopArticles() {
@@ -16,7 +16,7 @@ class FeedsAndPostsController extends WikiaController {
 
 	public function getAll() {
 		$this->response->setValues( [
-			'wikiRecentChanges' => ( new WikiRecentChanges() )->get(),
+			'recentChanges' => ( new RecentChanges() )->get(),
 			'topArticles' => ( new TopArticles() )->get(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

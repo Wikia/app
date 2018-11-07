@@ -2,7 +2,7 @@
 
 namespace Wikia\FeedsAndPosts;
 
-class WikiRecentChanges {
+class RecentChanges {
 
 	const LIMIT = 4;
 	const MINOR_CHANGE_THRESHOLD = 100;
