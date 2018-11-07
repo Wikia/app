@@ -106,7 +106,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					pv: pv,
 					pv_global: pvGlobal,
 					os: browserDetect.getOS(),
-					browser: browserDetect.getBrowser() || 'unknown',
+					browser: browserDetect.getBrowser().split(' ')[0],
 					npa: pageParams.npa
 				}
 			},
