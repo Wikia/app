@@ -28,7 +28,7 @@ def messageDetails(int rolloutStatus) {
     }
 }
 
-node("docker-daemon") {
+node("docker-daemon-big") {
 	def appBranch = params.app.split('\\.')[0]
 	def configBranch = params.config.split('\\.')[0]
 	def buildUser = "Anonymous"
