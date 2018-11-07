@@ -12,68 +12,74 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
+// e.g. 220.004
+def get_current_version() {
+  // get most recent tag reachable from commit
+  // eg. release-757.001 -> 757.001
+  return sh(
+      script: "git describe --abbrev=0 --match='release*' 2> /dev/null || echo 'release-000.000'",
+      returnStdout: true
+    )
+    .trim()
+    .replace('release-', '')
+}
+
 // prevVersion - e.g. 220.001
-def bump_minor(String prevVersion) {
-  prevReleaseTokens = prevVersion.tokenize('.')
-  prevMajorVersion = prevReleaseTokens[0]
-  prevMinorVersion = prevReleaseTokens[1].replaceFirst("^0*", "")
+// example from 220.001 to 220.002
+def bump_minor(String currentVersion) {
+  def currentVersionTokens = currentVersion.tokenize('.')
+  def currentMajorVersion = currentVersionTokens[0]
+  def nextMinorVersion = (currentVersionTokens[1].toInteger() + 1).toString().padLeft(3, '0')
 
-  nextMinorVersion = (prevMinorVersion.toInteger() + 1).toString().padLeft(3, '0')
-
-  return "${prevMajorVersion}.${nextMinorVersion}"
+  return currentMajorVersion + "." + nextMinorVersion
 }
 
 // Creates new tag if some commits were made to a release branch
-// e.g. currentBranch - release-220
-def createTag(String currentBranch) {
-  // e.g release-220.005
-  def currentLatestTag = sh(script: "git describe --abbrev=0", returnStdout: true).trim()
-  println("Current latest tag: ${currentLatestTag}")
+def createTag() {
+  // e.g 220.005
+  def currentVersion = get_current_version()
+  def currentBranch = 'release-' + currentVersion.tokenize('.')[0]
+  println("Current version: ${currentVersion}")
 
-  if (params.source == 'hotfix') {
-    def anyNewCommits = sh(script: "git log HEAD...${currentLatestTag}", returnStdout: true).trim()
-    println(anyNewCommits)
-    def latestCommitOnCurrentRelease = sh(
-      script: "git show-ref ${currentBranch} -s",
-      returnStdout: true
-    ).trim()
-    //e.g. release-220.002
-    def latestTagOnCurrentRelease = sh(
-      script: "git describe ${latestCommitOnCurrentRelease}",
-      returnStdout: true
-    ).trim()
+  def unreleasedCommits = sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true).trim()
+  println(unreleasedCommits)
 
+  //e.g. release-220.002
+  def latestTagOnCurrentRelease = sh(
+    script: "git describe --match='release-${currentBranch}*'",
+    returnStdout: true
+  ).trim()
 
-    if (anyNewCommits.isEmpty()) {
-      // no new commits
-      println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
+  if (unreleasedCommits.isEmpty()) {
+    // no new commits
+    println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
 
-      return latestTagOnCurrentRelease
-    } else {
-      def prevVersion = latestTagOnCurrentRelease.replace('release-', '')
-      //e.g. release-220.003
-      def newTag = "release-" + bump_minor(prevVersion)
-
-      doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
-
-      if (doesTagExist.isEmpty()) {
-        println("Creating ${newTag} tag")
-        //TODO: Uncomment
-        //sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-        //  sh(script: "git tag --annotate --message ${newTag} ${newTag}")
-        //  sh(script: "git push origin ${newTag}")
-        //}
-      } else {
-        println("Tag ${newTag} already exists")
-      }
-
-      return newTag
-    }
+    return latestTagOnCurrentRelease
   } else {
-    println("Releasing a tag from preview - skip creating a new tag")
+    //e.g. release-220.003
+    def newTag = "release-" + bump_minor(currentVersion)
+
+    doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
+
+    if (doesTagExist.isEmpty()) {
+      println("Tag already exists: ${newTag}")
+    } else {
+      println("Creating tag: ${newTag}")
+      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        if (!params.dry_run) {
+          sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
+          sh(script: "git push origin ${nextTag}")
+        } else {
+          println("Dry run: git tag --annotate --message ${nextTag} ${nextTag}")
+          println("Dry run: git push origin ${nextTag}")
+        }
+      }
+    }
+
+    return newTag
   }
 
-  return currentLatestTag
+  return 'release-' + currentVersion
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
@@ -100,8 +106,11 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   // Send notifications
-  // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
-  println("Sending slack msg to #release-progress: ${summary}")
+  if (!params.dry_run) {
+    slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  }
+
+  println("Slack message: ${summary}")
 }
 
 stage('Slack notify start') {
@@ -142,7 +151,7 @@ node("docker-daemon") {
           // when source=preview fetch version from preview
           if (params.source == 'preview') {
             withDockerContainer(kubectlImage) {
-              previewDeploymentInfo = sh(
+              def previewDeploymentInfo = sh(
                 script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
                 returnStdout: true
               )
@@ -194,8 +203,6 @@ node("docker-daemon") {
 
     stage("Clone repositories") {
       if (params.source == 'preview') {
-        // when releasing what is currently on preview
-        // checkout a tag instead of a branch
         appBranch = nextAppBranch
         configBranch = nextConfigBranch
       } else {
@@ -288,10 +295,14 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-              // SUS-5284 - make the image a bit smaller
-              sh("cp docker/.dockerignore ..")
-              sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
-              sh("docker push $mediawikiImage:$imageTag")
+              if (params.dry_run) {
+                println("Dry run: docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+              }
             } else {
               println("Php image tag ($imageTag) already exists")
             }
@@ -313,10 +324,14 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-              // SUS-5284 - make the image a bit smaller
-              sh("cp docker/.dockerignore ..")
-              sh("docker build . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
-              sh("docker push $nginxImage:$imageTag")
+              if (params.dry_run) {
+                println("Dry run: docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker push $nginxImage:$imageTag")
+              }
             } else {
               println("Nginx image tag ($imageTag) already exists")
             }
@@ -344,9 +359,14 @@ ${sjc}
 EOL""")
               sh("cat docker/prod/sjc.yaml")
               // deploy to SJC
-              //TODO: Uncomment
-              // sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
-              // rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+              if (!params.dry_run) {
+                sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+                rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+              } else {
+                println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml")
+                rolloutStatus = 0
+              }
+
             },
             "res": {
               def res = render(template, [
@@ -362,9 +382,14 @@ EOL""")
 
               sh("cat docker/prod/res.yaml")
               // deploy to RES
-              //TODO: Uncomment
-              // sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
-              // rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+              if (!params.dry_run) {
+                sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+                rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+              } else {
+                println("Dry run: kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yamlapp/docker/sandbox/k8s.yaml")
+                rolloutStatus = 0
+              }
+
             }
           )
         }
@@ -380,32 +405,42 @@ EOL""")
 
       withDockerContainer(kubectlImage) {
         // cron jobs only run on SJC
-        //TODO: Uncomment
-        // sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
+        if (!params.dry_run) {
+          sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
+        } else {
+          println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml")
+        }
       }
     }
 
     stage('Tag Jira tickets') {
-      //TODO: Uncomment
-      // build job: 'tag-jira-tickets',
-      //   parameters: [
-      //     string(name: 'app_name', value: 'app'),
-      //     string(name: 'env', value: 'prod'),
-      //     string(name: 'previous_release', value: currentAppVersion),
-      //     string(name: 'current_release', value: nextAppVersion),
-      //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-      //   ],
-      //   wait: false
+      if (!params.dry_run) {
+        build job: 'tag-jira-tickets',
+          parameters: [
+            string(name: 'app_name', value: 'app'),
+            string(name: 'env', value: 'prod'),
+            string(name: 'previous_release', value: currentAppVersion),
+            string(name: 'current_release', value: nextAppVersion),
+            [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+          ],
+          wait: false
+      } else {
+        println('Dry run: tag-jira-tickets')
+      }
+
     }
 
     stage('Trigger tests') {
-        //TODO: Uncomment
-      // build job: 'app-prod-push-event',
-      //   parameters: [
-      //     string(name: 'release', value: nextAppVersion),
-      //     string(name: 'datacenter', value: 'sjc')
-      //   ],
-      //   wait: false
+      if (!params.dry_run) {
+        build job: 'app-prod-push-event',
+          parameters: [
+            string(name: 'release', value: nextAppVersion),
+            string(name: 'datacenter', value: 'sjc')
+          ],
+          wait: false
+      } else {
+        println('Dry run: app-prod-push-event')
+      }
     }
 
   } catch (e) {
