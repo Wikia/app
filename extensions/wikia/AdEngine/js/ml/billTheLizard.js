@@ -77,37 +77,31 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
 			pageParams = pageLevelParams.getPageLevelParams();
 
-		var pv = pageParams.pv || 1;
-		pv = pv > 30 ? 30 : pv;
-
-		var pvGlobal = win.pvNumberGlobal || 1;
-		pvGlobal = pvGlobal > 40 ? 40 : pvGlobal;
-
 		adEngine3.context.set('services.billTheLizard', {
 			enabled: true,
 			host: 'https://services.wikia.com',
 			endpoint: 'bill-the-lizard/predict',
 			parameters: {
 				queen_of_hearts: {
+					browser: browserDetect.getBrowser().split(' ')[0],
 					device: deviceDetect.getDevice(pageParams),
 					esrb: pageParams.esrb || null,
 					geo: adEngineBridge.geo.getCountryCode() || null,
+					lang: pageParams.lang,
+					npa: pageParams.npa,
+					os: browserDetect.getOS(),
+					pv: Math.min(30, pageParams.pv || 1),
+					pv_global: Math.min(40, win.pvNumberGlobal || 1),
 					ref: pageParams.ref || null,
 					s0v: pageParams.s0v || null,
 					s2: pageParams.s2 || null,
 					top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
-					wiki_id: adContext.get('targeting.wikiId') || null,
 					video_id: featuredVideoData.mediaId || null,
 					video_tags: featuredVideoData.videoTags || null,
 					viewport_height: bucketizeViewportHeight(Math.max(
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
-					lang: pageParams.lang,
-					pv: pv,
-					pv_global: pvGlobal,
-					os: browserDetect.getOS(),
-					browser: browserDetect.getBrowser().split(' ')[0],
-					npa: pageParams.npa
+					wiki_id: adContext.get('targeting.wikiId') || null
 				}
 			},
 			projects: config.projects,
