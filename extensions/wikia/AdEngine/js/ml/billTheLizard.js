@@ -77,6 +77,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
 			pageParams = pageLevelParams.getPageLevelParams();
 
+		var pv = pageParams.pv || 1;
+		pv = pv > 30 ? 30 : pv;
+
+		var pvGlobal = win.pvNumberGlobal || 1;
+		pvGlobal = pvGlobal > 40 ? 40 : pvGlobal;
+
 		adEngine3.context.set('services.billTheLizard', {
 			enabled: true,
 			host: 'https://services.wikia.com',
@@ -97,8 +103,8 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
 					lang: pageParams.lang,
-					pv: pageParams.pv || '',
-					pv_global: win.pvNumberGlobal || 1,
+					pv: pv,
+					pv_global: pvGlobal,
 					os: browserDetect.getOS(),
 					browser: browserDetect.getBrowser() || 'unknown',
 					npa: pageParams.npa
