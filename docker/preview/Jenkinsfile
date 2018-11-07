@@ -14,63 +14,43 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-// prevVersion - e.g. 220.001
-def bump_minor(String prevVersion) {
-  prevReleaseTokens = prevVersion.tokenize('.')
-  prevMajorVersion = prevReleaseTokens[0]
-  prevMinorVersion = prevReleaseTokens[1].replaceFirst("^0*", "")
-
-  nextMinorVersion = (prevMinorVersion.toInteger() + 1).toString().padLeft(3, '0')
-
-  return "${prevMajorVersion}.${nextMinorVersion}"
-}
-
 // tag: release-751.001
 // version: 751.001
 // branch: release-751
 
-// for preview releases:
-// starts with "1.001" when previous tags do not exist
-// results in release branch version , eg. for branch "release-24"
-// it will be "24.001", when tag corresponding to current release branch does not exist
-// results in minor 1, eg. "23.001" => "23.002", when:
-//   - tag for current release exists
-//   - OR when it's not possible to retrieve release version from branch (e.g. "master")
-
-// `git describe --abbrev=10 --always` returns
-// - <latest-tag>-<number-of-commits-since-last-tag>-<10-chars-hash-of-last-commit> - when something was added since last tagged commit
-// - <latest-tag> - when last commit is the tagged one
-// - <full-commit hash> - when tag does not exist
-def generateReleaseVersion() {
+// e.g. 220.004
+def get_current_version() {
   // get most recent tag reachable from commit
-  // eg. release-757.001-12-ga0e0e73245 -> 757.001
-  prevTag = sh(script: "git describe --abbrev=10 --always", returnStdout: true)
+  // eg. release-757.001 -> 757.001
+  return sh(
+      script: "git describe --abbrev=0 --match='release*' 2> /dev/null || echo 'release-000.000'",
+      returnStdout: true
+    )
     .trim()
-    .tokenize('-')[1]
+    .replace('release-', '')
+}
 
-  return prevTag
+// release-770.001 -> release-771.001
+// release-600.009 -> release-601.001
+// none -> release-1.001
+def bump_major() {
+  def currentVersion = get_current_version()
 
-  // Disabled for now so we can run it right after old release pipeline for now
+  def nextMajorVersion = currentVersion.tokenize('.')[0].toInteger() + 1
 
-  // // retrieve release version from release branch eg. 757
-  // tagFromBranch = prevTag.tokenize('.')[0]
+  return nextMajorVersion + ".001"
+}
 
-  // if (!prevTag.isEmpty()) {
-  //   prevMajorVersion = prevTag.tokenize('.')[0]// eg. 34
+// prevVersion - e.g. 220.001
+// example from 220.001 to 220.002
+def bump_minor() {
+  def currentVersion = get_current_version()
 
-  //   // fallback - if it's not possible to retrieve version from release branch, set it to previous major version
-  //   if (tagFromBranch.isEmpty()) {
-  //     tagFromBranch = prevMajorVersion
-  //   }
+  def currentVersionTokens = currentVersion.tokenize('.')
+  def currentMajorVersion = currentVersionTokens[0]
+  def nextMinorVersion = (currentVersionTokens[1].toInteger() + 1).toString().padLeft(3, '0')
 
-  //   if (tagFromBranch <= prevMajorVersion) {
-  //     return bump_minor(prevTag)
-  //   } else {
-  //     return "${tagFromBranch}.001"
-  //   }
-  // } else {
-  //   return "1.001"
-  // }
+  return currentMajorVersion + "." + nextMinorVersion
 }
 
 def createReleaseBranch(String releaseBranch) {
@@ -83,12 +63,12 @@ def createReleaseBranch(String releaseBranch) {
 def createTag(String tag) {
   doesTagExist = sh(script: "git tag --list ${tag}", returnStdout: true).trim()
 
-  if (!doesTagExist.isEmpty()) {
-    println("Creating ${tag} tag")
+  if (doesTagExist.isEmpty()) {
+    println("Tag already exists: ${tag}")
+  } else {
+    println("Creating tag: ${tag}")
     sh(script: "git tag --annotate --message ${tag} ${tag}")
     sh(script: "git push origin ${tag}")
-  } else {
-    println("Tag ${tag} already exists")
   }
 }
 
@@ -129,13 +109,15 @@ node("docker-daemon") {
   def configHash
   def imageTag
 
-  def appReleaseVersion
-  def appReleaseTag
-  def appReleaseBranch
+  def currentAppTag
 
-  def configReleaseVersion
-  def configReleaseTag
-  def configReleaseBranch
+  def nextAppReleaseVersion
+  def nextAppReleaseTag
+  def nextAppReleaseBranch
+
+  def nextConfigReleaseVersion
+  def nextConfigReleaseTag
+  def nextConfigReleaseBranch
 
   wrap([$class: 'BuildUser']) {
     try {
@@ -146,30 +128,6 @@ node("docker-daemon") {
   }
 
   try {
-    stage('Upload, download and push translations to dev') {
-      //TODO: uncomment when this will become main deploy pipeline
-      //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
-
-      //node('sandbox-i18n01') {
-      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-      //    git branch: 'dev',
-      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
-      //      url: 'git@github.com:Wikia/app.git'
-
-      //    sh '''
-      //    git clean -f
-      //    git pull origin dev
-      //    git config --global user.email 'jenkins@fandom.com'
-      //    git config --global user.name 'Sir Jenkins'
-      //    sudo /usr/local/bin/downloadAppMasterTranslations.sh
-      //    git add --all
-      //    git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
-      //    git push -u origin dev
-      //    '''
-      //  }
-      //}
-    }
-
     stage("Clone repositories") {
       parallel (
         "app": {
@@ -193,16 +151,28 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            appReleaseVersion = generateReleaseVersion()
-            appReleaseTag = "release-" + appReleaseVersion
-            appReleaseBranch = appReleaseTag.tokenize('.')[0]
+            if (params.hotfix) {
+              nextAppReleaseVersion = bump_minor()
+            } else {
+              nextAppReleaseVersion = bump_major()
+            }
+
+            //e.g. release-220.001
+            nextAppReleaseTag = "release-" + nextAppReleaseVersion
+            //e.g. release-220
+            nextAppReleaseBranch = nextAppReleaseTag.tokenize('.')[0]
           }
         },
         "config": {
           dir("config") {
-            configReleaseVersion = generateReleaseVersion()
-            configReleaseTag = "release-" + configReleaseVersion
-            configReleaseBranch = configReleaseTag.tokenize('.')[0]
+            if (params.hotfix) {
+              nextConfigReleaseVersion = bump_minor()
+            } else {
+              nextConfigReleaseVersion = bump_major()
+            }
+
+            nextConfigReleaseTag = "release-" + nextConfigReleaseVersion
+            nextConfigReleaseBranch = nextConfigReleaseTag.tokenize('.')[0]
           }
         }
       )
@@ -218,11 +188,11 @@ node("docker-daemon") {
         )
       }
 
-      def prevAppTag = sh(
+      currentAppTag = sh(
         script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
         returnStdout: true
       )
-      def prevConfigTag = sh(
+      def currentConfigTag = sh(
         script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
         returnStdout: true
       )
@@ -231,10 +201,34 @@ node("docker-daemon") {
         timeout(time: 120, unit: 'SECONDS') {
           userInput = input(
             id: 'version_check',
-            message: "Updating preview\napp - ${prevAppTag} ==> ${appReleaseTag} \nconfig - ${prevConfigTag} ==> ${configReleaseTag}"
+            message: "Updating preview\napp - ${currentAppTag} ==> ${nextAppReleaseTag} \nconfig - ${currentConfigTag} ==> ${nextConfigReleaseTag}"
           )
         }
       }
+    }
+
+    stage('Upload, download and push translations to dev') {
+      //TODO: uncomment when this will become main deploy pipeline
+      //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
+
+      // node('sandbox-i18n01') {
+      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      //    git branch: 'dev',
+      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
+      //      url: 'git@github.com:Wikia/app.git'
+
+      //    sh '''
+      //     git clean -f
+      //     git pull origin dev
+      //     git config --global user.email 'jenkins@fandom.com'
+      //     git config --global user.name 'Sir Jenkins'
+      //     sudo /usr/local/bin/downloadAppMasterTranslations.sh
+      //     git add --all
+      //     git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
+      //     git push -u origin dev
+      //    '''
+      //  }
+      // }
     }
 
     sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
@@ -242,12 +236,12 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createReleaseBranch(appReleaseBranch)
+              createReleaseBranch(nextAppReleaseBranch)
             }
           },
           "config": {
             dir("config") {
-              createReleaseBranch(configReleaseBranch)
+              createReleaseBranch(nextConfigReleaseBranch)
             }
           }
         )
@@ -258,13 +252,13 @@ node("docker-daemon") {
           "app": {
             dir("app") {
               //TODO: uncomment when this will become main deploy pipeline
-              // createTag(appReleaseTag)
+              createTag(nextAppReleaseTag)
             }
           },
           "config": {
             dir("config") {
               //TODO: uncomment when this will become main deploy pipeline
-              // createTag(configReleaseTag)
+              createTag(nextConfigReleaseTag)
             }
           }
         )
@@ -367,6 +361,7 @@ node("docker-daemon") {
 
     stage("Apply new k8s descriptor") {
       dir("app") {
+        // Preview is essentially the same env as a sandbox
         def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
         def k8s = render(template, [
           'IMAGE_TAG': imageTag,
@@ -397,12 +392,12 @@ EOL""")
     }
 
     stage('Tag Jira tickets') {
-      //TODO: uncomment when this will become main deploy pipeline
+      // TODO: uncomment when this will become main deploy pipeline
       // build job: 'tag-jira-tickets', parameters: [
       //     string(name: 'app_name', value: 'app'),
       //     string(name: 'env', value: 'preview'),
-      //     string(name: 'previous_release', value: prevAppVersion),
-      //     string(name: 'current_release', value: params.app),
+      //     string(name: 'previous_release', value: currentAppTag),
+      //     string(name: 'current_release', value: nextAppReleaseTag),
       //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
       // ],
       // wait: false
@@ -411,7 +406,7 @@ EOL""")
     stage('Trigger tests') {
       //TODO: uncomment when this will become main deploy pipeline
       // build job: 'app-preview-push-event', parameters: [
-      //   string(name: 'release', value: params.app),
+      //   string(name: 'release', value: nextAppReleaseTag),
       //   string(name: 'datacenter', value: 'sjc')],
       //   wait: false
     }

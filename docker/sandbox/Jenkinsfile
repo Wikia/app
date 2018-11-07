@@ -19,7 +19,6 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-  def imageExists = false
   def buildUser = "Anonymous"
   def appHash
   def configHash
@@ -110,6 +109,7 @@ node("docker-daemon") {
     "php": {
       stage("Build and push php image") {
         dir("app") {
+          def imageExists = false
           def status = sh(script: """
             curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
             -w "%{http_code}" -s -I -o /dev/null \
@@ -135,6 +135,7 @@ node("docker-daemon") {
     "nginx": {
       stage("Build and push nginx image") {
         dir("app") {
+          def imageExists = false
           def status = sh(script: """
             curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
             -w "%{http_code}" -s -I -o /dev/null \
@@ -148,9 +149,7 @@ node("docker-daemon") {
           if (!imageExists) {
             // SUS-5284 - make the image a bit smaller
             sh("cp docker/.dockerignore ..")
-
-            sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
-
+            sh("docker build . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
             sh("docker push $nginxImage:$imageTag")
           } else {
             println("Nginx image tag ($imageTag) already exists")
