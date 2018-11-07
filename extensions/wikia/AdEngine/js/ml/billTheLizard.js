@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
+	'ext.wikia.adEngine.ml.bucketizers',
 	'ext.wikia.adEngine.services',
 	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	pageLevelParams,
 	adEngineBridge,
 	executor,
+	bucketizers,
 	services,
 	pageInfoTracker,
 	deviceDetect,
@@ -51,27 +53,6 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		});
 	}
 
-	/**
-	 * <400 as 400, 400-499 as 500, 500-599 as 600, 600-699 as 700,
-	 * 700-799 as 800, 800-900 as 899, 900-999 as 1000
-	 * and all from 1000 as 1100
-	 *
-	 * @param {Number} height
-	 * @returns {Number}
-	 */
-	function bucketizeViewportHeight(height) {
-		var buckets = [
-			0, 400, 500, 600, 700, 800, 900, 1000
-		];
-		var bucket = 1100;
-		for (var i = 1; i < buckets.length; i++) {
-			if (height >= buckets[i-1] && height < buckets[i]) {
-				bucket = buckets[i];
-			}
-		}
-		return bucket;
-	}
-
 	function call() {
 		var config = instantGlobals.wgAdDriverBillTheLizardConfig || {},
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
@@ -98,7 +79,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
 					video_id: featuredVideoData.mediaId || null,
 					video_tags: featuredVideoData.videoTags || null,
-					viewport_height: bucketizeViewportHeight(Math.max(
+					viewport_height: bucketizers.bucketizeViewportHeight(Math.max(
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
 					wiki_id: adContext.get('targeting.wikiId') || null
@@ -150,8 +131,6 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	return {
 		call: call,
 		hasResponse: hasResponse,
-		serialize: serialize,
-		// export for testing purpose
-		bucketizeViewportHeight: bucketizeViewportHeight
+		serialize: serialize
 	};
 });
