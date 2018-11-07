@@ -10,8 +10,8 @@ $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.p
 
 class DumpsOnDemand {
 
-	const BASEURL = "http://dumps.wikia.net";
 	const DEFAULT_COMPRESSION_FORMAT = '7zip';
+	const DUMPS_AMAZON_URL_BASE = 'https://s3.amazonaws.com/wikia_xml_dumps/';
 
 	/**
 	 * From this moment on we use Amazon S3 storage for the dumps.
@@ -23,6 +23,7 @@ class DumpsOnDemand {
 	 * @param SpecialStatistics $page
 	 * @param string $text
 	 * @return bool
+	 * @throws \Wikia\Util\AssertionException
 	 */
 	static public function customSpecialStatistics( SpecialStatistics $page, string &$text ): bool {
 		global $wgDBname, $wgCityId;
@@ -50,12 +51,12 @@ class DumpsOnDemand {
 		}
 
 		$tmpl->set( "curr", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml{$sDumpExtension}" ),
+			"url" => self::DUMPS_AMAZON_URL_BASE . self::getPath( "{$wgDBname}_pages_current.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml{$sDumpExtension}" ),
+			"url" => self::DUMPS_AMAZON_URL_BASE . self::getPath( "{$wgDBname}_pages_full.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
@@ -81,27 +82,6 @@ class DumpsOnDemand {
 		$text .= $tmpl->render( 'dod' );
 
 		return true;
-	}
-
-	/**
-	 * return url to place where dumps are stored
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String
-	 */
-	static public function getUrl( $database, $file, $baseurl = false ) {
-		$database = strtolower( $database );
-
-		return sprintf(
-			"%s/%s/%s/%s/%s",
-			( $baseurl === false ) ? self::BASEURL : $baseurl,
-			substr( $database, 0, 1),
-			substr( $database, 0, 2),
-			$database,
-			$file
-		);
 	}
 
 	/**
