@@ -119,7 +119,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	 * @throws MWException
 	 */
 	private function updatePricesPage() {
-		$this->appendPriceToAllPricesArray( self::BOT_USERNAME, $this->getTimeStampForRuneScape() );
+		$this->appendPriceToAllPricesArray( Wikia::BOT_USER, $this->getTimeStampForRuneScape() );
 		$joinedPrices = implode ( ",\n", $this->allPrices );
 		$updateString = sprintf("return {\n%s\n}", $joinedPrices);
 		$pricesDataPage = $this->getWikiPageForTitle( self::GRAND_EXCHANGE_PRICES_PAGE );
