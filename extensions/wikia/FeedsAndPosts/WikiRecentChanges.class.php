@@ -30,11 +30,8 @@ class WikiRecentChanges {
 		return null;
 	}
 
-	private function filterOutSmallChangesAndCleanUp( $articles ) {
-		$articlesWithMinorChange = [];
-		$articlesWithMajorChange = [];
-		$titlesMap = [];
-		$mainPageId = \Title::newMainPage()->getArticleID();
+	private function filterByDifferenceSize($articles, $mainPageId, $titlesMap, $onlyMajor) {
+		$result = [];
 
 		foreach ( $articles as $article ) {
 			$diffSize = abs( $article['newlen'] - $article['oldlen'] );
@@ -42,18 +39,32 @@ class WikiRecentChanges {
 
 			// filter out main page and pages we've already seen
 			if ( $article['pageid'] !== $mainPageId && empty( $titlesMap[$title] ) ) {
-				if ( $diffSize >= self::MINOR_CHANGE_THRESHOLD ) {
-					$articlesWithMajorChange[] = $article;
-				} else {
-					$articlesWithMinorChange[] = $article;
+				$isMajor = $diffSize >= self::MINOR_CHANGE_THRESHOLD;
+
+				if ( ( $isMajor && $onlyMajor ) || ( !$isMajor && !$onlyMajor ) ) {
+					$result[] = $article;
+					$titlesMap[$title] = true;
 				}
-				$titlesMap[$title] = true;
+			}
+
+			if ( count( $result ) === self::LIMIT ) {
+				break;
 			}
 		}
 
+		return $result;
+	}
+
+	private function filterOutSmallChangesAndCleanUp( $articles ) {
+		$titlesMap = [];
+		$mainPageId = \Title::newMainPage()->getArticleID();
+		$articlesWithMajorChange =
+			$this->filterByDifferenceSize( $articles, $mainPageId, $titlesMap, true );
 		$resultArticles = array_slice( $articlesWithMajorChange, 0, self::LIMIT );
 
 		if ( count( $resultArticles ) < self::LIMIT ) {
+			$articlesWithMinorChange =
+				$this->filterByDifferenceSize( $articles, $mainPageId, $titlesMap, false );
 			$resultArticles =
 				array_slice(
 					array_merge( $articlesWithMajorChange, $articlesWithMinorChange ),
@@ -67,12 +78,14 @@ class WikiRecentChanges {
 				return $article['pageid'];
 			}, $resultArticles ), DB_SLAVE );
 
-		return array_values( array_map( function ( $title ) {
+		return array_map( function ( $article ) use ( $resultTitles ) {
+			$title = $resultTitles[$article['pageid']];
+
 			return [
 				'title' => $title->getText(),
 				'url' => $title->getLocalURL(),
 			];
-		}, $resultTitles ) );
+		}, $resultArticles );
 	}
 
 	private function getRecentChanges() {
@@ -84,6 +97,7 @@ class WikiRecentChanges {
 			'rcprop' => 'title|sizes|ids',
 			'rcshow' => '!bot|!minor|!redirect',
 			'rcnamespace' => implode( '|', $wgContentNamespaces ),
+		    'rctype' => 'edit|new',
 			// load 20 times more items so we'll be able to filter out articles with minor changes
 			'rclimit' => self::LIMIT * 20,
 		] );
