@@ -2,9 +2,7 @@
 
 class ProtectSiteSpecialController extends WikiaSpecialPageController {
 
-	const PROTECTION_EXPIRY_VALUES = [
-		'1 hour', '2 hours', '4 hours', '8 hours', '12 hours',
-	];
+	const MAX_EXPIRY_TIME_SECONDS = 60 * 60 * 12; // 12 hours
 	const INVALID_EXPIRY = 'Invalid expiry time';
 
 	/** @var ProtectSiteModel $model */
@@ -39,20 +37,11 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			];
 		}
 
-		$times = [];
-
-		foreach ( self::PROTECTION_EXPIRY_VALUES as $value ) {
-			$times[] = [
-				'value' => $value,
-			];
-		}
-
 		$inputs[] = [
-			'type' => 'select',
+			'type' => 'text',
 			'label' => $this->msg( 'protectsite-label-expiry' )->escaped(),
 			'name' => 'expiry',
 			'value' => '1 hour',
-			'options' => $times,
 		];
 
 		$inputs[] = [
@@ -113,7 +102,7 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $user->isBlocked() ){
-			throw new ForbiddenException();
+			throw new UserBlockedError( $user->getBlock() );
 		}
 
 		$protection = 0;
@@ -136,14 +125,24 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 		$title = Title::makeTitle( NS_SPECIAL, 'Allpages' );
 		$log = new LogPage( 'protect' );
 
+		$target = SpecialPage::getTitleFor( 'ProtectSite' );
+
+		$this->response->setCode( 303 );
+		$this->response->setHeader( 'Location', $target->getFullURL() );
+
 		if ( $protection && $protection ^ ProtectSiteModel::PREVENT_ANONS_ONLY ) {
 			$expiry = $request->getVal( 'expiry', '1 hour' );
 
-			if ( !in_array( $expiry, self::PROTECTION_EXPIRY_VALUES ) ) {
-				throw new BadRequestException( self::INVALID_EXPIRY );
-			}
-
+			$now = time();
 			$expiresAt = strtotime( "+$expiry" );
+
+			if ( $expiresAt - $now > static::MAX_EXPIRY_TIME_SECONDS && !$user->isAllowed( 'protectsite-nolimit' ) ) {
+				BannerNotificationsController::addConfirmation(
+					$context->msg( 'protectsite-expiry-invalid' )->escaped(),
+					BannerNotificationsController::CONFIRMATION_ERROR
+				);
+				return false;
+			}
 
 			if ( !$request->getCheck( 'suppress_expiry' ) ) {
 				$reason = empty( $reason ) ? $expiry : "$expiry: $reason";
@@ -155,10 +154,5 @@ class ProtectSiteSpecialController extends WikiaSpecialPageController {
 			$model->unprotect( $this->wg->CityId );
 			$log->addEntry( 'unprotect', $title, $reason, [], $user );
 		}
-
-		$target = SpecialPage::getTitleFor( 'ProtectSite' );
-
-		$this->response->setCode( 303 );
-		$this->response->setHeader( 'Location', $target->getFullURL() );
 	}
 }

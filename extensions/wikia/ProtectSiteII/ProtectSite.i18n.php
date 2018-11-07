@@ -5,6 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	'action-protectsite' => 'temporarily block various site modifications',
 	'protectsite' => 'Protect site',
+	'protectsite-invalid-expiry' => 'Too long expiry time given',
 	'protectsite-label-expiry' => 'Expires in',
 	'protectsite-label-prevent-anons-only' => 'Block only anonymous users from performing these actions',
 	'protectsite-label-prevent-edit' => 'Prevent page edits',
