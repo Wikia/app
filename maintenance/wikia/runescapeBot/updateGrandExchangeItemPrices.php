@@ -9,6 +9,8 @@ require_once( __DIR__ . '/runescapeBot.setup.php' );
  */
 class UpdateGrandExchangeItemPrices extends Maintenance {
 
+	const RUNESCAPE_CITY_ID = 304;
+	const OLDSCHOOL_RUNESCAPE_CITY_ID = 691244;
 	const PAUSE_TIME_IN_SECONDS = 2.5;
 	const LOG_MESSAGE_TEMPLATE = "RUNESCAPE_BOT -- %s";
 	const MODULE_PREFIX = "Module:Exchange/";
@@ -20,38 +22,38 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	];
 	const GRAND_EXCHANGE_PRICES_PAGE = "Module:GEPrices/data";
 
+	/** @var RunescapeApi */
 	private $runescapeApi;
+	/** @var GrandExchangePageFetcher */
 	private $pageFetcher;
+	/** @var RawTextUpdater */
 	private $textUpdater;
-	private $allPrices = [];
 	private $botUser;
+	private $allPrices = [];
 
 	// Runescape provides the trade count for the top 100 most traded items.
 	// When updating the price for those items, we'll also update their trade count
 	private $topItemsTradeCount = [];
 
-	public function __construct() {
-		parent::__construct();
-		$this->runescapeApi = new RunescapeApi();
-		$this->pageFetcher = new GrandExchangePageFetcher();
-		$this->textUpdater = new RawTextUpdater();
-	}
-
 	/**
 	 * @throws Exception
 	 */
 	public function execute() {
+		// Initialize all of our member variables in execute since MW isn't fully bootstrapped when
+		// the constructor to this class is called
+		$this->runescapeApi = new RunescapeApi();
+		$this->pageFetcher = new GrandExchangePageFetcher();
+		$this->textUpdater = new RawTextUpdater();
 		$this->botUser = User::newFromName( Wikia::BOT_USER );
 		$this->topItemsTradeCount = $this->runescapeApi->getTopItems();
 
 		// "Grand Exchange" is the name of the runescape marketplace. All items that need
 		// to be updated are in the "Grand Exchange" category
-		$pages = $this->pageFetcher->fetchAllGrandExchangePages();
-		foreach ( $pages as $page) {
+		foreach ( $this->pageFetcher->fetchAllGrandExchangePages() as $page ) {
 			try {
 				$this->updatePricePagesForArticle( $page );
 			} catch	( Exception $e ) {
-				$this->logError( $e->getMessage(), [ 'page' => $page ] );
+				$this->logWarn( $e->getMessage(), [ 'page' => $page ] );
 			} finally {
 				$this->pauseExecutionMomentarily();
 			}
@@ -234,7 +236,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 			if ( $result->isGood() )  {
 				$this->logInfo( "successfully updated page", $pageContext );
 			} else {
-				$this->logError( "unable to update page", $pageContext );
+				$this->logWarn( "unable to update page", $pageContext );
 			}
 		} catch ( MWException $e ) {
 			$errorContext = [ "exception" => $e ];
@@ -242,12 +244,16 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		}
 	}
 
-	private function logError( string $errorMessage,  $context = [] ) {
+	private function logInfo( $infoMessage, $context = [] ) {
+		$this->mLogger->info( sprintf( self::LOG_MESSAGE_TEMPLATE, $infoMessage ), $context );
+	}
+
+	private function logWarn( string $errorMessage,  $context = [] ) {
 		$this->mLogger->error( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
 	}
 
-	private function logInfo( $infoMessage, $context = [] ) {
-		$this->mLogger->info( sprintf( self::LOG_MESSAGE_TEMPLATE, $infoMessage ), $context );
+	private function logError( string $errorMessage,  $context = [] ) {
+		$this->mLogger->error( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
 	}
 
 	/**
@@ -257,7 +263,6 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		sleep( self::PAUSE_TIME_IN_SECONDS );
 	}
 }
-
 
 $maintClass = 'UpdateGrandExchangeItemPrices';
 require_once RUN_MAINTENANCE_IF_MAIN;
