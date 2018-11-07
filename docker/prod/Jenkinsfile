@@ -117,7 +117,7 @@ stage('Slack notify start') {
   notifyBuild('STARTED')
 }
 
-node("docker-daemon") {
+node("docker-daemon-big") {
   def currentAppBranch
   def currentConfigBranch
   def currentAppTag
@@ -404,10 +404,12 @@ EOL""")
       }
 
       withDockerContainer(kubectlImage) {
-        // cron jobs only run on SJC
         if (!params.dry_run) {
-          sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
+            // cron jobs and alerting is only run on SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/alerting.yaml"
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
         } else {
+          println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/alerting.yaml")
           println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml")
         }
       }

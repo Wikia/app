@@ -18,7 +18,7 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-node("docker-daemon") {
+node("docker-daemon-big") {
   def buildUser = "Anonymous"
   def appHash
   def configHash
