@@ -2,8 +2,8 @@
 
 class RunescapeApi {
 
-	const API_URL_TEMPLATE = "http://services.runescape.com/m=itemdb_%s/api/graph/%s.json";
-	const TOP_TRADED_ITEMS_URL = "http://services.runescape.com/m=itemdb_%s/top100.ws";
+	const GET_ITEM_URL = "http://services.runescape.com/m=itemdb_%s/api/graph/%s.json";
+	const GET_TOP_ITEMS_URL = "http://services.runescape.com/m=itemdb_%s/top100.ws";
 	const ONE_SECOND = 1;
 
 	// The APIs for runescape and oldschoolrunescape differ based on the suffix of the itemdb_ parameter
@@ -28,7 +28,7 @@ class RunescapeApi {
 	 * @throws Exception
 	 */
 	public function getItemById(string $itemId ) : GrandExchangeItem  {
-		$url =  sprintf( self::API_URL_TEMPLATE, $this->itemDbSuffix, $itemId );
+		$url =  sprintf( self::GET_ITEM_URL, $this->itemDbSuffix, $itemId );
 		$response = $this->makeRequestAndRetryOnFailure( $url );
 		if ( $response === false ) {
 			throw new Exception( "Error fetching data from runescape API" );
@@ -61,7 +61,7 @@ class RunescapeApi {
 
 	public function getTopItems() {
 		$idToTradeCountMap = [];
-		$url =  sprintf( self::TOP_TRADED_ITEMS_URL, $this->itemDbSuffix );
+		$url =  sprintf( self::GET_TOP_ITEMS_URL, $this->itemDbSuffix );
 		$response = $this->makeRequestAndRetryOnFailure( $url );
 
 		if ( $response === false ) {
