@@ -14,17 +14,17 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
+// examples of what a tag, version and branch mean in the code below
 // tag: release-751.001
 // version: 751.001
 // branch: release-751
 
 // e.g. 220.004
 def get_current_version() {
-  def currentBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
   // get most recent tag reachable for current branch
   // eg. release-757.001 -> 757.001
   return sh(
-      script: "git describe --abbrev=0 --match='${currentBranch}*' 2> /dev/null || echo 'release-000.000'",
+      script: "git describe --abbrev=0 --match='release-*' 2> /dev/null || echo 'release-000.000'",
       returnStdout: true
     )
     .trim()
