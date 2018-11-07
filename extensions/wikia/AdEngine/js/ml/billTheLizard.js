@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 				bucket = buckets[i];
 			}
 		}
-		return bucket.toString();
+		return bucket;
 	}
 
 	function call() {
