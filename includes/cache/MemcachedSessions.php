@@ -84,6 +84,12 @@ function memsess_write( $id, $data ) {
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
 	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
+
+	\Wikia\Logger\WikiaLogger::instance()->debug( __FUNCTION__, [
+		'session_id' => $id,
+		'session_data' => json_encode( $data ),
+	] );
+
 	return true;
 }
 
