@@ -249,7 +249,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	}
 
 	private function logWarn( string $errorMessage,  $context = [] ) {
-		$this->mLogger->error( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
+		$this->mLogger->warning( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
 	}
 
 	private function logError( string $errorMessage,  $context = [] ) {
