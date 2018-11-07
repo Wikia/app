@@ -110,6 +110,16 @@ class Hooks {
 		$dispatchable->getResponse()->setData( $data );
 	}
 
+	public static function onGetWikisUnderDomain( $domain, $languageOnly, &$cities ) {
+		// filter out communities with a valid wgFandomCreatorCommunityId set
+		$cities = array_filter( $cities, function ( $cityData ) {
+			$communityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityData[ 'city_id' ], false, "" );
+			return false;
+			return !self::isValidCommunityId( $communityId );
+		});
+		return true;
+	}
+
 	private static function convertToCommunityHeaderNavigation( $items, $level = 1 ) {
 		$convertedNavigation = [];
 		$moreItems = null;

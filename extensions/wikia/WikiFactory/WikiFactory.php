@@ -575,9 +575,9 @@ class WikiFactory {
 		$dbr = static::db( DB_SLAVE );
 
 		return WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
+			wfSharedMemcKey( 'wikifactory:DomainWikis:v2', $domain, $languageOnly ),
 			900,	// 15 minutes
-			function() use ($dbr, $domain, $languageOnly) {
+			function() use ( $dbr, $domain, $languageOnly ) {
 				if ( $languageOnly ) {
 					// require at least a single characted in the path
 					$urlCond = $dbr->makeList( [
@@ -615,6 +615,7 @@ class WikiFactory {
 					];
 				}
 				$dbr->freeResult( $dbResult );
+				Hooks::run( 'GetWikisUnderDomain', [ $domain, $languageOnly, &$cities ] );
 				return $cities;
 			}
 		);
