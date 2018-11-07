@@ -327,12 +327,12 @@ node("docker-daemon") {
             def cacheBuster = new Date().getTime()
 
             sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
-            sh('echo "' + appReleaseTag + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + nextAppReleaseTag + '@' + appHash + '" > wikia.version.txt')
           }
         },
         "config": {
           dir("config") {
-            sh('echo "' + configReleaseTag + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + nextConfigReleaseTag + '@' + configHash + '" > wikia.version.txt')
           }
         }
       )
@@ -410,8 +410,8 @@ node("docker-daemon") {
           'SANDBOX_NAME': 'preview',
           'SANDBOX_ENVIRONMENT': 'preview',
           'SANDBOX_DATACENTER': datacenter,
-          'APP_VERSION': appReleaseTag,
-          'CONFIG_VERSION': configReleaseTag,
+          'APP_VERSION': nextAppReleaseTag,
+          'CONFIG_VERSION': nextConfigReleaseTag,
           'REPLICAS': 4
         ])
 
