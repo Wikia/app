@@ -111,11 +111,17 @@ class Hooks {
 	}
 
 	public static function onGetWikisUnderDomain( $domain, $languageOnly, &$cities ) {
-		// filter out communities with a valid wgFandomCreatorCommunityId set
-		$cities = array_filter( $cities, function ( $cityData ) {
-			$communityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityData[ 'city_id' ], false, "" );
-			return !self::isValidCommunityId( $communityId );
-		});
+		// add FC specific fields
+		$cities = array_map(
+			function( $cityData ) {
+				$communityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityData[ 'city_id' ], false, "" );
+				$cityData['fc_community'] = self::isValidCommunityId( $communityId );
+				if ( $cityData['fc_community'] ) {
+					$cityData['fc_community_id'] = $communityId;
+				}
+				return $cityData;
+			},
+			$cities );
 		return true;
 	}
 

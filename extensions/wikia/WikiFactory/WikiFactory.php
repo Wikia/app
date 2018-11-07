@@ -575,7 +575,7 @@ class WikiFactory {
 		$dbr = static::db( DB_SLAVE );
 
 		return WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wikifactory:DomainWikis:v2', $domain, $languageOnly ),
+			wfSharedMemcKey( 'wikifactory:DomainWikis:v3', $domain, $languageOnly ),
 			900,	// 15 minutes
 			function() use ( $dbr, $domain, $languageOnly ) {
 				if ( $languageOnly ) {
