@@ -2671,7 +2671,8 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsExt = false;
+// TODO set it back to false
+$wgEnableFeedsAndPostsExt = true;
 
 /**
  * Enable the Embedded Feeds module from Community Feeds
