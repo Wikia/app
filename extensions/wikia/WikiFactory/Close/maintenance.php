@@ -348,9 +348,6 @@ class CloseWikiMaintenance {
 		$time = Wikia::timeDuration( wfTime() - $time );
 		$this->debug( "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}" );
 
-		/**
-		 * @name dumpfile
-		 */
 		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
 		if( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
@@ -381,7 +378,10 @@ class CloseWikiMaintenance {
 		}
 		else {
 			$this->info( "List of files in {$directory} is empty" );
-			throw new WikiaException( "List of files in {$directory} is empty" );
+
+			// SUS-6077 | sub-bucket is empty, e.g. foo bucket is not empty,
+			// but bucket/<lang>  can be
+			return false;
 		}
 
 		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
