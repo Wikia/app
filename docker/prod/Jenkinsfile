@@ -174,7 +174,7 @@ EOL""")
         }
     }
 
-    stage("Apply cron jobs") {
+    stage("Apply cron jobs and alerts") {
         dir("app") {
             // SUS-5531 - apply cron jobs via auto-generated YAML file
             sh("cd docker/maintenance && bash cronjobs-generator.sh ${imageTag} > ../prod/k8s-cronjobs.yaml")
@@ -182,7 +182,8 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            // cron jobs only run on SJC
+            // cron jobs and alerting is only run on SJC
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/alerting.yaml"
             sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
         }
     }
