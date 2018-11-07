@@ -140,7 +140,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 				continue;
 			}
 
-			$indexValue = $this->getIndexValueFromTemplatePage( $indexPage );
+			$indexValue = $this->getIndexValueFromTemplatePage( $templatePage );
 			$timeStamp = $this->getTimeStampForRuneScape();
 			$indexDataPage = $this->getWikiPageForTitle( $this->getDataTitleForIndexPage( $indexPage ) );
 			$item = new GrandExchangeItem( $timeStamp, $indexValue, -1 );
