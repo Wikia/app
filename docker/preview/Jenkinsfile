@@ -54,22 +54,57 @@ def bump_minor() {
 }
 
 def createReleaseBranch(String releaseBranch) {
-  // sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
+  sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
   //TODO: uncomment when this will become main deploy pipeline
   // sh(script: "git push --set-upstream origin ${releaseBranch}")
 }
 
-// tag: release-xxx.xxx
-def createTag(String tag) {
-  doesTagExist = sh(script: "git tag --list ${tag}", returnStdout: true).trim()
+// Creates new tag if some commits were made to a release branch
+def createTag(String nextTag) {
+  // e.g 220.005
+  def currentVersion = nextTag.replace('release-', '')
+  def currentBranch = nextTag.tokenize('.')[0]
+  println("Current version: ${currentVersion}")
 
-  if (doesTagExist.isEmpty()) {
-    println("Tag already exists: ${tag}")
+  def unreleasedCommits = sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true).trim()
+  println(unreleasedCommits)
+
+  //e.g. release-220.002
+  def latestTagOnCurrentRelease = sh(
+    script: "git describe --match='release-${currentBranch}*'",
+    returnStdout: true
+  ).trim()
+
+  if (unreleasedCommits.isEmpty()) {
+    // no new commits
+    println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
+
+    return latestTagOnCurrentRelease
   } else {
-    println("Creating tag: ${tag}")
-    sh(script: "git tag --annotate --message ${tag} ${tag}")
-    sh(script: "git push origin ${tag}")
+    //e.g. release-220.003
+    def newTag = "release-" + bump_minor(currentVersion)
+
+    doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
+
+    if (doesTagExist.isEmpty()) {
+      println("Tag already exists: ${newTag}")
+    } else {
+      println("Creating tag: ${newTag}")
+      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        if (!params.dry_run) {
+          sh(script: "git tag --annotate --message ${newTag} ${newTag}")
+          sh(script: "git push origin ${newTag}")
+        } else {
+          println("Dry run: git tag --annotate --message ${newTag} ${newTag}")
+          println("Dry run: git push origin ${newTag}")
+        }
+      }
+    }
+
+    return newTag
   }
+
+  return 'release-' + currentVersion
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
@@ -96,7 +131,11 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   // Send notifications
-  // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  if (!params.dry_run) {
+    slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  }
+
+  println("Slack message: ${summary}")
 }
 
 stage('Slack notify start') {
@@ -151,7 +190,7 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            if (params.hotfix) {
+            if (params.source == 'hotfix') {
               nextAppReleaseVersion = bump_minor()
             } else {
               nextAppReleaseVersion = bump_major()
@@ -165,7 +204,7 @@ node("docker-daemon") {
         },
         "config": {
           dir("config") {
-            if (params.hotfix) {
+            if (params.source == 'hotfix') {
               nextConfigReleaseVersion = bump_minor()
             } else {
               nextConfigReleaseVersion = bump_major()
@@ -251,13 +290,11 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              //TODO: uncomment when this will become main deploy pipeline
               createTag(nextAppReleaseTag)
             }
           },
           "config": {
             dir("config") {
-              //TODO: uncomment when this will become main deploy pipeline
               createTag(nextConfigReleaseTag)
             }
           }
@@ -322,10 +359,15 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-              // SUS-5284 - make the image a bit smaller
-              sh("cp docker/.dockerignore ..")
-              sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
-              sh("docker push $mediawikiImage:$imageTag")
+              if (params.dry_run) {
+                println("Dry run: docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+              }
+
             } else {
               println("Php image tag ($imageTag) already exists")
             }
@@ -347,10 +389,15 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-              // SUS-5284 - make the image a bit smaller
-              sh("cp docker/.dockerignore ..")
-              sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
-              sh("docker push $nginxImage:$imageTag")
+
+              if (params.dry_run) {
+                println("Dry run: docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker push $nginxImage:$imageTag")
+              }
             } else {
               println("Nginx image tag ($imageTag) already exists")
             }
@@ -380,10 +427,16 @@ EOL""")
         sh("cat docker/sandbox/k8s.yaml")
       }
 
-      withDockerContainer(kubectlImage) {
-        sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-        rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-preview")
+      if (!params.dry_run) {
+        withDockerContainer(kubectlImage) {
+          sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-preview")
+        }
+      } else {
+        println("Dry run: kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml")
+        rolloutStatus = 0
       }
+
     }
 
     stage('Create selenium-tests preview branch') {
