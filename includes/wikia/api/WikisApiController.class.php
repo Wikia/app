@@ -281,7 +281,7 @@ class WikisApiController extends WikiaApiController {
 			}, $wikis );
 		}
 
-		// sort the wikis by their url, Eglish wiki should come first
+		// sort the wikis by their url, English wiki should come first
 		uasort( $wikis, function( $a, $b ) { return strcmp( $a['city_url'], $b['city_url'] ); } );
 
 		$this->response->setVal( 'wikis', $wikis );
