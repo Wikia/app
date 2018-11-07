@@ -1930,7 +1930,6 @@ class Wikia {
 		}
 		$surrogateKey = implode( ' ', $surrogateKeys );
 		header( 'Surrogate-Key: ' . $surrogateKey );
-		header( 'X-Surrogate-Key: ' . $surrogateKey );
 	}
 
 	public static function surrogateKey( $args ) {
@@ -1943,7 +1942,7 @@ class Wikia {
 		return 'mw-' . implode( '-', func_get_args() );
 	}
 
-	public static function purgeSurrogateKey( $key, $service = 'mediawiki' ) {
+	public static function purgeSurrogateKey( string $key, string $service = 'mediawiki' ) {
 		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key, $service );
 	}
 

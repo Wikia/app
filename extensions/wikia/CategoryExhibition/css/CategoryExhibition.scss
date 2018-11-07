@@ -24,7 +24,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 }
 
 .category-gallery-form {
-	margin: 0 5px 5px 5px;
+	margin-bottom: 10px;
 	text-align: right;
 
 	a {
@@ -33,103 +33,8 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 	.wikia-menu-button {
 
-		li{
+		li {
 			float: none;
-		}
-	}
-
-	#category-exhibition-display-new {
-		display: inline-block;
-		position: relative;
-		width: 14px;
-		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* inline */
-		background-repeat: no-repeat;
-		background-position: center;
-
-		div {
-			position: absolute;
-			background-color: $color-inctive-button;
-			width: 5px;
-			height: 5px;
-			margin: 0px;
-			padding: 0px;
-		}
-
-		&.active {
-			div {
-				background-color: $color-buttons;
-			}
-
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* inline */
-		}
-
-		#cat-exh-new-one {
-			top: 2px;
-			left: 1px;
-		}
-
-		#cat-exh-new-two {
-			top: 8px;
-			left: 7px;
-		}
-
-		#cat-exh-new-three {
-			top: 2px;
-			left: 7px;
-		}
-
-		#cat-exh-new-four {
-			top: 8px;
-			left: 1px;
-		}
-	}
-
-	#category-exhibition-display-old {
-		display: inline-block;
-		position: relative;
-		width: 14px;
-		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* inline */
-		background-repeat: no-repeat;
-		background-position: center;
-
-		div {
-			position: absolute;
-			background-color: $color-inctive-button;
-			width: 11px;
-			height: 1px;
-			margin: 0px;
-			padding: 0px;
-		}
-
-		&.active {
-			div {
-				background-color: $color-buttons;
-			}
-
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* inline */
-		}
-
-		#cat-exh-old-one {
-			top: 3px;
-			left: 3px;
-		}
-		#cat-exh-old-two {
-			top: 5px;
-			left: 3px;
-		}
-		#cat-exh-old-three {
-			top: 7px;
-			left: 3px;
-		}
-		#cat-exh-old-four {
-			top: 9px;
-			left: 3px;
-		}
-		#cat-exh-old-five {
-			top: 11px;
-			left: 3px;
 		}
 	}
 }
@@ -147,7 +52,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 		.category-gallery-room1 {
 			vertical-align: top;
-			border: 0px;
+			border: 0;
 			display: inline-block;
 			position: relative;
 			width: 670px;
@@ -155,7 +60,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 		.category-gallery-room2 {
 			vertical-align: top;
-			border: 0px;
+			border: 0;
 			display: inline-block;
 			width: 670px;
 			position: relative;
@@ -195,7 +100,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 	a, a:hover, a:visited {
 		color: $color-text;
-		text-decoration:none;
+		text-decoration: none;
 		display: block;
 	}
 
@@ -238,7 +143,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		}
 
 		.text {
-			font-family: Helvetica,Arial,sans-serif; /* overriden in Monaco */
+			font-family: Helvetica, Arial, sans-serif; /* overriden in Monaco */
 			font-style: normal;
 			font-size: 13px;
 			font-weight: bold;
@@ -246,9 +151,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			position: relative;
 			display: block;
 			margin: 0;
-			padding: 0;
-			padding-left: 24px;
-			padding-top: 13px;
+			padding: 13px 0 0 24px;
 			line-height: 17px;
 			height: 85px;
 			overflow: hidden;
@@ -284,7 +187,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 	a, a:hover, a:visited {
 		color: $color-links;
-		text-decoration:none;
+		text-decoration: none;
 		display: block;
 	}
 
@@ -302,7 +205,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		display: block;
 		font-size: 11px;
 		padding: 4px;
-		margin: 0px;
+		margin: 0;
 		max-height: 11px;
 		overflow: hidden;
 		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
@@ -327,7 +230,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 }
 
-category-gallery-paginator{
+.category-gallery-paginator {
 	position: relative;
 	height: 50px;
 }

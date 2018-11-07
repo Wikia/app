@@ -636,7 +636,7 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+	public function getTrendingPagesData( int $limit, $category, bool $withImagesOnly	) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -654,7 +654,7 @@ class MercuryApi {
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = self::processTrendingArticlesData( $rawData );
+			$data = self::processTrendingPagesData( $rawData, $withImagesOnly );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -703,7 +703,7 @@ class MercuryApi {
 		];
 	}
 
-	public function processTrendingArticlesData( $data ) {
+	public function processTrendingPagesData( $data, bool $withImagesOnly = false ) {
 		if ( !isset( $data['items'] ) || !is_array( $data['items'] ) ) {
 			return null;
 		}
@@ -711,7 +711,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data['items'] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item );
+			$processedItem = $this->processTrendingPagesItem( $item, $withImagesOnly );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -725,15 +725,19 @@ class MercuryApi {
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
 	 * @param array $item
-	 *
+	 * @param bool $withImagesOnly - if true, skip items without thumbnail
 	 * @return array
 	 */
-	public function processTrendingArticlesItem( $item ) {
+	public function processTrendingPagesItem( $item, bool $withImagesOnly ) {
 		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
+			if ( $withImagesOnly && empty( $item['thumbnail'] ) ) {
+				return null;
+			}
+
 			foreach ( $paramsToInclude as $param ) {
 				if ( !empty( $item[$param] ) ) {
 					$processedItem[$param] = $item[$param];
