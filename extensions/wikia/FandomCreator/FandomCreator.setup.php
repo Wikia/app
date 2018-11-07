@@ -33,7 +33,6 @@ if ( !empty($wgFandomCreatorCommunityId ) ) {
 
 	$wgHooks['DesignSystemCommunityHeaderModelGetData'][] = 'FandomCreator\Hooks::onDesignSystemCommunityHeaderModelGetData';
 
-
 	$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
 		$params = $dispatchable->getRequest()->getParams();
 		$product = $params[DesignSystemApiController::PARAM_PRODUCT];

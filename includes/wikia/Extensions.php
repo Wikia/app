@@ -1678,7 +1678,6 @@ if ( !empty( $wgEnableCommunityPageExt ) || ( $wgLanguageCode == 'ja' && $wgCity
 	include "$IP/extensions/wikia/CommunityPage/CommunityPage.setup.php";
 }
 
-
 include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 
 /**

@@ -114,7 +114,6 @@ class Hooks {
 		// filter out communities with a valid wgFandomCreatorCommunityId set
 		$cities = array_filter( $cities, function ( $cityData ) {
 			$communityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityData[ 'city_id' ], false, "" );
-			return false;
 			return !self::isValidCommunityId( $communityId );
 		});
 		return true;
