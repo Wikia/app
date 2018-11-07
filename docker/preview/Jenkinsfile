@@ -20,10 +20,11 @@ def render(String template, java.util.LinkedHashMap binding) {
 
 // e.g. 220.004
 def get_current_version() {
-  // get most recent tag reachable from commit
+  def currentBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
+  // get most recent tag reachable for current branch
   // eg. release-757.001 -> 757.001
   return sh(
-      script: "git describe --abbrev=0 --match='release*' 2> /dev/null || echo 'release-000.000'",
+      script: "git describe --abbrev=0 --match='${currentBranch}*' 2> /dev/null || echo 'release-000.000'",
       returnStdout: true
     )
     .trim()
@@ -41,8 +42,8 @@ def bump_major() {
   return nextMajorVersion + ".001"
 }
 
-// prevVersion - e.g. 220.001
-// example from 220.001 to 220.002
+// release-770.001 -> release-770.002
+// none -> release-000.001
 def bump_minor() {
   def currentVersion = get_current_version()
 
@@ -59,52 +60,46 @@ def createReleaseBranch(String releaseBranch) {
   // sh(script: "git push --set-upstream origin ${releaseBranch}")
 }
 
-// Creates new tag if some commits were made to a release branch
+// If new release - create a tag e.g. release-230.001
+// if hotfix - create new tag for current relaese branch if any commit were made to it
 def createTag(String nextTag) {
-  // e.g 220.005
-  def currentVersion = nextTag.replace('release-', '')
-  def currentBranch = nextTag.tokenize('.')[0]
+  // e.g. 219.001
+  def currentVersion = get_current_version()
   println("Current version: ${currentVersion}")
 
-  def unreleasedCommits = sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true).trim()
-  println(unreleasedCommits)
+  def hasUnreleasedCommits = true
+  if (params.source == 'hotfix') {
+    hasUnreleasedCommits = !sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true)
+      .trim()
+      .isEmpty()
+  }
 
-  //e.g. release-220.002
-  def latestTagOnCurrentRelease = sh(
-    script: "git describe --match='release-${currentBranch}*'",
-    returnStdout: true
-  ).trim()
+  if (hasUnreleasedCommits) {
+    doesTagExist = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
-  if (unreleasedCommits.isEmpty()) {
+    if (doesTagExist.isEmpty()) {
+      println("Tag already exists: ${nextTag}")
+    } else {
+      println("Creating tag: ${nextTag}")
+      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        if (!params.dry_run) {
+          sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
+          sh(script: "git push origin ${nextTag}")
+        } else {
+          println("Dry run: git tag --annotate --message ${nextTag} ${nextTag}")
+          println("Dry run: git push origin ${nextTag}")
+        }
+      }
+    }
+    return nextTag
+  } else {
+    //e.g. release-219.001
+    def latestTagOnCurrentRelease = 'release-' + currentVersion
     // no new commits
     println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
 
     return latestTagOnCurrentRelease
-  } else {
-    //e.g. release-220.003
-    def newTag = "release-" + bump_minor(currentVersion)
-
-    doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
-
-    if (doesTagExist.isEmpty()) {
-      println("Tag already exists: ${newTag}")
-    } else {
-      println("Creating tag: ${newTag}")
-      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-        if (!params.dry_run) {
-          sh(script: "git tag --annotate --message ${newTag} ${newTag}")
-          sh(script: "git push origin ${newTag}")
-        } else {
-          println("Dry run: git tag --annotate --message ${newTag} ${newTag}")
-          println("Dry run: git push origin ${newTag}")
-        }
-      }
-    }
-
-    return newTag
   }
-
-  return 'release-' + currentVersion
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
