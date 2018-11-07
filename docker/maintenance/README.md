@@ -215,6 +215,12 @@ Marks wikis created by automated tests for closing.
 
 `maintenance/wikia/cronjobs/resetWeeklyUserContributionsCount.php`
 
+#### runescape-price-update-bot.yaml
+
+`maintenance/runescape-price-update-bot.yaml`
+
+Updates prices of items on runescape and oldschoolrunescape wikis using data from Jagex API
+
 Reset weekly user rank on Special:Community.
 
 #### send-confirmation-reminder.yaml
@@ -240,12 +246,6 @@ Removes expired SiteWideMessages from MySQL.
 `extensions/wikia/SemanticMediaWiki/maintenance/rebuildConceptCache.php`
 
 Warms up semantic query cache for SemanticMediaWiki's Concept pages.
-
-#### runescape-price-update-bot.yaml
-
-`maintenance/runescape-price-update-bot.yaml`
-
-Updates prices of items on runescape and oldschoolrunescape wikis using data from Jagex API
 
 #### update-special-pages.yaml
 
