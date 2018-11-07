@@ -565,10 +565,11 @@ class WikiFactory {
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
-	 * @param $domain wiki host (without the protocol nor path)
+	 * @param $domain string wiki host (without the protocol nor path)
+	 * @param $languageOnly bool whether to only return language wikis (default)
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
-	public static function getWikisUnderDomain( $domain ) {
+	public static function getWikisUnderDomain( $domain, $languageOnly = false ) {
 		$domain = wfNormalizeHost( $domain );
 
 		$dbr = static::db( DB_SLAVE );
@@ -576,12 +577,23 @@ class WikiFactory {
 		return WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
 			900,	// 15 minutes
-			function() use ($dbr, $domain) {
-				$where = [
-					$dbr->makeList( [
+			function() use ($dbr, $domain, $languageOnly) {
+				if ( $languageOnly ) {
+					// require at least a single characted in the path
+					$urlCond = $dbr->makeList( [
 						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
 						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
-					], LIST_OR ),
+					], LIST_OR );
+				} else {
+					// all wikis under a given domain
+					$urlCond = $dbr->makeList( [
+						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyString() ),
+					], LIST_OR );;
+				}
+
+				$where = [
+					$urlCond,
 					'city_public' => 1
 				];
 
@@ -622,7 +634,7 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'] );
+		return self::getWikisUnderDomain( $url['host'], true );
 	}
 
 	/**
