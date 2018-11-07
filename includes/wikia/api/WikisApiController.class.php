@@ -264,6 +264,26 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function getWikisUnderDomain() {
+		global $wgWikiaBaseDomainRegex, $wgFandomBaseDomain;
+		$domain = $this->request->getVal( 'domain' );
+		if ( !preg_match( '/\.' . $wgWikiaBaseDomainRegex . '$/', $domain ) ) {
+			throw new InvalidParameterApiException( 'domain' );
+		}
+
+		$wikis = WikiFactory::getWikisUnderDomain( $domain );
+		$forceHttps = endsWith( $domain, ".{$wgFandomBaseDomain}" );
+
+		if ( $forceHttps ) {
+			$wikis = array_map( function ( $wiki ) {
+				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
+				return $wiki;
+			}, $wikis );
+		}
+
+		$this->response->setVal( 'wikis', $wikis );
+	}
+
 	/**
 	 * Get the value of an array request parameter passed as CSV without performing
 	 * a potentially expensive explode+count of all items.
