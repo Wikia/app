@@ -20,8 +20,7 @@ before_install:
   - sudo apt install -y libmemcached-dev
 install:
   - pecl channel-update pecl.php.net
-  - pecl install uopz mustache redis
-  - printf "no --disable-memcached-sasl\n" | pecl install memcached
+  - printf "no --disable-memcached-sasl\n" | pecl install uopz mustache redis memcached
 before_script:
   # make sure indices are upgraded, see https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-23.html#mysqld-5-7-23-bug
   - sudo mysql_upgrade
