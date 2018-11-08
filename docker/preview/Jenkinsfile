@@ -31,9 +31,9 @@ def get_current_version() {
     .replace('release-', '')
 }
 
-// release-770.001 -> release-771.001
-// release-600.009 -> release-601.001
-// none -> release-1.001
+// 770.001 -> 771.001
+// 600.009 -> 601.001
+// none -> 1.001
 def bump_major() {
   def currentVersion = get_current_version()
 
@@ -42,8 +42,8 @@ def bump_major() {
   return nextMajorVersion + ".001"
 }
 
-// release-770.001 -> release-770.002
-// none -> release-000.001
+// 770.001 -> 770.002
+// none -> 000.001
 def bump_minor() {
   def currentVersion = get_current_version()
 
@@ -185,7 +185,9 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            if (params.source == 'hotfix') {
+            if (params.source == 'latest') {
+              nextAppReleaseVersion = get_current_version()
+            } else if (params.source == 'hotfix') {
               nextAppReleaseVersion = bump_minor()
             } else {
               nextAppReleaseVersion = bump_major()
@@ -203,7 +205,9 @@ node("docker-daemon") {
         },
         "config": {
           dir("config") {
-            if (params.source == 'hotfix') {
+            if (params.source == 'latest') {
+              nextConfigReleaseVersion = get_current_version()
+            } else if (params.source == 'hotfix') {
               nextConfigReleaseVersion = bump_minor()
             } else {
               nextConfigReleaseVersion = bump_major()
@@ -278,12 +282,22 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createReleaseBranch(nextAppReleaseBranch)
+              if (params.source == 'latest') {
+                println("Source: latest; checkout tag: ${nextAppReleaseTag}")
+                createReleaseBranch(nextAppReleaseTag)
+              } else {
+                createReleaseBranch(nextAppReleaseBranch)
+              }
             }
           },
           "config": {
             dir("config") {
-              createReleaseBranch(nextConfigReleaseBranch)
+              if (params.source == 'latest') {
+                println("Source: latest; checkout tag: ${nextConfigReleaseTag}")
+                createReleaseBranch(nextConfigReleaseTag)
+              } else {
+                createReleaseBranch(nextConfigReleaseBranch)
+              }
             }
           }
         )
@@ -293,12 +307,20 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createTag(nextAppReleaseTag)
+              if (params.source == 'latest') {
+                println("Source: latest; skip creating a tag")
+              } else {
+                createTag(nextAppReleaseTag)
+              }
             }
           },
           "config": {
             dir("config") {
-              createTag(nextConfigReleaseTag)
+              if (params.source == 'latest') {
+                println("Source: latest; skip creating a tag")
+              } else {
+                createTag(nextConfigReleaseTag)
+              }
             }
           }
         )
