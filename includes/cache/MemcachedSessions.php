@@ -136,20 +136,21 @@ function memsess_write_close() {
  *
  * Wikia change
  *
- * @return BagOStuff|EmptyBagOStuff|MemCachedClientforWiki
+ * @return BagOStuff|EmptyBagOStuff|MemCachedClientforWiki|MemcachedPeclBagOStuff
+ * @throws MWException
  */
 function getSessionMemc() {
-	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc;
-	global $wgMemCachedPersistent, $wgMemCachedDebug;
+	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc, $wgMemCachedPersistent;
 
 	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) ) {
 		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) ) {
 			return $wgSessionMemc;
 		} else {
-			$wgSessionMemc = new MemCachedClientforWiki(
-				array( 'persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
-			$wgSessionMemc->set_servers( $wgSessionMemCachedServers );
-			$wgSessionMemc->set_debug( $wgMemCachedDebug );
+			$wgSessionMemc = new MemcachedPeclBagOStuff( [
+				'persistant' => $wgMemCachedPersistent,
+				'compress_threshold' => 1500,
+				'servers' => $wgSessionMemCachedServers,
+			] );
 
 			return $wgSessionMemc;
 		}
