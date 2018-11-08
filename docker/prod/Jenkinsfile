@@ -150,8 +150,10 @@ node("docker-daemon-big") {
         "preview": {
           // when source=preview fetch version from preview
           if (params.source == 'preview') {
+            def previewDeploymentInfo
+
             withDockerContainer(kubectlImage) {
-              def previewDeploymentInfo = sh(
+              previewDeploymentInfo = sh(
                 script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
                 returnStdout: true
               )
@@ -175,6 +177,8 @@ node("docker-daemon-big") {
           }
         },
         "prod": {
+          def currentDeploymentInfo
+
           withDockerContainer(kubectlImage) {
             currentDeploymentInfo = sh(
               script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",
