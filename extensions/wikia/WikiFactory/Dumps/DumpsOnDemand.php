@@ -102,7 +102,16 @@ class DumpsOnDemand {
 
 		$iUserId = $wgUser->getId();
 
+		$task = ( new \Wikia\Tasks\Tasks\DumpsOnDemandTask() )
+			->setQueue( \Wikia\Tasks\Queues\DumpsOnDemandQueue::NAME )
+			->wikiId( $iCityId )
+			->createdBy( $iUserId );
+
+		$task->call( 'dump' );
+		$task_id = $task->queue();
+
 		$aData = [
+			'task_id'        => $task_id,
 			'dump_wiki_id'   => $iCityId,
 			'dump_user_id'   => $iUserId,
 			'dump_requested' => wfTimestampNow()
@@ -124,14 +133,6 @@ class DumpsOnDemand {
 				array( 'city_id' => $iCityId ),
 				__METHOD__
 		);
-
-		$task = ( new \Wikia\Tasks\Tasks\DumpsOnDemandTask() )
-			->setQueue( \Wikia\Tasks\Queues\DumpsOnDemandQueue::NAME )
-			->wikiId( $iCityId )
-			->createdBy( $iUserId );
-
-		$task->call( 'dump' );
-		$task->queue();
 
 		WikiFactory::clearCache( $iCityId );
 	}

@@ -282,6 +282,7 @@ CREATE TABLE `dmca_request` (
 DROP TABLE IF EXISTS `dumps`;
 CREATE TABLE `dumps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` char(39) DEFAULT NULL,
   `dump_wiki_id` int(9) NOT NULL,
   `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
