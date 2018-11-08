@@ -35,36 +35,31 @@ def bump_minor(String currentVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createTag() {
-  // e.g 220.005
-  def currentVersion = get_current_version()
-  def currentBranch = 'release-' + currentVersion.tokenize('.')[0]
+def createTag(String currentTag) {
+  // e.g. 220.001
+  def currentVersion = currentTag.tokenize('-')[1]
+  // e.g. release-220
+  def currentBranch = currentTag.tokenize('.')[0]
   println("Current version: ${currentVersion}")
 
-  def unreleasedCommits = sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true).trim()
+  def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
   println(unreleasedCommits)
-
-  //e.g. release-220.002
-  def latestTagOnCurrentRelease = sh(
-    script: "git describe --match='${currentBranch}*'",
-    returnStdout: true
-  ).trim()
 
   if (unreleasedCommits.isEmpty()) {
     // no new commits
-    println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
+    println("No new commits - redeploy: ${currentTag}")
 
-    return latestTagOnCurrentRelease
+    return currentTag
   } else {
-    //e.g. release-220.003
-    def newTag = "release-" + bump_minor(currentVersion)
+    //e.g. release-220.002
+    def nextTag = "release-" + bump_minor(currentVersion)
 
-    doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
+    doesTagExist = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
     if (doesTagExist) {
-      println("Tag already exists: ${newTag}")
+      println("Tag already exists: ${nextTag}")
     } else {
-      println("Creating tag: ${newTag}")
+      println("Creating tag: ${nextTag}")
       sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
         if (!params.dry_run) {
           sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
@@ -76,10 +71,8 @@ def createTag() {
       }
     }
 
-    return newTag
+    return nextTag
   }
-
-  return 'release-' + currentVersion
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
@@ -207,27 +200,32 @@ node("docker-daemon-big") {
 
     stage("Clone repositories") {
       if (params.source == 'preview') {
-        appBranch = nextAppBranch
-        configBranch = nextConfigBranch
+        checkoutApp = nextAppTag
+        checkoutConfig = nextConfigTag
       } else {
         // when releasing a hot fix
         // checkout a current branch that is on prod
         // so we'll be able to create new tag if necessary
-        appBranch = "SUS-5787-4"
-        configBranch = currentConfigBranch
+        checkoutApp = currentAppBranch
+        checkoutConfig = currentConfigBranch
       }
 
-      println("App branch: ${appBranch}")
-      println("Config branch: ${configBranch}")
+      println("Checkout App: ${appBranch}")
+      println("Checkout Config: ${configBranch}")
 
       parallel (
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: appBranch,
+                branch: "SUS-5787-4",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextAppTag = createTag()
+            if (params.source == 'preview') {
+              println("Source: preview; nextAppTag: ${nextAppTag}")
+            } else {
+              nextAppTag = createTag(currentAppTag)
+            }
+
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
@@ -236,10 +234,15 @@ node("docker-daemon-big") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: configBranch,
+                branch: checkoutConfig,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextConfigTag = createTag()
+            if (params.source == 'preview') {
+              println("Source: preview; nextConfigTag: ${nextConfigTag}")
+            } else {
+              nextConfigTag = createTag(currentConfigTag)
+            }
+
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
@@ -272,12 +275,12 @@ node("docker-daemon-big") {
             def cacheBuster = new Date().getTime()
 
             sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
-            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + nextAppTag + '@' + appHash + '" > wikia.version.txt')
           }
         },
         "config": {
           dir("config") {
-            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + nextConfigTag + '@' + configHash + '" > wikia.version.txt')
           }
         }
       )
