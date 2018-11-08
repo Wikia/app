@@ -2,17 +2,11 @@
 
 class CategoryUrlParams {
 	const ALLOWED_SORT_TYPES = [ 'mostvisited', 'alphabetical' ];
-	const ALLOWED_DISPLAY_TYPES = [ 'exhibition', 'page' ];
 
 	/**
-	 * @var user passed through constructor. Used to read and save the preferences for sort and display types
+	 * @var user passed through constructor. Used to read and save the preferences for sort
 	 */
 	private $user;
-
-	/**
-	 * @var String display param value as appears in URL
-	 */
-	private $display;
 
 	/**
 	 * @var String sort param value as appears in URL
@@ -29,19 +23,12 @@ class CategoryUrlParams {
 	 */
 	private $sortType;
 
-	/**
-	 * @var string the computed display type. One of self::ALLOWED_DISPLAY_TYPES
-	 */
-	private $displayType;
-
 	public function __construct( WebRequest $request, User $user = null ) {
 		$this->user = $user;
-		$this->display = $request->getVal( 'display', null );
 		$this->sort = $request->getVal( 'sort', null );
 		$this->page = $request->getInt( 'page', 0 );
 
 		$this->sortType = $this->initType( $this->sort, self::ALLOWED_SORT_TYPES, 'CategoryExhibitionSortType' );
-		$this->displayType = $this->initType( $this->display, self::ALLOWED_DISPLAY_TYPES, 'CategoryExhibitionDisplayType' );
 	}
 
 	/**
@@ -51,15 +38,6 @@ class CategoryUrlParams {
 	 */
 	public function getSortParam() {
 		return $this->sort;
-	}
-
-	/**
-	 * Get the display param as it appeared in URL. Useful for caching
-	 * To get the computed display type, call `getDisplayType`
-	 * @return String
-	 */
-	public function getDisplayParam() {
-		return $this->display;
 	}
 
 	/**
@@ -75,10 +53,6 @@ class CategoryUrlParams {
 		return self::ALLOWED_SORT_TYPES;
 	}
 
-	public function getAllowedDisplayTypes() {
-		return self::ALLOWED_DISPLAY_TYPES;
-	}
-
 	/**
 	 * Get the sort type requested by user either through the URL or the user preference.
 	 * Defaults to the first of the available sort types. Always returns one of the
@@ -90,37 +64,21 @@ class CategoryUrlParams {
 	}
 
 	/**
-	 * Get the display type requested by user either through the URL or the user preference.
-	 * Defaults to the first of the available display types. Always returns one of the
-	 * allowed types (getAllowedDisplayTypes).
-	 * @return string
-	 */
-	public function getDisplayType() {
-		return $this->displayType;
-	}
-
-	/**
-	 * Save the current sort and display values as user preference
-	 * Don't save if it won't affect the getDisplayType/getSortType logic
+	 * Save the current sort value as user preference
+	 * Don't save if it won't affect the getSortType logic
 	 */
 	public function savePreference() {
 		if ( !$this->user || $this->user->isAnon() ) {
 			return;
 		}
 
-		if ( !$this->sort && !$this->display ) {
+		if ( !$this->sort ) {
 			return;
 		}
 
 		$userPrefSort = $this->user->getGlobalPreference( 'CategoryExhibitionSortType', self::ALLOWED_SORT_TYPES[0] );
 		if ( $userPrefSort !== $this->sortType ) {
 			$this->user->setGlobalPreference( 'CategoryExhibitionSortType', $this->sortType );
-			$this->user->saveSettings();
-		}
-
-		$userPrefDisplay = $this->user->getGlobalPreference( 'CategoryExhibitionDisplayType', self::ALLOWED_DISPLAY_TYPES[0] );
-		if ( $userPrefDisplay !== $this->displayType ) {
-			$this->user->setGlobalPreference( 'CategoryExhibitionDisplayType', $this->displayType );
 			$this->user->saveSettings();
 		}
 	}

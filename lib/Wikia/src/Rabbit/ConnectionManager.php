@@ -35,7 +35,8 @@ class ConnectionManager {
 		$this->user = $user;
 		$this->pass = $pass;
 
-		\Hooks::register( 'RestInPeace', [ $this, 'close' ] );
+		// free resources on request shutdown
+		register_shutdown_function( [ $this, 'close' ] );
 	}
 
 	/**

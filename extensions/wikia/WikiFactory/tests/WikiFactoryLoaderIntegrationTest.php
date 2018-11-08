@@ -246,7 +246,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $result );
-		$this->assertInstanceOf( Closure::class, $GLOBALS['wgExtensionFunctions'][0] );
+		$this->assertEquals( true, $GLOBALS['wgIncludeClosedWikiHandler'] );
 	}
 
 	public function provideDisabledWikis() {

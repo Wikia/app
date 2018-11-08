@@ -1,0 +1,106 @@
+page:
+- page_id: 1
+  page_namespace: 14
+  page_title: CategoryA
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 1
+  page_len: 0
+- page_id: 2
+  page_namespace: 14
+  page_title: Subcategory
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 2
+  page_len: 0
+- page_id: 3
+  page_namespace: 1
+  page_title: Oh_Page_1
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 3
+  page_len: 0
+- page_id: 4
+  page_namespace: 1
+  page_title: Page_2
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 4
+  page_len: 0
+- page_id: 5
+  page_namespace: 1
+  page_title: Page_3
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 5
+  page_len: 0
+- page_id: 6
+  page_namespace: 1
+  page_title: Page_4
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 6
+  page_len: 0
+- page_id: 7
+  page_namespace: 1
+  page_title: Page_5
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 7
+  page_len: 0
+- page_id: 8
+  page_namespace: 1
+  page_title: Page_6
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 8
+  page_len: 0
+- page_id: 9
+  page_namespace: 1
+  page_title: Page_7
+  page_restrictions: ''
+  page_random: 0
+  page_latest: 9
+  page_len: 0
+
+categorylinks:
+- cl_from: 2
+  cl_to: CategoryA
+  cl_sortkey: SUBCATEGORY
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 3
+  cl_to: CategoryA
+  cl_sortkey: OH PAGE 1
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 4
+  cl_to: CategoryA
+  cl_sortkey: PAGE 2
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 5
+  cl_to: CategoryA
+  cl_sortkey: PAGE 3
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 6
+  cl_to: CategoryA
+  cl_sortkey: PAGE 4
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 7
+  cl_to: CategoryA
+  cl_sortkey: PAGE 5
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 8
+  cl_to: CategoryA
+  cl_sortkey: PAGE 6
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase
+- cl_from: 9
+  cl_to: CategoryA
+  cl_sortkey: PAGE 7
+  cl_sortkey_prefix: ''
+  cl_collation: uppercase

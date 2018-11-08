@@ -16,7 +16,7 @@
 @import 'ads-mixin';
 @import 'ads-porvata';
 
-$wikia-top-ads-index: 2;
+$wikia-top-ads-index: 6;
 $uap-video-animation-duration: 0.4s;
 $navbar-size-for-sticky-element: 65px;
 $global-navigation-and-sitewide-messages-index: 5000101;
@@ -169,6 +169,10 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 			width: $page-width-large;
 		}
 	}
+}
+
+#bottomLeaderboardWrapper {
+	text-align: center;
 }
 
 #BOTTOM_LEADERBOARD {

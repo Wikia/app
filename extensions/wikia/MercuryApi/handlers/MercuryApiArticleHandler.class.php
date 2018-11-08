@@ -23,7 +23,10 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param Article $article
 	 *
-	 * @return mixed
+	 * @return array
+	 * @throws FatalError
+	 * @throws MWException
+	 * @throws WikiaException
 	 */
 	public static function getArticleDetails( Article $article ) {
 		$articleId = $article->getID();
@@ -32,6 +35,8 @@ class MercuryApiArticleHandler {
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
+
+		\Hooks::run( 'MercuryArticleDetails', [ $article, &$articleDetails ] );
 
 		return $articleDetails;
 	}

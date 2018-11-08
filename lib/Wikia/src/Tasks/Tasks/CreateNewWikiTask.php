@@ -97,19 +97,9 @@ class CreateNewWikiTask extends BaseTask {
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run updateSpecialPages.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
-		$this->info( "Remove edit lock" );
-		$variable = \WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
-		if ( isset( $variable->cv_variable_id ) ) {
-			\WikiFactory::removeVarById( $variable->cv_variable_id, $wgCityId );
-			\WikiFactory::clearCache( $wgCityId );
-		}
-
 		// SUS-3264 | set up events_local_users entries directly, instead of calling backend script
 		$this->info( "Setting up events_local_users table entries" );
 		\ListusersData::populateEventsLocalUsers( $wgCityId );
-
-		$wgMemc = wfGetMainCache();
-		$wgMemc->delete( \WikiFactory::getVarsKey( $wgCityId ) );
 
 		return true;
 	}
@@ -118,7 +108,7 @@ class CreateNewWikiTask extends BaseTask {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $parserMemc, $wgContLanguageCode;
+		global $wgSitename;
 
 		$source = wfMsgForContent( 'Mainpage' );
 		$target = $wgSitename;
@@ -196,18 +186,6 @@ class CreateNewWikiTask extends BaseTask {
 				}
 			}
 		}
-
-		/**
-		 * clear skin cache for rt#63874
-		 *
-		 * @todo establish what $code is exactly in this case
-		 */
-		$parserMemc->delete( wfMemcKey( 'sidebar', $wgContLanguageCode ) );
-
-		$parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
-		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
 	}
 
 	/**

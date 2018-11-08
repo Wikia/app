@@ -29,7 +29,6 @@ $wgAutoloadClasses[ 'CategoryExhibitionSectionBlogs' ] = __DIR__ . '/CategoryExh
 $wgAutoloadClasses[ 'CategoryExhibitionSectionMedia' ] = __DIR__ . '/CategoryExhibitionSectionMedia.class.php';
 $wgAutoloadClasses[ 'CategoryExhibitionSectionPages' ] = __DIR__ . '/CategoryExhibitionSectionPages.class.php';
 $wgAutoloadClasses[ 'CategoryExhibitionSectionSubcategories' ] = __DIR__ . '/CategoryExhibitionSectionSubcategories.class.php';
-$wgAutoloadClasses[ 'CategoryPageII' ] = __DIR__ . '/CategoryPageII.php';
 $wgAutoloadClasses[ 'CategoryUrlParams' ] = __DIR__ . '/CategoryUrlParams.class.php';
 
 // Internalization
@@ -39,7 +38,6 @@ $wgExtensionMessagesFiles[ 'CategoryPageII' ] = __DIR__ . '/i18n/CategoryExhibit
 define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');
 $wgHooks['LanguageGetMagic'][] = 'CategoryExhibitionHooks::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryExhibitionHooks::onInternalParseBeforeLinks';
-$wgHooks['ArticleFromTitle'][] = 'CategoryExhibitionHooks::onArticleFromTitle';
 $wgHooks['onArticleSaveComplete'][] = 'CategoryExhibitionHooks::onArticleSaveComplete';
 $wgHooks['AfterCategoriesUpdate'][] = 'CategoryExhibitionHooks::onAfterCategoriesUpdate';
 
