@@ -61,7 +61,7 @@ def createTag() {
 
     doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
 
-    if (doesTagExist.isEmpty()) {
+    if (doesTagExist) {
       println("Tag already exists: ${newTag}")
     } else {
       println("Creating tag: ${newTag}")

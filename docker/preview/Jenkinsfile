@@ -69,15 +69,17 @@ def createTag(String nextTag) {
 
   def hasUnreleasedCommits = true
   if (params.source == 'hotfix') {
-    hasUnreleasedCommits = !sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true)
+    hasUnreleasedCommits = sh(
+        script: "git log HEAD...release-${currentVersion}",
+        returnStdout: true
+      )
       .trim()
-      .isEmpty()
   }
 
   if (hasUnreleasedCommits) {
     doesTagExist = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
-    if (doesTagExist.isEmpty()) {
+    if (doesTagExist) {
       println("Tag already exists: ${nextTag}")
     } else {
       println("Creating tag: ${nextTag}")
