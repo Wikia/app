@@ -166,7 +166,6 @@ class DumpsOnDemand {
 	 * @param string $sPath
 	 * @param bool $bPublic
 	 * @param string $sMimeType
-	 * @throws S3Exception
 	 */
 	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
 		global $wgAWSAccessKey, $wgAWSSecretKey;
@@ -194,8 +193,11 @@ class DumpsOnDemand {
 			]
 		);
 
-		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage s3://wikia_xml_dumps/{$remotePath} (size: {$size}, time: {$time})", true, true);
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'remote_path' => $remotePath,
+			'size' => $size,
+			'time_sec' => wfTime() - $time,
+		] );
 	}
 
 	/**
