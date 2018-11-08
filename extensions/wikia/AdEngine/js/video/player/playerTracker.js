@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
+				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string
 			};
 
 		if (bidHelper && params.bid) {

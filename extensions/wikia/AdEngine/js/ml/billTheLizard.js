@@ -9,7 +9,6 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.instantGlobals',
-	'wikia.log',
 	'wikia.trackingOptIn'
 ], function (
 	adEngine3,
@@ -21,13 +20,9 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	pageInfoTracker,
 	deviceDetect,
 	instantGlobals,
-	log,
 	trackingOptIn
 ) {
 	'use strict';
-
-	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard',
-		ready = false;
 
 	if (!services.billTheLizard) {
 		return;
@@ -87,24 +82,18 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 			return services.billTheLizard.call(['queen_of_hearts'])
 				.then(function () {
-					ready = true;
-					log(['respond'], log.levels.debug, logGroup);
-
 					var values = serialize();
 
 					if (values) {
 						pageLevelParams.add('btl', adEngine3.context.get('targeting.btl'));
 						pageInfoTracker.trackProp('btl', values);
 					}
-				}, function () {
-					ready = true;
-					log(['reject'], log.levels.debug, logGroup);
 				});
 		});
 	}
 
-	function hasResponse() {
-		return ready;
+	function getResponseStatus() {
+		return services.billTheLizard.getResponseStatus();
 	}
 
 	function serialize() {
@@ -113,7 +102,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 	return {
 		call: call,
-		hasResponse: hasResponse,
+		getResponseStatus: getResponseStatus,
 		serialize: serialize
 	};
 });
