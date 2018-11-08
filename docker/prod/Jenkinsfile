@@ -46,7 +46,7 @@ def createTag() {
 
   //e.g. release-220.002
   def latestTagOnCurrentRelease = sh(
-    script: "git describe --match='release-${currentBranch}*'",
+    script: "git describe --match='${currentBranch}*'",
     returnStdout: true
   ).trim()
 
