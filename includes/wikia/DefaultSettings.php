@@ -260,6 +260,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
+$wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
 
 /**
  * Resource Loader enhancements
@@ -1131,13 +1132,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
 
 /**
- * @name $wgAdDriverBottomLeaderBoardMegaCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardMegaCountries = null;
-
-/**
  * @name $wgAdDriverBottomLeaderBoardViewportCountries
  * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1613,6 +1607,13 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
+
+/**
+ * @name $wgAdDriverIncontentPlayerRailCountries
+ * Moves INCONTENT_PLAYER slot into rail section in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerRailCountries = null;
 
 /**
  * @name $wgAdDriverIncontentPlayerSlotCountries

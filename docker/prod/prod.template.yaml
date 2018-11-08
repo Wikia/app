@@ -55,7 +55,7 @@ spec:
               cpu: 100m
               memory: 50Mi
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          image: artifactory.wikia-inc.com/sus/mediawiki-php:${IMAGE_TAG}
           lifecycle:
             preStop:
               exec:
@@ -91,10 +91,10 @@ spec:
           resources:
             limits:
               cpu: "6"
-              memory: 1200Mi
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
               cpu: "3"
-              memory: 800Mi
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -228,18 +228,14 @@ spec:
                 - -c
                 - sleep 3
           livenessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             initialDelaySeconds: 10
             timeoutSeconds: 5
-            periodSeconds: 20
           readinessProbe:
-            httpGet:
-              path: /health/check
+            tcpSocket:
               port: 8080
             timeoutSeconds: 5
-            periodSeconds: 10
           ports:
             - containerPort: 8080
           resources:
@@ -254,7 +250,7 @@ spec:
             - name: FASTCGI_READ_TIMEOUT
               value: "3600s"
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          image: artifactory.wikia-inc.com/sus/mediawiki-php:${IMAGE_TAG}
           livenessProbe:
             tcpSocket:
               port: 9000
@@ -282,11 +278,11 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: 6
-              memory: 2Gi
+              cpu: "6"
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: 2
-              memory: 800Mi
+              cpu: "3"
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -341,7 +337,7 @@ spec:
     kind: Deployment
     name: mediawiki-tasks
   maxReplicas: 30
-  minReplicas: 10
+  minReplicas: 15
   metrics:
   - type: Resource
     resource:

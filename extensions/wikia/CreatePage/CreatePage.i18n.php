@@ -1727,7 +1727,7 @@ $messages['ru'] = array(
 	'createpage-ve-body' => 'Статья <b>$1</b> ещё не существует на этой вики. Вы можете помочь, добавив несколько предложений.',
 	'createpage-button-proceed' => 'Далее',
 	'createpage-button-cancel' => 'Отмена',
-	'createpage-dialog-redlinks-list-header' => 'Или нажмите на одно из названий ниже, что начать редактировать.',
+	'createpage-dialog-redlinks-list-header' => 'Или нажмите на одно из названий ниже, чтобы начать редактировать.',
 );
 
 $messages['sah'] = array(

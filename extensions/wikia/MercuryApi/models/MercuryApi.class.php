@@ -96,14 +96,21 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
 		$htmlTitle = new WikiaHtmlTitle();
 
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'articlePath' => $articlePath,
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
@@ -135,20 +142,13 @@ class MercuryApi {
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'cacheBuster' => (int) $wgStyleVersion,
 				'cdnRootUrl' => $wgCdnRootUrl,
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
@@ -181,18 +181,11 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'defaultSkin' => $wgDefaultSkin,
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
@@ -642,7 +635,7 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+	public function getTrendingPagesData( int $limit, $category, bool $withImagesOnly	) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -660,7 +653,7 @@ class MercuryApi {
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = self::processTrendingArticlesData( $rawData );
+			$data = self::processTrendingPagesData( $rawData, $withImagesOnly );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -709,7 +702,7 @@ class MercuryApi {
 		];
 	}
 
-	public function processTrendingArticlesData( $data ) {
+	public function processTrendingPagesData( $data, bool $withImagesOnly = false ) {
 		if ( !isset( $data['items'] ) || !is_array( $data['items'] ) ) {
 			return null;
 		}
@@ -717,7 +710,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data['items'] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item );
+			$processedItem = $this->processTrendingPagesItem( $item, $withImagesOnly );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -731,15 +724,19 @@ class MercuryApi {
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
 	 * @param array $item
-	 *
+	 * @param bool $withImagesOnly - if true, skip items without thumbnail
 	 * @return array
 	 */
-	public function processTrendingArticlesItem( $item ) {
+	public function processTrendingPagesItem( $item, bool $withImagesOnly ) {
 		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
+			if ( $withImagesOnly && empty( $item['thumbnail'] ) ) {
+				return null;
+			}
+
 			foreach ( $paramsToInclude as $param ) {
 				if ( !empty( $item[$param] ) ) {
 					$processedItem[$param] = $item[$param];

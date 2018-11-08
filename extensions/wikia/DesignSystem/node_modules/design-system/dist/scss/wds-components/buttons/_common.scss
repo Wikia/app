@@ -56,12 +56,18 @@
 		border: 0;
 	}
 
-	.wds-icon:first-child {
+	.wds-icon {
 		align-self: center;
 		pointer-events: none;
 
 		&:not(:only-child) {
-			margin-right: 6px;
+			&:first-child {
+				margin-right: 6px;
+			}
+
+			&:last-child {
+				margin-left: 6px;
+			}
 		}
 	}
 

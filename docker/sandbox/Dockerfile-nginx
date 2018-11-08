@@ -7,7 +7,7 @@ RUN chown -R nginx:nginx /etc/nginx && \
     chown nginx:nginx /var/run/nginx
 
 ADD docker/base/base.inc /etc/nginx/conf.d/base.inc
-ADD docker/sandbox/nginx.conf /etc/nginx/nginx.conf
+ADD docker/base/nginx.conf /etc/nginx/nginx.conf
 ADD docker/sandbox/site.conf /etc/nginx/conf.d/default.conf
 
 # static mediawiki files

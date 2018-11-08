@@ -9,7 +9,7 @@ spec:
       - name: logger
         image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
       - name: php
-        image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
+        image: artifactory.wikia-inc.com/sus/mediawiki-php:0a5674e.c752111
         env:
          - name: SERVER_ID
            value: "177"

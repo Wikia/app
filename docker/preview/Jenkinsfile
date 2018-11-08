@@ -1,0 +1,505 @@
+// todo use it when border settings for handling `-k8s` suffix will be prepared
+// def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
+def datacenter = params.datacenter
+
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
+
+def rolloutStatus = 1
+
+def render(String template, java.util.LinkedHashMap binding) {
+  def engine = new groovy.text.SimpleTemplateEngine()
+
+  return engine.createTemplate(template).make(binding).toString()
+}
+
+// examples of what a tag, version and branch mean in the code below
+// tag: release-751.001
+// version: 751.001
+// branch: release-751
+
+// e.g. 220.004
+def get_current_version() {
+  // get most recent tag reachable for current branch
+  // eg. release-757.001 -> 757.001
+  return sh(
+      script: "git describe --abbrev=0 --match='release-*' 2> /dev/null || echo 'release-000.000'",
+      returnStdout: true
+    )
+    .trim()
+    .replace('release-', '')
+}
+
+// 770.001 -> 771.001
+// 600.009 -> 601.001
+// none -> 1.001
+def bump_major() {
+  def currentVersion = get_current_version()
+
+  def nextMajorVersion = currentVersion.tokenize('.')[0].toInteger() + 1
+
+  return nextMajorVersion + ".001"
+}
+
+// 770.001 -> 770.002
+// none -> 000.001
+def bump_minor() {
+  def currentVersion = get_current_version()
+
+  def currentVersionTokens = currentVersion.tokenize('.')
+  def currentMajorVersion = currentVersionTokens[0]
+  def nextMinorVersion = (currentVersionTokens[1].toInteger() + 1).toString().padLeft(3, '0')
+
+  return currentMajorVersion + "." + nextMinorVersion
+}
+
+def createReleaseBranch(String releaseBranch) {
+  sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
+  //TODO: uncomment when this will become main deploy pipeline
+  // sh(script: "git push --set-upstream origin ${releaseBranch}")
+}
+
+// If new release - create a tag e.g. release-230.001
+// if hotfix - create new tag for current relaese branch if any commit were made to it
+def createTag(String nextTag) {
+  // e.g. 219.001
+  def currentVersion = get_current_version()
+  println("Current version: ${currentVersion}")
+
+  def hasUnreleasedCommits = true
+  if (params.source == 'hotfix') {
+    hasUnreleasedCommits = !sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true)
+      .trim()
+      .isEmpty()
+  }
+
+  if (hasUnreleasedCommits) {
+    doesTagExist = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
+
+    if (doesTagExist.isEmpty()) {
+      println("Tag already exists: ${nextTag}")
+    } else {
+      println("Creating tag: ${nextTag}")
+      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        if (!params.dry_run) {
+          sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
+          sh(script: "git push origin ${nextTag}")
+        } else {
+          println("Dry run: git tag --annotate --message ${nextTag} ${nextTag}")
+          println("Dry run: git push origin ${nextTag}")
+        }
+      }
+    }
+    return nextTag
+  } else {
+    //e.g. release-219.001
+    def latestTagOnCurrentRelease = 'release-' + currentVersion
+    // no new commits
+    println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
+
+    return latestTagOnCurrentRelease
+  }
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "!!K8S (mirror deploy)!!: *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}>"
+  def summary = "${subject}"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'BLUE'
+    colorCode = '#70CADB'
+  } else if (buildStatus == 'SUCCESSFUL') {
+    color = 'GREEN'
+    colorCode = '#7AF371'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+    summary = summary + " <!here>"
+  }
+
+  // Send notifications
+  if (!params.dry_run) {
+    slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+  }
+
+  println("Slack message: ${summary}")
+}
+
+stage('Slack notify start') {
+  notifyBuild('STARTED')
+}
+
+node("docker-daemon") {
+  def buildUser = "Anonymous"
+  def appHash
+  def configHash
+  def imageTag
+
+  def currentAppTag
+
+  def nextAppReleaseVersion
+  def nextAppReleaseTag
+  def nextAppReleaseBranch
+
+  def nextConfigReleaseVersion
+  def nextConfigReleaseTag
+  def nextConfigReleaseBranch
+
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
+
+  try {
+    stage("Clone repositories") {
+      parallel (
+        "app": {
+          dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+              branch: 'dev',
+              credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          }
+        },
+        "config": {
+          dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+              branch: 'dev',
+              credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          }
+        }
+      )
+    }
+
+    stage("Calculate next release branch and version") {
+      parallel (
+        "app": {
+          dir("app") {
+            if (params.source == 'latest') {
+              nextAppReleaseVersion = get_current_version()
+            } else if (params.source == 'hotfix') {
+              nextAppReleaseVersion = bump_minor()
+            } else {
+              nextAppReleaseVersion = bump_major()
+            }
+
+            //e.g. release-220.001
+            nextAppReleaseTag = "release-" + nextAppReleaseVersion
+            //e.g. release-220
+            nextAppReleaseBranch = nextAppReleaseTag.tokenize('.')[0]
+
+            println("Version: ${nextAppReleaseVersion}")
+            println("Tag: ${nextAppReleaseTag}")
+            println("Branch: ${nextAppReleaseBranch}")
+          }
+        },
+        "config": {
+          dir("config") {
+            if (params.source == 'latest') {
+              nextConfigReleaseVersion = get_current_version()
+            } else if (params.source == 'hotfix') {
+              nextConfigReleaseVersion = bump_minor()
+            } else {
+              nextConfigReleaseVersion = bump_major()
+            }
+
+            nextConfigReleaseTag = "release-" + nextConfigReleaseVersion
+            nextConfigReleaseBranch = nextConfigReleaseTag.tokenize('.')[0]
+
+            println("Version: ${nextConfigReleaseVersion}")
+            println("Tag: ${nextConfigReleaseTag}")
+            println("Branch: ${nextConfigReleaseBranch}")
+          }
+        }
+      )
+    }
+
+    stage("Fetch version") {
+      def deploymentInfo
+
+      withDockerContainer(kubectlImage) {
+        deploymentInfo = sh(
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+          returnStdout: true
+        )
+      }
+
+      currentAppTag = sh(
+        script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'",
+        returnStdout: true
+      )
+      def currentConfigTag = sh(
+        script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
+        returnStdout: true
+      )
+
+      if (params.force != true) {
+        timeout(time: 120, unit: 'SECONDS') {
+          userInput = input(
+            id: 'version_check',
+            message: "Updating preview\napp - ${currentAppTag} ==> ${nextAppReleaseTag} \nconfig - ${currentConfigTag} ==> ${nextConfigReleaseTag}"
+          )
+        }
+      }
+    }
+
+    stage('Upload, download and push translations to dev') {
+      //TODO: uncomment when this will become main deploy pipeline
+      //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
+
+      // node('sandbox-i18n01') {
+      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      //    git branch: 'dev',
+      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
+      //      url: 'git@github.com:Wikia/app.git'
+
+      //    sh '''
+      //     git clean -f
+      //     git pull origin dev
+      //     git config --global user.email 'jenkins@fandom.com'
+      //     git config --global user.name 'Sir Jenkins'
+      //     sudo /usr/local/bin/downloadAppMasterTranslations.sh
+      //     git add --all
+      //     git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
+      //     git push -u origin dev
+      //    '''
+      //  }
+      // }
+    }
+
+    sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+      stage("Create new release branches") {
+        parallel (
+          "app": {
+            dir("app") {
+              if (params.source == 'latest') {
+                println("Source: latest; checkout tag: ${nextAppReleaseTag}")
+                createReleaseBranch(nextAppReleaseTag)
+              } else {
+                createReleaseBranch(nextAppReleaseBranch)
+              }
+            }
+          },
+          "config": {
+            dir("config") {
+              if (params.source == 'latest') {
+                println("Source: latest; checkout tag: ${nextConfigReleaseTag}")
+                createReleaseBranch(nextConfigReleaseTag)
+              } else {
+                createReleaseBranch(nextConfigReleaseBranch)
+              }
+            }
+          }
+        )
+      }
+
+      stage("Create release tags") {
+        parallel (
+          "app": {
+            dir("app") {
+              if (params.source == 'latest') {
+                println("Source: latest; skip creating a tag")
+              } else {
+                createTag(nextAppReleaseTag)
+              }
+            }
+          },
+          "config": {
+            dir("config") {
+              if (params.source == 'latest') {
+                println("Source: latest; skip creating a tag")
+              } else {
+                createTag(nextConfigReleaseTag)
+              }
+            }
+          }
+        )
+      }
+    }
+
+    stage("Calculate docker image tag") {
+      parallel (
+        "app": {
+          dir("app") {
+            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/app commit: $appHash")
+          }
+        },
+        "config": {
+          dir("config") {
+            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/config commit: $configHash")
+          }
+        }
+      )
+
+      imageTag = "$appHash.$configHash"
+
+      println("Image tag: $imageTag")
+    }
+
+    stage("Bump cachebuster and version") {
+      parallel (
+        "app": {
+          dir("app") {
+            def cacheBuster = new Date().getTime()
+
+            sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
+            sh('echo "' + nextAppReleaseTag + '@' + appHash + '" > wikia.version.txt')
+          }
+        },
+        "config": {
+          dir("config") {
+            sh('echo "' + nextConfigReleaseTag + '@' + configHash + '" > wikia.version.txt')
+          }
+        }
+      )
+    }
+
+    parallel (
+      "php": {
+        stage("Build and push php image") {
+          dir("app") {
+            def imageExists = false
+            def status = sh(script: """
+              curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+              -w "%{http_code}" -s -I -o /dev/null \
+              -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
+            """, returnStdout: true).trim()
+
+            if (status == "200") {
+              imageExists = true
+            }
+
+            if (!imageExists) {
+              if (params.dry_run) {
+                println("Dry run: docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+              }
+
+            } else {
+              println("Php image tag ($imageTag) already exists")
+            }
+          }
+        }
+      },
+      "nginx": {
+        stage("Build and push nginx image") {
+          dir("app") {
+            def imageExists = false
+            def status = sh(script: """
+              curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+              -w "%{http_code}" -s -I -o /dev/null \
+              -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-nginx/${imageTag}"
+            """, returnStdout: true).trim()
+
+            if (status == "200") {
+              imageExists = true
+            }
+
+            if (!imageExists) {
+
+              if (params.dry_run) {
+                println("Dry run: docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker push $nginxImage:$imageTag")
+              }
+            } else {
+              println("Nginx image tag ($imageTag) already exists")
+            }
+          }
+        }
+      }
+    )
+
+    stage("Apply new k8s descriptor") {
+      dir("app") {
+        // Preview is essentially the same env as a sandbox
+        def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
+        def k8s = render(template, [
+          'IMAGE_TAG': imageTag,
+          'SANDBOX_NAME': 'preview',
+          'SANDBOX_ENVIRONMENT': 'preview',
+          'SANDBOX_DATACENTER': datacenter,
+          'APP_VERSION': nextAppReleaseTag,
+          'CONFIG_VERSION': nextConfigReleaseTag,
+          'REPLICAS': 4
+        ])
+
+        sh("""cat > docker/sandbox/k8s.yaml <<EOL
+${k8s}
+EOL""")
+
+        sh("cat docker/sandbox/k8s.yaml")
+      }
+
+      if (!params.dry_run) {
+        withDockerContainer(kubectlImage) {
+          sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-preview")
+        }
+      } else {
+        println("Dry run: kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml")
+        rolloutStatus = 0
+      }
+
+    }
+
+    stage('Create selenium-tests preview branch') {
+      //TODO: uncomment when this will become main deploy pipeline
+      // build 'create-preview-test-run'
+    }
+
+    stage('Tag Jira tickets') {
+      // TODO: uncomment when this will become main deploy pipeline
+      // build job: 'tag-jira-tickets', parameters: [
+      //     string(name: 'app_name', value: 'app'),
+      //     string(name: 'env', value: 'preview'),
+      //     string(name: 'previous_release', value: currentAppTag),
+      //     string(name: 'current_release', value: nextAppReleaseTag),
+      //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+      // ],
+      // wait: false
+    }
+
+    stage('Trigger tests') {
+      //TODO: uncomment when this will become main deploy pipeline
+      // build job: 'app-preview-push-event', parameters: [
+      //   string(name: 'release', value: nextAppReleaseTag),
+      //   string(name: 'datacenter', value: 'sjc')],
+      //   wait: false
+    }
+
+  } catch (e) {
+    // If there was an exception thrown, the build failed
+    currentBuild.result = "FAILED"
+    throw e
+  } finally {
+    stage('Set and report job status') {
+      if (rolloutStatus != 0) {
+        currentBuild.result = "UNSTABLE"
+      }
+
+      notifyBuild(currentBuild.result)
+    }
+  }
+}

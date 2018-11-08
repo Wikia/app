@@ -2358,6 +2358,13 @@ $wgEnableCategoryGalleriesExt = true;
 $wgEnableCategoryIntersectionExt = false;
 
 /**
+ * Enable CategoryPage3 extension which replaces category pages with a SEO friendly version
+ * @see extensions/wikia/CategoryPage3/
+ * @var bool $wgEnableCategoryPage3Ext
+ */
+$wgEnableCategoryPage3Ext = true;
+
+/**
  * Enable CategoryTree extension.
  * @see /extensions/CategoryTree/
  * @var bool wgEnableCategoryTreeExt
@@ -4601,7 +4608,7 @@ $wgGenerateThumbnailOnParse = false;
  */
 $wgGlobalUserPreferenceWhiteList = [
 	'literals' => [
-		'CategoryExhibitionDisplayType',
+		'category-page-layout',
 		'CategoryExhibitionSortType',
 		'ccmeonemails',
 		'cols',
@@ -6479,26 +6486,11 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * Groups that should not be affected by Special:ProtectSite lockdown.
- * @see extensions/wikia/SpecialProtectSite
- * @var Array $wgProtectsiteExempt
- */
-$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
-
-/**
  * Enable ProtectSiteJS extension.
  * @see extensions/wikia/ProtectSiteJS
  * @var bool $wgEnableProtectSiteJSExt
  */
 $wgEnableProtectSiteJSExt = true;
-
-/**
- * The maximum time, site can be locked by the Protectsite extension.
- * @see /extensions/wikia/SpecialProtectSite
- * @var string $wgProtectsiteLimit
- *
- */
-$wgProtectsiteLimit = '12 hours';
 
 /**
  * Big list of banned IP addresses, in the keys not the values.
@@ -6684,7 +6676,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'prod.irc.service.sjc.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
@@ -8633,13 +8625,6 @@ $wgWikiaEnableSharedHelpExt = true;
 $wgWikiaEnableSharedTalkExt = true;
 
 /**
- * Enable ProtectSite extension.
- * @see extensions/wikia/SpecialProtectSite
- * @var bool $wgWikiaEnableSpecialProtectSiteExt
- */
-$wgWikiaEnableSpecialProtectSiteExt = true;
-
-/**
  * Enable WikiFactory Redirector.
  * @see /extensions/wikia/WikiFactory/redir/SpecialWikiFactoryRedir.php
  * @var bool $wgWikiaEnableWikiFactoryRedir
@@ -8903,3 +8888,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;

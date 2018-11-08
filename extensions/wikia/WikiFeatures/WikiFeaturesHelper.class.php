@@ -30,7 +30,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableAjaxPollExt' => 280,
 		'wgEnableBlogArticles' => 281,
 		'wgEnableArticleCommentsExt' => 200,
-		'wgEnableCategoryExhibitionExt' => 201,
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,

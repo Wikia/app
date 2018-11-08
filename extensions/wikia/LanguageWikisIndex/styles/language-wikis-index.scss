@@ -1,0 +1,112 @@
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+
+$language-wikis-index-header-background-color: #006CB0;
+$language-wikis-index-header-background-height: 105px;
+$language-wikis-index-header-background-height-small-breakpoint: 115px;
+
+.language-wiki-index {
+	margin: 50px auto 0;
+	max-width: 710px;
+	text-align: center;
+
+	&__intro {
+		font-size: $wds-typescale-size-plus-2;
+		font-weight: $wds-fandom-font-weight-bold;
+		line-height: $wds-line-height;
+		margin: 20px auto;
+		max-width: 600px;
+	}
+
+	&__list-intro {
+		font-size: $wds-typescale-size-plus-1;
+		line-height: $wds-line-height;
+		margin: 20px;
+	}
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 30px 0;
+	}
+
+	&__list-language {
+		margin-bottom: 10px;
+		width: 350px;
+
+		a {
+			color: $wds-fandom-color-link;
+		}
+	}
+
+	&__create-wiki {
+		background-color: $wds-fandom-color-light-gray;
+		display: flex;
+		flex-wrap: wrap;
+		margin: 20px 0;
+		padding: 15px 80px;
+	}
+
+	&__create-wiki-question {
+		margin: 0 auto;
+	}
+
+	&__create-wiki-link {
+		color: $wds-fandom-color-link;
+		font-weight: $wds-fandom-font-weight-bold;
+		margin: 0 auto;
+		text-transform: uppercase;
+	}
+
+	&__create-wiki-link-icon {
+		transform: rotate(180deg);
+		vertical-align: text-top;
+	}
+
+	&__links {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 auto;
+		max-width: 600px;
+	}
+
+	&__links-item {
+		color: $wds-fandom-color-link;
+		width: 200px;
+	}
+
+	hr {
+		color: $wds-fandom-color-light-gray;
+	}
+}
+
+.language-wikis-index-header {
+	background-color: $language-wikis-index-header-background-color;
+	height: $language-wikis-index-header-background-height;
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+
+	@media #{$wds-breakpoint-l-down} {
+		height: $language-wikis-index-header-background-height-small-breakpoint;
+	}
+
+	@if ($widthType == 0) {
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small + $padding-width-small * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus + $padding-width-small-plus * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium + $padding-width-medium * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
+		}
+	}
+}

@@ -3,9 +3,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
-	'ext.wikia.adEngine.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
@@ -15,9 +15,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	adContext,
 	pageLevel,
 	adTracker,
+	bridge,
 	slotTargeting,
 	browserDetect,
-	geo,
 	log,
 	win,
 	bidHelper,
@@ -44,13 +44,13 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData = {
 				'pv_unique_id': win.pvUID,
 				'pv_number': pageLevelParams.pv,
-				'country': geo.getCountryCode(),
+				'country': bridge.geo.getCountryCode(),
 				'timestamp': (new Date()).getTime(),
 				'skin': pageLevelParams.skin,
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': (params.slotName || emptyValue.string).toLowerCase(),
+				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
@@ -62,9 +62,10 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState,
+				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.hasResponse() ? 1 : 0
+				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string
 			};
 
 		if (bidHelper && params.bid) {
