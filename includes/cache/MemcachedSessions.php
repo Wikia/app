@@ -143,7 +143,7 @@ function getSessionMemc() {
 	global $wgMemCachedPersistent, $wgMemCachedDebug;
 
 	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) ) {
-		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof MemCachedClientforWiki ) {
+		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) ) {
 			return $wgSessionMemc;
 		} else {
 			$wgSessionMemc = new MemCachedClientforWiki(
