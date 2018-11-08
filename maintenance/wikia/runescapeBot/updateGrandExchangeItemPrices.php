@@ -246,14 +246,17 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 	}
 
 	private function logInfo( $infoMessage, $context = [] ) {
+		$this->output( $infoMessage . " " . json_encode( $context ) . "\n" );
 		$this->mLogger->info( sprintf( self::LOG_MESSAGE_TEMPLATE, $infoMessage ), $context );
 	}
 
-	private function logWarn( string $errorMessage,  $context = [] ) {
-		$this->mLogger->warning( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
+	private function logWarn( string $warnMessage, $context = [] ) {
+		$this->output( $warnMessage . " " . json_encode( $context ) . "\n" );
+		$this->mLogger->warning( sprintf( self::LOG_MESSAGE_TEMPLATE, $warnMessage ), $context );
 	}
 
 	private function logError( string $errorMessage,  $context = [] ) {
+		$this->output( $errorMessage . " " . json_encode( $context ) . "\n" );
 		$this->mLogger->error( sprintf( self::LOG_MESSAGE_TEMPLATE, $errorMessage ), $context );
 	}
 
