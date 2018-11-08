@@ -140,7 +140,8 @@ function memsess_write_close() {
  * @throws MWException
  */
 function getSessionMemc() {
-	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc, $wgMemCachedPersistent;
+	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc,
+	       $wgMemCachedPersistent, $wgMemCachedDebug;
 
 	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) ) {
 		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) ) {
@@ -150,6 +151,7 @@ function getSessionMemc() {
 				'persistant' => $wgMemCachedPersistent,
 				'compress_threshold' => 1500,
 				'servers' => $wgSessionMemCachedServers,
+				'debug' => $wgMemCachedDebug,
 			] );
 
 			return $wgSessionMemc;
