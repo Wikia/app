@@ -38,6 +38,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				geo: {
 					getCountryCode: function () {
 						return 'XY';
+					},
+					getDocumentVisibilityStatus: function () {
+						return 'visible';
 					}
 				}
 			},
@@ -54,9 +57,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			},
 			window: {
 				pvUID: 'superFooUniqueID'
-			},
-			doc: {
-				hidden: false
 			}
 		},
 		tracker;
@@ -69,7 +69,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.bridge,
 			mocks.slotTargeting,
 			mocks.browserDetect,
-			mocks.doc,
 			mocks.log,
 			mocks.window,
 			mocks.bidHelper,
@@ -246,29 +245,10 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	});
 
 	it('include document_hidden=1 if document is hidden', function () {
-		mocks.doc.hidden = true;
 		tracker.track({
 			adProduct: 'uap'
 		}, 'fooPlayer', 'barEvent');
 
-		expect(getTrackedValue('document_hidden')).toEqual(1);
-	});
-
-	it('include document_hidden=0 if document is not hidden', function () {
-		mocks.doc.hidden = false;
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('document_hidden')).toEqual(0);
-	});
-
-	it('include document_hidden=-1 if document.hidden is undefined', function () {
-		delete mocks.doc.hidden;
-		tracker.track({
-			adProduct: 'uap'
-		}, 'fooPlayer', 'barEvent');
-
-		expect(getTrackedValue('document_hidden')).toEqual(-1);
+		expect(getTrackedValue('document_visibility')).toEqual('visible');
 	});
 });

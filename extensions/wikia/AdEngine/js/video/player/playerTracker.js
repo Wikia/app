@@ -6,7 +6,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
-	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
@@ -19,7 +18,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	bridge,
 	slotTargeting,
 	browserDetect,
-	doc,
 	log,
 	win,
 	bidHelper,
@@ -37,6 +35,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 	function isEnabled() {
 		return !!context.opts.playerTracking;
+
 	}
 
 	function prepareData(params, playerName, eventName, errorCode, contentType) {
@@ -68,7 +67,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string,
-				'document_hidden': doc.hidden === false ? 0 : (doc.hidden ? 1 : -1)
+				'document_visiblity': bridge.geo.getDocumentVisibilityStatus()
 			};
 
 		if (bidHelper && params.bid) {
