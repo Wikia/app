@@ -58,7 +58,6 @@ class WikiaDataAccess {
 
 	/**
 	 * @param string $key The key to use for storing/retrieving this data.
-	 * @param int The time (in seconds) to cache this data
 	 * @param callable $getData A function to call that will return the data to cache.
 	 * @param Array $options An array of other options to control cache behavior.  Keys are:
 	 * 	[
