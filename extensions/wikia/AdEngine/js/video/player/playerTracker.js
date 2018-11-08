@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
 				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string,
-				'document_visiblity': bridge.geo.getDocumentVisibilityStatus()
+				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
 			};
 
 		if (bidHelper && params.bid) {

@@ -290,6 +290,6 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.document_visiblity).toEqual('visible');
+		expect(trackedData.document_visibility).toEqual('visible');
 	});
 });
