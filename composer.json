@@ -39,6 +39,7 @@
     "ext-exif": "*",
     "ext-gd": "*",
     "ext-intl": "*",
+    "ext-memcached": "*",
     "ext-mustache": "*",
     "ext-mysqli": "*",
     "ext-pcntl": "*",
