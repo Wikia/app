@@ -446,7 +446,7 @@ class MediaWiki {
 
 		// If using FastCGI we can flush the output now and do any further updates without blocking
 		if ( function_exists( 'fastcgi_finish_request' ) ) {
-			fastcgi_finish_request();
+			# fastcgi_finish_request();
 		} else {
 			// Either all DBs should commit or none
 			ignore_user_abort( true );
