@@ -3,7 +3,7 @@
 use Wikia\FeedsAndPosts\WikiRecentChangesAPIProxy;
 
 class FeedsAndPostsController extends WikiaController {
-	public function getWikiRecentChanges() {
+	public function getRecentChanges() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new WikiRecentChangesAPIProxy() )->get() );
 	}
