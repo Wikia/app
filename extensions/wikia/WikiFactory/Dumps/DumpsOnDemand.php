@@ -110,7 +110,7 @@ class DumpsOnDemand {
 		$task->call( 'dump' );
 		$task_id = $task->queue();
 
-		$aData = [
+		$row = [
 			'task_id'        => $task_id,
 			'dump_wiki_id'   => $iCityId,
 			'dump_user_id'   => $iUserId,
@@ -118,15 +118,15 @@ class DumpsOnDemand {
 		];
 
 		if ( $bHidden ) {
-			$aData['dump_hidden'] = 'Y';
+			$row['dump_hidden'] = 'Y';
 		}
 
 		if ( $bClose ) {
-			$aData['dump_closed'] = 'Y';
+			$row['dump_closed'] = 'Y';
 		}
 
 		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-		$oDB->insert( 'dumps', $aData, __METHOD__ );
+		$oDB->insert( 'dumps', $row, __METHOD__ );
 		$oDB->update(
 				'city_list',
 				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
