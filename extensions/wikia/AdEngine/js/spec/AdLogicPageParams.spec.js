@@ -20,9 +20,11 @@ describe('AdLogicPageParams', function () {
 				getVal: noop
 			},
 		},
-		geoMock = {
-			getCountryCode: function() {
-				return 'PL';
+		bridgeMock = {
+			geo: {
+				getCountryCode: function() {
+					return 'PL';
+				}
 			}
 		};
 
@@ -123,7 +125,7 @@ describe('AdLogicPageParams', function () {
 			mockAdContext(targeting),
 			mockAdLogicZoneParams(),
 			windowMock.document,
-			geoMock,
+			bridgeMock,
 			windowMock.location,
 			logMock,
 			mocks.trackingOptIn,
@@ -344,8 +346,8 @@ describe('AdLogicPageParams', function () {
 		expect(params.ar).toBe('3:4');
 	});
 
-	it('geo is set only when ext.wikia.adEngine.geo.getCountryCode returns value', function () {
-		geoMock.getCountryCode = function() { return; };
+	it('geo is set only when ext.wikia.adEngine.bridge.geo.getCountryCode returns value', function () {
+		bridgeMock.geo.getCountryCode = function() { return; };
 		var params = getParams();
 
 		expect(params.geo).toBe('none');

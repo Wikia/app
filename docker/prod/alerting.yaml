@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: mediawiki
+    prometheus: prod
+    role: alert-rules
+  name: mediawiki-prod
+  namespace: prod
+spec:
+  groups:
+  # SUS-6163 | monitoring and alerting around per-wiki maintenance scripts execution
+  - name: mediawiki_maintenance_scripts.rules
+    rules:
+    - alert: mediawiki_maintenance_scripts_UpdateSpecialPages_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="UpdateSpecialPages"}) > 86400
+      labels:
+        team: sus
+      annotations:
+        description: UpdateSpecialPages maintenance script did not run in the last 24 hours
+        summary: UpdateSpecialPages last succeeded {{humanizeDuration $value}} ago
+        graphs: https://metrics.wikia-inc.com/d/Lpjst60mk/celery-mediawiki-tasks

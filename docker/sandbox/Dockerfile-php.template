@@ -1,4 +1,4 @@
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:372bb48
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
 ENV WIKIA_DATACENTER="${SANDBOX_DATACENTER}"
 ENV WIKIA_ENVIRONMENT="${SANDBOX_ENVIRONMENT}"
@@ -9,6 +9,6 @@ ADD config /usr/wikia/slot1/current/config
 
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \
     chmod 777 /usr/wikia/slot1/current/cache/messages && \
-    SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=4
+    SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=16
 
 USER nobody

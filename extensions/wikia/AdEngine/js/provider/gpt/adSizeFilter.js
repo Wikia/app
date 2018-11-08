@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (bridge, abTest, doc, log, win) {
+], function (adEngineBridge, abTest, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function getBottomLeaderboardSizes(slotSizes) {
-		return bridge.universalAdPackage.isFanTakeoverLoaded() ?
+		return adEngineBridge.universalAdPackage.isFanTakeoverLoaded() ?
 			getFanTakeoverBLBSizes(getAdContext().targeting.skin) : removeUAPFromSlotSizes(slotSizes);
 	}
 

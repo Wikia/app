@@ -1,10 +1,6 @@
 {
 	"globalPreferences": [
 		{
-			"name": "CategoryExhibitionDisplayType",
-			"value": "exhibition"
-		},
-		{
 			"name": "CategoryExhibitionSortType",
 			"value": "alphabetical"
 		},

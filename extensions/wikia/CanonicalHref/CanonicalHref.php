@@ -44,7 +44,7 @@ function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
 	$canonicalUrl = $out->getTitle()->getFullURL();
 
 	// Allow hooks to change the canonicalUrl that will be used in the page.
-	Hooks::run( 'WikiaCanonicalHref', [ &$canonicalUrl ] );
+	Hooks::run( 'WikiaCanonicalHref', [ &$canonicalUrl, $out ] );
 
 	$out->addLink( [
 		'rel' => 'canonical',

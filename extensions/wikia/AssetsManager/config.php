@@ -13,7 +13,9 @@ $config['oasis_shared_core_js'] = [
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
-		'//extensions/wikia/AutoLogin/js/passive_autologin.js',
+		// Parametrized links to category pages might be everywhere and we need to catch 'em all
+		'#group_category_page3_alphabet_shortcuts_js',
+		'//extensions/wikia/AutoLogin/js/passive_autologin.js'
 	],
 ];
 
@@ -179,7 +181,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
-		'//extensions/wikia/AdEngine/dist/geo.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
@@ -797,7 +798,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
-		'//extensions/wikia/AdEngine/dist/geo.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -2445,4 +2445,36 @@ $config['fandom_com_migration_js'] = [
 	'assets' => [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
 	]
+];
+
+$config['language_wikis_index_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LanguageWikisIndex/styles/language-wikis-index.scss',
+	],
+];
+
+$config['category_page3_alphabet_shortcuts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/scripts/alphabet-shortcuts.js',
+	],
+];
+
+$config['category_page3_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-page3.scss',
+	],
+];
+
+$config['category_page3_layout_selector_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
+	],
 ];

@@ -7,7 +7,7 @@ metadata:
     app: mediawiki-${SANDBOX_NAME}
     type: mediawiki
 spec:
-  replicas: 1
+  replicas: ${REPLICAS}
   strategy:
     type: Recreate
     rollingUpdate: null
@@ -92,10 +92,10 @@ spec:
           resources:
             limits:
               cpu: "6"
-              memory: 1200Mi
+              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
               cpu: "3"
-              memory: 800Mi
+              memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
