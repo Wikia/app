@@ -195,6 +195,10 @@ node("docker-daemon") {
             nextAppReleaseTag = "release-" + nextAppReleaseVersion
             //e.g. release-220
             nextAppReleaseBranch = nextAppReleaseTag.tokenize('.')[0]
+
+            println("Version: ${nextAppReleaseVersion}")
+            println("Tag: ${nextAppReleaseTag}")
+            println("Branch: ${nextAppReleaseBranch}")
           }
         },
         "config": {
@@ -207,6 +211,10 @@ node("docker-daemon") {
 
             nextConfigReleaseTag = "release-" + nextConfigReleaseVersion
             nextConfigReleaseBranch = nextConfigReleaseTag.tokenize('.')[0]
+
+            println("Version: ${nextConfigReleaseVersion}")
+            println("Tag: ${nextConfigReleaseTag}")
+            println("Branch: ${nextConfigReleaseBranch}")
           }
         }
       )
