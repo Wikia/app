@@ -2,7 +2,8 @@
 
 /**
  * A wrapper class for the PECL memcached client
- * 
+ *
+ * @see https://pecl.php.net/package/memcached
  * @ingroup Cache
  */
 class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
