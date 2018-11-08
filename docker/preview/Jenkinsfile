@@ -282,12 +282,23 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createReleaseBranch(nextAppReleaseBranch)
+              if (params.source != 'latest') {
+                createReleaseBranch(nextAppReleaseBranch)
+              } else {
+                println("Source: latest; checkout tag: ${nextAppReleaseTag}")
+                createReleaseBranch(nextAppReleaseTag)
+              }
+
             }
           },
           "config": {
             dir("config") {
-              createReleaseBranch(nextConfigReleaseBranch)
+              if (params.source != 'latest') {
+                createReleaseBranch(nextConfigReleaseBranch)
+              } else {
+                println("Source: latest; checkout tag: ${nextConfigReleaseTag}")
+                createReleaseBranch(nextConfigReleaseTag)
+              }
             }
           }
         )
@@ -297,12 +308,20 @@ node("docker-daemon") {
         parallel (
           "app": {
             dir("app") {
-              createTag(nextAppReleaseTag)
+              if (params.source != 'latest') {
+                createTag(nextAppReleaseTag)
+              } else {
+                println("Source: latest; skip creating a tag")
+              }
             }
           },
           "config": {
             dir("config") {
-              createTag(nextConfigReleaseTag)
+              if (params.source != 'latest') {
+                createTag(nextConfigReleaseTag)
+              } else {
+                println("Source: latest; skip creating a tag")
+              }
             }
           }
         )
