@@ -213,7 +213,7 @@ node("docker-daemon-big") {
         // when releasing a hot fix
         // checkout a current branch that is on prod
         // so we'll be able to create new tag if necessary
-        appBranch = currentAppBranch
+        appBranch = "SUS-5787-4"
         configBranch = currentConfigBranch
       }
 
@@ -227,7 +227,7 @@ node("docker-daemon-big") {
                 branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextAppTag = createTag(appBranch)
+            nextAppTag = createTag()
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
@@ -239,7 +239,7 @@ node("docker-daemon-big") {
                 branch: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextConfigTag = createTag(configBranch)
+            nextConfigTag = createTag()
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
