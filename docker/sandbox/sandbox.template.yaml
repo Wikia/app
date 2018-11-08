@@ -54,7 +54,7 @@ spec:
               cpu: 100m
               memory: 50Mi
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:${IMAGE_TAG}
+          image: artifactory.wikia-inc.com/sus/mediawiki-php:${IMAGE_TAG}
           lifecycle:
             preStop:
               exec:
