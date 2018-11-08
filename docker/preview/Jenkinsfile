@@ -206,7 +206,7 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             if (params.source == 'latest') {
-              nextAppReleaseVersion = get_current_version()
+              nextConfigReleaseVersion = get_current_version()
             } else if (params.source == 'hotfix') {
               nextConfigReleaseVersion = bump_minor()
             } else {
