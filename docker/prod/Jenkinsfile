@@ -220,7 +220,7 @@ node("docker-daemon-big") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: 'SUS-5787',
+                branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             nextAppTag = createTag(appBranch)
