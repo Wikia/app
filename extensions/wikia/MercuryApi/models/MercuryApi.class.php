@@ -142,9 +142,25 @@ class MercuryApi {
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
+		       $wgSmartBannerAdConfiguration;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
+		$smartBannerCustomConfig = $wgSmartBannerAdConfiguration;
+		if ( !empty( $smartBannerCustomConfig ) && !empty( $smartBannerCustomConfig['imageUrl'] ) ) {
+			try {
+				$smartBannerCustomConfig['imageUrl'] = VignetteRequest::fromUrl( $smartBannerCustomConfig['imageUrl'] )
+					->thumbnailDown()
+					->width( 64 )
+					->height( 64 )
+					->url();
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->warning(
+					"error while processing image url in wgSmartBannerAdConfiguration, check if image url is valid vignette url"
+				);
+				$smartBannerCustomConfig = [];
+			}
+		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
@@ -162,6 +178,7 @@ class MercuryApi {
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 				'siteMessage' => $this->getSiteMessage(),
+				'smartBannerAdConfiguration' => $smartBannerCustomConfig,
 				'twitterAccount' => $wgTwitterAccount,
 			]
 		);
