@@ -56,7 +56,7 @@ function memsess_read( $id ) {
 	}
 	/** Wikia change - end */
 
-	$memc =& getMemc();
+	$memc = getSessionMemc();
 	$data = $memc->get( memsess_key( $id ) );
 
 	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
@@ -85,7 +85,7 @@ function memsess_write( $id, $data ) {
 	}
 	/** Wikia change - end */
 
-	$memc =& getMemc();
+	$memc = getSessionMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
 	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
@@ -105,7 +105,7 @@ function memsess_write( $id, $data ) {
  * @return Boolean: success
  */
 function memsess_destroy( $id ) {
-	$memc =& getMemc();
+	$memc = getSessionMemc();
 	$memc->delete( memsess_key( $id ) );
 
 	\Wikia\Logger\WikiaLogger::instance()->debug( __FUNCTION__, [
@@ -131,8 +131,14 @@ function memsess_write_close() {
 	session_write_close();
 }
 
-/* Wikia */
-function &getMemc() {
+/**
+ * Return memcache client for PHP sessions handling
+ *
+ * Wikia change
+ *
+ * @return BagOStuff|EmptyBagOStuff|MemCachedClientforWiki
+ */
+function getSessionMemc() {
 	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc;
 	global $wgMemCachedPersistent, $wgMemCachedDebug;
 
@@ -151,4 +157,3 @@ function &getMemc() {
 		return $wgMemc;
 	}
 }
-
