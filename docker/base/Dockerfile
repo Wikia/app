@@ -90,6 +90,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install /tmp/php-luasandbox-extension \
     #
     # SUS-5855 | redis pecl extension requied by Wikia\Metrics\Collector
+    # SUS-6166 | memcached pecl extension to be used by MemcachedPeclBagOStuff PHP class
     #
     && pecl install --onlyreqdeps --force redis memcached \
     && docker-php-ext-enable redis memcached \
