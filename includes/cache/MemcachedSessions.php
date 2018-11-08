@@ -61,6 +61,11 @@ function memsess_read( $id ) {
 
 	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
 
+	\Wikia\Logger\WikiaLogger::instance()->debug( __FUNCTION__, [
+		'session_id' => $id,
+		'session_data' => json_encode( $data ),
+	] );
+
 	if( ! $data ) return '';
 	return $data;
 }
@@ -102,6 +107,10 @@ function memsess_write( $id, $data ) {
 function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
+
+	\Wikia\Logger\WikiaLogger::instance()->debug( __FUNCTION__, [
+		'session_id' => $id,
+	] );
 
 	wfDebug( sprintf( "%s[%s]\n", __METHOD__, $id ) );
 	return true;
