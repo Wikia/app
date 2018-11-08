@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.browserDetect',
+	'wikia.document',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window',
@@ -18,6 +19,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	pageLayout,
 	deviceDetect,
 	browserDetect,
+	doc,
 	log,
 	trackingOptIn,
 	win,
@@ -111,6 +113,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'btl': (billTheLizard && billTheLizard.serialize()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
+			'document_hidden': doc.hidden === false ? 0 : (doc.hidden ? 1 : -1),
 			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};

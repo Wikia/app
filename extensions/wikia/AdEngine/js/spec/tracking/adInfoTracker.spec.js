@@ -56,7 +56,10 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 				}
 			}
 		},
-		log: noop
+		log: noop,
+		doc: {
+			hidden: false
+		}
 	};
 
 	function getModule() {
@@ -67,6 +70,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 			mocks.pageLayout,
 			mocks.deviceDetect,
 			mocks.browserDetect,
+			mocks.doc,
 			mocks.log,
 			mocks.trackingOptIn,
 			mocks.window
@@ -279,5 +283,35 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
 		expect(trackedData.opt_in).toBe('yes');
+	});
+
+	it('include document_hidden=1 if document is hidden', function () {
+		mocks.doc.hidden = true;
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO');
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.document_hidden).toEqual(1);
+	});
+
+	it('include document_hidden=0 if document is not hidden', function () {
+		mocks.doc.hidden = false;
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO');
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.document_hidden).toEqual(0);
+	});
+
+	it('include document_hidden=-1 if document.hidden is undefined', function () {
+		delete mocks.doc.hidden;
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO');
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.document_hidden).toEqual(-1);
 	});
 });
