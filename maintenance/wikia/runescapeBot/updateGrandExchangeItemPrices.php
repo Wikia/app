@@ -9,6 +9,7 @@ require_once( __DIR__ . '/runescapeBot.setup.php' );
  */
 class UpdateGrandExchangeItemPrices extends Maintenance {
 
+	const BOT_ACCOUNT = 'RSWBot';
 	const RUNESCAPE_CITY_ID = 304;
 	const OLDSCHOOL_RUNESCAPE_CITY_ID = 691244;
 	const PAUSE_TIME_IN_SECONDS = 2.5;
@@ -44,7 +45,7 @@ class UpdateGrandExchangeItemPrices extends Maintenance {
 		$this->runescapeApi = new RunescapeApi();
 		$this->pageFetcher = new GrandExchangePageFetcher();
 		$this->textUpdater = new RawTextUpdater();
-		$this->botUser = User::newFromName( Wikia::BOT_USER );
+		$this->botUser = User::newFromName( self::BOT_ACCOUNT );
 		$this->topItemsTradeCount = $this->runescapeApi->getTopItems();
 
 		// "Grand Exchange" is the name of the runescape marketplace. All items that need
