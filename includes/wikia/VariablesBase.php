@@ -2674,6 +2674,13 @@ $wgEnableFastLinkCache = true;
 $wgEnableFeedsAndPostsExt = false;
 
 /**
+ * Enable the Embedded Feeds module from Community Feeds
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableEmbeddedFeeds
+ */
+$wgEnableEmbeddedFeeds = false;
+
+/**
  * Enable FileInfoFunctions extension.
  * @see extensions/wikia/ImageSizeInfoFunctions
  * @var bool $wgEnableFileInfoFunctionsExt
