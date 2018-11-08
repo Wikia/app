@@ -55,7 +55,7 @@ spec:
               cpu: 100m
               memory: 50Mi
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          image: artifactory.wikia-inc.com/sus/mediawiki-php:${IMAGE_TAG}
           lifecycle:
             preStop:
               exec:
@@ -250,7 +250,7 @@ spec:
             - name: FASTCGI_READ_TIMEOUT
               value: "3600s"
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          image: artifactory.wikia-inc.com/sus/mediawiki-php:${IMAGE_TAG}
           livenessProbe:
             tcpSocket:
               port: 9000

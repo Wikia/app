@@ -46,8 +46,15 @@ class FandomComMigrationHooks {
 	}
 
 	private static function isEnabled() {
-		global $wgFandomComMigrationScheduled, $wgFandomComMigrationDone;
+		global $wgDomainChangeDate, $wgFandomComMigrationScheduled, $wgFandomComMigrationDone;
 
-		return !empty( $wgFandomComMigrationScheduled ) || $wgFandomComMigrationDone;
+		if ( $wgFandomComMigrationDone && !empty( $wgDomainChangeDate ) ) {
+			$migrationDateTime = new DateTime( $wgDomainChangeDate );
+			$weekAgo = ( new DateTime() )->sub( new DateInterval( 'P7D' ) );
+
+			return $migrationDateTime > $weekAgo;
+		}
+
+		return !empty( $wgFandomComMigrationScheduled );
 	}
 }
