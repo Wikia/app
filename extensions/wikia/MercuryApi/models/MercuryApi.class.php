@@ -139,13 +139,9 @@ class MercuryApi {
 		];
 	}
 
-	public function getMobileWikiVariables() {
-		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
-		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
-		       $wgSmartBannerAdConfiguration;
+	private function getSmartBannerAdConfig() {
+		global $wgSmartBannerAdConfiguration;
 
-		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 		$smartBannerCustomConfig = $wgSmartBannerAdConfiguration;
 		if ( !empty( $smartBannerCustomConfig ) && !empty( $smartBannerCustomConfig['imageUrl'] ) ) {
 			try {
@@ -161,6 +157,16 @@ class MercuryApi {
 				$smartBannerCustomConfig = [];
 			}
 		}
+
+		return $smartBannerCustomConfig;
+	}
+
+	public function getMobileWikiVariables() {
+		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
+		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
+		       $wgEnableFeedsAndPostsExt, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+
+		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
@@ -178,7 +184,7 @@ class MercuryApi {
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 				'siteMessage' => $this->getSiteMessage(),
-				'smartBannerAdConfiguration' => $smartBannerCustomConfig,
+				'smartBannerAdConfiguration' => $this->getSmartBannerAdConfig(),
 				'twitterAccount' => $wgTwitterAccount,
 			]
 		);
