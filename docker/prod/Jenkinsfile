@@ -187,31 +187,19 @@ node("docker-daemon-big") {
     }
 
     stage("Clone repositories") {
-      if (params.source == 'preview') {
-        checkoutApp = "tags/${nextAppTag}"
-        checkoutConfig = "tags/${nextConfigTag}"
-      } else {
-        // when releasing a hot fix
-        // checkout a current branch that is on prod
-        // so we'll be able to create new tag if necessary
-        checkoutApp = currentAppBranch
-        checkoutConfig = currentConfigBranch
-      }
-
-      println("Checkout App: ${appBranch}")
-      println("Checkout Config: ${configBranch}")
-
       parallel (
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: "SUS-5787-4",
+                branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             if (params.source == 'preview') {
+              sh(script: "git checkout SUS-5787-4")
               println("Source: preview; skip creating a tag")
             } else {
-              nextAppTag = createTag(currentAppTag, currentAppBranch)
+              sh(script: "git checkout ${currentAppBranch}")
+              nextAppTag = createTag(currentAppTag,)
             }
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -222,12 +210,14 @@ node("docker-daemon-big") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: checkoutConfig,
+                branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             if (params.source == 'preview') {
+              sh(script: "git checkout ${nextConfigTag}")
               println("Source: preview; skip creating a tag")
             } else {
+              sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag)
             }
 
