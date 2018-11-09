@@ -26,8 +26,6 @@ def bump_minor(String currentVersion) {
 def createTag(String currentTag) {
   // e.g. 220.001
   def currentVersion = currentTag.tokenize('-')[1]
-  // e.g. release-220
-  def currentBranch = currentTag.tokenize('.')[0]
   println("Current version: ${currentVersion}")
 
   def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
