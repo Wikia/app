@@ -406,6 +406,7 @@ EOL""")
 
     stage('Tag Jira tickets') {
       if (!params.dry_run) {
+        //TODO: uncomment when this becomes main release pipeline
         // build job: 'tag-jira-tickets',
         //   parameters: [
         //     string(name: 'app_name', value: 'app'),
@@ -422,6 +423,7 @@ EOL""")
 
     stage('Trigger tests') {
       if (!params.dry_run) {
+        //TODO: uncomment when this becomes main release pipeline
         // build job: 'app-prod-push-event',
         //   parameters: [
         //     string(name: 'release', value: nextAppTag),
