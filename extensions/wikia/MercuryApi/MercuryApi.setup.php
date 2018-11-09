@@ -46,3 +46,4 @@ $wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGet
 $wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
 $wgHooks['MakeHeadline'][] = 'MercuryApiHooks::onMakeHeadline';
 $wgHooks['ParserBeforeTidy'][] = 'MercuryApiHooks::onParserBeforeTidy';
+$wgHooks['ScribuntoSuccess'][] = 'MercuryApiHooks::onScribuntoSuccess';

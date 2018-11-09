@@ -193,4 +193,29 @@ class MercuryApiHooks {
 			$text .= '</section>';
 		}
 	}
+
+	public static function onScribuntoSuccess( Parser $parser, $result ) {
+		global $wgArticleAsJson;
+		$isRunescape = true;
+
+		if ( $wgArticleAsJson && $isRunescape ) {
+			$dom = new simple_html_dom();
+			$dom->load( $result, true, false );
+
+			// TODO parse all instances
+			$configNode = $dom->find( '.jcConfig' )[0];
+			$configRaw = trim( $configNode->innertext );
+			$dom->clear();
+			unset( $dom );
+
+			// TODO can we store it somewhere else than DB?
+			\Wikia::setProps( $parser->getTitle()->getArticleID(), [
+				// TODO parse it to JSON instead of doing it in JS
+				'runescapeCalculatorConfig' => $configRaw
+			] );
+			// $parser->getOutput()->setProperty( 'runescapeCalculatorConfig', $configRaw );
+		}
+
+		return true;
+	}
 }

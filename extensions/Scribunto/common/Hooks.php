@@ -96,6 +96,9 @@ class ScribuntoHooks {
 			$result = $module->invoke( $functionName, $childFrame );
 			$result = UtfNormal::cleanUp( strval( $result ) );
 
+			// Wikia change
+			Hooks::run( 'ScribuntoSuccess', [ $parser, $result ] );
+
 			wfProfileOut( __METHOD__ );
 			return $result;
 		} catch( ScribuntoException $e ) {

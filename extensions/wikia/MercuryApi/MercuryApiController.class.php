@@ -331,6 +331,14 @@ class MercuryApiController extends WikiaController {
 						)
 						);
 
+						$isRunescape = true;
+						if ( $isRunescape ) {
+							$data['article']['runescapeCalculatorConfig'] = \Wikia::getProps(
+								$title->getArticleID(),
+								'runescapeCalculatorConfig'
+							);
+						}
+
 						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
 						if ( !empty( $featuredVideo ) ) {
 							$data['article']['featuredVideo'] = $featuredVideo;
@@ -490,7 +498,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function isSupportedByMercury( Title $title ) {
-		$nsList = [ NS_FILE, NS_CATEGORY, NS_PROJECT ];
+		$nsList = [ NS_FILE, NS_CATEGORY, NS_PROJECT, 116 ];
 
 		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 			$nsList[] = NS_BLOG_ARTICLE;
