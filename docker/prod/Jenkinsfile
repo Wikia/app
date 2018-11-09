@@ -371,7 +371,7 @@ EOL""")
                 sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
                 rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
               } else {
-                println("Dry run: kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yamlapp/docker/sandbox/k8s.yaml")
+                println("Dry run: kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml")
                 rolloutStatus = 0
               }
 
