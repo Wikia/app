@@ -3,9 +3,6 @@ export function getConfig() {
 		slotsToEnable: [
 			'TOP_RIGHT_BOXAD',
 			'INVISIBLE_SKIN'
-		],
-		onInit() {
-			window.adslots2.push('INVISIBLE_SKIN');
-		}
+		]
 	};
 }
