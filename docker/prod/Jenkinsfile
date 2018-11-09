@@ -148,10 +148,6 @@ node("docker-daemon-big") {
               returnStdout: true
             ).trim()
 
-            //TODO: Temporary to refrech prod on k8s
-            nextAppTag = "release-763.001"
-            nextConfigTag = "release-763.001"
-
             println("nextAppTag: ${nextAppTag}, nextConfigTag: ${nextConfigTag}")
 
             //e.g release-230
@@ -197,7 +193,7 @@ node("docker-daemon-big") {
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             if (params.source == 'preview') {
-              sh(script: "git checkout SUS-5787-4")
+              sh(script: "git checkout ${nextAppTag}")
               println("Source: preview; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentAppBranch}")
