@@ -150,6 +150,10 @@ node("docker-daemon-big") {
               returnStdout: true
             ).trim()
 
+            //TODO: Temporary to refrech prod on k8s
+            nextAppTag = "release-763.001"
+            nextConfigTag = "release-763.001"
+
             println("nextAppTag: ${nextAppTag}, nextConfigTag: ${nextConfigTag}")
 
             //e.g release-230
