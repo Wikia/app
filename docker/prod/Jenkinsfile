@@ -86,7 +86,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   if (!params.dry_run) {
-    // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+    slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
   }
 
   println("Slack message: ${summary}")
