@@ -406,29 +406,28 @@ EOL""")
 
     stage('Tag Jira tickets') {
       if (!params.dry_run) {
-        build job: 'tag-jira-tickets',
-          parameters: [
-            string(name: 'app_name', value: 'app'),
-            string(name: 'env', value: 'prod'),
-            string(name: 'previous_release', value: currentAppVersion),
-            string(name: 'current_release', value: nextAppVersion),
-            [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-          ],
-          wait: false
+        // build job: 'tag-jira-tickets',
+        //   parameters: [
+        //     string(name: 'app_name', value: 'app'),
+        //     string(name: 'env', value: 'prod'),
+        //     string(name: 'previous_release', value: currentAppTag),
+        //     string(name: 'current_release', value: nextAppTag),
+        //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+        //   ],
+        //   wait: false
       } else {
         println('Dry run: tag-jira-tickets')
       }
-
     }
 
     stage('Trigger tests') {
       if (!params.dry_run) {
-        build job: 'app-prod-push-event',
-          parameters: [
-            string(name: 'release', value: nextAppVersion),
-            string(name: 'datacenter', value: 'sjc')
-          ],
-          wait: false
+        // build job: 'app-prod-push-event',
+        //   parameters: [
+        //     string(name: 'release', value: nextAppTag),
+        //     string(name: 'datacenter', value: 'sjc')
+        //   ],
+        //   wait: false
       } else {
         println('Dry run: app-prod-push-event')
       }
