@@ -88,7 +88,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   if (!params.dry_run) {
-    slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
+    // slackSend (channel: '#release-progress', color: colorCode, failOnError: true, message: summary)
   }
 
   println("Slack message: ${summary}")
@@ -349,10 +349,10 @@ EOL""")
               sh("cat docker/prod/sjc.yaml")
               // deploy to SJC
               if (!params.dry_run) {
-                sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+                sh "kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml"
                 rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
               } else {
-                println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml")
+                println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml")
                 rolloutStatus = 0
               }
 
@@ -372,10 +372,10 @@ EOL""")
               sh("cat docker/prod/res.yaml")
               // deploy to RES
               if (!params.dry_run) {
-                sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+                sh "kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml"
                 rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
               } else {
-                println("Dry run: kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml")
+                println("Dry run: kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml")
                 rolloutStatus = 0
               }
 
