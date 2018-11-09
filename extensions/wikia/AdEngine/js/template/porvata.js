@@ -140,7 +140,7 @@ define('ext.wikia.adEngine.template.porvata', [
 					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
 				}
 				if (typeof params.fallbackBidEnableInContentFloating !== 'undefined') {
-					params.enableInContentFloating = adContext.opts.incontentPlayerRail || params.fallbackBidEnableInContentFloating;
+					params.enableInContentFloating = adContext.get('opts.incontentPlayerRail.enabled') || params.fallbackBidEnableInContentFloating;
 				}
 				if (typeof params.fallbackBidEnableLeaderboardFloating !== 'undefined') {
 					params.enableLeaderboardFloating = params.fallbackBidEnableLeaderboardFloating;
