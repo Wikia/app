@@ -139,6 +139,28 @@ class MercuryApi {
 		];
 	}
 
+	private function getSmartBannerAdConfig() {
+		global $wgSmartBannerAdConfiguration;
+
+		$smartBannerCustomConfig = $wgSmartBannerAdConfiguration;
+		if ( !empty( $smartBannerCustomConfig ) && !empty( $smartBannerCustomConfig['imageUrl'] ) ) {
+			try {
+				$smartBannerCustomConfig['imageUrl'] = VignetteRequest::fromUrl( $smartBannerCustomConfig['imageUrl'] )
+					->thumbnailDown()
+					->width( 64 )
+					->height( 64 )
+					->url();
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->warning(
+					"error while processing image url in wgSmartBannerAdConfiguration, check if image url is valid vignette url"
+				);
+				$smartBannerCustomConfig = [];
+			}
+		}
+
+		return $smartBannerCustomConfig;
+	}
+
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
@@ -162,6 +184,7 @@ class MercuryApi {
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 				'siteMessage' => $this->getSiteMessage(),
+				'smartBannerAdConfiguration' => $this->getSmartBannerAdConfig(),
 				'twitterAccount' => $wgTwitterAccount,
 			]
 		);

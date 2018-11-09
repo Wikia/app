@@ -2653,6 +2653,28 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
+ * configures smart banner to display custom text/link/image and target it by country an OS
+ * example value:
+ * {
+ *  "os": [
+ *      "ios",
+ *      "android"
+ *  ],
+ *  "imageUrl": "https:\/\/vignette.wikia.nocookie.net\/rybatest\/images\/7\/71\/002-send-1.svg\/revision\/latest?cb=20180711085702",
+ *  "title": "some short title",
+ *  "text": "some body text",
+ *  "linkText": "some link",
+ *  "linkUrl": "some.url.com",
+ *  "countries": [
+ *      "pl",
+ *      "us",
+ *      "au"
+ *  ]
+ * }
+ */
+$wgSmartBannerAdConfiguration = [];
+
+/**
  * Surprisingly, this variable enables FANDOM stories on search result page!
  * @see /extensions/wikia/Search/WikiaSearchController.class.php
  * @var bool $wgEnableFandomStoriesOnSearchResultPage
