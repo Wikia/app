@@ -35,7 +35,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 	function isEnabled() {
 		return !!context.opts.playerTracking;
-
 	}
 
 	function prepareData(params, playerName, eventName, errorCode, contentType) {
