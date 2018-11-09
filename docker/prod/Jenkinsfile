@@ -188,8 +188,8 @@ node("docker-daemon-big") {
 
     stage("Clone repositories") {
       if (params.source == 'preview') {
-        checkoutApp = nextAppTag
-        checkoutConfig = nextConfigTag
+        checkoutApp = "refs/tags/${nextAppTag}"
+        checkoutConfig = "refs/tags/${nextConfigTag}"
       } else {
         // when releasing a hot fix
         // checkout a current branch that is on prod
