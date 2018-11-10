@@ -24,14 +24,14 @@ class WikiaRobotsController extends WikiaController {
 		$allow = [];
 		$disallow = [];
 		$sitemap = [];
-		foreach ($wikis as $wikiData) {
+		foreach ( $wikis as $wikiData ) {
 			if ( \Hooks::run( 'GenerateRobotsRules', [ $wikiData['city_id'] ] ) ) {
 				$params = [
 					'controller' => 'WikiaRobots',
 					'method' => 'getAllowedDisallowed',
 					'shallow' => 1
 				];
-				if ($wgRequest->getBool('forcerobots')) { // uzywac globala?
+				if ( $this->request->getBool( 'forcerobots' ) ) {
 					$params['forcerobots'] = '1';
 				}
 				$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA );
