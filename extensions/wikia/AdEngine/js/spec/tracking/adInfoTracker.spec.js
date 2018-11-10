@@ -8,6 +8,9 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 			geo: {
 				getSamplingResults: function () {
 					return [];
+				},
+				getDocumentVisibilityStatus: function () {
+					return 'visible';
 				}
 			}
 		},
@@ -279,5 +282,14 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
 		expect(trackedData.opt_in).toBe('yes');
+	});
+
+	it('include document_visibility', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO');
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.document_visibility).toEqual('visible');
 	});
 });

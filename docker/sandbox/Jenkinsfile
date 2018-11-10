@@ -1,182 +1,206 @@
 // todo use it when border settings for handling `-k8s` suffix will be prepared
-// def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
-def sandbox = params.sandbox_name;
-def datacenter = params.datacenter
-def environment = params.sandbox_name.split('-')[0]
-def replicas = 1
+// def sandbox = params.sandbox.endsWith("-k8s") ?  params.sandbox : params.sandbox + '-k8s';
 
-if (environment == 'preview') {
-	replicas = 4
-}
+//support both long names sandbox-xw1 and short names xw1
+def tokens = params.sandbox.tokenize('-')
+def sandbox = tokens[tokens.size() - 1]
+def datacenter = params.datacenter
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
-def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
 
 def rolloutStatus = 1
 
 def render(String template, java.util.LinkedHashMap binding) {
-	def engine = new groovy.text.SimpleTemplateEngine()
+  def engine = new groovy.text.SimpleTemplateEngine()
 
-	return engine.createTemplate(template).make(binding).toString()
+  return engine.createTemplate(template).make(binding).toString()
 }
 
 node("docker-daemon-big") {
-	def imageExists = false
-	def buildUser = "Anonymous"
-	def appHash
-	def configHash
-	def imageTag
+  def buildUser = "Anonymous"
+  def appHash
+  def configHash
+  def imageTag
 
-	stage("Log version") {
-		def deploymentInfo
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
 
-		try {
-			withDockerContainer(kubectlImage) {
-				deploymentInfo = sh(
-					script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-" +
-					sandbox
-					+ " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
-					returnStdout: true
-				)
-			}
+  stage("Fetch version") {
+    def deploymentInfo
 
-			def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
-			def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+    try {
+      withDockerContainer(kubectlImage) {
+        deploymentInfo = sh(
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-sandbox-" +
+          sandbox
+          + " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+          returnStdout: true
+        )
+      }
 
-			println("Updating sandbox ${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
-		} catch (exc) {
-			println("Deploying new sandbox named ${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
-		}
-	}
+      def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+      def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
 
-	stage("Clone repositories") {
-		wrap([$class: 'BuildUser']) {
-			try {
-				buildUser = "${BUILD_USER}"
-			} catch (MissingPropertyException ex) {
-				buildUser = "Jenkins"
-			}
-		}
-		dir("app") {
-			git url: "git@github.com:Wikia/app.git",
-				branch: params.app_branch,
-				credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+      println("Updating sandbox sandbox-${sandbox}\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
+    } catch (exc) {
+      println("Deploying new sandbox named sandbox-${sandbox}\napp - ${params.app_branch} \nconfig - ${params.config_branch}")
+    }
+  }
 
-			appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+  stage("Clone repositories") {
+    parallel (
+      "app": {
+        dir("app") {
+          git url: "git@github.com:Wikia/app.git",
+            branch: params.app_branch,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-			println("Wikia/app commit: $appHash")
-		}
+          appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-		dir("config") {
-			git url: "git@github.com:Wikia/config.git",
-				branch: params.config_branch,
-				credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          println("Wikia/app commit: $appHash")
+        }
+      },
 
-			configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+      "config": {
+        dir("config") {
+          git url: "git@github.com:Wikia/config.git",
+            branch: params.config_branch,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-			println("Wikia/config commit: $configHash")
-		}
+          configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-		imageTag = "$appHash.$configHash"
+          println("Wikia/config commit: $configHash")
+        }
+      }
+    )
 
-		println("Image tag: $imageTag")
-	}
+    imageTag = "$appHash.$configHash"
 
-	stage("Bump cachebuster and version") {
-		dir("app") {
-			sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
-			sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
-		}
+    println("Image tag: $imageTag")
+  }
 
-		dir("config") {
-			sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
-		}
-	}
+  stage("Bump cachebuster and version") {
+    parallel (
+      "app": {
+        dir("app") {
+          def cacheBuster = new Date().getTime()
 
-	stage("Build and push images") {
-		dir("app") {
-			def status = sh(script: """
-				curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-				-w "%{http_code}" -s -I -o /dev/null \
-				-XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-php/${imageTag}"
-			""", returnStdout: true).trim()
+          sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
+          sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
+        }
+      },
 
-			if (status == "200") {
-				imageExists = true
-			}
+      "config": {
+        dir("config") {
+          sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
+        }
+      }
+    )
+  }
 
-			if (!imageExists) {
-					sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:da4390f")
+  parallel (
+    "php": {
+      stage("Build and push php image") {
+        dir("app") {
+          def imageExists = false
+          def status = sh(script: """
+            curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+            -w "%{http_code}" -s -I -o /dev/null \
+            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
+          """, returnStdout: true).trim()
 
-				// SUS-5284 - make the image a bit smaller
-				sh("cp docker/.dockerignore ..")
+          if (status == "200") {
+            imageExists = true
+          }
 
-				sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+          if (!imageExists) {
+            // SUS-5284 - make the image a bit smaller
+            sh("cp docker/.dockerignore ..")
+            sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+            sh("docker push $mediawikiImage:$imageTag")
+          } else {
+            println("Php image tag ($imageTag) already exists")
+          }
+        }
+      }
+    },
 
-				// SUS-5853 - temporarily create docker image descriptor
-				def template = sh(script: 'cat docker/sandbox/Dockerfile-php.template', returnStdout: true)
-				def dockerImage = render(template, [
-					'SANDBOX_NAME': sandbox,
-					'SANDBOX_ENVIRONMENT': environment,
-					'SANDBOX_DATACENTER': datacenter
-				])
+    "nginx": {
+      stage("Build and push nginx image") {
+        dir("app") {
+          def imageExists = false
+          def status = sh(script: """
+            curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+            -w "%{http_code}" -s -I -o /dev/null \
+            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-nginx/${imageTag}"
+          """, returnStdout: true).trim()
 
-				sh("""cat > docker/sandbox/Dockerfile-php <<EOL
-${dockerImage}
-EOL""")
-				sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
+          if (status == "200") {
+            imageExists = true
+          }
 
-				sh("docker push $nginxImage:$imageTag")
-				sh("docker push $mediawikiImage:$imageTag")
-			} else {
-				println("Image tag ($imageTag) already exists")
-			}
-		}
-	}
+          if (!imageExists) {
+            // SUS-5284 - make the image a bit smaller
+            sh("cp docker/.dockerignore ..")
+            sh("docker build . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+            sh("docker push $nginxImage:$imageTag")
+          } else {
+            println("Nginx image tag ($imageTag) already exists")
+          }
+        }
+      }
+    }
+  )
 
-	stage('Notify Slack Channel publish') {
-		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
-	}
+  stage('Notify Slack Channel publish') {
+    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
+  }
 
-	stage("Apply new k8s descriptor") {
-		dir("app") {
-			def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
-			def k8s = render(template, [
-				'IMAGE_TAG': imageTag,
-				'SANDBOX_NAME': sandbox,
-				'SANDBOX_ENVIRONMENT': environment,
-				'SANDBOX_DATACENTER': datacenter,
-				'APP_VERSION': params.app_branch,
-				'CONFIG_VERSION': params.config_branch,
-				'REPLICAS': replicas
-			])
+  stage("Apply new k8s descriptor") {
+    dir("app") {
+      def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
+      def k8s = render(template, [
+        'IMAGE_TAG': imageTag,
+        'SANDBOX_NAME': 'sandbox-' + sandbox,
+        'SANDBOX_ENVIRONMENT': 'sandbox',
+        'SANDBOX_DATACENTER': datacenter,
+        'APP_VERSION': params.app_branch,
+        'CONFIG_VERSION': params.config_branch,
+        'REPLICAS': 1
+      ])
 
-			sh("""cat > docker/sandbox/k8s.yaml <<EOL
+      sh("""cat > docker/sandbox/k8s.yaml <<EOL
 ${k8s}
 EOL""")
 
-			sh("cat docker/sandbox/k8s.yaml")
-		}
+      sh("cat docker/sandbox/k8s.yaml")
+    }
 
-		withDockerContainer(kubectlImage) {
-			sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-			rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
-		}
-	}
+    withDockerContainer(kubectlImage) {
+      sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-sandbox-'${sandbox}'")
+    }
+  }
 
-	stage("Set and report job status") {
-		def emoji
-		def color
-		if (rolloutStatus != 0) {
-		 	currentBuild.result = "UNSTABLE"
-		 	emoji = ":siren:"
-		 	color = "#cc142c"
-		} else {
-			emoji = ":checkmark:"
-			color = "#36a64f"
-		}
+  stage("Set and report job status") {
+    def emoji
+    def color
+    if (rolloutStatus != 0) {
+       currentBuild.result = "UNSTABLE"
+       emoji = ":siren:"
+       color = "#cc142c"
+    } else {
+      emoji = ":checkmark:"
+      color = "#36a64f"
+    }
 
-		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
-	}
+    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"sandbox-${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
+  }
 }

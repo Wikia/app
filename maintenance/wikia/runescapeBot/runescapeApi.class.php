@@ -2,9 +2,25 @@
 
 class RunescapeApi {
 
-	const API_URL_TEMPLATE = "http://services.runescape.com/m=itemdb_rs/api/graph/%s.json";
-	const TOP_TRADED_ITEMS_URL = "http://services.runescape.com/m=itemdb_rs/top100.ws";
+	const GET_ITEM_URL = "http://services.runescape.com/m=itemdb_%s/api/graph/%s.json";
+	const GET_TOP_ITEMS_URL = "http://services.runescape.com/m=itemdb_%s/top100.ws";
 	const ONE_SECOND = 1;
+
+	// The APIs for runescape and oldschoolrunescape differ based on the suffix of the itemdb_ parameter
+	// (see the URLs above). We'll look at wgCityId to determine which community we're on and therefore which
+	// suffix (and therefore which API) we should use.
+	const RUNESCAPE_ITEMDB_SUFFIX = "rs";
+	const OLDSCHOOL_RUNESCAPE_ITEMDB_SUFFIX = "oldschool";
+
+	private $itemDbSuffix;
+
+	/**
+	 * RunescapeApi constructor.
+	 * @throws Exception
+	 */
+	public function __construct() {
+		$this->itemDbSuffix = $this->determineItemDbSuffix();
+	}
 
 	/**
 	 * @param string $itemId
@@ -12,7 +28,8 @@ class RunescapeApi {
 	 * @throws Exception
 	 */
 	public function getItemById(string $itemId ) : GrandExchangeItem  {
-		$response = $this->makeRequestAndRetryOnFailure( sprintf( self::API_URL_TEMPLATE, $itemId ) );
+		$url =  sprintf( self::GET_ITEM_URL, $this->itemDbSuffix, $itemId );
+		$response = $this->makeRequestAndRetryOnFailure( $url );
 		if ( $response === false ) {
 			throw new Exception( "Error fetching data from runescape API" );
 		}
@@ -44,7 +61,8 @@ class RunescapeApi {
 
 	public function getTopItems() {
 		$idToTradeCountMap = [];
-		$response = $this->makeRequestAndRetryOnFailure( self::TOP_TRADED_ITEMS_URL );
+		$url =  sprintf( self::GET_TOP_ITEMS_URL, $this->itemDbSuffix );
+		$response = $this->makeRequestAndRetryOnFailure( $url );
 
 		if ( $response === false ) {
 			return $idToTradeCountMap;
@@ -87,5 +105,23 @@ class RunescapeApi {
 		$match = [];
 		preg_match( "/([\d\.]+)/", $totalsLink->textContent, $match );
 		return $match[1];
+	}
+
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	private function determineItemDbSuffix() {
+		global $wgCityId;
+
+		if ( (int) $wgCityId === UpdateGrandExchangeItemPrices::RUNESCAPE_CITY_ID ) {
+			return self::RUNESCAPE_ITEMDB_SUFFIX;
+		}
+
+		if ( (int) $wgCityId === UpdateGrandExchangeItemPrices::OLDSCHOOL_RUNESCAPE_CITY_ID ) {
+			return self::OLDSCHOOL_RUNESCAPE_ITEMDB_SUFFIX;
+		}
+
+		throw new Exception( "this should only be run on a runescape wiki!" );
 	}
 }

@@ -8,7 +8,9 @@ class FeedsAndPostsHooks {
 	 * @return bool
 	 */
 	private static function shouldLoadAssets() {
-		return WikiaPageType::isArticlePage();
+		global $wgEnableEmbeddedFeeds;
+
+		return WikiaPageType::isArticlePage() && $wgEnableEmbeddedFeeds;
 	}
 
 	public static function onBeforePageDisplay() {

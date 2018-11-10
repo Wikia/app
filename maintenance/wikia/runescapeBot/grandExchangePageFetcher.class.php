@@ -2,13 +2,19 @@
 
 class GrandExchangePageFetcher {
 
-	const GRAND_EXCHANGE_CATEGORY_NAME = "Category: Grand Exchange";
-
-	const RUNESCAPE_CITY_ID = 304;
-	const OLDSCHOOL_RUNESCAPE_CITY_ID = 691244;
-
 	const RUNESCAPE_NS_FILTER = 112;
 	const OLDSCHOOL_RUNESCAPE_NS_FILTER = 114;
+	const GRAND_EXCHANGE_CATEGORY_NAME = "Category: Grand Exchange";
+
+	private $nameSpaceFilter;
+
+	/**
+	 * GrandExchangePageFetcher constructor.
+	 * @throws Exception
+	 */
+	public function __construct() {
+		$this->nameSpaceFilter = $this->determineNamespaceFilter();
+	}
 
 	/**
 	 * @return array
@@ -25,7 +31,7 @@ class GrandExchangePageFetcher {
 			'cmprop' => 'title',
 			'cmlimit' => 'max',
 			'cmtitle' => self::GRAND_EXCHANGE_CATEGORY_NAME,
-			'cmnamespace' => $this->getNameSpaceFilter()
+			'cmnamespace' => $this->nameSpaceFilter
 		];
 
 		$hasNext = true;
@@ -60,14 +66,14 @@ class GrandExchangePageFetcher {
 	 * @return int
 	 * @throws Exception
 	 */
-	private function getNameSpaceFilter() {
+	private function determineNamespaceFilter() {
 		global $wgCityId;
 
-		if ( (int) $wgCityId === self::RUNESCAPE_CITY_ID ) {
+		if ( (int) $wgCityId === UpdateGrandExchangeItemPrices::RUNESCAPE_CITY_ID ) {
 			return self::RUNESCAPE_NS_FILTER;
 		}
 
-		if ( (int) $wgCityId === self::OLDSCHOOL_RUNESCAPE_CITY_ID ) {
+		if ( (int) $wgCityId === UpdateGrandExchangeItemPrices::OLDSCHOOL_RUNESCAPE_CITY_ID ) {
 			return self::OLDSCHOOL_RUNESCAPE_NS_FILTER;
 		}
 

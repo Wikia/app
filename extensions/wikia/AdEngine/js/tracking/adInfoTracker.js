@@ -111,6 +111,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'btl': (billTheLizard && billTheLizard.serialize()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
+			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),
 			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};

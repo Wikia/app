@@ -10,8 +10,8 @@ $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.p
 
 class DumpsOnDemand {
 
-	const BASEURL = "http://dumps.wikia.net";
 	const DEFAULT_COMPRESSION_FORMAT = '7zip';
+	const DUMPS_AMAZON_URL_BASE = 'https://s3.amazonaws.com/wikia_xml_dumps/';
 
 	/**
 	 * From this moment on we use Amazon S3 storage for the dumps.
@@ -23,6 +23,7 @@ class DumpsOnDemand {
 	 * @param SpecialStatistics $page
 	 * @param string $text
 	 * @return bool
+	 * @throws \Wikia\Util\AssertionException
 	 */
 	static public function customSpecialStatistics( SpecialStatistics $page, string &$text ): bool {
 		global $wgDBname, $wgCityId;
@@ -50,12 +51,12 @@ class DumpsOnDemand {
 		}
 
 		$tmpl->set( "curr", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml{$sDumpExtension}" ),
+			"url" => self::DUMPS_AMAZON_URL_BASE . self::getPath( "{$wgDBname}_pages_current.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml{$sDumpExtension}" ),
+			"url" => self::DUMPS_AMAZON_URL_BASE . self::getPath( "{$wgDBname}_pages_full.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
@@ -84,27 +85,6 @@ class DumpsOnDemand {
 	}
 
 	/**
-	 * return url to place where dumps are stored
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String
-	 */
-	static public function getUrl( $database, $file, $baseurl = false ) {
-		$database = strtolower( $database );
-
-		return sprintf(
-			"%s/%s/%s/%s/%s",
-			( $baseurl === false ) ? self::BASEURL : $baseurl,
-			substr( $database, 0, 1),
-			substr( $database, 0, 2),
-			$database,
-			$file
-		);
-	}
-
-	/**
 	 * @param int $iCityId
 	 * @param bool $bHidden
 	 * @param bool $bClose
@@ -122,36 +102,37 @@ class DumpsOnDemand {
 
 		$iUserId = $wgUser->getId();
 
-		$aData = [
-			'dump_wiki_id'   => $iCityId,
-			'dump_user_id'   => $iUserId,
-			'dump_requested' => wfTimestampNow()
-		];
-
-		if ( $bHidden ) {
-			$aData['dump_hidden'] = 'Y';
-		}
-
-		if ( $bClose ) {
-			$aData['dump_closed'] = 'Y';
-		}
-
-		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-		$oDB->insert( 'dumps', $aData, __METHOD__ );
-		$oDB->update(
-				'city_list',
-				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
-				array( 'city_id' => $iCityId ),
-				__METHOD__
-		);
-
 		$task = ( new \Wikia\Tasks\Tasks\DumpsOnDemandTask() )
 			->setQueue( \Wikia\Tasks\Queues\DumpsOnDemandQueue::NAME )
 			->wikiId( $iCityId )
 			->createdBy( $iUserId );
 
 		$task->call( 'dump' );
-		$task->queue();
+		$task_id = $task->queue();
+
+		$row = [
+			'task_id'        => $task_id,
+			'dump_wiki_id'   => $iCityId,
+			'dump_user_id'   => $iUserId,
+			'dump_requested' => wfTimestampNow()
+		];
+
+		if ( $bHidden ) {
+			$row['dump_hidden'] = 'Y';
+		}
+
+		if ( $bClose ) {
+			$row['dump_closed'] = 'Y';
+		}
+
+		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+		$oDB->insert( 'dumps', $row, __METHOD__ );
+		$oDB->update(
+				'city_list',
+				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+				array( 'city_id' => $iCityId ),
+				__METHOD__
+		);
 
 		WikiFactory::clearCache( $iCityId );
 	}
@@ -185,7 +166,6 @@ class DumpsOnDemand {
 	 * @param string $sPath
 	 * @param bool $bPublic
 	 * @param string $sMimeType
-	 * @throws S3Exception
 	 */
 	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
 		global $wgAWSAccessKey, $wgAWSSecretKey;
@@ -213,8 +193,11 @@ class DumpsOnDemand {
 			]
 		);
 
-		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage s3://wikia_xml_dumps/{$remotePath} (size: {$size}, time: {$time})", true, true);
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'remote_path' => $remotePath,
+			'size' => $size,
+			'time_sec' => wfTime() - $time,
+		] );
 	}
 
 	/**
