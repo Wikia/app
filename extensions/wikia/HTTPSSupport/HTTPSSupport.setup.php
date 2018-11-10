@@ -8,3 +8,4 @@ $wgHooks['MercuryWikiVariables'][] = 'HTTPSSupportHooks::onMercuryWikiVariables'
 $wgHooks['outputMakeExternalImage'][] = 'HTTPSSupportHooks::parserUpgradeVignetteUrls';
 $wgHooks['WikiaRobotsBeforeOutput'][] = 'HTTPSSupportHooks::onRobotsBeforeOutput';
 $wgHooks['InterwikiLoadBeforeCache'][] = 'HTTPSSupportHooks::onInterwikiLoadBeforeCache';
+$wgHooks['BeforeResourceLoaderCSSMinifier'][] = 'HTTPSSupportHooks::onBeforeResourceLoaderCSSMinifier';

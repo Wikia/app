@@ -142,6 +142,28 @@ class HTTPSSupportHooks {
 		return true;
 	}
 
+	public static function onBeforeResourceLoaderCSSMinifier( &$style ) {
+		global $wgScriptPath;
+
+		if ( empty( $wgScriptPath ) ) {
+			return true;
+		}
+
+		$style = preg_replace(
+			'/(["\'])(\/load\.php\?[^"\']+)(\1)/Um',
+			'$1' . $wgScriptPath . '$2$3',
+			$style
+		);
+
+		$style = preg_replace(
+			'/(["\'])(\/[^"\']+ctype=text\/css[^"\']*)(\1)/Um',
+			'$1' . $wgScriptPath . '$2$3',
+			$style
+		);
+
+		return true;
+	}
+
 	private static function httpsAllowed( User $user, string $url ): bool {
 		global $wgEnableHTTPSForAnons;
 

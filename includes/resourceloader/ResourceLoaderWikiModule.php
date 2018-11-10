@@ -152,7 +152,13 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( $this->getFlip( $context ) ) {
 				$style = CSSJanus::transform( $style, true, false );
 			}
+
+			// Wikia change - begin
+			Hooks::run( 'BeforeResourceLoaderCSSMinifier', [ &$style ] );
+			// Wikia change - end
+
 			$style = CSSMin::remap( $style, false, $wgScriptPath, true );
+
 			if ( !isset( $styles[$media] ) ) {
 				$styles[$media] = '';
 			}

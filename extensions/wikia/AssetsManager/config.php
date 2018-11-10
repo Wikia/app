@@ -195,6 +195,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizardExecutor.js',
+		'//extensions/wikia/AdEngine/js/ml/bucketizers.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
