@@ -28,3 +28,11 @@ spec:
       annotations:
         description: CloseWikiMaintenance maintenance script did not run in the last 48 hours
         summary: CloseWikiMaintenance last succeeded {{humanizeDuration $value}} ago
+    # DumpStarters should be run every 24h
+    - alert: mediawiki_maintenance_scripts_DumpStarters_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DumpStarters"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Starter wikis XML and SQL dumps were not updated in the last 24 hours
+        summary: DumpStarters last succeeded {{humanizeDuration $value}} ago
