@@ -104,7 +104,7 @@ def createTag(String nextTag) {
   }
 }
 
-def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag) {
+def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag, String buildUser) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
@@ -161,7 +161,7 @@ node("docker-daemon") {
   }
 
   stage('Slack notify start') {
-    notifyBuild('STARTED', '', '')
+    notifyBuild('STARTED', '', '', buildUser)
   }
 
   try {
@@ -502,7 +502,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result, nextAppReleaseTag, nextAppReleaseTag)
+      notifyBuild(currentBuild.result, nextAppReleaseTag, nextAppReleaseTag, buildUser)
     }
   }
 }
