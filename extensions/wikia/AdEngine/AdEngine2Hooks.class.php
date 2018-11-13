@@ -76,6 +76,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverGeoEdgeCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKruxNewParamsCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
