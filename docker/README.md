@@ -82,8 +82,8 @@ The jenkins files are taken from dev branch, so if you want to introduce changes
 5. In jenkins-jobs repo - change back the name of a job, branch to dev and merge it
 
 ### FAQ
-- are docker images rebuilt always?
--
+#### Are docker images rebuilt always? On every deployment?
+No, docker images have app and config commit hashes in an image name. So if you push the same app and config combo - docker image won't be rebuilt.
 
 
 ## How to set up Docker on your machine
