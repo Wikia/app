@@ -113,7 +113,7 @@ class CloseWikiMaintenance extends Maintenance {
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
 			if ( $this->hasOption( 'dry-run' ) ) {
-				$this->output( sprintf("Wiki #%d (%s) will be removed - %s\n",
+				$this->output( sprintf("DRY-RUN: Wiki #%d (%s) is marked to be removed - %s\n",
 					$cityid, $dbname, $row->city_additional ?: 'n/a' ) );
 				continue;
 			}
