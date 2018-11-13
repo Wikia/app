@@ -13,12 +13,16 @@
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 
+// make Wikia\Logger\Loggable trait available at a run-time
+require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
+
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class CloseWikiMaintenance extends Maintenance {
 
 	use Wikia\Logger\Loggable;
 
+	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
 	public function __construct() {
@@ -46,18 +50,21 @@ class CloseWikiMaintenance extends Maintenance {
 		global $IP;
 
 		// process script command line arguments
-		$first     = $this->hasArg( 'first' );
-		$sleep     = $this->getArg( 'sleep', 15 );
-		$limit     = $this->getArg( 'limit', false );
-		$cluster   = $this->getArg( 'cluster', false ); // eg. c6
-
-		$opts      = array( "ORDER BY" => "city_id" );
+		$first     = $this->hasOption( 'first' );
+		$sleep     = $this->getOption( 'sleep', 15 );
+		$limit     = $this->getOption( 'limit', false );
+		$cluster   = $this->getOption( 'cluster', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first'   => $first,
 			'limit'   => $limit,
 		] );
+
+		// build database query
+		$opts = [
+			"ORDER BY" => "city_id"
+		];
 
 		/**
 		 * if $first is set skip limit checking
@@ -105,9 +112,9 @@ class CloseWikiMaintenance extends Maintenance {
 			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
-			if ( $this->hasArg( 'dry-run' ) ) {
+			if ( $this->hasOption( 'dry-run' ) ) {
 				$this->output( sprintf("Wiki #%d (%s) will be removed - %s\n",
-					$cityid, $dbname, $row->city_additional ) );
+					$cityid, $dbname, $row->city_additional ?: 'n/a' ) );
 				continue;
 			}
 
