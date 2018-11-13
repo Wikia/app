@@ -93,10 +93,6 @@ def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag)
   println("Slack message: ${summary}")
 }
 
-stage('Slack notify start') {
-  notifyBuild('STARTED', '', '')
-}
-
 node("docker-daemon-big") {
   def currentAppBranch
   def currentConfigBranch
@@ -122,6 +118,10 @@ node("docker-daemon-big") {
     } catch (MissingPropertyException ex) {
       buildUser = "Jenkins"
     }
+  }
+
+  stage('Slack notify start') {
+    notifyBuild('STARTED', '', '')
   }
 
   try {
