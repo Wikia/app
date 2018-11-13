@@ -110,11 +110,17 @@ class Hooks {
 		$dispatchable->getResponse()->setData( $data );
 	}
 
+	public static function onGenerateRobotsRules( $cityId ) {
+		$communityId = WikiFactory::getVarValueByName( 'wgFandomCreatorCommunityId', $cityId, false, '' );
+		// fandom creator has its own set of rules
+		return !self::isValidCommunityId( $communityId );
+	}
+
 	public static function onGetWikisUnderDomain( $domain, $languageOnly, &$cities ) {
 		// add FC specific fields
 		$cities = array_map(
 			function( $cityData ) {
-				$communityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityData[ 'city_id' ], false, "" );
+				$communityId = WikiFactory::getVarValueByName( 'wgFandomCreatorCommunityId', $cityData[ 'city_id' ], false, '' );
 				$cityData['fc_community'] = self::isValidCommunityId( $communityId );
 				if ( $cityData['fc_community'] ) {
 					$cityData['fc_community_id'] = $communityId;
