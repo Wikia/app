@@ -33,7 +33,7 @@ In order to run service locally you need to configure hosts. Add below line to `
 This section describe how to deploy mediawiki to various environments, how they work and how to introduce changes to it.
 
 There are 2 main parts of all deployments:
-1. Jenkins job that is defined in jenkins-jobs reposiotory that accepts needed parameters to deploy to a given environment
+1. Jenkins job that is defined in jenkins-jobs repository that accepts needed parameters to deploy to a given environment
 2. a jenkins file that is in this repo that is being executed by Jenkins as a pipeline job
 
 ### How to deploy to sandbox
