@@ -625,7 +625,13 @@ class WikiFactory {
 		return self::getWikisUnderDomain( $url['host'] );
 	}
 
-	public static function isLanguageWikisIndex( $cityId ) {
+	public static function isLanguageWikisIndex( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
 		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
 			return true;
 		}
