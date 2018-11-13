@@ -26,6 +26,10 @@ spec:
                 value: "${server_id}"
               - name: LOG_STDOUT_ONLY
                 value: "yes"
+              - name: WIKIA_DATACENTER
+                value: sjc
+              - name: WIKIA_ENVIRONMENT
+                value: prod
             resources:
               limits:
                 cpu: "6"
