@@ -193,4 +193,22 @@ class MercuryApiHooks {
 			$text .= '</section>';
 		}
 	}
+
+	public static function onClosedOrEmptyWikiDomains() {
+		/** @var $wgRequest WebRequest */
+		global $wgRequest;
+
+		$controller = $wgRequest->getVal( 'controller', null );
+		$method = $wgRequest->getVal( 'method', null );
+
+		if (
+			$controller === 'MercuryApi' &&
+			in_array( $method, [ 'getMobileWikiVariables', 'getTrackingDimensions' ] ) &&
+			count( WikiFactory::getLanguageWikis() ) > 0
+		) {
+			return false;
+		}
+
+		return true;
+	}
 }
