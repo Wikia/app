@@ -30,7 +30,7 @@ In order to run service locally you need to configure hosts. Add below line to `
 
 ## Deploy Pipeline
 
-This section describe how to depoly mediawiki to various environments, how they work and how to introduce changes to it.
+This section describe how to deploy mediawiki to various environments, how they work and how to introduce changes to it.
 
 There are 2 main parts of all deployments:
 1. Jenkins job that is defined in jenkins-jobs reposiotory that accepts needed parameters to deploy to a given environment
@@ -38,7 +38,7 @@ There are 2 main parts of all deployments:
 
 ### How to deploy to sandbox
 
-1. Open [mediaiwki-deploy-sandbox](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-sandbox/activity)
+1. Open [mediawiki-deploy-sandbox](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-sandbox/activity)
 2. Press run button, fill in the form and submit the form
 3. Profit!
 
@@ -50,19 +50,21 @@ There are 2 main parts of all deployments:
 
 This job is ran by [daily-release-cut](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/daily-release-cut/activity) but if you need to deploy manually:
 
-1. Open [mediaiwki-deploy-preview](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-preview/activity)
+1. Open [mediawiki-deploy-preview](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-preview/activity)
 2. Press run button, fill in the form
 	1. new release - will create new release branch, new release tag and push that to preview
-	2. hotfix - will chekout a release branch that is currently on preview and if there are any changes on this branch against the tag that is deployed - it will create new tag and push that to preview
+	2. hotfix - will checkout a release branch that is currently on preview and if there are any changes on this branch against the tag that is deployed - it will create new tag and push that to preview
 	3. latest - fetch a latest tag that is on github and push that to preview
 3. Submit the form
 4. This job will wait for your input on stage 'Fetch version' - if you won't press Proceed it will be aborted
 
+Please keep in mind that preview deployment will automatically start all functional tests.
+
 ### how to deploy to prod
-1. Open [mediaiwki-deploy-prod](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-prod/activity)
+1. Open [mediawiki-deploy-prod](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-prod/activity)
 2. Press run button, fill in the form
 	1. preview - fetch a version from preview environment and push the same to prod
-	2. hotfix - will chekout a release branch that is currently on prod and if there are any changes on this branch against the tag that is deployed - it will create new tag and push that to prod
+	2. hotfix - will checkout a release branch that is currently on prod and if there are any changes on this branch against the tag that is deployed - it will create new tag and push that to prod
 
 ### Where are the jobs configured
 All 3 jobs are defined in [jenkins-jobs](https://github.com/Wikia/jenkins-jobs) repo in this file [mediawiki-deployment-pipeline](https://github.com/Wikia/jenkins-jobs/blob/master/jobs/mediawiki/mediawiki-deployment-pipeline.yaml)
