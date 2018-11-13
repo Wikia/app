@@ -104,15 +104,18 @@ def createTag(String nextTag) {
   }
 }
 
-def notifyBuild(String buildStatus = 'STARTED') {
+def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def subject = "!!K8S (mirror deploy)!!: *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}>"
-  def summary = "${subject}"
+  def summary = "K8S (mirror deploy): *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}> by ${buildUser}"
+
+  if (appTag && configTag) {
+    summary = summary + " - app tag <https://github.com/Wikia/app/releases/tag/'${appTag}'|'${appTag}'> and config tag <https://github.com/Wikia/config/releases/tag/'${configTag}'|'${configTag}'>"
+  }
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -120,10 +123,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#70CADB'
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
-    colorCode = '#7AF371'
+    colorCode = '#36A64F'
   } else {
-    color = 'RED'
-    colorCode = '#FF0000'
     summary = summary + " <!here>"
   }
 
@@ -135,9 +136,9 @@ def notifyBuild(String buildStatus = 'STARTED') {
   println("Slack message: ${summary}")
 }
 
-stage('Slack notify start') {
-  notifyBuild('STARTED')
-}
+ stage('Slack notify start') {
+    notifyBuild('STARTED', '', '')
+  }
 
 node("docker-daemon") {
   def buildUser = "Anonymous"
@@ -501,7 +502,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result)
+      notifyBuild(currentBuild.result, nextAppReleaseTag, nextAppReleaseTag)
     }
   }
 }
