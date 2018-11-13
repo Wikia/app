@@ -78,6 +78,12 @@ class MigrateWikiToFandom extends Maintenance {
 				}
 			}
 
+			$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
+			if ( !$additionalTargetDomain ) {
+				continue;
+			}
+
+
 			if ( strpos( $targetDomain, $wgFandomBaseDomain ) === false ||
 				substr_count( $targetDomain, '.' ) > 3
 			) {
@@ -85,10 +91,16 @@ class MigrateWikiToFandom extends Maintenance {
 				continue;
 			}
 
+
 			if ( $saveChanges ) {
+
 				WikiFactory::addDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
 				WikiFactory::setmainDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
+
+				if ( !empty($additionalTargetDomain) ){
+					WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}');
+				}
 
 				// Banner notification about migration, see SEO-669
 				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
@@ -101,6 +113,9 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 
 			$this->output( "Wiki with ID {$sourceWikiId} was migrated from {$sourceDomain} to {$targetDomain}!\n" );
+			if ( ! empty($additionalTargetDomain)  ){
+				$this->output( "/en alias domain was created: {$additionalTargetDomain}\n" );
+			}
 		}
 
 		fclose( $fileHandle );
@@ -118,6 +133,16 @@ class MigrateWikiToFandom extends Maintenance {
 		}
 
 		return "{$parts[0]}.{$wgFandomBaseDomain}";
+
+	}
+
+	private function getAdditionalDomain( $sourceDomain ) {
+		global $wgFandomBaseDomain;
+		$parts = explode( '.', $sourceDomain );
+		if ( $parts[1] !== 'wikia' ){
+			return false;
+		}
+		return "{$parts[0]}.{$wgFandomBaseDomain}/en";
 	}
 
 	private function isValidLanguagePath( $languageCode ): bool {
