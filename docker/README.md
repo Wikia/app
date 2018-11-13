@@ -48,6 +48,8 @@ There are 2 main parts of all deployments:
 
 ### How to deploy to preview
 
+This job is ran by [daily-release-cut](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/daily-release-cut/activity) but if you need to deploy manually:
+
 1. Open [mediaiwki-deploy-preview](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-preview/activity)
 2. Press run button, fill in the form
 	1. new release - will create new release branch, new release tag and push that to preview
