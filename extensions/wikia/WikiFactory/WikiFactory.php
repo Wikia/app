@@ -625,6 +625,21 @@ class WikiFactory {
 		return self::getWikisUnderDomain( $url['host'] );
 	}
 
+	public static function isLanguageWikisIndex( $cityId ) {
+		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
+			return true;
+		}
+
+		if ( static::isPublic( $cityId ) ) {
+			return false;
+		}
+
+		$wiki = static::getWikiByID( $cityId );
+		$wikiHost = parse_url( $wiki->city_url, PHP_URL_HOST );
+
+		return count( static::getWikisUnderDomain( $wikiHost ) ) > 0;
+	}
+
 	/**
 	 * Strips the language path from city_url.
 	 *
