@@ -122,5 +122,13 @@ spec:
       labels:
         team: sus
       annotations:
-        description: Maintenance script to that cleanups stash uploads was not run in the last 24 hours
+        description: Maintenance script that cleanups stash uploads was not run in the last 24 hours
         summary: UploadStashCleanup last succeeded {{humanizeDuration $value}} ago
+    # InitStats should be run every 24h
+    - alert: mediawiki_maintenance_scripts_InitStats_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="InitStats"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that re-initialises wikis statistics table was not run in the last 24 hours
+        summary: InitStats last succeeded {{humanizeDuration $value}} ago
