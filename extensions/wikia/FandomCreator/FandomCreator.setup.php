@@ -12,8 +12,9 @@ spl_autoload_register( function( $class ) {
 	}
 } );
 
-// This hook is active on every wiki
+// This hooks are active on every wiki
 $wgHooks['GetWikisUnderDomain'][] = 'FandomCreator\Hooks::onGetWikisUnderDomain';
+$wgHooks['GenerateRobotsRules'][] = 'FandomCreator\Hooks::onGenerateRobotsRules';
 
 if ( !empty($wgFandomCreatorCommunityId ) ) {
 	// Part of the setup that is active on fandom creator communities
@@ -32,7 +33,6 @@ if ( !empty($wgFandomCreatorCommunityId ) ) {
 	};
 
 	$wgHooks['DesignSystemCommunityHeaderModelGetData'][] = 'FandomCreator\Hooks::onDesignSystemCommunityHeaderModelGetData';
-	$wgHooks['GenerateRobotsRules'][] = 'FandomCreator\Hooks::onGenerateRobotsRules';
 
 	$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
 		$params = $dispatchable->getRequest()->getParams();
