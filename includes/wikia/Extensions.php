@@ -214,11 +214,6 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
  * load extensions by using configuration variables
  */
 
-#--- 1. Special::ProtectSite
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
-}
-
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
@@ -1017,11 +1012,6 @@ if (!empty( $wgEnablePaginatorExt )){
 	include( "$IP/extensions/wikia/Paginator/Paginator.setup.php" );
 }
 
-# Category Exhibition
-if (!empty($wgEnableCategoryExhibitionExt)) {
-		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
 /*
  * Send email from the app authenticated by a secret token
  */
@@ -1125,7 +1115,6 @@ if ( !empty( $wgEnableWikiFeatures ) ) {
 			'wgEnableAjaxPollExt',
 			'wgEnableBlogArticles',
 			'wgEnableArticleCommentsExt',
-			'wgEnableCategoryExhibitionExt',
 			'wgEnableWallExt',
 			'wgEnablePortableInfoboxEuropaTheme'
 		),
@@ -1300,7 +1289,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PROD:
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
-		case WIKIA_ENV_STABLE:
 		case WIKIA_ENV_SANDBOX:
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
@@ -1763,6 +1751,12 @@ if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }
 
+include "$IP/extensions/wikia/LanguageWikisIndex/LanguageWikisIndex.setup.php";
+
+if ( $wgIncludeClosedWikiHandler ) {
+	include "$IP/extensions/wikia/WikiFactory/Loader/closedWikiHandler.php";
+}
+
 // SRE-116
 include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
 
@@ -1771,3 +1765,12 @@ include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
 if ( empty( $wgDevelEnvironment ) ) {
 	include "$IP/lib/Wikia/src/SwiftSync/SwiftSync.setup.php";
 }
+
+// SEO-670 | SEO friendly category pages
+if ( !empty( $wgEnableCategoryPage3Ext ) ) {
+	include "$IP/extensions/wikia/CategoryPage3/CategoryPage3.setup.php";
+}
+
+// Category Exhibition
+// If you want to delete this extension remember to update CategoryPage3
+include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );

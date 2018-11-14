@@ -1,0 +1,8 @@
+# Schedule is Feb 31st, so this will never run. We're temporarily disabling
+# this pending a green light from the runescape admins
+schedule: "0 5 31 2 *"
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+- --id=304,691244
+- maintenance/wikia/runescapeBot/updateGrandExchangeItemPrices.php

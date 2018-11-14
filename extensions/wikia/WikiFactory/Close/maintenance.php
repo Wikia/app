@@ -13,23 +13,25 @@
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 
-$optionsWithArgs = array( "limit", "sleep" );
+// make Wikia\Logger\Loggable trait available at a run-time
+require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
 
-require_once( __DIR__ . "/../../../../maintenance/commandLine.inc" );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
-class CloseWikiMaintenance {
+class CloseWikiMaintenance extends Maintenance {
 
 	use Wikia\Logger\Loggable;
 
+	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
-	private $mOptions;
-
-	/**
-	 * @param array $options
-	 */
-	public function __construct( array $options ) {
-		$this->mOptions = $options;
+	public function __construct() {
+		parent::__construct();
+		$this->addOption( 'first', 'Run only once for first wiki in queue' );
+		$this->addOption( 'dry-run', 'List wikis that will be removed and quit' );
+		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
+		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
+		$this->addOption( 'cluster', 'Run for a given cluster only', false, true );
 	}
 
 	/**
@@ -47,23 +49,29 @@ class CloseWikiMaintenance {
 	public function execute() {
 		global $IP;
 
-		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
-		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
-		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
-		$opts      = array( "ORDER BY" => "city_id" );
+		// process script command line arguments
+		$first     = $this->hasOption( 'first' );
+		$sleep     = $this->getOption( 'sleep', 15 );
+		$limit     = $this->getOption( 'limit', false );
+		$cluster   = $this->getOption( 'cluster', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first'   => $first,
-			'limit'   => isset( $this->mOptions[ "limit" ] ) ? $this->mOptions[ "limit" ] : false
+			'limit'   => $limit,
 		] );
+
+		// build database query
+		$opts = [
+			"ORDER BY" => "city_id"
+		];
 
 		/**
 		 * if $first is set skip limit checking
 		 */
 		if( !$first ) {
-			if( isset( $this->mOptions[ "limit" ] ) && is_numeric( $this->mOptions[ "limit" ] ) )  {
-				$opts[ "LIMIT" ] = $this->mOptions[ "limit" ];
+			if( is_numeric( $limit ) )  {
+				$opts[ "LIMIT" ] = $limit;
 			}
 		}
 
@@ -82,7 +90,7 @@ class CloseWikiMaintenance {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp" ),
+			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp", "city_additional" ),
 			$where,
 			__METHOD__,
 			$opts
@@ -103,6 +111,12 @@ class CloseWikiMaintenance {
 			$cityid   = intval( $row->city_id );
 			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
+
+			if ( $this->hasOption( 'dry-run' ) ) {
+				$this->output( sprintf("DRY-RUN: Wiki #%d (%s) is marked to be removed - %s\n",
+					$cityid, $dbname, $row->city_additional ?: 'n/a' ) );
+				continue;
+			}
 
 			$this->debug( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
 
@@ -348,9 +362,6 @@ class CloseWikiMaintenance {
 		$time = Wikia::timeDuration( wfTime() - $time );
 		$this->debug( "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}" );
 
-		/**
-		 * @name dumpfile
-		 */
 		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
 		if( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
@@ -381,7 +392,10 @@ class CloseWikiMaintenance {
 		}
 		else {
 			$this->info( "List of files in {$directory} is empty" );
-			throw new WikiaException( "List of files in {$directory} is empty" );
+
+			// SUS-6077 | sub-bucket is empty, e.g. foo bucket is not empty,
+			// but bucket/<lang>  can be
+			return false;
 		}
 
 		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
@@ -529,14 +543,5 @@ class CloseWikiMaintenance {
 
 }
 
-/**
- * used options:
- *
- * --first			-- run only once for first wiki in queue
- * --limit=<limit>	-- run for <limit> wikis
- */
-global $IP, $options;
-
-$wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
-$maintenance = new CloseWikiMaintenance( $options );
-$maintenance->execute();
+$maintClass = CloseWikiMaintenance::class;
+require_once( RUN_MAINTENANCE_IF_MAIN );

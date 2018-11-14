@@ -38,6 +38,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				geo: {
 					getCountryCode: function () {
 						return 'XY';
+					},
+					getDocumentVisibilityStatus: function () {
+						return 'visible';
 					}
 				}
 			},
@@ -239,5 +242,13 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
+	});
+
+	it('include document_hidden=1 if document is hidden', function () {
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('document_visibility')).toEqual('visible');
 	});
 });

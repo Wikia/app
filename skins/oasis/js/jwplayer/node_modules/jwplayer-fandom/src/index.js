@@ -84,8 +84,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				playlist: options.videoDetails.playlist,
 				title: options.videoDetails.title,
 				localization: i18n,
-				repeat: options.repeat,
-				isUserIntended: options.isUserIntended
+				repeat: options.repeat
 			};
 
 		playerSetup.plugins = {};
@@ -156,8 +155,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
 
 		wikiaJWPlayerUserIntendedPlayControl(
-			//user coming from footer must've clicked the video thumbnail
-			window.location.search.indexOf('wikia-footer-wiki-rec') > -1,
+			options.shouldForceUserIntendedPlay,
 			playerInstance,
 			options.tracking,
 			options.autoplay

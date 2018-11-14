@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: mediawiki
+    prometheus: prod
+    role: alert-rules
+  name: mediawiki-prod
+  namespace: prod
+spec:
+  groups:
+  # SUS-6163 | monitoring and alerting around per-wiki maintenance scripts execution
+  - name: mediawiki_maintenance_scripts.rules
+    rules:
+    - alert: mediawiki_maintenance_scripts_UpdateSpecialPages_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="UpdateSpecialPages"}) > 86400
+      labels:
+        team: sus
+      annotations:
+        description: UpdateSpecialPages maintenance script did not run in the last 24 hours
+        summary: UpdateSpecialPages last succeeded {{humanizeDuration $value}} ago
+        graphs: https://metrics.wikia-inc.com/d/Lpjst60mk/celery-mediawiki-tasks
+    # SUS-6077 | Close wikis queue not being consumed
+    - alert: mediawiki_maintenance_scripts_CloseWikiMaintenance_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseWikiMaintenance"}) > 86400 * 2
+      labels:
+        team: sus
+      annotations:
+        description: CloseWikiMaintenance maintenance script did not run in the last 48 hours
+        summary: CloseWikiMaintenance last succeeded {{humanizeDuration $value}} ago
+    # DumpStarters should be run every 24h
+    - alert: mediawiki_maintenance_scripts_DumpStarters_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DumpStarters"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Starter wikis XML and SQL dumps were not updated in the last 24 hours
+        summary: DumpStarters last succeeded {{humanizeDuration $value}} ago

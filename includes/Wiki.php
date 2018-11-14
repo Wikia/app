@@ -441,14 +441,6 @@ class MediaWiki {
 	 * If possible this method will be executed only after the response has been flushed.
 	 */
 	public function restInPeace() {
-		// If using FastCGI we can flush the output now and do any further updates without blocking
-		if ( function_exists( 'fastcgi_finish_request' ) ) {
-			fastcgi_finish_request();
-		} else {
-			// Either all DBs should commit or none
-			ignore_user_abort( true );
-		}
-
 		// Do any deferred jobs
 		DeferredUpdates::doUpdates();
 

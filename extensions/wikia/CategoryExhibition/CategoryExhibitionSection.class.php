@@ -171,7 +171,6 @@ abstract class CategoryExhibitionSection {
 			count( $serviceData ),
 			$itemsPerPage,
 			$this->categoryTitle->getFullURL( [
-				'display' => $this->urlParams->getDisplayParam(),
 				'sort' => $this->urlParams->getSortParam(),
 			] )
 		);
@@ -264,11 +263,9 @@ abstract class CategoryExhibitionSection {
 			md5( $this->categoryTitle->getDBKey() ),
 			get_class( $this ),
 			$this->paginatorPosition,
-			$this->urlParams->getDisplayType(),
 			$this->urlParams->getSortType(),
 			$this->cacheHelper->getTouched( $this->categoryTitle ),
 			// Those are mentioned separately because they modify the pagination URL
-			$this->urlParams->getDisplayParam(),
 			$this->urlParams->getSortParam()
 		);
 	}

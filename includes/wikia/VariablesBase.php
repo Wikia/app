@@ -2358,6 +2358,13 @@ $wgEnableCategoryGalleriesExt = true;
 $wgEnableCategoryIntersectionExt = false;
 
 /**
+ * Enable CategoryPage3 extension which replaces category pages with a SEO friendly version
+ * @see extensions/wikia/CategoryPage3/
+ * @var bool $wgEnableCategoryPage3Ext
+ */
+$wgEnableCategoryPage3Ext = true;
+
+/**
  * Enable CategoryTree extension.
  * @see /extensions/CategoryTree/
  * @var bool wgEnableCategoryTreeExt
@@ -2646,6 +2653,28 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
+ * configures smart banner to display custom text/link/image and target it by country an OS
+ * example value:
+ * {
+ *  "os": [
+ *      "ios",
+ *      "android"
+ *  ],
+ *  "imageUrl": "https:\/\/vignette.wikia.nocookie.net\/rybatest\/images\/7\/71\/002-send-1.svg\/revision\/latest?cb=20180711085702",
+ *  "title": "some short title",
+ *  "text": "some body text",
+ *  "linkText": "some link",
+ *  "linkUrl": "some.url.com",
+ *  "countries": [
+ *      "pl",
+ *      "us",
+ *      "au"
+ *  ]
+ * }
+ */
+$wgSmartBannerAdConfiguration = [];
+
+/**
  * Surprisingly, this variable enables FANDOM stories on search result page!
  * @see /extensions/wikia/Search/WikiaSearchController.class.php
  * @var bool $wgEnableFandomStoriesOnSearchResultPage
@@ -2665,6 +2694,13 @@ $wgEnableFastLinkCache = true;
  * @var bool $wgEnableFeedsAndPostsExt
  */
 $wgEnableFeedsAndPostsExt = false;
+
+/**
+ * Enable the Embedded Feeds module from Community Feeds
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableEmbeddedFeeds
+ */
+$wgEnableEmbeddedFeeds = false;
 
 /**
  * Enable FileInfoFunctions extension.
@@ -4600,7 +4636,7 @@ $wgGenerateThumbnailOnParse = false;
  */
 $wgGlobalUserPreferenceWhiteList = [
 	'literals' => [
-		'CategoryExhibitionDisplayType',
+		'category-page-layout',
 		'CategoryExhibitionSortType',
 		'ccmeonemails',
 		'cols',
@@ -6478,26 +6514,11 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * Groups that should not be affected by Special:ProtectSite lockdown.
- * @see extensions/wikia/SpecialProtectSite
- * @var Array $wgProtectsiteExempt
- */
-$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
-
-/**
  * Enable ProtectSiteJS extension.
  * @see extensions/wikia/ProtectSiteJS
  * @var bool $wgEnableProtectSiteJSExt
  */
 $wgEnableProtectSiteJSExt = true;
-
-/**
- * The maximum time, site can be locked by the Protectsite extension.
- * @see /extensions/wikia/SpecialProtectSite
- * @var string $wgProtectsiteLimit
- *
- */
-$wgProtectsiteLimit = '12 hours';
 
 /**
  * Big list of banned IP addresses, in the keys not the values.
@@ -8632,13 +8653,6 @@ $wgWikiaEnableSharedHelpExt = true;
 $wgWikiaEnableSharedTalkExt = true;
 
 /**
- * Enable ProtectSite extension.
- * @see extensions/wikia/SpecialProtectSite
- * @var bool $wgWikiaEnableSpecialProtectSiteExt
- */
-$wgWikiaEnableSpecialProtectSiteExt = true;
-
-/**
  * Enable WikiFactory Redirector.
  * @see /extensions/wikia/WikiFactory/redir/SpecialWikiFactoryRedir.php
  * @var bool $wgWikiaEnableWikiFactoryRedir
@@ -8902,3 +8916,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;

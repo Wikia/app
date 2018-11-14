@@ -260,6 +260,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
+$wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
 
 /**
  * Resource Loader enhancements
@@ -1129,13 +1130,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
-
-/**
- * @name $wgAdDriverBottomLeaderBoardMegaCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardMegaCountries = null;
 
 /**
  * @name $wgAdDriverBottomLeaderBoardViewportCountries

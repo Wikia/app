@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/../../Maintenance.php';
 
-use \Wikia\Logger\WikiaLogger;
-
 /**
  * Script to migrate a community to fandom.com.
  *
@@ -136,6 +134,7 @@ class MigrateWikiToFandom extends Maintenance {
 		WikiFactory::clearCache( $wikiId );
 
 		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
+		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ), 'mercury' );
 
 		$dbName = WikiFactory::IDtoDB( $wikiId );
 
