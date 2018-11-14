@@ -71,17 +71,20 @@ class MigrateWikiToFandom extends Maintenance {
 			if ( count( $data ) === 2 ) {
 				$targetDomain = $data[1];
 			} else {
+				# check if addictional /en alias domain should be created
+				global $additionalDomain;
+				$additionalDomain = false;
+
 				$targetDomain = $this->getTargetDomain( $sourceDomain );
 				if ( !$targetDomain ) {
 					$this->output( "Could not get the target domain for wiki with ID {$sourceWikiId}!\n" );
 					continue;
 				}
+				if ( $additionalDomain ){
+					$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
+				}
 			}
 
-			$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
-			if ( !$additionalTargetDomain ) {
-				continue;
-			}
 
 
 			if ( strpos( $targetDomain, $wgFandomBaseDomain ) === false ||
@@ -91,14 +94,13 @@ class MigrateWikiToFandom extends Maintenance {
 				continue;
 			}
 
-
 			if ( $saveChanges ) {
 
 				WikiFactory::addDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
 				WikiFactory::setmainDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
-				if ( !empty($additionalTargetDomain) ){
+				if ( $additionalDomain ){
 					WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}');
 				}
 
@@ -113,7 +115,7 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 
 			$this->output( "Wiki with ID {$sourceWikiId} was migrated from {$sourceDomain} to {$targetDomain}!\n" );
-			if ( ! empty($additionalTargetDomain)  ){
+			if ( $additionalDomain ){
 				$this->output( "/en alias domain was created: {$additionalTargetDomain}\n" );
 			}
 		}
@@ -123,6 +125,8 @@ class MigrateWikiToFandom extends Maintenance {
 
 	private function getTargetDomain( $sourceDomain ) {
 		global $wgFandomBaseDomain;
+		global $additionalDomain;
+
 		$parts = explode( '.', $sourceDomain );
 		if ( count( $parts ) > 3 ) {
 			if ( !$this->isValidLanguagePath( $parts[0] ) ) {
@@ -131,7 +135,7 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 			return "{$parts[1]}.{$wgFandomBaseDomain}/{$parts[0]}";
 		}
-
+		$additionalDomain = true;
 		return "{$parts[0]}.{$wgFandomBaseDomain}";
 
 	}
