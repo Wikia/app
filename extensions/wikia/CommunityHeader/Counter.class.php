@@ -11,7 +11,7 @@ class Counter {
 
 	public function __construct( DesignSystemCommunityHeaderModel $model ) {
 		$counterModel = $model->getArticlesCounter();
-		$this->value =  $counterModel['articles_count'];
+		$this->value =  $counterModel['value'];
 		$this->label = new Label( $counterModel['label']['key'], $counterModel['label']['type'] );
 	}
 }
