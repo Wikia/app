@@ -66,11 +66,9 @@ class LanguageWikisIndexHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		$isClosedWikiWithLanguageWikis = self::isClosedWikiWithLanguageWikis();
-
 		if (
 			self::isEmptyDomainWithLanguageWikis() ||
-			$isClosedWikiWithLanguageWikis
+			self::isClosedWikiWithLanguageWikis()
 		) {
 			$wikis = array_map( function ( $wiki ) {
 				return [
@@ -93,7 +91,6 @@ class LanguageWikisIndexHooks {
 
 			$wikiVariables['languageWikis'] = [
 				'additionalLinks' => $additionalLinks,
-				'isClosed' => $isClosedWikiWithLanguageWikis,
 				'wikis' => $wikis,
 			];
 
@@ -118,7 +115,7 @@ class LanguageWikisIndexHooks {
 		return $wgCityId == WikiFactory::LANGUAGE_WIKIS_INDEX;
 	}
 
-	public static function isClosedWikiWithLanguageWikis() {
+	private static function isClosedWikiWithLanguageWikis() {
 		global $wgIncludeClosedWikiHandler;
 
 		return $wgIncludeClosedWikiHandler && count( WikiFactory::getLanguageWikis() ) > 0;
