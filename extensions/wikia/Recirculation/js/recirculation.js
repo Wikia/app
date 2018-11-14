@@ -75,7 +75,7 @@ require([
 		};
 
 	function prepareRailRecirculation(options) {
-		if (mw.config.get('canLoadFeedsAndPosts')) {
+		if (mw.config.get('showEmbeddedFeed')) {
 			// If Feeds & Posts will load, don't display the rail recirc
 			return;
 		}
