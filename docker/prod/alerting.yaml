@@ -132,3 +132,11 @@ spec:
       annotations:
         description: Maintenance script that re-initialises wikis statistics table was not run in the last 24 hours
         summary: InitStats last succeeded {{humanizeDuration $value}} ago
+    # CleanupPhalanxStats should be run every week
+    - alert: mediawiki_maintenance_scripts_CleanupPhalanxStats_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanupPhalanxStats"}) > 86400 * 8
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that removes old specials.phalanx_stats entries was not run in the last 7 days
+        summary: CleanupPhalanxStats last succeeded {{humanizeDuration $value}} ago
