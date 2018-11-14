@@ -12,7 +12,7 @@ spl_autoload_register( function( $class ) {
 	}
 } );
 
-// This hooks are active on every wiki
+// These hooks are active on every wiki
 $wgHooks['GetWikisUnderDomain'][] = 'FandomCreator\Hooks::onGetWikisUnderDomain';
 $wgHooks['GenerateRobotsRules'][] = 'FandomCreator\Hooks::onGenerateRobotsRules';
 
