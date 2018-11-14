@@ -203,7 +203,7 @@ class MercuryApiHooks {
 
 		if (
 			$controller === 'MercuryApi' &&
-			in_array( $method, [ 'getMobileWikiVariables', 'getTrackingDimensions' ] ) &&
+			$method === 'getMobileWikiVariables' &&
 			WikiFactory::isLanguageWikisIndex()
 		) {
 			return false;
