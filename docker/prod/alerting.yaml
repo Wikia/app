@@ -155,11 +155,19 @@ spec:
       annotations:
         description: Maintenance script that sends the weekly digest to the users found in the global_watchlist table was not run in the last 7 days
         summary: sendWeeklyDigest last succeeded {{humanizeDuration $value}} ago
-    # LyricsWikiCrawler should be run every week
+    # LyricsWikiCrawler should be run every 24h
     - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="LyricsWikiCrawler"}) > 3600 * 25
       labels:
         team: sus
       annotations:
-        description: Maintenance script tht is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
+        description: Maintenance script that is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
         summary: LyricsWikiCrawler last succeeded {{humanizeDuration $value}} ago
+    # AutomatedDeadWikisDeletionMaintenance should be run every 24h (excluding Friday and weekends)
+    - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="AutomatedDeadWikisDeletionMaintenance"}) > 86400 * 4
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that marks wikis as closed was not run in the last four days
+        summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
