@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function setupProjects() {
 		if (adContext.get('targeting.hasFeaturedVideo')) {
 			services.billTheLizard.projectsHandler.enable('queen_of_hearts');
+			services.billTheLizard.projectsHandler.enable('vcr');
 		}
 	}
 
@@ -53,6 +54,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function call() {
 		var config = instantGlobals.wgAdDriverBillTheLizardConfig || {},
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
+			now = new Date(),
 			pageParams = pageLevelParams.getPageLevelParams();
 
 		adEngine3.context.set('services.billTheLizard', {
@@ -80,6 +82,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
 					wiki_id: adContext.get('targeting.wikiId') || null
+				},
+				vcr: {
+					pv: Math.min(30, pageParams.pv || 1),
+					h: now.getHours(),
+					pv_global: Math.min(40, win.pvNumberGlobal || 1),
+					ref: pageParams.ref || null
 				}
 			},
 			projects: config.projects,
@@ -99,7 +107,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 				pageInfoTracker.trackProp('btl_request', query);
 			});
 
-			return services.billTheLizard.call(['queen_of_hearts'])
+			return services.billTheLizard.call(['queen_of_hearts', 'vcr'])
 				.then(function () {
 					var values = serialize();
 
