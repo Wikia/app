@@ -78,14 +78,22 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		] );
 
 		$message = '';
-		$pagination = $helper->getPagination( [
-			'page' => $page,
-			'category' => $category,
-			'provider' => $providers
-		], $addVideo );
-		$paginationBar = $pagination[ 'body' ];
-		$this->wg->Out->addHeadItem( 'Pagination', $pagination[ 'head' ] );
-
+		$paginationBar = '';
+		if ( $isMobile ) {
+			if ( empty( $videos ) ) {
+				$message = wfMessage( 'specialvideos-no-videos' )->escaped();
+			} else {
+				$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
+			}
+		} else {
+			$pagination = $helper->getPagination( [
+				'page' => $page,
+				'category' => $category,
+				'provider' => $providers
+			], $addVideo );
+			$paginationBar = $pagination[ 'body' ];
+			$this->wg->Out->addHeadItem( 'Pagination', $pagination[ 'head' ] );
+		}
 
 		$this->addVideo = $addVideo;
 		$this->pagination = $paginationBar;
