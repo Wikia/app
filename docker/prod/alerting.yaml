@@ -164,7 +164,7 @@ spec:
         description: Maintenance script that is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
         summary: LyricsWikiCrawler last succeeded {{humanizeDuration $value}} ago
     # AutomatedDeadWikisDeletionMaintenance should be run every 24h (excluding Friday and weekends)
-    - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
+    - alert: mediawiki_maintenance_scripts_AutomatedDeadWikisDeletionMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="AutomatedDeadWikisDeletionMaintenance"}) > 86400 * 4
       labels:
         team: sus
