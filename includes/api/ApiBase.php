@@ -1615,5 +1615,9 @@ abstract class ApiBase extends ContextSource {
 		WikiaLogger::instance()->popContext();
 	}
 
+	protected function isInternalRequest() {
+		return $this->getRequest()->isWikiaInternalRequest();
+	}
+
 	// Wikia Change - END
 }
