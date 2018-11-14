@@ -139,6 +139,14 @@ spec:
       annotations:
         description: Maintenance script that removes old specials.phalanx_stats entries was not run in the last 7 days
         summary: CleanupPhalanxStats last succeeded {{humanizeDuration $value}} ago
+    # ResetWeeklyUserContributionsCount should be run every week
+    - alert: mediawiki_maintenance_scripts_ResetWeeklyUserContributionsCount_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ResetWeeklyUserContributionsCount"}) > 86400 * 8
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that resets users rank with most contributions was not run in the last 7 days
+        summary: ResetWeeklyUserContributionsCount last succeeded {{humanizeDuration $value}} ago
     # LyricsWikiCrawler should be run every week
     - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="LyricsWikiCrawler"}) > 3600 * 25
