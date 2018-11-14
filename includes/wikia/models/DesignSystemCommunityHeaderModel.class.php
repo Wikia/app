@@ -35,8 +35,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$data = [
 			'sitename' => $this->getSiteNameData(),
 			'navigation' => $this->getNavigation(),
-			'articles_counter' => $this->getArticlesCounter(),
-			'action_buttons' => $this->getActionButtons(),
+			'counter' => $this->getArticlesCounter(),
+			'buttons' => $this->getActionButtons(),
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
@@ -62,7 +62,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		}
 
 		return [
-			'articles_count' => $value,
+			'value' => $value,
 			'label' => [
 				'type' => 'translatable-text',
 				'key' => $labelKey,
