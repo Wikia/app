@@ -24,7 +24,7 @@ class CommunityHeaderService extends WikiaService {
 	public function index() {
 		$this->setVal( 'sitename', new Sitename( $this->model ) );
 		$this->setVal( 'wordmark', new Wordmark( $this->model ) );
-		$this->setVal( 'counter', new Counter() );
+		$this->setVal( 'counter', new Counter( $this->model ) );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
 		$this->setVal( 'backgroundImageUrl', $this->model->getBackgroundImageUrl() );
 	}

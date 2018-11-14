@@ -2,22 +2,16 @@
 
 namespace Wikia\CommunityHeader;
 
-use \SiteStats;
+use DesignSystemCommunityHeaderModel;
 
 class Counter {
 	public $label;
 	public $value;
 	public $trackingLabel = 'counter';
 
-	public function __construct() {
-		$value = SiteStats::articles();
-		$this->value =  \RequestContext::getMain()->getLanguage()->formatNum( $value );
-
-		if( $value === 1 ) {
-			$labelKey = 'community-header-page';
-		} else {
-			$labelKey = 'community-header-pages';
-		}
-		$this->label = new Label( $labelKey, Label::TYPE_TRANSLATABLE_TEXT );
+	public function __construct( DesignSystemCommunityHeaderModel $model ) {
+		$counterModel = $model->getArticlesCounter();
+		$this->value =  $counterModel['articles_count'];
+		$this->label = new Label( $counterModel['label']['key'], $counterModel['label']['type'] );
 	}
 }

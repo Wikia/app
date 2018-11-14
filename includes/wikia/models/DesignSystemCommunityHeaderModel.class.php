@@ -34,7 +34,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getData(): array {
 		$data = [
 			'sitename' => $this->getSiteNameData(),
-			'navigation' => $this->getNavigation()
+			'navigation' => $this->getNavigation(),
+			'articles_counter' => $this->getArticlesCounter(),
+			'action_buttons' => $this->getActionButtons(),
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
@@ -48,6 +50,28 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		Hooks::run( 'DesignSystemCommunityHeaderModelGetData', [ &$data, $this->productInstanceId ] );
 
 		return $data;
+	}
+
+	public function getArticlesCounter() {
+		$value = \RequestContext::getMain()->getLanguage()->formatNum( SiteStats::articles() );
+
+		if( $value === 1 ) {
+			$labelKey = 'community-header-page';
+		} else {
+			$labelKey = 'community-header-pages';
+		}
+
+		return [
+			'articles_count' => $value,
+			'label' => [
+				'type' => 'translatable-text',
+				'key' => $labelKey,
+			]
+		];
+	}
+
+	public function getActionButtons() {
+
 	}
 
 	public function getWordmarkData(): array {
