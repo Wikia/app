@@ -8,7 +8,7 @@ class WikiButtons {
 	public $buttons;
 	public $moreButtons;
 
-	public function __construct() {
+	public function __construct( \DesignSystemCommunityHeaderModel $model ) {
 		$wgUser = \RequestContext::getMain()->getUser();
 
 		if ( $wgUser->isLoggedIn() ) {
