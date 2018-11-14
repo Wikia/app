@@ -89,12 +89,11 @@ class LanguageWikisIndexHooks {
 				],
 			];
 
+			$wikiVariables['isEmptyDomainWithLanguageWikis'] = self::isEmptyDomainWithLanguageWikis();
 			$wikiVariables['languageWikis'] = [
 				'additionalLinks' => $additionalLinks,
 				'wikis' => $wikis,
 			];
-
-			array_unshift( $wikiVariables['htmlTitle']['parts'], wfMessage( 'languagewikisindex' )->escaped() );
 		}
 
 		return true;
