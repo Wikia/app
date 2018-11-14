@@ -2,13 +2,13 @@
 
 namespace Wikia\FeedsAndPosts;
 
-class WikiRecentChangesAPIProxy {
+class RecentChanges {
 
 	const LIMIT = 4;
 	const MINOR_CHANGE_THRESHOLD = 100;
 
 	const IMAGE_WIDTH = 150;
-	const IMAGE_RATIO = 3/4;
+	const IMAGE_RATIO = 3 / 4;
 
 	private function requestAPI( $params ) {
 		$api = new \ApiMain( new \FauxRequest( $params ) );
@@ -17,23 +17,17 @@ class WikiRecentChangesAPIProxy {
 		return $api->GetResultData();
 	}
 
-	private function getThumbnailUrl( $url ) {
-		try {
-			return \VignetteRequest::fromUrl( $url )
-				->zoomCrop()
-				->width( self::IMAGE_WIDTH )
-				->height( floor( self::IMAGE_WIDTH / self::IMAGE_RATIO ) )
-				->url();
-		} catch ( \Exception $exception ) {
-			\Wikia\Logger\WikiaLogger::instance()
-				->warning( "Invalid thumbnail url provided for recent updates module",
-					[
-						'thumbnailUrl' => $url,
-						'message' => $exception->getMessage(),
-					] );
+	private function getImage( $title, $width, $ratio ) {
+		$response = $this->requestAPI( [
+			'action' => 'imageserving',
+			'wisTitle' => $title,
+		] );
 
-			return $url;
+		if ( isset( $response['image']['imageserving'] ) ) {
+			return Thumbnails::getThumbnailUrl( $response['image']['imageserving'], $width, $ratio );
 		}
+
+		return null;
 	}
 
 	private function filterByDifferenceSize($articles, $mainPageId, $titlesMap, $onlyMajor) {
@@ -115,27 +109,15 @@ class WikiRecentChangesAPIProxy {
 		return [];
 	}
 
-	private function getImage( $title ) {
-		$response = $this->requestAPI( [
-			'action' => 'imageserving',
-			'wisTitle' => $title,
-		] );
-
-		if ( isset( $response['image']['imageserving'] ) ) {
-			return $this->getThumbnailUrl( $response['image']['imageserving'] );
-		}
-
-		return null;
-	}
-
 	public function get() {
 		$cacheTTL = 3600; // an hour
 
-		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-just-updated' ), $cacheTTL, function () {
+		return \WikiaDataAccess::cache( wfMemcKey( 'feeds-recent-changes' ), $cacheTTL, function () {
 			$recentChanges = $this->getRecentChanges();
 
 			foreach ( $recentChanges as &$article ) {
-				$article['image'] = $this->getImage( $article['title'] );
+				$article['image'] =
+					$this->getImage( $article['title'], self::IMAGE_WIDTH, self::IMAGE_RATIO );
 			}
 
 			return $recentChanges;
