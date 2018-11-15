@@ -86,6 +86,7 @@ class Http {
 			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
 
 			$params = [
+				'requestHeaders' => $options[ 'headers' ],
 				'statusCode' => $req->getStatus(),
 				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
@@ -97,7 +98,6 @@ class Http {
 				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
-				$params[ 'requestHeaders' ] = $options[ 'headers' ];
 				$params[ 'responseHeaders' ] = $req->getResponseHeaders();
 				$params[ 'reqStatus' ] = $status;
 				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
@@ -432,7 +432,17 @@ class MWHttpRequest {
 		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
 		global $wgKubernetesNamespace;
 		if ( !empty( $wgKubernetesNamespace ) && Http::isLocalURL( $this->url ) ) {
-			$list[] = sprintf( 'X-Original-Host: %s', $this->parsedUrl['host'] );
+			$originalHost = $this->parsedUrl['host'];
+			$staging = wfGetStagingEnvForUrl( $this->url ); # this method requires a full URL
+
+			if ( $staging ) {
+				# SUS-6263 | this is required by k8s internal traffic that proxies directly to a
+				# specific nginx instance instead of http-border with its own VCL logic
+				# e.g. futurama.fandom.com (remove any environment specific domain suffix)
+				$originalHost = str_replace( "{$staging}.", '', $originalHost );
+			}
+
+			$list[] = sprintf( 'X-Original-Host: %s', $originalHost );
 		}
 
 		foreach ( $this->reqHeaders as $name => $value ) {
