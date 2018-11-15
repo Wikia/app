@@ -717,6 +717,44 @@ class WikiFactory {
 		return false;
 	}
 
+
+	static public function getIp( int $id, $master = false ) {
+
+		// SUS-2983 | do not make queries when provided city_id will not return any row
+		if ( empty( $id ) ) {
+			return false;
+		}
+
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
+		$memkey = static::getWikiaCacheKey( $id );
+		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
+		if ( empty($cached) || !is_object( $cached ) ) {
+
+			$dbr = static::db( ( $master ) ? DB_MASTER : DB_SLAVE );
+			$ip = $dbr->selectField(
+				"city_list",
+				"city_founding_ip_bin",
+				["city_id" => $id],
+				__METHOD__
+			);
+
+			$oMemc->set($memkey, $ip, 60*60*24);
+		} else {
+			$ip = $cached;
+		}
+
+		return $ip;
+	}
+
+
+
+
+
+
+
+
+
 	/**
 	 * setVarById
 	 *
