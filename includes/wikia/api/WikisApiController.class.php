@@ -264,17 +264,49 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Gets list of communities hosted under a given domain.
+	 * Returns 404 for domains without communities.
+	 *
+	 * @requestParam string $domain full community domain, can be localized (staging/dev)
+	 *
+	 * @responseParam string $primaryDomain primary domain for a wiki, localized. empty for unknown domains
+	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
+	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
+	 */
 	public function getWikisUnderDomain() {
-		global $wgWikiaBaseDomainRegex, $wgFandomBaseDomain;
+		global $wgWikiaBaseDomainRegex;
 		$domain = $this->request->getVal( 'domain' );
 		if ( !preg_match( '/\.' . $wgWikiaBaseDomainRegex . '$/', $domain ) ) {
 			throw new InvalidParameterApiException( 'domain' );
 		}
 
 		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
-		$forceHttps = endsWith( $domain, ".{$wgFandomBaseDomain}" );
 
-		if ( $forceHttps ) {
+		$normalizedDomain = wfNormalizeHost( $domain );
+		$cityId = WikiFactory::DomainToID( $normalizedDomain );
+		if ( empty( $wikis ) && empty( $cityId ) ) {
+			throw new NotFoundApiException();
+		}
+
+		if ( !empty( $cityId ) ) {
+			// there is a community at the domain root, make sure it is the primary domain
+			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
+
+			$this->response->setVal( 'primaryDomain', $primaryDomain );
+			$this->response->setVal( 'primaryProtocol',
+				wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
+				$this->response->setVal( 'wikis', [] );
+				return;
+			}
+		} else {
+			// there is no community at the domain root, but there are some language communities
+			$this->response->setVal( 'primaryDomain', '' );
+			$this->response->setVal( 'primaryProtocol', '' );
+		}
+
+		if ( wfHttpsEnabledForDomain( $domain ) ) {
 			$wikis = array_map( function ( $wiki ) {
 				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
 				return $wiki;
