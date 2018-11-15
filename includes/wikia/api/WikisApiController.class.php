@@ -265,12 +265,12 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Gets list of communities hosted under a given domain.
-	 * Returns 404 for domains without communities.
+	 * Gets list of communities hosted under a given domain (or the primary domain url)
+	 * Returns 404 for unknown domains.
 	 *
 	 * @requestParam string $domain full community domain, can be localized (staging/dev)
 	 *
-	 * @responseParam string $primaryDomain primary domain for a wiki, localized. empty for unknown domains
+	 * @responseParam string $primaryDomain primary domain for a wiki in case the $domain is an alias
 	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
@@ -281,29 +281,24 @@ class WikisApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'domain' );
 		}
 
-		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
-
 		$normalizedDomain = wfNormalizeHost( $domain );
 		$cityId = WikiFactory::DomainToID( $normalizedDomain );
-		if ( empty( $wikis ) && empty( $cityId ) ) {
-			throw new NotFoundApiException();
-		}
 
 		if ( !empty( $cityId ) ) {
 			// there is a community at the domain root, make sure it is the primary domain
 			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
-
-			$this->response->setVal( 'primaryDomain', $primaryDomain );
-			$this->response->setVal( 'primaryProtocol',
-				wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
 			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
+				$this->response->setVal( 'primaryDomain', $primaryDomain );
+				$this->response->setVal( 'primaryProtocol',
+					wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
 				$this->response->setVal( 'wikis', [] );
 				return;
 			}
-		} else {
-			// there is no community at the domain root, but there are some language communities
-			$this->response->setVal( 'primaryDomain', '' );
-			$this->response->setVal( 'primaryProtocol', '' );
+		}
+
+		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
+		if ( empty( $wikis ) ) {
+			throw new NotFoundApiException();
 		}
 
 		if ( wfHttpsEnabledForDomain( $domain ) ) {
@@ -313,6 +308,8 @@ class WikisApiController extends WikiaApiController {
 			}, $wikis );
 		}
 
+		$this->response->setVal( 'primaryDomain', '' );
+		$this->response->setVal( 'primaryProtocol', '' );
 		$this->response->setVal( 'wikis', $wikis );
 	}
 
