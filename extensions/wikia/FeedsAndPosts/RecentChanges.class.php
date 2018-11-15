@@ -30,7 +30,7 @@ class RecentChanges {
 		return null;
 	}
 
-	private function filterByDifferenceSize($articles, $mainPageId, $titlesMap, $onlyMajor) {
+	private function filterByDifferenceSize($articles, $mainPageId, &$titlesMap, $onlyMajor) {
 		$result = [];
 
 		foreach ( $articles as $article ) {

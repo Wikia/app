@@ -12,18 +12,6 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-// e.g. 220.004
-def get_current_version() {
-  // get most recent tag reachable from commit
-  // eg. release-757.001 -> 757.001
-  return sh(
-      script: "git describe --abbrev=0 --match='release*' 2> /dev/null || echo 'release-000.000'",
-      returnStdout: true
-    )
-    .trim()
-    .replace('release-', '')
-}
-
 // prevVersion - e.g. 220.001
 // example from 220.001 to 220.002
 def bump_minor(String currentVersion) {
@@ -35,36 +23,29 @@ def bump_minor(String currentVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createTag() {
-  // e.g 220.005
-  def currentVersion = get_current_version()
-  def currentBranch = 'release-' + currentVersion.tokenize('.')[0]
+def createTag(String currentTag) {
+  // e.g. 220.001
+  def currentVersion = currentTag.tokenize('-')[1]
   println("Current version: ${currentVersion}")
 
-  def unreleasedCommits = sh(script: "git log HEAD...release-${currentVersion}", returnStdout: true).trim()
+  def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
   println(unreleasedCommits)
-
-  //e.g. release-220.002
-  def latestTagOnCurrentRelease = sh(
-    script: "git describe --match='release-${currentBranch}*'",
-    returnStdout: true
-  ).trim()
 
   if (unreleasedCommits.isEmpty()) {
     // no new commits
-    println("No new commits - redeploy: ${latestTagOnCurrentRelease}")
+    println("No new commits - redeploy: ${currentTag}")
 
-    return latestTagOnCurrentRelease
+    return currentTag
   } else {
-    //e.g. release-220.003
-    def newTag = "release-" + bump_minor(currentVersion)
+    //e.g. release-220.002
+    def nextTag = "release-" + bump_minor(currentVersion)
 
-    doesTagExist = sh(script: "git tag --list ${newTag}", returnStdout: true).trim()
+    tagExists = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
-    if (doesTagExist.isEmpty()) {
-      println("Tag already exists: ${newTag}")
+    if (tagExists) {
+      println("Tag already exists: ${nextTag}")
     } else {
-      println("Creating tag: ${newTag}")
+      println("Creating tag: ${nextTag}")
       sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
         if (!params.dry_run) {
           sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
@@ -76,21 +57,22 @@ def createTag() {
       }
     }
 
-    return newTag
+    return nextTag
   }
-
-  return 'release-' + currentVersion
 }
 
-def notifyBuild(String buildStatus = 'STARTED') {
+def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag, String buildUser) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def subject = "!!K8S (mirror deploy)!!: *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}>"
-  def summary = "${subject}"
+  def summary = "K8S (mirror deploy): *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}> by ${buildUser}"
+
+  if (appTag && configTag) {
+    summary = summary + " - app tag <https://github.com/Wikia/app/releases/tag/${appTag}|${appTag}> and config tag <https://github.com/Wikia/config/releases/tag/${configTag}|${configTag}>"
+  }
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -98,10 +80,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#70CADB'
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
-    colorCode = '#7AF371'
+    colorCode = '#36A64F'
   } else {
-    color = 'RED'
-    colorCode = '#FF0000'
     summary = summary + " <!here>"
   }
 
@@ -111,10 +91,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   println("Slack message: ${summary}")
-}
-
-stage('Slack notify start') {
-  notifyBuild('STARTED')
 }
 
 node("docker-daemon-big") {
@@ -144,14 +120,20 @@ node("docker-daemon-big") {
     }
   }
 
+  stage('Slack notify start') {
+    notifyBuild('STARTED', '', '', buildUser)
+  }
+
   try {
     stage('Fetch version') {
       parallel (
         "preview": {
           // when source=preview fetch version from preview
           if (params.source == 'preview') {
+            def previewDeploymentInfo
+
             withDockerContainer(kubectlImage) {
-              def previewDeploymentInfo = sh(
+              previewDeploymentInfo = sh(
                 script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
                 returnStdout: true
               )
@@ -175,6 +157,8 @@ node("docker-daemon-big") {
           }
         },
         "prod": {
+          def currentDeploymentInfo
+
           withDockerContainer(kubectlImage) {
             currentDeploymentInfo = sh(
               script: "kubectl --context kube-sjc-prod -n prod get deployments -l app=mediawiki-prod -o jsonpath='{.items[0].spec.template.metadata.labels}'",
@@ -202,28 +186,21 @@ node("docker-daemon-big") {
     }
 
     stage("Clone repositories") {
-      if (params.source == 'preview') {
-        appBranch = nextAppBranch
-        configBranch = nextConfigBranch
-      } else {
-        // when releasing a hot fix
-        // checkout a current branch that is on prod
-        // so we'll be able to create new tag if necessary
-        appBranch = currentAppBranch
-        configBranch = currentConfigBranch
-      }
-
-      println("App branch: ${appBranch}")
-      println("Config branch: ${configBranch}")
-
       parallel (
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: appBranch,
+                branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextAppTag = createTag(appBranch)
+            if (params.source == 'preview') {
+              sh(script: "git checkout ${nextAppTag}")
+              println("Source: preview; skip creating a tag")
+            } else {
+              sh(script: "git checkout ${currentAppBranch}")
+              nextAppTag = createTag(currentAppTag,)
+            }
+
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
@@ -232,10 +209,17 @@ node("docker-daemon-big") {
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: configBranch,
+                branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            nextConfigTag = createTag(configBranch)
+            if (params.source == 'preview') {
+              sh(script: "git checkout ${nextConfigTag}")
+              println("Source: preview; skip creating a tag")
+            } else {
+              sh(script: "git checkout ${currentConfigBranch}")
+              nextConfigTag = createTag(currentConfigTag)
+            }
+
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
@@ -268,12 +252,12 @@ node("docker-daemon-big") {
             def cacheBuster = new Date().getTime()
 
             sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
-            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + nextAppTag + '@' + appHash + '" > wikia.version.txt')
           }
         },
         "config": {
           dir("config") {
-            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + nextConfigTag + '@' + configHash + '" > wikia.version.txt')
           }
         }
       )
@@ -360,10 +344,10 @@ EOL""")
               sh("cat docker/prod/sjc.yaml")
               // deploy to SJC
               if (!params.dry_run) {
-                sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml"
+                sh "kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml"
                 rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
               } else {
-                println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/sjc.yaml")
+                println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml")
                 rolloutStatus = 0
               }
 
@@ -383,10 +367,10 @@ EOL""")
               sh("cat docker/prod/res.yaml")
               // deploy to RES
               if (!params.dry_run) {
-                sh "kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yaml"
+                sh "kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml"
                 rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
               } else {
-                println("Dry run: kubectl --context kube-res-prod -n prod apply -f app/docker/prod/res.yamlapp/docker/sandbox/k8s.yaml")
+                println("Dry run: kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml")
                 rolloutStatus = 0
               }
 
@@ -417,29 +401,30 @@ EOL""")
 
     stage('Tag Jira tickets') {
       if (!params.dry_run) {
-        build job: 'tag-jira-tickets',
-          parameters: [
-            string(name: 'app_name', value: 'app'),
-            string(name: 'env', value: 'prod'),
-            string(name: 'previous_release', value: currentAppVersion),
-            string(name: 'current_release', value: nextAppVersion),
-            [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-          ],
-          wait: false
+        //TODO: uncomment when this becomes main release pipeline
+        // build job: 'tag-jira-tickets',
+        //   parameters: [
+        //     string(name: 'app_name', value: 'app'),
+        //     string(name: 'env', value: 'prod'),
+        //     string(name: 'previous_release', value: currentAppTag),
+        //     string(name: 'current_release', value: nextAppTag),
+        //     [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+        //   ],
+        //   wait: false
       } else {
         println('Dry run: tag-jira-tickets')
       }
-
     }
 
     stage('Trigger tests') {
       if (!params.dry_run) {
-        build job: 'app-prod-push-event',
-          parameters: [
-            string(name: 'release', value: nextAppVersion),
-            string(name: 'datacenter', value: 'sjc')
-          ],
-          wait: false
+        //TODO: uncomment when this becomes main release pipeline
+        // build job: 'app-prod-push-event',
+        //   parameters: [
+        //     string(name: 'release', value: nextAppTag),
+        //     string(name: 'datacenter', value: 'sjc')
+        //   ],
+        //   wait: false
       } else {
         println('Dry run: app-prod-push-event')
       }
@@ -455,7 +440,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result)
+      notifyBuild(currentBuild.result, nextAppTag, nextConfigTag, buildUser)
     }
   }
 }
