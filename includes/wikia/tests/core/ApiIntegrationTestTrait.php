@@ -30,6 +30,7 @@ trait ApiIntegrationTestTrait {
 
 		if ( $internal ) {
 		    $request->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, '1' );
+		    $request->setHeader( WebRequest::MW_AUTH_OK_HEADER, '1' );
         }
 
 		$context = new RequestContext();

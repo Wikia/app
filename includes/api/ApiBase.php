@@ -1616,7 +1616,7 @@ abstract class ApiBase extends ContextSource {
 	}
 
 	protected function isInternalRequest() {
-		return $this->getRequest()->isWikiaInternalRequest();
+		return $this->getRequest()->isWikiaInternalRequest() && $this->getRequest()->isMwAuthOk();
 	}
 
 	// Wikia Change - END
