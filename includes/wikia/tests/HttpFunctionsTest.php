@@ -34,7 +34,12 @@ class HttpFunctionsTest extends WikiaBaseTest {
 		$http = new MWHttpRequest( $url );
 		$headers = $http->getHeaderList();
 
-		$this->assertEquals( 'X-Original-Host: ' . $expected, $headers[0] );
+		if ( is_null( $expected ) ) {
+			$this->assertEquals( [], $headers );
+		}
+		else {
+			$this->assertEquals( 'X-Original-Host: ' . $expected, $headers[0] );
+		}
 	}
 
 	public function getHeaderListOriginalHostDataProvider() {
@@ -44,5 +49,8 @@ class HttpFunctionsTest extends WikiaBaseTest {
 		yield [ 'http://futurama.preview.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
 		yield [ 'http://futurama.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
 		yield [ 'http://futurama.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
+
+		yield [ 'http://example.com/fr/wikia.php', null ] ;
+		yield [ 'http://futurama.wikia.org/fr/wikia.php', null] ;
 	}
 }
