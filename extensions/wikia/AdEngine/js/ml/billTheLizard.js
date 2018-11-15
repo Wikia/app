@@ -84,8 +84,8 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 					wiki_id: adContext.get('targeting.wikiId') || null
 				},
 				vcr: {
-					pv: Math.min(30, pageParams.pv || 1),
 					h: now.getHours(),
+					pv: Math.min(30, pageParams.pv || 1),
 					pv_global: Math.min(40, win.pvNumberGlobal || 1),
 					ref: pageParams.ref || null
 				}
