@@ -266,12 +266,12 @@ class WikisApiController extends WikiaApiController {
 
 	/**
 	 * Gets list of communities hosted under a given domain.
-	 * Returns 404 in case no communities are hosted under this domain.
+	 * Returns 404 for domains without communities.
 	 *
-	 * @requestParam string $domain wikia domain, can be localized (staging/dev)
+	 * @requestParam string $domain full community domain, can be localized (staging/dev)
 	 *
-	 * @responseParam string $primaryDomain primary domain for a wiki, localized, without protocol
-	 * @responseParam string $primaryDomain primary protocol for the domain, either 'http://' or 'https://'
+	 * @responseParam string $primaryDomain primary domain for a wiki, localized. empty for unknown domains
+	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
 	public function getWikisUnderDomain() {
@@ -290,7 +290,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $cityId ) ) {
-			// there is a communitu at the domain root, make sure it is the primary domain
+			// there is a community at the domain root, make sure it is the primary domain
 			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 
 			$this->response->setVal( 'primaryDomain', $primaryDomain );
