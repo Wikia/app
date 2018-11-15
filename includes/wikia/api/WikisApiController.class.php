@@ -271,6 +271,24 @@ class WikisApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'domain' );
 		}
 
+		$normalizedDomain = wfNormalizeHost( $domain );
+		$cityId = WikiFactory::DomainToID( $normalizedDomain );
+		if ( empty( $cityId ) ) {
+			throw new NotFoundApiException();
+		}
+		$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
+
+		if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
+			if ( endsWith( wfNormalizeHost( $primaryDomain ), ".{$wgFandomBaseDomain}" ) ) {
+				$primaryDomain = "https://${primaryDomain}";
+			} else {
+				$primaryDomain = "http://${primaryDomain}";
+			}
+			$this->response->setVal( 'primaryDomain', $primaryDomain );
+			$this->response->setVal( 'wikis', [] );
+			return;
+		}
+
 		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
 		$forceHttps = endsWith( $domain, ".{$wgFandomBaseDomain}" );
 
@@ -282,6 +300,8 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'wikis', $wikis );
+		$this->response->setVal( 'primaryDomain', '' );
+
 	}
 
 	/**
