@@ -264,8 +264,18 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Gets list of communities hosted under a given domain.
+	 * Returns 404 in case no communities are hosted under this domain.
+	 *
+	 * @requestParam string $domain wikia domain, can be localized (staging/dev)
+	 *
+	 * @responseParam string $primaryDomain primary domain for a wiki, localized, without protocol
+	 * @responseParam string $primaryDomain primary protocol for the domain, either 'http://' or 'https://'
+	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
+	 */
 	public function getWikisUnderDomain() {
-		global $wgWikiaBaseDomainRegex, $wgFandomBaseDomain;
+		global $wgWikiaBaseDomainRegex;
 		$domain = $this->request->getVal( 'domain' );
 		if ( !preg_match( '/\.' . $wgWikiaBaseDomainRegex . '$/', $domain ) ) {
 			throw new InvalidParameterApiException( 'domain' );
@@ -278,21 +288,18 @@ class WikisApiController extends WikiaApiController {
 		}
 		$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 
+		$this->response->setVal( 'primaryDomain', $primaryDomain );
+		$this->response->setVal( 'primaryProtocol',
+			wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+
 		if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
-			if ( endsWith( wfNormalizeHost( $primaryDomain ), ".{$wgFandomBaseDomain}" ) ) {
-				$primaryDomain = "https://${primaryDomain}";
-			} else {
-				$primaryDomain = "http://${primaryDomain}";
-			}
-			$this->response->setVal( 'primaryDomain', $primaryDomain );
 			$this->response->setVal( 'wikis', [] );
 			return;
 		}
 
 		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
-		$forceHttps = endsWith( $domain, ".{$wgFandomBaseDomain}" );
 
-		if ( $forceHttps ) {
+		if ( wfHttpsEnabledForDomain( $domain ) ) {
 			$wikis = array_map( function ( $wiki ) {
 				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
 				return $wiki;
@@ -300,8 +307,6 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'wikis', $wikis );
-		$this->response->setVal( 'primaryDomain', '' );
-
 	}
 
 	/**
