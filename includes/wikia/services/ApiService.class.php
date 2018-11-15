@@ -65,7 +65,14 @@ class ApiService {
 
 		$staging = wfGetStagingEnvForUrl( $cityUrl );
 		if ( $staging ) {
+			# TODO: remove when we're fully migrated to k8s
 			$options[ 'headers' ][ 'X-Staging' ] = $staging;
+
+			# SUS-6263 | this is required by k8s internal traffic that proxies directly to a
+			# specific nginx instance instead of http-border with its own VCL logic
+			# e.g. futurama.fandom.com (remove any environment specific domain suffix)
+			$options[ 'headers' ][ 'X-Original-Host' ] =
+				parse_url( str_replace( "{$staging}.", '', $cityUrl ), PHP_URL_HOST );
 		}
 
 		// request JSON format of API response
