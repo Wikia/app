@@ -86,7 +86,7 @@ class Http {
 			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
 
 			$params = [
-				'requestHeaders' => $options[ 'headers' ],
+				'requestHeaders' => $req->getHeaderList(),
 				'statusCode' => $req->getStatus(),
 				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
