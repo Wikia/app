@@ -281,23 +281,30 @@ class WikisApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'domain' );
 		}
 
+		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
+
 		$normalizedDomain = wfNormalizeHost( $domain );
 		$cityId = WikiFactory::DomainToID( $normalizedDomain );
-		if ( empty( $cityId ) ) {
+		if ( empty( $wikis ) && empty( $cityId ) ) {
 			throw new NotFoundApiException();
 		}
-		$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 
-		$this->response->setVal( 'primaryDomain', $primaryDomain );
-		$this->response->setVal( 'primaryProtocol',
-			wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+		if ( !empty( $cityId ) ) {
+			// there is a communitu at the domain root, make sure it is the primary domain
+			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 
-		if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
-			$this->response->setVal( 'wikis', [] );
-			return;
+			$this->response->setVal( 'primaryDomain', $primaryDomain );
+			$this->response->setVal( 'primaryProtocol',
+				wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
+				$this->response->setVal( 'wikis', [] );
+				return;
+			}
+		} else {
+			// there is no community at the domain root, but there are some language communities
+			$this->response->setVal( 'primaryDomain', '' );
+			$this->response->setVal( 'primaryProtocol', '' );
 		}
-
-		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
 
 		if ( wfHttpsEnabledForDomain( $domain ) ) {
 			$wikis = array_map( function ( $wiki ) {
