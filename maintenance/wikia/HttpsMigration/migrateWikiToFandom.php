@@ -78,7 +78,7 @@ class MigrateWikiToFandom extends Maintenance {
 					continue;
 				}
 
-				if ( stripos($targetDomain, "/") === false  ){
+				if ( strpos($targetDomain, "/") === false  ){
 					$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
 				}
 
@@ -99,7 +99,7 @@ class MigrateWikiToFandom extends Maintenance {
 
 				WikiFactory::setmainDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
-				if ( stripos($targetDomain, "/") === false  ){
+				if ( strpos($targetDomain, "/") === false  ){
 					WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}');
 				}
 
@@ -114,7 +114,7 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 
 			$this->output( "Wiki with ID {$sourceWikiId} was migrated from {$sourceDomain} to {$targetDomain}!\n" );
-			if ( stripos($targetDomain, "/") === false ){
+			if ( strpos($targetDomain, "/") === false ){
 				$this->output( "/en alias domain was created: {$additionalTargetDomain}\n" );
 			}
 		}
