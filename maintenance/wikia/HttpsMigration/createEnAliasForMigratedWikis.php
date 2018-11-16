@@ -65,8 +65,6 @@ class MigrateWikiToFandom extends Maintenance {
 
 				if ( !empty($additionalTargetDomain) ){
 					WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}' );
-					$this->purgeCachesForWiki( $sourceWikiId );
-
 				}
 			}
 
@@ -88,46 +86,6 @@ class MigrateWikiToFandom extends Maintenance {
 		return "{$parts[0]}.{$wgFandomBaseDomain}/en";
 	}
 
-
-	private function purgeCachesForWiki( $wikiId ) {
-		global $wgMemc;
-
-		WikiFactory::clearCache( $wikiId );
-
-		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
-		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ), 'mercury' );
-
-		$dbName = WikiFactory::IDtoDB( $wikiId );
-
-		$keys = [
-			wfSharedMemcKey( 'globaltitlev1', $wikiId ),
-			wfSharedMemcKey( 'globaltitlev1:https', $wikiId ),
-			wfForeignMemcKey(
-				$dbName,
-				false,
-				'Wikia\Search\TopWikiArticles',
-				'WikiaSearch',
-				'topWikiArticles',
-				$wikiId,
-				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
-				false
-			),
-			wfForeignMemcKey(
-				$dbName,
-				false,
-				'Wikia\Search\TopWikiArticles',
-				'WikiaSearch',
-				'topWikiArticles',
-				$wikiId,
-				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
-				true
-			),
-		];
-
-		foreach ( $keys as $key ) {
-			$wgMemc->delete( $key );
-		}
-	}
 }
 
 $maintClass = 'MigrateWikiToFandom';
