@@ -65,6 +65,7 @@ class ApiService {
 
 		$staging = wfGetStagingEnvForUrl( $cityUrl );
 		if ( $staging ) {
+			# TODO: remove when we're fully migrated to k8s
 			$options[ 'headers' ][ 'X-Staging' ] = $staging;
 		}
 
