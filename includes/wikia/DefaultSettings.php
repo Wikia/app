@@ -1359,6 +1359,13 @@ $wgAdDriverFVDelayTimeoutOasis = 2000;
 $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
+ * @name $wgAdDriverGeoEdgeCountries
+ * List of countries Geo Edge will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGeoEdgeCountries = null;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
