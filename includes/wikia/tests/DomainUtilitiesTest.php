@@ -1,6 +1,6 @@
 <?php
 
-class HttpFunctionsTest extends WikiaBaseTest {
+class DomainUtilitiesTest extends WikiaBaseTest {
 
 	private $originallocalVHosts;
 
@@ -27,8 +27,9 @@ class HttpFunctionsTest extends WikiaBaseTest {
 	 * @param string|null $expected
 	 *
 	 * @dataProvider getHeaderListOriginalHostDataProvider
+	 * @covers MWHttpRequest::getHeaderList
 	 */
-	public function testGetHeaderListOriginalHost( $url, $expected ) {
+	public function testGetHeaderListOriginalHost( string $url, $expected ) {
 		$this->mockGlobalVariable( 'wgKubernetesNamespace', 'foo' );
 
 		$http = new MWHttpRequest( $url );
@@ -52,5 +53,26 @@ class HttpFunctionsTest extends WikiaBaseTest {
 
 		yield [ 'http://example.com/fr/wikia.php', null ] ;
 		yield [ 'http://futurama.wikia.org/fr/wikia.php', null] ;
+	}
+
+	/**
+	 * @param string $host
+	 * @param string $expected
+	 *
+	 * @dataProvider wfNormalizeHostDataProvider
+	 */
+	public function testWfNormalizeHost( string $host, string $expected ) {
+		$this->assertEquals( $expected, wfNormalizeHost( $host ) );
+	}
+
+	public function wfNormalizeHostDataProvider() {
+		yield [ 'futurama.sandbox-s6.wikia.com', 'futurama.wikia.com' ];
+		yield [ 'muppet.sandbox-qa06.wikia.com', 'muppet.wikia.com' ];
+		yield [ 'futurama.verify.wikia.com', 'futurama.wikia.com' ];
+		yield [ 'futurama.preview.wikia.com', 'futurama.wikia.com' ];
+		yield [ 'futurama.preview.fandom.com', 'futurama.fandom.com' ];
+		yield [ 'muppet.wikia.com', 'muppet.wikia.com' ];
+		yield [ 'muppet.fandom.com', 'muppet.fandom.com' ];
+		yield [ 'example.com', 'example.com' ];
 	}
 }

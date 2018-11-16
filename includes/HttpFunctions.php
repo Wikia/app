@@ -432,17 +432,7 @@ class MWHttpRequest {
 		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
 		global $wgKubernetesNamespace;
 		if ( !empty( $wgKubernetesNamespace ) && Http::isLocalURL( $this->url ) ) {
-			$originalHost = $this->parsedUrl['host'];
-			$staging = wfGetStagingEnvForUrl( $this->url ); # this method requires a full URL
-
-			if ( $staging ) {
-				# SUS-6263 | this is required by k8s internal traffic that proxies directly to a
-				# specific nginx instance instead of http-border with its own VCL logic
-				# e.g. futurama.fandom.com (remove any environment specific domain suffix)
-				$originalHost = str_replace( "{$staging}.", '', $originalHost );
-			}
-
-			$list[] = sprintf( 'X-Original-Host: %s', $originalHost );
+			$list[] = sprintf( 'X-Original-Host: %s', wfNormalizeHost( $this->parsedUrl['host'] ) );
 		}
 
 		foreach ( $this->reqHeaders as $name => $value ) {
