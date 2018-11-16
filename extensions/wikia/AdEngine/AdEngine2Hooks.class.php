@@ -101,6 +101,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
+        $vars[] = 'wgAdDriverPubMaticDfpCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';

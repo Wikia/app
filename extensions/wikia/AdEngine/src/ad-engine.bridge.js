@@ -114,6 +114,7 @@ function init(
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
 			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
+			context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
 			context.set('custom.isCMPEnabled', true);
 		}
 
