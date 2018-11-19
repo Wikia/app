@@ -66,10 +66,7 @@ class LanguageWikisIndexHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		if (
-			self::isEmptyDomainWithLanguageWikis() ||
-			self::isClosedWikiWithLanguageWikis()
-		) {
+		if ( WikiFactory::isLanguageWikisIndex() ) {
 			$wikis = array_map( function ( $wiki ) {
 				return [
 					'languageName' => Language::getLanguageName( $wiki['city_lang'] ),
@@ -112,12 +109,6 @@ class LanguageWikisIndexHooks {
 		// we recognize an empty domain root with orphaned language path wikis by "fake" city id set by
 		// WikiFactoryLoader
 		return $wgCityId == WikiFactory::LANGUAGE_WIKIS_INDEX;
-	}
-
-	private static function isClosedWikiWithLanguageWikis() {
-		global $wgIncludeClosedWikiHandler;
-
-		return $wgIncludeClosedWikiHandler && count( WikiFactory::getLanguageWikis() ) > 0;
 	}
 
 	/**
