@@ -625,6 +625,15 @@ class WikiFactory {
 		return self::getWikisUnderDomain( $url['host'] );
 	}
 
+	/**
+	 * Checks if a wiki should display the language wikis index
+	 * It returns true in the following cases:
+	 * - Wiki is languagewikisindex.fandom.com
+	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
 	public static function isLanguageWikisIndex( $cityId = null ) {
 		global $wgCityId;
 
