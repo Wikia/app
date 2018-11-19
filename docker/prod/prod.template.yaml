@@ -127,13 +127,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-prod
-  maxReplicas: 50
+  maxReplicas: 75
   minReplicas: 20
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 50
+      targetAverageUtilization: 25
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
