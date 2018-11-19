@@ -12,22 +12,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 */
 	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
 
-	/**
-	 * Minimum number of non-profile edit revisions needed to determine if user made only
-	 * one edit on a wiki
-	 */
-	const FIRST_EDIT_REVISION_THRESHOLD = 2;
-
 	const DAILY_NOTIFICATION_LIMIT = 15;
-
-	/**
-	 * Constants for describing Users edit status for purpose of sending founder notification
-	 * on first edit
-	 */
-	const NO_EDITS = 0;
-	const FIRST_EDIT = 1;
-	const MULTIPLE_EDITS = 2;
-
 
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
@@ -242,49 +227,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		return Email\Controller\FounderAnonEditController::class;
-	}
-
-	/**
-	 * Returns whether the user made no edits, first edit
-	 * or multiple edits (excluding profile page edits)
-	 *
-	 * @param User $user
-	 * @param bool $useMasterDb
-	 * @returns int one of:
-	 * 		FounderEmailsEditEvent::NO_EDITS
-	 * 		FounderEmailsEditEvent::FIRST_EDIT
-	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
-	 */
-	static public function getUserEditsStatus( $user, $useMasterDb = false ) {
-		$recentEditsCount = 0;
-		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
-
-		$conditions = [
-			'rev_user' => $user->getId(),
-		];
-
-		$userPageId = $user->getUserPage()->getArticleID();
-
-		if ( $userPageId ) {
-			$conditions[] = "rev_page != $userPageId";
-		}
-
-		$dbResult = $dbr->select(
-			[ 'revision' ],
-			[ 'rev_id' ],
-			$conditions,
-			__METHOD__,
-			[
-				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
-				'ORDER BY' => 'rev_timestamp DESC'
-			]
-		);
-
-		while ( $row = $dbr->FetchObject( $dbResult ) ) {
-			$recentEditsCount++;
-		}
-
-		return $recentEditsCount;
 	}
 
 	/**
