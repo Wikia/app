@@ -46,6 +46,10 @@ require([
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
 	}
 
+	function shouldForceUserIntendedPlay() {
+		return isFromRecirculation();
+	}
+
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
@@ -102,7 +106,8 @@ require([
 			logger: {
 				clientName: 'oasis'
 			},
-			lang: videoDetails.lang
+			lang: videoDetails.lang,
+			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
 	}
 
