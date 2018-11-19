@@ -17,6 +17,7 @@ use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Metrics\Collector;
 
 $optionsWithArgs = array(
 	'action',
@@ -647,6 +648,20 @@ class AutomatedDeadWikisDeletionMaintenance {
 			default:
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);
 		}
+
+		// SUS-6163 - report when was the last time a given maintenance script has been run successfully
+		global $wgWikiaEnvironment;
+
+		Collector::getInstance()
+			->addGauge(
+				'mediawiki_maintenance_scripts_last_success',
+				time(),
+				[
+					'script_class' => __CLASS__,
+					'env' => $wgWikiaEnvironment,
+				],
+				'Unix timestamp maintenance script last succeeded'
+			);
 	}
 
 	static protected function adjustSettings() {

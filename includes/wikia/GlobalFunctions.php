@@ -1602,7 +1602,7 @@ function wfGetBaseDomainForHost( $host ) {
  * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
  * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
  *
- * @param $host
+ * @param string $host
  * @return string normalized host name
  */
 function wfNormalizeHost( $host ) {

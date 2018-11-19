@@ -6,7 +6,7 @@ class ApiWikiFactorySaveVariable extends ApiBase {
 	 * @throws UsageException
 	 */
 	public function execute() {
-		if ( !$this->getUser()->isAllowed( 'wikifactory' ) ) {
+		if ( !$this->isInternalRequest() && !$this->getUser()->isAllowed( 'wikifactory' ) ) {
 			$this->dieUsageMsg( 'badaccess-groups' );
 		}
 
@@ -49,7 +49,7 @@ class ApiWikiFactorySaveVariable extends ApiBase {
 	}
 
 	public function getTokenSalt() {
-		return '';
+		return $this->isInternalRequest() ? false : '';
 	}
 
 	public function mustBePosted() {
@@ -57,7 +57,7 @@ class ApiWikiFactorySaveVariable extends ApiBase {
 	}
 
 	public function needsToken() {
-		return true;
+		return !$this->isInternalRequest();
 	}
 
 	public function isWriteMode() {
