@@ -226,6 +226,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 						player: this
 					};
 					if (adContext.get('opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled')) {
+						log('Passing additional params to Moat FV tracking', log.levels.info, logGroup);
 						var rv = articleVideoAd.calculateRV(videoDepth);
 						payload.ids = {
 							zMoatRV: rv <= 10 ? rv.toString() : '10+',
