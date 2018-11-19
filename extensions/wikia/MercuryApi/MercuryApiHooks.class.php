@@ -204,7 +204,7 @@ class MercuryApiHooks {
 		if (
 			$controller === 'MercuryApi' &&
 			$method === 'getMobileWikiVariables' &&
-			WikiFactory::isLanguageWikisIndex() || $wgIncludeClosedWikiHandler
+			( WikiFactory::isLanguageWikisIndex() || $wgIncludeClosedWikiHandler )
 		) {
 			return false;
 		}
