@@ -173,7 +173,7 @@ node("docker-daemon-big") {
         'SANDBOX_DATACENTER': datacenter,
         'APP_VERSION': params.app_branch,
         'CONFIG_VERSION': params.config_branch,
-        'REPLICAS': 1
+        'MAX_REPLICAS': 2
       ])
 
       sh("""cat > docker/sandbox/k8s.yaml <<EOL

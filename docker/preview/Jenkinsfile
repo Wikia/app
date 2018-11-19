@@ -445,7 +445,7 @@ node("docker-daemon") {
           'SANDBOX_DATACENTER': datacenter,
           'APP_VERSION': nextAppReleaseTag,
           'CONFIG_VERSION': nextConfigReleaseTag,
-          'REPLICAS': 4
+          'MAX_REPLICAS': 10
         ])
 
         sh("""cat > docker/sandbox/k8s.yaml <<EOL
