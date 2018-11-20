@@ -211,6 +211,8 @@ abstract class CategoryExhibitionSection {
 	}
 
 	protected function getTemplateVarsForItem( $pageId ) {
+		global $wgScriptPath;
+
 		$oTitle = Title::newFromID( $pageId );
 		if ( !( $oTitle instanceof Title ) ) {
 			return false;
@@ -220,7 +222,8 @@ abstract class CategoryExhibitionSection {
 		$sKey = wfMemcKey(
 			'category_exhibition_category_cache_1',
 			$pageId,
-			$this->cacheHelper->getTouched( $oTitle )
+			$this->cacheHelper->getTouched( $oTitle ),
+			$wgScriptPath
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -257,6 +260,8 @@ abstract class CategoryExhibitionSection {
 	 * Caching functions.
 	 */
 	protected function getKey() {
+		global $wgScriptPath;
+
 		return wfMemcKey(
 			'category_exhibition_section_0',
 			self::CACHE_VERSION,
@@ -266,7 +271,8 @@ abstract class CategoryExhibitionSection {
 			$this->urlParams->getSortType(),
 			$this->cacheHelper->getTouched( $this->categoryTitle ),
 			// Those are mentioned separately because they modify the pagination URL
-			$this->urlParams->getSortParam()
+			$this->urlParams->getSortParam(),
+			$wgScriptPath
 		);
 	}
 }

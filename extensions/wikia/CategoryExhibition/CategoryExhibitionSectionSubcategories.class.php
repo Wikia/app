@@ -12,6 +12,8 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	}
 
 	protected function getTemplateVarsForItem( $pageId ) {
+		global $wgScriptPath;
+
 		$oTitle = Title::newFromID( $pageId );
 
 		$oMemCache = F::App()->wg->memc;
@@ -21,7 +23,8 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			$this->cacheHelper->getTouched( $oTitle ),
 			// Display/sort params are passed to the subcategory, cache separately!
 			$this->urlParams->getSortParam(),
-			self::CACHE_VERSION
+			self::CACHE_VERSION,
+			$wgScriptPath
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
