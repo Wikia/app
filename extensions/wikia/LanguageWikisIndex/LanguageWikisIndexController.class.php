@@ -29,7 +29,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'cnwLink', $createNewWikiLink );
 
-		$this->setVal( 'wikiIsCreatable', ( $isClosed ||
+		$this->setVal( 'wikiIsCreatable', ( !$isClosed ||
 			( WikiFactory::getFlags( $wgCityId ) & WikiFactory::FLAG_FREE_WIKI_URL ) ) );
 
 		$this->setVal( 'links', [
