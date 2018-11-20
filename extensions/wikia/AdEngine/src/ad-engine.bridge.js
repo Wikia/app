@@ -173,6 +173,14 @@ function unifySlotInterface(slot) {
 		default: {
 			getSlotName: () => slot.name
 		},
+		emitEvent: (eventName) => {
+			const event = document.createEvent('CustomEvent');
+			event.initCustomEvent('adengine.slot.status', true, true, {
+				slot: slot,
+				status: eventName
+			});
+			window.dispatchEvent(event);
+		},
 		getElement: () => slot.container.parentElement,
 		getId: () => slot.name,
 		getSlotName: () => slot.name,
@@ -199,14 +207,6 @@ function unifySlotInterface(slot) {
 				});
 				window.dispatchEvent(event);
 			}
-		},
-		trackEvent: (status) => {
-			const event = document.createEvent('CustomEvent');
-			event.initCustomEvent('adengine.slot.status', true, true, {
-				slot: slot,
-				status: status
-			});
-			window.dispatchEvent(event);
 		},
 	});
 
