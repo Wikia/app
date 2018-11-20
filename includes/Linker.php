@@ -240,11 +240,18 @@ class Linker {
 			$html = self::linkText( $target );
 		}
 
+		# decode data-uncrawlable-url to set it as href for red link
+		if ($attribs['href'] === '#'){
+			$attribs['data-uncrawlable-url'] = self::decodedLinkUrl($target, $query, $options);
+
+		}
+
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
 		if ( Hooks::run( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
+
 		} else {
 			wfProfileOut(__METHOD__.'-hooks');
 		}
@@ -305,9 +312,33 @@ class Linker {
 			$query['action'] = 'edit';
 			$query['redlink'] = '1';
 		}
+
 		$ret = $target->getLinkURL( $query );
+
+		# In case of red link set href as #.
+		# Proper url will be encoded and stored in data-uncrawlable-url field and
+		# decoded after clicking on link.
+		if ( !empty($query['redlink']) ){
+			if ( $query['redlink'] === '1') {
+				$ret = "#";
+			}
+		}
+
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * Returns decoded red link URL
+	 *
+	 * @param $target Title
+	 * @param $query Array: query parameters
+	 */
+	private static function decodedLinkUrl( $target, $query ) {
+
+		$ret = $target->getLinkURL( $query );
+		return base64_encode($ret);
 	}
 
 	/**

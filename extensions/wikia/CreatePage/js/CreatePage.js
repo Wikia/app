@@ -345,6 +345,18 @@ var CreatePage = {
 
 		CreatePage.redlinkParam = '&redlink=1';
 
+
+		var redLinkObject = e.target,
+			uncrawlableURL = redLinkObject.getAttribute('data-uncrawlable-url');
+
+		// set decoded data-uncrawlable-url as href
+		// after clicking on red link
+		if (uncrawlableURL !== undefined){
+
+			var url = window.atob(uncrawlableURL);
+			redLinkObject.setAttribute('href', url);
+		}
+
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { category: 'article', action: Wikia.Tracker.ACTIONS.CLICK, label: 've-redlink-click' } );
 		}
