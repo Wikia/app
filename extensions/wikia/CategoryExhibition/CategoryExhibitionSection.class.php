@@ -219,13 +219,17 @@ abstract class CategoryExhibitionSection {
 		}
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = wfMemcKey(
+		$keyParams = [
 			'category_exhibition_category_cache_1',
 			$pageId,
-			$this->cacheHelper->getTouched( $oTitle ),
-			$wgScriptPath
-		);
+			$this->cacheHelper->getTouched( $oTitle )
+		];
 
+		if ( !empty( $wgScriptPath ) ) {
+			array_push( $keyParams, $wgScriptPath );
+		}
+
+		$sKey = wfMemcKey( ...$keyParams );
 		$cachedResult = $oMemCache->get( $sKey );
 
 		if ( !empty( $cachedResult ) ) {
@@ -262,7 +266,7 @@ abstract class CategoryExhibitionSection {
 	protected function getKey() {
 		global $wgScriptPath;
 
-		return wfMemcKey(
+		$keyParams = [
 			'category_exhibition_section_0',
 			self::CACHE_VERSION,
 			md5( $this->categoryTitle->getDBKey() ),
@@ -271,8 +275,13 @@ abstract class CategoryExhibitionSection {
 			$this->urlParams->getSortType(),
 			$this->cacheHelper->getTouched( $this->categoryTitle ),
 			// Those are mentioned separately because they modify the pagination URL
-			$this->urlParams->getSortParam(),
-			$wgScriptPath
-		);
+			$this->urlParams->getSortParam()
+		];
+
+		if ( !empty( $wgScriptPath ) ) {
+			array_push( $keyParams, $wgScriptPath );
+		}
+
+		return wfMemcKey( ...$keyParams );
 	}
 }

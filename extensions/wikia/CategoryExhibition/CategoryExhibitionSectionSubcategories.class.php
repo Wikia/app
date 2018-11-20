@@ -17,16 +17,20 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		$oTitle = Title::newFromID( $pageId );
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = wfMemcKey(
+		$keyParams = [
 			'category_exhibition_article_cache_0',
 			$pageId,
 			$this->cacheHelper->getTouched( $oTitle ),
 			// Display/sort params are passed to the subcategory, cache separately!
 			$this->urlParams->getSortParam(),
-			self::CACHE_VERSION,
-			$wgScriptPath
-		);
+			self::CACHE_VERSION
+		];
 
+		if ( !empty( $wgScriptPath ) ) {
+			array_push( $keyParams, $wgScriptPath );
+		}
+
+		$sKey = wfMemcKey( ...$keyParams );
 		$cachedResult = $oMemCache->get( $sKey );
 
 		if ( !empty( $cachedResult ) ) {
