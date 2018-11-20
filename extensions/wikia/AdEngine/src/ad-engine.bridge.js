@@ -191,7 +191,7 @@ function unifySlotInterface(slot) {
 		},
 		getStatus: () => null,
 		setStatus: (status) => {
-			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked'].indexOf(status) > -1) {
+			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
 				event.initCustomEvent('adengine.slot.status', true, true, {
 					slot: slot,
@@ -199,6 +199,14 @@ function unifySlotInterface(slot) {
 				});
 				window.dispatchEvent(event);
 			}
+		},
+		trackEvent: (status) => {
+			const event = document.createEvent('CustomEvent');
+			event.initCustomEvent('adengine.slot.status', true, true, {
+				slot: slot,
+				status: status
+			});
+			window.dispatchEvent(event);
 		},
 	});
 
