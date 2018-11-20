@@ -16,6 +16,7 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 		parent::setUp();
 
 		$this->requestContext = new RequestContext();
+		$this->wikiFounderIpController = new WikiFounderIpController();
 		$this->wikiFounderIpController->setContext($this->requestContext);
 		$this->wikiFounderIpController->setResponse(new WikiaResponse(WikiaResponse::FORMAT_JSON));
 	}
@@ -24,7 +25,7 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 		$this->expectException( MethodNotAllowedException::class );
 
 		$fauxRequest =
-			new FauxRequest( ['wikiId' => static::WIKI_ID] );
+			new FauxRequest( ['id' => static::WIKI_ID], true );
 		$fauxRequest->setHeader( \Wikia\Tracer\WikiaTracer::INTERNAL_REQUEST_HEADER_NAME, 1 );
 		$this->requestContext->setRequest( $fauxRequest );
 
