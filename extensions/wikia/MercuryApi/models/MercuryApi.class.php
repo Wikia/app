@@ -97,7 +97,7 @@ class MercuryApi {
 
 	private function getCommonVariables() {
 		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath,
-			   $wgIncludeClosedWikiHandler, $wgScriptPath;
+			   $wgScriptPath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
@@ -116,7 +116,7 @@ class MercuryApi {
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'id' => (int) $wgCityId,
-			'isClosed' => $wgIncludeClosedWikiHandler,
+			'isClosed' => !WikiFactory::isPublic( $wgCityId ),
 			'htmlTitle' => [
 				'separator' => $htmlTitle->getSeparator(),
 				'parts' => array_values( $htmlTitle->getAllParts() ),

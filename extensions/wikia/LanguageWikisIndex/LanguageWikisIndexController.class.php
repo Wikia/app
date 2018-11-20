@@ -8,7 +8,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgCityId, $wgIncludeClosedWikiHandler;
+		global $wgCityId;
 
 		$this->specialPage->setHeaders();
 
@@ -18,7 +18,8 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'langWikis', WikiFactory::getLanguageWikis() );
 
-		if ( $wgIncludeClosedWikiHandler ) {
+		$isClosed = $this->isClosedWiki();
+		if ( $isClosed ) {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro-closed' )->escaped() );
 		} else {
 			$this->setVal( 'intro', $this->msg( 'languagewikisindex-intro' )->escaped() );
@@ -28,7 +29,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 		$this->setVal( 'cnwLink', $createNewWikiLink );
 
-		$this->setVal( 'wikiIsCreatable', ( !$wgIncludeClosedWikiHandler ||
+		$this->setVal( 'wikiIsCreatable', ( $isClosed ||
 			( WikiFactory::getFlags( $wgCityId ) & WikiFactory::FLAG_FREE_WIKI_URL ) ) );
 
 		$this->setVal( 'links', [
@@ -36,5 +37,12 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 			'fandom' => '//fandom.wikia.com',
 			'fandom-university' => GlobalTitle::newFromText( 'FANDOM University', NS_MAIN, Wikia::COMMUNITY_WIKI_ID )->getFullURL(),
 		] );
+	}
+
+	private function isClosedWiki() {
+		global $wgCityId;
+
+		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() &&
+			!WikiFactory::isPublic( $wgCityId );
 	}
 }

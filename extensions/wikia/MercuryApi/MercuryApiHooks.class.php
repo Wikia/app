@@ -196,7 +196,7 @@ class MercuryApiHooks {
 
 	public static function onClosedOrEmptyWikiDomains() {
 		/** @var $wgRequest WebRequest */
-		global $wgIncludeClosedWikiHandler, $wgRequest;
+		global $wgCityId, $wgRequest;
 
 		$controller = $wgRequest->getVal( 'controller', null );
 		$method = $wgRequest->getVal( 'method', null );
@@ -204,7 +204,7 @@ class MercuryApiHooks {
 		if (
 			$controller === 'MercuryApi' &&
 			$method === 'getMobileWikiVariables' &&
-			( WikiFactory::isLanguageWikisIndex() || $wgIncludeClosedWikiHandler )
+			( WikiFactory::isLanguageWikisIndex() || !WikiFactory::isPublic( $wgCityId ) )
 		) {
 			return false;
 		}
