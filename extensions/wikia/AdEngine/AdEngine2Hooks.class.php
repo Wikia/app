@@ -151,6 +151,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
@@ -179,7 +180,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
-		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 	}
 
