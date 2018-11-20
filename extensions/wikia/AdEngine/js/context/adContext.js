@@ -153,6 +153,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+		context.opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled = isEnabled(
+			'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'
+		);
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);

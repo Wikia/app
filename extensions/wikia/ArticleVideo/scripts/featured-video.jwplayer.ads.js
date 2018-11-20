@@ -34,6 +34,9 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 ) {
 	'use strict';
 
+	var moatJwplayerPluginUrl = 'https://z.moatads.com/jwplayerplugin0938452/moatplugin.js',
+		moatPartnerCode = 'wikiajwint101173217941';
+
 	var allowedBidders = ['wikiaVideo'],
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
@@ -52,6 +55,15 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		}
 
 		return {};
+	}
+
+	function loadMoatTrackingPlugin() {
+		if (!win.moatjw) {
+			var scriptElement = win.document.createElement('script');
+			scriptElement.async = true;
+			scriptElement.src = moatJwplayerPluginUrl;
+			win.document.head.appendChild(scriptElement);
+		}
 	}
 
 	function init(player, bidParams, slotTargeting) {
@@ -98,7 +110,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			});
 
 			if (adContext.get('bidders.rubiconInFV') && !adContext.get('bidders.rubiconDfp')) {
-				allowedBidders.push('rubicon')
+				allowedBidders.push('rubicon');
 			}
 
 			player.on('beforePlay', function () {
@@ -205,6 +217,25 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				}
 				bidderEnabled = false;
 			});
+
+			if (adContext.get('opts.isMoatTrackingForFeaturedVideoEnabled')) {
+				player.on('adImpression', function (event) {
+					var payload = {
+						adImpressionEvent: event,
+						partnerCode: moatPartnerCode,
+						player: this
+					};
+					if (adContext.get('opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled')) {
+						log('Passing additional params to Moat FV tracking', log.levels.info, logGroup);
+						var rv = articleVideoAd.calculateRV(videoDepth);
+						payload.ids = {
+							zMoatRV: rv <= 10 ? rv.toString() : '10+',
+							zMoatS1: adContext.get('targeting.s1')
+						};
+					}
+					win.moatjw.add(payload);
+				});
+			}
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
 			fvLagger.markAsReady(null);
@@ -226,7 +257,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 
 	return {
 		init: init,
-		trackSetup: trackSetup
+		trackSetup: trackSetup,
+		loadMoatTrackingPlugin: loadMoatTrackingPlugin
 	};
 });
 
@@ -235,5 +267,9 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.articleVideo.featuredVideo.adsConfiguration'
 ], function (ads) {
-	return ads.init;
+	'use strict';
+	return {
+		init: ads.init,
+		loadMoatTrackingPlugin: ads.loadMoatTrackingPlugin
+	};
 });

@@ -1313,6 +1313,13 @@ $wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
 $wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries
+ * Adds FV rv and s1 values to Moat tracking.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
