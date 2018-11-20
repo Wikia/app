@@ -6,7 +6,7 @@
  * @link https://support.google.com/webmasters/answer/189077
  */
 class SeoLinkHreflang {
-	private static function getMainPageLinks() {
+	public static function getMainPageLinks() {
 		global $wgServer;
 
 		$url = parse_url( $wgServer );
@@ -47,7 +47,7 @@ class SeoLinkHreflang {
 	public static function onOutputPageBeforeHTML( OutputPage $out/*, $text*/ ) {
 		// Add hreflang links only on fandom.com domains
 		// where we have language wikis sharing the root domain
-		if ( !static::isCurrentWikiAFandomComWiki() ) {
+		if ( !wfIsCurrentWikiAFandomComWiki() ) {
 			return true;
 		}
 
@@ -58,14 +58,5 @@ class SeoLinkHreflang {
 		}
 
 		return true;
-	}
-
-	private static function isCurrentWikiAFandomComWiki() {
-		global $wgFandomBaseDomain, $wgServer;
-
-		$host = parse_url( $wgServer, PHP_URL_HOST );
-		$host = wfNormalizeHost( $host );
-
-		return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
 	}
 }

@@ -1658,3 +1658,15 @@ function wfForceBaseDomain( $url, $targetServer ) {
 	$finalUrl = http_build_url( $url, [ 'host' => $finalHost, ] );
 	return WikiFactory::getLocalEnvURL( $finalUrl );
 }
+
+/**
+ * @return bool
+ */
+function wfIsCurrentWikiAFandomComWiki() {
+	global $wgFandomBaseDomain, $wgServer;
+
+	$host = parse_url( $wgServer, PHP_URL_HOST );
+	$host = wfNormalizeHost( $host );
+
+	return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
+}
