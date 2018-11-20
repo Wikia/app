@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
-use Wikia\Rabbit\ConnectionBase;
 use Wikia\Tasks\AsyncTaskList;
 
 class DataWarehouseEventProducer {
@@ -10,10 +9,10 @@ class DataWarehouseEventProducer {
 	private $mParams, $mKey;
 
 	const
-		EDIT_CATEGORY       = 'log_edit',
-		CREATEPAGE_CATEGORY = 'log_create',
-		UNDELETE_CATEGORY   = 'log_undelete',
-		DELETE_CATEGORY     = 'log_delete',
+		EDIT_CATEGORY       = 'edit',
+		CREATEPAGE_CATEGORY = 'create',
+		UNDELETE_CATEGORY   = 'undelete',
+		DELETE_CATEGORY     = 'delete',
 		KINESIS_STREAM_NAME = 'mw_edit_json';
 
 	function __construct( $key, $archive = 0 ) {
@@ -369,9 +368,8 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 
 		$data = json_encode( $this->mParams );
-		$this->getRabbit()->publish( $this->mKey, $data );
 		if ( ! Wikia::isDevEnv() ) {
-			$this->mParams['action'] = substr($this->mKey, 4); // remove "log_" prefix
+			$this->mParams['action'] = $this->mKey;
 			$task = AsyncKinesisProducerTask::newLocalTask();
 			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
 			$task->queue();
@@ -421,17 +419,4 @@ class DataWarehouseEventProducer {
 		return $links;
 	}
 
-	/*
-	 * Helper methods
-	 */
-	/** @return \Wikia\Rabbit\ConnectionBase */
-	protected static function getRabbit() {
-		global $wgEditEventsRabbitConfig;
-
-		if ( !isset( self::$rabbit ) ) {
-			self::$rabbit = new ConnectionBase( $wgEditEventsRabbitConfig );
-		}
-
-		return self::$rabbit;
-	}
 }
