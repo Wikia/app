@@ -33,7 +33,7 @@ class SeoLinkHreflang {
 			return [];
 		}
 
-		$links = self::getMainPageLinks();
+		$links = static::getMainPageLinks();
 
 		return array_map( function ( $lang, $url ) {
 			return Html::element( 'link', [
@@ -45,12 +45,27 @@ class SeoLinkHreflang {
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out/*, $text*/ ) {
-		$links = self::generateHreflangLinks( $out );
+		// Add hreflang links only on fandom.com domains
+		// where we have language wikis sharing the root domain
+		if ( !static::isCurrentWikiAFandomComWiki() ) {
+			return true;
+		}
+
+		$links = static::generateHreflangLinks( $out );
 
 		if ( count( $links ) > 0 ) {
 			$out->addHeadItem( 'SeoLinkHreflang', "\t" . join( "\n\t", $links ) . "\n" );
 		}
 
 		return true;
+	}
+
+	private static function isCurrentWikiAFandomComWiki() {
+		global $wgFandomBaseDomain, $wgServer;
+
+		$host = parse_url( $wgServer, PHP_URL_HOST );
+		$host = wfNormalizeHost( $host );
+
+		return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
 	}
 }
