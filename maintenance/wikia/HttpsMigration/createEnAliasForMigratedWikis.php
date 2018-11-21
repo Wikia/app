@@ -55,7 +55,7 @@ class CreateEnAliasForMigratedWikis extends Maintenance {
 				continue;
 			}
 
-			$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
+			$additionalTargetDomain = $this->getAdditionalDomain( $sourceWikiId, $sourceDomain );
 
 			if ( !empty( $additionalTargetDomain ) ) {
 				continue;
@@ -71,13 +71,31 @@ class CreateEnAliasForMigratedWikis extends Maintenance {
 		fclose( $fileHandle );
 	}
 
-	private function getAdditionalDomain( $sourceDomain ) {
+	private function getAdditionalDomain( $sourceWikiId, $sourceDomain ) {
 		global $wgFandomBaseDomain;
 		$parts = explode( '.', $sourceDomain );
+
 		if ( $parts[1] !== 'fandom' ) {
-			$this->output( "Failed to create /en alias for {$sourceDomain}!\n" );
+			$this->output( "{$sourceDomain} isn't a fandom.com domain so we won't create a /en alias\n" );
 			return false;
 		}
+
+		$sourceWiki = WikiFactory::getWikiByID( $sourceWikiId );
+
+		if ( $sourceWiki['city_lang'] !== 'en' ) {
+			$this->output( "{$sourceDomain} isn't an English wiki so we won't create a /en alias\n" );
+			return false;
+		}
+
+		$sourceWikiDomains = WikiFactory::getDomains( $sourceWikiId );
+
+		foreach ( $sourceWikiDomains as $domain ) {
+			if ( endsWith( $domain, "{$wgFandomBaseDomain}/en" ) ) {
+				$this->output( "{$sourceDomain} already has a /en alias\n" );
+				return false;
+			}
+		}
+
 		return "{$parts[0]}.{$wgFandomBaseDomain}/en";
 	}
 }
