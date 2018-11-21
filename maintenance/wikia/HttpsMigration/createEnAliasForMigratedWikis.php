@@ -57,7 +57,7 @@ class CreateEnAliasForMigratedWikis extends Maintenance {
 
 			$additionalTargetDomain = $this->getAdditionalDomain( $sourceWikiId, $sourceDomain );
 
-			if ( !empty( $additionalTargetDomain ) ) {
+			if ( empty( $additionalTargetDomain ) ) {
 				continue;
 			}
 
