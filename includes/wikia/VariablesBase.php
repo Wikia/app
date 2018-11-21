@@ -1274,7 +1274,7 @@ $wgCreateLanguageWikisWithPath = false;
  * Whether to create new English wikis under the fandom.com domain.
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
-$wgCreateEnglishWikisOnFandomCom = false;
+$wgCreateEnglishWikisOnFandomCom = true;
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -2693,8 +2693,7 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-// TODO set me back to false
-$wgEnableFeedsAndPostsExt = true;
+$wgEnableFeedsAndPostsExt = false;
 
 /**
  * Enable the Embedded Feeds module from Community Feeds
