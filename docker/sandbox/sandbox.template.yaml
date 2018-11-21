@@ -7,7 +7,6 @@ metadata:
     app: mediawiki-${SANDBOX_NAME}
     type: mediawiki
 spec:
-  replicas: ${REPLICAS}
   strategy:
     type: Recreate
     rollingUpdate: null
@@ -91,10 +90,10 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "6"
+              cpu: "4"
               memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: "3"
+              cpu: "2"
               memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
@@ -155,6 +154,26 @@ spec:
   - port: main
     path: /metrics.php
     interval: 10s
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mediawiki-${SANDBOX_NAME}
+  maxReplicas: ${MAX_REPLICAS}
+  minReplicas: 1
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
 ---
 apiVersion: v1
 kind: Service

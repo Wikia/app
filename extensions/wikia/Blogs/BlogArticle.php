@@ -609,7 +609,10 @@ class BlogArticle extends Article {
 				$oWItem = WatchedItem::fromUserTitle( $oUser, $oCommentTitle );
 				$oWItem->removeWatch();
 			}
-			$oUser->invalidateCache();
+
+			// Bust article ETags for this user, to ensure that "unwatch" links change to "watch" links
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$oUser->touch();
 		}
 
 		wfProfileOut( __METHOD__ );

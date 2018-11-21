@@ -68,7 +68,19 @@ class ArticlesUsingMediaQuery {
 	}
 
 	public function getMemcKey() {
-		return wfMemcKey( 'ArticlesUsingMediaQuery', 'v3', md5( $this->fileTitle->getDBKey() ) );
+		global $wgScriptPath;
+
+		$params = [
+			'ArticlesUsingMediaQuery',
+			'v3',
+			md5( $this->fileTitle->getDBKey() )
+		];
+
+		if ( !empty( $wgScriptPath ) ) {
+			$params[] = $wgScriptPath;
+		}
+
+		return wfMemcKey( ...$params );
 	}
 
 	public function unsetCache() {

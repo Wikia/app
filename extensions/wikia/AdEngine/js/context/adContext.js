@@ -153,6 +153,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+		context.opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled = isEnabled(
+			'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'
+		);
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
@@ -219,10 +222,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-
-		context.opts.isMobileBottomLeaderboardSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
-		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';
 
