@@ -47,7 +47,7 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 	public function testInternalHeaderAbsence() {
 		$this->expectException( ForbiddenException::class );
 
-		$this->requestContext->setRequest( new FauxRequest( [ 'id' => static::WIKI_ID ]) );
+		$this->requestContext->setRequest( new FauxRequest( [ 'wikiId' => static::WIKI_ID ]) );
 
 		$this->wikiFounderIpController->init();
 	}

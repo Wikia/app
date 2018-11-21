@@ -4,7 +4,7 @@ use Wikia\Logger\Loggable;
 
 class WikiFounderIpController extends WikiaController {
 	use Loggable;
-	const PARAMETER_ID = 'id';
+	const WIKI_ID = 'wikiId';
 
 
 	public function init() {
@@ -15,7 +15,7 @@ class WikiFounderIpController extends WikiaController {
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
-		$id = $request->getVal( self::PARAMETER_ID);
+		$id = $request->getVal( self::WIKI_ID);
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
