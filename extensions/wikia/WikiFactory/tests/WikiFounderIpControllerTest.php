@@ -50,13 +50,14 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 		$this->requestContext->setRequest( new FauxRequest( [ 'id' => static::WIKI_ID ]) );
 
 		$this->wikiFounderIpController->init();
-		$this->wikiFounderIpController->getIp();
 	}
 
 	public function testGetWikiIp() {
 		$fauxRequest = new FauxRequest( [ 'id' => static::WIKI_ID ]);
 		$fauxRequest->setHeader( \Wikia\Tracer\WikiaTracer::INTERNAL_REQUEST_HEADER_NAME, 1 );
 		$this->requestContext->setRequest( $fauxRequest );
+
+		self::assertThat($fauxRequest->getVal( self::WIKI_ID), self::equalTo(static::WIKI_ID));
 
 		$this->wikiFounderIpController->init();
 		$this->wikiFounderIpController->getIp();
