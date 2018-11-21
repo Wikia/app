@@ -3528,7 +3528,7 @@ $wgEnableSendGridPostback = true;
  * @see extensions/wikia/SeoLinkHreflang
  * @var bool $wgEnableSeoLinkHreflangExt
  */
-$wgEnableSeoLinkHreflangExt = false;
+$wgEnableSeoLinkHreflangExt = true;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current
