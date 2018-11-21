@@ -67,6 +67,26 @@ class HTTPSSupportHooks {
 	}
 
 	/**
+	 * Remove Content-Security-Policy header when downgrading HTTPS to HTTP
+	 * Microsoft Edge starting from v17 misinterprets Content-Security-Policy: upgrade-insecure-requests
+	 * during redirects and falls into a loop HTTPS -> HTTP -> HTTPS -> ...
+	 *
+	 * @param $out
+	 * @param $redirect
+	 * @param $code
+	 * @param $redirectedBy
+	 */
+	public static function onBeforePageRedirect( $out, &$redirect, &$code, &$redirectedBy ) {
+		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, false, true );
+		$currentProtocol = parse_url( $currentUri, PHP_URL_SCHEME );
+		$targetProtocol = parse_url( $redirect, PHP_URL_SCHEME );
+
+		if ( $currentProtocol === 'https' && $targetProtocol === 'http' ) {
+			header_remove( 'Content-Security-Policy' );
+		}
+	}
+
+	/**
 	 * Handle downgrading anonymous requests for our robots.txt.
 	 *
 	 * @param  WebRequest $request
