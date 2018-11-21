@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../Maintenance.php';
  * The script runs in dry mode by default, and the --saveChanges option
  * needs to be used when you actually want to save the changes.
  */
-class MigrateWikiToFandom extends Maintenance {
+class CreateEnAliasForMigratedWikis extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
@@ -56,21 +56,16 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 
 			$additionalTargetDomain = $this->getAdditionalDomain( $sourceDomain );
-			if ( !$additionalTargetDomain ) {
+
+			if ( !empty( $additionalTargetDomain ) ) {
 				continue;
 			}
 
-
 			if ( $saveChanges ) {
-
-				if ( !empty($additionalTargetDomain) ){
-					WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}' );
-				}
+				WikiFactory::addDomain( $sourceWikiId, $additionalTargetDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}' );
 			}
 
-			if ( !empty($additionalTargetDomain)  ){
-				$this->output( "/en alias was created for wiki with ID {$sourceWikiId}: {$additionalTargetDomain}\n" );
-			}
+			$this->output( "/en alias was created for wiki with ID {$sourceWikiId}: {$additionalTargetDomain}\n" );
 		}
 
 		fclose( $fileHandle );
@@ -79,14 +74,13 @@ class MigrateWikiToFandom extends Maintenance {
 	private function getAdditionalDomain( $sourceDomain ) {
 		global $wgFandomBaseDomain;
 		$parts = explode( '.', $sourceDomain );
-		if ( $parts[1] !== 'fandom' ){
+		if ( $parts[1] !== 'fandom' ) {
 			$this->output( "Failed to create /en alias for {$sourceDomain}!\n" );
 			return false;
 		}
 		return "{$parts[0]}.{$wgFandomBaseDomain}/en";
 	}
-
 }
 
-$maintClass = 'MigrateWikiToFandom';
+$maintClass = 'CreateEnAliasForMigratedWikis';
 require_once RUN_MAINTENANCE_IF_MAIN;
