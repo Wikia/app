@@ -82,7 +82,7 @@ class CreateEnAliasForMigratedWikis extends Maintenance {
 
 		$sourceWiki = WikiFactory::getWikiByID( $sourceWikiId );
 
-		if ( $sourceWiki['city_lang'] !== 'en' ) {
+		if ( $sourceWiki->city_lang !== 'en' ) {
 			$this->output( "{$sourceDomain} isn't an English wiki so we won't create a /en alias\n" );
 			return false;
 		}
