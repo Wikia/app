@@ -1456,7 +1456,7 @@ class Title {
 				$namespace .= ':';
 			}
 			$url = $interwiki->getURL( $namespace . $this->getDBkey() );
-			$url = wfAppendQuery( $url, $query );
+			$url = WikiFactory::getLocalEnvURL( wfAppendQuery( $url, $query ) );
 		} else {
 			$dbkey = wfUrlencode( $this->getPrefixedDBkey() );
 			if ( $query == '' ) {
