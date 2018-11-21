@@ -234,7 +234,12 @@ class MediaWiki {
 				$url = $title->getFullURL( $query );
 			}
 			// Check for a redirect loop
-			if ( !preg_match( '/^' . preg_quote( $wgServer, '/' ) . preg_quote( $wgScriptPath, '/' ) . '/', $url )
+			$urlScriptPath = wfGetLanguagePathFromURL( $url );
+			if (
+				(
+					!preg_match( '/^' . preg_quote( $wgServer, '/' ) . '/', $url )
+					|| ( $wgScriptPath !== $urlScriptPath )
+				)
 				&& $title->isLocal() )
 			{
 				// 301 so google et al report the target as the actual url.
