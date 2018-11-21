@@ -77,8 +77,7 @@ class HTTPSSupportHooks {
 	 * @param $redirectedBy
 	 */
 	public static function onBeforePageRedirect( $out, &$redirect, &$code, &$redirectedBy ) {
-		$currentUri = \WikiFactoryLoader::getCurrentRequestUri( $_SERVER, false, true );
-		$currentProtocol = parse_url( $currentUri, PHP_URL_SCHEME );
+		$currentProtocol = WebRequest::detectProtocol();
 		$targetProtocol = parse_url( $redirect, PHP_URL_SCHEME );
 
 		if ( $currentProtocol === 'https' && $targetProtocol === 'http' ) {
