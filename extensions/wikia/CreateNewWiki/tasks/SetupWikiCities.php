@@ -95,7 +95,7 @@ class SetupWikiCities extends Task {
 			if ( $this->taskContext->getLanguage() === 'en' ) {
 				$domains[] = [
 					'city_id' => $this->taskContext->getCityId(),
-					'city_domain' => "{$this->taskContext->getDomain()}en"
+					'city_domain' => "{$this->taskContext->getDomain()}/en"
 				];
 			}
 		} else {
