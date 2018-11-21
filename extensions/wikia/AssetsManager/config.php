@@ -2460,7 +2460,7 @@ $config['category_page3_alphabet_shortcuts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CategoryPage3/scripts/alphabet-shortcuts.js',
+		'//extensions/wikia/CategoryPage3/scripts/decode-redlink-href.js',
 	],
 ];
 

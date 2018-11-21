@@ -45,6 +45,7 @@ $wgHooks['MakeHeadline'][] = 'RTELinkerHooks::onMakeHeadline';
 $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
 $wgHooks['WikiaSkinTopScripts'][] = 'addGlobalJsVariables';
+$wgHooks['SetHrefForRedLink'][] = 'RTELinkerHooks::onSetHrefForRedLink';
 
 
 // i18n

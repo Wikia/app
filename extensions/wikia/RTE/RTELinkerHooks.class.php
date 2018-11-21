@@ -133,4 +133,26 @@ class RTELinkerHooks extends Linker {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
+
+	/**
+	 * Sets href as # and store proper href in
+	 * data-uncrawlable-url to make redlink
+	 * uncrawlable.
+	 *
+	 * @param $attribs array attributes
+	 *
+	 */
+	public static function onSetHrefForRedLink (&$attribs) {
+		wfProfileIn(__METHOD__);
+
+		if ( strpos($attribs['href'], 'redlink=1') !== false ){
+			$originalURL = $attribs['href'];
+			$attribs['href'] = '#';
+			$attribs['data-uncrawlable-url'] = base64_encode($originalURL);
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+
+
 }
