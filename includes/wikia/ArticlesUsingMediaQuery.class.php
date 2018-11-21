@@ -77,7 +77,7 @@ class ArticlesUsingMediaQuery {
 		];
 
 		if ( !empty( $wgScriptPath ) ) {
-			array_push( $params, $wgScriptPath );
+			$params[] = $wgScriptPath;
 		}
 
 		return wfMemcKey( ...$params );
