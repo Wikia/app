@@ -226,7 +226,7 @@ abstract class CategoryExhibitionSection {
 		];
 
 		if ( !empty( $wgScriptPath ) ) {
-			array_push( $keyParams, $wgScriptPath );
+			$keyParams[] = $wgScriptPath;
 		}
 
 		$sKey = wfMemcKey( ...$keyParams );
@@ -279,7 +279,7 @@ abstract class CategoryExhibitionSection {
 		];
 
 		if ( !empty( $wgScriptPath ) ) {
-			array_push( $keyParams, $wgScriptPath );
+			$keyParams[] = $wgScriptPath;
 		}
 
 		return wfMemcKey( ...$keyParams );

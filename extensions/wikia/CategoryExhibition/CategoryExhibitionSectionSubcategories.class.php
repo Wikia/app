@@ -27,7 +27,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		];
 
 		if ( !empty( $wgScriptPath ) ) {
-			array_push( $keyParams, $wgScriptPath );
+			$keyParams[] = $wgScriptPath;
 		}
 
 		$sKey = wfMemcKey( ...$keyParams );
