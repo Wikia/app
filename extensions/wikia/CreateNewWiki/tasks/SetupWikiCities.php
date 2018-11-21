@@ -90,6 +90,14 @@ class SetupWikiCities extends Task {
 				'city_id' => $this->taskContext->getCityId(),
 				'city_domain' => $wikiaDomain
 			];
+
+			// Add *.fandom.com/en alias for English wikis
+			if ( $this->taskContext->getLanguage() === 'en' ) {
+				$domains[] = [
+					'city_id' => $this->taskContext->getCityId(),
+					'city_domain' => "{$this->taskContext->getDomain()}en"
+				];
+			}
 		} else {
 			// legacy www. subdomain for wikia.com wikis
 			$domains[] = [
