@@ -61,7 +61,7 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 		$this->requestContext->setRequest( $fauxRequest );
 
 		$wikiId = $fauxRequest->getVal( 'wikiId' );
-		$this->assertThat( $wikiId, self::equalTo( static::WIKI_ID ) );
+		$this->assertEquals( $wikiId,static::WIKI_ID);
 
 		$this->wikiFounderIpController->init();
 		$this->wikiFounderIpController->getIp();
