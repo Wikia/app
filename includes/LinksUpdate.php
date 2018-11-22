@@ -47,6 +47,12 @@ class LinksUpdate {
 	/**@}}*/
 
 	/**
+	 * slave DB connection handle
+	 * @var DatabaseBase $dbForReads
+	 */
+	private $dbForReads;
+
+	/**
 	 * Constructor
 	 *
 	 * @param $title Title of the page we're updating
@@ -102,6 +108,9 @@ class LinksUpdate {
 		}
 
 		$this->mRecursive = $recursive;
+
+		// SRE-109
+		$this->dbForReads = wfGetDB( DB_SLAVE );
 
 		Hooks::run( 'LinksUpdateConstructed', [ $this ] );
 	}
@@ -322,11 +331,11 @@ class LinksUpdate {
 		}
 		$ids = array();
 
-		$res = $this->mDb->select( 'page', array( 'page_id' ),
+		$res = $this->dbForReads->select( 'page', array( 'page_id' ),
 			array(
 				'page_namespace' => $namespace,
-				'page_title IN (' . $this->mDb->makeList( $dbkeys ) . ')',
-				'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
+				'page_title IN (' . $this->dbForReads->makeList( $dbkeys ) . ')',
+				'page_touched < ' . $this->dbForReads->addQuotes( $this->mInvalidationTimestamp )
 			), __METHOD__
 		);
 		foreach ( $res as $row ) {
@@ -763,7 +772,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingLinks() {
-		$res = $this->mDb->select( 'pagelinks', array( 'pl_namespace', 'pl_title' ),
+		$res = $this->dbForReads->select( 'pagelinks', array( 'pl_namespace', 'pl_title' ),
 			array( 'pl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -781,7 +790,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingTemplates() {
-		$res = $this->mDb->select( 'templatelinks', array( 'tl_namespace', 'tl_title' ),
+		$res = $this->dbForReads->select( 'templatelinks', array( 'tl_namespace', 'tl_title' ),
 			array( 'tl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -799,7 +808,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingImages() {
-		$res = $this->mDb->select( 'imagelinks', array( 'il_to' ),
+		$res = $this->dbForReads->select( 'imagelinks', array( 'il_to' ),
 			array( 'il_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -814,7 +823,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingExternals() {
-		$res = $this->mDb->select( 'externallinks', array( 'el_to' ),
+		$res = $this->dbForReads->select( 'externallinks', array( 'el_to' ),
 			array( 'el_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -829,7 +838,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingCategories() {
-		$res = $this->mDb->select( 'categorylinks', array( 'cl_to', 'cl_sortkey_prefix' ),
+		$res = $this->dbForReads->select( 'categorylinks', array( 'cl_to', 'cl_sortkey_prefix' ),
 			array( 'cl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -845,7 +854,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingInterlangs() {
-		$res = $this->mDb->select( 'langlinks', array( 'll_lang', 'll_title' ),
+		$res = $this->dbForReads->select( 'langlinks', array( 'll_lang', 'll_title' ),
 			array( 'll_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -859,7 +868,7 @@ class LinksUpdate {
 	 * @return array (prefix => array(dbkey => 1))
 	 */
 	protected function getExistingInterwikis() {
-		$res = $this->mDb->select( 'iwlinks', array( 'iwl_prefix', 'iwl_title' ),
+		$res = $this->dbForReads->select( 'iwlinks', array( 'iwl_prefix', 'iwl_title' ),
 			array( 'iwl_from' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
@@ -877,7 +886,7 @@ class LinksUpdate {
 	 * @return array
 	 */
 	private function getExistingProperties() {
-		$res = $this->mDb->select( 'page_props', array( 'pp_propname', 'pp_value' ),
+		$res = $this->dbForReads->select( 'page_props', array( 'pp_propname', 'pp_value' ),
 			array( 'pp_page' => $this->mId ), __METHOD__, $this->mOptions );
 		$arr = array();
 		foreach ( $res as $row ) {
