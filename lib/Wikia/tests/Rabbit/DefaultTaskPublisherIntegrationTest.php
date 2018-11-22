@@ -43,7 +43,7 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 			$this->channel = $this->rabbitConnectionManager->getChannel( '/' );
 			$this->channel->queue_declare( Queue::MAIN_QUEUE_NAME );
 			$this->channel->queue_declare( Queue::SMW_QUEUE_NAME );
-		} catch ( AMQPExceptionInterface $e ) {
+		} catch ( \ErrorException $connectionErrorException ) {
 			$this->markTestSkipped( 'Could not connect to Rabbit. Probably it is not running.' );
 		}
 	}
