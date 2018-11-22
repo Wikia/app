@@ -14,6 +14,15 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 
 	protected function setUp() {
 		parent::setUp();
+		$ipAddress = inet_pton( "149.6.28.163" );
+
+		$dbw = WikiFactory::db(DB_MASTER);
+		$dbw->update(
+			WikiFactory::table("city_list"),
+			["city_founding_ip_bin" => $ipAddress],
+			["city_id" => static::WIKI_ID],
+			__METHOD__
+		);
 
 		$this->requestContext = new RequestContext();
 		$this->wikiFounderIpController = new WikiFounderIpController();
@@ -64,10 +73,10 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 		$this->wikiFounderIpController->init();
 		$this->wikiFounderIpController->getIp();
 
+		$this->assertEquals( '149.6.28.163', $this->wikiFounderIpController->getResponse()->getBody() );
 		$this->assertEquals( 200, $this->wikiFounderIpController->getResponse()->getCode() );
 		$this->assertEquals( WikiaResponse::FORMAT_JSON,
 			$this->wikiFounderIpController->getResponse()->getFormat() );
-		$this->assertEquals( '149.6.28.163', $this->wikiFounderIpController->getResponse()->getBody() );
 	}
 
 	protected function getDataSet() {
