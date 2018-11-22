@@ -70,7 +70,7 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 			$this->wikiFounderIpController->getResponse()->getFormat() );
 		$this->assertEquals( 200, $this->wikiFounderIpController->getResponse()->getCode() );
 		$this->assertEquals( "149.6.28.163",
-			$this->wikiFounderIpController->getResponse()->getVal( "wikiIp" ) );
+			$this->wikiFounderIpController->getResponse()->getVal( "wikiFounderIp" ) );
 	}
 
 	protected function getDataSet() {

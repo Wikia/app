@@ -23,13 +23,13 @@ class WikiFounderIpController extends WikiaController {
 		$wiki = WikiFactory::getWikiByID( $id );
 		if ( empty( $wiki ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
-			$this->info("could not get Wiki IP. Wiki id: " . $id);
+			$this->info("could not get Wiki founder IP. Wiki id: " . $id);
 			return;
 		}
 
 		$ip = inet_ntop($wiki->city_founding_ip_bin);
 		$this->response->setCode( 200 );
-		$this->response->setVal("wikiIp", $ip);
+		$this->response->setVal("wikiFounderIp", $ip);
 	}
 
 	public function allowsExternalRequests() {
