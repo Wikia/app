@@ -45,9 +45,10 @@ class SeoLinkHreflang {
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out/*, $text*/ ) {
-		// Add hreflang links only on fandom.com domains
-		// where we have language wikis sharing the root domain
-		if ( !wfIsCurrentWikiAFandomComWiki() ) {
+		global $wgServer;
+
+		// Add hreflang links only on domains where we have language wikis share the root domain
+		if ( !wfHttpsEnabledForURL( $wgServer ) ) {
 			return true;
 		}
 
