@@ -45,9 +45,6 @@ class WikiFounderIpController extends WikiaController {
 		if ( !$this->getContext()->getRequest()->isWikiaInternalRequest() ) {
 			throw new ForbiddenException( 'Access to this controller is restricted' );
 		}
-//		if ( $this->getContext()->getRequest()->wasPosted() ) {
-//			throw new MethodNotAllowedException( 'Only GET allowed' );
-//		}
 	}
 
 	public function allowsExternalRequests() {
