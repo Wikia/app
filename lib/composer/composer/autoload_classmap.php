@@ -2993,6 +2993,7 @@ return array(
     'Wikia\\Tasks\\Tasks\\HTMLCacheUpdateTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/HTMLCacheUpdateTask.php',
     'Wikia\\Tasks\\Tasks\\ImageReviewTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php',
     'Wikia\\Tasks\\Tasks\\ImageSyncTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/ImageSyncTask.php',
+    'Wikia\\Tasks\\Tasks\\IncrementEditCountTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/IncrementEditCountTask.php',
     'Wikia\\Tasks\\Tasks\\JobWrapperTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/JobWrapperTask.php',
     'Wikia\\Tasks\\Tasks\\MaintenanceTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/MaintenanceTask.php',
     'Wikia\\Tasks\\Tasks\\MathTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/MathTask.php',
