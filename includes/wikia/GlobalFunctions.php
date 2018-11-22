@@ -1534,6 +1534,12 @@ function wfHttpsAllowedForURL( $url ): bool {
 				$host
 			);
 		} else {
+			// this is called from WFL, where $wgRequest is not available yet; use $_SERVER vars to check the header
+			if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
+				in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
+				// As those envs are not covered by our certificate, disable https there
+				return false;
+			}
 			$server = str_replace( ".{$baseDomain}", '', $host );
 		}
 	}
