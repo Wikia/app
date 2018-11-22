@@ -133,6 +133,4 @@ class RTELinkerHooks extends Linker {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
-
-
 }
