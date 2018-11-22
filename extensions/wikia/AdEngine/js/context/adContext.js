@@ -243,6 +243,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
 
+		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
+
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
