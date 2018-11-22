@@ -64,7 +64,7 @@ class CheckUserHooks {
 		}
 
 		// SRE-109: Update the cu_changes table in a background task
-		$task = new \Wikia\Tasks\Tasks\UpdateCheckUserTask();
+		$task = \Wikia\Tasks\Tasks\UpdateCheckUserTask::newLocalTask();
 		$task->call( 'updateWithEditInfo', $rcRow );
 		$task->queue();
 
