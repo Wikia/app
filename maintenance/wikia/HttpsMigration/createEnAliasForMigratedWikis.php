@@ -48,15 +48,15 @@ class CreateEnAliasForMigratedWikis extends Maintenance {
 				continue;
 			}
 
-			$sourceDomain = WikiFactory::cityIDtoDomain( $sourceWikiId );
+			$sourceCityUrl = WikiFactory::cityIDtoUrl( $sourceWikiId );
 
-			if ( !$sourceDomain ) {
+			if ( !$sourceCityUrl ) {
 				$this->output( "Wiki with ID {$sourceWikiId} was not found!\n" );
 				continue;
 			}
 
-			$sourceNormalizedHost = wfNormalizeHost( parse_url( $sourceDomain, PHP_URL_HOST ) );
-			$sourcePath = parse_url( $sourceDomain, PHP_URL_PATH );
+			$sourceNormalizedHost = wfNormalizeHost( parse_url( $sourceCityUrl, PHP_URL_HOST ) );
+			$sourcePath = parse_url( $sourceCityUrl, PHP_URL_PATH );
 			$additionalTargetDomain = $this->getAdditionalDomain( $sourceWikiId, $sourceNormalizedHost . $sourcePath );
 
 			if ( empty( $additionalTargetDomain ) ) {
