@@ -6,11 +6,6 @@ class WikiFounderIpController extends WikiaController {
 	use Loggable;
 	const WIKI_ID = 'wikiId';
 
-
-	public function init() {
-		$this->assertCanAccessController();
-	}
-
 	public function getIp() {
 		$context = $this->getContext();
 		$request = $context->getRequest();
@@ -35,16 +30,6 @@ class WikiFounderIpController extends WikiaController {
 		$ip = inet_ntop($wiki->city_founding_ip_bin);
 		$this->response->setCode( 200 );
 		$this->response->setVal("wikiIp", $ip);
-	}
-
-	/**
-	 * Make sure to only allow GET methods.
-	 * @throws WikiaHttpException
-	 */
-	public function assertCanAccessController() {
-		if ( $this->getContext()->getRequest()->wasPosted() ) {
-			throw new MethodNotAllowedException( 'Only GET allowed' );
-		}
 	}
 
 	public function allowsExternalRequests() {

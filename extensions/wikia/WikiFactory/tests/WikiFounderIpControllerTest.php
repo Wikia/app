@@ -29,14 +29,13 @@ class WikiFounderIpControllerTest extends WikiaDatabaseTest {
 	}
 
 	public function testPostRequestIsRejected() {
-		$this->expectException( MethodNotAllowedException::class );
-
 		$fauxRequest = new FauxRequest( [ 'id' => static::WIKI_ID ], true );
 		$fauxRequest->setHeader( \Wikia\Tracer\WikiaTracer::INTERNAL_REQUEST_HEADER_NAME, 1 );
 		$this->requestContext->setRequest( $fauxRequest );
 
 		$this->wikiFounderIpController->init();
 		$this->wikiFounderIpController->getIp();
+		$this->assertEquals( 400, $this->wikiFounderIpController->getResponse()->getCode() );
 	}
 
 	public function testWikiIdIsRequired() {
