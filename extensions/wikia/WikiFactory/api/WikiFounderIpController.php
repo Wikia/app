@@ -38,12 +38,12 @@ class WikiFounderIpController extends WikiaController {
 	}
 
 	/**
-	 * Make sure to only allow authorized methods.
+	 * Make sure to only allow GET methods.
 	 * @throws WikiaHttpException
 	 */
 	public function assertCanAccessController() {
-		if ( !$this->getContext()->getRequest()->isWikiaInternalRequest() ) {
-			throw new ForbiddenException( 'Access to this controller is restricted' );
+		if ( $this->getContext()->getRequest()->wasPosted() ) {
+			throw new MethodNotAllowedException( 'Only GET allowed' );
 		}
 	}
 
