@@ -1,1 +1,7 @@
 city_list:
+- city_id: 2
+  city_url: http://unittest.wikia.com
+  city_sitename: wikia
+  city_vertical: 5 # Lifestyle
+  city_cluster: c1
+  city_dbname: unittest
