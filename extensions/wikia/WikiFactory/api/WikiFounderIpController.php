@@ -15,9 +15,9 @@ class WikiFounderIpController extends WikiaController {
 		$context = $this->getContext();
 		$request = $context->getRequest();
 
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$id = $request->getVal( self::WIKI_ID);
 
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $id ) || !is_numeric($id) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
@@ -33,8 +33,8 @@ class WikiFounderIpController extends WikiaController {
 		}
 
 		$ip = inet_ntop($wiki->city_founding_ip_bin);
-
-		$this->response->setVal("wiki_ip", $ip);
+		$this->response->setCode( 200 );
+		$this->response->setVal("wikiIp", $ip);
 	}
 
 	/**
