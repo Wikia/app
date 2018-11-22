@@ -352,6 +352,12 @@ class SEOTweaksHooksHelper {
 			$attribs['rel'] = 'nofollow';
 		}
 
+		if ( strpos($attribs['href'], 'redlink=1') !== false ) {
+			$originalURL = $attribs['href'];
+			$attribs['href'] = '#';
+			$attribs['data-uncrawlable-url'] = base64_encode($originalURL);
+		}
+
 		return true;
 	}
 }
