@@ -171,3 +171,14 @@ spec:
       annotations:
         description: Maintenance script that marks wikis as closed was not run in the last four days
         summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
+  # SUS-6267 | monitoring for production pods
+  - name: mediawiki_prod.rules
+    rules:
+    - alert: mediawiki_prod_fpm_workers_usage_percentage
+      expr: avg(phpfpm_active_processes{service="mediawiki-prod"} / phpfpm_total_processes{service="mediawiki-prod"}) * 100 > 75
+      labels:
+        team: sus
+      annotations:
+        description: Production php-fpm workers usage is above the threshold
+        summary: fpm workers usage is at {{$value}} %
+        graphs: https://metrics.wikia-inc.com/d/znlnjNxik/kubernetes-production-traffic
