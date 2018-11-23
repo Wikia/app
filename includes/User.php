@@ -4034,7 +4034,7 @@ class User implements JsonSerializable {
 	 */
 	public function incEditCount() {
 		if ( !$this->isAnon() ) {
-			ServiceFactory::instance()->producerFactory()->editCountTaskProducer()->forUser( $this )->call( 'increment' );
+			ServiceFactory::instance()->producerFactory()->editCountTaskProducer()->incrementFor( $this );
 		}
 	}
 

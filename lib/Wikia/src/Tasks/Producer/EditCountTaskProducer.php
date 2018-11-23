@@ -7,37 +7,29 @@ use Wikia\Tasks\Tasks\IncrementEditCountTask;
 
 class EditCountTaskProducer implements TaskProducer {
 
-	/** @var IncrementEditCountTask[] $tasksByUser */
-	private $tasksByUser = [];
+	/** @var IncrementEditCountTask $task */
+	private $task;
 
 	public function __construct( TaskPublisher $publisher ) {
 		$publisher->registerProducer( $this );
 	}
 
-	/**
-	 * Get a task instance prepared for the given user. At most one task instance per user will be prepared per request.
-	 *
-	 * @param \User $user
-	 * @return IncrementEditCountTask
-	 */
-	public function forUser( \User $user ): IncrementEditCountTask {
-		$userId = $user->getId();
-
-		if ( !isset( $this->tasksByUser[$userId] ) ) {
-			$task = IncrementEditCountTask::newLocalTask();
-			$task->createdBy( $user );
-
-			$this->tasksByUser[$userId] = $task;
+	public function incrementFor( \User $user ) {
+		if ( empty( $this->task ) ) {
+			$this->task = IncrementEditCountTask::newLocalTask();
 		}
 
-		return $this->tasksByUser[$userId];
+		$this->task->call( 'increment', $user->getId() );
 	}
 
+	/**
+	 * @return \Wikia\Tasks\AsyncTaskList[]
+	 */
 	public function getTasks() {
-		foreach ( $this->tasksByUser as $task ) {
-			foreach ( $task->convertToTaskLists() as $taskList ) {
-				yield $taskList;
-			}
+		if ( $this->task ) {
+			return $this->task->convertToTaskLists();
 		}
+
+		return [];
 	}
 }

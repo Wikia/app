@@ -6,8 +6,8 @@ namespace Wikia\Tasks\Tasks;
  */
 class IncrementEditCountTask extends BaseTask {
 
-	public function increment() {
-		$userStatsService = new \UserStatsService( $this->createdByUser()->getId() );
+	public function increment( int $userId ) {
+		$userStatsService = new \UserStatsService( $userId );
 		$userStatsService->increaseEditsCount();
 	}
 }
