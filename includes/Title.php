@@ -2117,7 +2117,8 @@ class Title {
 			$errors[] = array( 'confirmedittext' );
 		}
 
-		if ( ( $action == 'edit' || $action == 'create' ) && !$user->isBlockedFrom( $this ) ) {
+		// SRE-109: Check user block from slave instead of reading from master
+		if ( ( $action == 'edit' || $action == 'create' ) && !$user->isBlockedFrom( $this, true /* use slave */ ) ) {
 			// Don't block the user from editing their own talk page unless they've been
 			// explicitly blocked from that too.
 		} elseif( $user->isBlocked() && $user->mBlock->prevents( $action ) !== false ) {

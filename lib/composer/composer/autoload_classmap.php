@@ -3005,6 +3005,7 @@ return array(
     'Wikia\\Tasks\\Tasks\\RefreshLinksForTitleTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/RefreshLinksForTitleTask.php',
     'Wikia\\Tasks\\Tasks\\RenameUserPagesTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/RenameUserPagesTask.php',
     'Wikia\\Tasks\\Tasks\\SiteWideMessagesTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/SiteWideMessagesTask.php',
+    'Wikia\\Tasks\\Tasks\\UpdateCheckUserTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/UpdateCheckUserTask.php',
     'Wikia\\Tasks\\Tasks\\UserRegistrationTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/UserRegistrationTask.php',
     'Wikia\\Tasks\\Tasks\\WatchlistUpdateTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/WatchlistUpdateTask.php',
     'Wikia\\Tracer\\Uuid' => $baseDir . '/lib/Wikia/src/Tracer/Uuid.php',
