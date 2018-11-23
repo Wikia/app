@@ -16,7 +16,7 @@ class ExternalStoreDBFetchBlobHookIntegrationTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$mockApiURL = "http://{$this->getMockServerHost()}:{$this->getMockServerPort()}";
+		$mockApiURL = "http://{$this->getMockServerHost()}:{$this->getMockServerPort()}/";
 		$this->mockGlobalVariable( "wgFetchBlobApiURL", $mockApiURL );
 		$this->mockGlobalVariable( 'wgDefaultExternalStore', [] );
 	}
