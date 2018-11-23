@@ -67,6 +67,9 @@ require([
 	}
 
 	function setupPlayer() {
+		// ToDo: remove debug code
+		console.log('Debug: JWPlayer setup');
+
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 

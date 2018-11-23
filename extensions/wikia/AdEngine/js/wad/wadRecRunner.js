@@ -2,32 +2,52 @@
 define('ext.wikia.adEngine.wad.wadRecRunner', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wad.btRecLoader',
+	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'ext.wikia.adEngine.wad.ilRecLoader',
 	'wikia.log'
-], function (adContext, btRecLoader, iltRecLoader, log) {
+], function (adContext, btRecLoader, hmdRecLoader, ilRecLoader, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner',
-		recEnabled = '';
+		recEnabled = {
+			display: '',
+			video: ''
+		},
+		recs = {
+			il: {
+				type: 'display',
+				context: 'opts.wadIL',
+				loader: ilRecLoader
+			},
+			bt: {
+				type: 'display',
+				context: 'opts.wadBT',
+				loader: btRecLoader
+			},
+			hmd: {
+				type: 'video',
+				context: 'opts.wadHMD',
+				loader: hmdRecLoader
+			}
+		};
 
 	function init() {
 		log('WAD rec module initialized', 'debug', logGroup);
 
-		if (!recEnabled && adContext.get('opts.wadIL')) {
-			recEnabled = 'il';
+		// ToDo: check Blockthrough recovery
+		Object.keys(recs).forEach(function (rec) {
+			var config = recs[rec];
 
-			iltRecLoader.init();
-		}
+			if (!recEnabled[config.type] && adContext.get(config.context)) {
+				recEnabled[config.type] = rec;
 
-		if (!recEnabled && adContext.get('opts.wadBT')) {
-			recEnabled = 'bt';
-
-			btRecLoader.init();
-		}
+				config.loader.init();
+			}
+		});
 	}
 
 	function isEnabled(name) {
-		return name === recEnabled;
+		return recEnabled.display === name || recEnabled.video === name;
 	}
 
 	return {
