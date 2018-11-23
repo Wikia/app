@@ -124,7 +124,8 @@ require([
 				},
 				responseTimeout
 			);
-		} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
+		} else if (bidders && bidders.addResponseListener && bidders.isEnabled() && false) {
+			// ToDo: remove FV AdBlock bug hack
 			bidders.addResponseListener(function () {
 				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
 				setupPlayer();
