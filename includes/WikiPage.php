@@ -1699,7 +1699,19 @@ class WikiPage extends Page implements IDBAccessObject {
 			$total = 0;
 		}
 
-		DeferredUpdates::addUpdate( new SiteStatsUpdate( 0, 1, $good, $total ) );
+		// SRE-109: Update site stats via a background task
+		$siteStatsUpdateTaskProducer =
+			\Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+		$siteStatsUpdateTaskProducer->addEdit();
+
+		if ( $good ) {
+			$siteStatsUpdateTaskProducer->addContentPage();
+		}
+
+		if ( $total ) {
+			$siteStatsUpdateTaskProducer->addNewPage();
+		}
+
 		DeferredUpdates::addUpdate( new SearchUpdate( $id, $title, $text ) );
 
 		# If this is another user's talk page, update newtalk.
@@ -2156,7 +2168,14 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * @param $id Int: page_id value of the page being deleted
 	 */
 	public function doDeleteUpdates( $id ) {
-		DeferredUpdates::addUpdate( new SiteStatsUpdate( 0, 1, - (int)$this->isCountable(), -1 ) );
+		// SRE-109: Update site stats via a background task
+		$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+		$siteStatsUpdateTaskProducer->addEdit();
+		$siteStatsUpdateTaskProducer->removePage();
+
+		if ( $this->isCountable() ) {
+			$siteStatsUpdateTaskProducer->removeContentPage();
+		}
 
 		$dbw = wfGetDB( DB_MASTER );
 
