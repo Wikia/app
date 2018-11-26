@@ -91,7 +91,6 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		});
 
 		relatedPlugin.on('play', function (data) {
-			logger.info('related plugin play');
 			depth++;
 
 			playerInstance.trigger('relatedVideoPlay', {
@@ -106,7 +105,6 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	playerInstance.on('play', function (data) {
 		if (isPlayerPaused) {
 			playerInstance.trigger('videoResumed', data);
-			logger.info('videoResumed triggered');
 		}
 
 		isPlayerPaused = false;
@@ -119,11 +117,9 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	playerInstance.on('firstFrame', function () {
 		if (depth === 0) {
 			playerInstance.trigger('playerStart', { auto: willAutoplay });
-			logger.info('playerStart triggered');
 		}
 
 		playerInstance.trigger('videoStart');
-		logger.info('videoStart triggered');
 	});
 
 	playerInstance.on('mute', function () {

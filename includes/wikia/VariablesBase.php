@@ -1274,7 +1274,7 @@ $wgCreateLanguageWikisWithPath = false;
  * Whether to create new English wikis under the fandom.com domain.
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
-$wgCreateEnglishWikisOnFandomCom = false;
+$wgCreateEnglishWikisOnFandomCom = true;
 
 /**
  * Domains that should not be allowed to make AJAX requests,

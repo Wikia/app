@@ -154,6 +154,13 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
 
+		wikiaJWPlayerUserIntendedPlayControl(
+			options.shouldForceUserIntendedPlay,
+			playerInstance,
+			options.tracking,
+			options.autoplay
+		);
+
 		if(options.watermark !== false) {
 			WikiaJWPlayerWatermarkPlugin.register();
 		}

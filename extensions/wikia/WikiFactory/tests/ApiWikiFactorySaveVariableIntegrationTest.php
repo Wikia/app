@@ -181,6 +181,23 @@ class ApiWikiFactorySaveVariableIntegrationTest extends WikiaDatabaseTest {
 		yield [ 4, 4, 12, 'test set', WikiFactoryVariableParseException::ERROR_VARIABLE_NOT_ARRAY ];
 	}
 
+	public function testInternalRequestDoesNotRequireTokenOrAuthenticatedUser() {
+		session_abort();
+		$varId = 1;
+		$wikiId = 1;
+		$value = 'from testInternalRequestDoesNotRequireTokenOrAuthenticatedUser';
+
+		$this->doInternalApiRequest( [
+			'action' => 'wfsavevariable',
+			'variable_id' => $varId,
+			'wiki_id' => $wikiId,
+			'variable_value' => $value,
+			'reason' => 'bar',
+		] );
+
+		$this->assertEquals( $value, $this->getVariable( $varId, $wikiId ) );
+	}
+
 	protected function getDataSet() {
 		return $this->createYamlDataSet( __DIR__ . '/fixtures/api_variable.yaml' );
 	}

@@ -31,7 +31,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( 'RequestContext', 'getMain', $requestContextMock );
 
-		$wikiButtons = new WikiButtons();
+		$wikiButtons = new WikiButtons( new DesignSystemCommunityHeaderModel('en'));
 
 		$this->assertEquals( $expected, $wikiButtons->buttons );
 	}

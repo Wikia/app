@@ -40,10 +40,7 @@ class CheckUserHooks {
 		$actionTextTrim = substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
 		$agentTrim = substr( $agent, 0, static::ACTION_TEXT_MAX_LENGTH );
 
-		$dbw = wfGetDB( DB_MASTER );
-		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
-			'cuc_id'         => $cuc_id,
 			'cuc_namespace'  => $rc_namespace,
 			'cuc_title'      => $rc_title,
 			'cuc_minor'      => $rc_minor,
@@ -65,7 +62,11 @@ class CheckUserHooks {
 		if ( isset( $rc_cur_id ) ) {
 			$rcRow['cuc_page_id'] = $rc_cur_id;
 		}
-		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+
+		// SRE-109: Update the cu_changes table in a background task
+		$task = \Wikia\Tasks\Tasks\UpdateCheckUserTask::newLocalTask();
+		$task->call( 'updateWithEditInfo', $rcRow );
+		$task->queue();
 
 		return true;
 	}

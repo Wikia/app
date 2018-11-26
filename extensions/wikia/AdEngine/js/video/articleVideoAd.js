@@ -94,6 +94,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		buildVastUrl: buildVastUrl,
 		shouldPlayPreroll: shouldPlayPreroll,
 		shouldPlayMidroll: shouldPlayMidroll,
-		shouldPlayPostroll: shouldPlayPostroll
+		shouldPlayPostroll: shouldPlayPostroll,
+		calculateRV: calculateRV
 	};
 });

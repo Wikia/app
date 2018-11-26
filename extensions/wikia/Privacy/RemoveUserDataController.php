@@ -111,6 +111,31 @@ class RemoveUserDataController extends WikiaController {
 		] );
 	}
 
+	/**
+	 * Invalidates the given user's email and removes it from memcache.
+	 * The email will not be reloaded from the DB unless a new value is set, or user cache is deleted.
+	 */
+	public function removeEmailFromCache() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if ( !$this->request->wasPosted() ) {
+			$this->response->setCode( self::METHOD_NOT_ALLOWED );
+			return;
+		}
+
+		$userId = $this->getVal( 'userId' );
+		if ( empty( $userId ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$user = User::newFromId( $userId );
+		$user->invalidateEmail();
+		// setting a blank email will prevent db reloads
+		$user->setEmail('');
+		$user->invalidateCache();
+	}
+
 	private function getUserWikis( int $userId ) {
 		$specialsDbr = self::getSpecialsDB();
 		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
