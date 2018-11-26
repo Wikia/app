@@ -112,7 +112,7 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
+		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video') && false) {
 			a9.waitForResponseCallbacks(
 				function onSuccess() {
 					bidParams = a9.getSlotParams(featuredVideoSlotName);
@@ -131,7 +131,11 @@ require([
 				setupPlayer();
 			});
 		} else {
-			setupPlayer();
+			setTimeout(function () {
+				console.log('Debug: late JWPlayer start');
+
+				setupPlayer();
+			}, 5000);
 		}
 	});
 });
