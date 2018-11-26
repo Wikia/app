@@ -8,7 +8,6 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
-	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.bidders')
@@ -22,7 +21,6 @@ require([
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoAds,
-	featuredVideoMoatTracking,
 	featuredVideoCookieService,
 	a9,
 	bidders
@@ -46,6 +44,10 @@ require([
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
 	}
 
+	function shouldForceUserIntendedPlay() {
+		return isFromRecirculation();
+	}
+
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
@@ -54,7 +56,6 @@ require([
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
 		featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -71,7 +72,7 @@ require([
 
 		featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
 
-		featuredVideoMoatTracking.loadTrackingPlugin();
+		featuredVideoAds.loadMoatTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -102,7 +103,8 @@ require([
 			logger: {
 				clientName: 'oasis'
 			},
-			lang: videoDetails.lang
+			lang: videoDetails.lang,
+			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
 	}
 

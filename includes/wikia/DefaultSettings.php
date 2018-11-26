@@ -1313,6 +1313,13 @@ $wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
 $wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries
+ * Adds FV rv and s1 values to Moat tracking.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1357,6 +1364,13 @@ $wgAdDriverFVDelayTimeoutOasis = 2000;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
+ * @name $wgAdDriverGeoEdgeCountries
+ * List of countries Geo Edge will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGeoEdgeCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries

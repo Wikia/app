@@ -1003,6 +1003,12 @@ class WikiPage extends Page implements IDBAccessObject {
 			$conditions['page_latest'] = $lastRevision;
 		}
 
+		// SRE-109: If the page has no previous revision (we're creating a new page)
+		// then the previous revision could not have been a redirect so there is no need to check for it
+		if ( $lastRevision === 0 ) {
+			$lastRevIsRedirect = false;
+		}
+
 		// Wikia change - begin
 		/**
 		 * PLATFORM-1311: page_latest can be set to zero only during page creation
@@ -1327,12 +1333,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
-		// <Wikia>
-		if ( is_string( $user ) ) {
-			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
-			Wikia::debugBacktrace( "MOLI: invalid User:" );
-		}
-		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -1485,7 +1485,11 @@ class WikiPage extends Page implements IDBAccessObject {
 				'text'       => $text,
 				'user'       => $user->getId(),
 				'user_text'  => $user->getName(),
-				'timestamp'  => $now
+				'timestamp'  => $now,
+
+				// SRE-109: We're creating a page so we know that the first revision will have no parents
+				// Not setting it explicitly will cause a pointless lookup on the master database
+				'parent_id'  => 0,
 			) );
 
 			try {

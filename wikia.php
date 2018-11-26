@@ -34,6 +34,11 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 
 	$app = F::app();
 
+	if ( empty( $wgRequest->getVal( 'controller' ) ) ) {
+		header( "HTTP/1.1 400 Bad Request", true, 400 );
+		return;
+	}
+
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
 

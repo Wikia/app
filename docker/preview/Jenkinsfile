@@ -256,30 +256,6 @@ node("docker-daemon") {
       }
     }
 
-    stage('Upload, download and push translations to dev') {
-      //TODO: uncomment when this will become main deploy pipeline
-      //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
-
-      // node('sandbox-i18n01') {
-      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-      //    git branch: 'dev',
-      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
-      //      url: 'git@github.com:Wikia/app.git'
-
-      //    sh '''
-      //     git clean -f
-      //     git pull origin dev
-      //     git config --global user.email 'jenkins@fandom.com'
-      //     git config --global user.name 'Sir Jenkins'
-      //     sudo /usr/local/bin/downloadAppMasterTranslations.sh
-      //     git add --all
-      //     git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
-      //     git push -u origin dev
-      //    '''
-      //  }
-      // }
-    }
-
     sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
       stage("Create new release branches") {
         parallel (
@@ -445,7 +421,8 @@ node("docker-daemon") {
           'SANDBOX_DATACENTER': datacenter,
           'APP_VERSION': nextAppReleaseTag,
           'CONFIG_VERSION': nextConfigReleaseTag,
-          'REPLICAS': 4
+          'REPLICAS': 4,
+          'MAX_REPLICAS': 10
         ])
 
         sh("""cat > docker/sandbox/k8s.yaml <<EOL
