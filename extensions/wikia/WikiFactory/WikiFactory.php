@@ -565,22 +565,33 @@ class WikiFactory {
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
-	 * @param $domain wiki host (without the protocol nor path)
+	 * @param string $domain wiki host (without the protocol nor path)
+	 * @param bool $includeRoot should the English version be included in the results
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
-	public static function getWikisUnderDomain( $domain ) {
+	public static function getWikisUnderDomain( $domain, $includeRoot = false ) {
 		$domain = wfNormalizeHost( $domain );
-
 		$dbr = static::db( DB_SLAVE );
 
 		return WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
+			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain, $includeRoot ),
 			900,	// 15 minutes
-			function() use ($dbr, $domain) {
+			function () use ( $dbr, $domain, $includeRoot ) {
+				$httpPattern = [ "http://{$domain}/" ];
+				$httpsPattern = [ "https://{$domain}/" ];
+
+				if ( !$includeRoot ) {
+					array_push( $httpPattern, $dbr->anyChar() );
+					array_push( $httpsPattern, $dbr->anyChar() );
+				}
+
+				array_push( $httpPattern, $dbr->anyString() );
+				array_push( $httpsPattern, $dbr->anyString() );
+
 				$where = [
 					$dbr->makeList( [
-						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
-						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( $httpPattern ),
+						'city_url ' . $dbr->buildLike( $httpsPattern ),
 					], LIST_OR ),
 					'city_public' => 1
 				];
