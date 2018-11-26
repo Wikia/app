@@ -87,6 +87,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
+		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
+		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
@@ -139,6 +141,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
