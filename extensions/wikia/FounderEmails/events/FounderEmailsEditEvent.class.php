@@ -12,22 +12,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 */
 	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
 
-	/**
-	 * Minimum number of non-profile edit revisions needed to determine if user made only
-	 * one edit on a wiki
-	 */
-	const FIRST_EDIT_REVISION_THRESHOLD = 2;
-
 	const DAILY_NOTIFICATION_LIMIT = 15;
-
-	/**
-	 * Constants for describing Users edit status for purpose of sending founder notification
-	 * on first edit
-	 */
-	const NO_EDITS = 0;
-	const FIRST_EDIT = 1;
-	const MULTIPLE_EDITS = 2;
-
 
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
@@ -245,49 +230,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	/**
-	 * Returns whether the user made no edits, first edit
-	 * or multiple edits (excluding profile page edits)
-	 *
-	 * @param User $user
-	 * @param bool $useMasterDb
-	 * @returns int one of:
-	 * 		FounderEmailsEditEvent::NO_EDITS
-	 * 		FounderEmailsEditEvent::FIRST_EDIT
-	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
-	 */
-	static public function getUserEditsStatus( $user, $useMasterDb = false ) {
-		$recentEditsCount = 0;
-		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
-
-		$conditions = [
-			'rev_user' => $user->getId(),
-		];
-
-		$userPageId = $user->getUserPage()->getArticleID();
-
-		if ( $userPageId ) {
-			$conditions[] = "rev_page != $userPageId";
-		}
-
-		$dbResult = $dbr->select(
-			[ 'revision' ],
-			[ 'rev_id' ],
-			$conditions,
-			__METHOD__,
-			[
-				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
-				'ORDER BY' => 'rev_timestamp DESC'
-			]
-		);
-
-		while ( $row = $dbr->FetchObject( $dbResult ) ) {
-			$recentEditsCount++;
-		}
-
-		return $recentEditsCount;
-	}
-
-	/**
 	 * @param RecentChange $oRecentChange
 	 *
 	 * @return bool
@@ -318,23 +260,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) === '1' ) ;
 
 			if ( !$wasNotificationSent ) {
-				$userEditStatus = static::getUserEditsStatus( $editor, true );
-				/*
-					If there is at least one edit, flag that we should not send this email anymore;
-					either first email is sent out as a result of this request,
-					or there was more than 1 edit so we will never need to send it again
-				 */
-				switch ( $userEditStatus ) {
-					case self::NO_EDITS:
-						return true;
-						break;
-					case self::FIRST_EDIT:
-						$isRegisteredUserFirstEdit = true;
-						static::setFirstEmailSentFlag( $editor->getName() );
-						break;
-					case self::MULTIPLE_EDITS:
-						static::setFirstEmailSentFlag( $editor->getName() );
-				}
+				$service = new UserStatsService( $editorId );
+				$editCount = $service->getEditCountWiki();
+
+				$isRegisteredUserFirstEdit = ( $editCount === 0 );
+
+				// Flag that we should not send this email anymore;
+				// either first email is sent out as a result of this request,
+				// or there was more than 1 edit so we will never need to send it again
+				static::setFirstEmailSentFlag( $editor->getName() );
 			}
 		} else {
 			// Anon user

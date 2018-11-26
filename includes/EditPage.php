@@ -1171,7 +1171,8 @@ class EditPage {
 			return $status;
 		}
 
-		if ( $wgUser->isBlockedFrom( $this->mTitle, false ) ) {
+		// SRE-109: Check blocked status on a replica instead of the master
+		if ( $wgUser->isBlockedFrom( $this->mTitle, true ) ) {
 			// Auto-block user's IP if the account was "hard" blocked
 			$wgUser->spreadAnyEditBlock();
 			# Check block state against master, thus 'false'.

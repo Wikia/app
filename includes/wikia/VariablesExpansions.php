@@ -347,6 +347,10 @@ $wgLBFactoryConf = [
         'blobs20132' => [ 'dbname' => 'blobs20132' ],
         'blobs20141' => [ 'dbname' => 'blobs20141' ],
     ],
+	'externalTemplateOverrides' => [
+		// SRE-109: Disable automatic transactions for external DBs like blobs cluster
+		'flags' => 0,
+	],
 ];
 
 /**

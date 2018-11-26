@@ -1534,6 +1534,12 @@ function wfHttpsAllowedForURL( $url ): bool {
 				$host
 			);
 		} else {
+			// this is called from WFL, where $wgRequest is not available yet; use $_SERVER vars to check the header
+			if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
+				in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
+				// As those envs are not covered by our certificate, disable https there
+				return false;
+			}
 			$server = str_replace( ".{$baseDomain}", '', $host );
 		}
 	}
@@ -1602,7 +1608,7 @@ function wfGetBaseDomainForHost( $host ) {
  * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
  * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
  *
- * @param $host
+ * @param string $host
  * @return string normalized host name
  */
 function wfNormalizeHost( $host ) {

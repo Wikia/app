@@ -3519,6 +3519,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Tasks\\Tasks\\RefreshLinksForTitleTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/RefreshLinksForTitleTask.php',
         'Wikia\\Tasks\\Tasks\\RenameUserPagesTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/RenameUserPagesTask.php',
         'Wikia\\Tasks\\Tasks\\SiteWideMessagesTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/SiteWideMessagesTask.php',
+        'Wikia\\Tasks\\Tasks\\UpdateCheckUserTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/UpdateCheckUserTask.php',
         'Wikia\\Tasks\\Tasks\\UserRegistrationTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/UserRegistrationTask.php',
         'Wikia\\Tasks\\Tasks\\WatchlistUpdateTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/WatchlistUpdateTask.php',
         'Wikia\\Tracer\\Uuid' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tracer/Uuid.php',

@@ -90,10 +90,10 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "6"
+              cpu: "2500m"
               memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: "3"
+              cpu: "1200m"
               memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
@@ -127,7 +127,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-prod
-  maxReplicas: 50
+  maxReplicas: 75
   minReplicas: 20
   metrics:
   - type: Resource
@@ -278,10 +278,10 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "6"
+              cpu: 4
               memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: "3"
+              cpu: 2
               memory: 1.5Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger

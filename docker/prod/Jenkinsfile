@@ -155,6 +155,17 @@ node("docker-daemon-big") {
             nextAppBranch = nextAppTag.tokenize('.')[0]
             nextConfigBranch = nextConfigTag.tokenize('.')[0]
           }
+
+          if (params.source == 'sync') {
+            if (params.app && params.config) {
+              nextAppTag = params.app
+              nextConfigTag = params.config
+
+              //e.g release-230
+              nextAppBranch = nextAppTag.tokenize('.')[0]
+              nextConfigBranch = nextConfigTag.tokenize('.')[0]
+            }
+          }
         },
         "prod": {
           def currentDeploymentInfo
@@ -193,9 +204,9 @@ node("docker-daemon-big") {
                 branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview') {
+            if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextAppTag}")
-              println("Source: preview; skip creating a tag")
+              println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentAppBranch}")
               nextAppTag = createTag(currentAppTag,)
@@ -212,9 +223,9 @@ node("docker-daemon-big") {
                 branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview') {
+            if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextConfigTag}")
-              println("Source: preview; skip creating a tag")
+              println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag)

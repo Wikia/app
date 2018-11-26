@@ -128,7 +128,10 @@ class SpecialEditWatchlist extends UnlistedSpecialPage {
 			$toUnwatch = array_diff( $current, $wanted );
 			$this->watchTitles( $toWatch );
 			$this->unwatchTitles( $toUnwatch );
-			$this->getUser()->invalidateCache();
+
+			// Bust article ETags for this user, to ensure that "watch" links change to "unwatch" links, and vice versa
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$this->getUser()->touch();
 
 			if( count( $toWatch ) > 0 || count( $toUnwatch ) > 0 ){
 				$this->successMessage = $this->msg( 'watchlistedit-raw-done' )->parse();
@@ -149,7 +152,10 @@ class SpecialEditWatchlist extends UnlistedSpecialPage {
 			}
 		} else {
 			$this->clearWatchlist();
-			$this->getUser()->invalidateCache();
+
+			// Bust article ETags for this user, to ensure that "unwatch" links change to "watch" links
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$this->getUser()->touch();
 
 			if( count( $current ) > 0 ){
 				$this->successMessage = $this->msg( 'watchlistedit-raw-done' )->parse();
