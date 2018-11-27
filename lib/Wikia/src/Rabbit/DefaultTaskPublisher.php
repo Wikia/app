@@ -120,28 +120,10 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function handleJsonError( array $payload ) {
-		switch ( json_last_error() ) {
-			case JSON_ERROR_NONE:
-				$message = __CLASS__ . ' - No JSON error but empty message found';
-				break;
-			case JSON_ERROR_DEPTH:
-				$message = __CLASS__ . ' - Maximum stack depth exceeded';
-				break;
-			case JSON_ERROR_STATE_MISMATCH:
-				$message = __CLASS__ . ' - Underflow or the modes mismatch';
-				break;
-			case JSON_ERROR_CTRL_CHAR:
-				$message = __CLASS__ . ' - Unexpected control character found';
-				break;
-			case JSON_ERROR_SYNTAX:
-				$message = __CLASS__ . ' - Syntax error, malformed JSON';
-				break;
-			case JSON_ERROR_UTF8:
-				$message = __CLASS__ . ' - Malformed UTF-8 characters, possibly incorrectly encoded';
-				break;
-			default:
-				$message = __CLASS__ . ' - Unknown JSON error';
-				break;
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			$message = __CLASS__ . ' - ' . json_last_error_msg();
+		} else {
+			$message = __CLASS__ . ' - No JSON error but empty message found';
 		}
 
 		$context = [ 'exception' => new \Exception() ];
