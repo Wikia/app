@@ -65,7 +65,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string,
+				'btl': billTheLizard ?
+					(billTheLizard.getResponseStatus('fv') || billTheLizard.BillTheLizard.NOT_USED) :
+					'',
 				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
 			};
 
