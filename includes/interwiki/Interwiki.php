@@ -347,7 +347,7 @@ class Interwiki {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 
-		return $url;
+		return WikiFactory::getLocalEnvURL( $url );
 	}
 
 	/**
