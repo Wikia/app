@@ -225,6 +225,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 						partnerCode: moatPartnerCode,
 						player: this
 					};
+
 					if (adContext.get('opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled')) {
 						log('Passing additional params to Moat FV tracking', log.levels.info, logGroup);
 						var rv = articleVideoAd.calculateRV(videoDepth);
@@ -233,6 +234,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 							zMoatS1: adContext.get('targeting.s1')
 						};
 					}
+
+					log(['Adding payload to MOAT plugin', payload], log.levels.debug, logGroup);
 					win.moatjw.add(payload);
 				});
 			}
