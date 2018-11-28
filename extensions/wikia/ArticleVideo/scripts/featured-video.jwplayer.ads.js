@@ -1,6 +1,7 @@
 /*global define, require*/
 define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -17,6 +18,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	require.optional('ext.wikia.adEngine.lookup.prebid')
 ], function (
 	adContext,
+	page,
 	vastUrlBuilder,
 	megaAdUnitBuilder,
 	slotRegistry,
@@ -229,9 +231,10 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 					if (adContext.get('opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled')) {
 						log('Passing additional params to Moat FV tracking', log.levels.info, logGroup);
 						var rv = articleVideoAd.calculateRV(videoDepth);
+						var params = page.getPageLevelParams();
 						payload.ids = {
 							zMoatRV: rv <= 10 ? rv.toString() : '10+',
-							zMoatS1: adContext.get('targeting.s1')
+							zMoatS1: params.s1
 						};
 					}
 
