@@ -78,6 +78,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// HMD rec
 		context.opts.wadHMD = serviceCanBeEnabled &&
+			//context.targeting.hasFeaturedVideo &&
 			isEnabled('wgAdDriverWadHMDCountries');
 	}
 

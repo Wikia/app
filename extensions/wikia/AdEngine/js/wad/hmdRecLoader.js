@@ -10,6 +10,33 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	var wikiaApiController = 'AdEngine2ApiController',
 		wikiaApiMethod = 'getHMDCode';
 
+	function getConfig() {
+		return {
+			globalConfig: "https://s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/global_config.json",
+			clientConfig: "https://fabian-test-eu-fra.s3.amazonaws.com/homad/homadConfigTestHttps.json",
+			/*clientConfig: function () {
+				return {
+					"alias": "comwikiapubadsgdoubleclicknet",
+					"config": "https://hgc-cf-cache-1.svonm.com/www.wikia.com/config.json",
+					"enabled": true,
+					"server": [
+						"https://ssl.1.damoh.wikia.com/[hash]/",
+						"https://ssl.2.damoh.wikia.com/[hash]/",
+						"https://ssl.3.damoh.wikia.com/[hash]/",
+						"https://ssl.4.damoh.wikia.com/[hash]/",
+						"https://ssl.5.damoh.wikia.com/[hash]/",
+						"https://ssl.6.damoh.wikia.com/[hash]/"
+					]
+				};
+			},*/
+			adTag: 'https://fabian-test-eu-fra.s3.amazonaws.com/vast-test-area/vast2-default-5sec.xml',
+			onReady: function () {
+				// ToDo: remove debug code
+				console.log('Debug: Homad is ready');
+			}
+		};
+	}
+
 	function injectScript() {
 		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
 
@@ -37,6 +64,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	}
 
 	return {
+		getConfig: getConfig,
 		init: init
 	};
 });

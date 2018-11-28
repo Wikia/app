@@ -1,32 +1,19 @@
+require([
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.hmdRecLoader'
+], function (adContext, hmdRecLoader) {
+	var context = adContext.getContext();
 
-var exportz = exportz || {};
-(function(exports) {
-    "use strict";
+	console.log(context.opts);
+	console.log(hmdRecLoader.getConfig());
 
-var conf = {
-    globalConfig: "https://s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/global_config.json",
-    clientConfig: function () {
-        return {
-	        "alias": "comwikiapubadsgdoubleclicknet",
-	        "config": "https://hgc-cf-cache-1.svonm.com/www.wikia.com/config.json",
-	        "enabled": true,
-	        "server": [
-		        "https://ssl.1.damoh.wikia.com/[hash]/",
-		        "https://ssl.2.damoh.wikia.com/[hash]/",
-		        "https://ssl.3.damoh.wikia.com/[hash]/",
-		        "https://ssl.4.damoh.wikia.com/[hash]/",
-		        "https://ssl.5.damoh.wikia.com/[hash]/",
-		        "https://ssl.6.damoh.wikia.com/[hash]/"
-	        ]
-        };
-    },
-    adTag: 'https://fabian-test-eu-fra.s3.amazonaws.com/vast-test-area/vast2-default-5sec.xml',
-    onReady: function () {
-	    // ToDo: remove debug code
-        console.log('Debug: Homad is ready');
-    }
-};
-var exportz=exportz||{};
+	var exportz = exportz || {};
+	(function(exports) {
+		"use strict";
+
+		var conf = hmdRecLoader.getConfig();
+		var exportz=exportz||{};
+
 (function(k){k=k||{};(function(h){function b(){this.A="setup";this.s();window.addEventListener("message",this.F.bind(this))}h.m=b;b.prototype={s:function(){this.a={urls:{},homadUrls:{},originalUrls:{},scripts:{},eventlistener:[],generalEventlistener:[],iFrames:[],iFrameOnLoadHandler:{},iFrameUrl:"",trace:[],stack:[],errmsg:[]}},postMessage:function(a,d){try{a.contentWindow&&(a=a.contentWindow)}catch(e){}a&&a.postMessage&&a.postMessage(d,"*")},F:function(a){a&&a.data&&a.data.type&&"vpaid"==a.data.type&&
 this.D(a.data)},D:function(a){if(this.a&&this.a.eventlistener)for(var d=this.a.eventlistener.length,e=0;e<d;e++)this.a&&this.a.eventlistener&&a.event==this.a.eventlistener[e].name&&this.a.eventlistener[e].cb(a)},j:function(a){a=a&&"number"===typeof a&&0<a?Math.round(a):10;for(var d="",e=0;e<a;e++)d+=String.fromCharCode((.5>Math.random()?65:97)+Math.floor(26*Math.random()));return d},h:function(a){var d=0,e,c;if(0===a.length)return d;for(e=0;e<a.length;e++)c=a.charCodeAt(e),d=(d<<5)-d+c,d|=0;return d},
 G:function(a){function d(a){var c="",d,b;for(d=7;0<=d;d--)b=a>>>4*d&15,c+=b.toString(16);return c}function e(a,c){return a<<c|a>>>32-c}var c,b,q=Array(80),h=1732584193,n=4023233417,u=2562383102,w=271733878,k=3285377520,f,l,m,p,r;a=a&&"string"===typeof a?a:"";f=a.length;var v=[];for(c=0;c<f-3;c+=4)b=a.charCodeAt(c)<<24|a.charCodeAt(c+1)<<16|a.charCodeAt(c+2)<<8|a.charCodeAt(c+3),v.push(b);switch(f%4){case 0:c=2147483648;break;case 1:c=a.charCodeAt(f-1)<<24|8388608;break;case 2:c=a.charCodeAt(f-2)<<
@@ -52,7 +39,5 @@ f.send(d)}else f.open("GET",a,!0),f.send()}catch(k){c&&c(f)}}function u(){var a=
 x.width=1;x.height=1;x.style.display="none";document.body.appendChild(x);A=x.contentWindow}else A=window;var H=A.setInterval.bind(window),B=A.setTimeout.bind(window),J=A.JSON;x&&document.body.removeChild(x);var I=!1;n(conf.globalConfig,function(a){l?d():l=!f(a.enabled)});"string"===typeof conf.clientConfig?n(conf.clientConfig,y,function(){B(function(){n(conf.clientConfig,y,function(){B(b,Math.round(1400+200*Math.random()))})},Math.round(400+200*Math.random()))}):r=H(function(){var a="";try{a=conf.clientConfig(),
 v++,a?(y(a),window.clearInterval(r)):50<=v&&(window.clearInterval(r),b())}catch(c){}},Math.round(100+100*Math.random()))})()}).call(exportz,exportz);
 
-}.bind(exportz))(exportz);
-
-
-
+	}.bind(exportz))(exportz);
+});
