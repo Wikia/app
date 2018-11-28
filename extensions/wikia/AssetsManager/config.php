@@ -14,7 +14,7 @@ $config['oasis_shared_core_js'] = [
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
 		// Parametrized links to category pages might be everywhere and we need to catch 'em all
-		'#group_category_page3_alphabet_shortcuts_js',
+		'#group_seo_tweaks_uncrawlable_urls',
 		'//extensions/wikia/AutoLogin/js/passive_autologin.js'
 	],
 ];
@@ -204,6 +204,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
 		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
+		'//extensions/wikia/AdEngine/js/tracking/moatYi.js',
 		'//extensions/wikia/AdEngine/js/tracking/pageInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
@@ -2457,11 +2458,11 @@ $config['language_wikis_index_scss'] = [
 	],
 ];
 
-$config['category_page3_alphabet_shortcuts_js'] = [
+$config['seo_tweaks_uncrawlable_urls'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CategoryPage3/scripts/alphabet-shortcuts.js',
+		'//extensions/wikia/SEOTweaks/scripts/uncrawlable-urls.js',
 	],
 ];
 

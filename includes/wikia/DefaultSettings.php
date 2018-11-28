@@ -121,6 +121,8 @@ $wgHooks['ArticleSaveComplete'][] = 'ApiHooks::onArticleSaveComplete';
 $wgHooks['ArticleRollbackComplete'][] = 'ApiHooks::onArticleRollbackComplete';
 $wgHooks['TitleMoveComplete'][] = 'ApiHooks::onTitleMoveComplete';
 $wgHooks['ArticleCommentListPurgeComplete'][] = 'ApiHooks::ArticleCommentListPurgeComplete';
+$wgHooks['ClosedWikiHandler'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
+$wgHooks['ShowLanguageWikisIndex'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
 
 
 //Wikia API base controller, all the others extend this class
@@ -1130,13 +1132,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
-
-/**
- * @name $wgAdDriverBottomLeaderBoardViewportCountries
- * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardViewportCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries

@@ -120,4 +120,27 @@ class SassUtilTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider hexToRgb
+	 *
+	 * @param $hex
+	 * @param $rgb
+	 */
+	public function testHexToRgb( $hex, $rgb ) {
+		$this->assertEquals( $rgb, SassUtil::hexToRgb( $hex ) );
+	}
+
+	public function hexToRgb() {
+		return [
+			[ '#ffffff', [ 'r' => 255, 'g' => 255, 'b' => 255 ] ],
+			[ '#00ffff', [ 'r' => 0, 'g' => 255, 'b' => 255 ] ],
+			[ '#ff00ff', [ 'r' => 255, 'g' => 0, 'b' => 255 ] ],
+			[ '#ffff00', [ 'r' => 255, 'g' => 255, 'b' => 0 ] ],
+			[ '#fff', [ 'r' => 255, 'g' => 255, 'b' => 255 ] ],
+			[ '#0ff', [ 'r' => 0, 'g' => 255, 'b' => 255 ] ],
+			[ '#f0f', [ 'r' => 255, 'g' => 0, 'b' => 255 ] ],
+			[ '#ff0', [ 'r' => 255, 'g' => 255, 'b' => 0 ] ],
+		];
+	}
 }

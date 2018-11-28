@@ -1664,3 +1664,22 @@ function wfForceBaseDomain( $url, $targetServer ) {
 	$finalUrl = http_build_url( $url, [ 'host' => $finalHost, ] );
 	return WikiFactory::getLocalEnvURL( $finalUrl );
 }
+
+function wfGetLanguagePathFromURL( string $url ): string {
+	$path = parse_url( $url, PHP_URL_PATH );
+	if ( is_null( $path ) ) {
+		return '';
+	}
+
+	$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
+	if ( $slash ) {
+		$languages = Language::getLanguageNames();
+		$langCode = substr( $path, 1, $slash - 1 );
+
+		if ( isset( $languages[$langCode] ) ) {
+			return "/{$langCode}";
+		}
+	}
+
+	return '';
+}
