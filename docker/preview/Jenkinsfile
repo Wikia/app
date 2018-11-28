@@ -19,23 +19,27 @@ def render(String template, java.util.LinkedHashMap binding) {
 // version: 751.001
 // branch: release-751
 
-// e.g. 220.004
-def get_current_version() {
-  // get most recent tag reachable for current branch
-  // eg. release-757.001 -> 757.001
-  return sh(
-      script: "git describe --abbrev=0 --match='release-*' 2> /dev/null || echo 'release-000.000'",
-      returnStdout: true
-    )
-    .trim()
-    .replace('release-', '')
+def get_latest_version() {
+  // eg. 757.001
+  def latestVersion = sh(
+    script: "git tag -l 'release-*' | tail -n1",
+    returnStdout: true
+  )
+  .trim()
+  .replace('release-', '')
+
+  if (latestVersion) {
+    return latestVersion
+  } else {
+    return '000.000'
+  }
 }
 
 // 770.001 -> 771.001
 // 600.009 -> 601.001
 // none -> 1.001
 def bump_major() {
-  def currentVersion = get_current_version()
+  def currentVersion = get_latest_version()
 
   def nextMajorVersion = currentVersion.tokenize('.')[0].toInteger() + 1
 
@@ -45,7 +49,7 @@ def bump_major() {
 // 770.001 -> 770.002
 // none -> 000.001
 def bump_minor() {
-  def currentVersion = get_current_version()
+  def currentVersion = get_latest_version()
 
   def currentVersionTokens = currentVersion.tokenize('.')
   def currentMajorVersion = currentVersionTokens[0]
@@ -189,7 +193,7 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             if (params.source == 'latest') {
-              nextAppReleaseVersion = get_current_version()
+              nextAppReleaseVersion = get_latest_version()
             } else if (params.source == 'hotfix') {
               nextAppReleaseVersion = bump_minor()
             } else {
@@ -209,7 +213,7 @@ node("docker-daemon") {
         "config": {
           dir("config") {
             if (params.source == 'latest') {
-              nextConfigReleaseVersion = get_current_version()
+              nextConfigReleaseVersion = get_latest_version()
             } else if (params.source == 'hotfix') {
               nextConfigReleaseVersion = bump_minor()
             } else {
@@ -254,30 +258,6 @@ node("docker-daemon") {
           )
         }
       }
-    }
-
-    stage('Upload, download and push translations to dev') {
-      //TODO: uncomment when this will become main deploy pipeline
-      //Disabled for now, so we don't do it twice (when deploying to Apaches and when deploying to k8s)
-
-      // node('sandbox-i18n01') {
-      //  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-      //    git branch: 'dev',
-      //      credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea',
-      //      url: 'git@github.com:Wikia/app.git'
-
-      //    sh '''
-      //     git clean -f
-      //     git pull origin dev
-      //     git config --global user.email 'jenkins@fandom.com'
-      //     git config --global user.name 'Sir Jenkins'
-      //     sudo /usr/local/bin/downloadAppMasterTranslations.sh
-      //     git add --all
-      //     git diff --quiet --exit-code --cached || git commit -m 'Automatic translations update'
-      //     git push -u origin dev
-      //    '''
-      //  }
-      // }
     }
 
     sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {

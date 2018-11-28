@@ -211,18 +211,25 @@ abstract class CategoryExhibitionSection {
 	}
 
 	protected function getTemplateVarsForItem( $pageId ) {
+		global $wgScriptPath;
+
 		$oTitle = Title::newFromID( $pageId );
 		if ( !( $oTitle instanceof Title ) ) {
 			return false;
 		}
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = wfMemcKey(
+		$keyParams = [
 			'category_exhibition_category_cache_1',
 			$pageId,
 			$this->cacheHelper->getTouched( $oTitle )
-		);
+		];
 
+		if ( !empty( $wgScriptPath ) ) {
+			$keyParams[] = $wgScriptPath;
+		}
+
+		$sKey = wfMemcKey( ...$keyParams );
 		$cachedResult = $oMemCache->get( $sKey );
 
 		if ( !empty( $cachedResult ) ) {
@@ -257,7 +264,9 @@ abstract class CategoryExhibitionSection {
 	 * Caching functions.
 	 */
 	protected function getKey() {
-		return wfMemcKey(
+		global $wgScriptPath;
+
+		$keyParams = [
 			'category_exhibition_section_0',
 			self::CACHE_VERSION,
 			md5( $this->categoryTitle->getDBKey() ),
@@ -267,6 +276,12 @@ abstract class CategoryExhibitionSection {
 			$this->cacheHelper->getTouched( $this->categoryTitle ),
 			// Those are mentioned separately because they modify the pagination URL
 			$this->urlParams->getSortParam()
-		);
+		];
+
+		if ( !empty( $wgScriptPath ) ) {
+			$keyParams[] = $wgScriptPath;
+		}
+
+		return wfMemcKey( ...$keyParams );
 	}
 }

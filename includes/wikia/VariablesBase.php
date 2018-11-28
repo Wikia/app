@@ -3514,6 +3514,13 @@ $wgEnableSemanticScribuntoExt = false;
 $wgEnableSendGridPostback = true;
 
 /**
+ * Enable SEO Link Hreflang extension.
+ * @see extensions/wikia/SeoLinkHreflang
+ * @var bool $wgEnableSeoLinkHreflangExt
+ */
+$wgEnableSeoLinkHreflangExt = true;
+
+/**
  * If on, the sidebar navigation links are cached for users with the current
  * language set. This can save a touch of load on a busy site by shaving off
  * extra message lookups. However it is also fragile: changing the site

@@ -265,7 +265,7 @@ class Subtitle {
 		$namespaceText = $language->getFormattedNsText( $this->title->getNamespace() );
 		$userBlogPageText = $namespaceText . ':' . $userName;
 
-		$pageStatsService = new PageStatsService( $this->title->getArticleId() );
+		$pageStatsService = new PageStatsService( $this->title );
 		$pageCreatedDate = $language->date( $pageStatsService->getFirstRevisionTimestamp() );
 
 		return $app->renderPartial(

@@ -8,7 +8,7 @@
 			<?= Html::element( 'a', [
 				'href' => '#',
 				'rel' => 'nofollow',
-				'data-category-url-encoded' => base64_encode( $title->getFullURL( [ 'from' => $shortcut['from'] ] ) )
+				'data-uncrawlable-url' => base64_encode( $title->getFullURL( [ 'from' => $shortcut['from'] ] ) )
 			], $shortcut['label'] ) ?></li>
 		<?php // Don't put a newline before </li> or the bullets will disappear ?>
 	<?php endforeach; ?>
