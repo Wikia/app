@@ -68,12 +68,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
-		$title = $article->getTitle();
-
-		// SRE-109: This operation is redundant for file description pages and talk pages/Wall messages/Forum posts
-		if ( !$title->isTalkPage() && !$title->inNamespace( NS_FILE ) ) {
-			PortableInfoboxDataService::newFromTitle( $title )->delete();
-		}
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
 
 		return true;
 	}
@@ -100,10 +95,7 @@ class PortableInfoboxHooks {
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			// SRE-109: This operation is redundant for file description pages and talk pages/Wall messages/Forum posts
-			if ( !$title->isTalkPage() && !$title->inNamespace( NS_FILE ) ) {
-				PortableInfoboxDataService::newFromTitle( $title )->delete();
-			}
+			PortableInfoboxDataService::newFromTitle( $title )->delete();
 		}
 
 		return true;
