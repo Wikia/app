@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.tracking.pageInfoTracker', [
 			'prop_name': name,
 			'prop_value': value,
 			'timestamp': (new Date()).getTime(),
-			'tzOffset': (new Date().getTimezoneOffset())
+			'tz_offset': (new Date().getTimezoneOffset())
 		});
 	}
 
