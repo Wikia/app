@@ -4,8 +4,7 @@ require([
 ], function (adContext, hmdRecLoader) {
 	var context = adContext.getContext();
 
-	console.log(context.opts);
-	console.log(hmdRecLoader.getConfig());
+	console.log('Debug: Homad started with configuration', hmdRecLoader.getConfig());
 
 	var exportz = exportz || {};
 	(function(exports) {

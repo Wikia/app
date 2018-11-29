@@ -105,7 +105,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/wad/btRecLoader.js',
-		'//extensions/wikia/AdEngine/js/wad/hmdRecLoader.js',
 		'//extensions/wikia/AdEngine/js/wad/ilRecLoader.js',
 		'//extensions/wikia/AdEngine/js/wad/wadRecRunner.js',
 		'#group_adengine2_playwire_js',
@@ -116,10 +115,6 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
 		'//resources/wikia/modules/viewportObserver.js',
-
-		// was: late queue
-		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
-
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js'
 	],
 ];
@@ -208,6 +203,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/tracking/pageInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
+		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
 		'//extensions/wikia/AdEngine/js/video/articleVideoAd.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
@@ -218,6 +214,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
+		'//extensions/wikia/AdEngine/js/wad/hmdRecLoader.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],

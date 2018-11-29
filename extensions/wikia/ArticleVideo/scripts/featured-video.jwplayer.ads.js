@@ -41,7 +41,16 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
-		logGroup = 'wikia.articleVideo.featuredVideo.ads';
+		logGroup = 'wikia.articleVideo.featuredVideo.ads',
+		vastUrls = {
+			pre: null,
+			mid: null,
+			post: null
+		};
+
+	function getCurrentVast(placement) {
+		return vastUrls[placement];
+	}
 
 	function parseVastParamsFromEvent(event) {
 		return vastParser.parse(event.tag, {
@@ -96,6 +105,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';
 				bidderEnabled = false;
+
+				vastUrls.pre = bid.vastUrl;
 				player.playAd(bid.vastUrl);
 			}
 		}
@@ -142,7 +153,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 
 				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
-					player.playAd(articleVideoAd.buildVastUrl(
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'preroll',
 						videoDepth,
@@ -150,7 +161,11 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 						slotTargeting,
 						playerState,
 						bidParams
-					));
+					);
+
+					vastUrls.pre = vastUrl;
+					console.log('Debug: preroll vast url saved', vastUrls.pre);
+					player.playAd(vastUrl);
 				}
 				prerollPositionReached = true;
 			});
@@ -160,14 +175,18 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				if (videoDepth > 0 && articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
 					playerState.muted = player.getMute();
-					player.playAd(articleVideoAd.buildVastUrl(
+
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'midroll',
 						videoDepth,
 						correlator,
 						slotTargeting,
 						playerState
-					));
+					);
+
+					vastUrls.mid = vastUrl;
+					player.playAd(vastUrl);
 				}
 
 			});
@@ -177,14 +196,18 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				if (videoDepth > 0 && articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
 					playerState.muted = player.getMute();
-					player.playAd(articleVideoAd.buildVastUrl(
+
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'postroll',
 						videoDepth,
 						correlator,
 						slotTargeting,
 						playerState
-					));
+					);
+
+					vastUrls.post = vastUrl;
+					player.playAd(vastUrl);
 				}
 			});
 
@@ -259,6 +282,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 
 	return {
 		init: init,
+		getCurrentVast: getCurrentVast,
 		trackSetup: trackSetup,
 		loadMoatTrackingPlugin: loadMoatTrackingPlugin
 	};

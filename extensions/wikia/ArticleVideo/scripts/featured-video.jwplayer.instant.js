@@ -1,10 +1,12 @@
 require([
 	'wikia.window',
 	'wikia.cookies',
+	'wikia.document',
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
@@ -14,10 +16,12 @@ require([
 ], function (
 	win,
 	cookies,
+	doc,
 	tracker,
 	trackingOptIn,
 	abTest,
 	adContext,
+	hmdRecLoader,
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoAds,
@@ -112,30 +116,38 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video') && false) {
-			a9.waitForResponseCallbacks(
-				function onSuccess() {
-					bidParams = a9.getSlotParams(featuredVideoSlotName);
+		doc.addEventListener('bab.blocking', function () {
+			if (adContext.get('opts.wadHMD')) {
+				console.log('Debug: initialize Homad with player setup()');
+				hmdRecLoader.setOnReady(function () {
+					// ToDo: remove debug code
+					console.log('Debug: Homad is ready');
 					setupPlayer();
-				},
-				function onTimeout() {
-					bidParams = {};
-					setupPlayer();
-				},
-				responseTimeout
-			);
-		} else if (bidders && bidders.addResponseListener && bidders.isEnabled() && false) {
-			// ToDo: remove FV AdBlock bug hack
-			bidders.addResponseListener(function () {
-				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				});
+			} else {
 				setupPlayer();
-			});
-		} else {
-			setTimeout(function () {
-				console.log('Debug: late JWPlayer start');
+			}
+		});
 
-				setupPlayer();
-			}, 5000);
-		}
+		doc.addEventListener('bab.not_blocking', function () {
+			if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
+				a9.waitForResponseCallbacks(
+					function onSuccess() {
+						bidParams = a9.getSlotParams(featuredVideoSlotName);
+						setupPlayer();
+					},
+					function onTimeout() {
+						bidParams = {};
+						setupPlayer();
+					},
+					responseTimeout
+				);
+			} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
+				bidders.addResponseListener(function () {
+					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+					setupPlayer();
+				});
+			}
+		});
 	});
 });
