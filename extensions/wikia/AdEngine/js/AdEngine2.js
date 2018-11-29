@@ -167,6 +167,11 @@ define('ext.wikia.adEngine.adEngine', [
 						slot.container.setAttribute('data-slot-result', 'hop');
 						nextProvider();
 					},
+					loaded: function () {
+						log(['loaded', provider.name, slotName], log.levels.debug, logGroup);
+						slot.container.setAttribute('data-slot-loaded', 'true');
+						slot.triggerOnLoad();
+					},
 					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], log.levels.debug, logGroup);
 						if (!slot.container.getAttribute('data-slot-result')) {
