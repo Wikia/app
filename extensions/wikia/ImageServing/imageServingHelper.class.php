@@ -14,26 +14,20 @@ class ImageServingHelper {
 	 * @return bool return true to continue hooks flow
 	 */
 	public static function onLinksUpdateComplete( $linksUpdate ) {
-		$title = $linksUpdate->getTitle();
-
-		// SRE-109: It is redundant to build index for file description pages and talk pages/Forum posts/Wall messages
-		if ( $title->isTalkPage() || $title->inNamespace( NS_FILE ) ) {
-			return true;
-		}
-
+		wfProfileIn(__METHOD__);
 		$images = $linksUpdate->getImages();
-		$articleId = $title->getArticleID();
+		$articleId = $linksUpdate->getTitle()->getArticleID();
 
 		if(count($images) === 1) {
 			$images = array_keys($images);
 			self::buildIndex( $articleId, $images);
-
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$article = new Article( $title );
+		$article = new Article($linksUpdate->getTitle());
 		self::buildAndGetIndex( $article );
-
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
