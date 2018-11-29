@@ -1657,6 +1657,10 @@ if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	include( "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php" );
 }
 
+if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
+	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
+}
+
 if ( !empty( $wgEnableSitemapPageExt ) ) {
 	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
 }

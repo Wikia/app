@@ -13,4 +13,5 @@ $wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
 $wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
 $wgHooks['ClosedWikiHandler'][] = 'LanguageWikisIndexHooks::onClosedWikiPage';
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'LanguageWikisIndexHooks::onGetHTMLBeforeWikiaPage';
+$wgHooks['MercuryWikiVariables'][] = 'LanguageWikisIndexHooks::onMercuryWikiVariables';
 $wgHooks['WikiaCanonicalHref'][] = 'LanguageWikisIndexHooks::onWikiaCanonicalHref';

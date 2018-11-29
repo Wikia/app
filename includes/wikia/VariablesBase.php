@@ -1274,7 +1274,7 @@ $wgCreateLanguageWikisWithPath = false;
  * Whether to create new English wikis under the fandom.com domain.
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
-$wgCreateEnglishWikisOnFandomCom = false;
+$wgCreateEnglishWikisOnFandomCom = true;
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -2009,16 +2009,6 @@ $wgDumpsDisabledWikis = [
  * @var string $wgEditEncoding
  */
 $wgEditEncoding = '';
-
-/**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-	'vhost' => 'data-warehouse',
-	'exchange' => 'mediawiki-edit-events',
-];
 
 /**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
@@ -3522,6 +3512,13 @@ $wgEnableSemanticScribuntoExt = false;
  * @var bool $wgEnableSendGridPostback
  */
 $wgEnableSendGridPostback = true;
+
+/**
+ * Enable SEO Link Hreflang extension.
+ * @see extensions/wikia/SeoLinkHreflang
+ * @var bool $wgEnableSeoLinkHreflangExt
+ */
+$wgEnableSeoLinkHreflangExt = true;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current

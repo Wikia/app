@@ -482,4 +482,38 @@ class SassUtil {
 
 		return $themeSettings;
 	}
+
+	/**
+	 * @param $themeSettings
+	 *
+	 * @return mixed
+	 */
+	public static function convertColorsToRgb( array $themeSettings ): array {
+		$settings = [];
+
+		foreach ( self::normalizeThemeColors( $themeSettings ) as $key => $val ) {
+			if ( preg_match( self::HEX_REG_EXP, $val ) ) {
+				$settings[$key] = self::hexToRgb( $val );
+			} else {
+				$settings[$key] = $val;
+			}
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * @param string $hex
+	 *
+	 * @return array with r, g and b keys
+	 */
+	public static function hexToRgb( string $hex ): array {
+		$hex      = str_replace('#', '', $hex);
+		$length   = strlen($hex);
+		$rgb['r'] = hexdec($length == 6 ? substr($hex, 0, 2) : ($length == 3 ? str_repeat(substr($hex, 0, 1), 2) : 0));
+		$rgb['g'] = hexdec($length == 6 ? substr($hex, 2, 2) : ($length == 3 ? str_repeat(substr($hex, 1, 1), 2) : 0));
+		$rgb['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
+
+		return $rgb;
+	}
 }

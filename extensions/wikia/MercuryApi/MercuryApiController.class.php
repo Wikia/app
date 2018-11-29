@@ -246,8 +246,13 @@ class MercuryApiController extends WikiaController {
 
 	/**
 	 * @return void
+	 * @throws FatalError
+	 * @throws MWException
+	 * @throws WikiaException
 	 */
 	public function getPage() {
+		global $wgServer;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [
@@ -302,6 +307,10 @@ class MercuryApiController extends WikiaController {
 				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 				// Set it before we remove the namespace from $displayTitle
 				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
+
+				if ( $isMainPage && wfHttpsEnabledForURL( $wgServer ) ) {
+					$data['hreflangLinks'] = SeoLinkHreflang::getMainPageLinks();
+				}
 
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );

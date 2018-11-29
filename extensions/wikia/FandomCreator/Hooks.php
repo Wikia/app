@@ -116,7 +116,7 @@ class Hooks {
 		return !self::isValidCommunityId( $communityId );
 	}
 
-	public static function onGetWikisUnderDomain( $domain, $languageOnly, &$cities ) {
+	public static function onGetWikisUnderDomain( $domain, $includeRoot, &$cities ) {
 		// add FC specific fields
 		$cities = array_map(
 			function( $cityData ) {

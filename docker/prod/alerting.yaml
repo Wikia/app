@@ -20,3 +20,165 @@ spec:
         description: UpdateSpecialPages maintenance script did not run in the last 24 hours
         summary: UpdateSpecialPages last succeeded {{humanizeDuration $value}} ago
         graphs: https://metrics.wikia-inc.com/d/Lpjst60mk/celery-mediawiki-tasks
+    # SUS-6077 | Close wikis queue not being consumed
+    - alert: mediawiki_maintenance_scripts_CloseWikiMaintenance_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseWikiMaintenance"}) > 86400 * 2
+      labels:
+        team: sus
+      annotations:
+        description: CloseWikiMaintenance maintenance script did not run in the last 48 hours
+        summary: CloseWikiMaintenance last succeeded {{humanizeDuration $value}} ago
+    # DumpStarters should be run every 24h
+    - alert: mediawiki_maintenance_scripts_DumpStarters_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DumpStarters"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Starter wikis XML and SQL dumps were not updated in the last 24 hours
+        summary: DumpStarters last succeeded {{humanizeDuration $value}} ago
+    # CleanupCityCreationLog should be run every 24h
+    - alert: mediawiki_maintenance_scripts_CleanupCityCreationLog_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanupCityCreationLog"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: CleanupCityCreationLog maintenance script did not run in the last 24 hours
+        summary: CleanupCityCreationLog last succeeded {{humanizeDuration $value}} ago
+    # CleanUpWallNotifications should be run every 24h
+    - alert: mediawiki_maintenance_scripts_CleanUpWallNotifications_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanUpWallNotifications"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: CleanUpWallNotifications maintenance script did not run in the last 24 hours
+        summary: CleanUpWallNotifications last succeeded {{humanizeDuration $value}} ago
+    # CloseMyAccountMaintenance should be run every 24h
+    - alert: mediawiki_maintenance_scripts_CloseMyAccountMaintenance_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseMyAccountMaintenance"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: CloseMyAccountMaintenance maintenance script did not run in the last 24 hours
+        summary: CloseMyAccountMaintenance last succeeded {{humanizeDuration $value}} ago
+    # ContentReviewStatus should be run every 3h
+    - alert: mediawiki_maintenance_scripts_ContentReviewStatus_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ContentReviewStatus"}) > 3600 * 4
+      labels:
+        team: sus
+      annotations:
+        description: "ContentReviewStatus should post a message on #js-review-tool Slack channel every three hours"
+        summary: ContentReviewStatus last succeeded {{humanizeDuration $value}} ago
+    # DeleteArticlesByPrefix should be run every 24h
+    - alert: mediawiki_maintenance_scripts_DeleteArticlesByPrefix_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DeleteArticlesByPrefix"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: DeleteArticlesByPrefix maintenance script did not run in the last 24 hours
+        summary: DeleteArticlesByPrefix last succeeded {{humanizeDuration $value}} ago
+    # FounderEmailsMaintenance should be run every 24h
+    - alert: mediawiki_maintenance_scripts_FounderEmailsMaintenance_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="FounderEmailsMaintenance"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: FounderEmailsMaintenance maintenance script did not run in the last 24 hours
+        summary: FounderEmailsMaintenance last succeeded {{humanizeDuration $value}} ago
+    # MigratePhalanxUserBlocks should be run every 24h
+    - alert: mediawiki_maintenance_scripts_MigratePhalanxUserBlocks_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="MigratePhalanxUserBlocks"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: MigratePhalanxUserBlocks maintenance script did not run in the last 24 hours
+        summary: MigratePhalanxUserBlocks last succeeded {{humanizeDuration $value}} ago
+    # PhraseAlerts should be run every 24h
+    - alert: mediawiki_maintenance_scripts_PhraseAlerts_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="PhraseAlerts"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Email with report about monitored phrases was not generated in the last 24 hours
+        summary: PhraseAlerts last succeeded {{humanizeDuration $value}} ago
+    # RemoveQAWikis should be run every 24h
+    - alert: mediawiki_maintenance_scripts_RemoveQAWikis_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="RemoveQAWikis"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Script that closes old QA wikis was not run in the last 24 hours
+        summary: RemoveQAWikis last succeeded {{humanizeDuration $value}} ago
+    # SendConfirmationReminder should be run every 24h
+    - alert: mediawiki_maintenance_scripts_SendConfirmationReminder_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="SendConfirmationReminder"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script to send email confirmation reminder to users was not run in the last 24 hours
+        summary: SendConfirmationReminder last succeeded {{humanizeDuration $value}} ago
+    # UploadStashCleanup should be run every 24h
+    - alert: mediawiki_maintenance_scripts_UploadStashCleanup_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="UploadStashCleanup"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that cleanups stash uploads was not run in the last 24 hours
+        summary: UploadStashCleanup last succeeded {{humanizeDuration $value}} ago
+    # InitStats should be run every 24h
+    - alert: mediawiki_maintenance_scripts_InitStats_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="InitStats"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that re-initialises wikis statistics table was not run in the last 24 hours
+    # CleanupPhalanxStats should be run every week
+    - alert: mediawiki_maintenance_scripts_CleanupPhalanxStats_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanupPhalanxStats"}) > 86400 * 8
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that removes old specials.phalanx_stats entries was not run in the last 7 days
+        summary: CleanupPhalanxStats last succeeded {{humanizeDuration $value}} ago
+    # ResetWeeklyUserContributionsCount should be run every week
+    - alert: mediawiki_maintenance_scripts_ResetWeeklyUserContributionsCount_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ResetWeeklyUserContributionsCount"}) > 86400 * 8
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that resets users rank with most contributions was not run in the last 7 days
+        summary: ResetWeeklyUserContributionsCount last succeeded {{humanizeDuration $value}} ago
+    # sendWeeklyDigest should be run every week
+    - alert: mediawiki_maintenance_scripts_sendWeeklyDigest_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="sendWeeklyDigest"}) > 86400 * 8
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that sends the weekly digest to the users found in the global_watchlist table was not run in the last 7 days
+        summary: sendWeeklyDigest last succeeded {{humanizeDuration $value}} ago
+    # LyricsWikiCrawler should be run every 24h
+    - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="LyricsWikiCrawler"}) > 3600 * 25
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
+        summary: LyricsWikiCrawler last succeeded {{humanizeDuration $value}} ago
+    # AutomatedDeadWikisDeletionMaintenance should be run every 24h (excluding Friday and weekends)
+    - alert: mediawiki_maintenance_scripts_AutomatedDeadWikisDeletionMaintenance_last_run
+      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="AutomatedDeadWikisDeletionMaintenance"}) > 86400 * 4
+      labels:
+        team: sus
+      annotations:
+        description: Maintenance script that marks wikis as closed was not run in the last four days
+        summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
+  # SUS-6267 | monitoring for production pods
+  - name: mediawiki_prod.rules
+    rules:
+    - alert: mediawiki_prod_fpm_workers_usage_percentage
+      expr: avg(phpfpm_active_processes{service="mediawiki-prod"} / phpfpm_total_processes{service="mediawiki-prod"}) * 100 > 75
+      labels:
+        team: sus
+      annotations:
+        description: Production php-fpm workers usage is above the threshold
+        summary: fpm workers usage is at {{$value}} %
+        graphs: https://metrics.wikia-inc.com/d/znlnjNxik/kubernetes-production-traffic

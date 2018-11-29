@@ -27,7 +27,14 @@ require_once( dirname( __FILE__ ) . '/includes/WebStart.php' );
  * @return Title
  */
 function guessTitle( $path ) {
+	global $wgScriptPath;
 	$path = trim( rawurldecode( $path ), '/ _' );
+
+	$scriptPath = ltrim( $wgScriptPath, '/' ) . '/';
+	// Strip the language path if there is one
+	if ( !empty( $wgScriptPath ) && startsWith( $path, $scriptPath ) ) {
+		$path = substr( $path, strlen( $scriptPath ) );
+	}
 
 	// SUS-6051 | /w/Foo and /wiki/index.php/Foo URLs need to be handled by PHP logic
 	// in order to use a proper wiki domain on sandboxes
