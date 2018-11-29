@@ -668,7 +668,7 @@ class WikiFactory {
 		$wiki = static::getWikiByID( $cityId );
 		$wikiHost = parse_url( $wiki->city_url, PHP_URL_HOST );
 
-		return count( static::getWikisUnderDomain( $wikiHost, true ) ) > 0;
+		return count( static::getWikisUnderDomain( $wikiHost, false ) ) > 0;
 	}
 
 	/**

@@ -16,7 +16,7 @@ spl_autoload_register( function( $class ) {
 $wgHooks['GetWikisUnderDomain'][] = 'FandomCreator\Hooks::onGetWikisUnderDomain';
 $wgHooks['GenerateRobotsRules'][] = 'FandomCreator\Hooks::onGenerateRobotsRules';
 
-if ( !empty($wgFandomCreatorCommunityId ) ) {
+if ( !empty( $wgFandomCreatorCommunityId ) ) {
 	// Part of the setup that is active on fandom creator communities
 	$wgAutoloadClasses['FandomCreator\Api\CommunitySetupController'] = __DIR__ . '/Api/CommunitySetupController.php';
 
