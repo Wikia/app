@@ -168,7 +168,6 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
-
 	let onLoadResolve = function () {};
 	const onLoadPromise = new Promise(function (resolve) {
 		onLoadResolve = resolve;
