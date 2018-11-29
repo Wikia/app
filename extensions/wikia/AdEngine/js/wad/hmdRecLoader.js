@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	}
 
 	function injectScript() {
-		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
+		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod + '&cb=2';
 
 		scriptLoader.loadScript(url, {
 			isAsync: false,
