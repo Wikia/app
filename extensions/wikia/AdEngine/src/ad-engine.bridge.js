@@ -168,6 +168,12 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
+
+	let onLoadResolve = function () {};
+	const onLoadPromise = new Promise(function (resolve) {
+		onLoadResolve = resolve;
+	});
+
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
 		default: {
@@ -208,11 +214,18 @@ function unifySlotInterface(slot) {
 				window.dispatchEvent(event);
 			}
 		},
+		onLoad: () => {
+			return onLoadPromise;
+		}
 	});
 
 	slot.pre('viewed', (event) => {
 		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
+	});
+
+	slot.pre('loaded', () => {
+		onLoadResolve();
 	});
 
 	slot.post('success', (event) => {

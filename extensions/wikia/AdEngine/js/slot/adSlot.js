@@ -19,11 +19,6 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			};
 		}
 
-		var onLoadResolve = function () {},
-			onLoadPromise = new Promise(function (resolve) {
-				onLoadResolve = resolve;
-			});
-
 		return {
 			name: name,
 			container: container,
@@ -31,10 +26,6 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			isViewed: function () {
 				return this.isViewedFlag;
 			},
-			onLoad: function () {
-				return onLoadPromise;
-			},
-			triggerOnLoad: onLoadResolve,
 			enabled: true,
 			isEnabled: registerHook('isEnabled'),
 			disable: registerHook('disable'),
