@@ -16,6 +16,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 * Displays the main menu for the admin dashboard
 	 */
 	public function index() {
+		global $wgScriptPath;
 		$this->getOutput()->setPageTitle( $this->msg( 'admindashboard-header' )->text() );
 		if ( !$this->getUser()->isAllowed( 'admindashboard' ) ) {
 			$this->displayRestrictionError();
@@ -31,6 +32,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 		$this->urlListUsers = SpecialPage::getTitleFor( 'ListUsers' )->getFullURL();
 		$this->urlUserRights = SpecialPage::getTitleFor( 'UserRights' )->getFullURL();
+		$this->urlAnnouncements = $wgScriptPath . '/announcements';
 
 		$this->urlCommunityCorner = Title::newFromText( 'Community-corner', NS_MEDIAWIKI )->getFullURL( 'action=edit' );
 		$this->urlAllCategories = SpecialPage::getTitleFor( 'Categories' )->getFullURL();
@@ -44,10 +46,10 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$this->showVideoLink = false;
 		}
     
-    if ( !empty( $this->wg->EnableBlogArticles ) ) {
-      $this->showNewBlogLink = true;
-		  $this->urlCreateBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' )->getFullURL();
-    } else {
+		if ( !empty( $this->wg->EnableBlogArticles ) ) {
+			$this->showNewBlogLink = true;
+			$this->urlCreateBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' )->getFullURL();
+		} else {
 			$this->showNewBlogLink = false;
 		}
 		$this->urlMultipleUpload = SpecialPage::getTitleFor( 'MultipleUpload' )->getFullURL();
