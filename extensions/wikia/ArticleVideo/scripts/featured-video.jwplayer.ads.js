@@ -41,15 +41,21 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
+		trackingParams,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads',
 		vastUrls = {
+			last: null,
 			pre: null,
 			mid: null,
 			post: null
 		};
 
 	function getCurrentVast(placement) {
-		return vastUrls[placement];
+		var vast = vastUrls[placement];
+
+		vastUrls.last = vast;
+
+		return vast;
 	}
 
 	function parseVastParamsFromEvent(event) {
@@ -84,14 +90,14 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			playerState = {},
 			playlistItem = player.getPlaylist(),
 			videoId = playlistItem[player.getPlaylistIndex()].mediaid,
-			trackingParams = {
-				adProduct: 'featured-video',
-				slotName: featuredVideoSlotName,
-				videoId: videoId
-			},
 			videoDepth = 0;
 
 		bidParams = bidParams || {};
+		trackingParams = {
+			adProduct: 'featured-video',
+			slotName: featuredVideoSlotName,
+			videoId: videoId
+		};
 
 		function requestBidder() {
 			if (!prebidWrapper) {
@@ -280,9 +286,22 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		}, 'setup');
 	}
 
+	function trackCustomEvent(event, params) {
+		params = params || {};
+
+		Object.keys(trackingParams).forEach(function(key) {
+			if (!params[key]) {
+				params[key] = trackingParams[key];
+			}
+		});
+
+		adsTracker.track(params, event);
+	}
+
 	return {
 		init: init,
 		getCurrentVast: getCurrentVast,
+		trackCustomEvent: trackCustomEvent,
 		trackSetup: trackSetup,
 		loadMoatTrackingPlugin: loadMoatTrackingPlugin
 	};
