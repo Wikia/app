@@ -127,9 +127,16 @@ class DesignSystemApiController extends WikiaApiController {
 	 * @throws NotFoundApiException
 	 */
 	private function getRequestParameters() {
-		$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
+		global $wgCityId;
+
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
 		$lang = $this->getRequiredParam( static::PARAM_LANG );
+
+		if ($product === static::PRODUCT_WIKIS) {
+			$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
+		} else {
+			$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
+		}
 
 		if ( $product === static::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );

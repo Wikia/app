@@ -90,7 +90,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-announcements-tooltip" )->escaped(); ?>">
-						<a href="/announcements" class="set" data-tracking="announcements">
+						<a href="<?= $urlAnnouncements ?>" class="set" data-tracking="announcements">
 						<span class="representation">
 							<?= DesignSystemHelper::renderSvg('wds-icons-megaphone', 'wds-icon'); ?>
 						</span>
