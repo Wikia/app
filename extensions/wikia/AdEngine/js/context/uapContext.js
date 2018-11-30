@@ -19,6 +19,10 @@ define('ext.wikia.adEngine.context.uapContext', [
 		return adEngineBridge.universalAdPackage.getUapId();
 	}
 
+	function getCreativeId() {
+		return adEngineBridge.universalAdPackage.getCreativeId();
+	}
+
 	function isFanTakeoverLoaded() {
 		return adEngineBridge.universalAdPackage.isFanTakeoverLoaded();
 	}

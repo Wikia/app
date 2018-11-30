@@ -175,6 +175,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
 			targeting = gptTargeting.getSlotLevelTargeting(slotName);
 			targeting.uap = uapContext.getUapId().toString();
+			targeting.uap_c = uapContext.getCreativeId().toString();
 			AdElement.configureSlot(slot, targeting);
 			googleTag.refreshSlot(slot);
 		} else {
