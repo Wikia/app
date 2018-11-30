@@ -2,8 +2,6 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wad.hmdRecLoader'
 ], function (adContext, hmdRecLoader) {
-	console.log('Debug: Homad started with configuration', hmdRecLoader.getConfig());
-
 	var exportz = exportz || {};
 	(function(exports) {
 		"use strict";

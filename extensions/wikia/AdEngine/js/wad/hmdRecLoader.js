@@ -15,6 +15,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	var wikiaApiController = 'AdEngine2ApiController',
 		wikiaApiMethod = 'getHMDCode',
 		isDebug = qs().getVal('hmd-rec-debug', '') === '1',
+		cacheBuster = 10,
 		logGroup = 'wikia.adEngine.wad.hmdRecLoader',
 		trackingStatus = {
 			hmdSetuped: false,
@@ -131,7 +132,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	}
 
 	function injectScript() {
-		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod + '&cb=2';
+		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod + '&cb=' + cacheBuster;
 
 		scriptLoader.loadScript(url, {
 			isAsync: false,
