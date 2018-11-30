@@ -61,6 +61,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			win.googletag.pubads().collapseEmptyDivs();
 			win.googletag.pubads().enableSingleRequest();
 			win.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			win.googletag.pubads().addEventListener('slotOnload', function (event) {
+				dispatchEvent(event, 'loaded');
+			});
 			win.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
 				dispatchEvent(event, 'renderEnded');
 			});
