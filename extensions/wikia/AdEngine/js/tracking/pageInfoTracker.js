@@ -23,7 +23,8 @@ define('ext.wikia.adEngine.tracking.pageInfoTracker', [
 			'pv_unique_id': win.pvUID,
 			'prop_name': name,
 			'prop_value': value,
-			'timestamp': (new Date()).getTime()
+			'timestamp': (new Date()).getTime(),
+			'tz_offset': (new Date()).getTimezoneOffset()
 		});
 	}
 
