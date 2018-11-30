@@ -6,14 +6,16 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.document',
+	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (adContext, slotRegistry, eventDispatcher, scriptLoader, adsConfiguration, doc, qs, win) {
+], function (adContext, slotRegistry, eventDispatcher, scriptLoader, adsConfiguration, doc, log, qs, win) {
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
 		wikiaApiMethod = 'getHMDCode',
 		isDebug = qs().getVal('hmd-rec-debug', '') === '1',
+		logGroup = 'wikia.adEngine.wad.hmdRecLoader',
 		trackingStatus = {
 			hmdSetuped: false,
 			adRequested: false,
@@ -104,15 +106,18 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			adjustAdVolumeToContentPlayer: true,
 			adTag: isDebug ? configDev.adTag : false,
 			prerollAdTag: isDebug ? false : function () {
-				console.log('Debug: requesting preroll adTag', adsConfiguration.getCurrentVast('pre'));
+				log('Requesting preroll adTag', log.levels.info, logGroup);
+
 				return adsConfiguration.getCurrentVast('pre') || false;
 			},
 			midrollAdTag: isDebug ? false : function () {
-				console.log('Debug: requesting midroll adTag');
+				log('Requesting midroll adTag', log.levels.info, logGroup);
+
 				return adsConfiguration.getCurrentVast('mid') || false;
 			},
 			postrollAdTag: isDebug ? false : function () {
-				console.log('Debug: requesting postroll adTag');
+				log('Requesting postroll adTag', log.levels.info, logGroup);
+
 				return adsConfiguration.getCurrentVast('post') || false;
 			}
 		};
@@ -136,7 +141,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 
 	function initializeTracking() {
 		window.addEventListener('hdEvent', function(event) {
-			console.log('Debug: hdEvent', event.detail.name, event);
+			log(['HMD event registered', event], log.levels.info, logGroup);
 
 			if (event.detail && event.detail.name && trackingEventsMap[event.detail.name]) {
 				var eventName = event.detail.name,
@@ -153,8 +158,8 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 
 	function init() {
 		doc.addEventListener('bab.blocking', function () {
-			// ToDo: remove debug code
-			console.log('Debug: blocking detected');
+			log('Initialising HMD rec loader', log.levels.info, logGroup);
+
 			initializeTracking();
 			injectScript();
 		});

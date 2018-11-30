@@ -71,9 +71,6 @@ require([
 	}
 
 	function setupPlayer() {
-		// ToDo: remove debug code
-		console.log('Debug: JWPlayer setup');
-
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
@@ -118,10 +115,7 @@ require([
 	trackingOptIn.pushToUserConsentQueue(function () {
 		doc.addEventListener('bab.blocking', function () {
 			if (adContext.get('opts.wadHMD')) {
-				console.log('Debug: initialize Homad with player setup()');
 				hmdRecLoader.setOnReady(function () {
-					// ToDo: remove debug code
-					console.log('Debug: Homad is ready');
 					setupPlayer();
 				});
 			} else {

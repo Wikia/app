@@ -170,7 +170,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 					);
 
 					vastUrls.pre = vastUrl;
-					console.log('Debug: preroll vast url saved', vastUrls.pre);
 					player.playAd(vastUrl);
 				}
 				prerollPositionReached = true;
@@ -231,8 +230,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			});
 
 			player.on('adError', function (event) {
-				// ToDo: remove debug code
-				console.log('Debug: ad request failed');
 				// https://support.jwplayer.com/customer/portal/articles/2924017
 				// According to JWPlayer docs IMA events have pattern 2xxxx
 				// Example:
