@@ -12,6 +12,6 @@ use SassUtil;
 
 class ThemeSettings {
 	public function get() {
-		return SassUtil::convertColorsToRgb(SassUtil::getOasisSettings());
+		return SassUtil::normalizeThemeColors(SassUtil::getOasisSettings());
 	}
 }
