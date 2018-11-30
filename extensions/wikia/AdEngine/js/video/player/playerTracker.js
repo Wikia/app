@@ -46,6 +46,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'pv_number': pageLevelParams.pv,
 				'country': bridge.geo.getCountryCode(),
 				'timestamp': (new Date()).getTime(),
+				'tz_offset': (new Date()).getTimezoneOffset(),
 				'skin': pageLevelParams.skin,
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
