@@ -26,7 +26,8 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 			'line_item_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
 			'rv': slotParams.rv || 1,
-			'timestamp': (new Date()).getTime()
+			'timestamp': (new Date()).getTime(),
+			'tz_offset': (new Date()).getTimezoneOffset()
 		};
 
 		log(['Slot viewable', slot.name, data], log.levels.info, logGroup);

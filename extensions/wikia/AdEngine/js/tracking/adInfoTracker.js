@@ -39,7 +39,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		var data,
 			isStickyEvent,
 			now = new Date(),
-			timestamp = now.getTime();
+			timestamp = now.getTime(),
+			tzOffset = now.getTimezoneOffset();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -68,6 +69,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
+			'tz_offset': tzOffset,
 			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
