@@ -296,7 +296,7 @@ class WikisApiController extends WikiaApiController {
 			}
 		}
 
-		$wikis = WikiFactory::getWikisUnderDomain( $domain, false );
+		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
 		if ( empty( $wikis ) ) {
 			throw new NotFoundApiException();
 		}
