@@ -265,6 +265,55 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Gets list of communities hosted under a given domain (or the primary domain url)
+	 * Returns 404 for unknown domains.
+	 *
+	 * @requestParam string $domain full community domain, can be localized (staging/dev)
+	 *
+	 * @responseParam string $primaryDomain primary domain for a wiki in case the $domain is an alias
+	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
+	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
+	 */
+	public function getWikisUnderDomain() {
+		global $wgWikiaBaseDomainRegex;
+		$domain = $this->request->getVal( 'domain' );
+		if ( !preg_match( '/\.' . $wgWikiaBaseDomainRegex . '$/', $domain ) ) {
+			throw new InvalidParameterApiException( 'domain' );
+		}
+
+		$normalizedDomain = wfNormalizeHost( $domain );
+		$cityId = WikiFactory::DomainToID( $normalizedDomain );
+
+		if ( !empty( $cityId ) && !WikiFactory::isLanguageWikisIndex( $cityId ) ) {
+			// there is a community at the domain root, make sure it is the primary domain
+			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
+			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
+				$this->response->setVal( 'primaryDomain', $primaryDomain );
+				$this->response->setVal( 'primaryProtocol',
+					wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+				$this->response->setVal( 'wikis', [] );
+				return;
+			}
+		}
+
+		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
+		if ( empty( $wikis ) ) {
+			throw new NotFoundApiException();
+		}
+
+		if ( wfHttpsEnabledForDomain( $domain ) ) {
+			$wikis = array_map( function ( $wiki ) {
+				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
+				return $wiki;
+			}, $wikis );
+		}
+
+		$this->response->setVal( 'primaryDomain', '' );
+		$this->response->setVal( 'primaryProtocol', '' );
+		$this->response->setVal( 'wikis', $wikis );
+	}
+
+	/**
 	 * Get the value of an array request parameter passed as CSV without performing
 	 * a potentially expensive explode+count of all items.
 	 *

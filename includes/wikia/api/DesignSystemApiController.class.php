@@ -109,7 +109,7 @@ class DesignSystemApiController extends WikiaApiController {
 		if (
 			$params[static::PARAM_PRODUCT] === self::PRODUCT_WIKIS &&
 			// There is no local content on language wikis index
-			!WikiFactory::isLanguageWikisIndex( $params[static::PARAM_ID] )
+			!WikiFactory::isLanguageWikisIndexOrClosed( $params[static::PARAM_ID] )
 		) {
 			$communityHeaderModel = new DesignSystemCommunityHeaderModel( $params[static::PARAM_LANG] );
 

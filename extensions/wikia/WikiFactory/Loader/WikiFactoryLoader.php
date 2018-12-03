@@ -912,7 +912,7 @@ class WikiFactoryLoader {
 	 */
 	private function hasLanguagePathWikis() {
 		if ( empty( $this->langCode ) ) {
-			if ( count( WikiFactory::getWikisUnderDomain( $this->mServerName ) ) > 0 ) {
+			if ( count( WikiFactory::getWikisUnderDomain( $this->mServerName, false ) ) > 0 ) {
 				return true;
 			}
 		}
