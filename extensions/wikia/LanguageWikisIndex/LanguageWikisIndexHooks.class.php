@@ -68,7 +68,7 @@ class LanguageWikisIndexHooks {
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgCityId;
 
-		if ( WikiFactory::isLanguageWikisIndex() ) {
+		if ( WikiFactory::isLanguageWikisIndexOrClosed() ) {
 			$wikis = array_map( function ( $wiki ) {
 				return [
 					'languageName' => Language::getLanguageName( $wiki['city_lang'] ),

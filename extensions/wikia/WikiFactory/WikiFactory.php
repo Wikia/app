@@ -642,10 +642,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * Checks if a wiki should display the language wikis index
-	 * It returns true in the following cases:
-	 * - Wiki is languagewikisindex.fandom.com
-	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 * Checks if a wiki is a non-existing domain root with language wikis underneath
 	 *
 	 * @param int|null $cityId
 	 * @return bool
@@ -658,6 +655,28 @@ class WikiFactory {
 		}
 
 		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if a wiki should display the language wikis index
+	 * It returns true in the following cases:
+	 * - Wiki is languagewikisindex.fandom.com
+	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
+	public static function isLanguageWikisIndexOrClosed( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
+		if ( self::isLanguageWikisIndex( $cityId ) ) {
 			return true;
 		}
 
