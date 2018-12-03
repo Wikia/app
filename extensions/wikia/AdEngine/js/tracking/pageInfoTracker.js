@@ -19,12 +19,13 @@ define('ext.wikia.adEngine.tracking.pageInfoTracker', [
 			return;
 		}
 
+		var now = new Date();
 		track('adengpageinfo_props', {
 			'pv_unique_id': win.pvUID,
 			'prop_name': name,
 			'prop_value': value,
-			'timestamp': (new Date()).getTime(),
-			'tz_offset': (new Date().getTimezoneOffset())
+			'timestamp': now.getTime(),
+			'tz_offset': now.getTimezoneOffset()
 		});
 	}
 
