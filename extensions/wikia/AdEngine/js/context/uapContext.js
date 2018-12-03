@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 
 	return {
 		dispatchEvent: dispatchEvent,
+		getCreativeId: getCreativeId,
 		getUapId: getUapID,
 		isFanTakeoverLoaded: isFanTakeoverLoaded,
 		reset: reset,
