@@ -75,6 +75,11 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.wadIL = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadILCountries') &&
 			isILSupportedBrowser();
+
+		// HMD rec
+		context.opts.wadHMD = serviceCanBeEnabled &&
+			context.targeting.hasFeaturedVideo &&
+			isEnabled('wgAdDriverWadHMDCountries');
 	}
 
 	function isEnabled(name) {
