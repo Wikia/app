@@ -4,12 +4,12 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.utils.scriptLoader',
-	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.document',
 	'wikia.log',
 	'wikia.querystring',
-	'wikia.window'
-], function (adContext, slotRegistry, eventDispatcher, scriptLoader, adsConfiguration, doc, log, qs, win) {
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration')
+], function (adContext, slotRegistry, eventDispatcher, scriptLoader, doc, log, qs, win, adsConfiguration) {
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
