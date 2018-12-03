@@ -45,7 +45,6 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracker', [
 
 			player.on('adError', function (event) {
 				dispatchStatus(event.tag, params, 'error');
-				clearParams(params);
 			});
 
 			player.on('adRequest', function (event) {
@@ -61,6 +60,10 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracker', [
 			});
 
 			tracker.register(player, params);
+
+			player.on('adError', function (event) {
+				clearParams(params);
+			});
 		}
 	};
 });
