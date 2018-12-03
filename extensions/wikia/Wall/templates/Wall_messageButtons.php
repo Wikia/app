@@ -60,24 +60,6 @@
 			];
 		}
 
-		if ( $canNotifyeveryone ) {
-			$dropdown[] = [
-				'attr' => 'data-dir="1"',
-				'class' => 'edit-notifyeveryone',
-				'href' => '#',
-				'text' => wfMessage( 'wall-message-notifyeveryone' )->escaped(),
-			];
-		}
-
-		if ( $canUnnotifyeveryone ) {
-			$dropdown[] = [
-				'attr' => 'data-mode="0"',
-				'class' => 'edit-notifyeveryone',
-				'href' => '#',
-				'text' => wfMessage( 'wall-message-unnotifyeveryone' )->escaped(),
-			];
-		}
-
 		if ( $canClose ) {
 			$dropdown[] = [
 				'attr' => 'data-mode="close"',

@@ -4,22 +4,8 @@ class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
 
 	public function getUpdateCounts() {
-		global $wgUser;
-
-		// check notifications for messages marked with "notify everyone"
-		$wne = new WallNotificationsEveryone();
-		$wne->processQueue( $wgUser->getId() );
-
 		$wn = new WallNotifications();
 		$this->getUpdateCountsInternal( $wn );
-		return true;
-	}
-
-	public function getUpdateWiki() {
-		$id = $this->request->getVal( 'wikiId' );
-		$isCrossWiki = $this->request->getVal( 'isCrossWiki' ) == 1;
-		$wn = new WallNotifications();
-		$this->getUpdateWikiInternal( $wn, $id, $isCrossWiki );
 		return true;
 	}
 
@@ -84,14 +70,13 @@ class WallNotificationsExternalController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getUpdateWikiInternal( WallNotifications $wn, $wikiId, $isCrossWiki = false ) {
+	public function getUpdateWiki() {
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$wn = new WallNotifications();
+
 		$user = $this->getContext()->getUser();
 
-		if ( $isCrossWiki ) {
-			$all = $wn->getWikiNotifications( $user->getId(), $wikiId, 0 );
-		} else {
-			$all = $wn->getWikiNotifications( $user->getId(), $wikiId, 5, false, true );
-		}
+		$all = $wn->getWikiNotifications( $user->getId(), $wikiId, 5 );
 
 		$html = '';
 		if ( $user->isLoggedIn() ) {

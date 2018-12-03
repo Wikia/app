@@ -37,7 +37,7 @@
 		 * relatedTopics - nullable or empty array
 		 * boardId - nullable
 		 */
-		postNew: function (page, title, body, convertToFormat, notifyEveryone, relatedTopics, successCallback, failCallback) {
+		postNew: function (page, title, body, convertToFormat, relatedTopics, successCallback, failCallback) {
 			this.bucky.timer.start('postNew');
 
 			$.nirvana.sendRequest({
@@ -47,7 +47,6 @@
 				data: {
 					body: body,
 					messagetitle: title,
-					notifyeveryone: notifyEveryone,
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
@@ -204,30 +203,6 @@
 
 					this.fire('afterSwitchWatch', element, data);
 					this.bucky.timer.stop(buckyString);
-				})
-			});
-		},
-
-		notifyEveryone: function (msgid, dir, callback) {
-			this.bucky.timer.start('notifyEveryone');
-
-			$.nirvana.sendRequest({
-				controller: this.pageController,
-				method: 'notifyEveryoneSave',
-				format: 'json',
-				type: 'POST',
-				data: {
-					msgid: msgid,
-					dir: dir,
-					token: mw.user.tokens.get('editToken')
-				},
-				callback: this.proxy(function (data) {
-					if ($.isFunction(callback)) {
-						callback(data);
-					}
-
-					this.fire('notifyEveryoneSaved', data);
-					this.bucky.timer.stop('notifyEveryone');
 				})
 			});
 		},

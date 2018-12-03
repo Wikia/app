@@ -273,7 +273,6 @@ $wgGroupPermissions["content-volunteer"]["editinterface"] = true;
 $wgGroupPermissions["content-volunteer"]["move"] = true;
 $wgGroupPermissions["content-volunteer"]["movefile"] = true;
 $wgGroupPermissions["content-volunteer"]["move-subpages"] = true;
-$wgGroupPermissions["content-volunteer"]["notifyeveryone"] = true;
 $wgGroupPermissions["content-volunteer"]["pageviews"] = true;
 $wgGroupPermissions["content-volunteer"]["protect"] = true;
 $wgGroupPermissions["content-volunteer"]["reupload"] = true;
@@ -351,7 +350,6 @@ $wgGroupPermissions['vanguard']['protect'] = true;
 $wgGroupPermissions['vanguard']['editinterface'] = true;
 $wgGroupPermissions['vanguard']['wikifeatures'] = true;
 $wgGroupPermissions['vanguard']['template-bulk-classification'] = true;
-$wgGroupPermissions['vanguard']['notifyeveryone'] = true;
 
 /**
  * Any user in a global group is exempt from seeing the first edit dialog.
