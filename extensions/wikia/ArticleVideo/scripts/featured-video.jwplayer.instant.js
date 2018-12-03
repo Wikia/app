@@ -143,5 +143,9 @@ require([
 				});
 			}
 		});
+
+		if (!adContext.get('opts.showAds')) {
+			setupPlayer();
+		}
 	});
 });
