@@ -6,11 +6,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, instantGlobals, geo, sampler, w, Querystring) {
+], function (browserDetect, cookies, instantGlobals, adEngineBridge, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
-		return geo.isProperGeo(geos, name);
+		return adEngineBridge.geo.isProperGeo(geos, name);
 	}
 
 	function updateAdContextRabbitExperiments(context) {
@@ -143,6 +143,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
 		context.rabbits = context.rabbits || {};
+		context.templates = context.templates || {};
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
@@ -152,6 +153,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+		context.opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled = isEnabled(
+			'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'
+		);
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
@@ -184,9 +188,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableAdInfoLog = isEnabled('wgAdDriverKikimoraTrackingCountries');
 		context.opts.playerTracking = isEnabled('wgAdDriverKikimoraPlayerTrackingCountries');
 
-		// CMP module
-		context.opts.isCMPEnabled = isEnabled('wgEnableCMPCountries');
-
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
@@ -218,14 +219,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.disableSra = isEnabled('wgAdDriverDisableSraCountries');
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
-		context.opts.isBLBMegaEnabled = isEnabled('wgAdDriverBottomLeaderBoardMegaCountries');
-		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-
-		context.opts.isMobileBottomLeaderboardSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
-		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';
 
@@ -234,9 +229,22 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
+		context.opts.incontentPlayerRail = {
+			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
+			trackingAlias: 'INCONTENT_PLAYER_RAIL',
+			conflictingSlots: [
+				'TOP_RIGHT_BOXAD',
+				'INCONTENT_BOXAD_1',
+				'BOTTOM_LEADERBOARD'
+			]
+		};
+
+		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+
+		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
-		context.opts.labradorDfp = geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

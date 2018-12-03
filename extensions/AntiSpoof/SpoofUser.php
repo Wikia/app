@@ -212,7 +212,12 @@ class SpoofUser {
 			'suf_exact_hash' => $this->mExactHash,
 			'suf_normalized_hash' => $this->mNormalizedHash
 		];
-		$db->insert( 'spoofuser_forgotten', $row, __METHOD__ );
+
+		$db->replace(
+			'spoofuser_forgotten',
+			['suf_exact_hash', 'suf_normalized_hash'],
+			$row,
+			__METHOD__ );
 		$db->delete( 'spoofuser', ['su_name' => $this->mName], __METHOD__ );
 		$db->commit();
 	}

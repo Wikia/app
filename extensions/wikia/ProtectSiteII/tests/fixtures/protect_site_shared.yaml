@@ -1,0 +1,52 @@
+protectsite:
+- wiki_id: 2
+  protection_bitfield: 15 # all actions prevented
+  protection_expiry: 20280101000000
+- wiki_id: 3
+  protection_bitfield: 527 # all actions prevented, only for anons
+  protection_expiry: 20280101000000
+user:
+- user_id: 1
+  user_name: 'NormalUser'
+  user_real_name: ''
+  user_email: 'kossuth.lajos@lajoskossuth.hu'
+  user_touched: '20110101000000'
+  user_token: 'loremipsum'
+  user_email_authenticated: '20101102000000'
+  user_email_token: 'dolorsitamet'
+  user_email_token_expires: '20120301120000'
+  user_registration: '20090604060000'
+  user_editcount: 2500
+  user_birthdate:
+  user_options: ''
+- user_id: 2
+  user_name: 'StaffUser'
+  user_real_name: ''
+  user_email: 'kossuth.lajos@lajoskossuth.hu'
+  user_touched: '20110101000000'
+  user_token: 'loremipsum'
+  user_email_authenticated: '20101102000000'
+  user_email_token: 'dolorsitamet'
+  user_email_token_expires: '20120301120000'
+  user_registration: '20090604060000'
+  user_editcount: 2500
+  user_birthdate:
+  user_options: ''
+- user_id: 3
+  user_name: 'VstfUser'
+  user_real_name: ''
+  user_email: 'kossuth.lajos@lajoskossuth.hu'
+  user_touched: '20110101000000'
+  user_token: 'loremipsum'
+  user_email_authenticated: '20101102000000'
+  user_email_token: 'dolorsitamet'
+  user_email_token_expires: '20120301120000'
+  user_registration: '20090604060000'
+  user_editcount: 2500
+  user_birthdate:
+  user_options: ''
+user_groups:
+- ug_user: 2
+  ug_group: staff
+- ug_user: 3
+  ug_group: vstf

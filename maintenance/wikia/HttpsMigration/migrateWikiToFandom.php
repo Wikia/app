@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/../../Maintenance.php';
 
-use \Wikia\Logger\WikiaLogger;
-
 /**
  * Script to migrate a community to fandom.com.
  *
@@ -78,6 +76,10 @@ class MigrateWikiToFandom extends Maintenance {
 					$this->output( "Could not get the target domain for wiki with ID {$sourceWikiId}!\n" );
 					continue;
 				}
+
+				if ( strpos( $targetDomain, "/" ) === false ) {
+					$englishAliasDomain = $this->getEnglishAliasDomain( $sourceDomain );
+				}
 			}
 
 			if ( strpos( $targetDomain, $wgFandomBaseDomain ) === false ||
@@ -92,6 +94,10 @@ class MigrateWikiToFandom extends Maintenance {
 
 				WikiFactory::setmainDomain( $sourceWikiId, $targetDomain, 'Migration to fandom.com' );
 
+				if ( !empty( $englishAliasDomain ) ) {
+					WikiFactory::addDomain( $sourceWikiId, $englishAliasDomain, 'Creating /en alias for Wiki with ID {$sourceWikiId}' );
+				}
+
 				// Banner notification about migration, see SEO-669
 				WikiFactory::removeVarByName( 'wgFandomComMigrationScheduled', $sourceWikiId, 'Migration to fandom.com' );
 				WikiFactory::setVarByName( 'wgFandomComMigrationDone', $sourceWikiId, true, 'Migration to fandom.com' );
@@ -103,6 +109,10 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 
 			$this->output( "Wiki with ID {$sourceWikiId} was migrated from {$sourceDomain} to {$targetDomain}!\n" );
+
+			if ( !empty( $englishAliasDomain ) ) {
+				$this->output( "/en alias domain was created: {$englishAliasDomain}\n" );
+			}
 		}
 
 		fclose( $fileHandle );
@@ -110,6 +120,7 @@ class MigrateWikiToFandom extends Maintenance {
 
 	private function getTargetDomain( $sourceDomain ) {
 		global $wgFandomBaseDomain;
+
 		$parts = explode( '.', $sourceDomain );
 		if ( count( $parts ) > 3 ) {
 			if ( !$this->isValidLanguagePath( $parts[0] ) ) {
@@ -118,8 +129,18 @@ class MigrateWikiToFandom extends Maintenance {
 			}
 			return "{$parts[1]}.{$wgFandomBaseDomain}/{$parts[0]}";
 		}
-
 		return "{$parts[0]}.{$wgFandomBaseDomain}";
+	}
+
+	private function getEnglishAliasDomain( $sourceDomain ) {
+		global $wgFandomBaseDomain;
+		$parts = explode( '.', $sourceDomain );
+
+		if ( $parts[1] !== 'wikia' ) {
+			return false;
+		}
+
+		return "{$parts[0]}.{$wgFandomBaseDomain}/en";
 	}
 
 	private function isValidLanguagePath( $languageCode ): bool {
@@ -127,7 +148,7 @@ class MigrateWikiToFandom extends Maintenance {
 			$this->languageNames = Language::getLanguageNames();
 		}
 
-		return isset( $this->languageNames[$languageCode] );
+		return isset( $this->languageNames[ $languageCode ] );
 	}
 
 	private function purgeCachesForWiki( $wikiId ) {
@@ -136,10 +157,33 @@ class MigrateWikiToFandom extends Maintenance {
 		WikiFactory::clearCache( $wikiId );
 
 		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
+		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ), 'mercury' );
+
+		$dbName = WikiFactory::IDtoDB( $wikiId );
 
 		$keys = [
 			wfSharedMemcKey( 'globaltitlev1', $wikiId ),
 			wfSharedMemcKey( 'globaltitlev1:https', $wikiId ),
+			wfForeignMemcKey(
+				$dbName,
+				false,
+				'Wikia\Search\TopWikiArticles',
+				'WikiaSearch',
+				'topWikiArticles',
+				$wikiId,
+				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
+				false
+			),
+			wfForeignMemcKey(
+				$dbName,
+				false,
+				'Wikia\Search\TopWikiArticles',
+				'WikiaSearch',
+				'topWikiArticles',
+				$wikiId,
+				Wikia\Search\TopWikiArticles::TOP_ARTICLES_CACHE,
+				true
+			),
 		];
 
 		foreach ( $keys as $key ) {

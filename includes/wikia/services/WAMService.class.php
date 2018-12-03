@@ -10,8 +10,7 @@ class WAMService {
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
-	const MEMCACHE_VER = '2';
-	const WAM_LINK = 'http://www.wikia.com/WAM';
+	const MEMCACHE_VER = '3';
 
 	protected $verticalIds = [
 		WikiFactoryHub::VERTICAL_ID_OTHER,
@@ -183,9 +182,14 @@ class WAMService {
 			$join_conds
 		);
 
+		$wikiDetailsService = new WikiDetailsService();
+
 		while ( $row = $db->fetchObject( $result ) ) {
 			$row = ( array )$row;
 			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );
+			$wikiDetails = $wikiDetailsService->getWikiDetails( $row['wiki_id'] );
+			$row['url'] = $wikiDetails['url'];
+			$row['title'] = $wikiDetails['title'];
 			$wamIndex['wam_index'][$row['wiki_id']] = $row;
 		}
 		$count = $resultCount->fetchObject();
@@ -381,8 +385,6 @@ class WAMService {
 			'fw1.last_peak',
 			'fw1.hub_name',
 			'fw1.vertical_id',
-			'dw.title',
-			'dw.url',
 			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change',
 			'ISNULL(fw2.wam) as wam_is_new'
 		);

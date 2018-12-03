@@ -10,7 +10,7 @@ class ArticleCommentsHooks {
 	 * @return bool
 	 */
 	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
-		$service = PageStatsService::newFromTitle( $title );
+		$service = new PageStatsService( $title );
 		$comments = $service->getCommentsCount();
 
 		if ( ArticleCommentInit::ArticleCommentCheckTitle( $title ) ) {

@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+use FandomCreator\CommunitySetup;
 
 class DWDimensionApiController extends WikiaApiController {
 	use PermissionsServiceAccessor;
@@ -81,6 +82,21 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 
+	protected function getFandomCreatorWikis( $limit, $afterWikiId ) {
+		$communityMap = [];
+		$fcCommunities = WikiFactory::getVariableForAllWikis( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $limit, $afterWikiId );
+		return array_reduce( $fcCommunities,
+			function( $acc, $pair ) {
+				$acc[ $pair[ 'city_id' ] ] = $pair[ 'value' ];
+				return $acc;
+			} , [] );
+	}
+
+	protected function parseUrl( $rowUrl ) {
+		$urlWithoutScheme = str_replace( ['http://', 'https://'], '', $rowUrl );
+		return trim( $urlWithoutScheme, '/' );
+	}
+
 	public function getWikis() {
 		$testWikis = $this->getTestWikisIDs();
 		$db = $this->getSharedDbSlave();
@@ -92,7 +108,9 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$query = str_replace( '$city_id', $afterWikiId,
 			DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
-		$query = str_replace( '$limit', $limit, $query);
+		$query = str_replace( '$limit', $limit, $query );
+
+		$fcCommunityIdMap = $this->getFandomCreatorWikis( $limit, $afterWikiId );
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
 
@@ -103,8 +121,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
 				'sitename' => $row->sitename,
-				'url' => parse_url( $row->url, PHP_URL_HOST ),
-				'domain' => parse_url( $row->url, PHP_URL_HOST ),
+				'url' => $row->url,
+				'domain' => $this->parseUrl( $row->url ),
 				'title' => $row->title,
 				'founding_user_id' => $row->founding_user_id,
 				'public' => $row->public,
@@ -115,7 +133,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'cluster' => $row->cluster,
 				'created_at' => $row->created_at,
 				'deleted' => $row->deleted,
-				'is_test_wiki' => intval(in_array($row->wiki_id, $testWikis))
+				'is_test_wiki' => intval( in_array( $row->wiki_id, $testWikis ) ),
+				'fc_community_id' => $fcCommunityIdMap[ $row->wiki_id ] ?? null,
 			];
 		}
 		$db->freeResult( $dbResult );

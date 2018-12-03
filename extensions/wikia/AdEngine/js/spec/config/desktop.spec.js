@@ -26,9 +26,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			getAdContextForcedProvider: returnEmpty,
 			getInstantGlobals: returnEmpty,
 			getUserAgent: noop,
-			geo: {
-				getCountryCode: noop
-			},
 			trackingOptIn: {
 				isOptedIn: noop
 			},
@@ -62,7 +59,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.log,
 			{navigator: {userAgent: mocks.getUserAgent()}},
 			mocks.getInstantGlobals(),
-			mocks.geo,
 			mocks.trackingOptIn,
 			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,

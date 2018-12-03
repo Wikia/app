@@ -672,11 +672,11 @@ $messages['ko'] = array(
 );
 
 $messages['nl'] = array(
-	'insights' => 'Insights',
-	'insights-desc' => 'Insights description',
-	'insights-landing-title' => 'Welcome to Insights',
-	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights.',
-	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
+	'insights' => 'Inzichten',
+	'insights-desc' => "De speciale pagina [[Special:Insights]] en subpagina's met lijsten van artikelen of sjablonen die aandacht nodig hebben.",
+	'insights-landing-title' => 'Welkom bij Inzichten',
+	'insights-landing-lead' => 'Met deze inzichten zie je welke artikelen harder aandacht nog hebben dan anderen, zodat je efficient met je tijd omgaat.',
+	'insights-list-no-items' => 'Goed gedaan! Er staan geen artikelen in deze wachtrij.',
 	'insights-list-no-flag-types' => 'There are no articles using the selected flag type!',
 	'insights-list-header-page' => 'Page',
 	'insights-list-header-altaction' => 'Action',
@@ -730,11 +730,11 @@ $messages['nl'] = array(
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
-	'insights-list-no-items-informative' => 'Nothing here yet. Keep editing, and visitors are sure to come!',
+	'insights-list-no-items-informative' => 'Hier is nog niets. Blijf bouwen aan je wiki en bezoekers zullen er zeker komen!',
 	'insights-list-subtitle-popularpages' => 'Popular pages',
 	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
 	'insights-error' => 'Something went wrong. Please try again.',
-	'right-insights' => 'Allows viewing the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
+	'right-insights' => "De speciale pagina [[Special:Insights]] en subpagina's met lijsten van artikelen of sjablonen die aandacht nodig hebben.",
 );
 
 $messages['pl'] = array(

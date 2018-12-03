@@ -288,8 +288,9 @@ class AchAwardingService {
 				}
 			}
 
-			//touch user when badges are given
-			$this->mUser->invalidateCache();
+			// Bust article ETags for this user, to ensure they see the updated set of badges on their profile
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$this->mUser->touch();
 
 			//purge the user page to update counters/ranking/badges/score, FB#2872
 			$this->mUser->getUserPage()->purgeSquid();

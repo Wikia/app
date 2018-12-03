@@ -54,10 +54,12 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->trackingOptIn = TrackingOptIn::renderScript();
 		// FIXME SUS-4812 get this out of here
+		$this->trackingCookies = Track::getTrackingCookiesJS();
 		$this->internalTracker = Track::getViewJS();
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->billTheLizard = null;
+		$this->moatYi = null;
 		$this->a9 = null;
 		$this->prebid = null;
 		$this->il = null;
@@ -246,6 +248,7 @@ class OasisController extends WikiaController {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->billTheLizard = AnalyticsEngine::track('BillTheLizard', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->moatYi = AnalyticsEngine::track('MoatYi', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->il = AdEngine2Controller::getILBootstrapCode();

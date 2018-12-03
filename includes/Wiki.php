@@ -154,7 +154,7 @@ class MediaWiki {
 	 * @return void
 	 */
 	private function performRequest() {
-		global $wgServer, $wgUsePathInfo, $wgTitle;
+		global $wgServer, $wgScriptPath, $wgUsePathInfo, $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -234,7 +234,12 @@ class MediaWiki {
 				$url = $title->getFullURL( $query );
 			}
 			// Check for a redirect loop
-			if ( !preg_match( '/^' . preg_quote( $wgServer, '/' ) . '/', $url )
+			$urlScriptPath = wfGetLanguagePathFromURL( $url );
+			if (
+				(
+					!preg_match( '/^' . preg_quote( $wgServer, '/' ) . '/', $url )
+					|| ( $wgScriptPath !== $urlScriptPath )
+				)
 				&& $title->isLocal() )
 			{
 				// 301 so google et al report the target as the actual url.
@@ -441,14 +446,6 @@ class MediaWiki {
 	 * If possible this method will be executed only after the response has been flushed.
 	 */
 	public function restInPeace() {
-		// If using FastCGI we can flush the output now and do any further updates without blocking
-		if ( function_exists( 'fastcgi_finish_request' ) ) {
-			fastcgi_finish_request();
-		} else {
-			// Either all DBs should commit or none
-			ignore_user_abort( true );
-		}
-
 		// Do any deferred jobs
 		DeferredUpdates::doUpdates();
 

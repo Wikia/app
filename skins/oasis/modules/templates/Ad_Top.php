@@ -9,7 +9,10 @@
 
 	</div>
 
-	<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']]); ?>
+	<?= $app->renderView('Ad', 'Index', [
+		'slotName' => 'INVISIBLE_SKIN',
+		'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+	]); ?>
 
 </div>
 

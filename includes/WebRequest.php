@@ -1132,11 +1132,10 @@ HTML;
 	 * (uses POST and contains a valid edit token)
 	 *
 	 * @param \User $user
-	 * @return mixed
 	 * @throws BadRequestException
 	 */
 	public function assertValidWriteRequest( \User $user ) {
-		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ), '', $this ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}
 	}
@@ -1365,7 +1364,7 @@ class FauxRequest extends WebRequest {
 	}
 
 	public function getRequestURL() {
-		$this->notImplemented( __METHOD__ );
+		return '/wiki/Operative';
 	}
 
 	/**

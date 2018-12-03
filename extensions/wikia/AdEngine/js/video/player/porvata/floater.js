@@ -1,17 +1,22 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
+		'ext.wikia.adEngine.adContext',
 		'ext.wikia.adEngine.video.player.porvata.floaterConfiguration',
 		'ext.wikia.adEngine.video.player.porvata.floatingContextFactory',
 		'wikia.document',
+		'wikia.domCalculator',
 		'wikia.throttle',
 		'wikia.window'
-	], function (floaterConfiguration, floatingContextFactory, doc, throttle, win) {
+	], function (adContext, floaterConfiguration, floatingContextFactory, doc, domCalculator, throttle, win) {
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
 			wikiFloatingVideoSelector = '.video-container',
-			floatingContextCache = {};
+			floatingContextCache = {},
+			conflictingAdSlots = [],
+			activeAdSlotsInConflict = [],
+			activeAdSlotsCheck = false;
 
 		function updateDimensions(element, width, height) {
 			if (element) {
@@ -81,20 +86,22 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				} else {
 					endFloating(floatingContext);
 				}
+
+				if (adContext.get('opts.incontentPlayerRail.enabled')) {
+					floatingContext.elements.video.stop();
+				}
 			};
 		}
 
 		function enableFloating(floatingContext) {
-			var elements = floatingContext.elements,
-				width = 0,
-				height = 0;
+			var elements = floatingContext.elements;
 
 			floatingContext.beforeFloat();
 			elements.adContainer.classList.add(activeFloatingCssClass);
 
 			// Those values have to be set after setting active floating css class
-			width = floatingContext.getWidth();
-			height = floatingContext.getHeight();
+			var width = floatingContext.getWidth(),
+				height = floatingContext.getHeight();
 
 			updateDimensions(elements.imageContainer, width, height);
 
@@ -180,7 +187,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
-		 * Make video floating on the right rail.
+		 * Make video floating on the right rail
 		 *
 		 * @param video - video object
 		 * @param params - parameters that video receives
@@ -205,7 +212,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
-		 * Checks whether slot with given parameters can become floating.
+		 * Checks whether slot with given parameters can become floating
 		 *
 		 * @param params - parameters that video receives
 		 * @returns {boolean} - true when floater can make given video & slot floatable
@@ -214,15 +221,70 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return floaterConfiguration.canFloat(params);
 		}
 
+		/**
+		 * Checks whether slot with given name is floating
+		 *
+		 * @param slotName - parameters with slot name
+		 * @returns {boolean} - true when slot is currently floating
+		 */
 		function isFloating(slotName) {
 			return floatingContextCache[slotName] &&
 				floatingContextCache[slotName].elements.adContainer.classList.contains(activeFloatingCssClass);
 		}
 
+		/**
+		 * Add callback (second parameter) which should be executed whether floating slot (first parameter)
+		 * will conflict with any of given ad slots (third parameter)
+		 *
+		 * @param element - floating ad slot
+		 * @param callback - function to be executed once conflict in/out alert will be raised
+		 * @param adSlots - array of ad slots ids which can conflict with floating ad slot
+		 * @returns {function} - onScroll listener callback
+		 */
+		function registerConflictCallback(element, callback, adSlots) {
+			conflictingAdSlots = adSlots;
+
+			var conflictCallback = throttle(function() {
+				if (activeAdSlotsCheck) {
+					return;
+				}
+
+				activeAdSlotsCheck = true;
+
+				var currentConflicts = [];
+
+				conflictingAdSlots.forEach(function (adSlot) {
+					if (domCalculator.isFloatingInConflict(element, doc.getElementById(adSlot))) {
+						currentConflicts.push(adSlot);
+					}
+				});
+
+				currentConflicts.forEach(function (adSlot) {
+					if (activeAdSlotsInConflict.indexOf(adSlot) === -1) {
+						callback(adSlot + '_in');
+					}
+				});
+
+				activeAdSlotsInConflict.forEach(function (adSlot) {
+					if (currentConflicts.indexOf(adSlot) === -1) {
+						callback(adSlot + '_out');
+					}
+				});
+
+				activeAdSlotsInConflict = currentConflicts;
+				activeAdSlotsCheck = false;
+			}, 100);
+
+			win.addEventListener('scroll', conflictCallback);
+
+			return conflictCallback;
+		}
+
 		return {
 			canFloat: canFloat,
 			makeFloat: makeFloat,
-			isFloating: isFloating
+			isFloating: isFloating,
+			registerConflictCallback: registerConflictCallback
 		};
 	}
 );

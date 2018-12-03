@@ -138,6 +138,7 @@ class ProfilerXhprof extends Profiler {
 				continue;
 			}
 			// Convert elapsed times from μs to ms to match interface
+			// @see https://github.com/tideways/php-xhprof-extension#data-format
 			$entry = [
 				'name' => $fname,
 				'calls' => $stats['ct'],
@@ -199,19 +200,17 @@ class ProfilerXhprof extends Profiler {
 
 		$width = 140;
 		$nameWidth = $width - 65;
-		$format = "%-{$nameWidth}s %6d %9d %9d %9d %9d %7.3f%% %9d";
+		$format = "%-{$nameWidth}s %6d %9d %9d %7.3f%% %9d";
 		$out = [];
-		$out[] = sprintf( "%-{$nameWidth}s %6s %9s %9s %9s %9s %7s %9s",
-			'Name', 'Calls', 'Total', 'Min', 'Each', 'Max', '%', 'Mem'
+		$out[] = sprintf( "%-{$nameWidth}s %6s %9s %9s %7s %9s",
+			'Name', 'Calls', 'Total', 'Each', '%', 'Mem'
 		);
 		foreach ( $data as $stats ) {
 			$out[] = sprintf( $format,
 				$stats['name'],
 				$stats['calls'],
 				$stats['real'] * 1000,
-				$stats['min_real'] * 1000,
 				$stats['real'] / $stats['calls'] * 1000,
-				$stats['max_real'] * 1000,
 				$stats['%real'],
 				$stats['memory']
 			);

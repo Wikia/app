@@ -1,0 +1,31 @@
+.wds-font-style-italic {
+	font-style: italic;
+}
+
+.wds-font-style-normal {
+	font-style: normal;
+}
+
+.wds-text-transform-capitalize {
+	text-transform: capitalize;
+}
+
+.wds-text-transform-uppercase {
+	text-transform: uppercase;
+}
+
+.wds-text-transform-lowercase {
+	text-transform: lowercase;
+}
+
+.wds-text-transform-none {
+	text-transform: none;
+}
+
+.wds-midlight-aqua {
+	@include wds-midlight(rgba($wds-fandom-color-aqua, .25));
+}
+
+.wds-midlight-navy {
+	@include wds-midlight(rgba($wds-fandom-color-navy, .1));
+}

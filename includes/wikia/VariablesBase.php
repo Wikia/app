@@ -1274,7 +1274,7 @@ $wgCreateLanguageWikisWithPath = false;
  * Whether to create new English wikis under the fandom.com domain.
  * @var bool $wgCreateEnglishWikisOnFandomCom
  */
-$wgCreateEnglishWikisOnFandomCom = false;
+$wgCreateEnglishWikisOnFandomCom = true;
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -2011,17 +2011,6 @@ $wgDumpsDisabledWikis = [
 $wgEditEncoding = '';
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-	'vhost' => 'data-warehouse',
-	'exchange' => 'mediawiki-edit-events',
-	'deadExchange' => 'zombie.v0.1',
-];
-
-/**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
  * @var Array $wgEditInterfaceWhitelist
  */
@@ -2359,6 +2348,13 @@ $wgEnableCategoryGalleriesExt = true;
 $wgEnableCategoryIntersectionExt = false;
 
 /**
+ * Enable CategoryPage3 extension which replaces category pages with a SEO friendly version
+ * @see extensions/wikia/CategoryPage3/
+ * @var bool $wgEnableCategoryPage3Ext
+ */
+$wgEnableCategoryPage3Ext = true;
+
+/**
  * Enable CategoryTree extension.
  * @see /extensions/CategoryTree/
  * @var bool wgEnableCategoryTreeExt
@@ -2555,13 +2551,6 @@ $wgEnableDiscussionsLog = true;
 $wgEnableDiscussionsNavigation = false;
 
 /**
- * Allows submitting posts with Polls.
- * @see extensions/wikia/MercuryApi
- * @var bool $wgEnableDiscussionsPolls
- */
-$wgEnableDiscussionsPolls = true;
-
-/**
  * Enable DismissableSiteNotice extension.
  * @see /extensions/DismissableSiteNotice
  * @var bool wgEnableDismissableSiteNoticeExt
@@ -2654,6 +2643,28 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
+ * configures smart banner to display custom text/link/image and target it by country an OS
+ * example value:
+ * {
+ *  "os": [
+ *      "ios",
+ *      "android"
+ *  ],
+ *  "imageUrl": "https:\/\/vignette.wikia.nocookie.net\/rybatest\/images\/7\/71\/002-send-1.svg\/revision\/latest?cb=20180711085702",
+ *  "title": "some short title",
+ *  "text": "some body text",
+ *  "linkText": "some link",
+ *  "linkUrl": "some.url.com",
+ *  "countries": [
+ *      "pl",
+ *      "us",
+ *      "au"
+ *  ]
+ * }
+ */
+$wgSmartBannerAdConfiguration = [];
+
+/**
  * Surprisingly, this variable enables FANDOM stories on search result page!
  * @see /extensions/wikia/Search/WikiaSearchController.class.php
  * @var bool $wgEnableFandomStoriesOnSearchResultPage
@@ -2673,6 +2684,13 @@ $wgEnableFastLinkCache = true;
  * @var bool $wgEnableFeedsAndPostsExt
  */
 $wgEnableFeedsAndPostsExt = false;
+
+/**
+ * Enable the Embedded Feeds module from Community Feeds
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableEmbeddedFeeds
+ */
+$wgEnableEmbeddedFeeds = false;
 
 /**
  * Enable FileInfoFunctions extension.
@@ -2702,13 +2720,6 @@ $wgEnableFirstContributionsExt = true;
  * @var bool $wgEnableFlagClosedAccountsExt
  */
 $wgEnableFlagClosedAccountsExt = true;
-
-/**
- * Enable FlowTracking extension (event tracking in create new page flow).
- * @see extensions/wikia/FlowTracking
- * @var bool $wgEnableFlowTracking
- */
-$wgEnableFlowTracking = true;
 
 /**
  * Enable Forum extension.
@@ -3503,6 +3514,13 @@ $wgEnableSemanticScribuntoExt = false;
 $wgEnableSendGridPostback = true;
 
 /**
+ * Enable SEO Link Hreflang extension.
+ * @see extensions/wikia/SeoLinkHreflang
+ * @var bool $wgEnableSeoLinkHreflangExt
+ */
+$wgEnableSeoLinkHreflangExt = true;
+
+/**
  * If on, the sidebar navigation links are cached for users with the current
  * language set. This can save a touch of load on a busy site by shaving off
  * extra message lookups. However it is also fragile: changing the site
@@ -3926,6 +3944,16 @@ $wgWikiaMobileSmartBannerConfig = [
 		'apple-itunes-app' => 'app-id=422467074',
 		'google-play-app' => 'app-id=com.wikia.app.GameGuides'
 	]
+];
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see extensions/wikia/WikiFactory/WikiStatusChangePublisher/WikiStatusChangeHooks
+ * @var Array $wgWikiStatusChangePublisher
+ */
+$wgWikiStatusChangePublisher = [
+	'exchange' => 'wiki-status-changed',
+	'vhost' => 'events',
 ];
 
 /**
@@ -4605,7 +4633,7 @@ $wgGenerateThumbnailOnParse = false;
  */
 $wgGlobalUserPreferenceWhiteList = [
 	'literals' => [
-		'CategoryExhibitionDisplayType',
+		'category-page-layout',
 		'CategoryExhibitionSortType',
 		'ccmeonemails',
 		'cols',
@@ -4973,7 +5001,6 @@ $wgImageMagickConvertCommand = '/usr/bin/convert';
 $wgImageReview = [
 	'vhost' => 'dc-file-sync',
 	'exchange' => 'amq.topic',
-	'deadExchange' => 'zombie.v0.1'
 ];
 
 /**
@@ -5048,7 +5075,6 @@ $wgIncludeLegacyJavaScript = true;
 $wgIndexingPipeline = [
 	'vhost' => 'indexer',
 	'exchange' => 'events',
-	'deadExchange' => 'zombie.v0.1',
 ];
 
 /**
@@ -6370,6 +6396,19 @@ $wgPoolCounterConf = null;
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
 /**
+ * Whether to emit more detailed debug logs for a PoolWorkArticleView
+ * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
+ * @var bool $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugMode = false;
+
+/**
+ * The fraction of PoolWorkArticleView executions that should be executed with more detailed logging
+ * @var float $wgPoolWorkArticleViewDebugMode
+ */
+$wgPoolWorkArticleViewDebugSampleRatio = 0.05;
+
+/**
  * Whether to preload the mediawiki.util module as blocking module in the top
  * queue. Before MediaWiki 1.19, modules used to load slower/less asynchronous
  * which allowed modules to lack dependencies on 'popular' modules that were
@@ -6472,26 +6511,11 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * Groups that should not be affected by Special:ProtectSite lockdown.
- * @see extensions/wikia/SpecialProtectSite
- * @var Array $wgProtectsiteExempt
- */
-$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
-
-/**
  * Enable ProtectSiteJS extension.
  * @see extensions/wikia/ProtectSiteJS
  * @var bool $wgEnableProtectSiteJSExt
  */
 $wgEnableProtectSiteJSExt = true;
-
-/**
- * The maximum time, site can be locked by the Protectsite extension.
- * @see /extensions/wikia/SpecialProtectSite
- * @var string $wgProtectsiteLimit
- *
- */
-$wgProtectsiteLimit = '12 hours';
 
 /**
  * Big list of banned IP addresses, in the keys not the values.
@@ -6677,7 +6701,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'prod.irc.service.sjc.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
@@ -8626,13 +8650,6 @@ $wgWikiaEnableSharedHelpExt = true;
 $wgWikiaEnableSharedTalkExt = true;
 
 /**
- * Enable ProtectSite extension.
- * @see extensions/wikia/SpecialProtectSite
- * @var bool $wgWikiaEnableSpecialProtectSiteExt
- */
-$wgWikiaEnableSpecialProtectSiteExt = true;
-
-/**
  * Enable WikiFactory Redirector.
  * @see /extensions/wikia/WikiFactory/redir/SpecialWikiFactoryRedir.php
  * @var bool $wgWikiaEnableWikiFactoryRedir
@@ -8896,3 +8913,8 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;

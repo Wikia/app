@@ -347,6 +347,10 @@ $wgLBFactoryConf = [
         'blobs20132' => [ 'dbname' => 'blobs20132' ],
         'blobs20141' => [ 'dbname' => 'blobs20141' ],
     ],
+	'externalTemplateOverrides' => [
+		// SRE-109: Disable automatic transactions for external DBs like blobs cluster
+		'flags' => 0,
+	],
 ];
 
 /**
@@ -540,6 +544,13 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
  * @var string $wgServicesExternalDomain
  */
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
+
+/**
+ * External alternative services domain.
+ * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
+ * @var string $wgServicesExternalAlternativeDomain
+ */
+$wgServicesExternalAlternativeDomain = "https://services.$wgFandomBaseDomain/";
 
 /**
  * Whether to disable the background tasks broker for MediaWiki.

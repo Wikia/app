@@ -134,6 +134,9 @@ $messages['ja'] = array(
 	'emailext-discussion-100-upvote-summary' => '[$1 $2] のあなたの投稿への「イイね！」が100件に達しました！',
 );
 
+$messages['ko'] = array(
+);
+
 $messages['nl'] = array(
 	'emailext-discussion-reply-with-title-subject' => 'There is a new reply to [$1 $2] on [$3 $4]',
 	'emailext-discussion-reply-subject' => 'There is a new reply to a post you are following on [$1 $2]',

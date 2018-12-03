@@ -2959,7 +2959,7 @@ $messages['ru'] = array(
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://ru.community.wikia.com/wiki/Справка:Поддерживаемые_браузеры">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',
-	'grouppage-chatmoderator' => 'w:c:ru.community:Справка:Чат',
+	'grouppage-chatmoderator' => 'Project:Модераторы чата',
 	'chatbanlist' => 'Список банов в чате',
 	'chat-message-was-too-long' => 'Сообщение слишком длинное и не может быть отображено.',
 	'right-chat' => 'Общайтесь с другими участниками в [[Справка:Чат|чате]]',

@@ -121,6 +121,8 @@ $wgHooks['ArticleSaveComplete'][] = 'ApiHooks::onArticleSaveComplete';
 $wgHooks['ArticleRollbackComplete'][] = 'ApiHooks::onArticleRollbackComplete';
 $wgHooks['TitleMoveComplete'][] = 'ApiHooks::onTitleMoveComplete';
 $wgHooks['ArticleCommentListPurgeComplete'][] = 'ApiHooks::ArticleCommentListPurgeComplete';
+$wgHooks['ClosedWikiHandler'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
+$wgHooks['ShowLanguageWikisIndex'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
 
 
 //Wikia API base controller, all the others extend this class
@@ -260,6 +262,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
+$wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
 
 /**
  * Resource Loader enhancements
@@ -1131,20 +1134,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
 
 /**
- * @name $wgAdDriverBottomLeaderBoardMegaCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardMegaCountries = null;
-
-/**
- * @name $wgAdDriverBottomLeaderBoardViewportCountries
- * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardViewportCountries = null;
-
-/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1319,6 +1308,13 @@ $wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
 $wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries
+ * Adds FV rv and s1 values to Moat tracking.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1363,6 +1359,13 @@ $wgAdDriverFVDelayTimeoutOasis = 2000;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
+ * @name $wgAdDriverGeoEdgeCountries
+ * List of countries Geo Edge will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGeoEdgeCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1615,6 +1618,13 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 $wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
+ * @name $wgAdDriverIncontentPlayerRailCountries
+ * Moves INCONTENT_PLAYER slot into rail section in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerRailCountries = null;
+
+/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1734,8 +1744,10 @@ $wgInlineStartupScript = false;
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
+// SUS-2164: Include Auth extensions - enabled globally
+include_once "$IP/extensions/wikia/AuthPreferences/AuthPreferences.setup.php";
+
 // SUS-2164: Include Facebook extensions - enabled globally
-include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension

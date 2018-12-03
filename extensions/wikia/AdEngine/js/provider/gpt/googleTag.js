@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function dispatchEvent(event, methodName) {
 		var slot,
-			slotName = adSlot.getShortSlotName(event.slot.getName());
+			slotName = adSlot.getShortSlotName(event.slot.getAdUnitPath());
 
 		log(['dispatchEvent', event], log.levels.info, logGroup);
 		slot = slotRegistry.get(slotName);
@@ -61,6 +61,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			win.googletag.pubads().collapseEmptyDivs();
 			win.googletag.pubads().enableSingleRequest();
 			win.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			win.googletag.pubads().addEventListener('slotOnload', function (event) {
+				dispatchEvent(event, 'loaded');
+			});
 			win.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
 				dispatchEvent(event, 'renderEnded');
 			});

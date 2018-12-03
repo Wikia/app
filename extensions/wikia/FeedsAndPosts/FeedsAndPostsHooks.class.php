@@ -7,28 +7,24 @@ class FeedsAndPostsHooks {
 	 *
 	 * @return bool
 	 */
-	private static function shouldLoadAssets() {
-		return WikiaPageType::isArticlePage();
+	private static function shouldShowEmbeddedFeed() {
+		global $wgEnableEmbeddedFeeds;
+
+		return WikiaPageType::isArticlePage() && $wgEnableEmbeddedFeeds;
 	}
 
-	/**
-	 * Add to Javascript assets on Oasis
-	 *
-	 * @param array $jsAssets
-	 *
-	 * @return bool
-	 */
-	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		if ( self::shouldLoadAssets() ) {
-			$jsAssets[] = 'feeds_and_posts_js';
+	public static function onBeforePageDisplay() {
+		if ( self::shouldShowEmbeddedFeed() ) {
+			\Wikia::addAssetsToOutput( 'feeds_and_posts_scss' );
+			\Wikia::addAssetsToOutput( 'feeds_and_posts_js' );
 		}
 
 		return true;
 	}
 
 	public static function onMakeGlobalVariablesScript( array &$vars ) {
-		if ( self::shouldLoadAssets() ) {
-			$vars['canLoadFeedsAndPosts'] = true;
+		if ( self::shouldShowEmbeddedFeed() ) {
+			$vars['showEmbeddedFeed'] = true;
 		}
 		return true;
 	}

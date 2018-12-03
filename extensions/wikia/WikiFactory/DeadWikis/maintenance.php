@@ -17,6 +17,7 @@ use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Metrics\Collector;
 
 $optionsWithArgs = array(
 	'action',
@@ -308,17 +309,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $wikis;
 	}
 
-	protected function doDisableWiki( $wikiId, $flags, $reason = '' ) {
-		// TODO: copied from WikiFactory::disableWiki since it's not released yet
-		WikiFactory::setFlags( $wikiId, $flags );
-		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
-		if ($this->debug) {
-			var_dump("setPublicStatus",$wikiId,$res);
-		}
-		WikiFactory::clearCache( $wikiId );
-		return $res !== false;
-	}
-
 	protected function disableWikis( $wikis, &$deleted = array(), &$notDeleted = array() ) {
 		$flags = $this->getFlags();
 		foreach ($wikis as $id => $wiki) {
@@ -354,7 +344,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 
 
-			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
+			if ( $this->doDisableWiki( $id, $flags,self::DELETION_REASON ) ) {
 				echo "ok\n";
 				$this->disableDiscussion( $id );
 				$deleted[$id] = $wiki;
@@ -364,6 +354,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$notDeleted[$id] = $wiki;
 			}
 		}
+	}
+
+	protected function doDisableWiki( $wikiId, $flags, $reason = '' ) {
+		return WikiFactory::disableWiki( $wikiId, $flags, $reason ) !== false;
 	}
 
 	private function disableDiscussion( $cityId ) {
@@ -654,6 +648,20 @@ class AutomatedDeadWikisDeletionMaintenance {
 			default:
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);
 		}
+
+		// SUS-6163 - report when was the last time a given maintenance script has been run successfully
+		global $wgWikiaEnvironment;
+
+		Collector::getInstance()
+			->addGauge(
+				'mediawiki_maintenance_scripts_last_success',
+				time(),
+				[
+					'script_class' => __CLASS__,
+					'env' => $wgWikiaEnvironment,
+				],
+				'Unix timestamp maintenance script last succeeded'
+			);
 	}
 
 	static protected function adjustSettings() {

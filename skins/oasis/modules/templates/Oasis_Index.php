@@ -34,6 +34,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
+<?= $trackingCookies ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
@@ -70,6 +71,7 @@
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $billTheLizard ?>
+<?= $moatYi ?>
 <?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>

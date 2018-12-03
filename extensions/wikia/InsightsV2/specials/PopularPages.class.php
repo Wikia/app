@@ -8,6 +8,14 @@ class PopularPages extends PageQueryPage {
 		parent::__construct( $name );
 	}
 
+	public function execute( $par ) {
+		/**
+		 * SUS-4938 | redirect to Special:Insights/popularpages
+		 */
+		$title = SpecialPage::getTitleFor( 'Insights', 'popularpages' );
+		$this->getOutput()->redirect( $title->getFullURL() );
+	}
+
 	public function isListed() {
 		return false;
 	}

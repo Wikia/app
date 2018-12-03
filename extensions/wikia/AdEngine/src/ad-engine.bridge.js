@@ -14,6 +14,7 @@ import {
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
 	Roadblock,
+	StickyAd,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -29,11 +30,10 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyAd];
 
 function init(
 	adTracker,
-	geo,
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
@@ -53,9 +53,15 @@ function init(
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
-	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
+
+	const stickySlotsLines = legacyContext.get('opts.stickySlotsLines');
+	if (stickySlotsLines && stickySlotsLines.length) {
+		context.set('templates.stickyAd.lineItemIds', stickySlotsLines);
+		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyAd');
+	}
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
@@ -108,7 +114,7 @@ function init(
 			context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
 			context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 			context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
-			context.set('custom.isCMPEnabled', legacyContext.get('opts.isCMPEnabled'));
+			context.set('custom.isCMPEnabled', true);
 		}
 
 		context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
@@ -159,12 +165,26 @@ function syncSlotsStatus(slotRegistry, slotsInContext) {
 }
 
 function unifySlotInterface(slot) {
-	const slotContext = context.get(`slots.${slot.name}`) || {targeting: {}};
+	const slotPath = `slots.${slot.name}`;
+	const slotContext = context.get(slotPath) || {targeting: {}};
+
+	let onLoadResolve = function () {};
+	const onLoadPromise = new Promise(function (resolve) {
+		onLoadResolve = resolve;
+	});
 
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
 		default: {
 			getSlotName: () => slot.name
+		},
+		emitEvent: (eventName) => {
+			const event = document.createEvent('CustomEvent');
+			event.initCustomEvent('adengine.slot.status', true, true, {
+				slot: slot,
+				status: eventName
+			});
+			window.dispatchEvent(event);
 		},
 		getElement: () => slot.container.parentElement,
 		getId: () => slot.name,
@@ -178,12 +198,13 @@ function unifySlotInterface(slot) {
 			return (slotContext.viewportConflicts || []).length > 0;
 		},
 		isRepeatable: () => false,
+		getConfigProperty: (key) => context.get(`${slotPath}.${key}`),
 		setConfigProperty: (key, value) => {
-			context.set(`slots.${slot.name}.${key}`, value);
+			context.set(`${slotPath}.${key}`, value);
 		},
 		getStatus: () => null,
 		setStatus: (status) => {
-			if (['viewport-conflict', 'sticked', 'unsticked'].indexOf(status) > -1) {
+			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
 				event.initCustomEvent('adengine.slot.status', true, true, {
 					slot: slot,
@@ -191,12 +212,27 @@ function unifySlotInterface(slot) {
 				});
 				window.dispatchEvent(event);
 			}
+		},
+		onLoad: () => {
+			return onLoadPromise;
 		}
 	});
 
 	slot.pre('viewed', (event) => {
 		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
+	});
+
+	slot.pre('loaded', () => {
+		onLoadResolve();
+	});
+
+	slot.post('success', (event) => {
+		slot.lineItemId = slot.container.firstElementChild.getAttribute('data-gpt-line-item-id');
+		const templates = slot.getConfigProperty('defaultTemplates');
+		if (templates && templates.length) {
+			templates.forEach(template => templateService.init(template, slot));
+		}
 	});
 
 	return slot;
@@ -255,6 +291,8 @@ function readSessionId() {
 	utils.readSessionId();
 }
 
+const geo = utils;
+
 export {
 	init,
 	GptSizeMap,
@@ -265,4 +303,5 @@ export {
 	context,
 	universalAdPackage,
 	slotService,
+	geo,
 };

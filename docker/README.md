@@ -9,11 +9,12 @@ We assume that you have `app` and `config` repository cloned in the same directo
 
 ```sh
 # 1. build a base image
-docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:372bb48 ./base
-docker push artifactory.wikia-inc.com/sus/php-wikia-base:372bb48
+docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:da4390f ./base
+docker push artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
 # 2. and then dev image
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
+docker build -f dev/Dockerfile-nginx -t nginx-wikia-dev ./dev
 
 # 3. you can now run eval.php (execute this from root directory of app repo clone)
 docker run -it --rm -h localhost -e 'SERVER_ID=165' -e 'WIKIA_ENVIRONMENT=dev' -e 'WIKIA_DATACENTER=poz' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/sus/php-wikia-dev php maintenance/eval.php

@@ -45,8 +45,16 @@ $wgAutoloadClasses['WikiFactoryVariableParseException'] = __DIR__ . '/WikiFactor
 $wgAutoloadClasses['ApiWikiFactorySaveVariable'] = __DIR__ . '/api/ApiWikiFactorySaveVariable.php';
 $wgAutoloadClasses['ApiWikiFactoryRemoveVariable'] = __DIR__ . '/api/ApiWikiFactoryRemoveVariable.php';
 $wgAutoloadClasses['MarkWikiAsClosedController'] = __DIR__ . '/api/MarkWikiAsClosedController.class.php';
+$wgAutoloadClasses['AnnotateWikiNotSpamController'] = __DIR__ . '/api/AnnotateWikiNotSpamController.php';
+$wgAutoloadClasses['WikiFounderIpController'] = __DIR__ . '/api/WikiFounderIpController.php';
+$wgAutoloadClasses['WikiStatusChangeHooks'] = __DIR__ . '/WikiStatusChangePublisher/WikiStatusChangeHooks.php';
+$wgAutoloadClasses['WikiStatusChangePublisher'] = __DIR__ . '/WikiStatusChangePublisher/WikiStatusChangePublisher.php';
+
 $wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
 $wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
+
+$wgHooks['WikiFactoryPublicStatusChange'][] = 'WikiStatusChangeHooks::onWikiFactoryPublicStatusChange';
+$wgHooks['WikiFactoryDoCloseWiki'][] = 'WikiStatusChangeHooks::onWikiFactoryDoCloseWiki';
 
 $wgResourceModules['ext.wikia.wikiFactory'] = [
 	'scripts' => [

@@ -1003,6 +1003,12 @@ class WikiPage extends Page implements IDBAccessObject {
 			$conditions['page_latest'] = $lastRevision;
 		}
 
+		// SRE-109: If the page has no previous revision (we're creating a new page)
+		// then the previous revision could not have been a redirect so there is no need to check for it
+		if ( $lastRevision === 0 ) {
+			$lastRevIsRedirect = false;
+		}
+
 		// Wikia change - begin
 		/**
 		 * PLATFORM-1311: page_latest can be set to zero only during page creation
@@ -1327,12 +1333,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
-		// <Wikia>
-		if ( is_string( $user ) ) {
-			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
-			Wikia::debugBacktrace( "MOLI: invalid User:" );
-		}
-		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -1485,7 +1485,11 @@ class WikiPage extends Page implements IDBAccessObject {
 				'text'       => $text,
 				'user'       => $user->getId(),
 				'user_text'  => $user->getName(),
-				'timestamp'  => $now
+				'timestamp'  => $now,
+
+				// SRE-109: We're creating a page so we know that the first revision will have no parents
+				// Not setting it explicitly will cause a pointless lookup on the master database
+				'parent_id'  => 0,
 			) );
 
 			try {
@@ -3076,13 +3080,28 @@ class PoolWorkArticleView extends PoolCounterWork {
 	 * @param $text String: text to parse or null to load it
 	 */
 	function __construct( Page $page, ParserOptions $parserOptions, $revid, $useParserCache, $text = null ) {
+		global $wgPoolWorkArticleViewDebugSampleRatio, $wgPoolWorkArticleViewDebugMode;
+
+		// SRE-111: Enable detailed sampling for some PoolWorkArticleView executions
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( $wgPoolWorkArticleViewDebugSampleRatio );
+
+		if ( $sampler->shouldSample() ) {
+			$wgPoolWorkArticleViewDebugMode = true;
+		}
+
 		$this->page = $page;
 		$this->revid = $revid;
 		$this->cacheable = $useParserCache;
 		$this->parserOptions = $parserOptions;
 		$this->text = $text;
 		$this->cacheKey = ParserCache::singleton()->getKey( $page, $parserOptions );
-		parent::__construct( 'ArticleView', $this->cacheKey . ':revid:' . $revid );
+		$poolCounterKey = "{$this->cacheKey}:revid:$revid";
+		parent::__construct( 'ArticleView', $poolCounterKey );
+		
+		if ( $wgPoolWorkArticleViewDebugMode ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: parser cache key: {$this->cacheKey}" );
+			\Wikia\Logger\WikiaLogger::instance()->info( "SRE-111: poolcounter key: $poolCounterKey" );
+		}
 	}
 
 	/**
@@ -3181,7 +3200,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 	 * @return bool
 	 */
 	function getCachedWork() {
-		$this->parserOutput = ParserCache::singleton()->get( $this->page, $this->parserOptions );
+		$parserCache = ParserCache::singleton();
+
+		// SRE-111: Clear out the options key from in memory cache so as not to get a false negative
+		// We lookup options key 2x, and if we got here then the first time was a miss so we have the miss cached in memory
+		// PoolCounter has notified us that the work is now done - so clear out the miss
+		$parserCache->clearOptionsKey( $this->page );
+
+		$this->parserOutput = $parserCache->get( $this->page, $this->parserOptions );
 
 		if ( $this->parserOutput === false ) {
 			wfDebug( __METHOD__ . ": parser cache miss\n" );

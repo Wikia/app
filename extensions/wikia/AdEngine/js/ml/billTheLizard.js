@@ -3,31 +3,36 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.ml.billTheLizardExecutor',
+	'ext.wikia.adEngine.ml.bucketizers',
 	'ext.wikia.adEngine.services',
 	'ext.wikia.adEngine.tracking.pageInfoTracker',
 	'ext.wikia.adEngine.utils.device',
+	'wikia.browserDetect',
+	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.log',
-	'wikia.trackingOptIn'
+	'wikia.trackingOptIn',
+	'wikia.window'
 ], function (
 	adEngine3,
 	adContext,
 	pageLevelParams,
-	geo,
+	adEngineBridge,
 	executor,
+	bucketizers,
 	services,
 	pageInfoTracker,
 	deviceDetect,
+	browserDetect,
+	doc,
 	instantGlobals,
 	log,
-	trackingOptIn
+	trackingOptIn,
+	win
 ) {
 	'use strict';
-
-	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard',
-		ready = false;
 
 	if (!services.billTheLizard) {
 		return;
@@ -36,6 +41,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function setupProjects() {
 		if (adContext.get('targeting.hasFeaturedVideo')) {
 			services.billTheLizard.projectsHandler.enable('queen_of_hearts');
+			services.billTheLizard.projectsHandler.enable('vcr');
 		}
 	}
 
@@ -48,6 +54,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function call() {
 		var config = instantGlobals.wgAdDriverBillTheLizardConfig || {},
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
+			now = new Date(),
 			pageParams = pageLevelParams.getPageLevelParams();
 
 		adEngine3.context.set('services.billTheLizard', {
@@ -56,16 +63,31 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			endpoint: 'bill-the-lizard/predict',
 			parameters: {
 				queen_of_hearts: {
+					browser: browserDetect.getBrowser().split(' ')[0],
 					device: deviceDetect.getDevice(pageParams),
 					esrb: pageParams.esrb || null,
-					geo: geo.getCountryCode() || null,
+					geo: adEngineBridge.geo.getCountryCode() || null,
+					lang: pageParams.lang,
+					npa: pageParams.npa,
+					os: browserDetect.getOS(),
+					pv: Math.min(30, pageParams.pv || 1),
+					pv_global: Math.min(40, win.pvNumberGlobal || 1),
 					ref: pageParams.ref || null,
 					s0v: pageParams.s0v || null,
 					s2: pageParams.s2 || null,
 					top_1k: adContext.get('targeting.wikiIsTop1000') ? 1 : 0,
-					wiki_id: adContext.get('targeting.wikiId') || null,
 					video_id: featuredVideoData.mediaId || null,
-					video_tags: featuredVideoData.videoTags || null
+					video_tags: featuredVideoData.videoTags || null,
+					viewport_height: bucketizers.bucketizeViewportHeight(Math.max(
+						doc.documentElement.clientHeight, win.innerHeight || 0
+					)),
+					wiki_id: adContext.get('targeting.wikiId') || null
+				},
+				vcr: {
+					h: now.getHours(),
+					pv: Math.min(30, pageParams.pv || 1),
+					pv_global: Math.min(40, win.pvNumberGlobal || 1),
+					ref: pageParams.ref || null
 				}
 			},
 			projects: config.projects,
@@ -81,25 +103,24 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			return services.billTheLizard.call(['queen_of_hearts'])
+			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (query) {
+				pageInfoTracker.trackProp('btl_request', query);
+			});
+
+			return services.billTheLizard.call(['queen_of_hearts', 'vcr'])
 				.then(function () {
-					ready = true;
-					log(['respond'], log.levels.debug, logGroup);
+					var values = serialize();
 
-					var rabbitPropValue = serialize();
-
-					if (adContext.get('opts.enableAdInfoLog') && rabbitPropValue) {
-						pageInfoTracker.trackProp('btl', rabbitPropValue);
+					if (values) {
+						pageLevelParams.add('btl', adEngine3.context.get('targeting.btl'));
+						pageInfoTracker.trackProp('btl', values);
 					}
-				}, function () {
-					ready = true;
-					log(['reject'], log.levels.debug, logGroup);
 				});
 		});
 	}
 
-	function hasResponse() {
-		return ready;
+	function getResponseStatus() {
+		return services.billTheLizard.getResponseStatus();
 	}
 
 	function serialize() {
@@ -108,7 +129,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 
 	return {
 		call: call,
-		hasResponse: hasResponse,
+		getResponseStatus: getResponseStatus,
 		serialize: serialize
 	};
 });

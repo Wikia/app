@@ -1,0 +1,6 @@
+schedule: "0 1 * * *"
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+- --id=304,691244
+- maintenance/wikia/runescapeBot/updateGrandExchangeItemPrices.php
