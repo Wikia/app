@@ -53,7 +53,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
-		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
 		$vars[] = 'wgAdDriverBlockDelayServicesCountries';
 		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
 		$vars[] = 'wgAdDriverCTPMobileRabbitCountries';
@@ -116,6 +115,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
+		$vars[] = 'wgAdDriverWadHMDCountries';
 
 		/**
 		 * Disaster Recovery

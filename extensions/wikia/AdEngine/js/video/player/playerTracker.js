@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'ad_product': params.adProduct,
 				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
-				'ad_error_code': errorCode || emptyValue.int,
+				'ad_error_code': errorCode || params.errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,

@@ -75,6 +75,11 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.wadIL = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadILCountries') &&
 			isILSupportedBrowser();
+
+		// HMD rec
+		context.opts.wadHMD = serviceCanBeEnabled &&
+			context.targeting.hasFeaturedVideo &&
+			isEnabled('wgAdDriverWadHMDCountries');
 	}
 
 	function isEnabled(name) {
@@ -219,7 +224,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.disableSra = isEnabled('wgAdDriverDisableSraCountries');
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
-		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&

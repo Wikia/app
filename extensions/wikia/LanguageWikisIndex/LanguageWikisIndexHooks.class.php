@@ -65,6 +65,37 @@ class LanguageWikisIndexHooks {
 		return true;
 	}
 
+	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
+		if ( WikiFactory::isLanguageWikisIndex() ) {
+			$wikis = array_map( function ( $wiki ) {
+				return [
+					'languageName' => Language::getLanguageName( $wiki['city_lang'] ),
+					'url' => wfHttpToHttps( $wiki['city_url'] ),
+					'title' => $wiki['city_title']
+				];
+			}, WikiFactory::getLanguageWikis() );
+
+			$additionalLinks = [
+				[
+					'url' => '//fandom.wikia.com',
+					'title' => wfMessage( 'languagewikisindex-links-fandom' )->escaped()
+				],
+				[
+					'url' => GlobalTitle::newFromText( 'FANDOM University', NS_MAIN, Wikia::COMMUNITY_WIKI_ID )->getFullURL(),
+					'title' => wfMessage( 'languagewikisindex-links-fandom-university' )->escaped()
+				],
+			];
+
+			$wikiVariables['isEmptyDomainWithLanguageWikis'] = self::isEmptyDomainWithLanguageWikis();
+			$wikiVariables['languageWikis'] = [
+				'additionalLinks' => $additionalLinks,
+				'wikis' => $wikis,
+			];
+		}
+
+		return true;
+	}
+
 	public static function onWikiaCanonicalHref( &$canonicalUrl ) {
 		if ( RequestContext::getMain()->getTitle()->isSpecial( 'LanguageWikisIndex' ) ) {
 			$canonicalUrl = wfExpandUrl( self::WIKIS_INDEX_PAGE );
