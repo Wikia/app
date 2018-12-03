@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracker', [
 
 			tracker.register(player, params);
 
-			player.on('adError', function (event) {
+			player.on('adError', function () {
 				clearParams(params);
 			});
 		}
