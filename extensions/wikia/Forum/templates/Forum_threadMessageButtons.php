@@ -36,17 +36,6 @@
 								<a href="#" class="delete-message" data-mode="rev"> <?= wfMessage( 'wall-message-rev-delete' )->escaped(); ?> </a>
 							</li>
 						<?php endif; ?>
-
-						<?php if ( $notifyeveryone ): ?>
-							<li>
-								<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMessage( 'wall-message-notifyeveryone' )->escaped(); ?> </a>
-							</li>
-						<?php endif; ?>
-						<?php if ( $unnotifyeveryone ): ?>
-							<li>
-								<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMessage( 'wall-message-unnotifyeveryone' )->escaped(); ?> </a>
-							</li>
-						<?php endif; ?>
 				</ul>
 			</div>
 		</div>
