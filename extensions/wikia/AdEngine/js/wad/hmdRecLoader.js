@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.wad.hmdRecLoader', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
