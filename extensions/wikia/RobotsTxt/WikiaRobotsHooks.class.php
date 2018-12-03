@@ -19,19 +19,6 @@ class WikiaRobotsHooks {
 	}
 
 	private static function isRobotsRequestUrl( $requestUrl ) {
-		$url = parse_url( $requestUrl );
-		if ( isset( $url[ 'path' ] ) ) {
-			if ( $url[ 'path' ] == '/robots.txt' ) {
-				return true;
-			}
-			if ( $url[ 'path' ] == '/wikia.php' && isset( $url[ 'query' ] ) ) {
-				$params = [];
-				parse_str( $url['query'], $params );
-				if ( isset( $params['controller'] ) && $params['controller'] == 'WikiaRobots' ) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return parse_url( $requestUrl, PHP_URL_PATH ) == '/robots.txt';
 	}
 }
