@@ -59,9 +59,10 @@ class CompareRobots extends Maintenance {
 			$this->error( "\tStatuses don't match, prod: {$prodResponse->getStatus()}, service: {$serviceResponse->getStatus()}" );
 			return false;
 		}
-		if ( $prodResponse->getStatus() >= 300 && $prodResponse->getStatus() < 300 ) {
+		if ( $prodResponse->getStatus() >= 300 && $prodResponse->getStatus() < 400 ) {
 			$prodRedirect = $prodResponse->getResponseHeader( 'location' );
-			$serviceRedirect = $prodResponse->$serviceResponse( 'location' );
+			$serviceRedirect = $serviceResponse->getResponseHeader( 'location' );
+			$serviceRedirect = str_replace( 'newrobots.txt', 'robots.txt', $serviceRedirect);
 			if ( $prodRedirect !== $serviceRedirect ) {
 				$this->error( "\tRedirects don't match, prod: {$prodRedirect}, service: {$serviceRedirect}" );
 				return false;
@@ -110,6 +111,7 @@ class CompareRobots extends Maintenance {
 				$parsed = parse_url( $wiki->city_url );
 				$url = $parsed['scheme'] . '://' . $parsed['host'];
 				foreach( [false, true ] as $https ) {
+					$this->output( "Checking {$url} domain, https: " . json_encode( $https ) . "\n" );
 					if ( !array_key_exists( $wiki->city_id, $fcCommunities ) ) {
 						$prodResponse = $this->fetchRobotsFromMediaWiki( $url, $https );
 					} else {
@@ -120,9 +122,8 @@ class CompareRobots extends Maintenance {
 					$domainsChecked += 1;
 					if ( !$this->responsesEqual( $prodResponse, $serviceResponse ) ) {
 						$failures += 1;
-						$this->error( "FAILURE: {$url} domain, https: " . json_encode( $https ) );
 					} else {
-						$this->output( "SUCCESS: {$url} domain, https: " . json_encode( $https ) );
+						$this->output( "\tSUCCESS!\n" );
 					}
 				}
 			}
