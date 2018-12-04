@@ -56,7 +56,7 @@ class CompareRobots extends Maintenance {
 
 	private function responsesEqual( $prodResponse, $serviceResponse ) {
 		if ( $prodResponse->getStatus() !== $serviceResponse->getStatus() ) {
-			$this->error( "\tStatuses don't match, prod: {$prodResponse->getStatus()}, service: {$serviceResponse->getStatus()}" );
+			$this->error( "\tFAILURE: Statuses don't match, prod: {$prodResponse->getStatus()}, service: {$serviceResponse->getStatus()}" );
 			return false;
 		}
 		if ( $prodResponse->getStatus() >= 300 && $prodResponse->getStatus() < 400 ) {
@@ -64,17 +64,20 @@ class CompareRobots extends Maintenance {
 			$serviceRedirect = $serviceResponse->getResponseHeader( 'location' );
 			$serviceRedirect = str_replace( 'newrobots.txt', 'robots.txt', $serviceRedirect);
 			if ( $prodRedirect !== $serviceRedirect ) {
-				$this->error( "\tRedirects don't match, prod: {$prodRedirect}, service: {$serviceRedirect}" );
+				$this->error( "\tFAILURE: Redirects don't match, prod: {$prodRedirect}, service: {$serviceRedirect}" );
 				return false;
 			}
 			return true;
 		}
 		if ( $prodResponse->getStatus() != 200 ) {
-			$this->error( "\tInvalid response status: {$prodResponse->getStatus()}" );
+			$this->error( "\tFAILURE: Invalid response status: {$prodResponse->getStatus()}" );
 			return false;
 		}
-		if ( $prodResponse->getContent() !==  $serviceResponse->getContent() ) {
-			$this->error( "\tReponse content is different" );
+		$prodContent = preg_replace("/\n\n+/s","\n", $prodResponse->getContent() );
+		$serviceContent = preg_replace("/\n\n+/s","\n", $serviceResponse->getContent() );
+
+		if ( $prodContent !==  $serviceContent ) {
+			$this->error( "\tFAILURE: Reponse content is different" );
 			return false;
 		}
 		return true;
