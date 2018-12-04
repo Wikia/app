@@ -565,22 +565,33 @@ class WikiFactory {
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
-	 * @param $domain wiki host (without the protocol nor path)
+	 * @param string $domain wiki host (without the protocol nor path)
+	 * @param bool $includeRoot should the English version be included in the results
 	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
-	public static function getWikisUnderDomain( $domain ) {
+	public static function getWikisUnderDomain( $domain, $includeRoot = false ) {
 		$domain = wfNormalizeHost( $domain );
-
 		$dbr = static::db( DB_SLAVE );
 
 		return WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain ),
+			wfSharedMemcKey( 'wikifactory:DomainWikis:v1', $domain, $includeRoot ),
 			900,	// 15 minutes
-			function() use ($dbr, $domain) {
+			function () use ( $dbr, $domain, $includeRoot ) {
+				$httpPattern = [ "http://{$domain}/" ];
+				$httpsPattern = [ "https://{$domain}/" ];
+
+				if ( !$includeRoot ) {
+					array_push( $httpPattern, $dbr->anyChar() );
+					array_push( $httpsPattern, $dbr->anyChar() );
+				}
+
+				array_push( $httpPattern, $dbr->anyString() );
+				array_push( $httpsPattern, $dbr->anyString() );
+
 				$where = [
 					$dbr->makeList( [
-						'city_url ' . $dbr->buildLike( "http://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
-						'city_url ' . $dbr->buildLike( "https://{$domain}/", $dbr->anyChar(), $dbr->anyString() ),
+						'city_url ' . $dbr->buildLike( $httpPattern ),
+						'city_url ' . $dbr->buildLike( $httpsPattern ),
 					], LIST_OR ),
 					'city_public' => 1
 				];
@@ -603,6 +614,11 @@ class WikiFactory {
 					];
 				}
 				$dbr->freeResult( $dbResult );
+				Hooks::run( 'GetWikisUnderDomain', [ $domain, $includeRoot, &$cities ] );
+
+				// sort the wikis by their url, English wiki should come first
+				uasort( $cities, function( $a, $b ) { return strcmp( $a['city_url'], $b['city_url'] ); } );
+
 				return $cities;
 			}
 		);
@@ -622,7 +638,56 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'] );
+		return self::getWikisUnderDomain( $url['host'], false );
+	}
+
+	/**
+	 * Checks if a wiki is a non-existing domain root with language wikis underneath
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
+	public static function isLanguageWikisIndex( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
+		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if a wiki should display the language wikis index
+	 * It returns true in the following cases:
+	 * - Wiki is languagewikisindex.fandom.com
+	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
+	public static function isLanguageWikisIndexOrClosed( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
+		if ( self::isLanguageWikisIndex( $cityId ) ) {
+			return true;
+		}
+
+		if ( static::isPublic( $cityId ) ) {
+			return false;
+		}
+
+		$wiki = static::getWikiByID( $cityId );
+		$wikiHost = parse_url( $wiki->city_url, PHP_URL_HOST );
+
+		return count( static::getWikisUnderDomain( $wikiHost, false ) ) > 0;
 	}
 
 	/**

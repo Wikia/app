@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'ad_product': params.adProduct,
 				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
-				'ad_error_code': errorCode || emptyValue.int,
+				'ad_error_code': errorCode || params.errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
@@ -65,7 +65,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string,
+				'btl': billTheLizard ?
+					(billTheLizard.getResponseStatus('fv') || billTheLizard.BillTheLizard.NOT_USED) :
+					'',
 				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
 			};
 

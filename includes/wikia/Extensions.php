@@ -1657,6 +1657,10 @@ if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	include( "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php" );
 }
 
+if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
+	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
+}
+
 if ( !empty( $wgEnableSitemapPageExt ) ) {
 	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
 }
@@ -1678,9 +1682,7 @@ if ( !empty( $wgEnableCommunityPageExt ) || ( $wgLanguageCode == 'ja' && $wgCity
 	include "$IP/extensions/wikia/CommunityPage/CommunityPage.setup.php";
 }
 
-if (!empty($wgFandomCreatorCommunityId)) {
-	include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
-}
+include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 
 /**
  * @name $wgEnableNewAuthModal

@@ -2011,16 +2011,6 @@ $wgDumpsDisabledWikis = [
 $wgEditEncoding = '';
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-	'vhost' => 'data-warehouse',
-	'exchange' => 'mediawiki-edit-events',
-];
-
-/**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
  * @var Array $wgEditInterfaceWhitelist
  */
@@ -3522,6 +3512,13 @@ $wgEnableSemanticScribuntoExt = false;
  * @var bool $wgEnableSendGridPostback
  */
 $wgEnableSendGridPostback = true;
+
+/**
+ * Enable SEO Link Hreflang extension.
+ * @see extensions/wikia/SeoLinkHreflang
+ * @var bool $wgEnableSeoLinkHreflangExt
+ */
+$wgEnableSeoLinkHreflangExt = true;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current

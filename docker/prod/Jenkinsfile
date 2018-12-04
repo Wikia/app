@@ -209,7 +209,7 @@ node("docker-daemon-big") {
               println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentAppBranch}")
-              nextAppTag = createTag(currentAppTag,)
+              nextAppTag = createTag(currentAppTag)
             }
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()

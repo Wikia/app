@@ -108,7 +108,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': isStickyEvent ? slotRegistry.getCurrentScrollY() : slotRegistry.getScrollY(slotName),
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
-			'btl': (billTheLizard && billTheLizard.serialize()) || '',
+			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
 			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),

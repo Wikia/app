@@ -204,7 +204,7 @@ class CloseWikiPage extends SpecialPage {
 		if ( isset($this->mRedirect) && !empty($this->mRedirect) ) {
 			$this->mRedirect = preg_replace( '!^https?://!', '', $this->mRedirect );
 			Wikia::log( __METHOD__, "check domain {$this->mRedirect}" );
-			$city_id = WikiFactory::DomainToID( trim( $this->mRedirect ) );
+			$city_id = WikiFactory::DomainToID( trim( $this->mRedirect, ' /' ) );
 			if( !$city_id ) {
 				Wikia::log( __METHOD__, "domain doesn't exist" );
 				$valid = false;

@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.adEngine', [
 	function createSlot(queuedSlot, container, callbacks) {
 		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
 
-		registerHooks(slot, ['success', 'collapse', 'hop', 'renderEnded', 'viewed']);
+		registerHooks(slot, ['success', 'collapse', 'hop', 'loaded', 'renderEnded', 'viewed']);
 		slot.post('success', queuedSlot.onSuccess);
 
 		return slot;
@@ -166,6 +166,10 @@ define('ext.wikia.adEngine.adEngine', [
 						tracker.track('hop', adInfo);
 						slot.container.setAttribute('data-slot-result', 'hop');
 						nextProvider();
+					},
+					loaded: function () {
+						log(['loaded', provider.name, slotName], log.levels.debug, logGroup);
+						slot.container.setAttribute('data-slot-loaded', 'true');
 					},
 					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], log.levels.debug, logGroup);

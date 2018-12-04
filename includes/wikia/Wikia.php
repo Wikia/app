@@ -1201,7 +1201,10 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+			// PLATFORM-3828 - disable upgrade-insecure-requests on wikis not migrated to fandom.com
+			if ( wfHttpsEnabledForURL( $request->getFullRequestURL() ) ) {
+				$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+			}
 
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
