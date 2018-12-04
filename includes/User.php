@@ -4034,16 +4034,7 @@ class User implements JsonSerializable {
 	 */
 	public function incEditCount() {
 		if ( !$this->isAnon() ) {
-			/**
-			 * Wikia change
-			 * Update editcount for wiki
-			 * @since Feb 2013
-			 * @author Kamil Koterba
-			 */
-
-			$userStatsService = new UserStatsService( $this->getId() );
-			$userStatsService->increaseEditsCount();
-			/* end of change */
+			ServiceFactory::instance()->producerFactory()->editCountTaskProducer()->incrementFor( $this );
 		}
 	}
 

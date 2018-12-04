@@ -45,7 +45,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			uapContext: {
-				getUapId: noop
+				getUapId: noop,
+				getCreativeId: noop
 			},
 			passbackHandler: {
 				get: function () {

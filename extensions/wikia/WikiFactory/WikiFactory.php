@@ -614,6 +614,11 @@ class WikiFactory {
 					];
 				}
 				$dbr->freeResult( $dbResult );
+				Hooks::run( 'GetWikisUnderDomain', [ $domain, $includeRoot, &$cities ] );
+
+				// sort the wikis by their url, English wiki should come first
+				uasort( $cities, function( $a, $b ) { return strcmp( $a['city_url'], $b['city_url'] ); } );
+
 				return $cities;
 			}
 		);
@@ -633,14 +638,11 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'] );
+		return self::getWikisUnderDomain( $url['host'], false );
 	}
 
 	/**
-	 * Checks if a wiki should display the language wikis index
-	 * It returns true in the following cases:
-	 * - Wiki is languagewikisindex.fandom.com
-	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 * Checks if a wiki is a non-existing domain root with language wikis underneath
 	 *
 	 * @param int|null $cityId
 	 * @return bool
@@ -655,6 +657,28 @@ class WikiFactory {
 		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
 			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Checks if a wiki should display the language wikis index
+	 * It returns true in the following cases:
+	 * - Wiki is languagewikisindex.fandom.com
+	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
+	public static function isLanguageWikisIndexOrClosed( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
+		if ( self::isLanguageWikisIndex( $cityId ) ) {
+			return true;
+		}
 
 		if ( static::isPublic( $cityId ) ) {
 			return false;
@@ -663,7 +687,7 @@ class WikiFactory {
 		$wiki = static::getWikiByID( $cityId );
 		$wikiHost = parse_url( $wiki->city_url, PHP_URL_HOST );
 
-		return count( static::getWikisUnderDomain( $wikiHost ) ) > 0;
+		return count( static::getWikisUnderDomain( $wikiHost, false ) ) > 0;
 	}
 
 	/**

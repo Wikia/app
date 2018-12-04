@@ -145,7 +145,7 @@ class ApiHooks {
 		if (
 			$controller === 'DesignSystemApi' &&
 			$product === DesignSystemApiController::PRODUCT_WIKIS &&
-			WikiFactory::isLanguageWikisIndex( $id )
+			WikiFactory::isLanguageWikisIndexOrClosed( $id )
 		) {
 			return false;
 		}

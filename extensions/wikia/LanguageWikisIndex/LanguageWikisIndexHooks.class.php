@@ -11,7 +11,7 @@ class LanguageWikisIndexHooks {
 		global $wgRequest, $wgCityId;
 		$requestUrl = $wgRequest->getRequestURL();
 
-		if ( !self::isEmptyDomainWithLanguageWikis() ) {
+		if ( !self::isEmptyDomainWithLanguageWikis( $wgCityId ) ) {
 			// on active wikis the `/language-wikis` path should redirect to the main page
 			if ( parse_url( $requestUrl, PHP_URL_PATH ) === self::WIKIS_INDEX_PAGE &&
 				WikiFactory::isPublic( $wgCityId ) ) {
@@ -32,9 +32,9 @@ class LanguageWikisIndexHooks {
 		exit( 0 );
 	}
 
-	public static function onGenerateRobotsRules() {
+	public static function onGenerateRobotsRules( $cityId ) {
 		// don't render rules for an empty domain root
-		return !self::isEmptyDomainWithLanguageWikis();
+		return !self::isEmptyDomainWithLanguageWikis( $cityId );
 	}
 
 	public static function onClosedWikiPage( $requestUrl ) {
@@ -51,7 +51,7 @@ class LanguageWikisIndexHooks {
 		$path = parse_url( RequestContext::getMain()->getRequest()->getRequestURL(), PHP_URL_PATH );
 		if (
 			(
-				self::isEmptyDomainWithLanguageWikis() ||
+				self::isEmptyDomainWithLanguageWikis( $wgCityId ) ||
 				( !WikiFactory::isPublic( $wgCityId ) && count( WikiFactory::getLanguageWikis() ) > 0 )
 			)
 			&& $path === self::WIKIS_INDEX_PAGE
@@ -66,7 +66,9 @@ class LanguageWikisIndexHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		if ( WikiFactory::isLanguageWikisIndex() ) {
+		global $wgCityId;
+
+		if ( WikiFactory::isLanguageWikisIndexOrClosed() ) {
 			$wikis = array_map( function ( $wiki ) {
 				return [
 					'languageName' => Language::getLanguageName( $wiki['city_lang'] ),
@@ -86,7 +88,7 @@ class LanguageWikisIndexHooks {
 				],
 			];
 
-			$wikiVariables['isEmptyDomainWithLanguageWikis'] = self::isEmptyDomainWithLanguageWikis();
+			$wikiVariables['isEmptyDomainWithLanguageWikis'] = self::isEmptyDomainWithLanguageWikis( $wgCityId );
 			$wikiVariables['languageWikis'] = [
 				'additionalLinks' => $additionalLinks,
 				'wikis' => $wikis,
@@ -104,11 +106,10 @@ class LanguageWikisIndexHooks {
 		return true;
 	}
 
-	public static function isEmptyDomainWithLanguageWikis() {
-		global $wgCityId;
+	public static function isEmptyDomainWithLanguageWikis( $cityId ) {
 		// we recognize an empty domain root with orphaned language path wikis by "fake" city id set by
 		// WikiFactoryLoader
-		return $wgCityId == WikiFactory::LANGUAGE_WIKIS_INDEX;
+		return $cityId == WikiFactory::LANGUAGE_WIKIS_INDEX;
 	}
 
 	/**
