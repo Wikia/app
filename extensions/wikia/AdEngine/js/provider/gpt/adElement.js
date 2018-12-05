@@ -84,8 +84,14 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	};
 
 	AdElement.prototype.updateDataParams = function (event) {
-		this.node.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
-		this.node.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+		var resp = event.slot.getResponseInformation();
+		if (!resp.isEmpty && resp.creativeId === null && resp.lineItemId === null) {
+			this.node.setAttribute('data-gpt-line-item-id', 'AdX');
+			this.node.setAttribute('data-gpt-creative-id', 'AdX');
+		} else {
+			this.node.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
+			this.node.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+		}
 		this.node.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
 	};
 

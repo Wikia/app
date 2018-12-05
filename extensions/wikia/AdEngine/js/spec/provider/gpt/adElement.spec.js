@@ -3,6 +3,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 	'use strict';
 
 	function noop() { return; }
+	var responseInformation;
 
 	var AdElement,
 		adSizes = [
@@ -39,7 +40,10 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 			mocks.log
 		);
 		slot = {
-			setTargeting: noop
+			setTargeting: noop,
+			getResponseInformation: function () {
+				return responseInformation;
+			}
 		};
 		slotTargeting = {
 			foo: 12,
@@ -104,11 +108,17 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 
 	it('Add response event details as json to attribute', function () {
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+		responseInformation = {
+			lineItemId: 123,
+			creativeId: 456,
+			size: [728, 90]
+		};
 
 		element.updateDataParams({
 			lineItemId: 123,
 			creativeId: 456,
-			size: [728, 90]
+			size: [728, 90],
+			slot: slot
 		});
 
 		expect(element.getNode().getAttribute('data-gpt-line-item-id')).toEqual('123');
