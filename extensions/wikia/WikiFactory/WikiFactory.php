@@ -617,7 +617,7 @@ class WikiFactory {
 				Hooks::run( 'GetWikisUnderDomain', [ $domain, $includeRoot, &$cities ] );
 
 				// sort the wikis by their url, English wiki should come first
-				uasort( $cities, function( $a, $b ) { return strcmp( $a['city_url'], $b['city_url'] ); } );
+				usort( $cities, function( $a, $b ) { return strcmp( $a['city_url'], $b['city_url'] ); } );
 
 				return $cities;
 			}
