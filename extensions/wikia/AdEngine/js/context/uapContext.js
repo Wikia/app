@@ -19,6 +19,10 @@ define('ext.wikia.adEngine.context.uapContext', [
 		return adEngineBridge.universalAdPackage.getUapId();
 	}
 
+	function getCreativeId() {
+		return adEngineBridge.universalAdPackage.getCreativeId();
+	}
+
 	function isFanTakeoverLoaded() {
 		return adEngineBridge.universalAdPackage.isFanTakeoverLoaded();
 	}
@@ -37,6 +41,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 
 	return {
 		dispatchEvent: dispatchEvent,
+		getCreativeId: getCreativeId,
 		getUapId: getUapID,
 		isFanTakeoverLoaded: isFanTakeoverLoaded,
 		reset: reset,

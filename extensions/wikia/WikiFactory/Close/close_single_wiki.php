@@ -159,6 +159,8 @@ class CloseSingleWiki extends Maintenance {
 
 		$this->removeDiscussions( $wgCityId );
 
+		$this->purgeCachesForWiki( $wgCityId );
+
 		$this->output( 'Wiki closed' );
 	}
 
@@ -261,6 +263,13 @@ class CloseSingleWiki extends Maintenance {
 		global $wgCityId;
 
 		parent::output( sprintf( "%d: %s\n", $wgCityId, $out ), $channel );
+	}
+
+	private function purgeCachesForWiki( $wikiId ) {
+		WikiFactory::clearCache( $wikiId );
+
+		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
+		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ), 'mercury' );
 	}
 }
 
