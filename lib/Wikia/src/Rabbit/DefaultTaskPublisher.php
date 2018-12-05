@@ -69,18 +69,24 @@ class DefaultTaskPublisher implements TaskPublisher {
 				$queue = $task->getQueue()->name();
 				$payload = $task->serialize();
 
-				$message = new AMQPMessage( json_encode( $payload ), [
-					'content_type' => 'application/json',
-					'content-encoding' => 'UTF-8',
-					'immediate' => false,
-					'delivery_mode' => 2, // persistent
-					'app_id' => 'mediawiki',
-					'correlation_id' => WikiaTracer::instance()->getTraceId(),
-				] );
+				$jsonObject = json_encode( $payload );
 
-				$channel->batch_basic_publish( $message, '', $queue );
+				if ( $jsonObject ) {
+					$message = new AMQPMessage( $jsonObject, [
+						'content_type' => 'application/json',
+						'content-encoding' => 'UTF-8',
+						'immediate' => false,
+						'delivery_mode' => 2, // persistent
+						'app_id' => 'mediawiki',
+						'correlation_id' => WikiaTracer::instance()->getTraceId(),
+					] );
 
-				$this->logPublish( $queue, $payload );
+					$channel->batch_basic_publish( $message, '', $queue );
+
+					$this->logPublish( $queue, $payload );
+				} else {
+					$this->handleJsonError( $payload );
+				}
 			}
 
 			$channel->publish_batch();
@@ -111,5 +117,27 @@ class DefaultTaskPublisher implements TaskPublisher {
 			'spawn_task_args' => substr( $argsJson, 0, 3000 ) . ( strlen( $argsJson ) > 3000 ? '...' : '' ),
 			'spawn_task_queue' => $queue,
 		] );
+	}
+
+	private function handleJsonError( array $payload ) {
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			$message = __CLASS__ . ' - ' . json_last_error_msg();
+		} else {
+			$message = __CLASS__ . ' - No JSON error but empty message found';
+		}
+
+		$context = [ 'exception' => new \Exception() ];
+
+		// Extract the task class name from message array
+		// Theoretically an AsyncTaskList instance might contain multiple task calls of different classes
+		// however this is never the case in practice.
+		foreach ( $payload['args'] as $arguments ) {
+			foreach ( $arguments['task_list'] as $task ) {
+				$context['task'] = $task['class'];
+				break;
+			}
+		}
+
+		$this->error( $message, $context );
 	}
 }
