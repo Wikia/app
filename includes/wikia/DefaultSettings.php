@@ -1425,6 +1425,12 @@ $wgAdDriverWadBTCountries = null;
 $wgAdDriverWadILCountries = null;
 
 /**
+ * @name $wgAdDriverWadHMDCountries
+ * List of countries to enable HOMAD recovery
+ */
+$wgAdDriverWadHMDCountries = null;
+
+/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */

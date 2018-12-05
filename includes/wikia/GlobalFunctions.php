@@ -1551,9 +1551,9 @@ function wfHttpsAllowedForURL( $url ): bool {
 /**
  * Returns true for URLs with fandom domain, some examples:
  * - https://starwars.fandom.com/wiki/Yoda
- * - starwars.fandom.com/wiki/Yoda
- * - starwars.fandom-dev.pl/
- * - starwars.fandom-dev.us
+ * - http://starwars.fandom.com/wiki/Yoda
+ * - http://starwars.fandom-dev.pl/
+ * - http://starwars.fandom-dev.us
  *
  * In the future, it can be used to force HTTPS on other domains
  *
@@ -1561,20 +1561,33 @@ function wfHttpsAllowedForURL( $url ): bool {
  * @return bool
  */
 function wfHttpsEnabledForURL( $url ): bool {
-	global $wgFandomBaseDomain;
-
 	$host = parse_url( $url, PHP_URL_HOST );
 
 	// e.g. not existing wikis
 	if ( empty( $host ) ) {
 		return false;
 	}
-
-	$host = wfNormalizeHost( $host );
-
-	return wfGetBaseDomainForHost( $host ) === $wgFandomBaseDomain;
+	return wfHttpsEnabledForDomain( $host );
 }
 
+/**
+ * Returns true for dhosts with fandom domain, some examples:
+ * - starwars.fandom.com
+ * - starwars.fandom.com
+ * - starwars.fandom-dev.pl
+ * - starwars.fandom-dev.us
+ *
+ * In the future, it can be used to force HTTPS on other domains
+ *
+ * @param $url
+ * @return bool
+ */
+function wfHttpsEnabledForDomain( $domain ) : bool {
+	global $wgFandomBaseDomain;
+	$domain = wfNormalizeHost( $domain );
+
+	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain;
+}
 /**
  * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
  *
