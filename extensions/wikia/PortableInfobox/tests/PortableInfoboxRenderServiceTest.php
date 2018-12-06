@@ -47,7 +47,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$infoboxRenderService = new PortableInfoboxRenderService();
 		$output = $wrapper->wrap( function () use ( $infoboxRenderService ) {
 			return $infoboxRenderService->renderInfobox(
-				[ [ 'type' => 'title', 'data' => [ 'value' => 'Test' ] ] ], '', '', '', '', null );
+				[ [ 'type' => 'title', 'data' => [ 'value' => 'Test' ] ] ], '', '', '', '', null, null );
 		} );
 
 		$expected = $this->normalizeHTML( '<aside class="portable-infobox pi-background pi-europa">
@@ -235,7 +235,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', $accentColor, $accentColorText, null );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', $accentColor, $accentColorText, null, null );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 

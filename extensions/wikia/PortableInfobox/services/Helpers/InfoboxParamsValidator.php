@@ -11,6 +11,7 @@ class InfoboxParamsValidator {
 		'theme',
 		'theme-source',
 		'type',
+		'name',
 	];
 
 	private $supportedLayouts = [
