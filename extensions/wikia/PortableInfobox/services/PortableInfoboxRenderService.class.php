@@ -33,7 +33,7 @@ class PortableInfoboxRenderService {
 	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText, $type ) {
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 
 		// decide on image width, if europa go with bigger images! else default size
@@ -49,7 +49,8 @@ class PortableInfoboxRenderService {
 				'content' => $infoboxHtmlContent,
 				'theme' => $theme,
 				'layout' => $layout,
-				'isEuropaEnabled' => $this->isEuropaTheme()
+				'isEuropaEnabled' => $this->isEuropaTheme(),
+				'type' => $type,
 			] );
 		} else {
 			$output = '';
