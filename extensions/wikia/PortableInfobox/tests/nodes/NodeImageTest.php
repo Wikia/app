@@ -144,6 +144,11 @@ class NodeImageTest extends WikiaBaseTest {
 				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img'] ]
 			],
 			[
+				'<image source="img" name="image"></image>',
+				[ ],
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => 'image', 'source' => 'img'] ]
+			],
+			[
 				'<image source="img"></image>',
 				[ 'img' => 'test.jpg' ],
 				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img' ] ]
