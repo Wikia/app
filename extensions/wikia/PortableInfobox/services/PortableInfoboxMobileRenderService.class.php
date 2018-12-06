@@ -16,7 +16,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText, $type ) {
 		$items = $this->splitOfHeroData( $infoboxdata, [ 'hero' => [ ], 'infobox' => [ ] ] );
 
 		if ( !empty( $items['hero'] ) ) {
