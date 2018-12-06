@@ -245,14 +245,27 @@ class PortableInfoboxRenderService {
 			$data = $item['data'];
 
 			if ( $item['type'] === 'data' ) {
-				array_push( $horizontalGroupData['labels'], $data['label'] );
-				array_push( $horizontalGroupData['values'], $data['value'] );
+				array_push( $horizontalGroupData['labels'], [
+					'text' => $data['label'],
+					'item-name' => $data['item-name'],
+					'source' => $data['source'],
+				] );
+
+				array_push( $horizontalGroupData['values'], [
+					'text' => $data['value'],
+					'item-name' => $data['item-name'],
+					'source' => $data['source']
+				] );
 
 				if ( !empty( $data['label'] ) ) {
 					$horizontalGroupData['renderLabels'] = true;
 				}
 			} elseif ( $item['type'] === 'header' ) {
-				$horizontalGroupData['header'] = $data['value'];
+				$horizontalGroupData['header'] = [
+					'value' => $data['value'],
+					'source' => $data['source'],
+					'item-name' => $data['item-name'],
+				];
 			}
 		}
 
@@ -307,17 +320,33 @@ class PortableInfoboxRenderService {
 	}
 
 	private function createSmartGroupSections( $rowItems, $capacity ) {
-		return array_reduce( $rowItems, function ( $result, $item ) use ( $capacity ) {
-			$styles = "width: calc({$item['data']['span']} / $capacity * 100%);";
+		return array_reduce(
+			$rowItems,
+			function ( $result, $item ) use ( $capacity ) {
+				$styles = "width: calc({$item['data']['span']} / $capacity * 100%);";
 
-			$label = $item['data']['label'] ?? "";
-			if ( !empty( $label ) ) {
-				$result['renderLabels'] = true;
-			}
-			$result['labels'][] = [ 'value' => $label, 'inlineStyles' => $styles ];
-			$result['values'][] = [ 'value' => $item['data']['value'], 'inlineStyles' => $styles ];
+				$label = $item['data']['label'] ?? "";
+				if ( !empty( $label ) ) {
+					$result['renderLabels'] = true;
+				}
 
-			return $result;
-		}, [ 'labels' => [ ], 'values' => [ ], 'renderLabels' => false ] );
+				$result['labels'][] = [
+					'value' => $label,
+					'inlineStyles' => $styles,
+					'item-name' => $item['data']['item-name'],
+					'source' => $item['data']['source']
+				];
+
+				$result['values'][] = [
+					'value' => $item['data']['value'],
+					'inlineStyles' => $styles,
+					'item-name' => $item['data']['item-name'],
+					'source' => $item['data']['source']
+				];
+
+				return $result;
+			},
+			[ 'labels' => [], 'values' => [], 'renderLabels' => false ]
+		);
 	}
 }
