@@ -182,6 +182,8 @@ class PortableInfoboxRenderService {
 		} else {
 			// More than one image means image collection
 			$data = $helper->extendImageCollectionData( $images );
+			$data['source'] = $data['images'][0]['source'];
+			$data['item-name'] = $data['images'][0]['item-name'];
 			$templateName = 'image-collection';
 		}
 
