@@ -59,7 +59,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 
 		$infoboxRenderService = new PortableInfoboxMobileRenderService();
 		$actualOutput = $wrapper->wrap( function () use ( $infoboxRenderService, $input ) {
-			return $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
+			return $infoboxRenderService->renderInfobox( $input, '', '', '', '', null );
 		} );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
