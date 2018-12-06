@@ -7,12 +7,7 @@ define(
 		}
 
 		function login(onSuccess, redirectURL) {
-			window.wikiaAuthModal.load({
-				forceLogin: true,
-				url: redirectURL,
-				origin: 'create-new-wikia',
-				onAuthSuccess: onSuccess
-			});
+			window.location = redirectURL;
 		}
 
 		function getLoginRedirectURL(wikiName, wikiDomain, wikiLanguage) {
