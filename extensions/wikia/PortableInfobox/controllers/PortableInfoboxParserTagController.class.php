@@ -16,6 +16,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const ACCENT_COLOR = 'accent-color';
 	const ACCENT_COLOR_TEXT = 'accent-color-text';
 	const TYPE = 'type';
+	const NAME = 'name';
 
 	private $markerNumber = 0;
 	private $infoboxParamsValidator = null;
@@ -96,10 +97,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
 		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
 		$type = $this->getType( $params );
+		$name = $this->getName( $params );
 
 		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
-		return $renderService->renderInfobox( $data, implode( ' ', $themeList ), $layout, $accentColor, $accentColorText, $type );
+		return $renderService->renderInfobox( $data, implode( ' ', $themeList ), $layout, $accentColor, $accentColorText, $type, $name );
 
 	}
 
@@ -232,6 +234,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function getType( $params ) {
 		return isset( $params[self::TYPE] ) ? htmlspecialchars( $params[self::TYPE] ) : null;
+	}
+
+	private function getName( $params ) {
+		return isset( $params[self::NAME] ) ? htmlspecialchars( $params[self::NAME] ) : null;
 	}
 
 	private function getColor( $colorParam, $params, PPFrame $frame ) {
