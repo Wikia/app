@@ -484,30 +484,30 @@ class NodeDataTest extends WikiaBaseTest {
 
 	public function dataProvider() {
 		return [
-			[ '<data source="test"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ],
-			[ '<data source="test" span="2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => '2', 'layout' => null ] ],
-			[ '<data source="test" span="2.2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ],
-			[ '<data source="test" span="non_numeric_span"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ],
-			[ '<data source="test" layout="wrong layout"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ],
-			[ '<data source="test" layout="default"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => 'default' ] ],
-			[ '<data source="test"><default>def</default></data>', [ ], [ 'value' => 'def', 'label' => '', 'span' => 1, 'layout' => null ] ],
+			[ '<data source="test"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" span="2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 2, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" span="2.2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" span="non_numeric_span"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" layout="wrong layout"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" layout="default"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => 'default', 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test"><default>def</default></data>', [ ], [ 'value' => 'def', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ ],
-			  [ 'value' => 'def', 'label' => 'l', 'span' => 1, 'layout' => null ] ],
+			  [ 'value' => 'def', 'label' => 'l', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label source="l">jjj</label><default>def</default></data>', [ 'l' => 1 ],
-			  [ 'value' => 'def', 'label' => 'jjj', 'span' => 1, 'layout' => null ] ],
+			  [ 'value' => 'def', 'label' => 'jjj', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label source="l" /><default>def</default></data>', [ 'l' => 1 ],
-			  [ 'value' => 'def', 'label' => '', 'span' => 1, 'layout' => null ] ],
+			  [ 'value' => 'def', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ 'test' => 1 ],
-			  [ 'value' => 1, 'label' => 'l', 'span' => 1, 'layout' => null ] ],
-			[ '<data></data>', [ ], [ 'label' => '', 'value' => null, 'span' => 1, 'layout' => null ] ],
+			  [ 'value' => 1, 'label' => 'l', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data></data>', [ ], [ 'label' => '', 'value' => null, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => null ] ],
 			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ 'test' => 1 ],
-			  [ 'value' => '{{{test}}}%', 'label' => 'l', 'span' => 1, 'layout' => null ] ],
+			  [ 'value' => '{{{test}}}%', 'label' => 'l', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label>l</label><format>{{{not_defined_var}}}%</format><default>def</default></data>', [ 'test' => 1 ],
-				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l', 'span' => 1, 'layout' => null ] ],
+				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ ],
-				[ 'value' => 'def', 'label' => 'l', 'span' => 1, 'layout' => null ] ],
+				[ 'value' => 'def', 'label' => 'l', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test"><format>{{{test}}}%</format></data>', [ 'test' => 0 ],
-				[ 'value' => '{{{test}}}%', 'label' => '', 'span' => 1, 'layout' => null ] ],
+				[ 'value' => '{{{test}}}%', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 		];
 	}
 
@@ -529,27 +529,27 @@ class NodeDataTest extends WikiaBaseTest {
 		return [
 			[ '<data source="test"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ]
 			],
 			[ '<data source="test" layout="default"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => 'default' ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => 'default', 'item-name' => null, 'source' => 'test' ] ]
 			],
 			[ '<data source="test" layout="wrong_layout"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ]
 			],
 			[ '<data source="test" span="2"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => '2', 'layout' => null ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 2, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ]
 			],
 			[ '<data source="test" span="2.2"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ]
 			],
 			[ '<data source="test" span="non numeric span"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ]
 			],
 		];
 	}
