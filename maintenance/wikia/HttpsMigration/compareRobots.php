@@ -16,6 +16,7 @@ class CompareRobots extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Compares the response of robots service and MW/FC';
+		$this->addOption( 'diffsdir', 'Directory where differences in the responses are saved', false, true, 'd' );
 	}
 
 	private function httpGet( $url, $headers, $ssl ) {
@@ -83,9 +84,32 @@ class CompareRobots extends Maintenance {
 		return true;
 	}
 
+	private function dumpResponse( $filename, $response ) {
+		$file = fopen( $filename, "w" );
+		if ( !$file ) {
+			$this->error("\tCannot create log file");
+			return;
+		}
+		fwrite( $file, "Status: status: {$response->getStatus()}\n" );
+		fwrite( $file, "==== HEADERS ====\n" );
+		fwrite( $file, print_r( $response->getResponseHeaders(), true ) );
+		fwrite( $file, "\n==== CONTENT ====\n" );
+		fwrite( $file, $response->getContent() );
+		fclose( $file );
+	}
+
 	public function execute() {
 		global $wgHTTPProxy;
 		$wgHTTPProxy = 'prod.border.service.sjc.consul:80';
+
+		$diffsdir = $this->getOption( 'diffsdir', false );
+		if ( $diffsdir ) {
+			$diffsdir = rtrim( $diffsdir, '/' );
+			if ( !is_dir($diffsdir) ) {
+				$this->error("Directory $diffsdir does not exists, ignoring\n");
+				$diffsdir = null;
+			}
+		}
 
 		$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
@@ -123,8 +147,15 @@ class CompareRobots extends Maintenance {
 					$serviceResponse = $this->fetchRobotsFromK8s( $url, $https );
 
 					$domainsChecked += 1;
-					if ( !$this->responsesEqual( $prodResponse, $serviceResponse ) ) {
+					if ( !$this->responsesEqual( $prodResponse, $serviceResponse, $diffsdir ) ) {
 						$failures += 1;
+						if ( $diffsdir ) {
+							$filename = str_replace( '.', '_', $parsed['host'] ) . '_' . ($https ? 'https' : 'http');
+							$prodFile = join( '/', [$diffsdir, $filename . '_prod.txt' ] );
+							$serviceFile = join( '/', [$diffsdir, $filename . '_service.txt' ] );
+							$this->dumpResponse( $prodFile, $prodResponse );
+							$this->dumpResponse( $serviceFile, $serviceResponse );
+						}
 					} else {
 						$this->output( "\tSUCCESS!\n" );
 					}
