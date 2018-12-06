@@ -137,7 +137,8 @@ class PortableInfoboxRenderService {
 
 		return $this->render( 'group', [
 			'content' => $groupHTMLContent,
-			'cssClasses' => implode( ' ', $cssClasses )
+			'cssClasses' => implode( ' ', $cssClasses ),
+			'item-name' => $groupData['item-name']
 		] );
 	}
 

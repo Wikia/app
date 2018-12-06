@@ -2,4 +2,6 @@
 	This template is linked with of mercury/front/templates/main/components/infobox-builder-item-title.hbs
 	Changing this template requires modifying the other in mercury repo.
 }}
-<h2 class="pi-item pi-item-spacing pi-title"{{#inlineStyles}} style="{{inlineStyles}}"{{/inlineStyles}}>{{{value}}}</h2>
+<h2 class="pi-item pi-item-spacing pi-title"{{#inlineStyles}} style="{{inlineStyles}}"{{/inlineStyles}}{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}{{#source}} data-source="{{source}}"{{/source}}>
+	{{{value}}}
+</h2>
