@@ -143,17 +143,17 @@ class NodeGroupTest extends WikiaBaseTest {
 				'row-items' => null
 
 			  ] ],
-			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>', [ ],
+			[ '<group show="incomplete"><header name="header">h</header><data source="1" name="source1"/><data source="2"/></group>', [ ],
 			  [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '1' ], 'isEmpty' => true,
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => 'header', 'source' => null ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => 'source1', 'source' => '1' ], 'isEmpty' => true,
 					'source' => [ '1' ] ],
 				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '2' ], 'isEmpty' => true,
 					'source' => [ '2' ] ],
 			  ],
 				'layout' => 'default',
 				'collapse' => null,
-				'row-items' => null
+				'row-items' => null,
 			  ] ]
 		];
 	}

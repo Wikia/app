@@ -485,6 +485,7 @@ class NodeDataTest extends WikiaBaseTest {
 	public function dataProvider() {
 		return [
 			[ '<data source="test"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
+			[ '<data source="test" name="some name"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => 'some name', 'source' => 'test' ] ],
 			[ '<data source="test" span="2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 2, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test" span="2.2"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
 			[ '<data source="test" span="non_numeric_span"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'test' ] ],
