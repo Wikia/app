@@ -73,11 +73,11 @@ class NodeGroupTest extends WikiaBaseTest {
 			  [ 'elem1' => 1, 'elem2' => 2 ],
 			  [ 'value' =>
 					[
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ],
 						  'source' => [ 'elem1' ] ],
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem2' ],
 						  'source' => [ 'elem2' ] ],
-						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null ],
+						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem3' ],
 						  'source' => [ 'elem3' ] ]
 					],
 				'layout' => 'default',
@@ -89,12 +89,12 @@ class NodeGroupTest extends WikiaBaseTest {
 			  [ 'elem1' => 1, 'elem2' => 2 ],
 			  [ 'value' =>
 					[
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem1' ] ],
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem2' ] ],
-						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem3' ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ],
+							'source' => [ 'elem1' ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem2' ],
+							'source' => [ 'elem2' ] ],
+						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem3' ],
+							'source' => [ 'elem3' ] ]
 					],
 				'layout' => 'horizontal',
 				'collapse' => null,
@@ -105,12 +105,12 @@ class NodeGroupTest extends WikiaBaseTest {
 			  [ 'elem1' => 1, 'elem2' => 2 ],
 			  [ 'value' =>
 					[
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem1' ] ],
-						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem2' ] ],
-						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null ],
-						  'source' => [ 'elem3' ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ],
+							'source' => [ 'elem1' ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem2' ],
+							'source' => [ 'elem2' ] ],
+						[ 'type' => 'data', 'isEmpty' => true, 'data' => [ 'label' => 'l2', 'value' => null, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem3' ],
+							'source' => [ 'elem3' ] ]
 					],
 				'layout' => 'default',
 				'collapse' => null,
@@ -119,10 +119,10 @@ class NodeGroupTest extends WikiaBaseTest {
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
 			  [ '1' => 'one', '2' => 'two' ],
 			  [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => false,
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '1' ], 'isEmpty' => false,
 					'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'two', 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => false,
+				  [ 'type' => 'data', 'data' => [ 'value' => 'two', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '2' ], 'isEmpty' => false,
 					'source' => [ '2' ] ],
 			  ],
 				'layout' => 'default',
@@ -132,10 +132,10 @@ class NodeGroupTest extends WikiaBaseTest {
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
 			  [ '1' => 'one' ],
 			  [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => false,
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '1' ], 'isEmpty' => false,
 					'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => true,
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '2' ], 'isEmpty' => true,
 					'source' => [ '2' ] ]
 			  ],
 				'layout' => 'default',
@@ -145,10 +145,10 @@ class NodeGroupTest extends WikiaBaseTest {
 			  ] ],
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>', [ ],
 			  [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => true,
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '1' ], 'isEmpty' => true,
 					'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null ], 'isEmpty' => true,
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '', 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => '2' ], 'isEmpty' => true,
 					'source' => [ '2' ] ],
 			  ],
 				'layout' => 'default',
