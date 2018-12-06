@@ -17,7 +17,8 @@ class ApiWikiFactorySaveVariable extends ApiBase {
 				$params['variable_id'],
 				$params['wiki_id'],
 				$params['variable_value'],
-				$params['reason']
+				$params['reason'],
+				$this->isInternalRequest()
 			);
 
 			if ( !$result ) {
