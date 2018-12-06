@@ -257,7 +257,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -274,7 +276,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -297,7 +301,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								'name' => 'image',
 								'key' => 'image',
 								'caption' => 'Lorem ipsum dolor',
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -342,7 +348,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								'isVideo' => true,
 								'duration' => '1:20',
 								'name' => 'test',
-								'key' => 'test'
+								'key' => 'test',
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -396,6 +404,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'navigation',
 						'data' => [
 							'value' => 'navigation value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -413,7 +423,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -433,7 +445,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -444,7 +458,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								'url' => 'http://image.jpg',
 								'name' => 'image',
 								'key' => 'image',
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					],
@@ -452,7 +468,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -492,18 +510,24 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'image',
-						'data' => [ ]
+						'data' => [ ],
+						'source' => null,
+						'item-name' => null,
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -524,14 +548,18 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -552,7 +580,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -562,27 +592,35 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test Header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'default',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -610,7 +648,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -620,27 +660,35 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test Header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'default',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -672,27 +720,35 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test header'
+										'value' => 'Test header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -735,20 +791,26 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -776,7 +838,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'navigation',
 						'data' => [
-							'value' => '<p>Links</p>'
+							'value' => '<p>Links</p>',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -801,20 +865,26 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label 1',
-										'value' => 'test value 1'
+										'value' => 'test value 1',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label 2',
-										'value' => 'test value 2'
+										'value' => 'test value 2',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -850,27 +920,35 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'test header'
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value 1'
+										'value' => 'test value 1',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label 2',
-										'value' => 'test value 2'
+										'value' => 'test value 2',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -908,20 +986,26 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value 1'
+										'value' => 'test value 1',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value 2'
+										'value' => 'test value 2',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -954,7 +1038,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -963,7 +1049,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -972,7 +1060,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -981,7 +1071,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 4',
 										'value' => 'test value 4',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -990,13 +1082,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 5',
 										'value' => 'test value 5',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1043,7 +1139,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1052,7 +1150,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1061,7 +1161,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1070,13 +1172,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 4',
 										'value' => 'test value 4',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1121,13 +1227,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1160,7 +1270,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 2,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1169,13 +1281,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1210,7 +1326,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 2,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1219,13 +1337,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 7
+							'row-items' => 7,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1260,7 +1382,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 2,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1269,7 +1393,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 2,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1278,13 +1404,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 2,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1333,7 +1463,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1342,7 +1474,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1351,7 +1485,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => null,
-										'layout' => 'default'
+										'layout' => 'default',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1360,7 +1496,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 4',
 										'value' => 'test value 4',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1369,7 +1507,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 5',
 										'value' => 'test value 5',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1378,13 +1518,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 6',
 										'value' => 'test value 6',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1435,7 +1579,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1444,7 +1590,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1453,7 +1601,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1462,7 +1612,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 4',
 										'value' => 'test value 4',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1471,7 +1623,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 5',
 										'value' => 'test value 5',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1480,13 +1634,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 6',
 										'value' => 'test value 6',
 										'span' => null,
-										'layout' => 'default'
+										'layout' => 'default',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1537,7 +1695,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 40,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1546,7 +1706,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1555,13 +1717,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1604,7 +1770,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1613,7 +1781,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 40,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1622,13 +1792,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1677,7 +1851,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 1',
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1686,13 +1862,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 2',
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'title',
 									'data' => [
-										'value' => 'title value'
+										'value' => 'title value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1701,13 +1881,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 3',
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -1751,7 +1935,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => null,
 										'value' => 'test value 1',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1760,13 +1946,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => null,
 										'value' => 'test value 2',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'title',
 									'data' => [
-										'value' => 'title value'
+										'value' => 'title value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1775,7 +1965,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => null,
 										'value' => 'test value 3',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -1784,13 +1976,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'label' => 'Test 4',
 										'value' => 'test value 4',
 										'span' => 1,
-										'layout' => null
+										'layout' => null,
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => 3
+							'row-items' => 3,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
