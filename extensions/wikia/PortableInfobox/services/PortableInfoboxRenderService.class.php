@@ -248,17 +248,17 @@ class PortableInfoboxRenderService {
 			$data = $item['data'];
 
 			if ( $item['type'] === 'data' ) {
-				array_push( $horizontalGroupData['labels'], [
+				$horizontalGroupData['labels'][] = [
 					'text' => $data['label'],
 					'item-name' => $data['item-name'],
 					'source' => $data['source'],
-				] );
+				];
 
-				array_push( $horizontalGroupData['values'], [
+				$horizontalGroupData['values'][] = [
 					'text' => $data['value'],
 					'item-name' => $data['item-name'],
 					'source' => $data['source']
-				] );
+				];
 
 				if ( !empty( $data['label'] ) ) {
 					$horizontalGroupData['renderLabels'] = true;
