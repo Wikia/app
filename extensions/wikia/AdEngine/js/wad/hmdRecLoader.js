@@ -29,23 +29,42 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			},
 			hmdCollapse: {
 				emptyVast: 1003,
-				emptyVastFromHomadServerEvent: 1013,
+				emptyVastFromHomadServerEvent: 1013
+			},
+			vastIds: {
+				lineItemId: '',
+				creativeId: ''
 			}
 		},
 		trackingEventsMap = {
 			adRequest: function () {
 				trackingStatus.adRequested = true;
-				adsConfiguration.trackCustomEvent('hmd_request');
+				trackingStatus.vastIds.lineItemId = '';
+				trackingStatus.vastIds.creativeId = '';
+				trackEvent('hmd_request');
 			},
-			adImpression: function () {
-				adsConfiguration.trackCustomEvent('hmd_impression');
+			adImpression: function (event) {
+				if (event.detail.adIds && event.detail.adIds[0]) {
+					var adIds = event.detail.adIds[0];
+
+					if (adIds.adID) {
+						trackingStatus.vastIds.lineItemId = adIds.adID;
+					}
+
+					if (adIds.creativeID) {
+						trackingStatus.vastIds.creativeId = adIds.creativeID;
+					}
+				}
+
+				trackEvent('hmd_impression');
 				eventDispatcher.dispatch('adengine.video.status', {
 					vastUrl: adsConfiguration.getCurrentVast('last'),
+					lineItemId: trackingStatus.vastIds.lineItemId,
+					creativeId: trackingStatus.vastIds.creativeId,
 					status: 'success'
 				});
 			},
 			adStart: 'hmd_started',
-			// adViewableImpression: 'hmd_viewable_impression',
 			adFirstQuartile: 'hmd_first_quartile',
 			adMidPoint: 'hmd_midpoint',
 			adThirdQuartile: 'hmd_third_quartile',
@@ -56,28 +75,31 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			contentPlayerPause: function (event) {
 				if (event.detail.state === 'setup') {
 					trackingStatus.hmdSetuped = true;
-					adsConfiguration.trackCustomEvent('hmd_setup');
+					trackEvent('hmd_setup');
 				} else if (trackingStatus.hmdSetuped) {
 					if (trackingStatus.adRequested) {
 						trackingStatus.adRequested = false;
-						adsConfiguration.trackCustomEvent('hmd_loaded');
+						trackEvent('hmd_loaded');
 					} else {
-						adsConfiguration.trackCustomEvent('hmd_ready');
+						trackEvent('hmd_ready');
 					}
 				}
 			},
 			continueContent: 'hmd_continue',
+			viewable: 'hmd_viewable_impression',
 			penalty: 'hmd_blocked',
 			adError: function (event) {
 				var type = event.detail.type;
 
 				if (trackingStatus.hmdErrors[type]) {
-					adsConfiguration.trackCustomEvent('hmd_error', {
+					trackEvent('hmd_error', {
 						errorCode: trackingStatus.hmdErrors[type]
 					});
 				} else if (trackingStatus.hmdCollapse[type]) {
 					eventDispatcher.dispatch('adengine.video.status', {
 						vastUrl: adsConfiguration.getCurrentVast('last'),
+						lineItemId: trackingStatus.vastIds.lineItemId,
+						creativeId: trackingStatus.vastIds.creativeId,
 						status: 'collapse'
 					});
 				}
@@ -131,6 +153,20 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 		config.onReady = onReady;
 	}
 
+	function trackEvent(eventName, params) {
+		params = params || {};
+
+		if (trackingStatus.vastIds.lineItemId) {
+			params.lineItemId = trackingStatus.vastIds.lineItemId;
+		}
+
+		if (trackingStatus.vastIds.creativeId) {
+			params.creativeId = trackingStatus.vastIds.creativeId;
+		}
+
+		adsConfiguration.trackCustomEvent(eventName, params);
+	}
+
 	function injectScript() {
 		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod + '&cb=' + cacheBuster;
 
@@ -151,7 +187,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 				if (typeof trackingMethod === 'function') {
 					trackingMethod(event);
 				} else {
-					adsConfiguration.trackCustomEvent(trackingMethod);
+					trackEvent(trackingMethod);
 				}
 			}
 		});
