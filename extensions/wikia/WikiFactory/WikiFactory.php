@@ -795,6 +795,8 @@ class WikiFactory {
 	 * @return boolean
 	 */
 	static function isReadonlyBlacklisted( $cv_variable_id ) {
+		global $wgWikiFactoryReadonlyBlacklist;
+
 		return in_array( $cv_variable_id, $wgWikiFactoryReadonlyBlacklist, true );
 	}
 
