@@ -845,6 +845,11 @@ if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 include( "$IP/extensions/wikia/Discussions/Discussions.setup.php" );
 
 /**
+ * Enable Test Wikis Extension
+ */
+include( "$IP/extensions/wikia/TestWikis/TestWikis.setup.php" );
+
+/**
  * Enable Special:DiscussionsLog
  */
 if ( !empty( $wgEnableDiscussionsLog ) ) {
