@@ -59,7 +59,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 
 		$infoboxRenderService = new PortableInfoboxMobileRenderService();
 		$actualOutput = $wrapper->wrap( function () use ( $infoboxRenderService, $input ) {
-			return $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
+			return $infoboxRenderService->renderInfobox( $input, '', '', '', '', null, null );
 		} );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
@@ -80,7 +80,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -96,6 +98,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'type' => 'navigation',
 						'data' => [
 							'value' => 'navigation value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -111,7 +115,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -129,7 +135,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -140,7 +148,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								'url' => 'http://image.jpg',
 								'name' => 'image',
 								'key' => 'image',
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					],
@@ -148,7 +158,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -187,18 +199,24 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'image',
-						'data' => [ ]
+						'data' => [ ],
+						'source' => null,
+						'item-name' => null,
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -217,14 +235,18 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
-							'value' => 'test value'
+							'value' => 'test value',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -243,7 +265,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test Title'
+							'value' => 'Test Title',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -253,27 +277,35 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test Header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'default',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -305,27 +337,35 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test header'
+										'value' => 'Test header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -373,20 +413,26 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => '',
-										'value' => 'test value'
+										'value' => 'test value',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -418,7 +464,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'navigation',
 						'data' => [
-							'value' => '<p>Links</p>'
+							'value' => '<p>Links</p>',
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -441,7 +489,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								'ref' => 1,
 								'name' => 'test1',
 								'key' => 'test1',
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -462,7 +512,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
-						'isVideo' => false
+						'isVideo' => false,
 					]
 				]
 			],
@@ -482,7 +532,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								'name' => 'test1',
 								'key' => 'test1',
 								'ref' => 44,
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -521,7 +573,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								'ref' => 1,
 								'name' => 'test1',
 								'key' => 'test1',
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -554,7 +608,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test <img /><a href="example.com">Title</a>'
+							'value' => 'Test <img /><a href="example.com">Title</a>',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -565,7 +621,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								'name' => 'test1',
 								'key' => 'test1',
 								'ref' => 44,
-								'isVideo' => false
+								'isVideo' => false,
+								'source' => null,
+								'item-name' => null,
 							]
 						]
 					]
@@ -602,13 +660,17 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'Test 1',
-							'value' => 'test value 1'
+							'value' => 'test value 1',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test <img /><a href="example.com">Title</a>'
+							'value' => 'Test <img /><a href="example.com">Title</a>',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -618,14 +680,18 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test Header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'Test 2',
-										'value' => 'test value 2'
+										'value' => 'test value 2',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -636,7 +702,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 											'name' => 'test1',
 											'key' => 'test1',
 											'ref' => 44,
-											'isVideo' => false
+											'isVideo' => false,
+											'source' => null,
+											'item-name' => null,
 										]
 									]
 								],
@@ -644,13 +712,17 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => 'Test 3',
-										'value' => 'test value 3'
+										'value' => 'test value 3',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
@@ -703,13 +775,17 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'type' => 'data',
 						'data' => [
 							'label' => 'Test 1',
-							'value' => 'test value 1'
+							'value' => 'test value 1',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
 						'type' => 'title',
 						'data' => [
-							'value' => 'Test <img /><a href="example.com">Title</a>'
+							'value' => 'Test <img /><a href="example.com">Title</a>',
+							'source' => null,
+							'item-name' => null,
 						]
 					],
 					[
@@ -719,14 +795,18 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test Header',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'Test 2',
-										'value' => 'test value 2'
+										'value' => 'test value 2',
+										'source' => null,
+										'item-name' => null,
 									]
 								],
 								[
@@ -737,7 +817,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 											'name' => 'test1',
 											'key' => 'test1',
 											'ref' => 44,
-											'isVideo' => false
+											'isVideo' => false,
+											'source' => null,
+											'item-name' => null,
 										]
 									]
 								],
@@ -745,13 +827,17 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									'type' => 'data',
 									'data' => [
 										'label' => 'Test 3',
-										'value' => 'test value 3'
+										'value' => 'test value 3',
+										'source' => null,
+										'item-name' => null,
 									]
 								]
 							],
 							'layout' => null,
 							'collapse' => null,
-							'row-items' => null
+							'row-items' => null,
+							'source' => null,
+							'item-name' => null,
 						]
 					]
 				],
