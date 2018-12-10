@@ -1,6 +1,6 @@
 <?php if ($showAd): ?>
 	<?php // For Ad Mix experiment - XW-3156 ?>
-	<?php if ( $slotName === 'TOP_RIGHT_BOXAD' ): ?>
+	<?php if ( $slotName === 'TOP_BOXAD' ): ?>
 		<div id="top-right-boxad-wrapper">
 	<?php endif; ?>
 	<!-- BEGIN SLOTNAME: <?= htmlspecialchars( $slotName ) ?> -->
@@ -21,7 +21,7 @@
 	<? endif; ?>
 	</div>
 	<!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
-	<?php if ( $slotName === 'TOP_RIGHT_BOXAD' ): ?>
+	<?php if ( $slotName === 'TOP_BOXAD' ): ?>
 		</div>
 	<?php endif; ?>
 <?php else: ?>

@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			MOBILE_PREFOOTER:       'mobile_prefooter',
 			MOBILE_TOP_LEADERBOARD: 'mobile_leaderboard',
 			TOP_LEADERBOARD:        'leaderboard',
-			TOP_RIGHT_BOXAD:        'medrec'
+			TOP_BOXAD:        'medrec'
 		};
 
 	// The filtering function

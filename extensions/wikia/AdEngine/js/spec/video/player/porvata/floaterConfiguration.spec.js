@@ -34,11 +34,11 @@ describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', functio
 		expect(actual).toBeFalsy();
 	});
 
-	it('floater should be disabled when "enableInContentFloating" configuration is set to true, but TOP_RIGHT_BOXAD is asking', function () {
+	it('floater should be disabled when "enableInContentFloating" configuration is set to true, but TOP_BOXAD is asking', function () {
 		var module = getModule(),
 			params = {
 				enableInContentFloating: true,
-				slotName: 'TOP_RIGHT_BOXAD'
+				slotName: 'TOP_BOXAD'
 			},
 			actual = module.canFloat(params);
 

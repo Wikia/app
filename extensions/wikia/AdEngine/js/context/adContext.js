@@ -101,7 +101,9 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
-		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
+		// Due to TOP_BOXAD rename we have to force new Prebid - otherwise it won't bid for this slot
+		// context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
+		context.bidders.prebidAE3 = true;
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
@@ -238,7 +240,7 @@ define('ext.wikia.adEngine.adContext', [
 			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
 			trackingAlias: 'INCONTENT_PLAYER_RAIL',
 			conflictingSlots: [
-				'TOP_RIGHT_BOXAD',
+				'TOP_BOXAD',
 				'INCONTENT_BOXAD_1',
 				'BOTTOM_LEADERBOARD'
 			]
