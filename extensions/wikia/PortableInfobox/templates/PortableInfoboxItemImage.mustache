@@ -2,7 +2,7 @@
 	This template is linked with of mercury/front/templates/main/components/infobox-builder-item-image.hbs
 	Changing this template requires modifying the other in mercury repo.
 }}
-<figure class="pi-item pi-image">
+<figure class="pi-item pi-image"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}{{#source}} data-source="{{source}}"{{/source}}>
 	<a href="{{url}}" class="image image-thumbnail{{#isVideo}} video video-thumbnail{{/isVideo}}"
 	   title="{{alt}}">
 		<img src="{{thumbnail}}" srcset="{{thumbnail}} 1x, {{thumbnail2x}} 2x" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}"

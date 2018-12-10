@@ -14,7 +14,9 @@ class NodeData extends Node {
 				'label' => $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ),
 				'value' => $this->getValueWithDefault( $this->xmlNode ),
 				'span' => $this->getSpan(),
-				'layout' => $this->getLayout()
+				'layout' => $this->getLayout(),
+				'item-name' => $this->getItemName(),
+				'source' => $this->getSource(),
 			];
 		}
 
