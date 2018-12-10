@@ -141,27 +141,32 @@ class NodeImageTest extends WikiaBaseTest {
 			[
 				'<image source="img"></image>',
 				[ ],
-				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null, 'isVideo' => false ] ]
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img'] ]
+			],
+			[
+				'<image source="img" name="image"></image>',
+				[ ],
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => 'image', 'source' => 'img'] ]
 			],
 			[
 				'<image source="img"></image>',
 				[ 'img' => 'test.jpg' ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null, 'isVideo' => false ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img' ] ]
 			],
 			[
 				'<image source="img"><alt><default>test alt</default></alt></image>',
 				[ 'img' => 'test.jpg' ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null, 'isVideo' => false ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img' ] ]
 			],
 			[
 				'<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
 				[ 'img' => 'test.jpg', 'alt source' => 2 ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null, 'isVideo' => false ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => '', 'isVideo' => false, 'item-name' => null, 'source' => 'img' ] ]
 			],
 			[
 				'<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
 				[ 'img' => 'test.jpg' ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg', 'isVideo' => false ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg', 'isVideo' => false, 'item-name' => null, 'source' => 'img' ] ]
 			],
 		];
 	}
@@ -275,9 +280,11 @@ class NodeImageTest extends WikiaBaseTest {
 						'name' => 'Test.jpg',
 						'key' => 'Test.jpg',
 						'alt' => null,
-						'caption' => null,
+						'caption' => '',
 						'isVideo' => true,
-						'duration' => '00:10'
+						'duration' => '00:10',
+						'item-name' => null,
+						'source' => 'img',
 					]
 				]
 			]
