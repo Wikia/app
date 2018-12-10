@@ -27,7 +27,7 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 
 		$sunsetDate = $this->getOption( 'sunset-date' );
 
-		$robot = User::newFromId( Wikia::USER );
+		$robot = User::newFromName( Wikia::USER );
 		$robotId = $robot->getId();
 
 		$messageIdsPerLang = [];
@@ -83,12 +83,12 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 		$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 
 		$sysop = $dbr->addQuotes( 'sysop' );
-		$sysopWildcard = $dbr->addQuotes( $dbr->buildLike( $dbr->anyString(), 'sysop', $dbr->anyString() ) );
+		$sysopWildcard = $dbr->buildLike( $dbr->anyString(), 'sysop', $dbr->anyString() );
 
 		$res = $dbr->select(
 			'events_local_users',
-			[ 'wiki_id', 'distinct(user_id) as user_id' ],
-			[ 'wiki_id' => $wikiIds, "single_group = $sysop OR all_groups LIKE $sysopWildcard" ],
+			[ 'distinct(user_id) as user_id', 'wiki_id' ],
+			[ 'wiki_id' => $wikiIds, "single_group = $sysop OR all_groups $sysopWildcard" ],
 			__METHOD__
 		);
 
@@ -102,7 +102,7 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$res = $dbr->selectFieldValues(
+		$res = $dbr->select(
 			[ 'city_variables', 'city_variables_pool' ],
 			'cv_city_id',
 			[ 'cv_name' => 'wgEnableForumExt', 'cv_value' => serialize( true ) ],
