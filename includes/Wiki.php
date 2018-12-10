@@ -26,7 +26,6 @@
  * internal documentation reviewed 15 Mar 2010
  */
 class MediaWiki {
-
 	/**
 	 * TODO: fold $output, etc, into this
 	 * @var IContextSource

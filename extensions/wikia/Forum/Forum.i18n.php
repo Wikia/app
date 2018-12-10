@@ -139,6 +139,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'right-forumadmin' => 'Has admin access to the forums',
 	'right-forumoldedit' => 'Can edit the old, archived forums',
 	'right-boardedit' => 'Edit Forum board information',
+	'forum-highlight-retirement-sitewide-message' => 'Highlighting Forum threads is [$1 no longer possible] after $2. Instead, you can use Announcements to notify your community about important news.'
 );
 
 $messages['qqq'] = array(
