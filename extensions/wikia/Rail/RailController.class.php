@@ -6,7 +6,7 @@ use Wikia\Util\GlobalStateWrapper;
 
 class RailController extends WikiaController {
 
-	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_RIGHT_BOXAD
+	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_BOXAD
 	const FILTER_LAZY_MODULES = true;
 	const FILTER_NON_LAZY_MODULES = false;
 
