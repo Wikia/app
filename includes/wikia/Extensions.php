@@ -157,6 +157,14 @@ if (empty($wgHelpWikiId)) {
 
 $wgLocalMessageCache = '/tmp/messagecache';
 
+/**
+ * List of readonly variables in WF (those can be changed
+ * only by internal request via API)
+ */
+$wgWikiFactoryReadonlyBlacklist = [
+	// TODO: enable when deploying 
+	// 938, // AdTag is readonly
+];
 
 /**
  * The URL path of the icon for iPhone and iPod Touch web app bookmarks.
