@@ -54,10 +54,19 @@ class TemplatesApiController extends WikiaApiController {
 	 * CORE-20: this is an experimental API that can change in the near future
 	 *
 	 * @throws WikiaHttpException
+	 * @throws MWException
 	 */
 	public function getMetadata() {
-		$pageid = $this->getRequiredParam( 'pageid' );
-		$title = Title::newFromID( $pageid );
+		// handle both "title" and "pageid" URL parameters
+		$titleParam = $this->getVal('title');
+
+		if (!$titleParam) {
+			$pageid = $this->getRequiredParam( 'pageid' );
+			$title = Title::newFromID( $pageid );
+		}
+		else {
+			$title = Title::newFromText( $titleParam );
+		}
 
 		if ( !$title || !$title->exists() ) {
 			throw new NotFoundApiException();
