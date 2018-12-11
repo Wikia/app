@@ -351,7 +351,7 @@ class SEOTweaksHooksHelper {
 		if ( in_array( 'broken', $options ) ) {
 			$attribs['rel'] = 'nofollow';
 			$originalURL = $attribs['href'];
-			unset($attribs['href']);
+			unset( $attribs['href'] );
 			$attribs['data-uncrawlable-url'] = base64_encode( $originalURL );
 		}
 
