@@ -60,12 +60,14 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 			list ( $wikiId, $userId ) = $data;
 
 			$user = User::newFromId( $userId );
+
 			$langCode = $user->getGlobalPreference( 'language' );
+			$message = $this->getLocalizedMessage( $messageIdsPerLang, $langCode );
 
 			$rows[] = [
 				'msg_wiki_id' => $wikiId,
 				'msg_recipient_id' => $userId,
-				'msg_id' => $messageIdsPerLang[$langCode] ?? $messageIdsPerLang['en'],
+				'msg_id' => $message,
 				'msg_status' => 0
 			];
 		}
@@ -73,6 +75,22 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		$dbw->insert( 'messages_status', $rows, __METHOD__ );
+	}
+
+	private function getLocalizedMessage( array $messageIdsPerLang, string $langCode ): string {
+		if ( isset( $messageIdsPerLang[$langCode] ) ) {
+			return $messageIdsPerLang[$langCode];
+		}
+
+		$fallbacks = Language::getFallbacksFor( $langCode );
+
+		foreach ( $fallbacks as $fallback ) {
+			if ( isset( $messageIdsPerLang[$fallback] ) ) {
+				return $messageIdsPerLang[$fallback];
+			}
+		}
+
+		return $messageIdsPerLang['en'];
 	}
 
 	private function getAdminsOnWikis( array $wikiIds ) {
