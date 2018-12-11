@@ -42,7 +42,7 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 				[ 'title' => [ 'value' => '' ] ],
 			],
 			[
-				[ 'title' => [ 'value' => '<figure class="article-thumb tright show-info-icon" style="width: 335px"> 	<a 	href="http://mediawiki119.marzjan.wikia-dev.com/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" 	class="video video-thumbnail image lightbox medium " 	 	 itemprop=\'video\' itemscope itemtype="http://schema.org/VideoObject" 	><img src="http://vignette-poz.wikia-dev.com//images/6/6e/AMERICA%27S_TEST_KITCHEN_SEASON_9/revision/latest/scale-to-width-down/335?cb=20130904003328" 	 alt="AMERICA\'S TEST KITCHEN SEASON 9"  	class="thumbimage " 	 	data-video-key="AMERICA\'S_TEST_KITCHEN_SEASON_9" 	data-video-name="AMERICA\'S TEST KITCHEN SEASON 9" 	 	 width="335"  	 height="187"  	 itemprop="thumbnail"  	 	 	></span><meta itemprop="duration" content="PT01M00S"></a>  	<figcaption> 		 			<a href="/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" class="sprite info-icon"></a> 		 		 			<p class="title">AMERICA\'S TEST KITCHEN SEASON 9</p> 		 		 	</figcaption> </figure>' ] ],
+				[ 'title' => [ 'value' => '<figure class="article-thumb tright show-info-icon" style="width: 335px"> 	<a 	href="http://mediawiki119.marzjan.wikia-dev.com/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" 	class="video video-thumbnail image lightbox medium " 	 	 itemprop=\'video\' itemscope itemtype="http://schema.org/VideoObject" 	><img src="http://vignette-poz.wikia-dev.com//images/6/6e/AMERICA%27S_TEST_KITCHEN_SEASON_9/revision/latest/scale-to-width-down/335?cb=20130904003328" 	 alt="AMERICA\'S TEST KITCHEN SEASON 9"  	class="thumbimage " 	 	data-video-key="AMERICA\'S_TEST_KITCHEN_SEASON_9" 	data-video-name="AMERICA\'S TEST KITCHEN SEASON 9" 	 	 width="335"  	 height="187"  	 itemprop="thumbnail"  	 	 	></span><meta itemprop="duration" content="PT01M00S"></a>  	<figcaption> 		 			<a href="/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" class="sprite info-icon"></a> 		 		 			<p class="title">AMERICA&#039;S TEST KITCHEN SEASON 9</p> 		 		 	</figcaption> </figure>' ] ],
 				[ 'title' => [ 'value' => 'AMERICA&#039;S TEST KITCHEN SEASON 9' ] ]
 			],
 			[
@@ -137,7 +137,7 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 				[ 'image' => [ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ] ]
 			]
 		];
-		
+
 	}
 }
 
