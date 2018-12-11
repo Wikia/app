@@ -14,7 +14,7 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 		'pl' => 'Wyróżnianie wątków na Forum [http://spolecznosc.wikia.com/wiki/W%C4%85tek:51360 nie będzie możliwe] po 10 grudnia. Zamiast tego, możesz użyć Ogłoszeń by poinformować Twoją społeczność o ważnych wydarzeniach.',
 		'pt-br' => 'Os artigos de destaques do fórum [https://comunidade.wikia.com/wiki/Conversa:27521 estarão indisponíveis] após o dia 10 de Dezembro. No lugar você pode usar os Anúncios para notificar sua comunidade de notícias importantes.',
 		'ru' => 'Функция "Сообщить всем" с форума будет удалена после 10 декабря. [http://ru.community.wikia.com/wiki/%D0%A2%D0%B5%D0%BC%D0%B0:139214 Подробнее см. здесь]. Вы можете использовать Объявления для информирования участников вики.',
-		'zh-hans' => '论坛中的突出显示讨论功能将在[http://zh.community.wikia.com/wiki/%E5%B8%96%E5%AD%90:20761 12月10日后停止使用]。管理员可以使用公告功能发布社区消息。',
+		'zh' => '论坛中的突出显示讨论功能将在[http://zh.community.wikia.com/wiki/%E5%B8%96%E5%AD%90:20761 12月10日后停止使用]。管理员可以使用公告功能发布社区消息。',
 		'zh-hant' => '論壇中的突出顯示討論功能將在[http://zh.community.wikia.com/wiki/%E5%B8%96%E5%AD%90:20761 12月10日後停止使用]。 管理員可以使用公告功能發佈社群消息。',
 	];
 
