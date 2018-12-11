@@ -143,6 +143,7 @@ $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDim
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
+$wgAutoloadClasses['TemplatesApiController'] = "{$IP}/includes/wikia/api/TemplatesApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
