@@ -105,6 +105,10 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 				[ 'image' => [ 'caption' => 'AMERICA&#039;S TEST KITCHEN SEASON 9' ] ]
 			],
 			[
+				[ 'image' => [ 'caption' => '<p>Test & Title</p>' ] ],
+				[ 'image' => [ 'caption' => 'Test & Title' ] ]
+			],
+			[
 				[ 'image' => [ 'caption' => '<sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>' ] ],
 				[ 'image' => [ 'caption' => '<sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>' ] ]
 			],
