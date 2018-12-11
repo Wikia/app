@@ -1,0 +1,19 @@
+<section class="pi-item pi-panel pi-border-color{{#cssClasses}} {{{cssClasses}}}{{/cssClasses}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+	{{{header}}}
+	<ul class="wds-tabs">
+		{{#tab-toggles}}
+			<li class="wds-tabs__tab" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+				<div class="wds-tabs__tab-label">
+					{{value}}
+				</div>
+			</li>
+		{{/tab-toggles}}
+	</ul>
+	<div class="wds-tabs__content">
+		{{#tab-contents}}
+			<div class="wds-tabs__tab-content" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+				{{{content}}}
+			</div>
+		{{/tab-contents}}
+	</div>
+</section>
