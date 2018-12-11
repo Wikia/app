@@ -97,6 +97,14 @@ class PortableInfoboxRenderService {
 			case 'image':
 				$result = $this->renderImage( $data );
 				break;
+			case 'panel':
+				$result = $this->renderPanel( $data );
+				break;
+			case 'section':
+				// we support section only as direct child of panel, therefore there is no point in rendering
+				// it in other context
+				$result = '';
+				break;
 			case 'title':
 				$result = $this->renderTitle( $data );
 				break;
@@ -189,6 +197,83 @@ class PortableInfoboxRenderService {
 		}
 
 		return $this->render( $templateName, $data );
+	}
+
+	protected function renderPanel( $data ) {
+		$cssClasses = [];
+		$tabToggles = [];
+		$tabContents = [];
+		$collapse = $data['collapse'];
+		$header = '';
+
+		foreach ( $data['value'] as $index => $child ) {
+			switch ( $child['type'] ) {
+				case 'header':
+					if ( empty( $header ) ) {
+						$header = $this->renderHeader( $child['data'] );
+					}
+					break;
+				case 'section':
+					$sectionData = $this->getSectionData( $child, $index );
+
+					// section needs to have both, header and content in order to render it
+					if ( !empty( $sectionData['toggle'] ) && !empty( $sectionData['content'] ) ) {
+						$tabToggles[] = $sectionData['toggle'];
+						$tabContents[] = $sectionData['content'];
+					}
+					break;
+				default:
+					// we do not support any other tags than section and header inside panel
+					break;
+			}
+		}
+
+		if ( $collapse !== null && count( $tabContents ) > 0 && !empty( $header ) ) {
+			$cssClasses[] = 'pi-collapse';
+			$cssClasses[] = 'pi-collapse-' . $collapse;
+		}
+
+		return $this->render( 'panel', [
+			'item-name' => $data['item-name'],
+			'cssClasses' => implode( ' ', $cssClasses ),
+			'header' => $header,
+			'tab-toggles' => $tabToggles,
+			'tab-contents' => $tabContents,
+		]);
+	}
+
+	private function getSectionData( $section, $index ) {
+		$toggle = null;
+		$content = '';
+		$itemName = $section['data']['item-name'];
+
+		foreach ($section['data']['value'] as $child) {
+			switch ($child['type']) {
+				case 'header':
+					if ( empty( $toggle ) ) {
+						$toggle = $child['data'];
+						$toggle['index'] = $index;
+						// item-name is inherited from section unless <header> tag has specified name attribute
+						$toggle['item-name'] = $toggle['item-name'] ?? $itemName;
+					}
+					break;
+				default:
+					$content .= $this->renderItem($child['type'], $child['data']);
+					break;
+			}
+		}
+
+		$content = !empty($content)
+			? [
+				'index' => $index,
+				'content' => $content,
+				'item-name' => $itemName,
+			] : null;
+
+		return [
+			'toggle' => $toggle,
+			'content' => $content,
+		];
 	}
 
 	protected function renderTitle( $data ) {
