@@ -62,12 +62,12 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 			$user = User::newFromId( $userId );
 
 			$langCode = $user->getGlobalPreference( 'language' );
-			$message = $this->getLocalizedMessage( $messageIdsPerLang, $langCode );
+			$msgId = $this->getLocalizedMessageId( $messageIdsPerLang, $langCode );
 
 			$rows[] = [
 				'msg_wiki_id' => $wikiId,
 				'msg_recipient_id' => $userId,
-				'msg_id' => $message,
+				'msg_id' => $msgId,
 				'msg_status' => 0
 			];
 		}
@@ -77,7 +77,7 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 		$dbw->insert( 'messages_status', $rows, __METHOD__ );
 	}
 
-	private function getLocalizedMessage( array $messageIdsPerLang, string $langCode ): string {
+	private function getLocalizedMessageId( array $messageIdsPerLang, string $langCode ): int {
 		if ( isset( $messageIdsPerLang[$langCode] ) ) {
 			return $messageIdsPerLang[$langCode];
 		}
