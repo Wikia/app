@@ -3746,6 +3746,11 @@ class Parser {
 			}
 			# RTE - end
 
+			/* @var PPNode_DOM $args */
+			# wikia start
+			Hooks::run( 'ParserBraceSubstitutionForTemplate', [ $title, $args ] );
+			# wikia end
+
 			# Do infinite loop check
 			# This has to be done after redirect resolution to avoid infinite loops via redirects
 			if ( !$frame->loopCheck( $title ) ) {
