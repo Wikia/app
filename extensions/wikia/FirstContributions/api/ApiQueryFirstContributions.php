@@ -136,8 +136,8 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 
 	public function getExamples() {
 		return [
-			'api.php?action=query&list=neweditors',
-			'api.php?action=query&list=neweditors&fcdir=newer'
+			'api.php?action=query&list=firstcontributions',
+			'api.php?action=query&list=firstcontributions&fcdir=newer'
 		];
 	}
 }
