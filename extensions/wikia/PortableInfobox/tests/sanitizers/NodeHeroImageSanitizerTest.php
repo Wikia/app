@@ -106,7 +106,7 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 			],
 			[
 				[ 'image' => [ 'caption' => '<p>Test & Title</p>' ] ],
-				[ 'image' => [ 'caption' => 'Test & Title' ] ]
+				[ 'image' => [ 'caption' => 'Test &amp; Title' ] ]
 			],
 			[
 				[ 'image' => [ 'caption' => '<sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>' ] ],
