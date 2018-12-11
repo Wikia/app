@@ -54,7 +54,6 @@ class TemplatesApiController extends WikiaApiController {
 	 * CORE-20: this is an experimental API that can change in the near future
 	 *
 	 * @throws WikiaHttpException
-	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getMetadata() {
 		$pageid = $this->getRequiredParam( 'pageid' );
