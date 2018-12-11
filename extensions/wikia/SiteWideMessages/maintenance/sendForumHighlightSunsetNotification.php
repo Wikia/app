@@ -65,7 +65,7 @@ class SendForumHighlightSunsetNotification extends Maintenance {
 			$rows[] = [
 				'msg_wiki_id' => $wikiId,
 				'msg_recipient_id' => $userId,
-				'msg_id' => $messageIdsPerLang[$langCode],
+				'msg_id' => $messageIdsPerLang[$langCode] ?? $messageIdsPerLang['en'],
 				'msg_status' => 0
 			];
 		}
