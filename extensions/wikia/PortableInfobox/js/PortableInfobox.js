@@ -42,8 +42,41 @@
 		}
 	};
 
+	var Panel = {
+		init: function($content) {
+			var $panels = $content.find('.pi-panel');
+
+			$panels.each( function( index ) {
+				var $panel = $panels.eq(index),
+					$toggles = $panel.find('.pi-section-toggles');
+
+				$toggles.on('click', function(e) {
+					var toggle = e.target.closest('.pi-section-toggle');
+
+					if (toggle !== null) {
+						var $newActiveToggle = $(toggle),
+							newRef = $newActiveToggle.attr('data-ref'),
+							$oldActiveToggle = $toggles.find('.pi-active-section'),
+							$oldActiveContent = $panel.find('.pi-section-content.pi-active-section'),
+							$newActiveContent = $panel.find('.pi-section-content[data-ref=' + newRef + ']');
+
+						console.log($oldActiveToggle, $oldActiveContent);
+						$oldActiveToggle.removeClass('wds-is-current pi-active-section');
+						$oldActiveContent.removeClass('pi-active-section');
+						$oldActiveContent.addClass('wds-is-hidden');
+
+						$newActiveToggle.addClass('wds-is-current pi-active-section');
+						$newActiveContent.addClass('pi-active-section');
+						$newActiveContent.removeClass('wds-is-hidden');
+					}
+				})
+			});
+		}
+	};
+
 	mw.hook('wikipage.content').add(function($content) {
 		ImageCollection.init($content);
 		CollapsibleGroup.init($content);
+		Panel.init($content);
 	});
 })(window, jQuery);

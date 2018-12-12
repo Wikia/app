@@ -233,6 +233,11 @@ class PortableInfoboxRenderService {
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
 
+		if ( count( $tabContents ) > 0 && count( $tabToggles ) > 0 ) {
+			$tabContents[0]['active'] = true;
+			$tabToggles[0]['active'] = true;
+		}
+
 		return $this->render( 'panel', [
 			'item-name' => $data['item-name'],
 			'cssClasses' => implode( ' ', $cssClasses ),
