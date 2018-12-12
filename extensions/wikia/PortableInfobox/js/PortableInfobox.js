@@ -60,14 +60,11 @@
 							$oldActiveContent = $panel.find('.pi-section-content.pi-active-section'),
 							$newActiveContent = $panel.find('.pi-section-content[data-ref=' + newRef + ']');
 
-						console.log($oldActiveToggle, $oldActiveContent);
-						$oldActiveToggle.removeClass('wds-is-current pi-active-section');
+						$oldActiveToggle.removeClass('pi-active-section');
 						$oldActiveContent.removeClass('pi-active-section');
-						$oldActiveContent.addClass('wds-is-hidden');
 
-						$newActiveToggle.addClass('wds-is-current pi-active-section');
+						$newActiveToggle.addClass('pi-active-section');
 						$newActiveContent.addClass('pi-active-section');
-						$newActiveContent.removeClass('wds-is-hidden');
 					}
 				})
 			});

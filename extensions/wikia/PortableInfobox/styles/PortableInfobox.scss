@@ -4,6 +4,9 @@
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-components/tabs';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -37,19 +40,47 @@
 		}
 	}
 
-	.wds-tabs {
+	.pi-section-toggles {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
-	.wds-tabs__tab {
+	.pi-section-toggle {
 		line-height: 14px;
 	}
 }
 
 @include commonElementsStyles;
 @include individualElementsStyles;
+
+// **********  Styles for Panels  ********** //
+// extending wds classes to not expose them in infobox markup
+.pi-section-toggles {
+	@extend .wds-tabs;
+}
+
+.pi-section-toggle {
+	@extend .wds-tabs__tab;
+
+	&.pi-active-section {
+		@extend .wds-is-current;
+	}
+}
+
+.pi-section-contents {
+	@extend .wds-tabs__content !optional;
+}
+
+.pi-section-content {
+	@extend .wds-tabs__tab-content !optional;
+
+	display: none;
+
+	&.pi-active-section {
+		display: block;
+	}
+}
 
 // **********  Special styles for HORIZONTAL group  ********** //
 
