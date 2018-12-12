@@ -2180,7 +2180,15 @@ class User implements JsonSerializable {
 				'userId' => $this->getId(),
 				'err'    => $heliosPasswordChange,
 			] );
-			throw new PasswordError( wfMessage( $heliosPasswordChange->errors[0]->description )->text() );
+			$description = $heliosPasswordChange->errors[0]->description;
+			$message = null;
+			if ( $description === 'passwordtooshort' ) {
+				global $wgMinimalPasswordLength;
+				$message = wfMessage( 'passwordtooshort', $wgMinimalPasswordLength );
+			} else {
+				$message = wfMessage( $description );
+			}
+			throw new PasswordError( $message->text() );
 		}
 	}
 
@@ -2199,15 +2207,7 @@ class User implements JsonSerializable {
 				'userId' => $this->getId(),
 				'err'    => $result,
 			] );
-			$description = $result->errors[0]->description;
-			$message = null;
-			if ( $description === 'passwordtooshort' ) {
-				global $wgMinimalPasswordLength;
-				$message = wfMessage( 'passwordtooshort', $wgMinimalPasswordLength );
-			} else {
-				$message = wfMessage( $description );
-			}
-			throw new PasswordError( $message->text() );
+			throw new PasswordError( wfMessage( $result->errors[0]->description )->text() );
 		}
 	}
 
