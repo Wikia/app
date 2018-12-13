@@ -1,9 +1,9 @@
 <section class="pi-item pi-panel pi-border-color{{#cssClasses}} {{{cssClasses}}}{{/cssClasses}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
 	{{{header}}}
-	<ul class="pi-section-toggles">
+	<ul class="pi-section-navigation">
 		{{#tab-toggles}}
-			<li class="pi-section-toggle{{#active}} pi-active-section{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
-				<div class="wds-tabs__tab-label pi-section-toggle-label">
+			<li class="pi-section-tab{{#active}} pi-section-active{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+				<div class="pi-section-label">
 					{{value}}
 				</div>
 			</li>
@@ -11,7 +11,7 @@
 	</ul>
 	<div class="pi-section-contents">
 		{{#tab-contents}}
-			<div class="pi-section-content{{#active}} pi-active-section{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+			<div class="pi-section-content{{#active}} pi-section-active{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
 				{{{content}}}
 			</div>
 		{{/tab-contents}}

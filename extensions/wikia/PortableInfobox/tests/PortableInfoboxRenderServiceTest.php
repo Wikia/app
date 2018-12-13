@@ -2058,7 +2058,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-panel pi-border-color">
 								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
-								<ul class="pi-section-toggles">
+								<ul class="pi-section-navigation">
 		
 	</ul>
 								<div class="pi-section-contents">
