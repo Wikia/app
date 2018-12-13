@@ -20,6 +20,10 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		return true;
 	}
 
+	public function getDescription() {
+		return $this->msg( 'insights-list-subtitle-nonportableinfoboxes' )->text();
+	}
+
 	/**
 	 * A wrapper for calling the querycache table
 	 *
