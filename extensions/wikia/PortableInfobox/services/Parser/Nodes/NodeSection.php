@@ -6,6 +6,7 @@ class NodeSection extends Node {
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$this->data = [
+				'label' => $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ),
 				'value' => $this->getRenderDataForChildren(),
 				'item-name' => $this->getItemName(),
 			];
@@ -18,7 +19,7 @@ class NodeSection extends Node {
 		if ( !isset( $this->children ) ) {
 			$this->children = [ ];
 			foreach ( $this->xmlNode as $child ) {
-				if ( !in_array( $child->getName(), [ 'section', 'panel' ] ) ) {
+				if ( !in_array( $child->getName(), [ 'section', 'panel', 'label' ] ) ) {
 					$this->children[] = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
 						->setExternalParser( $this->externalParser );
 				}
