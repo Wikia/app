@@ -236,6 +236,9 @@ class PortableInfoboxRenderService {
 		if ( count( $tabContents ) > 0 && count( $tabToggles ) > 0 ) {
 			$tabContents[0]['active'] = true;
 			$tabToggles[0]['active'] = true;
+		} else {
+			// do not render empty panel
+			return '';
 		}
 
 		return $this->render( 'panel', [

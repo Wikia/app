@@ -2046,8 +2046,55 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 													'source' => 'elem1'
 												]
 											]
-										]
+										],
+										'label' => '',
 									]
+								],
+							],
+							'collapse' => null,
+							'item-name' => null,
+						],
+					],
+				],
+				'output' => '',
+				'description' => 'panel with one section that does not render because it has no label => renders nothing',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'panel',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
+									]
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => 'section label',
+									],
 								],
 							],
 							'collapse' => null,
@@ -2059,14 +2106,175 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							  <section class="pi-item pi-panel pi-border-color">
 								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
 								<ul class="pi-section-navigation">
-		
-	</ul>
+									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
+					section label
+				</div></li>
+                                </ul>
 								<div class="pi-section-contents">
-		
-	</div>
+									<div class="pi-section-content pi-section-active" data-ref="1">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l1</h3>
+											<div class="pi-data-value pi-font">1</div>
+										</div>
+									</div>
+								</div>
 							  </section>
 							</aside>',
-				'description' => 'panel with one section that does not render',
+				'description' => 'panel with header and 2 sections',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'panel',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
+									]
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => 'section label',
+									],
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => '',
+									],
+								],
+							],
+							'collapse' => null,
+							'item-name' => null,
+						],
+					],
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-panel pi-border-color">
+								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
+								<ul class="pi-section-navigation">
+									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
+					section label
+				</div></li>
+                                </ul>
+								<div class="pi-section-contents">
+									<div class="pi-section-content pi-section-active" data-ref="1">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l1</h3>
+											<div class="pi-data-value pi-font">1</div>
+										</div>
+									</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'sections without label are not rendered inside panel',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'panel',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
+									]
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => 'section label',
+									],
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [],
+										'label' => 'asdf',
+									],
+								],
+							],
+							'collapse' => null,
+							'item-name' => null,
+						],
+					],
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-panel pi-border-color">
+								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
+								<ul class="pi-section-navigation">
+									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
+					section label
+				</div></li>
+                                </ul>
+								<div class="pi-section-contents">
+									<div class="pi-section-content pi-section-active" data-ref="1">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l1</h3>
+											<div class="pi-data-value pi-font">1</div>
+										</div>
+									</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'sections without content are not rendered inside panel',
 				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
