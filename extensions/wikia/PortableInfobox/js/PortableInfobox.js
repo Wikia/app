@@ -48,23 +48,23 @@
 
 			$panels.each( function( index ) {
 				var $panel = $panels.eq(index),
-					$toggles = $panel.find('.pi-section-toggles');
+					$toggles = $panel.find('.pi-section-navigation');
 
 				$toggles.on('click', function(e) {
-					var toggle = e.target.closest('.pi-section-toggle');
+					var toggle = e.target.closest('.pi-section-tab');
 
 					if (toggle !== null) {
 						var $newActiveToggle = $(toggle),
 							newRef = $newActiveToggle.attr('data-ref'),
-							$oldActiveToggle = $toggles.find('.pi-active-section'),
-							$oldActiveContent = $panel.find('.pi-section-content.pi-active-section'),
+							$oldActiveToggle = $toggles.find('.pi-section-active'),
+							$oldActiveContent = $panel.find('.pi-section-content.pi-section-active'),
 							$newActiveContent = $panel.find('.pi-section-content[data-ref=' + newRef + ']');
 
-						$oldActiveToggle.removeClass('pi-active-section');
-						$oldActiveContent.removeClass('pi-active-section');
+						$oldActiveToggle.removeClass('pi-section-active');
+						$oldActiveContent.removeClass('pi-section-active');
 
-						$newActiveToggle.addClass('pi-active-section');
-						$newActiveContent.addClass('pi-active-section');
+						$newActiveToggle.addClass('pi-section-active');
+						$newActiveContent.addClass('pi-section-active');
 					}
 				})
 			});

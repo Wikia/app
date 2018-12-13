@@ -40,7 +40,7 @@
 		}
 	}
 
-	.pi-section-toggles {
+	.pi-section-navigation {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -56,11 +56,11 @@
 		}
 	}
 
-	.pi-section-toggle {
+	.pi-section-tab {
 		line-height: 14px;
 	}
 
-	.pi-section-toggle-label {
+	.pi-section-label {
 		color: $color-links;
 	}
 }
@@ -70,42 +70,40 @@
 
 // **********  Styles for Panels  ********** //
 // extending wds classes to not expose them in infobox markup
-.pi-section-toggles {
+.pi-section-navigation {
 	@extend .wds-tabs;
 }
 
-.pi-section-toggle {
+.pi-section-tab {
 	@extend .wds-tabs__tab;
 
 	&:hover {
 		$toggle-hover-color: darken($color-links, 20%);
 
-		&.pi-active-section {
+		&.pi-section-active {
 			// keep in sync with .wds-is-current
 			@include wds-box-underline($toggle-hover-color);
 		}
 
-		.pi-section-toggle-label {
+		.pi-section-label {
 			color: $toggle-hover-color;
 		}
 	}
 
-	&.pi-active-section {
+	&.pi-section-active {
 		// keep in sync with .wds-is-current
 		@include wds-box-underline($color-links);
 	}
 }
 
-.pi-section-contents {
-	@extend .wds-tabs__content !optional;
+.pi-section-label {
+	@extend .wds-tabs__tab-label;
 }
 
 .pi-section-content {
-	@extend .wds-tabs__tab-content !optional;
-
 	display: none;
 
-	&.pi-active-section {
+	&.pi-section-active {
 		display: block;
 	}
 }
