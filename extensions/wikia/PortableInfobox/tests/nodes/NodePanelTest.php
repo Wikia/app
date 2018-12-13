@@ -51,7 +51,7 @@ class NodePanelTest extends WikiaBaseTest {
 				['elem1' => 1],
 				[
 					'value' => [
-						['type' => 'section', 'data' => [ 'item-name' => null, 'value' => [ [ 'type' => 'data', 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ] ] ] ] ],
+						['type' => 'section', 'data' => [ 'item-name' => null, 'label' => '', 'value' => [ [ 'type' => 'data', 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ] ] ] ] ],
 					],
 					'collapse' => null,
 					'item-name' => 'asdf',
@@ -62,7 +62,18 @@ class NodePanelTest extends WikiaBaseTest {
 				[
 					'value' => [
 						[ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ] ],
-						['type' => 'section', 'data' => [ 'item-name' => null, 'value' => [ [ 'type' => 'data', 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ] ] ] ] ],
+						['type' => 'section', 'data' => [ 'item-name' => null, 'label' => '', 'value' => [ [ 'type' => 'data', 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ] ] ] ] ],
+					],
+					'collapse' => null,
+					'item-name' => 'asdf',
+				]
+			],
+			[ '<panel name="asdf"><header>h</header><section><label>sl</label><data source="elem1"><label>l1</label></data></section></panel>',
+				['elem1' => 1],
+				[
+					'value' => [
+						[ 'type' => 'header', 'data' => [ 'value' => 'h', 'item-name' => null, 'source' => null ] ],
+						['type' => 'section', 'data' => [ 'item-name' => null, 'label' => 'sl', 'value' => [ [ 'type' => 'data', 'data' => [ 'label' => 'l1', 'value' => 1, 'span' => 1, 'layout' => null, 'item-name' => null, 'source' => 'elem1' ] ] ] ] ],
 					],
 					'collapse' => null,
 					'item-name' => 'asdf',

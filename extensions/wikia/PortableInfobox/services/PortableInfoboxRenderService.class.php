@@ -248,24 +248,16 @@ class PortableInfoboxRenderService {
 	}
 
 	private function getSectionData( $section, $index ) {
-		$toggle = null;
 		$content = '';
 		$itemName = $section['data']['item-name'];
+		$toggle = !empty( $section['data']['label'] ) ? [
+			'value' => $section['data']['label'],
+			'index' => $index,
+			'item-name' => $itemName,
+		] : null;
 
-		foreach ($section['data']['value'] as $child) {
-			switch ($child['type']) {
-				case 'header':
-					if ( empty( $toggle ) ) {
-						$toggle = $child['data'];
-						$toggle['index'] = $index;
-						// item-name is inherited from section unless <header> tag has specified name attribute
-						$toggle['item-name'] = $toggle['item-name'] ?? $itemName;
-					}
-					break;
-				default:
-					$content .= $this->renderItem($child['type'], $child['data']);
-					break;
-			}
+		foreach ( $section['data']['value'] as $child ) {
+			$content .= $this->renderItem( $child['type'], $child['data'] );
 		}
 
 		$content = !empty($content)
