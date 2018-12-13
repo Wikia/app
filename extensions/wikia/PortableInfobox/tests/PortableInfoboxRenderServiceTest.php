@@ -2047,52 +2047,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 												]
 											]
 										],
-										'label' => '',
-									]
-								],
-							],
-							'collapse' => null,
-							'item-name' => null,
-						],
-					],
-				],
-				'output' => '',
-				'description' => 'panel with one section that does not render because it has no label => renders nothing',
-				'mockParams' => [ ],
-				'accentColor' => '',
-				'accentColorText' => ''
-			],
-			[
-				'input' => [
-					[
-						'type' => 'panel',
-						'data' => [
-							'value' => [
-								[
-									'type' => 'header',
-									'data' => [
-										'value' => 'test header',
-										'source' => null,
-										'item-name' => null,
-									]
-								],
-								[
-									'type' => 'section',
-									'data' => [
-										'item-name' => null,
-										'value' => [
-											[
-												'type' => 'data',
-												'data' => [
-													'label' => 'l1',
-													'value' => 1,
-													'span' => 1,
-													'layout' => null,
-													'item-name' => null,
-													'source' => 'elem1'
-												]
-											]
-										],
 										'label' => 'section label',
 									],
 								],
@@ -2107,8 +2061,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-					section label
-				</div></li>
+						section label
+					</div></li>
                                 </ul>
 								<div class="pi-section-contents">
 									<div class="pi-section-content pi-section-active" data-ref="1">
@@ -2167,8 +2121,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 											[
 												'type' => 'data',
 												'data' => [
-													'label' => 'l1',
-													'value' => 1,
+													'label' => 'l2',
+													'value' => 2,
 													'span' => 1,
 													'layout' => null,
 													'item-name' => null,
@@ -2190,8 +2144,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-					section label
-				</div></li>
+						section label
+					</div></li>
+									<li class="pi-section-tab" data-ref="2"><div class="pi-section-label">
+						2
+					</div></li>
                                 </ul>
 								<div class="pi-section-contents">
 									<div class="pi-section-content pi-section-active" data-ref="1">
@@ -2200,10 +2157,16 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 											<div class="pi-data-value pi-font">1</div>
 										</div>
 									</div>
+									<div class="pi-section-content" data-ref="2">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l2</h3>
+											<div class="pi-data-value pi-font">2</div>
+										</div>
+									</div>
 								</div>
 							  </section>
 							</aside>',
-				'description' => 'sections without label are not rendered inside panel',
+				'description' => 'sections without label are rendered with numeric label',
 				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
@@ -2261,8 +2224,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-					section label
-				</div></li>
+						section label
+					</div></li>
                                 </ul>
 								<div class="pi-section-contents">
 									<div class="pi-section-content pi-section-active" data-ref="1">
@@ -2275,6 +2238,90 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							  </section>
 							</aside>',
 				'description' => 'sections without content are not rendered inside panel',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'panel',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
+									]
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => '',
+									],
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l2',
+													'value' => 2,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										],
+										'label' => '',
+									],
+								],
+							],
+							'collapse' => null,
+							'item-name' => null,
+						],
+					],
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-panel pi-border-color">
+								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
+								<div class="pi-section-contents">
+									<div class="pi-section-content pi-section-active" data-ref="1">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l1</h3>
+											<div class="pi-data-value pi-font">1</div>
+										</div>
+									</div>
+									<div class="pi-section-content pi-section-active" data-ref="2">
+										<div class="pi-item pi-data pi-item-spacing pi-border-color" data-source="elem1">
+											<h3 class="pi-data-label pi-secondary-font">l2</h3>
+											<div class="pi-data-value pi-font">2</div>
+										</div>
+									</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'if none of sections has label then al sections should be rendered one below other',
 				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''

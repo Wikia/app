@@ -205,6 +205,7 @@ class PortableInfoboxRenderService {
 		$tabContents = [];
 		$collapse = $data['collapse'];
 		$header = '';
+		$shouldShowToggles = false;
 
 		foreach ( $data['value'] as $index => $child ) {
 			switch ( $child['type'] ) {
@@ -216,10 +217,14 @@ class PortableInfoboxRenderService {
 				case 'section':
 					$sectionData = $this->getSectionData( $child, $index );
 
-					// section needs to have both, header and content in order to render it
-					if ( !empty( $sectionData['toggle'] ) && !empty( $sectionData['content'] ) ) {
+					// section needs to have content in order to render it
+					if ( !empty( $sectionData['content'] ) ) {
 						$tabToggles[] = $sectionData['toggle'];
 						$tabContents[] = $sectionData['content'];
+
+						if ( !empty( $sectionData['toggle']['value'] ) ) {
+							$shouldShowToggles = true;
+						}
 					}
 					break;
 				default:
@@ -233,7 +238,7 @@ class PortableInfoboxRenderService {
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
 
-		if ( count( $tabContents ) > 0 && count( $tabToggles ) > 0 ) {
+		if ( count( $tabContents ) > 0 ) {
 			$tabContents[0]['active'] = true;
 			$tabToggles[0]['active'] = true;
 		} else {
@@ -241,23 +246,31 @@ class PortableInfoboxRenderService {
 			return '';
 		}
 
+		if ( !$shouldShowToggles ) {
+			$tabContents = array_map(function($content) {
+				$content['active'] = true;
+				return $content;
+			}, $tabContents);
+		}
+
 		return $this->render( 'panel', [
 			'item-name' => $data['item-name'],
 			'cssClasses' => implode( ' ', $cssClasses ),
 			'header' => $header,
-			'tab-toggles' => $tabToggles,
-			'tab-contents' => $tabContents,
+			'tabToggles' => $tabToggles,
+			'tabContents' => $tabContents,
+			'shouldShowToggles' => $shouldShowToggles,
 		]);
 	}
 
 	private function getSectionData( $section, $index ) {
 		$content = '';
 		$itemName = $section['data']['item-name'];
-		$toggle = !empty( $section['data']['label'] ) ? [
+		$toggle = [
 			'value' => $section['data']['label'],
 			'index' => $index,
 			'item-name' => $itemName,
-		] : null;
+		];
 
 		foreach ( $section['data']['value'] as $child ) {
 			$content .= $this->renderItem( $child['type'], $child['data'] );
