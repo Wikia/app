@@ -750,10 +750,11 @@ class WikiFactory {
 	 * @param $cityId
 	 * @param $value
 	 * @param null $reason
+	 * @param bool $ignoreBlacklist=false
 	 * @return bool
 	 * @throws WikiFactoryVariableParseException
 	 */
-	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null ) {
+	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null, $ignoreBlacklist = false ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( !static::isUsed() ) {
@@ -776,10 +777,27 @@ class WikiFactory {
 			$wikiFactoryVariableParser = new WikiFactoryVariableParser( $variable->cv_variable_type );
 			$value = $wikiFactoryVariableParser->transformValue( $value );
 
-			return static::setVarById( $varId, $cityId, $value, $reason );
+			return static::setVarById( $varId, $cityId, $value, $reason, $ignoreBlacklist );
 		}
 
 		return false;
+	}
+
+	/**
+	 * isReadonlyBlacklisted
+	 * 
+	 * Checks if the value is listed as read-only in blacklist
+	 * 
+	 * Putting a variable name in the blacklist is going to prevent
+	 * all the changes made to it via WikiFactory class.
+	 * 
+	 * @param string cv_variable_id
+	 * @return boolean
+	 */
+	static function isReadonlyBlacklisted( $cv_variable_id ) {
+		global $wgWikiFactoryReadonlyBlacklist;
+
+		return in_array( $cv_variable_id, $wgWikiFactoryReadonlyBlacklist, true );
 	}
 
 	/**
@@ -799,10 +817,11 @@ class WikiFactory {
 	 * @param integer $city_id        wiki id in city list
 	 * @param mixed $value            new value for variable
 	 * @param string $reason          optional extra reason text
+	 * @param boolean $ignoreBlacklist if the the blacklist check will be ignored
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
+	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null, $ignoreBlacklist = false ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
@@ -816,6 +835,11 @@ class WikiFactory {
 		}
 
 		if ( empty( $cv_variable_id ) || empty( $city_id ) ) {
+			return false;
+		}
+
+		if ( !$ignoreBlacklist && static::isReadonlyBlacklisted( $cv_variable_id ) ) {
+			Wikia::log( __METHOD__, "", "Variable is marked as readonly in wgWikiFactoryReadonlyBlacklist");
 			return false;
 		}
 
