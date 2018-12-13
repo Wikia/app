@@ -101,7 +101,7 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
-		// Due to TOP_BOXAD rename we have to force new Prebid - otherwise it won't bid for this slot
+		// Due to TOP_BOXAD rename we have to force new Prebid, because otherwise it won't bid for this slot
 		// context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
 		context.bidders.prebidAE3 = context.targeting.skin === 'oasis';
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
