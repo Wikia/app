@@ -91,6 +91,10 @@
 								'slotName' => 'TOP_RIGHT_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
+							echo $app->renderView( 'Ad', 'Index', [
+								'slotName' => 'TOP_BOXAD',
+								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+							] );
 						}
 					?>
 					</div>
