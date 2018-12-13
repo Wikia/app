@@ -115,7 +115,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 						$this->getName(),
 						count( $links ),
 						NS_TEMPLATE,
-						$title->getPrefixedDBkey(),
+						$title->getDBkey(),
 					];
 				}
 			}

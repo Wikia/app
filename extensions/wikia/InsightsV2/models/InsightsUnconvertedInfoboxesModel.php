@@ -29,7 +29,7 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	}
 
 	public function getAction( Title $title ) {
-		$subpage = Title::newFromText( $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() , NS_TEMPLATE );
+		$subpage = Title::makeTitle( NS_TEMPLATE, $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() );
 
 		if ( !$subpage instanceof Title ) {
 			// something went terribly wrong, quit early

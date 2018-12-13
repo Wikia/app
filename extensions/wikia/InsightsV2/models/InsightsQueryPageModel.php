@@ -102,7 +102,7 @@ abstract class InsightsQueryPageModel extends InsightsModel {
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( $row->title ) {
-				$title = Title::newFromText( $row->title, $row->namespace );
+				$title = Title::makeTitle( $row->namespace, $row->title );
 
 				if ( $title instanceof Title ) {
 					$data = [
