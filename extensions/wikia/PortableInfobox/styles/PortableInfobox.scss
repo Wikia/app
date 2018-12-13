@@ -44,10 +44,24 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		overflow-x: scroll;
+		overflow-y: hidden;
+
+		// justify-content: center does not work as it cuts the first overflowing element
+		// @see https://stackoverflow.com/a/34455253
+		&:before,
+		&:after {
+			content: '';
+			margin: auto;
+		}
 	}
 
 	.pi-section-toggle {
 		line-height: 14px;
+	}
+
+	.pi-section-toggle-label {
+		color: $color-links;
 	}
 }
 
@@ -63,8 +77,22 @@
 .pi-section-toggle {
 	@extend .wds-tabs__tab;
 
+	&:hover {
+		$toggle-hover-color: darken($color-links, 20%);
+
+		&.pi-active-section {
+			// keep in sync with .wds-is-current
+			@include wds-box-underline($toggle-hover-color);
+		}
+
+		.pi-section-toggle-label {
+			color: $toggle-hover-color;
+		}
+	}
+
 	&.pi-active-section {
-		@extend .wds-is-current;
+		// keep in sync with .wds-is-current
+		@include wds-box-underline($color-links);
 	}
 }
 
