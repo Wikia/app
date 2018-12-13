@@ -1271,12 +1271,6 @@ $wgCreateDatabaseActiveCluster = 'c7';
 $wgCreateLanguageWikisWithPath = false;
 
 /**
- * Whether to create new English wikis under the fandom.com domain.
- * @var bool $wgCreateEnglishWikisOnFandomCom
- */
-$wgCreateEnglishWikisOnFandomCom = true;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
