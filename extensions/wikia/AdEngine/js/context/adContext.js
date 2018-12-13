@@ -118,7 +118,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.aol = isEnabled('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isEnabled('wgAdDriverAppNexusBidderCountries');
 		context.bidders.appnexusDfp = isEnabled('wgAdDriverAppNexusDfpCountries');
-		context.bidders.appnexusWebAds = isEnabled('wgAdDriverAppNexusWebAdsBidderCountries');
 		context.bidders.audienceNetwork = isEnabled('wgAdDriverAudienceNetworkBidderCountries');
 		context.bidders.indexExchange = isEnabled('wgAdDriverIndexExchangeBidderCountries');
 		context.bidders.kargo = isEnabled('wgAdDriverKargoBidderCountries');

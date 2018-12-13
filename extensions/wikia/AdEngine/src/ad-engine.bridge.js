@@ -90,7 +90,6 @@ function init(
 			context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
 			context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
 			context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
-			context.set('bidders.prebid.appnexusWebads.enabled', legacyContext.get('bidders.appnexusWebAds'));
 			context.set('bidders.prebid.audienceNetwork.enabled', legacyContext.get('bidders.audienceNetwork'));
 			context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 			context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
