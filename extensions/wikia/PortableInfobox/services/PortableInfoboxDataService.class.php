@@ -62,7 +62,7 @@ class PortableInfoboxDataService {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
 			$incOnlyTemplates = $this->parsingHelper->parseIncludeonlyInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
-				$this->delete();
+				$this->purge();
 				$this->set( $incOnlyTemplates );
 			};
 		}
