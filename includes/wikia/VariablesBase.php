@@ -1265,12 +1265,6 @@ $wgCountTotalSearchHits = false;
 $wgCreateDatabaseActiveCluster = 'c7';
 
 /**
- * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
- * @var bool $wgCreateLanguageWikisWithPath
- */
-$wgCreateLanguageWikisWithPath = false;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
