@@ -265,10 +265,12 @@ class PortableInfoboxRenderService {
 					$horizontalGroupData['renderLabels'] = true;
 				}
 			} elseif ( $item['type'] === 'header' ) {
+
 				$horizontalGroupData['header'] = [
 					'value' => $data['value'],
 					'source' => $data['source'],
 					'item-name' => $data['item-name'],
+					'inline-styles' => $this->inlineStyles
 				];
 			}
 		}
