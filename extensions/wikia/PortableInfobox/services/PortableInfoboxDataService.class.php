@@ -236,4 +236,18 @@ class PortableInfoboxDataService {
 			$this->purge();
 		}
 	}
+
+	/**
+	 * This method performs rendering of a current template and saves its metadata
+	 * in the page_props table.
+	 *
+	 * This method will be used to fix portable templates with missing database entries.
+	 *
+	 * @see CORE-6
+	 */
+	public function regenerate() {
+		$data = (new PortableInfoboxParsingHelper)->reparseArticle( $this->title );
+		$this->set( $data );
+		return $data;
+	}
 }
