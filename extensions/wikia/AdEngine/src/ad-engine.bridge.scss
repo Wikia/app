@@ -6,10 +6,21 @@
   }
 
   #WikiaTopAds {
+    padding: 0;
     position: absolute;
     top: 0;
     width: 100%;
   }
+}
+
+#TOP_LEADERBOARD.sticky-iab {
+  padding: 18px 0 0 0;
+  width: 100%;
+}
+
+.gpt-ad.bfaa-template.sticky-iab .advertisement-label {
+  color: #5f7a7b;
+  position: static;
 }
 
 .gpt-ad.bfab-template {
