@@ -203,7 +203,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	#TOP_BOXAD {
+	#TOP_RIGHT_BOXAD, #TOP_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
 		padding: 15px;
 	}
@@ -217,7 +217,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
-#TOP_BOXAD {
+#TOP_RIGHT_BOXAD, #TOP_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
 
