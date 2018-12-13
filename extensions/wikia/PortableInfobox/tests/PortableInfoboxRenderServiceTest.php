@@ -2016,6 +2016,61 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
+			[
+				'input' => [
+					[
+						'type' => 'panel',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header',
+										'source' => null,
+										'item-name' => null,
+									]
+								],
+								[
+									'type' => 'section',
+									'data' => [
+										'item-name' => null,
+										'value' => [
+											[
+												'type' => 'data',
+												'data' => [
+													'label' => 'l1',
+													'value' => 1,
+													'span' => 1,
+													'layout' => null,
+													'item-name' => null,
+													'source' => 'elem1'
+												]
+											]
+										]
+									]
+								],
+							],
+							'collapse' => null,
+							'item-name' => null,
+						],
+					],
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-panel pi-border-color">
+								<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">test header</h2>
+								<ul class="pi-section-toggles">
+		
+	</ul>
+								<div class="pi-section-contents">
+		
+	</div>
+							  </section>
+							</aside>',
+				'description' => 'panel with one section that does not render',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
 		];
 	}
 }
