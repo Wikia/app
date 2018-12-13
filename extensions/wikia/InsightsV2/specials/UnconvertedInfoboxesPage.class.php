@@ -114,8 +114,8 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 					$nonportableInfoboxes[] = [
 						$this->getName(),
 						count( $links ),
-						NS_TEMPLATE,
-						$title->getPrefixedDBkey(),
+						$title->getNamespace(),
+						$title->getDBkey(),
 					];
 				}
 			}
