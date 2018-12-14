@@ -7,7 +7,7 @@ require([
 ) {
 	'use strict';
 
-	const decodeUncrawlableURL = function() {
+	function decodeUncrawlableURL(){
 
 		// Handles middle click, ctrl+click and regular click
 		$('a[data-uncrawlable-url]').on('mousedown', function () {
@@ -19,6 +19,6 @@ require([
 
 	$(decodeUncrawlableURL);
 
-	$( window ).on( 'EditPageAfterRenderPreview', decodeUncrawlableURL);
+	mw.hook('wikipage.content').add(decodeUncrawlableURL);
 
 });
