@@ -1,13 +1,13 @@
 <?php
 
 use Wikia\Logger\Loggable;
-use Wikia\Tasks\Queues\Queue;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
 
 	const ACCEPTED = 202;
 	const METHOD_NOT_ALLOWED = 405;
+	const NO_CONTENT = 204;
 
 	public function allowsExternalRequests() {
 		return false;
@@ -134,6 +134,7 @@ class RemoveUserDataController extends WikiaController {
 		// setting a blank email will prevent db reloads
 		$user->setEmail('');
 		$user->invalidateCache();
+		$this->response->setCode( self::NO_CONTENT );
 	}
 
 	private function getUserWikis( int $userId ) {
