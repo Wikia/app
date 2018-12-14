@@ -84,7 +84,7 @@ class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
 
-	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const COMMUNITY_WIKI_ID = 177; // community.fandom.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
 

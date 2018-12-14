@@ -31,7 +31,10 @@ class LookupContribsHooks {
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
 		if ( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
-			$url = 'http://community.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() );
+			$lcTitle = GlobalTitle::newFromText( 'LookupContribs', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL );
+			$url = $lcTitle->getFullURL( [
+				'target' => $nt->getText(),
+			] );
 			$attribs = [
 				'href' => $url,
 				'title' => wfMsg( 'right-lookupcontribs' )
