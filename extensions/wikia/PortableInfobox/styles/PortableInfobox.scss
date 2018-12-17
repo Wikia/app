@@ -41,23 +41,51 @@
 	}
 
 	.pi-section-navigation {
+		$overflow-color: rgba($wds-color-black, 0.25);
+
+		@if $is-dark-wiki {
+			$overflow-color: rgba($wds-color-white, 0.4);
+		}
+
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		overflow-x: scroll;
 		overflow-y: hidden;
+		-ms-overflow-style: none;
+		overflow: -moz-scrollbars-none;
 
-		// justify-content: center does not work as it cuts the first overflowing element
-		// @see https://stackoverflow.com/a/34455253
-		&:before,
-		&:after {
+		// this is responsible for "scrolling shadow"
+		background-image: radial-gradient(farthest-side at 0 50%, $overflow-color, transparent), radial-gradient(farthest-side at 100% 50%, $overflow-color, transparent);
+		background-position: 0 0, 100% 0;
+		background-repeat: no-repeat;
+		background-size: 9px 100%;
+
+		// center items horizontally + cover "scrolling shadow" with pseudo element
+		&:after,
+		&:before {
+			align-self: stretch;
+			background-color: $infobox-background;
 			content: '';
-			margin: auto;
+			width: 100%;
+		}
+
+		&::-webkit-scrollbar {
+			display: none;
 		}
 	}
 
+	// items on both edges have partial background so "scrolling shadow" does not appear immediately
 	.pi-section-tab {
 		line-height: 14px;
+
+		&:first-of-type {
+			background: linear-gradient(to right, $infobox-background 0%, transparent 50%);
+		}
+
+		&:last-of-type {
+			background: linear-gradient(to left, $infobox-background 0%, transparent 50%);
+		}
 	}
 
 	.pi-section-label {
