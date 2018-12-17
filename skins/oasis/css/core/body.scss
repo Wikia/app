@@ -24,6 +24,11 @@ a {
 	}
 }
 
+//set hand cursor for redlinks without href (but not in editor view)
+a.new:not([data-rte-instance]):not(.ve-ce-linkAnnotation){
+	cursor: pointer;
+}
+
 .clearfix {
 	@include clearfix;
 }
