@@ -48,7 +48,7 @@
 
 			$panels.each( function( index ) {
 				var $panel = $panels.eq(index),
-					$scrollWrapper = $panel.find('.pi-scroll-wrapper'),
+					$scrollWrapper = $panel.find('.pi-panel-scroll-wrapper'),
 					$toggles = $panel.find('.pi-section-navigation');
 
                 $toggles.on('scroll', function(event) {
@@ -58,15 +58,15 @@
                 	var didScrollToLeft = nav.scrollLeft < compensation;
 
                 	if (didScrollToLeft) {
-                        $scrollWrapper.removeClass('pi-scroll-left');
+                        $scrollWrapper.removeClass('pi-panel-scroll-left');
 	                } else {
-                        $scrollWrapper.addClass('pi-scroll-left');
+                        $scrollWrapper.addClass('pi-panel-scroll-left');
 	                }
 
                 	if (didScrollToRight) {
-                        $scrollWrapper.removeClass('pi-scroll-right');
+                        $scrollWrapper.removeClass('pi-panel-scroll-right');
 	                } else {
-                        $scrollWrapper.addClass('pi-scroll-right');
+                        $scrollWrapper.addClass('pi-panel-scroll-right');
 	                }
                 });
 

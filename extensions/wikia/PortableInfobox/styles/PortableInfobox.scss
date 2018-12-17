@@ -66,40 +66,41 @@
 	}
 }
 
-.pi-scroll-wrapper {
+.pi-panel-scroll-wrapper {
+	$shadow-color: rgba($wds-color-black, 0.25);
+
+	@if $is-dark-wiki {
+		$shadow-color: rgba($wds-color-white, 0.4);
+	}
+
 	position: relative;
-}
 
-$shadow-color: rgba($wds-color-black, 0.25);
+	&:after,
+	&:before {
+		content: '';
+		display: none;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 10px;
+		z-index: 1;
+	}
 
-@if $is-dark-wiki {
-	$shadow-color: rgba($wds-color-white, 0.4);
-}
+	&:before {
+		background-image: radial-gradient(farthest-side at 0 50%, $shadow-color, transparent);
+		left: 0;
+	}
 
-.pi-left-shadow,
-.pi-right-shadow {
-	display: none;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	width: 10px;
-	z-index: 1;
-}
-
-.pi-left-shadow {
-	background-image: radial-gradient(farthest-side at 0 50%, $shadow-color, transparent);
-	left: 0;
-
-	.pi-scroll-left & {
+	&.pi-panel-scroll-left:before {
 		display: block;
 	}
-}
 
-.pi-right-shadow {
-	background-image: radial-gradient(farthest-side at 100% 50%, $shadow-color, transparent);
-	right: 0;
+	&:after {
+		background-image: radial-gradient(farthest-side at 100% 50%, $shadow-color, transparent);
+		right: 0;
+	}
 
-	.pi-scroll-right & {
+	&.pi-panel-scroll-right:after {
 		display: block;
 	}
 }

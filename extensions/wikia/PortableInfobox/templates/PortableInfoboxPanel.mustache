@@ -1,7 +1,6 @@
 <section class="pi-item pi-panel pi-border-color{{#cssClasses}} {{{cssClasses}}}{{/cssClasses}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
 	{{{header}}}
-	<div class="pi-scroll-wrapper">
-		<span class="pi-left-shadow"></span>
+	<div class="pi-panel-scroll-wrapper">
 		<ul class="pi-section-navigation">
 			{{#tab-toggles}}
 				<li class="pi-section-tab{{#active}} pi-section-active{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
@@ -11,7 +10,6 @@
 				</li>
 			{{/tab-toggles}}
 		</ul>
-		<span class="pi-right-shadow"></span>
 	</div>
 	<div class="pi-section-contents">
 		{{#tab-contents}}
