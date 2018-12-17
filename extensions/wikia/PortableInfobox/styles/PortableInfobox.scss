@@ -41,10 +41,10 @@
 	}
 
 	.pi-section-navigation {
-		$overflow-color: rgba(26, 26, 26, 0.25);
+		$overflow-color: rgba($wds-color-black, 0.25);
 
 		@if $is-dark-wiki {
-			$overflow-color: rgba(255, 255, 255, 0.4);
+			$overflow-color: rgba($wds-color-white, 0.4);
 		}
 
 		list-style: none;
