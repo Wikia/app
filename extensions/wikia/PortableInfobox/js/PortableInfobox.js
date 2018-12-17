@@ -48,7 +48,27 @@
 
 			$panels.each( function( index ) {
 				var $panel = $panels.eq(index),
+					$scrollWrapper = $panel.find('.pi-scroll-wrapper'),
 					$toggles = $panel.find('.pi-section-navigation');
+
+                $toggles.on('scroll', function(event) {
+                	var nav = event.currentTarget;
+                	var compensation = 20;
+                	var didScrollToRight = nav.scrollWidth - nav.scrollLeft - compensation <= nav.clientWidth;
+                	var didScrollToLeft = nav.scrollLeft < compensation;
+
+                	if (didScrollToLeft) {
+                        $scrollWrapper.removeClass('pi-scroll-left');
+	                } else {
+                        $scrollWrapper.addClass('pi-scroll-left');
+	                }
+
+                	if (didScrollToRight) {
+                        $scrollWrapper.removeClass('pi-scroll-right');
+	                } else {
+                        $scrollWrapper.addClass('pi-scroll-right');
+	                }
+                });
 
 				$toggles.on('click', function(e) {
 					var toggle = e.target.closest('.pi-section-tab');

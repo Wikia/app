@@ -41,12 +41,6 @@
 	}
 
 	.pi-section-navigation {
-		$overflow-color: rgba($wds-color-black, 0.25);
-
-		@if $is-dark-wiki {
-			$overflow-color: rgba($wds-color-white, 0.4);
-		}
-
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -55,17 +49,9 @@
 		-ms-overflow-style: none;
 		overflow: -moz-scrollbars-none;
 
-		// this is responsible for "scrolling shadow"
-		background-image: radial-gradient(farthest-side at 0 50%, $overflow-color, transparent), radial-gradient(farthest-side at 100% 50%, $overflow-color, transparent);
-		background-position: 0 0, 100% 0;
-		background-repeat: no-repeat;
-		background-size: 9px 100%;
-
-		// center items horizontally + cover "scrolling shadow" with pseudo element
 		&:after,
 		&:before {
 			align-self: stretch;
-			background-color: $infobox-background;
 			content: '';
 			width: 100%;
 		}
@@ -75,21 +61,46 @@
 		}
 	}
 
-	// items on both edges have partial background so "scrolling shadow" does not appear immediately
-	.pi-section-tab {
-		line-height: 14px;
-
-		&:first-of-type {
-			background: linear-gradient(to right, $infobox-background 0%, transparent 50%);
-		}
-
-		&:last-of-type {
-			background: linear-gradient(to left, $infobox-background 0%, transparent 50%);
-		}
-	}
-
 	.pi-section-label {
 		color: $color-links;
+	}
+}
+
+.pi-scroll-wrapper {
+	position: relative;
+}
+
+$shadow-color: rgba($wds-color-black, 0.25);
+
+@if $is-dark-wiki {
+	$shadow-color: rgba($wds-color-white, 0.4);
+}
+
+.pi-left-shadow,
+.pi-right-shadow {
+	display: none;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 10px;
+	z-index: 1;
+}
+
+.pi-left-shadow {
+	background-image: radial-gradient(farthest-side at 0 50%, $shadow-color, transparent);
+	left: 0;
+
+	.pi-scroll-left & {
+		display: block;
+	}
+}
+
+.pi-right-shadow {
+	background-image: radial-gradient(farthest-side at 100% 50%, $shadow-color, transparent);
+	right: 0;
+
+	.pi-scroll-right & {
+		display: block;
 	}
 }
 
