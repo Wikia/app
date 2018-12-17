@@ -117,21 +117,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $newData, $result );
 	}
 
-	public function testDelete() {
-		$data = '[{"parser_tag_version": ' .
-			PortableInfoboxParserTagController::PARSER_TAG_VERSION .
-			', "data": [], "metadata": []}]';
-		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
-			// purge memc so we can rerun tests
-			->invalidateCache()
-			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $data ] ) )
-			->delete()
-			->getData();
-
-		$this->assertEquals( [ ], $result );
-	}
-
-	public function testPurge() {
+	public function testInvalidateCache() {
 		$data = '[{"parser_tag_version": ' .
 			PortableInfoboxParserTagController::PARSER_TAG_VERSION .
 			', "data": [], "metadata": []}]';

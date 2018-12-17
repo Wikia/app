@@ -146,16 +146,6 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * Remove infobox data from page props and memcache
-	 */
-	public function delete() {
-		$this->clear();
-		unset( $this->cache );
-
-		return $this;
-	}
-
-	/**
 	 * Purge mem cache and local cache
 	 */
 	public function invalidateCache() {
@@ -225,15 +215,6 @@ class PortableInfoboxDataService {
 				return $data;
 			}, [ 'command' => WikiaDataAccess::REFRESH_CACHE, 'cacheTTL' => WikiaResponse::CACHE_STANDARD ] );
 			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => json_encode( $data ) ] );
-		}
-	}
-
-	protected function clear() {
-		$id = $this->title->getArticleID();
-		if ( $id ) {
-			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
-			// don't cache clear state
-			$this->invalidateCache();
 		}
 	}
 

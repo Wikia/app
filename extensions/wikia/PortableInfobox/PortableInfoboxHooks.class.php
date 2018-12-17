@@ -89,13 +89,13 @@ class PortableInfoboxHooks {
 	/**
 	 * Purge articles memcache when template is edited
 	 *
-	 * @param $articles Array of Titles
+	 * @param Title[] $articles
 	 *
 	 * @return bool
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			PortableInfoboxDataService::newFromTitle( $title )->delete();
+			PortableInfoboxDataService::newFromTitle( $title )->invalidateCache();
 		}
 
 		return true;
