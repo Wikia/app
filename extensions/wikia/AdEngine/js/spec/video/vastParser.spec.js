@@ -109,7 +109,7 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		});
 
 		expect(adInfo.contentType).toEqual('text/javascript');
-		expect(adInfo.creativeId).toEqual('555');
-		expect(adInfo.lineItemId).toEqual('222');
+		expect(adInfo.creativeId).toEqual('666');
+		expect(adInfo.lineItemId).toEqual('333');
 	});
 });
