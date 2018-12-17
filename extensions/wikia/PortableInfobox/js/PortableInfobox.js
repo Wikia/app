@@ -86,7 +86,7 @@
 						$newActiveToggle.addClass('pi-section-active');
 						$newActiveContent.addClass('pi-section-active');
 					}
-				})
+				});
 			});
 		}
 	};
