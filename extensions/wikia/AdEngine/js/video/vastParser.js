@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.video.vastParser', [
 
 			var wrapperAdIds = imaAd.getWrapperAdIds(),
 				wrapperCreativeIds = imaAd.getWrapperCreativeIds();
-
+console.error(imaAd.getAdId(), imaAd.getCreativeId(), wrapperAdIds, wrapperCreativeIds);
 			if (wrapperAdIds && wrapperAdIds.length) {
 				adInfo.lineItemId = getFirstNumber(wrapperAdIds);
 			}
