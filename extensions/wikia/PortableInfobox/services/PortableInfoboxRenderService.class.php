@@ -264,6 +264,26 @@ class PortableInfoboxRenderService {
 				if ( !empty( $data['label'] ) ) {
 					$horizontalGroupData['renderLabels'] = true;
 				}
+			} elseif ( $item['type'] === 'image' ) {
+
+				// Only one image is supported in a horizontal group
+				$image = $data[0];
+
+				$horizontalGroupData['labels'][] = [
+					'text' => $image['caption'],
+					'item-name' => $image['item-name'],
+					'source' => $image['source'],
+				];
+
+				// Caption is used to display label in TH
+				// Unset it so it is not rendered also as an image caption
+				$image['caption'] = null;
+
+				$horizontalGroupData['values'][] = [
+					'text' => $this->renderImage( [ $image ] ),
+					'item-name' => $image['item-name'],
+					'source' => $image['source']
+				];
 			} elseif ( $item['type'] === 'header' ) {
 				$horizontalGroupData['header'] = [
 					'value' => $data['value'],
