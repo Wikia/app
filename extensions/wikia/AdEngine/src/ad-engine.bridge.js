@@ -14,7 +14,7 @@ import {
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
 	Roadblock,
-	StickyAd,
+	StickyTLB,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -30,7 +30,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyAd];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyTLB];
 
 function init(
 	adTracker,
@@ -59,8 +59,8 @@ function init(
 
 	const stickySlotsLines = legacyContext.get('opts.stickySlotsLines');
 	if (stickySlotsLines && stickySlotsLines.length) {
-		context.set('templates.stickyAd.lineItemIds', stickySlotsLines);
-		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyAd');
+		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
+		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
 	}
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
