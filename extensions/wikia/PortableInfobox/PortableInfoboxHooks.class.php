@@ -68,7 +68,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
 
 		return true;
 	}
