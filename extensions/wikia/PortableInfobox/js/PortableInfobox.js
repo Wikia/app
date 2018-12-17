@@ -49,28 +49,12 @@
 			$panels.each( function( index ) {
 				var $panel = $panels.eq(index),
 					$scrollWrapper = $panel.find('.pi-panel-scroll-wrapper'),
-					$toggles = $panel.find('.pi-section-navigation');
+					$toggles = $panel.find('.pi-section-navigation'),
+					scrollHandler = this.handleScrollShadow($scrollWrapper, $toggles[0]);
 
-                $toggles.on('scroll', function(event) {
-                	var nav = event.currentTarget;
-                	var compensation = 20;
-                	var didScrollToRight = nav.scrollWidth - nav.scrollLeft - compensation <= nav.clientWidth;
-                	var didScrollToLeft = nav.scrollLeft < compensation;
-
-                	if (didScrollToLeft) {
-                        $scrollWrapper.removeClass('pi-panel-scroll-left');
-	                } else {
-                        $scrollWrapper.addClass('pi-panel-scroll-left');
-	                }
-
-                	if (didScrollToRight) {
-                        $scrollWrapper.removeClass('pi-panel-scroll-right');
-	                } else {
-                        $scrollWrapper.addClass('pi-panel-scroll-right');
-	                }
-                });
-
-				$toggles.on('click', function(e) {
+                $toggles
+	                .on('scroll', scrollHandler)
+	                .on('click', function(e) {
 					var toggle = e.target.closest('.pi-section-tab');
 
 					if (toggle !== null) {
@@ -87,8 +71,30 @@
 						$newActiveContent.addClass('pi-section-active');
 					}
 				});
-			});
-		}
+
+                scrollHandler();
+			}.bind(this));
+		},
+
+		handleScrollShadow: function($scrollWrapper, scrollEl) {
+            return function() {
+                var compensation = 20;
+                var didScrollToRight = scrollEl.scrollWidth - scrollEl.scrollLeft - compensation <= scrollEl.clientWidth;
+                var didScrollToLeft = scrollEl.scrollLeft < compensation;
+
+                if (didScrollToLeft) {
+                    $scrollWrapper.removeClass('pi-panel-scroll-left');
+                } else {
+                    $scrollWrapper.addClass('pi-panel-scroll-left');
+                }
+
+                if (didScrollToRight) {
+                    $scrollWrapper.removeClass('pi-panel-scroll-right');
+                } else {
+                    $scrollWrapper.addClass('pi-panel-scroll-right');
+                }
+            };
+        }
 	};
 
 	mw.hook('wikipage.content').add(function($content) {
