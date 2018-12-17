@@ -50,9 +50,13 @@ class CompareRobots extends Maintenance {
 		return $this->httpGet( 'http://graph-cms.fandom.com/robots.txt', $headers, $ssl );
 	}
 
-	private function fetchRobotsFromK8s( $domain, $ssl=false ) {
+	private function fetchRobotsFromK8s( $domain, $ssl=false, $jaegerDebugId = false) {
 		$url = $domain . '/newrobots.txt';
-		return $this->httpGet( $url, [], $ssl );
+		$headers = [];
+		if ( $jaegerDebugId ) {
+			$headers[ 'jaeger-debug-id' ] = $jaegerDebugId;
+		}
+		return $this->httpGet( $url, $headers, $ssl );
 	}
 
 	private function responsesEqual( $prodResponse, $serviceResponse ) {
@@ -129,6 +133,7 @@ class CompareRobots extends Maintenance {
 		$lastCityId = 0;
 		$domainsChecked = 0;
 		$failures = 0;
+
 		do {
 			$cities = $db->select( 'city_list', ['city_id', 'city_url'],
 				"city_id > $lastCityId", __METHOD__,
@@ -144,10 +149,15 @@ class CompareRobots extends Maintenance {
 					} else {
 						$prodResponse = $this->fetchRobotsFromFC( $url, $https );
 					}
-					$serviceResponse = $this->fetchRobotsFromK8s( $url, $https );
+					$jaegerDebugId = sprintf( "%04d%6d", rand(1000, 9999), $domainsChecked);
+
+					$serviceResponse = $this->fetchRobotsFromK8s( $url, $https, $jaegerDebugId );
 
 					$domainsChecked += 1;
-					if ( !$this->responsesEqual( $prodResponse, $serviceResponse, $diffsdir ) ) {
+					if ( !$this->responsesEqual( $prodResponse, $serviceResponse ) ) {
+						if ( $serviceResponse->getStatus() >= 500 ) {
+							$this->error( "\rjaeger-debug-id: {$jaegerDebugId}" );
+						}
 						$failures += 1;
 						if ( $diffsdir ) {
 							$filename = str_replace( '.', '_', $parsed['host'] ) . '_' . ($https ? 'https' : 'http');
