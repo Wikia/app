@@ -38,7 +38,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			', "data": [], "metadata": []}]';
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $data ] ) )
 			->getData();
 
@@ -50,7 +50,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 		$infoboxNode = NodeFactory::newFromXML( $markup, [ 'test' => 1 ] );
 
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ ] ) )
 			->save( $infoboxNode )
 			->getData();
@@ -89,7 +89,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			]
 		];
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1, NS_TEMPLATE ) )
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ ] ) )
 			->setParsingHelper( new ParsingHelperDummy( null, $data ) )
 			->getData();
@@ -109,7 +109,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $oldData ] ) )
 			->setParsingHelper( new ParsingHelperDummy( $newData ) )
 			->getData();
@@ -123,7 +123,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			', "data": [], "metadata": []}]';
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $data ] ) )
 			->delete()
 			->getData();
@@ -137,13 +137,13 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			', "data": [], "metadata": []}]';
 		$service = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $data ] ) );
 
 		// this should load data from props to memc
 		$result = $service->getData();
 
-		$service->purge()
+		$service->invalidateCache()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ ] ) );
 		$purged = $service->getData();
 
@@ -152,7 +152,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 
 	public function testImageListRemoveDuplicates() {
 		$images = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy(
 				new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxPageProps() ) ] )
 			)
@@ -163,7 +163,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 
 	public function testImageListFetchImages() {
 		$images = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
-			->purge()
+			->invalidateCache()
 			->setPagePropsProxy(
 				new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxPageProps() ) ] )
 			)

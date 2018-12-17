@@ -62,7 +62,7 @@ class PortableInfoboxDataService {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
 			$incOnlyTemplates = $this->parsingHelper->parseIncludeonlyInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
-				$this->purge();
+				$this->invalidateCache();
 				$this->set( $incOnlyTemplates );
 			};
 		}
@@ -158,7 +158,7 @@ class PortableInfoboxDataService {
 	/**
 	 * Purge mem cache and local cache
 	 */
-	public function purge() {
+	public function invalidateCache() {
 		WikiaDataAccess::cachePurge( $this->cachekey );
 		unset( $this->cache );
 
@@ -233,7 +233,7 @@ class PortableInfoboxDataService {
 		if ( $id ) {
 			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
 			// don't cache clear state
-			$this->purge();
+			$this->invalidateCache();
 		}
 	}
 

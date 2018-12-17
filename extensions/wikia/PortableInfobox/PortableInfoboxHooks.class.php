@@ -68,7 +68,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->invalidateCache();
 
 		return true;
 	}
@@ -81,7 +81,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticlePurge( Page $article ) {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->invalidateCache();
 
 		return true;
 	}
