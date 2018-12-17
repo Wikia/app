@@ -162,6 +162,7 @@ class BodyController extends WikiaController {
 				1202 => [ 'Forum', 'forumRelatedThreads', null ],
 				1201 => [ 'Forum', 'forumActivityModule', null ],
 				1490 => [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ],
+				1491 => [ 'Ad', 'Index', [ 'slotName' => 'TOP_BOXAD' ] ],
 			];
 
 			// Include additional modules from other extensions (like chat)
@@ -240,12 +241,12 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
+		$railModuleList[1441] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_BOXAD' ] ];
 
 		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 
 		return $railModuleList;
 	}
-
 
 	public function executeIndex() {
 		// set up global vars
