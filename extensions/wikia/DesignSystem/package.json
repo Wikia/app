@@ -1,5 +1,5 @@
 {
-  "name": "design-system-form-media-wiki",
+  "name": "design-system-for-media-wiki",
   "scripts": {
     "setup": "npm install && node i18n/build && SERVER_ID=177 php ../../../maintenance/rebuildLocalisationCache.php --force --thread=2 --primary",
     "build-templates": "npm install && npx grunt"
