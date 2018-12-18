@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.video.vastParser', [
 	var logGroup = 'ext.wikia.adEngine.video.vastParser';
 
 	function getLastNumber(possibleValues) {
-		var i, value;
+		var i;
+		var value = '';
 
 		for (i = 0; i < possibleValues.length; i++) {
 			if (!isNaN(possibleValues[i])) {

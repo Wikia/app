@@ -112,4 +112,12 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		expect(adInfo.creativeId).toEqual('666');
 		expect(adInfo.lineItemId).toEqual('333');
 	});
+
+	it('Get ad info from from IMA object without wrapper ids', function () {
+		var adInfo = parser.getAdInfo(getImaAd(['foo', 'foo1'], ['bar2', 'bar']));
+
+		expect(adInfo.contentType).toEqual('text/javascript');
+		expect(adInfo.creativeId).toEqual('');
+		expect(adInfo.lineItemId).toEqual('');
+	});
 });
