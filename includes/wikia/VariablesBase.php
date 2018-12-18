@@ -8884,12 +8884,12 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Custom message to show on the migration banner.
+ * Custom messages to show on the migration banner (before and after migration).
  * @see PLATFORM-3895
  * @var
  */
-$wgFandomComMigrationCustomMessage = '';
-
+$wgFandomComMigrationCustomMessageBefore = '';
+$wgFandomComMigrationCustomMessageAfter = '';
 
 /**
  * Whether the community was migrated to a fandom.com domain, triggers a banner notification
