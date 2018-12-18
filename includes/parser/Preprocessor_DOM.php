@@ -1053,6 +1053,14 @@ class PPFrame_DOM implements PPFrame {
 				}
 			}
 		}
+
+		# wikia start
+		Hooks::run(
+			'PreprocessorDOMNewTemplateFrame',
+			[ $this, $title, $numberedArgs, $namedArgs ]
+		);
+		# wikia end
+
 		return new PPTemplateFrame_DOM( $this->preprocessor, $this, $numberedArgs, $namedArgs, $title );
 	}
 

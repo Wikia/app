@@ -17,6 +17,9 @@ describe('AdContext', function () {
 				},
 				getBrowserVersion: function() {
 					return 100;
+				},
+				isSteam: function() {
+					return false;
 				}
 			},
 			bridge: {
