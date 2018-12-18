@@ -14,7 +14,7 @@ require([
 	var wgFandomComMigrationScheduled = mw.config.get('wgFandomComMigrationScheduled');
 	var wgFandomComMigrationDone = mw.config.get('wgFandomComMigrationDone');
 	var wgFandomComMigrationCustomMessageBefore = mw.config.get('wgFandomComMigrationCustomMessageBefore');
-    var wgFandomComMigrationCustomMessageAfter = mw.config.get('wgFandomComMigrationCustomMessageAfter');
+	var wgFandomComMigrationCustomMessageAfter = mw.config.get('wgFandomComMigrationCustomMessageAfter');
 
 	var afterMigrationClosedStorageKey = 'fandom-com-migration-after-closed';
 	var beforeMigrationClosedStorageKey = 'fandom-com-migration-before-closed';
