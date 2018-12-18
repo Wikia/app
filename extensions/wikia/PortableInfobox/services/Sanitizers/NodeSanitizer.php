@@ -85,10 +85,7 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 		$result = [ ];
 		foreach ( $nodes as $node ) {
 			$outputHtml = $rawHtml = $dom->saveHTML( $node );
-			if ( $node->nodeName === '#text' ) {
-				// As the input text is already escaped, we make sure that our output will be escaped too
-				$outputHtml = htmlspecialchars( $rawHtml, ENT_QUOTES );
-			}
+
 			if ( $node->parentNode && in_array( $node->parentNode->nodeName, $this->selectorsWrappingTextToPad ) ) {
 				$outputHtml = sprintf( ' %s ', $rawHtml );
 			}

@@ -92,6 +92,11 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			videoId = playlistItem[player.getPlaylistIndex()].mediaid,
 			videoDepth = 0;
 
+		// Disable ads for steam browser
+		if (adContext.get('opts.isSteamBrowser')) {
+			return;
+		}
+
 		bidParams = bidParams || {};
 		trackingParams = {
 			adProduct: 'featured-video',
