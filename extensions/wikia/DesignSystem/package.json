@@ -1,13 +1,12 @@
 {
-  "name": "design-system",
+  "name": "design-system-form-media-wiki",
   "scripts": {
     "setup": "npm install && node i18n/build && SERVER_ID=177 php ../../../maintenance/rebuildLocalisationCache.php --force --thread=2 --primary",
     "build-templates": "npm install && npx grunt"
   },
   "dependencies": {
-    "design-system": "Wikia/design-system#15.3.4",
-    "design-system-i18n": "Wikia/design-system-i18n#2.0.2",
-    "grunt-mustache": "~0.1.5",
-    "grunt": "~0.4.2"
+    "design-system": "github:Wikia/design-system#16.1.3",
+    "grunt": "~0.4.2",
+    "grunt-mustache": "~0.1.5"
   }
 }

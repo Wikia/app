@@ -1,21 +1,21 @@
-var fs = require('fs'),
-	path = require('path'),
-	rootDir = process.cwd() + '/node_modules/design-system-i18n/i18n',
-	filename = 'design-system.json',
-	destDir = './i18n',
+const fs = require('fs');
+const	path = require('path');
+const	rootDir = process.cwd() + '/node_modules/design-system/i18n';
+const	filename = 'design-system.json';
+const	destDir = './i18n';
 	// keep in sync with DesignSystem/DesignSystemHelper.class.php
-	messageParamsMapping = {
+const	messageParamsMapping = {
 		'global-footer-licensing-and-vertical-description': {
 			sitename: '$1',
 			vertical: '$2',
-			license: '$3'
+			license: '$3',
 		},
 		'global-navigation-search-placeholder-in-wiki': {
-			sitename: '$1'
+			sitename: '$1',
 		},
 		'global-footer-copyright-wikia': {
-			date: '$1'
-		}
+			date: '$1',
+		},
 	};
 
 function directoryExists(path) {
@@ -36,21 +36,21 @@ function ensureDirectoryExistence(dirname) {
 
 ensureDirectoryExistence(destDir);
 
-var languages = fs.readdirSync(rootDir).filter(function (file) {
+const languages = fs.readdirSync(rootDir).filter(function(file) {
 	return fs.statSync(path.join(rootDir, file)).isDirectory();
 });
 
-languages.forEach(function (lang) {
-	var i18n = require(rootDir + '/' + lang + '/' + filename);
+languages.forEach(function(lang) {
+	const i18n = require(rootDir + '/' + lang + '/' + filename);
 
 	// zh in DS is zh-hans in Oasis
 	if (lang === 'zh') {
 		lang = 'zh-hans';
 	}
 
-	Object.keys(messageParamsMapping).forEach(function (key) {
+	Object.keys(messageParamsMapping).forEach(function(key) {
 		if (i18n.hasOwnProperty(key)) {
-			i18n[key] = i18n[key].replace(/{(\w+)}/g, function (match, param) {
+			i18n[key] = i18n[key].replace(/{(\w+)}/g, function(match, param) {
 				return messageParamsMapping[key][param];
 			});
 		}

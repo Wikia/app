@@ -1,7 +1,7 @@
 ## How to update i18n
-1. Update version number of `design-system-i18n` in `./package.json` file
+1. Update version number of `design-system` in `./package.json` file
 1. Run `npm run setup` on your devbox which will:
-  - install new version of `design-system-i18n`
+  - install new version of `design-system`
   - build messages in MediaWiki format from the source files to `./i18n/` directory
   - rebuild localisation cache
 
