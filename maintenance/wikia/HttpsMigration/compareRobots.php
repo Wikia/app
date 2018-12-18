@@ -149,7 +149,7 @@ class CompareRobots extends Maintenance {
 					} else {
 						$prodResponse = $this->fetchRobotsFromFC( $url, $https );
 					}
-					$jaegerDebugId = sprintf( "%04d%6d", rand(1000, 9999), $domainsChecked);
+					$jaegerDebugId = sprintf( "%04d%06d", rand(1000, 9999), $domainsChecked);
 
 					$serviceResponse = $this->fetchRobotsFromK8s( $url, $https, $jaegerDebugId );
 
