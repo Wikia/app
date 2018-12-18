@@ -59,7 +59,8 @@ class FandomComMigrationHooks {
 			$vars['wgFandomComMigrationCustomMessageBefore'] = $parser->parse(
 				$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
 			$vars['wgFandomComMigrationCustomMessageAfter'] = $parser->parse(
-				$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();		}
+				$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+		}
 
 		return true;
 	}
