@@ -2062,8 +2062,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-panel-scroll-wrapper">
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-						section label
-					</div></li>
+							section label
+						</div></li>
                                 </ul>
 								</div>
 								<div class="pi-section-contents">
@@ -2147,12 +2147,12 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-panel-scroll-wrapper">
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-						section label
-					</div></li>
+							section label
+						</div></li>
 					<li class="pi-section-tab" data-ref="2">
 											<div class="pi-section-label">
-												2
-											</div></li>
+							2
+						</div></li>
                                 </ul>
 								</div>
 								<div class="pi-section-contents">
@@ -2230,8 +2230,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-panel-scroll-wrapper">
 								<ul class="pi-section-navigation">
 									<li class="pi-section-tab pi-section-active" data-ref="1"><div class="pi-section-label">
-						section label
-					</div></li>
+							section label
+						</div></li>
                                 </ul>
 								</div>
 								<div class="pi-section-contents">
