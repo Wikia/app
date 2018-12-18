@@ -13,6 +13,7 @@ require([
 
 	var wgFandomComMigrationScheduled = mw.config.get('wgFandomComMigrationScheduled');
 	var wgFandomComMigrationDone = mw.config.get('wgFandomComMigrationDone');
+	var wgFandomComMigrationCustomMessage = mw.config.get('wgFandomComMigrationCustomMessage');
 
 	var afterMigrationClosedStorageKey = 'fandom-com-migration-after-closed';
 	var beforeMigrationClosedStorageKey = 'fandom-com-migration-before-closed';
@@ -48,7 +49,7 @@ require([
 	function showBeforeMigrationNotification() {
 		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
-				mw.message('fandom-com-migration-before').parse(),
+                wgFandomComMigrationCustomMessage ? wgFandomComMigrationCustomMessage : mw.message('fandom-com-migration-before').parse(),
 				'warn',
 				null
 			);
