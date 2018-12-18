@@ -226,21 +226,4 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		line-height: $title-line-height;
 		padding-top: $infobox-side-spacing;
 	}
-
-	.pi-section-navigation {
-		&:after,
-		&:before {
-			background-color: $background-color;
-		}
-	}
-
-	.pi-section-tab {
-		&:first-of-type {
-			background: linear-gradient(to right, $background-color 0%, transparent 50%);
-		}
-
-		&:last-of-type {
-			background: linear-gradient(to left, $background-color 0%, transparent 50%);
-		}
-	}
 }

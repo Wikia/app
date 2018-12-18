@@ -1,15 +1,17 @@
 <section class="pi-item pi-panel pi-border-color{{#cssClasses}} {{{cssClasses}}}{{/cssClasses}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
 	{{{header}}}
 	{{#shouldShowToggles}}
-		<ul class="pi-section-navigation">
-			{{#tabToggles}}
-				<li class="pi-section-tab{{#active}} pi-section-active{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
-					<div class="pi-section-label">
-						{{#value}}{{value}}{{/value}}{{^value}}{{index}}{{/value}}
-					</div>
-				</li>
-			{{/tabToggles}}
-		</ul>
+		<div class="pi-panel-scroll-wrapper">
+			<ul class="pi-section-navigation">
+				{{#tabToggles}}
+					<li class="pi-section-tab{{#active}} pi-section-active{{/active}}" data-ref="{{index}}"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}>
+						<div class="pi-section-label">
+							{{#value}}{{value}}{{/value}}{{^value}}{{index}}{{/value}}
+						</div>
+					</li>
+				{{/tabToggles}}
+			</ul>
+		</div>
 	{{/shouldShowToggles}}
 	<div class="pi-section-contents">
 		{{#tabContents}}
