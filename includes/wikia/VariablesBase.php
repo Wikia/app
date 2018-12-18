@@ -8898,7 +8898,7 @@ $wgFandomComMigrationScheduled = false;
 /**
  * Custom messages to show on the migration banner (before and after migration).
  * @see PLATFORM-3895
- * @var
+ * @var string
  */
 $wgFandomComMigrationCustomMessageBefore = '';
 $wgFandomComMigrationCustomMessageAfter = '';
