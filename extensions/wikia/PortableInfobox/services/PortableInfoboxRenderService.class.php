@@ -199,7 +199,7 @@ class PortableInfoboxRenderService {
 		return $this->render( $templateName, $data );
 	}
 
-	protected function renderPanel( $data ) {
+	protected function renderPanel( $data, $type='panel' ) {
 		$cssClasses = [];
 		$tabToggles = [];
 		$tabContents = [];
@@ -253,7 +253,7 @@ class PortableInfoboxRenderService {
 			}, $tabContents);
 		}
 
-		return $this->render( 'panel', [
+		return $this->render( $type, [
 			'item-name' => $data['item-name'],
 			'cssClasses' => implode( ' ', $cssClasses ),
 			'header' => $header,
