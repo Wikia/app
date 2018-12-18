@@ -120,6 +120,10 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
         return $this->render( 'header-mobile', $data );
 	}
 
+	protected function renderPanel( $data, $type='panel-mobile' ) {
+		return parent::renderPanel($data, $type);
+	}
+
 	protected function render( $type, array $data ) {
 		$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
 

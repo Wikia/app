@@ -28,6 +28,7 @@ class PortableInfoboxMustacheEngine {
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
 		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache',
 		'panel' => 'PortableInfoboxPanel.mustache',
+		'panel-mobile' => 'PortableInfoboxPanelMobile.mustache',
 	];
 	protected $templateEngine;
 
