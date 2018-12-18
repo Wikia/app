@@ -20,9 +20,9 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 	 */
 	public function testCheckDomainIsCorrect( $domainName, $lang, $isCorrect, $expectedErrorKey ) {
 
-		$messageMock = $this->getMock( 'stdClass', array( 'text' ) );
+		$messageMock = $this->getMock( 'stdClass', [ 'escaped' ] );
 		$messageMock->expects( $this->any() )
-			->method( 'text' )
+			->method( 'escaped' )
 			->will( $this->returnValue( 'mocked-string' ) );
 
 		if ( !$isCorrect ) {
@@ -34,7 +34,7 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 		}
 
 		$this->mockStaticMethod( 'CreateWikiChecks', 'checkBadWords', true );
-		$this->mockStaticMethod( 'CreateWikiChecks', 'domainExists', false );
+		$this->mockStaticMethod( 'CreateWikiChecks', 'getDomain', false );
 		$this->mockStaticMethod( 'CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 			'en' => 'en',
@@ -79,9 +79,9 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 	 * @slowExecutionTime 0.03061 ms
 	 */
 	function testCheckDomainIsCorrectBadWords() {
-		$messageMock = $this->getMock( 'stdClass', array( 'text' ) );
+		$messageMock = $this->getMock( 'stdClass', array( 'escaped' ) );
 		$messageMock->expects( $this->any() )
-			->method( 'text' )
+			->method( 'escaped' )
 			->will( $this->returnValue( 'mocked-string' ) );
 
 		$this->getGlobalFunctionMock( 'wfMessage' )
@@ -105,9 +105,12 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 	 * @slowExecutionTime 0.03205 ms
 	 */
 	function testCheckDomainIsCorrectDomainExists() {
-		$messageMock = $this->getMock( 'stdClass', array( 'text' ) );
+		$messageMock = $this->getMock( 'stdClass', [ 'rawParams', 'escaped' ] );
 		$messageMock->expects( $this->any() )
-			->method( 'text' )
+			->method( 'rawParams' )
+			->will( $this->returnSelf() );
+		$messageMock->expects( $this->any() )
+			->method( 'escaped' )
 			->will( $this->returnValue( 'mocked-string' ) );
 
 		$this->getGlobalFunctionMock( 'wfMessage' )
@@ -117,7 +120,7 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 			->will( $this->returnValue( $messageMock ) );
 
 		$this->mockStaticMethod( 'CreateWikiChecks', 'checkBadWords', true );
-		$this->mockStaticMethod( 'CreateWikiChecks', 'domainExists', true );
+		$this->mockStaticMethod( 'CreateWikiChecks', 'getDomain', 'example.fandom.com' );
 		$this->mockStaticMethod( 'CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 		) );
