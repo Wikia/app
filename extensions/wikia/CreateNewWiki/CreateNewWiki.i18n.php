@@ -400,7 +400,7 @@ $messages['br'] = array(
 	'autocreatewiki-bad-name' => 'An anv zo da bezañ skrivet gant lizherennoù bihan, hep esaouennoù hag hep arouezennoù dibar (evel $ hag @).',
 	'autocreatewiki-invalid-wikiname' => "Ne c'haller ket skrivañ an anv gant arouezennoù dibar (evel \$ hag @) ha ne c'hall ket bezañ goullo.",
 	'autocreatewiki-violate-policy' => 'Un anv zo er wiki-se a dorr hor politikerezh a-fet reiñ anvioù.',
-	'autocreatewiki-name-taken' => 'Ur wiki a zo dija d\'ar chomlec\'h-se. Kemerit perzh war $1 pe dibabit ur chomlec\'h all.',
+	'autocreatewiki-name-taken' => "Ur wiki a zo dija d'ar chomlec'h-se. Kemerit perzh war $1 pe dibabit ur chomlec'h all.",
 	'autocreatewiki-name-too-short' => "Re verr eo ar chomlec'h, dibabit ur chomlec'h gant 3 araouezenn d'an nebeutañ.",
 	'autocreatewiki-name-too-long' => "Re hir eo ar chomlec'h, dibabit ur chomlec'h gant 50 arouezenn d'ar muiañ.",
 	'autocreatewiki-empty-wikiname' => "Goullo ne c'hall ket bezañ anv ar wiki.",
@@ -587,7 +587,7 @@ $messages['cy'] = array(
 	'autocreatewiki-bad-name' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ddim yn oddefol ac mae\'n reidiol yn bod yn bachlythrennau heb bylchau.',
 	'autocreatewiki-invalid-wikiname' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ac enwau gwag ddim yn oddefol.',
 	'autocreatewiki-violate-policy' => "Mae'r enw wici hwn yn cynnwys gair fod yn treisio ein polisi enwi ni.",
-	'autocreatewiki-name-taken' => 'Mae\'n wici gyda y cyfeiriad hwn. Dych chi\'n gallu creu newidiadau wrth $1 neu dewis cyfeiriad arall.',
+	'autocreatewiki-name-taken' => "Mae'n wici gyda y cyfeiriad hwn. Dych chi'n gallu creu newidiadau wrth $1 neu dewis cyfeiriad arall.",
 	'autocreatewiki-name-too-short' => "Mae'r cyfeiriad yn rhy fach, dewis cyfeiriad gyda 3 llythryn neu nifer o leiaf.",
 );
 
@@ -682,7 +682,7 @@ $messages['de'] = array(
 	'autocreatewiki-bad-name' => 'Diese Adresse darf keine Sonderzeichen (wie z.B. $ oder @) enthalten und muss ein einzelnes kleingeschriebenes Wort ohne Leerzeichen sein.',
 	'autocreatewiki-invalid-wikiname' => 'Der Name des Wikis darf keine Sonderzeichen (z.B. $ oder @) enthalten und darf nicht leer sein.',
 	'autocreatewiki-violate-policy' => 'Im Wiki-Namen ist ein Wort enthalten, dass unsere Namens-Regeln verletzt',
-	'autocreatewiki-name-taken' => 'Es gibt bereits ein Wiki mit dieser Adresse. Beteilige dich unter $1 oder wähle eine andere Adresse.',
+	'autocreatewiki-name-taken' => 'Es gibt bereits ein Wiki mit dieser Adresse. Beteilige dich unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> oder wähle eine andere Adresse.',
 	'autocreatewiki-name-too-short' => 'Dieser Name ist zu kurz, bitte wähle einen mit mindestens 3 Buchstaben.',
 	'autocreatewiki-name-too-long' => 'Dieser Name ist zu lang. Bitte wähle einen Namen mit maximal 50 Zeichen.',
 	'autocreatewiki-empty-wikiname' => 'Bitte gib deinem Wiki einen Namen.',
@@ -882,7 +882,7 @@ $messages['es'] = array(
 	'autocreatewiki-bad-name' => 'El nombre no puede contener caracteres especiales (como $ o @) y debe componerse por palabras en minúscula y sin espacios.',
 	'autocreatewiki-invalid-wikiname' => 'El nombre no puede contener caracteres especiales (como $ o @) y el campo no puede estar vacío.',
 	'autocreatewiki-violate-policy' => 'El nombre de este wiki contiene una palabra que viola nuestra política de nombres',
-	'autocreatewiki-name-taken' => 'Ya existe un wiki con esta dirección. Comienza a editar en $1 o escoge otra dirección.',
+	'autocreatewiki-name-taken' => 'Ya existe un wiki con esta dirección. Comienza a editar en <a href="http://$1.wikia.com">http://$1.wikia.com</a> o escoge otra dirección.',
 	'autocreatewiki-name-too-short' => 'Esta dirección es demasiado corta, por favor, elige una dirección con al menos 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Esta dirección es demasiado larga, por favor, elige una dirección con un máximo de 50 caracteres.',
 	'autocreatewiki-empty-wikiname' => 'El campo del nombre del wiki no puede estar vacío.',
@@ -1127,7 +1127,7 @@ $messages['fr'] = array(
 	'autocreatewiki-bad-name' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @), doit être un mot unique, en minuscules et sans espaces.',
 	'autocreatewiki-invalid-wikiname' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @) et ne doit pas être vide.',
 	'autocreatewiki-violate-policy' => 'Le nom de ce wiki contient un mot qui enfreint notre règlement.',
-	'autocreatewiki-name-taken' => 'Cette URL est déjà prise. Participez sur $1 ou choisissez une autre URL.',
+	'autocreatewiki-name-taken' => 'Cette URL est déjà prise. Participez sur <a href="http://$1.wikia.com">http://$1.wikia.com</a> ou choisissez une autre URL.',
 	'autocreatewiki-name-too-short' => 'Cette URL est trop courte, choisissez une URL avec au moins 3 caractères.',
 	'autocreatewiki-name-too-long' => 'Cette URL est trop longue, choisissez une URL avec au maximum 50 caractères.',
 	'autocreatewiki-empty-wikiname' => 'Le nom du wiki ne peut pas être vide.',
@@ -1567,7 +1567,7 @@ $messages['it'] = array(
 	'autocreatewiki-bad-name' => 'Il nome non può contenere caratteri speciali (per es. $ o @) e deve essere una singola parola minuscola senza spazi.',
 	'autocreatewiki-invalid-wikiname' => 'Il nome non può contenere caratteri speciali (come $ o @) e non può essere vuoto.',
 	'autocreatewiki-violate-policy' => 'Il nome di questa wiki contiene una parola che viola la nostra politica di denominazione',
-	'autocreatewiki-name-taken' => 'C\'è già una wiki con questo indirizzo. Inizia a contribuire su $1 o scegli un altro indirizzo.',
+	'autocreatewiki-name-taken' => 'C\'è già una wiki con questo indirizzo. Inizia a contribuire su <a href="http://$1.wikia.com">http://$1.wikia.com</a> o scegli un altro indirizzo.',
 	'autocreatewiki-name-too-short' => 'Questo indirizzo è troppo breve. Scegli un indirizzo di almeno 3 caratteri.',
 	'autocreatewiki-name-too-long' => 'Questo indirizzo è troppo lungo. Scegli un indirizzo con un massimo di 50 caratteri.',
 	'autocreatewiki-empty-wikiname' => 'Il nome della wiki non può essere vuoto.',
@@ -1657,7 +1657,7 @@ $messages['ja'] = array(
 	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
 	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また入力は必須になります。',
 	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのFANDOMコミュニティは既に存在します。まずは$1 をチェックしてみましょう。',
+	'autocreatewiki-name-taken' => 'このアドレスのFANDOMコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> をチェックしてみましょう。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
 	'autocreatewiki-empty-wikiname' => 'FANDOMコミュニティ名は入力が必須になります。',
@@ -2368,7 +2368,7 @@ $messages['nl'] = array(
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
 	'autocreatewiki-violate-policy' => 'Deze wikinaam bevat een woord dat ons beleid voor namen schendt.',
 	'autocreatewiki-name-taken' => 'Er bestaat al een wiki met dit adres.
-Je kunt meehelpen op $1 of een ander adres kiezen.',
+Je kunt meehelpen op <a href=\\"http://$1.wikia.com\\">http://$1.wikia.com</a> of een ander adres kiezen.',
 	'autocreatewiki-name-too-short' => 'Dit adres is te kort.
 Kies een adres met tenminste drie tekens.',
 	'autocreatewiki-name-too-long' => 'Het adres is te lang.
@@ -2529,7 +2529,7 @@ $messages['pl'] = array(
 	'autocreatewiki-bad-name' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) oraz musi stanowić jedno słowo zapisane małymi literami bez odstępów.',
 	'autocreatewiki-invalid-wikiname' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) i nie może być pusta',
 	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza nasze zasady nadawania tytułów',
-	'autocreatewiki-name-taken' => 'Wiki o tym adresie już istnieje. Przyłącz się do jej edytowania na $1 lub wybierz inny adres.',
+	'autocreatewiki-name-taken' => 'Wiki o tym adresie już istnieje. Przyłącz się do jej edytowania na <a href="http://$1.wikia.com">http://$1.wikia.com</a> lub wybierz inny adres.',
 	'autocreatewiki-name-too-short' => 'Adres jest zbyt krótki. Wybierz adres, który zawiera przynajmniej 3 znaki.',
 	'autocreatewiki-name-too-long' => 'Adres jest zbyt długi. Wybierz adres, który zawiera maksymalnie 50 znaków.',
 	'autocreatewiki-empty-wikiname' => 'Nazwa wiki nie może być pusta.',
@@ -2610,7 +2610,7 @@ $messages['pms'] = array(
 	'autocreatewiki-bad-name' => 'Ël nòm a peul pa conten-e caràter speciaj (com $ o @) e a deuv esse na sola paròla minùscola sensa spassi.',
 	'autocreatewiki-invalid-wikiname' => 'Ël nòm a peul pa conten-e caràter speciaj (com $ e @) e a peul pa esse veuid',
 	'autocreatewiki-violate-policy' => "Sto nòm ëd wiki-sì a conten na paròla ch'a rispeta pa nòstre régole pr'ij nòm",
-	'autocreatewiki-name-taken' => 'A-i é già na wiki con costa adrëssa. Ch\'a ancamin-a a modifiché a $1 o ch\'a serna n\'àutra adrëssa.',
+	'autocreatewiki-name-taken' => "A-i é già na wiki con costa adrëssa. Ch'a ancamin-a a modifiché a $1 o ch'a serna n'àutra adrëssa.",
 	'autocreatewiki-name-too-short' => "St'adrëssa a l'é tròp curta, sern n'adrëssa con almanch 3 caràter.",
 	'autocreatewiki-name-too-long' => "St'adrëssa a l'é tròp longa. Për piasì, ch'a serna n'adrëssa con al pi 50 caràter.",
 	'autocreatewiki-empty-wikiname' => 'Ël nòm ëd la Wiki a peul pa esse veuid.',
@@ -2721,7 +2721,7 @@ $messages['pt'] = array(
 	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
 	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
 	'autocreatewiki-violate-policy' => 'Esse nome contém uma palavra que viola as nossas políticas de nomeação',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em $1 ou escolher outro endereço.',
+	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
 	'autocreatewiki-name-too-short' => 'Este endereço é muito curto, por favor escolha outro com no mínimo 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Este endereço é muito longo. Escolha outro com no máximo 50 caracteres.',
 	'autocreatewiki-empty-wikiname' => 'O nome da wiki não pode estar vazio.',
@@ -2854,7 +2854,7 @@ $messages['ru'] = array(
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и является обязательным для заполнения.',
 	'autocreatewiki-violate-policy' => 'Название вики содержит слово, нарушающее наши правила именования.',
-	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту $1 или выбрать другой URL.',
+	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой URL.',
 	'autocreatewiki-name-too-short' => 'Слишком короткий адрес. Выберите адрес длиной не менее 3 символов.',
 	'autocreatewiki-name-too-long' => 'Слишком длинный адрес. Выберите адрес длиной не более 50 символов.',
 	'autocreatewiki-empty-wikiname' => 'Поле имени вики не может быть пустым.',
@@ -2863,7 +2863,7 @@ $messages['ru'] = array(
 	'autocreatewiki-regex-error-comment' => 'использовано в вики «$1» (полный текст: $2)',
 	'autocreatewiki-protect-reason' => 'Часть официального интерфейса',
 	'autocreatewiki-welcometalk-wall-title' => 'Добро пожаловать!',
-	'autocreatewiki-welcometalk-wall' => 'Здравствуйте. Я представляю команду поддержки ФЭНДОМА. Мы рады, что сообщество {{subst:SITENAME}} стала частью ФЭНДОМА.
+	'autocreatewiki-welcometalk-wall' => 'Здравствуйте. Я представляю команду поддержки ФЭНДОМА. Мы рады, что сообщество {{subst:SITENAME}} стала частью ФЭНДОМА. 
 
 Вам может показаться, что перед вами много работы, но мы поможем вам сделать первые шаги. Позвольте предложить несколько советов и полезных ссылок, которые помогут вам в развитии вашей вики.
 
@@ -2887,7 +2887,7 @@ $messages['ru'] = array(
 -- [[Участник:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '<p>Здравствуйте, $2!<br /><br />
 Созданная вами вики доступна по адресу <a href="$1">$1</a>. Мы надеемся, что вы скоро начнете её развивать. <br /><br />
-Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке ФЭНДОМА</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br />
+Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке ФЭНДОМА</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br /> 
 Команда ФЭНДОМА<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Чтобы создать вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
@@ -3515,7 +3515,7 @@ $messages['zh-hans'] = array(
 *最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用FANDOM的所有功能或者观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 祝你玩得开心！',
-	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在$1页面进行编辑或选择其他地址。',
+	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在<a href="http://$1.wikia.com">http://$1.wikia.com</a>页面进行编辑或选择其他地址。',
 	'autocreatewiki-welcometalk' => '==欢迎==
 
 您好！
@@ -3588,7 +3588,7 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-bad-name' => '名稱不能包含特殊字元 （如 $ 或 @），並且必須是一個小寫字母無空格的字詞。',
 	'autocreatewiki-invalid-wikiname' => '名稱不能包含特殊字元 （如 $ 或 @） 且不能為空白',
 	'autocreatewiki-violate-policy' => '此 Wiki 名稱中包含了違反我們的命名政策的詞語',
-	'autocreatewiki-name-taken' => '已經有用此網址創建的Wiki。可進入$1 參與編輯或選擇另一個網址。',
+	'autocreatewiki-name-taken' => '已經有用此網址創建的Wiki。可進入<a href="http://<span class=" notranslate"="">$1.wikia.com">http:// $1.wikia.com</a> 參與編輯或選擇另一個網址。',
 	'autocreatewiki-name-too-short' => '此網址太短，選擇一個具有至少 3 個字元的網址。',
 	'autocreatewiki-name-too-long' => '此網址太長，請另選擇一個不超過50 個字元的網址 。',
 	'autocreatewiki-empty-wikiname' => 'Wiki 的名稱不能為空白。',
