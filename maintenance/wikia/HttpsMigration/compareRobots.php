@@ -156,7 +156,7 @@ class CompareRobots extends Maintenance {
 					$domainsChecked += 1;
 					if ( !$this->responsesEqual( $prodResponse, $serviceResponse ) ) {
 						if ( $serviceResponse->getStatus() >= 500 ) {
-							$this->error( "\rjaeger-debug-id: {$jaegerDebugId}" );
+							$this->error( "\rjaeger-debug-id: {$jaegerDebugId}, time: " . date('Y/m/d H:i:s', time()) );
 						}
 						$failures += 1;
 						if ( $diffsdir ) {
