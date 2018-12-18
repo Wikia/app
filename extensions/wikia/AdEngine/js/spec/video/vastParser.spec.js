@@ -87,7 +87,7 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		expect(adInfo.lineItemId).toEqual('456');
 	});
 
-	it('Parse ad info from from IMA object', function () {
+	it('Parse ad info from IMA object', function () {
 		var adInfo = parser.parse(dummyVast, {
 			contentType: 'video/mp4',
 			creativeId: '123',
@@ -100,7 +100,7 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		expect(adInfo.lineItemId).toEqual('000');
 	});
 
-	it('Parse ad info from from IMA object\'s wrapper ids', function () {
+	it('Parse ad info from IMA object\'s wrapper ids', function () {
 		var adInfo = parser.parse(dummyVast, {
 			contentType: 'video/mp4',
 			creativeId: '123',
@@ -113,7 +113,7 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		expect(adInfo.lineItemId).toEqual('333');
 	});
 
-	it('Get ad info from from IMA object without wrapper ids', function () {
+	it('Get ad info from IMA object with incorrect wrapper ids', function () {
 		var adInfo = parser.getAdInfo(getImaAd(['foo', 'foo1'], ['bar2', 'bar']));
 
 		expect(adInfo.contentType).toEqual('text/javascript');
