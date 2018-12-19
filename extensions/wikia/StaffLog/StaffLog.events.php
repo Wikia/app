@@ -83,8 +83,12 @@ class StaffLogger {
 		return $text;
 	}
 
-	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason ) {
+	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason, $user = null ) {
 		global $wgUser;
+		if ($user != null) {
+			$wgUser = $user;
+		}
+
 		$comment = wfMessage(
 			'stafflog-wiki-status-change',
 			self::getCommunityUser( $wgUser->getName() ),

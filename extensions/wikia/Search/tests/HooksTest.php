@@ -26,7 +26,7 @@ class HooksTest extends BaseTest {
 		$wid = 123;
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->assertTrue(
-				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
+				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not')
 		);
 		$mockIndexer
 		    ->expects( $this->at( 0 ) )

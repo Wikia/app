@@ -17,9 +17,9 @@ class WikiStatusChangeHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason, $user = null ) {
 		$publisher = new WikiStatusChangePublisher();
-		$publisher->publishWikiFactoryStatusChange( $city_id, $city_public, $reason );
+		$publisher->publishWikiFactoryStatusChange( $city_id, $city_public, $reason, $user );
 
 		return true;
 	}
