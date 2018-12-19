@@ -21,16 +21,17 @@ class WikiStatusChangePublisher {
 	) {
 		$status = $this->mapWikiFactoryActionToStatus( $wikiId, $wikiFactoryAction );
 
-		return $this->publishStatusChange( $wikiId, $status, $reason, $user = null );
+		return $this->publishStatusChange( $wikiId, $status, $reason, $user );
 	}
 
 	/**
 	 * @param int $wikiId
 	 * @param string $status is one of 'closed', 'opened', 'hidden', 'removed'
 	 * @param string $reason
+	 * @param User $user
 	 * @return bool
 	 */
-	private function publishStatusChange( int $wikiId, string $status, string $reason, $user = null ) {
+	private function publishStatusChange( int $wikiId, string $status, string $reason, User $user = null ) {
 		global $wgWikiStatusChangePublisher;
 
 		$connectionBase = new ConnectionBase( $wgWikiStatusChangePublisher );
@@ -42,7 +43,8 @@ class WikiStatusChangePublisher {
 		$connectionBase->publish( $routingKey, [
 			'wikiId' => $wikiId,
 			'reason' => $reason,
-			'status' => $status
+			'status' => $status,
+			'user' => $user
 		] );
 
 		return true;
