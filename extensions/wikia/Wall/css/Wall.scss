@@ -63,11 +63,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			margin-bottom: 20px;
 			padding-top: 5px;
 			position: relative;
-			.highlight {
-				position: absolute;
-				top: 0; left: 0; width: 100%; height: 100%;
-				background: yellow;
-			}
 			.msg-title {
 				font-weight: bold;
 				font-size: 18px;
@@ -581,9 +576,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 	.stafflogo {
 		img { margin-bottom: 1px; margin-left: 3px; }
-	}
-	.highlight {
-		display: none;
 	}
 
 	&.Thread {

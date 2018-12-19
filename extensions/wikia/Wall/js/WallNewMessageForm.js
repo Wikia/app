@@ -26,7 +26,6 @@
 			this.messageBody = $('#WallMessageBody');
 			this.messageSubmit = $('#WallMessageSubmit');
 			this.messagePreview = $('#WallMessagePreview');
-			this.notifyEveryone = $('#NotifyEveryone');
 		},
 
 		initEvents: function () {
@@ -119,7 +118,6 @@
 				title ? this.messageTitle.val() : '',
 				this.getMessageBody(),
 				this.getFormat(),
-				this.notifyEveryone.is(':checked') ? '1' : '0',
 				topics,
 				//success callback
 				this.proxy(function () {
