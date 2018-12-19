@@ -16,6 +16,10 @@ class PagesWithoutInfobox extends PageQueryPage {
 		return true;
 	}
 
+	public function getDescription() {
+		return $this->msg( 'insights-list-subtitle-pageswithoutinfobox' )->text();
+	}
+
 	/**
 	 * A wrapper for calling the querycache table
 	 *
