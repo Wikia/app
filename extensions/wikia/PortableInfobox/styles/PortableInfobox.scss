@@ -48,6 +48,7 @@
 		overflow-y: hidden;
 		-ms-overflow-style: none;
 		overflow: -moz-scrollbars-none;
+		scrollbar-width: none; // Fx only
 
 		&:after,
 		&:before {
