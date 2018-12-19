@@ -14,6 +14,7 @@ class WikiStatusChangeHooks {
 	 * @param  int $city_public WikiFactory action
 	 * @param  int $city_id
 	 * @param  string $reason
+	 * @param  User $user
 	 *
 	 * @return bool
 	 */

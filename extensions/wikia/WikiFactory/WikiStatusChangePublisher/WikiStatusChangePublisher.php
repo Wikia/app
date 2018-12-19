@@ -17,11 +17,11 @@ class WikiStatusChangePublisher {
 	}
 
 	public function publishWikiFactoryStatusChange(
-		int $wikiId, int $wikiFactoryAction, string $reason, $user
+		int $wikiId, int $wikiFactoryAction, string $reason, $user = null
 	) {
 		$status = $this->mapWikiFactoryActionToStatus( $wikiId, $wikiFactoryAction );
 
-		return $this->publishStatusChange( $wikiId, $status, $reason, $user );
+		return $this->publishStatusChange( $wikiId, $status, $reason, $user = null );
 	}
 
 	/**
@@ -30,7 +30,7 @@ class WikiStatusChangePublisher {
 	 * @param string $reason
 	 * @return bool
 	 */
-	private function publishStatusChange( int $wikiId, string $status, string $reason, $user ) {
+	private function publishStatusChange( int $wikiId, string $status, string $reason, $user = null ) {
 		global $wgWikiStatusChangePublisher;
 
 		$connectionBase = new ConnectionBase( $wgWikiStatusChangePublisher );
@@ -42,7 +42,7 @@ class WikiStatusChangePublisher {
 		$connectionBase->publish( $routingKey, [
 			'wikiId' => $wikiId,
 			'reason' => $reason,
-			'status' => $status,
+			'status' => $status
 		] );
 
 		return true;
