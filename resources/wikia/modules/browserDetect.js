@@ -81,6 +81,10 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		return userAgent.toLowerCase().indexOf('android') > -1;
 	}
 
+	function isSteam() {
+		return userAgent.toLowerCase().indexOf('steam') > -1;
+	}
+
 	function getOS() {
 		if (null !== operatingSystem) {
 			return operatingSystem;
@@ -158,6 +162,7 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		isIOS7orLower: isIOS7orLower,
 		isAndroid: isAndroid,
 		isMobile: isMobile,
-		isEdge: isEdge
+		isEdge: isEdge,
+		isSteam: isSteam
 	};
 });
