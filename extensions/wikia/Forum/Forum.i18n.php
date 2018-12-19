@@ -2464,6 +2464,7 @@ ___________________________________________<br />
 	'right-forumadmin' => 'フォーラムでアドミンの権限を持つ',
 	'right-forumoldedit' => '旧フォーラムのアーカイブを編集することができます',
 	'right-boardedit' => 'フォーラムのボードの情報を編集できる',
+	'forum-discussion-highlight' => 'このスレッドをハイライトする',
 );
 
 $messages['kn'] = array(
@@ -2792,6 +2793,7 @@ $messages['lol'] = array(
 	'right-forumadmin' => 'crwdns63367:0crwdne63367:0',
 	'right-forumoldedit' => 'crwdns63368:0crwdne63368:0',
 	'right-boardedit' => 'crwdns63369:0crwdne63369:0',
+	'forum-discussion-highlight' => 'crwdns63293:0crwdne63293:0',
 );
 
 $messages['lrc'] = array(
@@ -3747,6 +3749,7 @@ ___________________________________________<br>
 	'right-forumadmin' => 'Имеет доступ статуса администратора на форуме',
 	'right-forumoldedit' => 'Может редактировать архивы старого форума',
 	'right-boardedit' => 'Редактирование главных тем форума',
+	'forum-discussion-highlight' => 'Сообщить всем об этой теме',
 );
 
 $messages['sr-ec'] = array(
