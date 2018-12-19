@@ -8891,9 +8891,17 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
  * @see SEO-669
- * @var string $wgFandomComMigrationScheduled
+ * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
+
+/**
+ * Custom messages to show on the migration banner (before and after migration).
+ * @see PLATFORM-3895
+ * @var string
+ */
+$wgFandomComMigrationCustomMessageBefore = '';
+$wgFandomComMigrationCustomMessageAfter = '';
 
 /**
  * Whether the community was migrated to a fandom.com domain, triggers a banner notification
