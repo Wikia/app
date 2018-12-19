@@ -22,8 +22,6 @@ class WallMessageBuilder extends WallBuilder {
 	private $parentMessage = null;
 	/** @var bool $notify; */
 	private $notify = true;
-	/** @var bool $notifyEveryone */
-	private $notifyEveryone = false;
 	/** @var array $relatedTopics */
 	private $relatedTopics = [];
 
@@ -59,9 +57,7 @@ class WallMessageBuilder extends WallBuilder {
 	 */
 	public function createMetaData(): WallMessageBuilder {
 		$this->metaData = [ 'title' => $this->messageTitle ];
-		if ( $this->notifyEveryone ) {
-			$this->metaData[ 'notify_everyone' ] = time();
-		}
+
 		if ( !empty( $this->relatedTopics ) ) {
 			$this->metaData[ 'related_topics' ] = implode( '|', $this->relatedTopics );
 		}
@@ -187,21 +183,6 @@ class WallMessageBuilder extends WallBuilder {
 	}
 
 	/**
-	 * If set, notify all users on the wiki about the change.
-	 * @return WallMessageBuilder
-	 */
-	public function notifyEveryoneForNewThreadIfNeeded(): WallMessageBuilder {
-		if ( $this->notifyEveryone ) {
-			$notif = WallNotificationEntity::createFromRev( $this->newRevision );
-
-			$wne = new WallNotificationsEveryone();
-			$wne->addNotificationToQueue( $notif );
-		}
-
-		return $this;
-	}
-
-	/**
 	 * Insert a new entry into comments_index table for the new thread or reply.
 	 * In order to enforce data integrity, we have to use the same transaction as MediaWiki
 	 *
@@ -255,8 +236,7 @@ class WallMessageBuilder extends WallBuilder {
 				->createMetaData()
 				->postNewMessage()
 				->doNewThreadUpdates()
-				->notifyIfNeeded()
-				->notifyEveryoneForNewThreadIfNeeded();
+				->notifyIfNeeded();
 		} else {
 			// reply
 			$this
@@ -344,16 +324,6 @@ class WallMessageBuilder extends WallBuilder {
 	 */
 	public function setNotify( bool $notify ): WallMessageBuilder {
 		$this->notify = $notify;
-
-		return $this;
-	}
-
-	/**
-	 * @param bool $notifyEveryone
-	 * @return WallMessageBuilder
-	 */
-	public function setNotifyEveryone( bool $notifyEveryone ): WallMessageBuilder {
-		$this->notifyEveryone = $notifyEveryone;
 
 		return $this;
 	}

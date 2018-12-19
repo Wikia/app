@@ -495,16 +495,6 @@ class WallHelper {
 		}
 	}
 
-	// TODO: move it some how to wall message class
-
-	public function isAllowedNotifyEveryone( $ns, $user ) {
-		$app = F::App();
-		if ( in_array( MWNamespace::getSubject( $ns ), $app->wg->WallNotifyEveryoneNS ) && $user->isAllowed( 'notifyeveryone' ) ) {
-			return true;
-		}
-		return false;
-	}
-
 	public static function getTopicPageURL( $topic ) {
 		if ( empty( $topic ) ) {
 			return "#";
