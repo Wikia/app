@@ -22,7 +22,7 @@ export const getConfig = () => ({
 	slotsToEnable: [
 		'BOTTOM_LEADERBOARD',
 		'INCONTENT_BOXAD_1',
-		'TOP_RIGHT_BOXAD'
+		'TOP_BOXAD'
 	],
 
 	onInit(adSlot, params) {

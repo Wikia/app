@@ -30,8 +30,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		},
 		testCases = [
 			{
-				slotName: 'TOP_RIGHT_BOXAD',
-				adUnit: '/5441/wka2a.MR/top_right_boxad/tablet/oasis-home/_godofwar-gaming'
+				slotName: 'TOP_BOXAD',
+				adUnit: '/5441/wka2a.MR/top_boxad/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'MOBILE_PREFOOTER',
@@ -92,11 +92,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				valid: true
 			},
 			{
-				adUnit: '/5441/wka1a.MR/top_right_boxad/tablet/oasis-home/_godofwar-gaming',
+				adUnit: '/5441/wka1a.MR/top_boxad/tablet/oasis-home/_godofwar-gaming',
 				valid: true
 			},
 			{
-				adUnit: 'TOP_RIGHT_BOXAD',
+				adUnit: 'TOP_BOXAD',
 				valid: false
 			},
 			{
