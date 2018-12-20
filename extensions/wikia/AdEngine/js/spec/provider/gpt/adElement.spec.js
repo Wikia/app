@@ -125,4 +125,21 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		expect(element.getNode().getAttribute('data-gpt-creative-id')).toEqual('456');
 		expect(element.getNode().getAttribute('data-gpt-creative-size')).toEqual('[728,90]');
 	});
+
+	it('Add response event details and keep strings without quotes', function () {
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+		responseInformation = {
+			lineItemId: null,
+			creativeId: null
+		};
+
+		element.updateDataParams({
+			size: [728, 90],
+			slot: slot
+		});
+
+		expect(element.getNode().getAttribute('data-gpt-line-item-id')).toEqual('AdX');
+		expect(element.getNode().getAttribute('data-gpt-creative-id')).toEqual('AdX');
+		expect(element.getNode().getAttribute('data-gpt-creative-size')).toEqual('[728,90]');
+	});
 });

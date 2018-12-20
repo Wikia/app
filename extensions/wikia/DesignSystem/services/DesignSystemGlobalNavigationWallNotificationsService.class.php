@@ -84,9 +84,6 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
 
 		$this->response->setVal( 'isUnread', $unread ? 'unread' : 'read' );
-		if ( $unread && $data->notifyeveryone ) {
-			$this->overrideTemplate( 'NotifyEveryone' );
-		}
 	}
 
 	public function NotificationAdmin() {
