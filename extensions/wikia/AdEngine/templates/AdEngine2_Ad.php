@@ -1,7 +1,8 @@
 <?php if ($showAd): ?>
 	<?php // For Ad Mix experiment - XW-3156 ?>
+	<?php // Let's keep 'top-right-boxad-wrapper' id because of custom wiki scripts ?>
 	<?php if ( $slotName === 'TOP_BOXAD' || $slotName === 'TOP_RIGHT_BOXAD' ): ?>
-		<div id="top-boxad-wrapper">
+		<div id="top-right-boxad-wrapper">
 	<?php endif; ?>
 	<!-- BEGIN SLOTNAME: <?= htmlspecialchars( $slotName ) ?> -->
 	<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad noprint default-height">

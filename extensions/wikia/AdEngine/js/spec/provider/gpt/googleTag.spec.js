@@ -95,7 +95,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					}
 				}, {
 					getTargeting: function () {
-						return ['TOP_RIGHT_BOXAD']
+						return ['TOP_BOXAD']
 					}
 				}, {
 					getTargeting: function () {

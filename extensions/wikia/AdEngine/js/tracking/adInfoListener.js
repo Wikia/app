@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
 		enabledSlots = {
 			TOP_LEADERBOARD: true,
-			TOP_RIGHT_BOXAD: true,
+			TOP_BOXAD: true,
 			INCONTENT_BOXAD_1: true,
 			INCONTENT_PLAYER: true,
 			INVISIBLE_SKIN: true,
@@ -167,7 +167,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 					trackSlot(slot, status, adInfo);
 				}
 
-				if (slot.name === 'TOP_RIGHT_BOXAD') {
+				if (slot.name === 'TOP_BOXAD') {
 					eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
 				}
 			});

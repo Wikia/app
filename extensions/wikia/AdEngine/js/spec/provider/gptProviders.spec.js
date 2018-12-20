@@ -155,7 +155,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			TOP_BOXAD: '300x250,300x600,300x1050'
 		};
 
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
@@ -169,7 +169,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			TOP_BOXAD: '300x250,300x600,300x1050'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
