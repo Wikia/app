@@ -43,8 +43,7 @@ class WikiStatusChangePublisher {
 		$connectionBase->publish( $routingKey, [
 			'wikiId' => $wikiId,
 			'reason' => $reason,
-			'status' => $status,
-			'user' => $user
+			'status' => $status
 		] );
 
 		return true;
