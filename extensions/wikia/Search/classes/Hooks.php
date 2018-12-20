@@ -37,8 +37,7 @@ class Hooks {
 	 *
 	 * @return bool
 	 */
-	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason, $user = null
-	) {
+	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason, $user = null ) {
 		return ( $city_public < 1 ) ? ( new Indexer )->deleteWikiDocs( $city_id ) :
 			( new Indexer )->reindexWiki( $city_id );
 	}
