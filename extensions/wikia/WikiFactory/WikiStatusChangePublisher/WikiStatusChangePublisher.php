@@ -28,7 +28,6 @@ class WikiStatusChangePublisher {
 	 * @param int $wikiId
 	 * @param string $status is one of 'closed', 'opened', 'hidden', 'removed'
 	 * @param string $reason
-	 * @param User $user
 	 * @return bool
 	 */
 	private function publishStatusChange( int $wikiId, string $status, string $reason ) {
@@ -43,7 +42,7 @@ class WikiStatusChangePublisher {
 		$connectionBase->publish( $routingKey, [
 			'wikiId' => $wikiId,
 			'reason' => $reason,
-			'status' => $status
+			'status' => $status,
 		] );
 
 		return true;
