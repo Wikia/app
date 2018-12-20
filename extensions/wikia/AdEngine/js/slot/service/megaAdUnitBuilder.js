@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 
 	var dfpId = '5441',
 		megaSlots = [
+			'TOP_BOXAD',
 			'INVISIBLE_SKIN',
 			'BOTTOM_LEADERBOARD'
 		],
@@ -37,7 +38,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	function getGroup(slotName) {
 		var map = {
 			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
-			'MR': ['TOP_RIGHT_BOXAD'],
+			'MR': ['TOP_BOXAD'],
 			'PF': ['MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD'],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'INCONTENT_PLAYER', 'MOBILE_IN_CONTENT'],

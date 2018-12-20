@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 ], function (adContext, $, log, throttle, win) {
 	'use strict';
 
-	var $medrec = $('#TOP_RIGHT_BOXAD'),
+	var $medrec = $('#TOP_BOXAD'),
 		$rail = $('#WikiaRail'),
 		$railWrapper = $('#WikiaRailWrapper'),
 		$wikiaMainContent = $('#WikiaMainContent'),

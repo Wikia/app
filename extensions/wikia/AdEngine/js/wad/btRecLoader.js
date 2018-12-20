@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 				},
 				lazy: false
 			},
-			TOP_RIGHT_BOXAD: {
+			TOP_BOXAD: {
 				uid: '5b2d1649b2-188',
 				style: 'margin-bottom:10px; z-index:100;',
 				size: {
