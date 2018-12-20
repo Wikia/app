@@ -226,7 +226,6 @@ class WallExternalController extends WikiaController {
 	 * @requestParam string body Message body
 	 * @requestParam int pagenamespace 1200 for Message Wall, 2000 for Forum threads
 	 * @requestParam string pagetitle title of parent page (Message Wall or Forum Board)
-	 * @requestParam bool notifyeveryone whether to notify everyone on the wiki
 	 *
 	 * @responseParam bool status
 	 * @responseParam string message rendered message HTML
@@ -267,12 +266,6 @@ class WallExternalController extends WikiaController {
 			return;
 		}
 
-
-		$notifyEveryone = false;
-		if ( $helper->isAllowedNotifyEveryone( $ns, $this->wg->User ) ) {
-			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
-		}
-
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
 
 		try {
@@ -281,7 +274,6 @@ class WallExternalController extends WikiaController {
 					->setMessageText( $body )
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setRelatedTopics( $relatedTopics )
-					->setNotifyEveryone( $notifyEveryone )
 					->setParentPageTitle( $title )
 					->build();
 		} catch ( WallBuilderException $builderException ) {
@@ -603,34 +595,6 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'htmlorwikitext', $text );
 		$this->response->setVal( 'status', true );
-	}
-
-	public function notifyEveryoneSave() {
-		try {
-			// SUS-664: Validate edit token
-			$this->checkWriteRequest();
-		} catch ( BadRequestException $e ) {
-			$this->setTokenMismatchError();
-			return false;
-		}
-
-		$msgid = $this->request->getVal( 'msgid' );
-		$dir = $this->request->getVal( 'dir' );
-		/**
-		 * @var $mw WallMessage
-		 */
-		$mw = WallMessage::newFromId( $msgid );
-		if ( $mw ) {
-			if ( $dir == 1 ) {
-				$mw->setNotifyEveryone( true );
-				$this->response->setVal( 'newdir', 0 );
-				$this->response->setVal( 'newmsg', wfMessage( 'wall-message-unnotifyeveryone' )->escaped() );
-			} else {
-				$mw->setNotifyEveryone( false );
-				$this->response->setVal( 'newdir', 1 );
-				$this->response->setVal( 'newmsg', wfMessage( 'wall-message-notifyeveryone' )->escaped() );
-			}
-		}
 	}
 
 	public function editMessageSave() {

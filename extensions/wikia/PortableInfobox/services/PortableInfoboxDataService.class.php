@@ -62,7 +62,7 @@ class PortableInfoboxDataService {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
 			$incOnlyTemplates = $this->parsingHelper->parseIncludeonlyInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
-				$this->delete();
+				$this->invalidateCache();
 				$this->set( $incOnlyTemplates );
 			};
 		}
@@ -146,19 +146,9 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * Remove infobox data from page props and memcache
-	 */
-	public function delete() {
-		$this->clear();
-		unset( $this->cache );
-
-		return $this;
-	}
-
-	/**
 	 * Purge mem cache and local cache
 	 */
-	public function purge() {
+	public function invalidateCache() {
 		WikiaDataAccess::cachePurge( $this->cachekey );
 		unset( $this->cache );
 
@@ -228,12 +218,17 @@ class PortableInfoboxDataService {
 		}
 	}
 
-	protected function clear() {
-		$id = $this->title->getArticleID();
-		if ( $id ) {
-			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
-			// don't cache clear state
-			$this->purge();
-		}
+	/**
+	 * This method performs rendering of a current template and saves its metadata
+	 * in the page_props table.
+	 *
+	 * This method will be used to fix portable templates with missing database entries.
+	 *
+	 * @see CORE-6
+	 */
+	public function regenerate() {
+		$data = (new PortableInfoboxParsingHelper)->reparseArticle( $this->title );
+		$this->set( $data );
+		return $data;
 	}
 }

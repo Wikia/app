@@ -252,11 +252,9 @@ require(
 			},
 
 			updateWikiFetch: function (wikiId) {
-				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
-					data = {
-						wikiId: wikiId,
-						isCrossWiki: isCrossWiki
-					};
+				var data = {
+					wikiId: wikiId
+				};
 
 				$.extend(data, this.getUrlParams());
 

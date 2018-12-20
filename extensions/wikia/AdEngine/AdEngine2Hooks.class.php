@@ -94,6 +94,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
+		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
@@ -143,6 +144,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
+		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
