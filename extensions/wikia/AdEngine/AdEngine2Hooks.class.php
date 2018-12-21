@@ -40,10 +40,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusDfpCountries';
-		$vars[] = 'wgAdDriverAppNexusWebAdsBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
+		$vars[] = 'wgAdDriverA9BidRefreshingCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverA9DealsCountries';
+		$vars[] = 'wgAdDriverA9IncontentBoxadCountries';
 		$vars[] = 'wgAdDriverA9OptOutCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
@@ -53,7 +54,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
-		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
 		$vars[] = 'wgAdDriverBlockDelayServicesCountries';
 		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
 		$vars[] = 'wgAdDriverCTPMobileRabbitCountries';
@@ -76,6 +76,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverGeoEdgeCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKruxNewParamsCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
@@ -85,12 +86,15 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
+		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
 		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
+		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
@@ -114,6 +118,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
+		$vars[] = 'wgAdDriverWadHMDCountries';
 
 		/**
 		 * Disaster Recovery
@@ -139,6 +144,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
+		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
+		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
@@ -150,6 +157,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';

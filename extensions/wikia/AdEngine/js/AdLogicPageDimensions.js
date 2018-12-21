@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		slotsToHideOnMediaQuery = {
-			TOP_RIGHT_BOXAD:         'oneColumn',
+			TOP_BOXAD:               'oneColumn',
 			INCONTENT_BOXAD_1:       'oneColumn'
 		},
 		mediaQueriesToCheck = {

@@ -86,6 +86,7 @@ class Http {
 			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
 
 			$params = [
+				'requestHeaders' => $req->getHeaderList(),
 				'statusCode' => $req->getStatus(),
 				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
@@ -431,7 +432,7 @@ class MWHttpRequest {
 		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
 		global $wgKubernetesNamespace;
 		if ( !empty( $wgKubernetesNamespace ) && Http::isLocalURL( $this->url ) ) {
-			$list[] = sprintf( 'X-Original-Host: %s', $this->parsedUrl['host'] );
+			$list[] = sprintf( 'X-Original-Host: %s', wfNormalizeHost( $this->parsedUrl['host'] ) );
 		}
 
 		foreach ( $this->reqHeaders as $name => $value ) {

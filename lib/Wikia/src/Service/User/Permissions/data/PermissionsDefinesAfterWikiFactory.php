@@ -549,13 +549,6 @@ $wgGroupPermissions['helper']['editwallarchivedpages'] = true;
 $wgGroupPermissions['*']['wallshowwikiaemblem'] = false;
 $wgGroupPermissions['staff']['wallshowwikiaemblem'] = true;
 
-$wgGroupPermissions['*']['notifyeveryone'] = false;
-$wgGroupPermissions['sysop']['notifyeveryone'] = true;
-$wgGroupPermissions['vstf']['notifyeveryone'] = true;
-$wgGroupPermissions['staff']['notifyeveryone'] = true;
-$wgGroupPermissions['helper']['notifyeveryone'] = true;
-$wgGroupPermissions['threadmoderator']['notifyeveryone'] = true;
-
 $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
 $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;

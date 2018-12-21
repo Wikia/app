@@ -121,6 +121,8 @@ $wgHooks['ArticleSaveComplete'][] = 'ApiHooks::onArticleSaveComplete';
 $wgHooks['ArticleRollbackComplete'][] = 'ApiHooks::onArticleRollbackComplete';
 $wgHooks['TitleMoveComplete'][] = 'ApiHooks::onTitleMoveComplete';
 $wgHooks['ArticleCommentListPurgeComplete'][] = 'ApiHooks::ArticleCommentListPurgeComplete';
+$wgHooks['ClosedWikiHandler'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
+$wgHooks['ShowLanguageWikisIndex'][] = 'ApiHooks::onClosedOrEmptyWikiDomains';
 
 
 //Wikia API base controller, all the others extend this class
@@ -141,6 +143,7 @@ $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDim
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
+$wgAutoloadClasses['TemplatesApiController'] = "{$IP}/includes/wikia/api/TemplatesApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -1001,6 +1004,20 @@ $wgAdDriverA9BidderCountries = null;
 $wgAdDriverA9OptOutCountries = null;
 
 /**
+ * @name $wgAdDriverA9BidRefreshingCountries
+ * List of countries where A9 bids can refreshed
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidRefreshingCountries = null;
+
+/**
+ * @name $wgAdDriverA9IncontentBoxadCountries
+ * List of countries where A9 is used for incontent boxads
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9IncontentBoxadCountries = null;
+
+/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
@@ -1098,13 +1115,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverAppNexusWebAdsBidderCountries
- * List of countries where appnexus via WebAds bidding platform is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAppNexusWebAdsBidderCountries = null;
-
-/**
  * @name $wgAdDriverUseAudienceNetworkBidder
  * Enables Facebook Audience Network bidding platform.
  */
@@ -1130,13 +1140,6 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
-
-/**
- * @name $wgAdDriverBottomLeaderBoardViewportCountries
- * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardViewportCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1320,6 +1323,13 @@ $wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
 $wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries
+ * Adds FV rv and s1 values to Moat tracking.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1364,6 +1374,20 @@ $wgAdDriverFVDelayTimeoutOasis = 2000;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
+ * @name $wgAdDriverGeoEdgeCountries
+ * List of countries Geo Edge will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGeoEdgeCountries = null;
+
+/**
+ * @name $wgAdDriverNielsenCountries
+ * List of countries Nielsen DCR will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNielsenCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1421,6 +1445,12 @@ $wgAdDriverWadBTCountries = null;
  * List of countries to enable InstartLogic recovery
  */
 $wgAdDriverWadILCountries = null;
+
+/**
+ * @name $wgAdDriverWadHMDCountries
+ * List of countries to enable HOMAD recovery
+ */
+$wgAdDriverWadHMDCountries = null;
 
 /**
  * @name $wgEnableCMPCountries

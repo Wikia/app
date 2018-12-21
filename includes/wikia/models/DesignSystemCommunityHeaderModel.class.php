@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId, $wgFandomCreatorCommunityId;
+		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt;
 
 		parent::__construct();
 
@@ -25,16 +25,19 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$this->mainPageUrl = empty( $wgFandomCreatorCommunityId )
-			? wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() )
+		$this->mainPageUrl = ( !empty( $wgFandomCreatorCommunityId ) || !empty( $wgEnableFeedsAndPostsExt ) ) ?
 			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
-			: wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) );
+			// for Feeds And Posts alpha communities we need it as well
+			wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) ) :
+			wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
 	}
 
 	public function getData(): array {
 		$data = [
 			'sitename' => $this->getSiteNameData(),
-			'navigation' => $this->getNavigation()
+			'navigation' => $this->getNavigation(),
+			'counter' => $this->getArticlesCounter(),
+			'buttons' => $this->getActionButtons(),
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
@@ -48,6 +51,152 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		Hooks::run( 'DesignSystemCommunityHeaderModelGetData', [ &$data, $this->productInstanceId ] );
 
 		return $data;
+	}
+
+	public function getArticlesCounter() {
+		$value = \RequestContext::getMain()->getLanguage()->formatNum( SiteStats::articles() );
+
+		if( $value === 1 ) {
+			$labelKey = 'community-header-page';
+		} else {
+			$labelKey = 'community-header-pages';
+		}
+
+		return [
+			'value' => $value,
+			'label' => [
+				'type' => 'translatable-text',
+				'key' => $labelKey,
+			]
+		];
+	}
+
+	public function getActionButtons() {
+		$wgUser = \RequestContext::getMain()->getUser();
+
+		if ( $wgUser->isLoggedIn() ) {
+			if ( $wgUser->isAllowed( 'admindashboard' ) ) {
+				$buttons = $this->adminButtons();
+			} else {
+				$buttons = $this->userButtons();
+			}
+			$buttons[] = [
+				'type' => 'link-group',
+				'items' => $this->dropdownButtons()
+			];
+		} else {
+			$buttons = $this->anonButtons();
+		}
+
+		return $buttons;
+	}
+
+	private function anonButtons(): array {
+		return [
+			$this->getButton(
+				$this->getSpecialPageURL( 'CreatePage' ),
+				'add-new-page',
+				'community-header-add-new-page',
+				'community-header-add-new-page',
+				'wds-icons-article-small'
+			)
+		];
+	}
+
+	private function userButtons(): array {
+		return [
+			$this->getButton(
+				$this->getSpecialPageURL( 'CreatePage' ),
+				'add-new-page',
+				'community-header-add',
+				'community-header-add-new-page',
+				'wds-icons-article-small'
+			),
+			$this->getButton(
+				$this->getSpecialPageURL( 'WikiActivity' ),
+				'wiki-activity',
+				null,
+				'community-header-wiki-activity',
+				'wds-icons-activity-small'
+			),
+		];
+	}
+
+	private function adminButtons(): array {
+		return [
+			$this->getButton(
+				$this->getSpecialPageURL( 'CreatePage' ),
+				'add-new-page',
+				null,
+				'community-header-add-new-page',
+				'wds-icons-article-small'
+			),
+			$this->getButton(
+				$this->getSpecialPageURL( 'WikiActivity' ),
+				'wiki-activity',
+				null,
+				'community-header-wiki-activity',
+				'wds-icons-activity-small'
+			),
+			$this->getButton(
+				$this->getSpecialPageURL( 'AdminDashboard' ),
+				'admin-dashboard',
+				null,
+				'community-header-admin-dashboard',
+				'wds-icons-dashboard-small'
+			),
+		];
+	}
+
+	private function dropdownButtons() {
+		return [
+			$this->getButton(
+				$this->getSpecialPageURL( 'Upload' ),
+				'more-add-new-image',
+				'community-header-add-new-image'
+			),
+			$this->getButton(
+				$this->getSpecialPageURL( 'Videos' ),
+				'more-add-new-video',
+				'community-header-add-new-video'
+			),
+			$this->getButton(
+				$this->getSpecialPageURL( 'RecentChanges' ),
+				'more-recent-changes',
+				'community-header-recent-changes'
+			),
+		];
+	}
+
+	private function getButton( $href, $trackingLabel, $labelKey = null, $titleKey = null, $iconName = null): array {
+		$button = [
+			'type' => 'link-button',
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
+		];
+
+		if ( !empty($labelKey) ) {
+			$button['label'] = [
+				'type' => 'translatable-text',
+				'key' => $labelKey,
+			];
+		}
+
+		if ( !empty( $titleKey ) ) {
+			$button['title'] = [
+				'type' => 'translatable-text',
+				'key' => $titleKey
+			];
+		}
+
+		if ( !empty( $iconName ) ) {
+			$button['image-data'] = [
+				'type' => 'wds-svg',
+				'name' => $iconName
+			];
+		}
+
+		return $button;
 	}
 
 	public function getWordmarkData(): array {
@@ -305,5 +454,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			return $ret;
 		}, $items );
+	}
+
+	private function getSpecialPageURL( $name ): string {
+		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 }

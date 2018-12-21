@@ -516,6 +516,8 @@ class NavigationModel extends WikiaModel {
 					$node[self::TEXT] = wfMsg( trim( $node[self::ORIGINAL], ' *' ) );
 				}
 
+				$node[self::HREF] = '#';
+
 				$fname = $this->extraWordsMap[$extraWord];
 				$data = DataProvider::$fname();
 				//http://bugs.php.net/bug.php?id=46322 count(false) == 1

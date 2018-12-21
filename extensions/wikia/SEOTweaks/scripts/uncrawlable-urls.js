@@ -6,13 +6,14 @@ require([
 	window
 ) {
 	'use strict';
-
 	$(function () {
+
 		// Handles middle click, ctrl+click and regular click
-		$('a[data-category-url-encoded]').on('mousedown', function () {
+		$('a[data-uncrawlable-url]').on('mousedown', function () {
 			var $this = $(this);
-			var url = window.atob($this.attr('data-category-url-encoded'));
+			var url = window.atob($this.attr('data-uncrawlable-url'));
 			$this.attr('href', url);
 		});
 	});
+
 });

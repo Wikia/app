@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function setupProjects() {
 		if (adContext.get('targeting.hasFeaturedVideo')) {
 			services.billTheLizard.projectsHandler.enable('queen_of_hearts');
+			services.billTheLizard.projectsHandler.enable('vcr');
 		}
 	}
 
@@ -53,6 +54,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	function call() {
 		var config = instantGlobals.wgAdDriverBillTheLizardConfig || {},
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
+			now = new Date(),
 			pageParams = pageLevelParams.getPageLevelParams();
 
 		adEngine3.context.set('services.billTheLizard', {
@@ -80,6 +82,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 						doc.documentElement.clientHeight, win.innerHeight || 0
 					)),
 					wiki_id: adContext.get('targeting.wikiId') || null
+				},
+				vcr: {
+					h: now.getHours(),
+					pv: Math.min(30, pageParams.pv || 1),
+					pv_global: Math.min(40, win.pvNumberGlobal || 1),
+					ref: pageParams.ref || null
 				}
 			},
 			projects: config.projects,
@@ -95,33 +103,53 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (query) {
-				pageInfoTracker.trackProp('btl_request', query);
+			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (event) {
+				var propName = 'btl_request';
+				if (event.callId !== undefined) {
+					propName = propName + '_' + event.callId;
+				}
+				pageInfoTracker.trackProp(propName, event.query);
+			});
+			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_RESPONSE, function (event) {
+				var propName = 'btl_response';
+				if (event.callId !== undefined) {
+					propName = propName + '_' + event.callId;
+				}
+				pageInfoTracker.trackProp(propName, event.response);
 			});
 
-			return services.billTheLizard.call(['queen_of_hearts'])
+			return services.billTheLizard.call(['queen_of_hearts', 'vcr'], 'fv')
 				.then(function () {
-					var values = serialize();
-
-					if (values) {
-						pageLevelParams.add('btl', adEngine3.context.get('targeting.btl'));
-						pageInfoTracker.trackProp('btl', values);
-					}
+					pageLevelParams.add('btl', adEngine3.context.get('targeting.btl'));
 				});
+
 		});
 	}
 
-	function getResponseStatus() {
-		return services.billTheLizard.getResponseStatus();
+	/**
+	 * Returns BTL response status.
+	 *
+	 * @param {number|string} [callId]
+	 * @returns {string|*}
+	 */
+	function getResponseStatus(callId) {
+		return services.billTheLizard.getResponseStatus(callId);
 	}
 
-	function serialize() {
-		return services.billTheLizard.serialize();
+	/**
+	 * Serializes BTL responses.
+	 *
+	 * @param {number|string} callId
+	 * @returns {string}
+	 */
+	function serialize(callId) {
+		return services.billTheLizard.serialize(callId);
 	}
 
 	return {
 		call: call,
 		getResponseStatus: getResponseStatus,
-		serialize: serialize
+		serialize: serialize,
+		BillTheLizard: services.BillTheLizard
 	};
 });

@@ -1,10 +1,10 @@
 <?php
 
-use \Wikia\PortableInfobox\Parser\Nodes;
-use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
-use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
-use \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
-use \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
+use Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
+use Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
+use Wikia\PortableInfobox\Parser\Nodes;
+use Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
+use Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
@@ -15,6 +15,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 	const ACCENT_COLOR = 'accent-color';
 	const ACCENT_COLOR_TEXT = 'accent-color-text';
+	const TYPE = 'type';
+	const NAME = 'name';
 
 	private $markerNumber = 0;
 	private $infoboxParamsValidator = null;
@@ -94,10 +96,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$layout = $this->getLayout( $params );
 		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
 		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
+		$type = $this->getType( $params );
+		$name = $this->getName( $params );
 
 		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
-		return $renderService->renderInfobox( $data, implode( ' ', $themeList ), $layout, $accentColor, $accentColorText );
+
+		return $renderService->renderInfobox( $data, implode( ' ', $themeList ), $layout, $accentColor, $accentColorText, $type, $name );
 
 	}
 
@@ -226,6 +231,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
+	private function getType( $params ) {
+		return isset( $params[self::TYPE] ) ? htmlspecialchars( $params[self::TYPE] ) : null;
+	}
+
+	private function getName( $params ) {
+		return isset( $params[self::NAME] ) ? htmlspecialchars( $params[self::NAME] ) : null;
 	}
 
 	private function getColor( $colorParam, $params, PPFrame $frame ) {

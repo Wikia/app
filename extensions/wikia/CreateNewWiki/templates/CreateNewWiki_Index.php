@@ -28,12 +28,9 @@
 						<div class="wiki-name-error error-msg"></div>
 					</div>
 					<div class="wiki-domain-container">
-					<span class="domain-country">
-						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
-					</span>
 						<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
 						<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
-						.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiBaseDomain ) ?></span>
+						.<span class="wiki-base-domain"><?= htmlspecialchars( $wikiBaseDomain ) ?><?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : '/' . Sanitizer::escapeHtmlAllowEntities( $selectedLang ) ?></span>
 						<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
 						<div class="wiki-domain-error error-msg"></div>
 					</div>

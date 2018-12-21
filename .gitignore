@@ -19,6 +19,7 @@ psy.cfg
 /robots.txt
 /atlassian-ide-plugin.xml
 _misc
+/.vscode
 
 # Ignore VIM swap files
 *.sw[a-z]

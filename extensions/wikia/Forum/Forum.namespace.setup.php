@@ -18,7 +18,6 @@ if ( !empty( $wgEnableForumExt ) ) {
 
 
 $wgWallNS[] = NS_WIKIA_FORUM_BOARD;
-$wgWallNotifyEveryoneNS[] = NS_WIKIA_FORUM_BOARD;
 $wgWallVotesNS[] = NS_WIKIA_FORUM_BOARD;
 $wgWallThreadCloseNS[] = NS_WIKIA_FORUM_BOARD;
 $wgWallTopicsNS[] = NS_WIKIA_FORUM_BOARD;

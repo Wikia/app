@@ -96,7 +96,8 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath,
+			   $wgScriptPath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
@@ -115,6 +116,7 @@ class MercuryApi {
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'id' => (int) $wgCityId,
+			'isClosed' => !WikiFactory::isPublic( $wgCityId ),
 			'htmlTitle' => [
 				'separator' => $htmlTitle->getSeparator(),
 				'parts' => array_values( $htmlTitle->getAllParts() ),
@@ -123,6 +125,7 @@ class MercuryApi {
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
+			'scriptPath' => $wgScriptPath,
 			'siteName' => $wgSitename,
 			'specialRobotPolicy' => !empty( $robotPolicy ) ? $robotPolicy : null,
 			'surrogateKey' => Wikia::wikiSurrogateKey( $wgCityId ),
@@ -248,9 +251,9 @@ class MercuryApi {
 		       $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
 		       $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
 		       $wgDiscussionColorOverride, $wgEnableNewAuth, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
-		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgIsGASpecialWiki,
+		       $wgTwitterAccount, $wgIsGASpecialWiki,
 		       $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
@@ -277,7 +280,6 @@ class MercuryApi {
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'enableNewAuth' => $wgEnableNewAuth,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
@@ -290,7 +292,6 @@ class MercuryApi {
 				'qualarooUrl' => ( $wgDevelEnvironment ) ? $wgQualarooDevUrl : $wgQualarooUrl,
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
-				'scriptPath' => $wgScriptPath,
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 				'twitterAccount' => $wgTwitterAccount,

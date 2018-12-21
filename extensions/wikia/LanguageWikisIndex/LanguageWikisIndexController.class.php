@@ -9,6 +9,7 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 	public function index() {
 		global $wgCityId;
+
 		$this->specialPage->setHeaders();
 
 		$this->getOutput()->setRobotPolicy( 'noindex,follow' );
@@ -40,7 +41,8 @@ class LanguageWikisIndexController extends WikiaSpecialPageController {
 
 	private function isClosedWiki() {
 		global $wgCityId;
-		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() &&
+
+		return !LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis( $wgCityId ) &&
 			!WikiFactory::isPublic( $wgCityId );
 	}
 }

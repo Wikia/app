@@ -9,10 +9,9 @@ $wgSpecialPages['LanguageWikisIndex'] = 'LanguageWikisIndexController';
 $wgExtensionMessagesFiles['LanguageWikisIndex'] = __DIR__ . '/LanguageWikisIndex.i18n.php';
 
 $wgExtensionFunctions[] = 'LanguageWikisIndexHooks::onExtensionFunctions';
-if ( LanguageWikisIndexHooks::isEmptyDomainWithLanguageWikis() ) {
-	$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
-}
 
+$wgHooks['GenerateRobotsRules'][] = 'LanguageWikisIndexHooks::onGenerateRobotsRules';
 $wgHooks['ClosedWikiHandler'][] = 'LanguageWikisIndexHooks::onClosedWikiPage';
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'LanguageWikisIndexHooks::onGetHTMLBeforeWikiaPage';
+$wgHooks['MercuryWikiVariables'][] = 'LanguageWikisIndexHooks::onMercuryWikiVariables';
 $wgHooks['WikiaCanonicalHref'][] = 'LanguageWikisIndexHooks::onWikiaCanonicalHref';

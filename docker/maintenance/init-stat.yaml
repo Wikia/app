@@ -3,5 +3,5 @@ args:
 - php
 - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
 - --active=1
-- --params="--noviews --active --update"
+- --params="--active --update"
 - maintenance/initStats.php

@@ -47,7 +47,6 @@
 				.on('click', '.message-undo-remove', this.proxy(this.undoRemoveOrAdminDelete))
 				.on('click', '.follow', this.proxy(this.switchWatch))
 				.on('keydown', 'textarea', this.proxy(this.focusButton))
-				.on('click', '.edit-notifyeveryone', this.proxy(this.editNotifyEveryone))
 				.on('click', '.close-thread', this.proxy(this.confirmAction))
 				.on('click', '.reopen-thread', this.proxy(this.doThreadChange))
 				.on('click', '.votes', this.proxy(this.showVotersModal))
@@ -68,13 +67,6 @@
 
 			// Enable tooltips
 			this.setUpVoteTooltips();
-
-			$('#ForumNewMessage .highlight').popover({
-				content: function () {
-					return self.WallTooltipMeta.find('.tooltip-highlight-thread').clone();
-				},
-				placement: 'top'
-			});
 
 			// If any textarea has content make sure Reply / Post button is visible
 			$(document).ready(this.initTextareas);
@@ -640,30 +632,6 @@
 			if (id && newState) {
 				this.doThreadChangeSendRequest(id, newState, {});
 			}
-		},
-
-		editNotifyEveryone: function (e) {
-			var $element = $(e.target),
-				wallMsg,
-				id;
-
-			e.preventDefault();
-
-			if ($element.attr('data-inprogress')) {
-				return true;
-			}
-
-			wallMsg = $element.closest('li.message');
-			id = wallMsg.attr('data-id');
-
-			$element.animate({
-				'opacity': 0.5
-			}, 'slow');
-			$element.attr('data-inprogress', true);
-
-			this.model.notifyEveryone(wallMsg.attr('data-id'), $element.attr('data-dir'), function () {
-				window.location.reload();
-			});
 		},
 
 		quote: function (e) {

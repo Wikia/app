@@ -75,6 +75,11 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.wadIL = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadILCountries') &&
 			isILSupportedBrowser();
+
+		// HMD rec
+		context.opts.wadHMD = serviceCanBeEnabled &&
+			context.targeting.hasFeaturedVideo &&
+			isEnabled('wgAdDriverWadHMDCountries');
 	}
 
 	function isEnabled(name) {
@@ -96,7 +101,9 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
-		context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
+		// Due to TOP_BOXAD rename we have to force new Prebid, because otherwise it won't bid for this slot
+		// context.bidders.prebidAE3 = context.targeting.skin === 'oasis' && isEnabled('wgAdDriverPrebidAdEngine3Countries');
+		context.bidders.prebidAE3 = context.targeting.skin === 'oasis';
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
 		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
@@ -111,7 +118,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.aol = isEnabled('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isEnabled('wgAdDriverAppNexusBidderCountries');
 		context.bidders.appnexusDfp = isEnabled('wgAdDriverAppNexusDfpCountries');
-		context.bidders.appnexusWebAds = isEnabled('wgAdDriverAppNexusWebAdsBidderCountries');
 		context.bidders.audienceNetwork = isEnabled('wgAdDriverAudienceNetworkBidderCountries');
 		context.bidders.indexExchange = isEnabled('wgAdDriverIndexExchangeBidderCountries');
 		context.bidders.kargo = isEnabled('wgAdDriverKargoBidderCountries');
@@ -154,6 +160,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+		context.opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled = isEnabled(
+			'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'
+		);
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecServices(context, noExternals);
@@ -217,16 +226,12 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.disableSra = isEnabled('wgAdDriverDisableSraCountries');
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
-		context.opts.isBLBViewportEnabled = isEnabled('wgAdDriverBottomLeaderBoardViewportCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-
-		context.opts.isMobileBottomLeaderboardSwapEnabled = (
-			context.targeting.skin !== 'oasis' && isEnabled('wgAdDriverMobileBottomLeaderboardSwapCountries')
-		);
 		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
 			context.targeting.skin === 'oasis';
 
+		context.opts.isSteamBrowser = browserDetect.isSteam();
 		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
@@ -236,13 +241,15 @@ define('ext.wikia.adEngine.adContext', [
 			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
 			trackingAlias: 'INCONTENT_PLAYER_RAIL',
 			conflictingSlots: [
-				'TOP_RIGHT_BOXAD',
+				'TOP_BOXAD',
 				'INCONTENT_BOXAD_1',
 				'BOTTOM_LEADERBOARD'
 			]
 		};
 
 		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+
+		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);

@@ -1,4 +1,4 @@
-<div class="pi-image-collection">
+<div class="pi-image-collection"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}{{#source}} data-source="{{source}}"{{/source}}>
 	<ul class="pi-image-collection-tabs">
 		{{#images}}<li class="pi-tab-link pi-item-spacing {{#isFirst}}current{{/isFirst}}" data-pi-tab="pi-tab-{{dataRef}}">
 			{{#caption}}{{{caption}}}{{/caption}}

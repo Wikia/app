@@ -9,8 +9,8 @@ CategoryAutoComplete = {
 		CategoryAutoComplete.searchForm = $('#'+CategoryAutoComplete.FORM_ID);
 		CategoryAutoComplete.searchFields = CategoryAutoComplete.searchForm.find('input[placeholder]');
 
-		// RT #141437 - hide TOP_RIGHT_BOXAD when showing search suggestions
-		CategoryAutoComplete.ads = $("[id$='TOP_RIGHT_BOXAD']");
+		// RT #141437 - hide TOP_BOXAD when showing search suggestions
+		CategoryAutoComplete.ads = $("[id$='TOP_BOXAD']");
 
 		CategoryAutoComplete.searchFields.bind({
 			'suggestShow': CategoryAutoComplete.hideAds,

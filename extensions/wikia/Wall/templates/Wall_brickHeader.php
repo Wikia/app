@@ -20,12 +20,6 @@
 				->escaped(); ?></span>
 	<? endif; ?>
 
-	<? if ( !empty( $isNotifyeveryone ) ): ?>
-		<span class="removed"><?= wfMessage( 'parentheses' )
-				->params( wfMessage( 'wall-thread-isnotifyeveryone' )->plain() )
-				->escaped(); ?></span>
-	<? endif; ?>
-
 	<? if ( !empty( $isClosed ) ): ?>
 		<span class="removed"><?= wfMessage( 'parentheses' )
 				->params( wfMessage( 'wall-thread-closed' )->plain() )

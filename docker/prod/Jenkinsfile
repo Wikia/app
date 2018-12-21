@@ -61,15 +61,18 @@ def createTag(String currentTag) {
   }
 }
 
-def notifyBuild(String buildStatus = 'STARTED') {
+def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag, String buildUser) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def subject = "!!K8S (mirror deploy)!!: *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}>"
-  def summary = "${subject}"
+  def summary = "K8S (mirror deploy): *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}> by ${buildUser}"
+
+  if (appTag && configTag) {
+    summary = summary + " - app tag <https://github.com/Wikia/app/releases/tag/${appTag}|${appTag}> and config tag <https://github.com/Wikia/config/releases/tag/${configTag}|${configTag}>"
+  }
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -77,10 +80,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#70CADB'
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
-    colorCode = '#7AF371'
+    colorCode = '#36A64F'
   } else {
-    color = 'RED'
-    colorCode = '#FF0000'
     summary = summary + " <!here>"
   }
 
@@ -90,10 +91,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   println("Slack message: ${summary}")
-}
-
-stage('Slack notify start') {
-  notifyBuild('STARTED')
 }
 
 node("docker-daemon-big") {
@@ -121,6 +118,10 @@ node("docker-daemon-big") {
     } catch (MissingPropertyException ex) {
       buildUser = "Jenkins"
     }
+  }
+
+  stage('Slack notify start') {
+    notifyBuild('STARTED', '', '', buildUser)
   }
 
   try {
@@ -153,6 +154,17 @@ node("docker-daemon-big") {
             //e.g release-230
             nextAppBranch = nextAppTag.tokenize('.')[0]
             nextConfigBranch = nextConfigTag.tokenize('.')[0]
+          }
+
+          if (params.source == 'sync') {
+            if (params.app && params.config) {
+              nextAppTag = params.app
+              nextConfigTag = params.config
+
+              //e.g release-230
+              nextAppBranch = nextAppTag.tokenize('.')[0]
+              nextConfigBranch = nextConfigTag.tokenize('.')[0]
+            }
           }
         },
         "prod": {
@@ -192,12 +204,12 @@ node("docker-daemon-big") {
                 branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview') {
+            if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextAppTag}")
-              println("Source: preview; skip creating a tag")
+              println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentAppBranch}")
-              nextAppTag = createTag(currentAppTag,)
+              nextAppTag = createTag(currentAppTag)
             }
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -211,9 +223,9 @@ node("docker-daemon-big") {
                 branch: "dev",
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview') {
+            if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextConfigTag}")
-              println("Source: preview; skip creating a tag")
+              println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag)
@@ -439,7 +451,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result)
+      notifyBuild(currentBuild.result, nextAppTag, nextConfigTag, buildUser)
     }
   }
 }

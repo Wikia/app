@@ -20,8 +20,6 @@ $wgAutoloadClasses['WallNotificationOwnerEntity'] =  __DIR__ . '/WallNotificatio
 $wgAutoloadClasses['WallNotificationEntity'] =  __DIR__ . '/WallNotificationEntity.class.php';
 $wgAutoloadClasses['WallNotificationsExternalController'] =  __DIR__ . '/WallNotificationsExternalController.class.php';
 
-$wgAutoloadClasses['WallNotificationsEveryone'] =  __DIR__ . '/WallNotificationsEveryone.class.php';
-
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
 $wgAutoloadClasses['WallHelper'] =  __DIR__ . '/../Wall/WallHelper.class.php';

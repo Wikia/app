@@ -34,7 +34,6 @@ JSMessages::registerPackage( 'ThemeDesigner', [
 
 // hooks
 $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
-$wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
 $wgHooks['UploadComplete'][] = 'ThemeDesignerHooks::onUploadComplete';
 $wgHooks['UploadVerification'][] = 'ThemeDesignerHooks::onUploadVerification';
 $wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'SpecialThemeDesignerPreview::onPageHeaderActionButtonShouldDisplay';

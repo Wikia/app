@@ -1,28 +1,30 @@
 require([
 	'wikia.window',
 	'wikia.cookies',
+	'wikia.document',
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
-	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
 	cookies,
+	doc,
 	tracker,
 	trackingOptIn,
 	abTest,
 	adContext,
+	hmdRecLoader,
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoAds,
-	featuredVideoMoatTracking,
 	featuredVideoCookieService,
 	a9,
 	bidders
@@ -46,6 +48,10 @@ require([
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
 	}
 
+	function shouldForceUserIntendedPlay() {
+		return isFromRecirculation();
+	}
+
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
@@ -54,7 +60,6 @@ require([
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
 		featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -71,7 +76,7 @@ require([
 
 		featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
 
-		featuredVideoMoatTracking.loadTrackingPlugin();
+		featuredVideoAds.loadMoatTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -102,29 +107,44 @@ require([
 			logger: {
 				clientName: 'oasis'
 			},
-			lang: videoDetails.lang
+			lang: videoDetails.lang,
+			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
-			a9.waitForResponseCallbacks(
-				function onSuccess() {
-					bidParams = a9.getSlotParams(featuredVideoSlotName);
+		doc.addEventListener('bab.blocking', function () {
+			if (adContext.get('opts.wadHMD')) {
+				hmdRecLoader.setOnReady(function () {
 					setupPlayer();
-				},
-				function onTimeout() {
-					bidParams = {};
-					setupPlayer();
-				},
-				responseTimeout
-			);
-		} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
-			bidders.addResponseListener(function () {
-				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				});
+			} else {
 				setupPlayer();
-			});
-		} else {
+			}
+		});
+
+		doc.addEventListener('bab.not_blocking', function () {
+			if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
+				a9.waitForResponseCallbacks(
+					function onSuccess() {
+						bidParams = a9.getSlotParams(featuredVideoSlotName);
+						setupPlayer();
+					},
+					function onTimeout() {
+						bidParams = {};
+						setupPlayer();
+					},
+					responseTimeout
+				);
+			} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
+				bidders.addResponseListener(function () {
+					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+					setupPlayer();
+				});
+			}
+		});
+
+		if (!adContext.get('opts.showAds')) {
 			setupPlayer();
 		}
 	});

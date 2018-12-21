@@ -1,0 +1,9 @@
+<script>
+	require([
+		require.optional('ext.wikia.adEngine.tracking.moatYi')
+	], function (moatYi) {
+		if (moatYi) {
+			moatYi.call();
+		}
+	});
+</script>

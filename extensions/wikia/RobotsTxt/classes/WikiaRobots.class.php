@@ -171,7 +171,7 @@ class WikiaRobots {
 			return $robots;
 		}
 
-		if ( \Hooks::run( 'GenerateRobotsRules' ) ) {
+		if ( \Hooks::run( 'GenerateRobotsRules', [ $wgCityId ] ) ) {
 			// Sitemap
 			if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
 				$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';
@@ -213,6 +213,7 @@ class WikiaRobots {
 
 		// Paranoid check to make sure language wikis return only their rules without calling other
 		// wikis recursively.
+		// TODO - remove the code below once robots are served by the robots-txt service
 		if ( !$wgRequest->getBool( 'shallow' ) ) {
 			// fetch from foreign wikis...
 			$languageWikis = \WikiFactory::getLanguageWikis();

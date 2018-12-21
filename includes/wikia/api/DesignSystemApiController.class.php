@@ -15,6 +15,10 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->cors->setAllowCredentials( true );
 	}
 
+	/**
+	 * @throws InvalidParameterApiException
+	 * @throws NotFoundApiException
+	 */
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
@@ -28,6 +32,10 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
+	/**
+	 * @throws InvalidParameterApiException
+	 * @throws NotFoundApiException
+	 */
 	public function getNavigation() {
 		$params = $this->getRequestParameters();
 		// TODO: remove after full rollout of XW-4947
@@ -49,6 +57,10 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->addCachingHeaders();
 	}
 
+	/**
+	 * @throws InvalidParameterApiException
+	 * @throws NotFoundApiException
+	 */
 	public function getCommunityHeader() {
 		$params = $this->getRequestParameters();
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $params[static::PARAM_LANG] );
@@ -61,7 +73,8 @@ class DesignSystemApiController extends WikiaApiController {
 	/**
 	 * return all possible elements of Design System API
 	 *
-	 * @throws \NotFoundApiException
+	 * @throws InvalidParameterApiException
+	 * @throws NotFoundApiException
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
@@ -93,7 +106,11 @@ class DesignSystemApiController extends WikiaApiController {
 			'global-navigation' => $navigationModel->getData(),
 		];
 
-		if ( $params[self::PARAM_PRODUCT] === self::PRODUCT_WIKIS ) {
+		if (
+			$params[static::PARAM_PRODUCT] === self::PRODUCT_WIKIS &&
+			// There is no local content on language wikis index
+			!WikiFactory::isLanguageWikisIndexOrClosed( $params[static::PARAM_ID] )
+		) {
 			$communityHeaderModel = new DesignSystemCommunityHeaderModel( $params[static::PARAM_LANG] );
 
 			$responseData['community-header'] = $communityHeaderModel->getData();
@@ -104,10 +121,22 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->addCachingHeaders();
 	}
 
+	/**
+	 * @return array
+	 * @throws InvalidParameterApiException
+	 * @throws NotFoundApiException
+	 */
 	private function getRequestParameters() {
-		$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
+		global $wgCityId;
+
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
 		$lang = $this->getRequiredParam( static::PARAM_LANG );
+
+		if ($product === static::PRODUCT_WIKIS) {
+			$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
+		} else {
+			$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
+		}
 
 		if ( $product === static::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );

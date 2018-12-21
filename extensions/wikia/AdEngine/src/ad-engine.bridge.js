@@ -14,7 +14,7 @@ import {
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
 	Roadblock,
-	StickyAd,
+	StickyTLB,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -30,7 +30,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyAd];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyTLB];
 
 function init(
 	adTracker,
@@ -59,8 +59,8 @@ function init(
 
 	const stickySlotsLines = legacyContext.get('opts.stickySlotsLines');
 	if (stickySlotsLines && stickySlotsLines.length) {
-		context.set('templates.stickyAd.lineItemIds', stickySlotsLines);
-		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyAd');
+		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
+		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
 	}
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
@@ -90,7 +90,6 @@ function init(
 			context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
 			context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
 			context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
-			context.set('bidders.prebid.appnexusWebads.enabled', legacyContext.get('bidders.appnexusWebAds'));
 			context.set('bidders.prebid.audienceNetwork.enabled', legacyContext.get('bidders.audienceNetwork'));
 			context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 			context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
@@ -169,10 +168,23 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
+	let onLoadResolve = function () {};
+	const onLoadPromise = new Promise(function (resolve) {
+		onLoadResolve = resolve;
+	});
+
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
 		default: {
 			getSlotName: () => slot.name
+		},
+		emitEvent: (eventName) => {
+			const event = document.createEvent('CustomEvent');
+			event.initCustomEvent('adengine.slot.status', true, true, {
+				slot: slot,
+				status: eventName
+			});
+			window.dispatchEvent(event);
 		},
 		getElement: () => slot.container.parentElement,
 		getId: () => slot.name,
@@ -192,7 +204,7 @@ function unifySlotInterface(slot) {
 		},
 		getStatus: () => null,
 		setStatus: (status) => {
-			if (['viewport-conflict', 'sticked', 'unsticked'].indexOf(status) > -1) {
+			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
 				event.initCustomEvent('adengine.slot.status', true, true, {
 					slot: slot,
@@ -201,11 +213,18 @@ function unifySlotInterface(slot) {
 				window.dispatchEvent(event);
 			}
 		},
+		onLoad: () => {
+			return onLoadPromise;
+		}
 	});
 
 	slot.pre('viewed', (event) => {
 		slot.isViewedFlag = true;
 		slotListener.emitImpressionViewable(event, slot);
+	});
+
+	slot.pre('loaded', () => {
+		onLoadResolve();
 	});
 
 	slot.post('success', (event) => {

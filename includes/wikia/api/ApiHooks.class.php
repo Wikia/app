@@ -128,4 +128,28 @@ class ApiHooks {
 		ArticlesApiController::purgeCache( $title->getArticleID() );
 		return true;
 	}
+
+	/**
+	 * DesignSystemApi should keep working on language wikis index
+	 *
+	 * @return bool
+	 */
+	public static function onClosedOrEmptyWikiDomains() {
+		/** @var $wgRequest WebRequest */
+		global $wgRequest;
+
+		$controller = $wgRequest->getVal( 'controller', null );
+		$product = $wgRequest->getVal( DesignSystemApiController::PARAM_PRODUCT, null );
+		$id = $wgRequest->getVal( DesignSystemApiController::PARAM_ID, null );
+
+		if (
+			$controller === 'DesignSystemApi' &&
+			$product === DesignSystemApiController::PRODUCT_WIKIS &&
+			WikiFactory::isLanguageWikisIndexOrClosed( $id )
+		) {
+			return false;
+		}
+
+		return true;
+	}
 }
