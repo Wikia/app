@@ -19,6 +19,7 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 		logGroup = 'wikia.adEngine.wad.hmdRecLoader',
 		trackingStatus = {
 			hmdSetuped: false,
+			hmdReady: false,
 			adRequested: false,
 			hmdErrors: {
 				mediaerror: 1001,
@@ -77,11 +78,12 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 					trackingStatus.hmdSetuped = true;
 					trackEvent('hmd_setup');
 				} else if (trackingStatus.hmdSetuped) {
-					if (trackingStatus.adRequested) {
+					if (!trackingStatus.hmdReady) {
+						trackingStatus.hmdReady = true;
+						trackEvent('hmd_ready');
+					} else if (trackingStatus.adRequested) {
 						trackingStatus.adRequested = false;
 						trackEvent('hmd_loaded');
-					} else {
-						trackEvent('hmd_ready');
 					}
 				}
 			},
@@ -90,6 +92,8 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			penalty: 'hmd_blocked',
 			adError: function (event) {
 				var type = event.detail.type;
+
+				trackingStatus.adRequested = false;
 
 				if (trackingStatus.hmdErrors[type]) {
 					trackEvent('hmd_error', {
@@ -127,18 +131,18 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			clientConfig: isDebug ? configDev.clientConfig : configClient,
 			admessage: 'The ad ends in [time] seconds',
 			adjustAdVolumeToContentPlayer: true,
-			adTag: isDebug ? configDev.adTag : false,
-			prerollAdTag: isDebug ? false : function () {
+			adTag: false,
+			prerollAdTag: function () {
 				log('Requesting preroll adTag', log.levels.info, logGroup);
 
-				return adsConfiguration.getCurrentVast('pre') || false;
+				return isDebug ? configDev.adTag : adsConfiguration.getCurrentVast('pre') || false;
 			},
-			midrollAdTag: isDebug ? false : function () {
+			midrollAdTag: function () {
 				log('Requesting midroll adTag', log.levels.info, logGroup);
 
 				return adsConfiguration.getCurrentVast('mid') || false;
 			},
-			postrollAdTag: isDebug ? false : function () {
+			postrollAdTag: function () {
 				log('Requesting postroll adTag', log.levels.info, logGroup);
 
 				return adsConfiguration.getCurrentVast('post') || false;
@@ -178,9 +182,13 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 
 	function initializeTracking() {
 		window.addEventListener('hdEvent', function(event) {
-			log(['HMD event registered', event], log.levels.info, logGroup);
+			log(['HMD event registered', event, event.detail.name], log.levels.info, logGroup);
 
-			if (event.detail && event.detail.name && trackingEventsMap[event.detail.name]) {
+			if (
+				event.detail && event.detail.name && event.detail.state &&
+				['setup', 'preroll'].indexOf(event.detail.state) !== -1 &&
+				trackingEventsMap[event.detail.name]
+			) {
 				var eventName = event.detail.name,
 					trackingMethod = trackingEventsMap[eventName];
 
