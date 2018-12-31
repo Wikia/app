@@ -1,5 +1,5 @@
 <table class="pi-horizontal-group{{^renderLabels}} pi-horizontal-group-no-labels{{/renderLabels}}">
-	{{#header}}<caption class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}{{#source}} data-source="{{source}}"{{/source}}>{{{value}}}</caption>{{/header}}
+	{{#header}}<caption class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing"{{#item-name}} data-item-name="{{item-name}}"{{/item-name}}{{#source}} data-source="{{source}}"{{/source}}{{#inline-styles}} style="{{{inline-styles}}}"{{/inline-styles}}>{{{value}}}</caption>{{/header}}
 	{{#renderLabels}}
 	<thead>
 		<tr>
