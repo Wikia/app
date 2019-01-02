@@ -173,8 +173,8 @@ class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 
 	public function httpsUrlsProvider() {
 		return [
-			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
-			[ 177, 'https', 'https://community.wikia.com/wiki/Test' ],
+			[ 177, 'http', 'http://community.fandom.com/wiki/Test' ],
+			[ 177, 'https', 'https://community.fandom.com/wiki/Test' ],
 			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
 			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
 			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
