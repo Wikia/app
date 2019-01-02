@@ -6,7 +6,6 @@
 	<?php foreach ( $alphabetShortcuts as $shortcut ) : ?>
 		<li class="category-page__alphabet-shortcut<?= $shortcut['isActive'] ? ' is-active': '' ?>">
 			<?= Html::element( 'a', [
-				'href' => null,
 				'rel' => 'nofollow',
 				'data-uncrawlable-url' => base64_encode( $title->getFullURL( [ 'from' => $shortcut['from'] ] ) )
 			], $shortcut['label'] ) ?></li>
