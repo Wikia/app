@@ -296,6 +296,10 @@ class WikisApiController extends WikiaApiController {
 			}
 		}
 
+		if ( !WikiFactory::isPublic( $cityId ) ) {
+			throw new ResourceGoneException();
+		}
+
 		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
 		if ( empty( $wikis ) ) {
 			throw new NotFoundApiException();

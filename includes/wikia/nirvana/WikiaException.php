@@ -202,6 +202,11 @@ class MethodNotAllowedException extends WikiaHttpException {
 	protected $message = 'Method not allowed';
 }
 
+class ResourceGoneException extends WikiaHttpException {
+	protected $code = 410;
+	protected $message = 'Resource gone';
+}
+
 class NotImplementedException extends WikiaHttpException {
 	protected $code = 501;
 	protected $message = 'Not implemented';
