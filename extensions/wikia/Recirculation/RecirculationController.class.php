@@ -2,7 +2,7 @@
 
 
 class RecirculationController extends WikiaController {
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
 	const ALLOWED_TYPES = [ 'popular', 'shares', 'recent_popular' ];
 	const DEFAULT_TYPE = 'popular';
 
@@ -13,11 +13,6 @@ class RecirculationController extends WikiaController {
 		} else {
 			$this->type = self::DEFAULT_TYPE;
 		}
-	}
-
-	public function discussionsAuthor() {
-		$this->setVal( 'post', $this->getVal( 'post' ) );
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 
 	public function discussions() {
@@ -52,7 +47,6 @@ class RecirculationController extends WikiaController {
 			}
 
 			$this->response->setCachePolicy(WikiaResponse::CACHE_PUBLIC);
-			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title' => wfMessage( 'recirculation-discussion-title' )
@@ -119,7 +113,6 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
 
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 		if ( $wgLanguageCode !== 'en' ) {
 			$this->response->getView()->setTemplatePath( __DIR__ .
 			                                             '/templates/RecirculationController_FooterInternaltional.php' );
