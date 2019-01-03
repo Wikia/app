@@ -8,11 +8,7 @@ $wgExtensionCredits['other'][] = [
 ];
 
 // Autoload
-$wgAutoloadClasses['ParselyDataService'] =  __DIR__ . '/services/ParselyDataService.class.php';
-$wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
-$wgAutoloadClasses['CuratedContentService'] =  __DIR__ . '/services/CuratedContentService.class.php';
-$wgAutoloadClasses['CurationCMSService'] =  __DIR__ . '/services/CurationCMSService.class.php';
 $wgAutoloadClasses['PopularPagesService'] = __DIR__. '/services/PopularPagesService.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
