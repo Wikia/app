@@ -12,6 +12,6 @@ class RailContentService extends WikiaService {
 		}
 
 		$this->response->addAsset( 'extensions/wikia/Recirculation/styles/premium-rail.scss' );
-		$this->setVal( 'popularPages', $popularPagesService->getPopularPages( 5 ) );
+		$this->setVal( 'popularPages', $articles );
 	}
 }

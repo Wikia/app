@@ -18,42 +18,4 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( WikiRecommendations::getPopularArticles() );
 	}
-
-	public function getDiscussions() {
-		$this->cors->setHeaders( $this->response );
-
-		$cityId = $this->getParamCityId();
-		$type = $this->getParamType();
-
-		if ( !RecirculationHooks::canShowDiscussions( $cityId ) ) {
-			return;
-		}
-
-		$dataService = new DiscussionsDataService( $cityId );
-
-		$data = $dataService->getData( $type );
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		$this->response->setData( $data );
-	}
-
-	private function getParamCityId() {
-		$cityId = $this->request->getVal( 'cityId', 0 );
-
-		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
-			throw new InvalidParameterApiException( 'cityId' );
-		}
-
-		return $cityId;
-	}
-
-	private function getParamType() {
-		$type = $this->request->getVal( 'type', null );
-
-		if ( !$type || !in_array( $type, self::ALLOWED_TYPES ) ) {
-			throw new InvalidParameterApiException( 'type' );
-		}
-
-		return $type;
-	}
 }
