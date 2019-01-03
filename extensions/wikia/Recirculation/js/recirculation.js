@@ -27,29 +27,6 @@ require([
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
 		$mixedContentFooterContent = $('.mcf-content'),
-		railRecirculation = {
-			max: 5,
-			widget: 'wikia-rail',
-			width: 320,
-			height: 180,
-			modelName: 'ns',
-			title: 'recirculation-fandom-title',
-			opts: {
-				resultType: 'cross-domain',
-				domainType: 'fandom.wikia.com'
-			}
-		},
-		internationalRailRecirculation = {
-			max: 5,
-			widget: 'wikia-rail-i18n',
-			width: 320,
-			height: 180,
-			modelName: 'wiki',
-			title: 'recirculation-trending',
-			opts: {
-				rule_language: window.wgContentLanguage
-			}
-		},
 		mixedContentFooter = {
 			nsItems: {
 				max: $mixedContentFooter.data('number-of-ns-articles'),
@@ -73,94 +50,6 @@ require([
 				}
 			}
 		};
-
-	function prepareRailRecirculation(options) {
-		if (mw.config.get('showEmbeddedFeed')) {
-			// If Feeds & Posts will load, don't display the rail recirc
-			return;
-		}
-
-		var request;
-		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION_SOURCE', 'TOPIC_FEED') &&
-			getCurationCMSTopic();
-
-		if (isRecirculationABTest) {
-			request = getDataFromCurationCMS();
-		} else {
-			request = liftigniter.prepare(options);
-		}
-		// prepare & render right rail recirculation module
-		request.done(function (data) {
-			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-				var view = viewFactory();
-				view.render(data, options.title)
-					.then(view.setupTracking())
-					.then(function () {
-						if (!isRecirculationABTest) {
-							liftigniter.setupTracking(view.itemsSelector, options);
-						}
-					});
-			});
-		});
-	}
-
-	function getNormalizedCurationCMSData(data) {
-		var normalizedData = {};
-		normalizedData.items = [];
-
-		data.posts.forEach(function (post) {
-			normalizedData.items.push({
-				title: post.title,
-				thumbnail: post.thumbnail.url,
-				url: post.url
-			});
-		});
-
-		return normalizedData;
-	}
-
-	function getDataFromCurationCMS() {
-		var deferred = $.Deferred();
-
-		nirvana.sendRequest({
-			controller: 'RecirculationApi',
-			method: 'getFandomPosts',
-			format: 'json',
-			type: 'get',
-			scriptPath: window.wgCdnApiUrl,
-			data: {
-				type: 'stories',
-				slug: getCurationCMSTopic()
-			},
-			callback: function (data) {
-				if (data && data.posts && data.posts.length > 0) {
-					deferred.resolve(getNormalizedCurationCMSData(data));
-				} else {
-					deferred.reject();
-				}
-			},
-			onErrorCallback: function () {
-				deferred.reject();
-			}
-		});
-
-		return deferred;
-	}
-
-	function getCurationCMSTopic() {
-		var topics = {
-			2233: 'marvel',
-			147: 'star-wars',
-			1071836: 'overwatch',
-			3035: 'fallout',
-			250551: 'arrowverse',
-			13346: 'the-walking-dead',
-			410: 'anime',
-			1081: 'anime',
-		};
-
-		return topics[window.wgCityId];
-	}
 
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
@@ -212,7 +101,6 @@ require([
 
 		if (window.wgContentLanguage === 'en') {
 			prepareEnglishRecirculation();
-			prepareRailRecirculation(railRecirculation);
 
 			// fetch data for all recirculation modules
 			liftigniter.fetch('ns');
@@ -220,7 +108,6 @@ require([
 			prepareInternationalRecirculation();
 
 			if (window.wgContentLanguage === 'de') {
-				prepareRailRecirculation(internationalRailRecirculation);
 				liftigniter.fetch('wiki');
 			}
 

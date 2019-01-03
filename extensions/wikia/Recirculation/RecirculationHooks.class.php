@@ -209,4 +209,7 @@ class RecirculationHooks {
 		return $noIndexNamespaces;
 	}
 
+	public static function onGetRailModuleList( array &$railModuleList ) {
+		$railModuleList[1000] = [ 'RailContentService', 'renderRailModule', null ];
+	}
 }
