@@ -272,6 +272,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @responseParam string $primaryDomain primary domain for a wiki in case the $domain is an alias
 	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
+	 * @responseParam bool $blocked true if robots.txt is blocked for a given domain
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
 	public function getWikisUnderDomain() {
@@ -296,16 +297,23 @@ class WikisApiController extends WikiaApiController {
 			}
 		}
 
-		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
-		if ( empty( $wikis ) ) {
-			throw new NotFoundApiException();
-		}
+		$wikis = [];
+		if ( WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWikis', $cityId, false, false ) ) {
+			$this->response->setVal( 'blocked', true );
+		} else {
+			$this->response->setVal( 'blocked', false );
 
-		if ( wfHttpsEnabledForDomain( $domain ) ) {
-			$wikis = array_map( function ( $wiki ) {
-				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
-				return $wiki;
-			}, $wikis );
+			$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
+			if ( empty( $wikis ) ) {
+				throw new NotFoundApiException();
+			}
+
+			if ( wfHttpsEnabledForDomain( $domain ) ) {
+				$wikis = array_map( function ( $wiki ) {
+					$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
+					return $wiki;
+				}, $wikis );
+			}
 		}
 
 		$this->response->setVal( 'primaryDomain', '' );
