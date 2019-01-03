@@ -27,6 +27,7 @@ require([
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
 		$mixedContentFooterContent = $('.mcf-content'),
+		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
 		mixedContentFooter = {
 			nsItems: {
 				max: $mixedContentFooter.data('number-of-ns-articles'),
@@ -39,23 +40,24 @@ require([
 					domainType: 'fandom.wikia.com'
 				}
 			},
-			wikiItems: {
-				max: $mixedContentFooter.data('number-of-wiki-articles'),
-				widget: 'wikia-footer-wiki-rec',
-				width: 386,
-				height: 337,
-				modelName: 'wiki',
-				opts: {
-					rule_language: window.wgContentLanguage
-				}
-			}
 		};
+
+	function getPopularPages() {
+		return nirvana.sendRequest({
+			controller: 'RecirculationApi',
+			method: 'getPopularPages',
+			type: 'get',
+			data: {
+				limit: numberOfArticleFooterSlots,
+			}
+		});
+	}
 
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.nsItems),
-			liftigniter.prepare(mixedContentFooter.wikiItems),
+			getPopularPages(),
 			discussions.prepare()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
@@ -68,7 +70,6 @@ require([
 					discussions: discussions
 				}).then(function () {
 					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
-					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
 				});
 			});
 		});
@@ -76,7 +77,7 @@ require([
 
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
-			liftigniter.prepare(mixedContentFooter.wikiItems),
+			getPopularPages(),
 			discussions.prepare()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {

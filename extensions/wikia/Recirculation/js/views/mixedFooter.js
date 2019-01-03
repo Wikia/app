@@ -15,7 +15,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 	function render(data) {
 		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
-			wikiArticlesList = data.wikiItems.items,
+			wikiArticlesList = data.wikiItems,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {},
 			$discussions = $(data.discussions);
@@ -84,9 +84,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
 				wikiArticle.classes = $this[0].className.replace('mcf-card-wiki-placeholder', '');
 				wikiArticle.liType = 'wiki';
-				if (wikiArticle.type === 'video') {
-					wikiArticle.video = true;
-				}
 
 				$this.replaceWith(utils.renderTemplate(template, wikiArticle));
 			}

@@ -28,11 +28,27 @@ class PopularPagesService {
 			$articleId = $title->getArticleID();
 
 			if ( isset( $images[$articleId] ) ) {
-				$data[] = [
+				$data[$articleId] = [
 					'title' => $title->getPrefixedText(),
 					'url' => $title->getFullURL(),
 					'thumbnail' => $images[$articleId][0]['url'],
+					'hasVideo' => false,
 				];
+			}
+		}
+
+		return $data;
+	}
+
+	public function getPopularPagesWithVideoInfo( int $limit ): array {
+		global $wgCityId;
+
+		$data = $this->getPopularPages( $limit );
+		$videos = ArticleVideoService::getFeaturedVideosForWiki( $wgCityId );
+
+		foreach ( $videos as $mapping ) {
+			if ( isset( $data[$mapping->getId()] ) ) {
+				$data[$mapping->getId()]['hasVideo'] = true;
 			}
 		}
 

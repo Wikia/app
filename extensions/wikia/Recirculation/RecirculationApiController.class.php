@@ -18,4 +18,16 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( WikiRecommendations::getPopularArticles() );
 	}
+
+	public function getPopularPages() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+
+		$limit = max( $this->request->getInt( 'limit', 13 ), 13 );
+
+		$popularPagesService = new PopularPagesService();
+		$data = $popularPagesService->getPopularPagesWithVideoInfo( $limit );
+
+		$this->response->setData( $data );
+	}
 }
