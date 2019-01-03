@@ -20,9 +20,10 @@ export function getSlotsContext(legacyContext, skin) {
 				},
 				defaultTemplates: []
 			},
-			'TOP_RIGHT_BOXAD': {
+			'TOP_BOXAD': {
 				disabled: false,
-				slotName: 'TOP_RIGHT_BOXAD',
+				slotName: 'TOP_BOXAD',
+				bidderAlias: 'TOP_RIGHT_BOXAD',
 				sizes: [
 					{
 						viewportSize: [728, 0],
@@ -32,7 +33,7 @@ export function getSlotsContext(legacyContext, skin) {
 				options: {},
 				defaultSizes: [[300, 250]],
 				targeting: {
-					pos: 'TOP_RIGHT_BOXAD',
+					pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
 					loc: 'top'
 				}
 			},
@@ -51,7 +52,7 @@ export function getSlotsContext(legacyContext, skin) {
 					pos: 'BOTTOM_LEADERBOARD',
 					loc: 'footer'
 				},
-				viewportConflicts: ['TOP_RIGHT_BOXAD']
+				viewportConflicts: ['TOP_BOXAD']
 			}
 		},
 		mercury: {

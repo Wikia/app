@@ -70,7 +70,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					pageType: 'article',
 					skin: 'oasis',
 					src: 'remnant',
-					slotName: 'TOP_RIGHT_BOXAD'
+					slotName: 'TOP_BOXAD'
 				},
 				wsi: 'oma2'
 			},

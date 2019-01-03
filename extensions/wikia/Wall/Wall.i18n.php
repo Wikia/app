@@ -1861,6 +1861,13 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 
 Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
 	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
+	'wall-message-update-removed-highlight-summary' => 'Hervorhebung entfernt',
+	'wall-message-unnotifyeveryone' => 'Hervorhebung entfernen',
+	'wall-message-notifyeveryone-tooltip' => 'Jeder angemeldete Benutzer dieses Wikis erhält eine Benachrichtigung über diesen Diskussionsfaden beim nächsten Besuch des Wikis',
+	'wall-message-notifyeveryone' => 'Diskussionsfaden hervorheben',
+	'wall-message-update-highlight-summary' => 'Hervorgehoben',
+	'wall-notifications-notifyeveryone' => 'Von $1 hervorgehoben',
+	'wall-thread-isnotifyeveryone' => 'Hervorgehoben',
 );
 
 $messages['diq'] = array(
@@ -2247,6 +2254,13 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 
 El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
 	'wall-confirm-monobook-lack-of-reason' => 'Por favor incluye un motivo para retirar este hilo o respuesta.',
+	'wall-message-update-removed-highlight-summary' => 'Destacado retirado',
+	'wall-message-unnotifyeveryone' => 'Dejar de destacar este tema',
+	'wall-message-notifyeveryone-tooltip' => 'Todo usuario identificado en el wiki será notificado sobre este hilo la próxima vez que inicie sesión',
+	'wall-message-notifyeveryone' => 'Destacar este tema',
+	'wall-message-update-highlight-summary' => 'Destacado',
+	'wall-notifications-notifyeveryone' => 'Destacado por $1',
+	'wall-thread-isnotifyeveryone' => 'Destacado',
 );
 
 $messages['eu'] = array(
@@ -2824,6 +2838,13 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 
 Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-confirm-monobook-lack-of-reason' => 'Veuillez indiquer un résumé pour la suppression de ce fil/cette réponse.',
+	'wall-message-update-removed-highlight-summary' => 'Dépinglé',
+	'wall-message-unnotifyeveryone' => 'Dépingler ce fil',
+	'wall-message-notifyeveryone-tooltip' => 'Chaque personne connectée sur le wiki recevra une notification pour ce fil la prochaine fois qu’elle visitera le wiki',
+	'wall-message-notifyeveryone' => 'Épingler ce fil',
+	'wall-message-update-highlight-summary' => 'Épinglé',
+	'wall-notifications-notifyeveryone' => 'Épinglé par $1',
+	'wall-thread-isnotifyeveryone' => 'Épinglé',
 );
 
 $messages['fy'] = array(
@@ -3739,7 +3760,6 @@ $messages['id'] = array(
 );
 
 $messages['it'] = array(
-
 	'wall-recentchanges-new-message' => 'nella [[$1|bacheca di $2]]',
 	'wall-recentchanges-removed-thread' => 'ha rimosso la discussione "[[$1|$2]]" dalla [[$3|bacheca di $4]]',
 	'wall-recentchanges-removed-reply' => 'ha rimosso la risposta in "[[$1|$2]]" nella [[$3|bacheca di $4]]',
@@ -3995,6 +4015,13 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 
 Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
 	'wall-confirm-monobook-lack-of-reason' => 'Per favore specifica il motivo della rimozione di questa discussione/risposta.',
+	'wall-message-update-removed-highlight-summary' => 'Evidenziatura rimossa',
+	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
+	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati su questa wiki saranno notificati della presenza di questa discussione la prossima volta che visiteranno la wiki',
+	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
+	'wall-message-update-highlight-summary' => 'Evidenziata',
+	'wall-notifications-notifyeveryone' => 'Evidenziata da $1',
+	'wall-thread-isnotifyeveryone' => 'Evidenziata',
 );
 
 $messages['ja'] = array(
@@ -4253,6 +4280,13 @@ $messages['ja'] = array(
 
 削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
 	'wall-confirm-monobook-lack-of-reason' => 'このスレッド・返信を削除する理由を入力してください。',
+	'wall-message-update-removed-highlight-summary' => 'ハイライトを解除',
+	'wall-message-unnotifyeveryone' => 'このスレッドのハイライトを解除',
+	'wall-message-notifyeveryone-tooltip' => 'このコミュニティを閲覧している全ての登録ユーザーに対して、次回の訪問後からこのスレッドに関する通知が行われます',
+	'wall-message-notifyeveryone' => 'このスレッドをハイライトする',
+	'wall-message-update-highlight-summary' => 'ハイライトする',
+	'wall-notifications-notifyeveryone' => '$1 がハイライトしました',
+	'wall-thread-isnotifyeveryone' => 'ハイライトする',
 );
 
 $messages['ka'] = array(
@@ -4867,6 +4901,14 @@ $messages['lol'] = array(
 	'wall-confirm-monobook-restore' => 'crwdns26608:0crwdne26608:0',
 	'wall-confirm-monobook-admin' => 'crwdns26607:0crwdne26607:0',
 	'wall-confirm-monobook-lack-of-reason' => 'crwdns26611:0crwdne26611:0',
+	'wall-message-update-removed-highlight-summary' => 'crwdns26553:0crwdne26553:0',
+	'wall-message-unnotifyeveryone' => 'crwdns26770:0crwdne26770:0',
+	'wall-message-notifyeveryone-tooltip' => 'crwdns26771:0crwdne26771:0',
+	'wall-message-notifyeveryone' => 'crwdns26769:0crwdne26769:0',
+	'wall-message-update-highlight-summary' => 'crwdns26552:0crwdne26552:0',
+	'right-notifyeveryone' => 'crwdns57579:0crwdne57579:0',
+	'wall-notifications-notifyeveryone' => 'crwdns26768:0crwdne26768:0',
+	'wall-thread-isnotifyeveryone' => 'crwdns26564:0crwdne26564:0',
 );
 
 $messages['lrc'] = array(
@@ -6134,6 +6176,13 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 
 Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-confirm-monobook-lack-of-reason' => 'Podaj powód usunięcia wątku/odpowiedzi.',
+	'wall-message-update-removed-highlight-summary' => 'Usunięto wyróżnienie',
+	'wall-message-unnotifyeveryone' => 'Usuń wyróżnienie tego wątku',
+	'wall-message-notifyeveryone-tooltip' => 'Każdy zalogowany użytkownik na wiki zostanie powiadomiony o tym wątku przy kolejnej wizycie',
+	'wall-message-notifyeveryone' => 'Wyróżnij',
+	'wall-message-update-highlight-summary' => 'Wyróżniono',
+	'wall-notifications-notifyeveryone' => 'Wyróżniono przez $1',
+	'wall-thread-isnotifyeveryone' => 'wyróżniony',
 );
 
 $messages['ps'] = array(
@@ -6448,6 +6497,13 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 
 O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-confirm-monobook-lack-of-reason' => 'Por favor, forneça uma razão para remover este(a) tópico/resposta.',
+	'wall-message-update-removed-highlight-summary' => 'Destaque removido',
+	'wall-message-unnotifyeveryone' => 'Remover o destaque deste tópico',
+	'wall-message-notifyeveryone-tooltip' => 'Todas as pessoas registradas na wiki serão notificadas sobre este tópico na próxima visita à wiki',
+	'wall-message-notifyeveryone' => 'Destacar este tópico',
+	'wall-message-update-highlight-summary' => 'Destacado',
+	'wall-notifications-notifyeveryone' => 'Destacado por $1',
+	'wall-thread-isnotifyeveryone' => 'Destacar',
 );
 
 $messages['qu'] = array(
@@ -6746,6 +6802,13 @@ $messages['ru'] = array(
 
 Оригинал сообщения и ваш комментарий останутся в истории вики.',
 	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, поясните удаление этой темы/ответа.',
+	'wall-message-update-removed-highlight-summary' => 'Оповещение удалено',
+	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
+	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем посещении вики',
+	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
+	'wall-message-update-highlight-summary' => 'Сообщить всем',
+	'wall-notifications-notifyeveryone' => 'Об этом {{GENDER:$1|сообщил|сообщила}} $1',
+	'wall-thread-isnotifyeveryone' => 'Сообщить всем',
 );
 
 $messages['sco'] = array(
@@ -8307,6 +8370,13 @@ $messages['zh-hans'] = array(
 
 原信息和你的摘要将出现在wiki的历史记录中。',
 	'wall-confirm-monobook-lack-of-reason' => '请输入删除该 话题/回复 的原因。',
+	'wall-message-update-removed-highlight-summary' => '移除突出显示',
+	'wall-message-unnotifyeveryone' => '取消高亮此话题',
+	'wall-message-notifyeveryone-tooltip' => '所有此wiki的用户都将在下次访问时被通知查看此话题',
+	'wall-message-notifyeveryone' => '高亮此话题',
+	'wall-message-update-highlight-summary' => '突出显示',
+	'wall-notifications-notifyeveryone' => '由$1设置高亮',
+	'wall-thread-isnotifyeveryone' => '突出显示',
 );
 
 $messages['zh-hant'] = array(
@@ -8565,5 +8635,12 @@ $messages['zh-hant'] = array(
 
 原來發布訊息和你的編輯摘要仍將出現在維基的歷史頁面。',
 	'wall-confirm-monobook-lack-of-reason' => '請提供刪除此 話題/回覆 的原因。',
+	'wall-message-update-removed-highlight-summary' => '取消聚焦',
+	'wall-message-unnotifyeveryone' => '取消聚焦這個話題',
+	'wall-message-notifyeveryone-tooltip' => '所有這個維基的登入使用者造訪本 wiki 時會收到這個話題的通知。',
+	'wall-message-notifyeveryone' => '聚焦這個話題',
+	'wall-message-update-highlight-summary' => '聚焦',
+	'wall-notifications-notifyeveryone' => '由$1 聚焦',
+	'wall-thread-isnotifyeveryone' => '聚焦',
 );
 
