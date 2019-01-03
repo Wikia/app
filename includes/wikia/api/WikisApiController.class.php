@@ -299,9 +299,9 @@ class WikisApiController extends WikiaApiController {
 
 		$wikis = [];
 		if ( WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWikis', $cityId, false, false ) ) {
-			$this->response->setVal( 'blocked', true );
+			$this->response->setVal( 'is_blocked', true );
 		} else {
-			$this->response->setVal( 'blocked', false );
+			$this->response->setVal( 'is_blocked', false );
 
 			$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
 			if ( empty( $wikis ) ) {
