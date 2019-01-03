@@ -60,13 +60,13 @@ require([
 			getPopularPages(),
 			discussions.prepare()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				var view = viewFactory();
 				view.render({
 					nsItems: nsItems,
-					wikiItems: wikiItems,
+					wikiItems: popularPagesResponse[0],
 					discussions: discussions
 				}).then(function () {
 					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
@@ -80,15 +80,12 @@ require([
 			getPopularPages(),
 			discussions.prepare()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-				var view = viewFactory();
-				view.render({
-					wikiItems: wikiItems,
+				viewFactory().render({
+					wikiItems: popularPagesResponse[0],
 					discussions: discussions
-				}).then(function () {
-					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
 				});
 			});
 		});

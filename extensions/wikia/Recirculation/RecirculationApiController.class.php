@@ -26,7 +26,7 @@ class RecirculationApiController extends WikiaApiController {
 		$limit = max( $this->request->getInt( 'limit', 13 ), 13 );
 
 		$popularPagesService = new PopularPagesService();
-		$data = $popularPagesService->getPopularPagesWithVideoInfo( $limit );
+		$data = $popularPagesService->getPopularPagesWithVideoInfo( $limit, 386, 337 );
 
 		$this->response->setData( $data );
 	}

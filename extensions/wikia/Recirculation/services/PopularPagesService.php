@@ -1,7 +1,7 @@
 <?php
 
 class PopularPagesService {
-	public function getPopularPages( int $limit ): array {
+	public function getPopularPages( int $limit, int $thumbWidth, int $thumbHeight ): array {
 		global $wgCityId, $wgContentNamespaces;
 
 		$articles = DataMartService::getTopArticlesByPageview(
@@ -19,7 +19,7 @@ class PopularPagesService {
 		$articleIds = array_keys( $articles );
 		$titles = Title::newFromIDs( $articleIds );
 
-		$imageServing = new ImageServing( $articleIds, 80, 50 );
+		$imageServing = new ImageServing( $articleIds, $thumbWidth, $thumbHeight );
 		$images = $imageServing->getImages( 1 );
 
 		$data = [];
@@ -40,10 +40,10 @@ class PopularPagesService {
 		return $data;
 	}
 
-	public function getPopularPagesWithVideoInfo( int $limit ): array {
+	public function getPopularPagesWithVideoInfo( int $limit, int $thumbWidth, int $thumbHeight ): array {
 		global $wgCityId;
 
-		$data = $this->getPopularPages( $limit );
+		$data = $this->getPopularPages( $limit, $thumbWidth, $thumbHeight );
 		$videos = ArticleVideoService::getFeaturedVideosForWiki( $wgCityId );
 
 		foreach ( $videos as $mapping ) {
@@ -52,6 +52,6 @@ class PopularPagesService {
 			}
 		}
 
-		return $data;
+		return array_values( $data );
 	}
 }

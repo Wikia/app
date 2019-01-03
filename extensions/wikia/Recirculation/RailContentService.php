@@ -4,7 +4,7 @@ class RailContentService extends WikiaService {
 
 	public function renderRailModule() {
 		$popularPagesService = new PopularPagesService();
-		$articles = $popularPagesService->getPopularPages( 5 );
+		$articles = $popularPagesService->getPopularPages( 5, 80, 50 );
 
 		if ( empty( $articles ) ) {
 			$this->skipRendering();
