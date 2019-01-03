@@ -125,10 +125,4 @@ class RecirculationController extends WikiaController {
 			                                             '/templates/RecirculationController_FooterInternaltional.php' );
 		}
 	}
-
-	public function container( $params ) {
-		$containerId = $this->request->getVal( 'containerId' );
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
-		$this->response->setVal( 'containerId', $containerId );
-	}
 }
