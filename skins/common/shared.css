@@ -459,6 +459,7 @@ a.feedlink {
  * off special external link styling */
 .plainlinks a {
 	background: none !important;
+	cursor: pointer;
 	padding: 0 !important;
 }
 /* External URLs should always be treated as LTR (bug 4330) */
