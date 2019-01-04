@@ -1,7 +1,7 @@
 <?php
 
 class NodeHeroImageSanitizer extends NodeSanitizer {
-	protected $allowedTags = [ 'a' ];
+	protected $allowedTags = [ 'a', 'br' ];
 	protected $selectorsWrappingTextToPad = [ 'li' ];
 	protected $selectorsWrappingAllowedFeatures = [ 'sup[@class="reference"]' ];
 	protected $selectorsForFullRemoval =
