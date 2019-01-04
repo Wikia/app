@@ -272,7 +272,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @responseParam string $primaryDomain primary domain for a wiki in case the $domain is an alias
 	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
-	 * @responseParam bool $blocked true if robots.txt is blocked for a given domain
+	 * @responseParam bool $isBlocked true if robots.txt is blocked for a given domain
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
 	public function getWikisUnderDomain() {
@@ -299,9 +299,9 @@ class WikisApiController extends WikiaApiController {
 
 		$wikis = [];
 		if ( WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWiki', $cityId, false, false ) ) {
-			$this->response->setVal( 'is_blocked', true );
+			$this->response->setVal( 'isBlocked', true );
 		} else {
-			$this->response->setVal( 'is_blocked', false );
+			$this->response->setVal( 'isBlocked', false );
 
 			$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
 			if ( empty( $wikis ) ) {
