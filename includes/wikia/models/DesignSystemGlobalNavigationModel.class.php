@@ -5,6 +5,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const HOMEPAGE_URL = 'https://www.fandom.com';
+
 	private $product;
 	private $productInstanceId;
 	private $lang;
@@ -102,8 +104,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
+
+		$server = $this->product === static::PRODUCT_FANDOMS ? static::HOMEPAGE_URL : $wgServer;
 		if ( $useWikiBaseDomain ) {
-			$url = wfForceBaseDomain( $url, $wgServer );
+			$url = wfForceBaseDomain( $url, $server );
 		}
 		return $url;
 	}

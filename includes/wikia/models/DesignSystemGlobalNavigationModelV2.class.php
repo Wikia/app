@@ -5,6 +5,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const HOMEPAGE_URL = 'https://www.fandom.com';
+
 	const COMMUNITY_CENTRAL_LABEL = 'global-navigation-wikis-community-central';
 	const COMMUNITY_CENTRAL_TRACKING_LABEL = 'link.community-central';
 
@@ -98,8 +100,10 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
+
+		$server = $this->product === static::PRODUCT_FANDOMS ? static::HOMEPAGE_URL : $wgServer;
 		if ( $useWikiBaseDomain ) {
-			$url = wfForceBaseDomain( $url, $wgServer );
+			$url = wfForceBaseDomain( $url, $server );
 		}
 		return $url;
 	}
