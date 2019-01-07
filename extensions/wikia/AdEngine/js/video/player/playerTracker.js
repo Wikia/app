@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
@@ -19,6 +20,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	browserDetect,
 	log,
 	win,
+	bidders,
 	billTheLizard,
 	floater
 ) {
@@ -71,8 +73,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
 			};
 
-		if (bidHelper && params.bid) {
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+		if (bidders && params.bid) {
+			trackingData['price'] = bidders.transformPriceFromBid(params.bid);
 			trackingData['vast_id'] = params.bid.creativeId || emptyValue.string;
 		}
 

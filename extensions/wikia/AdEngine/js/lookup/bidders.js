@@ -51,6 +51,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	return {
 		addResponseListener: addResponseListener,
 		getBidByAdId: adEngineBidders.bidders.prebidHelper.getBidByAdId,
+		getBidParameters: adEngineBidders.bidders.getBidParameters,
 		getCurrentSlotPrices: adEngineBidders.bidders.getCurrentSlotPrices,
 		getDfpSlotPrices: adEngineBidders.bidders.getDfpSlotPrices,
 		getName: getName,
@@ -58,6 +59,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 		getWinningVideoBidBySlotName: adEngineBidders.bidders.prebidHelper.getWinningVideoBidBySlotName,
 		isEnabled: isEnabled,
 		runBidding: runBidding,
+		transformPriceFromBid: adEngineBidders.bidders.transformPriceFromBid,
 		updateSlotTargeting: adEngineBidders.bidders.updateSlotTargeting,
 		wasCalled: isEnabled
 	};

@@ -61,8 +61,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
-			return prebid.getSlotParams(featuredVideoSlotName);
+		if (bidders && bidders.isEnabled()) {
+			return bidders.getBidParameters(featuredVideoSlotName);
 		}
 
 		return {};
@@ -101,7 +101,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		};
 
 		function requestBidder() {
-			if (!prebidWrapper) {
+			if (!bidders) {
 				return;
 			}
 
