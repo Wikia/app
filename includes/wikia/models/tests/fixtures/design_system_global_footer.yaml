@@ -12,7 +12,7 @@ city_list:
     city_cluster: c2
     city_dbname: memoryalpha
   - city_id: 3
-    city_url: http://fandom.wikia.com
+    city_url: https://www.fandom.com
     city_sitename: Fandom
     city_vertical: 0
     city_cluster: c3
