@@ -46,11 +46,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			instantGlobals = {
 				wgAdDriverAbTestIdTargeting: 1
-			},
-			prebid = {
-				get: function () {
-					return mocks.pbjs;
-				}
 			};
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
@@ -58,8 +53,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
-			bidders,
-            prebid
+			bidders
         );
 	}
 

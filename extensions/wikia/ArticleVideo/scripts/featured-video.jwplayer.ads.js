@@ -12,9 +12,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.wrappers.prebid'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
 	vastUrlBuilder,
@@ -28,9 +26,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	fvLagger,
 	log,
 	win,
-	prebidWrapper,
-	bidders,
-	prebid
+	bidders
 ) {
 	'use strict';
 
@@ -109,9 +105,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				return;
 			}
 
-			var bid = bidders && bidders.isEnabled()
-				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
-				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';

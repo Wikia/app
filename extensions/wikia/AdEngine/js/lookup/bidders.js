@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	}
 
 	function isEnabled() {
-		return adContext.get('bidders.prebidAE3') && adContext.get('opts.showAds');
+		return adContext.get('bidders.prebid') && adContext.get('opts.showAds');
 	}
 
 	function addResponseListener(callback) {

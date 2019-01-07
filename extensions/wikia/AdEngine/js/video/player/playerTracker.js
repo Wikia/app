@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
@@ -20,7 +19,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	browserDetect,
 	log,
 	win,
-	bidHelper,
 	billTheLizard,
 	floater
 ) {
