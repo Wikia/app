@@ -7,7 +7,11 @@ require(['wikia.trackingOptIn', 'mw'], function (trackingOptIn, mw) {
 
 		trackingSettingsButton.classList.add('privacy-settings-button', 'wds-button');
 
-		trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
+		if (mw.config.get('wgCookieDomain') === '.' + mw.config.get('wgWikiaBaseDomain')) {
+			trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle').text();
+		} else {
+			trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle-fandom').text();
+		}
 		trackingSettingsButton.addEventListener('click', function () {
 			trackingOptIn.reset();
 		});

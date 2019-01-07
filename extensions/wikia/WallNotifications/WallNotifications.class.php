@@ -38,11 +38,10 @@ class WallNotifications {
 	 * @param int $wikiId The wikia on which the notifications originated
 	 * @param int $readSlice Max number of already read messages to show
 	 * @param bool $countOnly Set to true to only return a count.  This should be split out to another function
-	 * @param bool $notifyEveryone
 	 *
 	 * @return array|Mixed
 	 */
-	public function getWikiNotifications( $userId, $wikiId, $readSlice = 5, $countOnly = false, $notifyEveryone = false ) {
+	public function getWikiNotifications( $userId, $wikiId, $readSlice = 5, $countOnly = false ) {
 
 		$list = $this->getWikiNotificationList( $userId, $wikiId );
 		if ( empty( $list ) ) {
@@ -91,14 +90,12 @@ class WallNotifications {
 					}
 				}
 			} else {
-				if ( empty( $notifyRelation['notifyeveryone'] ) || $notifyEveryone ) {
-					$unread[] = [
-						"grouped" => $grouped,
-						"count" => 	empty( $notifyRelation['count'] )
-									? count( $notifyRelation['list'] )
-									: $notifyRelation['count']
-					];
-				}
+				$unread[] = [
+					"grouped" => $grouped,
+					"count" => 	empty( $notifyRelation['count'] )
+								? count( $notifyRelation['list'] )
+								: $notifyRelation['count']
+				];
 			}
 		}
 
@@ -184,14 +181,14 @@ class WallNotifications {
 			$this->getCountsCacheKey( $userId ),
 			self::TTL,
 			function() use ( $userId ) {
-				global $wgMemc, $wgCityId;
+				global $wgCityId;
 
 				$wikiList = $this->getWikiList( $userId );
 
 				$output = [];
 				$total = 0;
 				foreach ( $wikiList as $wiki ) {
-					$wiki['unread'] = $this->getCount( $userId, $wiki['id'], $wiki['id'] == $wgCityId );
+					$wiki['unread'] = $this->getCount( $userId, $wiki['id'] );
 					$total += $wiki['unread'];
 					// show only Wikis with unread notifications
 					// current Wiki is an exception (show always)
@@ -231,13 +228,12 @@ class WallNotifications {
 	 * Returns number of unread user's notifications for wiki
 	 * @param int $userId
 	 * @param int $wikiId
-	 * @param bool $notifyeveryone
 	 * @return int
 	 */
-	private function getCount( $userId, $wikiId, $notifyeveryone = false ) {
+	private function getCount( $userId, $wikiId ) {
 		// fixme
 		// should not to do the whole work of WikiNotifications
-		$notifs = $this->getWikiNotifications( $userId, $wikiId, 5, true, $notifyeveryone );
+		$notifs = $this->getWikiNotifications( $userId, $wikiId, 5, true );
 		return $notifs['unread_count'];
 	}
 
@@ -537,7 +533,6 @@ class WallNotifications {
 				'entity_key' => $notification->id,
 				'author_id' => $notifData->msg_author_id,
 				'is_reply' => $notification->isReply(),
-				'notifyeveryone' => $notifData->notifyeveryone
 			]
 		);
 	}
@@ -746,10 +741,6 @@ class WallNotifications {
 		$this->cleanEntitiesFromDB();
 	}
 
-	protected function random_msleep( $max = 20 ) {
-		usleep( rand( 1, $max * 1000 ) );
-	}
-
 	protected function remNotificationFromData( &$data, $uniqueId ) {
 		if ( isset( $data['relation'][ $uniqueId ]['last'] ) && $data['relation'][ $uniqueId ]['last'] > -1 ) {
 			unset( $data['notification'][ $data['relation'][$uniqueId ]['last'] ] );
@@ -763,7 +754,6 @@ class WallNotifications {
 		$isReply = $notificationData['is_reply'];
 		$authorId = $notificationData['author_id'];
 		$read = $notificationData['is_read'];
-		$notifyeveryone = $notificationData['notifyeveryone'];
 
 		// The code will call this method twice for the same notification at times.  Rather than unwind this terrible
 		// mess of logic and state, just make sure we don't add the same notification twice.
@@ -891,7 +881,6 @@ class WallNotifications {
 				'isReply' => $isReply
 			];
 			$data['relation'][ $uniqueId ]['count'] += 1;
-			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
 		}
 
 		$data['relation'][ $uniqueId ]['read'] = $read;
@@ -1007,7 +996,7 @@ class WallNotifications {
 			// fetch notification entries for pre fetched unique ids
 			$res = $db->select(
 				'wall_notification',
-				['id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id', 'notifyeveryone'],
+				['id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id' ],
 				[
 					'user_id' => $userId,
 					'wiki_id' => $wikiId,

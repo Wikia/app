@@ -24,14 +24,7 @@
 			<? if ( $showMiniEditor ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
-			<?php if($notify_everyone): ?>
-				<?php //never use in wall just for example?>
-				<input type="checkbox" name="NotifyEveryone" id="NotifyEveryone" value="1" />
-			<?php endif; ?>
 			<div id="WallMessageBodyButtons" class="speech-bubble-buttons" data-space-type="buttons">
-				<label class="highlight">
-					<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" />
-				</label>
 				<button id="WallMessageSubmit" disabled="disabled"><?= wfMessage( 'wall-button-to-submit-comment' )->escaped(); ?></button>
 				
 				<button class="secondary" id="WallMessagePreview" disabled="disabled"><?= wfMessage( 'wall-button-to-preview-comment' )->escaped(); ?></button>

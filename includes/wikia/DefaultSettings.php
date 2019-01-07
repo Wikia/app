@@ -1004,6 +1004,20 @@ $wgAdDriverA9BidderCountries = null;
 $wgAdDriverA9OptOutCountries = null;
 
 /**
+ * @name $wgAdDriverA9BidRefreshingCountries
+ * List of countries where A9 bids can refreshed
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidRefreshingCountries = null;
+
+/**
+ * @name $wgAdDriverA9IncontentBoxadCountries
+ * List of countries where A9 is used for incontent boxads
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9IncontentBoxadCountries = null;
+
+/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */

@@ -4,6 +4,9 @@
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-components/tabs';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -36,10 +39,116 @@
 			line-height: 19px;
 		}
 	}
+
+	.pi-section-navigation {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		-ms-overflow-style: none;
+		overflow: -moz-scrollbars-none;
+		scrollbar-width: none; // Fx only
+
+		&:after,
+		&:before {
+			align-self: stretch;
+			content: '';
+			width: 100%;
+		}
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.pi-section-label {
+		color: $color-links;
+	}
+}
+
+.pi-panel-scroll-wrapper {
+	$shadow-color: rgba($wds-color-black, 0.25);
+
+	@if $is-dark-wiki {
+		$shadow-color: rgba($wds-color-white, 0.4);
+	}
+
+	position: relative;
+
+	&:after,
+	&:before {
+		content: '';
+		height: 100%;
+		opacity: 0;
+		position: absolute;
+		transition: opacity 0.3s;
+		top: 0;
+		width: 10px;
+		z-index: 1;
+	}
+
+	&:before {
+		background-image: radial-gradient(farthest-side at 0 50%, $shadow-color, transparent);
+		left: 0;
+	}
+
+	&.pi-panel-scroll-left:before {
+		opacity: 1;
+	}
+
+	&:after {
+		background-image: radial-gradient(farthest-side at 100% 50%, $shadow-color, transparent);
+		right: 0;
+	}
+
+	&.pi-panel-scroll-right:after {
+		opacity: 1;
+	}
 }
 
 @include commonElementsStyles;
 @include individualElementsStyles;
+
+// **********  Styles for Panels  ********** //
+// extending wds classes to not expose them in infobox markup
+.pi-section-navigation {
+	@extend .wds-tabs;
+}
+
+.pi-section-tab {
+	@extend .wds-tabs__tab;
+
+	&:hover {
+		$toggle-hover-color: darken($color-links, 20%);
+
+		&.pi-section-active {
+			// keep in sync with .wds-is-current
+			@include wds-box-underline($toggle-hover-color);
+		}
+
+		.pi-section-label {
+			color: $toggle-hover-color;
+		}
+	}
+
+	&.pi-section-active {
+		// keep in sync with .wds-is-current
+		@include wds-box-underline($color-links);
+	}
+}
+
+.pi-section-label {
+	@extend .wds-tabs__tab-label;
+}
+
+.pi-section-content {
+	display: none;
+
+	&.pi-section-active {
+		display: block;
+	}
+}
 
 // **********  Special styles for HORIZONTAL group  ********** //
 

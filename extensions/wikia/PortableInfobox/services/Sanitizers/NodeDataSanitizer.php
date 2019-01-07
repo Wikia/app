@@ -1,7 +1,7 @@
 <?php
 
 class NodeDataSanitizer extends NodeSanitizer {
-	protected $allowedTags = [ 'a' ];
+	protected $allowedTags = [ 'a' , 'br' ];
 
 	/**
 	 * @desc remove all HTML tags but links from data labels.
