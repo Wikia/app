@@ -50,7 +50,10 @@ define(
 			category: 'create-new-wiki',
 			trackingMethod: 'analytics'
 		}),
+		wikiaBaseDomain = window.wgWikiaBaseDomain,
 		fandomBaseDomain = window.wgFandomBaseDomain,
+		shouldCreateLanguageWikisWithPath = window.wgCreateLanguageWikisWithPath,
+		shouldCreateEnglishWikisOnFandomCom = window.wgCreateEnglishWikisOnFandomCom,
 		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
@@ -317,14 +320,27 @@ define(
 		checkWikiName();
 		checkDomain();
 		var selected = $(this).val();
-		if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
-			wikiBaseDomain.text(fandomBaseDomain + '/' + selected);
-		} else {
-			wikiBaseDomain.text(fandomBaseDomain);
+		if (shouldCreateEnglishWikisOnFandomCom) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain);
+			} else {
+				wikiBaseDomain.text(fandomBaseDomain);
+			}
 		}
+		if (shouldCreateLanguageWikisWithPath) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
+			}
+		} else {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiDomainCountry.html(selected + '.');
+			} else {
+				wikiDomainCountry.html('');
+			}
 
-		if (!wikiDomainLabel.hasClass('active')) {
-			wikiDomainLabel.css('left', wikiDomain.position().left);
+			if (!wikiDomainLabel.hasClass('active')) {
+				wikiDomainLabel.css('left', wikiDomain.position().left);
+			}
 		}
 
 		track({
