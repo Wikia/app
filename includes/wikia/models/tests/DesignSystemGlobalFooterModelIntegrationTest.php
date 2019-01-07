@@ -99,7 +99,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 			[
 				3,
 				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
-				'http://fandom.wikia.com',
+				'https://www.fandom.com',
 				'Fandom',
 				'foo',
 				'',
