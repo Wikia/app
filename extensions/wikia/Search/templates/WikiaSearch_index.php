@@ -89,7 +89,6 @@
 
 			</div>
 			<div class="SearchAdsTopWrapper WikiaRail <?= !empty( $isGridLayoutEnabled ) ? 'grid-2' : '' ?> alpha">
-				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']] ); ?>
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'TOP_BOXAD', 'pageTypes' => ['search']] ); ?>
 				<?php if ( !empty( $wikiMatch ) ):?>
 					<?= $wikiMatch ?>
