@@ -148,7 +148,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( $isCorporatePageOrFandom && $this->lang === static::DEFAULT_LANG ) {
 			$search['results']['param-name'] = 's';
-			$search['results']['url'] = 'http://fandom.wikia.com/';
+			$search['results']['url'] = 'https://www.fandom.com/';
 			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-fandom';
 		} elseif ( $isCorporatePageOrFandom ) {
 			// Non-English Fandom or non-English corporate pages
