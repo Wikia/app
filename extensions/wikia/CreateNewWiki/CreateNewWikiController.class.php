@@ -25,7 +25,8 @@ class CreateNewWikiController extends WikiaController {
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
-			   $wgRequest, $wgUser, $wgFandomBaseDomain, $wgAllowCommunityBuilderCNWPrompt;
+			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain,
+			   $wgAllowCommunityBuilderCNWPrompt;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -93,7 +94,7 @@ class CreateNewWikiController extends WikiaController {
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
-		$this->wikiBaseDomain = $wgFandomBaseDomain;
+		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
 	}
