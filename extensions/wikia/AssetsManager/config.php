@@ -57,7 +57,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
-		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -178,6 +177,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
+		'//extensions/wikia/AdEngine/dist/prebid.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
@@ -188,7 +188,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/bidders.js',
-		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizardExecutor.js',
 		'//extensions/wikia/AdEngine/js/ml/bucketizers.js',
@@ -217,14 +216,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/hmdRecLoader.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
-	],
-];
-
-$config['adengine2_a9_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/a9.js',
 	],
 ];
 
@@ -759,6 +750,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
+		'//extensions/wikia/AdEngine/dist/prebid.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
@@ -809,10 +801,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//extensions/wikia/AdEngine/js/video/vastDebugger.js',
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
-		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-
-		// Use Prebid.js built in @wikia/ad-products
-		'//extensions/wikia/AdEngine/dist/prebid.js'
+		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js'
 	],
 ];
 
