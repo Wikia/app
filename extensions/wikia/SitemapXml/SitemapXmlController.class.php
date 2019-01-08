@@ -150,14 +150,10 @@ class SitemapXmlController extends WikiaController {
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
 			$prev = "0";
 			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as $page ) {
-				if($prev) {
-					$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $page->page_id . '-'.$prev.'.xml';
-					$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
-				}
+				$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' .$prev. '-' . $page->page_id .'.xml';
+				$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 				$prev = $page->page_id;
 			}
-			$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-0-' . $prev . '.xml';
-			$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 		}
 
 		if ( $wgEnableDiscussions ) {

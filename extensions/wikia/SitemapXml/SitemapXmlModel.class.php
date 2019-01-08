@@ -32,15 +32,16 @@ class SitemapXmlModel extends WikiaModel {
 	 * @return bool|mixed
 	 */
 	public function getSubSitemaps( $namespace, $limit ) {
+		$mainSQL = $this->getQuery( $namespace );
 		$sql = (new WikiaSQL())
 			->SELECT()
 			->FIELD( 'page_id' , 'rownum')
-			->FROM( "(SELECT @x:=-1) AS x,(".$this->getQuery( $namespace )
+			->FROM( "(SELECT @x:=1) AS x, (".$mainSQL->injectParams($this->dbr, $this->getQuery( $namespace )
 					->FIELD( 'page_id' )
-					->FIELD("(@x:=@x+1)" )->AS_("rownum")
+					->FIELD("(@x:=@x+1)" )->AS_("rownum")->build())
 				.")")->AS_("db")
 			->WHERE("rownum MOD ".$limit)->EQUAL_TO("0")
-			->ORDER_BY("page_id DESC");
+			->OR_("db.page_id = (".$mainSQL->injectParams($this->dbr,$mainSQL->FIELD( 'max(page.page_id)' )->build()).") ");
 
 		return $sql->run( $this->dbr, function ( $result ) {
 			while ( $row = $result->fetchObject() ) {
@@ -101,7 +102,8 @@ class SitemapXmlModel extends WikiaModel {
 			->SELECT()
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( $namespace )
-			->AND_( 'page_is_redirect' )->EQUAL_TO( false );
+			->AND_( 'page_is_redirect' )->EQUAL_TO( false )
+			->ORDER_BY("page_id");
 
 		if ( $namespace === NS_CATEGORY ) {
 			$sql->JOIN( 'category' )->ON( 'page.page_title', 'category.cat_title')
