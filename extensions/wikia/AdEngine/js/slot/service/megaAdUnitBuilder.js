@@ -13,7 +13,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'INVISIBLE_SKIN',
 			'BOTTOM_LEADERBOARD'
 		],
-		context;
+		context,
+		WKA1 = 'wka1b',
+		WKA2 = 'wka2b',
+		shortSlotNameRegexp = new RegExp('^.*\/(' + WKA1 + '|' + WKA2 + ').[\\w]+\/([^\/]*)\/.*$');
 
 	if (adContext.get('opts.incontentPlayerRail.enabled')) {
 		megaSlots.push('INCONTENT_PLAYER');
@@ -60,8 +63,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDeviceSpecial(params),
-			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
-			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
+			provider = src.indexOf('remnant') === -1 ? WKA1: WKA2,
+			wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki',
 			vertical = params.s0;
 
 		adUnitElements = [
@@ -89,11 +92,11 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function isValid(adUnit) {
-		return adUnit.indexOf('wka1a.') !== -1 || adUnit.indexOf('wka2a.') !== -1;
+		return adUnit.indexOf(WKA1 + '.') !== -1 || adUnit.indexOf(WKA2 + '.') !== -1;
 	}
 
 	function getShortSlotName(adUnit) {
-		return adUnit.replace(/^.*\/(wka1a|wka2a)\.[\w]+\/([^\/]*)\/.*$/, function () {
+		return adUnit.replace(shortSlotNameRegexp, function () {
 			if (arguments[2]) {
 				return arguments[2].toUpperCase();
 			}
