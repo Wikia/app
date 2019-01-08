@@ -59,11 +59,11 @@ class PrepareDomainTest extends \WikiaBaseTest {
 	}
 
 	public function testPrepareEnglishWiki() {
-		global $wgFandomBaseDomain;
-
 		$taskContext = new TaskContext( [
 			'language' => 'en',
 			'inputDomain' => 'starwars',
+			'shouldCreateLanguageWikiWithPath' => true,
+			'shouldCreateEnglishWikisOnFandomCom' => false,
 		] );
 
 		$prepareDomainTask = new PrepareDomain( $taskContext );
@@ -72,16 +72,16 @@ class PrepareDomainTest extends \WikiaBaseTest {
 
 		$this->assertTrue( $result->isOk() );
 
-		$this->assertEquals( "starwars.$wgFandomBaseDomain", $taskContext->getDomain() );
-		$this->assertEquals( "http://starwars.$wgFandomBaseDomain/", $taskContext->getURL() );
+		$this->assertEquals( 'starwars.wikia.com', $taskContext->getDomain() );
+		$this->assertEquals( 'http://starwars.wikia.com/', $taskContext->getURL() );
 	}
 
 	public function testPrepareLanguageWikiWithPath() {
-		global $wgFandomBaseDomain;
-
 		$taskContext = new TaskContext( [
 			'language' => 'de',
 			'inputDomain' => 'starwars',
+			'shouldCreateLanguageWikiWithPath' => true,
+			'shouldCreateEnglishWikisOnFandomCom' => false,
 		] );
 
 		$prepareDomainTask = new PrepareDomain( $taskContext );
@@ -90,8 +90,62 @@ class PrepareDomainTest extends \WikiaBaseTest {
 
 		$this->assertTrue( $result->isOk() );
 
-		$this->assertEquals( "starwars.$wgFandomBaseDomain/de", $taskContext->getDomain() );
-		$this->assertEquals( "http://starwars.$wgFandomBaseDomain/de/", $taskContext->getURL() );
+		$this->assertEquals( 'starwars.wikia.com/de', $taskContext->getDomain() );
+		$this->assertEquals( 'http://starwars.wikia.com/de/', $taskContext->getURL() );
+	}
+
+	public function testPrepareLanguageWikiNoPath() {
+		$taskContext = new TaskContext( [
+			'language' => 'de',
+			'inputDomain' => 'starwars',
+			'shouldCreateLanguageWikiWithPath' => false,
+			'shouldCreateEnglishWikisOnFandomCom' => false,
+		] );
+
+		$prepareDomainTask = new PrepareDomain( $taskContext );
+
+		$result = $prepareDomainTask->prepare();
+
+		$this->assertTrue( $result->isOk() );
+
+		$this->assertEquals( 'de.starwars.wikia.com', $taskContext->getDomain() );
+		$this->assertEquals( 'http://de.starwars.wikia.com/', $taskContext->getURL() );
+	}
+
+	public function testPrepareEnglishWikiWithFandomCom() {
+		$taskContext = new TaskContext( [
+			'language' => 'en',
+			'inputDomain' => 'starwars',
+			'shouldCreateLanguageWikiWithPath' => false,
+			'shouldCreateEnglishWikisOnFandomCom' => true,
+		] );
+
+		$prepareDomainTask = new PrepareDomain( $taskContext );
+
+		$result = $prepareDomainTask->prepare();
+
+		$this->assertTrue( $result->isOk() );
+
+		$this->assertEquals( 'starwars.fandom.com', $taskContext->getDomain() );
+		$this->assertEquals( 'http://starwars.fandom.com/', $taskContext->getURL() );
+	}
+
+	public function testPrepareLanguageWikiWithFandomCom() {
+		$taskContext = new TaskContext( [
+			'language' => 'de',
+			'inputDomain' => 'starwars',
+			'shouldCreateLanguageWikiWithPath' => false,
+			'shouldCreateEnglishWikisOnFandomCom' => true,
+		] );
+
+		$prepareDomainTask = new PrepareDomain( $taskContext );
+
+		$result = $prepareDomainTask->prepare();
+
+		$this->assertTrue( $result->isOk() );
+
+		$this->assertEquals( 'de.starwars.wikia.com', $taskContext->getDomain() );
+		$this->assertEquals( 'http://de.starwars.wikia.com/', $taskContext->getURL() );
 	}
 
 	/**

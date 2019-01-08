@@ -5,6 +5,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const HOMEPAGE_URL = 'https://www.fandom.com';
+
 	private $product;
 	private $productInstanceId;
 	private $lang;
@@ -102,8 +104,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
+
+		$server = $this->product === static::PRODUCT_FANDOMS ? static::HOMEPAGE_URL : $wgServer;
 		if ( $useWikiBaseDomain ) {
-			$url = wfForceBaseDomain( $url, $wgServer );
+			$url = wfForceBaseDomain( $url, $server );
 		}
 		return $url;
 	}
@@ -148,7 +152,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( $isCorporatePageOrFandom && $this->lang === static::DEFAULT_LANG ) {
 			$search['results']['param-name'] = 's';
-			$search['results']['url'] = 'http://fandom.wikia.com/';
+			$search['results']['url'] = 'https://www.fandom.com/';
 			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-fandom';
 		} elseif ( $isCorporatePageOrFandom ) {
 			// Non-English Fandom or non-English corporate pages
