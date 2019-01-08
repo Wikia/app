@@ -14,9 +14,9 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		$mixedContentFooter = $('#mixed-content-footer'),
 		templatePaths = {
 			article: 'client/Recirculation_article.mustache',
-            topic: 'client/Recirculation_topic.mustache',
-            storyStream: 'client/Recirculation_storyStream.mustache',
-            sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
+			topic: 'client/Recirculation_topic.mustache',
+			storyStream: 'client/Recirculation_storyStream.mustache',
+			sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
 		};
 
 	function render(data) {
@@ -46,14 +46,22 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			$wikiArticleHook = $('.mcf-card-wiki-placeholder'),
 			$sponsoredContentHook = $('.mcf-card-sponsored-content');
 
-        if (sponsoredContent) {
-            $sponsoredContentHook.replaceWith(
-                utils.renderTemplate(
-                    templates[templatePaths.sponsoredContent],
-                    $.extend(true, {}, sponsoredContent, { shortTitle: sponsoredContent.title.substring(0, 80) + '...' })
-                )
-            );
-        }
+		if (sponsoredContent) {
+			$sponsoredContentHook.replaceWith(
+				utils.renderTemplate(
+					templates[templatePaths.sponsoredContent],
+					$.extend(
+						true,
+						{},
+						sponsoredContent,
+						{
+							shortTitle: sponsoredContent.title.substring(0, 80) + '...',
+							attributionLabel: sponsoredContent.attributionLabel || 'Sponsored by'
+						}
+					)
+				)
+			);
+		}
 
 		$.each($newsAndStoriesHook, function (index) {
 			var $this = $(this),

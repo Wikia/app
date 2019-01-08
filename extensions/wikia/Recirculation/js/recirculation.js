@@ -61,16 +61,16 @@ require([
 			liftigniter.prepare(mixedContentFooter.nsItems),
 			getPopularPages(),
 			discussions.prepare(),
-            sponsoredContentHelper.fetch()
+			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-                viewFactory().render({
+				viewFactory().render({
 					nsItems: nsItems,
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		});
@@ -80,7 +80,7 @@ require([
 		var mixedContentFooterData = [
 			getPopularPages(),
 			discussions.prepare(),
-            sponsoredContentHelper.fetch()
+			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
@@ -88,7 +88,7 @@ require([
 				viewFactory().render({
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		});
