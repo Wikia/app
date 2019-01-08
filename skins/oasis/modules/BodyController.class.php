@@ -146,6 +146,8 @@ class BodyController extends WikiaController {
 	}
 
 	public function getRailModuleList() {
+		global $wgWatchShowURL;
+
 		$title = $this->getContext()->getTitle();
 		$user = $this->getContext()->getUser();
 
@@ -240,6 +242,10 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1441] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_BOXAD' ] ];
+
+		if ( !empty( $wgWatchShowURL ) ) {
+			$railModuleList[1442] = [ 'WatchShowService', 'index', null ];
+		}
 
 		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 
