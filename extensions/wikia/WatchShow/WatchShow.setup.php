@@ -5,7 +5,7 @@
  * @see IW-1470
  */
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
 
 // Autoload
 $wgAutoloadClasses['WatchShowHooks'] = $dir . 'WatchShowHooks.class.php';
@@ -16,3 +16,4 @@ $wgAutoloadClasses['WatchShowService'] = $dir . 'WatchShowService.class.php';
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'WatchShowHooks::onBeforePageDisplay';
 $wgHooks['MercuryWikiVariables'][] = 'WatchShowHooks::onMercuryWikiVariables';
+$wgHooks['GetRailModuleList'][] = 'WatchShowHooks::onGetRailModuleList';
