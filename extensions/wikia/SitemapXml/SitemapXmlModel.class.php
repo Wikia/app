@@ -39,7 +39,8 @@ class SitemapXmlModel extends WikiaModel {
 					->FIELD( 'page_id' )
 					->FIELD("(@x:=@x+1)" )->AS_("rownum")
 				.")")->AS_("db")
-			->WHERE("rownum MOD ".$limit)->EQUAL_TO("0");
+			->WHERE("rownum MOD ".$limit)->EQUAL_TO("0")
+			->ORDER_BY("page_id DESC");
 
 		return $sql->run( $this->dbr, function ( $result ) {
 			while ( $row = $result->fetchObject() ) {
