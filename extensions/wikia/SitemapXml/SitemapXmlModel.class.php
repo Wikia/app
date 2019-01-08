@@ -26,6 +26,29 @@ class SitemapXmlModel extends WikiaModel {
 	}
 
 	/**
+	 * Get all subpages
+	 * @param int $namespace
+	 * @param int $limit
+	 * @return bool|mixed
+	 */
+	public function getSubSitemaps( $namespace, $limit ) {
+		$sql = (new WikiaSQL())
+			->SELECT()
+			->FIELD( 'page_id' , 'rownum')
+			->FROM( "(SELECT @x:=-1) AS x,(".$this->getQuery( $namespace )
+			->FIELD( 'page_id' )
+			->FIELD("(@x:=@x+1)" )->AS_("rownum")
+			.")")->AS_("db")
+			->WHERE("rownum MOD ".$limit)->EQUAL_TO("0");
+
+		return $sql->run( $this->dbr, function ( $result ) {
+			while ( $row = $result->fetchObject() ) {
+				yield $row;
+			}
+		} );
+	}
+
+	/**
 	 * Get list of items for the namespace
 	 *
 	 * @param int $namespace
@@ -46,6 +69,28 @@ class SitemapXmlModel extends WikiaModel {
 	}
 
 	/**
+	 * Get list of items for the namespace
+	 *
+	 * @param int $namespace
+	 * @param int $begin
+	 * @param int $end
+	 * @return WikiaSQL
+	 */
+	public function getItemsBetween($namespace, $begin, $end ) {
+		$sql = $this->getQuery( $namespace )
+			->FIELD( 'page_namespace', 'page_title', 'page_touched' );
+		if($end) {
+			$sql = $sql->AND_("page_id")->BETWEEN($begin, $end);
+		}
+
+		return $sql->run( $this->dbr, function ( $result ) {
+			while ( $row = $result->fetchObject() ) {
+				yield $row;
+			}
+		} );
+	}
+
+	/**
 	 * Get query
 	 * @param int $namespace
 	 * @return WikiaSQL
@@ -55,8 +100,7 @@ class SitemapXmlModel extends WikiaModel {
 			->SELECT()
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( $namespace )
-			->AND_( 'page_is_redirect' )->EQUAL_TO( false )
-			->ORDER_BY( 'page_id' );
+			->AND_( 'page_is_redirect' )->EQUAL_TO( false );
 
 		if ( $namespace === NS_CATEGORY ) {
 			$sql->JOIN( 'category' )->ON( 'page.page_title', 'category.cat_title')
