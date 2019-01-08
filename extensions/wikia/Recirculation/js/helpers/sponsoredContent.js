@@ -1,10 +1,10 @@
 define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
-	'use strict';
+    'use strict';
 
-	var userGeo = Geo.getCountryCode();
+    var userGeo = Geo.getCountryCode();
 
-	function fetch() {
-		var mock = [
+    function fetch() {
+        var mock = [
             {
                 "id": 0,
                 "url": "https://starwars.wikia.com/wiki/Yoda",
@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
                     "US"
                 ],
                 "title": "Yoda",
-                "siteName": "Hulu"
+                "attribution": "Hulu"
             },
             {
                 "id": 0,
@@ -23,7 +23,8 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
                 "weight": 25,
                 "geos": [],
                 "title": "Elmo",
-                "siteName": "Hulu"
+                "attribution": "Hulu",
+                "attributionLabel": "Provided by"
             },
             {
                 "id": 0,
@@ -34,7 +35,8 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
                     "DE"
                 ],
                 "title": "Luke",
-	            "siteName": "Netflix"
+                "attribution": "Netflix",
+                "attributionLabel": "Provided by"
             },
             {
                 "id": 0,
@@ -46,52 +48,52 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
                     "AU"
                 ],
                 "title": "Kermit",
-                "siteName": "Netflix"
+                "attribution": "Netflix"
             }
         ];
 
-		return mock;
-		// return $.ajax();
-	}
+        return mock;
+        // return $.ajax();
+    }
 
-	function getSponsoredItem(sponsoredContent) {
-		var applicableContent = getApplicableContent(sponsoredContent);
-		var sumOfWeights = getWeightsSum(applicableContent);
-		var ranges = getMaxRanges(applicableContent, sumOfWeights);
-		var applicableRanges = getApplicableRanges(ranges, Math.random());
-		var firstApplicableIndex = applicableContent.length - applicableRanges.length;
+    function getSponsoredItem(sponsoredContent) {
+        var applicableContent = getApplicableContent(sponsoredContent);
+        var sumOfWeights = getWeightsSum(applicableContent);
+        var ranges = getMaxRanges(applicableContent, sumOfWeights);
+        var applicableRanges = getApplicableRanges(ranges, Math.random());
+        var firstApplicableIndex = applicableContent.length - applicableRanges.length;
 
-		return applicableContent[firstApplicableIndex];
-	}
+        return applicableContent[firstApplicableIndex];
+    }
 
-	function getApplicableContent(sponsoredContent) {
-		return sponsoredContent.filter(function (el) {
+    function getApplicableContent(sponsoredContent) {
+        return sponsoredContent.filter(function (el) {
             return !el.geos.length || el.geos.indexOf(userGeo) !== -1;
-		});
-	}
+        });
+    }
 
-	function getWeightsSum(applicableContent) {
+    function getWeightsSum(applicableContent) {
         return applicableContent.reduce(function (sum, el) {
-        	return sum + el.weight;
+            return sum + el.weight;
         }, 0);
-	}
+    }
 
-	function getMaxRanges(applicableContent, totalSum) {
-		return applicableContent.map(function (el, index, arr) {
-			var currentSum = getWeightsSum(arr.slice(0, index + 1));
+    function getMaxRanges(applicableContent, totalSum) {
+        return applicableContent.map(function (el, index, arr) {
+            var currentSum = getWeightsSum(arr.slice(0, index + 1));
 
-            return currentSum/totalSum;
-		});
-	}
+            return currentSum / totalSum;
+        });
+    }
 
-	function getApplicableRanges(maxRanges, number) {
-		return maxRanges.filter(function (el) {
-			return el >= number;
-		});
-	}
+    function getApplicableRanges(maxRanges, number) {
+        return maxRanges.filter(function (el) {
+            return el >= number;
+        });
+    }
 
-	return {
+    return {
         fetch: fetch,
         getSponsoredItem: getSponsoredItem
-	};
+    };
 });
