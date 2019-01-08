@@ -11,7 +11,13 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			category: 'mixed-content-footer',
 			trackingMethod: 'analytics'
 		}),
-		$mixedContentFooter = $('#mixed-content-footer');
+		$mixedContentFooter = $('#mixed-content-footer'),
+		templatePaths = {
+			article: 'client/Recirculation_article.mustache',
+            topic: 'client/Recirculation_topic.mustache',
+            storyStream: 'client/Recirculation_storyStream.mustache',
+            sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
+		};
 
 	function render(data) {
 		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
@@ -30,29 +36,39 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			})
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
-				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
+				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredContent);
 				setupTracking();
-			})
+			});
 	}
 
-	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
+	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList, sponsoredContent) {
 		var $newsAndStoriesHook = $('.mcf-card-ns-placeholder'),
-			$wikiArticleHook = $('.mcf-card-wiki-placeholder');
+			$wikiArticleHook = $('.mcf-card-wiki-placeholder'),
+			$sponsoredContentHook = $('.mcf-card-sponsored-content');
+
+        if (sponsoredContent) {
+            $sponsoredContentHook.replaceWith(
+                utils.renderTemplate(
+                    templates[templatePaths.sponsoredContent],
+                    $.extend(true, {}, sponsoredContent, { shortTitle: sponsoredContent.title.substring(0, 80) + '...' })
+                )
+            );
+        }
 
 		$.each($newsAndStoriesHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
+				template = templates[templatePaths.article],
 				newsAndStoriesItem = newsAndStoriesList[index],
 				type;
 
-			if(newsAndStoriesItem) {
+			if (newsAndStoriesItem) {
 				type = newsAndStoriesItem.type;
 				newsAndStoriesItem.shortTitle = newsAndStoriesItem.title;
 				if (type === 'topic') {
-					template = templates['client/Recirculation_topic.mustache'];
+					template = templates[templatePaths.topic];
 					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
 				} else if (type === 'storyStream') {
-					template = templates['client/Recirculation_storyStream.mustache'];
+					template = templates[templatePaths.storyStream];
 					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
 				} else if (type === 'video') {
 					newsAndStoriesItem.video = true;
@@ -68,17 +84,18 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 		$.each($wikiArticleHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
+				template = templates[templatePaths.article],
 				wikiArticle = wikiArticlesList[index];
-				wikiArticle.shortTitle = wikiArticle.title;
 
-			if(wikiArticle) {
+			if (wikiArticle) {
 				if (!wikiArticle.thumbnail) {
 					wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
 				}
 
 				if (wikiArticle.title.length > 90) {
 					wikiArticle.shortTitle = wikiArticle.title.substring(0, 80) + '...';
+				} else {
+                    wikiArticle.shortTitle = wikiArticle.title;
 				}
 
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
@@ -91,16 +108,16 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function getTemplateList(newsAndStoriesArticles) {
-		var templateList = ['client/Recirculation_article.mustache'],
+		var templateList = [templatePaths.article, templatePaths.sponsoredContent],
 			topicExist = false,
 			storyStreamExist = false;
 
 		newsAndStoriesArticles.forEach(function (article) {
 			if (article.type === 'topic' && !topicExist) {
-				templateList.push('client/Recirculation_topic.mustache');
+				templateList.push(templatePaths.topic);
 				topicExist = true;
 			} else if (article.type === 'storyStream' && !storyStreamExist) {
-				templateList.push('client/Recirculation_storyStream.mustache');
+				templateList.push(templatePaths.storyStream);
 				storyStreamExist = true;
 			}
 		});

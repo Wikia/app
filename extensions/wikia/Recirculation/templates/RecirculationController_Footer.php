@@ -34,7 +34,7 @@
 			</div>
 
 			<div class="mcf-column">
-				<div class="mcf-card-ns-placeholder" data-tracking="card-2"></div>
+				<div class="mcf-card-ns-placeholder mcf-card-sponsored-content" data-tracking="card-2"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-5"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-8"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-11"></div>

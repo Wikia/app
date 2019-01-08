@@ -9,6 +9,7 @@ require([
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.discussions',
+	'ext.wikia.recirculation.helpers.sponsoredContent',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
@@ -21,6 +22,7 @@ require([
              mixedFooter,
              liftigniter,
              discussions,
+             sponsoredContentHelper,
              oldDiscussions,
              videosModule) {
 	'use strict';
@@ -58,18 +60,17 @@ require([
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.nsItems),
 			getPopularPages(),
-			discussions.prepare()
+			discussions.prepare(),
+            sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-				var view = viewFactory();
-				view.render({
+                viewFactory().render({
 					nsItems: nsItems,
 					wikiItems: popularPagesResponse[0],
-					discussions: discussions
-				}).then(function () {
-					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
+					discussions: discussions,
+                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		});
@@ -78,14 +79,16 @@ require([
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
 			getPopularPages(),
-			discussions.prepare()
+			discussions.prepare(),
+            sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					wikiItems: popularPagesResponse[0],
-					discussions: discussions
+					discussions: discussions,
+                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		});
