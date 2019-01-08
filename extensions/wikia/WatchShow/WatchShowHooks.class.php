@@ -18,5 +18,7 @@ class WatchShowHooks {
 
 	public static function onGetRailModuleList( Array &$railModuleList ): bool {
 		$railModuleList[1442] = [ 'WatchShowService', 'index', null ];
+
+		return true;
 	}
 }
