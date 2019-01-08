@@ -32,7 +32,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
 			MOBILE_IN_CONTENT: true,
-			MOBILE_PREFOOTER: true
+			MOBILE_PREFOOTER: true,
+			INVISIBLE_HIGH_IMPACT_2: true
 		};
 
 	function isEnabled() {

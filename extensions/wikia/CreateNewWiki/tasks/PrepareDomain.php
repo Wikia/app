@@ -11,7 +11,7 @@ class PrepareDomain extends Task {
 	const LOCK_DOMAIN_TIMEOUT = 30;
 
 	public function prepare() {
-		global $wgContLang, $wgFandomBaseDomain;
+		global $wgContLang, $wgWikiaBaseDomain, $wgFandomBaseDomain;
 
 		$wikiLanguage = $this->taskContext->getLanguage();
 		$inputDomain = $this->taskContext->getInputDomain();
@@ -27,14 +27,21 @@ class PrepareDomain extends Task {
 		$this->taskContext->setWikiName( $domain );
 
 		$subdomain = $domain;
+		$wikiBaseDomain = $wgWikiaBaseDomain;
 
-		// SUS-4784 - create language wikis with the language code in the path
-		if ( !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
-			$this->taskContext->setDomain( "$subdomain.$wgFandomBaseDomain/$wikiLanguage" );
-			$this->taskContext->setUrl( "http://$subdomain.$wgFandomBaseDomain/$wikiLanguage/" );
+		// SUS-4784 - create language wikis with the language code in the path, but only if enabled
+		if ( $this->taskContext->shouldCreateLanguageWikiWithPath() && !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
+			$this->taskContext->setDomain( "$subdomain.$wgWikiaBaseDomain/$wikiLanguage" );
+			$this->taskContext->setUrl( "http://$subdomain.$wgWikiaBaseDomain/$wikiLanguage/" );
 		} else {
-			$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wgFandomBaseDomain ) );
-			$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wgFandomBaseDomain ) );
+			if ( !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
+				$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
+			} elseif ( $this->taskContext->shouldCreateEnglishWikisOnFandomCom() ) {
+				$wikiBaseDomain = $wgFandomBaseDomain;
+			}
+
+			$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wikiBaseDomain ) );
+			$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wikiBaseDomain ) );
 		}
 
 		return TaskResult::createForSuccess();

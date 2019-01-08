@@ -226,6 +226,14 @@ export function getBiddersContext(skin) {
 						enabled: false,
 						publisherId: '156260',
 						slots: {
+							FEATURED: {
+								sizes: [
+									[0, 0]
+								],
+								ids: [
+									'1636185@0x0'
+								]
+							},
 							TOP_LEADERBOARD: {
 								sizes: [
 									[728, 90],
