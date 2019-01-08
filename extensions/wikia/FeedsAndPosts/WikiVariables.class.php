@@ -10,13 +10,13 @@ class WikiVariables {
 			wfMemcKey( 'feeds-wiki-variables' ),
 			$cacheTTL,
 			function () {
-				global $wgDBname, $wgServer, $wgDisableHTTPSDowngrade, $wgEnableHTTPSForAnons;
+				global $wgServer, $wgDBname, $wgDisableHTTPSDowngrade, $wgEnableHTTPSForAnons;
 
 				$wikiVariables = [
-					'basePath' => $wgServer,
 					'dbName' => $wgDBname,
-					'disableHTTPSDowngrade' => $wgDisableHTTPSDowngrade,
-					'enableHTTPSForAnons' => $wgEnableHTTPSForAnons,
+					'disableHTTPSDowngrade' => !empty( $wgDisableHTTPSDowngrade ),
+					'enableHTTPSForAnons' => !empty( $wgEnableHTTPSForAnons ),
+					'enableHTTPSForDomain' => wfHttpsEnabledForURL( $wgServer ),
 				];
 
 				return $wikiVariables;
