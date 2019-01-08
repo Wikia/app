@@ -64,7 +64,7 @@ class SitemapXmlController extends WikiaController {
 		if ( $parsedPath->index ) {
 			$out = $this->generateSitemapIndex();
 		} elseif ( is_int( $parsedPath->namespace ) ) {
-			$out = $this->generateSitemapPage( $parsedPath->namespace, $parsedPath->page );
+			$out = $this->generateSitemapPage( $parsedPath->namespace, $parsedPath->begin,  $parsedPath->end  );
 		} else {
 			$title = ( new WikiaHtmlTitle() )->setParts( [ 'Not Found' ] )->getTitle();
 			$body = '<title>%s</title><h1>Not Found</h1><p>The requested URL was not found</p>';
@@ -114,21 +114,19 @@ class SitemapXmlController extends WikiaController {
 		return date( 'Y-m-d\TH:i:s\Z', $touchedTime );
 	}
 
-	private function generateSitemapPage( $namespace, $page ) {
+	private function generateSitemapPage($namespace, $begin, $end ) {
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
-		$out .= '<!-- Namespace: ' . $namespace . '; page: ' . $page . ' -->' . PHP_EOL;
+		$out .= '<!-- Namespace: ' . $namespace . '; begin: ' . $begin . '; end: ' . $end . ' -->' . PHP_EOL;
 
-		$offset = self::URLS_PER_PAGE * ( $page - 1 );
-		$limit = self::URLS_PER_PAGE;
 
 		$priority = self::PRIORITIES[$namespace] ?? self::DEFAULT_PRIORITY;
 		$title = Title::newFromText( '$1', $namespace );
 		$urlPrefix = str_replace( '$1', '', $title->getFullURL() );
 
-		foreach ( $this->model->getItems( $namespace, $offset, $limit ) as $page ) {
-			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $page->page_title ) );
-			$lastmod = $this->getLastMod( $page->page_touched );
+		foreach ($this->model->getItemsBetween( $namespace, $begin, $end ) as $item ) {
+			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $item->page_title ) );
+			$lastmod = $this->getLastMod( $item->page_touched );
 
 			$out .= '<url>' . PHP_EOL;
 			$out .= '<loc>' . $urlPrefix . $encodedTitle . '</loc>' . PHP_EOL;
@@ -150,11 +148,16 @@ class SitemapXmlController extends WikiaController {
 		$baseUrl = $this->wg->Server . $this->wg->ScriptPath;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
-			$nsPages = $this->model->getPageNumber( $ns, self::URLS_PER_PAGE );
-			for ( $page = 1; $page <= $nsPages; $page++ ) {
-				$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-p' . $page . '.xml';
-				$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+			$prev = "0";
+			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as $page ) {
+				if($prev) {
+					$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $page->page_id . '-'.$prev.'.xml';
+					$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+				}
+				$prev = $page->page_id;
 			}
+			$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-0-' . $prev . '.xml';
+			$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 		}
 
 		if ( $wgEnableDiscussions ) {
@@ -177,7 +180,8 @@ class SitemapXmlController extends WikiaController {
 		$parsed = (object) [
 			'index' => false,
 			'namespace' => null,
-			'page' => null,
+			'begin' => null,
+			'end' => null,
 		];
 
 		if ( $path === 'sitemap-newsitemapxml-index.xml' || $path === 'sitemap-index.xml' ) {
@@ -188,21 +192,23 @@ class SitemapXmlController extends WikiaController {
 		$m = null;
 
 		if ( !preg_match(
-			'/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-p(\d+)\.xml$/', $path, $m )
+			'/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-id-(\d+)-(\d+)\.xml$/', $path, $m )
 		) {
 			return $parsed;
 		}
 
 		$space = $m[2];
 		$specificNamespace = intval( $m[3] );
-		$page = intval( $m[4] );
+		$begin = intval( $m[4] );
+		$end = intval( $m[5] );
 
 		if ( !in_array( $specificNamespace, self::SEPARATE_SITEMAPS ) ) {
 			return $parsed;
 		}
 
 		$parsed->namespace = $specificNamespace;
-		$parsed->page = $page;
+		$parsed->begin = $begin;
+		$parsed->end = $end;
 
 		return $parsed;
 	}
