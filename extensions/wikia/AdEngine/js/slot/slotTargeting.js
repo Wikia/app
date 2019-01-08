@@ -82,7 +82,8 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 
 	function getOutstreamData() {
 		var context = adContext.getContext(),
-			videoTargeting = bidders.getPrebid().getAdserverTargetingForAdUnitCode(videoSlots[context.targeting.skin]);
+			slotName = videoSlots[context.targeting.skin],
+			videoTargeting = bidders && bidders.isEnabled() ? bidders.getPrebid().getAdserverTargetingForAdUnitCode(slotName) : null;
 
 		if (videoTargeting) {
 			return constructOutstreamString(videoTargeting);

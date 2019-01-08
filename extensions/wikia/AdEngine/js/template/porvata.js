@@ -117,7 +117,8 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			hasDirectAd = false;
-			fallbackBid = bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			fallbackBid = bidders && bidders.isEnabled() ? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders) : null;
+
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
@@ -213,7 +214,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (bidders && params.hbAdId) {
+		if (bidders && bidders.isEnabled() && params.hbAdId) {
 			params.bid = bidders.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
@@ -274,7 +275,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 			onReady(video, params);
 
-			if (bidders && params.useBidAsFallback) {
+			if (bidders && bidders.isEnabled() && params.useBidAsFallback) {
 				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {
