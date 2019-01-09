@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		$mixedContentFooter = $('#mixed-content-footer');
 
 	function render(data) {
-		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
+		var newsAndStoriesList = data.nsItems,
 			wikiArticlesList = data.wikiItems,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {},
@@ -70,7 +70,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			var $this = $(this),
 				template = templates['client/Recirculation_article.mustache'],
 				wikiArticle = wikiArticlesList[index];
-				wikiArticle.shortTitle = wikiArticle.title;
 
 			if(wikiArticle) {
 				if (!wikiArticle.thumbnail) {
