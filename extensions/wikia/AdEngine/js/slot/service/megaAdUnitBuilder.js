@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDeviceSpecial(params),
-			provider = src.indexOf('remnant') === -1 ? wka1: wka2,
+			provider = src.indexOf('remnant') === -1 ? wka1 : wka2,
 			wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki',
 			vertical = params.s0;
 
