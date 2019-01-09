@@ -15,8 +15,11 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgDevelEnvironment;
+
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
+		$out->addJsConfigVars('wgServiceUrl', empty( $wgDevelEnvironment ) ? 'services.wikia.com' : 'services.wikia-dev.pl' );
 
 		if ( static::isCorrectPageType() ) {
 			self::addLiftIgniterMetadata( $out );

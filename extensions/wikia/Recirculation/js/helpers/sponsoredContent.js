@@ -1,59 +1,30 @@
-define('ext.wikia.recirculation.helpers.sponsoredContent', [], function () {
+define('ext.wikia.recirculation.helpers.sponsoredContent', [
+    'jquery',
+    'wikia.window'
+], function ($, w) {
     'use strict';
 
     var userGeo = Geo.getCountryCode();
+    var hasFetched = false;
+    var deferred = $.Deferred();
 
     function fetch() {
-        var mock = [
-            {
-                "id": 0,
-                "url": "https://starwars.wikia.com/wiki/Yoda",
-                "thumbnailUrl": "https://vignette.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest/scale-to-width-down/500?cb=20150206140125",
-                "weight": 20,
-                "geos": [
-                    "US"
-                ],
-                "title": "Yoda",
-                "attribution": "Hulu"
-            },
-            {
-                "id": 0,
-                "url": "https://muppet.wikia.com/wiki/Elmo",
-                "thumbnailUrl": "https://vignette.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest/scale-to-width-down/500?cb=20150206140125",
-                "weight": 25,
-                "geos": [],
-                "title": "Elmo",
-                "attribution": "Hulu",
-                "attributionLabel": "Provided by"
-            },
-            {
-                "id": 0,
-                "url": "https://starwars.wikia.com/wiki/Luke",
-                "thumbnailUrl": "https://vignette.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest/scale-to-width-down/500?cb=20150206140125",
-                "weight": 20,
-                "geos": [
-                    "DE"
-                ],
-                "title": "Luke",
-                "attribution": "Netflix",
-                "attributionLabel": "Provided by"
-            },
-            {
-                "id": 0,
-                "url": "https://muppet.wikia.com/wiki/Kermit",
-                "thumbnailUrl": "https://vignette.wikia.nocookie.net/starwars/images/d/d6/Yoda_SWSB.png/revision/latest/scale-to-width-down/500?cb=20150206140125",
-                "weight": 10,
-                "geos": [
-                    "US",
-                    "AU"
-                ],
-                "title": "Kermit",
-                "attribution": "Netflix"
-            }
-        ];
+        if (!hasFetched) {
+            hasFetched = true;
 
-        return mock;
-        // return $.ajax();
+            $
+                .ajax({
+                    url: 'https://' + w.wgServiceUrl + '/wiki-recommendations/sponsored-articles',
+                })
+                .done(function (result) {
+                    deferred.resolve(result);
+                })
+                .fail(function (err) {
+                    deferred.reject(err);
+                });
+        }
+
+        return deferred.promise();
     }
 
     function getSponsoredItem(sponsoredContent) {

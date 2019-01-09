@@ -2,6 +2,7 @@
 
 .WikiaRail .premium-recirculation-rail {
 	img {
+		align-self: center;
 		display: block;
 	}
 
@@ -21,5 +22,21 @@
 
 	p {
 		margin: 16px 12px 0;
+	}
+
+	.rail-sponsored-content {
+		div {
+			margin: 5px 12px;
+		}
+
+		p {
+			margin: 0 0 10px;
+		}
+
+		span {
+			font-style: italic;
+			font-weight: bold;
+			opacity: 0.5;
+		}
 	}
 }
