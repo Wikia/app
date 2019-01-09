@@ -28,7 +28,8 @@ require([
 		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
 		numberOfFandomPostFooterSlots = $mixedContentFooter.data('number-of-ns-articles');
 
-	function mapAjaxCall(data) {
+	/** Discard redundant data returned by jQuery */
+	function mapAjaxCall(data /*, code, jqXHR */) {
 		return data;
 	}
 
