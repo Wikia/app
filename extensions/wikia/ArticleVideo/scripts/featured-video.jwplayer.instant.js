@@ -11,7 +11,6 @@ require([
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
@@ -26,7 +25,6 @@ require([
 	featuredVideoAutoplay,
 	featuredVideoAds,
 	featuredVideoCookieService,
-	a9,
 	bidders
 ) {
 	if (!videoDetails) {
@@ -41,7 +39,6 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
-		responseTimeout = 2000,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -124,23 +121,13 @@ require([
 		});
 
 		doc.addEventListener('bab.not_blocking', function () {
-			if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
-				a9.waitForResponseCallbacks(
-					function onSuccess() {
-						bidParams = a9.getSlotParams(featuredVideoSlotName);
-						setupPlayer();
-					},
-					function onTimeout() {
-						bidParams = {};
-						setupPlayer();
-					},
-					responseTimeout
-				);
-			} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
-				bidders.addResponseListener(function () {
+			if (bidders && bidders.isEnabled()) {
+				bidders.runOnBiddingReady(function () {
 					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
 					setupPlayer();
 				});
+			} else {
+				setupPlayer();
 			}
 		});
 

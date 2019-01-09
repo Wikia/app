@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	}
 
 	function isEnabled() {
-		return adContext.get('bidders.prebidAE3') && adContext.get('opts.showAds');
+		return adContext.get('bidders.prebid') && adContext.get('opts.showAds');
 	}
 
 	function addResponseListener(callback) {
@@ -51,6 +51,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 	return {
 		addResponseListener: addResponseListener,
 		getBidByAdId: adEngineBidders.bidders.prebidHelper.getBidByAdId,
+		getBidParameters: adEngineBidders.bidders.getBidParameters,
 		getCurrentSlotPrices: adEngineBidders.bidders.getCurrentSlotPrices,
 		getDfpSlotPrices: adEngineBidders.bidders.getDfpSlotPrices,
 		getName: getName,
@@ -58,6 +59,8 @@ define('ext.wikia.adEngine.lookup.bidders', [
 		getWinningVideoBidBySlotName: adEngineBidders.bidders.prebidHelper.getWinningVideoBidBySlotName,
 		isEnabled: isEnabled,
 		runBidding: runBidding,
+		runOnBiddingReady: adEngineBidders.bidders.runOnBiddingReady,
+		transformPriceFromBid: adEngineBidders.bidders.transformPriceFromBid,
 		updateSlotTargeting: adEngineBidders.bidders.updateSlotTargeting,
 		wasCalled: isEnabled
 	};
