@@ -4,24 +4,16 @@ namespace Wikia\FeedsAndPosts;
 
 class WikiVariables {
 	public function get() {
-		$cacheTTL = 60; // a minute
+		global $wgServer, $wgDBname, $wgDisableHTTPSDowngrade, $wgEnableHTTPSForAnons;
 
-		return \WikiaDataAccess::cache(
-			wfMemcKey( 'feeds-wiki-variables' ),
-			$cacheTTL,
-			function () {
-				global $wgServer, $wgDBname, $wgDisableHTTPSDowngrade, $wgEnableHTTPSForAnons;
+		$wikiVariables = [
+			'basePath' => $wgServer,
+			'dbName' => $wgDBname,
+			'disableHTTPSDowngrade' => !empty( $wgDisableHTTPSDowngrade ),
+			'enableHTTPSForAnons' => !empty( $wgEnableHTTPSForAnons ),
+			'enableHTTPSForDomain' => wfHttpsEnabledForURL( $wgServer ),
+		];
 
-				$wikiVariables = [
-					'dbName' => $wgDBname,
-					'disableHTTPSDowngrade' => !empty( $wgDisableHTTPSDowngrade ),
-					'enableHTTPSForAnons' => !empty( $wgEnableHTTPSForAnons ),
-					'enableHTTPSForDomain' => wfHttpsEnabledForURL( $wgServer ),
-				];
-
-				return $wikiVariables;
-			}
-		);
+		return $wikiVariables;
 	}
-
 }
