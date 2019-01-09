@@ -103,7 +103,7 @@ class SitemapXmlModel extends WikiaModel {
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( $namespace )
 			->AND_( 'page_is_redirect' )->EQUAL_TO( false )
-			->ORDER_BY('page_id');
+			->ORDER_BY( 'page_id' );
 
 		if ( $namespace === NS_CATEGORY ) {
 			$sql->JOIN( 'category' )->ON( 'page.page_title', 'category.cat_title')
