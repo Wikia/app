@@ -9,7 +9,7 @@ class PopularPagesService {
 			null,
 			$wgContentNamespaces,
 			false,
-			$limit + 1
+			$limit + 5 // compensate for main page / articles without image
 		);
 
 		$mainPage = Title::newMainPage();
@@ -23,6 +23,7 @@ class PopularPagesService {
 		$images = $imageServing->getImages( 1 );
 
 		$data = [];
+		$count = 0;
 
 		foreach ( $titles as $title ) {
 			$articleId = $title->getArticleID();
@@ -34,6 +35,10 @@ class PopularPagesService {
 					'thumbnail' => $images[$articleId][0]['url'],
 					'hasVideo' => false,
 				];
+
+				if ( ++$count >= $limit ) {
+					break;
+				}
 			}
 		}
 
