@@ -36,7 +36,9 @@ class PopularPagesService {
 					'hasVideo' => false,
 				];
 
-				if ( ++$count >= $limit ) {
+				$count++;
+
+				if ( $count >= $limit ) {
 					break;
 				}
 			}
