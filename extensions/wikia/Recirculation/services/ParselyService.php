@@ -2,8 +2,6 @@
 
 class ParselyService implements FandomArticleService {
 
-	const FANDOM_SITE_NAME = 'Fandom';
-
 	const REQUEST_TIMEOUT_SECONDS = 2;
 	const EXTRA_POSTS_TO_FETCH = 10;
 
@@ -38,7 +36,6 @@ class ParselyService implements FandomArticleService {
 						'title' => $postData['title'],
 						'url' => $postData['url'],
 						'thumbnail' => $postData['image_url'],
-						'site_name' => static::FANDOM_SITE_NAME,
 					];
 				}
 

@@ -49,8 +49,6 @@ class ParselyServiceIntegrationTest extends TestCase {
 
 			$titles[] = $title;
 
-			$this->assertEquals( ParselyService::FANDOM_SITE_NAME, $data['site_name'] );
-
 			$this->assertNotEmpty( $data['thumbnail'] );
 			$this->assertNotEmpty( $data['url'] );
 		}

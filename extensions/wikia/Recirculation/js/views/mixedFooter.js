@@ -62,6 +62,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				newsAndStoriesItem.liType = 'ns';
 				newsAndStoriesItem.classes = $this[0].className.replace('mcf-card-ns-placeholder', '');
 
+				newsAndStoriesItem.site_name = 'Fandom';
+
 				$this.replaceWith(utils.renderTemplate(template, newsAndStoriesItem));
 			}
 		});
@@ -85,6 +87,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
 				wikiArticle.classes = $this[0].className.replace('mcf-card-wiki-placeholder', '');
 				wikiArticle.liType = 'wiki';
+
+				wikiArticle.site_name = w.wgSitename;
 
 				$this.replaceWith(utils.renderTemplate(template, wikiArticle));
 			}
