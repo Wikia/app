@@ -41,7 +41,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			bidders = {
 				isEnabled: function () {
-					return false;
+					return true;
 				},
 				getPrebid: function () {
 					return mocks.pbjs;
