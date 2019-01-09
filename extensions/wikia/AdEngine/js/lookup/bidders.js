@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.lookup.bidders', [
 		getWinningVideoBidBySlotName: adEngineBidders.bidders.prebidHelper.getWinningVideoBidBySlotName,
 		isEnabled: isEnabled,
 		runBidding: runBidding,
+		runOnBiddingReady: adEngineBidders.bidders.runOnBiddingReady,
 		transformPriceFromBid: adEngineBidders.bidders.transformPriceFromBid,
 		updateSlotTargeting: adEngineBidders.bidders.updateSlotTargeting,
 		wasCalled: isEnabled

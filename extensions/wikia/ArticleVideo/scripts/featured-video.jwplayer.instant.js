@@ -39,8 +39,6 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
-		responseTimeout = 3000,
-		playerSetuped = false,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -70,8 +68,6 @@ require([
 	}
 
 	function setupPlayer() {
-		playerSetuped = true;
-
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
@@ -125,22 +121,18 @@ require([
 		});
 
 		doc.addEventListener('bab.not_blocking', function () {
-			if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
-				bidders.addResponseListener(function () {
+			if (bidders && bidders.isEnabled()) {
+				bidders.runOnBiddingReady(function () {
 					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
 					setupPlayer();
 				});
+			} else {
+				setupPlayer();
 			}
 		});
 
 		if (!adContext.get('opts.showAds')) {
 			setupPlayer();
 		}
-
-		setTimeout(function () {
-			if (!playerSetuped) {
-				setupPlayer();
-			}
-		}, responseTimeout);
 	});
 });
