@@ -5,10 +5,13 @@ use Wikia\RobotsTxt\RobotsTxt;
 use Wikia\RobotsTxt\WikiaRobots;
 
 class WikiaRobotsController extends WikiaController {
+	private function getRobotsBuilder() {
+		$wikiaRobots = new WikiaRobots( new PathBuilder() );
+		return $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
+	}
 
 	public function getAllowedDisallowed() {
-		$wikiaRobots = new WikiaRobots( new PathBuilder() );
-		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
+		$robots = $this->getRobotsBuilder();
 
 		$this->response->setVal( 'allowed', $robots->getAllowedPaths() );
 		$this->response->setVal( 'disallowed', $robots->getDisallowedPaths() );
@@ -17,7 +20,7 @@ class WikiaRobotsController extends WikiaController {
 	}
 
 	public function getRulesForDomain() {
-		global $wgServer;
+		global $wgServer, $wgCityId;
 
 		$wikis = \WikiFactory::getWikisUnderDomain( parse_url( $wgServer, PHP_URL_HOST ), true );
 		$degraded = false;
@@ -26,15 +29,24 @@ class WikiaRobotsController extends WikiaController {
 		$sitemap = [];
 		foreach ( $wikis as $wikiData ) {
 			if ( \Hooks::run( 'GenerateRobotsRules', [ $wikiData['city_id'] ] ) ) {
-				$params = [
-					'controller' => 'WikiaRobots',
-					'method' => 'getAllowedDisallowed',
-					'shallow' => 1
-				];
-				if ( $this->request->getBool( 'forcerobots' ) ) {
-					$params['forcerobots'] = '1';
+				if ( $wikiData['city_id'] === $wgCityId ) {
+					$robots = $this->getRobotsBuilder();
+					$response = [
+						'allowed' => $robots->getAllowedPaths(),
+						'dissallowed' => $robots->getDisallowedPaths(),
+						'sitemaps' => $robots->getSitemaps(),
+					];
+				} else {
+					$params = [
+						'controller' => 'WikiaRobots',
+						'method'     => 'getAllowedDisallowed',
+						'shallow'    => 1
+					];
+					if ( $this->request->getBool( 'forcerobots' ) ) {
+						$params['forcerobots'] = '1';
+					}
+					$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA );
 				}
-				$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA );
 				if ( !empty( $response ) ) {
 					if ( isset( $response['allowed'] ) ) {
 						$allow = array_merge( $allow, $response['allowed'] );
