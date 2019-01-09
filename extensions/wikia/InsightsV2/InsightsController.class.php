@@ -29,7 +29,10 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( InsightsHelper::isInsightPage( $this->type ) ) {
 			$this->renderSubpage();
 		} elseif ( !empty( $this->type ) ) {
-			$this->response->redirect( SpecialPage::getTitleFor( 'Insights' ) );
+			$title = SpecialPage::getTitleFor( 'Insights' );
+			$targetUrl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
+			$this->response->redirect($targetUrl);
+
 		}
 
 		wfProfileOut( __METHOD__ );
