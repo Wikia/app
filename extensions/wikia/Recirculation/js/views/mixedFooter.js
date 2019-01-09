@@ -78,6 +78,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 				if (wikiArticle.title.length > 90) {
 					wikiArticle.shortTitle = wikiArticle.title.substring(0, 80) + '...';
+				} else {
+					wikiArticle.shortTitle = wikiArticle.title;
 				}
 
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
