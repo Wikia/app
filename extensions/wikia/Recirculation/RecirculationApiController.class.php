@@ -1,7 +1,8 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'all', 'stories'];
+
+	const MAX_MIXED_CONTENT_FOOTER_SLOTS = 13;
 
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
@@ -23,11 +24,31 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
-		$limit = max( $this->request->getInt( 'limit', 13 ), 13 );
+		$limit = min(
+			$this->request->getInt( 'limit', static::MAX_MIXED_CONTENT_FOOTER_SLOTS ),
+			static::MAX_MIXED_CONTENT_FOOTER_SLOTS
+		);
 
 		$popularPagesService = new PopularPagesService();
 		$data = $popularPagesService->getPopularPagesWithVideoInfo( $limit, 386, 337 );
 
 		$this->response->setData( $data );
+	}
+
+	public function getTrendingFandomArticles() {
+		global $wgParselyApiUrl, $wgParselyApiKey, $wgParselyApiSecret, $wgMemc;
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$limit = min(
+			$this->request->getInt( 'limit', static::MAX_MIXED_CONTENT_FOOTER_SLOTS ),
+			static::MAX_MIXED_CONTENT_FOOTER_SLOTS
+		);
+
+		$articleService = new ParselyService( $wgParselyApiUrl, $wgParselyApiKey, $wgParselyApiSecret );
+		$cachedArticleService = new CachedFandomArticleService( $wgMemc, $articleService );
+
+		$posts = $cachedArticleService->getTrendingFandomArticles( $limit );
+
+		$this->response->setData( $posts );
 	}
 }
