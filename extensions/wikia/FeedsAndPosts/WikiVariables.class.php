@@ -9,10 +9,9 @@ class WikiVariables {
 		$wikiVariables = [
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
-			'disableHTTPSDowngrade' => !empty( $wgDisableHTTPSDowngrade ),
-			'enableHTTPSForAnons' => !empty( $wgEnableHTTPSForAnons ),
-			'enableHTTPSForDomain' => wfHttpsEnabledForURL( $wgServer ),
 		];
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
 
 		return $wikiVariables;
 	}
