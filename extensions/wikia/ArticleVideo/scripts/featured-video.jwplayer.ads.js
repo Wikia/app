@@ -101,7 +101,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		};
 
 		function requestBidder() {
-			if (!bidders) {
+			if (!bidders || !bidders.isEnabled()) {
 				return;
 			}
 
