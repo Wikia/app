@@ -85,6 +85,8 @@ class StaffLogger {
 
 	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason, $user = null ) {
 		global $wgUser;
+		// When an another service makes a call to change wiki status, then the user is not
+		// available in global wgUser, therefore it may be passed explicitly.
 		if ($user == null) {
 			$user = $wgUser;
 		}
