@@ -33,7 +33,7 @@ class WikiaRobotsController extends WikiaController {
 					$robots = $this->getRobotsBuilder();
 					$response = [
 						'allowed' => $robots->getAllowedPaths(),
-						'dissallowed' => $robots->getDisallowedPaths(),
+						'disallowed' => $robots->getDisallowedPaths(),
 						'sitemaps' => $robots->getSitemaps(),
 					];
 				} else {
