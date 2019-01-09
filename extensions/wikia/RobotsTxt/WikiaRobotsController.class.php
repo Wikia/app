@@ -45,7 +45,7 @@ class WikiaRobotsController extends WikiaController {
 					if ( $this->request->getBool( 'forcerobots' ) ) {
 						$params['forcerobots'] = '1';
 					}
-					$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA );
+					$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA, false, true );
 				}
 				if ( !empty( $response ) ) {
 					if ( isset( $response['allowed'] ) ) {
