@@ -34,7 +34,7 @@ class ParselyService implements FandomArticleService {
 				if ( isset( $metadata['postID'] ) ) {
 					$posts[$metadata['postID']] = [
 						'title' => $postData['title'],
-						'link' => $postData['link'],
+						'url' => $postData['url'],
 						'thumbnail' => $postData['image_url'],
 					];
 				}
@@ -54,10 +54,16 @@ class ParselyService implements FandomArticleService {
 			'secret' => $this->apiSecret
 		];
 
+		// force deterministic ordering of parameters, for easy testing
+		ksort( $query );
 
 		$url = $this->baseUrl . $path . '?' . http_build_query( $query );
 		$response = ExternalHttp::get( $url, static::REQUEST_TIMEOUT_SECONDS );
 
-		return json_decode( $response, true );
+		if ( $response ) {
+			return json_decode( $response, true ) ?? [];
+		}
+
+		return [];
 	}
 }
