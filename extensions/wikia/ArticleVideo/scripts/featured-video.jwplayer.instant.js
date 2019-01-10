@@ -110,28 +110,28 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		doc.addEventListener('bab.blocking', function () {
-			if (adContext.get('opts.wadHMD')) {
-				hmdRecLoader.setOnReady(function () {
+		if (adContext.get('opts.babDetectionDesktop')) {
+			doc.addEventListener('bab.blocking', function () {
+				if (adContext.get('opts.wadHMD')) {
+					hmdRecLoader.setOnReady(function () {
+						setupPlayer();
+					});
+				} else {
 					setupPlayer();
-				});
-			} else {
-				setupPlayer();
-			}
-		});
+				}
+			});
 
-		doc.addEventListener('bab.not_blocking', function () {
-			if (bidders && bidders.isEnabled()) {
-				bidders.runOnBiddingReady(function () {
-					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+			doc.addEventListener('bab.not_blocking', function () {
+				if (bidders && bidders.isEnabled()) {
+					bidders.runOnBiddingReady(function () {
+						bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+						setupPlayer();
+					});
+				} else {
 					setupPlayer();
-				});
-			} else {
-				setupPlayer();
-			}
-		});
-
-		if (!adContext.get('opts.showAds')) {
+				}
+			});
+		} else {
 			setupPlayer();
 		}
 	});
