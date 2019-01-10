@@ -11,8 +11,10 @@
 		<span class="mcf-card-article__title">
 			{{title}}
 		</span>
-		<span class="mcf-card-article__subtitle">
-			{{attributionLabel}} {{attribution}}
-		</span>
+		{{#attribution}}
+			<span class="mcf-card-article__subtitle">
+				{{attributionLabel}} {{attribution}}
+			</span>
+		{{/attribution}}
     </a>
 </div>
