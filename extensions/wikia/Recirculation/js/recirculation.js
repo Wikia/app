@@ -44,20 +44,20 @@ require([
 			},
 		};
 
-    function waitForRail() {
-        var $rail = $('#WikiaRail'),
-            deferred = $.Deferred();
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred();
 
-        if ($rail.find('.loading').exists()) {
-            $rail.one('afterLoad.rail', function () {
-                deferred.resolve();
-            });
-        } else {
-            deferred.resolve();
-        }
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function () {
+				deferred.resolve();
+			});
+		} else {
+			deferred.resolve();
+		}
 
-        return deferred.promise();
-    }
+		return deferred.promise();
+	}
 
 	function getPopularPages() {
 		return nirvana.sendRequest({
@@ -79,16 +79,19 @@ require([
 			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions, sponsoredContent) {
-		    $mixedContentFooterContent.show();
-		    require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-		        viewFactory().render({
-                    nsItems: nsItems,
-                    wikiItems: popularPagesResponse[0],
-                    discussions: discussions,
-                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
-		        });
-		    });
-		});
+			$mixedContentFooterContent.show();
+			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
+				viewFactory().render({
+					nsItems: nsItems,
+					wikiItems: popularPagesResponse[0],
+					discussions: discussions,
+					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+				});
+			});
+		})
+			.fail(function (err) {
+				console.log('#######', 'prepareEnglishRecirculation err', err);
+			});
 	}
 
 	function prepareInternationalRecirculation() {
@@ -98,15 +101,18 @@ require([
 			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions, sponsoredContent) {
-		    $mixedContentFooterContent.show();
-		    require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-		        viewFactory().render({
-                    wikiItems: popularPagesResponse[0],
-                    discussions: discussions,
-                    sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
-		        });
-		    });
-		});
+			$mixedContentFooterContent.show();
+			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
+				viewFactory().render({
+					wikiItems: popularPagesResponse[0],
+					discussions: discussions,
+					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+				});
+			});
+		})
+			.fail(function (err) {
+				console.log('#######', 'prepareInternationalRecirculation err', err);
+			});
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
@@ -150,18 +156,18 @@ require([
 		lazyLoadHandler();
 
 		$.when
-            .apply($, [
-                sponsoredContentHelper.fetch(),
-                utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
-                waitForRail()
-            ])
-            .then(function (sponsoredContent, template) {
-                var $rail = $('#WikiaRail'),
-                    $firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
+			.apply($, [
+				sponsoredContentHelper.fetch(),
+				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
+				waitForRail()
+			])
+			.then(function (sponsoredContent, template) {
+				var $rail = $('#WikiaRail'),
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
 
-                $firstItem.replaceWith(
-                    utils.renderTemplate(template, sponsoredContentHelper.getSponsoredItem(sponsoredContent))
-                );
-            });
+				$firstItem.replaceWith(
+					utils.renderTemplate(template, sponsoredContentHelper.getSponsoredItem(sponsoredContent))
+				);
+			});
 	});
 });
