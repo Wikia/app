@@ -6,11 +6,6 @@ class RailContentService extends WikiaService {
 		$popularPagesService = new PopularPagesService();
 		$articles = $popularPagesService->getPopularPages( 5, 80, 50 );
 
-		if ( empty( $articles ) ) {
-			$this->skipRendering();
-			return false;
-		}
-
 		$this->response->addAsset( 'extensions/wikia/Recirculation/styles/premium-rail.scss' );
 		$this->setVal( 'popularPages', $articles );
 	}

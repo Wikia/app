@@ -7,7 +7,6 @@ require([
 	'wikia.trackingOptIn',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.mixedFooter',
-	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.discussions',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
@@ -19,7 +18,6 @@ require([
              trackingOptIn,
              utils,
              mixedFooter,
-             liftigniter,
              discussions,
              oldDiscussions,
              videosModule) {
@@ -28,19 +26,23 @@ require([
 	var $mixedContentFooter = $('#mixed-content-footer'),
 		$mixedContentFooterContent = $('.mcf-content'),
 		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
-		mixedContentFooter = {
-			nsItems: {
-				max: $mixedContentFooter.data('number-of-ns-articles'),
-				widget: 'wikia-impactfooter',
-				width: 386,
-				height: 337,
-				modelName: 'ns',
-				opts: {
-					resultType: 'cross-domain',
-					domainType: 'fandom.wikia.com'
-				}
-			},
-		};
+		numberOfFandomPostFooterSlots = $mixedContentFooter.data('number-of-ns-articles');
+
+	/** Discard redundant data returned by jQuery */
+	function mapAjaxCall(data /*, code, jqXHR */) {
+		return data;
+	}
+
+	function getTrendingFandomArticles() {
+		return nirvana.sendRequest({
+			controller: 'RecirculationApi',
+			method: 'getTrendingFandomArticles',
+			type: 'get',
+			data: {
+				limit: numberOfFandomPostFooterSlots,
+			}
+		}).then(mapAjaxCall);
+	}
 
 	function getPopularPages() {
 		return nirvana.sendRequest({
@@ -50,26 +52,23 @@ require([
 			data: {
 				limit: numberOfArticleFooterSlots,
 			}
-		});
+		}).then(mapAjaxCall);
 	}
 
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
-			liftigniter.prepare(mixedContentFooter.nsItems),
+			getTrendingFandomArticles(),
 			getPopularPages(),
 			discussions.prepare()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, popularPagesResponse, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-				var view = viewFactory();
-				view.render({
+				viewFactory().render({
 					nsItems: nsItems,
-					wikiItems: popularPagesResponse[0],
+					wikiItems: wikiItems,
 					discussions: discussions
-				}).then(function () {
-					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
 				});
 			});
 		});
@@ -80,11 +79,11 @@ require([
 			getPopularPages(),
 			discussions.prepare()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (popularPagesResponse, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
-					wikiItems: popularPagesResponse[0],
+					wikiItems: wikiItems,
 					discussions: discussions
 				});
 			});
@@ -99,15 +98,8 @@ require([
 
 		if (window.wgContentLanguage === 'en') {
 			prepareEnglishRecirculation();
-
-			// fetch data for all recirculation modules
-			liftigniter.fetch('ns');
 		} else {
 			prepareInternationalRecirculation();
-
-			if (window.wgContentLanguage === 'de') {
-				liftigniter.fetch('wiki');
-			}
 
 			if (videosModule) {
 				videosModule('#recirculation-rail');
@@ -122,7 +114,6 @@ require([
 				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
 
 			if (aproachingMCF) {
-				liftigniter.fetch('wiki');
 				discussions.fetch();
 				window.removeEventListener('scroll', lazyLoadHandler);
 			}
