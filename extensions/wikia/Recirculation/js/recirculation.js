@@ -166,7 +166,7 @@ require([
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
 
 				$firstItem.replaceWith(
-					utils.renderTemplate(template, sponsoredContentHelper.getSponsoredItem(sponsoredContent))
+					utils.renderTemplate(template[0], sponsoredContentHelper.getSponsoredItem(sponsoredContent))
 				);
 			})
 			.fail(function (err) {
