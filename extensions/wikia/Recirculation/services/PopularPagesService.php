@@ -2,7 +2,7 @@
 
 class PopularPagesService {
 	public function getPopularPages( int $limit, int $thumbWidth, int $thumbHeight ): array {
-		global $wgCityId, $wgContentNamespaces;
+		global $wgCityId, $wgContentNamespaces, $wgSitename;
 
 		$articles = DataMartService::getTopArticlesByPageview(
 			$wgCityId,
@@ -34,6 +34,7 @@ class PopularPagesService {
 					'url' => $title->getFullURL(),
 					'thumbnail' => $images[$articleId][0]['url'],
 					'hasVideo' => false,
+					'site_name' => $wgSitename,
 				];
 
 				$count++;
