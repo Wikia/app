@@ -2,6 +2,8 @@
 	<img src="{{thumbnailUrl}}" alt=""/>
 	<div>
 		<p>{{shortTitle}}</p>
-		<span>{{attributionLabel}} {{attribution}}</span>
+		{{#attribution}}
+			<span>{{attributionLabel}} {{attribution}}</span>
+		{{/attribution}}
 	</div>
 </a>

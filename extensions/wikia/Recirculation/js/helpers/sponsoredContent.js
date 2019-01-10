@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 
 			$
 				.ajax({
-					url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles',
+					url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/',
 				})
 				.done(function (result) {
 					deferred.resolve(result);
