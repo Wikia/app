@@ -44,6 +44,21 @@ require([
 			},
 		};
 
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred();
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function () {
+				deferred.resolve();
+			});
+		} else {
+			deferred.resolve();
+		}
+
+		return deferred.promise();
+	}
+
 	function getPopularPages() {
 		return nirvana.sendRequest({
 			controller: 'RecirculationApi',
@@ -70,10 +85,13 @@ require([
 					nsItems: nsItems,
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for english recirculation' + err, log.levels.error);
+			});
 	}
 
 	function prepareInternationalRecirculation() {
@@ -88,10 +106,13 @@ require([
 				viewFactory().render({
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
+			});
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
@@ -133,5 +154,34 @@ require([
 
 		window.addEventListener('scroll', lazyLoadHandler);
 		lazyLoadHandler();
+
+		$.when
+			.apply($, [
+				sponsoredContentHelper.fetch(),
+				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
+				waitForRail()
+			])
+			.done(function (sponsoredContent, template) {
+				var $rail = $('#WikiaRail'),
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
+					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
+				$firstItem.replaceWith(
+					utils.renderTemplate(
+						template[0],
+						$.extend(
+							true,
+							{},
+							sponsoredItem,
+							{
+								shortTitle: sponsoredItem.title.substring(0, 80) + '...',
+								attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+							}
+						))
+				);
+			})
+			.fail(function (err) {
+				log('Failed to fetch rail data for recirculation' + err, log.levels.error);
+			});
 	});
 });
