@@ -12,16 +12,13 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 		if (!hasFetched) {
 			hasFetched = true;
 
-			$
-				.ajax({
-					url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/',
-				})
-				.done(function (result) {
-					deferred.resolve(result);
-				})
-				.fail(function (err) {
-					deferred.reject(err);
-				});
+			$.ajax({
+				url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/',
+			}).done(function (result) {
+				deferred.resolve(result);
+			}).fail(function (err) {
+				deferred.reject(err);
+			});
 		}
 
 		return deferred.promise();

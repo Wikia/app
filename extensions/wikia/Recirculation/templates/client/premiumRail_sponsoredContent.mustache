@@ -1,9 +1,11 @@
-<a href="{{url}}" title="{{title}}" class="rail-sponsored-content">
-	<img src="{{thumbnailUrl}}" alt=""/>
-	<div>
-		<p>{{shortTitle}}</p>
-		{{#attribution}}
-			<span>{{attributionLabel}} {{attribution}}</span>
-		{{/attribution}}
-	</div>
-</a>
+<li>
+	<a href="{{url}}" title="{{title}}" class="rail-sponsored-content">
+		<div class="rail-sponsored-content-image" style="background-image: url({{thumbnailUrl}})"></div>
+		<div class="rail-sponsored-content-desc">
+			<p>{{shortTitle}}</p>
+			{{#attribution}}
+				<span>{{attributionLabel}} {{attribution}}</span>
+			{{/attribution}}
+		</div>
+	</a>
+</li>

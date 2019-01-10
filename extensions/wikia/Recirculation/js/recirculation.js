@@ -85,7 +85,7 @@ require([
 					nsItems: nsItems,
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		})
@@ -106,7 +106,7 @@ require([
 				viewFactory().render({
 					wikiItems: popularPagesResponse[0],
 					discussions: discussions,
-					sponsoredContent: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
 		})
@@ -163,10 +163,21 @@ require([
 			])
 			.done(function (sponsoredContent, template) {
 				var $rail = $('#WikiaRail'),
-					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
+					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
 
 				$firstItem.replaceWith(
-					utils.renderTemplate(template[0], sponsoredContentHelper.getSponsoredItem(sponsoredContent))
+					utils.renderTemplate(
+						template[0],
+						$.extend(
+							true,
+							{},
+							sponsoredItem,
+							{
+								shortTitle: sponsoredItem.title.substring(0, 80) + '...',
+								attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+							}
+						))
 				);
 			})
 			.fail(function (err) {

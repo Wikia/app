@@ -4,6 +4,7 @@
 	img {
 		align-self: center;
 		display: block;
+		width: 94px;
 	}
 
 	li {
@@ -25,12 +26,8 @@
 	}
 
 	.rail-sponsored-content {
-		div {
-			margin: 5px 12px;
-		}
-
 		p {
-			margin: 0 0 10px;
+			margin: 0 0 5px;
 		}
 
 		span {
@@ -38,5 +35,17 @@
 			font-weight: bold;
 			opacity: 0.5;
 		}
+	}
+
+	.rail-sponsored-content-desc {
+		margin: 5px 12px;
+	}
+
+	.rail-sponsored-content-image {
+		align-self: flex-start;
+		background-size: cover;
+		background-position: center;
+		height: 53px;
+		width: 94px;
 	}
 }

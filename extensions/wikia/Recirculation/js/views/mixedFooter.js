@@ -36,27 +36,27 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			})
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
-				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredContent);
+				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredItem);
 				setupTracking();
 			});
 	}
 
-	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList, sponsoredContent) {
+	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList, sponsoredItem) {
 		var $newsAndStoriesHook = $('.mcf-card-ns-placeholder'),
 			$wikiArticleHook = $('.mcf-card-wiki-placeholder'),
 			$sponsoredContentHook = $('.mcf-card-sponsored-content');
 
-		if (sponsoredContent) {
+		if (sponsoredItem) {
 			$sponsoredContentHook.replaceWith(
 				utils.renderTemplate(
 					templates[templatePaths.sponsoredContent],
 					$.extend(
 						true,
 						{},
-						sponsoredContent,
+						sponsoredItem,
 						{
-							shortTitle: sponsoredContent.title.substring(0, 80) + '...',
-							attributionLabel: sponsoredContent.attributionLabel || 'Sponsored by'
+							shortTitle: sponsoredItem.title.substring(0, 80) + '...',
+							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
 						}
 					)
 				)
