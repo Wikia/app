@@ -90,7 +90,7 @@ require([
 			});
 		})
 			.fail(function (err) {
-				console.log('#######', 'prepareEnglishRecirculation err', err);
+				log('Failed to fetch MCF data for english recirculation' + err, log.levels.error);
 			});
 	}
 
@@ -111,7 +111,7 @@ require([
 			});
 		})
 			.fail(function (err) {
-				console.log('#######', 'prepareInternationalRecirculation err', err);
+				log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
 			});
 	}
 
@@ -170,7 +170,7 @@ require([
 				);
 			})
 			.fail(function (err) {
-				console.log('#######', 'rail err', err);
+				log('Failed to fetch rail data for recirculation' + err, log.levels.error);
 			});
 	});
 });
