@@ -5,17 +5,22 @@ use Wikia\RobotsTxt\RobotsTxt;
 use Wikia\RobotsTxt\WikiaRobots;
 
 class WikiaRobotsController extends WikiaController {
-	private function getRobotsBuilder() {
+	public function getLocalRules() {
 		$wikiaRobots = new WikiaRobots( new PathBuilder() );
-		return $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
+		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
+		return [
+			'allowed' => $robots->getAllowedPaths(),
+			'disallowed' => $robots->getDisallowedPaths(),
+			'sitemaps' => $robots->getSitemaps(),
+		];
 	}
 
 	public function getAllowedDisallowed() {
-		$robots = $this->getRobotsBuilder();
+		$rules = $this->getLocalRules();
 
-		$this->response->setVal( 'allowed', $robots->getAllowedPaths() );
-		$this->response->setVal( 'disallowed', $robots->getDisallowedPaths() );
-		$this->response->setVal( 'sitemaps', $robots->getSitemaps() );
+		foreach ($rules as $key => $val) {
+			$this->response->setVal( $key, $val );
+		}
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
@@ -30,12 +35,7 @@ class WikiaRobotsController extends WikiaController {
 		foreach ( $wikis as $wikiData ) {
 			if ( \Hooks::run( 'GenerateRobotsRules', [ $wikiData['city_id'] ] ) ) {
 				if ( $wikiData['city_id'] === $wgCityId ) {
-					$robots = $this->getRobotsBuilder();
-					$response = [
-						'allowed' => $robots->getAllowedPaths(),
-						'disallowed' => $robots->getDisallowedPaths(),
-						'sitemaps' => $robots->getSitemaps(),
-					];
+					$response = $this->getLocalRules();
 				} else {
 					$params = [
 						'controller' => 'WikiaRobots',
