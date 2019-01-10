@@ -161,13 +161,16 @@ require([
 				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
 				waitForRail()
 			])
-			.then(function (sponsoredContent, template) {
+			.done(function (sponsoredContent, template) {
 				var $rail = $('#WikiaRail'),
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
 
 				$firstItem.replaceWith(
 					utils.renderTemplate(template, sponsoredContentHelper.getSponsoredItem(sponsoredContent))
 				);
+			})
+			.fail(function (err) {
+				console.log('#######', 'rail err', err);
 			});
 	});
 });

@@ -9,50 +9,48 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	var deferred = $.Deferred();
 
 	function fetch() {
-		return deferred.resolve(
-			[
-				{
-					"id": 25,
-					"url": "http://gameofthrones.wikia.com/wiki/Main_Page",
-					"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
-					"weight": 2,
-					"geos": [
-						"US",
-						"AU",
-						"PL"
-					],
-					"title": "SIema",
-					"attribution": "SiemaS",
-					"attributionLabel": "Siema2"
-				},
-				{
-					"id": 24,
-					"url": "http://rybatest.mateuszr.wikia-dev.pl/wiki/InfoboxEdgecasesWithGalleryWithFeaturedVideo",
-					"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
-					"weight": 4,
-					"geos": [
-						"US",
-						"DE"
-					],
-					"title": "1234",
-					"attribution": "asdfss",
-					"attributionLabel": "asdfss"
-				},
-				{
-					"id": 22,
-					"url": "https://poznan.mateuszr.fandom-dev.pl/pl/wiki/Areszt_śledczy",
-					"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
-					"weight": 1,
-					"geos": [
-						"AU",
-						"PL"
-					],
-					"title": "title 1",
-					"attribution": "sponsor 1",
-					"attributionLabel": "powered by"
-				}
-			]
-		);
+		return [
+			{
+				"id": 25,
+				"url": "http://gameofthrones.wikia.com/wiki/Main_Page",
+				"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
+				"weight": 2,
+				"geos": [
+					"US",
+					"AU",
+					"PL"
+				],
+				"title": "SIema",
+				"attribution": "SiemaS",
+				"attributionLabel": "Siema2"
+			},
+			{
+				"id": 24,
+				"url": "http://rybatest.mateuszr.wikia-dev.pl/wiki/InfoboxEdgecasesWithGalleryWithFeaturedVideo",
+				"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
+				"weight": 4,
+				"geos": [
+					"US",
+					"DE"
+				],
+				"title": "1234",
+				"attribution": "asdfss",
+				"attributionLabel": "asdfss"
+			},
+			{
+				"id": 22,
+				"url": "https://poznan.mateuszr.fandom-dev.pl/pl/wiki/Areszt_śledczy",
+				"thumbnailUrl": "https://vignette.wikia.nocookie.net/marveldatabase/images/b/b9/Spider-Man_Main_Page_Icon.jpg/revision/latest?cb=20180216053121",
+				"weight": 1,
+				"geos": [
+					"AU",
+					"PL"
+				],
+				"title": "title 1",
+				"attribution": "sponsor 1",
+				"attributionLabel": "powered by"
+			}
+		];
 
 		if (!hasFetched) {
 			hasFetched = true;
