@@ -64,7 +64,7 @@ class SitemapXmlController extends WikiaController {
 		if ( $parsedPath->index ) {
 			$out = $this->generateSitemapIndex();
 		} elseif ( is_int( $parsedPath->namespace ) ) {
-			$out = $this->generateSitemapPage( $parsedPath->namespace, $parsedPath->begin,  $parsedPath->end  );
+			$out = $this->generateSitemapPage( $parsedPath);
 		} else {
 			$title = ( new WikiaHtmlTitle() )->setParts( [ 'Not Found' ] )->getTitle();
 			$body = '<title>%s</title><h1>Not Found</h1><p>The requested URL was not found</p>';
@@ -114,17 +114,31 @@ class SitemapXmlController extends WikiaController {
 		return date( 'Y-m-d\TH:i:s\Z', $touchedTime );
 	}
 
-	private function generateSitemapPage($namespace, $begin, $end ) {
+	private function generateSitemapPage($parsedPath) {
+		$namespace = $parsedPath->namespace;
+		$begin = $parsedPath->begin;
+		$end = $parsedPath->end;
+		$page = $parsedPath->page;
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
-		$out .= '<!-- Namespace: ' . $namespace . '; begin: ' . $begin . '; end: ' . $end . ' -->' . PHP_EOL;
 
 
 		$priority = self::PRIORITIES[$namespace] ?? self::DEFAULT_PRIORITY;
 		$title = Title::newFromText( '$1', $namespace );
 		$urlPrefix = str_replace( '$1', '', $title->getFullURL() );
 
-		foreach ($this->model->getItemsBetween( $namespace, $begin, $end ) as $item ) {
+		if(!$page) {
+			$out .= '<!-- Namespace: ' . $namespace . '; begin: ' . $begin . '; end: ' . $end . ' -->' . PHP_EOL;
+			$data = $this->model->getItemsBetween( $namespace, $begin, $end );
+		} else {
+			//todo: remove old pagination, PLATFORM-3901
+			$out .= '<!-- Namespace: ' . $namespace . '; page: ' . $page . ' -->' . PHP_EOL;
+			$offset = self::URLS_PER_PAGE * ( $page - 1 );
+			$limit = self::URLS_PER_PAGE;
+			$data = $this->model->getItems( $namespace, $offset, $limit );
+		}
+
+		foreach ($data as $item ) {
 			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $item->page_title ) );
 			$lastmod = $this->getLastMod( $item->page_touched );
 
@@ -178,6 +192,8 @@ class SitemapXmlController extends WikiaController {
 			'namespace' => null,
 			'begin' => null,
 			'end' => null,
+			//todo: delete page param, PLATFORM-3901
+			'page' => null,
 		];
 
 		if ( $path === 'sitemap-newsitemapxml-index.xml' || $path === 'sitemap-index.xml' ) {
@@ -186,25 +202,28 @@ class SitemapXmlController extends WikiaController {
 		}
 
 		$m = null;
-
-		if ( !preg_match(
+		if ( preg_match(
 			'/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-id-(\d+)-(\d+)\.xml$/', $path, $m )
 		) {
+			$parsed->begin = intval( $m[4] );
+			$parsed->end = intval( $m[5] );
+			//todo: remove old sitemap pagination, PLATFORM-3901
+		} else if ( preg_match(
+			'/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-p(\d+)\.xml$/', $path, $m )
+		) {
+			$parsed->page = intval( $m[4] );
+		} else {
 			return $parsed;
 		}
 
 		$space = $m[2];
 		$specificNamespace = intval( $m[3] );
-		$begin = intval( $m[4] );
-		$end = intval( $m[5] );
 
 		if ( !in_array( $specificNamespace, self::SEPARATE_SITEMAPS ) ) {
 			return $parsed;
 		}
 
 		$parsed->namespace = $specificNamespace;
-		$parsed->begin = $begin;
-		$parsed->end = $end;
 
 		return $parsed;
 	}
