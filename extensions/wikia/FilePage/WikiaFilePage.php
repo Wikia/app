@@ -21,7 +21,7 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function getActionOverrides() {
 		if ( $this->isVideo() ) {
-			return array( 'revert' => 'WikiaRevertVideoAction' );
+			return [ 'revert' => 'WikiaRevertVideoAction' ];
 		} else {
 			return parent::getActionOverrides();
 		}
@@ -40,7 +40,7 @@ class WikiaFilePage extends ImagePage {
 	/**
 	 * Render the image or video
 	 */
-	protected function openShowImage(){
+	protected function openShowImage() {
 		if ( $this->isVideo() ) {
 			$this->openShowVideo();
 		} else {
@@ -48,21 +48,65 @@ class WikiaFilePage extends ImagePage {
 		}
 	}
 
+	/**
+	 * Render the image or video
+	 */
+	public function view() {
+		global $wgMemc, $wgDBprefix, $wgOut, $wgUser;
+		if ( !$wgUser->isAnon() ) {
+			parent::view();
+
+			return;
+		}
+		$redirKey = "redir:".$wgDBprefix.":".$this->getTitle();
+		$url = $wgMemc->get($redirKey);
+		if(url) {
+			$wgOut->redirect($url);
+		}
+		$displayImg = $img = false;
+		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
+		if ( !$img ) { // not set by hook?
+			$img = wfFindFile( $this->getTitle() );
+			if ( !$img ) {
+				$img = wfLocalFile( $this->getTitle() );
+			}
+		}
+		if ( !$img ) {
+			parent::view();
+			return;
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$res =
+			$dbr->select( [ 'imagelinks', 'page' ], [
+					'page_title',
+				], [ 'il_to' => $img->getTitle()->getDBkey(), 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
+				[ 'LIMIT' => 3, 'ORDER BY' => 'page_namespace, page_id', ] );
+
+
+		$res->seek(0);
+		$row = $res->current();
+		$res->free();
+		$url =  wfExpandUrl("/wiki/".$row->page_title);
+		$wgMemc->add($redirKey, $url);
+		$wgOut->redirect($url);
+	}
+
 	protected function openShowVideo() {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 
-		JSMessages::enqueuePackage('VideoPage', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage( 'VideoPage', JSMessages::EXTERNAL );
 
 		/* @var $file WikiaLocalFile|OldWikiaLocalFile */
 		$file = $this->getDisplayedFile();
 
 		//If a timestamp is specified, show the archived version of the video (if it exists)
-		$timestamp = $app->wg->Request->getInt('t', 0);
+		$timestamp = $app->wg->Request->getInt( 't', 0 );
 		if ( $timestamp > 0 ) {
 			$archiveFile = wfFindFile( $this->mTitle, $timestamp );
-			if ( $archiveFile instanceof LocalFile && $archiveFile->exists()) {
+			if ( $archiveFile instanceof LocalFile && $archiveFile->exists() ) {
 				$file = $archiveFile;
 			}
 		}
@@ -73,22 +117,24 @@ class WikiaFilePage extends ImagePage {
 		}
 
 		// JS for VideoBootstrap
-		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, ['autoplay' => $autoplay] );
+		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, [ 'autoplay' => $autoplay ] );
 
 		// Tell JS that HTML will already be loaded on the page.
 		$embedCode['htmlPreloaded'] = 1;
 
 		// HTML is no longer needed in VideoBootstrap
 		$html = $embedCode['html'];
-		unset($embedCode['html']);
+		unset( $embedCode['html'] );
 
-		$videoDisplay = '<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>';
+		$videoDisplay =
+			'<script type="text/javascript">window.playerParams = ' . json_encode( $embedCode ) .
+			';</script>';
 
 		$videoDisplay .= '<div class="fullImageLink" id="file">' . $html . '</div>';
 
 		$videoDisplay .= $this->getVideoInfoLine( $file );
 
-		$app->wg->Out->addHTML($videoDisplay);
+		$app->wg->Out->addHTML( $videoDisplay );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -103,12 +149,13 @@ class WikiaFilePage extends ImagePage {
 
 		$app = F::app();
 
-		$captionDetails = array(
+		$captionDetails = [
 			'provider' => $file->getProviderName(),
 			'providerUrl' => $file->getProviderHomeUrl(),
 			'detailUrl' => $file->getProviderDetailUrl(),
-			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
-		);
+			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()
+				->getDBKey() ),
+		];
 
 		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
@@ -128,7 +175,7 @@ class WikiaFilePage extends ImagePage {
 			$file = $this->getDisplayedFile();
 			$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 			$name = $file->getName();
-			$url = $uploadTitle->getFullUrl( array( 'name' => $name ) );
+			$url = $uploadTitle->getFullUrl( [ 'name' => $name ] );
 		} else {
 			$url = parent::getUploadUrl();
 		}
