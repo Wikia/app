@@ -11,7 +11,13 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			category: 'mixed-content-footer',
 			trackingMethod: 'analytics'
 		}),
-		$mixedContentFooter = $('#mixed-content-footer');
+		$mixedContentFooter = $('#mixed-content-footer'),
+		templatePaths = {
+			article: 'client/Recirculation_article.mustache',
+			topic: 'client/Recirculation_topic.mustache',
+			storyStream: 'client/Recirculation_storyStream.mustache',
+			sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
+		};
 
 	function render(data) {
 		var newsAndStoriesList = data.nsItems,
@@ -30,29 +36,47 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			})
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
-				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
+				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredItem);
 				setupTracking();
-			})
+			});
 	}
 
-	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
+	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList, sponsoredItem) {
 		var $newsAndStoriesHook = $('.mcf-card-ns-placeholder'),
-			$wikiArticleHook = $('.mcf-card-wiki-placeholder');
+			$wikiArticleHook = $('.mcf-card-wiki-placeholder'),
+			$sponsoredContentHook = $('.mcf-card-sponsored-content');
+
+		if (sponsoredItem) {
+			$sponsoredContentHook.replaceWith(
+				utils.renderTemplate(
+					templates[templatePaths.sponsoredContent],
+					$.extend(
+						true,
+						{},
+						sponsoredItem,
+						{
+							shortTitle: sponsoredItem.title.substring(0, 80) + '...',
+							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+						}
+					)
+				)
+			);
+		}
 
 		$.each($newsAndStoriesHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
+				template = templates[templatePaths.article],
 				newsAndStoriesItem = newsAndStoriesList[index],
 				type;
 
-			if(newsAndStoriesItem) {
+			if (newsAndStoriesItem) {
 				type = newsAndStoriesItem.type;
 				newsAndStoriesItem.shortTitle = newsAndStoriesItem.title;
 				if (type === 'topic') {
-					template = templates['client/Recirculation_topic.mustache'];
+					template = templates[templatePaths.topic];
 					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
 				} else if (type === 'storyStream') {
-					template = templates['client/Recirculation_storyStream.mustache'];
+					template = templates[templatePaths.storyStream];
 					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
 				} else if (type === 'video') {
 					newsAndStoriesItem.video = true;
@@ -68,10 +92,10 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 		$.each($wikiArticleHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
+				template = templates[templatePaths.article],
 				wikiArticle = wikiArticlesList[index];
 
-			if(wikiArticle) {
+			if (wikiArticle) {
 				if (!wikiArticle.thumbnail) {
 					wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
 				}
@@ -92,16 +116,16 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function getTemplateList(newsAndStoriesArticles) {
-		var templateList = ['client/Recirculation_article.mustache'],
+		var templateList = [templatePaths.article, templatePaths.sponsoredContent],
 			topicExist = false,
 			storyStreamExist = false;
 
 		newsAndStoriesArticles.forEach(function (article) {
 			if (article.type === 'topic' && !topicExist) {
-				templateList.push('client/Recirculation_topic.mustache');
+				templateList.push(templatePaths.topic);
 				topicExist = true;
 			} else if (article.type === 'storyStream' && !storyStreamExist) {
-				templateList.push('client/Recirculation_storyStream.mustache');
+				templateList.push(templatePaths.storyStream);
 				storyStreamExist = true;
 			}
 		});

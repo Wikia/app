@@ -8,6 +8,7 @@ require([
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.discussions',
+	'ext.wikia.recirculation.helpers.sponsoredContent',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
@@ -19,6 +20,7 @@ require([
              utils,
              mixedFooter,
              discussions,
+             sponsoredContentHelper,
              oldDiscussions,
              videosModule) {
 	'use strict';
@@ -44,6 +46,21 @@ require([
 		}).then(mapAjaxCall);
 	}
 
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred();
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function () {
+				deferred.resolve();
+			});
+		} else {
+			deferred.resolve();
+		}
+
+		return deferred.promise();
+	}
+
 	function getPopularPages() {
 		return nirvana.sendRequest({
 			controller: 'RecirculationApi',
@@ -60,34 +77,44 @@ require([
 		var mixedContentFooterData = [
 			getTrendingFandomArticles(),
 			getPopularPages(),
-			discussions.prepare()
+			discussions.prepare(),
+			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					nsItems: nsItems,
 					wikiItems: wikiItems,
-					discussions: discussions
+					discussions: discussions,
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for english recirculation' + err, log.levels.error);
+			});
 	}
 
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
 			getPopularPages(),
-			discussions.prepare()
+			discussions.prepare(),
+			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					wikiItems: wikiItems,
-					discussions: discussions
+					discussions: discussions,
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
+			});
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
@@ -121,5 +148,34 @@ require([
 
 		window.addEventListener('scroll', lazyLoadHandler);
 		lazyLoadHandler();
+
+		$.when
+			.apply($, [
+				sponsoredContentHelper.fetch(),
+				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
+				waitForRail()
+			])
+			.done(function (sponsoredContent, template) {
+				var $rail = $('#WikiaRail'),
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
+					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
+				$firstItem.replaceWith(
+					utils.renderTemplate(
+						template[0],
+						$.extend(
+							true,
+							{},
+							sponsoredItem,
+							{
+								shortTitle: sponsoredItem.title.substring(0, 80) + '...',
+								attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+							}
+						))
+				);
+			})
+			.fail(function (err) {
+				log('Failed to fetch rail data for recirculation' + err, log.levels.error);
+			});
 	});
 });
