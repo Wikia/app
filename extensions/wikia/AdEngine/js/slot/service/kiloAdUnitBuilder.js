@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.slot.service.kiloAdUnitBuilder', [
 			slotName = slotName[0];
 		}
 
-		var wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki';
+		var wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki';
 		return [
 			'', dfpId, 'wka.' + params.s0, wikiName, '', params.s2, src, slotName
 		].join('/');
