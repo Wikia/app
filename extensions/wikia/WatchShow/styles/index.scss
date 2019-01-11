@@ -1,4 +1,5 @@
 @import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 .watch-show {
 	.WikiaRail &.rail-module .wds-button.wds-is-secondary {
@@ -9,5 +10,16 @@
 	&__content {
 		@include align-items(flex-start);
 		@include flexbox();
+	}
+
+	&__available-on-hulu {
+		margin-left: 17px;
+
+		&-label {
+			font-size: 9px;
+			font-weight: $wds-font-weight-medium;
+			line-height: $wds-line-height-none;
+			margin-bottom: 4px;
+		}
 	}
 }
