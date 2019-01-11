@@ -72,8 +72,6 @@
 <?= $quantServe ?>
 <?= $billTheLizard ?>
 <?= $moatYi ?>
-<?= $a9 ?>
-<?= $prebid ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>

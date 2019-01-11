@@ -1,7 +1,6 @@
 /*global define, require, JSON*/
 define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.vastParser',
@@ -12,7 +11,6 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
-	lookupServices,
 	tracker,
 	eventDispatcher,
 	vastParser,
@@ -34,7 +32,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
 			MOBILE_IN_CONTENT: true,
-			MOBILE_PREFOOTER: true
+			MOBILE_PREFOOTER: true,
+			INVISIBLE_HIGH_IMPACT_2: true
 		};
 
 	function isEnabled() {
@@ -69,12 +68,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		var slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams || '{}'),
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams || '{}'),
-			slotPricesIgnoringTimeout = bidders && bidders.isEnabled()
-				? bidders.getCurrentSlotPrices(slot.name)
-				: lookupServices.getCurrentSlotPrices(slot.name),
-			realSlotPrices = bidders && bidders.isEnabled()
-				? bidders.getDfpSlotPrices(slot.name)
-				: lookupServices.getDfpSlotPrices(slot.name),
+			slotPricesIgnoringTimeout = bidders && bidders.isEnabled() ? bidders.getCurrentSlotPrices(slot.name) : {},
+			realSlotPrices = bidders && bidders.isEnabled() ? bidders.getDfpSlotPrices(slot.name) : {},
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize || '[]'),
 			bidderWon = getBidderWon(slotParams, realSlotPrices);
 

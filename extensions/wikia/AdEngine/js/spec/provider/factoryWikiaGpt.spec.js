@@ -13,7 +13,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		},
 		megaAdUnitBuilder: {
 			build: function () {
-				return 'wikia_gpt/5441/wka1a.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
+				return 'wikia_gpt/5441/wka1b.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
 			},
 			isMegaSlot: noop
 		},

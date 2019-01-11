@@ -2053,7 +2053,7 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
+		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason, $user ] );
 
 		$update = [
 			"city_public" => $city_public,

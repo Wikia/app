@@ -4,10 +4,8 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-	const ASSET_GROUP_ADENGINE_A9 = 'adengine2_a9_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_pr3b1d_js';
 	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
@@ -101,10 +99,10 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
-		$vars[] = 'wgAdDriverPrebidAdEngine3Countries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
+		$vars[] = 'wgAdDriverPubMaticDfpCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
@@ -164,7 +162,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverF2BfabStickinessCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2DisableSraCountries';
-		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nMap';
 
@@ -247,14 +244,6 @@ class AdEngine2Hooks {
 
 		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
-
-		if ( AnalyticsProviderA9::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_A9;
-		}
-
-		if ( AnalyticsProviderPrebid::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_PREBID;
-		}
 
 		return true;
 	}

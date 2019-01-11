@@ -1080,13 +1080,6 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
- * @name $wgAdDriverPrebidAdEngine3Countries
- * List of countries where Prebid bidding platform from AdEngine3 is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPrebidAdEngine3Countries = null;
-
-/**
  * @name $wgAdDriverPrebidOptOutCountries
  * List of countries where Prebid is enabled for opted-out users.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1161,6 +1154,13 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPubMaticDfpCountries
+ * Enables PubMatic via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticDfpCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries

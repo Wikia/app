@@ -11,7 +11,6 @@ require([
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
@@ -26,7 +25,6 @@ require([
 	featuredVideoAutoplay,
 	featuredVideoAds,
 	featuredVideoCookieService,
-	a9,
 	bidders
 ) {
 	if (!videoDetails) {
@@ -41,7 +39,6 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
-		responseTimeout = 2000,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -112,40 +109,44 @@ require([
 		}, onPlayerReady);
 	}
 
-	trackingOptIn.pushToUserConsentQueue(function () {
-		doc.addEventListener('bab.blocking', function () {
-			if (adContext.get('opts.wadHMD')) {
-				hmdRecLoader.setOnReady(function () {
-					setupPlayer();
-				});
-			} else {
+	function prePlayerSetup(blocking) {
+		if (blocking && adContext.get('opts.wadHMD')) {
+			hmdRecLoader.setOnReady(function () {
 				setupPlayer();
-			}
-		});
+			});
 
-		doc.addEventListener('bab.not_blocking', function () {
-			if (a9 && a9.waitForResponseCallbacks && adContext.get('bidders.a9Video')) {
-				a9.waitForResponseCallbacks(
-					function onSuccess() {
-						bidParams = a9.getSlotParams(featuredVideoSlotName);
-						setupPlayer();
-					},
-					function onTimeout() {
-						bidParams = {};
-						setupPlayer();
-					},
-					responseTimeout
-				);
-			} else if (bidders && bidders.addResponseListener && bidders.isEnabled()) {
-				bidders.addResponseListener(function () {
-					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
-					setupPlayer();
-				});
-			}
-		});
+			return;
+		}
 
+		if (!blocking && bidders && bidders.isEnabled()) {
+			bidders.runOnBiddingReady(function () {
+				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				setupPlayer();
+			});
+
+			return;
+		}
+
+		setupPlayer();
+	}
+
+	trackingOptIn.pushToUserConsentQueue(function () {
 		if (!adContext.get('opts.showAds')) {
 			setupPlayer();
+
+			return;
+		}
+
+		if (!adContext.get('opts.babDetectionDesktop')) {
+			prePlayerSetup(false);
+		} else {
+			doc.addEventListener('bab.blocking', function () {
+				prePlayerSetup(true);
+			});
+
+			doc.addEventListener('bab.not_blocking', function () {
+				prePlayerSetup(false);
+			});
 		}
 	});
 });
