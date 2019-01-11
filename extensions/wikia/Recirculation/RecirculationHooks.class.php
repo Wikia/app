@@ -33,12 +33,7 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgNoExternals;
-
 		if ( static::isCorrectPageType() ) {
-			if ( empty( $wgNoExternals ) ) {
-				$jsAssets[] = 'recirculation_liftigniter_tracker';
-			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
