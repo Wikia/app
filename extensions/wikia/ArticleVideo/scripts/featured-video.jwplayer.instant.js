@@ -131,18 +131,22 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (!adContext.get('opts.showAds') || !adContext.get('opts.babDetectionDesktop')) {
+		if (!adContext.get('opts.showAds')) {
 			setupPlayer();
 
 			return;
 		}
 
-		doc.addEventListener('bab.blocking', function () {
-			prePlayerSetup(true);
-		});
-
-		doc.addEventListener('bab.not_blocking', function () {
+		if (!adContext.get('opts.babDetectionDesktop')) {
 			prePlayerSetup(false);
-		});
+		} else {
+			doc.addEventListener('bab.blocking', function () {
+				prePlayerSetup(true);
+			});
+
+			doc.addEventListener('bab.not_blocking', function () {
+				prePlayerSetup(false);
+			});
+		}
 	});
 });
