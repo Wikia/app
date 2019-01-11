@@ -2,14 +2,14 @@
 
 class PopularPagesService {
 	public function getPopularPages( int $limit, int $thumbWidth, int $thumbHeight ): array {
-		global $wgCityId, $wgContentNamespaces;
+		global $wgCityId, $wgContentNamespaces, $wgSitename;
 
 		$articles = DataMartService::getTopArticlesByPageview(
 			$wgCityId,
 			null,
 			$wgContentNamespaces,
 			false,
-			$limit + 1
+			$limit + 5 // compensate for main page / articles without image
 		);
 
 		$mainPage = Title::newMainPage();
@@ -23,6 +23,7 @@ class PopularPagesService {
 		$images = $imageServing->getImages( 1 );
 
 		$data = [];
+		$count = 0;
 
 		foreach ( $titles as $title ) {
 			$articleId = $title->getArticleID();
@@ -33,7 +34,14 @@ class PopularPagesService {
 					'url' => $title->getFullURL(),
 					'thumbnail' => $images[$articleId][0]['url'],
 					'hasVideo' => false,
+					'site_name' => $wgSitename,
 				];
+
+				$count++;
+
+				if ( $count >= $limit ) {
+					break;
+				}
 			}
 		}
 

@@ -2,18 +2,8 @@
 
 
 class RecirculationController extends WikiaController {
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const ALLOWED_TYPES = [ 'popular', 'shares', 'recent_popular' ];
-	const DEFAULT_TYPE = 'popular';
 
-	public function init() {
-		$type = $this->getVal( 'type' );
-		if ( in_array( $type, self::ALLOWED_TYPES ) ) {
-			$this->type = $type;
-		} else {
-			$this->type = self::DEFAULT_TYPE;
-		}
-	}
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function discussionsAuthor() {
 		$this->setVal( 'post', $this->getVal( 'post' ) );

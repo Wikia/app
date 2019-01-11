@@ -254,12 +254,12 @@ class CategoryPage3HooksTest extends WikiaBaseTest {
 		yield [
 			'http://first.wikia.com/wiki/Category:A?from=B',
 			1,
-			'<a href="#" rel="nofollow" data-uncrawlable-url="aHR0cDovL2ZpcnN0Lndpa2lhLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1C"></a>'
+			'<a rel="nofollow" data-uncrawlable-url="aHR0cDovL2ZpcnN0Lndpa2lhLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1C"></a>'
 		];
 		yield [
 			'https://second.fandom.com/wiki/Category:A?from=B&action=raw',
 			2,
-			'<a href="#" rel="nofollow" data-uncrawlable-url="aHR0cHM6Ly9zZWNvbmQuZmFuZG9tLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1CJmFjdGlvbj1yYXc="></a>'
+			'<a rel="nofollow" data-uncrawlable-url="aHR0cHM6Ly9zZWNvbmQuZmFuZG9tLmNvbS93aWtpL0NhdGVnb3J5OkE/ZnJvbT1CJmFjdGlvbj1yYXc="></a>'
 		];
 		yield [
 			'http://first.wikia.com/wiki/Category:A?action=raw',

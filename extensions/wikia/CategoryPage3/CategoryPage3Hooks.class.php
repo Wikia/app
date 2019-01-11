@@ -161,7 +161,6 @@ class CategoryPage3Hooks {
 			return true;
 		}
 
-		$attribs['href'] = '#';
 		$attribs['rel'] = 'nofollow';
 		$attribs['data-uncrawlable-url'] = base64_encode( $url );
 		$link = Html::rawElement( 'a', $attribs, $text );

@@ -105,6 +105,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
+		$vars[] = 'wgAdDriverPubMaticDfpCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
@@ -164,7 +165,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverF2BfabStickinessCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2DisableSraCountries';
-		$vars[] = 'wgAdDriverF2IncontentMegaCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nMap';
 

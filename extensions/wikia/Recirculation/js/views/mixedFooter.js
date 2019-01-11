@@ -20,7 +20,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		};
 
 	function render(data) {
-		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
+		var newsAndStoriesList = data.nsItems,
 			wikiArticlesList = data.wikiItems,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {},
