@@ -46,7 +46,7 @@ describe('ext.wikia.adEngine.slot.service.kiloAdUnitBuilder', function () {
 		});
 
 		expect(getModule().build('TOP_LEADERBOARD', 'playwire'))
-			.toEqual('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
+			.toEqual('/5441/wka.life/_top1k_wiki//article/playwire/TOP_LEADERBOARD');
 	});
 
 	it('Build non-1k wiki ad unit', function () {
