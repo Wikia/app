@@ -1,7 +1,8 @@
 define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	'jquery',
-	'wikia.window'
-], function ($, w) {
+	'wikia.window',
+	'wikia.log'
+], function ($, w, log) {
 	'use strict';
 
 	var userGeo = Geo.getCountryCode();
@@ -17,7 +18,9 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 			}).done(function (result) {
 				deferred.resolve(result);
 			}).fail(function (err) {
-				deferred.reject(err);
+				log('Failed to fetch Sponsored content data' + err, log.levels.error);
+				// don't block rendering of rail/MCF
+				deferred.resolve([]);
 			});
 		}
 
