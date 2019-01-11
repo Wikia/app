@@ -224,7 +224,7 @@
 		}
 
 		.wds-button {
-			@include button-theming($color-buttons, $color-button-text);
+			@include button-theming($color-buttons, $color-button-text, $color-text);
 
 			&.wds-is-secondary {
 				margin-left: 12px;
