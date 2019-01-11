@@ -4,7 +4,7 @@ namespace Wikia\FeedsAndPosts;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgDisableHTTPSDowngrade, $wgEnableHTTPSForAnons;
+		global $wgServer, $wgDBname;
 
 		$wikiVariables = [
 			'basePath' => $wgServer,
