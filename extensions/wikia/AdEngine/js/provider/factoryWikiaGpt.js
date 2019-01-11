@@ -6,8 +6,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.services')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	btfBlocker,
 	gptHelper,
@@ -15,8 +14,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	megaAdUnitBuilder,
 	slotRegistry,
 	log,
-	bidders,
-	lookups
+	bidders
 ) {
 	'use strict';
 
@@ -99,10 +97,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 					slotTargeting[key] = targeting[key];
 				});
 
-				slotRegistry.storeScrollY(slot.name);
-			} else if (lookups) {
-				lookups.storeRealSlotPrices(slot.name);
-				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 				slotRegistry.storeScrollY(slot.name);
 			}
 

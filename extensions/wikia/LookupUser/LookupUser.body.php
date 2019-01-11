@@ -240,7 +240,7 @@ EOT
 		}
 		$optionsString = '';
 		foreach ( $user->getOptions() as $name => $value ) {
-			$optionsString .= "$name = $value <br />";
+			$optionsString .= "$name = ".htmlspecialchars($value)." <br />";
 		}
 		$name = $user->getName();
 		$email = $user->getEmail() ?: $user->getGlobalAttribute( 'disabled-user-email' );

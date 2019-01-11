@@ -14,12 +14,13 @@ class WikiStatusChangeHooks {
 	 * @param  int $city_public WikiFactory action
 	 * @param  int $city_id
 	 * @param  string $reason
+	 * @param  User $user
 	 *
 	 * @return bool
 	 */
-	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+	public static function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason, $user = null ) {
 		$publisher = new WikiStatusChangePublisher();
-		$publisher->publishWikiFactoryStatusChange( $city_id, $city_public, $reason );
+		$publisher->publishWikiFactoryStatusChange( $city_id, $city_public, $reason, $user );
 
 		return true;
 	}

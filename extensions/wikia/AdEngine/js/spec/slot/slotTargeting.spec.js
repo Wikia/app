@@ -41,16 +41,14 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			bidders = {
 				isEnabled: function () {
-					return false;
+					return true;
+				},
+				getPrebid: function () {
+					return mocks.pbjs;
 				}
 			},
 			instantGlobals = {
 				wgAdDriverAbTestIdTargeting: 1
-			},
-			prebid = {
-				get: function () {
-					return mocks.pbjs;
-				}
 			};
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
@@ -58,8 +56,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
-			bidders,
-            prebid
+			bidders
         );
 	}
 
