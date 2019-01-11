@@ -109,30 +109,40 @@ require([
 		}, onPlayerReady);
 	}
 
-	trackingOptIn.pushToUserConsentQueue(function () {
-		if (adContext.get('opts.babDetectionDesktop')) {
-			doc.addEventListener('bab.blocking', function () {
-				if (adContext.get('opts.wadHMD')) {
-					hmdRecLoader.setOnReady(function () {
-						setupPlayer();
-					});
-				} else {
-					setupPlayer();
-				}
+	function prePlayerSetup(blocking) {
+		if (blocking && adContext.get('opts.wadHMD')) {
+			hmdRecLoader.setOnReady(function () {
+				setupPlayer();
 			});
 
-			doc.addEventListener('bab.not_blocking', function () {
-				if (bidders && bidders.isEnabled()) {
-					bidders.runOnBiddingReady(function () {
-						bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
-						setupPlayer();
-					});
-				} else {
-					setupPlayer();
-				}
-			});
-		} else {
-			setupPlayer();
+			return;
 		}
+
+		if (!blocking && bidders && bidders.isEnabled()) {
+			bidders.runOnBiddingReady(function () {
+				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				setupPlayer();
+			});
+
+			return;
+		}
+
+		setupPlayer();
+	}
+
+	trackingOptIn.pushToUserConsentQueue(function () {
+		if (!adContext.get('opts.showAds') || !adContext.get('opts.babDetectionDesktop')) {
+			setupPlayer();
+
+			return;
+		}
+
+		doc.addEventListener('bab.blocking', function () {
+			prePlayerSetup(true);
+		});
+
+		doc.addEventListener('bab.not_blocking', function () {
+			prePlayerSetup(false);
+		});
 	});
 });
