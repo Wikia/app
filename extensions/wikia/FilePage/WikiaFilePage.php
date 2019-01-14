@@ -52,17 +52,21 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc, $wgDBprefix, $wgOut, $wgUser;
+		global $wgMemc, $wgDBprefix, $wgOut, $wgUser, $wgGroupPermissionsLocal;
 		if ( !$wgUser->isAnon() ) {
 			parent::view();
 
 			return;
 		}
-		$redirKey = "redir:".$wgDBprefix.":".$this->getTitle();
-		$url = $wgMemc->get($redirKey);
-		if($url) {
-			$wgOut->redirect($url);
+		if (preg_match("/\*\|read\|0/", $wgGroupPermissionsLocal) ||
+			preg_match("/\user\|read\|0/", $wgGroupPermissionsLocal)) {
+
 		}
+		$redirKey = "redir:".$wgDBprefix.":".$this->getTitle();
+		//$url = $wgMemc->get($redirKey);
+//		if($url) {
+//			$wgOut->redirect($url);
+//		}
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
@@ -79,15 +83,22 @@ class WikiaFilePage extends ImagePage {
 
 		$res =
 			$dbr->select( [ 'imagelinks', 'page' ], [
-					'page_title',
+				'page_title','page_namespace',
 				], [ 'il_to' => $img->getTitle()->getDBkey(), 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
 				[ 'LIMIT' => 5, 'ORDER BY' => 'page_namespace, page_id', ] );
 
+
 		$res->seek(0);
 		$row = $res->current();
-		$page = WikiPage::loadFromRow($row);
+		$title = Title::newFromRow($row);
+
+		var_dump($title);
+		$wiki = WikiPage::factory($title);
+		var_dump($wiki);
+		var_dump($wgGroupPermissionsLocal);
 		$res->free();
 		$url =  wfExpandUrl("/wiki/".$row->page_title);
+		die;
 		$wgMemc->add($redirKey, $url);
 		$wgOut->redirect($url);
 	}
