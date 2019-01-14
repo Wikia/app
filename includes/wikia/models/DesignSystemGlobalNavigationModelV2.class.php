@@ -37,6 +37,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'search' => $this->getSearchData(),
 			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
 			'main-navigation' => $this->getMainNavigation(),
+			'content-recommendations' => $this->getContentRecommendations(),
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -64,6 +65,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$this->getFandomLinks(),
 			[ $this->getWikisMenu() ]
 		);
+	}
+
+	private function getContentRecommendations() {
+		$url = RecirculationApiController::getFullUrl( 'getTrendingFandomArticles' );
+
+		if ( wfHttpsAllowedForURL( $url ) ) {
+			$url = wfHttpToHttps( $url );
+		}
+
+		return [
+			'url' => $url
+		];
 	}
 
 	private function getWikisMenu() {
