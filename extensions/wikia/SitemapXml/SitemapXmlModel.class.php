@@ -42,7 +42,7 @@ class SitemapXmlModel extends WikiaModel {
 							->AS_( 'rownum' )
 							->build() ) . ')' )
 				->AS_( 'db' )
-				->WHERE( 'rownum MOD ' . intval($limit)+1 )
+				->WHERE( 'rownum MOD ' . (intval($limit)+1) )
 				->EQUAL_TO( '0' )
 				->OR_( 'db.page_id = (' . $mainSQL->injectParams( $this->dbr,
 						$mainSQL->FIELD( 'max(page.page_id)' )->build() ) . ') ' );
