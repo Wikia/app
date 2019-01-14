@@ -60,7 +60,7 @@ class WikiaFilePage extends ImagePage {
 		}
 		$redirKey = "redir:".$wgDBprefix.":".$this->getTitle();
 		$url = $wgMemc->get($redirKey);
-		if(url) {
+		if($url) {
 			$wgOut->redirect($url);
 		}
 		$displayImg = $img = false;
@@ -81,11 +81,11 @@ class WikiaFilePage extends ImagePage {
 			$dbr->select( [ 'imagelinks', 'page' ], [
 					'page_title',
 				], [ 'il_to' => $img->getTitle()->getDBkey(), 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
-				[ 'LIMIT' => 3, 'ORDER BY' => 'page_namespace, page_id', ] );
-
+				[ 'LIMIT' => 5, 'ORDER BY' => 'page_namespace, page_id', ] );
 
 		$res->seek(0);
 		$row = $res->current();
+		$page = WikiPage::loadFromRow($row);
 		$res->free();
 		$url =  wfExpandUrl("/wiki/".$row->page_title);
 		$wgMemc->add($redirKey, $url);
