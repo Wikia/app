@@ -58,16 +58,20 @@ class WikiaFilePage extends ImagePage {
 
 			return;
 		}
-		var_dump($wgNamespaceProtection);
-		if (preg_match("/\*\|read\|0/", $wgGroupPermissionsLocal) ||
-			preg_match("/\user\|read\|0/", $wgGroupPermissionsLocal)) {
+		//fallback to main page
+		$url = wfExpandUrl( "/wiki/Main_Page" );
+		//wiki needs read privileges
+		if ( preg_match( "/\*\|read\|0/", $wgGroupPermissionsLocal ) ||
+			 preg_match( "/\user\|read\|0/", $wgGroupPermissionsLocal ) ) {
+			$wgOut->redirect( $url );
 
+			return;
 		}
-		$redirKey = "redir:".$wgDBprefix.":".$this->getTitle();
-		//$url = $wgMemc->get($redirKey);
-//		if($url) {
-//			$wgOut->redirect($url);
-//		}
+		$redirKey = "redir:" . $wgDBprefix . ":" . $this->getTitle();
+		$url = $wgMemc->get( $redirKey );
+		if ( $url ) {
+			$wgOut->redirect( $url );
+		}
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
@@ -78,30 +82,37 @@ class WikiaFilePage extends ImagePage {
 		}
 		if ( !$img ) {
 			parent::view();
+
 			return;
 		}
+		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
+
+		foreach ( $res as $row ) {
+			$title = Title::newFromRow( $row );
+			if ( $title->isRedirect() ) {
+				continue;
+			}
+			$url = wfExpandUrl( "/wiki/" . $row->page_title );
+			$res->free();
+			break;
+		}
+		$wgMemc->add( $redirKey, $url );
+		$wgOut->redirect( $url );
+	}
+
+	/**
+	 * Fetch informationabout pages linked to image
+	 * @param string $dbKey
+	 * @return string
+	 */
+	private function fetchLinks( $dbKey ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res =
-			$dbr->select( [ 'imagelinks', 'page' ], [
-				'page_title','page_namespace',
-				], [ 'il_to' => $img->getTitle()->getDBkey(), 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
-				[ 'LIMIT' => 5, 'ORDER BY' => 'page_namespace, page_id', ] );
-
-
-		$res->seek(0);
-		$row = $res->current();
-		$title = Title::newFromRow($row);
-
-		var_dump($title);
-		$wiki = WikiPage::factory($title);
-		var_dump($wiki);
-		var_dump($wgGroupPermissionsLocal);
-		$res->free();
-		$url =  wfExpandUrl("/wiki/".$row->page_title);
-		die;
-		$wgMemc->add($redirKey, $url);
-		$wgOut->redirect($url);
+		return $dbr->select( [ 'imagelinks', 'page' ], [
+			'page_title',
+			'page_namespace',
+		], [ 'il_to' => $dbKey, 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
+			[ 'LIMIT' => 5, 'ORDER BY' => 'page_namespace, page_id', ] );
 	}
 
 	protected function openShowVideo() {
