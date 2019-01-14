@@ -87,8 +87,9 @@ class SitemapXmlModel extends WikiaModel {
 	public function getItemsBetween( $namespace, $begin, $end ) {
 		$sql =
 			$this->getQuery( $namespace )->FIELD( 'page_namespace', 'page_title', 'page_touched' );
+		$sql = $sql->AND_( 'page_id' )->GREATER_THAN_OR_EQUAL( $begin );
 		if ( $end ) {
-			$sql = $sql->AND_( 'page_id' )->BETWEEN( $begin, $end );
+			$sql = $sql->AND_( 'page_id' )->LESS_THAN( $end );
 		}
 
 		return $sql->run( $this->dbr, function ( $result ) {
