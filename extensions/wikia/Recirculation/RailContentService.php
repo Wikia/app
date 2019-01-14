@@ -14,10 +14,10 @@ class RailContentService extends WikiaService {
 		);
 
 		foreach ( $articles as $pageId => $article ) {
-			$gen = ( new VignetteUrlToUrlGenerator( $article['thumbnail'] ) )->build();
+			$urlGenerator = ( new VignetteUrlToUrlGenerator( $article['thumbnail'] ) )->build();
 
 			$articles[$pageId]['thumbnail'] =
-				$gen->zoomCrop()
+				$urlGenerator->zoomCrop()
 					->width( static::RAIL_THUMBNAIL_WIDTH )
 					->height( static::RAIL_THUMBNAIL_HEIGHT )
 					->url();
