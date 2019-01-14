@@ -5,6 +5,15 @@ define('ext.wikia.recirculation.tracker', [
 ], function (tracker, abTest) {
 	'use strict';
 
+	function trackSelect(label) {
+		tracker.track({
+			action: tracker.ACTIONS.SELECT,
+			category: 'recirculation',
+			label: label,
+			trackingMethod: 'analytics'
+		})
+	}
+
 	function trackClick(label) {
 		tracker.track({
 			action: tracker.ACTIONS.CLICK,
@@ -25,6 +34,7 @@ define('ext.wikia.recirculation.tracker', [
 
 	return {
 		trackImpression: trackImpression,
-		trackClick: trackClick
+		trackClick: trackClick,
+		trackSelect: trackSelect,
 	};
 });
