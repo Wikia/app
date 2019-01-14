@@ -8926,3 +8926,10 @@ $wgEnableFastlyInsights = false;
  * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
  */
 $wgIncludeClosedWikiHandler = false;
+
+/**
+ * If set, the "Watch now" button is visible and leads to the url from this variable
+ * @see IW-1470
+ * @var string
+ */
+$wgWatchShowURL = '';
