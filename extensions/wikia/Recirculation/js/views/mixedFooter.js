@@ -50,7 +50,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 						sponsoredItem,
 						{
 							shortTitle: sponsoredItem.title.substring(0, 80) + '...',
-							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by',
+							trackingLabels: 'footer,sponsored-item'
 						}
 					)
 				)
