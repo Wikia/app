@@ -81,6 +81,9 @@
 				// Generic paginate
 				PAGINATE: 'paginate',
 
+				// Generic item selection
+				SELECT: 'select',
+
 				// Sharing view email, social network, etc
 				SHARE: 'share',
 

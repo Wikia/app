@@ -10,6 +10,7 @@ require([
 	'ext.wikia.recirculation.helpers.discussions',
 	'ext.wikia.recirculation.helpers.sponsoredContent',
 	'ext.wikia.recirculation.discussions',
+	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
              mw,
@@ -22,6 +23,7 @@ require([
              discussions,
              sponsoredContentHelper,
              oldDiscussions,
+             tracker,
              videosModule) {
 	'use strict';
 
@@ -173,6 +175,19 @@ require([
 							}
 						))
 				);
+
+				tracker.trackImpression('rail');
+
+				$rail.on('click', '[data-tracking]', function () {
+					var $this = $(this),
+						labels = $this.data('tracking').split(','),
+						href = $this.attr('href');
+
+					labels.forEach(function (label) {
+						tracker.trackClick(label);
+					});
+					tracker.trackSelect(href);
+				});
 			})
 			.fail(function (err) {
 				log('Failed to fetch rail data for recirculation' + err, log.levels.error);

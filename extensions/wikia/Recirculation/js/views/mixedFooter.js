@@ -1,28 +1,22 @@
 define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
-	'wikia.tracker',
+	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.plista'
 ], function ($, w, tracker, utils, plista) {
 	'use strict';
 
-	var track = tracker.buildTrackingFunction({
-			category: 'mixed-content-footer',
-			trackingMethod: 'analytics'
-		}),
-		$mixedContentFooter = $('#mixed-content-footer'),
+	var $mixedContentFooter = $('#mixed-content-footer'),
 		templatePaths = {
 			article: 'client/Recirculation_article.mustache',
-			topic: 'client/Recirculation_topic.mustache',
-			storyStream: 'client/Recirculation_storyStream.mustache',
 			sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
 		};
 
 	function render(data) {
 		var newsAndStoriesList = data.nsItems,
 			wikiArticlesList = data.wikiItems,
-			templateList = getTemplateList(newsAndStoriesList),
+			templateList = [templatePaths.article, templatePaths.sponsoredContent],
 			templates = {},
 			$discussions = $(data.discussions);
 		$('.mcf-discussions-placeholder').replaceWith($discussions);
@@ -56,7 +50,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 						sponsoredItem,
 						{
 							shortTitle: sponsoredItem.title.substring(0, 80) + '...',
-							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
+							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by',
+							trackingLabels: 'footer,sponsored-item'
 						}
 					)
 				)
@@ -66,23 +61,11 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		$.each($newsAndStoriesHook, function (index) {
 			var $this = $(this),
 				template = templates[templatePaths.article],
-				newsAndStoriesItem = newsAndStoriesList[index],
-				type;
+				newsAndStoriesItem = newsAndStoriesList[index];
 
 			if (newsAndStoriesItem) {
-				type = newsAndStoriesItem.type;
 				newsAndStoriesItem.shortTitle = newsAndStoriesItem.title;
-				if (type === 'topic') {
-					template = templates[templatePaths.topic];
-					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
-				} else if (type === 'storyStream') {
-					template = templates[templatePaths.storyStream];
-					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
-				} else if (type === 'video') {
-					newsAndStoriesItem.video = true;
-				}
-
-				newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + type;
+				newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + 'ns,footer';
 				newsAndStoriesItem.liType = 'ns';
 				newsAndStoriesItem.classes = $this[0].className.replace('mcf-card-ns-placeholder', '');
 
@@ -106,7 +89,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 					wikiArticle.shortTitle = wikiArticle.title;
 				}
 
-				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
+				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article,footer';
 				wikiArticle.classes = $this[0].className.replace('mcf-card-wiki-placeholder', '');
 				wikiArticle.liType = 'wiki';
 
@@ -115,37 +98,18 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		});
 	}
 
-	function getTemplateList(newsAndStoriesArticles) {
-		var templateList = [templatePaths.article, templatePaths.sponsoredContent],
-			topicExist = false,
-			storyStreamExist = false;
-
-		newsAndStoriesArticles.forEach(function (article) {
-			if (article.type === 'topic' && !topicExist) {
-				templateList.push(templatePaths.topic);
-				topicExist = true;
-			} else if (article.type === 'storyStream' && !storyStreamExist) {
-				templateList.push(templatePaths.storyStream);
-				storyStreamExist = true;
-			}
-		});
-
-		return templateList;
-	}
-
 	function setupTracking() {
-		track({
-			action: tracker.ACTIONS.IMPRESSION
-		});
+		tracker.trackImpression('footer');
 
 		$mixedContentFooter.on('click', '[data-tracking]', function () {
-			var labels = $(this).data('tracking').split(',');
+			var $this = $(this),
+				labels = $this.data('tracking').split(','),
+				href = $this.attr('href');
+
 			labels.forEach(function (label) {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: label
-				});
+				tracker.trackClick(label);
 			});
+			tracker.trackSelect(href);
 		});
 	}
 
