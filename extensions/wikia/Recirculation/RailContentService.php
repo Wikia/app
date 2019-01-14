@@ -14,13 +14,16 @@ class RailContentService extends WikiaService {
 		);
 
 		foreach ( $articles as $pageId => $article ) {
-			$urlGenerator = ( new VignetteUrlToUrlGenerator( $article['thumbnail'] ) )->build();
-
-			$articles[$pageId]['thumbnail'] =
-				$urlGenerator->zoomCrop()
-					->width( static::RAIL_THUMBNAIL_WIDTH )
-					->height( static::RAIL_THUMBNAIL_HEIGHT )
-					->url();
+			try {
+				$articles[$pageId]['thumbnail'] =
+					VignetteRequest::fromUrl( $article['thumbnail'] )
+						->zoomCrop()
+						->width( static::RAIL_THUMBNAIL_WIDTH )
+						->height( static::RAIL_THUMBNAIL_HEIGHT )
+						->url();
+			} catch ( Exception $ignored ) {
+				// just use the original thumbnail
+			}
 		}
 
 		$this->response->addAsset( 'extensions/wikia/Recirculation/styles/premium-rail.scss' );
