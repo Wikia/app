@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'fandom-com-migration-after' => "Attention: We have migrated your community's domain to fandom.com. Find out more in [http://community.wikia.com/wiki/User_blog:Brandon_Rhea/How_we%27re_testing_the_fandom.com_domain_migration this FANDOM news blog].",
+	'fandom-com-migration-after' => "Attention: We have migrated your community's domain to fandom.com. Find out more on [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
 	'fandom-com-migration-before' => "Attention: We are migrating your community's domain to fandom.com this week. Find out more on [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
 );
 
