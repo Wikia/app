@@ -90,9 +90,16 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		if (!event.isEmpty && event.slot) {
 			var resp = event.slot.getResponseInformation();
 
-			if (resp && resp.creativeId === null && resp.lineItemId === null) {
-				creativeId = 'AdX';
-				lineItemId = 'AdX';
+			if (resp) {
+				if (resp.sourceAgnosticCreativeId && resp.sourceAgnosticLineItemId) {
+					log(['set line item and creative id to source agnostic values'], 'debug', logGroup);
+					creativeId = resp.sourceAgnosticCreativeId;
+					lineItemId = resp.sourceAgnosticLineItemId;
+				}
+				else if (resp.creativeId === null && resp.lineItemId === null) {
+					creativeId = 'AdX';
+					lineItemId = 'AdX';
+				}
 			}
 		}
 
