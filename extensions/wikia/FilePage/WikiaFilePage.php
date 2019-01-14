@@ -52,12 +52,13 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc, $wgDBprefix, $wgOut, $wgUser, $wgGroupPermissionsLocal;
+		global $wgMemc, $wgDBprefix, $wgOut, $wgUser, $wgGroupPermissionsLocal, $wgNamespaceProtection;
 		if ( !$wgUser->isAnon() ) {
 			parent::view();
 
 			return;
 		}
+		var_dump($wgNamespaceProtection);
 		if (preg_match("/\*\|read\|0/", $wgGroupPermissionsLocal) ||
 			preg_match("/\user\|read\|0/", $wgGroupPermissionsLocal)) {
 
