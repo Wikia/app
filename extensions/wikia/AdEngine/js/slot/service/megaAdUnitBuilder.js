@@ -60,12 +60,19 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return deviceDetect.getDevice(params);
 	}
 
+	function getWikiName(slotName, s1) {
+		if (slotName === 'OUTSTREAM' || slotName === 'FEATURED') {
+			return s1;
+		}
+		return getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki';
+	}
+
 	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDeviceSpecial(params),
 			provider = src.indexOf('remnant') === -1 ? wka1 : wka2,
-			wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki',
+			wikiName = getWikiName(slotName, params.s1),
 			vertical = params.s0;
 
 		adUnitElements = [
