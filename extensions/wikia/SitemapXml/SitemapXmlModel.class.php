@@ -32,7 +32,7 @@ class SitemapXmlModel extends WikiaModel {
 	 */
 	public function getSubSitemaps( $namespace, $limit ) {
 		$mainSQL = $this->getQuery( $namespace );
-		echo $sql =
+		$sql =
 			( new WikiaSQL() )->SELECT()
 				->FIELD( 'page_id', 'rownum' )
 				->FROM( '(SELECT @x:=-1) AS x, (' . $mainSQL->injectParams( $this->dbr,
