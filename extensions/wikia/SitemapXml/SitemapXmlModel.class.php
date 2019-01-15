@@ -49,7 +49,7 @@ class SitemapXmlModel extends WikiaModel {
 
 		return $sql->run( $this->dbr, function ( $result ) {
 			while ( $row = $result->fetchObject() ) {
-				yield $row;
+				yield array($result->numRows($result), $row);
 			}
 		} );
 	}

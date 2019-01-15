@@ -170,11 +170,17 @@ class SitemapXmlController extends WikiaController {
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
 			$prev = false;
-			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as $page ) {
+			$count = 0;
+			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as list($numberRows, $page) ) {
+				$count++;
 				if($prev) {
+					$currId = $page->page_id;
+					if($count == $numberRows) {
+						$currId += 1;
+					}
 					$url =
 						$baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $prev . '-' .
-						$page->page_id . '.xml';
+						$currId . '.xml';
 					$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 				}
 				$prev = $page->page_id;
