@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 
 	var dfpId = '5441',
 		megaSlots = [
+			'TOP_LEADERBOARD',
 			'TOP_BOXAD',
 			'INVISIBLE_SKIN',
 			'BOTTOM_LEADERBOARD'
