@@ -42,14 +42,38 @@
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
+		{{#isUserAnon}}
+		<div class="more-info-dropdown more-info-right wds-dropdown">
+			<div class="wds-dropdown__toggle push-dropdown-down">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
+				<span><?= wfMsg('lightbox-header-more-info-button') ?></span>
+			</div>
+			<div class="wds-is-not-scrollable wds-dropdown__content wds-is-right-aligned more-info-container">
+				{{{imageInfo}}}
+			</div>
+		</div>
+		{{/isUserAnon}}
+		{{^isUserAnon}}
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
-
+		{{/isUserAnon}}
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
 			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
 			<input class="lightbox-article-input" />
 		</div>
 
+		{{#isUserAnon}}
+		<div class="more-info-dropdown more-info-left wds-dropdown">
+			<div class="wds-dropdown__toggle push-dropdown-down">
+				<h1>{{fileTitle}}</h1>
+			</div>
+			<div class="wds-is-not-scrollable wds-dropdown__content wds-is-left-aligned more-info-container">
+				{{{imageInfo}}}
+			</div>
+		</div>
+		{{/isUserAnon}}
+		{{^isUserAnon}}
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
+		{{/isUserAnon}}
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}

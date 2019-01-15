@@ -422,6 +422,28 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.close {
 			margin: 0;
 		}
+		.more-info-dropdown {
+			padding-bottom: 4px;
+			span {
+			  	cursor: pointer;
+			}
+		    .more-info-container {
+				padding: 0;
+			  	min-width: 300px;
+			}
+		}
+	  	.more-info-left {
+		  	float: left;
+		}
+		.more-info-right {
+		  	float: right;
+			svg {
+				@include sprite-Lightbox-base;
+				content: '';
+				float: left;
+				margin: 1px 4px 0 2px;
+			}
+		}
 		.more-info-button, .share-button {
 			float: right;
 			margin-left: 5px;

@@ -158,6 +158,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
+		global $wgParser;
 		$this->response->setFormat( 'json' );
 
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
@@ -217,6 +218,11 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
+		$this->isUserAnon = $this->wg->User->isAnon();
+		$parserOptions = new ParserOptions();
+		$parserOptions->setEditSection(false);
+		$parserOptions->setTidy(true);
+		$this->imageInfo = $wgParser->parse($data['description'], $title, $parserOptions)->getText();
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );
