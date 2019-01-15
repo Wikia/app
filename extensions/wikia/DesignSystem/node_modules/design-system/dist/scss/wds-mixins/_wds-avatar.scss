@@ -31,12 +31,7 @@
 		}
 	}
 
-	.wds-avatar__inner-border:hover + .wds-avatar__image {
-		fill: $color-hover;
-		border-color: $color-hover;
-	}
-
-	.wds-avatar__inner-border {
+	&.is-default:before {
 		@include square($diameter - 2*$border-width);
 
 		border: solid $inner-border-width $color-background;
