@@ -309,6 +309,10 @@ class SEOTweaksHooksHelper {
 			return true;
 		}
 
+		if ( !$user->isAnon() ) {
+			$queryParams['rdfrom'] = $queryParams['title'];
+		}
+
 		unset( $queryParams['title'] );
 		$targetUrl = $output->getWikiPage()->getRedirectTarget()->getFullURL( $queryParams );
 
@@ -352,6 +356,15 @@ class SEOTweaksHooksHelper {
 			$originalURL = $attribs['href'];
 			$attribs['href'] = '#';
 			$attribs['data-uncrawlable-url'] = base64_encode( $originalURL );
+		}
+
+		return true;
+	}
+
+	public static function onDisplayRedirectedFrom( $rdfrom, $wgOut, $article): bool {
+		if ( !$article->getContext()->getUser()->isAnon() ) {
+			$redir = Linker::makeExternalLink( $rdfrom, $rdfrom );
+			$wgOut->addSubtitle( wfMessage( 'redirectedfrom' )->rawParams( $redir ) );
 		}
 
 		return true;
