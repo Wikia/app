@@ -32,17 +32,17 @@ class SitemapXmlModel extends WikiaModel {
 	 */
 	public function getSubSitemaps( $namespace, $limit ) {
 		$mainSQL = $this->getQuery( $namespace );
-		$sql =
+		echo $sql =
 			( new WikiaSQL() )->SELECT()
 				->FIELD( 'page_id', 'rownum' )
-				->FROM( '(SELECT @x:=1) AS x, (' . $mainSQL->injectParams( $this->dbr,
+				->FROM( '(SELECT @x:=-1) AS x, (' . $mainSQL->injectParams( $this->dbr,
 						$this->getQuery( $namespace )
 							->FIELD( 'page_id' )
 							->FIELD( '(@x:=@x+1)' )
 							->AS_( 'rownum' )
 							->build() ) . ')' )
 				->AS_( 'db' )
-				->WHERE( 'rownum MOD ' . (intval($limit)+2 ))
+				->WHERE( 'rownum MOD ' . $limit )
 				->EQUAL_TO( '0' )
 				->OR_( 'db.page_id = (' . $mainSQL->injectParams( $this->dbr,
 						$mainSQL->FIELD( 'max(page.page_id)' )->build() ) . ') ' );

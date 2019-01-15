@@ -140,7 +140,7 @@ class SitemapXmlController extends WikiaController {
 			$limit = self::URLS_PER_PAGE;
 			$data = $this->model->getItems( $namespace, $offset, $limit );
 		}
-
+		$count = 0;
 		foreach ( $data as $item ) {
 			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $item->page_title ) );
 			$lastmod = $this->getLastMod( $item->page_touched );
@@ -150,9 +150,11 @@ class SitemapXmlController extends WikiaController {
 			$out .= '<lastmod>' . $lastmod . '</lastmod>' . PHP_EOL;
 			$out .= '<priority>' . $priority . '</priority>' . PHP_EOL;
 			$out .= '</url>' . PHP_EOL;
+			$count ++;
 		}
 
 		$out .= '</urlset>' . PHP_EOL;
+		$out .= sprintf( '<!-- number of pages: %d -->' . PHP_EOL, $count );
 
 		return $out;
 	}
@@ -163,15 +165,18 @@ class SitemapXmlController extends WikiaController {
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
+
 		$baseUrl = $this->wg->Server . $this->wg->ScriptPath;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
-			$prev = "0";
+			$prev = false;
 			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as $page ) {
-				$url =
-					$baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $prev . '-' .
-					$page->page_id . '.xml';
-				$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+				if($prev) {
+					$url =
+						$baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $prev . '-' .
+						$page->page_id . '.xml';
+					$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+				}
 				$prev = $page->page_id;
 			}
 		}
