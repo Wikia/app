@@ -18,7 +18,7 @@ class CompareRobots extends Maintenance {
 		$this->mDescription = 'Compares the response of robots service and MW/FC';
 		$this->addOption( 'diffsdir', 'Directory where differences in the responses are saved',
 			false, true, 'd' );
-		$this->addOption( 'staging', 'Staging env for MediaWiki requests', false, true );
+		$this->addOption( 'staging', 'Staging env for service requests', false, true );
 	}
 
 	private function httpGet( $url, $headers, $ssl ) {
