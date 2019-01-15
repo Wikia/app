@@ -78,6 +78,7 @@ class CompareRobots extends Maintenance {
 			$prodRedirect = $prodResponse->getResponseHeader( 'location' );
 			$serviceRedirect = $serviceResponse->getResponseHeader( 'location' );
 			$serviceRedirect = str_replace( 'newrobots.txt', 'robots.txt', $serviceRedirect );
+			$serviceRedirect = str_replace( '?forcerobots=1', '', $serviceRedirect );
 			if ( $prodRedirect !== $serviceRedirect ) {
 				$this->error( "\tFAILURE: Redirects don't match, prod: {$prodRedirect}, service: {$serviceRedirect}" );
 
