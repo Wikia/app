@@ -424,7 +424,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 		.more-info-dropdown {
 			padding-bottom: 4px;
-			span {
+			span,h1 {
 			  	cursor: pointer;
 			}
 		    .more-info-container {
