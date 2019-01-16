@@ -28,20 +28,18 @@ class PopularPagesService {
 		foreach ( $titles as $title ) {
 			$articleId = $title->getArticleID();
 
-			if ( isset( $images[$articleId] ) ) {
-				$data[$articleId] = [
-					'title' => $title->getPrefixedText(),
-					'url' => $title->getFullURL(),
-					'thumbnail' => $images[$articleId][0]['url'],
-					'hasVideo' => false,
-					'site_name' => $wgSitename,
-				];
+			$data[$articleId] = [
+				'title' => $title->getPrefixedText(),
+				'url' => $title->getFullURL(),
+				'thumbnail' => isset( $images[$articleId]) ? $images[$articleId][0]['url'] : null,
+				'hasVideo' => false,
+				'site_name' => $wgSitename,
+			];
 
-				$count++;
+			$count++;
 
-				if ( $count >= $limit ) {
-					break;
-				}
+			if ( $count >= $limit ) {
+				break;
 			}
 		}
 
