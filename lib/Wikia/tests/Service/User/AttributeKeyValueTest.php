@@ -40,6 +40,18 @@ class AttributeKeyValueTest extends TestCase {
 		$this->assertTrue( $ret, "the attribute was not set" );
 	}
 
+	public function testSetEmptyAttributeSuccess() {
+		$this->persistenceMock->expects( $this->once() )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->testAttribute_1->getName() => ''  ] )
+			->willReturn( true );
+
+		$service = new AttributeService( $this->persistenceMock );
+		$ret = $service->set( $this->userId, [ $this->testAttribute_1->getName() => ''  ] );
+
+		$this->assertTrue( $ret, "the attribute was not set" );
+	}
+
 	public function testSetMultipleUsers() {
 		$this->persistenceMock->expects( $this->at( 0 ) )
 			->method( 'saveAttributes' )
