@@ -9,6 +9,7 @@ use Wikia\Service\PersistenceException;
 class AttributeKeyValueTest extends TestCase {
 
 	protected $userId = 1;
+	protected $otherUserId = 2;
 	protected $anonUserId = 0;
 	/** @var Attribute $testAttribute_1 */
 	protected $testAttribute_1;
@@ -37,6 +38,24 @@ class AttributeKeyValueTest extends TestCase {
 		$ret = $service->set( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] );
 
 		$this->assertTrue( $ret, "the attribute was not set" );
+	}
+
+	public function testSetMultipleUsers() {
+		$this->persistenceMock->expects( $this->at( 0 ) )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue()  ] )
+			->willReturn( true );
+		$this->persistenceMock->expects( $this->at( 1 ) )
+			->method( 'saveAttributes' )
+			->with( $this->otherUserId, [ $this->testAttribute_2->getName() => $this->testAttribute_2->getValue()  ] )
+			->willReturn( true );
+
+		$service = new AttributeService( $this->persistenceMock );
+		$firstUserResult = $service->set( $this->userId, [ $this->testAttribute_1->getName() => $this->testAttribute_1->getValue() ] );
+		$otherUserResult = $service->set( $this->otherUserId, [ $this->testAttribute_2->getName() => $this->testAttribute_2->getValue() ] );
+
+		$this->assertTrue( $firstUserResult, "the attribute was not set" );
+		$this->assertTrue( $otherUserResult, "the attribute was not set" );
 	}
 
 	/**
