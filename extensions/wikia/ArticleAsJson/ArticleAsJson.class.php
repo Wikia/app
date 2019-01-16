@@ -486,8 +486,8 @@ class ArticleAsJson {
 
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
-			$media['srcset'] = self::getSrcset( $media['url'], intval( $media['width'] ) );
-			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], 340 );
+			$media['srcset'] = self::getSrcset( $media['url'], intval( $media['width'] ), $file );
+			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], 340, $file );
 
 			$res = self::createMarker( $media );
 
@@ -497,13 +497,19 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function getSrcset( string $url, int $originalWidth ): string {
+	/**
+	 * @param string $url
+	 * @param int $originalWidth
+	 * @param File $file
+	 * @return string
+	 */
+	public static function getSrcset( string $url, int $originalWidth, $file ): string {
 		$widths = [ 284, 340, 732, 985 ];
 		$srcSetItems = [];
 
 		foreach ( $widths as $width ) {
 			if ( $width <= $originalWidth ) {
-				$thumb = self::getThumbnailUrlForWidth( $url, $width );
+				$thumb = self::getThumbnailUrlForWidth( $url, $width, $file );
 				$srcSetItems[] = "${thumb} ${width}w";
 			}
 		}
@@ -511,16 +517,30 @@ class ArticleAsJson {
 		return implode( ',', $srcSetItems );
 	}
 
-	public static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
-		try {
-			$url = VignetteRequest::fromUrl( $url )
+	/**
+	 * @param string $url
+	 * @param int $requestedWidth
+	 * @param File $file
+	 * @return string
+	 * @throws Exception
+	 */
+	public static function getThumbnailUrlForWidth( string $url, int $requestedWidth, $file ) {
+		if ( VignetteRequest::isVignetteUrl( $url ) ) {
+			return VignetteRequest::fromUrl( $url )
 				->scaleToWidth( $requestedWidth )
 				->url();
-		} catch(InvalidArgumentException $e) {
-			$url = '';
 		}
 
-		return $url;
+		// XF-741: Handle foreign image repositories, such as Wikimedia Commons
+		if ( $file && !$file->getRepo()->isLocal() ) {
+			$thumbnail = $file->transform( [ 'width' => $requestedWidth ] );
+
+			if ( $thumbnail ) {
+				return $thumbnail->getUrl();
+			}
+		}
+
+		return '';
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
@@ -589,24 +609,6 @@ class ArticleAsJson {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Because we take captions out of main parser flow we have to replace links manually
-	 *
-	 * @param Parser $parser
-	 * @param $media
-	 */
-	private static function linkifyMediaCaption( Parser $parser, &$media ) {
-		if ( array_key_exists( 'caption', $media ) ) {
-			$caption = $media['caption'];
-
-			if ( is_string( $caption ) &&
-				( strpos( $caption, '<!--LINK' ) !== false || strpos( $caption, '<!--IWLINK' ) !== false )
-			) {
-				$parser->replaceLinkHolders( $media['caption'] );
-			}
-		}
 	}
 
 	/**
