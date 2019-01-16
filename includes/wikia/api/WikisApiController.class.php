@@ -299,7 +299,8 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$wikis = [];
-		if ( WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWiki', $cityId, false, false ) ) {
+		if ( !empty( $cityId ) && WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWiki', $cityId,
+			false, false ) ) {
 			$this->response->setVal( 'isBlocked', true );
 		} else {
 			$this->response->setVal( 'isBlocked', false );
@@ -316,8 +317,9 @@ class WikisApiController extends WikiaApiController {
 				}, $wikis );
 			}
 		}
-
-		$this->response->setVal( 'isPublic', WikiFactory::isPublic( $cityId ) );
+		if ( !empty( $cityId ) ) {
+			$this->response->setVal( 'isPublic', WikiFactory::isPublic( $cityId ) );
+		}
 		$this->response->setVal( 'primaryDomain', '' );
 		$this->response->setVal( 'primaryProtocol', '' );
 		$this->response->setVal( 'wikis', $wikis );
