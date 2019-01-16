@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.tracking.nielsen', [
 		adEngine3.context.set('services.nielsen.enabled', adContext.get('opts.nielsen'));
 		adEngine3.context.set('services.nielsen.appId', 'P26086A07-C7FB-4124-A679-8AC404198BA7');
 
-		const pageParams = pageLevelParams.getPageLevelParams();
+		var pageParams = pageLevelParams.getPageLevelParams();
 
 		services.nielsen.call({
 			type: 'static',
