@@ -162,6 +162,10 @@ class CompareRobots extends Maintenance {
 			while ( $wiki = $cities->fetchObject() ) {
 				$lastCityId = $wiki->city_id;
 				$parsed = parse_url( $wiki->city_url );
+				if ( $parsed['path'] != '/' ) {
+					// don't compare rebots for language path wikis
+					continue;
+				}
 				$url = $parsed['scheme'] . '://' . $parsed['host'];
 				foreach ( [ false, true ] as $https ) {
 					$this->output( "Checking {$url} domain, https: " . json_encode( $https ) .
