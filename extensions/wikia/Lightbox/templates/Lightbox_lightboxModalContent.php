@@ -43,6 +43,7 @@
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
 		{{#isUserAnon}}
+		{{#imageDescription}}
 		<div class="more-info-dropdown more-info-right wds-dropdown">
 			<div class="wds-dropdown__toggle push-dropdown-down">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
@@ -52,6 +53,7 @@
 				{{{imageDescription}}}
 			</div>
 		</div>
+		{{/imageDescription}}
 		{{/isUserAnon}}
 		{{^isUserAnon}}
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
@@ -62,6 +64,7 @@
 		</div>
 
 		{{#isUserAnon}}
+		{{#imageDescription}}
 		<div class="more-info-dropdown more-info-left wds-dropdown">
 			<div class="wds-dropdown__toggle push-dropdown-down">
 				<h1>{{fileTitle}}</h1>
@@ -70,6 +73,10 @@
 				{{{imageDescription}}}
 			</div>
 		</div>
+		{{/imageDescription}}
+		{{^imageDescription}}
+		<h1>{{fileTitle}}</h1>
+		{{/imageDescription}}
 		{{/isUserAnon}}
 		{{^isUserAnon}}
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>

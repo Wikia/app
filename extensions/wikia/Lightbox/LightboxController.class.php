@@ -222,7 +222,11 @@ class LightboxController extends WikiaController {
 		$parserOptions = new ParserOptions();
 		$parserOptions->setEditSection( false );
 		$parserOptions->setTidy( true );
-		$this->imageDescription = $wgParser->parse( $data['description'], $title, $parserOptions )->getText();
+		if ( empty( trim( $data['description'] ) ) ) {
+			$this->imageDescription = false;
+		} else {
+			$this->imageDescription = $wgParser->parse( trim( $data['description'] ), $title, $parserOptions )->getText();
+		}
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );
