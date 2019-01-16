@@ -34,5 +34,7 @@ class FeedsAndPostsController extends WikiaController {
 	public function getWikiVariables() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new WikiVariables() )->get() );
+
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 	}
 }
