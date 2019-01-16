@@ -163,12 +163,6 @@ class BlogsHelper {
 	 * @return bool false if we're trying to move out of or into blog comment namespace, true otherwise
 	 */
 	public static function onAbortMove( Title $sourceTitle, Title $targetTitle, User $user, &$err, string $reason ): bool {
-		$blogsNS = [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ];
-		if ( $sourceTitle->inNamespaces( $blogsNS ) && !$targetTitle->inNamespace( $sourceTitle->getNamespace() ) ) {
-			$err = wfMessage( 'immobile-source-namespace', $sourceTitle->getNsText() )->escaped();
-			return false;
-		}
-
 		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
 			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
 			return false;
