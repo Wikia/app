@@ -199,6 +199,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/tracking/moatYi.js',
+		'//extensions/wikia/AdEngine/js/tracking/nielsen.js',
 		'//extensions/wikia/AdEngine/js/tracking/pageInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
