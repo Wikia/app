@@ -79,6 +79,9 @@ class CompareRobots extends Maintenance {
 			$serviceRedirect = $serviceResponse->getResponseHeader( 'location' );
 			$serviceRedirect = str_replace( 'newrobots.txt', 'robots.txt', $serviceRedirect );
 			$serviceRedirect = str_replace( '?forcerobots=1', '', $serviceRedirect );
+			if ( $staging ) {
+				$serviceRedirect = str_replace( ".{$staging}.", '.', $serviceRedirect );
+			}
 			if ( $prodRedirect !== $serviceRedirect ) {
 				$this->error( "\tFAILURE: Redirects don't match, prod: {$prodRedirect}, service: {$serviceRedirect}" );
 
@@ -94,8 +97,10 @@ class CompareRobots extends Maintenance {
 		}
 		$prodContent = preg_replace( "/\n\n+/s", "\n", $prodResponse->getContent() );
 		$serviceContent = preg_replace( "/\n\n+/s", "\n", $serviceResponse->getContent() );
-		// remove staging-specific responses
-		$serviceContent = str_replace( ".{$staging}.", '.', $serviceContent );
+		if ( $staging ) {
+			// remove staging-specific responses
+			$serviceContent = str_replace( ".{$staging}.", '.', $serviceContent );
+		}
 
 		if ( $prodContent !== $serviceContent ) {
 			$this->error( "\tFAILURE: Reponse content is different" );
