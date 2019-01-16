@@ -8,8 +8,7 @@ class BlogsHelperTest extends WikiaBaseTest {
 
 	/**
 	 * SUS-1635: Regression test for BlogsHelper::AbortMove hook handler
-	 * Verify blog pages and comments can be renamed, pages can be moved into blog namespace and that pages can't be moved
-	 * out of blogs namespaces or into comment namespace
+	 * Verify blog pages and comments can be renamed, pages can be moved into blog namespace and back.
 	 *
 	 * @covers BlogsHelper::onAbortMove()
 	 * @dataProvider blogsMoveRestrictionsDataProvider
@@ -22,10 +21,6 @@ class BlogsHelperTest extends WikiaBaseTest {
 		$sourceTitleMock = $this->getMock( Title::class, [ 'getNamespace' ] );
 		/** @var Title|PHPUnit_Framework_MockObject_MockObject $targetTitleMock */
 		$targetTitleMock = $this->getMock( Title::class, [ 'getNamespace' ] );
-
-		$sourceTitleMock->expects( $this->atLeastOnce() )
-			->method( 'getNamespace' )
-			->willReturn( $sourceNamespace );
 
 		$targetTitleMock->expects( $this->atLeastOnce() )
 			->method( 'getNamespace' )
