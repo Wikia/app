@@ -49,7 +49,7 @@
 				<span><?= wfMsg('lightbox-header-more-info-button') ?></span>
 			</div>
 			<div class="wds-is-not-scrollable wds-dropdown__content wds-is-right-aligned more-info-container">
-				{{{imageInfo}}}
+				{{{imageDescription}}}
 			</div>
 		</div>
 		{{/isUserAnon}}
@@ -67,7 +67,7 @@
 				<h1>{{fileTitle}}</h1>
 			</div>
 			<div class="wds-is-not-scrollable wds-dropdown__content wds-is-left-aligned more-info-container">
-				{{{imageInfo}}}
+				{{{imageDescription}}}
 			</div>
 		</div>
 		{{/isUserAnon}}
