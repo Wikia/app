@@ -162,19 +162,13 @@ require([
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
 					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
 
-				$firstItem.replaceWith(
-					utils.renderTemplate(
-						template[0],
-						$.extend(
-							true,
-							{},
-							sponsoredItem,
-							{
-								shortTitle: sponsoredItem.title.substring(0, 80) + '...',
-								attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by'
-							}
-						))
-				);
+				if (sponsoredItem.title.length > 90) {
+					sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
+				} else {
+					sponsoredItem.shortTitle = sponsoredItem.title;
+				}
+
+				$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
 
 				tracker.trackImpression('rail');
 
