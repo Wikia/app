@@ -41,21 +41,15 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			$sponsoredContentHook = $('.mcf-card-sponsored-content');
 
 		if (sponsoredItem) {
-			$sponsoredContentHook.replaceWith(
-				utils.renderTemplate(
-					templates[templatePaths.sponsoredContent],
-					$.extend(
-						true,
-						{},
-						sponsoredItem,
-						{
-							shortTitle: sponsoredItem.title.substring(0, 80) + '...',
-							attributionLabel: sponsoredItem.attributionLabel || 'Sponsored by',
-							trackingLabels: 'footer,sponsored-item'
-						}
-					)
-				)
-			);
+			if (sponsoredItem.title.length > 90) {
+				sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
+			} else {
+				sponsoredItem.shortTitle = sponsoredItem.title;
+			}
+
+			sponsoredItem.trackingLabels = 'footer,sponsored-item';
+
+			$sponsoredContentHook.replaceWith(utils.renderTemplate(templates[templatePaths.sponsoredContent], sponsoredItem));
 		}
 
 		$.each($newsAndStoriesHook, function (index) {
