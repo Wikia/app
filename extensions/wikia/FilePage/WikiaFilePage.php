@@ -53,24 +53,26 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function view() {
 		global $wgMemc, $wgDBprefix, $wgOut, $wgUser, $wgGroupPermissionsLocal, $wgNamespaceProtection;
-		if ( !$wgUser->isAnon() ) {
+		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
 			return;
 		}
 		//fallback to main page
-		$url = wfExpandUrl( "/wiki/Main_Page" );
+		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
-		if ( preg_match( "/\*\|read\|0/", $wgGroupPermissionsLocal ) ||
-			 preg_match( "/\user\|read\|0/", $wgGroupPermissionsLocal ) ) {
-			$wgOut->redirect( $url );
+		if ( !$this->getTitle()->userCan( 'read' ) ) {
+			$this->getContext()->getOutput()->redirect( $url );
 
 			return;
 		}
-		$redirKey = "redir:" . $wgDBprefix . ":" . $this->getTitle();
+		$redirKey = wfMemcKey( "redir:", $wgDBprefix, $this->getTitle()->getPrefixedText() );
+
 		$url = $wgMemc->get( $redirKey );
 		if ( $url ) {
-			$wgOut->redirect( $url );
+			$this->getContext()->getOutput()->redirect( $url );
+
+			return;
 		}
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
@@ -92,12 +94,12 @@ class WikiaFilePage extends ImagePage {
 			if ( $title->isRedirect() ) {
 				continue;
 			}
-			$url = wfExpandUrl( "/wiki/" . $row->page_title );
+			$url = $title->getFullURL();
 			$res->free();
 			break;
 		}
 		$wgMemc->add( $redirKey, $url );
-		$wgOut->redirect( $url );
+		$this->getContext()->getOutput()->redirect( $url );
 	}
 
 	/**
@@ -111,8 +113,15 @@ class WikiaFilePage extends ImagePage {
 		return $dbr->select( [ 'imagelinks', 'page' ], [
 			'page_title',
 			'page_namespace',
-		], [ 'il_to' => $dbKey, 'page_is_redirect' => 0, 'il_from = page_id' ], __METHOD__,
-			[ 'LIMIT' => 5, 'ORDER BY' => 'page_namespace, page_id', ] );
+		], [
+			'il_to' => $dbKey,
+			'page_is_redirect' => 0,
+			'page_namespace' => NS_MAIN,
+			'il_from = page_id',
+		], __METHOD__, [
+				'LIMIT' => 5,
+				'ORDER BY' => 'page_namespace, page_id',
+			] );
 	}
 
 	protected function openShowVideo() {
