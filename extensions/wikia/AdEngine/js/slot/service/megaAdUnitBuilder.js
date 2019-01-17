@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'TOP_LEADERBOARD',
 			'TOP_BOXAD',
 			'INVISIBLE_SKIN',
-			'BOTTOM_LEADERBOARD'
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_PLAYER'
 		],
 		context,
 		wka1 = 'wka1b',
@@ -61,10 +62,13 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function getWikiName(slotName, s1) {
-		if (slotName === 'OUTSTREAM' || slotName === 'FEATURED') {
+		slotName = slotName.toLowerCase();
+		if (!getContextTargeting().wikiIsTop1000) {
+			return '_not_a_top1k_wiki';
+		} else if (slotName === 'outstream' || slotName === 'featured') {
 			return s1;
 		}
-		return getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki';
+		return '_top1k_wiki';
 	}
 
 	function build(slotName, src, slotNameSuffix) {
