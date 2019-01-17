@@ -254,12 +254,16 @@ class WikiaPhotoGalleryAjax {
 	 * @author Marooned
 	 */
 	static public function saveGalleryData() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$hash = $wgRequest->getVal('hash');
 		$wikitext = $wgRequest->getVal('wikitext');
 		$starttime = $wgRequest->getVal('starttime');
+
+		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			throw new BadRequestApiException();
+		}
 
 		$result = WikiaPhotoGalleryHelper::saveGalleryDataByHash($hash, $wikitext, $starttime);
 

@@ -374,7 +374,13 @@
 							if ( event.isDefaultPrevented() ) {
 								return false;
 							}
-							WikiaPhotoGallery.ajax('saveGalleryData', {hash:gallery.hash, wikitext:gallery.wikitext, title:wgPageName, starttime:gallery.starttime}, function(data) {
+							WikiaPhotoGallery.ajax('saveGalleryData', {
+								hash: gallery.hash,
+								wikitext: gallery.wikitext,
+								title: wgPageName,
+								starttime: gallery.starttime,
+								token: window.mw.user.tokens.get('editToken'),
+							}, function (data) {
 								if (data.info == 'ok') {
 									$('#WikiaPhotoGalleryEditor').hideModal();
 									location.hash = '#' + gallery.id;
