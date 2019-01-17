@@ -232,6 +232,10 @@ class Linker {
 			$attribs['href'] = wfAppendQuery( $attribs['href'], wfArrayToCgi( $oldquery ) );
 		}
 
+		if ( array_key_exists( 'anonFile', $customAttribs ) ) {
+			$attribs['href'] = $customAttribs['anonFile'];
+		}
+
 		$attribs = array_merge(
 			$attribs,
 			self::linkAttribs( $target, $customAttribs, $options )

@@ -46,11 +46,14 @@ class ParserCache {
 	 * @param $hash string
 	 * @return mixed|string
 	 */
-	protected function getParserOutputKey( $article, $hash ) {
+	protected function getParserOutputKey( $article, $hash, $isAnon = false ) {
 		global $wgRequest;
 
 		// idhash seem to mean 'page id' + 'rendering hash' (r3710)
 		$pageid = $article->getID();
+		if($isAnon){
+			$pageid = "anon:".$pageid;
+		}
 		$renderkey = (int)($wgRequest->getVal('action') == 'render');
 
 		$key = wfMemcKey( 'pcache', 'idhash', "{$pageid}-{$renderkey}!{$hash}" );
@@ -142,7 +145,8 @@ class ParserCache {
 			$usedOptions = ParserOptions::legacyOptions();
 		}
 
-		return $this->getParserOutputKey( $article, $popts->optionsHash( $usedOptions, $article->getTitle() ) );
+		return $this->getParserOutputKey( $article, $popts->optionsHash( $usedOptions, $article->getTitle() ),
+			$popts->getUser()->isAnon() );
 	}
 
 	/**

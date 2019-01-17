@@ -2360,8 +2360,21 @@ class Parser {
 		if ( $text == '' ) {
 			$text = htmlspecialchars( $nt->getPrefixedText() );
 		}
+		$attribs = array();
 
-		$link = Linker::linkKnown( $nt, "$prefix$text$inside", array(), $query );
+		if($this->getUser()->isAnon()) {
+			# Give extensions a chance to select the file revision for us
+			$options = array();
+			$descQuery = false;
+			Hooks::run( 'BeforeParserFetchFileAndTitle',
+				array( $this, $nt, &$options, &$descQuery ) );
+			# Fetch and register the file (file title may be different via hooks)
+			list( $file, $title ) = $this->fetchFileAndTitle( $nt, $options );
+			$attribs['anonFile'] = $file->getUnscaledThumb()->url;
+		}
+
+		$link = Linker::linkKnown( $nt, "$prefix$text$inside", $attribs, $query );
+
 
 		return $this->armorLinks( $link ) . $trail;
 	}
