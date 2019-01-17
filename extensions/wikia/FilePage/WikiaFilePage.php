@@ -52,7 +52,7 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc, $wgDBprefix, $wgOut, $wgUser, $wgGroupPermissionsLocal, $wgNamespaceProtection;
+		global $wgMemc, $wgDBprefix;
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
