@@ -430,7 +430,12 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		    .more-info-container {
 				padding: 0 18px 0 18px;
 			  	min-width: 400px;
+			  	background-color: $color-page;
+			  	color: $color-text;
 			}
+		}
+	  	.more-info-image {
+		  	background-color: $color-text;
 		}
 	  	.more-info-left {
 		  	float: left;

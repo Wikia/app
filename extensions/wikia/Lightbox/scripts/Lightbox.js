@@ -587,6 +587,21 @@
 			return topOffset + $(window).scrollTop();
 
 		},
+		restyleImageInfo: function() {
+			$('.more-info-container .banner img').each(function (index) {
+				$(this).removeAttr('class');
+				$(this).removeAttr('style');
+				$(this).removeAttr('id');
+				$(this).addClass('more-info-image')
+			});
+			$('.more-info-container').each(function (index) {
+				$(this).find('*').not('.more-info-image').each(function (index) {
+					$(this).removeAttr('class');
+					$(this).removeAttr('style');
+					$(this).removeAttr('id');
+				});
+			});
+		},
 		renderHeader: function () {
 			var headerTemplate = Lightbox.openModal.headerTemplate;
 			LightboxLoader.getMediaDetail({
@@ -596,6 +611,7 @@
 				Lightbox.openModal.header
 					.html(renderedResult)
 					.prepend($(Lightbox.openModal.closeButton).clone(true, true)); // clone close button into header
+				Lightbox.restyleImageInfo();
 			});
 		},
 		showOverlay: function () {
