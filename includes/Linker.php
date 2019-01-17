@@ -781,7 +781,7 @@ class Linker {
 	 */
 	public static function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" )
 	{
-		global $wgUser, $wgStylePath, $wgContLang;
+		global $wgStylePath, $wgContLang;
 		$exists = $file && $file->exists();
 
 		# Shortcuts
@@ -865,7 +865,6 @@ class Linker {
 				'outerWidth' => $width,
 				'file'       => $file,
 				'url'        => $url,
-				'anon' => $wgUser->isAnon(),
 			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
