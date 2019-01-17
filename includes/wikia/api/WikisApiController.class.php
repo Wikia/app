@@ -306,10 +306,6 @@ class WikisApiController extends WikiaApiController {
 			$this->response->setVal( 'isBlocked', false );
 
 			$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
-			if ( empty( $wikis ) ) {
-				throw new NotFoundApiException();
-			}
-
 			if ( wfHttpsEnabledForDomain( $domain ) ) {
 				$wikis = array_map( function ( $wiki ) {
 					$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
