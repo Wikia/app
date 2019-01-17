@@ -28,7 +28,7 @@
 			</div>
 
 			<div class="mcf-column">
-				<div class="mcf-card-wiki-placeholder" data-tracking="footer-card-2"></div>
+				<div class="mcf-card-wiki-placeholder mcf-card-sponsored-content" data-tracking="footer-card-2"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="footer-card-5"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="footer-card-8"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="footer-card-11"></div>
