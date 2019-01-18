@@ -33,12 +33,7 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgNoExternals;
-
 		if ( static::isCorrectPageType() ) {
-			if ( empty( $wgNoExternals ) ) {
-				$jsAssets[] = 'recirculation_liftigniter_tracker';
-			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
@@ -209,4 +204,7 @@ class RecirculationHooks {
 		return $noIndexNamespaces;
 	}
 
+	public static function onGetRailModuleList( array &$railModuleList ) {
+		$railModuleList[1000] = [ 'RailContentService', 'renderRailModule', null ];
+	}
 }
