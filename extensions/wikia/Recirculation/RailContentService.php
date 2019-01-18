@@ -2,7 +2,7 @@
 
 class RailContentService extends WikiaService {
 
-	const RAIL_THUMBNAIL_WIDTH = 94;
+	const RAIL_THUMBNAIL_WIDTH = 53;
 	const RAIL_THUMBNAIL_HEIGHT = 53;
 
 	public function renderRailModule() {
