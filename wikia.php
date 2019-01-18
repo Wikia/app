@@ -103,7 +103,7 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 		echo json_encode( [
 			'status' => $e->getCode(),
 			'error' => get_class( $e ),
-			'details' => $e->getDetails()
+			'message' => $e->getMessage()
 		]);
 
 		Wikia\Logger\WikiaLogger::instance()->error( 'Unhandled API error', [
