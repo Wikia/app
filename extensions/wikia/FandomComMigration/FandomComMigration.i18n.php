@@ -27,15 +27,9 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'fandom-com-migration-after' => "Attention : nous avons migré le domaine de votre communauté vers
-fandom.com. Pour en savoir plus, consultez
-[https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com
+	'fandom-com-migration-after' => "Attention : nous avons migré le domaine de votre communauté vers fandom.com. Pour en savoir plus, consultez [https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com
 cette page d'aide Fandom].",
-	'fandom-com-migration-before' => "Attention : au cours des prochaines semaines, nous allons migrer
-le domaine de votre communauté vers fandom.com. Pour en savoir
-plus, consultez
-[https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com
-cette page d'aide Fandom].",
+	'fandom-com-migration-before' => "Attention : au cours des prochaines semaines, nous allons migrer le domaine de votre communauté vers fandom.com. Pour en savoir plus, consultez [https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com cette page d'aide Fandom].",
 );
 
 $messages['it'] = array(
