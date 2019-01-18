@@ -427,11 +427,23 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			span,h1 {
 			  	cursor: pointer;
 			}
-		    .more-info-container {
-				padding: 0 18px 0 18px;
-			  	min-width: 400px;
-			  	background-color: $color-page;
-			  	color: $color-text;
+			.more-info-container {
+				padding: 18px;
+				min-width: 400px;
+				background: $color-page;
+				border-color: $color-page-border;
+				@if lightness($color-page) < 50 {
+					background: $color-module-background;
+					border-color: $color-page-border;
+				}
+				color: $color-text;
+			}
+			&::before {
+				border-bottom-color: $color-page-border;
+				@if lightness($color-page) < 50 {
+					background: $color-module-background;
+					border-bottom-color: $color-page-border;
+				}
 			}
 		}
 	  	.more-info-image {
