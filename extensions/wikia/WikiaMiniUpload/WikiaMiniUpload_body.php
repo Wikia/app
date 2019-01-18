@@ -492,17 +492,12 @@ class WikiaMiniUpload {
 				}
 				if ( $title->exists() ) {
 					if ( $type == 'overwrite' ) {
-						$title = Title::newFromText($name, 6);
-						// is the target protected?
-						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-						$permErrorsCreate = ( $title->exists() ? [] : $title->getUserPermissionsErrors( 'create', $wgUser ) );
-
-						if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+						if ( !\UploadBase::userCanReUpload( $wgUser, $name ) ) {
 							header( 'X-screen-type: error' );
 							return wfMessage( 'wmu-file-protected' )->plain();
 						}
 
+						$title = Title::newFromText( $name, 6 );
 						$file_name = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 						$file_mwname = new FakeLocalFile( Title::newFromText( $mwname, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 
