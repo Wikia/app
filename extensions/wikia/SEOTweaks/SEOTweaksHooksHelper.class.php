@@ -364,7 +364,15 @@ class SEOTweaksHooksHelper {
 	public static function onDisplayRedirectedFrom( $rdfrom, Article $article): bool {
 		$context = $article->getContext();
 		if ( !$context->getUser()->isAnon() ) {
-			$redir = Linker::makeExternalLink( $rdfrom, $rdfrom );
+			$redirectNamespace = $article->getTitle()->getNamespace();
+			$title = Title::makeTitleSafe( $redirectNamespace, $rdfrom );
+			$article->setRedirectedFrom( $title );
+			$redir = Linker::linkKnown(
+				$article->mRedirectedFrom,
+				null,
+				array(),
+				array( 'redirect' => 'no' )
+			);
 			$context->getOutput()->addSubtitle( wfMessage( 'redirectedfrom' )->rawParams( $redir ) );
 		}
 
