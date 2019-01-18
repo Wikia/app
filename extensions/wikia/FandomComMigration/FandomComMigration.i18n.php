@@ -48,8 +48,8 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'fandom-com-migration-after' => 'Uwaga: Dokonaliśmy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [tej stronie pomocy].',
-	'fandom-com-migration-before' => 'Uwaga: W ciągu następnych kilku tygodni dokonamy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [tej stronie pomocy].',
+	'fandom-com-migration-after' => 'Uwaga: Dokonaliśmy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [https://spolecznosc.wikia.com/wiki/Pomoc:Migracja_domen_Fandomu tej stronie pomocy].',
+	'fandom-com-migration-before' => 'Uwaga: W ciągu następnych kilku tygodni dokonamy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [https://spolecznosc.wikia.com/wiki/Pomoc:Migracja_domen_Fandomu tej stronie pomocy].',
 );
 
 $messages['pt'] = array(
