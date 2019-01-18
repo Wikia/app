@@ -47,6 +47,14 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				sponsoredItem.shortTitle = sponsoredItem.title;
 			}
 
+			if (sponsoredItem.thumbnailUrl && window.Vignette) {
+				sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(this.sponsoredItem.thumbnailUrl, {
+					mode: window.Vignette.mode.zoomCrop,
+					height: 337,
+					width: 386
+				});
+			}
+
 			sponsoredItem.trackingLabels = 'footer,sponsored-item';
 
 			$sponsoredContentHook.replaceWith(utils.renderTemplate(templates[templatePaths.sponsoredContent], sponsoredItem));
