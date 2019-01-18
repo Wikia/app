@@ -112,6 +112,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.onemobile = isEnabled('wgAdDriverAolOneMobileBidderCountries');
 		context.bidders.openx = isEnabled('wgAdDriverOpenXPrebidBidderCountries');
 		context.bidders.pubmatic = isEnabled('wgAdDriverPubMaticBidderCountries');
+		context.bidders.lkqd = isEnabled('wgAdDriverLkqdBidderCountries');
 		context.bidders.pubmaticDfp = isEnabled('wgAdDriverPubMaticDfpCountries');
 	}
 
