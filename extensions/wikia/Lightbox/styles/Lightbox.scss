@@ -5,6 +5,8 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -422,7 +424,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.close {
 			margin: 0;
 		}
-		.more-info-dropdown {
+	  	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+	  	.more-info-dropdown {
 			padding-bottom: 4px;
 			span,h1 {
 			  	cursor: pointer;
@@ -430,20 +433,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			.more-info-container {
 				padding: 18px;
 				min-width: 400px;
-				background: $color-page;
-				border-color: $color-page-border;
-				@if lightness($color-page) < 50 {
-					background: $color-module-background;
-					border-color: $color-page-border;
-				}
-				color: $color-text;
-			}
-			&::before {
-				border-bottom-color: $color-page-border;
-				@if lightness($color-page) < 50 {
-					background: $color-module-background;
-					border-bottom-color: $color-page-border;
-				}
 			}
 		}
 	  	.more-info-image {
