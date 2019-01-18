@@ -748,7 +748,6 @@ class WikiaMiniUpload {
 
 		return empty( $title->getUserPermissionsErrors( 'edit', $wgUser ) )
 			&& empty( $title->getUserPermissionsErrors( 'upload', $wgUser ) )
-			&& empty( $title->getUserPermissionsErrors( 'create', $wgUser ) )
 			&& ( $file instanceof File && UploadBase::userCanReUpload( $wgUser, $file->getName() ) );
 	}
 
