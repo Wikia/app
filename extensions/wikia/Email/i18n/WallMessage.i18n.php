@@ -79,14 +79,14 @@ $messages['ja'] = array(
 );
 
 $messages['ko'] = array(
-	'emailext-wallmessage-following-subject' => '$1 님이 {{SITENAME}}에서 $2 님에게 메시지를 남겼습니다',
-	'emailext-wallmessage-following-summary' => "'''[$1 $2] 님이 [{{SERVERCANONICAL}} {{SITENAME}}]에서 $3 님에게 메시지를 남겼습니다.'''",
+	'emailext-wallmessage-following-subject' => '{{SITENAME}}에서 $1 님의 메시지 담벼락에 메시지가 도착했습니다: $2',
+	'emailext-wallmessage-following-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]에서 $1 님의 메시지 담벼락에 메시지가 도착했습니다: [$2 $3]',
 	'emailext-wallmessage-full-conversation' => '대화 내역 보기',
-	'emailext-wallmessage-owned-subject' => '$1 님이 {{SITENAME}}에서 귀하에게 메시지를 남겼습니다',
-	'emailext-wallmessage-owned-summary' => "'''[$1 $2] 님이 [{{SERVERCANONICAL}} {{SITENAME}}]에서 귀하에게 메시지를 남겼습니다.'''",
+	'emailext-wallmessage-owned-subject' => '{{SITENAME}}에 새로운 메시지가 도착했습니다: $1',
+	'emailext-wallmessage-owned-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]에 새로운 메시지가 도착했습니다: [$1 $2]',
 	'emailext-wallmessage-recent-messages' => '[$1 $2의 모든 최근 메시지 보기]',
 	'emailext-wallmessage-reply-subject' => '{{SITENAME}}의 $1 메시지에 새 댓글이 달렸습니다',
-	'emailext-wallmessage-reply-summary' => "'''[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 메시지에 새 댓글이 달렸습니다.'''",
+	'emailext-wallmessage-reply-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 메시지에 새 댓글이 달렸습니다',
 );
 
 $messages['nl'] = array(

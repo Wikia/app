@@ -1265,18 +1265,6 @@ $wgCountTotalSearchHits = false;
 $wgCreateDatabaseActiveCluster = 'c7';
 
 /**
- * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
- * @var bool $wgCreateLanguageWikisWithPath
- */
-$wgCreateLanguageWikisWithPath = false;
-
-/**
- * Whether to create new English wikis under the fandom.com domain.
- * @var bool $wgCreateEnglishWikisOnFandomCom
- */
-$wgCreateEnglishWikisOnFandomCom = true;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -8932,3 +8920,10 @@ $wgEnableFastlyInsights = false;
  * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
  */
 $wgIncludeClosedWikiHandler = false;
+
+/**
+ * If set, the "Watch now" button is visible and leads to the url from this variable
+ * @see IW-1470
+ * @var string
+ */
+$wgWatchShowURL = '';

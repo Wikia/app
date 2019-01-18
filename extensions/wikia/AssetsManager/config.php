@@ -57,7 +57,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
-		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -176,6 +175,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
+		'//extensions/wikia/AdEngine/dist/prebid.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
@@ -186,7 +186,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/bidders.js',
-		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
 		'//extensions/wikia/AdEngine/js/ml/billTheLizardExecutor.js',
 		'//extensions/wikia/AdEngine/js/ml/bucketizers.js',
@@ -215,53 +214,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/hmdRecLoader.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
-	],
-];
-
-$config['adengine2_a9_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/a9.js',
-	],
-];
-
-$config['adengine2_pr3b1d_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
-
-		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/beachfront.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/kargo.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/onemobile.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/pubmatic.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikiaVideo.js',
-
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
-
-		// Use Prebid.js built in @wikia/ad-products
-		'//extensions/wikia/AdEngine/dist/prebid.js'
 	],
 ];
 
@@ -796,6 +748,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
 		'//extensions/wikia/AdEngine/dist/services.js',
+		'//extensions/wikia/AdEngine/dist/prebid.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
@@ -811,9 +764,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
-		'//extensions/wikia/AdEngine/js/lookup/a9.js',
-		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
-		'//extensions/wikia/AdEngine/js/lookup/services.js',
+		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -845,12 +796,10 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
+		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//extensions/wikia/AdEngine/js/video/vastDebugger.js',
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
-		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-
-		//Prebid
-		'#group_adengine2_pr3b1d_js'
+		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js'
 	],
 ];
 
@@ -2474,4 +2423,18 @@ $config['category_page3_layout_selector_scss'] = [
 	'assets' => [
 		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
 	],
+];
+
+$config['watch_show_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/styles/index.scss',
+	]
+];
+
+$config['watch_show_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/scripts/index.js',
+	]
 ];

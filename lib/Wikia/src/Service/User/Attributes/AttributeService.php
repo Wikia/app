@@ -34,10 +34,8 @@ class AttributeService {
 	 * @throws \Exception
 	 */
 	public function set( $userId, array $attributes ) {
-		$nonEmptyAttributes = array_filter( $attributes );
-
 		// SRE-97: No attributes to save, nothing to do
-		if ( empty( $nonEmptyAttributes ) ) {
+		if ( empty( $attributes ) ) {
 			return true;
 		}
 
@@ -47,7 +45,7 @@ class AttributeService {
 
 		try {
 			$profilerStart = $this->startProfile();
-			$ret = $this->persistenceAdapter->saveAttributes( $userId, $nonEmptyAttributes );
+			$ret = $this->persistenceAdapter->saveAttributes( $userId, $attributes );
 			$this->endProfile( AttributeService::PROFILE_EVENT, $profilerStart,
 				[ 'user_id' => intval($userId), 'method' => 'saveAttribute' ] );
 

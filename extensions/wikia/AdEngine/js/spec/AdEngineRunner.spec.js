@@ -22,6 +22,16 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 				};
 			}
 		},
+		bidders: {
+			getName: function () {
+				return 'bidders';
+			},
+			isEnabled: function () {
+				return true;
+			},
+			wasCalled: noop,
+			addResponseListener: noop
+		},
 		fvLagger: {
 			addResponseListener: noop,
 			wasCalled: function () {
@@ -30,18 +40,13 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			getName: noop
 		},
 		log: noop,
-		win: {},
-		a9: {
-			getName: function () {
-				return 'a9';
-			}
-		}
+		win: {}
 	};
 
 	mocks.log.levels = {};
 
 	function getRunner(bidders, instantGlobals, fvLagger) {
-		bidders = bidders || {};
+		bidders = bidders || null;
 		instantGlobals = instantGlobals || {};
 		fvLagger = fvLagger || fvLagger;
 		return modules['ext.wikia.adEngine.adEngineRunner'](
@@ -51,9 +56,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			instantGlobals,
 			mocks.log,
 			mocks.win,
-			bidders.a9,
-			null,
-			null,
+			bidders,
 			null,
 			fvLagger
 		);
@@ -66,8 +69,6 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	}
 
 	beforeEach(function () {
-		mocks.a9.addResponseListener = noop;
-		mocks.a9.wasCalled = noop;
 		mocks.win.setTimeout = noop;
 	});
 
@@ -90,9 +91,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('Run adEngine immediately when all bidders are disabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
 
 		runner.run({}, [], 'queue.name', true);
@@ -101,12 +100,10 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('Run adEngine when all bidders responded and delay is enabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.a9, 'addResponseListener').and.callFake(runCallback);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'addResponseListener').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -114,11 +111,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('Run adEngine when enabled bidder responded and delay is enabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(false);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(false);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -126,12 +121,10 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('Run adEngine when enabled bidder responded and delay is enabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.a9, 'addResponseListener').and.callFake(runCallback);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'addResponseListener').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -139,11 +132,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('Run adEngine by setTimeout when bidders not responded and delay is enabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
@@ -153,11 +144,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	// Shouldn't happen, but it's needed to verify all above positive test cases
 	it('Negative test case: bidders called but not responded, setTimeout is broken and delay is enabled', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -165,11 +154,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('sets timeout to default if nothing else is defined', function () {
-		var runner = getRunner({
-			a9: mocks.a9
-		});
+		var runner = getRunner(mocks.bidders);
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout');
 
 		runner.run({}, [], 'queue.name', true);
@@ -180,13 +167,11 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 		mockContext({
 			'opts.overwriteDelayEngine': true
 		});
-		var runner = getRunner({
-			a9: mocks.a9
-		}, {
+		var runner = getRunner(mocks.bidders, {
 			wgAdDriverDelayTimeout: 666
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout');
 
 		runner.run({}, [], 'queue.name', true);
@@ -199,13 +184,11 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			'targeting.hasFeaturedVideo': true
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout');
 
-		var runner = getRunner({
-			a9: mocks.a9
-		}, {
+		var runner = getRunner(mocks.bidders, {
 			wgAdDriverFVDelayTimeoutOasis: 666,
 			wgAdDriverFVDelayTimeoutMobileWiki: 11111
 		}, mocks.fvLagger);
@@ -220,13 +203,11 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			'targeting.hasFeaturedVideo': true
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout');
 
-		var runner = getRunner({
-			a9: mocks.a9
-		}, {
+		var runner = getRunner(mocks.bidders, {
 			wgAdDriverFVDelayTimeoutOasis: 666,
 			wgAdDriverFVDelayTimeoutMobileWiki: 11111
 		}, mocks.fvLagger);
