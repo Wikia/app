@@ -84,15 +84,16 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 		$response->render();
 	} catch ( WikiaHttpException $e ) {
 		http_response_code( $e->getCode() );
-		if ( $e->getCode() >= 500 ) {
+		if ( $e->getCode() >= WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR ) {
 			Wikia\Logger\WikiaLogger::instance()->error( 'Unhandled API error', [
 				'status'=> $e->getCode(),
 				'exception' => $e
 			] );
 		}
 	} catch ( Exception $e ) {
-		header( "HTTP/1.1 500 Internal Server Error", true, 500 );
+		header( "HTTP/1.1 500 Internal Server Error", true, WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		Wikia\Logger\WikiaLogger::instance()->error( 'Unhandled API error', [
+			'status' => WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
 			'exception' => $e
 		] );
 	}
