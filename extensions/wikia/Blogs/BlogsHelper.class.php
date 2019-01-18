@@ -169,7 +169,7 @@ class BlogsHelper {
 			return false;
 		}
 
-		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
+		if ( $targetTitle->inNamespaces( $blogsNS ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
 			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
 			return false;
 		}
