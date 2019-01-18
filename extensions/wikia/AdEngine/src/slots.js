@@ -60,30 +60,31 @@ export default {
 			INCONTENT_PLAYER: {
 				disabled: false,
 				slotName: 'INCONTENT_PLAYER',
-				options: {},
+				options: {
+					isVideoMegaEnabled: true
+				},
 				defaultSizes: [[1, 1]],
 				targeting: {
 					pos: 'INCONTENT_PLAYER',
 					loc: 'middle',
 				},
+				videoAdUnit: '/{custom.dfpId}/wka1b.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.dbNameElement}-{targeting.s0}'
 			},
 		};
 	},
 
 	setupSlotVideoAdUnit(adSlot, params) {
-		if (params.isVideoMegaEnabled) {
-			const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
-			const adUnit = utils.stringBuilder.build(
-				context.get('vast.megaAdUnitId'),
-				{
-					slotConfig: {
-						group: adProductInfo.adGroup,
-						adProduct: adProductInfo.adProduct,
-					},
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+			context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) ||context.get('vast.megaAdUnitId'),
+			{
+				slotConfig: {
+					group: adProductInfo.adGroup,
+					adProduct: adProductInfo.adProduct,
 				},
-			);
+			},
+		);
 
-			context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
-		}
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
 	},
 }

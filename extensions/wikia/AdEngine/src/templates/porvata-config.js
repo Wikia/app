@@ -10,7 +10,7 @@ export const getConfig = () => ({
 		inViewportOffsetTop: getNavbarHeight(),
 		isFloatingEnabled: true,
 		onInit: (adSlot, params) => {
-			params.isVideoMegaEnabled = true;
+			params.viewportHookElement = document.getElementById('INCONTENT_WRAPPER');
 			slots.setupSlotVideoAdUnit(adSlot, params);
 		},
 	}

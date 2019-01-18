@@ -67,9 +67,11 @@ function init(
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
-	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ? '_top1k_wiki' : '_not_a_top1k_wiki';
+	if (legacyContext.get('targeting.wikiIsTop1000')) {
+		context.set('custom.wikiIdentifier', '_top1k_wiki');
+		context.set('custom.dbNameElement', `_${context.get('targeting.s1')}`);
+	}
 
-	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
