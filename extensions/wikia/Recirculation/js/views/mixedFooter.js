@@ -48,7 +48,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			}
 
 			if (sponsoredItem.thumbnailUrl && window.Vignette) {
-				sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(this.sponsoredItem.thumbnailUrl, {
+				sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
 					mode: window.Vignette.mode.zoomCrop,
 					height: 337,
 					width: 386

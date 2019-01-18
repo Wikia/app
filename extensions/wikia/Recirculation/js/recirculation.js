@@ -168,6 +168,14 @@ require([
 					sponsoredItem.shortTitle = sponsoredItem.title;
 				}
 
+				if (sponsoredItem.thumbnailUrl && window.Vignette) {
+					sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
+						mode: window.Vignette.mode.zoomCrop,
+						height: 53,
+						width: 53
+					});
+				}
+
 				$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
 
 				tracker.trackImpression('rail');
