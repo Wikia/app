@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'TOP_LEADERBOARD',
 			'TOP_BOXAD',
 			'INVISIBLE_SKIN',
-			'BOTTOM_LEADERBOARD'
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_PLAYER'
 		],
 		context,
 		wka1 = 'wka1b',
@@ -60,12 +61,22 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return deviceDetect.getDevice(params);
 	}
 
+	function getWikiName(slotName, s1) {
+		slotName = slotName.toLowerCase();
+		if (!getContextTargeting().wikiIsTop1000) {
+			return '_not_a_top1k_wiki';
+		} else if (slotName === 'outstream' || slotName === 'featured') {
+			return s1;
+		}
+		return '_top1k_wiki';
+	}
+
 	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDeviceSpecial(params),
 			provider = src.indexOf('remnant') === -1 ? wka1 : wka2,
-			wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki',
+			wikiName = getWikiName(slotName, params.s1),
 			vertical = params.s0;
 
 		adUnitElements = [
