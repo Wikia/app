@@ -10,7 +10,7 @@ class RTEParserCache extends ParserCache {
 		parent::__construct( $memCached );
 	}
 
-	protected function getParserOutputKey( $article, $hash ) {
+	protected function getParserOutputKey( $article, $hash, $anon = false ) {
 		$articleId = $article->getID();
 
 		return wfMemcKey( 'rte-parser-cache', $articleId );
