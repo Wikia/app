@@ -71,7 +71,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		$url = RecirculationApiController::getFullUrl( 'getTrendingFandomArticles' );
 
 		if ( wfHttpsAllowedForURL( $url ) ) {
-			$url = wfHttpToHttps( $url );
+			$url = wfProtocolUrlToRelative( $url );
 		}
 
 		return [
