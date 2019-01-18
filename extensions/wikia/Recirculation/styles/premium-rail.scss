@@ -1,26 +1,31 @@
 @import 'skins/shared/color';
 
+%rail-thumbnaili {
+	border: 1px solid $color-page-border;
+	border-radius: 4px;
+	height: 53px;
+	width: 53px;
+}
+
 .WikiaRail .premium-recirculation-rail {
 	.recirculation-rail__placeholder, img {
+		@extend %rail-thumbnaili;
+
 		align-self: center;
 		display: block;
-		height: 53px;
-		width: 94px;
 	}
 
 	.recirculation-rail__placeholder {
-		background: #002A32 radial-gradient(#002A32, rgba(#000000, .2));
-		align-self: center;
-		display: block;
-		height: 53px;
-		position:relative;
-		width: 94px;
+		@extend %rail-thumbnaili;
+
+		background: #002A32;
+		position: relative;
 
 		svg {
-			fill: #fff;
+			fill: #00d6d6;
 			height: 50%;
 			left: 50%;
-			opacity: .15;
+			opacity: .2;
 			position: absolute;
 			top: 50%;
 			transform: translate(-50%, -50%);
@@ -63,10 +68,10 @@
 	}
 
 	.rail-sponsored-content-image {
+		@extend %rail-thumbnaili;
+
 		align-self: flex-start;
 		background-size: cover;
 		background-position: center;
-		height: 53px;
-		width: 94px;
 	}
 }
