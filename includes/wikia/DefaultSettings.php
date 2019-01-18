@@ -1154,6 +1154,14 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  */
 $wgAdDriverPubMaticBidderCountries = null;
 
+
+/**
+ * @name $wgAdDriverLkqdBidderCountries
+ * List of countries where LKQD prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdBidderCountries = null;
+
 /**
  * @name $wgAdDriverPubMaticDfpCountries
  * Enables PubMatic via DFP in these countries.
