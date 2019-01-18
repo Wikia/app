@@ -2426,3 +2426,17 @@ $config['category_page3_layout_selector_scss'] = [
 		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
 	],
 ];
+
+$config['watch_show_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/styles/index.scss',
+	]
+];
+
+$config['watch_show_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/scripts/index.js',
+	]
+];

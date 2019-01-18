@@ -344,7 +344,8 @@ class DataWarehouseEventProducer {
 		if ( empty( $lang_code ) ) {
 			$lang_code = $this->app->wg->LanguageCode;
 		}
-		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
+		$languageIdOrFalse = WikiFactory::LangCodeToId($lang_code);
+		$this->mParams['languageId'] = $languageIdOrFalse !== false ? intval($languageIdOrFalse) : NULL;
 	}
 
 	public function setCategories() {

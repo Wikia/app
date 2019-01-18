@@ -109,30 +109,44 @@ require([
 		}, onPlayerReady);
 	}
 
+	function prePlayerSetup(blocking) {
+		if (blocking && adContext.get('opts.wadHMD')) {
+			hmdRecLoader.setOnReady(function () {
+				setupPlayer();
+			});
+
+			return;
+		}
+
+		if (!blocking && bidders && bidders.isEnabled()) {
+			bidders.runOnBiddingReady(function () {
+				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
+				setupPlayer();
+			});
+
+			return;
+		}
+
+		setupPlayer();
+	}
+
 	trackingOptIn.pushToUserConsentQueue(function () {
-		doc.addEventListener('bab.blocking', function () {
-			if (adContext.get('opts.wadHMD')) {
-				hmdRecLoader.setOnReady(function () {
-					setupPlayer();
-				});
-			} else {
-				setupPlayer();
-			}
-		});
-
-		doc.addEventListener('bab.not_blocking', function () {
-			if (bidders && bidders.isEnabled()) {
-				bidders.runOnBiddingReady(function () {
-					bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
-					setupPlayer();
-				});
-			} else {
-				setupPlayer();
-			}
-		});
-
 		if (!adContext.get('opts.showAds')) {
 			setupPlayer();
+
+			return;
+		}
+
+		if (!adContext.get('opts.babDetectionDesktop')) {
+			prePlayerSetup(false);
+		} else {
+			doc.addEventListener('bab.blocking', function () {
+				prePlayerSetup(true);
+			});
+
+			doc.addEventListener('bab.not_blocking', function () {
+				prePlayerSetup(false);
+			});
 		}
 	});
 });

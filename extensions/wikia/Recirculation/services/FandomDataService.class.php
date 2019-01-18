@@ -1,7 +1,7 @@
 <?php
 
 class FandomDataService {
-	const API_BASE = 'http://fandom.wikia.com/wp-json/wp/v2/';
+	const API_BASE = 'https://www.fandom.com/wp-json/wp/v2/';
 
 	const MCACHE_VER = '1.0';
 	const MCACHE_TIME = 900; // 15 minutes
@@ -25,7 +25,7 @@ class FandomDataService {
 		if ( $type === 'category' || $type === 'latest' ) {
 			$this->setupCategories( $ignoreTopic );
 		} else {
-			$this->setupVerticalCategory( $vertical );
+			$this->setupVerticalCategory();
 		}
 	}
 
@@ -112,7 +112,7 @@ class FandomDataService {
 		return $posts;
 	}
 
-	private function setupVerticalCategory( $vertical ) {
+	private function setupVerticalCategory() {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$vertical = $wikiFactoryHub->getWikiVertical( $this->cityId )['short'];
 
