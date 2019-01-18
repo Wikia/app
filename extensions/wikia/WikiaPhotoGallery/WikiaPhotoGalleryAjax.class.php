@@ -257,13 +257,11 @@ class WikiaPhotoGalleryAjax {
 		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
 
+		$wgRequest->assertValidWriteRequest( $wgUser );
+
 		$hash = $wgRequest->getVal('hash');
 		$wikitext = $wgRequest->getVal('wikitext');
 		$starttime = $wgRequest->getVal('starttime');
-
-		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
-			throw new BadRequestApiException();
-		}
 
 		$result = WikiaPhotoGalleryHelper::saveGalleryDataByHash($hash, $wikitext, $starttime);
 
