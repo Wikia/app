@@ -25,7 +25,6 @@ if ( function_exists( 'newrelic_disable_autorum' ) ) {
 	newrelic_disable_autorum();
 }
 
-
 if ( !empty( $wgEnableNirvanaAPI ) ) {
 	// temporarily force ApiDocs extension regardless of config
 	require_once $IP . "/extensions/wikia/ApiDocs/ApiDocs.setup.php";
@@ -48,41 +47,55 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 
-	$response = $app->sendExternalRequest( null, null, null );
+	try {
+		$response = $app->sendExternalRequest( null, null, null );
 
-	// if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
-	// then force no cache to reflect api.php default behavior
-	$cacheControl = $response->getHeader( 'Cache-Control' );
+		// if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
+		// then force no cache to reflect api.php default behavior
+		$cacheControl = $response->getHeader( 'Cache-Control' );
 
-	if ( empty( $cacheControl ) ) {
-		$response->setHeader( 'Cache-Control', 'private', true );
+		if ( empty( $cacheControl ) ) {
+			$response->setHeader( 'Cache-Control', 'private', true );
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.caching-disabled', [
-			'controller' => $response->getControllerName(),
-			'method' => $response->getMethodName()
+			Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.caching-disabled', [
+				'controller' => $response->getControllerName(),
+				'method' => $response->getMethodName()
+			] );
+		}
+
+		// PLATFORM-1633: decrease the noise in reported transactions
+		$ex = $response->getException();
+
+		if ( $ex instanceof ControllerNotFoundException || $ex instanceof MethodNotFoundException ) {
+			Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'notFound' );
+			Transaction::setAttribute( Transaction::PARAM_METHOD, '' );
+
+			Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.not-found', [
+				'controller' => $response->getControllerName(),
+				'method' => $response->getMethodName()
+			] );
+		}
+
+		wfHandleCrossSiteAJAXdomain(); // PLATFORM-1719
+
+		$response->sendHeaders();
+		Hooks::run( 'NirvanaAfterRespond', [ $app, $response ] );
+
+		$response->render();
+	} catch ( WikiaHttpException $e ) {
+		http_response_code( $e->getCode() );
+		if ( $e->getCode() >= 500 ) {
+			Wikia\Logger\WikiaLogger::instance()->error( 'Unhandled API error', [
+				'status'=> $e->getCode(),
+				'exception' => $e
+			] );
+		}
+	} catch ( Exception $e ) {
+		header( "HTTP/1.1 500 Internal Server Error", true, 500 );
+		Wikia\Logger\WikiaLogger::instance()->error( 'Unhandled API error', [
+			'exception' => $e
 		] );
 	}
-
-	// PLATFORM-1633: decrease the noise in reported transactions
-	$ex = $response->getException();
-
-	if ( $ex instanceof ControllerNotFoundException || $ex instanceof MethodNotFoundException ) {
-		Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'notFound' );
-		Transaction::setAttribute( Transaction::PARAM_METHOD, '' );
-
-		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.not-found', [
-			'controller' => $response->getControllerName(),
-			'method' => $response->getMethodName()
-		] );
-	}
-
-	wfHandleCrossSiteAJAXdomain(); // PLATFORM-1719
-
-	$response->sendHeaders();
-	Hooks::run( 'NirvanaAfterRespond', [ $app, $response ] );
-
-	$response->render();
-
 	// Execute common request shutdown procedure
 	$mw = new MediaWiki();
 	$mw->restInPeace();
