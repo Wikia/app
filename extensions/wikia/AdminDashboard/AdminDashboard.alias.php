@@ -30,6 +30,20 @@ $specialPageAliases['pl'] = array(
 );
 
 /**
+ * Serbian Cyrillic (српски (ћирилица))
+ */
+$specialPageAliases['sr-ec'] = array(
+	'AdminDashboard' => array( 'Панел_администратора' ),
+);
+
+/**
+ * Serbian Latin (srpski (latinica))
+ */
+$specialPageAliases['sr-el'] = array(
+	'AdminDashboard' => array( 'Panel_administratora' ),
+);
+
+/**
  * Vietnamese (Tiếng Việt)
  */
 $specialPageAliases['vi'] = array(
