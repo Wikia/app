@@ -19,6 +19,7 @@ class CompareRobots extends Maintenance {
 		$this->addOption( 'diffsdir', 'Directory where differences in the responses are saved',
 			false, true, 'd' );
 		$this->addOption( 'staging', 'Staging env for service requests', false, true );
+		$this->addOption( 'fc', 'Check only FC communities', false, false );
 	}
 
 	private function httpGet( $url, $headers, $ssl ) {
@@ -139,6 +140,7 @@ class CompareRobots extends Maintenance {
 			}
 		}
 		$staging = $this->getOption( 'staging', false );
+		$fcOnly = $this->getOption( 'fc', false );
 
 		$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
@@ -161,6 +163,9 @@ class CompareRobots extends Maintenance {
 					__METHOD__, [ 'ORDER BY' => 'city_id ASC', 'LIMIT' => $this->batchSize ] );
 			while ( $wiki = $cities->fetchObject() ) {
 				$lastCityId = $wiki->city_id;
+				if ( $fcOnly && !array_key_exists( $wiki->city_id, $fcCommunities ) ) {
+					continue;
+				}
 				$parsed = parse_url( $wiki->city_url );
 				if ( $parsed['path'] != '/' ) {
 					// don't compare rebots for language path wikis
