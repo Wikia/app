@@ -6223,6 +6223,12 @@ $wgPageShareServices = [
 $wgPageShowWatchingUsers = false;
 
 /**
+ * Base URL used for Parsely API calls
+ * @var string $wgParselyApiUrl
+ */
+$wgParselyApiUrl = 'https://api.parsely.com/v2/';
+
+/**
  * The expiry time for the parser cache, in seconds.
  * @var int $wgParserCacheExpireTime
  */

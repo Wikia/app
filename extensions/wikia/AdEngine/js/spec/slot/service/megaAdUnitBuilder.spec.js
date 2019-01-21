@@ -75,7 +75,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'FEATURED',
-				adUnit: '/5441/wka2b.VIDEO/featured/tablet/oasis-home/_top1k_wiki-gaming'
+				adUnit: '/5441/wka2b.VIDEO/featured/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'UAP_BFAA',
