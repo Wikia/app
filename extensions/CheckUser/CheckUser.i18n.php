@@ -71,10 +71,10 @@ Here are the IPs used (5000 max, sorted by address):',
 	'checkuser-log-return' => 'Switch to CheckUser main form',
 	'checkuser-limited' => '\'\'\'These results have been truncated for performance reasons.\'\'\'',
 	'checkuser-log-userips' => '$1 got IP addresses for $2',
-	'checkuser-log-ipedits' => '$1 got edits for XFF <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
-	'checkuser-log-ipusers' => '$1 got users for <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
-	'checkuser-log-ipedits-xff' => '$1 got edits for XFF <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
-	'checkuser-log-ipusers-xff' => '$1 got users for XFF <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
+	'checkuser-log-ipedits' => '$1 got edits for XFF <a href="https://community.fandom.com/wiki/Special:MultiLookup?target=$2">$2</a>',
+	'checkuser-log-ipusers' => '$1 got users for <a href="https://community.fandom.com/wiki/Special:MultiLookup?target=$2">$2</a>',
+	'checkuser-log-ipedits-xff' => '$1 got edits for XFF <a href="https://community.fandom.com/wiki/Special:MultiLookup?target=$2">$2</a>',
+	'checkuser-log-ipusers-xff' => '$1 got users for XFF <a href="https://community.fandom.com/wiki/Special:MultiLookup?target=$2">$2</a>',
 	'checkuser-log-useredits' => '$1 got edits for $2',
 	'checkuser-autocreate-action' => 'was automatically created',
 	'checkuser-create-action' => 'was created',
@@ -88,10 +88,10 @@ Here are the IPs used (5000 max, sorted by address):',
 [http://rbls.org/$1 Proxy check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
-[http://community.wikia.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
-[http://community.wikia.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
+[https://community.fandom.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
+[https://community.fandom.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
 	'checkuser-token-fail' => 'Session failure. Please try again.',
 ];
 
@@ -1543,10 +1543,10 @@ IP-Adressen werden für eine Woche gesperrt (nur für unangemeldete Benutzer, di
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
-[http://community.wikia.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
-[http://community.wikia.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
+[https://community.fandom.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
+[https://community.fandom.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
 ];
 
 $messages['de-formal'] = [
@@ -1956,10 +1956,10 @@ Aquí se ven las IPs usadas (máximo 5000, ordenadas según dirección):',
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
-[http://community.wikia.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
-[http://community.wikia.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
+[https://community.fandom.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
+[https://community.fandom.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
 ];
 
 $messages['et'] = [
@@ -3446,10 +3446,10 @@ Di seguito sono indicati gli indirizzi IP utilizzati (fino a un massimo di 5000,
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
-[http://community.wikia.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
-[http://community.wikia.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
+[https://community.fandom.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
+[https://community.fandom.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
 ];
 
 $messages['ja'] = [
@@ -5291,10 +5291,10 @@ Użytych adresów IP jest (nie więcej niż 5000, posortowane według adresu):',
 [https://www.dan.me.uk/torcheck?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
-[http://community.wikia.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
-[http://community.wikia.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
-[http://community.wikia.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
+[https://community.fandom.com/wiki/Special:MultiLookup?target=$1 MultiLookup] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=User+talk:$1 MWF] ·
+[https://community.fandom.com/wiki/Special:Multiwikifinder?target=Message+Wall:$1 MWF-Wall] ·
+[https://community.fandom.com/index.php?title=Special:Phalanx&type=8&target=$1&wpPhalanxCheckBlocker=$1 Global Block]&#93;</span>',
 ];
 
 $messages['pms'] = [

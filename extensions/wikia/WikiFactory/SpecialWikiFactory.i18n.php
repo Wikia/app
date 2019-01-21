@@ -116,7 +116,7 @@ $messages['en'] = array(
 	'closed-wiki-dump-noexists' => 'This wiki has been closed. Content dump will be available within 24 hours. Please check back.',
 	'closed-wiki-create-wiki' => 'Create a new wiki',
 	'closed-wiki-policy' => "View FANDOM's Close Policy",
-	'closed-wiki-policy-url' => 'http://community.wikia.com/wiki/Community_Central:Closed_Wikia',
+	'closed-wiki-policy-url' => 'https://community.fandom.com/wiki/Community_Central:Closed_Wikia',
 	'closed-wiki-invalid-redirect-url' => 'Error: Redirect URL does not point to any existing wiki: "$1"',
 	'closed-create-dump' => 'Create a database dump',
 	'closed-create-image-archive' => 'Create an image archive',
@@ -1686,7 +1686,7 @@ $messages['es'] = array(
 	'wikifactory-label-eznamespace' => 'EZNamespace',
 	'right-wikifactorymetrics' => 'Permite el acceso a Special:WikiFactory/metrics',
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
-	'closed-wiki-policy-url' => 'http://community.wikia.com/wiki/Community_Central:Closed_Wikis',
+	'closed-wiki-policy-url' => 'https://community.fandom.com/wiki/Community_Central:Closed_Wikis',
 );
 
 $messages['et'] = array(
@@ -4347,7 +4347,7 @@ $messages['pt'] = array(
 	'right-wikifactorymetrics' => 'Permitir acesso ao Special:WikiFactory/metrics',
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
 	'awc-metrics-vertical' => 'e vertical:',
-	'closed-wiki-policy-url' => 'http://community.wikia.com/wiki/Community_Central:Closed_Wikia',
+	'closed-wiki-policy-url' => 'https://community.fandom.com/wiki/Community_Central:Closed_Wikia',
 	'closed-wiki-invalid-redirect-url' => 'Error: Redirect URL does not point to any existing wiki: "$1"',
 );
 

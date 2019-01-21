@@ -58,7 +58,7 @@ Click the confirmation link in your email to finish creating your account. Thank
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explore more wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Games</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entertainment</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Lifestyle</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Go to wikia.com',
-	'usersignup-welcome-email-content' => 'Want more information? Find advice, answers, and the Wikia community at <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Happy editing!',
+	'usersignup-welcome-email-content' => 'Want more information? Find advice, answers, and the Wikia community at <a style="color:#2C85D5;" href="https://community.fandom.com">Community Central</a>. Happy editing!',
 	'usersignup-welcome-email-signature' => 'The Wikia Team',
 	'usersignup-welcome-email-body' => 'Hi $USERNAME,
 We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.
@@ -74,7 +74,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Join FANDOM Today',
 	'usersignup-heading-byemail' => 'Create an account for someone else',
@@ -106,7 +106,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 );
@@ -262,7 +262,7 @@ $messages['ar'] = array(
 	'usersignup-welcome-email-explore-wiki-heading' => 'اكتشاف المزيد من الويكيات',
 	'usersignup-welcome-email-explore-wiki-content' => 'هناك الآلاف من الويكيات في ويكيا، إبحث عن أكثر الويكيات التي تهمك بالتوجه إلى إحدى محاورنا:  <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">ألعاب الفيديو</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">الترفيه</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">أساليب الحياة</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'اذهب إلى wikia.com',
-	'usersignup-welcome-email-content' => 'تريد المزيد من المعلومات؟ إبحث عن نصائح، أجوبة في مجتمع ويكيا في <a style="color:#2C85D5;" href="http://community.wikia.com">مركز المجتمع</a>. تحريرا سعيدا!',
+	'usersignup-welcome-email-content' => 'تريد المزيد من المعلومات؟ إبحث عن نصائح، أجوبة في مجتمع ويكيا في <a style="color:#2C85D5;" href="https://community.fandom.com">مركز المجتمع</a>. تحريرا سعيدا!',
 	'usersignup-welcome-email-signature' => 'فريق ويكيا',
 	'usersignup-heading' => 'إنضم لويكيا الآن',
 	'usersignup-heading-byemail' => 'إنشاء حساب لشخص آخر',
@@ -437,7 +437,7 @@ Vés a $EXPLOREWIKISURL
 Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
 L\'equip de Wikia
 ___________________________________________
-Per veure les últimes actualitzacions a Wikia, visita http://community.wikia.com
+Per veure les últimes actualitzacions a Wikia, visita https://community.fandom.com
 Vols controlar quins correus electrònics vols rebre? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uneix-te avui a Wikia',
 	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
@@ -615,7 +615,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Werde noch heute Mitglied bei FANDOM',
 	'usersignup-heading-byemail' => 'Ein Konto für jemand anderen erstellen',
@@ -647,7 +647,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Anmeldung abschließen',
@@ -753,7 +753,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Únete hoy a FANDOM',
 	'usersignup-heading-byemail' => 'Crear una cuenta para alguien más',
@@ -785,7 +785,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Termina de registrarte',
@@ -887,7 +887,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Liity Wikiaan tänään',
 	'usersignup-heading-byemail' => 'Luo käyttäjätilli jollekulle toiselle',
@@ -919,7 +919,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Viimeistele rekisteröityminen',
@@ -1006,7 +1006,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => "Rejoindre FANDOM dès aujourd'hui",
 	'usersignup-heading-byemail' => "Créer un compte pour quelqu'un d'autre",
@@ -1038,7 +1038,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Terminer la création de compte',
@@ -1108,7 +1108,7 @@ Prema na ligazón de confirmación do seu correo para rematar a creación da sú
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explore máis wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Hai milleiros de wikis en Wikia. Atope máis wikis do seu interese visitando os nosos centros de actividades: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">videoxogos</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">lecer</a> ou <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">estilo de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Vaia a wikia.com',
-	'usersignup-welcome-email-content' => 'Quere obter máis información? Atope consellos, respostas e á comunidade de Wikia na <a style="color:#2C85D5;" href="http://community.wikia.com">central da comunidade</a>. Páseo ben editando!',
+	'usersignup-welcome-email-content' => 'Quere obter máis información? Atope consellos, respostas e á comunidade de Wikia na <a style="color:#2C85D5;" href="https://community.fandom.com">central da comunidade</a>. Páseo ben editando!',
 	'usersignup-welcome-email-signature' => 'O equipo de Wikia',
 	'usersignup-welcome-email-body' => 'Boas, $USERNAME:
 Estamos encantados de darlle a benvida a Wikia e a {{SITENAME}}! Aquí hai algunhas cousas que pode facer para comezar.
@@ -1124,7 +1124,7 @@ Vaia a $EXPLOREWIKISURL
 Quere obter máis información? Atope consellos, respostas e á comunidade de Wikia na central da comunidade (http://www.community.wikia.com). Páseo ben editando!
 O equipo de Wikia
 ___________________________________________
-Para botar unha ollada aos últimos acontecementos en Wikia, visite http://community.wikia.com
+Para botar unha ollada aos últimos acontecementos en Wikia, visite https://community.fandom.com
 Quere controlar os correos electrónicos que recibe? Vaia a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Únase hoxe a Wikia',
 	'usersignup-heading-byemail' => 'Cree unha conta para outra persoa',
@@ -1156,7 +1156,7 @@ Acceda ao sistema en {{fullurl:{{ns:special}}:UserLogin}}
 Se non quere crear esta conta, pode ignorar esta mensaxe ou poñerse en contacto co equipo de soporte da comunidade para formular algunha pregunta.
 O equipo de Wikia
 ___________________________________________
-Para botar unha ollada aos últimos acontecementos en Wikia, visite http://community.wikia.com
+Para botar unha ollada aos últimos acontecementos en Wikia, visite https://community.fandom.com
 Quere controlar os correos electrónicos que recibe? Vaia a: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -1264,7 +1264,7 @@ Clicca sur le ligamine de confirmation in iste message pro finir le creation de 
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explora altere wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Il ha milles de wikis in Wikia! Cerca le wikis de tu interesse per medio de nostre centros de activitate: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Jocos video</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Intertenimento</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Stilo de vita</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Va a wikia.com',
-	'usersignup-welcome-email-content' => 'Vole plus information? Trova consilios, responsas, e le communitate de Wikia in le <a style="color:#2C85D5;" href="http://community.wikia.com">Centro del communitate</a>. Bon modification!',
+	'usersignup-welcome-email-content' => 'Vole plus information? Trova consilios, responsas, e le communitate de Wikia in le <a style="color:#2C85D5;" href="https://community.fandom.com">Centro del communitate</a>. Bon modification!',
 	'usersignup-welcome-email-signature' => 'Le equipa de Wikia',
 	'usersignup-welcome-email-body' => 'Salute $USERNAME,
 Benvenite a Wikia e a {{SITENAME}}! Ecce alcun cosas que tu pote facer pro comenciar.
@@ -1280,7 +1280,7 @@ Va a $EXPLOREWIKISURL
 Tu vole plus information? Responsas, e le communitate de Wikia se trova al Centro del Communitate (http://www.community.wikia.com). Bon modification!
 Le equipa de Wikia
 ___________________________________________
-Pro tener te al currente con le ultime eventos in Wikia, visita http://community.wikia.com
+Pro tener te al currente con le ultime eventos in Wikia, visita https://community.fandom.com
 Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Uni te hodie a Wikia',
 	'usersignup-heading-byemail' => 'Crear un conto pro qualcuno altere',
@@ -1312,7 +1312,7 @@ Per favor aperi session a {{fullurl:{{ns:special}}:UserLogin}}
 Si tu non vole que iste conto sia create, tu pote simplemente ignorar iste message o contactar nostre equipa de Supporto Communitari si tu ha questiones.
 Le equipa de Wikia
 ___________________________________________
-Pro tener te al currente con le eventos actual in Wikia, visita http://community.wikia.com
+Pro tener te al currente con le eventos actual in Wikia, visita https://community.fandom.com
 Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -1389,7 +1389,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Iscriviti a FANDOM oggi stesso',
 	'usersignup-heading-byemail' => 'Crea un account per qualcun altro',
@@ -1421,7 +1421,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => "Concludi l'iscrizione",
@@ -1492,7 +1492,7 @@ Click the confirmation link in your email to finish creating your account. Thank
 	'usersignup-welcome-email-explore-wiki-heading' => '色々なWikiaコミュニティを見てみよう。',
 	'usersignup-welcome-email-explore-wiki-content' => 'Wikiaには何千ものコミュニティがあります。<a style="color:#2C85D5;" href="http://ja.videogameshub.wikia.com/">ゲーム</a>、<a style="color:#2C85D5;" href="http://ja.entertainmenthub.wikia.com/">エンターテイメント</a>、<a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ライフスタイル</a>のハブから、他にもおもしろそうなWikiaコミュニティを探してみましょう。',
 	'usersignup-welcome-email-explore-wiki-button' => 'wikia.com にアクセス',
-	'usersignup-welcome-email-content' => '詳しくは、<a style="color:#2C85D5;" href="http://community.wikia.com">コミュニティ セントラル</a>にてアドバイス、回答、いろいろなWikiaコミュニティをご覧ください。それではどうぞ編集をお楽しみください。',
+	'usersignup-welcome-email-content' => '詳しくは、<a style="color:#2C85D5;" href="https://community.fandom.com">コミュニティ セントラル</a>にてアドバイス、回答、いろいろなWikiaコミュニティをご覧ください。それではどうぞ編集をお楽しみください。',
 	'usersignup-welcome-email-signature' => 'Wikiaチーム',
 	'usersignup-welcome-email-body' => 'Hi $USERNAME,
 We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.
@@ -1508,7 +1508,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'FANDOMに登録',
 	'usersignup-heading-byemail' => '他のユーザーのためにアカウントを作成する',
@@ -1540,7 +1540,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => '登録を完了してください',
@@ -1630,7 +1630,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => '위키아 계정 만들기',
 	'usersignup-heading-byemail' => '다른 사람을 위해 계정 만들기',
@@ -1662,7 +1662,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => '가입 완료',
@@ -1745,7 +1745,7 @@ $messages['mk'] = array(
 	'usersignup-welcome-email-explore-wiki-heading' => 'Истражете уште викија.',
 	'usersignup-welcome-email-explore-wiki-content' => 'На Викија имаме илјадници викија. Пронајдете уште викија што би ве интересирале на едно од нашите собиралишта: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Видеоигри</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Забава</a> или <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Животен стил</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Оди на wikia.com',
-	'usersignup-welcome-email-content' => 'Сакате повеќе информации? Совети, одговори и други учесници ќе најдете во <a style="color:#2C85D5;" href="http://community.wikia.com">Центарот на заедницата</a>. Среќно уредување!',
+	'usersignup-welcome-email-content' => 'Сакате повеќе информации? Совети, одговори и други учесници ќе најдете во <a style="color:#2C85D5;" href="https://community.fandom.com">Центарот на заедницата</a>. Среќно уредување!',
 	'usersignup-welcome-email-signature' => 'Екипата на Викија',
 	'usersignup-welcome-email-body' => 'Здраво $USERNAME,
 Ви посакуваме срдечно добредојде на Викија и {{SITENAME}}! Еве како да почнете.
@@ -1761,7 +1761,7 @@ $messages['mk'] = array(
 Сакате повеќе информации? Совети, одговори и други учесници ќе најдете во Центарот на заедницата  (http://www.community.wikia.com). Среќно уредување!
 Екипата на Викија
 ___________________________________________
-Најновите збиднувања на Викија ќе ги најдете на http://community.wikia.com
+Најновите збиднувања на Викија ќе ги најдете на https://community.fandom.com
 Сакате да изберете што да добивате по е-пошта? Одете на: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Приклучете се на Викија денес',
 	'usersignup-heading-byemail' => 'Направете сметка некому',
@@ -1793,7 +1793,7 @@ ___________________________________________
 Ако не ја сакате сметката, едноставно занемарете ја поракава. Ако имате прашања, обратете се кај екипата Поддршка на заедницата.
 Екипата на Викија
 ___________________________________________
-Најновите збиднувања на Викија ќе ги најдете на http://community.wikia.com
+Најновите збиднувања на Викија ќе ги најдете на https://community.fandom.com
 Сакате да изберете што да добивате по е-пошта? Одете на: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -1854,7 +1854,7 @@ Klik pautan pengesahan pada e-mel anda untuk melengkapkan pembukaan akaun anda. 
 	'usersignup-welcome-email-explore-wiki-heading' => 'Terokai wiki-wiki lain.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Di Wikia terdapat beribu-ribu wiki, carilah wiki-wiki lain yang menarik minat anda dengan menuju ke salah satu hab kami: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Permainan Video</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Hiburan</a>, atau <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Gaya Hidup</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Pergi ke wikia.com',
-	'usersignup-welcome-email-content' => 'Inginkan maklumat lanjut? Temui nasihat, jawapan, dan komuniti Wikia di <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Selamat menyunting!',
+	'usersignup-welcome-email-content' => 'Inginkan maklumat lanjut? Temui nasihat, jawapan, dan komuniti Wikia di <a style="color:#2C85D5;" href="https://community.fandom.com">Community Central</a>. Selamat menyunting!',
 	'usersignup-welcome-email-signature' => 'Pasukan Wikia',
 	'usersignup-welcome-email-body' => '$USERNAME,
 Dengan sukacitanya kami menyambut kedatangan anda ke Wikia dan {{SITENAME}}! Berikut ialah beberapa perkara yang boleh anda lakukan sebagai permulaan.
@@ -1870,7 +1870,7 @@ Pergi ke $EXPLOREWIKISURL
 Inginkan maklumat lanjut? Temui nasihat, jawapan, dan komuniti Wikia di Community Central (http://www.community.wikia.com). Selamat menyunting!
 Pasukan Wikia
 ___________________________________________
-Untuk mengikuti perkembangan terkini di Wikia, layari http://community.wikia.com
+Untuk mengikuti perkembangan terkini di Wikia, layari https://community.fandom.com
 Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Sertai Wikia Sekarang',
 	'usersignup-heading-byemail' => 'Buka akaun untuk rakan anda',
@@ -1902,7 +1902,7 @@ Sila log masuk di {{fullurl:{{ns:special}}:UserLogin}}
 Jika anda tidak mengingini pembukaan akaun ini, anda boleh mengabaikan e-mel ini begitu sahaja atau menghubungi pasukan Bantuan Komuniti kami jika ada sebarang pertanyaan.
 Pasukan Wikia
 ___________________________________________
-Untuk mengikuti perkembangan terkini di Wikia, layari http://community.wikia.com
+Untuk mengikuti perkembangan terkini di Wikia, layari https://community.fandom.com
 Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -1958,7 +1958,7 @@ Trykk på bekreftelseslenken i e-posten din for å fullføre opprettelsen av kon
 	'usersignup-welcome-email-explore-wiki-heading' => 'Utforske flere wikier.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Det er tusenvis av wikier hos Wikia, finn flere wikier som interesserer deg ved å besøke en av hubbene våre: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videospill</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">underholdning</a>, eller <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">livsstil</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Gå til wikia.com',
-	'usersignup-welcome-email-content' => 'Vil du ha mer informasjon? Finn råd, svar, og Wikia-fellesskapet hos <a style="color:#2C85D5;" href="http://community.wikia.com">fellesskapssentralen</a>. Lykke til med redigeringen!',
+	'usersignup-welcome-email-content' => 'Vil du ha mer informasjon? Finn råd, svar, og Wikia-fellesskapet hos <a style="color:#2C85D5;" href="https://community.fandom.com">fellesskapssentralen</a>. Lykke til med redigeringen!',
 	'usersignup-welcome-email-signature' => 'Wikia-teamet',
 	'usersignup-welcome-email-body' => 'Hei $USERNAME,
 Det er med glede vi ønsker deg velkommen til Wikia og {{SITENAME}}! Her er noen ting du kan gjøre for å komme i gang.
@@ -1974,7 +1974,7 @@ Gå til $EXPLOREWIKISURL
 Vil du ha mer informasjon? Finn råd, svar, og Wikia-fellesskapet hos fellesskapssentralen (http://www.community.wikia.com). Lykke til med redigeringen!
 Wikia-teamet
 ___________________________________________
-For å sjekke ut de siste hendelsene på Wikia, besøk http://community.wikia.com
+For å sjekke ut de siste hendelsene på Wikia, besøk https://community.fandom.com
 Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Registrer deg hos Wikia idag',
 	'usersignup-heading-byemail' => 'Opprett en konto for noen andre',
@@ -2006,7 +2006,7 @@ Vennligst logg inn på {{fullurl:{{ns:special}}:UserLogin}}
 Hvis du ikke ville at denne kontoen skulle bli opprettet kan du simpelthen ignorere denne e-posten eller kontakte fellesskapssupporten vår med spørsmål.
 Wikia-teamet
 ___________________________________________
-For å sjekke ut de siste hendelsene på Wikia, besøk http://community.wikia.com
+For å sjekke ut de siste hendelsene på Wikia, besøk https://community.fandom.com
 Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -2072,7 +2072,7 @@ Click the confirmation link in your email to finish creating your account. Thank
 	'usersignup-welcome-email-explore-wiki-heading' => "Meer wiki's ontdekken.",
 	'usersignup-welcome-email-explore-wiki-content' => 'Er zijn duizenden wiki\'s bij Wikia. U kunt wiki\'s vinden die bij uw interesses passen door naar een van onze hubs te gaan: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videogames</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Amusement</a> of <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Lifestyle</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ga naar wikia.com',
-	'usersignup-welcome-email-content' => 'Wilt u meer informatie? U kunt antwoorden en advies krijgen van de Wikiagemeenschap op <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Veel plezier!',
+	'usersignup-welcome-email-content' => 'Wilt u meer informatie? U kunt antwoorden en advies krijgen van de Wikiagemeenschap op <a style="color:#2C85D5;" href="https://community.fandom.com">Community Central</a>. Veel plezier!',
 	'usersignup-welcome-email-signature' => 'Het Wikia-team',
 	'usersignup-welcome-email-body' => 'Hi $USERNAME,
 We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.
@@ -2088,7 +2088,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Word vandaag lid van Wikia',
 	'usersignup-heading-byemail' => 'Maak een gebruiker aan voor iemand anders',
@@ -2120,7 +2120,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Registratie afronden',
@@ -2158,7 +2158,7 @@ Anar a \$EXPLOREWIKISURL
 Volètz mai d'informacion ? Trobatz de conselhs, de responsas, e la comunautat Wikia al Centre de la Comunautat (http://www.community.wikia.com). Bonas modificacions !
 L'equipa Wikia
 ___________________________________________
-Per veire las darrièras nòvas sus Wikia, anatz sus http://community.wikia.com
+Per veire las darrièras nòvas sus Wikia, anatz sus https://community.fandom.com
 Volètz verificar quins corrièrs electronics recebètz ? Anatz sus {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-marketing-community-heading' => 'Collaborar',
 	'usersignup-marketing-community' => "Descobrissètz e exploratz de subjèctes que van dels jòcs vidèo als filmes e a la television. Rencontratz de monde amb de passions e d'interèsses semblables.",
@@ -2243,7 +2243,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Dołącz do Fandomu już dziś',
 	'usersignup-heading-byemail' => 'Załóż konto dla kogoś innego',
@@ -2275,7 +2275,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Zakończenie rejestracji',
@@ -2341,7 +2341,7 @@ Ch'a sgnaca an sla liura ëd conferma an soa pòsta eletrònica për livré la c
 	'usersignup-welcome-email-explore-wiki-heading' => "Ch'a esplora pi 'd wiki.",
 	'usersignup-welcome-email-explore-wiki-content' => 'A-i son milen-e ëd wiki dzor Wikia, ch\'a treuva d\'àutre wiki ch\'a j\'anteresso an andasendie da un dij nòstri sénter: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videogieugh</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Divertiment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Stil ëd vita</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Và a wikia.com',
-	'usersignup-welcome-email-content' => 'Veul-lo pi d\'anformassion? Ch\'a treuva dij consèj, dle rispòste, e la comunità ëd Wikia al <a style="color:#2C85D5;" href="http://community.wikia.com">sènter dla comunità</a>. Bon travaj!',
+	'usersignup-welcome-email-content' => 'Veul-lo pi d\'anformassion? Ch\'a treuva dij consèj, dle rispòste, e la comunità ëd Wikia al <a style="color:#2C85D5;" href="https://community.fandom.com">sènter dla comunità</a>. Bon travaj!',
 	'usersignup-welcome-email-signature' => "L'echip ëd Wikia",
 	'usersignup-welcome-email-body' => "Cerea \$USERNAME,
 I soma content ëd deje ël bin-ëvnù su Wikia e {{SITENAME}}! Belessì a-i son dle còse ch'a peul fé për ancaminé.
@@ -2357,7 +2357,7 @@ Andé a \$EXPLOREWIKISURL
 Veul-lo pi d'anformassion? Ch'a treuva dij consèj, dle rispòste, e la comunità Wikia al sènter dla Comunità (http://www.community.wikia.com). Bon travaj!
 L'Echip Wikia
 ___________________________________________
-Për controlé j'ùltime neuve dzor Wikia, vìsita http://community.wikia.com
+Për controlé j'ùltime neuve dzor Wikia, vìsita https://community.fandom.com
 It veus-to controlé che email it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-heading' => "Ch'as gionza a Wikia Ancheuj",
 	'usersignup-heading-byemail' => "Creé un cont për quaidun d'àutr",
@@ -2389,7 +2389,7 @@ Për piasì, ch'a intra ant ël sistema a {{fullurl:{{ns:special}}:UserLogin}}
 S'a veul pa che 's cont a sia creà a peul bele mach ignoré ës mëssagi o contaté nòstra echip d'agiut për qualsëssìa chestion.
 L'Echip Wikia
 ___________________________________________
-Për controlé le neuve dzora Wikia, ch'a vìsita http://community.wikia.com
+Për controlé le neuve dzora Wikia, ch'a vìsita https://community.fandom.com
 Veul-lo controlé che mëssagi a arsèiv? Andé su: {{fullurl:{{ns:special}}:Preferences}}",
 );
 
@@ -2482,7 +2482,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Junte-se à Wikia Hoje',
 	'usersignup-heading-byemail' => 'Crie uma conta para outra pessoa',
@@ -2514,7 +2514,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Termine de se inscrever',
@@ -2617,7 +2617,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Присоединяйтесь к Фэндому сегодня',
 	'usersignup-heading-byemail' => 'Создать учётную запись для другого человека',
@@ -2649,7 +2649,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Завершить регистрацию',
@@ -2720,7 +2720,7 @@ Klicka på bekräftelselänken i din e-postmeddelande för att slutföra skapand
 	'usersignup-welcome-email-explore-wiki-heading' => 'Utforska fler wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Det finns tusentals wikis på Wikia, hitta mer wikis som du är intresserad av genom att gå till en av våra hubbar: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Videospel</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Underhållning</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Livsstil</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Gå till wikia.com',
-	'usersignup-welcome-email-content' => 'Vill ha mer information? Hitta råd, svar och Wikia-gemenskapen på <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Ha det så kul med redigeringen!',
+	'usersignup-welcome-email-content' => 'Vill ha mer information? Hitta råd, svar och Wikia-gemenskapen på <a style="color:#2C85D5;" href="https://community.fandom.com">Community Central</a>. Ha det så kul med redigeringen!',
 	'usersignup-welcome-email-signature' => 'Wikia-teamet',
 	'usersignup-welcome-email-body' => 'Hej $USERNAME,
 Vi är glada att välkomna dig till Wikia och {{SITENAME}}! Här är några saker du kan göra för att komma igång.
@@ -2736,7 +2736,7 @@ Gå till $EXPLOREWIKISURL
 Vill ha mer information? Hitta råd, svar och Wikia-gemenskapen på Community Central (http://www.community.wikia.com). Ha det så kul med redigeringen!
 Wikia-teamet
 ___________________________________________
-För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
+För att kolla in de senaste händelserna på Wikia, besök https://community.fandom.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Registrera dig på Wikia idag',
 	'usersignup-heading-byemail' => 'Skapa ett konto för någon annan',
@@ -2768,7 +2768,7 @@ Var god logga in på {{fullurl:{{ns:special}}:UserLogin}}
 Om du inte vill använda det här kontot ska skapas kan du helt enkelt ignorera detta e-postmeddelande eller kontakta vårt gemenskapssupportsteam med några frågor.
 Wikia-teamet
 ___________________________________________
-För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
+För att kolla in de senaste händelserna på Wikia, besök https://community.fandom.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -2827,7 +2827,7 @@ Pindutin ang kawing ng pagpapatotoo sa loob ng iyong e-liham upang tapusin na an
 	'usersignup-welcome-email-explore-wiki-heading' => 'Gumalugad ng marami pang mga wiki.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Mayroong libu-libong mga wiki sa Wikia, maghanap ng marami pang mga wiki na makakahumalingan mo sa pamamagitan ng pagpunta sa isa sa aming mga lunduyan: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Mga Larong Bidyo</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Pag-aaliw</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Gawi sa Pamumuhay</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Pumunta sa wikia.com',
-	'usersignup-welcome-email-content' => 'Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia roon sa a style="color:#2C85D5;" href="http://community.wikia.com">Lunduyan ng Pamayanan</a>. Maligayang pamamatnugot!',
+	'usersignup-welcome-email-content' => 'Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia roon sa a style="color:#2C85D5;" href="https://community.fandom.com">Lunduyan ng Pamayanan</a>. Maligayang pamamatnugot!',
 	'usersignup-welcome-email-signature' => 'Ang Pangkat ng Wikia',
 	'usersignup-welcome-email-body' => 'Kumusta $USERNAME,
 Maligaya at mabuti ang aming pagtanggap sa iyo sa Wikia at sa {{SITENAME}}! Narito ang ilang mga bagay na magagawa mo upang makapagsimula na.
@@ -2844,7 +2844,7 @@ Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng
 Maligayang pamamatnugot!
 Ang Pangkat ng Wikia
 ___________________________________________
-Upang masuri ang pinaka huling mga kaganapan sa Wikia, dalawin ang http://community.wikia.com
+Upang masuri ang pinaka huling mga kaganapan sa Wikia, dalawin ang https://community.fandom.com
 Nais tabanan kung anong mga e-liham ang tatanggapin mo? Magpunta sa: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Sumali na Ngayon sa Wikia',
 	'usersignup-heading-byemail' => 'Lumikha ng isang akawnt para sa ibang tao',
@@ -2876,7 +2876,7 @@ Paki lumagda roon sa {{fullurl:{{ns:special}}:UserLogin}}
 Kung hindi mo ninais na malikha ang akawnt na ito, huwag na lang pansinin ang e-liham na ito o makipag-ugnayan sa pangkat ng Suporta ng Pamayanan sa pamamagitan ng anumang mga katanungan.
 Ang Pangkat ng Wikia
 ___________________________________________
-Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dumalaw sa http://community.wikia.com
+Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dumalaw sa https://community.fandom.com
 Gusto mong kontrolin kung anong mga e-liham ang tatanggapin mo? Pumunta sa: {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -2952,7 +2952,7 @@ $messages['uk'] = array(
 	'usersignup-welcome-email-explore-wiki-heading' => 'Перегляньте інші вікі.',
 	'usersignup-welcome-email-explore-wiki-content' => 'На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Відеоігри</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Кіно і Серіали</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Стиль життя</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Перейти до wikia.com',
-	'usersignup-welcome-email-content' => 'Хочете отримати більше інформації? Знайдіть консультації, відповіді та спільноту Вікія у <a style="color:#2C85D5;" href="http://community.wikia.com">Центрі спільноти</a>. Приємного редагування!',
+	'usersignup-welcome-email-content' => 'Хочете отримати більше інформації? Знайдіть консультації, відповіді та спільноту Вікія у <a style="color:#2C85D5;" href="https://community.fandom.com">Центрі спільноти</a>. Приємного редагування!',
 	'usersignup-welcome-email-signature' => 'Команда Вікія',
 	'usersignup-welcome-email-body' => 'Привіт, $USERNAME
 Ми раді вітати вас на Вікія та на {{SITENAME}}! Ось декілька порад, які допоможуть вам почати.
@@ -2968,7 +2968,7 @@ $messages['uk'] = array(
 Потрібна додаткова інформація? На Центральній Вікі (http://www.community.wikia.com) можна знайти поради, відповіді на питання та інших учасників спільноти Вікія. Щасливого редагування!
 Команда Вікія
 ___________________________________________
-Щоб перевірити останні події на Вікія, відвідайте http://community.wikia.com
+Щоб перевірити останні події на Вікія, відвідайте https://community.fandom.com
 Не бажаєте отримувати листів від Вікія? Це можна змінити тут: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Приєднатися до Вікія сьогодні',
 	'usersignup-heading-byemail' => 'Створити обліковий запис для когось іншого',
@@ -3000,7 +3000,7 @@ $2, вам потрібно натиснути на посилання у цьо
 Якщо ви не хочете, щоб цей обліковий запис було створено, ви можете знехтувати цим повідомленням або зв\'язатися з нашою командою підтримки спільноти з будь-якого питання.
 Команда Вікія
 ___________________________________________
-Для перевірки останніх подій на Вікія відвідайте http://community.wikia.com
+Для перевірки останніх подій на Вікія відвідайте https://community.fandom.com
 Хочете налаштувати отримання розсилки листів? Перейдіть на {{fullurl:{{ns:special}}:Preferences}}',
 );
 
@@ -3061,7 +3061,7 @@ Click the confirmation link in your email to finish creating your account. Thank
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explore more wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Games</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entertainment</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Lifestyle</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Go to wikia.com',
-	'usersignup-welcome-email-content' => 'Want more information? Find advice, answers, and the Wikia community at <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Happy editing!',
+	'usersignup-welcome-email-content' => 'Want more information? Find advice, answers, and the Wikia community at <a style="color:#2C85D5;" href="https://community.fandom.com">Community Central</a>. Happy editing!',
 	'usersignup-welcome-email-signature' => 'The Wikia Team',
 	'usersignup-welcome-email-body' => 'Hi $USERNAME,
 We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.
@@ -3077,7 +3077,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Tham gia Wikia ngay hôm nay',
 	'usersignup-heading-byemail' => 'Create an account for someone else',
@@ -3109,7 +3109,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => 'Finish Signing Up',
@@ -3201,7 +3201,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => '今天加入FANDOM',
 	'usersignup-heading-byemail' => '为其他人创建帐户',
@@ -3233,7 +3233,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => '完成注册',
@@ -3324,7 +3324,7 @@ Go to $EXPLOREWIKISURL
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading-byemail' => '幫其他人創建帳戶',
 	'usersignup-marketing-wikia' => '開始和全球成千上萬的線上用戶共同分享知識和興趣。',
@@ -3352,7 +3352,7 @@ Please log in at {{fullurl:{{ns:special}}:UserLogin}}
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
 The Wikia Team
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-facebook-heading' => '完成註冊',

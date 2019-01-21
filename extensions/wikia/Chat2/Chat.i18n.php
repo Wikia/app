@@ -1739,7 +1739,7 @@ $messages['ja'] = array(
 	'chat-chatbanremove-log-entry' => '$1 の追放を解除しました。',
 	'chat-chatbanchange-log-entry' => '$1 のチャット追放設定を$2の有効期限で、$3までに変更しました。',
 	'chat-contributions-ban-notice' => 'このユーザーは現在チャットから追放されています。 参考のために最新の追放記録を以下に表示します：',
-	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
+	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="https://community.fandom.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
 	'grouppage-chatmoderator' => 'w:c:ja.community:ヘルプ:チャット',

@@ -49,18 +49,18 @@ $messages['en'] = array(
 <br /><br />
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 <br /><br />
-Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact us</a>.',
+Questions or concerns? Feel free to <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">contact us</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Hi $2,
 Please use this temporary password to log in to Wikia: "$3"
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+Questions or concerns? Feel free to contact us: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia Community Support
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
-	'userlogin-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -72,7 +72,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
 &nbsp;
-<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<a href="https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-loginreqlink' => 'log in',
@@ -206,17 +206,17 @@ $messages['ar'] = array(
 <br /><br />
 إن لم تطلب كلمة سر جديدة، فلا تقلق! حسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة السر القديمة.
 <br /><br />
-أسئلة أو مخاوف؟ لا تتردد في <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">الاتصال بنا</a>.',
+أسئلة أو مخاوف؟ لا تتردد في <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">الاتصال بنا</a>.',
 	'userlogin-password-email-signature' => 'دعم مجتمع ويكيا',
 	'userlogin-password-email-body' => 'مرحبًا $2،
 الرجاء استخدام كلمة المرور المؤقتة هذه لتسجيل الدخول إلى ويكيا: " $3 "
 إن لم تطلب كلمة مرور جديدة، فلا تقلق! فحسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة المرور القديمة.
-أسئلة أو مخاوف؟ لا تتردد في الاتصال بنا: http://community.wikia.com/wiki/Special:Contact/account-issue
+أسئلة أو مخاوف؟ لا تتردد في الاتصال بنا: https://community.fandom.com/wiki/Special:Contact/account-issue
 مجتمع ويكيا للدعم
 ___________________________________________
-للتحقق من آخر الأحداث في ويكيا، قم بزيارة http://community.wikia.com
+للتحقق من آخر الأحداث في ويكيا، قم بزيارة https://community.fandom.com
 تريد التحكم في رسائل البريد الإلكتروني التي تتلقها؟ اذهب إلى: {{fullurl:{{ns:special}}:تفضيلات}}',
-	'userlogin-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'تريد التحكم في رسائل البريد الإلكتروني التي تتلقاها منا؟ انتقل إلى <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">التفضيلات</a> الخاصة بك.',
 	'userlogin-loginreqlink' => 'تسجيل الدخول',
 	'userlogin-changepassword-needlogin' => 'أنت بحاجة إلى $1 لكي تغيّر كلمتك للمرور.',
@@ -473,9 +473,9 @@ $messages['de'] = array(
 <br /><br />
 Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher.
 <br /><br />
-Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
+Bei Fragen oder Bedenken kannst du uns jederzeit <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
-	'userlogin-password-email-body' => 'Hallo $2,gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Hallo $2,gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia Community Support
 
 ___________________________________________
@@ -502,7 +502,7 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
 &nbsp;
-<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<a href="https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-email-confirmation-banner-success-message' => 'Deine E-Mail-Adresse wurde bestätigt.',
@@ -695,12 +695,12 @@ $messages['fi'] = array(
 <br /><br />
 Mikäli et pyytänyt uutta salasanaa, älä huoli! Tilisi on turvassa. Sinun ei tarvitse välittää tästä sähköpostista, vaan voit jatkaa kirjautumista vanhalla salasanallasi.
 <br /><br />
-Kysymyksiä tai huolia? Älä epäröi <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">ottaa meihin yhteyttä</a>.',
+Kysymyksiä tai huolia? Älä epäröi <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">ottaa meihin yhteyttä</a>.',
 	'userlogin-password-email-signature' => 'Wikian Tuki',
 	'userlogin-password-email-body' => 'Hei $2,
 Ole hyvä ja käytä kirjautuessasi Wikiaan seuraavaa tilapäistä salasanaa: "$3"
 Mikäli et pyytänyt uutta salasanaa, älä huoli! Tilisi on turvassa. Sinun ei tarvitse välittää tästä sähköpostista, vaan voit jatkaa kirjautumista vanhalla salasanallasi.
-Kysymyksiä tai huolia? Älä epäröi ottaa meihin yhteyttä: http://community.wikia.com/wiki/Special:Contact/account-issue
+Kysymyksiä tai huolia? Älä epäröi ottaa meihin yhteyttä: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikian Tuki
 ___________________________________________
 Nähdäksesi, mitä Wikiassa tapahtuu, käy sivulla http://yhteiso.wikia.com
@@ -789,9 +789,9 @@ $messages['fr'] = array(
 <br /><br />
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe.
 <br /><br />
-Vous avez des questions ? N’hésitez pas à <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nous contacter</a>.',
+Vous avez des questions ? N’hésitez pas à <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">nous contacter</a>.',
 	'userlogin-password-email-signature' => 'Support de la communauté Wikia',
-	'userlogin-password-email-body' => "Bonjour $2,Veuillez utiliser ce mot de passe temporaire pour vous connecter à Wikia : $3Si vous n'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe.Vous avez des questions ? N’hésitez pas à nous contacter : http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => "Bonjour $2,Veuillez utiliser ce mot de passe temporaire pour vous connecter à Wikia : $3Si vous n'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe.Vous avez des questions ? N’hésitez pas à nous contacter : https://community.fandom.com/wiki/Special:Contact/account-issue
 Support de la communauté Wikia
 
 
@@ -883,17 +883,17 @@ $messages['gl'] = array(
 <br /><br />
 Se non solicitou un contrasinal novo, non se preocupe! A súa conta está a salvo e é segura. Pode ignorar este correo electrónico e seguir accedendo ao sistema de Wikia co seu contrasinal antigo.
 <br /><br />
-Ten preguntas ou preocupacións? Síntase libre de poñerse en <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contacto con nós</a>.',
+Ten preguntas ou preocupacións? Síntase libre de poñerse en <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">contacto con nós</a>.',
 	'userlogin-password-email-signature' => 'O equipo de soporte comunitario de Wikia',
 	'userlogin-password-email-body' => 'Boas, $2:
 Utilice este contrasinal temporal para acceder ao sistema en Wikia: "$3"
 Se non solicitou un contrasinal novo, non se preocupe! A súa conta está a salvo e é segura. Pode ignorar este correo electrónico e seguir accedendo ao sistema de Wikia co seu contrasinal antigo.
-Ten preguntas ou preocupacións? Síntase libre de poñerse en contacto con nós: http://community.wikia.com/wiki/Special:Contact/account-issue
+Ten preguntas ou preocupacións? Síntase libre de poñerse en contacto con nós: https://community.fandom.com/wiki/Special:Contact/account-issue
 O equipo de soporte comunitario de Wikia
 ___________________________________________
-Para botar unha ollada aos últimos acontecementos en Wikia, visite http://community.wikia.com
+Para botar unha ollada aos últimos acontecementos en Wikia, visite https://community.fandom.com
 Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Quere controlar os correos electrónicos que recibe? Vaia ás súas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-loginreqlink' => 'acceder ao sistema',
 	'userlogin-changepassword-needlogin' => 'Cómpre $1 para cambiar o contrasinal.',
@@ -949,9 +949,9 @@ Ha nem igényeltél új jelszót, ne aggódj! A felhasználói fiókod biztonsá
 Kérdésed vagy problémád van? Lépj velünk kapcsolatba!
 Wikia közösségi támogatás
 ___________________________________________
-A Wikia legfrissebb eseményeinek megtekintésére látogass el a http://community.wikia.com oldalra.
+A Wikia legfrissebb eseményeinek megtekintésére látogass el a https://community.fandom.com oldalra.
 Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintésére látogass el a <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> oldalra.',
+	'userlogin-email-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintésére látogass el a <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a> oldalra.',
 	'userlogin-email-footer-line2' => 'Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Változtass a <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">beállításaidon</a>',
 	'userlogin-loginreqlink' => 'bejelentkezés',
 	'wikiamobile-sendpassword-label' => 'Új jelszó küldése',
@@ -1011,9 +1011,9 @@ Si tu non requestava un nove contrasigno, nulle problema! Tu conto es san e salv
 Questiones o preoccupationes? Sia libere de contactar nos.
 Le equipa de supporto communitari de Wikia
 ___________________________________________
-Pro cognoscer le ultime evenimentos in Wikia, visita http://community.wikia.com
+Pro cognoscer le ultime evenimentos in Wikia, visita https://community.fandom.com
 Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
 	'userlogin-loginreqlink' => 'aperir session',
 	'userlogin-changepassword-needlogin' => 'Tu debe $1 pro cambiar tu contrasigno.',
@@ -1218,15 +1218,15 @@ $messages['ko'] = array(
 <br /><br />
 만약 임시 비밀번호를 요청하신 적이 없으시다면 걱정하지 마세요! 귀하의 계정은 안전합니다. 이 이메일은 무시하고 기존 비밀번호로 위키아에 로그인해주세요.
 <br /><br />
-궁금한 점이 있으시다면 저희에게 <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">연락</a>해 주세요.',
+궁금한 점이 있으시다면 저희에게 <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">연락</a>해 주세요.',
 	'userlogin-password-email-signature' => '위키아 커뮤니티 지원',
 	'userlogin-password-email-body' => '안녕하세요, $USERNAME 님.
 이 임시 비밀번호를 이용해 위키아에 로그인해주세요: "$3"
 만약 임시 비밀번호를 요청하신 적이 없으시다면 걱정하지 마세요! 귀하의 계정은 안전합니다. 이 이메일은 무시하고 기존 비밀번호로 위키아에 로그인해주세요.
-궁금한 점이 있으시다면 저희에게 연락해 주세요: http://community.wikia.com/wiki/Special:Contact/account-issue
+궁금한 점이 있으시다면 저희에게 연락해 주세요: https://community.fandom.com/wiki/Special:Contact/account-issue
 위키아 커뮤니티 지원
 ___________________________________________
-위키아에 무슨 일이 일어나고 있는지 궁금하다면 이곳을 방문해보세요: http://community.wikia.com
+위키아에 무슨 일이 일어나고 있는지 궁금하다면 이곳을 방문해보세요: https://community.fandom.com
 위키아에서 발송하는 이메일에 관한 설정은 다음 링크에서 해주세요: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line2' => '위키아에서 발송하는 이메일에 관한 설정은 다음 링크에서 해주세요. <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">사용자 환경 설정</a>',
 	'userlogin-loginreqlink' => '로그인',
@@ -1387,17 +1387,17 @@ $messages['mk'] = array(
 <br /><br />
 Доколку не побаравте нова лозинка, не грижете се! Сметката ви е сосем безбедна. Занемарете го ова писмо и најавувајте се со постоечката лозинка.
 <br /><br />
-Имате прашања или проблеми? Слободно <a href="http://community.wikia.com/wiki/Special:Contact/account-issue?uselang=mk">обратете ни се</a>.',
+Имате прашања или проблеми? Слободно <a href="https://community.fandom.com/wiki/Special:Contact/account-issue?uselang=mk">обратете ни се</a>.',
 	'userlogin-password-email-signature' => 'Поддршка за заедницата на Викија',
 	'userlogin-password-email-body' => 'Здраво $2,
 Искористете ја оваа привремена лозинка за да се најавите на Викија: „$3“
 Доколку не побаравте нова лозинка, не грижете се! Сметката ви е сосем безбедна. Занемарете го ова писмо и најавувајте се со постоечката лозинка.
-Имате прашања или проблеми? Слободно обратете ни се: http://community.wikia.com/wiki/Special:Contact/account-issue
+Имате прашања или проблеми? Слободно обратете ни се: https://community.fandom.com/wiki/Special:Contact/account-issue
 Поддршка за заедницата на Викија
 ___________________________________________
-Најновите збиднувања на Викија ќе ги најдете на http://community.wikia.com
+Најновите збиднувања на Викија ќе ги најдете на https://community.fandom.com
 Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'userlogin-loginreqlink' => 'се најавите',
 	'userlogin-changepassword-needlogin' => 'Треба да $1 за да можете да ја смените лозинката.',
@@ -1464,12 +1464,12 @@ Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.',
 	'userlogin-password-email-body' => 'Apa khabar $2,
 Sila gunakan kata laluan sementara ini untuk log masuk ke dalam Wikia: "$3"
 Jika anda tidak memohon kata laluan baru, usah risau! Akaun anda masih selamat dan terlindung. Anda boleh mengabaikan e-mel ini dan terus log masuk ke dalam Wikia dengan kata laluan lama anda.
-Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan di: http://community.wikia.com/wiki/Special:Contact/account-issue
+Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan di: https://community.fandom.com/wiki/Special:Contact/account-issue
 Bantuan Komuniti Wikia
 ___________________________________________
-Untuk meninjau perkembangan terkini di Wikia, lawati http://community.wikia.com
+Untuk meninjau perkembangan terkini di Wikia, lawati https://community.fandom.com
 Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a>',
 	'userlogin-loginreqlink' => 'log masuk',
 	'userlogin-changepassword-needlogin' => 'Anda perlu $1 untuk menukar kata laluan baru.',
@@ -1527,9 +1527,9 @@ Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er try
 Spørsmål eller bekymringer? Kontakt oss gjerne.
 Wikia fellesskapssupport
 ___________________________________________
-For å sjekke ut de nyeste hendelsene på Wikia, besøk http://community.wikia.com
+For å sjekke ut de nyeste hendelsene på Wikia, besøk https://community.fandom.com
 Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Special:Preferences}}">Innstillingene dine<a>',
-	'userlogin-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, besøk <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, besøk <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vil du kontrollere hvilke e-post du mottar? Gå til <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">innstillingene dine</a>',
 	'userlogin-loginreqlink' => 'logg inn',
 	'userlogin-changepassword-needlogin' => 'Du må $1 for å endre passordet ditt.',
@@ -1582,15 +1582,15 @@ $messages['nl'] = array(
 <br /><br />
 Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.
 <br /><br />
-Vragen of zorgen? Neem vooral <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact met ons op</a>.',
+Vragen of zorgen? Neem vooral <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">contact met ons op</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
-	'userlogin-password-email-body' => 'Hallo $2,Gebruik het volgende tijdelijke wachtwoord om aan te melden bij Wikia: "$3".Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.Neem contact met ons op als u vragen of zorgen hebt: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Hallo $2,Gebruik het volgende tijdelijke wachtwoord om aan te melden bij Wikia: "$3".Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.Neem contact met ons op als u vragen of zorgen hebt: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia Gemeenschapsondersteuning
 
 ___________________________________________
-Bezoek http://community.wikia.com voor het laatste nieuws over Wikia.
+Bezoek https://community.fandom.com voor het laatste nieuws over Wikia.
 Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:special}}:Preferences}}.',
-	'userlogin-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
+	'userlogin-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
 	'userlogin-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? Ga naar uw [{{fullurl:{{ns:special}}:Preferences}} voorkeuren]',
 	'userlogin-loginreqlink' => 'aanmelden',
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
@@ -1610,7 +1610,7 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
 &nbsp;
-<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<a href="https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-email-confirmation-banner-success-message' => 'Your email has been confirmed.',
@@ -1696,7 +1696,7 @@ Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest
 <br /><br />
 Masz pytania lub wątpliwości? Daj nam znać.',
 	'userlogin-password-email-signature' => 'Zespół Wikii',
-	'userlogin-password-email-body' => 'Witaj $2,Użyj tego tymczasowego hasła, aby zalogować się na Wikii: „$3”Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować tą wiadomość i zalogować się przy użyciu starego hasła.Masz pytania lub wątpliwości? Daj nam znać poprzez : http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Witaj $2,Użyj tego tymczasowego hasła, aby zalogować się na Wikii: „$3”Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować tą wiadomość i zalogować się przy użyciu starego hasła.Masz pytania lub wątpliwości? Daj nam znać poprzez : https://community.fandom.com/wiki/Special:Contact/account-issue
 Zespół Wikii
 
 
@@ -1781,17 +1781,17 @@ $messages['pms'] = array(
 <br /><br />
 S'a l'ha pa ciamà na neuva ciav, ch'as sagrin-a nen! Sò cont a l'é an salute e sigur. A peul ignoré ës mëssagi e continué a intré an Wikia con soa veja ciav.
 <br /><br />
-Dle chestion o dij dùbit? Ch'an <a href=\"http://community.wikia.com/wiki/Special:Contact/account-issue\">contata pura</a>.",
+Dle chestion o dij dùbit? Ch'an <a href=\"https://community.fandom.com/wiki/Special:Contact/account-issue\">contata pura</a>.",
 	'userlogin-password-email-signature' => 'Agiut dla Comunità Wikia',
 	'userlogin-password-email-body' => "Cerea $2,
 Për piasì, ch'a deuvra costa ciav temporania për intré an Wikia: «$3»
 S'a l'has pa ciamà na neuva ciav, ch'as sagrin-a nen! Sò cont a l'é an salute e sigur. A peul ignoré ës mëssagi e continué a intré an Wikia con soa veja ciav.
-Dle chestion o dij dùbit? Ch'an contata pura: http://community.wikia.com/wiki/Special:Contact/account-issue
+Dle chestion o dij dùbit? Ch'an contata pura: https://community.fandom.com/wiki/Special:Contact/account-issue
 L'agiut dla Comunità Wikia
 ___________________________________________
-Për controlé j'ùltime neuve an Wikia, ch'a vìsita http://community.wikia.com
+Për controlé j'ùltime neuve an Wikia, ch'a vìsita https://community.fandom.com
 Veul-lo controlé ij mëssagi ch'a arsèiv? Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}",
-	'userlogin-email-footer-line1' => 'Për controlé j\'ùltime neuve dzor Wikia, ch\'a vìsita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Për controlé j\'ùltime neuve dzor Wikia, ch\'a vìsita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Veul-lo controlé ij mëssagi ch\'a arsèiv? Ch\'a vada ai sò <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Gust</a>',
 	'userlogin-loginreqlink' => 'rintré ant ël sistema',
 	'userlogin-changepassword-needlogin' => "It l'has dabzògn ëd $1 për cangé toa ciav.",
@@ -1864,7 +1864,7 @@ $messages['pt'] = array(
 <br /><br />
 Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
 <br /><br />
-Dúvidas ou preocupações? Sinta-se livre para <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
+Dúvidas ou preocupações? Sinta-se livre para <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
 	'userlogin-password-email-body' => 'Olá $2
 Por favor, use essa senha temporária para se conectar no FANDOM: "$3"
 Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login no FANDOM com sua antiga senha.
@@ -1967,7 +1967,7 @@ $messages['ru'] = array(
 <br /><br />
 Если вы не запрашивали новый пароль, не волнуйтесь! Ваша учётная запись в безопасности и надёжно защищена. Вы можете игнорировать это сообщение и использовать старый пароль для входа на Викия.
 <br /><br />
-Вопросы или проблемы? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Свяжитесь с нами</a>.',
+Вопросы или проблемы? <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">Свяжитесь с нами</a>.',
 	'userlogin-password-email-signature' => 'Команда Викия',
 	'userlogin-password-email-body' => 'Здравствуйте, $2
 Пожалуйста, используйте этот временный пароль для входа на ФЭНДОМ: «$3»
@@ -2062,17 +2062,17 @@ $messages['sco'] = array(
 <br /><br />
 Gif ye didna speir fer ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this e-mail n continue tae log in tae Wikia wi yer auld passwaird.
 <br /><br />
-Speirins or concerns? Feel free tae <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact us</a>.',
+Speirins or concerns? Feel free tae <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">contact us</a>.',
 	'userlogin-password-email-signature' => 'Wikia Communitie Support',
 	'userlogin-password-email-body' => 'Hallo $2,
 Please uise this temparie passwaird tae log in tae Wikia: "$3"
 Gif ye didna speir fer ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this e-mail n continue tae log in tae Wikia wi yer auld passwaird.
-Speirins or concerns? Feel free tae contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+Speirins or concerns? Feel free tae contact us: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia Communitie Support
 ___________________________________________
-Tae check oot the latest happenins oan Wikia, veesit http://community.wikia.com
+Tae check oot the latest happenins oan Wikia, veesit https://community.fandom.com
 Want tae control whit wab-mails ye receive? Gang til: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Tae check oot the maist recynt happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Tae check oot the maist recynt happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Want tae control whit e-mails ye receeve? Gang tae yer <a href="{{fullurl:{{ns:special}}:Preferances}}" style="color:#2a87d5;text-decoration:none;">Preferances</a>',
 	'userlogin-loginreqlink' => 'log in',
 	'userlogin-changepassword-needlogin' => 'Ye need tae $1 tae chynge yer passwaird.',
@@ -2128,9 +2128,9 @@ $messages['sr-ec'] = array(
 Имате питања или предлога? Слободно контактирајте с нама.
 Подршка за заједницу Викије
 ___________________________________________
-Да бисте погледали најновија дешавања на Викији, посетите  http://community.wikia.com
+Да бисте погледали најновија дешавања на Викији, посетите  https://community.fandom.com
 Желите да изаберете шта желите да примате преко е-поште? Идите на {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Да бисте погледали најновија дешавања на Викији, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Да бисте погледали најновија дешавања на Викији, посетите <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Желите да изаберете које поруке ћете примати? Идите на <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Подешавања</a>',
 	'userlogin-loginreqlink' => 'се пријавите',
 	'userlogin-changepassword-needlogin' => 'Треба да $1 да бисте променили лозинку.',
@@ -2184,17 +2184,17 @@ $messages['sv'] = array(
 <br /><br />
 Om du inte begärde ett nytt lösenord, oroa dig inte! Ditt konto är tryggt och säkert. Du kan ignorera detta e-postmeddelande och fortsätta logga in på Wikia med ditt gamla lösenord.
 <br /><br />
-Frågor eller problem? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Kontakta oss gärna</a>.',
+Frågor eller problem? <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">Kontakta oss gärna</a>.',
 	'userlogin-password-email-signature' => 'Wikia gemenskapssupport',
 	'userlogin-password-email-body' => 'Hej $2,
 Var god använd detta temporära lösenord för att logga in på Wikia: "$3"
 Om du inte begärde ett nytt lösenord, oroa dig inte! Ditt konto är tryggt och säkert. Du kan ignorera detta e-postmeddelande och fortsätta logga in på Wikia med ditt gamla lösenord.
-Frågor eller problem? Kontakta oss gärna: http://community.wikia.com/wiki/Special:Contact/account-issue
+Frågor eller problem? Kontakta oss gärna: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia gemenskapssupport
 ___________________________________________
-För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
+För att kolla in de senaste händelserna på Wikia, besök https://community.fandom.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">inställningar</a>',
 	'userlogin-loginreqlink' => 'logga in',
 	'userlogin-changepassword-needlogin' => 'Du måste $1 för att ändra ditt lösenord.',
@@ -2330,9 +2330,9 @@ Kung hindi ka humiling ng isang bagong hudyat, huwag mag-alala! Ang akawnt mo ay
 May mga itatanong at mga pag-aalala? Maging malaya na makipag-ugnayan sa amin.
 Suporta ng Pamayanan ng Wikia
 ___________________________________________
-Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang http://community.wikia.com
+Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang https://community.fandom.com
 Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
 	'userlogin-loginreqlink' => 'lumagda',
 	'userlogin-changepassword-needlogin' => 'Kailangan mong $1 upang mabago ang hudyat mo.',
@@ -2443,17 +2443,17 @@ $messages['uk'] = array(
 <br /><br />
 Якщо ви не запитували новий пароль, то не турбуйтеся! Ваш обліковий запис є надійним і безпечним. Ви можете ігнорувати цей лист і продовжити вхід до Вікія під старим паролем.
 <br /><br />
-Питання або сумніви? Не соромтеся <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">звертатися до нас</a>.',
+Питання або сумніви? Не соромтеся <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">звертатися до нас</a>.',
 	'userlogin-password-email-signature' => 'Команда Wikia',
 	'userlogin-password-email-body' => 'Вітаю, $2,
 Будь ласка, використовуйте цей тимчасовий пароль для входу у Вікія: "$3"
 Якщо ви не запитували новий пароль, то не переймайтеся! Ваш обліковий запис надійний та безпечний. Ви можете ігнорувати цей лист і продовжувати входити до Вікія зі старим паролем.
-Є питання чи сумніви? Сміливо звертайтеся до нас:http://community.wikia.com/wiki/Special:Contact/account-issue
+Є питання чи сумніви? Сміливо звертайтеся до нас:https://community.fandom.com/wiki/Special:Contact/account-issue
 Спільнота підтримки Вікія
 ___________________________________________
-Останні події на Wikia - http://community.wikia.com
+Останні події на Wikia - https://community.fandom.com
 Налаштування листів від Wikia - {{fullurl:{{ns:special}}:Параметри}}',
-	'userlogin-email-footer-line1' => 'Останні події на Wikia описані на <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Останні події на Wikia описані на <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Щоб налаштувати сповіщення по електронній пошті, перейдіть на сторінку <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Установки</a>',
 	'userlogin-loginreqlink' => 'увійти',
 	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
@@ -2516,7 +2516,7 @@ $messages['vi'] = array(
 <br /><br />
 Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
 <br /><br />
-Có câu hỏi hoặc quan tâm? Vui lòng <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">liên hệ</a> với chúng tôi.',
+Có câu hỏi hoặc quan tâm? Vui lòng <a href="https://community.fandom.com/wiki/Special:Contact/account-issue">liên hệ</a> với chúng tôi.',
 	'userlogin-password-email-signature' => 'Nhóm Hỗ trợ Cộng đồng Wikia',
 	'userlogin-password-email-body' => 'Chào $2,
 Xin vui lòng sử dụng mật khẩu tạm thời này để đăng nhập vào Wikia: "$3"
@@ -2582,15 +2582,15 @@ $messages['xw-3171'] = array(
 <br /><br />
 如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
 <br /><br />
-仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+仍然有問題？請隨時<a href="https://community.fandom.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
 	'userlogin-password-email-signature' => 'Wikia 社區支援',
 	'userlogin-password-email-body' => 'Hi $2,
 Please use this temporary password to log in to Wikia: "$3"
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+Questions or concerns? Feel free to contact us: https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia Community Support
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
+To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line1' => '要查看Wikia最新發生的事，請至<a style="color:#2a87d5;text-decoration:none;" href="http://zh.community.wikia.com">zh.community.wikia.com</a>',
@@ -2605,7 +2605,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
 &nbsp;
-<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<a href="https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-loginreqlink' => '登入',
@@ -2664,15 +2664,15 @@ $messages['zh-hans'] = array(
 <br /><br />
 如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并且继续使用旧密码登录Wikia。
 <br /><br />
-如果您有任何问题，请<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
+如果您有任何问题，请<a href="https://community.fandom.com/wiki/Special:Contact/account-issue">联系我们</a>。',
 	'userlogin-password-email-signature' => 'Wikia社区支持',
-	'userlogin-password-email-body' => '嗨！$2请使用临时密码登录Wikia：“$3”如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并继续使用旧密码登录Wikia。如果您有任何问题，请联系我们：http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => '嗨！$2请使用临时密码登录Wikia：“$3”如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并继续使用旧密码登录Wikia。如果您有任何问题，请联系我们：https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia社区支持
 
 ___________________________________________
-如果您想查询Wikia最新资讯，请查看http://community.wikia.com
+如果您想查询Wikia最新资讯，请查看https://community.fandom.com
 希望控制您接收的电子邮件么？请至{{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-loginreqlink' => '登录',
 	'userlogin-changepassword-needlogin' => '您需要$1来更改您的密码。',
@@ -2752,14 +2752,14 @@ $messages['zh-hant'] = array(
 <br /><br />
 如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
 <br /><br />
-仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+仍然有問題？請隨時<a href="https://community.fandom.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
 	'userlogin-password-email-signature' => 'Wikia 社區支援',
-	'userlogin-password-email-body' => '$2 您好，請使用下列臨時密碼登入Wikia："$3"如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。仍然有問題？請隨時聯絡我們：http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => '$2 您好，請使用下列臨時密碼登入Wikia："$3"如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。仍然有問題？請隨時聯絡我們：https://community.fandom.com/wiki/Special:Contact/account-issue
 Wikia社群支援
 
 ___________________________________________
 
-要瞭解Wikia的最新動態，請造訪 http://community.wikia.com 。
+要瞭解Wikia的最新動態，請造訪 https://community.fandom.com 。
 希望調整您將會收到的電子郵件的類型嗎？請造訪：{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => '要查看Wikia最新發生的事，請至<a style="color:#2a87d5;text-decoration:none;" href="http://zh.community.wikia.com">zh.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想選擇您要接收那些郵件？請至您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">偏好設定</a>',

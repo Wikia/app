@@ -49,8 +49,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => 'Hi $WATCHINGUSERNAME,
 <br /><br />
 There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
@@ -60,7 +60,7 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 <p>
 <ul>
 <li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
-<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.
 </li>
 </ul>
 </p>',
@@ -389,8 +389,8 @@ $messages['bcl'] = array(
 Igwa nin sarong baguhong komento sa $PAGETITLE kan {{SITENAME}}. Gamita ining sugpunan tanganing hilngon an gabos na mga komento: $PAGETITLE_URL#WikiaArticleComments 
 
 - Pankomunidad na suporta kan Wikia ___________________________________________ 
-* Hanapa an katabangan asin abiso kan Sentral na Pankomunidad sa: http://community.wikia.com 
-* Muya mong maresibe nin kadikiton na mga mensahe gikan samuya? Ika makakahale kan subskripsyon o baguhon an saimong e-surat na mga kamuyahan digde sa:http://community.wikia.com/Special:Mga Kamuyahan',
+* Hanapa an katabangan asin abiso kan Sentral na Pankomunidad sa: https://community.fandom.com 
+* Muya mong maresibe nin kadikiton na mga mensahe gikan samuya? Ika makakahale kan subskripsyon o baguhon an saimong e-surat na mga kamuyahan digde sa:https://community.fandom.com/Special:Mga Kamuyahan',
 	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
 <br /><br /> 
 Igwa nin sarong baguhong komento sa $PAGETITLE kan {{SITENAME}}. Gamita ining sugpunan tanganing hilngon an gabos na mga komento: $PAGETITLE_URL#WikiaArticleComments
@@ -400,8 +400,8 @@ Igwa nin sarong baguhong komento sa $PAGETITLE kan {{SITENAME}}. Gamita ining su
 <br /><br />
 ___________________________________________ 
 <ul>
-<li>Hanapa an katabangan asin abiso kan Sentral na Pankomunidad sa: <a href="http://community.wikia.com">http://community.wikia.com</a><li> 
-<li>Muya mong maresibe nin kadikiton na mga mensahe gikan samuya? Ika makakahale kan subskripsyon o baguhon an saimong e-surat na mga kamuyahan digde sa:<a href="http://community.wikia.com/Special:Mga Kamuyahan">http://community.wikia.com/Special:Mga Kamuyahan</a></li>
+<li>Hanapa an katabangan asin abiso kan Sentral na Pankomunidad sa: <a href="https://community.fandom.com">https://community.fandom.com</a><li> 
+<li>Muya mong maresibe nin kadikiton na mga mensahe gikan samuya? Ika makakahale kan subskripsyon o baguhon an saimong e-surat na mga kamuyahan digde sa:<a href="https://community.fandom.com/Special:Mga Kamuyahan">https://community.fandom.com/Special:Mga Kamuyahan</a></li>
 </ul>
 </p>',
 );
@@ -727,8 +727,8 @@ $PAGETITLE_URL#WikiaArticleComments
 - Y Tîm Wikia
 
 ___________________________________________
-* Ffeindiwch help a chwnsel ar Community Central: http://community.wikia.com
-* Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma: http://community.wikia.com/Special:Preferences',
+* Ffeindiwch help a chwnsel ar Community Central: https://community.fandom.com
+* Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Helo $WATCHINGUSERNAME,
 <br /><br />
 Mae sylw newydd ar $PAGETITLE ar {{SITENAME}}. Defnyddwch y linc hwn i weld pob sylw: $PAGETITLE_URL#WikiaArticleComments
@@ -737,8 +737,8 @@ Mae sylw newydd ar $PAGETITLE ar {{SITENAME}}. Defnyddwch y linc hwn i weld pob 
 <br /><br />
 ___________________________________________
 <ul>
-<li>Ffeindiwch help a chwnsel ar Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma:  <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Ffeindiwch help a chwnsel ar Community Central: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma:  <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -800,8 +800,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
@@ -878,8 +878,8 @@ $messages['diq'] = array(
 <br /><br />
 ___________________________________________
 <ul>
-<li>Merkezê Cemaeti ra şıma şenê peşti bıgêrê: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Şıma wazenê ke ma ra şenıkêr mesac bıgêrê? Tercihanê xoyê ke na adrese derê, inan ra abonemanê xo bıxelenê ya zi bıvurnê: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Merkezê Cemaeti ra şıma şenê peşti bıgêrê: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Şıma wazenê ke ma ra şenıkêr mesac bıgêrê? Tercihanê xoyê ke na adrese derê, inan ra abonemanê xo bıxelenê ya zi bıvurnê: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -999,8 +999,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => 'Hola $WATCHINGUSERNAME,
 <br /><br />
 Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
@@ -1172,8 +1172,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hei $WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Seuraa tätä linkkiä nähdäksesi kaikki kommentit: 
@@ -1184,7 +1184,7 @@ $PAGETITLE_URL#WikiaArticleComments
 ___________________________________________
 <ul>
 <li>Löydä apua ja neuvoja Yhteisöwikiltä: <a href="http://yhteiso.wikia.com">http://yhteiso.wikia.com</a><li>
-<li>Haluatko saada meiltä vähemmän viestejä? Voit muuttaa sähköpostiasetuksesi täällä: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Haluatko saada meiltä vähemmän viestejä? Voit muuttaa sähköpostiasetuksesi täällä: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 	'article-comments-desc' => 'Article comments for wiki pages',
@@ -1270,8 +1270,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
 Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez <a href="$PAGETITLE_URL#WikiaArticleComments">ce lien</a> pour voir tous les commentaires.
@@ -1356,8 +1356,8 @@ $PAGETITLE_URL#WikiaArticleComments
 - O equipo comunitario de Wikia
 
 ___________________________________________
-* Atope axuda e consellos na central da comunidade: http://community.wikia.com
-* Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
+* Atope axuda e consellos na central da comunidade: https://community.fandom.com
+* Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Boas, $WATCHINGUSERNAME:
 <br /><br />
 Hai un novo comentario na páxina "$PAGETITLE" de {{SITENAME}}. Use esta ligazón para botar un ollo a todos os comentarios:
@@ -1367,8 +1367,8 @@ $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
 ___________________________________________
 <ul>
-<li>Atope axuda e consellos na central da comunidade: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Atope axuda e consellos na central da comunidade: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1436,8 +1436,8 @@ $messages['he'] = array(
 - תמיכה קהילתית, ויקיה 
 
 ___________________________________________
-* עזרה וייעוץ במרכז הקהילה: http://community.wikia.com
-* רוצים פחות הודעות מאיתנו? ניתן לבטל את המנוי או לשנות את העדפות הדוא"ל כאן: http://community.wikia.com/Special:Preferences',
+* עזרה וייעוץ במרכז הקהילה: https://community.fandom.com
+* רוצים פחות הודעות מאיתנו? ניתן לבטל את המנוי או לשנות את העדפות הדוא"ל כאן: https://community.fandom.com/Special:Preferences',
 );
 
 $messages['hi'] = array(
@@ -1540,8 +1540,8 @@ Van egy új hozzászólás a(z) „$PAGETITLE” oldalon. Ezen a linken az össz
 
 
 ___________________________________________
-* Segítség és tanácsok a Közösségi Központban: http://community.wikia.com
-* Kevesebb levelet szeretnél kapni? Leiratkozhatsz vagy módosíthatod az e-mail beállításaidat itt: http://community.wikia.com/Special:Preferences',
+* Segítség és tanácsok a Közösségi Központban: https://community.fandom.com
+* Kevesebb levelet szeretnél kapni? Leiratkozhatsz vagy módosíthatod az e-mail beállításaidat itt: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Kedves $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR hozzászólt a(z) "$PAGETITLE" laphoz.
@@ -1665,8 +1665,8 @@ Ada komentar baru pada $PAGETITLE di {{SITENAME}}. Gunakan pranala ini untuk mel
 -Komunitas Dukungan Wikia
 
 ___________________________________________
- * Temukan bantuan dan saran di Pusat Komunitas: http://community.wikia.com
-* Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah preferensi surel Anda di sini: http://community.wikia.com/Special:Preferences',
+ * Temukan bantuan dan saran di Pusat Komunitas: https://community.fandom.com
+* Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah preferensi surel Anda di sini: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hai $WATCHINGUSERNAME,
 <br /><br />
 Ada komentar baru di $PAGETITLE pada {{SITENAME}}. Gunakan pranala ini untuk melihat semua komentar: $PAGETITLE_URL#WikiaArticleComments
@@ -1675,8 +1675,8 @@ Ada komentar baru di $PAGETITLE pada {{SITENAME}}. Gunakan pranala ini untuk mel
 <br /><br />
 ___________________________________________
 <ul>
-<li>Menemukan bantuan dan saran di Pusat Komunitas: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah pengaturan email Anda di sini: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Menemukan bantuan dan saran di Pusat Komunitas: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Ingin menerima lebih sedikit pesan dari kami? Anda dapat berhenti berlangganan atau mengubah pengaturan email Anda di sini: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1741,8 +1741,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR ha commentato su "$PAGETITLE".
@@ -1810,8 +1810,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => 'こんにちは、$WATCHINGUSERNAME さん
 <br /><br />
 {{SITENAME}} の $PAGETITLE に新しいコメントがあります。すべてのコメントを閲覧するには次のリンクをご利用ください : <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
@@ -1906,8 +1906,8 @@ $messages['kn'] = array(
 
 ವಿಕಿಯದ ಸಮಾಜ ಸಂರಕ್ಷಣ    
 ______________________________________________ 
-* ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಾಯತೆ ಮತ್ತು ಸಲಹ ತೆಕ್ಕೊಳ್ಳಿ. http://community.wikia.com             
-* ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : http://community.wikia.com/Special:Preferences',
+* ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಾಯತೆ ಮತ್ತು ಸಲಹ ತೆಕ್ಕೊಳ್ಳಿ. https://community.fandom.com             
+* ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p> ನಮಸ್ಕಾರ $WATCHINGUSERNAME,
  <br /><br /> 
 {{SITENAME}} ಅಲ್ಲಿ  $PAGETITLE ಮೇಲೆ ಒಂದು ಹೊಸ ಟಿಪ್ಪಣಿ ಉಂಟು. ಈ ಲಿಂಕ್ ಅನ್ನು ಉಪಯೋಗ ಮಡಿ: $PAGETITLE_URL#WikiaArticleComments        
@@ -1915,8 +1915,8 @@ ______________________________________________
  - ವಿಕಿಯ ಸಮಾಜ ಸಮರ್ಥನ  
 __________________________      
 <ul>
-<li> ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಯತೆ ಮತ್ತು ಸಲಹಾ ತೆಕೊಳ್ಳಿ : <a href="http://community.wikia.com">http://community.wikia.com</a>.       <li>   
-<li>ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>    
+<li> ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಯತೆ ಮತ್ತು ಸಲಹಾ ತೆಕೊಳ್ಳಿ : <a href="https://community.fandom.com">https://community.fandom.com</a>.       <li>   
+<li>ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>    
 </ul> 
 </p>',
 );
@@ -1968,8 +1968,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p> $WATCHINGUSERNAME님, <br /><br /> $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. <br /><br /> 댓글을 보시려면 다음 링크로 들어가세요: <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br /> 자주 방문해주시고 기여도 많이 부탁드립니다. <br /><br /> {{SITENAME}} <br /><hr /> <ul> <li>메일로 알림받는 항목들을 관리하고 싶으신가요? <a href="{{fullurl:{{ns:special}}:환경설정}}">{{ns:special}}:환경설정<a>에서 해주세요.</li> </ul> </p>',
 	'right-commentdelete' => 'Can delete article comments',
 	'right-commentedit' => 'Can edit article comments',
@@ -2275,8 +2275,8 @@ Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, 
 - Vikija Kopienas
 
  ______________________
-* Atrast palīdzību un konsultācijas par Kopienas Centrālās: http://community.wikia.com
-* Vēlos saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: http://community.wikia.com/Special:Preferences',
+* Atrast palīdzību un konsultācijas par Kopienas Centrālās: https://community.fandom.com
+* Vēlos saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
 <br /><br />
 Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
@@ -2285,8 +2285,8 @@ Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, 
 <br /><br />
  ______________________
 <ul>
-<li>Atrast palīdzību un konsultācijas par Kopienas Centrālās: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>vai Vēlaties saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Atrast palīdzību un konsultācijas par Kopienas Centrālās: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>vai Vēlaties saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2367,8 +2367,8 @@ $messages['mk'] = array(
 - Поддршка за заедницата на Викија
 
 ___________________________________________
-* Помош и совети за Викија ќе добиете во Центарот на заедницата: http://community.wikia.com
-* Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: http://community.wikia.com/Special:Preferences',
+* Помош и совети за Викија ќе добиете во Центарот на заедницата: https://community.fandom.com
+* Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Здраво $WATCHINGUSERNAME,
 <br /><br />
 Има нов коментар на страницата $PAGETITLE на {{SITENAME}}. Сите коментари ќе ги најдете тука: $PAGETITLE_URL#WikiaArticleComments
@@ -2377,8 +2377,8 @@ ___________________________________________
 <br /><br />
 ___________________________________________
 <ul>
-<li>омош и совети за Викија ќе добиете во Центарот на заедницата: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>омош и совети за Викија ќе добиете во Центарот на заедницата: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2470,8 +2470,8 @@ Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melih
 - Bantuan Komuniti Wikia
 
 ___________________________________________
-* Dapatkan bantuan dan nasihat di Pusat Komuniti: http://community.wikia.com
-* Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: http://community.wikia.com/Special:Preferences',
+* Dapatkan bantuan dan nasihat di Pusat Komuniti: https://community.fandom.com
+* Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
 Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melihat semua komen: $PAGETITLE_URL#WikiaArticleComments
@@ -2480,8 +2480,8 @@ Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melih
 <br /><br />
 ___________________________________________
 <ul>
-<li> Dapatkan bantuan dan nasihat di Pusat Komuniti: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
-<li> Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li> Dapatkan bantuan dan nasihat di Pusat Komuniti: <a href="https://community.fandom.com">https://community.fandom.com</a></li>
+<li> Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2617,8 +2617,8 @@ Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å
 - Wikia fellesskapssupporten
 
 ___________________________________________
-* Finn hjelp og råd på Fellesskapssentralen: http://community.wikia.com
-* Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: http://community.wikia.com/Special:Preferences',
+* Finn hjelp og råd på Fellesskapssentralen: https://community.fandom.com
+* Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hei $WATCHINGUSERNAME,
 <br /><br />
 Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å se alle kommentarene: $PAGETITLE_URL#WikiaArticleComments
@@ -2627,8 +2627,8 @@ Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å
 <br /><br />
 ___________________________________________
 <ul>
-<li>Finn hjelp og råd på Fellesskapssentralen: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
-<li>Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Finn hjelp og råd på Fellesskapssentralen: <a href="https://community.fandom.com">https://community.fandom.com</a></li>
+<li>Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2703,8 +2703,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
 $ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
@@ -2740,8 +2740,8 @@ Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende kop
 <br /><br />
 ___________________________________________
 <ul>
-<li>Voor hulp en advies op Community Central ga je naar <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Wil je minder berichten van ons ontvangen? Schrijf je dan uit of wijzig je e-mailvoorkeuren op <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Voor hulp en advies op Community Central ga je naar <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Wil je minder berichten van ons ontvangen? Schrijf je dan uit of wijzig je e-mailvoorkeuren op <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2839,8 +2839,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Witaj $WATCHINGUSERNAME,
 <br /><br />
 Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE . Użyj tego linku aby zobaczyć wszystkie komentarze: <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
@@ -2907,8 +2907,8 @@ A-i é un neuv coment a \$PAGETITLE dzora {{SITENAME}}. Ch'a deuvra sa liura pë
 - L'echip d'agiut ëd la Comunità Wikia
 
 ___________________________________________
-* Ch'a truva d'agiut e 'd consèj a la sentral dla comunità: http://community.wikia.com
-* Veul-lo arsèive men ëd mëssagi da noi? A peul disabonesse o modifiché ij sò gust ëd pòsta eletrònica ambelessì: http://community.wikia.com/Special:Preferences",
+* Ch'a truva d'agiut e 'd consèj a la sentral dla comunità: https://community.fandom.com
+* Veul-lo arsèive men ëd mëssagi da noi? A peul disabonesse o modifiché ij sò gust ëd pòsta eletrònica ambelessì: https://community.fandom.com/Special:Preferences",
 	'enotif_body_article_comment-HTML' => '<p>Cerea $WATCHINGUSERNAME,
 <br /><br />
 A-i é un neuv coment a $PAGETITLE dzora {{SITENAME}}. Ch\'a deuvra sa liura për vëdde tùit ij coment:
@@ -2917,8 +2917,8 @@ A-i é un neuv coment a $PAGETITLE dzora {{SITENAME}}. Ch\'a deuvra sa liura pë
 <br /><br />
 ___________________________________________
 <ul>
-<li>Ch\'a treuva d\'agiut e ëd consèj a la sentral dla comunità: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Veul-lo arsèive men mëssagi da noi? A peul ëscancelé l\'abonament o modifiché ij sò gust ëd pòsta eletrònica ambelessì: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Ch\'a treuva d\'agiut e ëd consèj a la sentral dla comunità: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Veul-lo arsèive men mëssagi da noi? A peul ëscancelé l\'abonament o modifiché ij sò gust ëd pòsta eletrònica ambelessì: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -3006,8 +3006,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Olá $ WATCHINGUSERNAME,
 <br /><br />
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
@@ -3090,8 +3090,8 @@ Stè 'nu commende nuève sus a \$PAGETITLE sus a {{SITENAME}}. Ause stu collegam
 - Uicchia Comunitate de Supporte
 
 ___________________________________________
-* Iacchie aijute e consiglie sus 'a Comunitate Cendrale: http://community.wikia.com
-* Vuè avè mene messàgge da nuje? Allore scangillate o cange le preferenze de l'email aqquà: http://community.wikia.com/Special:Preferences",
+* Iacchie aijute e consiglie sus 'a Comunitate Cendrale: https://community.fandom.com
+* Vuè avè mene messàgge da nuje? Allore scangillate o cange le preferenze de l'email aqquà: https://community.fandom.com/Special:Preferences",
 	'enotif_body_article_comment-HTML' => '<p>Cià $WATCHINGUSERNAME,
 <br /><br />
 Ste \'nu commende nuève sus a $PAGETITLE sus a {{SITENAME}}. Ause stu collegamende pe \'ndrucà tutte sus a le commende: $PAGETITLE_URL#WikiaArticleComments
@@ -3100,8 +3100,8 @@ Ste \'nu commende nuève sus a $PAGETITLE sus a {{SITENAME}}. Ause stu collegame
 <br /><br />
 ___________________________________________
 <ul>
-<li>Pe acchià aijute e consiglie sus \'a Comunitate Cendrale: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Vuè avè mene messàgge da nuje? Te puè scangellà o cangià le preferenze de l\'email toje aqquà: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Pe acchià aijute e consiglie sus \'a Comunitate Cendrale: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Vuè avè mene messàgge da nuje? Te puè scangellà o cangià le preferenze de l\'email toje aqquà: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -3152,8 +3152,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Уважаемый $WATCHINGUSERNAME,
 <br /><br />
 Участник $PAGEEDITOR оставил комментарий на "$PAGETITLE".
@@ -3331,8 +3331,8 @@ Besök oss och redigera ofta...
 - Wikia Gemenskapssupport
 
 ___________________________________________
-* Hitta hjälp och råd på Gemenskapscentralen: http://community.wikia.com
-* Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: http://community.wikia.com/Special:Preferences',
+* Hitta hjälp och råd på Gemenskapscentralen: https://community.fandom.com
+* Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hej $WATCHINGUSERNAME,
 <br /><br />
 Det finns en ny kommentar på PAGETITLE på {{SITENAME}}. Använd denna länk för att se alla kommentarer.
@@ -3344,8 +3344,8 @@ Besök oss och redigera ofta...
 <br /><br />
 ___________________________________________
 <ul>
-<li>Hitta hjälp och råd på Gemenskapscentralen: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Hitta hjälp och råd på Gemenskapscentralen: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -3550,8 +3550,8 @@ $messages['tr'] = array(
 - Wikia Topluluğu Desteği
 
 ___________________________________________
-* Topluluk Merkezinden yardım alabilirsiniz: http://community.wikia.com
-* Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: http://community.wikia.com/Special:Preferences',
+* Topluluk Merkezinden yardım alabilirsiniz: https://community.fandom.com
+* Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Merhaba $WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}} sitesi $PAGETITLE başlığında yeni bir yorum var. Tüm yorumları görmek için şu bağlantıyı kullanın: $PAGETITLE_URL#WikiaArticleComments
@@ -3560,8 +3560,8 @@ ___________________________________________
 <br /><br />
 ___________________________________________
 <ul>
-<li>Topluluk Merkezinden yardım alabilirsiniz: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Topluluk Merkezinden yardım alabilirsiniz: <a href="https://community.fandom.com">https://community.fandom.com</a><li>
+<li>Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -3677,8 +3677,8 @@ $messages['uk'] = array(
 - Підтримка спільноти Wikia
 
 ___________________________________________
-* Знайти допомогу і пораду в Громадському центрі: http://community.wikia.com
-* Хочете отримувати менше повідомлень від нас? Ви можете відмовитися або змінити налаштування вашої електронної пошти тут: http://community.wikia.com/Special:Preferences',
+* Знайти допомогу і пораду в Громадському центрі: https://community.fandom.com
+* Хочете отримувати менше повідомлень від нас? Ви можете відмовитися або змінити налаштування вашої електронної пошти тут: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Привіт $WATCHINGUSERNAME.
 <br /><br />
 З\'явився новий коментар до статті $PAGETITLE на сайті {{SITENAME}}. Зайдіть сюди, щоб переглянути  всі коментарі: $PAGETITLE_URL #WikiaArticleComments
@@ -3687,8 +3687,8 @@ ___________________________________________
 <br /><br />
 ___________________________________________
 <ul>
-<li>Знайти допомогу і пораду в громадському центрі: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
-<li>Хочете отримувати менше повідомлень від нас? Ви можете відмовитися або змінити налаштування вашої електронної пошти тут: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Знайти допомогу і пораду в громадському центрі: <a href="https://community.fandom.com">https://community.fandom.com</a></li>
+<li>Хочете отримувати менше повідомлень від нас? Ви можете відмовитися або змінити налаштування вашої електронної пошти тут: <a href="https://community.fandom.com/Special:Preferences">https://community.fandom.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -3745,8 +3745,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Xin chào $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
@@ -3817,8 +3817,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
@@ -3890,8 +3890,8 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}} 上的 $PAGETITLE 有新評論。
@@ -3903,7 +3903,7 @@ ___________________________________________
 
 ___________________________________________
 <ul>
-<li>您可在社區中心尋找協助和建議：<a href="http://zh.community.wikia.com">http://community.wikia.com</a><li>
+<li>您可在社區中心尋找協助和建議：<a href="http://zh.community.wikia.com">https://community.fandom.com</a><li>
 <li>不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：<a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
