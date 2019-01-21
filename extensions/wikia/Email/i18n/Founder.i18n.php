@@ -94,7 +94,7 @@ $messages['qqq'] = array(
 	'emailext-founder-customize-details' => 'Line telling the user to feature their best content on the main page of their wiki',
 	'emailext-founder-share-header' => 'Header for the section telling the user to share their wiki across social media',
 	'emailext-founder-share-details' => 'Line telling the user to share their content on social media by by tagging @Wikia',
-	'emailext-founder-visit-community' => 'Line telling the founder that they can receive support from Wikia by going to their respective community.wikia.com. $1 -> wikiUrl, $2 -> wikiName, https://community.fandom.com should point to language appropriate community wiki',
+	'emailext-founder-visit-community' => 'Line telling the founder that they can receive support from Wikia by going to their respective community.fandom.com. $1 -> wikiUrl, $2 -> wikiName, https://community.fandom.com should point to language appropriate community wiki',
 	'emailext-founder-happy-wikia-building' => 'Line telling user to have fun building their wiki',
 	'emailext-founder-3-days-subject' => 'Subject for the email a founder receives 3 days after creating the wiki. The email contains additional tips for building and maintaining a wiki',
 	'emailext-founder-3-days-summary' => 'Into line to 3 day founder wiki-tips email. $1 -> wikiName, $2 -> wikiUrl',
@@ -108,7 +108,7 @@ $messages['qqq'] = array(
 	'emailext-founder-3-days-wam-details' => 'Line encouraging the founder to visit WAM to see the successful wikis for inspiration',
 	'emailext-founder-3-days-discussion-header' => 'Header for starting a discussion',
 	'emailext-founder-3-days-discussion-details' => 'Line encouraging user to use discussions for sharing thoughts etc.',
-	'emailext-founder-3-days-need-help' => 'Line which asks if the founder needs help and, if so, to visit their community.wikia.com wiki to get help from Wikia community support. https://community.fandom.com should point to language appropriate community wiki',
+	'emailext-founder-3-days-need-help' => 'Line which asks if the founder needs help and, if so, to visit their community.fandom.com wiki to get help from Wikia community support. https://community.fandom.com should point to language appropriate community wiki',
 	'emailext-founder-3-days-great-work' => 'Line which enthusiastically tells the founder to keep doing good work',
 	'emailext-founder-10-days-subject' => 'Subject for the email a founder receives 10 days after creating their wiki.',
 	'emailext-founder-10-days-summary' => "Intro line which reminds the founder it's been 10 days since they started their wiki. $1 -> wiki URL, $2 wiki name",
@@ -119,7 +119,7 @@ $messages['qqq'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Line encouraging the founder to email users to get them more involved and active on the wiki',
 	'emailext-founder-10-days-email-google-header' => "Header link which gives the founder tips on improving their SEO. See 'emailext-founder-get-with-google'",
 	'emailext-founder-10-days-email-google-details' => 'Line which reminds the user the internet is vast and they should work on improving their SEO to draw more traffic',
-	'emailext-founder-get-with-google' => 'Link to page on community.wikia.com which gives tips on helping with SEO.',
+	'emailext-founder-get-with-google' => 'Link to page on community.fandom.com which gives tips on helping with SEO.',
 	'emailext-founder-10-days-email-what-next' => "Line which tells the user we're excited to see what they're going to do with their wiki",
 );
 

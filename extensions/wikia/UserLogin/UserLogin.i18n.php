@@ -60,7 +60,7 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
-	'userlogin-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -216,7 +216,7 @@ $messages['ar'] = array(
 ___________________________________________
 للتحقق من آخر الأحداث في ويكيا، قم بزيارة https://community.fandom.com
 تريد التحكم في رسائل البريد الإلكتروني التي تتلقها؟ اذهب إلى: {{fullurl:{{ns:special}}:تفضيلات}}',
-	'userlogin-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'تريد التحكم في رسائل البريد الإلكتروني التي تتلقاها منا؟ انتقل إلى <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">التفضيلات</a> الخاصة بك.',
 	'userlogin-loginreqlink' => 'تسجيل الدخول',
 	'userlogin-changepassword-needlogin' => 'أنت بحاجة إلى $1 لكي تغيّر كلمتك للمرور.',
@@ -893,7 +893,7 @@ O equipo de soporte comunitario de Wikia
 ___________________________________________
 Para botar unha ollada aos últimos acontecementos en Wikia, visite https://community.fandom.com
 Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Quere controlar os correos electrónicos que recibe? Vaia ás súas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-loginreqlink' => 'acceder ao sistema',
 	'userlogin-changepassword-needlogin' => 'Cómpre $1 para cambiar o contrasinal.',
@@ -951,7 +951,7 @@ Wikia közösségi támogatás
 ___________________________________________
 A Wikia legfrissebb eseményeinek megtekintésére látogass el a https://community.fandom.com oldalra.
 Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintésére látogass el a <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a> oldalra.',
+	'userlogin-email-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintésére látogass el a <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a> oldalra.',
 	'userlogin-email-footer-line2' => 'Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Változtass a <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">beállításaidon</a>',
 	'userlogin-loginreqlink' => 'bejelentkezés',
 	'wikiamobile-sendpassword-label' => 'Új jelszó küldése',
@@ -1013,7 +1013,7 @@ Le equipa de supporto communitari de Wikia
 ___________________________________________
 Pro cognoscer le ultime evenimentos in Wikia, visita https://community.fandom.com
 Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
 	'userlogin-loginreqlink' => 'aperir session',
 	'userlogin-changepassword-needlogin' => 'Tu debe $1 pro cambiar tu contrasigno.',
@@ -1397,7 +1397,7 @@ $messages['mk'] = array(
 ___________________________________________
 Најновите збиднувања на Викија ќе ги најдете на https://community.fandom.com
 Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'userlogin-loginreqlink' => 'се најавите',
 	'userlogin-changepassword-needlogin' => 'Треба да $1 за да можете да ја смените лозинката.',
@@ -1469,7 +1469,7 @@ Bantuan Komuniti Wikia
 ___________________________________________
 Untuk meninjau perkembangan terkini di Wikia, lawati https://community.fandom.com
 Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a>',
 	'userlogin-loginreqlink' => 'log masuk',
 	'userlogin-changepassword-needlogin' => 'Anda perlu $1 untuk menukar kata laluan baru.',
@@ -1529,7 +1529,7 @@ Wikia fellesskapssupport
 ___________________________________________
 For å sjekke ut de nyeste hendelsene på Wikia, besøk https://community.fandom.com
 Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Special:Preferences}}">Innstillingene dine<a>',
-	'userlogin-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, besøk <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, besøk <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Vil du kontrollere hvilke e-post du mottar? Gå til <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">innstillingene dine</a>',
 	'userlogin-loginreqlink' => 'logg inn',
 	'userlogin-changepassword-needlogin' => 'Du må $1 for å endre passordet ditt.',
@@ -1590,7 +1590,7 @@ Wikia Gemeenschapsondersteuning
 ___________________________________________
 Bezoek https://community.fandom.com voor het laatste nieuws over Wikia.
 Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:special}}:Preferences}}.',
-	'userlogin-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
+	'userlogin-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
 	'userlogin-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? Ga naar uw [{{fullurl:{{ns:special}}:Preferences}} voorkeuren]',
 	'userlogin-loginreqlink' => 'aanmelden',
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
@@ -1791,7 +1791,7 @@ L'agiut dla Comunità Wikia
 ___________________________________________
 Për controlé j'ùltime neuve an Wikia, ch'a vìsita https://community.fandom.com
 Veul-lo controlé ij mëssagi ch'a arsèiv? Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}",
-	'userlogin-email-footer-line1' => 'Për controlé j\'ùltime neuve dzor Wikia, ch\'a vìsita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Për controlé j\'ùltime neuve dzor Wikia, ch\'a vìsita <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Veul-lo controlé ij mëssagi ch\'a arsèiv? Ch\'a vada ai sò <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Gust</a>',
 	'userlogin-loginreqlink' => 'rintré ant ël sistema',
 	'userlogin-changepassword-needlogin' => "It l'has dabzògn ëd $1 për cangé toa ciav.",
@@ -2072,7 +2072,7 @@ Wikia Communitie Support
 ___________________________________________
 Tae check oot the latest happenins oan Wikia, veesit https://community.fandom.com
 Want tae control whit wab-mails ye receive? Gang til: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Tae check oot the maist recynt happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Tae check oot the maist recynt happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Want tae control whit e-mails ye receeve? Gang tae yer <a href="{{fullurl:{{ns:special}}:Preferances}}" style="color:#2a87d5;text-decoration:none;">Preferances</a>',
 	'userlogin-loginreqlink' => 'log in',
 	'userlogin-changepassword-needlogin' => 'Ye need tae $1 tae chynge yer passwaird.',
@@ -2130,7 +2130,7 @@ $messages['sr-ec'] = array(
 ___________________________________________
 Да бисте погледали најновија дешавања на Викији, посетите  https://community.fandom.com
 Желите да изаберете шта желите да примате преко е-поште? Идите на {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Да бисте погледали најновија дешавања на Викији, посетите <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Да бисте погледали најновија дешавања на Викији, посетите <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Желите да изаберете које поруке ћете примати? Идите на <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Подешавања</a>',
 	'userlogin-loginreqlink' => 'се пријавите',
 	'userlogin-changepassword-needlogin' => 'Треба да $1 да бисте променили лозинку.',
@@ -2194,7 +2194,7 @@ Wikia gemenskapssupport
 ___________________________________________
 För att kolla in de senaste händelserna på Wikia, besök https://community.fandom.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">inställningar</a>',
 	'userlogin-loginreqlink' => 'logga in',
 	'userlogin-changepassword-needlogin' => 'Du måste $1 för att ändra ditt lösenord.',
@@ -2332,7 +2332,7 @@ Suporta ng Pamayanan ng Wikia
 ___________________________________________
 Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang https://community.fandom.com
 Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
 	'userlogin-loginreqlink' => 'lumagda',
 	'userlogin-changepassword-needlogin' => 'Kailangan mong $1 upang mabago ang hudyat mo.',
@@ -2453,7 +2453,7 @@ $messages['uk'] = array(
 ___________________________________________
 Останні події на Wikia - https://community.fandom.com
 Налаштування листів від Wikia - {{fullurl:{{ns:special}}:Параметри}}',
-	'userlogin-email-footer-line1' => 'Останні події на Wikia описані на <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Останні події на Wikia описані на <a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => 'Щоб налаштувати сповіщення по електронній пошті, перейдіть на сторінку <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Установки</a>',
 	'userlogin-loginreqlink' => 'увійти',
 	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
@@ -2672,7 +2672,7 @@ Wikia社区支持
 ___________________________________________
 如果您想查询Wikia最新资讯，请查看https://community.fandom.com
 希望控制您接收的电子邮件么？请至{{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.wikia.com</a>',
+	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="https://community.fandom.com">community.fandom.com</a>',
 	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-loginreqlink' => '登录',
 	'userlogin-changepassword-needlogin' => '您需要$1来更改您的密码。',

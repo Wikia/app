@@ -49,7 +49,7 @@ See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the new page.
 <br /><hr />
 <p>
 <ul>
-<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Find help and advice on <a href="https://community.fandom.com">Community Central</a>.</li>
 <li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.
 </li>
 </ul>
@@ -75,7 +75,7 @@ Go to <a href="$PAGETITLE_URL">$PAGETITLE</a> to read the new post.
 <br /><hr />
 <p>
 <ul>
-<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Find help and advice on <a href="https://community.fandom.com">Community Central</a>.</li>
 <li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.</li>
 </ul>
 </p>',

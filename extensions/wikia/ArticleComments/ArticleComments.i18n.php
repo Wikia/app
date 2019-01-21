@@ -59,7 +59,7 @@ There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all o
 <br /><hr />
 <p>
 <ul>
-<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Find help and advice on <a href="https://community.fandom.com">Community Central</a>.</li>
 <li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.
 </li>
 </ul>

@@ -71,7 +71,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -434,7 +434,7 @@ Comprova-ho ($LEARNBASICURL)
 Explora més viquis.
 Hi ha milers de viquis a Wikia, troba les que et poden interessar a algun dels nostres centres: Videojocs (http://www.wikia.com/Video_Games), Entreteniment (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
 Vés a $EXPLOREWIKISURL
-Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (http://www.community.wikia.com). Que t\'ho passis bè editant!
+Necessites més informació? Troba consells, respostes i la comunitat Wikia a la Central de la Comunitat (https://community.fandom.com). Que t\'ho passis bè editant!
 L\'equip de Wikia
 ___________________________________________
 Per veure les últimes actualitzacions a Wikia, visita https://community.fandom.com
@@ -612,7 +612,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -750,7 +750,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -884,7 +884,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -1003,7 +1003,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -1121,7 +1121,7 @@ Bótelle unha ollada ($LEARNBASICURL)
 Explore máis wikis.
 Hai milleiros de wikis en Wikia. Atope máis wikis do seu interese visitando un dos nosos centros de actividades: videoxogos (http://www.wikia.com/Video_Games), lecer (http://www.wikia.com/Entertainment) ou estilo de vida (http://www.wikia.com/Lifestyle).
 Vaia a $EXPLOREWIKISURL
-Quere obter máis información? Atope consellos, respostas e á comunidade de Wikia na central da comunidade (http://www.community.wikia.com). Páseo ben editando!
+Quere obter máis información? Atope consellos, respostas e á comunidade de Wikia na central da comunidade (https://community.fandom.com). Páseo ben editando!
 O equipo de Wikia
 ___________________________________________
 Para botar unha ollada aos últimos acontecementos en Wikia, visite https://community.fandom.com
@@ -1277,7 +1277,7 @@ Jecta un oculo a: $LEARNBASICURL
 Explora plus wikis.
 Il ha milles de wikis in Wikia. Trova altere wikis que te interessa a un de nostre centros de activitate: Jocos video (http://www.wikia.com/Video_Games), Intertenimento (http://www.wikia.com/Entertainment), o Stilo de vita (http://www.wikia.com/Lifestyle).
 Va a $EXPLOREWIKISURL
-Tu vole plus information? Responsas, e le communitate de Wikia se trova al Centro del Communitate (http://www.community.wikia.com). Bon modification!
+Tu vole plus information? Responsas, e le communitate de Wikia se trova al Centro del Communitate (https://community.fandom.com). Bon modification!
 Le equipa de Wikia
 ___________________________________________
 Pro tener te al currente con le ultime eventos in Wikia, visita https://community.fandom.com
@@ -1386,7 +1386,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -1505,7 +1505,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -1627,7 +1627,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -1758,7 +1758,7 @@ $messages['mk'] = array(
 Истражете повеќе викија.
 На Викија имаме илјадници викија. Пронајдете ги оние што ве интересираат на едно од нашите собиралишта: Видеоигри (http://www.wikia.com/Video_Games), Забава (http://www.wikia.com/Entertainment) или Животен стил (http://www.wikia.com/Lifestyle).
 Одете на $EXPLOREWIKISURL
-Сакате повеќе информации? Совети, одговори и други учесници ќе најдете во Центарот на заедницата  (http://www.community.wikia.com). Среќно уредување!
+Сакате повеќе информации? Совети, одговори и други учесници ќе најдете во Центарот на заедницата  (https://community.fandom.com). Среќно уредување!
 Екипата на Викија
 ___________________________________________
 Најновите збиднувања на Викија ќе ги најдете на https://community.fandom.com
@@ -1867,7 +1867,7 @@ Jom! ($LEARNBASICURL)
 Explore more wikis.
 Di Wikia terdapat beribu-ribu wiki, carilah wiki-wiki lain yang menarik minat anda dengan menuju ke salah satu hab kami: Permainan Video (http://www.wikia.com/Video_Games), Hiburan (http://www.wikia.com/Entertainment), atau Gaya Hidup (http://www.wikia.com/Lifestyle).
 Pergi ke $EXPLOREWIKISURL
-Inginkan maklumat lanjut? Temui nasihat, jawapan, dan komuniti Wikia di Community Central (http://www.community.wikia.com). Selamat menyunting!
+Inginkan maklumat lanjut? Temui nasihat, jawapan, dan komuniti Wikia di Community Central (https://community.fandom.com). Selamat menyunting!
 Pasukan Wikia
 ___________________________________________
 Untuk mengikuti perkembangan terkini di Wikia, layari https://community.fandom.com
@@ -1971,7 +1971,7 @@ Sjekk det ut ($LEARNBASICURL)
 Utforske flere wikier.
 Det er tusenvis av wikier hos Wikia, finn flere wikier som interesserer deg ved å besøke en av hubbene våre: Videospill (http://www.wikia.com/Video_Games), underholdning (http://www.wikia.com/Entertainment), eller livsstil (http://www.wikia.com/Lifestyle).
 Gå til $EXPLOREWIKISURL
-Vil du ha mer informasjon? Finn råd, svar, og Wikia-fellesskapet hos fellesskapssentralen (http://www.community.wikia.com). Lykke til med redigeringen!
+Vil du ha mer informasjon? Finn råd, svar, og Wikia-fellesskapet hos fellesskapssentralen (https://community.fandom.com). Lykke til med redigeringen!
 Wikia-teamet
 ___________________________________________
 For å sjekke ut de siste hendelsene på Wikia, besøk https://community.fandom.com
@@ -2085,7 +2085,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -2155,7 +2155,7 @@ Agachatz (\$LEARNBASICURL)
 Explorar d'autres wikis.
 I a de milierats de wikis sus Wikia; trobatz d'autres wikis que vos interèssan en anant sus un de nòstres gropaments : Jòcs vidèo (http://www.wikia.com/Video_Games), Lésers (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
 Anar a \$EXPLOREWIKISURL
-Volètz mai d'informacion ? Trobatz de conselhs, de responsas, e la comunautat Wikia al Centre de la Comunautat (http://www.community.wikia.com). Bonas modificacions !
+Volètz mai d'informacion ? Trobatz de conselhs, de responsas, e la comunautat Wikia al Centre de la Comunautat (https://community.fandom.com). Bonas modificacions !
 L'equipa Wikia
 ___________________________________________
 Per veire las darrièras nòvas sus Wikia, anatz sus https://community.fandom.com
@@ -2240,7 +2240,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -2354,7 +2354,7 @@ Dé n'ociada a (\$LEARNBASICURL)
 Esploré d'àutre wiki.
 A-i son milen-e ëd wiki dzor Wikia, ch'a treuva d'àutre wiki ch'a j'anteresso andasend a un dij nòstri sénter: Videogieugh (http://www.wikia.com/Video_Games), Divertiment (http://www.wikia.com/Entertainment), o Stil ëd Vita(http://www.wikia.com/Lifestyle).
 Andé a \$EXPLOREWIKISURL
-Veul-lo pi d'anformassion? Ch'a treuva dij consèj, dle rispòste, e la comunità Wikia al sènter dla Comunità (http://www.community.wikia.com). Bon travaj!
+Veul-lo pi d'anformassion? Ch'a treuva dij consèj, dle rispòste, e la comunità Wikia al sènter dla Comunità (https://community.fandom.com). Bon travaj!
 L'Echip Wikia
 ___________________________________________
 Për controlé j'ùltime neuve dzor Wikia, vìsita https://community.fandom.com
@@ -2479,7 +2479,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -2614,7 +2614,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -2733,7 +2733,7 @@ Spana in det på ($LEARNBASICURL)
 Utforska fler wikis.
 Det finns tusentals wikis på Wikia, hitta mer wikis som du är intresserad av genom att gå till en av våra hubbar: Videospel (http://www.wikia.com/Video_Games), Underhållning (http://www.wikia.com/Entertainment), or Livsstil (http://www.wikia.com/Lifestyle).
 Gå till $EXPLOREWIKISURL
-Vill ha mer information? Hitta råd, svar och Wikia-gemenskapen på Community Central (http://www.community.wikia.com). Ha det så kul med redigeringen!
+Vill ha mer information? Hitta råd, svar och Wikia-gemenskapen på Community Central (https://community.fandom.com). Ha det så kul med redigeringen!
 Wikia-teamet
 ___________________________________________
 För att kolla in de senaste händelserna på Wikia, besök https://community.fandom.com
@@ -2840,7 +2840,7 @@ Tingnan at suriin ito ($LEARNBASICURL)
 Gumalugad ng marami pang mga wiki.
 Mayroong libu-libong mga wiki sa Wikia, maghanap ng marami pang mga wiki na makakawilihan mo sa pamamagitan ng pagpunta sa aming mga lunduyan: Mga Larong Bidyo (http://www.wikia.com/Video_Games), Paglilibang (http://www.wikia.com/Entertainment), o Estilo ng Pamumuhay (http://www.wikia.com/Lifestyle).
 Pumunta sa $EXPLOREWIKISURL
-Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia doon sa Lunduyan ng Pamayanan (http://www.community.wikia.com).
+Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia doon sa Lunduyan ng Pamayanan (https://community.fandom.com).
 Maligayang pamamatnugot!
 Ang Pangkat ng Wikia
 ___________________________________________
@@ -2965,7 +2965,7 @@ $messages['uk'] = array(
 Досліджуйте інші вікії.
 На Вікія знаходяться тисячі вікій, знайдіть інші вікії, які, можливо, зацікавлять вас: Відеоігри (http://www.wikia.com/Video_Games), Кіно і серіали (http://www.wikia.com/Entertainment) або Захоплення (http://www.wikia.com/Lifestyle).
 Перейти до $EXPLOREWIKISURL
-Потрібна додаткова інформація? На Центральній Вікі (http://www.community.wikia.com) можна знайти поради, відповіді на питання та інших учасників спільноти Вікія. Щасливого редагування!
+Потрібна додаткова інформація? На Центральній Вікі (https://community.fandom.com) можна знайти поради, відповіді на питання та інших учасників спільноти Вікія. Щасливого редагування!
 Команда Вікія
 ___________________________________________
 Щоб перевірити останні події на Вікія, відвідайте https://community.fandom.com
@@ -3074,7 +3074,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -3198,7 +3198,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
@@ -3321,7 +3321,7 @@ Check it out ($LEARNBASICURL)
 Explore more wikis.
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
 Go to $EXPLOREWIKISURL
-Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+Want more information? Find advice, answers, and the Wikia community at Community Central (https://community.fandom.com). Happy editing!
 The Wikia Team
 ___________________________________________
 To check out the latest happenings on Wikia, visit https://community.fandom.com
