@@ -162,7 +162,7 @@ $wgLocalMessageCache = '/tmp/messagecache';
  * only by internal request via API)
  */
 $wgWikiFactoryReadonlyBlacklist = [
-	// TODO: enable when deploying 
+	// TODO: enable when deploying
 	// 938, // AdTag is readonly
 ];
 
@@ -340,6 +340,7 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
+include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
 
 include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
 

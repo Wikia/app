@@ -5,12 +5,12 @@ require([
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.abTest',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
-	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.articleVideo.featuredVideo.cookies',
+	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.wad.hmdRecLoader'),
+	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration'),
 	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
@@ -19,12 +19,12 @@ require([
 	tracker,
 	trackingOptIn,
 	abTest,
-	adContext,
-	hmdRecLoader,
 	videoDetails,
 	featuredVideoAutoplay,
-	featuredVideoAds,
 	featuredVideoCookieService,
+	adContext,
+	hmdRecLoader,
+	featuredVideoAds,
 	bidders
 ) {
 	if (!videoDetails) {
@@ -56,7 +56,9 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
+		if (featuredVideoAds) {
+			featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
+		}
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -71,9 +73,11 @@ require([
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
+		if (featuredVideoAds) {
+			featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
+			featuredVideoAds.loadMoatTrackingPlugin();
+		}
 
-		featuredVideoAds.loadMoatTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -131,13 +135,13 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (!adContext.get('opts.showAds')) {
+		if (!adContext || !adContext.get('opts.showAds')) {
 			setupPlayer();
 
 			return;
 		}
 
-		if (!adContext.get('opts.babDetectionDesktop')) {
+		if (!hmdRecLoader || !adContext.get('opts.babDetectionDesktop')) {
 			prePlayerSetup(false);
 		} else {
 			doc.addEventListener('bab.blocking', function () {

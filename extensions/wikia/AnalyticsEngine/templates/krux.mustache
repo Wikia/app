@@ -1,7 +1,11 @@
 <!-- Begin Krux Tag -->
 <script type="text/javascript">
-	require(['wikia.krux'], function (krux) {
-		krux.load('{{siteId}}');
-	});
+    require([
+        require.optional('wikia.krux')
+    ], function (krux) {
+        if (krux) {
+            krux.load('{{siteId}}');
+        }
+    });
 </script>
 <!-- End Krux Tag -->
