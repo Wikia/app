@@ -168,6 +168,20 @@ $config['tracking_opt_in_js'] = [
 	],
 ];
 
+$config['adengine3_top_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdEngine3/dist/ads.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/bidders.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/engine.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/prebid.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/products.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/services.js',
+		'//extensions/wikia/AdEngine3/module.js'
+	],
+];
+
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],

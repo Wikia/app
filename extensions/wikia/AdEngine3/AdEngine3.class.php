@@ -2,7 +2,7 @@
 
 class AdEngine3
 {
-	const AD_ENGINE_3_ASSET_GROUP = 'TODO';
+	const AD_ENGINE_3_ASSET_GROUP = 'adengine3_top_js';
 
 	public static function isEnabled()
 	{
@@ -38,12 +38,13 @@ class AdEngine3
 		return true;
 	}
 
-	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
+	public static function onOasisSkinAssetGroupsBlocking(&$jsAssets)
+	{
 		if (!self::isEnabled()) {
 			return true;
 		}
 
-//		$jsAssets[] = static::AD_ENGINE_3_ASSET_GROUP;
+		$jsAssets[] = static::AD_ENGINE_3_ASSET_GROUP;
 
 		return true;
 	}

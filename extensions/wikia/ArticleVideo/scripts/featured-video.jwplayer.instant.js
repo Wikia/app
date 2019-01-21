@@ -9,9 +9,10 @@ require([
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.wad.hmdRecLoader'),
+	require.optional('ext.wikia.adEngine3.api'),
 	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration'),
-	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	win,
 	cookies,
@@ -23,9 +24,10 @@ require([
 	featuredVideoAutoplay,
 	featuredVideoCookieService,
 	adContext,
+	bidders,
 	hmdRecLoader,
+	adsApi,
 	featuredVideoAds,
-	bidders
 ) {
 	if (!videoDetails) {
 		return;
@@ -39,6 +41,7 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
+		videoAds,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -58,6 +61,8 @@ require([
 
 		if (featuredVideoAds) {
 			featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
+		} else if (videoAds) {
+			videoAds.register(playerInstance, slotTargeting);
 		}
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -76,6 +81,18 @@ require([
 		if (featuredVideoAds) {
 			featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
 			featuredVideoAds.loadMoatTrackingPlugin();
+		}
+
+		if (adsApi) {
+			videoAds = adsApi.jwplayerAdsFactory.create({
+				adProduct: 'featured',
+				slotName: 'FEATURED',
+				audio: willMute,
+				autoplay: willAutoplay,
+				featured: true,
+				videoId: videoDetails.playlist[0].mediaid,
+			});
+			adsApi.jwplayerAdsFactory.loadMoatPlugin();
 		}
 
 		win.wikiaJWPlayer('featured-video__player', {
