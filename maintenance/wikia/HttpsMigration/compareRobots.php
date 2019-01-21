@@ -22,35 +22,51 @@ class CompareRobots extends Maintenance {
 		$this->addOption( 'fc', 'Check only FC communities', false, false );
 	}
 
-	private function httpGet( $url, $headers, $ssl ) {
-		$headers['Fastly-FF'] = 1;
-		if ( $ssl ) {
-			$headers['Fastly-SSL'] = 1;
+	private function httpGet( $url, $headers, $ssl, $external = false ) {
+		if ( !$external ) {
+			$headers['Fastly-FF'] = 1;
+			if ( $ssl ) {
+				$headers['Fastly-SSL'] = 1;
+			}
+		} else {
+			if ( $ssl ) {
+				$url = str_replace( 'http://', 'https://', $url );
+			} else {
+				$url = str_replace( 'https://', 'http://', $url );
+			}
 		}
-		$response = \Http::get( $url, 5,    // 5s
-			[
-				'returnInstance' => true,
-				'followRedirects' => false,
-				'timeout' => 5,
-				'headers' => $headers,
-			] );
+		$options = [
+			'returnInstance' => true,
+			'followRedirects' => false,
+			'timeout' => 5,
+			'headers' => $headers,
+		];
+		if ( !$external ) {
+			$response = \Http::get( $url, 5, $options );
+		} else {
+			$response = \ExternalHttp::get( $url, 5, $options );
 
+		}
 		return $response;
 	}
 
 	private function fetchRobotsFromMediaWiki( $domain, $ssl = false ) {
-		$headers = [];
 		$url = $domain . '/robots.txt';
 
 		return $this->httpGet( $url, [], $ssl );
 	}
 
 	private function fetchRobotsFromFC( $domain, $ssl = false ) {
-		$headers = [
+		/*
+		 $headers = [
 			'X-Original-Host' => parse_url( $domain, PHP_URL_HOST ),
 		];
 
 		return $this->httpGet( 'http://graph-cms.fandom.com/robots.txt', $headers, $ssl );
+		*/
+		$url = $domain . '/robots.txt';
+		return $this->httpGet( $url, [], $ssl, true );
+
 	}
 
 	private function fetchRobotsFromK8s(
@@ -98,6 +114,8 @@ class CompareRobots extends Maintenance {
 		}
 		$prodContent = preg_replace( "/\n\n+/s", "\n", $prodResponse->getContent() );
 		$serviceContent = preg_replace( "/\n\n+/s", "\n", $serviceResponse->getContent() );
+		$prodContent = str_replace( ': ', ':', $prodContent );
+		$serviceContent = str_replace( ': ', ':', $serviceContent );
 		if ( $staging ) {
 			// remove staging-specific responses
 			$serviceContent = str_replace( ".{$staging}.", '.', $serviceContent );
@@ -179,6 +197,11 @@ class CompareRobots extends Maintenance {
 						$prodResponse = $this->fetchRobotsFromMediaWiki( $url, $https );
 					} else {
 						$prodResponse = $this->fetchRobotsFromFC( $url, $https );
+						$servedBy = $prodResponse->getResponseHeaders()['x-served-by'];
+						if ( is_array( $servedBy ) && strpos( $servedBy[0], 'ap-s' ) === 0 ) {
+							$this->output( "\tSkipping this FC community as it seems to be served by MW\n" );
+							continue;
+						}
 					}
 					$jaegerDebugId = sprintf( "%04d%06d", rand( 1000, 9999 ), $domainsChecked );
 
