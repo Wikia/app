@@ -23,9 +23,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			},
 			buildNew: noop
 		},
-		kiloAdUnitBuilder: {
-			build: function () {}
-		},
 		megaAdUnitBuilder: {
 			build: function () {},
 			isMegaSlot: noop
@@ -87,7 +84,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
 					getFactory(),
-					mocks.kiloAdUnitBuilder,
 					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
@@ -102,7 +98,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.kiloAdUnitBuilder,
 					mocks.megaAdUnitBuilder,
 					getFactory()
 				);
