@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.utils.device'
-], function (adContext, page, slotsContext, deviceDetect) {
+	'ext.wikia.adEngine.utils.device',
+	'ext.wikia.adEngine.bridge'
+], function (adContext, page, slotsContext, deviceDetect, adEngineBridge) {
 	'use strict';
 
 	var dfpId = '5441',
@@ -16,8 +17,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'INCONTENT_PLAYER'
 		],
 		context,
-		wka1 = 'wka1b',
-		wka2 = 'wka2b',
+		serverPrefix = adEngineBridge.geo.isProperCountry(['AU', 'NZ']) ? 'vm' : 'wka',
+		wka1 = serverPrefix + '1b',
+		wka2 = serverPrefix + '2b',
 		shortSlotNameRegexp = new RegExp('^.*\/(' + wka1 + '|' + wka2 + ').[\\w]+\/([^\/]*)\/.*$');
 
 	if (adContext.get('opts.incontentPlayerRail.enabled')) {
