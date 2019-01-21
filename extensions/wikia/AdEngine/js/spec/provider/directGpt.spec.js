@@ -17,7 +17,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			factory: {
 				createProvider: noop
 			},
-			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
 			megaAdUnitBuilder: {name: 'megaAdUnit'},
 			slotTweaker: {}
 		};
@@ -26,20 +25,10 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 		return modules['ext.wikia.adEngine.provider.directGpt'](
 			mocks.adContext,
 			mocks.factory,
-			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
 			mocks.slotTweaker
 		);
 	}
-
-	it('Return kilo adUnit if there is no param in context', function () {
-		spyOn(mocks.factory, 'createProvider');
-
-		getModule();
-
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
-			.toEqual(mocks.kiloAdUnitBuilder);
-	});
 
 	it('Return mega adUnit builder when enabled in context', function () {
 		spyOn(mocks.factory, 'createProvider');
@@ -49,15 +38,5 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.megaAdUnitBuilder);
-	});
-
-	it('Return kilo adUnit builder when Mega is turned off', function () {
-		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: false}});
-
-		getModule();
-
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
-			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 });
