@@ -2370,7 +2370,10 @@ class Parser {
 				array( $this, $nt, &$options, &$descQuery ) );
 			# Fetch and register the file (file title may be different via hooks)
 			list( $file, $title ) = $this->fetchFileAndTitle( $nt, $options );
-			$attribs['anonFile'] = $file->getUnscaledThumb()->url;
+			if($file){
+				$attribs['anonFile'] = $file->getUnscaledThumb()->url;
+			}
+
 		}
 
 		$link = Linker::linkKnown( $nt, "$prefix$text$inside", $attribs, $query );
