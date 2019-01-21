@@ -53,6 +53,7 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function view() {
 		global $wgMemc, $wgDBprefix;
+		$out = $this->getContext()->getOutput();
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
@@ -62,15 +63,15 @@ class WikiaFilePage extends ImagePage {
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
-			$this->getContext()->getOutput()->redirect( $url );
+			$out->redirect( $url );
 
 			return;
 		}
-		$redirKey = wfMemcKey( "redir:", $wgDBprefix, $this->getTitle()->getPrefixedText() );
+		$redirKey = wfMemcKey( "redir", $wgDBprefix, $this->getTitle()->getPrefixedText() );
 
 		$url = $wgMemc->get( $redirKey );
 		if ( $url ) {
-			$this->getContext()->getOutput()->redirect( $url );
+			$out->redirect( $url );
 
 			return;
 		}
@@ -99,7 +100,7 @@ class WikiaFilePage extends ImagePage {
 			break;
 		}
 		$wgMemc->add( $redirKey, $url );
-		$this->getContext()->getOutput()->redirect( $url );
+		$out->redirect( $url );
 	}
 
 	/**
