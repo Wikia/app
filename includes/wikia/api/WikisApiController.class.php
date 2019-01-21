@@ -298,27 +298,27 @@ class WikisApiController extends WikiaApiController {
 			}
 		}
 
-		$wikis = [];
-		if ( !empty( $cityId ) && WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWiki', $cityId,
-			false, false ) ) {
-			$this->response->setVal( 'isBlocked', true );
-		} else {
-			$this->response->setVal( 'isBlocked', false );
+		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
 
-			$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
-
-			if ( wfHttpsEnabledForDomain( $domain ) ) {
-				$wikis = array_map( function ( $wiki ) {
-					$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
-					return $wiki;
-				}, $wikis );
-			}
+		if ( wfHttpsEnabledForDomain( $domain ) ) {
+			$wikis = array_map( function ( $wiki ) {
+				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
+				return $wiki;
+			}, $wikis );
 		}
+
 		if ( empty( $cityId ) && empty( $wikis ) ) {
 			throw new NotFoundApiException();
 		}
 		if ( !empty( $cityId ) ) {
 			$this->response->setVal( 'isPublic', WikiFactory::isPublic( $cityId ) );
+		}
+		if ( !empty( $cityId ) &&
+			 WikiFactory::getVarValueByName( 'wgRobotsTxtBlockedWiki', $cityId,
+				 false, false ) ) {
+			$this->response->setVal( 'isBlocked', true );
+		} else {
+			$this->response->setVal( 'isBlocked', false );
 		}
 		$this->response->setVal( 'primaryDomain', '' );
 		$this->response->setVal( 'primaryProtocol', '' );
