@@ -3,7 +3,6 @@
 use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\ThemeSettings;
 use Wikia\FeedsAndPosts\TopArticles;
-use Wikia\FeedsAndPosts\WikiInfo;
 use Wikia\FeedsAndPosts\WikiVariables;
 
 class FeedsAndPostsController extends WikiaController {
@@ -23,7 +22,6 @@ class FeedsAndPostsController extends WikiaController {
 			'topArticles' => ( new TopArticles() )->get(),
 			'theme' => ( new ThemeSettings() )->get(),
 			'wikiVariables' => ( new WikiVariables() )->get(),
-			'wikiInfo' => ( new WikiInfo() )->get(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -36,10 +34,5 @@ class FeedsAndPostsController extends WikiaController {
 	public function getWikiVariables() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new WikiVariables() )->get() );
-	}
-
-	public function getWikiInfo() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setValues( ( new WikiInfo() )->get() );
 	}
 }
