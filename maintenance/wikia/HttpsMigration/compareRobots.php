@@ -12,6 +12,7 @@ ini_set( 'error_reporting', E_NOTICE );
 class CompareRobots extends Maintenance {
 
 	private $batchSize = 1000;
+	const TIMEOUT = 10;	// seconds
 
 	public function __construct() {
 		parent::__construct();
@@ -38,13 +39,13 @@ class CompareRobots extends Maintenance {
 		$options = [
 			'returnInstance' => true,
 			'followRedirects' => false,
-			'timeout' => 5,
+			'timeout' => self::TIMEOUT,
 			'headers' => $headers,
 		];
 		if ( !$external ) {
-			$response = \Http::get( $url, 5, $options );
+			$response = \Http::get( $url, self::TIMEOUT, $options );
 		} else {
-			$response = \ExternalHttp::get( $url, 5, $options );
+			$response = \ExternalHttp::get( $url, self::TIMEOUT, $options );
 
 		}
 		return $response;
@@ -108,7 +109,7 @@ class CompareRobots extends Maintenance {
 			return true;
 		}
 		if ( $prodResponse->getStatus() != 200 ) {
-			$this->error( "\tFAILURE: Invalid response status: {$prodResponse->getStatus()}" );
+			$this->error( "\tFAILURE: Invalid prod response status: {$prodResponse->getStatus()}" );
 
 			return false;
 		}
@@ -209,10 +210,14 @@ class CompareRobots extends Maintenance {
 						$this->fetchRobotsFromK8s( $url, $https, $jaegerDebugId, $staging );
 
 					$domainsChecked += 1;
+
 					if ( !$this->responsesEqual( $prodResponse, $serviceResponse, $staging ) ) {
-						if ( $serviceResponse->getStatus() >= 500 ) {
-							$this->error( "\rjaeger-debug-id: {$jaegerDebugId}, time: " .
+						if ( $serviceResponse->getStatus() >= 500 ||
+							 !$serviceResponse->status->isOK() ) {
+							$this->error( "\tjaeger-debug-id: {$jaegerDebugId}, time: " .
 										  date( 'Y/m/d H:i:s', time() ) );
+							$this->error( "\t" . json_encode(
+								$serviceResponse->status->getErrorsArray() ) . "\n" );
 						}
 						$failures += 1;
 						if ( $diffsdir ) {
