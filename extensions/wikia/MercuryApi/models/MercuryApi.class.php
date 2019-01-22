@@ -221,6 +221,7 @@ class MercuryApi {
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+				'openGraphImageUrl' => OpenGraphImageHelper::getUrl(),
 			]
 		);
 
