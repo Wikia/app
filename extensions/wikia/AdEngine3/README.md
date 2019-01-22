@@ -11,14 +11,11 @@ All `*.js` files are build into `dist/` using webpack command.
 ## To do
 
 - floating medrec
-- vast size
-- MEGA adjustments
-- inline video
 - DW tracking
 
 -----
 
-- LKQD
+- inline video
 - nielsen
 - WAD functionality
 - steam browser
