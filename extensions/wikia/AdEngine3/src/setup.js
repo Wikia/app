@@ -47,7 +47,7 @@ function setupAdContext(wikiContext, isOptedIn = false) {
     context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
   }
 
-  context.set('state.isSteam', true);
+  context.set('state.isSteam', false);
   context.set('state.deviceType', utils.client.getDeviceType());
 
   if (context.get('state.isSteam')) {

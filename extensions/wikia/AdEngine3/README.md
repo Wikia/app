@@ -15,9 +15,12 @@ All `*.js` files are build into `dist/` using webpack command.
 - DW tracking
 - floating medrec
 - bill the lizard
-- krux
-- moat yi
 - no ads
+- netzathleten
+- vast size
+- DFP params
+- steam browser
+- MEGA adjustments
 - templates:
   - UAP
   - ABCD

@@ -2,6 +2,7 @@ import { biddersDelay } from './bidders-delay';
 import { billTheLizardConfigurator } from './bill-the-lizard';
 import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
+import { krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
 import ads from './setup';
 import slots from './slots';
 
@@ -21,9 +22,9 @@ function setupAdEngine(isOptedIn) {
     console.info(`Created ad slot ${slot.getSlotName()}`);
     bidders.updateSlotTargeting(slot.getSlotName());
   });
-  // events.on(events.MOAT_YI_READY, (data) => {
-  //  pageTracker.trackProp('moat_yi', data);
-  // });
+  events.on(events.MOAT_YI_READY, (data) => {
+   pageTracker.trackProp('moat_yi', data);
+  });
 
   billTheLizardConfigurator.configure();
 
@@ -60,8 +61,8 @@ function callExternals() {
       responseListener: biddersDelay.markAsReady,
     });
 
-//     krux.call();
-//     moatYi.call();
+    krux.call();
+    moatYi.call();
 }
 
 function run() {
