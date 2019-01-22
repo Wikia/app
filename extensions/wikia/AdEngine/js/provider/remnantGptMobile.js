@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.adUnitBuilder'
-], function (adContext, factory, adUnitBuilder) {
+	'ext.wikia.adEngine.provider.factory.wikiaGpt'
+], function (adContext, factory) {
 	'use strict';
 
 	return factory.createProvider(
