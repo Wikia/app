@@ -131,7 +131,12 @@ function setupAdContext(wikiContext, isOptedIn = false) {
     context.set('custom.isCMPEnabled', true);
   }
 
+  if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
+    context.push('slots.FEATURED.defaultSizes', [480, 360]);
+  }
+
   context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
+  context.set('services.netzathleten.enabled', isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
   // Need to be placed always after all lABrador wgVars checks
   context.set('targeting.labrador', utils.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
