@@ -370,8 +370,8 @@ class SEOTweaksHooksHelper {
 			$redir = Linker::linkKnown(
 				$article->mRedirectedFrom,
 				null,
-				[],
-				[ 'redirect' => 'no' ]
+				array(),
+				array( 'redirect' => 'no' )
 			);
 			$context->getOutput()->addSubtitle( wfMessage( 'redirectedfrom' )->rawParams( $redir ) );
 		}
