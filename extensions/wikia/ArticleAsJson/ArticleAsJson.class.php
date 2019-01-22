@@ -201,14 +201,16 @@ class ArticleAsJson {
 	}
 
 	private static function getGalleryThumbnail( $item, int $width ): string {
-		try {
+		if ( VignetteRequest::isVignetteUrl( $item['url'] ) ) {
 			return VignetteRequest::fromUrl( $item['url'] )
 				->topCrop()
 				->width( $width )
 				->height( $width )
 				->url();
-		} catch (InvalidArgumentException $e) {
-			return '';
+		} else {
+			$file = wfFindFile( $item['title'] );
+
+			return self::getThumbUrl( $file, $width, $width );
 		}
 	}
 
@@ -412,7 +414,9 @@ class ArticleAsJson {
 			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
 				self::$heroImage = $mediaObj;
 
-				try {
+				$height = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 5 / 4;
+
+				if ( VignetteRequest::isVignetteUrl( $mediaObj['url'] ) ) {
 					$height = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 5 / 4;
 					$thumbnail4by5 = VignetteRequest::fromUrl( $mediaObj['url'] )
 						->topCrop()
@@ -432,10 +436,26 @@ class ArticleAsJson {
 						->height( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
 						->url();
 
-				} catch(InvalidArgumentException $e) {
-					$thumbnail4by5 = '';
-					$thumbnail4by5x2 = '';
-					$thumbnail1by1 = '';
+				} else {
+					$file = wfFindFile( $title );
+
+					$thumbnail4by5 = self::getThumbUrl(
+						$file,
+						PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH,
+						$height
+					);
+
+					$thumbnail4by5x2 = self::getThumbUrl(
+						$file,
+						PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 2,
+						$height * 2
+					);
+
+					$thumbnail1by1 = self::getThumbUrl(
+						$file,
+						PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH,
+						PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH
+					);
 				}
 
 				self::$heroImage['thumbnail4by5'] = $thumbnail4by5;
@@ -448,6 +468,26 @@ class ArticleAsJson {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param File $file
+	 * @param int $width
+	 * @param null $height
+	 * @return string
+	 */
+	private static function getThumbUrl( $file, int $width, $height = null ): string {
+		if ( $file ) {
+			$params = array_filter( [ 'width' => $width, 'height' => $height ] );
+
+			$thumb = $file->transform( $params );
+
+			if ( $thumb ) {
+				return $thumb->getUrl();
+			}
+		}
+
+		return '';
 	}
 
 	public static function onImageBeforeProduceHTML(
@@ -532,15 +572,7 @@ class ArticleAsJson {
 		}
 
 		// XF-741: Handle foreign image repositories, such as Wikimedia Commons
-		if ( $file && !$file->getRepo()->isLocal() ) {
-			$thumbnail = $file->transform( [ 'width' => $requestedWidth ] );
-
-			if ( $thumbnail ) {
-				return $thumbnail->getUrl();
-			}
-		}
-
-		return '';
+		return self::getThumbUrl( $file, $requestedWidth );
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
