@@ -151,7 +151,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					break;
 
 				case 'internal':
-					if (element.getAttribute('data-uncrawlable-url')) {
+					if (!data.link && element.getAttribute('data-uncrawlable-url')) {
 						//show proper target and text in case it's red link
 						var pattern = new RegExp('(?<=\\/)(.*?)(?=\\/)', 'g');
 						var domainPattern = new RegExp('^(http|https):', 'g');
