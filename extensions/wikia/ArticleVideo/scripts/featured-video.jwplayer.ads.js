@@ -2,7 +2,6 @@
 define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
@@ -16,7 +15,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 ], function (
 	adContext,
 	vastUrlBuilder,
-	megaAdUnitBuilder,
 	slotRegistry,
 	srcProvider,
 	articleVideoAd,
