@@ -47,7 +47,7 @@
 		<div class="more-info-dropdown more-info-right wds-dropdown">
 			<div class="wds-dropdown__toggle push-dropdown-down">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
-				<span><?= wfMsg('lightbox-header-more-info-button') ?></span>
+				<span><?= wfMessage('lightbox-header-more-info-button')->escaped() ?></span>
 			</div>
 			<div class="wds-dropdown__content wds-is-right-aligned more-info-container">
 				{{{imageDescription}}}
@@ -56,10 +56,10 @@
 		{{/imageDescription}}
 		{{/isUserAnon}}
 		{{^isUserAnon}}
-		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
+		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMessage('lightbox-header-more-info-button')->escaped() ?></a>
 		{{/isUserAnon}}
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
-			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
+			<button class="article-add-button secondary"><?= wfMessage('lightbox-header-add-video-button')->escaped() ?></button>
 			<input class="lightbox-article-input" />
 		</div>
 
