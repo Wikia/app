@@ -63,6 +63,7 @@ class AdEngine3
 		$pageType = $wikiaPageType->getPageType();
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData($articleId);
 
 		// 1 of 3 verticals
 		$oldWikiVertical = $hubService->getCategoryInfoForCity($wg->CityId)->cat_name;

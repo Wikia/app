@@ -14,6 +14,7 @@ define('ext.wikia.adEngine3.api', [
   }
 
   return {
+    isAutoPlayDisabled: ads.isAutoPlayDisabled,
     shouldShowAds: shouldShowAds,
     jwplayerAdsFactory: products.jwplayerAdsFactory,
     waitForAdStackResolve: ads.waitForAdStackResolve

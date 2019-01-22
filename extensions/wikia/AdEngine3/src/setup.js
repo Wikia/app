@@ -58,7 +58,7 @@ function setupAdContext(wikiContext, isOptedIn = false) {
   context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));
 
   context.set('options.video.playAdsOnNextVideo', isGeoEnabled('wgAdDriverPlayAdsOnNextFVCountries'));
-  context.set('options.video.adsOnNextVideoFrequency', instantGlobals.get('wgAdDriverPlayAdsOnNextFVFrequency'));
+  context.set('options.video.adsOnNextVideoFrequency', instantGlobals.get('wgAdDriverPlayAdsOnNextFVFrequency') || 3);
   context.set('options.video.isMidrollEnabled', isGeoEnabled('wgAdDriverFVMidrollCountries'));
   context.set('options.video.isPostrollEnabled', isGeoEnabled('wgAdDriverFVPostrollCountries'));
 

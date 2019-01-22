@@ -1,10 +1,12 @@
-import { biddersDelay } from './bidders-delay';
-import { billTheLizardConfigurator } from './bill-the-lizard';
+import { biddersDelay } from './bidders/bidders-delay';
+import { billTheLizardConfigurator } from './ml/configuration';
+import { isAutoPlayDisabled } from './ml/executor';
 import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
+import { billTheLizard, krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
 import ads from './setup';
 import slots from './slots';
+import pageTracker from './tracking/page-tracker';
 
 import './styles.scss';
 
@@ -52,7 +54,7 @@ function trackLabradorValues() {
   const labradorPropValue = utils.getSamplingResults().join(';');
 
   if (labradorPropValue) {
-    // pageTracker.trackProp('labrador', labradorPropValue);
+    pageTracker.trackProp('labrador', labradorPropValue);
   }
 }
 
@@ -63,6 +65,7 @@ function callExternals() {
 
     krux.call();
     moatYi.call();
+    billTheLizard.call(['queen_of_hearts', 'vcr']);
 }
 
 function run() {
@@ -90,6 +93,7 @@ function waitForAdStackResolve() {
 }
 
 export {
+  isAutoPlayDisabled,
   run,
   waitForAdStackResolve
 }

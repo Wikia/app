@@ -10,17 +10,16 @@ All `*.js` files are build into `dist/` using webpack command.
 
 ## To do
 
-- verify FV functionality / wgVars
 - WAD functionality
 - DW tracking
 - floating medrec
-- bill the lizard
 - no ads
 - netzathleten
 - vast size
 - DFP params
 - steam browser
 - MEGA adjustments
+- inline video
 - templates:
   - UAP
   - ABCD
