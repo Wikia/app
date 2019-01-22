@@ -495,7 +495,7 @@ class WikiFactoryLoader {
 			 ( strpos( $this->parsedUrl['path'], '/api.php' ) === 0 ||
 			   strpos( $this->parsedUrl['path'], '/wikia.php' ) === 0 ||
 			   strpos( $this->parsedUrl['path'], '/api/v1' ) === 0 ) ) {
-			$this->mServerName = $url['host'];
+			$this->mServerName = strtolower( $url['host'] );
 		}
 		// end of PLATFORM-3878 hack
 
