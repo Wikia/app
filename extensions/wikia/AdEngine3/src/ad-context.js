@@ -401,9 +401,7 @@ export default {
   },
   events: {
     pushOnScroll: {
-      ids: [
-          'bottom_leaderboard'
-      ],
+      ids: [],
       threshold: 100,
     },
   },

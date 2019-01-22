@@ -1,5 +1,6 @@
 import { context, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
+import { throttle } from 'lodash';
 
 const PAGE_TYPES = {
   article: 'a',
@@ -12,17 +13,6 @@ function setSlotState(slotName, state) {
   } else {
     slotService.disable(slotName);
   }
-}
-
-/**
- * Decides if incontent_player slot should be active.
- *
- * @returns {boolean}
- */
-function isIncontentPlayerApplicable() {
-  return context.get('custom.pageType') !== 'home'
-    && !context.get('custom.hasFeaturedVideo')
-    && !context.get('custom.isIncontentPlayerDisabled');
 }
 
 export default {
@@ -123,11 +113,12 @@ export default {
           {
             viewportSize: [1024, 0],
             sizes: [
+              [728, 90],
               [970, 250],
             ],
           },
         ],
-        defaultSizes: [[728, 90], [970, 250]],
+        defaultSizes: [[728, 90]],
         targeting: {
           loc: 'footer',
           rv: 1,
@@ -179,7 +170,7 @@ export default {
 
     setSlotState('FEATURED', context.get('custom.hasFeaturedVideo'));
 
-    // TODO: Remove those slots
+    // TODO: Remove those slots once AE3 is globally enabled
     setSlotState('TOP_LEADERBOARD_AB', false);
     setSlotState('GPT_FLUSH', false);
   },
@@ -211,5 +202,19 @@ export default {
 
       context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
     }
+  },
+
+  injectBottomLeaderboard() {
+    const pushSlotAfterComments = throttle(() => {
+      if (window.ArticleComments && !window.ArticleComments.initCompleted) {
+        return;
+      }
+
+      // TODO: Recovery part
+      document.removeEventListener('scroll', pushSlotAfterComments);
+      context.push('events.pushOnScroll.ids', 'BOTTOM_LEADERBOARD');
+    }, 250);
+
+    document.addEventListener('scroll', pushSlotAfterComments);
   },
 };

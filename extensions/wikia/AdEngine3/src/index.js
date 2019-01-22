@@ -3,6 +3,7 @@ import { billTheLizardConfigurator } from './bill-the-lizard';
 import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 import ads from './setup';
+import slots from './slots';
 
 import './styles.scss';
 
@@ -40,6 +41,10 @@ function startAdEngine() {
     utils.scriptLoader.loadScript(GPT_LIBRARY_URL);
 
     ads.init();
+
+    window.wgAfterContentAndJS.push(() => {
+      slots.injectBottomLeaderboard();
+    });
   }
 }
 
