@@ -83,7 +83,7 @@ require([
 			featuredVideoAds.loadMoatTrackingPlugin();
 		}
 
-		if (adsApi) {
+		if (adsApi && adsApi.shouldShowAds()) {
 			videoAds = adsApi.jwplayerAdsFactory.create({
 				adProduct: 'featured',
 				slotName: 'FEATURED',
@@ -152,6 +152,12 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
+		if (adsApi) {
+			adsApi.waitForAdStackResolve().then(setupPlayer);
+
+			return;
+		}
+
 		if (!adContext || !adContext.get('opts.showAds')) {
 			setupPlayer();
 

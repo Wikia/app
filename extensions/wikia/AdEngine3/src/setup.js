@@ -22,8 +22,11 @@ function isGeoEnabled(key) {
 }
 
 function setupAdContext(wikiContext, isOptedIn = false) {
+  const showAds = window.ads.context.opts.showAds;
+
   context.extend(basicContext);
   context.set('wiki', wikiContext);
+  context.set('state.showAds', showAds);
 
   if (context.get('wiki.opts.isAdTestWiki')) {
     context.set('src', 'test');
@@ -44,7 +47,12 @@ function setupAdContext(wikiContext, isOptedIn = false) {
     context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
   }
 
+  context.set('state.isSteam', true);
   context.set('state.deviceType', utils.client.getDeviceType());
+
+  if (context.get('state.isSteam')) {
+    context.set('state.showAds', false);
+  }
 
   context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
   context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));

@@ -11,7 +11,6 @@ const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
 function setupAdEngine(isOptedIn) {
   const wikiContext = window.ads.context;
-  const showAds = window.ads.context.opts.showAds;
 
   ads.configure(wikiContext, isOptedIn);
   // videoTracker.register();
@@ -29,7 +28,7 @@ function setupAdEngine(isOptedIn) {
   billTheLizardConfigurator.configure();
 
   callExternals();
-  if (showAds) {
+  if (context.get('state.showAds')) {
     startAdEngine();
   }
 
@@ -57,11 +56,10 @@ function trackLabradorValues() {
 }
 
 function callExternals() {
-//     biddersDelay.resetPromise();
-//     bidders.requestBids({
-//       responseListener: biddersDelay.markAsReady,
-//     });
-//
+    bidders.requestBids({
+      responseListener: biddersDelay.markAsReady,
+    });
+
 //     krux.call();
 //     moatYi.call();
 }
@@ -72,47 +70,25 @@ function run() {
   window.Wikia.consentQueue.push(setupAdEngine);
 }
 
-export {
-  run
+function waitForBiddersResolve() {
+  if (!context.get('state.showAds')) {
+    return Promise.resolve();
+  }
+
+  const timeout = new Promise((resolve) => {
+    setTimeout(resolve, context.get('options.maxDelayTimeout'));
+  });
+
+  return Promise.race([ timeout, biddersDelay.getPromise() ]);
 }
 
+function waitForAdStackResolve() {
+  return Promise.all([
+    waitForBiddersResolve()
+  ]);
+}
 
-//   createJWPlayerVideoAds(options) {
-//     const { jwplayerAdsFactory } = window.Wikia.adProducts;
-//
-//     if (this.showAds) {
-//       return jwplayerAdsFactory.create(options);
-//     }
-//
-//     return null;
-//   }
-//
-//   loadJwplayerMoatTracking() {
-//     const { jwplayerAdsFactory } = window.Wikia.adProducts;
-//
-//     jwplayerAdsFactory.loadMoatPlugin();
-//   }
-//
-//   waitForVideoBidders() {
-//     const { context, utils } = window.Wikia.adEngine;
-//
-//     if (!this.showAds) {
-//       return Promise.resolve();
-//     }
-//
-//     const timeout = new Promise((resolve) => {
-//       setTimeout(resolve, context.get('options.maxDelayTimeout'));
-//     });
-//
-//     return Promise.race([
-//       biddersDelay.getPromise(),
-//       timeout,
-//     ]).then(() => {
-//       utils.logger('featured-video', 'resolving featured video delay');
-//     });
-//   }
-// }
-//
-// Ads.instance = null;
-//
-// export default Ads;
+export {
+  run,
+  waitForAdStackResolve
+}
