@@ -87,6 +87,7 @@ function setupAdContext(wikiContext, isOptedIn = false) {
 
   if (context.get('wiki.targeting.wikiIsTop1000')) {
     context.set('custom.wikiIdentifier', '_top1k_wiki');
+    context.set('custom.dbNameForAdUnit', context.get('targeting.s1'));
   }
   context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
   context.set('custom.hasPortableInfobox', !!context.get('wiki.targeting.hasPortableInfobox'));
@@ -133,6 +134,11 @@ function setupAdContext(wikiContext, isOptedIn = false) {
 
   if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
     context.push('slots.FEATURED.defaultSizes', [480, 360]);
+  }
+  context.set('slots.FEATURED.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
+
+  if (utils.isProperGeo(['AU', 'NZ'])) {
+    context.set('custom.serverPrefix', 'vm1b');
   }
 
   context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));

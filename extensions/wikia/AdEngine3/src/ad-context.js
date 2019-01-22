@@ -1,6 +1,5 @@
 export default {
-  adUnitId: '/{custom.dfpId}/wka1b.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/'
-  + '{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
+  adUnitId: '/{custom.dfpId}/{custom.serverPrefix}.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
   bidders: {
     enabled: false,
     timeout: 2000,
@@ -393,11 +392,13 @@ export default {
     }
   },
   custom: {
-    dfpId: '5441',
-    wikiIdentifier: '_not_a_top1k_wiki',
     appnexusDfp: true,
-    rubiconDfp: true,
+    dbNameForAdUnit: '_not_a_top1k_wiki',
+    dfpId: '5441',
     pubmaticDfp: false,
+    rubiconDfp: true,
+    serverPrefix: 'wka1b',
+    wikiIdentifier: '_not_a_top1k_wiki',
   },
   events: {
     pushOnScroll: {
@@ -411,8 +412,8 @@ export default {
   },
   slots: {},
   vast: {
-    adUnitId: '/{custom.dfpId}/wka1b.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/'
-   + '{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
+    adUnitId: '/{custom.dfpId}/{custom.serverPrefix}.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
+    adUnitIdWithDbName: '/{custom.dfpId}/{custom.serverPrefix}.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.dbNameForAdUnit}-{targeting.s0}',
   },
   targeting: {
     ae3: '1',
