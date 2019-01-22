@@ -15,7 +15,6 @@ All `*.js` files are build into `dist/` using webpack command.
 - floating medrec
 - netzathleten
 - vast size
-- DFP params
 - steam browser
 - MEGA adjustments
 - inline video

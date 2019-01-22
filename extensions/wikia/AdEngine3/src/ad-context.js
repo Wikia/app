@@ -419,6 +419,7 @@ export default {
     outstream: 'none',
     skin: 'oasis',
     uap: 'none',
+    uap_c: 'none'
   },
   services: {
     billTheLizard: {

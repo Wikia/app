@@ -28,7 +28,7 @@ export default {
         slotShortcut: 'l',
         sizes: [
           {
-            viewportSize: [1024, 0],
+            viewportSize: [1440, 0],
             sizes: [
               [728, 90],
               [970, 66],
@@ -42,6 +42,22 @@ export default {
               [1030, 130],
               [1030, 250],
               [1440, 585],
+            ],
+          },
+          {
+            viewportSize: [1024, 0],
+            sizes: [
+              [728, 90],
+              [970, 66],
+              [970, 90],
+              [970, 150],
+              [970, 180],
+              [970, 250],
+              [970, 365],
+              [1024, 416],
+              [1030, 65],
+              [1030, 130],
+              [1030, 250]
             ],
           },
         ],
@@ -60,8 +76,17 @@ export default {
         group: 'MR',
         options: {},
         slotShortcut: 'm',
-        sizes: [],
-        defaultSizes: [[300, 250], [300, 600], [300, 1050]],
+        sizes: [
+          {
+            viewportSize: [1024, 1300],
+            sizes: [
+              [300, 250],
+              [300, 600],
+              [300, 1050]
+            ],
+          },
+        ],
+        defaultSizes: [[300, 250], [300, 600]],
         targeting: {
           loc: 'top',
           pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
@@ -131,7 +156,6 @@ export default {
         group: 'VIDEO',
         lowerSlotName: 'featured',
         targeting: {
-          uap: 'none',
           rv: 1
         },
         trackingKey: 'featured-video',
@@ -143,7 +167,6 @@ export default {
         group: 'VIDEO',
         lowerSlotName: 'video',
         targeting: {
-          uap: 'none',
           rv: 1
         },
         trackingKey: 'video',
@@ -176,14 +199,14 @@ export default {
   },
 
   setupIdentificators() {
-    const pageTypeParam = PAGE_TYPES[context.get('targeting.s2')] || 'x';
+    const pageTypeParam = PAGE_TYPES[context.get('wiki.targeting.pageType')] || 'x';
     const slotsDefinition = context.get('slots');
 
     // Wikia Page Identificator
     context.set('targeting.wsi', `ox${pageTypeParam}1`);
     Object.keys(slotsDefinition).forEach((key) => {
       const slotParam = slotsDefinition[key].slotShortcut || 'x';
-      context.set(`slots.${key}.targeting.wsi`, `m${slotParam}${pageTypeParam}1`);
+      context.set(`slots.${key}.targeting.wsi`, `o${slotParam}${pageTypeParam}1`);
     });
   },
 
