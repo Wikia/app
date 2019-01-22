@@ -7,7 +7,7 @@ export default class AdUnitBuilder {
 		const adProductInfo = getAdProductInfo(slot.getSlotName(), options.loadedTemplate, options.loadedProduct);
 
 		return utils.stringBuilder.build(
-			context.get(options.isVideoMegaEnabled ? 'vast.megaAdUnitId' : 'vast.adUnitId'),
+			context.get('vast.adUnitId'),
 			Object.assign(slot.config, adProductInfo)
 		);
 	}

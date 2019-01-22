@@ -405,24 +405,6 @@ describe('AdContext', function () {
 		expect(moatSamplerArgs[1]).toEqual(25);
 	});
 
-	it('Should enable MEGA ad unit builder only for featured video pages', function () {
-		mocks.instantGlobals = {
-			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-		};
-
-		var context = {
-			targeting: {
-				hasFeaturedVideo: true,
-				skin: 'oasis',
-				pageType: 'article'
-			}
-		};
-
-		getModule().setContext(context);
-		expect(context.opts.megaAdUnitBuilderEnabled).toEqual(true);
-
-	});
-
 	[
 		{
 			instantGlobals: {
@@ -497,40 +479,6 @@ describe('AdContext', function () {
 
 			expect(getModule().getContext().bidders[testCase.testedBidder]).toEqual(testCase.expectedResult);
 		});
-	});
-
-	it('Should disable MEGA on non-FV mobile page', function () {
-		mocks.instantGlobals = {
-			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-		};
-
-		var context = {
-			targeting: {
-				hasFeaturedVideo: false,
-				skin: 'oasis',
-				pageType: 'article'
-			}
-		};
-
-		getModule().setContext(context);
-		expect(context.opts.megaAdUnitBuilderEnabled).toBeFalsy();
-	});
-
-	it('Should enable MEGA on FV mobile page', function () {
-		mocks.instantGlobals = {
-			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-		};
-
-		var context = {
-			targeting: {
-				hasFeaturedVideo: true,
-				skin: 'mercury',
-				pageType: 'article'
-			}
-		};
-
-		getModule().setContext(context);
-		expect(context.opts.megaAdUnitBuilderEnabled).toBeTruthy();
 	});
 
 	it('return value by string', function () {

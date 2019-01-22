@@ -177,8 +177,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
-
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact && isEnabled('wgAdDriverHighImpactSlotCountries')
@@ -208,9 +206,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 		context.opts.porvataMoatTrackingEnabled = isEnabled('wgAdDriverPorvataMoatTrackingCountries');
 		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
-
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
-			isEnabled('wgAdDriverMegaAdUnitBuilderForFVCountries');
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
