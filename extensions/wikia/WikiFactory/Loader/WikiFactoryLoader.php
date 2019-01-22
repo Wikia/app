@@ -334,7 +334,6 @@ class WikiFactoryLoader {
 			} else {
 				// request from HTTPD case.
 				// We only know server name so we have to ask city_domains table
-
 				$where = [
 					'city_domains.city_id = city_list.city_id',
 					'city_domains.city_domain' => rtrim( $this->mServerName . '/' . $this->langCode, '/' )
@@ -484,8 +483,19 @@ class WikiFactoryLoader {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-
 		$url = parse_url( $this->mCityUrl );
+
+		// PLATFORM-3878 - needed while switching community to fandom.com, to be removed afterwards.
+		// For api calls to community, fake the mServerName value so it matches city_url. This
+		// stops the redirects and allows the api to be used on every community domain configured
+		// in WikiFactory.
+		if ( $this->mWikiID == WikiFactory::COMMUNITY_CENTRAL &&
+			 ( strpos( $this->parsedUrl['path'], '/api.php' ) === 0 ||
+			   strpos( $this->parsedUrl['path'], '/wikia.php' ) === 0 ||
+			   strpos( $this->parsedUrl['path'], '/api/v1' ) === 0 ) ) {
+			$this->mServerName = $url['host'];
+		}
+		// end of PLATFORM-3878 hack
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) && $this->mWikiIdForced === false &&
