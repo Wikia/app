@@ -144,6 +144,28 @@
 			border: 0;
 		}
 	}
+
+	&.wds-is-flipped {
+		&::before, &::after {
+			bottom: unset;
+			top: -$wds-dropdown-border-width;
+		}
+
+		&::before {
+			border-bottom-color: transparent;
+			border-top-color: $wds-color-faint-gray;
+		}
+
+		&::after {
+			border-bottom-color: transparent;
+			border-top-color: $wds-color-white;
+		}
+
+		.wds-dropdown__content {
+			bottom: 100%;
+			top: unset;
+		}
+	}
 }
 
 .wds-dropdown__content .wds-list.wds-is-linked .wds-dropdown-level-2 {

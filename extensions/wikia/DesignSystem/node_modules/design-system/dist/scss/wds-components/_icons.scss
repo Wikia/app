@@ -9,4 +9,8 @@
 	&-tiny {
 		@include square($wds-icon-tiny-size);
 	}
+
+	&.is-rotated-45 {
+		transform: rotate(45deg);
+	}
 }
