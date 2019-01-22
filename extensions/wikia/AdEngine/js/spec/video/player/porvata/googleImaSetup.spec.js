@@ -6,7 +6,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	}
 
 	var imaSetup,
-		MEGA_AD_UNIT = 'mega/ad/unit',
+		AD_UNIT = 'mega/ad/unit',
 		mocks = {
 			context: {
 				get: noop
@@ -22,7 +22,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			log: noop,
 			adUnitBuilder: {
 				build: function () {
-					return MEGA_AD_UNIT;
+					return AD_UNIT;
 				}
 			},
 			win: {
@@ -136,14 +136,13 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		imaSetup.createRequest({
 			width: 100,
 			height: 100,
-			vastTargeting: 'test',
-			useMegaAdUnitBuilder: false
+			vastTargeting: 'test'
 		});
 
 		expect(mocks.vastUrlBuilder.build.calls.first().args[2].adUnit).toBeUndefined();
 	});
 
-	it('pass correct slot targeting params to MEGA adUnit builder', function () {
+	it('pass correct slot targeting params to adUnit builder', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
 		spyOn(mocks.adUnitBuilder, 'build');
 
@@ -172,7 +171,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		type: 'bfaa',
 		expected: 'ABCD'
 	}].forEach(function (testCase) {
-		it('pass correct param to MEGA ad unit builder for "' + testCase.expected  + '" product', function () {
+		it('pass correct param to ad unit builder for "' + testCase.expected  + '" product', function () {
 			spyOn(mocks.vastUrlBuilder, 'build');
 			spyOn(mocks.adUnitBuilder, 'build');
 
