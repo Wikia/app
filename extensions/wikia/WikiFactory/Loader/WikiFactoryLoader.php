@@ -334,6 +334,7 @@ class WikiFactoryLoader {
 			} else {
 				// request from HTTPD case.
 				// We only know server name so we have to ask city_domains table
+
 				$where = [
 					'city_domains.city_id = city_list.city_id',
 					'city_domains.city_domain' => rtrim( $this->mServerName . '/' . $this->langCode, '/' )
@@ -483,6 +484,7 @@ class WikiFactoryLoader {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+
 		$url = parse_url( $this->mCityUrl );
 
 		// PLATFORM-3878 - needed while switching community to fandom.com, to be removed afterwards.
