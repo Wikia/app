@@ -302,6 +302,7 @@ class SEOTweaksHooksHelper {
 		$queryParams = $request->getQueryValues();
 
 		if (
+			!$user->isAnon() ||
 			!$title->isRedirect() ||
 			( isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no' ) ||
 			in_array( $request->getVal( 'action', 'view' ), [ 'raw', 'render' ] )
