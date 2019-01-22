@@ -58,7 +58,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverCTPDesktopQueenCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
-		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';

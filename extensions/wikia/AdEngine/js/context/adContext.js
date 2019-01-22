@@ -220,7 +220,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
 		context.opts.replayAdsForFV = isEnabled('wgAdDriverPlayAdsOnNextFVCountries');
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
-		context.opts.disableSra = isEnabled('wgAdDriverDisableSraCountries');
+		context.opts.disableSra = true;
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
