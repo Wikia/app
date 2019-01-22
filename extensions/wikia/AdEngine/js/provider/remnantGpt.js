@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.provider.remnantGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker'
-], function (adContext, factory, adUnitBuilder, slotTweaker) {
+], function (adContext, factory, slotTweaker) {
 	'use strict';
 
 	return factory.createProvider(
@@ -31,9 +30,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 			},
-			getAdUnitBuilder: function () {
-				return adUnitBuilder;
-			}
+			testSrc: 'test-remnant'
 		}
 	);
 });

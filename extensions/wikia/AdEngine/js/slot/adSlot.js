@@ -1,10 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.adSlot', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (adUnitBuilder, megaAdUnitBuilder, doc, log) {
+], function (adUnitBuilder, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
@@ -40,10 +39,6 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	}
 
 	function getShortSlotName(slotName) {
-		if (megaAdUnitBuilder.isValid(slotName)) {
-			return megaAdUnitBuilder.getShortSlotName(slotName);
-		}
-
 		return adUnitBuilder.getShortSlotName(slotName);
 	}
 
