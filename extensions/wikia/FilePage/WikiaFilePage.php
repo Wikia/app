@@ -84,7 +84,7 @@ class WikiaFilePage extends ImagePage {
 			}
 		}
 		if ( !$img ) {
-			parent::view();
+            $out->redirect( $url );
 
 			return;
 		}
