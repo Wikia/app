@@ -28,3 +28,4 @@ All `*.js` files are build into `dist/` using webpack command.
   - outstream
   - intersitital
   - floor adhesion
+  - skin (roadblock)

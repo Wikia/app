@@ -1,67 +1,69 @@
+import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
+import { scrollListener, slotTweaker } from '@wikia/ad-engine';
+import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
+
+const {
+  CSS_CLASSNAME_STICKY_BFAA,
+  CSS_TIMING_EASE_IN_CUBIC,
+  SLIDE_OUT_TIME
+} = universalAdPackage;
+
 export const getConfig = () => ({
   adSlot: null,
   slotParams: null,
   updateNavbarOnScroll: null,
 
-  onReady() {
-    const { events } = window.Wikia.adEngine;
-
-    const page = document.querySelector('.application-wrapper');
-
-    page.classList.add('bfaa-template');
-
-    events.on(events.MENU_OPEN_EVENT, () => this.adSlot.emit('unstickImmediately'));
-    events.on(events.PAGE_CHANGE_EVENT, () => {
-      page.classList.remove('bfaa-template');
-      document.body.classList.remove('has-bfaa');
-      document.body.style.paddingTop = '';
-      events.emit(events.HEAD_OFFSET_CHANGE, 0);
-    });
-  },
-
   onInit(adSlot, params) {
-    const { events, slotTweaker } = window.Wikia.adEngine;
-
     this.adSlot = adSlot;
     this.slotParams = params;
-    this.navbarElement = document.querySelector('.site-head-container .site-head, .wds-global-navigation');
 
-    const wrapper = document.querySelector('.top-leaderboard');
+    const wrapper = document.getElementById('WikiaTopAds');
 
+    this.adSlot.getElement().classList.add('gpt-ad');
     wrapper.style.opacity = '0';
     slotTweaker.onReady(adSlot).then(() => {
       wrapper.style.opacity = '';
-      this.onReady();
+      this.updateNavbar();
     });
 
-    events.emit(events.SMART_BANNER_CHANGE, false);
+    this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+  },
+
+  onAfterStickBfaaCallback() {
+    pinNavbar(false);
   },
 
   onBeforeUnstickBfaaCallback() {
-    const { CSS_TIMING_EASE_IN_CUBIC, SLIDE_OUT_TIME } = window.Wikia.adProducts.universalAdPackage;
-
-
-    Object.assign(this.navbarElement.style, {
+    scrollListener.removeCallback(this.updateNavbarOnScroll);
+    this.updateNavbarOnScroll = null;
+    Object.assign(navBarElement.style, {
       transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
-      top: '0',
+      top: '0'
     });
   },
 
   onAfterUnstickBfaaCallback() {
-    Object.assign(this.navbarElement.style, {
+    Object.assign(navBarElement.style, {
       transition: '',
-      top: '',
+      top: ''
     });
+
+    this.updateNavbar();
+    this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+  },
+
+  updateNavbar() {
+    const container = this.adSlot.getElement();
+    const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+    const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+
+    pinNavbar(isInViewport && !isSticky);
+    this.moveNavbar(isSticky ? container.offsetHeight : 0);
   },
 
   moveNavbar(offset) {
-    const { events } = window.Wikia.adEngine;
-
-    events.emit(events.HEAD_OFFSET_CHANGE, offset || this.adSlot.getElement().clientHeight);
-    this.navbarElement.style.top = offset ? `${offset}px` : '';
-  },
+    if (navBarElement) {
+      navBarElement.style.top = offset ? `${offset}px` : '';
+    }
+  }
 });
-
-export default {
-  getConfig,
-};

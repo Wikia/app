@@ -49,6 +49,12 @@ function startAdEngine() {
     window.wgAfterContentAndJS.push(() => {
       slots.injectBottomLeaderboard();
     });
+
+    context.push('listeners.slot', {
+      onRenderEnded: (slot) => {
+        slot.getElement().classList.remove('default-height');
+      }
+    });
   }
 }
 
