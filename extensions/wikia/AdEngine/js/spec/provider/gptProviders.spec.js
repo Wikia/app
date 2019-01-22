@@ -23,19 +23,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			},
 			buildNew: noop
 		},
-		megaAdUnitBuilder: {
-			build: function () {},
-			isMegaSlot: noop
-		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
 				extra.success();
 				extra.error();
 			}
-		},
-		lookups: {
-			extendSlotTargeting: noop,
-			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -70,11 +62,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
-			null,
-			mocks.lookups
+			null
 		);
 	}
 
@@ -84,7 +74,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
 					getFactory(),
-					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'remnantGpt':
@@ -92,13 +81,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					getFactory(),
 					mocks.adUnitBuilder,
-					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.megaAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':

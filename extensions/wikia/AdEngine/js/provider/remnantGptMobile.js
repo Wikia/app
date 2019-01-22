@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder'
-], function (adContext, factory, adUnitBuilder, megaAdUnitBuilder) {
+	'ext.wikia.adEngine.slot.adUnitBuilder'
+], function (adContext, factory, adUnitBuilder) {
 	'use strict';
 
 	return factory.createProvider(
@@ -28,7 +27,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 		},
 		{
 			getAdUnitBuilder: function () {
-				return adContext.get('opts.enableRemnantNewAdUnit') ? megaAdUnitBuilder : adUnitBuilder;
+				return adUnitBuilder;
 			},
 			testSrc: 'test-remnant'
 		});

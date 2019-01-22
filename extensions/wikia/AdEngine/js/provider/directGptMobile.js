@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt'
-], function (adContext, megaAdUnitBuilder, factory) {
+], function (adContext, factory) {
 	'use strict';
 
 	return factory.createProvider(
@@ -29,9 +28,6 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50', loc: 'footer'}
 		},
 		{
-			getAdUnitBuilder: function () {
-				return megaAdUnitBuilder;
-			},
 			firstCallSlots: [
 				'MOBILE_TOP_LEADERBOARD'
 			],
