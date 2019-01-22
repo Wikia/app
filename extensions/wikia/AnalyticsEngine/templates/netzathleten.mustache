@@ -1,37 +1,36 @@
 <!-- Begin NetzAthleten (Netletix) Tag -->
-<!-- TODO: FIXME -->
-<!--<script type="text/javascript">-->
-<!--require([-->
-	<!--'ext.wikia.adEngine.adContext',-->
-	<!--'wikia.geo',-->
-	<!--'wikia.instantGlobals',-->
-	<!--'wikia.trackingOptIn'-->
-<!--], function(adContext, geo, instantGlobals, trackingOptIn) {-->
-	<!--var url = "{{ url }}";-->
+<script type="text/javascript">
+require([
+	'wikia.trackingOptIn',
+	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine3.api')
+], function(trackingOptIn, adContext, adsApi) {
+	var url = "{{ url }}";
 
-	<!--function loadNetzAthletenScript() {-->
-		<!--var scriptElementNetzAthleten = document.createElement("script");-->
-		<!--scriptElementNetzAthleten.type = "text/javascript";-->
-		<!--scriptElementNetzAthleten.src = url;-->
+	function loadNetzAthletenScript() {
+		var scriptElementNetzAthleten = document.createElement("script");
+		scriptElementNetzAthleten.type = "text/javascript";
+		scriptElementNetzAthleten.src = url;
 
-		<!--scriptElementNetzAthleten.addEventListener("load", function() {-->
-			<!--window.naMediaAd.setValue("homesite", window.wgIsMainpage);-->
-		<!--});-->
-		<!--document.head.appendChild(scriptElementNetzAthleten);-->
-	<!--}-->
+		scriptElementNetzAthleten.addEventListener("load", function() {
+			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+		});
+		document.head.appendChild(scriptElementNetzAthleten);
+	}
 
-	<!--function loadNA(optIn) {-->
-		<!--if (optIn && adContext.get('opts.netzathleten')) {-->
-			<!--// user opt-ins for NetzAthleten-->
-			<!--loadNetzAthletenScript();-->
-		<!--}-->
-	<!--}-->
+	function loadNA(optIn) {
+		if (optIn) {
+			// user opt-ins for NetzAthleten
+			loadNetzAthletenScript();
+		}
+	}
 
-	<!--if (trackingOptIn) {-->
-		<!--trackingOptIn.pushToUserConsentQueue(loadNA);-->
-	<!--} else {-->
-		<!--loadNA(true)-->
-	<!--}-->
-<!--});-->
-<!--</script>-->
+	if (
+		(adContext && adContext.get('opts.netzathleten')) ||
+		(adsApi && adsApi.isNetzathletenEnabled())
+	) {
+		trackingOptIn.pushToUserConsentQueue(loadNA);
+	}
+});
+</script>
 <!-- End NetzAthleten (Netletix) Tag -->

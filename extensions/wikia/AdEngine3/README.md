@@ -10,14 +10,18 @@ All `*.js` files are build into `dist/` using webpack command.
 
 ## To do
 
-- WAD functionality
-- DW tracking
 - floating medrec
-- netzathleten
 - vast size
-- steam browser
 - MEGA adjustments
 - inline video
+- DW tracking
+
+-----
+
+- LKQD
+- nielsen
+- WAD functionality
+- steam browser
 - templates:
   - UAP
   - ABCD
