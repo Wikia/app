@@ -12,41 +12,6 @@ define('ext.wikia.recirculation.utils', [
 		'</svg>';
 
 	/**
-	 * Checks if template is cached in LocalStorage and if not loads it by using loader
-	 * @returns {$.Deferred}
-	 */
-	function loadTemplate(templateName) {
-		var dfd = new $.Deferred(),
-			templateLocation = 'extensions/wikia/Recirculation/templates/' + templateName,
-			cacheKey = 'RecirculationAssets_' + templateLocation,
-			template = cache.getVersioned(cacheKey);
-
-		if (!templateName) {
-			return dfd.reject('Invalid template name');
-		}
-
-		if (template) {
-			dfd.resolve(template);
-		} else {
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: templateLocation
-				}
-			}).done(function (data) {
-				template = data.mustache[0];
-
-				dfd.resolve(template);
-
-				// 1 day
-				cache.setVersioned(cacheKey, template, 86400);
-			});
-		}
-
-		return dfd.promise();
-	}
-
-	/**
 	 * Loads mustache templates
 	 * @returns {$.Deferred}
 	 */
@@ -73,13 +38,6 @@ define('ext.wikia.recirculation.utils', [
 		return $(Mustache.render(template, data));
 	}
 
-	function renderTemplateByName(templateName, data) {
-		return loadTemplate(templateName)
-			.then(function(template) {
-				return $(Mustache.render(template, data));
-			});
-	}
-
 	function buildLabel(element, label) {
 		var $parent = $(element).parent(),
 			slot = $parent.data('index') + 1,
@@ -90,28 +48,10 @@ define('ext.wikia.recirculation.utils', [
 		return parts.join('=');
 	}
 
-	function waitForRail() {
-		var $rail = $('#WikiaRail'),
-			deferred = $.Deferred(),
-			args = Array.prototype.slice.call(arguments);
-
-		if ($rail.find('.loading').exists()) {
-			$rail.one('afterLoad.rail', function() {
-				deferred.resolve.apply(null, args);
-			});
-		} else {
-			deferred.resolve.apply(null, args);
-		}
-
-		return deferred.promise();
-	}
-
 	return {
 		buildLabel: buildLabel,
 		loadTemplates: loadTemplates,
 		renderTemplate: renderTemplate,
-		renderTemplateByName: renderTemplateByName,
-		waitForRail: waitForRail,
 		fandomHeartSvg: fandomHeartSvg
 	};
 });

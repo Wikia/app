@@ -302,12 +302,15 @@ class SEOTweaksHooksHelper {
 		$queryParams = $request->getQueryValues();
 
 		if (
-			!$user->isAnon() ||
 			!$title->isRedirect() ||
 			( isset( $queryParams['redirect'] ) && $queryParams['redirect'] === 'no' ) ||
 			in_array( $request->getVal( 'action', 'view' ), [ 'raw', 'render' ] )
 		) {
 			return true;
+		}
+
+		if ( !$user->isAnon() ) {
+			$queryParams['rdfrom'] = $queryParams['title'];
 		}
 
 		unset( $queryParams['title'] );
@@ -353,6 +356,24 @@ class SEOTweaksHooksHelper {
 			$originalURL = $attribs['href'];
 			$attribs['href'] = '#';
 			$attribs['data-uncrawlable-url'] = base64_encode( $originalURL );
+		}
+
+		return true;
+	}
+
+	public static function onDisplayRedirectedFrom( $rdfrom, Article $article): bool {
+		$context = $article->getContext();
+		if ( !$context->getUser()->isAnon() ) {
+			$redirectNamespace = $article->getTitle()->getNamespace();
+			$title = Title::makeTitleSafe( $redirectNamespace, $rdfrom );
+			$article->setRedirectedFrom( $title );
+			$redir = Linker::linkKnown(
+				$article->mRedirectedFrom,
+				null,
+				[],
+				[ 'redirect' => 'no' ]
+			);
+			$context->getOutput()->addSubtitle( wfMessage( 'redirectedfrom' )->rawParams( $redir ) );
 		}
 
 		return true;

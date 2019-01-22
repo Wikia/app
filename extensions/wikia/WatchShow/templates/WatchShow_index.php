@@ -3,7 +3,7 @@
 		Watch This Show
 	</h2>
 	<div class="watch-show__content">
-		<a href="<?= $url ?>" class="wds-button wds-is-secondary">Watch now</a>
+		<a href="<?= $url ?>" class="wds-button wds-is-secondary" target="_blank" rel="noopener">Watch now</a>
 		<div class="watch-show__available-on-hulu">
 			<div class="watch-show__available-on-hulu-label">Available On</div>
 			<svg width="63" height="21" xmlns="http://www.w3.org/2000/svg"

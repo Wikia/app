@@ -96,6 +96,55 @@ class HTTPSSupportHooks {
 	}
 
 	/**
+	 * Hacky support for some non-HTTPS Special:FilePath URLs.
+	 *
+	 * This will attempt to fix plain HTTP file path URLs in the simplest
+	 * cases by converting them to HTTPS Vignette URLs.
+	 *
+	 * This will not account for non-English translations of Special:FilePath
+	 * or language path wikis (which should only have ever been on HTTPS).
+	 *
+	 * @param  string &$url
+	 * @return bool
+	 */
+	public static function parserUpgradeSpecialFilePathURLs( string &$url ) {
+		global $wgWikiaBaseDomainRegex;
+
+		$parts = parse_url( $url );
+
+		if ( empty( $parts['host'] ) || empty( $parts['path'] ) ) {
+			return true;
+		}
+
+		// We are only supporting legacy uses of Special:FilePath, so hardcoding /wiki/
+		// here is necessary, rather than using article path (which could be different on
+		// the current wiki). We will also not support translated versions of "Special:FilePath"
+		$filePathPrefix = '/wiki/Special:FilePath/';
+		$path = urldecode( $parts['path'] );
+
+		if (
+			preg_match( "/\\.{$wgWikiaBaseDomainRegex}$/", $parts['host'] )
+			&& isset( $parts['scheme'] )
+			&& $parts['scheme'] === 'http'
+			&& stripos( $path, $filePathPrefix ) === 0
+		) {
+			$fileName = str_ireplace( $filePathPrefix, '', $path );
+			$cityId = WikiFactory::DomainToID( wfNormalizeHost( $parts['host'] ) );
+
+			if ( empty( $cityId ) ) {
+				return true;
+			}
+
+			$globalFile = GlobalFile::newFromText( $fileName, $cityId );
+			if ( $globalFile->exists() ) {
+				$url = $globalFile->getUrlGenerator()->url();
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Make sure any "external" links to our own wikis that support HTTPS
 	 * are protocol-relative on output.
 	 *

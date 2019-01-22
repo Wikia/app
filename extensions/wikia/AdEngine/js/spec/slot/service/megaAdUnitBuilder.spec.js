@@ -26,6 +26,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			slotsContext: {
 				isApplicable: noop
+			},
+			adEngineBridge: {
+				geo: {
+					isProperCountry: noop
+				}
 			}
 		},
 		testCases = [
@@ -75,7 +80,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'FEATURED',
-				adUnit: '/5441/wka2b.VIDEO/featured/tablet/oasis-home/_top1k_wiki-gaming'
+				adUnit: '/5441/wka2b.VIDEO/featured/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'UAP_BFAA',
@@ -110,7 +115,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			mocks.adContext,
 			mocks.page,
 			mocks.slotsContext,
-			mocks.deviceDetect
+			mocks.deviceDetect,
+			mocks.adEngineBridge
 		);
 	}
 
@@ -223,6 +229,19 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt'))
 			.toEqual('/5441/wka1b.LB/top_leaderboard/desktop/oasis-home/_top1k_wiki-gaming');
+	});
+
+	it('Should build new ad unit non-remnant provider with vm1b for AU and NZ', function () {
+		mockPageParams(DEFAULT_PAGE_PARAMS);
+		mockContext({ wikiIsTop1000: true }, {});
+
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('desktop');
+		spyOn(mocks.adEngineBridge.geo, 'isProperCountry').and.callFake(function (geos) {
+			return geos.length === 2 && geos[0] === 'AU' && geos[1] === 'NZ';
+		});
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt'))
+			.toEqual('/5441/vm1b.LB/top_leaderboard/desktop/oasis-home/_top1k_wiki-gaming');
 	});
 
 	it('Should build new ad unit without device if its special page', function () {

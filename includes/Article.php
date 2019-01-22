@@ -951,6 +951,8 @@ class Article extends Page {
 		} elseif ( $rdfrom ) {
 			// This is an externally redirected view, from some other wiki.
 			// If it was reported from a trusted site, supply a backlink.
+			Hooks::run( 'DisplayRedirectedFrom', array( $rdfrom, $this ) );
+
 			if ( $wgRedirectSources && preg_match( $wgRedirectSources, $rdfrom ) ) {
 				$redir = Linker::makeExternalLink( $rdfrom, $rdfrom );
 				$wgOut->addSubtitle( wfMessage( 'redirectedfrom' )->rawParams( $redir ) );
