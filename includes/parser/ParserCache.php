@@ -249,7 +249,8 @@ class ParserCache {
 			$optionsKey->setContainsOldMagic( $parserOutput->containsOldMagic() );
 
 			$parserOutputKey = $this->getParserOutputKey( $article,
-				$popts->optionsHash( $optionsKey->mUsedOptions, $article->getTitle() ) );
+				$popts->optionsHash( $optionsKey->mUsedOptions, $article->getTitle() ) ,
+                $popts->getUser()->isAnon() );
 
 			// Save the timestamp so that we don't have to load the revision row on view
 			$parserOutput->setTimestamp( $article->getTimestamp() );
