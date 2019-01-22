@@ -1,19 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, megaAdUnitBuilder, vastUrlBuilder, browserDetect, log, win) {
+], function (adContext, adUnitBuilder, vastUrlBuilder, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
-
-	function megaIsEnabled(params) {
-		return params.useMegaAdUnitBuilder !== false &&
-			(params.useMegaAdUnitBuilder || adContext.get('opts.megaAdUnitBuilderEnabled'));
-	}
 
 	function getPosBasedOnProduct(params) {
 		if (params.adProduct === 'abcd') {
@@ -31,9 +26,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		var vastUrlBuilderOptions = {},
 			vastUrl;
 
-		if (megaIsEnabled(params)) {
-			vastUrlBuilderOptions.adUnit =
-				megaAdUnitBuilder.build(getPosBasedOnProduct(params), params.vastTargeting.src);
+		if (params.vastTargeting && params.vastTargeting.src && (params.adProduct || params.vastTargeting.pos)) {
+			vastUrlBuilderOptions.adUnit = adUnitBuilder.build(getPosBasedOnProduct(params), params.vastTargeting.src);
 		}
 
 		vastUrl = params.vastUrl ||

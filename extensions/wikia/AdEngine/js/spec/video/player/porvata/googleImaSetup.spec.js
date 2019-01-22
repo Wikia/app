@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 				build: noop
 			},
 			log: noop,
-			megaAdUnitBuilder: {
+			adUnitBuilder: {
 				build: function () {
 					return MEGA_AD_UNIT;
 				}
@@ -41,16 +41,12 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	function getModule(vastUrlBuilder) {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaSetup'](
 			mocks.context,
-			mocks.megaAdUnitBuilder,
+			mocks.adUnitBuilder,
 			vastUrlBuilder,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.win
 		);
-	}
-
-	function megaTurnedOn(name) {
-		return name === 'opts.megaAdUnitBuilderEnabled' ? true : undefined;
 	}
 
 	mocks.log.levels = {};
@@ -134,35 +130,8 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		expect(mocks.vastUrlBuilder.build.calls.first().args[2].adUnit).toBeUndefined();
 	});
 
-	it('create VAST url with overwritten custom MEGA adUnit if option is set', function () {
-		spyOn(mocks.vastUrlBuilder, 'build');
-
-		imaSetup.createRequest({
-			width: 100,
-			height: 100,
-			vastTargeting: 'test',
-			useMegaAdUnitBuilder: true
-		});
-
-		expect(mocks.vastUrlBuilder.build.calls.first().args[2].adUnit).toEqual(MEGA_AD_UNIT);
-	});
-
-	it('create VAST url with overwritten custom MEGA adUnit if it is set on context (without option)', function () {
-		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.context, 'get').and.callFake(megaTurnedOn);
-
-		imaSetup.createRequest({
-			width: 100,
-			height: 100,
-			vastTargeting: 'test'
-		});
-
-		expect(mocks.vastUrlBuilder.build.calls.first().args[2].adUnit).toEqual(MEGA_AD_UNIT);
-	});
-
 	it('create VAST url with default adUnit if option is set to false, even if global enable it', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.context, 'get').and.callFake(megaTurnedOn);
 
 		imaSetup.createRequest({
 			width: 100,
@@ -176,7 +145,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 
 	it('pass correct slot targeting params to MEGA adUnit builder', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.megaAdUnitBuilder, 'build');
+		spyOn(mocks.adUnitBuilder, 'build');
 
 		imaSetup.createRequest({
 			width: 100,
@@ -184,11 +153,10 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			vastTargeting: {
 				src: 'test_src',
 				pos: 'TEST_SLOT'
-			},
-			useMegaAdUnitBuilder: true
+			}
 		});
 
-		expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith('TEST_SLOT', 'test_src');
+		expect(mocks.adUnitBuilder.build).toHaveBeenCalledWith('TEST_SLOT', 'test_src');
 	});
 
 	[{
@@ -206,7 +174,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	}].forEach(function (testCase) {
 		it('pass correct param to MEGA ad unit builder for "' + testCase.expected  + '" product', function () {
 			spyOn(mocks.vastUrlBuilder, 'build');
-			spyOn(mocks.megaAdUnitBuilder, 'build');
+			spyOn(mocks.adUnitBuilder, 'build');
 
 			imaSetup.createRequest({
 				adProduct: testCase.adProduct,
@@ -216,11 +184,10 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 				vastTargeting: {
 					src: 'test_src',
 					pos: 'TEST_SLOT'
-				},
-				useMegaAdUnitBuilder: true
+				}
 			});
 
-			expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith(testCase.expected, 'test_src');
+			expect(mocks.adUnitBuilder.build).toHaveBeenCalledWith(testCase.expected, 'test_src');
 		});
 	});
 });
