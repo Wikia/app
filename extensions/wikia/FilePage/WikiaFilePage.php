@@ -112,14 +112,14 @@ class WikiaFilePage extends ImagePage {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		return $dbr->select( [ 'imagelinks', 'page' ], [
-			'page_title',
-			'page_namespace',
-		], [
-			'il_to' => $dbKey,
-			'page_is_redirect' => 0,
-			'page_namespace' => NS_MAIN,
-			'il_from = page_id',
-		], __METHOD__, [
+				'page_title',
+				'page_namespace',
+			], [
+				'il_to' => $dbKey,
+				'page_is_redirect' => 0,
+				'page_namespace' => NS_MAIN,
+				'il_from = page_id',
+			], __METHOD__, [
 				'LIMIT' => 5,
 				'ORDER BY' => 'page_namespace, page_id',
 			] );
