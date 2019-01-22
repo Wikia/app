@@ -13,7 +13,6 @@ All `*.js` files are build into `dist/` using webpack command.
 - WAD functionality
 - DW tracking
 - floating medrec
-- no ads
 - netzathleten
 - vast size
 - DFP params

@@ -9,7 +9,6 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 
 	function isDisabledByQueenOfHearts() {
 		if (adsApi) {
-			console.log(adsApi.isAutoPlayDisabled());
 			return adsApi.isAutoPlayDisabled();
 		}
 

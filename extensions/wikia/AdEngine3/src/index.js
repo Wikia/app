@@ -30,9 +30,11 @@ function setupAdEngine(isOptedIn) {
 
   billTheLizardConfigurator.configure();
 
-  callExternals();
   if (context.get('state.showAds')) {
+    callExternals();
     startAdEngine();
+  } else {
+    window.wgAfterContentAndJS.push(hideAllAdSlots);
   }
 
   trackLabradorValues();
@@ -90,6 +92,16 @@ function waitForAdStackResolve() {
   return Promise.all([
     waitForBiddersResolve()
   ]);
+}
+
+function hideAllAdSlots() {
+  Object.keys(context.get('slots')).forEach((slotName) => {
+    const element = document.getElementById(slotName);
+
+    if (element) {
+      element.classList.add('hidden');
+    }
+  });
 }
 
 export {
