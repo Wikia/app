@@ -3,19 +3,23 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.utils.device'
-], function (adContext, page, slotsContext, deviceDetect) {
+	'ext.wikia.adEngine.utils.device',
+	'ext.wikia.adEngine.bridge'
+], function (adContext, page, slotsContext, deviceDetect, adEngineBridge) {
 	'use strict';
 
 	var dfpId = '5441',
 		megaSlots = [
+			'TOP_LEADERBOARD',
 			'TOP_BOXAD',
 			'INVISIBLE_SKIN',
-			'BOTTOM_LEADERBOARD'
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_PLAYER'
 		],
 		context,
-		wka1 = 'wka1b',
-		wka2 = 'wka2b',
+		serverPrefix = adEngineBridge.geo.isProperCountry(['AU', 'NZ']) ? 'vm' : 'wka',
+		wka1 = serverPrefix + '1b',
+		wka2 = serverPrefix + '2b',
 		shortSlotNameRegexp = new RegExp('^.*\/(' + wka1 + '|' + wka2 + ').[\\w]+\/([^\/]*)\/.*$');
 
 	if (adContext.get('opts.incontentPlayerRail.enabled')) {
@@ -59,12 +63,22 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return deviceDetect.getDevice(params);
 	}
 
+	function getWikiName(slotName, s1) {
+		slotName = slotName.toLowerCase();
+		if (!getContextTargeting().wikiIsTop1000) {
+			return '_not_a_top1k_wiki';
+		} else if (slotName === 'outstream' || slotName === 'featured') {
+			return s1;
+		}
+		return '_top1k_wiki';
+	}
+
 	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDeviceSpecial(params),
 			provider = src.indexOf('remnant') === -1 ? wka1 : wka2,
-			wikiName = getContextTargeting().wikiIsTop1000 ? '_top1k_wiki' : '_not_a_top1k_wiki',
+			wikiName = getWikiName(slotName, params.s1),
 			vertical = params.s0;
 
 		adUnitElements = [

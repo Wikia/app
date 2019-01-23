@@ -7,9 +7,10 @@ require([
 	'wikia.trackingOptIn',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.mixedFooter',
-	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.discussions',
+	'ext.wikia.recirculation.helpers.sponsoredContent',
 	'ext.wikia.recirculation.discussions',
+	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
              mw,
@@ -19,189 +20,103 @@ require([
              trackingOptIn,
              utils,
              mixedFooter,
-             liftigniter,
              discussions,
+             sponsoredContentHelper,
              oldDiscussions,
+             tracker,
              videosModule) {
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
 		$mixedContentFooterContent = $('.mcf-content'),
-		railRecirculation = {
-			max: 5,
-			widget: 'wikia-rail',
-			width: 320,
-			height: 180,
-			modelName: 'ns',
-			title: 'recirculation-fandom-title',
-			opts: {
-				resultType: 'cross-domain',
-				domainType: 'fandom.wikia.com'
-			}
-		},
-		internationalRailRecirculation = {
-			max: 5,
-			widget: 'wikia-rail-i18n',
-			width: 320,
-			height: 180,
-			modelName: 'wiki',
-			title: 'recirculation-trending',
-			opts: {
-				rule_language: window.wgContentLanguage
-			}
-		},
-		mixedContentFooter = {
-			nsItems: {
-				max: $mixedContentFooter.data('number-of-ns-articles'),
-				widget: 'wikia-impactfooter',
-				width: 386,
-				height: 337,
-				modelName: 'ns',
-				opts: {
-					resultType: 'cross-domain',
-					domainType: 'fandom.wikia.com'
-				}
-			},
-			wikiItems: {
-				max: $mixedContentFooter.data('number-of-wiki-articles'),
-				widget: 'wikia-footer-wiki-rec',
-				width: 386,
-				height: 337,
-				modelName: 'wiki',
-				opts: {
-					rule_language: window.wgContentLanguage
-				}
-			}
-		};
+		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
+		numberOfFandomPostFooterSlots = $mixedContentFooter.data('number-of-ns-articles');
 
-	function prepareRailRecirculation(options) {
-		if (mw.config.get('showEmbeddedFeed')) {
-			// If Feeds & Posts will load, don't display the rail recirc
-			return;
-		}
-
-		var request;
-		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION_SOURCE', 'TOPIC_FEED') &&
-			getCurationCMSTopic();
-
-		if (isRecirculationABTest) {
-			request = getDataFromCurationCMS();
-		} else {
-			request = liftigniter.prepare(options);
-		}
-		// prepare & render right rail recirculation module
-		request.done(function (data) {
-			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-				var view = viewFactory();
-				view.render(data, options.title)
-					.then(view.setupTracking())
-					.then(function () {
-						if (!isRecirculationABTest) {
-							liftigniter.setupTracking(view.itemsSelector, options);
-						}
-					});
-			});
-		});
+	/** Discard redundant data returned by jQuery */
+	function mapAjaxCall(data /*, code, jqXHR */) {
+		return data;
 	}
 
-	function getNormalizedCurationCMSData(data) {
-		var normalizedData = {};
-		normalizedData.items = [];
-
-		data.posts.forEach(function (post) {
-			normalizedData.items.push({
-				title: post.title,
-				thumbnail: post.thumbnail.url,
-				url: post.url
-			});
-		});
-
-		return normalizedData;
-	}
-
-	function getDataFromCurationCMS() {
-		var deferred = $.Deferred();
-
-		nirvana.sendRequest({
+	function getTrendingFandomArticles() {
+		return nirvana.sendRequest({
 			controller: 'RecirculationApi',
-			method: 'getFandomPosts',
-			format: 'json',
+			method: 'getTrendingFandomArticles',
 			type: 'get',
-			scriptPath: window.wgCdnApiUrl,
 			data: {
-				type: 'stories',
-				slug: getCurationCMSTopic()
-			},
-			callback: function (data) {
-				if (data && data.posts && data.posts.length > 0) {
-					deferred.resolve(getNormalizedCurationCMSData(data));
-				} else {
-					deferred.reject();
-				}
-			},
-			onErrorCallback: function () {
-				deferred.reject();
+				limit: numberOfFandomPostFooterSlots,
 			}
-		});
-
-		return deferred;
+		}).then(mapAjaxCall);
 	}
 
-	function getCurationCMSTopic() {
-		var topics = {
-			2233: 'marvel',
-			147: 'star-wars',
-			1071836: 'overwatch',
-			3035: 'fallout',
-			250551: 'arrowverse',
-			13346: 'the-walking-dead',
-			410: 'anime',
-			1081: 'anime',
-		};
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred();
 
-		return topics[window.wgCityId];
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function () {
+				deferred.resolve();
+			});
+		} else {
+			deferred.resolve();
+		}
+
+		return deferred.promise();
+	}
+
+	function getPopularPages() {
+		return nirvana.sendRequest({
+			controller: 'RecirculationApi',
+			method: 'getPopularPages',
+			type: 'get',
+			data: {
+				limit: numberOfArticleFooterSlots,
+			}
+		}).then(mapAjaxCall);
 	}
 
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
-			liftigniter.prepare(mixedContentFooter.nsItems),
-			liftigniter.prepare(mixedContentFooter.wikiItems),
-			discussions.prepare()
+			getTrendingFandomArticles(),
+			getPopularPages(),
+			discussions.prepare(),
+			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-				var view = viewFactory();
-				view.render({
+				viewFactory().render({
 					nsItems: nsItems,
 					wikiItems: wikiItems,
-					discussions: discussions
-				}).then(function () {
-					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
-					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
+					discussions: discussions,
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for english recirculation' + err, log.levels.error);
+			});
 	}
 
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
-			liftigniter.prepare(mixedContentFooter.wikiItems),
-			discussions.prepare()
+			getPopularPages(),
+			discussions.prepare(),
+			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {
+		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions, sponsoredContent) {
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-				var view = viewFactory();
-				view.render({
+				viewFactory().render({
 					wikiItems: wikiItems,
-					discussions: discussions
-				}).then(function () {
-					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
+					discussions: discussions,
+					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
 				});
 			});
-		});
+		})
+			.fail(function (err) {
+				log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
+			});
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
@@ -212,17 +127,8 @@ require([
 
 		if (window.wgContentLanguage === 'en') {
 			prepareEnglishRecirculation();
-			prepareRailRecirculation(railRecirculation);
-
-			// fetch data for all recirculation modules
-			liftigniter.fetch('ns');
 		} else {
 			prepareInternationalRecirculation();
-
-			if (window.wgContentLanguage === 'de') {
-				prepareRailRecirculation(internationalRailRecirculation);
-				liftigniter.fetch('wiki');
-			}
 
 			if (videosModule) {
 				videosModule('#recirculation-rail');
@@ -237,7 +143,6 @@ require([
 				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
 
 			if (aproachingMCF) {
-				liftigniter.fetch('wiki');
 				discussions.fetch();
 				window.removeEventListener('scroll', lazyLoadHandler);
 			}
@@ -245,5 +150,53 @@ require([
 
 		window.addEventListener('scroll', lazyLoadHandler);
 		lazyLoadHandler();
+
+		$.when
+			.apply($, [
+				sponsoredContentHelper.fetch(),
+				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
+				waitForRail()
+			])
+			.done(function (sponsoredContent, template) {
+				var $rail = $('#WikiaRail'),
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
+					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
+				if (!sponsoredItem) {
+					return;
+				}
+
+				if (sponsoredItem.title && sponsoredItem.title.length > 90) {
+					sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
+				} else {
+					sponsoredItem.shortTitle = sponsoredItem.title;
+				}
+
+				if (sponsoredItem.thumbnailUrl && window.Vignette) {
+					sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
+						mode: window.Vignette.mode.zoomCrop,
+						height: 53,
+						width: 53
+					});
+				}
+
+				$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+
+				tracker.trackImpression('rail');
+
+				$rail.on('click', '[data-tracking]', function () {
+					var $this = $(this),
+						labels = $this.data('tracking').split(','),
+						href = $this.attr('href');
+
+					labels.forEach(function (label) {
+						tracker.trackClick(label);
+					});
+					tracker.trackSelect(href);
+				});
+			})
+			.fail(function (err) {
+				log('Failed to fetch rail data for recirculation' + err, log.levels.error);
+			});
 	});
 });

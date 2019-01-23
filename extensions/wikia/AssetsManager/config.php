@@ -122,24 +122,15 @@ $config['recirculation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'//resources/wikia/libraries/vignette/vignette.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
-		'//extensions/wikia/Recirculation/js/views/premiumRail.js',
+		'//extensions/wikia/Recirculation/js/helpers/sponsoredContent.js',
 		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
 		'//extensions/wikia/Recirculation/js/plista.js',
-	],
-];
-
-$config['recirculation_liftigniter_tracker'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 
@@ -2425,4 +2416,18 @@ $config['category_page3_layout_selector_scss'] = [
 	'assets' => [
 		'//extensions/wikia/CategoryPage3/styles/category-layout-selector.scss',
 	],
+];
+
+$config['watch_show_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/styles/index.scss',
+	]
+];
+
+$config['watch_show_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/WatchShow/scripts/index.js',
+	]
 ];
