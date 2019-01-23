@@ -187,8 +187,7 @@ export default {
     setSlotState('TOP_BOXAD', true);
     setSlotState('INCONTENT_BOXAD_1', true);
     setSlotState('BOTTOM_LEADERBOARD', true);
-
-    setSlotState('INVISIBLE_SKIN', false);
+    setSlotState('INVISIBLE_SKIN', true);
 
     setSlotState('FEATURED', context.get('custom.hasFeaturedVideo'));
 

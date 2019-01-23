@@ -87,7 +87,7 @@ require([
 			videoAds = adsApi.jwplayerAdsFactory.create({
 				adProduct: 'featured',
 				slotName: 'FEATURED',
-				audio: willMute,
+				audio: !willMute,
 				autoplay: willAutoplay,
 				featured: true,
 				videoId: videoDetails.playlist[0].mediaid,

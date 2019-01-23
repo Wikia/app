@@ -5,18 +5,19 @@ import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 import { billTheLizard, krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
 import ads from './setup';
-import slots from './slots';
 import pageTracker from './tracking/page-tracker';
+import slots from './slots';
+import videoTracker from './tracking/video-tracking';
 
 import './styles.scss';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
-function setupAdEngine(isOptedIn) {
+function setupAdEngine(isOptedIn, geoRequiresConsent) {
   const wikiContext = window.ads.context;
 
-  ads.configure(wikiContext, isOptedIn);
-  // videoTracker.register();
+  ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+  videoTracker.register();
 
   context.push('delayModules', biddersDelay);
 

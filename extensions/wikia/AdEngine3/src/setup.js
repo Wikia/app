@@ -3,9 +3,9 @@ import { utils as adProductsUtils, Roadblock, StickyTLB } from '@wikia/ad-engine
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
 import slots from './slots';
-// import slotTracker from './tracking/slot-tracker';
+import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
-// import viewabilityTracker from './tracking/viewability-tracker';
+import viewabilityTracker from './tracking/viewability-tracker';
 import { getConfig as getRoadblockConfig } from './templates/roadblock-config';
 import { getConfig as getStickyTLBConfig } from './templates/sticky-tlb-config';
 
@@ -21,7 +21,7 @@ function isGeoEnabled(key) {
   return utils.isProperGeo(instantGlobals.get(key), key);
 }
 
-function setupAdContext(wikiContext, isOptedIn = false) {
+function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
   const showAds = window.ads.context.opts.showAds;
 
   context.extend(basicContext);
@@ -67,6 +67,7 @@ function setupAdContext(wikiContext, isOptedIn = false) {
   context.set('options.tracking.kikimora.slot', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
   context.set('options.tracking.kikimora.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
   context.set('options.trackingOptIn', isOptedIn);
+  context.set('options.geoRequiresConsent', geoRequiresConsent);
 
   context.set('services.geoEdge.enabled', isGeoEnabled('wgAdDriverGeoEdgeCountries'));
   context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
@@ -172,8 +173,8 @@ function configure(adsContext, isOptedIn) {
   templateService.register(Roadblock, getRoadblockConfig());
   templateService.register(StickyTLB, getStickyTLBConfig());
 
-  // context.push('listeners.slot', slotTracker);
-  // context.push('listeners.slot', viewabilityTracker);
+  context.push('listeners.slot', slotTracker);
+  context.push('listeners.slot', viewabilityTracker);
 }
 
 function init() {

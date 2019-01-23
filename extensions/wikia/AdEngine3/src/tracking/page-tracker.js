@@ -1,5 +1,5 @@
 import { context } from '@wikia/ad-engine';
-// import { track } from '../../../utils/track';
+import { track } from './tracker';
 
 /**
   * Wrapper for page info warehouse tracking
@@ -25,13 +25,13 @@ export default {
     }
 
     const now = new Date();
-    // track({
-    //   eventName: 'adengpageinfo_props',
-    //   trackingMethod: 'internal',
-    //   prop_name: name,
-    //   prop_value: value,
-    //   timestamp: now.getTime(),
-    //   tz_offset: now.getTimezoneOffset(),
-    // });
+    track({
+      eventName: 'adengpageinfo_props',
+      trackingMethod: 'internal',
+      prop_name: name,
+      prop_value: value,
+      timestamp: now.getTime(),
+      tz_offset: now.getTimezoneOffset(),
+    });
   },
 };

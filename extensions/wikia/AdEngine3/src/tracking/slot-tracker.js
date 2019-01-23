@@ -1,4 +1,5 @@
-import { track } from '../../../utils/track';
+import { context, utils } from '@wikia/ad-engine';
+import { track } from './tracker';
 import targeting from '../targeting';
 
 const onRenderEndedStatusToTrack = [
@@ -17,36 +18,14 @@ function getPosParameter({ pos = '' }) {
 }
 
 function checkOptIn() {
-  let geoRequires = true;
-
-  if (window.M === 'undefined') {
-    geoRequires = true;
-  } else if (typeof window.M.geoRequiresConsent !== 'undefined') {
-    geoRequires = window.M.geoRequiresConsent;
-  } else if (typeof window.M.continent !== 'undefined') {
-    geoRequires = window.M.continent === 'EU';
-  }
-
-  if (geoRequires) {
-    const { context } = window.Wikia.adEngine;
-
+  if (context.get('options.geoRequiresConsent')) {
     return context.get('options.trackingOptIn') ? 'yes' : 'no';
   }
 
   return '';
 }
 
-/**
-  * Prepare data for render ended tracking
-  * @param {Object} slot
-  * @param {Object} data
-  * @returns {Object}
-  */
 function prepareData(slot, data) {
-  // Global imports:
-  const { context, utils } = window.Wikia.adEngine;
-  // End of imports
-
   const now = new Date();
   const slotName = slot.getSlotName();
 
@@ -80,7 +59,7 @@ function prepareData(slot, data) {
     kv_ref: context.get('targeting.ref'),
     kv_top: context.get('targeting.top'),
     labrador: utils.getSamplingResults().join(';'),
-    btl: slot.btlStatus,
+    btl: '',
     opt_in: checkOptIn(),
     document_visibility: utils.getDocumentVisibilityStatus(),
     // Missing:
@@ -88,28 +67,11 @@ function prepareData(slot, data) {
   }, targeting.getBiddersPrices(slotName));
 }
 
-/**
-  * Wrapper for player data warehouse tracking
-  */
 export default {
-  /**
-  * Checks whether tracker is enabled via instant global
-  * @returns {boolean}
-  */
   isEnabled() {
-    // Global imports:
-    const { context } = window.Wikia.adEngine;
-    // End of imports
-
     return context.get('options.tracking.kikimora.slot');
   },
 
-  /**
-   * Track custom slot event to data warehouse
-   * @param {Object} adSlot
-   * @param {Object} data
-   * @returns {void}
-   */
   onCustomEvent(adSlot, data) {
     track(Object.assign(
       {
@@ -120,12 +82,6 @@ export default {
     ));
   },
 
-  /**
-  * Track render ended event to data warehouse
-  * @param {Object} adSlot
-  * @param {Object} data
-  * @returns {void}
-  */
   onRenderEnded(adSlot, data) {
     const status = adSlot.getStatus();
 
@@ -142,12 +98,6 @@ export default {
     }
   },
 
-  /**
-  * Track status changed event (other than success and collapse) to data warehouse
-  * @param {Object} adSlot
-  * @param {Object} data
-  * @returns {void}
-  */
   onStatusChanged(adSlot, data) {
     const status = adSlot.getStatus();
 

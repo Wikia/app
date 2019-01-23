@@ -1,4 +1,6 @@
-import { track } from '../../../utils/track';
+import { events } from '@wikia/ad-engine';
+import { porvataTracker } from '@wikia/ad-engine/dist/ad-products';
+import { track } from './tracker';
 
 function trackEvent(eventData) {
   track(Object.assign(
@@ -12,9 +14,6 @@ function trackEvent(eventData) {
 
 export default {
   register: () => {
-    const { events } = window.Wikia.adEngine;
-    const { porvataTracker } = window.Wikia.adProducts;
-
     events.on(events.VIDEO_PLAYER_TRACKING_EVENT, trackEvent);
 
     porvataTracker.register();

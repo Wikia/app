@@ -10,11 +10,10 @@ All `*.js` files are build into `dist/` using webpack command.
 
 ## To do
 
-- floating medrec
-- DW tracking
-
------
-
+- missing DW params
+  - scroll_y
+  - bidder_won, bidder_won_price
+- floating medrec refresh
 - inline video
 - nielsen
 - WAD functionality
