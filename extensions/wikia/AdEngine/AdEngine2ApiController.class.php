@@ -38,20 +38,4 @@ class AdEngine2ApiController extends WikiaController {
 			$this->response->setBody( '' );
 		}
 	}
-
-	public function getILCode() {
-		global $wgUser;
-
-		$this->response->setContentType( 'text/javascript' );
-		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
-
-		if ($wgUser->isAnon()) {
-			$resourceLoader = new ResourceLoaderAdEngineILCode();
-			$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-			$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
-		} else {
-			$this->response->setBody( '' );
-		}
-	}
 }

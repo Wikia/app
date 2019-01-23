@@ -1419,12 +1419,6 @@ $wgAdDriverF2DisableSraCountries = null;
 $wgAdDriverWadBTCountries = null;
 
 /**
- * @name $wgAdDriverWadILCountries
- * List of countries to enable InstartLogic recovery
- */
-$wgAdDriverWadILCountries = null;
-
-/**
  * @name $wgAdDriverWadHMDCountries
  * List of countries to enable HOMAD recovery
  */
