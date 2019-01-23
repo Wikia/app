@@ -85,12 +85,12 @@ class WikiaFilePage extends ImagePage {
 			}
 		}
 
-		if ( !$img ) {
-
-            $out->redirect( $url );
+		if ( !$img || $img && !$img->fileExists ) {
+            parent::view();
 
 			return;
 		}
+
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
 
 		foreach ( $res as $row ) {
