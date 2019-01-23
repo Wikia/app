@@ -7,10 +7,9 @@ export default class AdUnitBuilder {
 		const adProductInfo = getAdProductInfo(slot.getSlotName(), options.loadedTemplate, options.loadedProduct);
 		let adUnitPattern = context.get(`slots.${slot.getSlotName()}.videoAdUnit`);
 
-		if (!adUnitPattern) {
-			adUnitPattern = context.get('vast.megaAdUnitId');
-		}
-
-		return utils.stringBuilder.build(adUnitPattern, Object.assign(slot.config, adProductInfo));
+		return utils.stringBuilder.build(
+			context.get('vast.adUnitId'),
+			Object.assign(slot.config, adProductInfo)
+		);
 	}
 }

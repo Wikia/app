@@ -492,18 +492,14 @@ class WikiaMiniUpload {
 				}
 				if ( $title->exists() ) {
 					if ( $type == 'overwrite' ) {
-						$title = Title::newFromText($name, 6);
-						// is the target protected?
-						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-						$permErrorsCreate = ( $title->exists() ? [] : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+						$title = Title::newFromText( $name, NS_FILE );
+						$file_name = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 
-						if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+						if ( !$this->userCanOverwrite( $title, $file_name ) ) {
 							header( 'X-screen-type: error' );
 							return wfMessage( 'wmu-file-protected' )->plain();
 						}
 
-						$file_name = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 						$file_mwname = new FakeLocalFile( Title::newFromText( $mwname, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 
 						if ( !empty( $extraId ) ) {
@@ -745,6 +741,14 @@ class WikiaMiniUpload {
 			'code' => isset( $embed_code ) ? $embed_code : '',
 		] );
 		return $tmpl->render( 'summary' );
+	}
+
+	private function userCanOverwrite( Title $title, File $file ) {
+		global $wgUser;
+
+		return empty( $title->getUserPermissionsErrors( 'edit', $wgUser ) )
+			&& empty( $title->getUserPermissionsErrors( 'upload', $wgUser ) )
+			&& ( $file instanceof File && UploadBase::userCanReUpload( $wgUser, $file->getName() ) );
 	}
 
 	/**

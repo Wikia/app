@@ -104,7 +104,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/wad/btRecLoader.js',
-		'//extensions/wikia/AdEngine/js/wad/ilRecLoader.js',
 		'//extensions/wikia/AdEngine/js/wad/wadRecRunner.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -122,24 +121,15 @@ $config['recirculation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'//resources/wikia/libraries/vignette/vignette.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
-		'//extensions/wikia/Recirculation/js/views/premiumRail.js',
+		'//extensions/wikia/Recirculation/js/helpers/sponsoredContent.js',
 		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
 		'//extensions/wikia/Recirculation/js/plista.js',
-	],
-];
-
-$config['recirculation_liftigniter_tracker'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 

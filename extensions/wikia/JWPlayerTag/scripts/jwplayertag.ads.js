@@ -2,13 +2,12 @@ define('wikia.articleVideo.jwplayertag.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'wikia.log'
-], function (adContext, btfBlocker, vastUrlBuilder, megaAdUnitBuilder, srcProvider, articleVideoAd, vastDebugger, adsTracking, log) {
+], function (adContext, btfBlocker, vastUrlBuilder, srcProvider, articleVideoAd, vastDebugger, adsTracking, log) {
 	'use strict';
 
 	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
