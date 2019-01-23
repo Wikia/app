@@ -109,6 +109,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					if (type === common.notificationTypes.discussionReply) {
 						return 'wds-icons-reply-small';
 					} else if (type === common.notificationTypes.announcement) {
+					    // TODO: icons update, icon missing
 						return 'wds-icons-megaphone';
 					} else {
 						return 'wds-icons-upvote-small';
