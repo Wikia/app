@@ -162,7 +162,11 @@ require([
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
 					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
 
-				if (sponsoredItem.title.length > 90) {
+				if (!sponsoredItem) {
+					return;
+				}
+
+				if (sponsoredItem.title && sponsoredItem.title.length > 90) {
 					sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
 				} else {
 					sponsoredItem.shortTitle = sponsoredItem.title;
