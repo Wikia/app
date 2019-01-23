@@ -16,8 +16,8 @@
 					<div class="featured-video__title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 				</div>
 				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-cross-tiny',
-					'wds-icon wds-icon-tiny featured-video__close'
+					'wds-icons-add-tiny',
+					'wds-icon wds-icon-tiny is-rotated-45 featured-video__close'
 				) ?>
 			</div>
 			<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>

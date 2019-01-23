@@ -213,6 +213,7 @@ class Subtitle {
 	 * @return string
 	 */
 	private function getBackArrow() {
+		// TODO: icons update
 		return DesignSystemHelper::renderSvg( 'wds-icons-upvote-reply-tiny', 'wds-icon wds-icon-tiny page-header__subtitle-back-icon' );
 	}
 

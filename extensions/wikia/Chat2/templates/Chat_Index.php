@@ -169,13 +169,13 @@
 	</script>
 	<script type='text/template' id='user-action-private-block-template'>
 		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-cross', 'wds-icon wds-icon-small' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-add', 'wds-icon wds-icon-small is-rotated-45' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>
 	<script type='text/template' id='user-action-private-allow-template'>
 		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark-circle', 'wds-icon wds-icon-small' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>

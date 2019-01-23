@@ -4,7 +4,7 @@
 			<div class="wds-global-navigation__notifications-counter wds-is-hidden"></div>
 		</div>
 		<?= DesignSystemHelper::renderSvg(
-			'wds-icons-note',
+			'wds-icons-message',
 			'wds-icon wds-icon-small',
 			wfMessage( 'global-navigation-messages-title' )->escaped()
 		) ?>
