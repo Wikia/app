@@ -52,7 +52,7 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc, $wgDBprefix;
+		global $wgMemc;
 		$out = $this->getContext()->getOutput();
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
@@ -67,7 +67,7 @@ class WikiaFilePage extends ImagePage {
 
 			return;
 		}
-		$redirKey = wfMemcKey( "redir", $wgDBprefix, $this->getTitle()->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
 
 		$url = $wgMemc->get( $redirKey );
 		if ( $url ) {
@@ -112,14 +112,14 @@ class WikiaFilePage extends ImagePage {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		return $dbr->select( [ 'imagelinks', 'page' ], [
-			'page_title',
-			'page_namespace',
-		], [
-			'il_to' => $dbKey,
-			'page_is_redirect' => 0,
-			'page_namespace' => NS_MAIN,
-			'il_from = page_id',
-		], __METHOD__, [
+				'page_title',
+				'page_namespace',
+			], [
+				'il_to' => $dbKey,
+				'page_is_redirect' => 0,
+				'page_namespace' => NS_MAIN,
+				'il_from = page_id',
+			], __METHOD__, [
 				'LIMIT' => 5,
 				'ORDER BY' => 'page_namespace, page_id',
 			] );
