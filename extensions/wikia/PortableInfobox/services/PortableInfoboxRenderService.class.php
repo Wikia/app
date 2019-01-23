@@ -97,6 +97,14 @@ class PortableInfoboxRenderService {
 			case 'image':
 				$result = $this->renderImage( $data );
 				break;
+			case 'panel':
+				$result = $this->renderPanel( $data );
+				break;
+			case 'section':
+				// we support section only as direct child of panel, therefore there is no point in rendering
+				// it in other context
+				$result = '';
+				break;
 			case 'title':
 				$result = $this->renderTitle( $data );
 				break;
@@ -191,6 +199,96 @@ class PortableInfoboxRenderService {
 		return $this->render( $templateName, $data );
 	}
 
+	protected function renderPanel( $data, $type='panel' ) {
+		$cssClasses = [];
+		$tabToggles = [];
+		$tabContents = [];
+		$collapse = $data['collapse'];
+		$header = '';
+		$shouldShowToggles = false;
+
+		foreach ( $data['value'] as $index => $child ) {
+			switch ( $child['type'] ) {
+				case 'header':
+					if ( empty( $header ) ) {
+						$header = $this->renderHeader( $child['data'] );
+					}
+					break;
+				case 'section':
+					$sectionData = $this->getSectionData( $child, $index );
+
+					// section needs to have content in order to render it
+					if ( !empty( $sectionData['content'] ) ) {
+						$tabToggles[] = $sectionData['toggle'];
+						$tabContents[] = $sectionData['content'];
+
+						if ( !empty( $sectionData['toggle']['value'] ) ) {
+							$shouldShowToggles = true;
+						}
+					}
+					break;
+				default:
+					// we do not support any other tags than section and header inside panel
+					break;
+			}
+		}
+
+		if ( $collapse !== null && count( $tabContents ) > 0 && !empty( $header ) ) {
+			$cssClasses[] = 'pi-collapse';
+			$cssClasses[] = 'pi-collapse-' . $collapse;
+		}
+
+		if ( count( $tabContents ) > 0 ) {
+			$tabContents[0]['active'] = true;
+			$tabToggles[0]['active'] = true;
+		} else {
+			// do not render empty panel
+			return '';
+		}
+
+		if ( !$shouldShowToggles ) {
+			$tabContents = array_map(function($content) {
+				$content['active'] = true;
+				return $content;
+			}, $tabContents);
+		}
+
+		return $this->render( $type, [
+			'item-name' => $data['item-name'],
+			'cssClasses' => implode( ' ', $cssClasses ),
+			'header' => $header,
+			'tabToggles' => $tabToggles,
+			'tabContents' => $tabContents,
+			'shouldShowToggles' => $shouldShowToggles,
+		]);
+	}
+
+	private function getSectionData( $section, $index ) {
+		$content = '';
+		$itemName = $section['data']['item-name'];
+		$toggle = [
+			'value' => $section['data']['label'],
+			'index' => $index,
+			'item-name' => $itemName,
+		];
+
+		foreach ( $section['data']['value'] as $child ) {
+			$content .= $this->renderItem( $child['type'], $child['data'] );
+		}
+
+		$content = !empty($content)
+			? [
+				'index' => $index,
+				'content' => $content,
+				'item-name' => $itemName,
+			] : null;
+
+		return [
+			'toggle' => $toggle,
+			'content' => $content,
+		];
+	}
+
 	protected function renderTitle( $data ) {
 		$data['inlineStyles'] = $this->inlineStyles;
 
@@ -264,11 +362,33 @@ class PortableInfoboxRenderService {
 				if ( !empty( $data['label'] ) ) {
 					$horizontalGroupData['renderLabels'] = true;
 				}
+			} elseif ( $item['type'] === 'image' ) {
+
+				// Only one image is supported in a horizontal group
+				$image = $data[0];
+
+				$horizontalGroupData['labels'][] = [
+					'text' => $image['caption'],
+					'item-name' => $image['item-name'],
+					'source' => $image['source'],
+				];
+
+				// Caption is used to display label in TH
+				// Unset it so it is not rendered also as an image caption
+				$image['caption'] = null;
+
+				$horizontalGroupData['values'][] = [
+					'text' => $this->renderImage( [ $image ] ),
+					'item-name' => $image['item-name'],
+					'source' => $image['source']
+				];
 			} elseif ( $item['type'] === 'header' ) {
+
 				$horizontalGroupData['header'] = [
 					'value' => $data['value'],
 					'source' => $data['source'],
 					'item-name' => $data['item-name'],
+					'inline-styles' => $this->inlineStyles
 				];
 			}
 		}

@@ -1,7 +1,7 @@
 export function getConfig() {
 	return {
 		slotsToEnable: [
-			'TOP_RIGHT_BOXAD',
+			'TOP_BOXAD',
 			'INVISIBLE_SKIN'
 		]
 	};

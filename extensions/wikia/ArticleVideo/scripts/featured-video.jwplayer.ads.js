@@ -12,9 +12,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.wrappers.prebid'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
 	vastUrlBuilder,
@@ -28,9 +26,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	fvLagger,
 	log,
 	win,
-	prebidWrapper,
-	bidders,
-	prebid
+	bidders
 ) {
 	'use strict';
 
@@ -65,8 +61,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
-			return prebid.getSlotParams(featuredVideoSlotName);
+		if (bidders && bidders.isEnabled()) {
+			return bidders.getBidParameters(featuredVideoSlotName);
 		}
 
 		return {};
@@ -92,6 +88,11 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			videoId = playlistItem[player.getPlaylistIndex()].mediaid,
 			videoDepth = 0;
 
+		// Disable ads for steam browser
+		if (adContext.get('opts.isSteamBrowser')) {
+			return;
+		}
+
 		bidParams = bidParams || {};
 		trackingParams = {
 			adProduct: 'featured-video',
@@ -100,13 +101,11 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		};
 
 		function requestBidder() {
-			if (!prebidWrapper) {
+			if (!bidders || !bidders.isEnabled()) {
 				return;
 			}
 
-			var bid = bidders && bidders.isEnabled()
-				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
-				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';

@@ -84,14 +84,27 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	};
 
 	AdElement.prototype.updateDataParams = function (event) {
-		var resp = event.slot.getResponseInformation();
-		if (!resp.isEmpty && resp.creativeId === null && resp.lineItemId === null) {
-			this.node.setAttribute('data-gpt-line-item-id', 'AdX');
-			this.node.setAttribute('data-gpt-creative-id', 'AdX');
-		} else {
-			this.node.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
-			this.node.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+		var creativeId = event.creativeId;
+		var lineItemId = event.lineItemId;
+
+		if (!event.isEmpty && event.slot) {
+			var resp = event.slot.getResponseInformation();
+
+			if (resp) {
+				if (resp.sourceAgnosticCreativeId && resp.sourceAgnosticLineItemId) {
+					log(['set line item and creative id to source agnostic values'], 'debug', logGroup);
+					creativeId = resp.sourceAgnosticCreativeId;
+					lineItemId = resp.sourceAgnosticLineItemId;
+				}
+				else if (resp.creativeId === null && resp.lineItemId === null) {
+					creativeId = 'AdX';
+					lineItemId = 'AdX';
+				}
+			}
 		}
+
+		this.node.setAttribute('data-gpt-line-item-id', lineItemId);
+		this.node.setAttribute('data-gpt-creative-id', creativeId);
 		this.node.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
 	};
 

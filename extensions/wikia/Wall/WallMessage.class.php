@@ -453,63 +453,6 @@ class WallMessage {
 		return $this->getArticleComment()->getMetadata( 'title' );
 	}
 
-	public function getNotifyeveryone() {
-		$out = (int )$this->getArticleComment()->getMetadata( 'notify_everyone' );
-		$ageInDays = ( time() - $out ) / ( 60 * 60 * 24 );
-
-		if ( $ageInDays < WallHelper::NOTIFICATION_EXPIRE_DAYS ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function canNotifyeveryone() {
-		if ( $this->isMain() && !$this->isArchive() && !$this->isRemove() ) {
-			if ( !$this->isAllowedNotifyEveryone() ) {
-				return false;
-			}
-			return !$this->getNotifyeveryone();
-		}
-		return false;
-	}
-
-	public function canUnnotifyeveryone() {
-		if ( $this->isMain() ) {
-			if ( !$this->isAllowedNotifyEveryone() ) {
-				return false;
-			}
-			return $this->getNotifyeveryone();
-		}
-		return false;
-	}
-
-	public function setNotifyEveryone( $notifyEveryone ) {
-		if ( $this->isMain() ) {
-			if ( !$this->isAllowedNotifyEveryone() ) {
-				wfDebug( __METHOD__ . " - is not allowed to notify everyone\n" );
-				return false;
-			}
-			$app = F::App();
-			$wne = new WallNotificationsEveryone();
-			$this->load( true );
-			if ( $notifyEveryone ) {
-				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
-				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text() );
-				$rev = $this->getArticleComment()->mLastRevision;
-				$entity = WallNotificationEntity::createFromRev( $rev );
-				$wne->addNotificationToQueue( $entity );
-			} else {
-				$this->getArticleComment()->removeMetadata( 'notify_everyone' );
-				$pageId = $this->getId();
-				$wne->removeNotificationForPageId( $pageId );
-				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text() );
-			}
-		}
-	}
-
 	public function setMetaTitle( $title ) {
 		if ( $this->isMain() ) {
 			$this->getArticleComment()->setMetaData( 'title', $title );
@@ -1472,11 +1415,6 @@ class WallMessage {
 
 	public function canVotes( User $user ) {
 		return $this->showVotes() && $user->isLoggedIn() && !$user->isBlocked();
-	}
-
-	public function isAllowedNotifyEveryone() {
-		$app = F::App();
-		return $this->helper->isAllowedNotifyEveryone( $this->title->getNamespace(), $app->wg->User );
 	}
 
 	/**

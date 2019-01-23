@@ -13,7 +13,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		},
 		megaAdUnitBuilder: {
 			build: function () {
-				return 'wikia_gpt/5441/wka1a.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
+				return 'wikia_gpt/5441/wka1b.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
 			},
 			isMegaSlot: noop
 		},
@@ -78,7 +78,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			'testSource',
 			{
 				TOP_LEADERBOARD:         {size: '728x90,970x250,970x90', pos: 'top'},
-				TOP_RIGHT_BOXAD:         {size: '300x250,300x600', pos: 'top'},
+				TOP_BOXAD:         {size: '300x250,300x600', pos: 'top'},
 				GPT_FLUSH:               {skipCall: true}
 			},
 			extra
@@ -132,10 +132,10 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			}
 		};
 
-		getProvider(extra).fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
+		getProvider(extra).fillInSlot(createSlot('TOP_BOXAD'));
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
-			'extra/testSource/TOP_RIGHT_BOXAD'
+			'extra/testSource/TOP_BOXAD'
 		);
 	});
 

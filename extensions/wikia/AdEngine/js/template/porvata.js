@@ -15,8 +15,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.tracker',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.wrappers.prebid')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
 	DOMElementTweaker,
@@ -33,8 +32,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	tracker,
 	win,
 	mercuryListener,
-	bidders,
-	prebid
+	bidders
 ) {
 	'use strict';
 	var fallbackBidders = [
@@ -119,9 +117,8 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			hasDirectAd = false;
-			fallbackBid = bidders && bidders.isEnabled()
-				? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders)
-				: prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			fallbackBid = bidders && bidders.isEnabled() ? bidders.getWinningVideoBidBySlotName(params.slotName, fallbackBidders) : null;
+
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
@@ -217,8 +214,8 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (prebid && params.hbAdId) {
-			params.bid = bidders && bidders.isEnabled() ? bidders.getBidByAdId(params.hbAdId) : prebid.getBidByAdId(params.hbAdId);
+		if (bidders && bidders.isEnabled() && params.hbAdId) {
+			params.bid = bidders.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}
@@ -278,7 +275,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 			onReady(video, params);
 
-			if (prebid && params.useBidAsFallback) {
+			if (bidders && bidders.isEnabled() && params.useBidAsFallback) {
 				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {

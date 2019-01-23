@@ -19,7 +19,7 @@
 		lightboxLoading: false,
 		inlineVideoLoading: [],
 		videoInstance: null,
-		pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
+		pageAds: $('#TOP_BOXAD'), // if more ads start showing up over lightbox, add them here
 		reloadOnClose: false, // Means to reload the page on closing the lightbox - see VID-473
 		lightboxSettings: {
 			// start with default modal options

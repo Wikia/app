@@ -83,17 +83,23 @@ class StaffLogger {
 		return $text;
 	}
 
-	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason ) {
+	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason, $user = null ) {
 		global $wgUser;
+		// When an another service makes a call to change wiki status, then the user is not
+		// available in global wgUser, therefore it may be passed explicitly.
+		if ($user == null) {
+			$user = $wgUser;
+		}
+
 		$comment = wfMessage(
 			'stafflog-wiki-status-change',
-			self::getCommunityUser( $wgUser->getName() ),
+			self::getCommunityUser( $user->getName() ),
 			self::getCityLink( $cityId ),
 			$cityStatus,
 			$reason
 		)->inLanguage( 'en' )->text();
 		// sadly, $type and $action have 10-character limit, hence 'wikifactor' and 'pubstatus'.
-		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), 0, '',  $comment );
+		self::log( 'wikifactor', 'pubstatus', $user->getID(), $user->getName(), 0, '',  $comment );
 		return true;
 	}
 }

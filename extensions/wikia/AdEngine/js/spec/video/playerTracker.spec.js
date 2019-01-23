@@ -45,7 +45,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			log: noop,
-			bidHelper: {
+			bidders: {
 				transformPriceFromBid: function (bid) {
 					return bid.cpm;
 				}
@@ -71,7 +71,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.browserDetect,
 			mocks.log,
 			mocks.window,
-			mocks.bidHelper,
+			mocks.bidders,
 			undefined,
 			undefined
 		);

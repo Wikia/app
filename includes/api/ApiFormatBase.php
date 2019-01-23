@@ -180,6 +180,7 @@ abstract class ApiFormatBase extends ApiBase {
 <!DOCTYPE HTML>
 <html>
 <head>
+	<meta name="robots" content="noindex,nofollow" />
 <?php if ( $this->mUnescapeAmps ) {
 ?>	<title>MediaWiki API</title>
 <?php } else {

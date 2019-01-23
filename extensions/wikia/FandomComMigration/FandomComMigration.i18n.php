@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'fandom-com-migration-after' => "Attention: We have migrated your community's domain to fandom.com. Find out more in [http://community.wikia.com/wiki/User_blog:Brandon_Rhea/How_we%27re_testing_the_fandom.com_domain_migration this FANDOM news blog].",
-	'fandom-com-migration-before' => 'Attention: Over the next few weeks, we will be migrating several communities to fandom.com, including yours. Find out more in [https://community.wikia.com/wiki/User_blog:Brandon_Rhea/How_we%27re_testing_the_fandom.com_domain_migration this FANDOM news blog].',
+	'fandom-com-migration-after' => "Attention: We have migrated your community's domain to fandom.com. Find out more in [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
+	'fandom-com-migration-before' => "Attention: Over the next few weeks, we are migrating your community's domain to fandom.com. Find out more on [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
 );
 
 $messages['qqq'] = array(
@@ -12,13 +12,13 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'fandom-com-migration-after' => 'Achtung: Wir haben die Domain deiner Community zu fandom.com geändert. Mehr Infos hierzu findest du im [http://de.community.wikia.com/wiki/Benutzer_Blog:Mira_Laime/So_testen_wir_den_Umzug_unserer_Domains_zu_fandom.com FANDOM News-Blog].',
-	'fandom-com-migration-before' => 'Achtung: In den nächsten Wochen werden wir die Domain dieser und einiger weiterer Communitys zu fandom.com ändern. Mehr Infos dazu findest du im [http://de.community.wikia.com/wiki/Benutzer_Blog:Mira_Laime/So_testen_wir_den_Umzug_unserer_Domains_zu_fandom.com FANDOM News-Blog].',
+	'fandom-com-migration-after' => 'Achtung: Wir haben die Domain deiner Community auf fandom.com umgezogen. Mehr dazu findest du auf [http://de.community.wikia.com/wiki/Hilfe:Domain-Umzug_auf_Fandom dieser Hilfeseite].',
+	'fandom-com-migration-before' => 'Achtung: Im Laufe der nächsten Wochen ziehen wir die Domain deiner Community um auf fandom.com. Mehr dazu auf [http://de.community.wikia.com/wiki/Hilfe:Domain-Umzug_auf_Fandom dieser Hilfeseite].',
 );
 
 $messages['es'] = array(
-	'fandom-com-migration-after' => 'Atención: Hemos migrado el dominio de tu comunidad a fandom.com. Conoce más en [https://comunidad.wikia.com/wiki/Usuario_Blog:Luchofigo85/C%C3%B3mo_estamos_probando_la_migraci%C3%B3n_de_dominio_a_fandom.com esta entrada de blog].',
-	'fandom-com-migration-before' => 'Atención: Estaremos cambiando el dominio de tu comunidad a fandom.com en las próximas semanas. Conoce más en [https://comunidad.wikia.com/wiki/Usuario_Blog:Luchofigo85/C%C3%B3mo_estamos_probando_la_migraci%C3%B3n_de_dominio_a_fandom.com esta entrada de blog].',
+	'fandom-com-migration-after' => 'Atención: Hemos migrado el dominio de tu comunidad a fandom.com. Entérate más en [https://comunidad.wikia.com/wiki/Ayuda:Migraci%C3%B3n_de_dominio_de_Fandom esta página de ayuda].',
+	'fandom-com-migration-before' => 'Atención: En las siguientes semanas estaremos migrando el dominio de nuestras comunidades a fandom. Entérate más en [https://comunidad.wikia.com/wiki/Ayuda:Migraci%C3%B3n_de_dominio_de_Fandom esta página de ayuda].',
 );
 
 $messages['fi'] = array(
@@ -27,18 +27,19 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'fandom-com-migration-after' => "Attention : nous avons migré le domaine de votre communauté vers fandom.com. Pour en savoir plus, consultez [http://communaute.wikia.com/wiki/Blog_utilisateur:Hypsoline/Comment_nous_allons_tester_la_migration_de_domaine_vers_fandom.com ce blog d'actualités FANDOM].",
-	'fandom-com-migration-before' => "Attention : au cours des prochaines semaines, nous allons migrer plusieurs communautés, dont la vôtre, vers fandom.com. Pour en savoir plus, consultez [http://communaute.wikia.com/wiki/Blog_utilisateur:Hypsoline/Comment_nous_allons_tester_la_migration_de_domaine_vers_fandom.com ce blog d'actualités FANDOM].",
+	'fandom-com-migration-after' => "Attention : nous avons migré le domaine de votre communauté vers fandom.com. Pour en savoir plus, consultez [https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com
+cette page d'aide Fandom].",
+	'fandom-com-migration-before' => "Attention : au cours des prochaines semaines, nous allons migrer le domaine de votre communauté vers fandom.com. Pour en savoir plus, consultez [https://communaute.wikia.com/wiki/Aide:Migration_vers_le_domaine_fandom.com cette page d'aide Fandom].",
 );
 
 $messages['it'] = array(
-	'fandom-com-migration-after' => 'Attenzione: abbiamo migrato il dominio della tua comunità su fandom.com. Scopri di più leggendo [http://it.community.wikia.com/wiki/Blog_utente:Leviathan_89/Come_stiamo_testando_la_migrazione_al_dominio_fandom.com questo blog di FANDOM].',
-	'fandom-com-migration-before' => 'Attenzione: nelle prossime settimane migreremo diverse comunità sul dominio fandom.com, tra cui la tua. Scopri di più leggendo [http://it.community.wikia.com/wiki/Blog_utente:Leviathan_89/Come_stiamo_testando_la_migrazione_al_dominio_fandom.com questo blog di FANDOM].',
+	'fandom-com-migration-after' => "Attenzione: Abbiamo migrato il dominio della tua comunità su fandom.com. Scopri di più su [http://it.community.wikia.com/wiki/Aiuto:Migrazione_al_domino_fandom.com questa pagina d'aiuto].",
+	'fandom-com-migration-before' => "Attenzione: Nelle prossime settimane, migreremo il dominio della tua comunità su fandom.com. Scopri di più su [http://it.community.wikia.com/wiki/Aiuto:Migrazione_al_domino_fandom.com questa pagina d'aiuto].",
 );
 
 $messages['ja'] = array(
-	'fandom-com-migration-after' => '注意：あなたのコミュニティのドメインはfandom.comに変更されました。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/fandom.com%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E7%A7%BB%E8%A1%8C%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 こちらのFANDOMスタッフブログ]をご覧ください。',
-	'fandom-com-migration-before' => '注意：今後数週間にかけて、あなたのコミュニティなど複数のコミュニティのドメインがfandom.comに変更されます。詳しくは、[http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Tomeito/fandom.com%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E7%A7%BB%E8%A1%8C%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 こちらのFANDOMスタッフブログ]をご覧ください。',
+	'fandom-com-migration-after' => 'お知らせ:こちらのコミュニティのドメインをfandom.comに移行致しました。詳細は[https://community.wikia.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
+	'fandom-com-migration-before' => 'お知らせ：数週間のうちに、こちらのコミュニティのドメインをfandom.comに移行致します。詳細は[https://community.wikia.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
 );
 
 $messages['nl'] = array(
@@ -47,29 +48,27 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'fandom-com-migration-after' => 'Uwaga: Dokonaliśmy migracji domeny waszej społeczności na fandom.com. Więcej informacji znajduje się w [[w:c:pl.c:Blog_użytkownika:Nanaki/Jak_testujemy_migrację_domeny_na_fandom.com|tym blogu]].
-',
-	'fandom-com-migration-before' => 'Uwaga: W nadchodzących tygodniach nastąpi migracja domeny waszej społeczności na fandom.com. Więcej informacji znajduje się w [[w:c:pl.c:Blog_użytkownika:Nanaki/Jak_testujemy_migrację_domeny_na_fandom.com|tym blogu]].
-',
+	'fandom-com-migration-after' => 'Uwaga: Dokonaliśmy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [https://spolecznosc.wikia.com/wiki/Pomoc:Migracja_domen_Fandomu tej stronie pomocy].',
+	'fandom-com-migration-before' => 'Uwaga: W ciągu następnych kilku tygodni dokonamy migracji domeny Waszej społeczności na fandom.com. Więcej informacji można znaleźć na [https://spolecznosc.wikia.com/wiki/Pomoc:Migracja_domen_Fandomu tej stronie pomocy].',
 );
 
 $messages['pt'] = array(
-	'fandom-com-migration-after' => 'Atenção: Nós migramos o domínio da sua comunidade para fandom.com. Saiba mais [https://comunidade.wikia.com/wiki/Blog_de_usu%C3%A1rio:Matheus_Leonardo/Como_testaremos_a_migra%C3%A7%C3%A3o_para_o_dom%C3%ADnio_fandom.com neste blog de notícias do FANDOM].',
-	'fandom-com-migration-before' => 'Atenção: Durante as próximas semanas, nós estaremos migrando várias comunidades para fandom.com, incluindo a sua. Saiba mais [https://comunidade.wikia.com/wiki/Blog_de_usu%C3%A1rio:Matheus_Leonardo/Como_testaremos_a_migra%C3%A7%C3%A3o_para_o_dom%C3%ADnio_fandom.com neste blog de notícias do FANDOM].',
+	'fandom-com-migration-after' => 'Atenção: nós migramos o domínio de sua comunidade para fandom.com. Descubra mais sobre isso [https://comunidade.wikia.com/wiki/Ajuda:Migra%C3%A7%C3%A3o_de_Dom%C3%ADnio_do_Fandom nessa página de ajuda].',
+	'fandom-com-migration-before' => 'Atenção: nas próximas semanas, estaremos migrando o domínio de sua comunidade para fandom.com. Descubra mais sobre isso [https://comunidade.wikia.com/wiki/Ajuda:Migra%C3%A7%C3%A3o_de_Dom%C3%ADnio_do_Fandom nessa página de ajuda Fandom].',
 );
 
 $messages['ru'] = array(
-	'fandom-com-migration-after' => 'ВНИМАНИЕ: Мы изменили домен вашего сообщества с wikia.com на fandom.com. Подробнее о переходе на домен fandom.com можно узнать в [http://ru.community.wikia.com/wiki/%D0%91%D0%BB%D0%BE%D0%B3_%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B0:Kuzura/%D0%A2%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0_%D0%BD%D0%B0_fandom.com этом блоге].',
-	'fandom-com-migration-before' => 'ВНИМАНИЕ: В течение следующих недель мы изменим домен некоторых сообществ с wikia.com на fandom.com, включая ваше сообщество. Подробнее о переходе на домен fandom.com можно узнать в [http://ru.community.wikia.com/wiki/%D0%91%D0%BB%D0%BE%D0%B3_%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B0:Kuzura/%D0%A2%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0_%D0%BD%D0%B0_fandom.com этом блоге].',
+	'fandom-com-migration-after' => 'Внимание. Домен вашего сообщества был изменён с wikia.com на fandom.com. Подробнее см. [http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_wikia.com_%D0%BD%D0%B0_fandom.com_%D0%B2_URL_%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2 справочную страницу].',
+	'fandom-com-migration-before' => 'Внимание. В течение следующих недель домен вашего сообщества изменится с wikia.com на fandom.com. Подробнее см. [http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_wikia.com_%D0%BD%D0%B0_fandom.com_%D0%B2_URL_%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2 справочную страницу].',
 );
 
 $messages['zh-hans'] = array(
-	'fandom-com-migration-after' => '提醒：我们已经将您的社区域名移动至fandom.com。请查阅[http://zh.community.wikia.com/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:Cal-Boy/%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E7%A4%BE%E5%8C%BA%E8%BF%81%E7%A7%BB%E8%87%B3%E6%96%B0%E5%9F%9F%E5%90%8Dfandom.com 这篇文章]了解更多内容。',
-	'fandom-com-migration-before' => '提醒：在接下来的几周，我们将会把大量的社区域名移动至fandom.com，其中也包括您的社区。请查阅[http://zh.community.wikia.com/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:Cal-Boy/%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E7%A4%BE%E5%8C%BA%E8%BF%81%E7%A7%BB%E8%87%B3%E6%96%B0%E5%9F%9F%E5%90%8Dfandom.com 这篇文章]了解更多内容。',
+	'fandom-com-migration-after' => '请注意：我们已经将您的社区域名迁移到了fandom.com。您可以在[http://zh.community.wikia.com/wiki/Help:Fandom%E5%9F%9F%E5%90%8D%E8%BF%81%E7%A7%BB Fandom帮助页]查找更多信息。',
+	'fandom-com-migration-before' => '请注意：在接下来的几个星期内，我们将会把您的社区域名迁移到fandom.com。您可以在[http://zh.community.wikia.com/wiki/Help:Fandom%E5%9F%9F%E5%90%8D%E8%BF%81%E7%A7%BB Fandom帮助页]查找更多信息。',
 );
 
 $messages['zh-hant'] = array(
-	'fandom-com-migration-after' => '提醒：我們已經將您的社區域名移動至fandom.com。請查閱[http://zh.community.wikia.com/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:Cal-Boy/%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E7%A4%BE%E5%8C%BA%E8%BF%81%E7%A7%BB%E8%87%B3%E6%96%B0%E5%9F%9F%E5%90%8Dfandom.com?variant=zh-hant 這篇文章]了解更多内容。',
-	'fandom-com-migration-before' => '提醒：在接下來的幾周，我們將會把大量的社區域名移動至fandom.com，其中也包括您的社區。請查閱[http://zh.community.wikia.com/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:Cal-Boy/%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E7%A4%BE%E5%8C%BA%E8%BF%81%E7%A7%BB%E8%87%B3%E6%96%B0%E5%9F%9F%E5%90%8Dfandom.com?variant=zh-hant 這篇文章]了解更多内容。',
+	'fandom-com-migration-after' => '请注意：我们已经将您的社区域名迁移到了fandom.com。您可以在[http://zh.community.wikia.com/wiki/Help:Fandom%E5%9F%9F%E5%90%8D%E8%BF%81%E7%A7%BB Fandom帮助页]查找更多信息。',
+	'fandom-com-migration-before' => '请注意：在接下来的几个星期内，我们将会把您的社区域名迁移到fandom.com。您可以在[http://zh.community.wikia.com/wiki/Help:Fandom%E5%9F%9F%E5%90%8D%E8%BF%81%E7%A7%BB Fandom帮助页]查找更多信息。',
 );
 

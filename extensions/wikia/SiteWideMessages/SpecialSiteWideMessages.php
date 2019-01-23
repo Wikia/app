@@ -166,7 +166,7 @@ function SiteWideMessagesAddNotifications( Skin $skin, QuickTemplate $tpl ): boo
  * When wiki is disabled or changed into the redirect, remove all messages from that wiki
  * User won't be able to do this by his own
  */
-function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = '') {
+function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = '', $user = null ) {
 	if ($city_public == 0 || $city_public == 2) {
 		SiteWideMessages::deleteMessagesOnWiki($city_id);
 	}

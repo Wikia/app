@@ -146,8 +146,6 @@ class WallBaseController extends WikiaService {
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
-		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
-		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
 		$this->response->setVal( 'canMove', $wallMessage->canMove( $this->wg->User, false ) );
 
 		$wallThread = $wallMessage;
@@ -476,7 +474,6 @@ class WallBaseController extends WikiaService {
 		$this->response->setVal( 'isRemoved', false );
 		$this->response->setVal( 'isAdminDeleted', false );
 
-		$this->response->setVal( 'isNotifyeveryone', false );
 		$this->response->setVal( 'isClosed', false );
 
 		$path = [ ];
@@ -515,7 +512,6 @@ class WallBaseController extends WikiaService {
 			$this->response->setVal( 'isRemoved', $isRemoved );
 			$this->response->setVal( 'isAdminDeleted', $isDeleted );
 
-			$this->response->setVal( 'isNotifyeveryone', $wallMessage->getNotifyeveryone() );
 			$this->response->setVal( 'isClosed', $wallMessage->isArchive() );
 
 
@@ -562,10 +558,6 @@ class WallBaseController extends WikiaService {
 		$this->response->setVal( 'wall_username', $wallUsername );
 
 		Hooks::run( 'WallNewMessage', [ $this->wg->Title, &$this->response ] );
-
-		$notifyEveryone = $this->helper->isAllowedNotifyEveryone( $this->wg->Title->getNamespace(), $this->wg->User );
-
-		$this->response->setVal( 'notify_everyone', $notifyEveryone );
 
 		$wall_message = $this->response->getVal( 'wall_message' );
 		if ( empty( $wall_message ) ) {
