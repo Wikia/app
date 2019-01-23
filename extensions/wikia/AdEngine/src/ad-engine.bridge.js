@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	PorvataTemplate,
 	Roadblock,
 	StickyTLB,
 	universalAdPackage,
@@ -24,18 +25,17 @@ import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import { getSlotsContext } from './slots';
+import slots from './slots';
 import { getBiddersContext } from './bidders';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyTLB];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, PorvataTemplate, Roadblock, StickyTLB];
 
 function init(
 	adTracker,
 	slotRegistry,
-	mercuryListener,
 	pageLevelTargeting,
 	adLogicZoneParams,
 	legacyContext,
@@ -49,10 +49,10 @@ function init(
 
 	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
 
-	TemplateRegistry.init(legacyContext, mercuryListener);
+	TemplateRegistry.init();
 	scrollListener.init();
 
-	context.set('slots', getSlotsContext(legacyContext, skin));
+	context.set('slots', slots.getContext());
 	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
@@ -67,13 +67,15 @@ function init(
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
-	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ? '_top1k_wiki' : '_not_a_top1k_wiki';
+	if (legacyContext.get('targeting.wikiIsTop1000')) {
+		context.set('custom.wikiIdentifier', '_top1k_wiki');
+		context.set('custom.dbNameElement', `_${context.get('targeting.s1')}`);
+	}
 
-	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
-		context.set('slots', getSlotsContext(legacyContext, skin));
+		context.set('slots', slots.getContext());
 		syncSlotsStatus(slotRegistry, context.get('slots'));
 	});
 

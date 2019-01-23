@@ -51,7 +51,6 @@ require([
 		adEngineBridge.init(
 			adTracker,
 			slotRegistry,
-			mercuryListener,
 			pageLevelParams.getPageLevelParams(),
 			adLogicZoneParams,
 			adContext,
