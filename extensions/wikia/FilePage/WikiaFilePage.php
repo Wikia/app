@@ -102,6 +102,7 @@ class WikiaFilePage extends ImagePage {
 			return;
 		}
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
+        var_dump($url);
 
         var_dump("6");
 		foreach ( $res as $row ) {
@@ -115,6 +116,7 @@ class WikiaFilePage extends ImagePage {
 			$res->free();
 			break;
 		}
+        var_dump($url);
 
         var_dump("7");
 		$wgMemc->add( $redirKey, $url );
