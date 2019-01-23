@@ -7,15 +7,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	var mocks = {
 		log: noop,
 		adUnitBuilder: {
-			build: function(slotName, src) {
-				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
-			}
-		},
-		megaAdUnitBuilder: {
-			build: function () {
+			build: function (slotName) {
 				return 'wikia_gpt/5441/wka1b.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
-			},
-			isMegaSlot: noop
+			}
 		},
 		extraUnitBuilder: {
 			build: function(slotName, src) {
@@ -27,10 +21,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				slot.success();
 				slot.hop();
 			}
-		},
-		lookups: {
-			extendSlotTargeting: noop,
-			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -63,11 +53,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
-			null,
-			mocks.lookups
+			null
 		);
 	}
 
@@ -103,7 +91,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
-			'/5441/wka.ent/_muppet//home/testSource/TOP_LEADERBOARD'
+			'wikia_gpt/5441/wka1b.PX/TOP_LEADERBOARD/desktop/oasis-article-ic/_project43-life'
 		);
 	});
 

@@ -177,8 +177,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		context.opts.enableRemnantNewAdUnit = isEnabled('wgAdDriverMEGACountries');
-
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact && isEnabled('wgAdDriverHighImpactSlotCountries')
@@ -209,9 +207,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.porvataMoatTrackingEnabled = isEnabled('wgAdDriverPorvataMoatTrackingCountries');
 		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
-			isEnabled('wgAdDriverMegaAdUnitBuilderForFVCountries');
-
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
 		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
@@ -220,7 +215,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
 		context.opts.replayAdsForFV = isEnabled('wgAdDriverPlayAdsOnNextFVCountries');
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
-		context.opts.disableSra = isEnabled('wgAdDriverDisableSraCountries');
+		context.opts.disableSra = true;
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
