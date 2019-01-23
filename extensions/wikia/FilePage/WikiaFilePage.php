@@ -63,6 +63,7 @@ class WikiaFilePage extends ImagePage {
         var_dump("2");
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
+        var_dump($url);
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
             var_dump("21");
