@@ -18,6 +18,7 @@ define('ext.wikia.adEngine3.api', [
   }
 
   return {
+    injectIncontentBoxad: ads.slots.injectIncontentBoxad,
     isAutoPlayDisabled: ads.isAutoPlayDisabled,
     isNetzathletenEnabled: isNetzathletenEnabled,
     shouldShowAds: shouldShowAds,

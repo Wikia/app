@@ -85,6 +85,7 @@ class AdEngine3
 				'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 			]),
 			'opts' => array_filter([
+				'adsInContent' => $wg->EnableAdsInContent,
 				'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 				'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 				'pageType' => $adPageTypeService->getPageType(),

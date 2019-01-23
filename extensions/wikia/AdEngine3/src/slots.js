@@ -15,6 +15,15 @@ function setSlotState(slotName, state) {
   }
 }
 
+function isIncontentBoxadApplicable() {
+  const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
+
+  return isSupportedPageType &&
+    window.wgIsContentNamespace &&
+    context.get('wiki.opts.adsInContent') &&
+    !context.get('wiki.targeting.wikiIsCorporate');
+}
+
 export default {
   getContext() {
     return {
@@ -161,18 +170,6 @@ export default {
         },
         trackingKey: 'featured-video',
       },
-      VIDEO: {
-        adProduct: 'video',
-        slotNameSuffix: '',
-        nonUapSlot: true,
-        group: 'VIDEO',
-        lowerSlotName: 'video',
-        defaultSizes: [[640, 480]],
-        targeting: {
-          rv: 1
-        },
-        trackingKey: 'video',
-      },
     };
   },
 
@@ -213,16 +210,39 @@ export default {
   },
 
   injectBottomLeaderboard() {
+    const slotName = 'BOTTOM_LEADERBOARD';
     const pushSlotAfterComments = throttle(() => {
       if (window.ArticleComments && !window.ArticleComments.initCompleted) {
         return;
       }
 
-      // TODO: Recovery part
+      // TODO: Add recovery part
       document.removeEventListener('scroll', pushSlotAfterComments);
-      context.push('events.pushOnScroll.ids', 'BOTTOM_LEADERBOARD');
+      context.push('events.pushOnScroll.ids', slotName);
     }, 250);
 
     document.addEventListener('scroll', pushSlotAfterComments);
   },
+
+  // TODO: Extract floating medrec to separate module once we do refreshing
+  injectIncontentBoxad() {
+    const slotName = 'INCONTENT_BOXAD_1';
+    const isApplicable = isIncontentBoxadApplicable();
+    const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
+
+    if (!isApplicable || !parentNode) {
+      setSlotState(slotName, false);
+      return;
+    }
+
+    const element = document.createElement('div');
+    element.id = slotName;
+    element.classList.add('wikia-ad');
+
+    parentNode.appendChild(element);
+
+    setTimeout(() => {
+      context.push('events.pushOnScroll.ids', slotName);
+    }, 10000);
+  }
 };

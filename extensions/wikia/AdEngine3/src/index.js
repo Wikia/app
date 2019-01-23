@@ -53,6 +53,11 @@ function startAdEngine() {
     context.push('listeners.slot', {
       onRenderEnded: (slot) => {
         slot.getElement().classList.remove('default-height');
+      },
+      onStatusChanged: (slot) => {
+        if (slot.getSlotName() === 'INCONTENT_BOXAD_1' && slot.getStatus() === 'success') {
+          document.getElementById('recirculation-rail').style.display = 'none';
+        }
       }
     });
   }
@@ -113,5 +118,6 @@ function hideAllAdSlots() {
 export {
   isAutoPlayDisabled,
   run,
+  slots,
   waitForAdStackResolve
 }
