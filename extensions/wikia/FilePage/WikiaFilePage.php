@@ -118,6 +118,7 @@ class WikiaFilePage extends ImagePage {
         var_dump("7");
 		$wgMemc->add( $redirKey, $url );
 		$out->redirect( $url );
+        var_dump($url);
 	}
 
 	/**
