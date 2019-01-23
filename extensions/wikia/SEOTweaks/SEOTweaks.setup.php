@@ -18,7 +18,6 @@ $wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
 $wgHooks['BeforeInitialize'][] = 'SEOTweaksHooksHelper::onBeforeInitialize';
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
 $wgHooks['CategoryPageView'][] = 'SEOTweaksHooksHelper::onCategoryPageView';
-$wgHooks['DisplayRedirectedFrom'][] = 'SEOTweaksHooksHelper::onDisplayRedirectedFrom';
 $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
 $wgHooks['LinkEnd'][] = 'SEOTweaksHooksHelper::onLinkEnd';
 $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeaders';
