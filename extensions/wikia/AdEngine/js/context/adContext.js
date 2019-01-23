@@ -55,10 +55,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
 	}
 
-	function isILSupportedBrowser() {
-		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
-	}
-
 	function updateAdContextRecServices(context, noExternals) {
 		// showAds is undefined by default
 		var serviceCanBeEnabled = !noExternals &&
@@ -70,11 +66,6 @@ define('ext.wikia.adEngine.adContext', [
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadBTCountries');
-
-		// IL rec
-		context.opts.wadIL = serviceCanBeEnabled &&
-			isEnabled('wgAdDriverWadILCountries') &&
-			isILSupportedBrowser();
 
 		// HMD rec
 		context.opts.wadHMD = serviceCanBeEnabled &&
