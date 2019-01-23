@@ -53,37 +53,29 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function view() {
 		global $wgMemc;
-		var_dump("1");
 		$out = $this->getContext()->getOutput();
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
 			return;
 		}
-        var_dump("2");
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
-        var_dump($url);
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
-            var_dump("21");
 			$out->redirect( $url );
 
 			return;
 		}
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
 
-        var_dump("3");
 		$urlMem = $wgMemc->get( $redirKey );
 		if ( $urlMem ) {
-
-            var_dump("31");
 			$out->redirect( $urlMem );
 
 			return;
 		}
 
-        var_dump("4");
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
@@ -93,21 +85,15 @@ class WikiaFilePage extends ImagePage {
 			}
 		}
 
-        var_dump("5");
 		if ( !$img ) {
 
-            var_dump("51");
             $out->redirect( $url );
 
 			return;
 		}
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
-        var_dump($url);
 
-        var_dump("6");
 		foreach ( $res as $row ) {
-
-            var_dump("61");
 			$title = Title::newFromRow( $row );
 			if ( $title->isRedirect() ) {
 				continue;
@@ -116,12 +102,8 @@ class WikiaFilePage extends ImagePage {
 			$res->free();
 			break;
 		}
-        var_dump($url);
-
-        var_dump("7");
 		$wgMemc->add( $redirKey, $url );
 		$out->redirect( $url );
-        var_dump($url);
 	}
 
 	/**
