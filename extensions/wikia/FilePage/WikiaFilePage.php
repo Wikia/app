@@ -53,12 +53,14 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function view() {
 		global $wgMemc;
+		var_dump("1");
 		$out = $this->getContext()->getOutput();
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
 			return;
 		}
+        var_dump("2");
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
@@ -69,6 +71,7 @@ class WikiaFilePage extends ImagePage {
 		}
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
 
+        var_dump("3");
 		$url = $wgMemc->get( $redirKey );
 		if ( $url ) {
 			$out->redirect( $url );
