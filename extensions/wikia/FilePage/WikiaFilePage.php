@@ -65,6 +65,7 @@ class WikiaFilePage extends ImagePage {
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
+            var_dump("21");
 			$out->redirect( $url );
 
 			return;
@@ -74,10 +75,14 @@ class WikiaFilePage extends ImagePage {
         var_dump("3");
 		$url = $wgMemc->get( $redirKey );
 		if ( $url ) {
+
+            var_dump("31");
 			$out->redirect( $url );
 
 			return;
 		}
+
+        var_dump("4");
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
@@ -86,14 +91,21 @@ class WikiaFilePage extends ImagePage {
 				$img = wfLocalFile( $this->getTitle() );
 			}
 		}
+
+        var_dump("5");
 		if ( !$img ) {
+
+            var_dump("51");
             $out->redirect( $url );
 
 			return;
 		}
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
 
+        var_dump("6");
 		foreach ( $res as $row ) {
+
+            var_dump("61");
 			$title = Title::newFromRow( $row );
 			if ( $title->isRedirect() ) {
 				continue;
@@ -102,6 +114,8 @@ class WikiaFilePage extends ImagePage {
 			$res->free();
 			break;
 		}
+
+        var_dump("7");
 		$wgMemc->add( $redirKey, $url );
 		$out->redirect( $url );
 	}
