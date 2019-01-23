@@ -163,7 +163,7 @@ $wgLocalMessageCache = '/tmp/messagecache';
  */
 $wgWikiFactoryReadonlyBlacklist = [
 	// TODO: enable when deploying 
-	// 938, // AdTag is readonly
+	938, // AdTag is readonly
 ];
 
 /**
