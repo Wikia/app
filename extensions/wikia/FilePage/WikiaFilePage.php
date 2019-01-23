@@ -74,11 +74,11 @@ class WikiaFilePage extends ImagePage {
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
 
         var_dump("3");
-		$url = $wgMemc->get( $redirKey );
-		if ( $url ) {
+		$urlMem = $wgMemc->get( $redirKey );
+		if ( $urlMem ) {
 
             var_dump("31");
-			$out->redirect( $url );
+			$out->redirect( $urlMem );
 
 			return;
 		}
