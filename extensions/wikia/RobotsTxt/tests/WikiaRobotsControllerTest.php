@@ -26,6 +26,9 @@ class WikiaRobotsControllerTest extends WikiaBaseTest {
 		return $wikiaRobotsController;
 	}
 
+	/**
+	 * Make sure it works with basic scenario - a single wiki on a domain.
+	 */
 	public function testUsesLocalCallForCurrentWiki() {
 		$wikiaRobotsController = $this->getController();
 
@@ -50,6 +53,9 @@ class WikiaRobotsControllerTest extends WikiaBaseTest {
 			'Sitemap entries mismatch' );
 	}
 
+	/**
+	 * Check if it fetches rules from a language wiki and merges the robots rules.
+	 */
 	public function testMergesLanguageWikisRules() {
 		$wikiaRobotsController = $this->getController();
 
@@ -76,6 +82,10 @@ class WikiaRobotsControllerTest extends WikiaBaseTest {
 		$this->assertEquals( [ 's1', 's2' ], $wikiaRobotsController->getResponse()
 			->getVal( 'Sitemap' ), 'Sitemap entries mismatch' );
 	}
+
+	/**
+	 * Make sure the degraded flag is set when the foreign call fails.
+	 */
 
 	public function testDegradedFlagOnFailedForeignCall() {
 		$wikiaRobotsController = $this->getController();
