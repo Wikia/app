@@ -59,7 +59,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverCTPDesktopQueenCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
-		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
@@ -78,11 +77,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKruxNewParamsCountries';
-		$vars[] = 'wgAdDriverKILOCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 		$vars[] = 'wgAdDriverLABradorTestCountries';
-		$vars[] = 'wgAdDriverMEGACountries';
-		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
@@ -115,7 +111,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverWadBTCountries';
-		$vars[] = 'wgAdDriverWadILCountries';
 		$vars[] = 'wgAdDriverWadHMDCountries';
 
 		/**

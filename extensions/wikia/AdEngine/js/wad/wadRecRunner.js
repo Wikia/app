@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wad.btRecLoader',
 	'ext.wikia.adEngine.wad.hmdRecLoader',
-	'ext.wikia.adEngine.wad.ilRecLoader',
 	'wikia.log'
-], function (adContext, btRecLoader, hmdRecLoader, ilRecLoader, log) {
+], function (adContext, btRecLoader, hmdRecLoader, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner',
@@ -14,11 +13,6 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 			video: ''
 		},
 		recs = {
-			il: {
-				type: 'display',
-				context: 'opts.wadIL',
-				loader: ilRecLoader
-			},
 			bt: {
 				type: 'display',
 				context: 'opts.wadBT',
@@ -34,7 +28,6 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 	function init() {
 		log('WAD rec module initialized', 'debug', logGroup);
 
-		// ToDo: check Blockthrough recovery
 		Object.keys(recs).forEach(function (rec) {
 			var config = recs[rec];
 

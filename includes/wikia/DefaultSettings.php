@@ -1286,27 +1286,6 @@ $wgAdDriverSrcPremiumCountries = [];
 $wgAdDriverStickySlotsLines = [];
 
 /**
- * @name $wgAdDriverKILOCountries
- * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverKILOCountries = null;
-
-/**
- * @name $wgAdDriverMEGACountries
- * Enables new way of building adUnits (currently limited for remnant).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMEGACountries = null;
-
-/**
- * @name $wgAdDriverMegaAdUnitBuilderForFVCountries
- * Enables new way of building adUnits for FeaturedVideo pages.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMegaAdUnitBuilderForFVCountries = null;
-
-/**
  * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
  * Enables MOAT tracking for feature video ads.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1444,12 +1423,6 @@ $wgAdDriverF2DisableSraCountries = null;
  * List of countries to enable Blockthrough recovery
  */
 $wgAdDriverWadBTCountries = null;
-
-/**
- * @name $wgAdDriverWadILCountries
- * List of countries to enable InstartLogic recovery
- */
-$wgAdDriverWadILCountries = null;
 
 /**
  * @name $wgAdDriverWadHMDCountries
