@@ -4,7 +4,7 @@ $wgExtensionCredits['other'][] = [
 	'name' => 'AdEngine',
 	'author' => 'Wikia',
 	'description' => 'AdEngine',
-	'version' => '1.0',
+	'version' => '3.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AdEngine3',
 ];
 
