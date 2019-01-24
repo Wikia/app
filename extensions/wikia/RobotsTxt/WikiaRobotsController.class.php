@@ -5,7 +5,7 @@ use Wikia\RobotsTxt\RobotsTxt;
 use Wikia\RobotsTxt\WikiaRobots;
 
 class WikiaRobotsController extends WikiaController {
-	public function getLocalRules() {
+	protected function getLocalRules() {
 		$wikiaRobots = new WikiaRobots( new PathBuilder() );
 		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt(), true );
 		return [
