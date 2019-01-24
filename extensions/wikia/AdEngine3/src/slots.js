@@ -164,7 +164,7 @@ export default {
         nonUapSlot: true,
         group: 'VIDEO',
         lowerSlotName: 'featured',
-        defaultSizes: [[640, 480]],
+        videoSizes: [[640, 480]],
         targeting: {
           rv: 1
         },

@@ -134,7 +134,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
   }
 
   if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
-    context.push('slots.FEATURED.defaultSizes', [480, 360]);
+    context.push('slots.FEATURED.videoSizes', [480, 360]);
   }
   context.set('slots.FEATURED.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 
