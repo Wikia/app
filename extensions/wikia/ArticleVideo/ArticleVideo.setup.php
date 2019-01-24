@@ -10,10 +10,7 @@ $wgHooks['InstantGlobalsGetVariables'][] = 'ArticleVideoHooks::onInstantGlobalsG
 $wgResourceModules['ext.ArticleVideo.jw'] = [
 	'scripts' => [
 		'skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
-		'extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
-		'extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay.js',
-		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.lagger.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.instant.js',
 	],

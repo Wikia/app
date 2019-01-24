@@ -59,7 +59,7 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		if (featuredVideoAds) {
+		if (featuredVideoAds && !adsApi) {
 			featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
 		} else if (videoAds) {
 			videoAds.register(playerInstance, slotTargeting);
@@ -78,7 +78,7 @@ require([
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		if (featuredVideoAds) {
+		if (featuredVideoAds && !adsApi) {
 			featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
 			featuredVideoAds.loadMoatTrackingPlugin();
 		}
