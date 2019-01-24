@@ -123,6 +123,36 @@
 				</div>
 			</div>
 			<div class="bottom-forms">
+                <?php
+                    if(!$wg->Out->getContext()->getUser()->isAnon()) {
+                ?>
+                <div class="more-links">
+                    <?php
+                    $formHeader = array (
+                        'inputs' => array (
+                            array(
+                                'type' => 'custom',
+                                'output' => '<h2>'. wfMsg('lightbox-urls-form-header') .'</h2>',
+                            ),
+                        ),
+                    );
+                    ?>
+                    <?php
+                    $formFilePage = array (
+                        'inputs' => array (
+                            array(
+                                'label' => wfMsg('lightbox-file-page-url'),
+                                'type' => 'text',
+                                'name' => 'lightbox-file-page-url',
+                                'value' => "{{fileUrl}}",
+                            )
+                        )
+                    );
+                    ?>
+                    <?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
+                    <?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
+                    </div>
+                <?php } ?>
 				<div class="email">
 					<?php
 						$form = array (
