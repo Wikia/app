@@ -169,7 +169,7 @@
 	</script>
 	<script type='text/template' id='user-action-private-block-template'>
 		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-add', 'wds-icon wds-icon-small is-rotated-45' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-close', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>

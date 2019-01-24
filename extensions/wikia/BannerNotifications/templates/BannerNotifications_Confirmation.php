@@ -9,8 +9,8 @@
 				<span class="wds-banner-notification__text">
 					<?= $notification['message'] ?>
 				</span>
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-add-tiny',
-					'wds-icon wds-icon-tiny is-rotated-45 wds-banner-notification__close' ) ?>
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-close-tiny',
+					'wds-icon wds-icon-tiny wds-banner-notification__close' ) ?>
 			</div>
 		<? endforeach ?>
 	</div>

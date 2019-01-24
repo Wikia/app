@@ -205,7 +205,7 @@ class BlogsHelper {
 			array_unshift(
 				$buttons,
 				new Button(
-					$label, 'wds-icons-plus', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
+					$label, 'wds-icons-add', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
 				)
 			);
 		}
