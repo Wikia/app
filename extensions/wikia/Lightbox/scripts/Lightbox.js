@@ -596,9 +596,13 @@
 			});
 			$('.more-info-container').each(function (index) {
 				$(this).find('*').not('.more-info-image').each(function (index) {
-					$(this).removeAttr('class');
-					$(this).removeAttr('style');
-					$(this).removeAttr('id');
+					if ($(this).css('display') === 'none') {
+						$(this).remove();
+					} else {
+						$(this).removeAttr('class');
+						$(this).removeAttr('style');
+						$(this).removeAttr('id');
+					}
 				});
 			});
 		},
