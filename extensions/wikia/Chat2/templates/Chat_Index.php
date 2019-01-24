@@ -136,7 +136,7 @@
 	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
 			<a href="<%= actionUrl %>" target="_blank">
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-comment-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
 		</li>

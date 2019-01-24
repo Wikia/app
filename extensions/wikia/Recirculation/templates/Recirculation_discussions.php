@@ -49,7 +49,7 @@
 						<div class="mcf-card-discussions__counters">
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['upvoteCount'] ) ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-reply', 'wds-icon wds-icon-tiny' ) ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-comment', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['postCount'] ) ?>
 						</div>
 					</div>

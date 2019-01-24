@@ -428,7 +428,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'tracking_label' => $tracking,
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-reply-small',
+					'name' => 'wds-icons-comment-small',
 				]
 			];
 		}

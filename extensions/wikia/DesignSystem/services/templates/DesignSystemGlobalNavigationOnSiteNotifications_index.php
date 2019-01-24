@@ -1,7 +1,6 @@
 <div class="wds-hidden-svg">
-<!--	TODO: icons update, icon missing -->
-	<?= DesignSystemHelper::renderSvg( 'wds-icons-megaphone' ) ?>
-	<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small' ) ?>
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-flag' ) ?>
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-comment-small' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small' ) ?>
 </div>
 
