@@ -49,7 +49,7 @@ class HAWelcomeTaskHookDispatcher {
 	public function dispatch() {
 		// abort if the feature has been disabled by the admin of the wiki.
 		if ( $this->welcomeMessageDisabled() ) {
-			$this->info( "aborting the hook: HAWelcome extension is disabled via the 'welcome-user' message." );
+			$this->info( "aborting the welcome hook: HAWelcome extension is disabled via the 'welcome-user' message." );
 			return true;
 		}
 
@@ -59,6 +59,7 @@ class HAWelcomeTaskHookDispatcher {
 		}
 
 		$this->markCurrentUserAsWelcomed();
+		$this->info( "welcome hook: marking user as welcomed" );
 
 		if ( $this->currentUserIsWelcomeExempt() || $this->currentUserIsDefaultWelcomer() || $this->currentUserIsFounder() ) {
 			$this->info( "aborting the welcome hook for an exempt user, default welcomer, or founder" );
