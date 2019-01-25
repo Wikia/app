@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	'ext.wikia.adEngine.adContext',
-  'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.bridge',
 	'wikia.window'
 ], function (adContext, bridge, win) {
 	'use strict';
