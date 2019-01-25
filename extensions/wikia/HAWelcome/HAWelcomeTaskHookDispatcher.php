@@ -57,8 +57,8 @@ class HAWelcomeTaskHookDispatcher {
 			$this->info( "aborting the welcome hook: user has already been welcomed" );
 			return true;
 		}
-		$this->markCurrentUserAsWelcomed();
 
+		$this->markCurrentUserAsWelcomed();
 
 		if ( $this->currentUserIsWelcomeExempt() || $this->currentUserIsDefaultWelcomer() || $this->currentUserIsFounder() ) {
 			$this->info( "aborting the welcome hook for an exempt user, default welcomer, or founder" );
@@ -84,6 +84,7 @@ class HAWelcomeTaskHookDispatcher {
 
 	protected function markCurrentUserAsWelcomed() {
 		$this->currentUser->setLocalFlag( self::WELCOME_SENT_FLAG, true );
+		$this->currentUser->saveSettings();
 	}
 
 	protected function currentUserIsWelcomeExempt() {
