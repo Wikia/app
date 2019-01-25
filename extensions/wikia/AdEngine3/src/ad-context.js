@@ -458,10 +458,10 @@ export default {
     },
     video: {
       moatTracking: {
-        articleVideosPartnerCode: 'wikiaimajsint377461931603',
+        articleVideosPartnerCode: 'wikiajwint101173217941',
         enabled: false,
         jwplayerPluginUrl: 'https://z.moatads.com/jwplayerplugin0938452/moatplugin.js',
-        partnerCode: 'wikiajwint101173217941',
+        partnerCode: 'wikiaimajsint377461931603',
         sampling: 0,
       },
     },
