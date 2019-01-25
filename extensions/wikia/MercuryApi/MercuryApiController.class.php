@@ -75,7 +75,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	public function getSearchPageAdsContext() {
-		$title = Title::newFromText('Search', -1);
+		$title = Title::newFromText('Search', NS_SPECIAL);
 
 		$context = (new AdEngine2ContextService())->getContext($title, 'mercury');
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
