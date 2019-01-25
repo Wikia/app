@@ -4,10 +4,8 @@
 namespace Wikia\CircuitBreaker;
 
 abstract class CircuitBreaker {
-	protected $uniqueName;
 
-	public function __construct( $uniqueName ) {
-		$this->uniqueName = $uniqueName;
+	public function __construct() {
 	}
 
 	abstract public function isAvailable();

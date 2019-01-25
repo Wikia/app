@@ -7,10 +7,12 @@ class RatioBasedCircuitBreaker extends CircuitBreaker {
 	protected $failureRatio, $successRatio;
 	protected $delayInSec;
 	protected $dataStorage;
+	protected $uniqueName;
 
 	public function __construct( $uniqueName, DataStorage $dataStorage,
 								Ratio $failureRatio, Ratio $successRatio, $delayInSec ) {
-		parent::__construct( $uniqueName );
+		parent::__construct();
+		$this->uniqueName = $uniqueName;
 		$this->dataStorage = $dataStorage;
 		$this->failureRatio = $failureRatio;
 		$this->successRatio = $successRatio;
