@@ -4,8 +4,8 @@ namespace Wikia\CircuitBreaker;
 
 class ExternalCircuitBreaker extends CircuitBreaker {
 
-	const ALLOWED_ENDPOINT = 'http://localhost:5432/allowed?name=%s';
-	const UPDATE_ENDPOINT = 'http://localhost:5432/update';
+	const ALLOWED_ENDPOINT = 'http://localhost:8080/allowed?name=%s';
+	const UPDATE_ENDPOINT = 'http://localhost:8080/update';
 	const CONNECT_TIMEOUT_MS = 20;
 	const TIMEOUT_MS = 50;
 	protected $uniqueName;
