@@ -166,6 +166,12 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 				text-transform: uppercase;
 			}
 
+			&.porvata3 {
+				& > div {
+					height: 100%;
+				}
+			}
+
 			.video-overlay {
 				background: #000;
 			}

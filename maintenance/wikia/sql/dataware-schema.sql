@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-archive-slave.query.consul    Database: dataware
 -- ------------------------------------------------------
--- Server version	5.7.18-15-log
+-- Server version	5.7.23-23-log
 
 
 --
@@ -202,39 +202,9 @@ CREATE TABLE `wall_notification` (
   `unique_id` int(11) NOT NULL,
   `entity_key` char(30) NOT NULL,
   `is_hidden` tinyint(1) NOT NULL,
-  `notifyeveryone` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `unique_id` (`unique_id`),
   KEY `user_wiki_unique` (`user_id`,`wiki_id`,`unique_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `wall_notification_queue`
---
-
-DROP TABLE IF EXISTS `wall_notification_queue`;
-CREATE TABLE `wall_notification_queue` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `entity_key` varbinary(30) NOT NULL,
-  `page_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wiki_id`,`page_id`),
-  KEY `event_date` (`event_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `wall_notification_queue_processed`
---
-
-DROP TABLE IF EXISTS `wall_notification_queue_processed`;
-CREATE TABLE `wall_notification_queue_processed` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL,
-  `entity_key` varbinary(30) NOT NULL,
-  `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_event_idx` (`user_id`,`entity_key`),
-  KEY `event_date` (`event_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -261,4 +231,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-07-06 12:59:33
+-- Dump completed on 2019-01-24 14:50:41

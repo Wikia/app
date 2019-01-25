@@ -24,6 +24,10 @@ a {
 	}
 }
 
+a.new:not([data-rte-instance]):not(.ve-ce-linkAnnotation){
+	cursor: pointer;
+}
+
 .clearfix {
 	@include clearfix;
 }
