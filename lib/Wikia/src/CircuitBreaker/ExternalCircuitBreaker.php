@@ -23,7 +23,16 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 	 */
 	protected function call( $method, $url, $params, $returnJson = false ) {
 		$curlHandle = curl_init();
+
 		curl_setopt( $curlHandle, CURLOPT_URL, $url );
+		curl_setopt( $curlHandle, CURLOPT_CONNECTTIMEOUT_MS, self::CONNECT_TIMEOUT_MS );
+		curl_setopt( $curlHandle, CURLOPT_TIMEOUT_MS, self::TIMEOUT_MS );
+
+		curl_setopt( $curlHandle, CURLOPT_RETURNTRANSFER, true );
+
+		curl_setopt( $curlHandle, CURLOPT_HEADER  , true);  // we want headers
+
+
 		if ( $method === 'POST ') {
 			curl_setopt( $curlHandle, CURLOPT_POST, 1 );
 			if ( !$params ) {
@@ -31,20 +40,22 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 					http_build_query( $params ));
 			}
 		}
-		curl_setopt( $curlHandle, CURLOPT_CONNECTTIMEOUT_MS, self::CONNECT_TIMEOUT_MS );
-		curl_setopt( $curlHandle, CURLOPT_TIMEOUT_MS, self::TIMEOUT_MS );
 
-		curl_setopt( $curlHandle, CURLOPT_RETURNTRANSFER, $returnJson );
-
-		curl_setopt( $curlHandle, CURLOPT_HEADER, false );
-
-		$response = curl_exec( $curlHandle );
+		$response = @curl_exec( $curlHandle );
 
 		if ( false === $response ) {
+			curl_close( $curlHandle );
 			// handle errors
 			return false;
 		}
+
+		$httpcode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
 		curl_close( $curlHandle );
+
+		if ( $httpcode < 200 || $httpcode >= 300 ) {
+			return false;
+		}
+
 		if ( !$returnJson ) {
 			return true;
 		}
@@ -68,6 +79,7 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 			'name' => $this->uniqueName,
 			'success' => true
 		]);
+		// @todo - report an error if updating cb state failed
 	}
 
 	public function failure() {
@@ -75,6 +87,7 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 			'name' => $this->uniqueName,
 			'success' => false
 		]);
+		// @todo - report an error if updating cb state failed
 	}
 
 }
