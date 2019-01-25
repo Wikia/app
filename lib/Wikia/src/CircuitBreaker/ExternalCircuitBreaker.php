@@ -8,11 +8,14 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 	const UPDATE_ENDPOINT = 'http://localhost:8080/update';
 	const CONNECT_TIMEOUT_MS = 20;
 	const TIMEOUT_MS = 50;
+
+	protected $curlHandle;
 	protected $uniqueName;
 
 	public function __construct( $uniqueName ) {
 		parent::__construct();
 		$this->uniqueName = $uniqueName;
+		$this->curlHandle = null;
 	}
 
 	/**
@@ -22,35 +25,36 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 	 * true or json is returned in case of a success
 	 */
 	protected function call( $method, $url, $params, $returnJson = false ) {
-		$curlHandle = curl_init();
+		if ( empty( $this->curlHandle  ) ) {
+			// keep the handle to reuse connection between calls
+			$this->curlHandle = curl_init();
+		}
 
-		curl_setopt( $curlHandle, CURLOPT_URL, $url );
-		curl_setopt( $curlHandle, CURLOPT_CONNECTTIMEOUT_MS, self::CONNECT_TIMEOUT_MS );
-		curl_setopt( $curlHandle, CURLOPT_TIMEOUT_MS, self::TIMEOUT_MS );
+		curl_setopt( $this->curlHandle, CURLOPT_URL, $url );
+		curl_setopt( $this->curlHandle, CURLOPT_CONNECTTIMEOUT_MS, self::CONNECT_TIMEOUT_MS );
+		curl_setopt( $this->curlHandle, CURLOPT_TIMEOUT_MS, self::TIMEOUT_MS );
 
-		curl_setopt( $curlHandle, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $this->curlHandle, CURLOPT_RETURNTRANSFER, true );
 
-		curl_setopt( $curlHandle, CURLOPT_HEADER  , true);  // we want headers
+		curl_setopt( $this->curlHandle, CURLOPT_HEADER  , true);  // we want headers
 
 
 		if ( $method === 'POST ') {
-			curl_setopt( $curlHandle, CURLOPT_POST, 1 );
+			curl_setopt( $this->curlHandle, CURLOPT_POST, 1 );
 			if ( !$params ) {
-				curl_setopt( $curlHandle, CURLOPT_POSTFIELDS,
+				curl_setopt( $this->curlHandle, CURLOPT_POSTFIELDS,
 					http_build_query( $params ));
 			}
 		}
 
-		$response = @curl_exec( $curlHandle );
+		$response = @curl_exec( $this->curlHandle );
 
 		if ( false === $response ) {
-			curl_close( $curlHandle );
 			// log connection errors
 			return false;
 		}
 
-		$httpcode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
-		curl_close( $curlHandle );
+		$httpcode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
 
 		if ( $httpcode < 200 || $httpcode >= 300 ) {
 			// unexpected cb status code - should be logged
