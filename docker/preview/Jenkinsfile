@@ -419,6 +419,7 @@ node("docker-daemon") {
         // Preview is essentially the same env as a sandbox
         def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
         def k8s = render(template, [
+          'MEDIAWIKI_IMAGE': mediawikiImage,
           'IMAGE_TAG': imageTag,
           'SANDBOX_NAME': 'preview',
           'SANDBOX_ENVIRONMENT': 'preview',
