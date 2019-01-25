@@ -5,13 +5,14 @@ require([
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.abTest',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
-	'wikia.articleVideo.featuredVideo.adsConfiguration',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.lookup.bidders')
+	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
+	require.optional('ext.wikia.adEngine.wad.hmdRecLoader'),
+	require.optional('ext.wikia.adEngine3.api'),
+	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration'),
 ], function (
 	win,
 	cookies,
@@ -19,13 +20,14 @@ require([
 	tracker,
 	trackingOptIn,
 	abTest,
-	adContext,
-	hmdRecLoader,
 	videoDetails,
 	featuredVideoAutoplay,
-	featuredVideoAds,
 	featuredVideoCookieService,
-	bidders
+	adContext,
+	bidders,
+	hmdRecLoader,
+	adsApi,
+	featuredVideoAds,
 ) {
 	if (!videoDetails) {
 		return;
@@ -39,6 +41,7 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
+		videoAds,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -56,7 +59,11 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
+		if (featuredVideoAds && !adsApi) {
+			featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
+		} else if (videoAds) {
+			videoAds.register(playerInstance, slotTargeting);
+		}
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -71,9 +78,23 @@ require([
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
+		if (featuredVideoAds && !adsApi) {
+			featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
+			featuredVideoAds.loadMoatTrackingPlugin();
+		}
 
-		featuredVideoAds.loadMoatTrackingPlugin();
+		if (adsApi && adsApi.shouldShowAds()) {
+			videoAds = adsApi.jwplayerAdsFactory.create({
+				adProduct: 'featured',
+				slotName: 'FEATURED',
+				audio: !willMute,
+				autoplay: willAutoplay,
+				featured: true,
+				videoId: videoDetails.playlist[0].mediaid,
+			});
+			adsApi.jwplayerAdsFactory.loadMoatPlugin();
+		}
+
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -131,13 +152,19 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (!adContext.get('opts.showAds')) {
+		if (adsApi) {
+			adsApi.waitForAdStackResolve().then(setupPlayer);
+
+			return;
+		}
+
+		if (!adContext || !adContext.get('opts.showAds')) {
 			setupPlayer();
 
 			return;
 		}
 
-		if (!adContext.get('opts.babDetectionDesktop')) {
+		if (!hmdRecLoader || !adContext.get('opts.babDetectionDesktop')) {
 			prePlayerSetup(false);
 		} else {
 			doc.addEventListener('bab.blocking', function () {
