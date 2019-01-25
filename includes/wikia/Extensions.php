@@ -157,6 +157,13 @@ if (empty($wgHelpWikiId)) {
 
 $wgLocalMessageCache = '/tmp/messagecache';
 
+/**
+ * List of readonly variables in WF (those can be changed
+ * only by internal request via API)
+ */
+$wgWikiFactoryReadonlyBlacklist = [
+	938, // AdTag is readonly
+];
 
 /**
  * The URL path of the icon for iPhone and iPod Touch web app bookmarks.
@@ -213,11 +220,6 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
 /**
  * load extensions by using configuration variables
  */
-
-#--- 1. Special::ProtectSite
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
-}
 
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
@@ -1017,11 +1019,6 @@ if (!empty( $wgEnablePaginatorExt )){
 	include( "$IP/extensions/wikia/Paginator/Paginator.setup.php" );
 }
 
-# Category Exhibition
-if (!empty($wgEnableCategoryExhibitionExt)) {
-		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
 /*
  * Send email from the app authenticated by a secret token
  */
@@ -1125,7 +1122,6 @@ if ( !empty( $wgEnableWikiFeatures ) ) {
 			'wgEnableAjaxPollExt',
 			'wgEnableBlogArticles',
 			'wgEnableArticleCommentsExt',
-			'wgEnableCategoryExhibitionExt',
 			'wgEnableWallExt',
 			'wgEnablePortableInfoboxEuropaTheme'
 		),
@@ -1300,7 +1296,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PROD:
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
-		case WIKIA_ENV_STABLE:
 		case WIKIA_ENV_SANDBOX:
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
@@ -1402,12 +1397,6 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
-
-// This extension is enabled globally and handles Sync between datacenters
-// It does work on devboxes if you need to enable for testing, but we are not running the sync script
-if ( empty( $wgDevelEnvironment ) ) {
-	include( "{$IP}/extensions/wikia/SwiftSync/SwiftSync.setup.php" );
-}
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
@@ -1675,6 +1664,10 @@ if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	include( "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php" );
 }
 
+if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
+	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
+}
+
 if ( !empty( $wgEnableSitemapPageExt ) ) {
 	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
 }
@@ -1696,9 +1689,7 @@ if ( !empty( $wgEnableCommunityPageExt ) || ( $wgLanguageCode == 'ja' && $wgCity
 	include "$IP/extensions/wikia/CommunityPage/CommunityPage.setup.php";
 }
 
-if (!empty($wgFandomCreatorCommunityId)) {
-	include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
-}
+include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 
 /**
  * @name $wgEnableNewAuthModal
@@ -1769,5 +1760,30 @@ if ( $wgEnableFastlyInsights ) {
 	include "$IP/extensions/wikia/FastlyInsights/FastlyInsights.setup.php";
 }
 
+include "$IP/extensions/wikia/LanguageWikisIndex/LanguageWikisIndex.setup.php";
+
+if ( $wgIncludeClosedWikiHandler ) {
+	include "$IP/extensions/wikia/WikiFactory/Loader/closedWikiHandler.php";
+}
+
 // SRE-116
 include "$IP/extensions/wikia/ProtectSiteII/ProtectSite.php";
+
+// This extension is enabled globally and handles Sync between datacenters
+// It does work on devboxes if you need to enable for testing, but we are not running the sync script
+if ( empty( $wgDevelEnvironment ) ) {
+	include "$IP/lib/Wikia/src/SwiftSync/SwiftSync.setup.php";
+}
+
+// SEO-670 | SEO friendly category pages
+if ( !empty( $wgEnableCategoryPage3Ext ) ) {
+	include "$IP/extensions/wikia/CategoryPage3/CategoryPage3.setup.php";
+}
+
+// Category Exhibition
+// If you want to delete this extension remember to update CategoryPage3
+include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
+
+if ( !empty( $wgWatchShowURL ) ) {
+	include "$IP/extensions/wikia/WatchShow/WatchShow.setup.php";
+}

@@ -22,7 +22,6 @@
 			this.messageBodyContainer = this.message.find('.body-container');
 			this.messageSubmit = this.message.find('.submit');
 			this.messagePreview = this.message.find('.preview');
-			this.notifyEveryone = this.message.find('.notify-everyone');
 			this.loading = this.message.find('.loadingAjax');
 			this.messageTitle.on('focus', this.proxy(this.messageTitleFocus));
 			this.boardList = $('#BoardList');

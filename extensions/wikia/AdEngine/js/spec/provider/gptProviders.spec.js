@@ -23,22 +23,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			},
 			buildNew: noop
 		},
-		kiloAdUnitBuilder: {
-			build: function () {}
-		},
-		megaAdUnitBuilder: {
-			build: function () {},
-			isMegaSlot: noop
-		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
 				extra.success();
 				extra.error();
 			}
-		},
-		lookups: {
-			extendSlotTargeting: noop,
-			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -73,11 +62,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
-			null,
-			mocks.lookups
+			null
 		);
 	}
 
@@ -87,8 +74,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
 					getFactory(),
-					mocks.kiloAdUnitBuilder,
-					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'remnantGpt':
@@ -96,14 +81,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					getFactory(),
 					mocks.adUnitBuilder,
-					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.kiloAdUnitBuilder,
-					mocks.megaAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':
@@ -155,7 +137,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			TOP_BOXAD: '300x250,300x600,300x1050'
 		};
 
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
@@ -169,7 +151,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			TOP_BOXAD: '300x250,300x600,300x1050'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);

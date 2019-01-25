@@ -70,6 +70,11 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::outputXServedBySHeader';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
+# ResourceLoader and api on empty/closed English wikis
+$wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
+$wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
+
+
 use Wikia\Tracer\WikiaTracer;
 
 /**
@@ -1196,7 +1201,10 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+			// PLATFORM-3828 - disable upgrade-insecure-requests on wikis not migrated to fandom.com
+			if ( wfHttpsEnabledForURL( $request->getFullRequestURL() ) ) {
+				$request->response()->header('Content-Security-Policy: upgrade-insecure-requests' );
+			}
 
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
@@ -1925,7 +1933,6 @@ class Wikia {
 		}
 		$surrogateKey = implode( ' ', $surrogateKeys );
 		header( 'Surrogate-Key: ' . $surrogateKey );
-		header( 'X-Surrogate-Key: ' . $surrogateKey );
 	}
 
 	public static function surrogateKey( $args ) {
@@ -1938,8 +1945,8 @@ class Wikia {
 		return 'mw-' . implode( '-', func_get_args() );
 	}
 
-	public static function purgeSurrogateKey( $key ) {
-		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key );
+	public static function purgeSurrogateKey( string $key, string $service = 'mediawiki' ) {
+		\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key, $service );
 	}
 
 	public static function isProductionEnv(): bool {
@@ -1950,5 +1957,12 @@ class Wikia {
 	public static function isDevEnv(): bool {
 		global $wgWikiaEnvironment;
 		return $wgWikiaEnvironment === WIKIA_ENV_DEV;
+	}
+
+	public static function onClosedOrEmptyWikiDomains( $requestUrl ) {
+		if ( $_SERVER['SCRIPT_NAME'] == '/load.php' ) {
+			return false;
+		}
+		return true;
 	}
 }

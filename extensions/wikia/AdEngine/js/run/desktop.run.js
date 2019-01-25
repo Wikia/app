@@ -23,7 +23,6 @@ require([
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
-	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
@@ -50,7 +49,6 @@ require([
 	adLogicZoneParams,
 	babDetection,
 	wadRecRunner,
-	geo,
 	trackingOptIn,
 	win,
 	fvLagger
@@ -66,14 +64,16 @@ require([
 	trackingOptIn.pushToUserConsentQueue(function () {
 		var context = adContext.getContext();
 
+		if (context.opts.isSteamBrowser) {
+			pageInfoTracker.trackProp('steam_browser', 'no_ads');
+		}
+
 		messageListener.init();
 
 		// Custom ads (skins, footer, etc)
 		adEngineBridge.init(
 			adTracker,
-			geo,
 			slotRegistry,
-			null,
 			pageLevelParams.getPageLevelParams(),
 			adLogicZoneParams,
 			adContext,
@@ -111,7 +111,7 @@ require([
 			slotStateMonitor.run();
 
 			// Track Labrador values to DW
-			var labradorPropValue = geo.getSamplingResults().join(';');
+			var labradorPropValue = adEngineBridge.geo.getSamplingResults().join(';');
 
 			if (context.opts.enableAdInfoLog && labradorPropValue) {
 				pageInfoTracker.trackProp('labrador', labradorPropValue);
@@ -152,8 +152,17 @@ require([
 ) {
 	'use strict';
 
+	function runOnPageReady(method) {
+		if (doc.readyState === 'complete') {
+			method();
+		} else {
+			win.addEventListener('load', method);
+		}
+	}
+
 	function initDesktopSlots() {
-		highImpact.init();
+		runOnPageReady(highImpact.init);
+
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			tracker.track({
 				category: 'wgDisableIncontentPlayer',
@@ -162,16 +171,21 @@ require([
 				label: true
 			});
 		} else {
-			inContent.init('INCONTENT_PLAYER');
+			var initInContent = function () {
+				inContent.init('INCONTENT_PLAYER');
+			};
+
+			if (adContext.get('opts.incontentPlayerRail.enabled')) {
+				initInContent();
+			} else {
+				runOnPageReady(initInContent);
+			}
 		}
-		bottomLeaderboard.init();
+
+		runOnPageReady(bottomLeaderboard.init);
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
-		if (doc.readyState === 'complete') {
-			initDesktopSlots();
-		} else {
-			win.addEventListener('load', initDesktopSlots);
-		}
+		initDesktopSlots();
 	});
 });

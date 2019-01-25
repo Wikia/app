@@ -99,7 +99,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 		$authorId = 6666;
 		$isReply = false;
 		$read = false;
-		$notifyeveryone = false;
 
 		$notificationData = [
 			'unique_id' => $secondUniqueId,
@@ -107,7 +106,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 			'is_reply' => $isReply,
 			'author_id' => $authorId,
 			'is_read' => $read,
-			'notifyeveryone' => $notifyeveryone
 		];
 
 		$dataS = [
@@ -120,7 +118,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				]
 			]
 		];
@@ -136,14 +133,12 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
 					'list' => [ 0 => [ 'entityKey' => $entityKey0, 'authorId' => $authorId, 'isReply' => $isReply ] ],
 					'last' => 1,
 					'count' => 1,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];
@@ -167,7 +162,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
@@ -177,7 +171,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					],
 					'last' => 2,
 					'count' => 2,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];
@@ -202,7 +195,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
@@ -212,7 +204,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					],
 					'last' => 2,
 					'count' => 2,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];
@@ -241,7 +232,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
@@ -252,7 +242,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					],
 					'last' => 3,
 					'count' => 3,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];
@@ -281,7 +270,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
@@ -292,7 +280,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					],
 					'last' => 4,
 					'count' => 4,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];
@@ -320,7 +307,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
-					'notifyeveryone' => 0
 				],
 				$secondUniqueId => [
 					'read' => $read,
@@ -331,7 +317,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 					],
 					'last' => 5,
 					'count' => 5,
-					'notifyeveryone' => $notifyeveryone
 				]
 			]
 		];

@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.geo',
 	'wikia.trackingOptIn',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
@@ -17,7 +16,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	log,
 	window,
 	instantGlobals,
-	geo,
 	trackingOptIn,
 	adContext,
 	adDecoratorPageDimensions,
@@ -44,8 +42,8 @@ define('ext.wikia.adEngine.config.desktop', [
 		log(slotName, 5, logGroup);
 		log(['getProvider', 'tracking opted ' + (isTrackingOptedIn ? 'in' : 'out')], log.levels.info, logGroup);
 
-		// If wgShowAds set to false, hide slots
-		if (!context.opts.showAds) {
+		// If wgShowAds set to false or the browser is a steam one, hide slots
+		if (!context.opts.showAds || context.opts.isSteamBrowser) {
 			return [];
 		}
 

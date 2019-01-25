@@ -47,7 +47,7 @@ class BlogsHelperTest extends WikiaBaseTest {
 		return [
 			'renaming user blog' => [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE, true ],
 			'renaming user blog comment' => [ NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE_TALK, true ],
-			'moving page to user blog namespace' => [ NS_MAIN, NS_BLOG_ARTICLE, true ],
+			'moving page to user blog namespace' => [ NS_MAIN, NS_BLOG_ARTICLE, false ],
 			'malformed move to blog comments namespace' => [ NS_MAIN, NS_BLOG_ARTICLE_TALK, false ],
 			'malformed move out of blog namespace' => [ NS_BLOG_ARTICLE, NS_MAIN, false ],
 			'malformed move out of blog comments namespace' => [ NS_BLOG_ARTICLE_TALK, NS_MAIN, false ],

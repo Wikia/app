@@ -23,7 +23,7 @@ $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiControlle
 
 // Rec
 $wgAutoloadClasses['ResourceLoaderAdEngineBTCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBTCode.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineILCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineILCode.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineHMDCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineHMDCode.php';
 
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';

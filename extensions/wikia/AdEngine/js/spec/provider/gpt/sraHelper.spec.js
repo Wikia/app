@@ -25,7 +25,7 @@ describe('ext.wikia.adEngine.provider.gpt.sraHelper', function () {
 	it('Returns always true when at least one slot has been flushed', function () {
 		var sraHelper = getModule();
 
-		expect(sraHelper.shouldFlush('TOP_RIGHT_BOXAD')).toEqual(true);
+		expect(sraHelper.shouldFlush('TOP_BOXAD')).toEqual(true);
 		expect(sraHelper.shouldFlush('TOP_LEADERBOARD')).toEqual(true);
 	});
 });

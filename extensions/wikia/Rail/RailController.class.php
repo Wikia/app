@@ -6,7 +6,7 @@ use Wikia\Util\GlobalStateWrapper;
 
 class RailController extends WikiaController {
 
-	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_RIGHT_BOXAD
+	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_BOXAD
 	const FILTER_LAZY_MODULES = true;
 	const FILTER_NON_LAZY_MODULES = false;
 
@@ -32,10 +32,6 @@ class RailController extends WikiaController {
 	 */
 	public function executeLazy() {
 		$this->getLazyRail();
-	}
-
-	public function stickyModule() {
-		// It loads Rail_stickyModule.php
 	}
 
 	/**
@@ -79,8 +75,6 @@ class RailController extends WikiaController {
 		$railLazyContent = '';
 
 		krsort( $railModules );
-
-		array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
 
 		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {
 			foreach ( $railModules as $railModule ) {

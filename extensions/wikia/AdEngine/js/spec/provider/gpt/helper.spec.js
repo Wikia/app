@@ -45,7 +45,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			uapContext: {
-				getUapId: noop
+				getUapId: noop,
+				getCreativeId: noop
 			},
 			passbackHandler: {
 				get: function () {
@@ -205,7 +206,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag, 'push');
 		spyOn(mocks.googleTag, 'flush');
 
-		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {sraEnabled: true});
+		getModule().pushAd(createSlot('TOP_BOXAD'), '/foo/slot/path', {}, {sraEnabled: true});
 
 		expect(mocks.googleTag.push).toHaveBeenCalled();
 		expect(mocks.googleTag.flush).toHaveBeenCalled();
@@ -231,7 +232,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Register slot callback on push', function () {
-		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {});
+		getModule().pushAd(createSlot('TOP_BOXAD'), '/foo/slot/path', {}, {});
 
 		expect(callbacks.renderEnded.length).toEqual(1);
 	});

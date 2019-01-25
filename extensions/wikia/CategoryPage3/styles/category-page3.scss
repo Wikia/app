@@ -1,0 +1,196 @@
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+
+// It's either that or !important for multiple selectors
+.WikiaArticle {
+	.category-page {
+		$space-between-groups: 48px;
+
+		&__trending-pages-header {
+			font-size: $wds-font-size-base;
+			font-weight: $wds-font-weight-bold;
+			margin-bottom: 12px;
+			margin-top: 50px;
+			text-transform: uppercase;
+		}
+
+		&__trending-pages {
+			// Grid is totally broken in IE11, -ms-inline-flexbox is better
+			display: -ms-inline-flexbox;
+			-ms-flex-wrap: wrap;
+
+			border-bottom: 1px solid $color-page-border;
+			display: grid;
+			grid-gap: 20px;
+			grid-template-columns: repeat(4, 1fr);
+			list-style: none;
+			margin: 0;
+			padding-bottom: 40px;
+		}
+
+		&__trending-page {
+			margin: 0;
+
+			&-thumbnail {
+				border: 1px solid $color-page-border;
+				box-sizing: border-box;
+				width: 100%;
+			}
+
+			&-title {
+				color: $color-text;
+				font-weight: $wds-font-weight-bold;
+				margin-top: 5px;
+				word-break: break-word;
+			}
+		}
+
+		&__total-number {
+			font-size: $wds-font-size-base;
+			font-weight: $wds-font-weight-bold;
+			margin-bottom: 30px;
+			margin-top: 40px;
+			text-transform: uppercase;
+		}
+
+		&__alphabet-shortcuts {
+			font-weight: $wds-font-weight-bold;
+			list-style: none;
+			margin: 0 0 35px;
+			text-align: center;
+		}
+
+		&__alphabet-shortcut {
+			display: inline;
+			text-transform: uppercase;
+
+			&.is-active {
+				a {
+					background: $color-links;
+					color: $color-page;
+				}
+			}
+
+			&:after {
+				$color-without-hash: str-slice(inspect($color-links), 2);
+				$bullet-svg: 'data:image/svg+xml,%3Csvg width="4" height="16" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle id="bullet" r="2" cy="8" cx="2" stroke-width="0" fill="%23#{$color-without-hash}"/%3E%3C/svg%3E';
+
+				background: url($bullet-svg) center center no-repeat;
+				content: " ";
+				letter-spacing: 1px;
+			}
+
+			a {
+				// For the highlight
+				cursor: pointer;
+				display: inline-block;
+				margin: 0 1px;
+				padding: 0 3px;
+			}
+		}
+
+		&__members {
+			margin-bottom: 30px;
+
+			&:not(.has-single-member) {
+				@include column-count(2);
+				@include column-gap(28px);
+			}
+		}
+
+		&__first-char {
+			@include column-break-inside(avoid);
+
+			border-bottom: 1px solid $color-page-border;
+			font-size: $wds-font-size-xl;
+			font-weight: $wds-font-weight-bold;
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		&__members-for-char {
+			list-style: none;
+			margin: 0;
+
+			&:not(:last-child) {
+				// Space between groups
+				margin-bottom: $space-between-groups;
+			}
+		}
+
+		&__member {
+			@include column-break-inside(avoid);
+			@include flexbox();
+
+			align-items: center;
+			margin: 0;
+			padding: 9px 0;
+		}
+
+		&__member-left {
+			@include flexbox();
+			@include flex-shrink(0);
+			@include justify-content(center);
+
+			width: 40px;
+
+			&-icon {
+				color: rgba($color-text, .75);
+				// 18px from .wds-icon-small + 2*6px
+				// we want to have the same height as for thumbnail to keep spacing consistent
+				padding: 6px 0;
+			}
+		}
+
+		&__member-thumbnail {
+			border: 1px solid $color-page-border;
+			box-sizing: border-box;
+			height: 30px;
+			width: 40px;
+		}
+
+		&__member-link {
+			padding-left: 12px;
+			word-break: break-word;
+		}
+
+		&__pagination {
+			@include flexbox();
+			@include justify-content(space-between);
+
+			border-top: 1px solid $color-page-border;
+			margin-bottom: 20px;
+			padding-top: 30px;
+
+			&-next {
+				// First and previous on the left, next and last on the right
+				margin-left: auto;
+
+				.wds-icon {
+					@include transform-rotate(-90deg);
+				}
+			}
+
+			&-prev {
+				// First and previous on the left, next and last on the right
+				margin-right: auto;
+
+				.wds-icon {
+					@include transform-rotate(90deg);
+				}
+			}
+
+			.wds-button {
+				@include button-theming($color-buttons, $color-button-text);
+			}
+
+			.wds-is-text {
+				@include button-theming($color-buttons, $color-button-text, $color-text);
+			}
+		}
+	}
+}

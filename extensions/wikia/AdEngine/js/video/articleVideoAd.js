@@ -3,11 +3,11 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, slotsContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, log) {
+], function (adContext, slotsContext, vastUrlBuilder, adUnitBuilder, srcProvider, vastDebugger, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			slotNameSuffix = '-audio';
 		}
 
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, slotNameSuffix);
+		options.adUnit = adUnitBuilder.build(slotParams.pos, slotParams.src, slotNameSuffix);
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 
@@ -94,6 +94,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		buildVastUrl: buildVastUrl,
 		shouldPlayPreroll: shouldPlayPreroll,
 		shouldPlayMidroll: shouldPlayMidroll,
-		shouldPlayPostroll: shouldPlayPostroll
+		shouldPlayPostroll: shouldPlayPostroll,
+		calculateRV: calculateRV
 	};
 });

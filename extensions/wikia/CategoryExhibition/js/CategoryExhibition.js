@@ -6,19 +6,6 @@ var CategoryExhibition = {
 		$('#mw-subcategories').delegate('.wikia-paginator a', 'click', CategoryExhibition.subcategoriesPaginatorClick);
 		$('#mw-images').delegate('.wikia-paginator a', 'click', CategoryExhibition.mediaPaginatorClick);
 		$('#mw-blogs').delegate('.wikia-paginator a', 'click', CategoryExhibition.blogsPaginatorClick);
-
-		CategoryExhibition.redrawFormButtons();
-	},
-
-	redrawFormButtons : function(){
-		// FIXME: move HTML to the template
-		$('#category-exhibition-display-old').
-			css('background', 'none').
-			html('<div id="cat-exh-old-one"></div><div id="cat-exh-old-two"></div><div id="cat-exh-old-three"></div><div id="cat-exh-old-four"></div><div id="cat-exh-old-five"></div>');
-
-		$('#category-exhibition-display-new').
-			css('background', 'none').
-			html('<div id="cat-exh-new-one"></div><div id="cat-exh-new-two"></div><div id="cat-exh-new-three"></div><div id="cat-exh-new-four"></div>');
 	},
 
 	log: function(msg) {

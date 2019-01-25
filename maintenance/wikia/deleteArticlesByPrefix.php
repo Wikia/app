@@ -51,7 +51,7 @@ class DeleteArticlesByPrefix extends Maintenance {
 
 		if (count($pages) === 0) {
 			$this->output("No articles found!\n");
-			die();
+			return;
 		}
 
 		foreach($pages as $page) {

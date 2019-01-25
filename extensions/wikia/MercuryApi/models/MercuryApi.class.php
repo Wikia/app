@@ -96,18 +96,27 @@ class MercuryApi {
 	}
 
 	private function getCommonVariables() {
-		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer;
+		global $wgDBname, $wgCityId, $wgLanguageCode, $wgContLang, $wgSitename, $wgServer, $wgArticlePath,
+			   $wgScriptPath;
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( RequestContext::getMain()->getRequest() );
 
 		$htmlTitle = new WikiaHtmlTitle();
 
+		if ( !empty( $wgArticlePath ) ) {
+			$articlePath = str_replace( '$1', '', $wgArticlePath );
+		} else {
+			$articlePath = '/wiki/';
+		}
+
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
+			'articlePath' => $articlePath,
 			'basePath' => $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'id' => (int) $wgCityId,
+			'isClosed' => !WikiFactory::isPublic( $wgCityId ),
 			'htmlTitle' => [
 				'separator' => $htmlTitle->getSeparator(),
 				'parts' => array_values( $htmlTitle->getAllParts() ),
@@ -116,6 +125,7 @@ class MercuryApi {
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
+			'scriptPath' => $wgScriptPath,
 			'siteName' => $wgSitename,
 			'specialRobotPolicy' => !empty( $robotPolicy ) ? $robotPolicy : null,
 			'surrogateKey' => Wikia::wikiSurrogateKey( $wgCityId ),
@@ -132,29 +142,45 @@ class MercuryApi {
 		];
 	}
 
+	private function getSmartBannerAdConfig() {
+		global $wgSmartBannerAdConfiguration;
+
+		$smartBannerCustomConfig = $wgSmartBannerAdConfiguration;
+		if ( !empty( $smartBannerCustomConfig ) && !empty( $smartBannerCustomConfig['imageUrl'] ) ) {
+			try {
+				$smartBannerCustomConfig['imageUrl'] = VignetteRequest::fromUrl( $smartBannerCustomConfig['imageUrl'] )
+					->thumbnailDown()
+					->width( 64 )
+					->height( 64 )
+					->url();
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->warning(
+					"error while processing image url in wgSmartBannerAdConfiguration, check if image url is valid vignette url"
+				);
+				$smartBannerCustomConfig = [];
+			}
+		}
+
+		return $smartBannerCustomConfig;
+	}
+
 	public function getMobileWikiVariables() {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
-		       $wgEnableFeedsAndPostsExt, $wgArticlePath, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl;
+		       $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
+		       $wgWatchShowURL;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'cacheBuster' => (int) $wgStyleVersion,
 				'cdnRootUrl' => $wgCdnRootUrl,
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
 				'defaultSkin' => $wgDefaultSkin,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 				'namespaces' => $wgContLang->getNamespaces(),
@@ -162,6 +188,7 @@ class MercuryApi {
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
 				'siteMessage' => $this->getSiteMessage(),
+				'smartBannerAdConfiguration' => $this->getSmartBannerAdConfig(),
 				'twitterAccount' => $wgTwitterAccount,
 			]
 		);
@@ -181,26 +208,20 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgArticlePath;
-
-		if ( !empty( $wgArticlePath ) ) {
-			$articlePath = str_replace( '$1', '', $wgArticlePath );
-		} else {
-			$articlePath = '/wiki/';
-		}
+		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
 			[
-				'articlePath' => $articlePath,
 				'defaultSkin' => $wgDefaultSkin,
 				'discussionColorOverride' => SassUtil::sanitizeColor( $wgDiscussionColorOverride ),
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+				'openGraphImageUrl' => OpenGraphImageHelper::getUrl(),
 			]
 		);
 
@@ -232,10 +253,10 @@ class MercuryApi {
 		       $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
 		       $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload,
 		       $wgDiscussionColorOverride, $wgEnableNewAuth, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl,
 		       $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText,
-		       $wgTwitterAccount, $wgEnableFeedsAndPostsExt, $wgIsGASpecialWiki, $wgDevelEnvironment, $wgQualarooDevUrl,
-		       $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
+		       $wgTwitterAccount, $wgIsGASpecialWiki,
+		       $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl, $wgArticlePath, $wgFandomCreatorCommunityId;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -261,7 +282,6 @@ class MercuryApi {
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableLightweightContributions' => $wgEnableLightweightContributions,
 				'enableNewAuth' => $wgEnableNewAuth,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
@@ -274,7 +294,6 @@ class MercuryApi {
 				'qualarooUrl' => ( $wgDevelEnvironment ) ? $wgQualarooDevUrl : $wgQualarooUrl,
 				'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
 				'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo(),
-				'scriptPath' => $wgScriptPath,
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 				'twitterAccount' => $wgTwitterAccount,
@@ -643,7 +662,7 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+	public function getTrendingPagesData( int $limit, $category, bool $withImagesOnly	) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -661,7 +680,7 @@ class MercuryApi {
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = self::processTrendingArticlesData( $rawData );
+			$data = self::processTrendingPagesData( $rawData, $withImagesOnly );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -710,7 +729,7 @@ class MercuryApi {
 		];
 	}
 
-	public function processTrendingArticlesData( $data ) {
+	public function processTrendingPagesData( $data, bool $withImagesOnly = false ) {
 		if ( !isset( $data['items'] ) || !is_array( $data['items'] ) ) {
 			return null;
 		}
@@ -718,7 +737,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data['items'] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item );
+			$processedItem = $this->processTrendingPagesItem( $item, $withImagesOnly );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -732,15 +751,19 @@ class MercuryApi {
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
 	 * @param array $item
-	 *
+	 * @param bool $withImagesOnly - if true, skip items without thumbnail
 	 * @return array
 	 */
-	public function processTrendingArticlesItem( $item ) {
+	public function processTrendingPagesItem( $item, bool $withImagesOnly ) {
 		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
+			if ( $withImagesOnly && empty( $item['thumbnail'] ) ) {
+				return null;
+			}
+
 			foreach ( $paramsToInclude as $param ) {
 				if ( !empty( $item[$param] ) ) {
 					$processedItem[$param] = $item[$param];

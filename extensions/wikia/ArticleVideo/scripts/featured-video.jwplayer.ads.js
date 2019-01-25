@@ -1,44 +1,56 @@
 /*global define, require*/
-define('wikia.articleVideo.featuredVideo.ads', [
+define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
-	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
+	'ext.wikia.adEngine.video.player.jwplayer.adsTracker',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.wrappers.prebid'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
 	vastUrlBuilder,
-	megaAdUnitBuilder,
 	slotRegistry,
 	srcProvider,
 	articleVideoAd,
-	adsTracking,
+	adsTracker,
 	vastDebugger,
 	vastParser,
 	fvLagger,
 	log,
 	win,
-	prebidWrapper,
-	bidders,
-	prebid
+	bidders
 ) {
 	'use strict';
+
+	var moatJwplayerPluginUrl = 'https://z.moatads.com/jwplayerplugin0938452/moatplugin.js',
+		moatPartnerCode = 'wikiajwint101173217941';
 
 	var allowedBidders = ['wikiaVideo'],
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
-		logGroup = 'wikia.articleVideo.featuredVideo.ads';
+		trackingParams,
+		logGroup = 'wikia.articleVideo.featuredVideo.ads',
+		vastUrls = {
+			last: null,
+			pre: null,
+			mid: null,
+			post: null
+		};
+
+	function getCurrentVast(placement) {
+		var vast = vastUrls[placement];
+
+		vastUrls.last = vast;
+
+		return vast;
+	}
 
 	function parseVastParamsFromEvent(event) {
 		return vastParser.parse(event.tag, {
@@ -47,14 +59,23 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
-			return prebid.getSlotParams(featuredVideoSlotName);
+		if (bidders && bidders.isEnabled()) {
+			return bidders.getBidParameters(featuredVideoSlotName);
 		}
 
 		return {};
 	}
 
-	return function (player, bidParams, slotTargeting) {
+	function loadMoatTrackingPlugin() {
+		if (!win.moatjw) {
+			var scriptElement = win.document.createElement('script');
+			scriptElement.async = true;
+			scriptElement.src = moatJwplayerPluginUrl;
+			win.document.head.appendChild(scriptElement);
+		}
+	}
+
+	function init(player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
@@ -63,27 +84,32 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			playerState = {},
 			playlistItem = player.getPlaylist(),
 			videoId = playlistItem[player.getPlaylistIndex()].mediaid,
-			trackingParams = {
-				adProduct: 'featured-video',
-				slotName: featuredVideoSlotName,
-				videoId: videoId
-			},
 			videoDepth = 0;
 
+		// Disable ads for steam browser
+		if (adContext.get('opts.isSteamBrowser')) {
+			return;
+		}
+
 		bidParams = bidParams || {};
+		trackingParams = {
+			adProduct: 'featured-video',
+			slotName: featuredVideoSlotName,
+			videoId: videoId
+		};
 
 		function requestBidder() {
-			if (!prebidWrapper) {
+			if (!bidders || !bidders.isEnabled()) {
 				return;
 			}
 
-			var bid = bidders && bidders.isEnabled()
-				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
-				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';
 				bidderEnabled = false;
+
+				vastUrls.pre = bid.vastUrl;
 				player.playAd(bid.vastUrl);
 			}
 		}
@@ -98,7 +124,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			if (adContext.get('bidders.rubiconInFV') && !adContext.get('bidders.rubiconDfp')) {
-				allowedBidders.push('rubicon')
+				allowedBidders.push('rubicon');
 			}
 
 			player.on('beforePlay', function () {
@@ -130,7 +156,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
-					player.playAd(articleVideoAd.buildVastUrl(
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'preroll',
 						videoDepth,
@@ -138,7 +164,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						slotTargeting,
 						playerState,
 						bidParams
-					));
+					);
+
+					vastUrls.pre = vastUrl;
+					player.playAd(vastUrl);
 				}
 				prerollPositionReached = true;
 			});
@@ -148,14 +177,18 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				if (videoDepth > 0 && articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
 					playerState.muted = player.getMute();
-					player.playAd(articleVideoAd.buildVastUrl(
+
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'midroll',
 						videoDepth,
 						correlator,
 						slotTargeting,
 						playerState
-					));
+					);
+
+					vastUrls.mid = vastUrl;
+					player.playAd(vastUrl);
 				}
 
 			});
@@ -165,14 +198,18 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				if (videoDepth > 0 && articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
 					playerState.muted = player.getMute();
-					player.playAd(articleVideoAd.buildVastUrl(
+
+					var vastUrl = articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
 						'postroll',
 						videoDepth,
 						correlator,
 						slotTargeting,
 						playerState
-					));
+					);
+
+					vastUrls.post = vastUrl;
+					player.playAd(vastUrl);
 				}
 			});
 
@@ -205,11 +242,73 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				}
 				bidderEnabled = false;
 			});
+
+			if (adContext.get('opts.isMoatTrackingForFeaturedVideoEnabled')) {
+				player.on('adImpression', function (event) {
+					var payload = {
+						adImpressionEvent: event,
+						partnerCode: moatPartnerCode,
+						player: this
+					};
+					if (adContext.get('opts.isMoatTrackingForFeaturedVideoAdditionalParamsEnabled')) {
+						log('Passing additional params to Moat FV tracking', log.levels.info, logGroup);
+						var rv = articleVideoAd.calculateRV(videoDepth);
+						payload.ids = {
+							zMoatRV: rv <= 10 ? rv.toString() : '10+',
+							zMoatS1: adContext.get('targeting.s1')
+						};
+					}
+					win.moatjw.add(payload);
+				});
+			}
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
 			fvLagger.markAsReady(null);
 		}
 
-		adsTracking(player, trackingParams);
+		adsTracker.register(player, trackingParams);
+	}
+
+	function trackSetup(mediaId, willAutoplay, willMute) {
+		adsTracker.track({
+			adProduct: 'featured-video',
+			slotName: featuredVideoSlotName,
+			src: srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER'),
+			videoId: mediaId,
+			withAudio: !willMute,
+			withCtp: !willAutoplay
+		}, 'setup');
+	}
+
+	function trackCustomEvent(event, params) {
+		params = params || {};
+
+		Object.keys(trackingParams).forEach(function(key) {
+			if (!params[key]) {
+				params[key] = trackingParams[key];
+			}
+		});
+
+		adsTracker.track(params, event);
+	}
+
+	return {
+		init: init,
+		getCurrentVast: getCurrentVast,
+		trackCustomEvent: trackCustomEvent,
+		trackSetup: trackSetup,
+		loadMoatTrackingPlugin: loadMoatTrackingPlugin
+	};
+});
+
+// We need to keep it in order to be compatible with ads function on mobile-wiki
+// TODO: Remove once we switch globally to AE3 on mobile-wiki
+define('wikia.articleVideo.featuredVideo.ads', [
+	'wikia.articleVideo.featuredVideo.adsConfiguration'
+], function (ads) {
+	'use strict';
+	return {
+		init: ads.init,
+		loadMoatTrackingPlugin: ads.loadMoatTrackingPlugin
 	};
 });

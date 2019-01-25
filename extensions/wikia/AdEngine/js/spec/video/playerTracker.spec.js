@@ -34,13 +34,18 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return 'Foo 9';
 				}
 			},
-			geo: {
-				getCountryCode: function () {
-					return 'XY';
+			bridge: {
+				geo: {
+					getCountryCode: function () {
+						return 'XY';
+					},
+					getDocumentVisibilityStatus: function () {
+						return 'visible';
+					}
 				}
 			},
 			log: noop,
-			bidHelper: {
+			bidders: {
 				transformPriceFromBid: function (bid) {
 					return bid.cpm;
 				}
@@ -61,14 +66,14 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
+			mocks.bridge,
 			mocks.slotTargeting,
 			mocks.browserDetect,
-			mocks.geo,
 			mocks.log,
 			mocks.window,
-			mocks.bidHelper,
+			mocks.bidders,
 			undefined,
-			undefined,
+			undefined
 		);
 	}
 
@@ -237,5 +242,13 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
+	});
+
+	it('include document_hidden=1 if document is hidden', function () {
+		tracker.track({
+			adProduct: 'uap'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('document_visibility')).toEqual('visible');
 	});
 });

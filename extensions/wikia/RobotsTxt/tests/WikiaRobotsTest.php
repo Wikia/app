@@ -132,8 +132,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		return [
 			[ WIKIA_ENV_PREVIEW ],
 			[ WIKIA_ENV_SANDBOX ],
-			[ WIKIA_ENV_VERIFY ],
-			[ WIKIA_ENV_STABLE ],
+			[ WIKIA_ENV_VERIFY ]
 		];
 	}
 

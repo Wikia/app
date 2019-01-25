@@ -10,7 +10,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		mocks = {
 			callback: noop,
 			adSlot: {
-				getIframe: noop
+				getShortSlotName: noop,
+				getIframe: noop,
 			},
 			bridge: {
 				slotService: {
@@ -94,7 +95,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					}
 				}, {
 					getTargeting: function () {
-						return ['TOP_RIGHT_BOXAD']
+						return ['TOP_BOXAD']
 					}
 				}, {
 					getTargeting: function () {

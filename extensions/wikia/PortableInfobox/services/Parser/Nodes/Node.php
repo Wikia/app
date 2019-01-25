@@ -7,6 +7,7 @@ use Wikia\PortableInfobox\Parser\SimpleParser;
 class Node {
 
 	const DATA_SRC_ATTR_NAME = 'source';
+	const NAME_ATTR_NAME = 'name';
 	const DEFAULT_TAG_NAME = 'default';
 	const FORMAT_TAG_NAME = 'format';
 	const LABEL_TAG_NAME = 'label';
@@ -107,7 +108,11 @@ class Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$this->data = [ 'value' => (string)$this->xmlNode ];
+			$this->data = [
+				'value' => (string)$this->xmlNode,
+				'item-name' => $this->getItemName(),
+				'source' => $this->getSource(),
+			];
 		}
 
 		return $this->data;
@@ -130,6 +135,14 @@ class Node {
 		$data = $this->getData()['value'];
 
 		return ( empty( $data ) && $data != '0' );
+	}
+
+	protected function getItemName() {
+		return $this->getXmlAttribute($this->xmlNode, self::NAME_ATTR_NAME);
+	}
+
+	protected function getSource() {
+		return $this->getXmlAttribute($this->xmlNode, self::DATA_SRC_ATTR_NAME);
 	}
 
 	protected function getChildNodes() {

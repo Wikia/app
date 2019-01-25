@@ -64,17 +64,19 @@ class SitemapXmlController extends WikiaController {
 		if ( $parsedPath->index ) {
 			$out = $this->generateSitemapIndex();
 		} elseif ( is_int( $parsedPath->namespace ) ) {
-			$out = $this->generateSitemapPage( $parsedPath->namespace, $parsedPath->page );
+			$out = $this->generateSitemapPage( $parsedPath );
 		} else {
 			$title = ( new WikiaHtmlTitle() )->setParts( [ 'Not Found' ] )->getTitle();
 			$body = '<title>%s</title><h1>Not Found</h1><p>The requested URL was not found</p>';
 
 			$response->setCode( 404 );
 			$response->setBody( sprintf( $body, htmlspecialchars( $title ) ) );
+
 			return;
 		}
 
-		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, microtime( true ) * 1000 - $start );
+		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL,
+			microtime( true ) * 1000 - $start );
 		$out .= sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 
 		if ( !$this->isRequestedGzipped() ) {
@@ -114,30 +116,46 @@ class SitemapXmlController extends WikiaController {
 		return date( 'Y-m-d\TH:i:s\Z', $touchedTime );
 	}
 
-	private function generateSitemapPage( $namespace, $page ) {
+	private function generateSitemapPage( $parsedPath ) {
+		$namespace = $parsedPath->namespace;
+		$begin = $parsedPath->begin;
+		$end = $parsedPath->end;
+		$page = $parsedPath->page;
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
-		$out .= '<!-- Namespace: ' . $namespace . '; page: ' . $page . ' -->' . PHP_EOL;
 
-		$offset = self::URLS_PER_PAGE * ( $page - 1 );
-		$limit = self::URLS_PER_PAGE;
 
 		$priority = self::PRIORITIES[$namespace] ?? self::DEFAULT_PRIORITY;
 		$title = Title::newFromText( '$1', $namespace );
 		$urlPrefix = str_replace( '$1', '', $title->getFullURL() );
 
-		foreach ( $this->model->getItems( $namespace, $offset, $limit ) as $page ) {
-			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $page->page_title ) );
-			$lastmod = $this->getLastMod( $page->page_touched );
+		if ( !$page ) {
+			$out .= '<!-- Namespace: ' . $namespace . '; begin: ' . $begin . '; end: ' . $end .
+					' -->' . PHP_EOL;
+			$data = $this->model->getItemsBetween( $namespace, $begin, $end );
+		} else {
+			//todo: remove old pagination, PLATFORM-3901
+			$out .= '<!-- Namespace: ' . $namespace . '; page: ' . $page . ' -->' . PHP_EOL;
+			$offset = self::URLS_PER_PAGE * ( $page - 1 );
+			$limit = self::URLS_PER_PAGE;
+			$data = $this->model->getItems( $namespace, $offset, $limit );
+		}
+		$count = 0;
+		foreach ( $data as $item ) {
+			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $item->page_title ) );
+			$lastmod = $this->getLastMod( $item->page_touched );
 
 			$out .= '<url>' . PHP_EOL;
 			$out .= '<loc>' . $urlPrefix . $encodedTitle . '</loc>' . PHP_EOL;
 			$out .= '<lastmod>' . $lastmod . '</lastmod>' . PHP_EOL;
 			$out .= '<priority>' . $priority . '</priority>' . PHP_EOL;
 			$out .= '</url>' . PHP_EOL;
+			$count ++;
 		}
 
 		$out .= '</urlset>' . PHP_EOL;
+		$out .= sprintf( '<!-- number of pages: %d -->' . PHP_EOL, $count );
+
 		return $out;
 	}
 
@@ -147,19 +165,32 @@ class SitemapXmlController extends WikiaController {
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
+
 		$baseUrl = $this->wg->Server . $this->wg->ScriptPath;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
-			$nsPages = $this->model->getPageNumber( $ns, self::URLS_PER_PAGE );
-			for ( $page = 1; $page <= $nsPages; $page++ ) {
-				$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-p' . $page . '.xml';
-				$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+			$prev = false;
+			$count = 0;
+			foreach ( $this->model->getSubSitemaps( $ns, self::URLS_PER_PAGE ) as list($numberRows, $page) ) {
+				$count++;
+				if($prev) {
+					$currId = $page->page_id;
+					if($count == $numberRows) {
+						$currId += 1;
+					}
+					$url =
+						$baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-id-' . $prev . '-' .
+						$currId . '.xml';
+					$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+				}
+				$prev = $page->page_id;
 			}
 		}
 
 		if ( $wgEnableDiscussions ) {
 			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
-			$discussionsSitemapUrl = $urlProvider->getUrl( 'discussions-sitemap' ) . '/sitemap/' . $wgCityId;
+			$discussionsSitemapUrl =
+				$urlProvider->getUrl( 'discussions-sitemap' ) . '/sitemap/' . $wgCityId;
 			$out .= '<sitemap><loc>' . $discussionsSitemapUrl . '</loc></sitemap>' . PHP_EOL;
 		}
 
@@ -170,39 +201,49 @@ class SitemapXmlController extends WikiaController {
 
 	private function isRequestedGzipped() {
 		$acceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
+
 		return strpos( $acceptEncoding, 'gzip' ) !== false;
 	}
 
 	private function parsePath( $path ) {
-		$parsed = (object) [
+		$parsed = (object)[
 			'index' => false,
 			'namespace' => null,
+			'begin' => null,
+			'end' => null,
+			//todo: delete page param, PLATFORM-3901
 			'page' => null,
 		];
 
 		if ( $path === 'sitemap-newsitemapxml-index.xml' || $path === 'sitemap-index.xml' ) {
 			$parsed->index = true;
+
 			return $parsed;
 		}
 
 		$m = null;
-
-		if ( !preg_match(
-			'/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-p(\d+)\.xml$/', $path, $m )
-		) {
-			return $parsed;
+		if ( preg_match( '/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-id-(\d+)-(\d+)\.xml$/', $path,
+			$m ) ) {
+			$parsed->begin = intval( $m[4] );
+			$parsed->end = intval( $m[5] );
+			//todo: remove old sitemap pagination, PLATFORM-3901
+		} else {
+			if ( preg_match( '/^sitemap-(newsitemapxml-)?(NS_([0-9]+))-p(\d+)\.xml$/', $path,
+				$m ) ) {
+				$parsed->page = intval( $m[4] );
+			} else {
+				return $parsed;
+			}
 		}
 
 		$space = $m[2];
 		$specificNamespace = intval( $m[3] );
-		$page = intval( $m[4] );
 
 		if ( !in_array( $specificNamespace, self::SEPARATE_SITEMAPS ) ) {
 			return $parsed;
 		}
 
 		$parsed->namespace = $specificNamespace;
-		$parsed->page = $page;
 
 		return $parsed;
 	}

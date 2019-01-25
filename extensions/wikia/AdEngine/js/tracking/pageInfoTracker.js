@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.tracking.pageInfoTracker', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, log, win) {
+], function (adContext, adTracker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.pageInfoTracker';
@@ -14,11 +15,17 @@ define('ext.wikia.adEngine.tracking.pageInfoTracker', [
 	}
 
 	function trackProp(name, value) {
+		if (!adContext.get('opts.enableAdInfoLog')) {
+			return;
+		}
+
+		var now = new Date();
 		track('adengpageinfo_props', {
 			'pv_unique_id': win.pvUID,
 			'prop_name': name,
 			'prop_value': value,
-			'timestamp': (new Date()).getTime()
+			'timestamp': now.getTime(),
+			'tz_offset': now.getTimezoneOffset()
 		});
 	}
 

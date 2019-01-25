@@ -34,6 +34,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
+<?= $trackingCookies ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
@@ -58,7 +59,6 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-<?= $il ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
@@ -70,8 +70,7 @@
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $billTheLizard ?>
-<?= $a9 ?>
-<?= $prebid ?>
+<?= $moatYi ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>

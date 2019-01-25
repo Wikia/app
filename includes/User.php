@@ -1993,7 +1993,9 @@ class User implements JsonSerializable {
 		// Wikia change - end
 
 		if ( $changed ) {
-			$this->invalidateCache();
+			// Bust article ETags for this user, to ensure they receive the message notification
+			// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+			$this->touch();
 		}
 	}
 
@@ -2912,7 +2914,10 @@ class User implements JsonSerializable {
 	public function addWatch( $title ) {
 		$wl = WatchedItem::fromUserTitle( $this, $title );
 		$wl->addWatch();
-		$this->invalidateCache();
+
+		// Bust article ETags for this user, to ensure that "watch" links change to "unwatch" links
+		// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+		$this->touch();
 	}
 
 	/**
@@ -2922,7 +2927,10 @@ class User implements JsonSerializable {
 	public function removeWatch( $title ) {
 		$wl = WatchedItem::fromUserTitle( $this, $title );
 		$wl->removeWatch();
-		$this->invalidateCache();
+
+		// Bust article ETags for this user, to ensure that "unwatch" links change to "watch" links
+		// SRE-109: Use touch() to avoid needless DB queries; it's sufficient as per r59993
+		$this->touch();
 	}
 
 	/**
@@ -4026,16 +4034,7 @@ class User implements JsonSerializable {
 	 */
 	public function incEditCount() {
 		if ( !$this->isAnon() ) {
-			/**
-			 * Wikia change
-			 * Update editcount for wiki
-			 * @since Feb 2013
-			 * @author Kamil Koterba
-			 */
-
-			$userStatsService = new UserStatsService( $this->getId() );
-			$userStatsService->increaseEditsCount();
-			/* end of change */
+			ServiceFactory::instance()->producerFactory()->editCountTaskProducer()->incrementFor( $this );
 		}
 	}
 

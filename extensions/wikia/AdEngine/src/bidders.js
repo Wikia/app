@@ -126,39 +126,6 @@ export function getBiddersContext(skin) {
 							}
 						}
 					},
-					appnexusWebads: {
-						enabled: false,
-						slots: {
-							TOP_LEADERBOARD: {
-								placementId: '13104394',
-								sizes: [
-									[728, 90],
-									[970, 250]
-								]
-							},
-							TOP_RIGHT_BOXAD: {
-								placementId: '13104393',
-								sizes: [
-									[300, 250],
-									[300, 600]
-								]
-							},
-							BOTTOM_LEADERBOARD: {
-								placementId: '13104395',
-								sizes: [
-									[728, 90],
-									[970, 250]
-								]
-							},
-							INCONTENT_BOXAD_1: {
-								placementId: '12939349',
-								sizes: [
-									[120, 600],
-									[160, 600]
-								]
-							}
-						}
-					},
 					audienceNetwork: {
 						enabled: false,
 						slots: {}
@@ -259,6 +226,14 @@ export function getBiddersContext(skin) {
 						enabled: false,
 						publisherId: '156260',
 						slots: {
+							FEATURED: {
+								sizes: [
+									[0, 0]
+								],
+								ids: [
+									'1636185@0x0'
+								]
+							},
 							TOP_LEADERBOARD: {
 								sizes: [
 									[728, 90],
@@ -404,8 +379,14 @@ export function getBiddersContext(skin) {
 					wikiaVideo: {
 						enabled: false,
 						slots: {
-							FEATURED: {},
-							INCONTENT_PLAYER: {}
+							FEATURED: {
+								videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
+								customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+							},
+							INCONTENT_PLAYER: {
+								videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
+								customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+							}
 						}
 					}
 				}

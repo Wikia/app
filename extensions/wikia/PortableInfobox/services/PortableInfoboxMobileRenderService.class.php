@@ -16,7 +16,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText, $type, $name ) {
 		$items = $this->splitOfHeroData( $infoboxdata, [ 'hero' => [ ], 'infobox' => [ ] ] );
 
 		if ( !empty( $items['hero'] ) ) {
@@ -118,6 +118,10 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 
 	protected function renderHeader( $data ) {
         return $this->render( 'header-mobile', $data );
+	}
+
+	protected function renderPanel( $data, $type='panel-mobile' ) {
+		return parent::renderPanel($data, $type);
 	}
 
 	protected function render( $type, array $data ) {

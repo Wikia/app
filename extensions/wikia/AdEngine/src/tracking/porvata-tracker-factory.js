@@ -1,6 +1,6 @@
-import { context } from '@wikia/ad-engine';
+import { context, utils } from '@wikia/ad-engine';
 
-export function createTracker(legacyContext, geo, pageLevelParams, tracker) {
+export function createTracker(legacyContext, pageLevelParams, tracker) {
 	return {
 		isEnabled() {
 			return legacyContext.get('opts.playerTracking');
@@ -10,9 +10,10 @@ export function createTracker(legacyContext, geo, pageLevelParams, tracker) {
 			const trackingData = Object.assign(data, {
 				pv_unique_id: window.pvUID,
 				pv_number: pageLevelParams.pv,
-				country: geo.getCountryCode(),
+				country: utils.getCountryCode(),
 				skin: pageLevelParams.skin,
-				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)'
+				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)',
+				document_visibility: utils.getDocumentVisibilityStatus(),
 			});
 
 			tracker.trackDW(trackingData, 'adengplayerinfo');

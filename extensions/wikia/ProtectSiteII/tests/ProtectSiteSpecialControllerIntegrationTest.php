@@ -15,6 +15,9 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	/** @var User $staffUser */
 	private $staffUser;
 
+	/** @var User $vstfUser */
+	private $vstfUser;
+
 	/** @var ProtectSiteModel $model */
 	private $model;
 
@@ -33,6 +36,7 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 
 		$this->normalUser = User::newFromName( 'NormalUser' );
 		$this->staffUser = User::newFromName( 'StaffUser' );
+		$this->vstfUser = User::newFromName( 'VstfUser' );
 
 		$this->model = new ProtectSiteModel();
 		$this->requestContext = new RequestContext();
@@ -78,30 +82,24 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	/**
-	 * @dataProvider invalidTimeProvider
+	 * @dataProvider longTimeProvider
 	 * @param string $time
 	 *
-	 * @throws BadRequestException
-	 * @throws ForbiddenException
 	 * @throws PermissionsError
+	 * @throws UserBlockedError
 	 */
-	public function testShouldRejectInvalidExpiryTime( string $time ) {
-		$this->expectException( BadRequestException::class );
+	public function testShouldRejectLongExpiryTimeWhenUserCannotBypassTimeRestriction( string $time ) {
 
 		$this->prepareRequestWithToken( [ 'edit' => 1, 'create' => 1, 'expiry' => $time ] );
-		$this->requestContext->setUser( $this->staffUser );
+		$this->requestContext->setUser( $this->vstfUser );
 
-		try {
-			$this->controller->saveProtectionSettings();
-		} catch ( BadRequestException $bre ) {
-			$this->assertEquals( ProtectSiteSpecialController::INVALID_EXPIRY, $bre->getDetails(), 'Invalid exception' );
-			$this->assertEquals( 0, $this->model->getProtectionSettings( static::TEST_WIKI_ID ), 'Settings should not have been set' );
+		$result = $this->controller->saveProtectionSettings();
 
-			throw $bre;
-		}
+		$this->assertFalse( $result );
+		$this->assertEquals( 0, $this->model->getProtectionSettings( static::TEST_WIKI_ID ), 'Settings should not have been set' );
 	}
 
-	public function invalidTimeProvider() {
+	public function longTimeProvider() {
 		yield [ '1 day' ];
 		yield [ '2 weeks' ];
 		yield [ '3 years' ];
@@ -144,12 +142,12 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function paramsProvider() {
-		yield [ [ 'edit' => 1, 'create' => 1 ], ];
-		yield [ [ 'edit' => 1, 'create' => 1, 'upload' => 1, 'move' => 1, ], ];
-		yield [ [ 'edit' => 1, 'create' => 1, 'upload' => 1, 'move' => 1, 'prevent_anons_only' => 1, ], ];
-		yield [ [ 'move' => 1, 'prevent_anons_only' => 1, ], ];
-		yield [ [ 'edit' => 1, 'create' => 1 ], ];
-		yield [ [ 'edit' => 1, 'create' => 1 ], ];
+		yield [ [ 'edit' => 1, 'create' => 1, 'expiry' => '3 hours', ], ];
+		yield [ [ 'edit' => 1, 'create' => 1, 'upload' => 1, 'move' => 1, 'expiry' => '1 day', ], ];
+		yield [ [ 'edit' => 1, 'create' => 1, 'upload' => 1, 'move' => 1, 'prevent_anons_only' => 1, 'expiry' => '10 minutes', ], ];
+		yield [ [ 'move' => 1, 'prevent_anons_only' => 1, 'expiry' => '30 seconds', ], ];
+		yield [ [ 'edit' => 1, 'create' => 1, 'expiry' => '1 week', ], ];
+		yield [ [ 'edit' => 1, 'create' => 1, 'expiry' => '3 months', ], ];
 	}
 
 	public function testShouldRemoveProtection() {

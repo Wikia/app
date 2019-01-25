@@ -5,10 +5,7 @@ require([
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
-	'ext.wikia.adEngine.lookup.a9',
-	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
@@ -28,10 +25,7 @@ require([
 	pageLevelParams,
 	adTracker,
 	slotsContext,
-	geo,
 	slotStateMonitor,
-	a9,
-	prebid,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
@@ -56,9 +50,7 @@ require([
 	adContext.addCallback(function () {
 		adEngineBridge.init(
 			adTracker,
-			geo,
 			slotRegistry,
-			mercuryListener,
 			pageLevelParams.getPageLevelParams(),
 			adLogicZoneParams,
 			adContext,
@@ -85,20 +77,12 @@ require([
 	}
 
 	function callOnConsecutivePageView() {
-		if (adContext.get('bidders.prebid')) {
-			prebid.call();
-		}
-
-		if (adContext.get('bidders.a9')) {
-			a9.call();
-		}
-
 		passFVLineItemIdToUAP();
 
 		adEngineBridge.readSessionId();
 
 		// Track Labrador values to DW
-		var labradorPropValue = geo.getSamplingResults().join(';');
+		var labradorPropValue = adEngineBridge.geo.getSamplingResults().join(';');
 
 		if (context.opts.enableAdInfoLog && labradorPropValue) {
 			pageInfoTracker.trackProp('labrador', labradorPropValue);

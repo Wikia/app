@@ -1213,9 +1213,10 @@ class LocalFile extends File {
 			/* wikia change - begin (VID-1568) */
 			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
 			/* wikia change - end (VID-1568) */
-		}
-		else {
-			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
+		} else {
+			// SRE-109: Update site stats via a background task
+			$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+			$siteStatsUpdateTaskProducer->addMedia();
 		}
 
 		# Hooks, hooks, the magic of hooks...
@@ -1391,7 +1392,9 @@ class LocalFile extends File {
 		$status = $batch->execute();
 
 		if ( $status->ok ) {
-			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => -1 ] ) );
+			// SRE-109: Update site stats via a background task
+			$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+			$siteStatsUpdateTaskProducer->removeMedia();
 		}
 		$this->unlock(); // done
 
@@ -2216,7 +2219,9 @@ class LocalFileRestoreBatch {
 			if ( !$exists ) {
 				wfDebug( __METHOD__ . " restored {$status->successCount} items, creating a new current\n" );
 
-				DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
+				// SRE-109: Update site stats via a background task
+				$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+				$siteStatsUpdateTaskProducer->addMedia();
 
 				$this->file->purgeEverything();
 			} else {

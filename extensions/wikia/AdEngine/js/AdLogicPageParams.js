@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'wikia.location',
 	'wikia.log',
 	'wikia.trackingOptIn',
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	adContext,
 	zoneParams,
 	doc,
-	geo,
+	adEngineBridge,
 	loc,
 	log,
 	trackingOptIn,
@@ -192,7 +192,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: targeting.esrbRating,
-			geo: geo.getCountryCode() || 'none',
+			geo: adEngineBridge.geo.getCountryCode() || 'none',
 			npa: trackingOptIn.isOptedIn() ? '0' : '1'
 		};
 

@@ -12,19 +12,25 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	}
 
 	protected function getTemplateVarsForItem( $pageId ) {
+		global $wgScriptPath;
+
 		$oTitle = Title::newFromID( $pageId );
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = wfMemcKey(
+		$keyParams = [
 			'category_exhibition_article_cache_0',
 			$pageId,
 			$this->cacheHelper->getTouched( $oTitle ),
 			// Display/sort params are passed to the subcategory, cache separately!
 			$this->urlParams->getSortParam(),
-			$this->urlParams->getDisplayParam(),
 			self::CACHE_VERSION
-		);
+		];
 
+		if ( !empty( $wgScriptPath ) ) {
+			$keyParams[] = $wgScriptPath;
+		}
+
+		$sKey = wfMemcKey( ...$keyParams );
 		$cachedResult = $oMemCache->get( $sKey );
 
 		if ( !empty( $cachedResult ) ) {
@@ -50,7 +56,6 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			'title' => $oTitle->getText(),
 			// Pass the display/sort params to the subcategory:
 			'url' => $oTitle->getLocalURL( [
-				'display' => $this->urlParams->getDisplayParam(),
 				'sort' => $this->urlParams->getSortParam(),
 			] ),
 			'img' => $imageUrl,

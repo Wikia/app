@@ -32,7 +32,9 @@ describe('AdLogicPageDimensions', function () {
 			logMock = noop,
 			documentMock = {documentElement: {scrollWidth: 1280}},
 			slotTweakerMock = {hide: noop, show: noop, hackChromeRefresh: noop},
+			adContextMock = {get: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				adContextMock,
 				slotTweakerMock,
 				documentMock,
 				logMock,
@@ -73,20 +75,20 @@ describe('AdLogicPageDimensions', function () {
 	it('checks if screen is too narrow for a slot', function () {
 
 		expect(adShown('foo', 'responsive', width2000)).toBeTruthy('width=2000 slot=foo -> ADS');
-		expect(adShown('TOP_RIGHT_BOXAD', 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_RIGHT_BOXAD -> ADS');
+		expect(adShown('TOP_BOXAD', 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_BOXAD -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 'responsive', width2000)).toBeTruthy('width=2000 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 'responsive', width1024)).toBeTruthy('width=1024 slot=foo -> ADS');
-		expect(adShown('TOP_RIGHT_BOXAD', 'responsive', width1024)).toBeTruthy('width=1024 slot=TOP_RIGHT_BOXAD -> ADS');
+		expect(adShown('TOP_BOXAD', 'responsive', width1024)).toBeTruthy('width=1024 slot=TOP_BOXAD -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 'responsive', width1024)).toBeTruthy('width=1024 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 'responsive', width800)).toBeTruthy('width=800 slot=foo -> ADS');
-		expect(adShown('TOP_RIGHT_BOXAD', 'responsive', width800)).toBeFalsy('width=800 slot=TOP_RIGHT_BOXAD -> ADS');
+		expect(adShown('TOP_BOXAD', 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BOXAD -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 'responsive', width800)).toBeFalsy('width=800 slot=INCONTENT_BOXAD_1 -> ADS');
 	});
 
 	it('updates the logic when resize event is fired', function () {
-		var slotName = 'TOP_RIGHT_BOXAD',
+		var slotName = 'TOP_BOXAD',
 			resizeListener = function () { return; },
 			isNarrow,
 			windowMock = {
@@ -111,7 +113,9 @@ describe('AdLogicPageDimensions', function () {
 				show: function () { adWasShown = true; },
 				hackChromeRefresh: noop
 			},
+			adContextMock = {get: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				adContextMock,
 				slotTweakerMock,
 				documentMock,
 				logMock,

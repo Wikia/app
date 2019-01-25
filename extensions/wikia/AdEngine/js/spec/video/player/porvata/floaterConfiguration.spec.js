@@ -1,12 +1,19 @@
 describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', function () {
 	'use strict';
 
+	function noop() {}
+
 	var mocks = {
-			win: {}
+			adContext: {
+				get: noop,
+				getContext: noop
+			}
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.porvata.floaterConfiguration'](mocks.win);
+		return modules['ext.wikia.adEngine.video.player.porvata.floaterConfiguration'](
+			mocks.adContext
+		);
 	}
 
 	it('floater should be disabled when "enableLeaderboardFloating" configuration is not set', function () {
@@ -27,11 +34,11 @@ describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', functio
 		expect(actual).toBeFalsy();
 	});
 
-	it('floater should be disabled when "enableInContentFloating" configuration is set to true, but TOP_RIGHT_BOXAX is asking', function () {
+	it('floater should be disabled when "enableInContentFloating" configuration is set to true, but TOP_BOXAD is asking', function () {
 		var module = getModule(),
 			params = {
 				enableInContentFloating: true,
-				slotName: 'TOP_RIGHT_BOXAD'
+				slotName: 'TOP_BOXAD'
 			},
 			actual = module.canFloat(params);
 

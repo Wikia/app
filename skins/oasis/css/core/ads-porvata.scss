@@ -146,6 +146,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	#INCONTENT_PLAYER {
 		margin: 0 auto -14px auto;
 
+		&.in-rail {
+			margin: 0;
+		}
+
 		&.porvata-outstream {
 			max-width: 640px;
 
@@ -160,6 +164,12 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 				padding-top: 6px;
 				text-align: center;
 				text-transform: uppercase;
+			}
+
+			&.porvata3 {
+				& > div {
+					height: 100%;
+				}
 			}
 
 			.video-overlay {

@@ -1,15 +1,15 @@
 .wds-leading-none {
-	@extend %wds-leading-none;
+	line-height: $wds-line-height-none;
 }
 
 .wds-leading-tight {
-	@extend %wds-leading-tight;
+	line-height: $wds-line-height-tight;
 }
 
 .wds-leading-normal {
-	@extend %wds-leading-normal;
+	line-height: $wds-line-height-normal;
 }
 
 .wds-leading-loose {
-	@extend %wds-leading-loose;
+	line-height: $wds-line-height-loose;
 }

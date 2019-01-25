@@ -88,7 +88,7 @@
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
-								'slotName' => 'TOP_RIGHT_BOXAD',
+								'slotName' => 'TOP_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}

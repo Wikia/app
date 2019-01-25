@@ -350,6 +350,9 @@ class SEOTweaksHooksHelper {
 	public static function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ): bool {
 		if ( in_array( 'broken', $options ) ) {
 			$attribs['rel'] = 'nofollow';
+			$originalURL = $attribs['href'];
+			unset( $attribs['href'] );
+			$attribs['data-uncrawlable-url'] = base64_encode( $originalURL );
 		}
 
 		return true;

@@ -99,12 +99,15 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = getUapId();
+			slotTargetingData.uap_c = uapContext.getCreativeId();
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
+
 			if (adContext.get('targeting.skin') === 'oasis') {
 				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
 			}
 
 			abId = slotTargeting.getAbTestId(slotTargetingData);
+
 			if (abId) {
 				slotTargetingData.abi = abId;
 			}
@@ -115,6 +118,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				getUapId() === 'none'
 			) {
 				slotTargetingData.pos = [slotTargetingData.pos, 'INCONTENT_PLAYER'];
+			}
+
+			if (slotTargetingData.pos === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
+				slotTargetingData.trackingpos = adContext.get('opts.incontentPlayerRail.trackingAlias');
 			}
 		}
 
@@ -169,6 +176,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
 			targeting = gptTargeting.getSlotLevelTargeting(slotName);
 			targeting.uap = uapContext.getUapId().toString();
+			targeting.uap_c = uapContext.getCreativeId().toString();
 			AdElement.configureSlot(slot, targeting);
 			googleTag.refreshSlot(slot);
 		} else {

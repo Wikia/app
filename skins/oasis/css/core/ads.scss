@@ -16,7 +16,7 @@
 @import 'ads-mixin';
 @import 'ads-porvata';
 
-$wikia-top-ads-index: 2;
+$wikia-top-ads-index: 6;
 $uap-video-animation-duration: 0.4s;
 $navbar-size-for-sticky-element: 65px;
 $global-navigation-and-sitewide-messages-index: 5000101;
@@ -171,6 +171,10 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
+#bottomLeaderboardWrapper {
+	text-align: center;
+}
+
 #BOTTOM_LEADERBOARD {
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
@@ -199,7 +203,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	#TOP_RIGHT_BOXAD {
+	#TOP_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
 		padding: 15px;
 	}
@@ -213,7 +217,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
-#TOP_RIGHT_BOXAD {
+#TOP_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
 

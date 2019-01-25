@@ -1265,18 +1265,6 @@ $wgCountTotalSearchHits = false;
 $wgCreateDatabaseActiveCluster = 'c7';
 
 /**
- * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
- * @var bool $wgCreateLanguageWikisWithPath
- */
-$wgCreateLanguageWikisWithPath = false;
-
-/**
- * Whether to create new English wikis under the fandom.com domain.
- * @var bool $wgCreateEnglishWikisOnFandomCom
- */
-$wgCreateEnglishWikisOnFandomCom = false;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -2011,16 +1999,6 @@ $wgDumpsDisabledWikis = [
 $wgEditEncoding = '';
 
 /**
- * RabbitMQ configuration for Edit Events Pipeline.
- * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
- * @var array $wgEditEventsRabbitConfig
- */
-$wgEditEventsRabbitConfig = [
-	'vhost' => 'data-warehouse',
-	'exchange' => 'mediawiki-edit-events',
-];
-
-/**
  * List of NS_MEDIAWIKI pages that users are allowed to edit.
  * @var Array $wgEditInterfaceWhitelist
  */
@@ -2358,6 +2336,13 @@ $wgEnableCategoryGalleriesExt = true;
 $wgEnableCategoryIntersectionExt = false;
 
 /**
+ * Enable CategoryPage3 extension which replaces category pages with a SEO friendly version
+ * @see extensions/wikia/CategoryPage3/
+ * @var bool $wgEnableCategoryPage3Ext
+ */
+$wgEnableCategoryPage3Ext = true;
+
+/**
  * Enable CategoryTree extension.
  * @see /extensions/CategoryTree/
  * @var bool wgEnableCategoryTreeExt
@@ -2646,6 +2631,28 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
+ * configures smart banner to display custom text/link/image and target it by country an OS
+ * example value:
+ * {
+ *  "os": [
+ *      "ios",
+ *      "android"
+ *  ],
+ *  "imageUrl": "https:\/\/vignette.wikia.nocookie.net\/rybatest\/images\/7\/71\/002-send-1.svg\/revision\/latest?cb=20180711085702",
+ *  "title": "some short title",
+ *  "text": "some body text",
+ *  "linkText": "some link",
+ *  "linkUrl": "some.url.com",
+ *  "countries": [
+ *      "pl",
+ *      "us",
+ *      "au"
+ *  ]
+ * }
+ */
+$wgSmartBannerAdConfiguration = [];
+
+/**
  * Surprisingly, this variable enables FANDOM stories on search result page!
  * @see /extensions/wikia/Search/WikiaSearchController.class.php
  * @var bool $wgEnableFandomStoriesOnSearchResultPage
@@ -2665,6 +2672,13 @@ $wgEnableFastLinkCache = true;
  * @var bool $wgEnableFeedsAndPostsExt
  */
 $wgEnableFeedsAndPostsExt = false;
+
+/**
+ * Enable the Embedded Feeds module from Community Feeds
+ * @see extensions/wikia/FeedsAndPosts
+ * @var bool $wgEnableEmbeddedFeeds
+ */
+$wgEnableEmbeddedFeeds = false;
 
 /**
  * Enable FileInfoFunctions extension.
@@ -3486,6 +3500,13 @@ $wgEnableSemanticScribuntoExt = false;
  * @var bool $wgEnableSendGridPostback
  */
 $wgEnableSendGridPostback = true;
+
+/**
+ * Enable SEO Link Hreflang extension.
+ * @see extensions/wikia/SeoLinkHreflang
+ * @var bool $wgEnableSeoLinkHreflangExt
+ */
+$wgEnableSeoLinkHreflangExt = true;
 
 /**
  * If on, the sidebar navigation links are cached for users with the current
@@ -4600,7 +4621,7 @@ $wgGenerateThumbnailOnParse = false;
  */
 $wgGlobalUserPreferenceWhiteList = [
 	'literals' => [
-		'CategoryExhibitionDisplayType',
+		'category-page-layout',
 		'CategoryExhibitionSortType',
 		'ccmeonemails',
 		'cols',
@@ -6202,6 +6223,12 @@ $wgPageShareServices = [
 $wgPageShowWatchingUsers = false;
 
 /**
+ * Base URL used for Parsely API calls
+ * @var string $wgParselyApiUrl
+ */
+$wgParselyApiUrl = 'https://api.parsely.com/v2/';
+
+/**
  * The expiry time for the parser cache, in seconds.
  * @var int $wgParserCacheExpireTime
  */
@@ -6478,26 +6505,11 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
- * Groups that should not be affected by Special:ProtectSite lockdown.
- * @see extensions/wikia/SpecialProtectSite
- * @var Array $wgProtectsiteExempt
- */
-$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
-
-/**
  * Enable ProtectSiteJS extension.
  * @see extensions/wikia/ProtectSiteJS
  * @var bool $wgEnableProtectSiteJSExt
  */
 $wgEnableProtectSiteJSExt = true;
-
-/**
- * The maximum time, site can be locked by the Protectsite extension.
- * @see /extensions/wikia/SpecialProtectSite
- * @var string $wgProtectsiteLimit
- *
- */
-$wgProtectsiteLimit = '12 hours';
 
 /**
  * Big list of banned IP addresses, in the keys not the values.
@@ -6683,7 +6695,7 @@ $wgRawHtml = false;
  * Set this to the IP address of the receiver.
  * @var string $wgRC2UDPAddress
  */
-$wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+$wgRC2UDPAddress = 'prod.irc.service.sjc.consul'; // 'irc.wikia-inc.com';
 
 /**
  * Notify external application about contributions via UDP.
@@ -8632,13 +8644,6 @@ $wgWikiaEnableSharedHelpExt = true;
 $wgWikiaEnableSharedTalkExt = true;
 
 /**
- * Enable ProtectSite extension.
- * @see extensions/wikia/SpecialProtectSite
- * @var bool $wgWikiaEnableSpecialProtectSiteExt
- */
-$wgWikiaEnableSpecialProtectSiteExt = true;
-
-/**
  * Enable WikiFactory Redirector.
  * @see /extensions/wikia/WikiFactory/redir/SpecialWikiFactoryRedir.php
  * @var bool $wgWikiaEnableWikiFactoryRedir
@@ -8880,9 +8885,17 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
  * @see SEO-669
- * @var string $wgFandomComMigrationScheduled
+ * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
+
+/**
+ * Custom messages to show on the migration banner (before and after migration).
+ * @see PLATFORM-3895
+ * @var string
+ */
+$wgFandomComMigrationCustomMessageBefore = '';
+$wgFandomComMigrationCustomMessageAfter = '';
 
 /**
  * Whether the community was migrated to a fandom.com domain, triggers a banner notification
@@ -8902,3 +8915,15 @@ $wgEnableResetTrackingPreferencesPage = false;
  * script to pages - https://insights.fastlylabs.com
  */
 $wgEnableFastlyInsights = false;
+
+/**
+ * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
+ */
+$wgIncludeClosedWikiHandler = false;
+
+/**
+ * If set, the "Watch now" button is visible and leads to the url from this variable
+ * @see IW-1470
+ * @var string
+ */
+$wgWatchShowURL = '';

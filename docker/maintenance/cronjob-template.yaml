@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
           - name: php
-            image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${label}
+            image: artifactory.wikia-inc.com/sus/mediawiki-php:${label}
             env:
               # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
               - name: KUBERNETES_DEPLOYMENT_NAME
@@ -26,6 +26,10 @@ spec:
                 value: "${server_id}"
               - name: LOG_STDOUT_ONLY
                 value: "yes"
+              - name: WIKIA_DATACENTER
+                value: sjc
+              - name: WIKIA_ENVIRONMENT
+                value: prod
             resources:
               limits:
                 cpu: "6"

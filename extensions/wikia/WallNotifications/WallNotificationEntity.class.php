@@ -13,27 +13,6 @@ class WallNotificationEntity {
 	public $msgText = '';
 	public $threadTitleFull = '';
 
-	/*
-	 *	Public Interface
-	 */
-
-	/**
-	 * Create a new object from an existing revision object.
-	 *
-	 * @param Revision $rev A revision object
-	 * @return WallNotificationEntity|null
-	 */
-	public static function createFromRev( Revision $rev ) {
-		$wn = new WallNotificationEntity();
-
-		if ( $wn->loadDataFromRev( $rev ) ) {
-			$wn->saveToCache();
-			return $wn;
-		}
-
-		return null;
-	}
-
 	public static function newFromRevisionAndMessage( Revision $revision, WallMessage $wallMessage ) {
 		$wn = new WallNotificationEntity();
 
@@ -216,7 +195,6 @@ class WallNotificationEntity {
 		$data->title_id = $wm->getTitle()->getArticleId();
 		$data->url = $wm->getMessagePageUrl();
 
-		$data->notifyeveryone = $wm->getNotifyeveryone();
 		$data->reason = $wm->isEdited() ? $wm->getLastEditSummary() : '';
 
 		$this->setMessageParentData( $data, $wm );

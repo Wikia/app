@@ -1,7 +1,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'ext.wikia.adEngine.utils.device',
@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (
 	adTracker,
-	geo,
+	bridge,
 	slotRegistry,
 	pageLayout,
 	deviceDetect,
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function getPosParameter(slotParams) {
-		var pos = (slotParams.pos || ''),
+		var pos = (slotParams.trackingpos || slotParams.pos || ''),
 			posArray = Array.isArray(pos) ? pos : pos.split(',');
 
 		return posArray[0].toLowerCase();
@@ -39,7 +39,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		var data,
 			isStickyEvent,
 			now = new Date(),
-			timestamp = now.getTime();
+			timestamp = now.getTime(),
+			tzOffset = now.getTimezoneOffset();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -58,7 +59,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		creative = creative || {};
 		bidders = bidders || {};
 
-		isStickyEvent = creative.status === 'sticked' || creative.status === 'unsticked';
+		isStickyEvent = ['sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(creative.status) > -1;
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -68,6 +69,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
+			'tz_offset': tzOffset,
 			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
@@ -98,7 +100,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_13': transformBidderPrice('onemobile'),
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
-			'bidder_16': transformBidderPrice('appnexusWebAds'),
 			'bidder_17': transformBidderPrice('kargo'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
@@ -108,10 +109,11 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': isStickyEvent ? slotRegistry.getCurrentScrollY() : slotRegistry.getScrollY(slotName),
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
-			'btl': (billTheLizard && billTheLizard.serialize()) || '',
+			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': geo.getSamplingResults().join(';'),
+			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),
+			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};
 
