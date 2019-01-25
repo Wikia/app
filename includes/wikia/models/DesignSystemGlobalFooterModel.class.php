@@ -383,11 +383,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$data['links'][] = [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
-				// TODO: icons
 				'image' => 'wds-icons-' . $hrefKey,
 				'image-data' => [
 					'type' => 'wds-svg',
-					// TODO: icons
 					'name' => 'wds-icons-' . $hrefKey,
 				],
 				'title' => [
