@@ -45,7 +45,7 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 
 		if ( false === $response ) {
 			curl_close( $curlHandle );
-			// handle errors
+			// log connection errors
 			return false;
 		}
 
@@ -53,6 +53,7 @@ class ExternalCircuitBreaker extends CircuitBreaker {
 		curl_close( $curlHandle );
 
 		if ( $httpcode < 200 || $httpcode >= 300 ) {
+			// unexpected cb status code - should be logged
 			return false;
 		}
 
