@@ -6,10 +6,12 @@ class RatioBasedCircuitBreaker extends CircuitBreaker {
 
 	protected $failureRatio, $successRatio;
 	protected $delayInSec;
+	protected $dataStorage;
 
-	public function __construct( $serviceName, DataStorage $dataStorage,
+	public function __construct( $uniqueName, DataStorage $dataStorage,
 								Ratio $failureRatio, Ratio $successRatio, $delayInSec ) {
-		parent::__construct($serviceName, $dataStorage);
+		parent::__construct( $uniqueName );
+		$this->dataStorage = $dataStorage;
 		$this->failureRatio = $failureRatio;
 		$this->successRatio = $successRatio;
 		$this->delayInSec = $delayInSec;
@@ -17,7 +19,7 @@ class RatioBasedCircuitBreaker extends CircuitBreaker {
 	}
 
 	protected function loadData() {
-		$r = $this->dataStorage->fetch( $this->serviceName );
+		$r = $this->dataStorage->fetch( $this->uniqueName );
 		if ( !empty( $r ) ) {
 			$data = json_decode( $r, true );
 			// update the state as it could have changed do to delay expiration
@@ -40,7 +42,7 @@ class RatioBasedCircuitBreaker extends CircuitBreaker {
     }
 
 	protected function saveData($data) {
-		$this->dataStorage->store( $this->serviceName, json_encode( $data ) );
+		$this->dataStorage->store( $this->uniqueName, json_encode( $data ) );
 	}
 
 	public function isAvailable() {

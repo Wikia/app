@@ -3,15 +3,11 @@
 
 namespace Wikia\CircuitBreaker;
 
-use Wikia\Sass\Exception;
-
 abstract class CircuitBreaker {
-	protected $serviceName;
-	protected $dataStorage;
+	protected $uniqueName;
 
-	public function __construct( $serviceName, DataStorage $dataStorage ) {
-		$this->serviceName = $serviceName;
-		$this->dataStorage = $dataStorage;
+	public function __construct( $uniqueName ) {
+		$this->uniqueName = $uniqueName;
 	}
 
 	abstract public function isAvailable();
