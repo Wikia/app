@@ -8,7 +8,9 @@ def datacenter = params.datacenter
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
-def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
+def mediawikiImageName = params.debug ? "mediawiki-sandbox-php" : "mediawiki-php"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}"
+def phpDockerFile = params.debug ? "docker/sandbox/Dockerfile-debug" : "docker/base/Dockerfile-php"
 
 def rolloutStatus = 1
 
@@ -113,7 +115,7 @@ node("docker-daemon-big") {
           def status = sh(script: """
             curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
             -w "%{http_code}" -s -I -o /dev/null \
-            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php/${imageTag}"
+            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/${mediawikiImageName}/${imageTag}"
           """, returnStdout: true).trim()
 
           if (status == "200") {
@@ -123,7 +125,7 @@ node("docker-daemon-big") {
           if (!imageExists) {
             // SUS-5284 - make the image a bit smaller
             sh("cp docker/.dockerignore ..")
-            sh("docker build .. -f docker/base/Dockerfile-php -t $mediawikiImage:$imageTag")
+            sh("docker build .. -f $phpDockerFile -t $mediawikiImage:$imageTag")
             sh("docker push $mediawikiImage:$imageTag")
           } else {
             println("Php image tag ($imageTag) already exists")
@@ -167,6 +169,7 @@ node("docker-daemon-big") {
     dir("app") {
       def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
       def k8s = render(template, [
+        'MEDIAWIKI_IMAGE': mediawikiImage,
         'IMAGE_TAG': imageTag,
         'SANDBOX_NAME': 'sandbox-' + sandbox,
         'SANDBOX_ENVIRONMENT': 'sandbox',
