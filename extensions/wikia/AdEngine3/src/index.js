@@ -24,10 +24,6 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
   events.on(events.AD_SLOT_CREATED, (slot) => {
     console.info(`Created ad slot ${slot.getSlotName()}`);
     bidders.updateSlotTargeting(slot.getSlotName());
-
-    if (slot.getSlotName() === 'FEATURED') {
-      slot.trackOnStatusChanged = true;
-    }
   });
   events.on(events.MOAT_YI_READY, (data) => {
    pageTracker.trackProp('moat_yi', data);

@@ -168,6 +168,7 @@ export default {
         targeting: {
           rv: 1
         },
+        trackEachStatus: true,
         trackingKey: 'featured-video',
       },
     };

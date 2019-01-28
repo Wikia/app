@@ -100,8 +100,9 @@ export default {
 
   onStatusChanged(adSlot, data) {
     const status = adSlot.getStatus();
+    const shouldSlotBeTracker = adSlot.getConfigProperty('trackEachStatus') || adSlot.trackOnStatusChanged;
 
-    if (onChangeStatusToTrack.indexOf(status) !== -1 || adSlot.trackOnStatusChanged) {
+    if (onChangeStatusToTrack.indexOf(status) !== -1 || shouldSlotBeTracker) {
       track(Object.assign(
         {
           eventName: 'adengadinfo',
