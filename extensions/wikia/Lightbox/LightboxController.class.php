@@ -297,7 +297,7 @@ class LightboxController extends WikiaController {
 		$this->networks = $networks;
 		$this->fileTitle = $fileTitle;
 		$this->imageUrl = $thumbUrl;
-        $this->isUserAnon = $this->wg->User->isAnon();
+		$this->isUserAnon = $this->wg->User->isAnon();
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
