@@ -74,6 +74,15 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
+	public function getSearchPageAdsContext() {
+		$title = Title::newFromText('Search', NS_SPECIAL);
+
+		$context = (new AdEngine2ContextService())->getContext($title, 'mercury');
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'adsContext', $context );
+	}
+
 	public function getMobileWikiVariables() {
 		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
 			->setAllowMethod( [ 'GET' ] )

@@ -5,6 +5,7 @@ export default class AdUnitBuilder {
 	static build(slot) {
 		const options = slot.config.options;
 		const adProductInfo = getAdProductInfo(slot.getSlotName(), options.loadedTemplate, options.loadedProduct);
+		let adUnitPattern = context.get(`slots.${slot.getSlotName()}.videoAdUnit`);
 
 		return utils.stringBuilder.build(
 			context.get('vast.adUnitId'),

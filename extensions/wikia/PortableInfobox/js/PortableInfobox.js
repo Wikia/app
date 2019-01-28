@@ -78,21 +78,25 @@
 
 		handleScrollShadow: function($scrollWrapper, scrollEl) {
             return function() {
-                var compensation = 20;
-                var didScrollToRight = scrollEl.scrollWidth - scrollEl.scrollLeft - compensation <= scrollEl.clientWidth;
-                var didScrollToLeft = scrollEl.scrollLeft < compensation;
+            	try {
+					var compensation = 20;
+					var didScrollToRight = scrollEl.scrollWidth - scrollEl.scrollLeft - compensation <= scrollEl.clientWidth;
+					var didScrollToLeft = scrollEl.scrollLeft < compensation;
 
-                if (didScrollToLeft) {
-                    $scrollWrapper.removeClass('pi-panel-scroll-left');
-                } else {
-                    $scrollWrapper.addClass('pi-panel-scroll-left');
-                }
+					if (didScrollToLeft) {
+						$scrollWrapper.removeClass('pi-panel-scroll-left');
+					} else {
+						$scrollWrapper.addClass('pi-panel-scroll-left');
+					}
 
-                if (didScrollToRight) {
-                    $scrollWrapper.removeClass('pi-panel-scroll-right');
-                } else {
-                    $scrollWrapper.addClass('pi-panel-scroll-right');
-                }
+					if (didScrollToRight) {
+						$scrollWrapper.removeClass('pi-panel-scroll-right');
+					} else {
+						$scrollWrapper.addClass('pi-panel-scroll-right');
+					}
+				} catch (e) {
+					console.warn(e);
+				}
             };
         }
 	};

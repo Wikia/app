@@ -74,7 +74,6 @@ require([
 		adEngineBridge.init(
 			adTracker,
 			slotRegistry,
-			null,
 			pageLevelParams.getPageLevelParams(),
 			adLogicZoneParams,
 			adContext,

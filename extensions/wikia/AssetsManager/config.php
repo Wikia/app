@@ -104,7 +104,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/wad/btRecLoader.js',
-		'//extensions/wikia/AdEngine/js/wad/ilRecLoader.js',
 		'//extensions/wikia/AdEngine/js/wad/wadRecRunner.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',

@@ -229,6 +229,7 @@ $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/Da
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
 $wgAutoloadClasses[ 'WikiaTagBuilderHelper'           ] = "$IP/includes/wikia/helpers/WikiaTagBuilderHelper.class.php";
 $wgAutoloadClasses[ 'WikiaIFrameTagBuilderHelper'     ] = "$IP/includes/wikia/helpers/WikiaIFrameTagBuilderHelper.class.php";
+$wgAutoloadClasses[ 'OpenGraphImageHelper'            ] = "$IP/includes/wikia/helpers/OpenGraphImageHelper.class.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Driver'     ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
@@ -1258,6 +1259,13 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
+ * @name wgAdDriverMobileWikiAE3SearchCountries
+ * List of countries where sections TLB is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3SearchCountries = null;
+
+/**
  * @name $wgAdDriverScrollDepthTrackingCountries
  * List of countries where scroll depth tracking is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1417,12 +1425,6 @@ $wgAdDriverF2DisableSraCountries = null;
  * List of countries to enable Blockthrough recovery
  */
 $wgAdDriverWadBTCountries = null;
-
-/**
- * @name $wgAdDriverWadILCountries
- * List of countries to enable InstartLogic recovery
- */
-$wgAdDriverWadILCountries = null;
 
 /**
  * @name $wgAdDriverWadHMDCountries
