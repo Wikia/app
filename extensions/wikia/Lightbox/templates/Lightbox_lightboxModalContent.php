@@ -126,26 +126,26 @@
 				{{^isUserAnon}}
 				<div class="more-links">
 					<?php
-					$formHeader = array (
-						'inputs' => array (
-							array(
-								'type' => 'custom',
-								'output' => '<h2>'. wfMessage('lightbox-urls-form-header')->parse() .'</h2>',
+						$formHeader = array (
+							'inputs' => array (
+								array(
+									'type' => 'custom',
+									'output' => '<h2>'. wfMessage('lightbox-urls-form-header')->parse() .'</h2>',
+								),
 							),
-						),
-					);
+						);
 					?>
 					<?php
-					$formFilePage = array (
-						'inputs' => array (
-							array(
-								'label' => wfMessage('lightbox-file-page-url')->parse(),
-								'type' => 'text',
-								'name' => 'lightbox-file-page-url',
-								'value' => "{{fileUrl}}",
+						$formFilePage = array (
+							'inputs' => array (
+								array(
+									'label' => wfMessage('lightbox-file-page-url')->parse(),
+									'type' => 'text',
+									'name' => 'lightbox-file-page-url',
+									'value' => "{{fileUrl}}",
+								)
 							)
-						)
-					);
+						);
 					?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
