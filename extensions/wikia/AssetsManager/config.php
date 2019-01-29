@@ -159,10 +159,26 @@ $config['tracking_opt_in_js'] = [
 	],
 ];
 
+$config['adengine3_top_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdEngine3/dist/ads.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/bidders.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/engine.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/prebid.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/products.js',
+		'//extensions/wikia/AdEngine3/dist/vendors/services.js',
+		'//extensions/wikia/AdEngine3/module.js'
+	],
+];
+
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.lagger.js',
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
@@ -183,8 +199,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/ml/bucketizers.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
 		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
@@ -195,6 +209,8 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
 		'//extensions/wikia/AdEngine/js/video/articleVideoAd.js',
+		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
+		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'//extensions/wikia/AdEngine/js/video/vastDebugger.js',
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
@@ -772,8 +788,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
-		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
 		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',

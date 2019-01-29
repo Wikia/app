@@ -968,6 +968,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
+ * Enables AdEngine3 extension on articles with Featured Video
+ */
+$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = false;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1265,6 +1271,13 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileSectionsCollapseCountries = null;
+
+/**
+ * @name wgAdDriverMobileWikiAE3SearchCountries
+ * List of countries where sections TLB is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3SearchCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries

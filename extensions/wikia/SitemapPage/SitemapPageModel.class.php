@@ -54,7 +54,10 @@ class SitemapPageModel extends WikiaModel {
 	 * @return bool
 	 */
 	public function isSitemapPage( $title ) {
-		if ( WikiaPageType::isCorporatePage() && $title->getDBkey() == self::SITEMAP_PAGE ) {
+		global $wgCityId;
+		if ( ( WikiaPageType::isCorporatePage() || $wgCityId == Wikia::COMMUNITY_WIKI_ID ) &&
+			$title->getDBkey() == self::SITEMAP_PAGE
+		) {
 			return true;
 		}
 
