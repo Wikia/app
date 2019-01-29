@@ -5,6 +5,8 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -422,6 +424,35 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.close {
 			margin: 0;
 		}
+	  	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+	  	.more-info-dropdown {
+			padding-bottom: 4px;
+			span,h1 {
+			  	cursor: pointer;
+			}
+			.more-info-container {
+				min-width: 400px;
+			  	max-height: 500px;
+			  	overflow-y: auto;
+			  	padding: 18px;
+			}
+		}
+	  	.more-info-image {
+		  	background-color: $color-text;
+		}
+	  	.more-info-left {
+		  	float: left;
+		}
+		.more-info-right {
+		  	float: right;
+		  	margin-right: 12px;
+		  	svg {
+				@include sprite-Lightbox-base;
+				content: '';
+				float: left;
+				margin: 1px 4px 0 2px;
+			}
+		}
 		.more-info-button, .share-button {
 			float: right;
 			margin-left: 5px;
@@ -430,9 +461,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				content: '';
 				display: block;
 				float: left;
-				width: 14px;
 				height: 14px;
 				margin: 4px 4px 0 -3px;
+			  	width: 14px;
 			}
 		}
 		.more-info-button{

@@ -339,6 +339,7 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
+include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
 
 include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
 
@@ -1331,46 +1332,46 @@ if ( !empty( $wgEnableFormatNumExt ) ) {
 if ( empty( $wgRightsUrl ) ) {
 	switch( $wgLanguageCode ) {
 		case 'de':
-			$wgRightsUrl  = "http://de.{$wgWikiaBaseDomain}/Lizenz";
+			$wgRightsUrl  = 'https://www.fandom.com/de/licensing-de';
 			break;
 		case 'es':
-			$wgRightsUrl  = "http://es.{$wgWikiaBaseDomain}/Licencia";
+			$wgRightsUrl  = 'https://www.fandom.com/es/licensing-es';
 			break;
 		case 'fi':
 			$wgRightsUrl  = "http://yhteiso.{$wgWikiaBaseDomain}/wiki/Suomen_Wikia:Lisenssointi";
 			break;
 		case 'fr':
-			$wgRightsUrl  = "http://fr.{$wgWikiaBaseDomain}/Licence";
+			$wgRightsUrl  = 'https://www.fandom.com/fr/licensing-fr';
 			break;
 		case 'it':
-			$wgRightsUrl  = "http://it.community.{$wgWikiaBaseDomain}/wiki/Wiki_della_Community:Licenza";
+			$wgRightsUrl  = 'https://www.fandom.com/it/licensing-it';
 			break;
 		case 'ja':
-			$wgRightsUrl  = "http://ja.{$wgWikiaBaseDomain}/ライセンス";
+			$wgRightsUrl  = 'https://www.fandom.com/ja/licensing-ja';
 			break;
 		case 'nl':
 			$wgRightsUrl  = "http://nl.community.{$wgWikiaBaseDomain}/wiki/Auteursrecht";
 			break;
 		case 'pl':
-			$wgRightsUrl  = "http://pl.{$wgWikiaBaseDomain}/Licencja";
+			$wgRightsUrl  = 'https://www.fandom.com/pl/licensing-pl';
 			break;
 		case 'pt':
-			$wgRightsUrl  = "http://pt-br.{$wgWikiaBaseDomain}/Licenciamento";
+			$wgRightsUrl  = 'https://www.fandom.com/pt-br/licensing-pt-br';
 			break;
 		case 'pt-br':
-			$wgRightsUrl  = "http://pt-br.{$wgWikiaBaseDomain}/Licenciamento";
+			$wgRightsUrl  = 'https://www.fandom.com/pt-br/licensing-pt-br';
 			break;
 		case 'ru':
-			$wgRightsUrl  = "http://ru.{$wgWikiaBaseDomain}/wiki/Лицензирование";
+			$wgRightsUrl  = 'https://www.fandom.com/ru/licensing-ru';
 			break;
 		case 'zh':
-			$wgRightsUrl  = "http://zh.wikia.com/wiki/内容授权方式";
+			$wgRightsUrl  = 'https://www.fandom.com/zh/licensing-zh';
 			break;
 		case 'zh-tw':
-			$wgRightsUrl  = "http://zh-tw.wikia.com/wiki/內容授權方式";
+			$wgRightsUrl  = 'https://www.fandom.com/zh-tw/licensing-zh-tw';
 			break;
 		default:
-			$wgRightsUrl  = "http://www.{$wgWikiaBaseDomain}/Licensing";
+			$wgRightsUrl  = 'https://www.fandom.com/licensing';
 			break;
 	}
 }

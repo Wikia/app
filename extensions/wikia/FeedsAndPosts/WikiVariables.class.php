@@ -15,6 +15,7 @@ class WikiVariables {
 			'dbName' => $wgDBname,
 			'getStartedUrl' =>  $this->getStartedUrl(),
 			'wikiDescription' => ( new CommunityDataService( $wgCityId ) )->getCommunityDescription(),
+			'openGraphImageUrl' => \OpenGraphImageHelper::getUrl(),
 		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
