@@ -169,6 +169,10 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
+	if (!context.get(slotPath)) {
+		return;
+	}
+
 	if (slot.isUnified) {
 		return slot;
 	}
