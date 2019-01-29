@@ -5,7 +5,7 @@
 		</div>
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-message',
-			'wds-icon wds-icon-small',
+			'wds-icon',
 			wfMessage( 'global-navigation-messages-title' )->escaped()
 		) ?>
 		<?= DesignSystemHelper::renderSvg(
