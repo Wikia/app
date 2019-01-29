@@ -195,7 +195,11 @@ class DPL {
 
 		$title = $article->mTitle->getText();
 		if (strpos($title,'%TITLE%')>=0) {
-			if ($this->mReplaceInTitle[0]!='') $title = preg_replace($this->mReplaceInTitle[0],$this->mReplaceInTitle[1],$title);
+			// XF-762: Avoid PHP notice
+			if ( $this->mReplaceInTitle[0] != '' && isset( $this->mReplaceInTitle[1] ) ) {
+				$title = preg_replace( $this->mReplaceInTitle[0], $this->mReplaceInTitle[1], $title );
+			}
+
 			if( isset($titleMaxLength) && (strlen($title) > $titleMaxLength)) $title = substr($title, 0, $titleMaxLength) . '...';
 			$sTag = str_replace('%TITLE%',$title,$sTag);
 		}

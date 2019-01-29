@@ -131,7 +131,7 @@ export default {
         options: {},
         slotShortcut: 'f',
         sizes: [],
-        defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+        defaultSizes: [[300, 250]],
         targeting: {
           loc: 'hivi',
           rv: 1,
@@ -168,6 +168,7 @@ export default {
         targeting: {
           rv: 1
         },
+        trackEachStatus: true,
         trackingKey: 'featured-video',
       },
     };
