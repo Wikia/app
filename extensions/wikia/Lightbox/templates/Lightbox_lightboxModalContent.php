@@ -128,22 +128,22 @@
 					<?php
 						$formHeader = array (
 							'inputs' => array (
-							array(
-								'type' => 'custom',
-								'output' => '<h2>'. wfMessage('lightbox-urls-form-header')->parse() .'</h2>',
-							),
+								array(
+									'type' => 'custom',
+									'output' => '<h2>'. wfMessage('lightbox-urls-form-header')->parse() .'</h2>',
+								),
 							),
 						);
 					?>
 					<?php
 						$formFilePage = array (
 							'inputs' => array (
-							array(
-								'label' => wfMessage('lightbox-file-page-url')->parse(),
-								'type' => 'text',
-								'name' => 'lightbox-file-page-url',
-								'value' => "{{fileUrl}}",
-							)
+								array(
+									'label' => wfMessage('lightbox-file-page-url')->parse(),
+									'type' => 'text',
+									'name' => 'lightbox-file-page-url',
+									'value' => "{{fileUrl}}",
+								)
 							)
 						);
 					?>

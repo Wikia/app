@@ -162,9 +162,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 					float: left;
 					width: 450px;
 					padding-bottom: 5px;
-					&:first-child {
-						border-right: 1px solid $color-page-border;
-						margin-right: 25px;
+					&:nth-child(2) {
+						border-left: 1px solid $color-page-border;
+						padding-left: 25px;
 					}
 				}
 			}
