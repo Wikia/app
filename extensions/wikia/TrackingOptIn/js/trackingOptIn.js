@@ -13,7 +13,7 @@ define('wikia.trackingOptIn', [
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
 
 	lazyQueue.makeQueue(window.Wikia.consentQueue, function (callback) {
-		callback(optIn);
+		callback(optIn, geoRequiresConsent);
 	});
 
 	function init() {

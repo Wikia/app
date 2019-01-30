@@ -113,18 +113,18 @@ $messages['lol'] = array(
 );
 
 $messages['pl'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Witamy w FANDOMIE!</h2>
+	'static-user-pages-user-content' => '== Witamy w Fandomie! ==
 
 Jeśli {{GENDER:|otrzymałeś|otrzymałaś}} powitanie z tego konta, oznacza to, że jesteś nowym edytorem tej wiki. Cześć!
 
 Jeśli szukasz pomocy, możesz zostawić wiadomość osobie, która podpisała wiadomość powitalną. Kliknij odnośnik do ich strony dyskusji, a następnie edytuj stronę, aby napisać wiadomość.
 
-Aby znaleźć ogólną pomoc FANDOMU, odwiedź [[w:pl:Pomoc:Zawartość|pomoc FANDOMU]], [[w:c:spolecznosc|Centrum Społeczności]] lub [[Special:Contact|skontaktuj się z pracownikami]], jeśli nadal masz pytania.
+Aby znaleźć ogólną pomoc Fandomu, odwiedź [[w:pl:Pomoc:Zawartość|pomoc Fandomu]], [[w:c:spolecznosc|Centrum Społeczności]] lub [[Special:Contact|skontaktuj się z pracownikami]], jeśli nadal masz pytania.
 
 == Informacje i pomoc dla narzędzia witania ==
 Aby uzyskać więcej informacji o automatycznych wiadomościach powitalnych, zobacz [[w:pl:Pomoc:Narzędzie witania|stronę pomocy narzędzia witania]].
 
-Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania FANDOMU, [[Special:Contact|skontaktuj się z pracownikami FANDOMU]].
+Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania Fandomu, [[Special:Contact|skontaktuj się z personelem]].
 ',
 	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to [[Pomoc:Boty|konto bota]], obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
 );

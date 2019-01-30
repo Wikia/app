@@ -192,6 +192,7 @@ function unifySlotInterface(slot) {
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		getVideoSizes: () => slotContext.videoSizes,
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
 		},

@@ -191,6 +191,10 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		if (AdEngine3::isEnabled()) {
+			return true;
+		}
+
 		global $wgTitle;
 
 		$skin = RequestContext::getMain()->getSkin();
@@ -225,6 +229,10 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		if (AdEngine3::isEnabled()) {
+			return true;
+		}
+
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_DESKTOP;
 
 		return true;
@@ -238,6 +246,9 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
+		if (AdEngine3::isEnabled()) {
+			return true;
+		}
 
 		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;

@@ -83,7 +83,13 @@ $(function () {
 						'wikia.window',
 						require.optional('ext.wikia.adEngine.adContext'),
 						require.optional('ext.wikia.adEngine.slot.floatingMedrec'),
-					], function (win, adContext, floatingMedrec) {
+						require.optional('ext.wikia.adEngine3.api'),
+					], function (win, adContext, floatingMedrec, adsApi) {
+						if (adsApi) {
+							adsApi.injectIncontentBoxad();
+							return;
+						}
+
 						if (!adContext) {
 							return;
 						}
