@@ -2,6 +2,8 @@ export default {
 	adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{custom.wikiIdentifier}//{targeting.s2}/{src}/{slotName}',
 	custom: {
 		dfpId: '5441',
+		dbNameElement: '_not_a_top1k_wiki',
+		wikiIdentifier: '_not_a_top1k_wiki'
 	},
 	events: {},
 	listeners: {
@@ -11,8 +13,7 @@ export default {
 	slots: {},
 	bidders: {},
 	vast: {
-		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{custom.wikiIdentifier}//{targeting.s2}/{targeting.src}/{slotName}',
-		megaAdUnitId: '/{custom.dfpId}/wka1b.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}'
+		adUnitId: '/{custom.dfpId}/wka1b.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}'
 	},
 	targeting: {
 		outstream: 'none',

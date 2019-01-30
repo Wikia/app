@@ -18,10 +18,10 @@ class FeedsAndPostsController extends WikiaController {
 
 	public function getAll() {
 		$this->response->setValues( [
-				'recentChanges' => ( new RecentChanges() )->get(),
-				'topArticles' => ( new TopArticles() )->get(),
-				'theme' => ( new ThemeSettings() )->get(),
-				'wikiVariables' => ( new WikiVariables() )->get(),
+			'recentChanges' => ( new RecentChanges() )->get(),
+			'topArticles' => ( new TopArticles() )->get(),
+			'theme' => ( new ThemeSettings() )->get(),
+			'wikiVariables' => ( new WikiVariables() )->get(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}

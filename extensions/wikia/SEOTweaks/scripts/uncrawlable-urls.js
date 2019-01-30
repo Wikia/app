@@ -6,7 +6,8 @@ require([
 	window
 ) {
 	'use strict';
-	$(function () {
+
+	function decodeUncrawlableURL(){
 
 		// Handles middle click, ctrl+click and regular click
 		$('a[data-uncrawlable-url]').on('mousedown', function () {
@@ -14,6 +15,10 @@ require([
 			var url = window.atob($this.attr('data-uncrawlable-url'));
 			$this.attr('href', url);
 		});
-	});
+	};
+
+	$(decodeUncrawlableURL);
+
+	mw.hook('wikipage.content').add(decodeUncrawlableURL);
 
 });

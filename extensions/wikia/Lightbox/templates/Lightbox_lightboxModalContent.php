@@ -42,14 +42,45 @@
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
-		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
-
+		{{#isUserAnon}}
+		{{#imageDescription}}
+		<div class="more-info-dropdown more-info-right wds-dropdown">
+			<div class="wds-dropdown__toggle push-dropdown-down">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
+				<span><?= wfMessage('lightbox-header-more-info-button')->escaped() ?></span>
+			</div>
+			<div class="wds-dropdown__content wds-is-right-aligned more-info-container">
+				{{{imageDescription}}}
+			</div>
+		</div>
+		{{/imageDescription}}
+		{{/isUserAnon}}
+		{{^isUserAnon}}
+		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMessage('lightbox-header-more-info-button')->escaped() ?></a>
+		{{/isUserAnon}}
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
-			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
+			<button class="article-add-button secondary"><?= wfMessage('lightbox-header-add-video-button')->escaped() ?></button>
 			<input class="lightbox-article-input" />
 		</div>
 
+		{{#isUserAnon}}
+		{{#imageDescription}}
+		<div class="more-info-dropdown more-info-left wds-dropdown">
+			<div class="wds-dropdown__toggle push-dropdown-down">
+				<h1>{{fileTitle}}</h1>
+			</div>
+			<div class="wds-dropdown__content wds-is-left-aligned more-info-container">
+				{{{imageDescription}}}
+			</div>
+		</div>
+		{{/imageDescription}}
+		{{^imageDescription}}
+		<h1>{{fileTitle}}</h1>
+		{{/imageDescription}}
+		{{/isUserAnon}}
+		{{^isUserAnon}}
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
+		{{/isUserAnon}}
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}
@@ -123,32 +154,34 @@
 				</div>
 			</div>
 			<div class="bottom-forms">
+				{{^isUserAnon}}
 				<div class="more-links">
 					<?php
 						$formHeader = array (
-						    'inputs' => array (
-						    	array(
-						    		'type' => 'custom',
-						    		'output' => '<h2>'. wfMsg('lightbox-urls-form-header') .'</h2>',
-						    	),
-						    ),
+							'inputs' => array (
+								array(
+									'type' => 'custom',
+									'output' => '<h2>'. wfMessage('lightbox-urls-form-header')->parse() .'</h2>',
+								),
+							),
 						);
 					?>
 					<?php
 						$formFilePage = array (
 							'inputs' => array (
-						        array(
-						            'label' => wfMsg('lightbox-file-page-url'),
-						            'type' => 'text',
-						            'name' => 'lightbox-file-page-url',
-					                'value' => "{{fileUrl}}",
-						        )
-						    )
+								array(
+									'label' => wfMessage('lightbox-file-page-url')->parse(),
+									'type' => 'text',
+									'name' => 'lightbox-file-page-url',
+									'value' => "{{fileUrl}}",
+								)
+							)
 						);
 					?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
 				</div>
+				{{/isUserAnon}}
 				<div class="email">
 					<?php
 						$form = array (

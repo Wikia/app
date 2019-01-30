@@ -12,11 +12,13 @@ class MercuryApiFilePageHandler {
 		$details = WikiaFileHelper::getMediaDetail( $title );
 		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
 
+		$file = wfFindFile( $title );
+
 		// width is set only for images and videos so if file page is about .pdf, .odt, .ogg or other type of file
 		// we don't need to generate srcset or thumbnail url
 		if ( isset( $mediaObject['width'] ) && is_int( $mediaObject['width'] ) ) {
-			$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'] );
-			$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340 );
+			$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'], $file );
+			$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340, $file );
 		}
 
 		// if article contains user provided HTML which is invalid (e.g. too many </div>), snippetter treat it as a text

@@ -37,7 +37,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 					return FAKE_VAST_URL;
 				}
 			},
-			megaAdUnitBuilder: {
+			adUnitBuilder: {
 				build: function () {
 					return 'mega/ad/unit';
 				}
@@ -54,7 +54,7 @@ describe('ext.wikia.adEngine.video.articleVideoAd', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.vastUrlBuilder,
-			mocks.megaAdUnitBuilder,
+			mocks.adUnitBuilder,
 			mocks.srcProvider,
 			mocks.vastDebugger,
 			mocks.log

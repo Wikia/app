@@ -254,8 +254,10 @@ class WikiaPhotoGalleryAjax {
 	 * @author Marooned
 	 */
 	static public function saveGalleryData() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
+
+		$wgRequest->assertValidWriteRequest( $wgUser );
 
 		$hash = $wgRequest->getVal('hash');
 		$wikitext = $wgRequest->getVal('wikitext');

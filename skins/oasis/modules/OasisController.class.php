@@ -249,7 +249,6 @@ class OasisController extends WikiaController {
 			$this->billTheLizard = AnalyticsEngine::track('BillTheLizard', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->moatYi = AnalyticsEngine::track('MoatYi', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->il = AdEngine2Controller::getILBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
