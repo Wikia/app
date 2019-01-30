@@ -24,8 +24,8 @@ define('ext.wikia.adEngine.tracking.nielsen', [
 
 		services.nielsen.call({
 			type: 'static',
-			assetid: `fandom.com/${pageParams.s0v}/${pageParams.s1}/${pageParams.artid}`,
-			section: `FANDOM ${pageParams.s0v.toUpperCase()} NETWORK`,
+			assetid: 'fandom.com/' + pageParams.s0v + '/' + pageParams.s1 + '/' + pageParams.artid,
+			section: 'FANDOM ' + pageParams.s0v.toUpperCase() + ' NETWORK',
 		});
 	}
 
