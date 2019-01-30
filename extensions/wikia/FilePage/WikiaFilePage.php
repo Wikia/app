@@ -52,9 +52,10 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc;
+		global $wgMemc, $wgRedirectFilePagesForAnons;
+
 		$out = $this->getContext()->getOutput();
-		if ( !$this->getContext()->getUser()->isAnon() ) {
+		if ( !$this->getContext()->getUser()->isAnon() || empty( $wgRedirectFilePagesForAnons ) ) {
 			parent::view();
 
 			return;
