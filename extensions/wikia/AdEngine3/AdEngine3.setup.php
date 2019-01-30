@@ -10,14 +10,14 @@ $wgExtensionCredits['other'][] = [
 
 // Autoload
 $wgAutoloadClasses['AdEngine3'] =  __DIR__ . '/AdEngine3.class.php';
-$wgAutoloadClasses['AdEngine3ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
+$wgAutoloadClasses['AdEngine3ApiController'] = __DIR__ . '/AdEngine3ApiController.class.php';
 $wgAutoloadClasses['AdEngine3Resource'] = __DIR__ . '/ResourceLoaders/AdEngine3Resource.class.php';
 $wgAutoloadClasses['AdEngine3WikiData'] =  __DIR__ . '/AdEngine3WikiData.class.php';
 
 // ResourceLoader
-$wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineBTCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBTCode.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineHMDCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineHMDCode.php';
+$wgAutoloadClasses['ResourceLoaderAdEngine3Base'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngine3Base.php';
+$wgAutoloadClasses['ResourceLoaderAdEngine3BTCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngine3BTCode.php';
+$wgAutoloadClasses['ResourceLoaderAdEngine3HMDCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngine3HMDCode.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 
 // Hooks

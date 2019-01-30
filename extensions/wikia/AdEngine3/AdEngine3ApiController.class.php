@@ -4,7 +4,7 @@ class AdEngine3ApiController extends WikiaController
 {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	public function getRecCode($partner)
+	public function getRecCode()
 	{
 		global $wgUser;
 
@@ -14,14 +14,15 @@ class AdEngine3ApiController extends WikiaController
 
 		if ($wgUser->isAnon()) {
 			$resourceLoader = null;
+			$type = $this->request->getVal('type', 'rec');
 
-			switch ($partner) {
+			switch ($type) {
 				case 'bt':
-					$resourceLoader = new ResourceLoaderAdEngineBTCode();
+					$resourceLoader = new ResourceLoaderAdEngine3BTCode();
 					break;
 
 				case 'hmd':
-					$resourceLoader = new ResourceLoaderAdEngineHMDCode();
+					$resourceLoader = new ResourceLoaderAdEngine3HMDCode();
 					break;
 			}
 
@@ -29,7 +30,7 @@ class AdEngine3ApiController extends WikiaController
 				$resourceLoaderContext = new ResourceLoaderContext(new ResourceLoader(), new FauxRequest());
 				$this->response->setBody($resourceLoader->getScript($resourceLoaderContext));
 			} else {
-				$this->response->setBody('');
+				$this->response->setBody('tut22ej');
 			}
 		} else {
 			$this->response->setBody('');

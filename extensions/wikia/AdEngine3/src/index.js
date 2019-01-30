@@ -1,9 +1,11 @@
+import { babDetection } from './wad/bab-detection';
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
 import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 import { billTheLizard, krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
+import { recRunner } from './wad/rec-runner';
 import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -18,7 +20,9 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
 
   ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
   videoTracker.register();
+  recRunner.init();
 
+  context.push('delayModules', babDetection);
   context.push('delayModules', biddersDelay);
 
   events.on(events.AD_SLOT_CREATED, (slot) => {
@@ -49,6 +53,7 @@ function startAdEngine() {
 
     window.wgAfterContentAndJS.push(() => {
       slots.injectBottomLeaderboard();
+	  babDetection.run();
     });
 
     context.push('listeners.slot', {

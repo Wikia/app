@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineBTCode extends ResourceLoaderAdEngineBase
+class ResourceLoaderAdEngine3BTCode extends ResourceLoaderAdEngineBase
 {
 	// 24h: cache for HTTP downloaded code
 	const TTL_SCRIPTS = WikiaResponse::CACHE_STANDARD;
@@ -15,7 +15,7 @@ class ResourceLoaderAdEngineBTCode extends ResourceLoaderAdEngineBase
 
 	protected function getMemcKey()
 	{
-		return wfSharedMemcKey('adengine', __METHOD__, static::CACHE_BUSTER);
+		return wfSharedMemcKey('adengine3', __METHOD__, static::CACHE_BUSTER);
 	}
 
 	/**

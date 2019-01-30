@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineHMDCode extends ResourceLoaderAdEngineBase
+class ResourceLoaderAdEngine3HMDCode extends ResourceLoaderAdEngineBase
 {
 	// Cache version: increase on any local file change
 	const CACHE_BUSTER = 50;
@@ -8,7 +8,7 @@ class ResourceLoaderAdEngineHMDCode extends ResourceLoaderAdEngineBase
 
 	protected function getMemcKey()
 	{
-		return wfSharedMemcKey('adengine', __METHOD__, static::CACHE_BUSTER);
+		return wfSharedMemcKey('adengine3', __METHOD__, static::CACHE_BUSTER);
 	}
 
 	/**
