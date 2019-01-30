@@ -37,14 +37,6 @@
 		}
 	}
 
-	&.is-default:before {
-		@include square($diameter - 2*$border-width);
-
-		border: solid $inner-border-width $color-background;
-		left: $border-width;
-		top: $border-width;
-	}
-
 	$badge-size: (0.2539 * $diameter) + 8px;
 	$left: -$badge-size / 3.5;
 	$right: -$badge-size / 2.5;
