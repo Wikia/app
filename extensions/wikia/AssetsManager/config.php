@@ -129,7 +129,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
-		'//extensions/wikia/Recirculation/js/plista.js',
 	],
 ];
 
