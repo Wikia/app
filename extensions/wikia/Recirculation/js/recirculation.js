@@ -83,6 +83,10 @@ require([
 			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredContent) {
+			// do not show footer at all if there is not enough elements to display
+			if (wikiItems.length < 8) {
+				return;
+			}
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
@@ -105,6 +109,10 @@ require([
 			sponsoredContentHelper.fetch()
 		];
 		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions, sponsoredContent) {
+			// do not show footer at all if there is not enough elements to display
+			if (wikiItems.length < 11) {
+				return;
+			}
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
@@ -114,9 +122,9 @@ require([
 				});
 			});
 		})
-			.fail(function (err) {
-				log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
-			});
+		.fail(function (err) {
+			log('Failed to fetch MCF data for international recirculation' + err, log.levels.error);
+		});
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
