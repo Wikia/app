@@ -170,7 +170,7 @@ require([
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
 					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
 
-				if (!sponsoredItem) {
+				if (!sponsoredItem || !$firstItem) {
 					return;
 				}
 
