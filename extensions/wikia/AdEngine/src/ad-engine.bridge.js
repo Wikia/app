@@ -62,6 +62,7 @@ function init(
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
 		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
 	}
+	context.set('templates.stickyTLB.enabled', !legacyContext.get('targeting.hasFeaturedVideo'));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
