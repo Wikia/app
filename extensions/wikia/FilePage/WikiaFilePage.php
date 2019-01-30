@@ -86,8 +86,8 @@ class WikiaFilePage extends ImagePage {
 		}
 
 		if ( !$img || $img && !$img->fileExists ) {
-            parent::view();
-
+			$wgMemc->add( $redirKey, $url );
+			$out->redirect( $url );
 			return;
 		}
 
