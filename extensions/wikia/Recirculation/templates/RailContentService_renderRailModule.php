@@ -1,7 +1,7 @@
 <div id="WikiaAdInContentPlaceHolder" class="rail-sticky-module">
 	<section id="recirculation-rail">
 		<section class="rail-module premium-recirculation-rail">
-			<?php if ( count( $popularPages ) >= 5 ): ?>
+			<?php if ( !empty( $popularPages ) ): ?>
 			<h2><?= wfMessage( 'popularpages' )->escaped(); ?></h2>
 			<ul class="thumbnails">
 				<?php foreach ( $popularPages as $page ): ?>
