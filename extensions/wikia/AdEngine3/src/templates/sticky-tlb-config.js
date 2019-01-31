@@ -3,67 +3,67 @@ import { scrollListener, slotTweaker } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
-  CSS_CLASSNAME_STICKY_BFAA,
-  CSS_TIMING_EASE_IN_CUBIC,
-  SLIDE_OUT_TIME
+	CSS_CLASSNAME_STICKY_BFAA,
+	CSS_TIMING_EASE_IN_CUBIC,
+	SLIDE_OUT_TIME
 } = universalAdPackage;
 
 export const getConfig = () => ({
-  adSlot: null,
-  slotParams: null,
-  updateNavbarOnScroll: null,
+	adSlot: null,
+	slotParams: null,
+	updateNavbarOnScroll: null,
 
-  onInit(adSlot, params) {
-    this.adSlot = adSlot;
-    this.slotParams = params;
+	onInit(adSlot, params) {
+		this.adSlot = adSlot;
+		this.slotParams = params;
 
-    const wrapper = document.getElementById('WikiaTopAds');
+		const wrapper = document.getElementById('WikiaTopAds');
 
-    this.adSlot.getElement().classList.add('gpt-ad');
-    wrapper.style.opacity = '0';
-    slotTweaker.onReady(adSlot).then(() => {
-      wrapper.style.opacity = '';
-      this.updateNavbar();
-    });
+		this.adSlot.getElement().classList.add('gpt-ad');
+		wrapper.style.opacity = '0';
+		slotTweaker.onReady(adSlot).then(() => {
+			wrapper.style.opacity = '';
+			this.updateNavbar();
+		});
 
-    this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
-  },
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+	},
 
-  onAfterStickBfaaCallback() {
-    pinNavbar(false);
-  },
+	onAfterStickBfaaCallback() {
+		pinNavbar(false);
+	},
 
-  onBeforeUnstickBfaaCallback() {
-    scrollListener.removeCallback(this.updateNavbarOnScroll);
-    this.updateNavbarOnScroll = null;
-    Object.assign(navBarElement.style, {
-      transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
-      top: '0'
-    });
-  },
+	onBeforeUnstickBfaaCallback() {
+		scrollListener.removeCallback(this.updateNavbarOnScroll);
+		this.updateNavbarOnScroll = null;
+		Object.assign(navBarElement.style, {
+			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
+			top: '0'
+		});
+	},
 
-  onAfterUnstickBfaaCallback() {
-    Object.assign(navBarElement.style, {
-      transition: '',
-      top: ''
-    });
+	onAfterUnstickBfaaCallback() {
+		Object.assign(navBarElement.style, {
+			transition: '',
+			top: ''
+		});
 
-    this.updateNavbar();
-    this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
-  },
+		this.updateNavbar();
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+	},
 
-  updateNavbar() {
-    const container = this.adSlot.getElement();
-    const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-    const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+	updateNavbar() {
+		const container = this.adSlot.getElement();
+		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
 
-    pinNavbar(isInViewport && !isSticky);
-    this.moveNavbar(isSticky ? container.offsetHeight : 0);
-  },
+		pinNavbar(isInViewport && !isSticky);
+		this.moveNavbar(isSticky ? container.offsetHeight : 0);
+	},
 
-  moveNavbar(offset) {
-    if (navBarElement) {
-      navBarElement.style.top = offset ? `${offset}px` : '';
-    }
-  }
+	moveNavbar(offset) {
+		if (navBarElement) {
+			navBarElement.style.top = offset ? `${offset}px` : '';
+		}
+	}
 });
