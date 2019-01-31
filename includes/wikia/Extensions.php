@@ -1788,3 +1788,5 @@ include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" )
 if ( !empty( $wgWatchShowURL ) ) {
 	include "$IP/extensions/wikia/WatchShow/WatchShow.setup.php";
 }
+
+include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
