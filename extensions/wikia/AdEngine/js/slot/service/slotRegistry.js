@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		// FIXME: This is getting ugly as hell
 		// Since it's going to be removed once we adopt AE3
 		// Let's unify slot interfaces through bridge over here
-		bridge.unifySlotInterface(slot);
+		slot = bridge.unifySlotInterface(slot);
 
 		slots[slot.name].push({
 			providerName: providerName,
