@@ -1,6 +1,9 @@
 import { context, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
+import { babDetection } from './wad/bab-detection';
+import { recRunner } from './wad/rec-runner';
+import { btLoader } from './wad/bt-loader';
 
 const PAGE_TYPES = {
   article: 'a',
@@ -216,7 +219,10 @@ export default {
         return;
       }
 
-      // TODO: Add recovery part
+	  if (babDetection.isBlocking() && recRunner.isEnabled('bt') && btLoader.duplicateSlot(slotName)) {
+	    btLoader.triggerScript();
+	  }
+
       document.removeEventListener('scroll', pushSlotAfterComments);
       context.push('events.pushOnScroll.ids', slotName);
     }, 250);
@@ -242,6 +248,8 @@ export default {
     parentNode.appendChild(element);
 
     setTimeout(() => {
+      // TODO: Add FMR recovery logic from AE2::floatingMedrec.js
+
       context.push('events.pushOnScroll.ids', slotName);
     }, 10000);
   }

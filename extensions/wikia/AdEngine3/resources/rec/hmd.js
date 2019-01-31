@@ -1,13 +1,14 @@
 require([
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.wad.hmdRecLoader'
-], function (adContext, hmdRecLoader) {
+	require.optional('ext.wikia.adEngine3.api')
+], function (
+	adsApi
+) {
 	var exportz = exportz || {};
 	(function(exports) {
 		"use strict";
 
-		var conf = hmdRecLoader.getConfig();
-		var exportz=exportz||{};
+		var conf = adsApi ? adsApi.getHmdConfig() : {};
+		var exportz = exportz || {};
 
 (function(k){k=k||{};(function(h){function b(){this.A="setup";this.s();window.addEventListener("message",this.F.bind(this))}h.m=b;b.prototype={s:function(){this.a={urls:{},homadUrls:{},originalUrls:{},scripts:{},eventlistener:[],generalEventlistener:[],iFrames:[],iFrameOnLoadHandler:{},iFrameUrl:"",trace:[],stack:[],errmsg:[]}},postMessage:function(a,d){try{a.contentWindow&&(a=a.contentWindow)}catch(e){}a&&a.postMessage&&a.postMessage(d,"*")},F:function(a){a&&a.data&&a.data.type&&"vpaid"==a.data.type&&
 this.D(a.data)},D:function(a){if(this.a&&this.a.eventlistener)for(var d=this.a.eventlistener.length,e=0;e<d;e++)this.a&&this.a.eventlistener&&a.event==this.a.eventlistener[e].name&&this.a.eventlistener[e].cb(a)},j:function(a){a=a&&"number"===typeof a&&0<a?Math.round(a):10;for(var d="",e=0;e<a;e++)d+=String.fromCharCode((.5>Math.random()?65:97)+Math.floor(26*Math.random()));return d},h:function(a){var d=0,e,c;if(0===a.length)return d;for(e=0;e<a.length;e++)c=a.charCodeAt(e),d=(d<<5)-d+c,d|=0;return d},

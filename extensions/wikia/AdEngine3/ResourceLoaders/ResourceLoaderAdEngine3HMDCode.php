@@ -3,7 +3,7 @@
 class ResourceLoaderAdEngine3HMDCode extends ResourceLoaderAdEngineBase
 {
 	// Cache version: increase on any local file change
-	const CACHE_BUSTER = 50;
+	const CACHE_BUSTER = 55;
 	const LOCAL_FILE_PATH = __DIR__ . '/../resources/rec/hmd.js';
 
 	protected function getMemcKey()

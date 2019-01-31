@@ -21,7 +21,14 @@ let recParams = {
 	},
 };
 
+/**
+ * Starts rec service and inits available adapters
+ */
 export const recRunner = {
+	/**
+	 * Checks availability of rec services, Instant Globals settings and initialises enabled ones
+	 * @returns {void}
+	 */
 	init() {
 		utils.logger(logGroup, 'WAD rec module initialized');
 
@@ -36,6 +43,11 @@ export const recRunner = {
 		});
 	},
 
+	/**
+	 * Checks whether rec service is available
+	 * @param {string} name
+	 * @returns {boolean}
+	 */
 	isEnabled(name) {
 		return recEnabled.display === name || recEnabled.video === name;
 	},

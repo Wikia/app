@@ -36,7 +36,7 @@ function updateWadContext() {
 		context.set('opts.wadBT', isGeoEnabled('wgAdDriverWadBTCountries'));
 
 		// HMD rec
-		context.set('opts.wadHMD', context.get('targeting.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
+		context.set('opts.wadHMD', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
     }
 }
 
@@ -51,8 +51,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
   context.set('wiki', wikiContext);
   context.set('state.showAds', showAds);
   context.set('opts.noExternals', window.wgNoExternals || isUrlParamSet('noexternals'));
-
-  updateWadContext();
 
   if (context.get('wiki.opts.isAdTestWiki')) {
     context.set('src', 'test');
@@ -176,6 +174,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
   slots.setupIdentificators();
   slots.setupStates();
+
+  updateWadContext();
 
   // TODO: Remove wrapper of window.adslots2 when we unify our push method
   utils.makeLazyQueue(window.adslots2, (slot) => {

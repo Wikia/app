@@ -1,10 +1,9 @@
 import { utils } from '@wikia/ad-engine';
+import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
+import { recInjector } from './rec-injector';
 
-const wikiaApiController = 'AdEngine3ApiController';
-const wikiaApiMethod = 'getRecCode';
 const isDebug = utils.queryString.get('hmd-rec-debug') === '1';
-const cacheBuster = 10;
-const logGroup = 'wikia.adEngine.wad.hmdRecLoader';
+const logGroup = 'hmd-loader';
 
 let trackingStatus = {
 	hmdSetuped: false,
@@ -47,12 +46,9 @@ const trackingEventsMap = {
 			}
 		}
 
-		trackEvent('hmd_impression');
-		eventDispatcher.dispatch('adengine.video.status', {
-			vastUrl: adsConfiguration.getCurrentVast('last'),
-			lineItemId: trackingStatus.vastIds.lineItemId,
-			creativeId: trackingStatus.vastIds.creativeId,
-			status: 'success',
+		trackEvent('hmd_impression', {
+			statusName: 'success',
+			vastParams: trackingStatus.vastIds,
 		});
 	},
 	adStart: 'hmd_started',
@@ -86,15 +82,11 @@ const trackingEventsMap = {
 		trackingStatus.adRequested = false;
 
 		if (trackingStatus.hmdErrors[type]) {
-			trackEvent('hmd_error', {
-				errorCode: trackingStatus.hmdErrors[type]
-			});
+			trackEvent('hmd_error', null, trackingStatus.hmdErrors[type]);
 		} else if (trackingStatus.hmdCollapse[type]) {
-			eventDispatcher.dispatch('adengine.video.status', {
-				vastUrl: adsConfiguration.getCurrentVast('last'),
-				lineItemId: trackingStatus.vastIds.lineItemId,
-				creativeId: trackingStatus.vastIds.creativeId,
-				status: 'collapse'
+			trackEvent(null, {
+				statusName: 'collapse',
+				vastParams: trackingStatus.vastIds,
 			});
 		}
 	}
@@ -125,99 +117,96 @@ const config = {
 	prerollAdTag: () => {
 		utils.logger(logGroup, 'Requesting preroll adTag');
 
-		return isDebug ? configDev.adTag : adsConfiguration.getCurrentVast('pre') || false;
+		return isDebug ? configDev.adTag : jwplayerAdsFactory.getCurrentVast('preroll') || false;
 	},
 	midrollAdTag: () => {
 		utils.logger(logGroup, 'Requesting midroll adTag');
 
-		return adsConfiguration.getCurrentVast('mid') || false;
+		return jwplayerAdsFactory.getCurrentVast('midroll') || false;
 	},
 	postrollAdTag: () => {
 		utils.logger(logGroup, 'Requesting postroll adTag');
 
-		return adsConfiguration.getCurrentVast('post') || false;
+		return jwplayerAdsFactory.getCurrentVast('postroll') || false;
 	}
 };
 
-function trackEvent(eventName, params) {
-	params = params || {};
+/**
+ * Subscribes to HMD window event and pass tracking to DW
+ * @returns {void}
+ */
+function initializeTracking() {
+	window.addEventListener('hdEvent', (event) => {
+		utils.logger(logGroup, 'HMD event registered', event, event.detail.name);
 
-	if (trackingStatus.vastIds.lineItemId) {
-		params.lineItemId = trackingStatus.vastIds.lineItemId;
-	}
+		if (
+			event.detail && event.detail.name && event.detail.state &&
+			['setup', 'preroll'].indexOf(event.detail.state) !== -1 &&
+			trackingEventsMap[event.detail.name]
+		) {
+			const eventName = event.detail.name;
+			const trackingMethod = trackingEventsMap[eventName];
 
-	if (trackingStatus.vastIds.creativeId) {
-		params.creativeId = trackingStatus.vastIds.creativeId;
-	}
-
-	adsConfiguration.trackCustomEvent(eventName, params);
+			if (typeof trackingMethod === 'function') {
+				trackingMethod(event);
+			} else {
+				trackEvent(trackingMethod);
+			}
+		}
+	});
 }
 
+/**
+ * Track single HMD event to DW
+ * @param {string} name
+ * @param {object} slotStatus
+ * @param {string|int} errorCode
+ * @returns {void}
+ */
+function trackEvent(name, slotStatus = null, errorCode = '') {
+	const event = new CustomEvent('hdPlayerEvent', {
+		detail: {
+			name,
+			slotStatus,
+			errorCode
+		}
+	});
+
+	document.dispatchEvent(event);
+}
+
+/**
+ * Loads HMD rec service
+ */
 export const hmdLoader = {
-	//aa
-};
-
-/*global define, require*/
-define('ext.wikia.adEngine.wad.hmdRecLoader', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.service.slotRegistry',
-	'ext.wikia.adEngine.utils.eventDispatcher',
-	'ext.wikia.adEngine.utils.scriptLoader',
-	'wikia.document',
-	'wikia.log',
-	'wikia.querystring',
-	'wikia.window',
-	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration')
-], function (adContext, slotRegistry, eventDispatcher, scriptLoader, doc, log, qs, win, adsConfiguration) {
-	'use strict';
-
-
-
-	function getConfig() {
+	/**
+	 * Returns HMD injected code config
+	 * @returns {object}
+	 */
+	getConfig() {
 		return config;
-	}
+	},
 
-	function setOnReady(onReady) {
-		config.onReady = onReady;
-	}
-
-	function injectScript() {
-		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod + '&cb=' + cacheBuster;
-
-		scriptLoader.loadScript(url, {
-			isAsync: false,
-			node: doc.head.lastChild
-		});
-	}
-
-	function initializeTracking() {
-		window.addEventListener('hdEvent', function(event) {
-			utils.logger(logGroup, 'HMD event registered', event, event.detail.name);
-
-			if (
-				event.detail && event.detail.name && event.detail.state &&
-				['setup', 'preroll'].indexOf(event.detail.state) !== -1 &&
-				trackingEventsMap[event.detail.name]
-			) {
-				var eventName = event.detail.name,
-					trackingMethod = trackingEventsMap[eventName];
-
-				if (typeof trackingMethod === 'function') {
-					trackingMethod(event);
-				} else {
-					trackEvent(trackingMethod);
-				}
-			}
-		});
-	}
-
-	function init() {
-		doc.addEventListener('bab.blocking', function () {
+	/**
+	 * Adds HMD rec service event listener on document
+	 * @returns {void}
+	 */
+	init() {
+		document.addEventListener('bab.blocking', () => {
 			utils.logger(logGroup, 'Initialising HMD rec loader');
 
 			initializeTracking();
-			injectScript();
-		});
-	}
 
-});
+			recInjector.inject('hmd');
+		});
+	},
+
+	/**
+	 * Adds callback executed after HMD service initialisation
+	 * @param {function} onReady
+	 * @returns {void}
+	 */
+	setOnReady(onReady) {
+		config.onReady = onReady;
+	},
+};
