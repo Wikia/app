@@ -69,13 +69,6 @@ class WikiaFilePage extends ImagePage {
 		}
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
 
-		$urlMem = $wgMemc->get( $redirKey );
-		if ( $urlMem ) {
-			$out->redirect( $urlMem );
-
-			return;
-		}
-
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
@@ -88,6 +81,13 @@ class WikiaFilePage extends ImagePage {
 		if ( !$img || $img && !$img->fileExists ) {
 			$wgMemc->add( $redirKey, $url );
 			$out->redirect( $url );
+			return;
+		}
+
+		$urlMem = $wgMemc->get( $redirKey );
+		if ( $urlMem ) {
+			$out->redirect( $urlMem );
+
 			return;
 		}
 
