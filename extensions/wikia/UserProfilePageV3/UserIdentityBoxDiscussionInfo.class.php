@@ -34,11 +34,11 @@ class UserIdentityBoxDiscussionInfo {
 	}
 
 	private function fetchDiscussionPostsNumber() {
-
 		$this->discussionActive = F::app()->wg->EnableDiscussions;
 		if ( $this->discussionActive ) {
+			global $wgScriptPath;
 			$this->discussionPostsCount = $this->fetchDiscussionPostsCount();
-			$this->discussionAllPostsByUserLink = "/d/u/{$this->userId}";
+			$this->discussionAllPostsByUserLink = "$wgScriptPath/d/u/{$this->userId}";
 		}
 	}
 
