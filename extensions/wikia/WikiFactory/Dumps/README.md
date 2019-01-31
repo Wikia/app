@@ -9,7 +9,7 @@ When a user clicks "Request a dump":
 1. `DumpsOnDemandTask.php` is queued with the given wiki id.
 1. XML dumps (the full one and with current versions of articles only) are created locally and then uploaded to Amazon's S3 storage.
 
-### Nagios check
+### Prometheus check
 
 We have a Prometheus check that keeps track of a length of the queue of pending and failed dump requests. The following queries are made:
 
@@ -29,6 +29,14 @@ mysql>SELECT COUNT(distinct dump_wiki_id) AS queue_size FROM dumps WHERE dump_co
 +------------+
 |          5 |
 +------------+
+```
+
+Failed dumps can be retried by pushing them back to the queue:
+
+```php
+$wgUser = User::newFromName('Macbre')
+DumpsOnDemand::queueDump(304 /* wiki ID */, false /* is dump hidden */, false /* is wiki closed */);
+Wikia\Factory\ServiceFactory::instance()->rabbitFactory()->taskPublisher()->doUpdate()
 ```
 
 ### Logs
