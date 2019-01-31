@@ -170,7 +170,7 @@ function unifySlotInterface(slot) {
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
 	if (!context.get(slotPath)) {
-		return;
+		return slot;
 	}
 
 	if (slot.isUnified) {
