@@ -11,7 +11,7 @@ When a user clicks "Request a dump":
 
 ### Nagios check
 
-We have Nagios checks that keep track of a length of the queue of pending and failed dump requests. They issue the following queries:
+We have a Prometheus check that keeps track of a length of the queue of pending and failed dump requests. The following queries are made:
 
 ```sql
 -- pending dump requests (i.e. to be processed)
