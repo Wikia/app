@@ -7,7 +7,9 @@ describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 				addCallback: function () {}
 			},
 			bridge: {
-				unifySlotInterface: function () {}
+				unifySlotInterface: function (slot) {
+					return slot;
+				}
 			}
 		},
 		registry;
