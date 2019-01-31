@@ -59,6 +59,7 @@ require([
 		return threads.map(function (thread, index) {
 			var userData = thread._embedded.userData[0];
 			var date = new Date(thread.creationDate.epochSecond * 1000);
+			var scriptPath = mw.config.get('wgScriptPath');
 
 			return {
 				author: thread.createdBy.name,
@@ -72,8 +73,8 @@ require([
 				isReported: thread.isReported ? 'is-reported' : '',
 				firstPostId: thread.firstPostId,
 				index: index,
-				link: '/d/p/' + thread.id,
-				shareUrl: window.location.protocol + '//' + window.location.hostname + '/d/p/' + thread.id,
+				link: scriptPath + '/d/p/' + thread.id,
+				shareUrl: window.location.protocol + '//' + window.location.hostname + scriptPath + '/d/p/' + thread.id,
 				upvoteUrl: upvoteUrl + thread.firstPostId,
 				title: thread.title,
 				upvoteCount: thread.upvoteCount,
@@ -105,7 +106,7 @@ require([
 			},
 		}).done(function (data) {
 			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl),
-				imagesDir = '/extensions/wikia/EmbeddableDiscussions/images/';
+				imagesDir = mw.config.get('wgExtensionAssetsPath') + '/wikia/EmbeddableDiscussions/images/';
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
@@ -113,6 +114,7 @@ require([
 				replyText: $.msg('embeddable-discussions-reply'),
 				replyIconSrc: imagesDir + 'reply.svg',
 				replyTinyIconSrc: imagesDir + 'reply-tiny.svg',
+				scriptPath: mw.config.get('wgScriptPath'),
 				shareText: $.msg('embeddable-discussions-share'),
 				shareIconSrc: imagesDir + 'share.svg',
 				showAll: $.msg('embeddable-discussions-show-all'),
