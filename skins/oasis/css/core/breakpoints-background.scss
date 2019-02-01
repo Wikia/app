@@ -110,6 +110,7 @@ body.skin-oasis {
 			background: $color-body-middle;
 			/* @noflip */
 			left: 50%;
+			opaicty: .3;
 			// (2) ... this will lay on top of the base ...
 			z-index: 1;
 

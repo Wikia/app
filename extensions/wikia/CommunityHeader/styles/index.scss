@@ -9,7 +9,7 @@
 	$community-theme-dropdowns-border-color: mix($wds-color-white, #000, 80%);
 	$community-theme-dropdowns-text-color: $wds-fandom-color-navy;
 
-	@if $is-dark-wiki {
+	@if (lightness($color-body) < 50) {
 		$community-theme-text-color: $wds-color-white;
 		$community-theme-separator-color: rgba($wds-color-white, .5);
 	}
