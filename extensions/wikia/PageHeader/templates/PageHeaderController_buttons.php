@@ -5,12 +5,10 @@
 		] ); ?>
 	<?php endif; ?>
 	<?php foreach ( $buttons->buttons as $button ): ?>
-		<a class="wds-button <?= $button->class ?>" href="<?= $button->href ?>"
-		   id="<?= $button->id ?>">
+		<a class="wds-button <?= $button->class ?>" href="<?= $button->href ?>" id="<?= $button->id ?>" title="<?= $button->label ?>">
 			<?php if ( !empty( $button->icon ) ): ?>
 				<?= DesignSystemHelper::renderSvg( $button->icon, 'wds-icon wds-icon-small' ); ?>
 			<?php endif; ?>
-			<span><?= $button->label ?></span>
 		</a>
 	<?php endforeach; ?>
 </div>

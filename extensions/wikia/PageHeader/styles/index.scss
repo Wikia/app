@@ -6,7 +6,7 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
-	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+	@include dropdown-theming($wds-color-white, $wds-fandom-color-navy, $color-links, mix($wds-color-white, #000, 80%));
 
 	@include align-items(flex-start);
 	@include flexbox();
@@ -23,7 +23,23 @@
 	}
 
 	.wds-button {
-		@include button-theming($color-buttons, $color-button-text, $color-text);
+		@include button-theming($wds-color-white, $wds-fandom-color-navy, $wds-fandom-color-navy);
+
+		border-color: $color-links;
+		border-radius: 50%;
+		box-sizing: border-box;
+		width: 36px;
+		height: 36px;
+
+		&.wds-is-secondary {
+			border-color: $color-links;
+		}
+
+		&:hover:not(:disabled),
+		&.wds-is-secondary:hover:not(:disabled) {
+			background-color: rgba($color-links, .05);
+			color: $wds-fandom-color-navy;
+		}
 	}
 
 	.wds-button-group {
@@ -51,7 +67,7 @@
 
 	&__contribution-buttons {
 		> *:not(:last-child) {
-			margin-right: 3px;
+			margin-right: 10px;
 		}
 	}
 
