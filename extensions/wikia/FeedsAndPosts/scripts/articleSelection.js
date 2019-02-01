@@ -3,6 +3,7 @@ require(['jquery'], function ($) {
 
 	var articleContainer = null;
 	var tooltip = null;
+	var articleTitle = null;
 
 	function init() {
 		if (!window.getSelection) {
@@ -10,6 +11,7 @@ require(['jquery'], function ($) {
 		}
 
 		articleContainer = document.getElementById('mw-content-text');
+		articleTitle = document.querySelector('h1').innerText;
 
 		window.document.addEventListener('mouseup', onMouseUp);
 	}
@@ -26,7 +28,7 @@ require(['jquery'], function ($) {
 				return;
 			}
 
-			renderTooltip(rect.x + rect.width / 2, rect.y);
+			renderTooltip(rect.x + rect.width / 2, rect.y + window.scrollY, parent.wholeText);
 
 			setTimeout(function () {
 				window.addEventListener('click', onClick);
@@ -34,12 +36,17 @@ require(['jquery'], function ($) {
 		}, 0);
 	}
 
-	function renderTooltip(x, y) {
+	function renderTooltip(x, y, text) {
 		if (!tooltip) {
 			tooltip = document.createElement('a');
 			tooltip.classList.add('feeds-article-selection-tooltip');
 			tooltip.innerText = "Twoja stara jeździ wózkiem bez kółek.";
 		}
+
+		tooltip.href = window.location.origin +
+			'/f?url=' + encodeURIComponent(window.location.href) +
+			'&title=' + articleTitle +
+			'&text=' + text;
 
 		tooltip.style.top = y + 'px';
 		tooltip.style.left = x + 'px';
