@@ -30,7 +30,7 @@ class AdEngine3ApiController extends WikiaController
 				$resourceLoaderContext = new ResourceLoaderContext(new ResourceLoader(), new FauxRequest());
 				$this->response->setBody($resourceLoader->getScript($resourceLoaderContext));
 			} else {
-				$this->response->setBody('tut22ej');
+				$this->response->setBody('');
 			}
 		} else {
 			$this->response->setBody('');
