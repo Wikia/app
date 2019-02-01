@@ -15,4 +15,17 @@
 		margin-right: 5px;
 		width: 18px;
 	}
+
+	&:after {
+		content: '';
+		display: block;
+		width: 0;
+		height: 0;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 10px solid white;
+		position: absolute;
+		bottom: -10px;
+		left: 20px;
+	}
 }
