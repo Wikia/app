@@ -1,8 +1,18 @@
 .feeds-article-selection-tooltip {
+	align-items: center;
 	background: white;
 	box-shadow: -2px 7px 14px -6px rgba(0,0,0,0.43);
+	color: black;
+	display: flex;
+	justify-content: center;
 	padding: 10px;
 	position: absolute;
 	transform: translate(-50%, -100%);
 	z-index: 100000;
+
+	svg {
+		height: 18px;
+		margin-right: 5px;
+		width: 18px;
+	}
 }
