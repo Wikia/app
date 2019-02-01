@@ -134,6 +134,9 @@ class FileDeleteForm {
 			global $wgUser;
 			$user = $wgUser;
 		}
+		global $wgMemc;
+		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
 
 		/* @var LocalFile $file */
 		if( $oldimage ) {

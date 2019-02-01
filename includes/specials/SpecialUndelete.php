@@ -691,6 +691,7 @@ class SpecialUndelete extends SpecialPage {
 		$this->checkPermissions();
 		$user = $this->getUser();
 
+
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -1412,7 +1413,7 @@ class SpecialUndelete extends SpecialPage {
 	}
 
 	function undelete() {
-		global $wgUploadMaintenance;
+		global $wgUploadMaintenance, $wgMemc;
 
 		if ( $wgUploadMaintenance && $this->mTargetObj->getNamespace() == NS_FILE ) {
 			throw new ErrorPageError( 'undelete-error', 'filedelete-maintenance' );
@@ -1451,6 +1452,9 @@ class SpecialUndelete extends SpecialPage {
 			$out->addWikiMsg( 'cannotundelete' );
 			$out->addWikiMsg( 'undeleterevdel' );
 		}
+
+		$redirKey = wfMemcKey( 'redir', $this->mTargetObj->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
 
 		// Show file deletion warnings and errors
 		$status = $archive->getFileStatus();
