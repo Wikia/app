@@ -6,6 +6,14 @@
 		height: 100%;
 		width: 100%;
 	}
+
+	&.is-default:before {
+		border-radius: 50%;
+		box-sizing: border-box;
+		content: '';
+		pointer-events: none;
+		position: absolute;
+	}
 }
 
 .wds-avatar__image {
@@ -14,12 +22,6 @@
 	display: inline-block;
 	border-radius: 50%;
 	box-sizing: border-box;
-}
-
-.wds-avatar__inner-border {
-	border-radius: 50%;
-	box-sizing: border-box;
-	position: absolute;
 }
 
 .wds-avatar__badge {
