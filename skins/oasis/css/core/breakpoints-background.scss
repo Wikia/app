@@ -67,14 +67,35 @@ $gradient-offset: $gradient-width;
 }
 
 body.skin-oasis {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgResourceBasePath */
 
-	&.background-not-tiled {
-		background-repeat: no-repeat;
-	}
+	.community-background {
+		left: 0;
+		position: fixed;
+		right: 0;
+		text-align: center;
+		top: $wds-global-navigation-height;
 
-	&.background-fixed {
-		 background-attachment: fixed;
+		&__image-container {
+			$gradient-mask: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+
+			-webkit-mask-image: $gradient-mask;
+			mask-image: $gradient-mask;
+
+			&::before {
+				background-color: $color-header;
+				content: '';
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+
+			img {
+				opacity: .3;
+				width: 100%;
+			}
+		}
 	}
 }
 
@@ -83,36 +104,6 @@ body.skin-oasis {
 		background: {
 			color: $color-body;
 			image: none;
-		}
-
-		.community-background {
-			left: 0;
-			position: fixed;
-			right: 0;
-			text-align: center;
-			top: $wds-global-navigation-height;
-
-			&__image-container {
-				$gradient-mask: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-
-				-webkit-mask-image: $gradient-mask;
-				mask-image: $gradient-mask;
-
-				&::before {
-					background-color: $color-header;
-					content: '';
-					height: 100%;
-					left: 0;
-					position: absolute;
-					top: 0;
-					width: 100%;
-				}
-
-				img {
-					opacity: .3;
-					width: 100%;
-				}
-			}
 		}
 
 		.background-image-gradient {
