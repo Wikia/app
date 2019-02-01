@@ -5,15 +5,29 @@
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 .wds-community-header {
+	$community-theme-dropdowns-background-color: $wds-color-white;
+	$community-theme-dropdowns-border-color: mix($wds-color-white, #000, 80%);
+	$community-theme-dropdowns-text-color: $wds-fandom-color-navy;
+
+	@if $is-dark-wiki {
+		$community-theme-text-color: $wds-color-white;
+		$community-theme-separator-color: rgba($wds-color-white, .5);
+	}
+
 	@include community-header-theming(
-		$color-community-header,
-		$color-text,
+		$color-header,
+		$community-theme-dropdowns-text-color,
 		$color-links,
-		$color-page,
-		$color-page-border
+		$community-theme-dropdowns-background-color,
+		$community-theme-dropdowns-border-color
 	);
 
-	margin: 0 auto;
+	&::before {
+		background-image: none;
+	}
+
+	background-color: transparent;
+	margin: -10px auto 15px;
 
 	// z-index needs to be at least 5 to avoid appearing avatars from avatar_stack component (in community rail module)
 	// above the local nav dropdowns

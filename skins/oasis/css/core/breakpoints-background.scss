@@ -85,40 +85,34 @@ body.skin-oasis {
 			image: none;
 		}
 
-		&::after,
-		&::before {
-			background: {
-				color: transparent;
-				image: url($background-image); /* $wgResourceBasePath */
-				repeat: no-repeat;
-			}
-			content: '';
-			height: $background-height;
-			position: absolute;
-			top: 0;
-			width: $background-width-half;
-			// (1) as Safari has problems with negative z-index, let this be base...
-			z-index: 0;
-		}
-
-		&.background-fixed::after,
-		&.background-fixed::before {
+		.community-background {
+			left: 0;
 			position: fixed;
-		}
+			right: 0;
+			text-align: center;
+			top: $wds-global-navigation-height;
 
-		&::after {
-			background-position: -$background-width-half 0;
-			/* @noflip */
-			margin-right: -$background-width-half;
-			/* @noflip */
-			right: 50%;
-		}
+			&__image-container {
+				$gradient-mask: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 
-		&::before {
-			/* @noflip */
-			left: 50%;
-			/* @noflip */
-			margin-left: -$background-width-half;
+				-webkit-mask-image: $gradient-mask;
+				mask-image: $gradient-mask;
+
+				&::before {
+					background-color: $color-header;
+					content: '';
+					height: 100%;
+					left: 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+				}
+
+				img {
+					opacity: .3;
+					width: 100%;
+				}
+			}
 		}
 
 		.background-image-gradient {

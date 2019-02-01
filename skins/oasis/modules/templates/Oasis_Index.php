@@ -58,10 +58,20 @@
 <?= $headItems ?>
 
 </head>
+
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-<? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
-	<div class="background-image-gradient"></div>
-<? endif ?>
+	<?
+		$themeSettings = new ThemeSettings();
+		$themeSettings->getBackgroundUrl();
+	?>
+	<div class="community-background">
+		<div class="community-background__image-container">
+			<img src=<?= $themeSettings->getBackgroundUrl(); ?> alt="" />
+			<? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
+				<div class="background-image-gradient"></div>
+			<? endif ?>
+		</div>
+	</div>
 
 <?= $internalTracker ?>
 
