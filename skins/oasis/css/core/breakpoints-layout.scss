@@ -84,7 +84,8 @@
 
 	.WikiaRail,
 	.main-page-tag-rcs {
-		padding: 0;
+		background-image: linear-gradient(180deg, $wds-fandom-color-light-gray, $wds-color-white);
+		padding: 30px;
 
 		@media #{$breakpoint-below-small-plus} {
 			-moz-column-count: 2;
