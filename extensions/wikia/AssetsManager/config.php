@@ -129,7 +129,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
-		'//extensions/wikia/Recirculation/js/plista.js',
 	],
 ];
 
@@ -203,6 +202,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/tracking/moatYi.js',
+		'//extensions/wikia/AdEngine/js/tracking/nielsen.js',
 		'//extensions/wikia/AdEngine/js/tracking/pageInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
@@ -220,6 +220,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//extensions/wikia/AdEngine/js/wad/hmdRecLoader.js',
+		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -2312,7 +2313,6 @@ $config['jwplayer_tag_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'#group_jwplayer_tag_ads_js',
 		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
@@ -2323,7 +2323,6 @@ $config['jwplayer_tag_with_featured_video_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'#group_jwplayer_tag_ads_js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
 	],
 ];

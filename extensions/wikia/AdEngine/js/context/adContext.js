@@ -234,6 +234,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
 
 		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
+		context.opts.nielsen = isEnabled('wgAdDriverNielsenCountries');
 
 		// Need to be placed always after all lABrador wgVars checks
 		context.opts.labradorDfp = adEngineBridge.geo.mapSamplingResults(instantGlobals.wgAdDriverLABradorDfpKeyvals);

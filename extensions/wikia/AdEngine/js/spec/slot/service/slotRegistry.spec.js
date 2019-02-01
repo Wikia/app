@@ -5,13 +5,19 @@ describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 	var mocks = {
 			adContext: {
 				addCallback: function () {}
+			},
+			bridge: {
+				unifySlotInterface: function (slot) {
+					return slot;
+				}
 			}
 		},
 		registry;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.slotRegistry'](
-			mocks.adContext
+			mocks.adContext,
+			mocks.bridge
 		);
 	}
 
