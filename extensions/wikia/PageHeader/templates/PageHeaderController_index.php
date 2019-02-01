@@ -20,4 +20,3 @@
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'buttons' ); ?>
 	</div>
 </header>
-<hr class="page-header__separator">

@@ -13,7 +13,7 @@
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	padding: 16px 0 12px;
+	padding: 30px 0 24px;
 	position: relative;
 	width: 100%;
 	z-index: 4;
@@ -81,10 +81,10 @@
 	&__categories {
 		@include align-items(flex-start);
 		@include flexbox();
+		font-weight: 500;
 		font-size: $wds-typescale-size-minus-2;
 
 		&-in {
-			font-weight: 600;
 			padding-right: 4px;
 			white-space: nowrap;
 		}
@@ -105,7 +105,6 @@
 
 		&-links {
 			color: $color-links;
-			font-style: italic;
 			line-height: 16px;
 			overflow-wrap: break-word;
 			word-wrap: break-word;
@@ -133,15 +132,8 @@
 		i {
 			font-style: italic;
 		}
-	}
 
-	&__separator {
-		background-color: $color-page-border;
-		border: 0;
-		height: 1px;
-		margin-bottom: 18px;
-		margin-top: 0;
-		width: 100%;
+		@include wds-midlight(rgba($color-links, .15));
 	}
 
 	&__subtitle {
