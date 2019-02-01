@@ -2384,10 +2384,24 @@ $config['feeds_and_posts_js'] = [
 	]
 ];
 
+$config['feeds_and_posts_selection_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/scripts/articleSelection.js',
+	]
+];
+
 $config['feeds_and_posts_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/FeedsAndPosts/styles/index.scss',
+	]
+];
+
+$config['feeds_and_posts_selection_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/FeedsAndPosts/styles/article-selection.scss',
 	]
 ];
 

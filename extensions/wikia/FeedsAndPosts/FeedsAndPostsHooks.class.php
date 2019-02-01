@@ -19,6 +19,9 @@ class FeedsAndPostsHooks {
 			\Wikia::addAssetsToOutput( 'feeds_and_posts_js' );
 		}
 
+		\Wikia::addAssetsToOutput( 'feeds_and_posts_selection_js' );
+		\Wikia::addAssetsToOutput( 'feeds_and_posts_selection_scss' );
+
 		return true;
 	}
 
