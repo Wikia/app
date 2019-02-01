@@ -98,6 +98,9 @@ class GlobalUsageHooks {
 	 * Deletes the file from the global link table.
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $reason ) {
+		global $wgMemc;
+		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
 		$gu = self::getGlobalUsage();
 		$gu->deleteLinksToFile( $title );
 		return true;

@@ -898,7 +898,7 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * Perform the actions of a page purging
 	 */
 	public function doPurge() {
-		global $wgUseSquid;
+		global $wgUseSquid, $wgMemc;
 
 		if( !Hooks::run( 'ArticlePurge', [ $this ] ) ) {
 			return false;
@@ -907,6 +907,11 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Invalidate the cache
 		$this->mTitle->invalidateCache();
 		$this->clear();
+
+		if ( $this->mTitle->getNamespace() == NS_FILE ) {
+			$redirKey = wfMemcKey( 'redir', $this->mTitle->getPrefixedText() );
+			$wgMemc->delete( $redirKey );
+		}
 
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
@@ -2148,6 +2153,8 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 		# Wikia change end
 
+		$this->doClearRedirsCache( $id );
+
 		// Wikia change: doDeleteUpdates has side effects that reset the title. This prevents hooks from acting on the
 		// page if they rely on the title or related associations.
 		$this->doDeleteUpdates( $id );
@@ -2222,8 +2229,8 @@ class WikiPage extends Page implements IDBAccessObject {
 			# Clean up recentchanges entries...
 			$dbw->delete( 'recentchanges',
 				array( 'rc_type != ' . RC_LOG,
-					'rc_namespace' => $this->mTitle->getNamespace(),
-					'rc_title' => $this->mTitle->getDBkey() ),
+					   'rc_namespace' => $this->mTitle->getNamespace(),
+					   'rc_title' => $this->mTitle->getDBkey() ),
 				__METHOD__ );
 			$dbw->delete( 'recentchanges',
 				array( 'rc_type != ' . RC_LOG, 'rc_cur_id' => $id ),
@@ -2239,6 +2246,27 @@ class WikiPage extends Page implements IDBAccessObject {
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
 		# Wikia
+	}
+
+	/**
+	 * Clear memcache redirs before db changed
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 */
+	public function doClearRedirsCache( $id ) {
+		global $wgMemc;
+		$dbr = wfGetDB( DB_SLAVE );
+		$results = $dbr->select(
+			array( 'imagelinks'),
+			array( 'il_to' ),
+			array( 'il_from' => $id),
+			__METHOD__,
+			array( 'ORDER BY' => 'il_to', )
+		);
+		foreach ( $results as $row ) {
+			$redirKey = wfMemcKey( 'redir', Title::makeTitleSafe( NS_FILE, $row->il_to )->getPrefixedText() );
+			$wgMemc->delete( $redirKey );
+		}
 	}
 
 	/**
