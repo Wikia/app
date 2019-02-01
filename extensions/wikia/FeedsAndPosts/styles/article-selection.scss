@@ -3,10 +3,11 @@
 	background: white;
 	border-radius: 3px;
 	box-shadow: 0 0 20px 0 rgba(black, .3);
-	color: black;
+	color: #0e191a;
 	display: flex;
 	font-family: Rubik, sans-serif;
 	font-size: 14px;
+	font-weight: 500;
 	justify-content: center;
 	padding: 12px;
 	position: absolute;
@@ -20,6 +21,7 @@
 	}
 
 	svg {
+		fill: #0e191a;
 		height: 18px;
 		margin-right: 5px;
 		width: 18px;
