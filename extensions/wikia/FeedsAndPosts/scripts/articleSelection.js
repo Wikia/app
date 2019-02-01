@@ -4,6 +4,7 @@ require(['jquery'], function ($) {
 	var articleContainer = null;
 	var tooltip = null;
 	var articleTitle = null;
+	var ogImage = null;
 
 	function init() {
 		if (!window.getSelection) {
@@ -12,6 +13,7 @@ require(['jquery'], function ($) {
 
 		articleContainer = document.getElementById('mw-content-text');
 		articleTitle = document.querySelector('h1').innerText;
+		ogImage = document.head.querySelector('meta[property="og:image"]').content;
 
 		window.document.addEventListener('mouseup', onMouseUp);
 	}
@@ -47,6 +49,7 @@ require(['jquery'], function ($) {
 			'/f/?url=' + encodeURIComponent(window.location.href) +
 			'&title=' + articleTitle +
 			'&text=' + text;
+			'&image=' + ogImage;
 
 		tooltip.style.top = y + 'px';
 		tooltip.style.left = x + 'px';
