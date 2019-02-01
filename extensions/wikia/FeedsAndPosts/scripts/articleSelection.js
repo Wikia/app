@@ -11,20 +11,27 @@ require(['jquery'], function ($) {
 
 		articleContainer = document.getElementById('mw-content-text');
 
-		window.addEventListener('mouseup', onMouseUp);
+		window.document.addEventListener('mouseup', onMouseUp);
 	}
 
 	function onMouseUp() {
-		var selection = window.getSelection();
-		var range = selection.getRangeAt(0);
-		var rect = range.getBoundingClientRect();
-		var parent = selection.anchorNode;
+		setTimeout(function () {
+			var selection = window.getSelection();
+			var range = selection.getRangeAt(0);
+			var rect = range.getBoundingClientRect();
+			var parent = selection.anchorNode;
+			var length = range.endOffset - range.startOffset;
 
-		if (!parent || !articleContainer.contains(parent)) {
-			return;
-		}
+			if (!parent || !articleContainer.contains(parent) || !length) {
+				return;
+			}
 
-		renderTooltip(rect.x, rect.y);
+			renderTooltip(rect.x + rect.width / 2, rect.y);
+
+			setTimeout(function () {
+				window.addEventListener('click', onClick);
+			}, 0);
+		}, 0);
 	}
 
 	function renderTooltip(x, y) {
@@ -40,10 +47,6 @@ require(['jquery'], function ($) {
 		if (!document.body.contains(tooltip)) {
 			document.body.appendChild(tooltip);
 		}
-
-		setTimeout(function () {
-			window.addEventListener('click', onClick);
-		}, 0);
 	}
 
 	function onClick(event) {
