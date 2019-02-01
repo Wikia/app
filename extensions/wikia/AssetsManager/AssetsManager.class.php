@@ -177,7 +177,6 @@ class AssetsManager {
 						// We always need to use common host for static assets since it has
 						// the information about the slot which is otherwise not available
 						// in varnish (BugId: 33905)
-//						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
 						$urls[] =  $this->getOneCommonURL( $asset );
 					}
 				}
@@ -388,27 +387,6 @@ class AssetsManager {
 	}
 
 	/**
-	 * Returns domainless URL to an asset
-	 *
-	 * @author Inez Korczyński <korczynski@gmail.com>
-	 * @return string Relative URL to one file
-	 */
-	public function getOneLocalURL(/* string */ $filePath, /* boolean */ $minify = null) {
-		global $wgScriptPath;
-		// we should never ever use Asset Manager for ONE file
-		// as it build our whole PHP stack and reads file from filesystem
-		// which cannot be cached by web server as the content is assumed
-		// to be dynamic
-		// BAC-696: added ltrim() - prevent double slash in the URL
-		$url = $wgScriptPath . '/' . ltrim( $filePath, '/' );
-		// TODO: remove it completely
-		//if ($minify !== null ? $minify : $this->mMinify) {
-		//	$url = $this->getAMLocalURL('one', $filePath);
-		//}
-		return $url;
-	}
-
-	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return string Full common URL to one file, uses not wiki specific host
 	 */
@@ -421,7 +399,7 @@ class AssetsManager {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
 			// in varnish (BugId: 33905)
-			$url = $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
+			$url = $this->mCommonHost . '/' . ltrim( $filePath, '/' );
 		}
 
 		return $url;
