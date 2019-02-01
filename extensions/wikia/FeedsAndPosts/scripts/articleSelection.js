@@ -50,8 +50,7 @@ require(['jquery'], function ($) {
 		tooltip.href = window.location.origin +
 			'/f/?url=' + encodeURIComponent(window.location.href) +
 			'&title=' + articleTitle +
-			'&text=' + text +
-			'&image=' + encodeURIComponent(ogImage);
+			'&text=' + text;
 
 		tooltip.style.top = y + 'px';
 		tooltip.style.left = x + 'px';
