@@ -372,7 +372,7 @@ class NavigationTest extends WikiaBaseTest {
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-discuss',
-							'iconKey' => 'wds-icons-reply-small',
+							'iconKey' => 'wds-icons-comment-small',
 						],
 						'href' => '/d/f',
 						'tracking' => 'discuss',
@@ -387,7 +387,7 @@ class NavigationTest extends WikiaBaseTest {
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-discuss',
-							'iconKey' => 'wds-icons-reply-small',
+							'iconKey' => 'wds-icons-comment-small',
 						],
 						'href' => '/d/f',
 						'tracking' => 'discuss',
@@ -402,7 +402,7 @@ class NavigationTest extends WikiaBaseTest {
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-forum',
-							'iconKey' => 'wds-icons-reply-small',
+							'iconKey' => 'wds-icons-comment-small',
 						],
 						'href' => $host . '/wiki/Special:Forum',
 						'tracking' => 'forum',
