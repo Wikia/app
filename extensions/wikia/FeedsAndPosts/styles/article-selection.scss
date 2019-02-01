@@ -1,14 +1,23 @@
 .feeds-article-selection-tooltip {
 	align-items: center;
 	background: white;
-	box-shadow: -2px 7px 14px -6px rgba(0,0,0,0.43);
+	border-radius: 3px;
+	box-shadow: 0 0 20px 0 rgba(black, .3);
 	color: black;
 	display: flex;
+	font-family: Rubik, sans-serif;
+	font-size: 14px;
 	justify-content: center;
-	padding: 10px;
+	padding: 12px;
 	position: absolute;
 	transform: translate(-50%, -100%);
 	z-index: 100000;
+
+	&:hover,
+	&:active,
+	&:visited {
+		text-decoration: none;
+	}
 
 	svg {
 		height: 18px;
@@ -26,6 +35,7 @@
 		border-top: 10px solid white;
 		position: absolute;
 		bottom: -10px;
-		left: 20px;
+		left: 50%;
+		transform: translate(-50%);
 	}
 }

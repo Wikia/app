@@ -28,7 +28,7 @@ require(['jquery'], function ($) {
 				return;
 			}
 
-			renderTooltip(rect.x + rect.width / 2, rect.y + window.scrollY - 10, parent.wholeText);
+			renderTooltip(rect.x + rect.width / 2, rect.y + window.scrollY - 10, selection.toString());
 
 			setTimeout(function () {
 				window.addEventListener('click', onClick);
