@@ -11,9 +11,11 @@ require(['jquery'], function ($) {
 			return;
 		}
 
+		const ogImageMeta = document.head.querySelector('meta[property="og:image"]');
+
 		articleContainer = document.getElementById('mw-content-text');
 		articleTitle = document.querySelector('h1').innerText;
-		ogImage = document.head.querySelector('meta[property="og:image"]').content;
+		ogImage = ogImageMeta ? ogImageMeta.content : '';
 
 		window.document.addEventListener('mouseup', onMouseUp);
 	}
@@ -48,8 +50,8 @@ require(['jquery'], function ($) {
 		tooltip.href = window.location.origin +
 			'/f/?url=' + encodeURIComponent(window.location.href) +
 			'&title=' + articleTitle +
-			'&text=' + text;
-			'&image=' + ogImage;
+			'&text=' + text +
+			'&image=' + encodeURIComponent(ogImage);
 
 		tooltip.style.top = y + 'px';
 		tooltip.style.left = x + 'px';
