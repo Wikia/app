@@ -5,7 +5,7 @@ const logGroup = 'bab-detection';
 
 let delayPromise = null;
 let detectionCompleted = false;
-let resolvePromise;
+let resolvePromise = null;
 
 /**
  * Creates and dispatches WAD result event on document object
@@ -117,7 +117,7 @@ export const babDetection = {
 	 * @returns {void}
 	 */
 	run() {
-		if (context.get('opts.babDetectionDesktop')) {
+		if (this.isEnabled()) {
 			utils.client.checkBlocking(
 				() => trackDetection(true),
 				() => trackDetection(false),
