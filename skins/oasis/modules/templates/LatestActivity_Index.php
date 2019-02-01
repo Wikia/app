@@ -1,6 +1,9 @@
 <section class="rail-module activity-module" id="wikia-recent-activity">
 
-	<h2 class="has-icon"><?= $activityIcon ?><?= $moduleHeader ?></h2>
+	<h2 class="has-icon">
+		<?= $activityIcon ?>
+		<?= $moduleHeader ?>
+	</h2>
 
 	<? if ( !empty( $changeList ) ): ?>
 		<ul class="activity-items">

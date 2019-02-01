@@ -205,7 +205,8 @@
 		margin: 0 10px 30px;
 
 		h2 {
-			border-bottom: 1px solid $color-page-border;
+			@include wds-midlight(rgba($color-links, .15));
+
 			font-size: $wds-typescale-size-base;
 			font-weight: bold;
 			min-height: 30px;
@@ -217,8 +218,9 @@
 				@include align-items(center);
 
 				svg {
-					fill: rgba($color-text, .75);
+					fill: $wds-fandom-color-navy;
 					margin-right: 7px;
+					margin-left: 5px;
 				}
 			}
 		}
@@ -266,21 +268,31 @@
 	}
 
 	.page-title {
-		color: $color-links;
-		font-size: $wds-typescale-size-minus-1;
+		font-size: $wds-font-size-xs;
 		margin-bottom: 2px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+
+		a {
+			color: $wds-fandom-color-navy;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
 	}
 
 	.edit-info {
-		color: rgba($color-text, .75);
-		font-size: $wds-typescale-size-minus-2;
+		color: $wds-fandom-color-dark-gray;
+		font-size: $wds-font-size-xxs;
 		max-height: 16px;
 
+		a {
+			color: inherit;
+		}
+
 		.edit-info-user {
-			color: rgba($color-text, .75);
 			display: inline-block;
 			max-width: 150px;
 			overflow: hidden;
