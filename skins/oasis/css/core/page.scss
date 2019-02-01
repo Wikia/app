@@ -26,7 +26,6 @@
 }
 
 .WikiaPage {
-	border: 1px solid $color-page-border;
 	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
@@ -43,6 +42,7 @@
 	}
 	.WikiaPageBackground {
 		background: $color-page;
+		border-radius: 4px;
 		height: 100%;
 		left: 0;
 		opacity: $page-opacity;
