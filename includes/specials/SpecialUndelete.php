@@ -1453,9 +1453,6 @@ class SpecialUndelete extends SpecialPage {
 			$out->addWikiMsg( 'undeleterevdel' );
 		}
 
-		$redirKey = wfMemcKey( 'redir', $this->mTargetObj->getPrefixedText() );
-		$wgMemc->delete( $redirKey );
-
 		// Show file deletion warnings and errors
 		$status = $archive->getFileStatus();
 		if( $status && !$status->isGood() ) {

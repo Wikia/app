@@ -2153,7 +2153,7 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 		# Wikia change end
 
-		$this->doClearRedirsCache( $id );
+		$this->doClearLinkedFilesCache( $id );
 
 		// Wikia change: doDeleteUpdates has side effects that reset the title. This prevents hooks from acting on the
 		// page if they rely on the title or related associations.
@@ -2253,7 +2253,7 @@ class WikiPage extends Page implements IDBAccessObject {
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	public function doClearRedirsCache( $id ) {
+	public function doClearLinkedFilesCache( $id ) {
 		global $wgMemc;
 		$dbr = wfGetDB( DB_SLAVE );
 		$results = $dbr->select(
@@ -2264,7 +2264,9 @@ class WikiPage extends Page implements IDBAccessObject {
 			array( 'ORDER BY' => 'il_to', )
 		);
 		foreach ( $results as $row ) {
-			$redirKey = wfMemcKey( 'redir', Title::makeTitleSafe( NS_FILE, $row->il_to )->getPrefixedText() );
+			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
+			self::onArticleDelete( $title );
+			$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 			$wgMemc->delete( $redirKey );
 		}
 	}
