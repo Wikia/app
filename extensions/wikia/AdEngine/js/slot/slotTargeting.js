@@ -37,6 +37,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		videoBidders = {
 			appnexusAst: 'aa',
 			beachfront: 'bf',
+			lkqd: 'lk',
 			rubicon: 'ru',
 			wikiaVideo: 'wa'
 		},
