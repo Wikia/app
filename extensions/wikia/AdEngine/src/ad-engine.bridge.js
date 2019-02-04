@@ -214,7 +214,7 @@ function unifySlotInterface(slot) {
 		setConfigProperty: (key, value) => {
 			context.set(`${slotPath}.${key}`, value);
 		},
-		getStatus: () => null,
+		getStatus: () => slot.container.getAttribute('data-slot-result'),
 		setStatus: (status) => {
 			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
