@@ -1,5 +1,6 @@
 require(['EditDraftSaving'], function (EditDraftSaving) {
-	var EDITOR_TYPE = 'editor-ck';
+	var EDITOR_TYPE = 'editor-ck',
+		RTE = window.RTE;
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 
@@ -25,6 +26,8 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 					RTE.getInstance().setData(draftText)
 				}
 			);
+
+			alert(window.mediaWiki.message('edit-draft-loaded').text());
 
 			EditDraftSaving.trackDraftRestore(EDITOR_TYPE);
 		}
