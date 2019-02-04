@@ -2153,8 +2153,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 		# Wikia change end
 
-		$this->doClearLinkedFilesCache( $id );
-
 		// Wikia change: doDeleteUpdates has side effects that reset the title. This prevents hooks from acting on the
 		// page if they rely on the title or related associations.
 		$this->doDeleteUpdates( $id );
@@ -2198,6 +2196,8 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 
 		$this->updateCategoryCounts( array(), $cats );
+
+		$links = $this->getFileLinks($id);
 
 		# If using cascading deletes, we can skip some explicit deletes
 		if ( !$dbw->cascadingDeletes() ) {
@@ -2246,6 +2246,24 @@ class WikiPage extends Page implements IDBAccessObject {
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
 		# Wikia
+
+		$this->doClearLinkedFilesCache($id, $links);
+	}
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 */
+	public function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		return $dbr->select(
+			array( 'imagelinks'),
+			array( 'il_to' ),
+			array( 'il_from' => $id),
+			__METHOD__,
+			array( 'ORDER BY' => 'il_to', )
+		);
 	}
 
 	/**
@@ -2253,21 +2271,16 @@ class WikiPage extends Page implements IDBAccessObject {
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	public function doClearLinkedFilesCache( $id ) {
+	public function doClearLinkedFilesCache( $id , $results = null) {
 		global $wgMemc;
-		$dbr = wfGetDB( DB_SLAVE );
-		$results = $dbr->select(
-			array( 'imagelinks'),
-			array( 'il_to' ),
-			array( 'il_from' => $id),
-			__METHOD__,
-			array( 'ORDER BY' => 'il_to', )
-		);
+		if(is_null($results)) {
+			$results = $this->getFileLinks($id);
+		}
 		foreach ( $results as $row ) {
 			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
-			self::onArticleDelete( $title );
 			$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 			$wgMemc->delete( $redirKey );
+			self::onArticleEdit( $title );
 		}
 	}
 
