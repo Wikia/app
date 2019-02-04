@@ -1,5 +1,8 @@
 define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jquery, logger, tracker) {
 
+	// keep in sync with PHP code in EditDraftSavingHooks.class.php file
+	var EDIT_DRAFT_KEY_HIDDEN_FIELD = 'wpEditDraftKey';
+
 	/**
 	 * @param msg {string}
 	 */
@@ -65,7 +68,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 		jquery('#editform').append(
 			jquery('<input>').
 				attr('type', 'hidden').
-				attr('name', 'wpEditDraftKey').
+				attr('name', EDIT_DRAFT_KEY_HIDDEN_FIELD).
 				attr('value', getDraftKey())
 		);
 	});

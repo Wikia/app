@@ -35,4 +35,9 @@ $wgResourceModules['ext.wikia.EditDraftSaving.mediawiki'] = [
 	'remoteExtPath' => 'wikia/EditDraftSaving',
 ];
 
+// inject above ResourceLoader modules
 $wgHooks['EditPage::showEditForm:initial'][] = 'EditDraftSavingHooks::onEditPage_showEditForm_initial';
+
+// invalidate drafts after successful edits
+$wgHooks['ArticleSaveComplete'][] = 'EditDraftSavingHooks::onArticleSaveComplete';
+$wgHooks['MakeGlobalVariablesScript'][] = 'EditDraftSavingHooks::onMakeGlobalVariablesScript';
