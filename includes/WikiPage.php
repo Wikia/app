@@ -927,6 +927,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 			MessageCache::singleton()->replace( $this->mTitle->getDBkey(), $text );
 		}
+		die("purge fin");
 		return true;
 	}
 
