@@ -16,7 +16,6 @@ import {
 	PorvataTemplate,
 	Roadblock,
 	StickyTLB,
-	Stickiness,
 	universalAdPackage,
 	getSamplingResults,
 	utils as adProductsUtils
@@ -318,6 +317,5 @@ export {
 	unifySlotInterface,
 	universalAdPackage,
 	slotService,
-	Stickiness,
 	geo,
 };

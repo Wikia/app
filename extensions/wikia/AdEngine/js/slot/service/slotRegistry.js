@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 
 	var slots = {},
 		slotStates = {},
-		slotQueueCount = {},
-		scrollYOnDfpRequest = {};
+		slotQueueCount = {};
 
 	function incrementSlotQueueCount(slotName) {
 		slotQueueCount[slotName] = slotQueueCount[slotName] || 0;
@@ -105,14 +104,6 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		slotStates = {};
 	});
 
-	function storeScrollY(slotName) {
-		scrollYOnDfpRequest[slotName] = getCurrentScrollY();
-	}
-
-	function getScrollY(slotName) {
-		return scrollYOnDfpRequest[slotName] || 0;
-	}
-
 	function getCurrentScrollY() {
 		return win.scrollY || win.pageYOffset;
 	}
@@ -124,8 +115,6 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		get: get,
 		getCurrentScrollY: getCurrentScrollY,
 		getRefreshCount: getRefreshCount,
-		getScrollY: getScrollY,
-		reset: reset,
-		storeScrollY: storeScrollY
+		reset: reset
 	};
 });
