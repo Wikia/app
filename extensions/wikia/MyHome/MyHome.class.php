@@ -159,24 +159,21 @@ class MyHome {
 	 * http://muppet.wikia.com -> http://muppet.wikia.com/wiki/Special:WikiActivity (happens for logged-in only)
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-	 * @param Title $title
-	 * @param $unused
-	 * @param OutputPage $output
-	 * @param User $user
 	 * @param WebRequest $webRequest
-	 * @param MediaWiki $mediaWiki
+	 * @param Title $title
+	 * @param OutputPage $output
 	 * @return bool
+	 * @throws MWException
 	 */
-	public static function getInitialMainPage(
-		&$title, $unused, OutputPage $output, User $user, WebRequest $webRequest,
-		MediaWiki $mediaWiki
-	) {
-		if ( $user->isLoggedIn() && $webRequest->getVal( 'redirect' ) === 'no' ) {
+	public static function getInitialMainPage( WebRequest $webRequest, &$title, OutputPage $output ) {
+		global $wgUser;
+
+		if ( $wgUser->isLoggedIn() && $webRequest->getVal( 'redirect' ) === 'no' ) {
 			return true;
 		}
 
 		if ( $title ) {
-			$title = UserService::getLandingPage( $user );
+			$title = UserService::getLandingPage( $wgUser );
 		}
 
 		return true;

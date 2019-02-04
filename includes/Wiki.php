@@ -239,7 +239,7 @@ class MediaWiki {
 		} elseif ( (
 			$shouldRedirectToTitle ||
 			$output->isRedirect() )
-			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
+			&& Hooks::run( 'TestCanonicalRedirect', array( $request, &$title, $output ) ) )
 		{
 			if ( $shouldRedirectToTitle ) {
 
