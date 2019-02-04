@@ -2083,6 +2083,8 @@ class WikiPage extends Page implements IDBAccessObject {
 		} else {
 			$bitfield = 'rev_deleted';
 		}
+		$links = null;
+		Hooks::run( 'ArticleGetFileLinks', [ $id, &$links ] );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -2157,7 +2159,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			$dbw->commit();
 		}
 
-		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id ] );
+		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id , $links ] );
 
 		return WikiPage::DELETE_SUCCESS;
 	}
