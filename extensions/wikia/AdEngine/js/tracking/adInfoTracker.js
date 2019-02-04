@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		creative = creative || {};
 		bidders = bidders || {};
 
-		isStickyEvent = ['sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(creative.status) > -1;
+		isStickyEvent = bridge.Stickiness.STICKY_EVENTS.indexOf(creative.status) > -1;
 
 		data = {
 			'pv': pageParams.pv || '',
