@@ -1,5 +1,6 @@
 require(['EditDraftSaving'], function (EditDraftSaving) {
 	var EDITOR_TYPE = 'ckeditor';
+
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 
 	function saveDraft() {
@@ -15,11 +16,17 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
-			EditDraftSaving.log('Restoring a draft');
+			var draftText = draftData.draftText;
+
+			// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			RTE.getInstance().setMode(
 				draftData.mode,
-				RTE.getInstance().setData(draftData.draftText)
+				function() {
+					RTE.getInstance().setData(draftText)
+				}
 			);
+
+			EditDraftSaving.trackDraftRestore(EDITOR_TYPE);
 		}
 
 		// register draft saving function
