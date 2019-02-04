@@ -1,5 +1,5 @@
 require(['EditDraftSaving'], function (EditDraftSaving) {
-	var EDITOR_TYPE = 'ckeditor';
+	var EDITOR_TYPE = 'editor-ck';
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 

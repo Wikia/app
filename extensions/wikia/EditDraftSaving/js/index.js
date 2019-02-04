@@ -54,12 +54,12 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	function trackDraftRestore(editorType) {
 		log('Restored a draft for ' + editorType);
 
-		// Wikia.Tracker:  trackingevent draft-restore/impression/ckeditor/ [analytics track]
+		// Wikia.Tracker:  trackingevent editor-ck/impression/draft-loaded/ [analytics track]
 		tracker.track({
 			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.IMPRESSION,
-			category: 'draft-restore',
-			label: editorType
+			category: editorType,
+			label: 'draft-loaded'
 		});
 	}
 
