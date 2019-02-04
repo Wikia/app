@@ -12,5 +12,5 @@ $GLOBALS['wgResourceModules']['ext.wikia.EditDraftSaving'] = [
 	'remoteExtPath' => 'wikia/EditDraftSaving',
 ];
 
-$wgHooks['AlternateEdit'][] = 'EditDraftSavingHooks::onAlternateEdit';
+$wgHooks['EditPage::showEditForm:initial'][] = 'EditDraftSavingHooks::onEditPage_showEditForm_initial';
 
