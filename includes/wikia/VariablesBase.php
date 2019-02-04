@@ -8927,3 +8927,10 @@ $wgIncludeClosedWikiHandler = false;
  * @var string
  */
 $wgWatchShowURL = '';
+
+/**
+ * Enables DraftSaving extension
+ * @see SUS-79
+ * @var bool
+ */
+$wgEnableEditDraftSavingExt = true;
