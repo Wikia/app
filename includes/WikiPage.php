@@ -907,7 +907,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Invalidate the cache
 		$this->mTitle->invalidateCache();
 		$this->clear();
-
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
@@ -927,6 +926,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 			MessageCache::singleton()->replace( $this->mTitle->getDBkey(), $text );
 		}
+
 		return true;
 	}
 

@@ -31,7 +31,7 @@ class CachedRedirects {
 	 */
 	public static function onArticleDeleteComplete( WikiPage $page, $user, $reason, $id, $links ) {
 		self::doClearLinkedFilesCache( $page->mTitle->getArticleID(), $links );
-
+die;
 		return true;
 	}
 
