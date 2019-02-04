@@ -907,7 +907,7 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Invalidate the cache
 		$this->mTitle->invalidateCache();
 		$this->clear();
-var_dump($wgUseSquid);
+
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
@@ -927,8 +927,6 @@ var_dump($wgUseSquid);
 
 			MessageCache::singleton()->replace( $this->mTitle->getDBkey(), $text );
 		}
-		var_dump(debug_backtrace());
-		die("purge fin");
 		return true;
 	}
 
