@@ -23,24 +23,36 @@ class UserService {
 	 *
 	 * @param User $user
 	 *
-	 * @return Title
+	 * @return string
 	 */
-	public static function getMainPage( User $user ) {
-		$title = Title::newMainPage();
+	public static function getLandingPageURL( User $user ): string {
+		$mainPage = Title::newMainPage();
 
 		if ( $user->isLoggedIn() ) {
+			global $wgScriptPath, $wgEnableFeedsAndPostsExt;
+
 			$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
+
 			switch ( $value ) {
 				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = SpecialPage::getTitleFor( 'WikiActivity' );
+					return SpecialPage::getTitleFor( 'WikiActivity' )->getFullURL();
 					break;
 				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = SpecialPage::getTitleFor( 'RecentChanges' );
+					return SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
 					break;
+				case UserPreferencesV2::LANDING_PAGE_FEEDS:
+					if ( $wgEnableFeedsAndPostsExt ) {
+						return wfExpandUrl( "$wgScriptPath/f" );
+					}
+
+					return $mainPage->getFullURL();
+					break;
+				default:
+					return $mainPage->getFullURL();
 			}
 		}
 
-		return $title;
+		return $mainPage->getFullURL();
 	}
 
 	/**

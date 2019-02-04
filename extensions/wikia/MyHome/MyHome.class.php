@@ -159,25 +159,30 @@ class MyHome {
 	 * http://muppet.wikia.com -> http://muppet.wikia.com/wiki/Special:WikiActivity (happens for logged-in only)
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 * @param Title $title
+	 * @param $unused
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $webRequest
+	 * @param MediaWiki $mediaWiki
+	 * @return bool
 	 */
-	public static function getInitialMainPage(Title &$title) {
-		wfProfileIn(__METHOD__);
-
-		global $wgUser, $wgTitle, $wgRequest;
-
-		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
-		$wgTitle = Title::newMainPage();
-
-		// do not redirect for skins different then Oasis (FB#1033)
-		if(get_class(RequestContext::getMain()->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getVal( 'redirect' ) == 'no' ) ) {
-			wfProfileOut(__METHOD__);
+	public static function getInitialMainPage(
+		$title, $unused, OutputPage $output, User $user, WebRequest $webRequest,
+		MediaWiki $mediaWiki
+	) {
+		if ( $user->isLoggedIn() && $webRequest->getVal( 'redirect' ) === 'no' ) {
 			return true;
 		}
 
-		//user must be logged in and have redirect enabled
-		$title = UserService::getMainPage($wgUser);
+		if ( $title ) {
+			$landingPage = UserService::getLandingPageURL( $user );
 
-		wfProfileOut(__METHOD__);
+			if ( $title->getFullURL() !== $landingPage ) {
+				$output->redirect( $landingPage, '301', 'UserLandingPage' );
+			}
+		}
+
 		return true;
 	}
 
