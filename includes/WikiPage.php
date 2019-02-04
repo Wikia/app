@@ -908,11 +908,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		$this->mTitle->invalidateCache();
 		$this->clear();
 
-		if ( $this->mTitle->getNamespace() == NS_FILE ) {
-			$redirKey = wfMemcKey( 'redir', $this->mTitle->getPrefixedText() );
-			$wgMemc->delete( $redirKey );
-		}
-
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
@@ -2088,6 +2083,10 @@ class WikiPage extends Page implements IDBAccessObject {
 		} else {
 			$bitfield = 'rev_deleted';
 		}
+		var_dump("get links");
+		$links = null;
+		Hooks::run( 'ArticleGetFileLinks', [ $id, &$links ] );
+		var_dump($links);
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -2162,7 +2161,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			$dbw->commit();
 		}
 
-		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id ] );
+		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id, $links] );
 
 		return WikiPage::DELETE_SUCCESS;
 	}
@@ -2196,8 +2195,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 
 		$this->updateCategoryCounts( array(), $cats );
-
-		$links = $this->getFileLinks($id);
 
 		# If using cascading deletes, we can skip some explicit deletes
 		if ( !$dbw->cascadingDeletes() ) {
@@ -2247,44 +2244,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		$this->setCachedLastEditTime( wfTimestampNow() );
 		# Wikia
 
-		$this->doClearLinkedFilesCache($id, $links);
-	}
-
-	/**
-	 * getFileLinks get links to material
-	 *
-	 * @param $id Int: page_id value of the page being deleted
-	 */
-	public function getFileLinks( $id ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		return $dbr->select(
-			array( 'imagelinks'),
-			array( 'il_to' ),
-			array( 'il_from' => $id),
-			__METHOD__,
-			array( 'ORDER BY' => 'il_to', )
-		);
-	}
-
-	/**
-	 * Clear memcache redirs before db changed
-	 *
-	 * @param $id Int: page_id value of the page being deleted
-	 */
-	public function doClearLinkedFilesCache( $id , $results = null) {
-		global $wgMemc;
-		if(is_null($results)) {
-			$results = $this->getFileLinks($id);
-		}
-		$timestamp = wfTimestampNow();
-		foreach ( $results as $row ) {
-			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
-			$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
-			$wgMemc->delete( $redirKey );
-			$key = wfMemcKey( 'page-lastedit', md5( $title->getPrefixedDBkey() ) );
-			$wgMemc->set( $key, wfTimestamp( TS_MW, $timestamp ), 60*15 );
-			self::onArticleEdit( $title );
-		}
 	}
 
 	/**
