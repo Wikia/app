@@ -126,6 +126,10 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('bidders.a9.dealsEnabled', isGeoEnabled('wgAdDriverA9DealsCountries'));
 	context.set('bidders.a9.videoEnabled', isGeoEnabled('wgAdDriverA9VideoBidderCountries') && hasFeaturedVideo);
 
+	if (hasFeaturedVideo) {
+		context.set('templates.stickyTLB.enabled', false);
+	}
+
 	if (isGeoEnabled('wgAdDriverPrebidBidderCountries')) {
 		context.set('bidders.prebid.enabled', true);
 		context.set('bidders.prebid.aol.enabled', isGeoEnabled('wgAdDriverAolBidderCountries'));

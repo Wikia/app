@@ -840,10 +840,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$extraParams['limit'] = $limit;
 		}
 
+		$webRequest = $this->getContext()->getRequest();
+
 		// SUS-495: add resultsLang parameter if present in original request (global search)
-		$resultsLang = $this->getContext()->getRequest()->getVal( 'resultsLang' );
+		$resultsLang = $webRequest->getVal( 'resultsLang' );
 		if ( !empty( $resultsLang ) ) {
 			$extraParams['resultsLang'] = $resultsLang;
+		}
+
+		// IW-1499: preserve search ID during pagination
+		$searchId = $webRequest->getVal( 'searchId' );
+		if ( $searchId ) {
+			$extraParams['searchId'] = $searchId;
 		}
 
 		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );

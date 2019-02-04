@@ -71,6 +71,7 @@
 <?= $quantServe ?>
 <?= $billTheLizard ?>
 <?= $moatYi ?>
+<?= $nielsen ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>

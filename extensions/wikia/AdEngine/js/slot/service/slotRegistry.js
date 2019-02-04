@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.bridge',
 	'wikia.window'
-], function (adContext, win) {
+], function (adContext, bridge, win) {
 	'use strict';
 
 	var slots = {},
@@ -21,6 +22,10 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	function add(slot, providerName) {
 		slots[slot.name] = slots[slot.name] || [];
 		incrementSlotQueueCount(slot.name);
+		// FIXME: This is getting ugly as hell
+		// Since it's going to be removed once we adopt AE3
+		// Let's unify slot interfaces through bridge over here
+		slot = bridge.unifySlotInterface(slot);
 
 		slots[slot.name].push({
 			providerName: providerName,
