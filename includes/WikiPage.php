@@ -2276,10 +2276,13 @@ class WikiPage extends Page implements IDBAccessObject {
 		if(is_null($results)) {
 			$results = $this->getFileLinks($id);
 		}
+		$timestamp = wfTimestampNow();
 		foreach ( $results as $row ) {
 			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
 			$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 			$wgMemc->delete( $redirKey );
+			$key = wfMemcKey( 'page-lastedit', md5( $title->getPrefixedDBkey() ) );
+			$wgMemc->set( $key, wfTimestamp( TS_MW, $timestamp ), 60*15 );
 			self::onArticleEdit( $title );
 		}
 	}
