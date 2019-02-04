@@ -183,6 +183,7 @@ class SquidPurgeClient {
 			$buf = substr( $this->writeBuffer, 0, self::BUFFER_SIZE );
 			$flags = 0;
 		}
+		$this->log( 'write to buf: ' . $buf );
 		wfSuppressWarnings();
 		$bytesSent = socket_send( $socket, $buf, strlen( $buf ), $flags );
 		wfRestoreWarnings();
