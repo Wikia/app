@@ -26,28 +26,23 @@ class UserService {
 	 * @return string
 	 */
 	public static function getLandingPageURL( User $user ): string {
+		global $wgScriptPath, $wgEnableFeedsAndPostsExt;
+
 		$mainPage = Title::newMainPage();
+		$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
 
-		if ( $user->isLoggedIn() ) {
-			global $wgScriptPath, $wgEnableFeedsAndPostsExt;
-
-			$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
-
-			switch ( true ) {
-				case $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					return SpecialPage::getTitleFor( 'WikiActivity' )->getFullURL();
-					break;
-				case $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					return SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
-					break;
-				case $wgEnableFeedsAndPostsExt && $value === UserPreferencesV2::LANDING_PAGE_FEEDS:
-					return wfExpandUrl( "$wgScriptPath/f" );
-				default:
-					return $mainPage->getFullURL();
-			}
+		switch ( true ) {
+			case $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
+				return SpecialPage::getTitleFor( 'WikiActivity' )->getFullURL();
+				break;
+			case $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
+				return SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
+				break;
+			case $wgEnableFeedsAndPostsExt && $value === UserPreferencesV2::LANDING_PAGE_FEEDS:
+				return wfExpandUrl( "$wgScriptPath/f" );
+			default:
+				return $mainPage->getFullURL();
 		}
-
-		return $mainPage->getFullURL();
 	}
 
 	/**
