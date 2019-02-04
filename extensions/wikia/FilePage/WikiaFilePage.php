@@ -59,12 +59,13 @@ class WikiaFilePage extends ImagePage {
 
 			return;
 		}
+		var_dump("view");
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
+			die;
 			$out->redirect( $url );
-
 			return;
 		}
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
@@ -72,26 +73,34 @@ class WikiaFilePage extends ImagePage {
 		$displayImg = $img = false;
 		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
 		if ( !$img ) { // not set by hook?
+			var_dump("no file");
 			$img = wfFindFile( $this->getTitle() );
 			if ( !$img ) {
+				var_dump("get local file");
 				$img = wfLocalFile( $this->getTitle() );
 			}
 		}
 
 		if ( !$img || $img && !$img->fileExists ) {
+			var_dump("no image");
+			die;
 			$wgMemc->add( $redirKey, $url );
 			$out->redirect( $url );
 			return;
 		}
 
 		$urlMem = $wgMemc->get( $redirKey );
+		var_dump("memcache");
 		if ( $urlMem ) {
+			var_dump($urlMem);
+			die;
 			$out->redirect( $urlMem );
 
 			return;
 		}
 
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
+		$out->redirect( $res );
 
 		foreach ( $res as $row ) {
 			$title = Title::newFromRow( $row );
@@ -102,6 +111,8 @@ class WikiaFilePage extends ImagePage {
 			$res->free();
 			break;
 		}
+		var_dump($url);
+		die;
 		$wgMemc->add( $redirKey, $url );
 		$out->redirect( $url );
 	}
