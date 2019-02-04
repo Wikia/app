@@ -25,9 +25,14 @@ function checkOptIn() {
   return '';
 }
 
+function getCurrentScrollY() {
+  return window.scrollY || window.pageYOffset;
+}
+
 function prepareData(slot, data) {
   const now = new Date();
   const slotName = slot.getSlotName();
+  const slotParams = slot.getDatasetValue('gptSlotParams');
 
   return Object.assign({
     pv: window.pvNumber,
@@ -63,7 +68,10 @@ function prepareData(slot, data) {
     opt_in: checkOptIn(),
     document_visibility: utils.getDocumentVisibilityStatus(),
     // Missing:
-    // bidder_won, bidder_won_price, page_layout, rabbit, scroll_y, product_chosen
+    // page_layout, rabbit, product_chosen
+    bidder_won: slotParams.hb_bidder || '',
+    bidder_won_price: slotParams.hb_pb || '',
+    scroll_y: getCurrentScrollY(),
   }, targeting.getBiddersPrices(slotName));
 }
 
