@@ -23,25 +23,30 @@ class UserService {
 	 *
 	 * @param User $user
 	 *
-	 * @return string
+	 * @return Title
+	 * @throws MWException
 	 */
-	public static function getLandingPageURL( User $user ): string {
-		global $wgScriptPath, $wgEnableFeedsAndPostsExt;
+	public static function getLandingPage( User $user ): Title {
+		global $wgEnableFeedsAndPostsExt;
 
-		$mainPage = Title::newMainPage();
 		$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
 
 		switch ( true ) {
 			case $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-				return SpecialPage::getTitleFor( 'WikiActivity' )->getFullURL();
+				return SpecialPage::getTitleFor( 'WikiActivity' );
 				break;
 			case $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-				return SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
+				return SpecialPage::getTitleFor( 'RecentChanges' );
 				break;
 			case $wgEnableFeedsAndPostsExt && $value === UserPreferencesV2::LANDING_PAGE_FEEDS:
-				return wfExpandUrl( "$wgScriptPath/f" );
+				return new class extends Title {
+					public function getFullURL( $query = '', $query2 = false ) {
+						global $wgScriptPath;
+						return wfExpandUrl( "$wgScriptPath/f" );
+					}
+				};
 			default:
-				return $mainPage->getFullURL();
+				return Title::newMainPage();
 		}
 	}
 

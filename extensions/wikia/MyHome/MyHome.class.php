@@ -168,7 +168,7 @@ class MyHome {
 	 * @return bool
 	 */
 	public static function getInitialMainPage(
-		$title, $unused, OutputPage $output, User $user, WebRequest $webRequest,
+		&$title, $unused, OutputPage $output, User $user, WebRequest $webRequest,
 		MediaWiki $mediaWiki
 	) {
 		if ( $user->isLoggedIn() && $webRequest->getVal( 'redirect' ) === 'no' ) {
@@ -176,11 +176,7 @@ class MyHome {
 		}
 
 		if ( $title ) {
-			$landingPage = UserService::getLandingPageURL( $user );
-
-			if ( $title->getFullURL() !== $landingPage ) {
-				$output->redirect( $landingPage, '301', 'UserLandingPage' );
-			}
+			$title = UserService::getLandingPage( $user );
 		}
 
 		return true;
