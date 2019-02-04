@@ -101,6 +101,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
 			'bidder_17': transformBidderPrice('kargo'),
+			'bidder_18': transformBidderPrice('lkqd'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',

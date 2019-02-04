@@ -62,6 +62,7 @@ function init(
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
 		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
 	}
+	context.set('templates.stickyTLB.enabled', !legacyContext.get('targeting.hasFeaturedVideo'));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
@@ -96,6 +97,7 @@ function init(
 		context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 		context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
 		context.set('bidders.prebid.kargo.enabled', legacyContext.get('bidders.kargo'));
+		context.set('bidders.prebid.lkqd.enabled', legacyContext.get('bidders.lkqd'));
 		context.set('bidders.prebid.onemobile.enabled', legacyContext.get('bidders.onemobile'));
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
@@ -169,6 +171,14 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
+	if (!context.get(slotPath)) {
+		return slot;
+	}
+
+	if (slot.isUnified) {
+		return slot;
+	}
+
 	let onLoadResolve = function () {};
 	const onLoadPromise = new Promise(function (resolve) {
 		onLoadResolve = resolve;
@@ -176,6 +186,7 @@ function unifySlotInterface(slot) {
 
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
+		isUnified: true,
 		default: {
 			getSlotName: () => slot.name
 		},
@@ -229,7 +240,7 @@ function unifySlotInterface(slot) {
 		onLoadResolve();
 	});
 
-	slot.post('success', (event) => {
+	slot.post('success', () => {
 		slot.lineItemId = slot.container.firstElementChild.getAttribute('data-gpt-line-item-id');
 		const templates = slot.getConfigProperty('defaultTemplates');
 		if (templates && templates.length) {
@@ -303,6 +314,7 @@ export {
 	passSlotEvent,
 	readSessionId,
 	context,
+	unifySlotInterface,
 	universalAdPackage,
 	slotService,
 	geo,
