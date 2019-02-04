@@ -84,7 +84,6 @@ class WikiaFilePage extends ImagePage {
 		}
 
 		$urlMem = $wgMemc->get( $redirKey );
-		var_dump("memcache");
 		if ( $urlMem ) {
 			$out->redirect( $urlMem , '301' );
 
