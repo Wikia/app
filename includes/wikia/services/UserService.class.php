@@ -33,20 +33,15 @@ class UserService {
 
 			$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
 
-			switch ( $value ) {
-				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
+			switch ( true ) {
+				case $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
 					return SpecialPage::getTitleFor( 'WikiActivity' )->getFullURL();
 					break;
-				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
+				case $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
 					return SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
 					break;
-				case UserPreferencesV2::LANDING_PAGE_FEEDS:
-					if ( $wgEnableFeedsAndPostsExt ) {
-						return wfExpandUrl( "$wgScriptPath/f" );
-					}
-
-					return $mainPage->getFullURL();
-					break;
+				case $wgEnableFeedsAndPostsExt && $value === UserPreferencesV2::LANDING_PAGE_FEEDS:
+					return wfExpandUrl( "$wgScriptPath/f" );
 				default:
 					return $mainPage->getFullURL();
 			}
