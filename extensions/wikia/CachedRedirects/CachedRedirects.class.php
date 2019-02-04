@@ -54,9 +54,15 @@ class CachedRedirects {
 	 *
 	 */
 	private static function purgeRedir( $title ) {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
+		$title->invalidateCache();
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $title );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
 	}
 
 
@@ -78,6 +84,7 @@ class CachedRedirects {
 	 * @param $id Int: page_id value of the page being deleted
 	 */
 	public static function doClearLinkedFilesCache( $id, $results = null ) {
+		global $wgCityId;
 		if ( is_null( $results ) ) {
 			$results = self::getFileLinks( $id );
 		}
@@ -85,6 +92,11 @@ class CachedRedirects {
 			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
 			self::purgeRedir( $title );
 			$title->invalidateCache();
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
 		}
 	}
 
