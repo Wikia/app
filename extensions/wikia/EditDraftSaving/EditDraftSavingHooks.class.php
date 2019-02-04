@@ -52,7 +52,7 @@ class EditDraftSavingHooks {
 	 * @param OutputPage $out
 	 */
 	static public function onMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
-		$draftKey = $_SESSION[ self::EDIT_DRAFT_KEY_HIDDEN_FIELD ];
+		$draftKey = $out->getRequest()->getSessionData( self::EDIT_DRAFT_KEY_HIDDEN_FIELD );
 
 		if (!$draftKey) {
 			return;
