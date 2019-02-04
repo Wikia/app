@@ -65,7 +65,7 @@ class WikiaFilePage extends ImagePage {
 		//wiki needs read privileges
 		if ( !$this->getTitle()->userCan( 'read' ) ) {
 			die;
-			$out->redirect( $url );
+			$out->redirect( $url , '301');
 			return;
 		}
 		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
@@ -85,7 +85,7 @@ class WikiaFilePage extends ImagePage {
 			var_dump("no image");
 			die;
 			$wgMemc->add( $redirKey, $url );
-			$out->redirect( $url );
+			$out->redirect( $url , '301' );
 			return;
 		}
 
@@ -94,13 +94,13 @@ class WikiaFilePage extends ImagePage {
 		if ( $urlMem ) {
 			var_dump($urlMem);
 			die;
-			$out->redirect( $urlMem );
+			$out->redirect( $urlMem , '301' );
 
 			return;
 		}
 
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
-		$out->redirect( $res );
+		var_dump($res);
 
 		foreach ( $res as $row ) {
 			$title = Title::newFromRow( $row );
@@ -114,7 +114,7 @@ class WikiaFilePage extends ImagePage {
 		var_dump($url);
 		die;
 		$wgMemc->add( $redirKey, $url );
-		$out->redirect( $url );
+		$out->redirect( $url , '301' );
 	}
 
 	/**
