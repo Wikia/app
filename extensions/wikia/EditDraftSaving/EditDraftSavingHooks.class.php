@@ -13,7 +13,11 @@ class EditDraftSavingHooks {
 	static public function onEditPage_showEditForm_initial(EditPage $editPage, OutputPage $output) {
 		$isRTEenabled = class_exists('RTE') && RTE::isEnabled();
 
-		// TODO: load a different set of JS files when RTE is used on this edit page
-		$output->addModules('ext.wikia.EditDraftSaving');
+		// load a different set of JS files when RTE is used on this edit page
+		$output->addModules(
+			$isRTEenabled
+				? 'ext.wikia.EditDraftSaving.rte'
+				: 'ext.wikia.EditDraftSaving.mediawiki'
+		);
 	}
 }
