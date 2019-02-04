@@ -1413,7 +1413,7 @@ class SpecialUndelete extends SpecialPage {
 	}
 
 	function undelete() {
-		global $wgUploadMaintenance, $wgMemc;
+		global $wgUploadMaintenance;
 
 		if ( $wgUploadMaintenance && $this->mTargetObj->getNamespace() == NS_FILE ) {
 			throw new ErrorPageError( 'undelete-error', 'filedelete-maintenance' );

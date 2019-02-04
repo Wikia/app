@@ -898,7 +898,7 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * Perform the actions of a page purging
 	 */
 	public function doPurge() {
-		global $wgUseSquid, $wgMemc;
+		global $wgUseSquid;
 
 		if( !Hooks::run( 'ArticlePurge', [ $this ] ) ) {
 			return false;

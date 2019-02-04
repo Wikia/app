@@ -48,9 +48,7 @@ class PurgeAction extends FormAction {
 	}
 
 	public function onSubmit( $data ) {
-		$this->page->doPurge();
-		die;
-		return true;
+		return $this->page->doPurge();
 	}
 
 	/**

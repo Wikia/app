@@ -104,9 +104,6 @@ class SquidUpdate {
 	 */
 	static function purge( $urlArr ) {
 		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
-		var_dump("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-var_dump($urlArr);
-var_dump("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 		if( !$urlArr ) {
 			return;
 		}
