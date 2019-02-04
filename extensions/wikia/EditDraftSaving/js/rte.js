@@ -18,7 +18,7 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
 
-			// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
+			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			RTE.getInstance().setMode(
 				draftData.mode,
 				function() {

@@ -21,14 +21,13 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 */
 	function storeDraft(draftData) {
 		try {
-			var draftDataJSON = JSON.stringify(draftData);
 			localStorage.setItem(
 				getDraftKey(),
-				draftDataJSON
+				JSON.stringify(draftData)
 			);
-			log('Stored a draft: ' + draftDataJSON);
+			log('Stored a draft');
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 	}
 
@@ -38,11 +37,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 */
 	function readDraft() {
 		try {
-			var draftData = localStorage.getItem(getDraftKey());
-			log('Read a draft: ' + draftData);
-			return  JSON.parse(draftData);
+			log('Reading a draft...');
+			return JSON.parse(localStorage.getItem(getDraftKey()));
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			return null;
 		}
 	}
