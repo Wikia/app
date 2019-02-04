@@ -907,7 +907,7 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Invalidate the cache
 		$this->mTitle->invalidateCache();
 		$this->clear();
-
+var_dump($wgUseSquid);
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
@@ -927,6 +927,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 			MessageCache::singleton()->replace( $this->mTitle->getDBkey(), $text );
 		}
+		var_dump(debug_backtrace());
 		die("purge fin");
 		return true;
 	}
@@ -2084,10 +2085,8 @@ class WikiPage extends Page implements IDBAccessObject {
 		} else {
 			$bitfield = 'rev_deleted';
 		}
-		var_dump("get links");
 		$links = null;
 		Hooks::run( 'ArticleGetFileLinks', [ $id, &$links ] );
-		var_dump($links);
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
