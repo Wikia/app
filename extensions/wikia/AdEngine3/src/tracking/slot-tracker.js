@@ -32,7 +32,6 @@ function getCurrentScrollY() {
 function prepareData(slot, data) {
   const now = new Date();
   const slotName = slot.getSlotName();
-  const slotParams = slot.getDatasetValue('gptSlotParams');
 
   return Object.assign({
     pv: window.pvNumber,
@@ -69,8 +68,8 @@ function prepareData(slot, data) {
     document_visibility: utils.getDocumentVisibilityStatus(),
     // Missing:
     // page_layout, rabbit, product_chosen
-    bidder_won: slotParams.hb_bidder || '',
-    bidder_won_price: slotParams.hb_pb || '',
+    bidder_won: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.name : '',
+    bidder_won_price: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.price : '',
     scroll_y: getCurrentScrollY(),
   }, targeting.getBiddersPrices(slotName));
 }
