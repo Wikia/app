@@ -183,6 +183,15 @@ export default {
 				enabled: false,
 				slots: {}
 			},
+			lkqd: {
+				enabled: false,
+				slots: {
+					FEATURED: {
+						placementId: '523',
+						siteId: '890798'
+					}
+				}
+			},
 			onemobile: {
 				enabled: false,
 				slots: {}
