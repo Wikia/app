@@ -21,6 +21,24 @@ $wgResourceModules['ext.wikia.EditDraftSaving.base'] = [
 	'remoteExtPath' => 'wikia/EditDraftSaving',
 ];
 
+// VisualEditor-specific modules
+$wgResourceModules['ext.wikia.EditDraftSaving.ve.lazy'] = [
+	'scripts' => [
+		'js/ve.lazy.js',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/EditDraftSaving',
+];
+
+$wgResourceModules['ext.wikia.EditDraftSaving.ve'] = [
+	'scripts' => [
+		'js/ve.js',
+	],
+	'dependencies' => ['ext.wikia.EditDraftSaving.base'],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/EditDraftSaving',
+];
+
 // RTE-specific module
 $wgResourceModules['ext.wikia.EditDraftSaving.rte'] = [
 	'scripts' => [
@@ -44,6 +62,7 @@ $wgResourceModules['ext.wikia.EditDraftSaving.mediawiki'] = [
 $wgAutoloadClasses['EditDraftSavingHooks'] = __DIR__.'/EditDraftSavingHooks.class.php';
 
 // inject above ResourceLoader modules
+$wgHooks['BeforePageDisplay'][] = 'EditDraftSavingHooks::onBeforePageDisplay';
 $wgHooks['EditPage::showEditForm:initial'][] = 'EditDraftSavingHooks::onEditPage_showEditForm_initial';
 
 // invalidate drafts after successful edits

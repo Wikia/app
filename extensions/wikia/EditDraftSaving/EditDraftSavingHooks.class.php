@@ -76,4 +76,15 @@ JS
 		// PHP session entry is no longer needed
 		unset( $_SESSION[ self::EDIT_DRAFT_KEY_HIDDEN_FIELD ] );
 	}
+
+	/**
+	 * Add a module for lazy loading VisualEditor handling.
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
+	 *
+	 * @param OutputPage $out
+	 */
+	static public function onBeforePageDisplay( OutputPage $out) {
+		$out->addModuleScripts('ext.wikia.EditDraftSaving.ve.lazy');
+	}
 }
