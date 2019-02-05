@@ -23,6 +23,15 @@ JavaScript code is injected into the editor via `EditPage::showEditForm:initial`
 Every five seconds we store the content of the editor (along with some metadata) in local storage. In case
 of a crash we restore it on your next visit to the editor.
 
+For VisualEditor we use the following JavaScript hooks:
+
+* `ve.activate` is fired when VisualEditor starts to load - we then load edit draft code on demand
+* `ve.activationComplete` is fired when VisualEditor is fully loaded - edit draft code is set up then
+* `ve.toolbarSaveButton.stateChanged` is fired when editing content changed - edit draft can be saved then
+* `postEdit` is fired when VisualEditor save completes - edit draft can be invalidated then
+
+> `window.mediaWiki.hook('hookName').add() is used to bind to a specific hook
+
 ### Draft invalidation
 
 On successful edits local storage entry is removed. To do that we need to pass local storage entry key name
