@@ -24,13 +24,14 @@ class AdEngine3ApiController extends WikiaController
 				case 'hmd':
 					$resourceLoader = new ResourceLoaderAdEngine3HMDCode();
 					break;
+
+				default:
+					$this->response->setBody('');
 			}
 
 			if ($resourceLoader) {
 				$resourceLoaderContext = new ResourceLoaderContext(new ResourceLoader(), new FauxRequest());
 				$this->response->setBody($resourceLoader->getScript($resourceLoaderContext));
-			} else {
-				$this->response->setBody('');
 			}
 		} else {
 			$this->response->setBody('');

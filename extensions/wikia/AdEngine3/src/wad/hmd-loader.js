@@ -2,7 +2,7 @@ import { utils } from '@wikia/ad-engine';
 import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
 import { recInjector } from './rec-injector';
 
-const isDebug = utils.queryString.get('hmd-rec-debug') === '1';
+const isDebug = utils.queryString.isUrlParamSet('hmd-rec-debug');
 const logGroup = 'hmd-loader';
 
 let trackingStatus = {

@@ -9,10 +9,6 @@ import viewabilityTracker from './tracking/viewability-tracker';
 import { getConfig as getRoadblockConfig } from './templates/roadblock-config';
 import { getConfig as getStickyTLBConfig } from './templates/sticky-tlb-config';
 
-function isUrlParamSet(param) {
-	return !!parseInt(utils.queryString.get(param), 10);
-}
-
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
 
@@ -23,20 +19,20 @@ function setupPageLevelTargeting(adsContext) {
 
 function updateWadContext() {
 	// BlockAdBlock detection
-	context.set('opts.babDetectionDesktop', isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
+	context.set('options.wad.enabled', isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
 
 	// showAds is undefined by default
-	var serviceCanBeEnabled = !context.get('opts.noExternals') &&
+	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('opts.showAds') !== false &&
 		!window.wgUserName &&
 		!context.get('opts.delayBlocked');
 
 	if (serviceCanBeEnabled) {
 		// BT rec
-		context.set('opts.wadBT', isGeoEnabled('wgAdDriverWadBTCountries'));
+		context.set('options.wad.btRec.enabled', isGeoEnabled('wgAdDriverWadBTCountries'));
 
 		// HMD rec
-		context.set('opts.wadHMD', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
+		context.set('options.wad.hmdRec.enabled', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
 	}
 }
 
@@ -50,7 +46,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.extend(basicContext);
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
-	context.set('opts.noExternals', window.wgNoExternals || isUrlParamSet('noexternals'));
+	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
 
 	if (context.get('wiki.opts.isAdTestWiki')) {
 		context.set('src', 'test');

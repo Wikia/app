@@ -109,7 +109,7 @@ export const babDetection = {
 	 * @returns {boolean}
 	 */
 	isEnabled() {
-		return context.get('opts.babDetectionDesktop');
+		return context.get('options.wad.enabled');
 	},
 
 	/**

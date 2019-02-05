@@ -11,12 +11,12 @@ let recEnabled = {
 let recParams = {
 	bt: {
 		type: 'display',
-		context: 'opts.wadBT',
+		context: 'options.wad.btRec.enabled',
 		loader: btLoader
 	},
 	hmd: {
 		type: 'video',
-		context: 'opts.wadHMD',
+		context: 'options.wad.hmdRec.enabled',
 		loader: hmdLoader,
 	},
 };
