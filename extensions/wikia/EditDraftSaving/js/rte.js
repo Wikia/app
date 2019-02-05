@@ -27,9 +27,7 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 				}
 			);
 
-			alert(window.mediaWiki.message('edit-draft-loaded').text());
-
-			EditDraftSaving.trackDraftRestore(EDITOR_TYPE);
+			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 
 		// register draft saving function
