@@ -27,10 +27,7 @@ describe('Krux module', function () {
 			track: noop
 		},
 		window: {
-			localStorage: {
-				'kxuser': mockedUserId + '-old',
-				'kxwikia_user': mockedUserId + '-new'
-			}
+			localStorage: {}
 		},
 		document: {},
 		wikiaTracker: {
@@ -47,11 +44,13 @@ describe('Krux module', function () {
 	mocks.log.levels = {};
 
 	it('Expects to get user from localStorage with the old key: kxuser', function () {
-		expect(getModule().getUser()).toBe(mocks.window.localStorage['kxuser']);
+		mocks.window.localStorage.kxuser = mockedUserId;
+		expect(getModule().getUser()).toBe(mockedUserId);
 	});
 
 	it('Expects to get user from localStorage with the new key: kxwikia_user', function () {
-		expect(getModule().getUser()).toBe(mocks.window.localStorage['kxwikia_user']);
+		mocks.window.localStorage['kxwikia_user'] = mockedUserId;
+		expect(getModule().getUser()).toBe(mockedUserId);
 	});
 
 	it('Expects to get empty array of segments from localStorage', function () {

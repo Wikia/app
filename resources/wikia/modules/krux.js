@@ -95,12 +95,13 @@ define('wikia.krux', [
 	}
 
 	function getParams(n) {
-		var k = 'kx' + n;
+		var oldKeyName = 'kx' + n,
+			newKeyName = 'kxwikia_' + n;
 
 		// Some browsers throw an exception when trying to check `window.localStorage` value when LS is disabled
 		try {
 			if (win.localStorage) {
-				return win.localStorage[k] || '';
+				return win.localStorage[oldKeyName] || win.localStorage[newKeyName] || '';
 			} else {
 				return '';
 			}
