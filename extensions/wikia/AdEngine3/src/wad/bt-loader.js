@@ -3,7 +3,8 @@ import { recInjector } from './rec-injector';
 
 const isDebug = utils.queryString.isUrlParamSet('bt-rec-debug');
 const placementClass = 'bt-uid-tg';
-const placementsMap = context.get('options.wad.btRec.placementsMap') || {};
+
+let placementsMap = {};
 
 /**
  * Duplicates slots before rec code execution
@@ -93,6 +94,8 @@ export const btLoader = {
 	 * @returns {void}
 	 */
 	init() {
+		placementsMap = context.get('options.wad.btRec.placementsMap') || {};
+
 		document.addEventListener('bab.blocking', injectScript);
 	},
 
