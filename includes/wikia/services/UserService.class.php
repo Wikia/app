@@ -4,6 +4,8 @@ class UserService {
 
 	const CACHE_EXPIRATION = 86400;//1 day
 
+	const SHOW_FEEDS_IF_REGISTERED_AFTER = '20190210000000';
+
 	public static function getNameFromUrl( $url ) {
 		$out = false;
 
@@ -27,27 +29,35 @@ class UserService {
 	 * @throws MWException
 	 */
 	public static function getLandingPage( User $user ): Title {
-		global $wgEnableFeedsAndPostsExt;
-
 		$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
 
-		switch ( true ) {
-			case $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-				return SpecialPage::getTitleFor( 'WikiActivity' );
-				break;
-			case $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-				return SpecialPage::getTitleFor( 'RecentChanges' );
-				break;
-			case $wgEnableFeedsAndPostsExt && $value === UserPreferencesV2::LANDING_PAGE_FEEDS:
-				return new class extends Title {
-					public function getFullURL( $query = '', $query2 = false ) {
-						global $wgScriptPath;
-						return wfExpandUrl( "$wgScriptPath/f" );
-					}
-				};
-			default:
-				return Title::newMainPage();
+		if ( $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY ) {
+			return SpecialPage::getTitleFor( 'WikiActivity' );
 		}
+
+		if ( $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES ) {
+			return SpecialPage::getTitleFor( 'RecentChanges' );
+		}
+
+		if ( self::shouldLandOnFeeds( $user, $value ) ) {
+			return new class extends Title {
+				public function getFullURL( $query = '', $query2 = false ) {
+					global $wgScriptPath;
+
+					return wfExpandUrl( "$wgScriptPath/f" );
+				}
+			};
+		}
+
+		return Title::newMainPage();
+	}
+
+	private static function shouldLandOnFeeds( User $user, string $landingPagePreference ): bool {
+		global $wgEnableFeedsAndPostsExt;
+
+		return $wgEnableFeedsAndPostsExt &&
+			   ( $landingPagePreference === UserPreferencesV2::LANDING_PAGE_FEEDS ||
+			   $user->getRegistration() >= static::SHOW_FEEDS_IF_REGISTERED_AFTER );
 	}
 
 	/**
