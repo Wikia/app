@@ -29,8 +29,13 @@ define('wikia.krux', [
 				value = params[key];
 				if (value) {
 					win['kruxDartParam_' + key] = value.toString();
+					log('Added: ' + key + ' with value: ' + value.toString(), log.levels.warning, logGroup);
+				} else {
+					log('Empty value for ' + key, log.levels.warning, logGroup);
 				}
 			});
+		} else {
+			log('Object.keys not defined!', log.levels.warning, logGroup);
 		}
 	}
 

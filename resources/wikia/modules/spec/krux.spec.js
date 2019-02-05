@@ -3,6 +3,7 @@ describe('Krux module', function () {
 	'use strict';
 
 	var kruxTrackerEventName = 'krux/segments_count',
+		mockedUserId = 'testUser',
 		mocks,
 		noop = function () {};
 
@@ -27,7 +28,8 @@ describe('Krux module', function () {
 		},
 		window: {
 			localStorage: {
-				kxuser: 'testUser'
+				'kxuser': mockedUserId + '-old',
+				'kxwikia_user': mockedUserId + '-new'
 			}
 		},
 		document: {},
@@ -44,8 +46,12 @@ describe('Krux module', function () {
 
 	mocks.log.levels = {};
 
-	it('Expects to get user from localStorage', function () {
-		expect(getModule().getUser()).toBe(mocks.window.localStorage.kxuser);
+	it('Expects to get user from localStorage with the old key: kxuser', function () {
+		expect(getModule().getUser()).toBe(mocks.window.localStorage['kxuser']);
+	});
+
+	it('Expects to get user from localStorage with the new key: kxwikia_user', function () {
+		expect(getModule().getUser()).toBe(mocks.window.localStorage['kxwikia_user']);
 	});
 
 	it('Expects to get empty array of segments from localStorage', function () {
