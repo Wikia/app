@@ -53,7 +53,7 @@ class CachedRedirects {
 	 *
 	 */
 	private static function purgeRedir( $title ) {
-		global $wgMemc, $wgCityId;
+		global $wgMemc;
 		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		$page = WikiPage::factory( $title );
@@ -69,7 +69,11 @@ class CachedRedirects {
 	public static function getFileLinks( $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		return $dbr->select( [ 'imagelinks' ], [ 'il_to' ], [ 'il_from' => $id ], __METHOD__,
+		return $dbr->select(
+			[ 'imagelinks' ],
+			[ 'il_to' ],
+			[ 'il_from' => $id ],
+			__METHOD__,
 			[ 'ORDER BY' => 'il_to', ] );
 	}
 
