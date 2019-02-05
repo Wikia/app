@@ -23,7 +23,14 @@ JavaScript code is injected into the editor via `EditPage::showEditForm:initial`
 Every five seconds we store the content of the editor (along with some metadata) in local storage. In case
 of a crash we restore it on your next visit to the editor.
 
-On successful edits local storage entry is removed.
+### Draft invalidation
+
+On successful edits local storage entry is removed. To do that we need to pass local storage entry key name
+to the page that shows after a successful edit:
+
+* local storage entry name is passed as a hidden form field named `wpEditDraftKey`
+* in `ArticleSaveComplete` hook we read this value from POST HTTP request and store it in PHP session
+* `MakeGlobalVariablesScript` hook then reads the PHP session value and emits a small inline JS that invalidates local storage entry
 
 ## Events tracking
 
