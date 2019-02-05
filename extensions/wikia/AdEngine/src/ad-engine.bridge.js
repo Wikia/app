@@ -97,6 +97,7 @@ function init(
 		context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 		context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
 		context.set('bidders.prebid.kargo.enabled', legacyContext.get('bidders.kargo'));
+		context.set('bidders.prebid.lkqd.enabled', legacyContext.get('bidders.lkqd'));
 		context.set('bidders.prebid.onemobile.enabled', legacyContext.get('bidders.onemobile'));
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
