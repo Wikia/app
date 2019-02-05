@@ -1659,7 +1659,6 @@ $wgDefaultUserOptions = [
 	'underline' => 2,
 	'uselivepreview' => 0,
 	'usenewrc' => 1,
-	'userlandingpage' => 1, // Main Page
 	'watchcreations' => 1,
 	'watchdefault' => 1,
 	'watchdeletion' => 0,

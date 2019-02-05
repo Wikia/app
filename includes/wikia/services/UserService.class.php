@@ -55,9 +55,12 @@ class UserService {
 	private static function shouldLandOnFeeds( User $user, string $landingPagePreference ): bool {
 		global $wgEnableFeedsAndPostsExt;
 
-		return $wgEnableFeedsAndPostsExt &&
-			   ( $landingPagePreference === UserPreferencesV2::LANDING_PAGE_FEEDS ||
-			   $user->getRegistration() >= static::SHOW_FEEDS_IF_REGISTERED_AFTER );
+		if ( $wgEnableFeedsAndPostsExt ) {
+			return $landingPagePreference === UserPreferencesV2::LANDING_PAGE_FEEDS ||
+				   ( empty( $landingPagePreference ) && $user->getRegistration() >= static::SHOW_FEEDS_IF_REGISTERED_AFTER );
+		}
+
+		return false;
 	}
 
 	/**
