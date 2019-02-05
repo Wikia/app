@@ -1,5 +1,9 @@
 <?php
-$wgAutoloadClasses['EditDraftSavingHooks'] = __DIR__.'/EditDraftSavingHooks.class.php';
+
+$wgExtensionCredits['other'][] = [
+	'name' => 'Edit Draft Saving',
+	'description' => 'Provides edit draft saving functionality. It acts as a "backup" of edited content in case your browser crashes.',
+];
 
 /**
  * Resources Loader modules
@@ -36,6 +40,8 @@ $wgResourceModules['ext.wikia.EditDraftSaving.mediawiki'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/EditDraftSaving',
 ];
+
+$wgAutoloadClasses['EditDraftSavingHooks'] = __DIR__.'/EditDraftSavingHooks.class.php';
 
 // inject above ResourceLoader modules
 $wgHooks['EditPage::showEditForm:initial'][] = 'EditDraftSavingHooks::onEditPage_showEditForm_initial';

@@ -4,6 +4,11 @@ EditDraftSaving
 This extension provides edit draft saving functionality. It acts as a "backup" of edited content in case your browser
 crashes, network connection disappears or any other quantum event takes place.
 
+## How to enable it?
+
+**This extension is disabled by default** at the moment.
+Please set [`wgEnableEditDraftSavingExt`](https://community.wikia.com/wiki/Special:WikiFactoryReporter?varid=1909) to true via WikiFactory.
+
 ## Supported editors
 
 All three editors are supported:
