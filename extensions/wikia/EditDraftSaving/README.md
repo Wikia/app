@@ -15,7 +15,7 @@ All three editors are supported:
 
 * CKEditor (`editor-ck`)
 * VisualEditor (`editor-ve`)
-* MediaWiki's source editor (`source`)
+* MediaWiki's source editor (`editor-mw`)
 
 ## How does it work?
 
