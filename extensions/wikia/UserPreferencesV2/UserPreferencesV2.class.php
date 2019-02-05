@@ -90,6 +90,7 @@ class UserPreferencesV2 {
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-feeds' )->plain()] = self::LANDING_PAGE_FEEDS;
 
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['default'] = self::LANDING_PAGE_MAIN_PAGE;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
