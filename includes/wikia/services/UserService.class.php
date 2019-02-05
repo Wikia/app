@@ -52,7 +52,7 @@ class UserService {
 		return Title::newMainPage();
 	}
 
-	private static function shouldLandOnFeeds( User $user, string $landingPagePreference ): bool {
+	private static function shouldLandOnFeeds( User $user, $landingPagePreference ): bool {
 		global $wgEnableFeedsAndPostsExt;
 
 		if ( $wgEnableFeedsAndPostsExt ) {
