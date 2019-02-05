@@ -68,8 +68,8 @@ function prepareData(slot, data) {
     document_visibility: utils.getDocumentVisibilityStatus(),
     // Missing:
     // page_layout, rabbit, product_chosen
-    bidder_won: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.name : '',
-    bidder_won_price: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.price : '',
+    bidder_won: slot.targeting.hb_bidder || '',
+    bidder_won_price: slot.targeting.hb_pb || '',
     scroll_y: getCurrentScrollY(),
   }, targeting.getBiddersPrices(slotName));
 }
