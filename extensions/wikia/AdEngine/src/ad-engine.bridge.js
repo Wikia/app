@@ -150,11 +150,11 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext) {
 	};
 
 	slotService.legacyEnabled = slotService.enable;
-	slotService.enable = (slotName) => {
+	slotService.enable = (slotName, status) => {
 		legacyBtfBlocker.unblock(slotName);
-		slotRegistry.enable(slotName);
+		slotRegistry.enable(slotName, status);
 	};
-	slotService.disable = (slotName) => slotRegistry.disable(slotName);
+	slotService.disable = (slotName, status) => slotRegistry.disable(slotName, status);
 	slotService.getState = (slotName) => slotsContext.isApplicable(slotName);
 }
 
@@ -239,7 +239,7 @@ function unifySlotInterface(slot) {
 		onLoadResolve();
 	});
 
-	slot.post('success', () => {
+	slot.post('renderEnded', () => {
 		slot.lineItemId = slot.container.firstElementChild.getAttribute('data-gpt-line-item-id');
 		const templates = slot.getConfigProperty('defaultTemplates');
 		if (templates && templates.length) {
