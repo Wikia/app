@@ -37,6 +37,8 @@ User's browser has crashed and we managed to restore the changes:
 Wikia.Tracker:  trackingevent editor-ck/impression/draft-loaded/ [analytics track]
 ```
 
+#### An edit has been published after draft restore
+
 Draft has been restored and a user published an edit:
 
 ```
