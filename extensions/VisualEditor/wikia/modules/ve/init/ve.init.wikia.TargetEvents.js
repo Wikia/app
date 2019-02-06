@@ -35,6 +35,8 @@ OO.inheritClass( ve.init.wikia.TargetEvents, ve.init.mw.TargetEvents );
  * Store timestamp when the surface is ready
  */
 ve.init.wikia.TargetEvents.prototype.onSurfaceReady = function () {
+	mw.hook( 've.wikia.surfaceReady' ).fire(this); // Wikia change - CORE-76
+
 	this.timings.surfaceReady = ve.now();
 	ve.init.wikia.TargetEvents.super.prototype.onSurfaceReady.call( this );
 };
