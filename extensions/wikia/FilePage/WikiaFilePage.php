@@ -152,82 +152,17 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgMemc;
-		$out = $this->getContext()->getOutput();
 		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
 			return;
 		}
-		//fallback to main page
-		$url = Title::newMainPage()->getFullURL();
-		//wiki needs read privileges
-		if ( !$this->getTitle()->userCan( 'read' ) ) {
-			$out->redirect( $url , '301');
-			return;
-		}
-		$redirKey = wfMemcKey( 'redir', $this->getTitle()->getPrefixedText() );
-
-		$displayImg = $img = false;
-		Hooks::run( 'ImagePageFindFile', [ $this, &$img, &$displayImg ] );
-		if ( !$img ) { // not set by hook?
-			$img = wfFindFile( $this->getTitle() );
-			if ( !$img ) {
-				$img = wfLocalFile( $this->getTitle() );
-			}
-		}
-
-		if ( !$img || $img && !$img->fileExists ) {
-			$wgMemc->add( $redirKey, $url );
-			$out->redirect( $url , '301' );
-			return;
-		}
-
-		$urlMem = $wgMemc->get( $redirKey );
-		if ( $urlMem ) {
-			$out->redirect( $urlMem , '301' );
-
-			return;
-		}
-
-		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
-
-		foreach ( $res as $row ) {
-			$title = Title::newFromRow( $row );
-			if ( $title->isRedirect() ) {
-				continue;
-			}
-			if ( !$title->userCan( 'read' ) ) {
-				$out->redirect( $url , '301');
-				continue;
-			}
-			$url = $title->getFullURL();
-			break;
-		}
-		$wgMemc->add( $redirKey, $url );
-		$out->redirect( $url , '301' );
-	}
-
-	/**
-	 * Fetch informationabout pages linked to image
-	 * @param string $dbKey
-	 * @return string
-	 */
-	private function fetchLinks( $dbKey ) {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		return $dbr->select( [ 'imagelinks', 'page' ], [
-			'page_title',
-			'page_namespace',
-		], [
-			'il_to' => $dbKey,
-			'page_is_redirect' => 0,
-			'page_namespace' => NS_MAIN,
-			'il_from = page_id',
-		], __METHOD__, [
-			'LIMIT' => 5,
-			'ORDER BY' => 'page_namespace, page_id',
-		] );
+		$data = F::app()->sendRequest(
+			'FilePage',
+			'fileRedir',
+			[ 'type' => 'local', 'format' => 'json' ]
+		)->getData();
+		$this->getContext()->getOutput()->redirect( $data['url'] , '301' );
 	}
 
 }

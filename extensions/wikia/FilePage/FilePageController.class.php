@@ -74,6 +74,92 @@ class FilePageController extends WikiaController {
 	}
 
 	/**
+	 * Collects data about what articles the current file appears in, either
+	 * locally and globally.
+	 *
+	 * @requestParam string type (optional) Possible values are 'global' or 'local', defaulting to 'local' if not given.
+	 *                                      Determines whether this collects a local or global file usage data
+	 */
+	public function fileRedir() {
+		wfProfileIn( __METHOD__ );
+		global $wgMemc;
+
+		$page = $this->getContext();
+
+		//fallback to main page
+		$url = Title::newMainPage()->getFullURL();
+		//wiki needs read privileges
+		if ( !$page->getTitle()->userCan( 'read' ) ) {
+			$this->url = $url;
+			return;
+		}
+		$redirKey = wfMemcKey( 'redir', $page->getTitle()->getPrefixedText() );
+
+		$displayImg = $img = false;
+		Hooks::run( 'ImagePageFindFile', [ $page, &$img, &$displayImg ] );
+		if ( !$img ) { // not set by hook?
+			$img = wfFindFile( $page->getTitle() );
+			if ( !$img ) {
+				$img = wfLocalFile( $page->getTitle() );
+			}
+		}
+
+		if ( !$img || $img && !$img->fileExists ) {
+			$wgMemc->add( $redirKey, $url );
+			$this->url = $url;
+			return;
+		}
+
+		$urlMem = $wgMemc->get( $redirKey );
+		if ( $urlMem ) {
+			$this->url = $urlMem;
+			return;
+		}
+
+		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
+
+		foreach ( $res as $row ) {
+			$title = Title::newFromRow( $row );
+			if ( $title->isRedirect() ) {
+				continue;
+			}
+			if ( !$title->userCan( 'read' ) ) {
+				continue;
+			}
+			$url = $title->getFullURL();
+			break;
+		}
+		$wgMemc->add( $redirKey, $url );
+		$this->url = $url;
+
+		wfProfileOut( __METHOD__ );
+	}
+
+
+
+	/**
+	 * Fetch informationabout pages linked to image
+	 * @param string $dbKey
+	 * @return string
+	 */
+	private function fetchLinks( $dbKey ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select( [ 'imagelinks', 'page' ], [
+			'page_title',
+			'page_namespace',
+		], [
+			'il_to' => $dbKey,
+			'page_is_redirect' => 0,
+			'page_namespace' => NS_MAIN,
+			'il_from = page_id',
+		], __METHOD__, [
+			'LIMIT' => 5,
+			'ORDER BY' => 'page_namespace, page_id',
+		] );
+	}
+
+	/**
 	 * Figure out what articles on the local wiki are using this file.  A lot of this code is lifted from the
 	 * includes/ImagePage.php file.  The original code includes a lot of HTML building which means it wasn't
 	 * possible to reuse there.
