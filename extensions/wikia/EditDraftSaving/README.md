@@ -21,7 +21,9 @@ JavaScript code for this feature is split into:
 
 * `index.js` provides a generic AMD module used by draft saving in all three editors
 * `rte.js` and `mediawiki.js` uses the above and is loaded for CKeditor and MediaWiki's source editor accordingly
-* `ve.lazy.js` is a small piece of code that is used to load `ve.js` when VisualEditor is requested.
+* `ve.js` provides draft saving for VisualEditor. Resource Loader module that provides this file is added as a dependency for `ext.visualEditor.wikia.core`.
+
+All these files are wrapped in Resource Loader modules and are only loaded when needed.
 
 ## How does it work?
 
@@ -31,7 +33,6 @@ of a crash we restore it on your next visit to the editor.
 
 For VisualEditor we use the following JavaScript hooks:
 
-* `ve.activate` is fired when VisualEditor starts to load - we then load edit draft code on demand
 * `ve.activationComplete` is fired when VisualEditor is fully loaded - edit draft code is set up then
 * `ve.toolbarSaveButton.stateChanged` is fired when editing content changed - edit draft can be saved then
 * `postEdit` is fired when VisualEditor save completes - edit draft can be invalidated then
