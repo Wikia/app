@@ -393,7 +393,7 @@ class PageArchive {
 		/* Wikia change end */
 
 		Hooks::run( 'UndeleteComplete', [ $this->title, $wgUser, $reason ] );
-
+		die("fin");
 		return array( $textRestored, $filesRestored, $reason );
 	}
 

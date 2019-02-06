@@ -2161,6 +2161,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id , $links ] );
 
+		die("fin");
 		return WikiPage::DELETE_SUCCESS;
 	}
 

@@ -107,6 +107,10 @@ class SquidUpdate {
 		if( !$urlArr ) {
 			return;
 		}
+		echo "<pre>";
+		var_dump($urlArr);
+		var_dump(debug_backtrace());
+		echo "</pre>";
 
 		// wikia change start
 		global $wgPurgeSquidViaCelery;
