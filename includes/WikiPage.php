@@ -1297,12 +1297,8 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$flags = $this->checkFlags( $flags );
 
-		$links = null;
-		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links ] );
-		$newLinks = [];
-		foreach ( $links as $row ) {
-			$newLinks[] = (object)[ "il_to" =>  $row->il_to];
-		}
+		Hooks::run( 'ArticleFilesRefresh', [ $this->mTitle ] );
+
 		if ( !Hooks::run( 'ArticleSave', [
 			$this,
 			&$user,
@@ -1560,11 +1556,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Return the new revision (or null) to the caller
 		$status->value['revision'] = $revision;
 
-		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links ] );
-
-		foreach ( $links as $row ) {
-			$newLinks[] = (object)[ "il_to" =>  $row->il_to];
-		}
 		Hooks::run( 'ArticleSaveComplete', [
 			$this,
 			$user,
@@ -1576,8 +1567,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			$flags,
 			$revision,
 			&$status,
-			$baseRevId,
-			$newLinks
+			$baseRevId
 		] );
 		wfProfileOut( __METHOD__ );
 		return $status;
@@ -2094,8 +2084,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		} else {
 			$bitfield = 'rev_deleted';
 		}
-		$links = null;
-		Hooks::run( 'ArticleGetFileLinks', [ $id, &$links ] );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -2170,7 +2158,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			$dbw->commit();
 		}
 
-		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id , $links ] );
+		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id ] );
 
 		return WikiPage::DELETE_SUCCESS;
 	}

@@ -183,12 +183,8 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @return true -- because it's hook
 	 */
-	public static function onUndeleteComplete( Title $title, $user, $reason ) {
-		if ( $title->getNamespace() == NS_FILE ) {
-			self::purgeRedir( $title );
-		} else {
-			self::clearLinkedFilesCache( $title->getArticleID() );
-		}
+	public static function onUndeleteComplete( Title $title ) {
+		self::purgeTitle($title);
 
 		return true;
 	}
@@ -202,8 +198,24 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @return true -- because it's hook
 	 */
-	public static function onArticleDeleteComplete( WikiPage $page, $user, $reason, $id, $links ) {
-		self::clearLinkedFilesCache( $page->mTitle->getArticleID(), $links );
+	public static function onArticleFilesRefresh( Title $title ) {
+		self::purgeTitle($title);
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onArticleDelete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+
 		return true;
 	}
 
@@ -216,11 +228,9 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @return true -- because it's hook
 	 */
-	public static function onArticleSaveComplete( WikiPage $page, User $user, $text, $summary,
-												  $minoredit, $watchthis,
-												  $sectionanchor, $flags, $revision, $status, $baseRevId, $links)
-	{
-		self::clearLinkedFilesCache( $page->mTitle->getArticleID(), $links );
+	public static function onArticleSaveComplete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+
 		return true;
 	}
 
@@ -235,6 +245,7 @@ class FilePageHooks extends WikiaObject{
 	 */
 	public static function onGetFileLinks( $id, &$links ) {
 		$links = self::getFileLinks( $id );
+
 		return true;
 	}
 
@@ -245,7 +256,22 @@ class FilePageHooks extends WikiaObject{
 	 * @param Title $title -- instance of Title class
 	 *
 	 */
-	private static function purgeRedir( $title ) {
+	private static function purgeTitle( Title $title ) {
+		if ( $title->getNamespace() == NS_FILE ) {
+			self::purgeRedir( $title );
+		} else {
+			self::clearLinkedFilesCache( $title->getArticleID() );
+		}
+	}
+
+
+	/**
+	 * Clear memcache and purge page
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 */
+	private static function purgeRedir( Title $title ) {
 		global $wgMemc;
 		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
