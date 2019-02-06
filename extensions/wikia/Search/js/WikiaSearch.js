@@ -34,6 +34,7 @@ var WikiaSearch = {
 		});
 
 		this.initVideoTabEvents();
+		this.trackSearchResultsImpression();
 
 		$('#search-v2-form').submit( function() {
 			if ( advancedOptions && this.action.indexOf( '#advanced' ) < 0 ) {
@@ -43,6 +44,7 @@ var WikiaSearch = {
 				this.action = this.action.split('#')[0];
 				this.action += '#';
 			}
+			console.log('SEARCH SUBMIT');
 		});
 	},
 	initVideoTabEvents: function() {
@@ -81,8 +83,31 @@ var WikiaSearch = {
 			searchForm.submit();
 		});
 
+	},
+	trackSearchResultsImpression() {
+		var queryparams = new URL(window.location).searchParams;
+		var query = queryparams.get('search') || queryparams.get('query');
+
+		if (!query) {
+			return;
+		}
+
+		var payload = {
+			searchPhrase: query,
+			filters: {},
+			results: [], // TODO: ???
+			page: parseInt(queryparams.get('page')) || 1,
+			limit: 0, // TODO: count of result
+			sortOrder: 'default',
+			app: 'app',
+			siteId: parseInt(window.wgCityId),
+			searchId: 'aaa', // TODO: generate on submitting search form and pass as a query param; if query is present and searchId not then it needs to be generated
+			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
+		};
+		// TODO: gdpr compliance
+		console.log(payload);
 	}
-}
+};
 
 
 $(function() {
