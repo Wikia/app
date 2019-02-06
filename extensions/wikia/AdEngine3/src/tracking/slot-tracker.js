@@ -85,7 +85,7 @@ export default {
   onRenderEnded(adSlot, data) {
     const status = adSlot.getStatus();
 
-    if (onRenderEndedStatusToTrack.indexOf(status) !== -1) {
+    if (onRenderEndedStatusToTrack.indexOf(status) !== -1 || adSlot.getConfigProperty('trackEachStatus')) {
       track(Object.assign(
         {
           eventName: 'adengadinfo',
@@ -100,9 +100,9 @@ export default {
 
   onStatusChanged(adSlot, data) {
     const status = adSlot.getStatus();
-    const shouldSlotBeTracker = adSlot.getConfigProperty('trackEachStatus') || adSlot.trackOnStatusChanged;
+    const shouldSlotBeTracked = adSlot.getConfigProperty('trackEachStatus') || adSlot.trackOnStatusChanged;
 
-    if (onChangeStatusToTrack.indexOf(status) !== -1 || shouldSlotBeTracker) {
+    if (onChangeStatusToTrack.indexOf(status) !== -1 || shouldSlotBeTracked) {
       track(Object.assign(
         {
           eventName: 'adengadinfo',

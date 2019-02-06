@@ -1788,3 +1788,8 @@ include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" )
 if ( !empty( $wgWatchShowURL ) ) {
 	include "$IP/extensions/wikia/WatchShow/WatchShow.setup.php";
 }
+
+// SUS-79
+if ( !empty( $wgEnableEditDraftSavingExt ) ) {
+	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
+}

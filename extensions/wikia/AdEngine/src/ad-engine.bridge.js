@@ -97,6 +97,7 @@ function init(
 		context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 		context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
 		context.set('bidders.prebid.kargo.enabled', legacyContext.get('bidders.kargo'));
+		context.set('bidders.prebid.lkqd.enabled', legacyContext.get('bidders.lkqd'));
 		context.set('bidders.prebid.onemobile.enabled', legacyContext.get('bidders.onemobile'));
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
@@ -117,6 +118,7 @@ function init(
 		context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 		context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
 		context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
+		context.set('custom.lkqdDfp', legacyContext.get('bidders.lkqd'));
 		context.set('custom.isCMPEnabled', true);
 	}
 
@@ -214,7 +216,7 @@ function unifySlotInterface(slot) {
 		setConfigProperty: (key, value) => {
 			context.set(`${slotPath}.${key}`, value);
 		},
-		getStatus: () => null,
+		getStatus: () => slot.container.getAttribute('data-slot-result'),
 		setStatus: (status) => {
 			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
