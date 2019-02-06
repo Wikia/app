@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 
 	var slots = {},
 		slotStates = {},
+		slotStatuses = {},
 		slotQueueCount = {},
 		scrollYOnDfpRequest = {};
 
@@ -40,9 +41,10 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		}
 	}
 
-	function setState(slotName, state) {
+	function setState(slotName, state, status) {
 		var slot = get(slotName);
 		slotStates[slotName] = state;
+		slotStatuses[slotName] = status;
 
 		if (slot) {
 			if (state) {
@@ -53,12 +55,12 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		}
 	}
 
-	function enable(slotName) {
-		setState(slotName, true);
+	function enable(slotName, status) {
+		setState(slotName, true, status);
 	}
 
-	function disable(slotName) {
-		setState(slotName, false);
+	function disable(slotName, status) {
+		setState(slotName, false, status);
 	}
 
 	function get(slotName, providerName) {
@@ -91,6 +93,14 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		return null;
 	}
 
+	function isEnabled(slotName) {
+		return slotStates[slotName] !== false;
+	}
+
+	function getStatus(slotName) {
+		return slotStatuses[slotName];
+	}
+
 	function getRefreshCount(slotName) {
 		return slotQueueCount[slotName] || 0;
 	}
@@ -103,6 +113,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		slots = {};
 		slotQueueCount = {};
 		slotStates = {};
+		slotStatuses = {};
 	});
 
 	function storeScrollY(slotName) {
@@ -125,6 +136,8 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		getCurrentScrollY: getCurrentScrollY,
 		getRefreshCount: getRefreshCount,
 		getScrollY: getScrollY,
+		getStatus: getStatus,
+		isEnabled: isEnabled,
 		reset: reset,
 		storeScrollY: storeScrollY
 	};
