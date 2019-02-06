@@ -36,6 +36,14 @@ class MercuryApiFilePageHandler {
 					}
 				);
 			}
+			$item['canRead'] = true;
+			$title = Title::newFromDBkey( $item['titleDBkey'] );
+			if ( $title->isRedirect() ) {
+				$item['canRead'] = false;
+			}
+			if ( !$title->userCan( 'read' ) ) {
+				$item['canRead'] = false;
+			}
 
 			return $item;
 		}, $fileUsageData['fileList']);
