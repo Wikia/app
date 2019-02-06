@@ -33,6 +33,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		return false;
 	}
 
+	function collapseIfSlotIsDisabled(slotName) {
+		var slot = slotRegistry.get(slotName);
+
+		if (!slotRegistry.isEnabled(slotName)) {
+			slot.collapse({ adType: slotRegistry.getStatus(slotName) });
+
+			return true;
+		}
+
+		return false;
+	}
+
 	function dispatchEvent(event, methodName) {
 		var slot,
 			slotName = adSlot.getShortSlotName(event.slot.getAdUnitPath());
@@ -152,14 +164,15 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var defaultSizes = adElement.getDefaultSizes(),
 			sizeMap = adElement.getSizes(),
 			slotId = adElement.getId(),
-			slot = googleSlots.getSlot(slotId);
+			slot = googleSlots.getSlot(slotId),
+			slotName = adElement.getSlotName();
 
 		log(['addSlot', adElement], log.levels.debug, logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		adElement.setSlotLevelParams();
 
-		if (collapseIfSlotHasViewportConflicts(adElement.getSlotName())) {
+		if (collapseIfSlotIsDisabled(slotName) || collapseIfSlotHasViewportConflicts(slotName)) {
 			return;
 		}
 
