@@ -5,6 +5,7 @@
  */
 require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ve',
+		ve = window.ve,
 		surface;
 
 	// editing surface is ready, we can now read the draft (if there is any)
@@ -20,8 +21,17 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 	// user is making changes, keep saving a draft
 	// @see https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.ui.Surface
 	mw.hook('ve.toolbarSaveButton.stateChanged').add(function() {
-		if (!surface) return;
-		console.log('stateChanged', surface);
+		if (!surface || !surface.model ||!surface.target) return;
+		console.log('stateChanged', surface, surface.model.documentModel);
+
+		// code borrowed from ve.ui.WikiaSourceModeDialog
+		// @see https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.init.mw.ArticleTarget-method-serialize
+		surface.target.serialize(
+			ve.dm.converter.getDomFromModel( surface.model.documentModel, false ),
+			function(wikitext) {
+				console.log('serialize callback', wikitext);
+			}
+		);
 	});
 
 	EditDraftSaving.log('ve.js loaded for ' + EDITOR_TYPE);
