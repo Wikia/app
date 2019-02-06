@@ -1787,7 +1787,8 @@ class EditPage {
 			$previewOutput = $this->getPreviewText();
 		}
 
-		Hooks::run( 'EditPage::showEditForm:initial', [ $this ] );
+		// pass the OutputPage object (added in version MW 1.20.0)
+		Hooks::run( 'EditPage::showEditForm:initial', [ $this, $wgOut ] );
 
 		$this->setHeaders();
 
