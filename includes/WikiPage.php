@@ -1560,7 +1560,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Return the new revision (or null) to the caller
 		$status->value['revision'] = $revision;
 
-		$links2= null;
 		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links ] );
 
 		foreach ( $links as $row ) {

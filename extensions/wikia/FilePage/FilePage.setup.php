@@ -44,3 +44,7 @@ $wgHooks['GlobalUsageImagePageWikiLink'][] = 'FilePageHooks::onGlobalUsageImageP
 $wgHooks['GlobalUsageLinksUpdateComplete'][] = 'FilePageHooks::onGlobalUsageLinksUpdateComplete';
 $wgHooks['BeforePageDisplay'][] = 'FilePageHooks::onBeforePageDisplay';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'FilePageHooks::onWikiaMobileAssetsPackages';
+$wgHooks['UndeleteComplete'][] = 'FilePageHooks::onUndeleteComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'FilePageHooks::onArticleDeleteComplete';
+$wgHooks['ArticleSaveComplete'][] = 'FilePageHooks::onArticleSaveComplete';
+$wgHooks['ArticleGetFileLinks'][] = 'FilePageHooks::onGetFileLinks';

@@ -202,7 +202,6 @@ class WikiaFilePage extends ImagePage {
 				continue;
 			}
 			$url = $title->getFullURL();
-			$res->free();
 			break;
 		}
 		$wgMemc->add( $redirKey, $url );

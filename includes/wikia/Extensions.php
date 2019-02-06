@@ -806,8 +806,6 @@ if ( empty( $wgEnableArticleCommentsExt ) ) {
 
 $wgEnableWallEngine = $wgEnableWallExt || $wgEnableForumExt ;
 
-include("$IP/extensions/wikia/CachedRedirects/CachedRedirects_setup.php");
-
 // ArticleComments are always required (for CrossWiki notifications on non-wall Wikis)
 include("$IP/extensions/wikia/ArticleComments/ArticleComments_setup.php");
 include("$IP/extensions/wikia/WallNotifications/WallNotifications.setup.php");
