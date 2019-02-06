@@ -8,12 +8,30 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 		ve = window.ve,
 		surface;
 
+	function restoreDraft(html) {
+		if (!surface) return;
+		var target = surface.target;
+
+		target.doc = ve.createDocumentFromHtml( html );
+		target.docToSave = null;
+		target.clearPreparedCacheKey();
+		target.setupSurface( target.doc, function () {
+			target.startSanityCheck();
+			target.emit( 'surfaceReady' );
+		} );
+	}
+
 	// editing surface is ready, we can now read the draft (if there is any)
 	mw.hook('ve.wikia.surfaceReady').add(function (targetEvents) {
 		EditDraftSaving.log('VisualEditor editing surface is ready');
 
 		// @see https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.init.Target-method-getSurface
 		surface = targetEvents.target.getSurface(); // VeUiDesktopSurface
+
+		window.veSurface = surface; // for debugging!
+
+		// let's restore the content
+		// restoreDraft('<p>1234 <b>restored!</b></p>');
 	});
 
 	// user is making changes, keep saving a draft
