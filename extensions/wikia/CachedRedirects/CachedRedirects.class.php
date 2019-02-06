@@ -34,6 +34,20 @@ class CachedRedirects {
 		return true;
 	}
 
+	/**
+	 * Hook to clear caches for linked materials after material was edited
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onArticleEditUpdates( WikiPage $page) {
+		self::doClearLinkedFilesCache( $page->mTitle->getArticleID() );
+		return true;
+	}
+
 
 	/**
 	 * Hook to fetch linked materials

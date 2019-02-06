@@ -16,4 +16,5 @@ $wgAutoloadClasses['CachedRedirects'] =  $dir . 'CachedRedirects.class.php';
 //hooks
 $wgHooks['UndeleteComplete'][] = 'CachedRedirects::onUndeleteComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'CachedRedirects::onArticleDeleteComplete';
+$wgHooks['ArticleEditUpdates'][] = 'CachedRedirects::onArticleEditUpdates';
 $wgHooks['ArticleGetFileLinks'][] = 'CachedRedirects::onGetFileLinks';
