@@ -404,6 +404,7 @@ export default {
     appnexusDfp: true,
     dbNameForAdUnit: '_not_a_top1k_wiki',
     dfpId: '5441',
+    lkqdDfp: false,
     pubmaticDfp: false,
     rubiconDfp: true,
     serverPrefix: 'wka1b',
