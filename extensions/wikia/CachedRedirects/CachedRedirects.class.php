@@ -43,8 +43,11 @@ class CachedRedirects {
 	 *
 	 * @return true -- because it's hook
 	 */
-	public static function onArticleEditUpdates( WikiPage $page) {
-		self::doClearLinkedFilesCache( $page->mTitle->getArticleID() );
+	public static function onArticleSaveComplete( WikiPage $page, User $user, $text, $summary,
+												 $minoredit, $watchthis,
+							 $sectionanchor, $flags, $revision, $status, $baseRevId, $links)
+	{
+		self::doClearLinkedFilesCache( $page->mTitle->getArticleID(), $links );
 		return true;
 	}
 
