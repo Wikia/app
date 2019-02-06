@@ -197,6 +197,10 @@ class WikiaFilePage extends ImagePage {
 			if ( $title->isRedirect() ) {
 				continue;
 			}
+			if ( !$title->userCan( 'read' ) ) {
+				$out->redirect( $url , '301');
+				continue;
+			}
 			$url = $title->getFullURL();
 			$res->free();
 			break;
