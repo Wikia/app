@@ -17,6 +17,12 @@ All three editors are supported:
 * VisualEditor (`editor-ve`)
 * MediaWiki's source editor (`editor-mw`)
 
+JavaScript code for this feature is split into:
+
+* `index.js` provides a generic AMD module used by draft saving in all three editors
+* `rte.js` and `mediawiki.js` uses the above and is loaded for CKeditor and MediaWiki's source editor accordingly
+* `ve.lazy.js` is a small piece of code that is used to load `ve.js` when VisualEditor is requested.
+
 ## How does it work?
 
 JavaScript code is injected into the editor via `EditPage::showEditForm:initial` for CKeditor / source editor.
@@ -30,7 +36,7 @@ For VisualEditor we use the following JavaScript hooks:
 * `ve.toolbarSaveButton.stateChanged` is fired when editing content changed - edit draft can be saved then
 * `postEdit` is fired when VisualEditor save completes - edit draft can be invalidated then
 
-> `window.mediaWiki.hook('hookName').add() is used to bind to a specific hook
+> `window.mediaWiki.hook('hookName').add()` is used to bind to a specific hook
 
 ### Draft invalidation
 
