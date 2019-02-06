@@ -36,6 +36,7 @@ For VisualEditor we use the following JavaScript hooks:
 * `ve.activationComplete` is fired when VisualEditor is fully loaded - edit draft code is set up then
 * `ve.toolbarSaveButton.stateChanged` is fired when editing content changed - edit draft can be saved then
 * `postEdit` is fired when VisualEditor save completes - edit draft can be invalidated then
+* `ve.wikia.surfaceReady` a custom hook fired in `ve.init.wikia.TargetEvents` Wikia's VisualEditor module
 
 > `window.mediaWiki.hook('hookName').add()` is used to bind to a specific hook
 
