@@ -1299,7 +1299,10 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$links = null;
 		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links ] );
-
+		$newLinks = [];
+		foreach ( $links as $row ) {
+			$newLinks[] = (object)[ "il_to" =>  $row->il_to];
+		}
 		if ( !Hooks::run( 'ArticleSave', [
 			$this,
 			&$user,
@@ -1557,10 +1560,12 @@ class WikiPage extends Page implements IDBAccessObject {
 		// Return the new revision (or null) to the caller
 		$status->value['revision'] = $revision;
 
-		$links2 = null;
-		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links2 ] );
-		$links = array_unique (array_merge($links, $links2));
+		$links2= null;
+		Hooks::run( 'ArticleGetFileLinks', [ $this->mTitle->getArticleID(), &$links ] );
 
+		foreach ( $links as $row ) {
+			$newLinks[] = (object)[ "il_to" =>  $row->il_to];
+		}
 		Hooks::run( 'ArticleSaveComplete', [
 			$this,
 			$user,
@@ -1573,9 +1578,8 @@ class WikiPage extends Page implements IDBAccessObject {
 			$revision,
 			&$status,
 			$baseRevId,
-			$links
+			$newLinks
 		] );
-
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}
