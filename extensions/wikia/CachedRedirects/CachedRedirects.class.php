@@ -16,7 +16,6 @@ class CachedRedirects {
 		} else {
 			self::doClearLinkedFilesCache( $title->getArticleID() );
 		}
-		\Wikia\Factory\ServiceFactory::instance()->rabbitFactory()->taskPublisher()->doUpdate();
 
 		return true;
 	}
@@ -32,7 +31,6 @@ class CachedRedirects {
 	 */
 	public static function onArticleDeleteComplete( WikiPage $page, $user, $reason, $id, $links ) {
 		self::doClearLinkedFilesCache( $page->mTitle->getArticleID(), $links );
-		\Wikia\Factory\ServiceFactory::instance()->rabbitFactory()->taskPublisher()->doUpdate();
 		return true;
 	}
 
