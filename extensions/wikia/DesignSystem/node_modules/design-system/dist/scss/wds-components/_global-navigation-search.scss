@@ -124,8 +124,12 @@ $toggle-active-margin-right: 17px;
 			color: $wds-color-dark-blue-gray;
 		}
 
+		.wds-global-navigation__search-container:not(.wds-search-is-focused) & {
+			display: none;
+		}
+
 		@media #{$wds-breakpoint-xlarge-down} {
-			.wds-global-navigation__search-container:not(.wds-search-is-focused) &, .wds-global-navigation:not(.wds-search-is-active) & {
+			.wds-global-navigation:not(.wds-search-is-active) & {
 				display: none;
 			}
 		}
@@ -164,12 +168,6 @@ $toggle-active-margin-right: 17px;
 
 		&-text {
 			@include wds-hide-on-breakpoint(medium-down);
-		}
-	}
-
-	&:hover:not(.wds-is-active) {
-		.wds-dropdown__content {
-			display: none;
 		}
 	}
 }

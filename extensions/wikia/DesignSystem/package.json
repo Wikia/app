@@ -5,7 +5,7 @@
     "build-templates": "npm install && npx grunt"
   },
   "dependencies": {
-    "design-system": "Wikia/design-system#1ed9f70a3520cae06c1355a2cde55ff0bdf8280f",
+    "design-system": "Wikia/design-system#f243167c11c5d9ff172295d647e1feed0b967b7a",
     "design-system-i18n": "Wikia/design-system-i18n#2.0.2",
     "ember-fetch": "^6.4.0",
     "grunt": "~0.4.2",
