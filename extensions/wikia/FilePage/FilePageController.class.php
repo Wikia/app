@@ -126,8 +126,13 @@ class FilePageController extends WikiaController {
 				$this->url = $title->getFullURL();
 				break;
 			}
-			$wgMemc->add( $redirKey, $this->url );
 		}
+		if( $this->url == Title::newMainPage()->getFullURL() ){
+			$this->url = wfAppendQuery($this->url, [
+				"file" => $page->getTitle()->getPrefixedText()
+				] );
+		}
+		$wgMemc->add( $redirKey, $this->url );
 	}
 
 
