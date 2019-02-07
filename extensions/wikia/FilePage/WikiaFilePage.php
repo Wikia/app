@@ -162,7 +162,9 @@ class WikiaFilePage extends ImagePage {
 			'fileRedir',
 			[ 'type' => 'local', 'format' => 'json' ]
 		)->getData();
-		$this->getContext()->getOutput()->redirect( $data['url'] , '301' );
+		if( isset( $data['url'] )) {
+			$this->getContext()->getOutput()->redirect( $data['url'] , '301' );
+		}
 	}
 
 }

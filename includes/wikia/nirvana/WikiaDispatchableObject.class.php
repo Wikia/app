@@ -318,7 +318,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$app = F::app();
 		$url = wfExpandUrl( $app->wg->Server . self::getLocalUrl( $method, $params, $format ) );
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$url = preg_replace("/^https/", "http", $url);
+			$url = wfHttpsToHttp( $url );
 		}
 		return $url;
 	}

@@ -184,7 +184,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onUndeleteComplete( Title $title ) {
-		self::purgeTitle($title);
+		self::purgeTitle( $title );
 
 		return true;
 	}
@@ -199,7 +199,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleFilesRefresh( Title $title ) {
-		self::purgeTitle($title);
+		self::purgeTitle( $title );
 
 		return true;
 	}
@@ -257,7 +257,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 */
 	private static function purgeTitle( Title $title ) {
-		if ( $title->getNamespace() == NS_FILE ) {
+		if ( $title->inNamespace( NS_FILE ) ) {
 			self::purgeRedir( $title );
 		} else {
 			self::clearLinkedFilesCache( $title->getArticleID() );
@@ -284,8 +284,10 @@ class FilePageHooks extends WikiaObject{
 	 * getFileLinks get links to material
 	 *
 	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
 	 */
-	public static function getFileLinks( $id ) {
+	private static function getFileLinks( $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		return $dbr->select(
@@ -301,7 +303,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	public static function clearLinkedFilesCache( $id, $results = null ) {
+	private static function clearLinkedFilesCache( $id, $results = null ) {
 		if ( is_null( $results ) ) {
 			$results = self::getFileLinks( $id );
 		}

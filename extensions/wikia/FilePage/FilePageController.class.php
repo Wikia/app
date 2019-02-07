@@ -81,16 +81,14 @@ class FilePageController extends WikiaController {
 	 *                                      Determines whether this collects a local or global file usage data
 	 */
 	public function fileRedir() {
-		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 
 		$page = $this->getContext();
 
 		//fallback to main page
-		$url = Title::newMainPage()->getFullURL();
+		$this->url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$page->getTitle()->userCan( 'read' ) ) {
-			$this->url = $url;
 			return;
 		}
 		$redirKey = wfMemcKey( 'redir', $page->getTitle()->getPrefixedText() );
@@ -105,8 +103,7 @@ class FilePageController extends WikiaController {
 		}
 
 		if ( !$img || $img && !$img->fileExists ) {
-			$wgMemc->add( $redirKey, $url );
-			$this->url = $url;
+			$wgMemc->add( $redirKey, $this->url );
 			return;
 		}
 
@@ -117,22 +114,20 @@ class FilePageController extends WikiaController {
 		}
 
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
-
-		foreach ( $res as $row ) {
-			$title = Title::newFromRow( $row );
-			if ( $title->isRedirect() ) {
-				continue;
+		if( $res ) {
+			foreach ( $res as $row ) {
+				$title = Title::newFromRow( $row );
+				if ( $title->isRedirect() ) {
+					continue;
+				}
+				if ( !$title->userCan( 'read' ) ) {
+					continue;
+				}
+				$this->url = $title->getFullURL();
+				break;
 			}
-			if ( !$title->userCan( 'read' ) ) {
-				continue;
-			}
-			$url = $title->getFullURL();
-			break;
+			$wgMemc->add( $redirKey, $this->url );
 		}
-		$wgMemc->add( $redirKey, $url );
-		$this->url = $url;
-
-		wfProfileOut( __METHOD__ );
 	}
 
 
@@ -140,7 +135,7 @@ class FilePageController extends WikiaController {
 	/**
 	 * Fetch informationabout pages linked to image
 	 * @param string $dbKey
-	 * @return string
+	 * @return ResultWrapper -  image links
 	 */
 	private function fetchLinks( $dbKey ) {
 		$dbr = wfGetDB( DB_SLAVE );
