@@ -1,5 +1,6 @@
 require(['EditDraftSaving'], function (EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ck',
+		editForm = document.forms["editform"],
 		RTE = window.RTE;
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
@@ -8,7 +9,8 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 		EditDraftSaving.storeDraft({
 			editor: EDITOR_TYPE,
 			mode: RTE.getInstance().mode,
-			draftText: RTE.getInstance().getData()
+			draftText: RTE.getInstance().getData(),
+			startTime: editForm.wpStarttime.value
 		});
 	}
 
@@ -19,6 +21,11 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
+
+			// CORE-84: restore "wpStarttime" field value
+			if (draftData.startTime) {
+				editForm.wpStarttime.value = draftData.startTime;
+			}
 
 			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			if (CKinstance.mode !== draftData.mode) {
