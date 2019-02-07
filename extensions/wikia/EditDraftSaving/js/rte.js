@@ -1,4 +1,4 @@
-require(['EditDraftSaving'], function (EditDraftSaving) {
+require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ck',
 		editForm = document.forms["editform"],
 		RTE = window.RTE;
@@ -22,13 +22,19 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
 
-			// CORE-84: restore "wpStarttime" field value
-			if (draftData.startTime) {
-				editForm.wpStarttime.value = draftData.startTime;
-			}
-
 			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			if (CKinstance.mode !== draftData.mode) {
+
+				// CORE-84: restore "wpStarttime" field value
+				if (draftData.startTime) {
+					editForm.wpStarttime.value = draftData.startTime;
+
+					// and compare it with the wpEdittime value
+					if (draftData.startTime > editForm.wpEdittime.value) {
+						jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
+					}
+				}
+
 				// we need to switch mode to apply a draft in a right one
 				CKinstance.setMode(
 					draftData.mode,
