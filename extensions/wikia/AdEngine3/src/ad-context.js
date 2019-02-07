@@ -402,6 +402,7 @@ export default {
   },
   custom: {
     appnexusDfp: true,
+	beachfrontDfp: false,
     dbNameForAdUnit: '_not_a_top1k_wiki',
     dfpId: '5441',
     lkqdDfp: false,
