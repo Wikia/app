@@ -1,6 +1,8 @@
 (function($, window) {
 
 var WikiaSearch = {
+	searchUID: null,
+
 	init: function() {
 		$('form#powersearch input[name=title]').val('Special:WikiaSearch');
 
@@ -44,7 +46,6 @@ var WikiaSearch = {
 				this.action = this.action.split('#')[0];
 				this.action += '#';
 			}
-			console.log('SEARCH SUBMIT');
 		});
 	},
 	initVideoTabEvents: function() {
@@ -84,7 +85,7 @@ var WikiaSearch = {
 		});
 
 	},
-	trackSearchResultsImpression() {
+	trackSearchResultsImpression: function() {
 		var queryparams = new URL(window.location).searchParams;
 		var query = queryparams.get('search') || queryparams.get('query');
 
@@ -101,11 +102,37 @@ var WikiaSearch = {
 			sortOrder: 'default',
 			app: 'app',
 			siteId: parseInt(window.wgCityId),
-			searchId: 'aaa', // TODO: generate on submitting search form and pass as a query param; if query is present and searchId not then it needs to be generated
+			searchId: this.getUniqueSearchId(),
 			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
 		};
 		// TODO: gdpr compliance
 		console.log(payload);
+	},
+	getUniqueSearchId: function() {
+		if (this.searchUID) {
+			return this.searchUID;
+		}
+
+		var queryParams = new URL(window.location).searchParams;
+		var searchUID = queryParams.get('searchUID') || this.genUID();
+		this.searchUID = searchUID;
+
+		$('a.paginator-prev, a.paginator-next, a.paginator-page').each(function() {
+			var $elem = $(this);
+			var originalUrl = $elem.attr('href');
+			var modifiedUrl = new URL(originalUrl);
+
+			modifiedUrl.searchParams.append('searchUID', searchUID);
+			$elem.attr('href', modifiedUrl);
+		});
+
+		return searchUID;
+	},
+	genUID: function() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
 	}
 };
 
