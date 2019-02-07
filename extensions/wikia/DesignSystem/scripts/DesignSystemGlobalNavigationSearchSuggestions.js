@@ -1,8 +1,9 @@
 $(function () {
 	'use strict';
 
-	var $globalNav = $('.wds-global-navigation'),
-		$searchDropdown = $globalNav.find('.wds-global-navigation__search'),
+	var searchDropdownSelector = '.wds-global-navigation__search-dropdown',
+		$globalNav = $('.wds-global-navigation'),
+		$searchDropdown = $globalNav.find(searchDropdownSelector),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		searchSuggestionsUrl = $searchInput.data('suggestions-url');
 
@@ -23,7 +24,7 @@ $(function () {
 				.autocomplete({
 					serviceUrl: searchSuggestionsUrl,
 					queryParamName: $searchInput.data('suggestions-param-name'),
-					appendTo: '.wds-global-navigation__search',
+					appendTo: searchDropdownSelector,
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,

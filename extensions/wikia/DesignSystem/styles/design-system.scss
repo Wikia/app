@@ -99,6 +99,10 @@ $global-navigation-z-index: 5000101;
   font-size: 14px;
 }
 
+.wds-global-navigation__search-dropdown:hover:not(.wds-is-active) .wds-global-navigation__search-suggestions {
+	display: none !important;
+}
+
 @if $widthType == 0 {
 	@media #{$screen} and (max-width: #{$content-width-small}) {
 		.wds-global-footer {
