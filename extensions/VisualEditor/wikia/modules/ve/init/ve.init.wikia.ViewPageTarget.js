@@ -121,13 +121,14 @@ ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) 
 	this.tearDownLicense();
 	this.tearDownAnonWarning();
 
-	this.$wikiaAds
-		.css({
-			height: 'auto',
-			width: 'auto'
-		})
-		.removeClass('ve-hidden-ad');
-
+	if (this.$wikiaAds) {
+		this.$wikiaAds
+			.css({
+				height: 'auto',
+				width: 'auto'
+			})
+			.removeClass('ve-hidden-ad');
+	}
 	// Parent method
 	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
 };

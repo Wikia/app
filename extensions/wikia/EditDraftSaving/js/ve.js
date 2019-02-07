@@ -15,24 +15,36 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 
 		EditDraftSaving.log('Restoring a draft...');
 
-		target.doc = ve.createDocumentFromHtml( html );
-		target.setupSurface(target.doc, function () {
-			target.startSanityCheck();
-			target.emit('surfaceReady');
+		target.deactivating = true;
+		target.toolbarSaveButton.disconnect( target );
+		target.toolbarSaveButton.$element.detach();
+		target.getToolbar().$actions.empty();
 
-			EditDraftSaving.log('Draft has been restored');
-			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
+		target.tearDownSurface( true /* noAnimate */ ).done( function () {
+
+			target.deactivating = false;
+			target.activating = true;
+			target.edited = true;
+			target.doc = ve.createDocumentFromHtml( html );
+			target.docToSave = null;
+			target.clearPreparedCacheKey();
+
+			target.setupSurface(target.doc, function () {
+				target.startSanityCheck();
+				target.emit('surfaceReady');
+
+				EditDraftSaving.log('Draft has been restored');
+				EditDraftSaving.onDraftRestore(EDITOR_TYPE);
+			});
 		});
 	}
 
-	// editing surface is ready, we can now read the draft (if there is any)
+	// editing surface is ready
 	mw.hook('ve.wikia.surfaceReady').add(function (targetEvents) {
 		EditDraftSaving.log('VisualEditor editing surface is ready');
 
 		// @see https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.init.Target-method-getSurface
 		surface = targetEvents.target.getSurface(); // VeUiDesktopSurface
-
-		window.veSurface = surface; // for debugging!
 	});
 
 	// user is making changes, keep saving a draft
@@ -53,10 +65,17 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 		});
 	});
 
-	EditDraftSaving.log('initialized for ' + EDITOR_TYPE);
+	// editor is fully loaded, we can now read the draft (if there is any)
+	mw.hook('ve.activationComplete').add(function() {
+		EditDraftSaving.log('VisualEditor is ready');
 
-	// let's restore the content
-	setTimeout(function() {
-		restoreDraft('<p>1234 <b>restored!</b></p>');
-	}, 2000);
+		var draftData = EditDraftSaving.readDraft();
+
+		// make sure that this draft comes from this editor
+		if (draftData && draftData.editor === EDITOR_TYPE) {
+			restoreDraft(draftData.draftText);
+		}
+	});
+
+	EditDraftSaving.log('initialized for ' + EDITOR_TYPE);
 });
