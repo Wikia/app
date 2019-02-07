@@ -15,28 +15,11 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 
 		EditDraftSaving.log('Restoring a draft...');
 
-		target.deactivating = true;
-		target.toolbarSaveButton.disconnect( target );
-		target.toolbarSaveButton.$element.detach();
-		target.getToolbar().$actions.empty();
+		target.doc = ve.createDocumentFromHtml( html );
+		target.startSanityCheck();
 
-		target.tearDownSurface( true /* noAnimate */ ).done( function () {
-
-			target.deactivating = false;
-			target.activating = true;
-			target.edited = true;
-			target.doc = ve.createDocumentFromHtml( html );
-			target.docToSave = null;
-			target.clearPreparedCacheKey();
-
-			target.setupSurface(target.doc, function () {
-				target.startSanityCheck();
-				target.emit('surfaceReady');
-
-				EditDraftSaving.log('Draft has been restored');
-				EditDraftSaving.onDraftRestore(EDITOR_TYPE);
-			});
-		});
+		EditDraftSaving.log('Draft has been restored');
+		EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 	}
 
 	// editing surface is ready
