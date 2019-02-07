@@ -8,17 +8,21 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 		ve = window.ve,
 		surface;
 
+	// code borrowed from ve.ui.WikiaSourceModeDialog
 	function restoreDraft(html) {
 		if (!surface) return;
 		var target = surface.target;
 
+		EditDraftSaving.log('Restoring a draft...');
+
 		target.doc = ve.createDocumentFromHtml( html );
-		target.docToSave = null;
-		target.clearPreparedCacheKey();
-		target.setupSurface( target.doc, function () {
+		target.setupSurface(target.doc, function () {
 			target.startSanityCheck();
-			target.emit( 'surfaceReady' );
-		} );
+			target.emit('surfaceReady');
+
+			EditDraftSaving.log('Draft has been restored');
+			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
+		});
 	}
 
 	// editing surface is ready, we can now read the draft (if there is any)
@@ -29,9 +33,6 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 		surface = targetEvents.target.getSurface(); // VeUiDesktopSurface
 
 		window.veSurface = surface; // for debugging!
-
-		// let's restore the content
-		// restoreDraft('<p>1234 <b>restored!</b></p>');
 	});
 
 	// user is making changes, keep saving a draft
@@ -53,4 +54,9 @@ require(['wikia.window', 'mw', 'EditDraftSaving'], function(window, mw, EditDraf
 	});
 
 	EditDraftSaving.log('initialized for ' + EDITOR_TYPE);
+
+	// let's restore the content
+	setTimeout(function() {
+		restoreDraft('<p>1234 <b>restored!</b></p>');
+	}, 2000);
 });
