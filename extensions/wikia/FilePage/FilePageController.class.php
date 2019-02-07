@@ -85,6 +85,11 @@ class FilePageController extends WikiaController {
 
 		$page = $this->getContext();
 
+		if( isset($page->getRequest()->getQueryValues()['fileTitle']) ) {
+			$fileTitle = $page->getRequest()->getQueryValues()['fileTitle'];
+			$page = new ImagePage( Title::newFromText( $fileTitle, NS_FILE )	);
+		}
+
 		//fallback to main page
 		$this->url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
@@ -129,8 +134,8 @@ class FilePageController extends WikiaController {
 		}
 		if( $this->url == Title::newMainPage()->getFullURL() ){
 			$this->url = wfAppendQuery($this->url, [
-				"file" => $page->getTitle()->getPrefixedText()
-				] );
+				"file" => $page->getTitle()->getText()
+			] );
 		}
 		$wgMemc->add( $redirKey, $this->url );
 	}
