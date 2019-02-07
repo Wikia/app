@@ -7,30 +7,30 @@ let delayPromise = null;
 let resolvePromise;
 
 export const biddersDelay = {
-  isEnabled() {
-    return context.get('bidders.enabled');
-  },
+	isEnabled() {
+		return context.get('bidders.enabled');
+	},
 
-  getName() {
-    return logGroup;
-  },
+	getName() {
+		return logGroup;
+	},
 
-  getPromise() {
-    if (delayPromise === null) {
-      delayPromise = new Promise((resolve) => {
-        resolvePromise = resolve;
-      });
-    }
+	getPromise() {
+		if (delayPromise === null) {
+			delayPromise = new Promise((resolve) => {
+				resolvePromise = resolve;
+			});
+		}
 
-    return delayPromise;
-  },
+		return delayPromise;
+	},
 
-  markAsReady() {
-    if (bidders.hasAllResponses()) {
-      if (resolvePromise) {
-        resolvePromise();
-        resolvePromise = null;
-      }
-    }
-  },
+	markAsReady() {
+		if (bidders.hasAllResponses()) {
+			if (resolvePromise) {
+				resolvePromise();
+				resolvePromise = null;
+			}
+		}
+	},
 };
