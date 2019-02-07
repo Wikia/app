@@ -87,6 +87,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
+		$vars[] = 'wgAdDriverMobileWikiAE3NativeSearchCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
