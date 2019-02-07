@@ -99,8 +99,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		var vastInfo = vastParser.parse(adInfo.vastUrl),
 			slotPrices = {};
 
-		if (vastInfo.amznbid) {
-			slotPrices.a9 = vastInfo.amznbid;
+		if (vastInfo.customParams.amznbid) {
+			slotPrices.a9 = vastInfo.customParams.amznbid;
 		}
 
 		if (vastInfo.customParams.hb_bidder) {
@@ -146,6 +146,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				switch (adType) {
 					case 'blocked':
 					case 'disabled':
+					case 'hivi-collapse':
 					case 'viewport-conflict':
 					case 'sticky-ready':
 					case 'sticked':

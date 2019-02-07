@@ -95,6 +95,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
   context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
   context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
   context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
+  context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
   context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
 
   const hasFeaturedVideo = context.get('custom.hasFeaturedVideo');
@@ -113,6 +114,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
     context.set('bidders.prebid.audienceNetwork.enabled', isGeoEnabled('wgAdDriverAudienceNetworkBidderCountries'));
     context.set('bidders.prebid.indexExchange.enabled', isGeoEnabled('wgAdDriverIndexExchangeBidderCountries'));
     context.set('bidders.prebid.kargo.enabled', isGeoEnabled('wgAdDriverKargoBidderCountries'));
+    context.set('bidders.prebid.lkqd.enabled', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
     context.set('bidders.prebid.onemobile.enabled', isGeoEnabled('wgAdDriverAolOneMobileBidderCountries'));
     context.set('bidders.prebid.openx.enabled', isGeoEnabled('wgAdDriverOpenXPrebidBidderCountries'));
     context.set('bidders.prebid.pubmatic.enabled', isGeoEnabled('wgAdDriverPubMaticBidderCountries'));

@@ -1,5 +1,5 @@
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
-import { scrollListener, slotTweaker } from '@wikia/ad-engine';
+import { scrollListener, slotService, slotTweaker } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
@@ -27,6 +27,8 @@ export const getConfig = () => ({
     });
 
     this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+
+    slotService.disable('INCONTENT_PLAYER', 'hivi-collapse');
   },
 
   onAfterStickBfaaCallback() {

@@ -183,6 +183,15 @@ export default {
         enabled: false,
         slots: {}
       },
+      lkqd: {
+        enabled: false,
+        slots: {
+          FEATURED: {
+            placementId: '523',
+            siteId: '890798'
+          }
+        }
+      },
       onemobile: {
         enabled: false,
         slots: {}
@@ -395,6 +404,7 @@ export default {
     appnexusDfp: true,
     dbNameForAdUnit: '_not_a_top1k_wiki',
     dfpId: '5441',
+    lkqdDfp: false,
     pubmaticDfp: false,
     rubiconDfp: true,
     serverPrefix: 'wka1b',
