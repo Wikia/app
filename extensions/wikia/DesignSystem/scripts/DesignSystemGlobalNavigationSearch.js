@@ -19,6 +19,7 @@ $(function ($) {
 		$searchSubmit.prop('disabled', true);
 		$searchInput.val('');
 		$globalNav.removeClass(activeSearchClass);
+		$searchContainer.removeClass('wds-search-is-focused');
 	}
 
 	$searchInput.on('input', function () {
@@ -43,7 +44,6 @@ $(function ($) {
 			if (!this.value.length) {
 				deactivateSearch();
 			}
-			$searchContainer.removeClass('wds-search-is-focused');
 		})
 		.on('focus', function () {
 			$searchContainer.addClass('wds-search-is-focused');
