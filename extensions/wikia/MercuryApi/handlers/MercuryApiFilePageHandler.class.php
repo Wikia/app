@@ -54,9 +54,14 @@ class MercuryApiFilePageHandler {
 			[ 'type' => 'local', 'format' => 'json' ]
 		)->getData();
 
+		$url = Title::newMainPage()->getFullURL();
+		if ( isset( $anonRedir['url'] ) && $anonRedir['url'] ) {
+			$url = $anonRedir['url'];
+		}
+
 
 		return [
-			'anonRedir' => $anonRedir['url'],
+			'anonRedir' => $url,
 			'fileUsageList' => $fileUsageList,
 			'fileUsageListSeeMoreUrl' => $fileUsageData['seeMoreLink'],
 			'media' => $mediaObject
