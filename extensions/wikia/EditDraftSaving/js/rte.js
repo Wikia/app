@@ -25,16 +25,6 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			if (CKinstance.mode !== draftData.mode) {
 
-				// CORE-84: restore "wpStarttime" field value
-				if (draftData.startTime) {
-					editForm.wpStarttime.value = draftData.startTime;
-
-					// and compare it with the wpEdittime value
-					if (draftData.startTime > editForm.wpEdittime.value) {
-						jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
-					}
-				}
-
 				// we need to switch mode to apply a draft in a right one
 				CKinstance.setMode(
 					draftData.mode,
@@ -47,6 +37,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 				CKinstance.setData(draftText);
 			}
 
+			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 

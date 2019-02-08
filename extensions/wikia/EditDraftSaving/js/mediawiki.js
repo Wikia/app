@@ -17,19 +17,9 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
-
-			// CORE-84: restore "wpStarttime" field value
-			if (draftData.startTime) {
-				editForm.wpStarttime.value = draftData.startTime;
-
-				// and compare it with the wpEdittime value
-				if (draftData.startTime > editForm.wpEdittime.value) {
-					jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
-				}
-			}
-
 			jquery('#wpTextbox1').val(draftData.draftText);
 
+			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 
