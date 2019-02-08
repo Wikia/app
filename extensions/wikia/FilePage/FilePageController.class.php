@@ -119,7 +119,7 @@ class FilePageController extends WikiaController {
 		}
 
 		$res = $this->fetchLinks( $img->getTitle()->getDBkey() );
-		if( $res ) {
+		if ( $res ) {
 			foreach ( $res as $row ) {
 				$title = Title::newFromRow( $row );
 				if ( $title->isRedirect() ) {
@@ -132,9 +132,9 @@ class FilePageController extends WikiaController {
 				break;
 			}
 		}
-		if( $this->url == Title::newMainPage()->getFullURL() ){
+		if ( $this->url === Title::newMainPage()->getFullURL() ) {
 			$this->url = wfAppendQuery($this->url, [
-				"file" => $page->getTitle()->getText()
+				'file' => $page->getTitle()->getText()
 			] );
 		}
 		$wgMemc->add( $redirKey, $this->url );

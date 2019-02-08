@@ -313,7 +313,7 @@ class LightboxController extends WikiaController {
 				);
 			}
 		}
-		if( isset($anonRedir['url']) && $anonRedir['url'] == $mpUrl ) {
+		if ( isset( $anonRedir['url'] ) && $anonRedir['url'] === $mpUrl ) {
 			$shareUrl = $anonRedir['url'];
 		}
 
