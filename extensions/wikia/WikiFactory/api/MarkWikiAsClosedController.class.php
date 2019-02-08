@@ -27,13 +27,6 @@ class MarkWikiAsClosedController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !empty( $fandomCreatorCommunityId ) && !is_numeric( $fandomCreatorCommunityId ) ) {
-			$this->response->setCode( 400 );
-			$this->info('invalid  fandomCreatorCommunityId parameter in request');
-
-			return;
-		}
-
 		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId ) ) {
 			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
@@ -42,9 +35,16 @@ class MarkWikiAsClosedController extends WikiaController {
 			return;
 		}
 
-		if ( static::isGoForClose($wikiId, $fandomCreatorCommunityId, $reason) ) {
-			$user = User::newFromId($userId);
+		if ( !empty( $fandomCreatorCommunityId ) && !is_numeric( $fandomCreatorCommunityId ) ) {
+			$this->response->setCode( 400 );
+			$this->info('invalid  fandomCreatorCommunityId parameter in request');
 
+			return;
+		}
+
+		$user = User::newFromId($userId);
+
+		if ( static::isGoForClose($wikiId, $fandomCreatorCommunityId, $user, $reason) ) {
 			WikiFactory::setFlags( $wikiId,
 				WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
 				WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, false, null,  $user );
@@ -73,7 +73,7 @@ class MarkWikiAsClosedController extends WikiaController {
 		}
 	}
 
-	static private function isGoForClose( $wikiId, $fandomCreatorCommunityId, $reason ) {
+	static private function isGoForClose( $wikiId, $fandomCreatorCommunityId, $user, $reason ) {
 		$isGoForClose = true;
 
 		if ( !empty( $fandomCreatorCommunityId ) ) {
