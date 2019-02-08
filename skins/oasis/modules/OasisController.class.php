@@ -60,6 +60,7 @@ class OasisController extends WikiaController {
 		$this->quantServe = null;
 		$this->billTheLizard = null;
 		$this->moatYi = null;
+		$this->nielsen = null;
 		$this->il = null;
 		$this->dynamicYield = null;
 		$this->krux = null;
@@ -247,7 +248,7 @@ class OasisController extends WikiaController {
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->billTheLizard = AnalyticsEngine::track('BillTheLizard', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->moatYi = AnalyticsEngine::track('MoatYi', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->il = AdEngine2Controller::getILBootstrapCode();
+			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);

@@ -1,7 +1,10 @@
-export function getSlotsContext(legacyContext, skin) {
-	const context = {
-		oasis: {
-			'TOP_LEADERBOARD': {
+import { context, utils } from '@wikia/ad-engine';
+import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
+
+export default {
+	getContext() {
+		return {
+			TOP_LEADERBOARD: {
 				disabled: false,
 				slotName: 'TOP_LEADERBOARD',
 				sizes: [
@@ -20,7 +23,7 @@ export function getSlotsContext(legacyContext, skin) {
 				},
 				defaultTemplates: []
 			},
-			'TOP_BOXAD': {
+			TOP_BOXAD: {
 				disabled: false,
 				slotName: 'TOP_BOXAD',
 				bidderAlias: 'TOP_RIGHT_BOXAD',
@@ -37,7 +40,7 @@ export function getSlotsContext(legacyContext, skin) {
 					loc: 'top'
 				}
 			},
-			'BOTTOM_LEADERBOARD': {
+			BOTTOM_LEADERBOARD: {
 				disabled: false,
 				slotName: 'BOTTOM_LEADERBOARD',
 				sizes: [
@@ -53,43 +56,35 @@ export function getSlotsContext(legacyContext, skin) {
 					loc: 'footer'
 				},
 				viewportConflicts: ['TOP_BOXAD']
-			}
-		},
-		mercury: {
-			'BOTTOM_LEADERBOARD': {
-				disabled: false,
-				slotName: 'BOTTOM_LEADERBOARD',
-				sizes: [
-					{
-						viewportSize: [0, 0],
-						sizes: [[320, 50], [300, 250], [300, 50]]
-					}
-				],
-				options: {},
-				defaultSizes: [[2, 2]],
-				targeting: {
-					pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER'],
-					loc: 'footer'
-				}
 			},
-			'MOBILE_TOP_LEADERBOARD': {
+			INCONTENT_PLAYER: {
 				disabled: false,
-				slotName: 'MOBILE_TOP_LEADERBOARD',
-				sizes: [
-					{
-						viewportSize: [0, 0],
-						sizes: [[320, 480]]
-					}
-				],
-				options: {},
-				defaultSizes: [[2, 2]],
+				slotName: 'INCONTENT_PLAYER',
+				options: {
+					isVideoMegaEnabled: true
+				},
+				defaultSizes: [[1, 1]],
 				targeting: {
-					pos: 'MOBILE_TOP_LEADERBOARD',
-					loc: 'top'
-				}
-			}
-		}
-	};
+					pos: 'INCONTENT_PLAYER',
+					loc: 'middle',
+				},
+				videoAdUnit: '/{custom.dfpId}/wka1b.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.dbNameElement}-{targeting.s0}'
+			},
+		};
+	},
 
-	return context[skin];
+	setupSlotVideoAdUnit(adSlot, params) {
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+			context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) ||context.get('vast.megaAdUnitId'),
+			{
+				slotConfig: {
+					group: adProductInfo.adGroup,
+					adProduct: adProductInfo.adProduct,
+				},
+			},
+		);
+
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
+	},
 }

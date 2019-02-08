@@ -13,6 +13,7 @@ import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	BigFancyAdInPlayer,
+	PorvataTemplate,
 	Roadblock,
 	StickyTLB,
 	universalAdPackage,
@@ -24,18 +25,17 @@ import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import { getSlotsContext } from './slots';
+import slots from './slots';
 import { getBiddersContext } from './bidders';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, Roadblock, StickyTLB];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer, PorvataTemplate, Roadblock, StickyTLB];
 
 function init(
 	adTracker,
 	slotRegistry,
-	mercuryListener,
 	pageLevelTargeting,
 	adLogicZoneParams,
 	legacyContext,
@@ -49,10 +49,10 @@ function init(
 
 	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
 
-	TemplateRegistry.init(legacyContext, mercuryListener);
+	TemplateRegistry.init();
 	scrollListener.init();
 
-	context.set('slots', getSlotsContext(legacyContext, skin));
+	context.set('slots', slots.getContext());
 	context.push('listeners.porvata', createTracker(legacyContext, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
@@ -62,18 +62,21 @@ function init(
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
 		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
 	}
+	context.set('templates.stickyTLB.enabled', !legacyContext.get('targeting.hasFeaturedVideo'));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
-	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ? '_top1k_wiki' : '_not_a_top1k_wiki';
+	if (legacyContext.get('targeting.wikiIsTop1000')) {
+		context.set('custom.wikiIdentifier', '_top1k_wiki');
+		context.set('custom.dbNameElement', `_${context.get('targeting.s1')}`);
+	}
 
-	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
-		context.set('slots', getSlotsContext(legacyContext, skin));
+		context.set('slots', slots.getContext());
 		syncSlotsStatus(slotRegistry, context.get('slots'));
 	});
 
@@ -94,6 +97,7 @@ function init(
 		context.set('bidders.prebid.beachfront.enabled', legacyContext.get('bidders.beachfront'));
 		context.set('bidders.prebid.indexExchange.enabled', legacyContext.get('bidders.indexExchange'));
 		context.set('bidders.prebid.kargo.enabled', legacyContext.get('bidders.kargo'));
+		context.set('bidders.prebid.lkqd.enabled', legacyContext.get('bidders.lkqd'));
 		context.set('bidders.prebid.onemobile.enabled', legacyContext.get('bidders.onemobile'));
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
@@ -111,9 +115,11 @@ function init(
 		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 		context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
 		context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
+		context.set('custom.beachfrontDfp', legacyContext.get('bidders.beachfrontDfp'));
 		context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 		context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
 		context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
+		context.set('custom.lkqdDfp', legacyContext.get('bidders.lkqd'));
 		context.set('custom.isCMPEnabled', true);
 	}
 
@@ -147,11 +153,11 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker, slotsContext) {
 	};
 
 	slotService.legacyEnabled = slotService.enable;
-	slotService.enable = (slotName) => {
+	slotService.enable = (slotName, status) => {
 		legacyBtfBlocker.unblock(slotName);
-		slotRegistry.enable(slotName);
+		slotRegistry.enable(slotName, status);
 	};
-	slotService.disable = (slotName) => slotRegistry.disable(slotName);
+	slotService.disable = (slotName, status) => slotRegistry.disable(slotName, status);
 	slotService.getState = (slotName) => slotsContext.isApplicable(slotName);
 }
 
@@ -167,6 +173,14 @@ function unifySlotInterface(slot) {
 	const slotPath = `slots.${slot.name}`;
 	const slotContext = context.get(slotPath) || {targeting: {}};
 
+	if (!context.get(slotPath)) {
+		return slot;
+	}
+
+	if (slot.isUnified) {
+		return slot;
+	}
+
 	let onLoadResolve = function () {};
 	const onLoadPromise = new Promise(function (resolve) {
 		onLoadResolve = resolve;
@@ -174,6 +188,7 @@ function unifySlotInterface(slot) {
 
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
+		isUnified: true,
 		default: {
 			getSlotName: () => slot.name
 		},
@@ -190,6 +205,7 @@ function unifySlotInterface(slot) {
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		getVideoSizes: () => slotContext.videoSizes,
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
 		},
@@ -201,7 +217,7 @@ function unifySlotInterface(slot) {
 		setConfigProperty: (key, value) => {
 			context.set(`${slotPath}.${key}`, value);
 		},
-		getStatus: () => null,
+		getStatus: () => slot.container.getAttribute('data-slot-result'),
 		setStatus: (status) => {
 			if (['viewport-conflict', 'sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(status) > -1) {
 				const event = document.createEvent('CustomEvent');
@@ -226,7 +242,7 @@ function unifySlotInterface(slot) {
 		onLoadResolve();
 	});
 
-	slot.post('success', (event) => {
+	slot.post('renderEnded', () => {
 		slot.lineItemId = slot.container.firstElementChild.getAttribute('data-gpt-line-item-id');
 		const templates = slot.getConfigProperty('defaultTemplates');
 		if (templates && templates.length) {
@@ -300,6 +316,7 @@ export {
 	passSlotEvent,
 	readSessionId,
 	context,
+	unifySlotInterface,
 	universalAdPackage,
 	slotService,
 	geo,

@@ -12,7 +12,8 @@ export function createTracker(legacyContext, pageLevelParams, tracker) {
 				pv_number: pageLevelParams.pv,
 				country: utils.getCountryCode(),
 				skin: pageLevelParams.skin,
-				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)'
+				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)',
+				document_visibility: utils.getDocumentVisibilityStatus(),
 			});
 
 			tracker.trackDW(trackingData, 'adengplayerinfo');

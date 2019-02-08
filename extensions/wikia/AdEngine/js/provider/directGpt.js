@@ -3,14 +3,10 @@
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker'
 ], function (
 	adContext,
 	factory,
-	kiloAdUnitBuilder,
-	megaAdUnitBuilder,
 	slotTweaker
 ) {
 	'use strict';
@@ -57,9 +53,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			],
 			sraEnabled: sraEnabled,
 			firstCallSlots: firstCallSlots,
-			getAdUnitBuilder: function () {
-				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
-			},
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',

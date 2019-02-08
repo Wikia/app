@@ -4,6 +4,7 @@
 	border: 1px solid $color-page-border;
 	border-radius: 4px;
 	height: 53px;
+	min-width: 53px;
 	width: 53px;
 }
 
@@ -69,15 +70,5 @@
 
 	.rail-sponsored-content-desc {
 		margin: 5px 12px;
-	}
-
-	.rail-sponsored-content-image {
-		@extend %rail-thumbnaili;
-
-		align-self: flex-start;
-		background-size: cover;
-		background-position: center;
-		height: 53px;
-		width: 53px;
 	}
 }

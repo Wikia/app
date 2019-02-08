@@ -33,11 +33,22 @@ class CoppaToolController extends WikiaController {
 		if ( $res === false ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', $errorMessage );
+			wfProfileOut( __METHOD__ );
+			return;
 		} else {
 			$this->response->setVal( 'success', true );
 			if ( !is_null( $errorMessage2 ) ) {
 				$this->response->setVal( 'errorMsg', $errorMessage2 );
 			}
+		}
+
+		try {
+			self::removeEmailChangeLog( $userObj );
+		} catch(Exception $ex) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'errorMsg',$ex->getMessage() );
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -179,5 +190,21 @@ class CoppaToolController extends WikiaController {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes entries for a given user from "Log of email changes"
+	 *
+	 * @see https://community.wikia.com/wiki/Special:EditAccount/log
+	 * @see CORE-86
+	 *
+	 * @param User $user
+	 * @throws Exception
+	 */
+	static private function removeEmailChangeLog( User $user) {
+		global $wgExternalSharedDB;
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$dbMaster->delete( 'user_email_log', [ 'user_id' => $user->getId()], __METHOD__ );
+		$dbMaster->commit(__METHOD__);
 	}
 }

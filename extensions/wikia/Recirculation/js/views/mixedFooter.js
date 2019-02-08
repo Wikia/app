@@ -2,9 +2,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
 	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils',
-	'ext.wikia.recirculation.plista'
-], function ($, w, tracker, utils, plista) {
+	'ext.wikia.recirculation.utils'
+], function ($, w, tracker, utils) {
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
@@ -28,7 +27,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 					templates[templateName] = data[index];
 				});
 			})
-			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredItem);
 				setupTracking();
