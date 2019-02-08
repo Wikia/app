@@ -93,12 +93,13 @@ var WikiaSearch = {
 			return;
 		}
 
+		var results = this.getSearchResults();
 		var payload = {
 			searchPhrase: query,
 			filters: {},
-			results: [], // TODO: ???
+			results: results,
 			page: parseInt(queryparams.get('page')) || 1,
-			limit: 0, // TODO: count of result
+			limit: results.length,
 			sortOrder: 'default',
 			app: 'app',
 			siteId: parseInt(window.wgCityId),
@@ -107,6 +108,17 @@ var WikiaSearch = {
 		};
 		// TODO: gdpr compliance
 		console.log(payload);
+	},
+	getSearchResults: function() {
+		var $results = $('.result-link[data-page-id]');
+		return $results.map(function(index, item) {
+			return {
+				id: item.getAttribute('data-page-id'),
+				title: item.text,
+				position: item.getAttribute('data-pos'),
+				thumbnail: !!item.getAttribute('data-thumbnail'),
+			}
+		});
 	},
 	getUniqueSearchId: function() {
 		if (this.searchUID) {
