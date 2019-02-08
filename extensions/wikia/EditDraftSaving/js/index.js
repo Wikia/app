@@ -6,6 +6,9 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	// get MediaWiki edit form
 	var editForm = jquery('#editform');
 
+	// was draft conflict triggered?
+	var inDraftConflict = false;
+
 	/**
 	 * @param msg {string}
 	 */
@@ -89,6 +92,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 		});
 
 		jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
+
+		inDraftConflict = true;
 	}
 
 	/**
@@ -105,7 +110,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 			label: 'draft-loaded'
 		});
 
-		jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-loaded').text());
+		// CORE-84: in case of a conflict, let's only show the conflict notice
+		if (!inDraftConflict) {
+			jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-loaded').text());
+		}
 
 		// bind to editform submit event to track successful edits form draft restore
 		editForm.on('submit', function() {
