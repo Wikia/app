@@ -940,8 +940,6 @@ class Article extends Page {
 					$wgOut->addModules( [ 'mediawiki.action.view.redirect' ] );
 				}
 
-
-
 				/**
 				 * Commented out by christian@wikia-inc.com
 				 * /extensions/wikia/CanonicalHref is used by Wikia to handle redirects and all of these cases:
