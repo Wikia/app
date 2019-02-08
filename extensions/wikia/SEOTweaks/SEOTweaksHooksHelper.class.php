@@ -357,6 +357,4 @@ class SEOTweaksHooksHelper {
 
 		return true;
 	}
-
-
 }
