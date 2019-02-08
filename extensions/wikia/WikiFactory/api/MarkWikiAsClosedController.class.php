@@ -30,47 +30,34 @@ class MarkWikiAsClosedController extends WikiaController {
 		if ( !empty( $fandomCreatorCommunityId ) && !is_numeric( $fandomCreatorCommunityId ) ) {
 			$this->response->setCode( 400 );
 			$this->info('invalid  fandomCreatorCommunityId parameter in request');
-		} else if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId ) ) {
+
+			return;
+		}
+
+		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId ) ) {
 			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
 			$this->info('no wikiId or reason parameter in request');
-		} else {
-			$user = User::newFromId($userId);
-			$goForClose = true;
 
-			if ( !empty( $fandomCreatorCommunityId ) ) {
-				$wikiFandomCreatorCommunityId = WikiFactory::getVarByName( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $wikiId );
-
-				if ( $fandomCreatorCommunityId == $wikiFandomCreatorCommunityId ) {
-					$goForClose = WikiFactory::resetFlags(
-						$wikiId,
-						WikiFactory::FLAG_PROTECTED,
-						false,
-						'fandom creator soft deletion: ' . $reason
-					);
-				}
-			}
-
-			if ( $goForClose ) {
-				$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason, $user );
-				$goForClose = ($res === WikiFactory::CLOSE_ACTION);
-			}
-
-			if ( $goForClose ) {
-				WikiFactory::setFlags( $wikiId,
-					WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, false, null,  $user );
-				WikiFactory::clearCache( $wikiId );
-				$this->response->setCode( 200 );
-
-				return;
-			} else {
-				$this->response->setCode( 500 );
-				$this->info("could not mark Wiki to be closed in MW. Wiki id: " . $wikiId);
-
-				return;
-			}
+			return;
 		}
+
+		if ( static::isGoForClose($wikiId, $fandomCreatorCommunityId, $reason) ) {
+			$user = User::newFromId($userId);
+
+			WikiFactory::setFlags( $wikiId,
+				WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP |
+				WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE, false, null,  $user );
+			WikiFactory::clearCache( $wikiId );
+			$this->response->setCode( 200 );
+
+			return;
+		}
+
+		$this->response->setCode( 500 );
+		$this->info("could not mark Wiki to be closed in MW. Wiki id: " . $wikiId);
+
+		return;
 	}
 
 	/**
@@ -84,5 +71,29 @@ class MarkWikiAsClosedController extends WikiaController {
 		if ( !$this->getContext()->getRequest()->wasPosted() ) {
 			throw new MethodNotAllowedException( 'Only POST allowed' );
 		}
+	}
+
+	static private function isGoForClose( $wikiId, $fandomCreatorCommunityId, $reason ) {
+		$isGoForClose = true;
+
+		if ( !empty( $fandomCreatorCommunityId ) ) {
+			$wikiFandomCreatorCommunityId = WikiFactory::getVarByName( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $wikiId );
+
+			if ( $fandomCreatorCommunityId == $wikiFandomCreatorCommunityId ) {
+				$isGoForClose = WikiFactory::resetFlags(
+					$wikiId,
+					WikiFactory::FLAG_PROTECTED,
+					false,
+					'fandom creator soft deletion: ' . $reason
+				);
+			}
+		}
+
+		if ( $isGoForClose ) {
+			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason, $user );
+			$isGoForClose = ($res === WikiFactory::CLOSE_ACTION);
+		}
+
+		return $isGoForClose;
 	}
 }
