@@ -71,7 +71,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 				'the most recent article edit was at "' + wpEdittime + '"');
 
 			// and compare it with the wpEdittime value
-			if (draftStartTime > wpEdittime) {
+			if (draftStartTime < wpEdittime) {
 				onDraftConflict(editorType);
 			}
 		}
