@@ -108,6 +108,9 @@ class CompareRobots extends Maintenance {
 
 			return true;
 		}
+		if ( $prodResponse->getStatus() > 400 && $prodResponse->getStatus() <= 410 ) {
+			return true;
+		}
 		if ( $prodResponse->getStatus() != 200 ) {
 			$this->error( "\tFAILURE: Invalid prod response status: {$prodResponse->getStatus()}" );
 
