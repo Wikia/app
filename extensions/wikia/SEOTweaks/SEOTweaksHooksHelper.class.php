@@ -359,20 +359,4 @@ class SEOTweaksHooksHelper {
 	}
 
 
-	/**
-	 * Hook: set script that changes the address bar in the browser for the redirected url
-	 * @param Article $page
-	 * @return bool
-	 */
-	public static function onArticleViewRedirect( Article $page ): bool {
-		if( !$page->getContext()->getUser()->isAnon() ) {
-			$script = 'history.replaceState({}, "' . $page->getTitle()->getText().'", "' .
-					  $page->getTitle()->getLocalURL() . '");';
-			$page->getContext()->getOutput()->addInlineScript( $script );
-		}
-
-		return true;
-	}
-
-
 }

@@ -22,7 +22,6 @@ $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfter
 $wgHooks['LinkEnd'][] = 'SEOTweaksHooksHelper::onLinkEnd';
 $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeaders';
 $wgHooks['ShowMissingArticle'][] = 'SEOTweaksHooksHelper::onShowMissingArticle';
-$wgHooks['ArticleViewRedirect'][] = 'SEOTweaksHooksHelper::onArticleViewRedirect';
 
 
 // messages
