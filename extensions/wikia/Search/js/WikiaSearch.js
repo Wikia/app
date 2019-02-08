@@ -35,6 +35,11 @@ var WikiaSearch = {
 			}
 		});
 
+		$('.result-link').on('click', function(event) {
+			console.log(event.target);
+			this.trackSearchResultClick(event.target);
+		}.bind(this));
+
 		this.initVideoTabEvents();
 		this.trackSearchResultsImpression();
 
@@ -85,6 +90,33 @@ var WikiaSearch = {
 		});
 
 	},
+	trackSearchResultClick: function(clickedElement) {
+		var queryparams = new URL(window.location).searchParams;
+		var query = queryparams.get('search') || queryparams.get('query');
+
+		if (!query) {
+			return;
+		}
+
+		var payload = {
+			searchPhrase: query,
+			clicked: {
+				type: 'article', // we don't show wikis results right now
+				id: clickedElement.getAttribute('data-page-id'),
+				title: clickedElement.text,
+				position: clickedElement.getAttribute('data-pos'),
+				thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
+			},
+			target: 'redirect',
+			app: 'app',
+			siteId: parseInt(window.wgCityId),
+			searchId: this.getUniqueSearchId(),
+			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
+		};
+
+		// todo: gdpr compliance
+		console.log(payload);
+	},
 	trackSearchResultsImpression: function() {
 		var queryparams = new URL(window.location).searchParams;
 		var query = queryparams.get('search') || queryparams.get('query');
@@ -110,7 +142,7 @@ var WikiaSearch = {
 		console.log(payload);
 	},
 	getSearchResults: function() {
-		var $results = $('.result-link[data-page-id]');
+		var $results = $('h1 a.result-link[data-page-id]');
 		return $results.map(function(index, item) {
 			return {
 				id: item.getAttribute('data-page-id'),
