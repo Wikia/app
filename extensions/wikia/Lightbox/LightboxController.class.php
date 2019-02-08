@@ -256,10 +256,7 @@ class LightboxController extends WikiaController {
 		$thumbUrl = '';
 		$networks = array();
 
-		$anonRedir = F::app()->sendRequest(
-			'FilePage',
-			'fileRedir'
-		)->getData();
+
 
 		if ( !empty( $file ) ) {
 			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
@@ -283,10 +280,16 @@ class LightboxController extends WikiaController {
 			);
 			$shareUrl = ( !empty( $articleUrl ) && in_array( $articleNS, $sharingNamespaces ) ) ? $articleUrl : $fileUrl;
 
+			$page = new ImagePage( $fileTitleObj );
+			$anonRedir = FilePageHelper::fileRedir( $page );
 
 			$mpUrl = wfAppendQuery(Title::newMainPage()->getFullURL() , [
 				"file" => $fileTitleObj->getText()
 			] );
+
+			if ( $anonRedir && $anonRedir === $mpUrl ) {
+				$shareUrl = $anonRedir;
+			}
 
 			$thumb = $file->transform( array( 'width' => 300, 'height' => 250 ) );
 			$thumbUrl = $thumb->getUrl();
@@ -312,9 +315,6 @@ class LightboxController extends WikiaController {
 					'url' => $network->getUrl( $shareUrl, $linkDescription )
 				);
 			}
-		}
-		if ( isset( $anonRedir['url'] ) && $anonRedir['url'] === $mpUrl ) {
-			$shareUrl = $anonRedir['url'];
 		}
 
 		$this->shareUrl = $shareUrl;

@@ -48,18 +48,12 @@ class MercuryApiFilePageHandler {
 			return $item;
 		}, $fileUsageData['fileList']);
 
-		$anonRedir = F::app()->sendRequest(
-			'FilePage',
-			'fileRedir',
-			[ 'type' => 'local', 'format' => 'json' ]
-		)->getData();
-
 		$url = Title::newMainPage()->getFullURL();
-		if ( isset( $anonRedir['url'] ) && $anonRedir['url'] ) {
-			$url = $anonRedir['url'];
+		$page = new ImagePage( $title );
+		$redir = FilePageHelper::fileRedir( $page );
+		if( !is_null($redir) ) {
+			$url = $redir;
 		}
-
-
 		return [
 			'anonRedir' => $url,
 			'fileUsageList' => $fileUsageList,

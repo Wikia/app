@@ -158,13 +158,9 @@ class WikiaFilePage extends ImagePage {
 
 			return;
 		}
-		$data = F::app()->sendRequest(
-			'FilePage',
-			'fileRedir',
-			[ 'type' => 'local', 'format' => 'json' ]
-		)->getData();
-		if( isset( $data['url'] )) {
-			$this->getContext()->getOutput()->redirect( $data['url'] , '301' );
+		$redir = FilePageHelper::fileRedir( $this );
+		if( !is_null($redir) ) {
+			$this->getContext()->getOutput()->redirect( $redir , '301' );
 		}
 	}
 
