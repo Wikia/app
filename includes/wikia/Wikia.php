@@ -55,9 +55,6 @@ $wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAf
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
-# don't purge all thumbs - PLATFORM-161
-$wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
-
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
@@ -1708,24 +1705,6 @@ class Wikia {
 				$variants = ['zh-hans', 'zh-hant'];
 				break;
 		}
-
-		return true;
-	}
-
-	/**
-	 * No neeed to purge all thumbnails
-	 *
-	 * @author macbre
-	 * @see PLATFORM-161
-	 * @see PLATFORM-252
-	 *
-	 * @param LocalFile $file
-	 * @param array $urls thumbs to purge
-	 * @return bool
-	 */
-	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		// purge only the first thumbnail
-		$urls = array_slice($urls, 0, 1);
 
 		return true;
 	}

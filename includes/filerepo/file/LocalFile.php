@@ -32,8 +32,7 @@ class LocalFile extends File {
 	/**#@+
 	 * @private
 	 */
-	var
-		$fileExists,       # does the file exist on disk? (loadFromXxx)
+	var $fileExists,       # does the file exist on disk? (loadFromXxx)
 		$historyLine,      # Number of line to return by nextHistoryLine() (constructor)
 		$historyRes,       # result of the query for the file's history (nextHistoryLine)
 		$width,            # \
@@ -113,7 +112,7 @@ class LocalFile extends File {
 	static function newFromKey( $sha1, $repo, $timestamp = false ) {
 		$dbr = $repo->getSlaveDB();
 
-		$conds = array( 'img_sha1' => $sha1 );
+		$conds = [ 'img_sha1' => $sha1 ];
 		if ( $timestamp ) {
 			$conds['img_timestamp'] = $dbr->timestamp( $timestamp );
 		}
@@ -130,7 +129,7 @@ class LocalFile extends File {
 	 * Fields in the image table
 	 */
 	static function selectFields() {
-		return array(
+		return [
 			'img_name',
 			'img_size',
 			'img_width',
@@ -145,7 +144,7 @@ class LocalFile extends File {
 			'img_user_text',
 			'img_timestamp',
 			'img_sha1',
-		);
+		];
 	}
 
 	/**
@@ -188,13 +187,15 @@ class LocalFile extends File {
 
 		if ( !$key ) {
 			wfProfileOut( __METHOD__ );
+
 			return false;
 		}
 
 		$cachedValues = $wgMemc->get( $key );
 
 		// Check if the key existed and belongs to this version of MediaWiki
-		if ( isset( $cachedValues['version'] ) && ( $cachedValues['version'] == MW_FILE_VERSION ) ) {
+		if ( isset( $cachedValues['version'] ) &&
+			 ( $cachedValues['version'] == MW_FILE_VERSION ) ) {
 			wfDebug( "Pulling file metadata from cache key $key\n" );
 			$this->fileExists = $cachedValues['fileExists'];
 			if ( $this->fileExists ) {
@@ -210,6 +211,7 @@ class LocalFile extends File {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $this->dataLoaded;
 	}
 
@@ -227,7 +229,7 @@ class LocalFile extends File {
 		}
 
 		$fields = $this->getCacheFields( '' );
-		$cache = array( 'version' => MW_FILE_VERSION );
+		$cache = [ 'version' => MW_FILE_VERSION ];
 		$cache['fileExists'] = $this->fileExists;
 
 		if ( $this->fileExists ) {
@@ -248,16 +250,29 @@ class LocalFile extends File {
 	}
 
 	function getCacheFields( $prefix = 'img_' ) {
-		static $fields = array( 'size', 'width', 'height', 'bits', 'media_type',
-			'major_mime', 'minor_mime', 'metadata', 'timestamp', 'sha1', 'user', 'user_text', 'description' );
-		static $results = array();
+		static $fields = [
+			'size',
+			'width',
+			'height',
+			'bits',
+			'media_type',
+			'major_mime',
+			'minor_mime',
+			'metadata',
+			'timestamp',
+			'sha1',
+			'user',
+			'user_text',
+			'description',
+		];
+		static $results = [];
 
 		if ( $prefix == '' ) {
 			return $fields;
 		}
 
 		if ( !isset( $results[$prefix] ) ) {
-			$prefixedFields = array();
+			$prefixedFields = [];
 			foreach ( $fields as $field ) {
 				$prefixedFields[] = $prefix . $field;
 			}
@@ -270,7 +285,7 @@ class LocalFile extends File {
 	/**
 	 * Load file metadata from the DB
 	 */
-	function loadFromDB($flags = 0 ) {
+	function loadFromDB( $flags = 0 ) {
 		# Polymorphic function name to distinguish foreign and local fetches
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
 		wfProfileIn( $fname );
@@ -278,12 +293,13 @@ class LocalFile extends File {
 		# Unconditionally set loaded=true, we don't want the accessors constantly rechecking
 		$this->dataLoaded = true;
 
-		$dbr = ( $flags & self::LOAD_VIA_SLAVE )
-			? $this->repo->getSlaveDB()
-			: $this->repo->getMasterDB();
+		$dbr =
+			( $flags & self::LOAD_VIA_SLAVE ) ? $this->repo->getSlaveDB()
+				: $this->repo->getMasterDB();
 
-		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ),
-			array( 'img_name' => $this->getName() ), $fname );
+		$row =
+			$dbr->selectRow( 'image', $this->getCacheFields( 'img_' ),
+				[ 'img_name' => $this->getName() ], $fname );
 
 		if ( $row ) {
 			$this->loadFromRow( $row );
@@ -304,10 +320,10 @@ class LocalFile extends File {
 
 		// Sanity check prefix once
 		if ( substr( key( $array ), 0, $prefixLength ) !== $prefix ) {
-			throw new MWException( __METHOD__ .  ': incorrect $prefix parameter' );
+			throw new MWException( __METHOD__ . ': incorrect $prefix parameter' );
 		}
 
-		$decoded = array();
+		$decoded = [];
 
 		foreach ( $array as $name => $value ) {
 			$decoded[substr( $name, $prefixLength )] = $value;
@@ -373,18 +389,16 @@ class LocalFile extends File {
 			return;
 		}
 
-		if ( is_null( $this->media_type ) ||
-			$this->mime == 'image/svg'
-		) {
+		if ( is_null( $this->media_type ) || $this->mime == 'image/svg' ) {
 			$this->upgradeRow();
 			$this->upgraded = true;
 		} else {
 			$handler = $this->getHandler();
 			if ( $handler ) {
 				$validity = $handler->isMetadataValid( $this, $this->metadata );
-				if ( $validity === MediaHandler::METADATA_BAD
-					|| ( $validity === MediaHandler::METADATA_COMPATIBLE && $wgUpdateCompatibleMetadata )
-				) {
+				if ( $validity === MediaHandler::METADATA_BAD ||
+					 ( $validity === MediaHandler::METADATA_COMPATIBLE &&
+					   $wgUpdateCompatibleMetadata ) ) {
 					$this->upgradeRow();
 					$this->upgraded = true;
 				}
@@ -410,6 +424,7 @@ class LocalFile extends File {
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": file does not exist, aborting\n" );
 			wfProfileOut( __METHOD__ );
+
 			return;
 		}
 
@@ -418,24 +433,21 @@ class LocalFile extends File {
 
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
+
 			return;
 		}
 		wfDebug( __METHOD__ . ': upgrading ' . $this->getName() . " to the current schema\n" );
 
-		$dbw->update( 'image',
-			array(
-				'img_width'      => $this->width,
-				'img_height'     => $this->height,
-				'img_bits'       => $this->bits,
+		$dbw->update( 'image', [
+				'img_width' => $this->width,
+				'img_height' => $this->height,
+				'img_bits' => $this->bits,
 				'img_media_type' => $this->media_type,
 				'img_major_mime' => $major,
 				'img_minor_mime' => $minor,
-				'img_metadata'   => $this->metadata,
-				'img_sha1'       => $this->sha1,
-			),
-			array( 'img_name' => $this->getName() ),
-			__METHOD__
-		);
+				'img_metadata' => $this->metadata,
+				'img_sha1' => $this->sha1,
+			], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 		$this->saveToCache();
 
@@ -484,12 +496,17 @@ class LocalFile extends File {
 			/* Wikia Change Start @author marzjan */
 			$fileExists = $this->repo->fileExists( $this->getVirtualUrl(), FileRepo::FILES_ONLY );
 
-			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
-				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
-			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to ".($fileExists ? 'true' : 'false')." for '".$this->getVirtualUrl()."'");
+			$info =
+				'URI: ' . ( empty( $_SERVER["REQUEST_URI"] ) ? 'N/A' : $_SERVER["REQUEST_URI"] ) .
+				' - REF: ' .
+				( empty( $_SERVER['HTTP_REFERER'] ) ? 'N/A' : $_SERVER['HTTP_REFERER'] );
+			Wikia::Log( __METHOD__, false,
+				"[$info] Setting fileExists to " . ( $fileExists ? 'true' : 'false' ) . " for '" .
+				$this->getVirtualUrl() . "'" );
 			/* Wikia Change End */
 			$this->missing = !$fileExists;
 		}
+
 		return $this->missing;
 	}
 
@@ -543,7 +560,7 @@ class LocalFile extends File {
 		$this->load();
 
 		if ( $type == 'text' ) {
-			return User::getUsername((int) $this->user, (string) $this->user_text); // SUS-808
+			return User::getUsername( (int)$this->user, (string)$this->user_text ); // SUS-808
 		} elseif ( $type == 'id' ) {
 			return $this->user;
 		}
@@ -556,11 +573,13 @@ class LocalFile extends File {
 	 */
 	function getMetadata() {
 		$this->load();
+
 		return $this->metadata;
 	}
 
 	function getBitDepth() {
 		$this->load();
+
 		return $this->bits;
 	}
 
@@ -569,6 +588,7 @@ class LocalFile extends File {
 	 */
 	public function getSize() {
 		$this->load();
+
 		return $this->size;
 	}
 
@@ -577,6 +597,7 @@ class LocalFile extends File {
 	 */
 	function getMimeType() {
 		$this->load();
+
 		return $this->mime;
 	}
 
@@ -586,6 +607,7 @@ class LocalFile extends File {
 	 */
 	function getMediaType() {
 		$this->load();
+
 		return $this->media_type;
 	}
 
@@ -601,6 +623,7 @@ class LocalFile extends File {
 	 */
 	public function exists() {
 		$this->load();
+
 		return $this->fileExists;
 	}
 
@@ -636,7 +659,7 @@ class LocalFile extends File {
 
 		if ( $this->repo->fileExists( $thumbDir, FileRepo::FILES_ONLY ) ) {
 			// Delete file where directory should be
-			$this->repo->cleanupBatch( array( $thumbDir ) );
+			$this->repo->cleanupBatch( [ $thumbDir ] );
 		}
 	}
 
@@ -659,8 +682,8 @@ class LocalFile extends File {
 		}
 
 		$backend = $this->repo->getBackend();
-		$files = array( $dir );
-		$iterator = $backend->getFileList( array( 'dir' => $dir ) );
+		$files = [ $dir ];
+		$iterator = $backend->getFileList( [ 'dir' => $dir ] );
 		foreach ( $iterator as $file ) {
 			$files[] = $file;
 		}
@@ -687,7 +710,7 @@ class LocalFile extends File {
 		$oldKey = $this->repo->getSharedCacheKey( 'oldfile', $hashedName );
 
 		// Must purge thumbnails for old versions too! bug 30192
-		foreach( $this->getHistory() as $oldFile ) {
+		foreach ( $this->getHistory() as $oldFile ) {
 			$oldFile->purgeThumbnails();
 		}
 
@@ -699,7 +722,7 @@ class LocalFile extends File {
 	/**
 	 * Delete all previously generated thumbnails, refresh metadata in memcached and purge the squid
 	 */
-	function purgeCache( $options = array() ) {
+	function purgeCache( $options = [] ) {
 		// Refresh metadata cache
 		$this->purgeMetadataCache();
 
@@ -709,7 +732,7 @@ class LocalFile extends File {
 		// Purge squid cache for this file
 		// Wikia change - begin
 		// @author macbre / BAC-1206
-		$urls = array( $this->getURL() );
+		$urls = [ $this->getURL() ];
 		Hooks::run( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
 		SquidUpdate::purge( $urls );
@@ -727,13 +750,10 @@ class LocalFile extends File {
 		$dir = array_shift( $files );
 		$this->purgeThumbList( $dir, $files );
 
-		// Purge any custom thumbnail caches
-		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
-
 		// Purge the squid
 		if ( $wgUseSquid ) {
-			$urls = array();
-			foreach( $files as $file ) {
+			$urls = [];
+			foreach ( $files as $file ) {
 				$urls[] = $this->getArchiveThumbUrl( $archiveName, $file );
 			}
 			SquidUpdate::purge( $urls );
@@ -743,9 +763,7 @@ class LocalFile extends File {
 	/**
 	 * Delete cached transformed files for the current version only.
 	 */
-	function purgeThumbnails( $options = array() ) {
-		global $wgUseSquid;
-
+	function purgeThumbnails( $options = [] ) {
 		// Delete thumbnails
 		$files = $this->getThumbnails();
 
@@ -757,22 +775,23 @@ class LocalFile extends File {
 			}
 		}
 
-		$dir = array_shift( $files );
-		$this->purgeThumbList( $dir, $files );
+		$urls = $this->getUrlsToPurge( $files );
+		$this->purgeThumbList( array_shift( $files ), $files );
 
-		// Purge any custom thumbnail caches
-		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, false ) );
+		( new AsyncPurgeTask() )->publish( $urls );
+	}
 
-		// Purge the squid
-		if ( $wgUseSquid ) {
-			$urls = array();
-			foreach( $files as $file ) {
-				$urls[] = $this->getThumbUrl( $file );
-			}
-
-			Hooks::run( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
-			SquidUpdate::purge( $urls );
+	function getUrlsToPurge( $files ) {
+		$urls = [];
+		foreach ( $files as $file ) {
+			$urls[] = $this->getThumbUrl( $file );
 		}
+
+		/** purge only the first thumbnail
+		 * @see PLATFORM-161
+		 * @see PLATFORM-252
+		 */
+		return array_slice( $urls, 0, 1 );
 	}
 
 	/**
@@ -781,14 +800,10 @@ class LocalFile extends File {
 	 * @param $files array of strings: relative filenames (to $dir)
 	 */
 	protected function purgeThumbList( $dir, $files ) {
-		$fileListDebug = strtr(
-			var_export( $files, true ),
-			array("\n"=>'')
-		);
+		$fileListDebug = strtr( var_export( $files, true ), [ "\n" => '' ] );
 		wfDebug( __METHOD__ . ": $fileListDebug\n" );
 
-		$purgeList = array();
-		$purgeList = array( $this->getThumbUrl( ) ); # wikia change
+		$purgeList = [ $this->getThumbUrl() ]; # wikia change
 		foreach ( $files as $file ) {
 			# Wikia change - remove all thumbnails in all formats (PLATFORM-441)
 			# e.g. PNG file can have a WebP thumbnail
@@ -798,7 +813,7 @@ class LocalFile extends File {
 		# Delete the thumbnails
 		$this->repo->cleanupBatch( $purgeList, FileRepo::SKIP_LOCKING );
 		# Clear out the thumbnail directory if empty
-		$this->repo->getBackend()->clean( array( 'dir' => $dir ) );
+		$this->repo->getBackend()->clean( [ 'dir' => $dir ] );
 	}
 
 	/** purgeDescription inherited */
@@ -806,23 +821,22 @@ class LocalFile extends File {
 
 	function getHistory( $limit = null, $start = null, $end = null, $inc = true ) {
 		$dbr = $this->repo->getSlaveDB();
-		$tables = array( 'oldimage' );
+		$tables = [ 'oldimage' ];
 
-/** wikia change
-		$fields = OldLocalFile::selectFields();
-**/
+		/** wikia change
+		 * $fields = OldLocalFile::selectFields();
+		 **/
 
 		/* Wikia change - fix hardcoded classes - Jakub */
 
 		$sOldLocalFileClass =
-			isset ( $this->repo->oldFileFactory[0] )
-				? $this->repo->oldFileFactory[0]
+			isset ( $this->repo->oldFileFactory[0] ) ? $this->repo->oldFileFactory[0]
 				: 'OldLocalFile';
 		$fields = $sOldLocalFileClass::selectFields();
 
 		/* end of Wikia change - fix hardcoded classes - Jakub */
 
-		$conds = $opts = $join_conds = array();
+		$conds = $opts = $join_conds = [];
 		$eq = $inc ? '=' : '';
 		$conds[] = "oi_name = " . $dbr->addQuotes( $this->title->getDBkey() );
 
@@ -841,7 +855,7 @@ class LocalFile extends File {
 		// Search backwards for time > x queries
 		$order = ( !$start && $end !== null ) ? 'ASC' : 'DESC';
 		$opts['ORDER BY'] = "oi_timestamp $order";
-		$opts['USE INDEX'] = array( 'oldimage' => 'oi_name_timestamp' );
+		$opts['USE INDEX'] = [ 'oldimage' => 'oi_name_timestamp' ];
 
 		Hooks::run( 'LocalFile::getHistory', [
 			$this,
@@ -853,7 +867,7 @@ class LocalFile extends File {
 		] );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
-		$r = array();
+		$r = [];
 
 		foreach ( $res as $row ) {
 			if ( $this->repo->oldFileFromRowFactory ) {
@@ -885,27 +899,22 @@ class LocalFile extends File {
 		$dbr = $this->repo->getSlaveDB();
 
 		if ( $this->historyLine == 0 ) {// called for the first time, return line from cur
-			$this->historyRes = $dbr->select( 'image',
-				array(
+			$this->historyRes = $dbr->select( 'image', [
 					'*',
 					"'' AS oi_archive_name",
 					'0 as oi_deleted',
-					'img_sha1'
-				),
-				array( 'img_name' => $this->title->getDBkey() ),
-				$fname
-			);
+					'img_sha1',
+				], [ 'img_name' => $this->title->getDBkey() ], $fname );
 
 			if ( 0 == $dbr->numRows( $this->historyRes ) ) {
 				$this->historyRes = null;
+
 				return false;
 			}
 		} elseif ( $this->historyLine == 1 ) {
-			$this->historyRes = $dbr->select( 'oldimage', '*',
-				array( 'oi_name' => $this->title->getDBkey() ),
-				$fname,
-				array( 'ORDER BY' => 'oi_timestamp DESC' )
-			);
+			$this->historyRes =
+				$dbr->select( 'oldimage', '*', [ 'oi_name' => $this->title->getDBkey() ], $fname,
+					[ 'ORDER BY' => 'oi_timestamp DESC' ] );
 		}
 		$this->historyLine ++;
 
@@ -951,7 +960,9 @@ class LocalFile extends File {
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
-	function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false, $user = null ) {
+	function upload(
+		$srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false, $user = null
+	) {
 		global $wgContLang;
 		// truncate nicely or the DB will do it for us
 		// non-nicely (dangling multi-byte chars, non-truncated
@@ -964,7 +975,8 @@ class LocalFile extends File {
 			# Essentially we are displacing any existing current file and saving
 			# a new current file at the old location. If just the first succeeded,
 			# we still need to displace the current DB entry and put in a new one.
-			if ( !$this->recordUpload2( $status->value, $comment, $pageText, $props, $timestamp, $user ) ) {
+			if ( !$this->recordUpload2( $status->value, $comment, $pageText, $props, $timestamp,
+				$user ) ) {
 				$status->fatal( 'filenotfound', $srcPath );
 			}
 		}
@@ -977,9 +989,10 @@ class LocalFile extends File {
 	/**
 	 * Record a file upload in the upload log and the image table
 	 */
-	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '',
-		$watch = false, $timestamp = false )
-	{
+	function recordUpload(
+		$oldver, $desc, $license = '', $copyStatus = '', $source = '', $watch = false,
+		$timestamp = false
+	) {
 		$pageText = SpecialUpload::getInitialPageText( $desc, $license, $copyStatus, $source );
 
 		if ( !$this->recordUpload2( $oldver, $desc, $pageText ) ) {
@@ -990,6 +1003,7 @@ class LocalFile extends File {
 			global $wgUser;
 			$wgUser->addWatch( $this->getTitle() );
 		}
+
 		return true;
 	}
 
@@ -1050,9 +1064,7 @@ class LocalFile extends File {
 			# doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
 			#
 			# Use INSERT IGNORE .. ON DUPLICATE KEY UPDATE instead now
-			$dbw->upsert(
-				'image',
-				[
+			$dbw->upsert( 'image', [
 					'img_name' => $this->getName(),
 					'img_size' => $this->size,
 					'img_width' => intval( $this->width ),
@@ -1066,15 +1078,12 @@ class LocalFile extends File {
 					'img_user' => $user->getId(),
 					'img_user_text' => $user->isAnon() ? $user->getName() : '', // SUS-3086
 					'img_metadata' => $this->metadata,
-					'img_sha1' => $this->sha1
-				],
-				[],
-				[ "img_name = VALUES(img_name)" ],
-				__METHOD__
-			);
+					'img_sha1' => $this->sha1,
+				], [], [ "img_name = VALUES(img_name)" ], __METHOD__ );
 		}
 		catch ( DBError $ex ) {
 			$dbw->rollback( __METHOD__ );
+
 			return false;
 		}
 
@@ -1085,53 +1094,47 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
-				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
+				Wikia::logBacktrace( __METHOD__ .
+									 "::oi_archive_name - [{$this->getName()}]" ); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
-			$dbw->insertSelect( 'oldimage', 'image',
-				array(
-					'oi_name'         => 'img_name',
+			$dbw->insertSelect( 'oldimage', 'image', [
+					'oi_name' => 'img_name',
 					'oi_archive_name' => $dbw->addQuotes( $oldver ),
-					'oi_size'         => 'img_size',
-					'oi_width'        => 'img_width',
-					'oi_height'       => 'img_height',
-					'oi_bits'         => 'img_bits',
-					'oi_timestamp'    => 'img_timestamp',
-					'oi_description'  => 'img_description',
-					'oi_user'         => 'img_user',
-					'oi_user_text'    => 'img_user_text',
-					'oi_metadata'     => 'img_metadata',
-					'oi_media_type'   => 'img_media_type',
-					'oi_major_mime'   => 'img_major_mime',
-					'oi_minor_mime'   => 'img_minor_mime',
-					'oi_sha1'         => 'img_sha1'
-				),
-				array( 'img_name' => $this->getName() ),
-				__METHOD__
-			);
+					'oi_size' => 'img_size',
+					'oi_width' => 'img_width',
+					'oi_height' => 'img_height',
+					'oi_bits' => 'img_bits',
+					'oi_timestamp' => 'img_timestamp',
+					'oi_description' => 'img_description',
+					'oi_user' => 'img_user',
+					'oi_user_text' => 'img_user_text',
+					'oi_metadata' => 'img_metadata',
+					'oi_media_type' => 'img_media_type',
+					'oi_major_mime' => 'img_major_mime',
+					'oi_minor_mime' => 'img_minor_mime',
+					'oi_sha1' => 'img_sha1',
+				], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 			# Update the current image row
-			$dbw->update( 'image',
-				array( /* SET */
-					'img_size'        => $this->size,
-					'img_width'       => intval( $this->width ),
-					'img_height'      => intval( $this->height ),
-					'img_bits'        => $this->bits,
-					'img_media_type'  => $this->media_type,
-					'img_major_mime'  => $this->major_mime,
-					'img_minor_mime'  => $this->minor_mime,
-					'img_timestamp'   => $timestamp,
-					'img_description' => $comment,
-					'img_user'        => $user->getId(),
-					'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
-					'img_metadata'    => $this->metadata,
-					'img_sha1'        => $this->sha1
-				),
-				array( 'img_name' => $this->getName() ),
-				__METHOD__
-			);
+			$dbw->update( 'image', [ /* SET */
+									 'img_size' => $this->size,
+									 'img_width' => intval( $this->width ),
+									 'img_height' => intval( $this->height ),
+									 'img_bits' => $this->bits,
+									 'img_media_type' => $this->media_type,
+									 'img_major_mime' => $this->major_mime,
+									 'img_minor_mime' => $this->minor_mime,
+									 'img_timestamp' => $timestamp,
+									 'img_description' => $comment,
+									 'img_user' => $user->getId(),
+									 'img_user_text' => $user->isAnon() ? $user->getName() : '',
+									 // SUS-3086
+									 'img_metadata' => $this->metadata,
+									 'img_sha1' => $this->sha1,
+				], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 		}
 
@@ -1142,29 +1145,26 @@ class LocalFile extends File {
 		# Add the log entry
 		$log = new LogPage( 'upload' );
 		$action = $reupload ? 'overwrite' : 'upload';
-		$log->addEntry( $action, $descTitle, $comment, array(), $user );
+		$log->addEntry( $action, $descTitle, $comment, [], $user );
 
 		if ( $descTitle->exists() ) {
 			# Create a null revision
 			$latest = $descTitle->getLatestRevID();
-			$nullRevision = Revision::newNullRevision(
-				$dbw,
-				$descTitle->getArticleId(),
-				$log->getRcComment(),
-				false
-			);
-			if (!is_null($nullRevision)) {
+			$nullRevision =
+				Revision::newNullRevision( $dbw, $descTitle->getArticleId(), $log->getRcComment(),
+					false );
+			if ( !is_null( $nullRevision ) ) {
 				$nullRevision->insertOn( $dbw );
 
-				Hooks::run( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
+				Hooks::run( 'NewRevisionFromEditComplete',
+					[ $wikiPage, $nullRevision, $latest, $user ] );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
-			}
-			else {
-				\Wikia\Logger\WikiaLogger::instance()->warning('PLATFORM-1311', [
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1311', [
 					'reason' => 'LocalFile no nullRevision',
 					'page_id' => $descTitle->getArticleId(),
-					'exception' => new Exception()
-				]);
+					'exception' => new Exception(),
+				] );
 			}
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
@@ -1180,13 +1180,15 @@ class LocalFile extends File {
 		// Update/Insert video info
 		try {
 			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
-		} catch ( \Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+		}
+		catch ( \Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1311', [
 				'reason' => 'LocalFile rollback',
-				'exception' => $e
-			]);
+				'exception' => $e,
+			] );
 
 			$dbw->rollback();
+
 			return false;
 		}
 		/* wikia change - end (VID-1568) */
@@ -1208,25 +1210,28 @@ class LocalFile extends File {
 			wfProfileOut( __METHOD__ . '-purge' );
 
 			# Remove the old file from the squid cache
-			SquidUpdate::purge( array( $this->getURL() ) );
+			SquidUpdate::purge( [ $this->getURL() ] );
 
 			/* wikia change - begin (VID-1568) */
 			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
 			/* wikia change - end (VID-1568) */
 		} else {
 			// SRE-109: Update site stats via a background task
-			$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+			$siteStatsUpdateTaskProducer =
+				\Wikia\Factory\ServiceFactory::instance()
+					->producerFactory()
+					->siteStatsUpdateTaskProducer();
 			$siteStatsUpdateTaskProducer->addMedia();
 		}
 
 		# Hooks, hooks, the magic of hooks...
-		Hooks::run( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
+		Hooks::run( 'FileUpload', [ $this, $reupload, $descTitle->exists() ] );
 
 		# Invalidate cache for all pages using this file
 		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-			->wikiId( $wgCityId )
-			->title( $this->getTitle() );
+		$task =
+			( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )->wikiId( $wgCityId )
+				->title( $this->getTitle() );
 		$task->call( 'purge', 'imagelinks' );
 		$task->queue();
 		// Wikia change end
@@ -1236,9 +1241,9 @@ class LocalFile extends File {
 
 		foreach ( $redirs as $redir ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $redir );
+			$task =
+				( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )->wikiId( $wgCityId )
+					->title( $redir );
 			$task->call( 'purge', 'imagelinks' );
 			$task->queue();
 			// Wikia change end
@@ -1257,7 +1262,7 @@ class LocalFile extends File {
 	 *
 	 * @param $srcPath String: local filesystem path to the source image
 	 * @param $flags Integer: a bitwise combination of:
-	 *     File::DELETE_SOURCE	Delete the source file, i.e. move rather than copy
+	 *     File::DELETE_SOURCE    Delete the source file, i.e. move rather than copy
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
@@ -1275,14 +1280,14 @@ class LocalFile extends File {
 	 * @param $srcPath String: local filesystem path to the source image
 	 * @param $dstRel String: target relative path
 	 * @param $flags Integer: a bitwise combination of:
-	 *     File::DELETE_SOURCE	Delete the source file, i.e. move rather than copy
+	 *     File::DELETE_SOURCE    Delete the source file, i.e. move rather than copy
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
 	function publishTo( $srcPath, $dstRel, $flags = 0 ) {
 		$this->lock(); // begin
 
-		$archiveName = wfTimestamp( TS_MW ) . '!'. $this->getName();
+		$archiveName = wfTimestamp( TS_MW ) . '!' . $this->getName();
 		$archiveRel = 'archive/' . $this->getHashPath() . $archiveName;
 		$flags = $flags & File::DELETE_SOURCE ? LocalRepo::DELETE_SOURCE : 0;
 		$status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags );
@@ -1321,8 +1326,8 @@ class LocalFile extends File {
 		// Wikia change - begin
 		// @author macbre
 		global $wgUploadMaintenance;
-		if (!empty($wgUploadMaintenance)) {
-			return Status::newFatal('filedelete-maintenance');
+		if ( !empty( $wgUploadMaintenance ) ) {
+			return Status::newFatal( 'filedelete-maintenance' );
 		}
 		// Wikia change - end
 
@@ -1379,11 +1384,8 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select(
-			'oldimage',
-			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() )
-		);
+		$result =
+			$dbw->select( 'oldimage', [ 'oi_archive_name' ], [ 'oi_name' => $this->getName() ] );
 		$archiveNames = [];
 		foreach ( $result as $row ) {
 			$batch->addOld( $row->oi_archive_name );
@@ -1393,7 +1395,10 @@ class LocalFile extends File {
 
 		if ( $status->ok ) {
 			// SRE-109: Update site stats via a background task
-			$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+			$siteStatsUpdateTaskProducer =
+				\Wikia\Factory\ServiceFactory::instance()
+					->producerFactory()
+					->siteStatsUpdateTaskProducer();
 			$siteStatsUpdateTaskProducer->removeMedia();
 		}
 		$this->unlock(); // done
@@ -1406,7 +1411,7 @@ class LocalFile extends File {
 
 			if ( $wgUseSquid ) {
 				// Purge the squid
-				$purgeUrls = array();
+				$purgeUrls = [];
 				foreach ( $archiveNames as $archiveName ) {
 					$purgeUrls[] = $this->getArchiveUrl( $archiveName );
 				}
@@ -1449,7 +1454,7 @@ class LocalFile extends File {
 
 		if ( $wgUseSquid ) {
 			// Purge the squid
-			SquidUpdate::purge( array( $this->getArchiveUrl( $archiveName ) ) );
+			SquidUpdate::purge( [ $this->getArchiveUrl( $archiveName ) ] );
 		}
 
 		return $status;
@@ -1466,7 +1471,7 @@ class LocalFile extends File {
 	 * @param $unsuppress Boolean
 	 * @return FileRepoStatus
 	 */
-	function restore( $versions = array(), $unsuppress = false ) {
+	function restore( $versions = [], $unsuppress = false ) {
 		$batch = new LocalFileRestoreBatch( $this, $unsuppress );
 
 		if ( !$versions ) {
@@ -1509,20 +1514,27 @@ class LocalFile extends File {
 	function getDescriptionText() {
 		global $wgParser;
 		$revision = Revision::newFromTitle( $this->title, false, Revision::READ_NORMAL );
-		if ( !$revision ) return false;
+		if ( !$revision ) {
+			return false;
+		}
 		$text = $revision->getText();
-		if ( !$text ) return false;
+		if ( !$text ) {
+			return false;
+		}
 		$pout = $wgParser->parse( $text, $this->title, new ParserOptions() );
+
 		return $pout->getText();
 	}
 
 	function getDescription() {
 		$this->load();
+
 		return $this->description;
 	}
 
 	function getTimestamp() {
 		$this->load();
+
 		return $this->timestamp;
 	}
 
@@ -1535,10 +1547,8 @@ class LocalFile extends File {
 			$this->sha1 = $this->repo->getFileSha1( $this->getPath() );
 			if ( !wfReadOnly() && strval( $this->sha1 ) != '' ) {
 				$dbw = $this->repo->getMasterDB();
-				$dbw->update( 'image',
-					array( 'img_sha1' => $this->sha1 ),
-					array( 'img_name' => $this->getName() ),
-					__METHOD__ );
+				$dbw->update( 'image', [ 'img_sha1' => $this->sha1 ],
+					[ 'img_name' => $this->getName() ], __METHOD__ );
 				$this->saveToCache();
 			}
 
@@ -1558,12 +1568,12 @@ class LocalFile extends File {
 
 		if ( !$this->locked ) {
 			$dbw->begin();
-			$this->locked++;
+			$this->locked ++;
 		}
 
 		$this->markVolatile(); // file may change soon
 
-		return $dbw->selectField( 'image', '1', array( 'img_name' => $this->getName() ), __METHOD__ );
+		return $dbw->selectField( 'image', '1', [ 'img_name' => $this->getName() ], __METHOD__ );
 	}
 
 	/**
@@ -1572,7 +1582,7 @@ class LocalFile extends File {
 	 */
 	function unlock() {
 		if ( $this->locked ) {
-			--$this->locked;
+			-- $this->locked;
 			if ( !$this->locked ) {
 				$dbw = $this->repo->getMasterDB();
 				$dbw->commit();
@@ -1592,8 +1602,10 @@ class LocalFile extends File {
 		$key = $this->repo->getSharedCacheKey( 'file-volatile', md5( $this->getName() ) );
 		if ( $key ) {
 			$this->lastMarkedVolatile = time();
+
 			return $wgMemc->set( $key, $this->lastMarkedVolatile, self::VOLATILE_TTL );
 		}
+
 		return true;
 	}
 
@@ -1607,11 +1619,14 @@ class LocalFile extends File {
 		global $wgMemc;
 		$key = $this->repo->getSharedCacheKey( 'file-volatile', md5( $this->getName() ) );
 		if ( $key ) {
-			if ( $this->lastMarkedVolatile && ( time() - $this->lastMarkedVolatile ) <= self::VOLATILE_TTL ) {
+			if ( $this->lastMarkedVolatile &&
+				 ( time() - $this->lastMarkedVolatile ) <= self::VOLATILE_TTL ) {
 				return true; // sanity
 			}
+
 			return ( $wgMemc->get( $key ) !== false );
 		}
+
 		return false;
 	}
 
@@ -1619,11 +1634,11 @@ class LocalFile extends File {
 	 * Roll back the DB transaction and mark the image unlocked
 	 */
 	function unlockAndRollback() {
-		\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+		\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1311', [
 			'reason' => 'LocalFile::unlockAndRollback',
 			'exception' => new Exception(),
 			'name' => $this->getName(),
-		]);
+		] );
 
 		$this->locked = false;
 		$dbw = $this->repo->getMasterDB();
@@ -1654,7 +1669,7 @@ class LocalFileDeleteBatch {
 	 */
 	var $file;
 
-	var $reason, $srcRels = array(), $archiveUrls = array(), $deletionBatch, $suppress;
+	var $reason, $srcRels = [], $archiveUrls = [], $deletionBatch, $suppress;
 	var $status;
 
 	function __construct( File $file, $reason = '', $suppress = false ) {
@@ -1683,11 +1698,11 @@ class LocalFileDeleteBatch {
 			$deleteCurrent = true;
 		}
 
-		return array( $oldRels, $deleteCurrent );
+		return [ $oldRels, $deleteCurrent ];
 	}
 
 	protected function getHashes() {
-		$hashes = array();
+		$hashes = [];
 		list( $oldRels, $deleteCurrent ) = $this->getOldRels();
 
 		if ( $deleteCurrent ) {
@@ -1696,12 +1711,10 @@ class LocalFileDeleteBatch {
 
 		if ( count( $oldRels ) ) {
 			$dbw = $this->file->repo->getMasterDB();
-			$res = $dbw->select(
-				'oldimage',
-				array( 'oi_archive_name', 'oi_sha1' ),
-				'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
-				__METHOD__
-			);
+			$res =
+				$dbw->select( 'oldimage', [ 'oi_archive_name', 'oi_sha1' ],
+					'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
+					__METHOD__ );
 
 			foreach ( $res as $row ) {
 				if ( rtrim( $row->oi_sha1, "\0" ) === '' ) {
@@ -1711,10 +1724,10 @@ class LocalFileDeleteBatch {
 
 					if ( $props['fileExists'] ) {
 						// Upgrade the oldimage row
-						$dbw->update( 'oldimage',
-							array( 'oi_sha1' => $props['sha1'] ),
-							array( 'oi_name' => $this->file->getName(), 'oi_archive_name' => $row->oi_archive_name ),
-							__METHOD__ );
+						$dbw->update( 'oldimage', [ 'oi_sha1' => $props['sha1'] ], [
+								'oi_name' => $this->file->getName(),
+								'oi_archive_name' => $row->oi_archive_name,
+							], __METHOD__ );
 						$hashes[$row->oi_archive_name] = $props['sha1'];
 					} else {
 						$hashes[$row->oi_archive_name] = false;
@@ -1767,64 +1780,63 @@ class LocalFileDeleteBatch {
 		}
 
 		if ( $deleteCurrent ) {
-			$concat = $dbw->buildConcat( array( "img_sha1", $encExt ) );
-			$where = array( 'img_name' => $this->file->getName() );
-			$dbw->insertSelect( 'filearchive', 'image',
-				array(
+			$concat = $dbw->buildConcat( [ "img_sha1", $encExt ] );
+			$where = [ 'img_name' => $this->file->getName() ];
+			$dbw->insertSelect( 'filearchive', 'image', [
 					'fa_storage_group' => $encGroup,
-					'fa_storage_key'   => "CASE WHEN img_sha1='' THEN '' ELSE $concat END",
-					'fa_deleted_user'      => $encUserId,
+					'fa_storage_key' => "CASE WHEN img_sha1='' THEN '' ELSE $concat END",
+					'fa_deleted_user' => $encUserId,
 					'fa_deleted_timestamp' => $encTimestamp,
-					'fa_deleted_reason'    => $encReason,
-					'fa_deleted'		   => $this->suppress ? $bitfield : 0,
+					'fa_deleted_reason' => $encReason,
+					'fa_deleted' => $this->suppress ? $bitfield : 0,
 
-					'fa_name'         => 'img_name',
+					'fa_name' => 'img_name',
 					'fa_archive_name' => 'NULL',
-					'fa_size'         => 'img_size',
-					'fa_width'        => 'img_width',
-					'fa_height'       => 'img_height',
-					'fa_metadata'     => 'img_metadata',
-					'fa_bits'         => 'img_bits',
-					'fa_media_type'   => 'img_media_type',
-					'fa_major_mime'   => 'img_major_mime',
-					'fa_minor_mime'   => 'img_minor_mime',
-					'fa_description'  => 'img_description',
-					'fa_user'         => 'img_user',
-					'fa_user_text'    => 'img_user_text',
-					'fa_timestamp'    => 'img_timestamp'
-				), $where, __METHOD__ );
+					'fa_size' => 'img_size',
+					'fa_width' => 'img_width',
+					'fa_height' => 'img_height',
+					'fa_metadata' => 'img_metadata',
+					'fa_bits' => 'img_bits',
+					'fa_media_type' => 'img_media_type',
+					'fa_major_mime' => 'img_major_mime',
+					'fa_minor_mime' => 'img_minor_mime',
+					'fa_description' => 'img_description',
+					'fa_user' => 'img_user',
+					'fa_user_text' => 'img_user_text',
+					'fa_timestamp' => 'img_timestamp',
+				], $where, __METHOD__ );
 		}
 
 		if ( count( $oldRels ) ) {
-			$concat = $dbw->buildConcat( array( "oi_sha1", $encExt ) );
-			$where = array(
+			$concat = $dbw->buildConcat( [ "oi_sha1", $encExt ] );
+			$where = [
 				'oi_name' => $this->file->getName(),
-				'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')' );
-			$dbw->insertSelect( 'filearchive', 'oldimage',
-				array(
+				'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
+			];
+			$dbw->insertSelect( 'filearchive', 'oldimage', [
 					'fa_storage_group' => $encGroup,
-					'fa_storage_key'   => "CASE WHEN oi_sha1='' THEN '' ELSE $concat END",
-					'fa_deleted_user'      => $encUserId,
+					'fa_storage_key' => "CASE WHEN oi_sha1='' THEN '' ELSE $concat END",
+					'fa_deleted_user' => $encUserId,
 					'fa_deleted_timestamp' => $encTimestamp,
-					'fa_deleted_reason'    => $encReason,
-					'fa_deleted'		   => $this->suppress ? $bitfield : 'oi_deleted',
+					'fa_deleted_reason' => $encReason,
+					'fa_deleted' => $this->suppress ? $bitfield : 'oi_deleted',
 
-					'fa_name'         => 'oi_name',
+					'fa_name' => 'oi_name',
 					'fa_archive_name' => 'oi_archive_name',
-					'fa_size'         => 'oi_size',
-					'fa_width'        => 'oi_width',
-					'fa_height'       => 'oi_height',
-					'fa_metadata'     => 'oi_metadata',
-					'fa_bits'         => 'oi_bits',
-					'fa_media_type'   => 'oi_media_type',
-					'fa_major_mime'   => 'oi_major_mime',
-					'fa_minor_mime'   => 'oi_minor_mime',
-					'fa_description'  => 'oi_description',
-					'fa_user'         => 'oi_user',
-					'fa_user_text'    => 'oi_user_text',
-					'fa_timestamp'    => 'oi_timestamp',
-					'fa_deleted'      => $bitfield
-				), $where, __METHOD__ );
+					'fa_size' => 'oi_size',
+					'fa_width' => 'oi_width',
+					'fa_height' => 'oi_height',
+					'fa_metadata' => 'oi_metadata',
+					'fa_bits' => 'oi_bits',
+					'fa_media_type' => 'oi_media_type',
+					'fa_major_mime' => 'oi_major_mime',
+					'fa_minor_mime' => 'oi_minor_mime',
+					'fa_description' => 'oi_description',
+					'fa_user' => 'oi_user',
+					'fa_user_text' => 'oi_user_text',
+					'fa_timestamp' => 'oi_timestamp',
+					'fa_deleted' => $bitfield,
+				], $where, __METHOD__ );
 		}
 	}
 
@@ -1833,15 +1845,14 @@ class LocalFileDeleteBatch {
 		list( $oldRels, $deleteCurrent ) = $this->getOldRels();
 
 		if ( count( $oldRels ) ) {
-			$dbw->delete( 'oldimage',
-				array(
+			$dbw->delete( 'oldimage', [
 					'oi_name' => $this->file->getName(),
-					'oi_archive_name' => array_keys( $oldRels )
-				), __METHOD__ );
+					'oi_archive_name' => array_keys( $oldRels ),
+				], __METHOD__ );
 		}
 
 		if ( $deleteCurrent ) {
-			$dbw->delete( 'image', array( 'img_name' => $this->file->getName() ), __METHOD__ );
+			$dbw->delete( 'image', [ 'img_name' => $this->file->getName() ], __METHOD__ );
 		}
 	}
 
@@ -1854,17 +1865,16 @@ class LocalFileDeleteBatch {
 
 		$this->file->lock();
 		// Leave private files alone
-		$privateFiles = array();
+		$privateFiles = [];
 		list( $oldRels, $deleteCurrent ) = $this->getOldRels();
 		$dbw = $this->file->repo->getMasterDB();
 
 		if ( !empty( $oldRels ) ) {
-			$res = $dbw->select( 'oldimage',
-				array( 'oi_archive_name' ),
-				array( 'oi_name' => $this->file->getName(),
+			$res = $dbw->select( 'oldimage', [ 'oi_archive_name' ], [
+					'oi_name' => $this->file->getName(),
 					'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
-					$dbw->bitAnd( 'oi_deleted', File::DELETED_FILE ) => File::DELETED_FILE ),
-				__METHOD__ );
+					$dbw->bitAnd( 'oi_deleted', File::DELETED_FILE ) => File::DELETED_FILE,
+				], __METHOD__ );
 
 			foreach ( $res as $row ) {
 				$privateFiles[$row->oi_archive_name] = 1;
@@ -1872,7 +1882,7 @@ class LocalFileDeleteBatch {
 		}
 		// Prepare deletion batch
 		$hashes = $this->getHashes();
-		$this->deletionBatch = array();
+		$this->deletionBatch = [];
 		$ext = $this->file->getExtension();
 		$dotExt = $ext === '' ? '' : ".$ext";
 
@@ -1883,7 +1893,7 @@ class LocalFileDeleteBatch {
 				$hash = $hashes[$name];
 				$key = $hash . $dotExt;
 				$dstRel = $this->file->repo->getDeletedHashPath( $key ) . $key;
-				$this->deletionBatch[$name] = array( $srcRel, $dstRel );
+				$this->deletionBatch[$name] = [ $srcRel, $dstRel ];
 			}
 		}
 
@@ -1911,18 +1921,20 @@ class LocalFileDeleteBatch {
 			// TODO: delete the defunct filearchive rows if we are using a non-transactional DB
 			$this->file->unlockAndRollback();
 			wfProfileOut( __METHOD__ );
+
 			return $this->status;
 		}
 
 		// Purge squid
 		if ( $wgUseSquid ) {
-			$urls = array();
+			$urls = [];
 
 			foreach ( $this->srcRels as $srcRel ) {
 				$urlRel = str_replace( '%2F', '/', rawurlencode( $srcRel ) );
 				$urls[] = $this->file->repo->getZoneUrl( 'public' ) . '/' . $urlRel;
 			}
-			Hooks::run( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
+			Hooks::run( 'LocalFileExecuteUrls',
+				[ $this->file, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 
@@ -1940,11 +1952,12 @@ class LocalFileDeleteBatch {
 	 * Removes non-existent files from a deletion batch.
 	 */
 	function removeNonexistentFiles( $batch ) {
-		$files = $newBatch = array();
+		$files = $newBatch = [];
 
 		foreach ( $batch as $batchItem ) {
 			list( $src, $dest ) = $batchItem;
-			$files[$src] = $this->file->repo->getVirtualUrl( 'public' ) . '/' . rawurlencode( $src );
+			$files[$src] =
+				$this->file->repo->getVirtualUrl( 'public' ) . '/' . rawurlencode( $src );
 		}
 
 		$result = $this->file->repo->fileExistsBatch( $files, FileRepo::FILES_ONLY );
@@ -1975,8 +1988,8 @@ class LocalFileRestoreBatch {
 
 	function __construct( File $file, $unsuppress = false ) {
 		$this->file = $file;
-		$this->cleanupBatch = $this->ids = array();
-		$this->ids = array();
+		$this->cleanupBatch = $this->ids = [];
+		$this->ids = [];
 		$this->unsuppress = $unsuppress;
 	}
 
@@ -2022,51 +2035,53 @@ class LocalFileRestoreBatch {
 
 		// Fetch all or selected archived revisions for the file,
 		// sorted from the most recent to the oldest.
-		$conditions = array( 'fa_name' => $this->file->getName() );
+		$conditions = [ 'fa_name' => $this->file->getName() ];
 
 		if ( !$this->all ) {
 			$conditions[] = 'fa_id IN (' . $dbw->makeList( $this->ids ) . ')';
 		}
 
-		$result = $dbw->select( 'filearchive', '*',
-			$conditions,
-			__METHOD__,
-			array( 'ORDER BY' => 'fa_timestamp DESC' )
-		);
+		$result =
+			$dbw->select( 'filearchive', '*', $conditions, __METHOD__,
+				[ 'ORDER BY' => 'fa_timestamp DESC' ] );
 
-		$idsPresent = array();
-		$storeBatch = array();
-		$insertBatch = array();
+		$idsPresent = [];
+		$storeBatch = [];
+		$insertBatch = [];
 		$insertCurrent = false;
-		$deleteIds = array();
+		$deleteIds = [];
 		$first = true;
-		$archiveNames = array();
+		$archiveNames = [];
 
 		foreach ( $result as $row ) {
 			$idsPresent[] = $row->fa_id;
 
 			if ( $row->fa_name != $this->file->getName() ) {
-				$status->error( 'undelete-filename-mismatch', $wgLang->timeanddate( $row->fa_timestamp ) );
-				$status->failCount++;
+				$status->error( 'undelete-filename-mismatch',
+					$wgLang->timeanddate( $row->fa_timestamp ) );
+				$status->failCount ++;
 				continue;
 			}
 
 			if ( $row->fa_storage_key == '' ) {
 				// Revision was missing pre-deletion
-				$status->error( 'undelete-bad-store-key', $wgLang->timeanddate( $row->fa_timestamp ) );
-				$status->failCount++;
+				$status->error( 'undelete-bad-store-key',
+					$wgLang->timeanddate( $row->fa_timestamp ) );
+				$status->failCount ++;
 				continue;
 			}
 
 			// Wikia change - begin
 			// @author macbre (BAC-526)
 			// check whether the file was deleted with "suppress" flag (and obey it)
-			if( !$this->unsuppress && ( $row->fa_deleted & Revision::DELETED_TEXT ) ) {
-				return Status::newFatal('undelete-error');
+			if ( !$this->unsuppress && ( $row->fa_deleted & Revision::DELETED_TEXT ) ) {
+				return Status::newFatal( 'undelete-error' );
 			}
 			// Wikia change - end
 
-			$deletedRel = $this->file->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
+			$deletedRel =
+				$this->file->repo->getDeletedHashPath( $row->fa_storage_key ) .
+				$row->fa_storage_key;
 			$deletedUrl = $this->file->repo->getVirtualUrl() . '/deleted/' . $deletedRel;
 
 			$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
@@ -2076,46 +2091,47 @@ class LocalFileRestoreBatch {
 				$sha1 = substr( $sha1, 1 );
 			}
 
-			if ( is_null( $row->fa_major_mime ) || $row->fa_major_mime == 'unknown'
-				|| is_null( $row->fa_minor_mime ) || $row->fa_minor_mime == 'unknown'
-				|| is_null( $row->fa_media_type ) || $row->fa_media_type == 'UNKNOWN'
-				|| is_null( $row->fa_metadata ) ) {
+			if ( is_null( $row->fa_major_mime ) || $row->fa_major_mime == 'unknown' ||
+				 is_null( $row->fa_minor_mime ) || $row->fa_minor_mime == 'unknown' ||
+				 is_null( $row->fa_media_type ) || $row->fa_media_type == 'UNKNOWN' ||
+				 is_null( $row->fa_metadata ) ) {
 				// Refresh our metadata
 				// Required for a new current revision; nice for older ones too. :)
 				$props = RepoGroup::singleton()->getFileProps( $deletedUrl );
 			} else {
-				$props = array(
+				$props = [
 					'minor_mime' => $row->fa_minor_mime,
 					'major_mime' => $row->fa_major_mime,
 					'media_type' => $row->fa_media_type,
-					'metadata'   => $row->fa_metadata
-				);
+					'metadata' => $row->fa_metadata,
+				];
 			}
 
 			if ( $first && !$exists ) {
 				// This revision will be published as the new current version
 				$destRel = $this->file->getRel();
-				$insertCurrent = array(
-					'img_name'        => $row->fa_name,
-					'img_size'        => $row->fa_size,
-					'img_width'       => $row->fa_width,
-					'img_height'      => $row->fa_height,
-					'img_metadata'    => $props['metadata'],
-					'img_bits'        => $row->fa_bits,
-					'img_media_type'  => $props['media_type'],
-					'img_major_mime'  => $props['major_mime'],
-					'img_minor_mime'  => $props['minor_mime'],
+				$insertCurrent = [
+					'img_name' => $row->fa_name,
+					'img_size' => $row->fa_size,
+					'img_width' => $row->fa_width,
+					'img_height' => $row->fa_height,
+					'img_metadata' => $props['metadata'],
+					'img_bits' => $row->fa_bits,
+					'img_media_type' => $props['media_type'],
+					'img_major_mime' => $props['major_mime'],
+					'img_minor_mime' => $props['minor_mime'],
 					'img_description' => $row->fa_description,
-					'img_user'        => $row->fa_user,
-					'img_user_text'   => $row->fa_user_text,
-					'img_timestamp'   => $row->fa_timestamp,
-					'img_sha1'        => $sha1
-				);
+					'img_user' => $row->fa_user,
+					'img_user_text' => $row->fa_user_text,
+					'img_timestamp' => $row->fa_timestamp,
+					'img_sha1' => $sha1,
+				];
 
 				// The live (current) version cannot be hidden!
 				if ( !$this->unsuppress && $row->fa_deleted ) {
 					$status->fatal( 'undeleterevdel' );
 					$this->file->unlock();
+
 					return $status;
 				}
 			} else {
@@ -2129,38 +2145,39 @@ class LocalFileRestoreBatch {
 
 					do {
 						$archiveName = wfTimestamp( TS_MW, $timestamp ) . '!' . $row->fa_name;
-						$timestamp++;
+						$timestamp ++;
 					} while ( isset( $archiveNames[$archiveName] ) );
 				}
 
 				$archiveNames[$archiveName] = true;
 				$destRel = $this->file->getArchiveRel( $archiveName );
-				$insertBatch[] = array(
-					'oi_name'         => $row->fa_name,
+				$insertBatch[] = [
+					'oi_name' => $row->fa_name,
 					'oi_archive_name' => $archiveName,
-					'oi_size'         => $row->fa_size,
-					'oi_width'        => $row->fa_width,
-					'oi_height'       => $row->fa_height,
-					'oi_bits'         => $row->fa_bits,
-					'oi_description'  => $row->fa_description,
-					'oi_user'         => $row->fa_user,
-					'oi_user_text'    => $row->fa_user_text,
-					'oi_timestamp'    => $row->fa_timestamp,
-					'oi_metadata'     => $props['metadata'],
-					'oi_media_type'   => $props['media_type'],
-					'oi_major_mime'   => $props['major_mime'],
-					'oi_minor_mime'   => $props['minor_mime'],
-					'oi_deleted'      => $this->unsuppress ? 0 : $row->fa_deleted,
-					'oi_sha1'         => $sha1 );
+					'oi_size' => $row->fa_size,
+					'oi_width' => $row->fa_width,
+					'oi_height' => $row->fa_height,
+					'oi_bits' => $row->fa_bits,
+					'oi_description' => $row->fa_description,
+					'oi_user' => $row->fa_user,
+					'oi_user_text' => $row->fa_user_text,
+					'oi_timestamp' => $row->fa_timestamp,
+					'oi_metadata' => $props['metadata'],
+					'oi_media_type' => $props['media_type'],
+					'oi_major_mime' => $props['major_mime'],
+					'oi_minor_mime' => $props['minor_mime'],
+					'oi_deleted' => $this->unsuppress ? 0 : $row->fa_deleted,
+					'oi_sha1' => $sha1,
+				];
 			}
 
 			$deleteIds[] = $row->fa_id;
 
 			if ( !$this->unsuppress && $row->fa_deleted & File::DELETED_FILE ) {
 				// private files can stay where they are
-				$status->successCount++;
+				$status->successCount ++;
 			} else {
-				$storeBatch[] = array( $deletedUrl, 'public', $destRel );
+				$storeBatch[] = [ $deletedUrl, 'public', $destRel ];
 				$this->cleanupBatch[] = $row->fa_storage_key;
 			}
 
@@ -2209,18 +2226,21 @@ class LocalFileRestoreBatch {
 		}
 
 		if ( $deleteIds ) {
-			$dbw->delete( 'filearchive',
-				array( 'fa_id IN (' . $dbw->makeList( $deleteIds ) . ')' ),
+			$dbw->delete( 'filearchive', [ 'fa_id IN (' . $dbw->makeList( $deleteIds ) . ')' ],
 				__METHOD__ );
 		}
 
 		// If store batch is empty (all files are missing), deletion is to be considered successful
 		if ( $status->successCount > 0 || !$storeBatch ) {
 			if ( !$exists ) {
-				wfDebug( __METHOD__ . " restored {$status->successCount} items, creating a new current\n" );
+				wfDebug( __METHOD__ .
+						 " restored {$status->successCount} items, creating a new current\n" );
 
 				// SRE-109: Update site stats via a background task
-				$siteStatsUpdateTaskProducer = \Wikia\Factory\ServiceFactory::instance()->producerFactory()->siteStatsUpdateTaskProducer();
+				$siteStatsUpdateTaskProducer =
+					\Wikia\Factory\ServiceFactory::instance()
+						->producerFactory()
+						->siteStatsUpdateTaskProducer();
 				$siteStatsUpdateTaskProducer->addMedia();
 
 				$this->file->purgeEverything();
@@ -2232,6 +2252,7 @@ class LocalFileRestoreBatch {
 		}
 
 		$this->file->unlock();
+
 		return $status;
 	}
 
@@ -2239,9 +2260,10 @@ class LocalFileRestoreBatch {
 	 * Removes non-existent files from a store batch.
 	 */
 	function removeNonexistentFiles( $triplets ) {
-		$files = $filteredTriplets = array();
-		foreach ( $triplets as $file )
+		$files = $filteredTriplets = [];
+		foreach ( $triplets as $file ) {
 			$files[$file[0]] = $file[0];
+		}
 
 		$result = $this->file->repo->fileExistsBatch( $files, FileRepo::FILES_ONLY );
 
@@ -2258,11 +2280,12 @@ class LocalFileRestoreBatch {
 	 * Removes non-existent files from a cleanup batch.
 	 */
 	function removeNonexistentFromCleanup( $batch ) {
-		$files = $newBatch = array();
+		$files = $newBatch = [];
 		$repo = $this->file->repo;
 
 		foreach ( $batch as $file ) {
-			$files[$file] = $repo->getVirtualUrl( 'deleted' ) . '/' .
+			$files[$file] =
+				$repo->getVirtualUrl( 'deleted' ) . '/' .
 				rawurlencode( $repo->getDeletedHashPath( $file ) . $file );
 		}
 
@@ -2301,14 +2324,14 @@ class LocalFileRestoreBatch {
 	 * @param array $storeBatch
 	 */
 	function cleanupFailedBatch( $storeStatus, $storeBatch ) {
-		$cleanupBatch = array();
+		$cleanupBatch = [];
 
 		foreach ( $storeStatus->success as $i => $success ) {
 			// Check if this item of the batch was successfully copied
 			if ( $success ) {
 				// Item was successfully copied and needs to be removed again
 				// Extract ($dstZone, $dstRel) from the batch
-				$cleanupBatch[] = array( $storeBatch[$i][1], $storeBatch[$i][2] );
+				$cleanupBatch[] = [ $storeBatch[$i][1], $storeBatch[$i][2] ];
 			}
 		}
 		$this->file->repo->cleanupBatch( $cleanupBatch );
@@ -2352,7 +2375,7 @@ class LocalFileMoveBatch {
 	 * Add the current image to the batch
 	 */
 	function addCurrent() {
-		$this->cur = array( $this->oldRel, $this->newRel );
+		$this->cur = [ $this->oldRel, $this->newRel ];
 	}
 
 	/**
@@ -2360,15 +2383,13 @@ class LocalFileMoveBatch {
 	 */
 	function addOlds() {
 		$archiveBase = 'archive';
-		$this->olds = array();
+		$this->olds = [];
 		$this->oldCount = 0;
-		$archiveNames = array();
+		$archiveNames = [];
 
-		$result = $this->db->select( 'oldimage',
-			array( 'oi_archive_name', 'oi_deleted' ),
-			array( 'oi_name' => $this->oldName ),
-			__METHOD__
-		);
+		$result =
+			$this->db->select( 'oldimage', [ 'oi_archive_name', 'oi_deleted' ],
+				[ 'oi_name' => $this->oldName ], __METHOD__ );
 
 		foreach ( $result as $row ) {
 			$archiveNames[] = $row->oi_archive_name;
@@ -2387,17 +2408,17 @@ class LocalFileMoveBatch {
 				continue;
 			}
 
-			$this->oldCount++;
+			$this->oldCount ++;
 
 			// Do we want to add those to oldCount?
 			if ( $row->oi_deleted & File::DELETED_FILE ) {
 				continue;
 			}
 
-			$this->olds[] = array(
+			$this->olds[] = [
 				"{$archiveBase}/{$this->oldHash}{$oldName}",
-				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
-			);
+				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}",
+			];
 		}
 
 		return $archiveNames;
@@ -2415,22 +2436,26 @@ class LocalFileMoveBatch {
 
 		// Copy the files into their new location
 		$statusMove = $repo->storeBatch( $triplets );
-		wfDebugLog( 'imagemove', "Moved files for {$this->file->getName()}: {$statusMove->successCount} successes, {$statusMove->failCount} failures" );
+		wfDebugLog( 'imagemove',
+			"Moved files for {$this->file->getName()}: {$statusMove->successCount} successes, {$statusMove->failCount} failures" );
 		if ( !$statusMove->isGood() ) {
 			wfDebugLog( 'imagemove', "Error in moving files: " . $statusMove->getWikiText() );
 			$this->cleanupTarget( $triplets );
 			$statusMove->ok = false;
+
 			return $statusMove;
 		}
 
 		$this->db->begin();
 		$statusDb = $this->doDBUpdates();
-		wfDebugLog( 'imagemove', "Renamed {$this->file->getName()} in database: {$statusDb->successCount} successes, {$statusDb->failCount} failures" );
+		wfDebugLog( 'imagemove',
+			"Renamed {$this->file->getName()} in database: {$statusDb->successCount} successes, {$statusDb->failCount} failures" );
 		if ( !$statusDb->isGood() ) {
 			$this->db->rollback();
 			// Something went wrong with the DB updates, so remove the target files
 			$this->cleanupTarget( $triplets );
 			$statusDb->ok = false;
+
 			return $statusDb;
 		}
 		$this->db->commit();
@@ -2456,59 +2481,52 @@ class LocalFileMoveBatch {
 		$dbw = $this->db;
 
 		// Update current image
-		$dbw->update(
-			'image',
-			array( 'img_name' => $this->newName ),
-			array( 'img_name' => $this->oldName ),
-			__METHOD__
-		);
+		$dbw->update( 'image', [ 'img_name' => $this->newName ], [ 'img_name' => $this->oldName ],
+			__METHOD__ );
 
 		if ( $dbw->affectedRows() ) {
-			$status->successCount++;
+			$status->successCount ++;
 		} else {
-			$status->failCount++;
+			$status->failCount ++;
 			$status->fatal( 'imageinvalidfilename' );
+
 			return $status;
 		}
 
 		// Wikia change - begin
 		// @author macbre (PLATFORM-238)
-		$rowsWithEmptyArchiveName = $dbw->selectField(
-			'oldimage',
-			'count(*)',
-			array(
+		$rowsWithEmptyArchiveName = $dbw->selectField( 'oldimage', 'count(*)', [
 				'oi_name' => $this->oldName,
 				'oi_archive_name = ""',
-			),
-			__METHOD__
-		);
+			], __METHOD__ );
 
 		if ( $rowsWithEmptyArchiveName > 0 ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name' , [
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name', [
 				'oi_name' => $this->oldName,
 				'new_name' => $this->newName,
-				'count' => $rowsWithEmptyArchiveName
+				'count' => $rowsWithEmptyArchiveName,
 			] );
 		}
 
 		// Wikia change - end
 
 		// Update old images
-		$dbw->update(
-			'oldimage',
-			array(
+		$dbw->update( 'oldimage', [
 				'oi_name' => $this->newName,
-				'oi_archive_name = ' . $dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ), $dbw->addQuotes( $this->newName ) ),
-			),
-			array(
+				'oi_archive_name = ' .
+				$dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ),
+					$dbw->addQuotes( $this->newName ) ),
+			], [
 				'oi_name' => $this->oldName,
 				'oi_archive_name <> ""', // Wikia change - @author macbre (PLATFORM-238)
-			),
-			__METHOD__
-		);
+			], __METHOD__ );
 
-		$affected = $dbw->affectedRows() + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
-		$total = $this->oldCount + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
+		$affected =
+			$dbw->affectedRows() +
+			$rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
+		$total =
+			$this->oldCount +
+			$rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
 		$status->successCount += $affected;
 		$status->failCount += $total - $affected;
 		if ( $status->failCount ) {
@@ -2522,14 +2540,15 @@ class LocalFileMoveBatch {
 	 * Generate triplets for FileRepo::storeBatch().
 	 */
 	function getMoveTriplets() {
-		$moves = array_merge( array( $this->cur ), $this->olds );
-		$triplets = array();	// The format is: (srcUrl, destZone, destUrl)
+		$moves = array_merge( [ $this->cur ], $this->olds );
+		$triplets = [];    // The format is: (srcUrl, destZone, destUrl)
 
 		foreach ( $moves as $move ) {
 			// $move: (oldRelativePath, newRelativePath)
 			$srcUrl = $this->file->repo->getVirtualUrl() . '/public/' . rawurlencode( $move[0] );
-			$triplets[] = array( $srcUrl, 'public', $move[1] );
-			wfDebugLog( 'imagemove', "Generated move triplet for {$this->file->getName()}: {$srcUrl} :: public :: {$move[1]}" );
+			$triplets[] = [ $srcUrl, 'public', $move[1] ];
+			wfDebugLog( 'imagemove',
+				"Generated move triplet for {$this->file->getName()}: {$srcUrl} :: public :: {$move[1]}" );
 		}
 
 		return $triplets;
@@ -2539,14 +2558,14 @@ class LocalFileMoveBatch {
 	 * Removes non-existent files from move batch.
 	 */
 	function removeNonexistentFiles( $triplets ) {
-		$files = array();
+		$files = [];
 
 		foreach ( $triplets as $file ) {
 			$files[$file[0]] = $file[0];
 		}
 
 		$result = $this->file->repo->fileExistsBatch( $files, FileRepo::FILES_ONLY );
-		$filteredTriplets = array();
+		$filteredTriplets = [];
 
 		foreach ( $triplets as $file ) {
 			if ( $result[$file[0]] ) {
@@ -2565,9 +2584,9 @@ class LocalFileMoveBatch {
 	 */
 	function cleanupTarget( $triplets ) {
 		// Create dest pairs from the triplets
-		$pairs = array();
+		$pairs = [];
 		foreach ( $triplets as $triplet ) {
-			$pairs[] = array( $triplet[1], $triplet[2] );
+			$pairs[] = [ $triplet[1], $triplet[2] ];
 		}
 
 		$this->file->repo->cleanupBatch( $pairs );
@@ -2579,7 +2598,7 @@ class LocalFileMoveBatch {
 	 */
 	function cleanupSource( $triplets ) {
 		// Create source file names from the triplets
-		$files = array();
+		$files = [];
 		foreach ( $triplets as $triplet ) {
 			$files[] = $triplet[0];
 		}

@@ -5,6 +5,8 @@
  * @ingroup Cache
  */
 
+use Wikia\Factory\ServiceFactory;
+
 /**
  * Handles purging appropriate Squid URLs given a title (or titles)
  * @ingroup Cache
@@ -102,47 +104,9 @@ class SquidUpdate {
 	 * @return void
 	 */
 	static function purge( $urlArr ) {
-		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
-
-		if( !$urlArr ) {
-			return;
+		if( $urlArr ) {
+			ServiceFactory::instance()->purgerFactory()->purger()->addUrls( $urlArr );
 		}
-
-		// wikia change start
-		global $wgPurgeSquidViaCelery;
-		if ( $wgPurgeSquidViaCelery == true ) {
-			\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addUrls( $urlArr );
-			return;
-		}
-		// wikia change end
-
-		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {
-			SquidUpdate::HTCPPurge( $urlArr );
-		}
-
-		wfProfileIn( __METHOD__ );
-
-		$maxSocketsPerSquid = 8; //  socket cap per Squid
-		$urlsPerSocket = 400; // 400 seems to be a good tradeoff, opening a socket takes a while
-		$socketsPerSquid = ceil( count( $urlArr ) / $urlsPerSocket );
-		if ( $socketsPerSquid > $maxSocketsPerSquid ) {
-			$socketsPerSquid = $maxSocketsPerSquid;
-		}
-
-		$pool = new SquidPurgeClientPool;
-		$chunks = array_chunk( $urlArr, ceil( count( $urlArr ) / $socketsPerSquid ) );
-		foreach ( $wgSquidServers as $server ) {
-			foreach ( $chunks as $chunk ) {
-				$client = new SquidPurgeClient( $server );
-				foreach ( $chunk as $url ) {
-					$client->queuePurge( $url );
-				}
-				$pool->addClient( $client );
-			}
-		}
-		$pool->run();
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
