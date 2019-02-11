@@ -31,11 +31,11 @@ class UserService {
 	public static function getLandingPage( User $user ): Title {
 		$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
 
-		if ( $value === UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY ) {
+		if ( $value == UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY ) {
 			return SpecialPage::getTitleFor( 'WikiActivity' );
 		}
 
-		if ( $value === UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES ) {
+		if ( $value == UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES ) {
 			return SpecialPage::getTitleFor( 'RecentChanges' );
 		}
 
@@ -56,7 +56,7 @@ class UserService {
 		global $wgEnableFeedsAndPostsExt;
 
 		if ( $wgEnableFeedsAndPostsExt ) {
-			return $landingPagePreference === UserPreferencesV2::LANDING_PAGE_FEEDS ||
+			return $landingPagePreference == UserPreferencesV2::LANDING_PAGE_FEEDS ||
 				   ( empty( $landingPagePreference ) && $user->getRegistration() >= static::SHOW_FEEDS_IF_REGISTERED_AFTER );
 		}
 
