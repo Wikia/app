@@ -81,7 +81,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			success: function () {
 				this.callback();
 			},
-			pre: function (result, callback) {
+			post: function (result, callback) {
 				this.callback = callback;
 			}
 		};

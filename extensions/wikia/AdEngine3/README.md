@@ -14,9 +14,9 @@ All `*.js` files are build into `dist/` using webpack command.
   - scroll_y
   - bidder_won, bidder_won_price
 - floating medrec refresh
+  - with BT integration
 - inline video ads
 - nielsen
-- WAD functionality
 - steam browser
 - templates:
   - UAP

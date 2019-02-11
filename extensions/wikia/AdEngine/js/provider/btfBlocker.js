@@ -151,10 +151,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			if (config && config.firstCallSlots && config.firstCallSlots.indexOf(slot.name) > -1) {
 				firstCallSlots.push(slot.name);
 
-				slot.pre('renderEnded', fillInSlotOnResponse);
-				slot.pre('collapse', fillInSlotOnResponse);
-				slot.pre('hop', fillInSlotOnResponse);
-				slot.pre('success', fillInSlotOnResponse);
+				slot.post('renderEnded', fillInSlotOnResponse);
+				slot.post('collapse', fillInSlotOnResponse);
+				slot.post('hop', fillInSlotOnResponse);
+				slot.post('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
