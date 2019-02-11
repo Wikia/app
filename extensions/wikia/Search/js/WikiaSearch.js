@@ -36,7 +36,6 @@ var WikiaSearch = {
 		});
 
 		$('.result-link').on('click', function(event) {
-			console.log(event.target);
 			this.trackSearchResultClick(event.target);
 		}.bind(this));
 
@@ -129,6 +128,9 @@ var WikiaSearch = {
 		}
 
 		var results = this.getSearchResults();
+		var searchUID = this.getUniqueSearchId();
+		this.appendSearchUidToPaginationLinks(searchUID);
+
 		var payload = {
 			searchPhrase: query,
 			filters: {},
@@ -138,7 +140,7 @@ var WikiaSearch = {
 			sortOrder: 'default',
 			app: 'app',
 			siteId: parseInt(window.wgCityId),
-			searchId: this.getUniqueSearchId(),
+			searchId: searchUID,
 			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
 		};
 
@@ -150,6 +152,7 @@ var WikiaSearch = {
 	},
 	getSearchResults: function() {
 		var $results = $('h1 a.result-link[data-page-id]');
+
 		return $results.map(function(index, item) {
 			return {
 				id: parseInt(item.getAttribute('data-page-id')),
@@ -168,6 +171,9 @@ var WikiaSearch = {
 		var searchUID = queryParams.get('searchUID') || this.genUID();
 		this.searchUID = searchUID;
 
+		return searchUID;
+	},
+	appendSearchUidToPaginationLinks: function(searchUID) {
 		$('a.paginator-prev, a.paginator-next, a.paginator-page').each(function() {
 			var $elem = $(this);
 			var originalUrl = $elem.attr('href');
@@ -176,8 +182,6 @@ var WikiaSearch = {
 			modifiedUrl.searchParams.append('searchUID', searchUID);
 			$elem.attr('href', modifiedUrl);
 		});
-
-		return searchUID;
 	},
 	genUID: function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
