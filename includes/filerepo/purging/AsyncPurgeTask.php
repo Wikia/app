@@ -36,7 +36,8 @@ class AsyncPurgeTask extends BaseTask {
 			'remove_thumbnails_url' => $removeThumbnailsUrl,
 		] );
 
-		\Http::request( "DELETE", $removeThumbnailsUrl );
+		\Http::request( "DELETE", $removeThumbnailsUrl,
+			[ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
 	}
 
 	public function purgerUrls( $thumbnailUrls ) {
