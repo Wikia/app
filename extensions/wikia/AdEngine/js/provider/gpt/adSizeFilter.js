@@ -52,12 +52,16 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		return slotSizes;
 	}
 
-	function removeUAPFromSlotSizes(slotSizes) {
+	function excludeSlotSizes(slotSizes, excludedSizes) {
 		return slotSizes.filter(function (size) {
 			var str = size.toString();
 
-			return !(str === '2,2' || str === '3,3');
-		});
+			return excludedSizes.indexOf(str) === -1;
+		})
+	}
+
+	function removeUAPFromSlotSizes(slotSizes) {
+		return excludeSlotSizes(slotSizes, ['2,2', '3,3']);
 	}
 
 	function getFanTakeoverBLBSizes(skin) {
@@ -69,6 +73,10 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function getBottomLeaderboardSizes(slotSizes) {
+		if (window.innerWidth < 1024) {
+			slotSizes = excludeSlotSizes(slotSizes, ['970,250']);
+		}
+
 		return adEngineBridge.universalAdPackage.isFanTakeoverLoaded() ?
 			getFanTakeoverBLBSizes(getAdContext().targeting.skin) : removeUAPFromSlotSizes(slotSizes);
 	}
