@@ -7,6 +7,7 @@ import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
 import { getConfig as getRoadblockConfig } from './templates/roadblock-config';
+import { Skin } from './templates/skin';
 import { getConfig as getStickyTLBConfig } from './templates/sticky-tlb-config';
 
 function setupPageLevelTargeting(adsContext) {
@@ -201,6 +202,7 @@ function configure(adsContext, isOptedIn) {
 	adProductsUtils.setupNpaContext();
 
 	templateService.register(Roadblock, getRoadblockConfig());
+	templateService.register(Skin);
 	templateService.register(StickyTLB, getStickyTLBConfig());
 
 	context.push('listeners.slot', slotTracker);
