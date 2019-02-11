@@ -778,7 +778,7 @@ class LocalFile extends File {
 		$urls = $this->getUrlsToPurge( $files );
 		$this->purgeThumbList( array_shift( $files ), $files );
 
-		( new AsyncPurgeTask() )->publish( $urls );
+		( new AsyncPurgeTask() )->publish( $this->getOriginalUrl(), $urls );
 	}
 
 	function getUrlsToPurge( $files ) {
