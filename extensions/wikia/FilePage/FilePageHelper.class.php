@@ -21,26 +21,21 @@ class FilePageHelper {
 	 *
 	 * @return string $url - url to redirect to
 	 */
-	public static function fileRedir(ImagePage $page) {
+	public static function getFilePageRedirect( Title $title) {
 		global $wgMemc;
 
-		$page = $page->getContext();
 
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
-		if ( !$page->getTitle()->userCan( 'read' ) ) {
+		if ( !$title->userCan( 'read' ) ) {
 			return $url;
 		}
-		$redirKey = wfMemcKey( 'redir', $page->getTitle()->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
 
-		$displayImg = $img = false;
-		Hooks::run( 'ImagePageFindFile', [ $page, &$img, &$displayImg ] );
-		if ( !$img ) { // not set by hook?
-			$img = wfFindFile( $page->getTitle() );
-			if ( !$img ) {
-				$img = wfLocalFile( $page->getTitle() );
-			}
+		$img = wfFindFile( $title );
+		if ( !$img ) {
+			$img = wfLocalFile( $title );
 		}
 
 		if ( !$img || $img && !$img->fileExists ) {
@@ -57,20 +52,20 @@ class FilePageHelper {
 		$res = self::fetchLinks( $img->getTitle()->getDBkey() );
 		if ( $res ) {
 			foreach ( $res as $row ) {
-				$title = Title::newFromRow( $row );
-				if ( $title->isRedirect() ) {
+				$ImageTitle = Title::newFromRow( $row );
+				if ( $ImageTitle->isRedirect() ) {
 					continue;
 				}
-				if ( !$title->userCan( 'read' ) ) {
+				if ( !$ImageTitle->userCan( 'read' ) ) {
 					continue;
 				}
-				$url = $title->getFullURL();
+				$url = $ImageTitle->getFullURL();
 				break;
 			}
 		}
 		if ( $url === Title::newMainPage()->getFullURL() ) {
 			$url = wfAppendQuery($url, [
-				'file' => $page->getTitle()->getText()
+				'file' => $title->getText()
 			] );
 		}
 		$wgMemc->set( $redirKey, $url );

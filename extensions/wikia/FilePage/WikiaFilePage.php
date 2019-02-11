@@ -158,7 +158,7 @@ class WikiaFilePage extends ImagePage {
 
 			return;
 		}
-		$redir = FilePageHelper::fileRedir( $this );
+		$redir = FilePageHelper::getFilePageRedirect( $this->getTitle() );
 		if( !is_null($redir) ) {
 			$this->getContext()->getOutput()->redirect( $redir , '301' );
 		}
