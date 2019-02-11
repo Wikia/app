@@ -2447,6 +2447,7 @@ $config['watch_show_js'] = [
 $config['search_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//resources/wikia/modules/uuid.js',
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
 	]
 ];
