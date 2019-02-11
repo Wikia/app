@@ -1,5 +1,6 @@
-require(['EditDraftSaving'], function (EditDraftSaving) {
+require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ck',
+		editForm = document.forms["editform"],
 		RTE = window.RTE;
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
@@ -8,7 +9,8 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 		EditDraftSaving.storeDraft({
 			editor: EDITOR_TYPE,
 			mode: RTE.getInstance().mode,
-			draftText: RTE.getInstance().getData()
+			draftText: RTE.getInstance().getData(),
+			startTime: editForm.wpStarttime.value
 		});
 	}
 
@@ -22,6 +24,7 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 
 			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
 			if (CKinstance.mode !== draftData.mode) {
+
 				// we need to switch mode to apply a draft in a right one
 				CKinstance.setMode(
 					draftData.mode,
@@ -34,6 +37,7 @@ require(['EditDraftSaving'], function (EditDraftSaving) {
 				CKinstance.setData(draftText);
 			}
 
+			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 

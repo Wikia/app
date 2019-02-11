@@ -115,6 +115,7 @@ function init(
 		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 		context.set('bidders.prebid.lazyLoadingEnabled', legacyContext.get('opts.isBLBLazyPrebidEnabled'));
 		context.set('custom.appnexusDfp', legacyContext.get('bidders.appnexusDfp'));
+		context.set('custom.beachfrontDfp', legacyContext.get('bidders.beachfrontDfp'));
 		context.set('custom.rubiconDfp', legacyContext.get('bidders.rubiconDfp'));
 		context.set('custom.rubiconInFV', legacyContext.get('bidders.rubiconInFV'));
 		context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
