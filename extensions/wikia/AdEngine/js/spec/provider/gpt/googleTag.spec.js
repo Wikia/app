@@ -57,7 +57,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getSlots: noop
 			},
 			slotRegistry: {
-				get: noop
+				get: noop,
+				isEnabled: function () { return true; }
 			},
 			srcProvider: {},
 			window: {

@@ -1134,6 +1134,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBeachfrontDfpCountries
+ * Enables Beachfront via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontDfpCountries = null;
+
+/**
  * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
  * List of countries where BOTTOM_LEADERBOARD lazy Prebid.js loading is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1160,6 +1167,14 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticBidderCountries = null;
+
+
+/**
+ * @name $wgAdDriverLkqdBidderCountries
+ * List of countries where LKQD prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdBidderCountries = null;
 
 /**
  * @name $wgAdDriverPubMaticDfpCountries
@@ -1265,7 +1280,14 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
- * @name wgAdDriverMobileWikiAE3SearchCountries
+ * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
+ * List of countries where incontent native is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverMobileWikiAE3SearchCountries
  * List of countries where sections TLB is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */

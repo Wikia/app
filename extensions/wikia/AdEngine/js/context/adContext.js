@@ -102,6 +102,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
 		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isEnabled('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
+		context.bidders.beachfrontDfp = isEnabled('wgAdDriverBeachfrontDfpCountries');
 		context.bidders.appnexusAst = isEnabled('wgAdDriverAppNexusAstBidderCountries');
 		context.bidders.aol = isEnabled('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isEnabled('wgAdDriverAppNexusBidderCountries');
@@ -112,6 +113,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.onemobile = isEnabled('wgAdDriverAolOneMobileBidderCountries');
 		context.bidders.openx = isEnabled('wgAdDriverOpenXPrebidBidderCountries');
 		context.bidders.pubmatic = isEnabled('wgAdDriverPubMaticBidderCountries');
+		context.bidders.lkqd = isEnabled('wgAdDriverLkqdBidderCountries');
 		context.bidders.pubmaticDfp = isEnabled('wgAdDriverPubMaticDfpCountries');
 	}
 

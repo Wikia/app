@@ -51,7 +51,6 @@ class LinkSuggest {
 
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
-		$measurement = T::start(__FUNCTION__);
 		wfProfileIn(__METHOD__);
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -147,7 +146,7 @@ class LinkSuggest {
 		$sql1Measurement = T::start([ __FUNCTION__ , "sql-1" ]);
 		$res = $db->select(
 			array( 'querycache', 'page' ),
-			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
+			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect' ),
 			array(
 				'qc_title = page_title',
 				'qc_namespace = page_namespace',
@@ -229,11 +228,9 @@ class LinkSuggest {
 			if ($row->page_is_redirect == 0) {
 
 				// remove any instances of original array's value
-				$resultsFlipped = array_flip($results);
-				unset($resultsFlipped[$titleFormatted]);
-				$results = array_flip($resultsFlipped);
+				unset( $results[$row->page_id] );
 
-				array_unshift($results, $titleFormatted);
+				$results = [ $row->page_id => $titleFormatted ] + $results;
 
 				$flippedRedirs = array_flip($redirects);
 				if (isset($flippedRedirs[$titleFormatted])) {
@@ -245,11 +242,10 @@ class LinkSuggest {
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
 				// remove any instances of original array's value
-				$resultsFlipped = array_flip($results);
-				unset($resultsFlipped[$redirTitleFormatted]);
-				$results = array_flip($resultsFlipped);
+				unset( $results[$row->page_id] );
 
-				array_unshift($results, $redirTitleFormatted);
+				$results = [ $row->page_id => $redirTitleFormatted ] + $results;
+
 				$redirects[$redirTitleFormatted] = $titleFormatted;
 			}
 		}
@@ -264,10 +260,12 @@ class LinkSuggest {
 				$specialPagesByAlpha = get_object_vars($specialPagesByAlpha);
 
 				ksort($specialPagesByAlpha, SORT_STRING);
+				$dummySpecialPageId = -1;
 				array_walk( $specialPagesByAlpha,
-					function($val,$key) use (&$results, $query) {
+					function($val,$key) use (&$results, $query, &$dummySpecialPageId) {
 						if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
-							$results[] = self::formatTitle('-1', $key);
+							$results[$dummySpecialPageId] = self::formatTitle('-1', $key);
+							$dummySpecialPageId--;
 						}
 					}
 				);
@@ -279,19 +277,29 @@ class LinkSuggest {
 
 		$format = $request->getText('format');
 
-		if ($format == 'json') {
-			$result_values = array_values($results);
+		if ( $format == 'json' ) {
+			$result_values = array_values( $results );
 
 			if ( $isMobile ) {
-				$out = json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
+				$out =
+					json_encode( [
+						array_splice( $result_values, 0, 10 ),
+						array_splice( $redirects, - 1, 1 ),
+					] );
 			} else {
-				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
+				$out =
+					json_encode( [
+						'query' => $request->getText( 'query' ),
+						'ids' => array_flip( $results ),
+						'suggestions' => $result_values,
+						'redirects' => $redirects,
+					] );
 			}
-		} elseif ($format == 'array') {
+		} elseif ( $format == 'array' ) {
 			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
-			$out = implode("\n", $results);
+			$out = implode( "\n", $results );
 		}
 
 		// 15 minutes times four (one hour, but easier to slice and dice)
@@ -374,8 +382,8 @@ class LinkSuggest {
 
 			if ($row->page_is_redirect == 0) {
 
-				if (!in_array($titleFormatted, $results)) {
-					$results[] = $titleFormatted;
+				if ( !isset( $results[$row->page_id] ) ) {
+					$results[$row->page_id] = $titleFormatted;
 				}
 
 				$flippedRedirs = array_flip($redirects);
