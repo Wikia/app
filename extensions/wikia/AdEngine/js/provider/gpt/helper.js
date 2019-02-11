@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.adEngine.slotTweaker',
@@ -27,6 +28,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	googleSlots,
 	gptTargeting,
 	passbackHandler,
+	slotRegistry,
 	srcProvider,
 	slotTargeting,
 	slotTweaker,
@@ -145,7 +147,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			setupPageLevelParams();
 		}
 
-		if (!slot.isEnabled()) {
+		// Don't collapse slots that have defined status
+		// because... slot tracking expects that slots is
+		// going to have DOM elements with all attributes
+		// so, in fact this slot is going to be collapsed
+		// later in googleTag.js
+		if (!slot.isEnabled() && !slotRegistry.getStatus(slotName)) {
 			log(['Push blocked', slotName], log.levels.debug, logGroup);
 			slot.collapse();
 			return;

@@ -491,11 +491,12 @@ class WikiFactoryLoader {
 		// For api calls to community, fake the mServerName value so it matches city_url. This
 		// stops the redirects and allows the api to be used on every community domain configured
 		// in WikiFactory.
-		if ( $this->mWikiID == WikiFactory::COMMUNITY_CENTRAL &&
-			 ( strpos( $this->parsedUrl['path'], '/api.php' ) === 0 ||
-			   strpos( $this->parsedUrl['path'], '/wikia.php' ) === 0 ||
-			   strpos( $this->parsedUrl['path'], '/api/v1' ) === 0 ) ) {
-			$this->mServerName = strtolower( $url['host'] );
+		if ( $this->mWikiID == WikiFactory::COMMUNITY_CENTRAL && isset( $this->parsedUrl['path'] ) ) {
+			if ( strpos( $this->parsedUrl['path'], '/api.php' ) === 0 ||
+				 strpos( $this->parsedUrl['path'], '/wikia.php' ) === 0 ||
+				 strpos( $this->parsedUrl['path'], '/api/v1' ) === 0 ) {
+				$this->mServerName = strtolower( $url['host'] );
+			}
 		}
 		// end of PLATFORM-3878 hack
 

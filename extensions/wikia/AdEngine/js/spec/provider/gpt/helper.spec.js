@@ -35,6 +35,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				hide: noop,
 				removeDefaultHeight: noop
 			},
+			slotRegistry: {
+				getStatus: noop
+			},
 			slotElement: {
 				appendChild: noop
 			},
@@ -113,6 +116,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.googleSlots,
 			mocks.gptTargeting,
 			mocks.passbackHandler,
+			mocks.slotRegistry,
 			mocks.srcProvider,
 			mocks.slotTargetingHelper,
 			mocks.slotTweaker,
