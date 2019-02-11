@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Tasks\BaseTask;
 
@@ -18,10 +19,13 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	public function removeThumbnailsInThumblr( $originalUrl ) {
-		global $wgThumblrUrl, $wgVignetteUrl;
+		global $wgVignetteUrl;
+
+		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
+		$thumblrUrl = "http://{$urlProvider->getUrl( 'thumblr' )}/";
 
 		// replace base URL - we need to call Thumblr internally
-		$removeThumbnailsUrl = str_replace( $wgVignetteUrl, $wgThumblrUrl, $originalUrl );
+		$removeThumbnailsUrl = str_replace( $wgVignetteUrl, $thumblrUrl, $originalUrl );
 
 		if ( substr( $removeThumbnailsUrl, - 1 ) != '/' ) {
 			$removeThumbnailsUrl = $removeThumbnailsUrl . '/';
