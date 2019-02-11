@@ -37,7 +37,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
-			isStickyEvent,
 			now = new Date(),
 			timestamp = now.getTime(),
 			tzOffset = now.getTimezoneOffset();
@@ -58,8 +57,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		slotParams = slotParams || {};
 		creative = creative || {};
 		bidders = bidders || {};
-
-		isStickyEvent = ['sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(creative.status) > -1;
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -108,7 +105,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'creative_size': (creative.creativeSize || '').replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
-			'scroll_y': isStickyEvent ? slotRegistry.getCurrentScrollY() : slotRegistry.getScrollY(slotName),
+			'scroll_y': slotRegistry.getCurrentScrollY(),
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
