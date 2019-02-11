@@ -102,9 +102,9 @@ var WikiaSearch = {
 			searchPhrase: query,
 			clicked: {
 				type: 'article', // we don't show wikis results right now
-				id: clickedElement.getAttribute('data-page-id'),
+				id: parseInt(clickedElement.getAttribute('data-page-id')),
 				title: clickedElement.text,
-				position: clickedElement.getAttribute('data-pos'),
+				position: parseInt(clickedElement.getAttribute('data-pos')),
 				thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
 			},
 			target: 'redirect',
@@ -116,6 +116,9 @@ var WikiaSearch = {
 
 		// todo: gdpr compliance
 		console.log(payload);
+		require(['search-tracking'], function (searchTracking) {
+			searchTracking.trackSearchClicked(payload);
+		});
 	},
 	trackSearchResultsImpression: function() {
 		var queryparams = new URL(window.location).searchParams;
@@ -140,17 +143,20 @@ var WikiaSearch = {
 		};
 		// TODO: gdpr compliance
 		console.log(payload);
+		require(['search-tracking'], function (searchTracking) {
+			searchTracking.trackSearchImpression(payload);
+		});
 	},
 	getSearchResults: function() {
 		var $results = $('h1 a.result-link[data-page-id]');
 		return $results.map(function(index, item) {
 			return {
-				id: item.getAttribute('data-page-id'),
+				id: parseInt(item.getAttribute('data-page-id')),
 				title: item.text,
-				position: item.getAttribute('data-pos'),
+				position: parseInt(item.getAttribute('data-pos')),
 				thumbnail: !!item.getAttribute('data-thumbnail'),
 			}
-		});
+		}).toArray();
 	},
 	getUniqueSearchId: function() {
 		if (this.searchUID) {
