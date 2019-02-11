@@ -109,9 +109,10 @@ body.skin-oasis {
 
 		.background-image-gradient {
 			background: $color-body-middle;
+			display: none;
 			/* @noflip */
 			left: 50%;
-			opaicty: .3;
+			opacity: .3;
 			// (2) ... this will lay on top of the base ...
 			z-index: 1;
 
