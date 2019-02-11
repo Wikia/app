@@ -88,9 +88,11 @@ class UserPreferencesV2 {
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-wiki-activity' )->plain()] = self::LANDING_PAGE_WIKI_ACTIVITY;
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-recent-changes' )->plain()] = self::LANDING_PAGE_RECENT_CHANGES;
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-feeds' )->plain()] = self::LANDING_PAGE_FEEDS;
+			
+			$selected = $user->getGlobalPreference( self::LANDING_PAGE_PROP_NAME ) ?? self::LANDING_PAGE_MAIN_PAGE;
 
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['default'] = self::LANDING_PAGE_MAIN_PAGE;
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['default'] = $selected;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
