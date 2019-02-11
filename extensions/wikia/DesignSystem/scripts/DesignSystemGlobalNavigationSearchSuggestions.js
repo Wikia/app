@@ -1,5 +1,5 @@
 $(function () {
-	require(['search-tracking', 'uuid'], function (searchTracking, uuid) {
+	require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function (searchTracking, uuid, trackingOptIn) {
 		'use strict';
 		var $globalNav = $('.wds-global-navigation'),
 			$searchDropdown = $globalNav.find('.wds-global-navigation__search'),
@@ -103,19 +103,23 @@ $(function () {
 				suggestionId: uuid()
 			};
 
-			searchTracking.trackSuggestImpression(
-				getSearchTrackingPayload(suggestions, query)
-			);
+			trackingOptIn.pushToUserConsentQueue(function () {
+				searchTracking.trackSuggestImpression(
+					getSearchTrackingPayload(suggestions, query)
+				);
+			});
 		}
 
 		function trackSuggestionClick(suggestion) {
-			searchTracking.trackSuggestClicked(
-				Object.assign(
-					{},
-					getSearchTrackingPayload(trackingState.suggestions, trackingState.query),
-					{
-						positionOfClickedItem: Object.values(trackingState.suggestions).indexOf(suggestion)
-					}
+			searchTracking.trackSuggestImpression(
+				searchTracking.trackSuggestClicked(
+					Object.assign(
+						{},
+						getSearchTrackingPayload(trackingState.suggestions, trackingState.query),
+						{
+							positionOfClickedItem: Object.values(trackingState.suggestions).indexOf(suggestion)
+						}
+					)
 				)
 			);
 		}
