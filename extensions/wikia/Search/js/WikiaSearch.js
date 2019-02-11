@@ -114,10 +114,10 @@ var WikiaSearch = {
 			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
 		};
 
-		// todo: gdpr compliance
-		console.log(payload);
-		require(['search-tracking'], function (searchTracking) {
-			searchTracking.trackSearchClicked(payload);
+		require(['search-tracking', 'wikia.trackingOptIn'], function (searchTracking, trackingOptIn) {
+			trackingOptIn.pushToUserConsentQueue(function () {
+				searchTracking.trackSearchClicked(payload);
+			});
 		});
 	},
 	trackSearchResultsImpression: function() {
@@ -141,10 +141,11 @@ var WikiaSearch = {
 			searchId: this.getUniqueSearchId(),
 			pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
 		};
-		// TODO: gdpr compliance
-		console.log(payload);
-		require(['search-tracking'], function (searchTracking) {
-			searchTracking.trackSearchImpression(payload);
+
+		require(['search-tracking', 'wikia.trackingOptIn'], function (searchTracking, trackingOptIn) {
+			trackingOptIn.pushToUserConsentQueue(function () {
+				searchTracking.trackSearchImpression(payload);
+			});
 		});
 	},
 	getSearchResults: function() {
