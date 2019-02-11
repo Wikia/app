@@ -17,6 +17,10 @@ class Hooks {
 
 	/* save image into local repo */
 	public static function doStoreInternal( array $params, \Status $status ) {
+		\Wikia\Logger\WikiaLogger::instance()
+			->info(
+				'Swift sync hooks - doStoreInternal'
+			);
 
 		// SUS-3826 | do not sync temporary files
 		if ( self::isTempFile( $params['dst'] ) ) {
@@ -31,6 +35,10 @@ class Hooks {
 	}
 
 	public static function doCopyInternal( array $params, \Status $status ) {
+		\Wikia\Logger\WikiaLogger::instance()
+			->info(
+				'Swift sync hooks - doCopyInternal'
+			);
 
 		if ( $status->isGood() ) {
 			self::addOperation( $params );
@@ -39,6 +47,10 @@ class Hooks {
 	}
 
 	public static function doDeleteInternal( array $params, \Status $status ) {
+		\Wikia\Logger\WikiaLogger::instance()
+			->info(
+				'Swift sync hooks - doDeleteInternal'
+			);
 
 		// SUS-3826 | do not sync temporary files
 		if ( self::isTempFile( $params['src'] ) ) {
