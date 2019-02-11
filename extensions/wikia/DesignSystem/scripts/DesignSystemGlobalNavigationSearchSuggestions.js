@@ -130,7 +130,7 @@ $(function () {
 						id: suggestions[articleId]
 					};
 				}),
-				app: 'mobile-wiki',
+				app: 'app',
 				siteId: parseInt(window.wgCityId),
 				suggestionId: trackingState.suggestionId,
 				pvUniqueId: window.pvUID || 'dev'
