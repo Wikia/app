@@ -199,7 +199,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
-		self::purgeTitle( $page->mTitle );
+		self::purgeTitle( $page->getTitle() );
 
 		return true;
 	}
