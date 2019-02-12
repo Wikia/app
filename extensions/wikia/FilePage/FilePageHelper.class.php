@@ -21,9 +21,8 @@ class FilePageHelper {
 	 *
 	 * @return string $url - url to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title) {
+	public static function getFilePageRedirect( Title $title ) {
 		global $wgMemc;
-
 
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
@@ -38,7 +37,7 @@ class FilePageHelper {
 			$img = wfLocalFile( $title );
 		}
 
-		if ( !$img || $img && !$img->fileExists ) {
+		if ( !$img || $img && !$img->exists() ) {
 			$wgMemc->set( $redirKey, $url );
 			return $url;
 		}

@@ -256,8 +256,6 @@ class LightboxController extends WikiaController {
 		$thumbUrl = '';
 		$networks = array();
 
-
-
 		if ( !empty( $file ) ) {
 			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
 			$fileTitle = $fileTitleObj->getText();
@@ -283,7 +281,7 @@ class LightboxController extends WikiaController {
 			$anonRedir = FilePageHelper::getFilePageRedirect( $fileTitleObj );
 
 			$mpUrl = wfAppendQuery(Title::newMainPage()->getFullURL() , [
-				"file" => $fileTitleObj->getText()
+				'file' => $fileTitleObj->getText()
 			] );
 
 			if ( $anonRedir && $anonRedir === $mpUrl ) {
