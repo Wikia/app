@@ -283,7 +283,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'line-image',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-note',
+					'name' => 'wds-icons-message',
 				],
 				'title' => [
 					'type' => 'translatable-text',

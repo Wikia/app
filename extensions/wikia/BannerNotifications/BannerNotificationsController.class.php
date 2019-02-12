@@ -18,7 +18,7 @@ class BannerNotificationsController extends WikiaController {
 	const TYPES = [
 		self::CONFIRMATION_CONFIRM => [
 			'class' => 'wds-success',
-			'icon' => 'wds-icons-checkmark-circle-small',
+			'icon' => 'wds-icons-checkmark-small',
 		],
 		self::CONFIRMATION_NOTIFY => [
 			'class' => 'wds-message',
@@ -26,7 +26,7 @@ class BannerNotificationsController extends WikiaController {
 		],
 		self::CONFIRMATION_ERROR => [
 			'class' => 'wds-alert',
-			'icon' => 'wds-icons-error-small',
+			'icon' => 'wds-icons-alert-small',
 		],
 		self::CONFIRMATION_WARN => [
 			'class' => 'wds-warning',
