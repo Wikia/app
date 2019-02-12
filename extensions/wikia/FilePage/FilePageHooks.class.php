@@ -198,8 +198,8 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @return true -- because it's hook
 	 */
-	public static function onArticleFilesRefresh( Title $title ) {
-		self::purgeTitle( $title );
+	public static function onArticleSave( WikiPage $page ) {
+		self::purgeTitle( $page->mTitle );
 
 		return true;
 	}

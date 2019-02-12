@@ -1297,7 +1297,6 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$flags = $this->checkFlags( $flags );
 
-		Hooks::run( 'ArticleFilesRefresh', [ $this->mTitle ] );
 
 		if ( !Hooks::run( 'ArticleSave', [
 			$this,

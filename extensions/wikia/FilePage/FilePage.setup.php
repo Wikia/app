@@ -48,4 +48,4 @@ $wgHooks['UndeleteComplete'][] = 'FilePageHooks::onUndeleteComplete';
 $wgHooks['ArticleDelete'][] = 'FilePageHooks::onArticleDelete';
 $wgHooks['ArticleSaveComplete'][] = 'FilePageHooks::onArticleSaveComplete';
 $wgHooks['ArticleGetFileLinks'][] = 'FilePageHooks::onGetFileLinks';
-$wgHooks['ArticleFilesRefresh'][] = 'FilePageHooks::onArticleFilesRefresh';
+$wgHooks['ArticleSave'][] = 'FilePageHooks::onArticleSave';
