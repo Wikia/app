@@ -255,9 +255,12 @@ class LightboxController extends WikiaController {
 		$fileUrl = '';
 		$thumbUrl = '';
 		$networks = array();
+		$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
+
+		Wikia::setSurrogateKeysHeaders( "sharecodes-" . $fileTitleObj->getPrefixedText(),
+			false );
 
 		if ( !empty( $file ) ) {
-			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
 			$fileTitle = $fileTitleObj->getText();
 			$articleTitle = $this->request->getVal( 'articleTitle' );
 			$articleTitleObj = Title::newFromText( $articleTitle );
@@ -312,6 +315,8 @@ class LightboxController extends WikiaController {
 					'url' => $network->getUrl( $shareUrl, $linkDescription )
 				);
 			}
+		} else {
+			$shareUrl = Title::newMainPage()->getFullURL();
 		}
 
 		$this->shareUrl = $shareUrl;
