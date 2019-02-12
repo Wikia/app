@@ -32,7 +32,6 @@ $wgHooks['SpecialPreferencesBeforeResetUserOptions'][] = 'UserPreferencesV2::onS
 $wgHooks['SpecialPreferencesAfterResetUserOptions'][] = 'UserPreferencesV2::onSpecialPreferencesAfterResetUserOptions';
 $wgHooks['PreferencesTrySetUserEmail'][] = 'UserPreferencesV2::onPreferencesTrySetUserEmail';
 $wgHooks['SavePreferences'][] = 'UserPreferencesV2::onSavePreferences';
-$wgHooks['UserGetDefaultOptions'][] = 'UserPreferencesV2::onUserGetDefaultOptions';
 
 /**
  * messages
