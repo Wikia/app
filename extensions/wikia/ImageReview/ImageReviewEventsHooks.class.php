@@ -213,8 +213,12 @@ class ImageReviewEventsHooks {
 
 			return array_map(
 				function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
+					$user = $item->getUser();
+					if ( $user === 'FANDOM' ) {
+						$user = $user.' (Image Classifier)';
+					}
 					return [
-						$item->getUser(),
+						$user,
 						$statusMessages[$item->getStatus()],
 						$item->getDate()
 					];
