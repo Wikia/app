@@ -105,7 +105,7 @@ require([
 			},
 		}).done(function (data) {
 			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl),
-				imagesDir = '/extensions/wikia/EmbeddableDiscussions/images/';
+				imagesDir = window.wgExtensionAssetsPath + '/wikia/EmbeddableDiscussions/images/';
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
@@ -113,6 +113,7 @@ require([
 				replyText: $.msg('embeddable-discussions-reply'),
 				replyIconSrc: imagesDir + 'reply.svg',
 				replyTinyIconSrc: imagesDir + 'reply-tiny.svg',
+				scriptPath: window.wgScriptPath,
 				shareText: $.msg('embeddable-discussions-share'),
 				shareIconSrc: imagesDir + 'share.svg',
 				showAll: $.msg('embeddable-discussions-show-all'),
