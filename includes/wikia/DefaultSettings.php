@@ -971,7 +971,7 @@ $wgAdDriverIsAdTestWiki = false;
  * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
  * Enables AdEngine3 extension on articles with Featured Video
  */
-$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = false;
+$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries

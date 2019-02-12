@@ -136,7 +136,7 @@
 	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
 			<a href="<%= actionUrl %>" target="_blank">
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-comment-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
 		</li>
@@ -169,13 +169,13 @@
 	</script>
 	<script type='text/template' id='user-action-private-block-template'>
 		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-cross', 'wds-icon wds-icon-small' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-close', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>
 	<script type='text/template' id='user-action-private-allow-template'>
 		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark-circle', 'wds-icon wds-icon-small' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>

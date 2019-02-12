@@ -132,6 +132,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	});
 
 	it('Doesn\'t return 3x3 size of BOTTOM_LEADERBOARD when there is no UAP', function () {
+		window.innerWidth = 1600;
 		var sizesIn = [[728, 90], [970, 250], [3, 3]],
 			sizesOut = [[728, 90], [970, 250]];
 
@@ -159,6 +160,14 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[300, 50], [300, 250]];
+
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Doesn\'t return 970x250 size of BOTTOM_LEADERBOARD when innerWidth is to small', function () {
+		window.innerWidth = 1000;
+		var sizesIn = [[728, 90], [970, 250]],
+			sizesOut = [[728, 90]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});

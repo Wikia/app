@@ -77,7 +77,7 @@ class MarkWikiAsClosedController extends WikiaController {
 		$isGoForClose = true;
 
 		if ( !empty( $fandomCreatorCommunityId ) ) {
-			$wikiFandomCreatorCommunityId = WikiFactory::getVarByName( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $wikiId );
+			$wikiFandomCreatorCommunityId = WikiFactory::getVarValueByName( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $wikiId );
 
 			if ( $fandomCreatorCommunityId == $wikiFandomCreatorCommunityId ) {
 				$isGoForClose = WikiFactory::resetFlags(
