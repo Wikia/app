@@ -8466,7 +8466,7 @@ $wgVerifyMimeType = true;
  * MediaWiki version number.
  * @var string $wgVersion
  */
-$wgVersion = '1.19.24';
+$wgVersion = '1.31.1';
 
 /**
  * Play videos on file page load.
