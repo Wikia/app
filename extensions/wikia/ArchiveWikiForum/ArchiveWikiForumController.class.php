@@ -17,8 +17,10 @@ class ArchiveWikiForumController extends WikiaController {
             $forumTitle = SpecialPage::getTitleFor( 'Forum' );
             $url = $forumTitle->getLocalURL();
         } else {
+        	global $wgScriptPath;
+
             $messageKey = 'archive-wiki-forums-button-to-discussions';
-            $url = '/d/f';
+            $url = "$wgScriptPath/d/f";
         }
 
         $this->response->setValues( [

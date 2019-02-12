@@ -5,11 +5,11 @@
  */
 class SpecialDiscussionsLogHooks {
 	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
-		global $wgServer;
+		global $wgServer, $wgScriptPath;
 
 		if ( F::app()->wg->User->isAllowed( 'specialdiscussionslog' ) ) {
 			$tools[] = Linker::makeExternalLink(
-				$wgServer . '/d/log?username=' . User::newFromId( $id )->getName(),
+				$wgServer . $wgScriptPath . '/d/log?username=' . User::newFromId( $id )->getName(),
 				wfMessage( 'discussionslog-contributions-link-title' )->escaped()
 			);
 		}
