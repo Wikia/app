@@ -4,6 +4,7 @@ import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
+import { matchMedia } from './match-media';
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -25,6 +26,15 @@ function isIncontentBoxadApplicable() {
 		window.wgIsContentNamespace &&
 		context.get('wiki.opts.adsInContent') &&
 		!context.get('wiki.targeting.wikiIsCorporate');
+}
+
+/**
+ * Enables top_boxad on screen with width >= 1024px.
+ *
+ * @returns {boolean}
+ */
+function isTopBoxadEnabled() {
+	return !matchMedia('screen and (max-width: 1023px)').matches;
 }
 
 export default {
@@ -188,7 +198,7 @@ export default {
 
 	setupStates() {
 		setSlotState('TOP_LEADERBOARD', true);
-		setSlotState('TOP_BOXAD', true);
+		setSlotState('TOP_BOXAD', isTopBoxadEnabled());
 		setSlotState('INCONTENT_BOXAD_1', true);
 		setSlotState('BOTTOM_LEADERBOARD', true);
 		setSlotState('INVISIBLE_SKIN', true);
@@ -252,5 +262,5 @@ export default {
 
 			context.push('events.pushOnScroll.ids', slotName);
 		}, 10000);
-	}
+	},
 };
