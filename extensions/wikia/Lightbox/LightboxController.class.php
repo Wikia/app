@@ -255,12 +255,12 @@ class LightboxController extends WikiaController {
 		$fileUrl = '';
 		$thumbUrl = '';
 		$networks = array();
-		$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
-
-		Wikia::setSurrogateKeysHeaders( "sharecodes-" . $fileTitleObj->getPrefixedText(),
-			false );
 
 		if ( !empty( $file ) ) {
+			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
+
+			Wikia::setSurrogateKeysHeaders( (new LightboxHelper)->getShareSurrogateKey( $fileTitleObj ),
+				false );
 			$fileTitle = $fileTitleObj->getText();
 			$articleTitle = $this->request->getVal( 'articleTitle' );
 			$articleTitleObj = Title::newFromText( $articleTitle );

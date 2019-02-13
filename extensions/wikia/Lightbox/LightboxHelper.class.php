@@ -153,11 +153,11 @@ class LightboxHelper extends WikiaModel {
 	}
 
 	/**
- * Get a surrogate key for share
- * @return string - key
- */
+	 * Get a surrogate key for share
+	 * @return string - key
+	 */
 	public function getShareSurrogateKey(Title $title) {
-		return "sharecodes-" . $title->getPrefixedText();
+		return 'sharecodes-' . $title->getPrefixedText();
 	}
 
 }

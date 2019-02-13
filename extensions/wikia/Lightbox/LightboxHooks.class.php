@@ -37,7 +37,4 @@ class LightboxHooks {
 		Wikia::purgeSurrogateKey( (new LightboxHelper)->getShareSurrogateKey( $page->getTitle() ) );
 		return true;
 	}
-
-
-
 }
