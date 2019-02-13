@@ -79,6 +79,7 @@ export default {
 				targeting: {
 					loc: 'top',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			TOP_BOXAD: {
@@ -160,6 +161,7 @@ export default {
 				targeting: {
 					loc: 'footer',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			FEATURED: {
@@ -211,6 +213,13 @@ export default {
 			const slotParam = slotsDefinition[key].slotShortcut || 'x';
 			context.set(`slots.${key}.targeting.wsi`, `o${slotParam}${pageTypeParam}1`);
 		});
+	},
+
+	setupSizes() {
+		if (window.innerWidth > 1024) {
+			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
+			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
+		}
 	},
 
 	injectBottomLeaderboard() {

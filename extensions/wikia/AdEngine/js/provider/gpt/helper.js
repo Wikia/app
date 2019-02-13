@@ -104,6 +104,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.uap_c = uapContext.getCreativeId();
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
 
+			if (['TOP_LEADERBOARD', 'BOTTOM_LEADERBOARD'].includes(slot.name)) {
+				slotTargetingData.xna = window.innerWidth <= 1023 ? '1' : '0';
+			}
+
 			if (adContext.get('targeting.skin') === 'oasis') {
 				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
 			}
