@@ -215,7 +215,7 @@ class ImageReviewEventsHooks {
 				function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
 					$user = $item->getUser();
 					if ( $user === 'WikiaImageReview020' ) {
-						$user = $user.' (IC)';
+						$user = 'Image Classifier';
 					}
 					return [
 						$user,
