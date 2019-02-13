@@ -215,7 +215,7 @@ export default {
 		});
 	},
 
-	setupSizes() {
+	setupSizesAvailability() {
 		if (window.innerWidth > 1024) {
 			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
 			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
