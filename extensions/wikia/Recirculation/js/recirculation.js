@@ -170,25 +170,28 @@ require([
 					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
 					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
 
-				if (!sponsoredItem || !$firstItem) {
+				if (!$firstItem) {
 					return;
 				}
 
-				if (sponsoredItem.title && sponsoredItem.title.length > 90) {
-					sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
-				} else {
-					sponsoredItem.shortTitle = sponsoredItem.title;
-				}
+				if (sponsoredItem) {
 
-				if (sponsoredItem.thumbnailUrl && window.Vignette) {
-					sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
-						mode: window.Vignette.mode.zoomCrop,
-						height: 53,
-						width: 53
-					});
-				}
+					if (sponsoredItem.title && sponsoredItem.title.length > 90) {
+						sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
+					} else {
+						sponsoredItem.shortTitle = sponsoredItem.title;
+					}
 
-				$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+					if (sponsoredItem.thumbnailUrl && window.Vignette) {
+						sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
+							mode: window.Vignette.mode.zoomCrop,
+							height: 53,
+							width: 53
+						});
+					}
+
+					$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+				}
 
 				tracker.trackImpression('rail');
 
