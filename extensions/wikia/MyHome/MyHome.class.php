@@ -172,7 +172,8 @@ class MyHome {
 			return true;
 		}
 
-		if ( $title ) {
+		// only apply landing page redirect if no title was provided (root path of wiki is being requested)
+		if ( $webRequest->getVal( 'title' ) === null && $title ) {
 			$title = UserService::getLandingPage( $wgUser );
 		}
 
