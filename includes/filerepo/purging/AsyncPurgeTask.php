@@ -23,25 +23,32 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	private function removeThumbnailsInThumblr( $originalUrl ) {
+		Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . ' - Remove thumbnails URL', [
+			'remove_thumbnails_url' => $this->getRemoveThumbnailsUrl( $originalUrl ),
+		] );
+
+		\Http::request( "DELETE", $url, [ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
+	}
+
+	private function getRemoveThumbnailsUrl( $originalUrl ) {
 		global $wgVignetteUrl;
 
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
 		$thumblrUrl = "http://{$urlProvider->getUrl( 'thumblr' )}/";
 
 		// replace base URL - we need to call Thumblr internally
-		$removeThumbnailsUrl = str_replace( $wgVignetteUrl, $thumblrUrl, $originalUrl );
+		$url = str_replace( $wgVignetteUrl, $thumblrUrl, $originalUrl );
 
-		if ( substr( $removeThumbnailsUrl, - 1 ) != '/' ) {
-			$removeThumbnailsUrl = $removeThumbnailsUrl . '/';
+		// remove the query parameters if provided
+		if ( strpos( $url, '?' ) !== false ) {
+			$url = substr( $url, 0, strpos( $url, "?" ) );
 		}
-		$removeThumbnailsUrl = $removeThumbnailsUrl . "thumbnails";
 
-		Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . ' - Remove thumbnails URL', [
-			'remove_thumbnails_url' => $removeThumbnailsUrl,
-		] );
+		if ( substr( $url, - 1 ) != '/' ) {
+			$url = $url . '/';
+		}
 
-		\Http::request( "DELETE", $removeThumbnailsUrl,
-			[ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
+		return $url . "thumbnails";
 	}
 
 	private function purgerUrls( $thumbnailUrls ) {
