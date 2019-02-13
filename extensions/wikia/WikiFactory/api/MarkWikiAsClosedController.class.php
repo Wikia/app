@@ -102,8 +102,15 @@ class MarkWikiAsClosedController extends WikiaController {
 	}
 
 	static private function closeWiki( $wikiId, $user, $reason ) {
-		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason, $user );
-		return ($res === WikiFactory::CLOSE_ACTION);
+		$status = WikiFactory::setPublicStatus(
+			WikiFactory::CLOSE_ACTION,
+			$wikiId,
+			$reason,
+			$user,
+			true
+		);
+
+		return ($status === WikiFactory::CLOSE_ACTION);
 	}
 
 	static private function removeProtectionFromFandomCreatorCommunityWiki( $wikiId, $reason ) {
