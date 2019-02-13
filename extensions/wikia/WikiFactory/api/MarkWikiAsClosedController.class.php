@@ -30,7 +30,7 @@ class MarkWikiAsClosedController extends WikiaController {
 		if ( !is_numeric( $wikiId ) || empty( $reason ) || !is_numeric( $userId ) ) {
 			// No wikiId, userId or reason given: Bad Request
 			$this->response->setCode( 400 );
-			$this->info('no wikiId or reason parameter in request' );
+			$this->info( 'no wikiId or reason parameter in request' );
 
 			return;
 		}
@@ -38,14 +38,14 @@ class MarkWikiAsClosedController extends WikiaController {
 		if ( !empty( $fandomCreatorCommunityId ) ) {
 			if ( !static::isValidFandomCreatorCommunityId( $fandomCreatorCommunityId, $wikiId )) {
 				$this->response->setCode( 400 );
-				$this->info('invalid fandomCreatorCommunityId parameter in request: ' . $fandomCreatorCommunityId );
+				$this->info( 'invalid fandomCreatorCommunityId parameter in request: ' . $fandomCreatorCommunityId );
 
 				return;
 			}
 
 			if ( !static::removeProtectionFromFandomCreatorCommunityWiki( $wikiId, $reason ) ) {
 				$this->response->setCode( 500 );
-				$this->info('could not remove protected flag on wiki with id: ' . $wikiId );
+				$this->info( 'could not remove protected flag on wiki with id: ' . $wikiId );
 
 				return;
 			}
@@ -55,7 +55,7 @@ class MarkWikiAsClosedController extends WikiaController {
 
 		if ( !static::closeWiki( $wikiId, $user, $reason ) ) {
 			$this->response->setCode( 500 );
-			$this->info('could not close wiki with id: ' . $wikiId );
+			$this->info( 'could not close wiki with id: ' . $wikiId );
 
 			return;
 		}
