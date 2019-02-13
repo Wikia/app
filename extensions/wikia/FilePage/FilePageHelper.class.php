@@ -30,7 +30,7 @@ class FilePageHelper {
 		if ( !$title->userCan( 'read' ) ) {
 			return $url;
 		}
-		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redir', WebRequest::detectProtocol(), $title->getPrefixedText() );
 
 		$img = wfFindFile( $title );
 		if ( !$img ) {
