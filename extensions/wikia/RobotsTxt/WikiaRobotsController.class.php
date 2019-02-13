@@ -5,19 +5,27 @@ use Wikia\RobotsTxt\RobotsTxt;
 use Wikia\RobotsTxt\WikiaRobots;
 
 class WikiaRobotsController extends WikiaController {
+	protected function getLocalRules() {
+		$wikiaRobots = new WikiaRobots( new PathBuilder() );
+		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt(), true );
+		return [
+			'allowed' => $robots->getAllowedPaths(),
+			'disallowed' => $robots->getDisallowedPaths(),
+			'sitemaps' => $robots->getSitemaps(),
+		];
+	}
 
 	public function getAllowedDisallowed() {
-		$wikiaRobots = new WikiaRobots( new PathBuilder() );
-		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
+		$rules = $this->getLocalRules();
 
-		$this->response->setVal( 'allowed', $robots->getAllowedPaths() );
-		$this->response->setVal( 'disallowed', $robots->getDisallowedPaths() );
-		$this->response->setVal( 'sitemaps', $robots->getSitemaps() );
+		foreach ($rules as $key => $val) {
+			$this->response->setVal( $key, $val );
+		}
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function getRulesForDomain() {
-		global $wgServer;
+		global $wgServer, $wgCityId;
 
 		$wikis = \WikiFactory::getWikisUnderDomain( parse_url( $wgServer, PHP_URL_HOST ), true );
 		$degraded = false;
@@ -26,15 +34,19 @@ class WikiaRobotsController extends WikiaController {
 		$sitemap = [];
 		foreach ( $wikis as $wikiData ) {
 			if ( \Hooks::run( 'GenerateRobotsRules', [ $wikiData['city_id'] ] ) ) {
-				$params = [
-					'controller' => 'WikiaRobots',
-					'method' => 'getAllowedDisallowed',
-					'shallow' => 1
-				];
-				if ( $this->request->getBool( 'forcerobots' ) ) {
-					$params['forcerobots'] = '1';
+				if ( $wikiData['city_id'] === $wgCityId ) {
+					$response = $this->getLocalRules();
+				} else {
+					$params = [
+						'controller' => 'WikiaRobots',
+						'method'     => 'getAllowedDisallowed',
+						'shallow'    => 1
+					];
+					if ( $this->request->getBool( 'forcerobots' ) ) {
+						$params['forcerobots'] = '1';
+					}
+					$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA, false, true );
 				}
-				$response = \ApiService::foreignCall( $wikiData['city_dbname'], $params, \ApiService::WIKIA );
 				if ( !empty( $response ) ) {
 					if ( isset( $response['allowed'] ) ) {
 						$allow = array_merge( $allow, $response['allowed'] );
