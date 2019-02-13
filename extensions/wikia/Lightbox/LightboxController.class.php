@@ -315,8 +315,6 @@ class LightboxController extends WikiaController {
 					'url' => $network->getUrl( $shareUrl, $linkDescription )
 				);
 			}
-		} else {
-			$shareUrl = Title::newMainPage()->getFullURL();
 		}
 
 		$this->shareUrl = $shareUrl;
