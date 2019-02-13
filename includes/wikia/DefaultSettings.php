@@ -974,6 +974,12 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
