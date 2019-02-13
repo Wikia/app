@@ -4,8 +4,6 @@ class UserService {
 
 	const CACHE_EXPIRATION = 86400;//1 day
 
-	const SHOW_FEEDS_IF_REGISTERED_AFTER = '20190210000000';
-
 	public static function getNameFromUrl( $url ) {
 		$out = false;
 
@@ -26,50 +24,23 @@ class UserService {
 	 * @param User $user
 	 *
 	 * @return Title
-	 * @throws MWException
 	 */
-	public static function getLandingPage( User $user ): Title {
-		global $wgEnableFeedsAndPostsExt;
+	public static function getMainPage( User $user ) {
+		$title = Title::newMainPage();
 
-		$value = self::getLandingPagePreference( $user );
-
-		switch ( $value ) {
-			case UserPreferencesV2::LANDING_PAGE_FEEDS:
-				if ( $wgEnableFeedsAndPostsExt ) {
-					return new class extends Title {
-						public function getFullURL( $query = '', $query2 = false ) {
-							global $wgScriptPath;
-
-							return wfExpandUrl( "$wgScriptPath/f" );
-						}
-					};
-				}
-
-				return Title::newMainPage();
-
-				break;
-			case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-				return SpecialPage::getTitleFor( 'RecentChanges' );
-
-				break;
-			case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-				return SpecialPage::getTitleFor( 'WikiActivity' );
-
-				break;
-			case UserPreferencesV2::LANDING_PAGE_MAIN_PAGE:
-			default:
-				return Title::newMainPage();
-		}
-	}
-
-	public static function getLandingPagePreference( User $user ) {
-		$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
-
-		if ( $user->getRegistration() >= static::SHOW_FEEDS_IF_REGISTERED_AFTER ) {
-			return $value ?? UserPreferencesV2::LANDING_PAGE_FEEDS;
+		if ( $user->isLoggedIn() ) {
+			$value = $user->getGlobalPreference( UserPreferencesV2::LANDING_PAGE_PROP_NAME );
+			switch ( $value ) {
+				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
+					$title = SpecialPage::getTitleFor( 'WikiActivity' );
+					break;
+				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
+					$title = SpecialPage::getTitleFor( 'RecentChanges' );
+					break;
+			}
 		}
 
-		return $value ?? UserPreferencesV2::LANDING_PAGE_MAIN_PAGE;
+		return $title;
 	}
 
 	/**

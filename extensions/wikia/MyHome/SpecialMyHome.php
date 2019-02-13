@@ -16,6 +16,6 @@ $wgSpecialPageGroups['WikiActivity'] = 'changes';
 $wgExtensionMessagesFiles['WikiActivityAliases'] = "$dir/SpecialWikiActivity.alias.php";
 
 // hooks
-$wgHooks['TestCanonicalRedirect'][] = 'MyHome::getInitialMainPage';
+$wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';
 $wgHooks['GetPreferences'][] = 'MyHome::onGetPreferences';
 $wgHooks['RevisionInsertComplete'][] = 'MyHome::onRevisionInsertComplete';

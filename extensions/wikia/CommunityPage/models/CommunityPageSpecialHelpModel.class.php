@@ -36,6 +36,6 @@ class CommunityPageSpecialHelpModel {
  		}
 
  		// this is a business decision: fallback to landing page taken from preferences
- 		return UserService::getLandingPage( $wgUser )->getFullURL();
+ 		return UserService::getMainPage( $wgUser )->getLocalURL();
  	}
 }

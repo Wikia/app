@@ -32,7 +32,6 @@ $messages['en'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
 	'preferences-v2-redirect-main-page' => 'Main Page',
 	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
-	'preferences-v2-redirect-feeds' => 'Community Feeds',
 	'preferences-v2-redirect-explanation' => 'The Landing page option allows you to choose where you go when you type $1 into your browser.',
 	'prefs-under-the-hood' => 'Under the Hood',
 	'prefs-recent-changesv2' => 'Recent changes, histories, and logs',

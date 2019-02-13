@@ -83,6 +83,14 @@ class MediaWiki {
 			$ret = Title::newFromID( $curid );
 		} elseif ( $title == '' && $action != 'delete' ) {
 			$ret = Title::newMainPage();
+
+			/* Wikia change begin - @author: Macbre */
+			/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
+			if(!$request->getInt( 'diff' ) && !$request->getInt( 'oldid' )) {
+				Hooks::run( 'InitialQueriesMainPage', array( &$ret ) );
+			}
+			/* Wikia change end */
+
 		} else {
 			$ret = Title::newFromURL( $title );
 			// Alias NS_MEDIA page URLs to NS_FILE...we only use NS_MEDIA
@@ -109,6 +117,12 @@ class MediaWiki {
 				$ret = $rev ? $rev->getTitle() : $ret;
 			}
 		}
+
+		/* Wikia change begin - @author: nAndy */
+		/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
+		/* It can be used for redirects but it changes url in end user's browser so it might not be what you want it to be */
+		Hooks::run( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
+		/* Wikia change end */
 
 		if ( $ret === null || ( $ret->getDBkey() == '' && $ret->getInterwiki() == '' ) ) {
 			$ret = SpecialPage::getTitleFor( 'Badtitle' );
@@ -239,7 +253,7 @@ class MediaWiki {
 		} elseif ( (
 			$shouldRedirectToTitle ||
 			$output->isRedirect() )
-			&& Hooks::run( 'TestCanonicalRedirect', array( $request, &$title, $output ) ) )
+			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
 			if ( $shouldRedirectToTitle ) {
 
