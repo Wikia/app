@@ -26,8 +26,12 @@ var LatestActivity = {
 };
 
 $(window).load(function() {
-	$('.WikiaRail').on('afterLoad.rail', function() {
-		LatestActivity.init();
-	});
+	var showLatestActivity = window.Wikia.AbTest.inGroup('HIDE_LATEST_ACTIVITY', 'SHOW');
+
+	if (showLatestActivity) {
+		$('.WikiaRail').on('afterLoad.rail', function() {
+			LatestActivity.init();
+		});
+	}
 });
 
