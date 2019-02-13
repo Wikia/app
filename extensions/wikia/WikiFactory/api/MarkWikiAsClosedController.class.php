@@ -41,7 +41,7 @@ class MarkWikiAsClosedController extends WikiaController {
 
 				$this->info(
 					'invalid fandomCreatorCommunityId parameter in request',
-					[ 'fandomCreatorCommunityId' => $fandomCreatorCommunityId ]
+					[ 'fandom_creator_community_id' => $fandomCreatorCommunityId ]
 				);
 
 				return;
@@ -52,7 +52,7 @@ class MarkWikiAsClosedController extends WikiaController {
 
 				$this->info(
 					'could not remove protected flag on wiki with id',
-					[ 'wikiId' => $wikiId ]
+					[ 'wiki_id' => $wikiId ]
 				);
 
 				return;
@@ -66,7 +66,7 @@ class MarkWikiAsClosedController extends WikiaController {
 
 			$this->info(
 				'could not close wiki with id',
-				[ 'wikiId' => $wikiId ]
+				[ 'wiki_id' => $wikiId ]
 			);
 
 			return;
