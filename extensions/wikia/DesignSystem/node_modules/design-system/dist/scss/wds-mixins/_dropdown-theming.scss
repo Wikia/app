@@ -41,11 +41,25 @@
 		}
 	}
 
-	.wds-dropdown::after {
-		border-bottom-color: $dropdown-background-color;
-	}
+	.wds-dropdown {
+		&::after {
+			border-bottom-color: $dropdown-background-color;
+		}
 
-	.wds-dropdown::before {
-		border-bottom-color: $color-page-border;
+		&::before {
+			border-bottom-color: $color-page-border;
+		}
+
+		&.wds-is-flipped {
+			&::after {
+				border-bottom-color: transparent;
+				border-top-color: $dropdown-background-color;
+			}
+
+			&::before {
+				border-bottom-color: transparent;
+				border-top-color: $color-page-border;
+			}
+		}
 	}
 }

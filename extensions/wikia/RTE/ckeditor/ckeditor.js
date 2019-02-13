@@ -48,3 +48,6 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
  * @member CKEDITOR
  */
 CKEDITOR.skinName = 'wikia';
+
+// Wikia change
+CKEDITOR.version = '4.7.0';

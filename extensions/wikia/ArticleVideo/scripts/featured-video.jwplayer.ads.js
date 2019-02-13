@@ -219,7 +219,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 
 			player.on('adRequest', function (event) {
 				var vastParams = parseVastParamsFromEvent(event);
-				slotRegistry.storeScrollY(featuredVideoSlotName);
 				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 

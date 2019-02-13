@@ -578,6 +578,13 @@ return array(
 			'jquery.byteLimit',
 		),
 	),
+	'mediawiki.action.view.redirect' => array(
+		'scripts' => 'resources/mediawiki.action/mediawiki.action.view.redirect.js',
+		'dependencies' => array(
+			'jquery.client',
+		),
+		'position' => 'top',
+	),
 	'mediawiki.action.history' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.history.js',
 		'dependencies' => 'jquery.ui.button',

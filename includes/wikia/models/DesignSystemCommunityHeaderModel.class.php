@@ -98,7 +98,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'add-new-page',
 				'community-header-add-new-page',
 				'community-header-add-new-page',
-				'wds-icons-article-small'
+				'wds-icons-page-small'
 			)
 		];
 	}
@@ -110,7 +110,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'add-new-page',
 				'community-header-add',
 				'community-header-add-new-page',
-				'wds-icons-article-small'
+				'wds-icons-page-small'
 			),
 			$this->getButton(
 				$this->getSpecialPageURL( 'WikiActivity' ),
@@ -129,7 +129,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'add-new-page',
 				null,
 				'community-header-add-new-page',
-				'wds-icons-article-small'
+				'wds-icons-page-small'
 			),
 			$this->getButton(
 				$this->getSpecialPageURL( 'WikiActivity' ),
@@ -370,7 +370,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				],
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-explore-tiny'
+					'name' => 'wds-icons-book-tiny'
 				],
 				'items' => array_map( function ( $item ) {
 					return [
@@ -428,7 +428,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'tracking_label' => $tracking,
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-reply-small',
+					'name' => 'wds-icons-comment-tiny',
 				]
 			];
 		}

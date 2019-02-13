@@ -15,7 +15,7 @@ class PageShareHooks {
 			$title->exists()
 		) {
 			$label = wfMessage( 'page-share-entry-point-label' )->escaped();
-			$buttons[] = new Button( $label, 'wds-icons-share', '#', 'wds-is-secondary', 'ShareEntryPoint' );
+			$buttons[] = new Button( $label, 'wds-icons-share-small', '#', 'wds-is-secondary', 'ShareEntryPoint' );
 		}
 
 		return true;
