@@ -52,4 +52,12 @@ Draft has been restored and a user published an edit:
 Wikia.Tracker:  trackingevent editor-ck/impression/draft-publish/ [analytics track]
 ```
 
+#### Draft conflicts
+
+We detected that someone edited the the page after your draft has been saved:
+
+```
+Wikia.Tracker:  trackingevent editor-ck/impression/draft-conflict/ [analytics track]
+```
+
 > `editor-ck` part is replaced wth an appropriate editor identifier (see the first section of this README file).

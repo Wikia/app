@@ -3,6 +3,7 @@ describe('Krux module', function () {
 	'use strict';
 
 	var kruxTrackerEventName = 'krux/segments_count',
+		mockedUserId = 'testUser',
 		mocks,
 		noop = function () {};
 
@@ -26,9 +27,7 @@ describe('Krux module', function () {
 			track: noop
 		},
 		window: {
-			localStorage: {
-				kxuser: 'testUser'
-			}
+			localStorage: {}
 		},
 		document: {},
 		wikiaTracker: {
@@ -44,12 +43,28 @@ describe('Krux module', function () {
 
 	mocks.log.levels = {};
 
-	it('Expects to get user from localStorage', function () {
-		expect(getModule().getUser()).toBe(mocks.window.localStorage.kxuser);
+	it('Expects to get user from localStorage with the old key: kxuser', function () {
+		mocks.window.localStorage.kxuser = mockedUserId;
+		expect(getModule().getUser()).toBe(mockedUserId);
+	});
+
+	it('Expects to get user from localStorage with the new key: kxwikia_user', function () {
+		mocks.window.localStorage['kxwikia_user'] = mockedUserId;
+		expect(getModule().getUser()).toBe(mockedUserId);
 	});
 
 	it('Expects to get empty array of segments from localStorage', function () {
 		expect(getModule().getSegments()).toEqual([]);
+	});
+
+	it('Expects to get segments from localStorage with the old key: kxsegs', function () {
+		mocks.window.localStorage.kxsegs = 'l7lznzoty,l4ml7tc6y,l4w5i2lte';
+		expect(getModule().getSegments()).toEqual([ 'l7lznzoty' , 'l4ml7tc6y', 'l4w5i2lte' ]);
+	});
+
+	it('Expects to get segments from localStorage with the new key: kxwikia_segs', function () {
+		mocks.window.localStorage['kxwikia_segs'] = 'l7lznzoty,l4ml7tc6y,l4w5i2lte';
+		expect(getModule().getSegments()).toEqual([ 'l7lznzoty' , 'l4ml7tc6y', 'l4w5i2lte' ]);
 	});
 
 	it('Expects to get limited amount of segments from localStorage', function () {
@@ -64,6 +79,7 @@ describe('Krux module', function () {
 	it('Expects to track empty segments array', function () {
 		spyOn(mocks.adTracker, 'track');
 		mocks.window.localStorage.kxsegs = '';
+		mocks.window.localStorage['kxwikia_segs'] = '';
 
 		getModule().getSegments();
 

@@ -18,7 +18,7 @@ class SpecialVideosHooks {
 			$user->isAllowed( 'videoupload' )
 		) {
 			$label = wfMessage( 'special-videos-add-video' )->escaped();
-			$buttons[] = new Button( $label, 'wds-icons-video-camera', '#', 'addVideo' );
+			$buttons[] = new Button( $label, 'wds-icons-video', '#', 'addVideo' );
 		}
 
 		return true;
