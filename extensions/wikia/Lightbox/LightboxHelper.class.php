@@ -156,8 +156,7 @@ class LightboxHelper extends WikiaModel {
 	 * Get a surrogate key for share
 	 * @return string - key
 	 */
-	public function getShareSurrogateKey(Title $title) {
+	public function getShareSurrogateKey( Title $title ) {
 		return 'sharecodes-' . $title->getPrefixedText();
 	}
-
 }

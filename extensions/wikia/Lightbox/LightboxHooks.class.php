@@ -34,7 +34,7 @@ class LightboxHooks {
 		if ( !$page->getTitle()->inNamespace( NS_FILE ) ) {
 			return true;
 		}
-		Wikia::purgeSurrogateKey( (new LightboxHelper)->getShareSurrogateKey( $page->getTitle() ) );
+		Wikia::purgeSurrogateKey( ( new LightboxHelper )->getShareSurrogateKey( $page->getTitle() ) );
 		return true;
 	}
 }
