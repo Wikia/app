@@ -11,14 +11,18 @@ class AsyncPurgeTask extends BaseTask {
 
 		$task = ( new AsyncPurgeTask() )->title( $this->title );
 		$taskLists[] =
-			( new AsyncTaskList() )->wikiId( $wgCityId )
-				->add( $task->call( 'removeThumbnailsInThumblr', $originalUrl ) )
-				->add( $task->call( 'purgerUrls', $thumbnailUrls ) );
+			( new AsyncTaskList() )->wikiId( $wgCityId )->add( $task->call( 'removeThumbnails',
+				$originalUrl, $thumbnailUrls ) );
 
 		return AsyncTaskList::batch( $taskLists );
 	}
 
-	public function removeThumbnailsInThumblr( $originalUrl ) {
+	public function removeThumbnails( $originalUrl, $thumbnailUrls ) {
+		$this->removeThumbnailsInThumblr( $originalUrl );
+		$this->purgerUrls( $thumbnailUrls );
+	}
+
+	private function removeThumbnailsInThumblr( $originalUrl ) {
 		global $wgVignetteUrl;
 
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
@@ -40,7 +44,7 @@ class AsyncPurgeTask extends BaseTask {
 			[ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
 	}
 
-	public function purgerUrls( $thumbnailUrls ) {
+	private function purgerUrls( $thumbnailUrls ) {
 		// This is another async event but it cannot happen before we call Thumblr to clear thumbs in GCS
 		SquidUpdate::purge( $thumbnailUrls );
 	}
