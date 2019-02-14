@@ -9,8 +9,8 @@ class AsyncPurgeTask extends BaseTask {
 		global $wgCityId;
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'file' => $fileId,
-			'thumbnail_urls' => $thumbnailUrls,
+			'file' => json_encode( $fileId ),
+			'thumbnail_urls' => json_encode( $thumbnailUrls ),
 		] );
 
 		$task = new AsyncPurgeTask();
@@ -26,8 +26,8 @@ class AsyncPurgeTask extends BaseTask {
 	 */
 	public function removeThumbnails( FileId $fileId, array $thumbnailUrls ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'file' => $fileId,
-			'thumbnail_urls' => $thumbnailUrls,
+			'file' => json_encode( $fileId ),
+			'thumbnail_urls' => json_encode( $thumbnailUrls ),
 		] );
 
 		try {
@@ -36,17 +36,24 @@ class AsyncPurgeTask extends BaseTask {
 		}
 		catch ( \Exception $exception ) {
 			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-				'file' => $fileId,
+				'file' => json_encode( $fileId ),
 				'thumbnail_urls' => $thumbnailUrls,
 			] );
 			throw $exception;
 		}
 	}
 
+	private function purgerUrls( array $thumbnailUrls ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'thumbnail_urls' => json_encode( $thumbnailUrls ),
+		] );
+		SquidUpdate::purge( $thumbnailUrls );
+	}
+
 	private function removeThumbnailsInThumblr( array $fileId ) {
 		$url = $this->getRemoveThumbnailsUrl( FileId::deserializeFromTask( $fileId ) );
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'file' => $fileId,
+			'file' => json_encode( $fileId ),
 			'remove_thumbnails_url' => $url,
 		] );
 		\Http::request( "DELETE", $url, [ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
@@ -63,7 +70,7 @@ class AsyncPurgeTask extends BaseTask {
 		return $url;
 	}
 
-	private function removeTrailingSlash( $text ) {
+	private function removeTrailingSlash( string $text ) {
 		if ( substr( $text, - 1 ) != '/' ) {
 			return substr( $text, 0, - 1 );
 		} else {
@@ -71,8 +78,4 @@ class AsyncPurgeTask extends BaseTask {
 		}
 	}
 
-	private function purgerUrls( $thumbnailUrls ) {
-		// This is another async event but it cannot happen before we call Thumblr to clear thumbs in GCS
-		SquidUpdate::purge( $thumbnailUrls );
-	}
 }

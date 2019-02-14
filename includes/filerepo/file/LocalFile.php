@@ -439,15 +439,15 @@ class LocalFile extends File {
 		wfDebug( __METHOD__ . ': upgrading ' . $this->getName() . " to the current schema\n" );
 
 		$dbw->update( 'image', [
-				'img_width' => $this->width,
-				'img_height' => $this->height,
-				'img_bits' => $this->bits,
-				'img_media_type' => $this->media_type,
-				'img_major_mime' => $major,
-				'img_minor_mime' => $minor,
-				'img_metadata' => $this->metadata,
-				'img_sha1' => $this->sha1,
-			], [ 'img_name' => $this->getName() ], __METHOD__ );
+			'img_width' => $this->width,
+			'img_height' => $this->height,
+			'img_bits' => $this->bits,
+			'img_media_type' => $this->media_type,
+			'img_major_mime' => $major,
+			'img_minor_mime' => $minor,
+			'img_metadata' => $this->metadata,
+			'img_sha1' => $this->sha1,
+		], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 		$this->saveToCache();
 
@@ -792,10 +792,25 @@ class LocalFile extends File {
 	}
 
 	private function publishAsyncPurgeTask( array $urls ) {
-		$id =
-			new FileId( $this->getBucket(), $this->getHashPath() . rawurlencode( $this->getName() ),
-				$this->getPathPrefix() );
-		( new AsyncPurgeTask() )->publish( $id, $urls );
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'original_url' => $this->getURL(),
+			'thumbnail_urls' => json_encode( $urls ),
+		] );
+		try {
+			$id =
+				new FileId( $this->getBucket(),
+					$this->getHashPath() . rawurlencode( $this->getName() ),
+					$this->getPathPrefix() );
+			( new AsyncPurgeTask() )->publish( $id, $urls );
+		}
+		catch ( Exception $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'error' => $e->getMessage(),
+				'call_stack' => $e->getTraceAsString(),
+				'original_url' => $this->getURL(),
+				'thumbnail_urls' => json_encode( $urls ),
+			] );
+		}
 	}
 
 	/**
@@ -908,11 +923,11 @@ class LocalFile extends File {
 
 		if ( $this->historyLine == 0 ) {// called for the first time, return line from cur
 			$this->historyRes = $dbr->select( 'image', [
-					'*',
-					"'' AS oi_archive_name",
-					'0 as oi_deleted',
-					'img_sha1',
-				], [ 'img_name' => $this->title->getDBkey() ], $fname );
+				'*',
+				"'' AS oi_archive_name",
+				'0 as oi_deleted',
+				'img_sha1',
+			], [ 'img_name' => $this->title->getDBkey() ], $fname );
 
 			if ( 0 == $dbr->numRows( $this->historyRes ) ) {
 				$this->historyRes = null;
@@ -1073,21 +1088,21 @@ class LocalFile extends File {
 			#
 			# Use INSERT IGNORE .. ON DUPLICATE KEY UPDATE instead now
 			$dbw->upsert( 'image', [
-					'img_name' => $this->getName(),
-					'img_size' => $this->size,
-					'img_width' => intval( $this->width ),
-					'img_height' => intval( $this->height ),
-					'img_bits' => $this->bits,
-					'img_media_type' => $this->media_type,
-					'img_major_mime' => $this->major_mime,
-					'img_minor_mime' => $this->minor_mime,
-					'img_timestamp' => $timestamp,
-					'img_description' => $comment,
-					'img_user' => $user->getId(),
-					'img_user_text' => $user->isAnon() ? $user->getName() : '', // SUS-3086
-					'img_metadata' => $this->metadata,
-					'img_sha1' => $this->sha1,
-				], [], [ "img_name = VALUES(img_name)" ], __METHOD__ );
+				'img_name' => $this->getName(),
+				'img_size' => $this->size,
+				'img_width' => intval( $this->width ),
+				'img_height' => intval( $this->height ),
+				'img_bits' => $this->bits,
+				'img_media_type' => $this->media_type,
+				'img_major_mime' => $this->major_mime,
+				'img_minor_mime' => $this->minor_mime,
+				'img_timestamp' => $timestamp,
+				'img_description' => $comment,
+				'img_user' => $user->getId(),
+				'img_user_text' => $user->isAnon() ? $user->getName() : '', // SUS-3086
+				'img_metadata' => $this->metadata,
+				'img_sha1' => $this->sha1,
+			], [], [ "img_name = VALUES(img_name)" ], __METHOD__ );
 		}
 		catch ( DBError $ex ) {
 			$dbw->rollback( __METHOD__ );
@@ -1109,22 +1124,22 @@ class LocalFile extends File {
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
 			$dbw->insertSelect( 'oldimage', 'image', [
-					'oi_name' => 'img_name',
-					'oi_archive_name' => $dbw->addQuotes( $oldver ),
-					'oi_size' => 'img_size',
-					'oi_width' => 'img_width',
-					'oi_height' => 'img_height',
-					'oi_bits' => 'img_bits',
-					'oi_timestamp' => 'img_timestamp',
-					'oi_description' => 'img_description',
-					'oi_user' => 'img_user',
-					'oi_user_text' => 'img_user_text',
-					'oi_metadata' => 'img_metadata',
-					'oi_media_type' => 'img_media_type',
-					'oi_major_mime' => 'img_major_mime',
-					'oi_minor_mime' => 'img_minor_mime',
-					'oi_sha1' => 'img_sha1',
-				], [ 'img_name' => $this->getName() ], __METHOD__ );
+				'oi_name' => 'img_name',
+				'oi_archive_name' => $dbw->addQuotes( $oldver ),
+				'oi_size' => 'img_size',
+				'oi_width' => 'img_width',
+				'oi_height' => 'img_height',
+				'oi_bits' => 'img_bits',
+				'oi_timestamp' => 'img_timestamp',
+				'oi_description' => 'img_description',
+				'oi_user' => 'img_user',
+				'oi_user_text' => 'img_user_text',
+				'oi_metadata' => 'img_metadata',
+				'oi_media_type' => 'img_media_type',
+				'oi_major_mime' => 'img_major_mime',
+				'oi_minor_mime' => 'img_minor_mime',
+				'oi_sha1' => 'img_sha1',
+			], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 			# Update the current image row
 			$dbw->update( 'image', [ /* SET */
@@ -1142,7 +1157,7 @@ class LocalFile extends File {
 									 // SUS-3086
 									 'img_metadata' => $this->metadata,
 									 'img_sha1' => $this->sha1,
-				], [ 'img_name' => $this->getName() ], __METHOD__ );
+			], [ 'img_name' => $this->getName() ], __METHOD__ );
 
 		}
 
@@ -1733,9 +1748,9 @@ class LocalFileDeleteBatch {
 					if ( $props['fileExists'] ) {
 						// Upgrade the oldimage row
 						$dbw->update( 'oldimage', [ 'oi_sha1' => $props['sha1'] ], [
-								'oi_name' => $this->file->getName(),
-								'oi_archive_name' => $row->oi_archive_name,
-							], __METHOD__ );
+							'oi_name' => $this->file->getName(),
+							'oi_archive_name' => $row->oi_archive_name,
+						], __METHOD__ );
 						$hashes[$row->oi_archive_name] = $props['sha1'];
 					} else {
 						$hashes[$row->oi_archive_name] = false;
@@ -1791,28 +1806,28 @@ class LocalFileDeleteBatch {
 			$concat = $dbw->buildConcat( [ "img_sha1", $encExt ] );
 			$where = [ 'img_name' => $this->file->getName() ];
 			$dbw->insertSelect( 'filearchive', 'image', [
-					'fa_storage_group' => $encGroup,
-					'fa_storage_key' => "CASE WHEN img_sha1='' THEN '' ELSE $concat END",
-					'fa_deleted_user' => $encUserId,
-					'fa_deleted_timestamp' => $encTimestamp,
-					'fa_deleted_reason' => $encReason,
-					'fa_deleted' => $this->suppress ? $bitfield : 0,
+				'fa_storage_group' => $encGroup,
+				'fa_storage_key' => "CASE WHEN img_sha1='' THEN '' ELSE $concat END",
+				'fa_deleted_user' => $encUserId,
+				'fa_deleted_timestamp' => $encTimestamp,
+				'fa_deleted_reason' => $encReason,
+				'fa_deleted' => $this->suppress ? $bitfield : 0,
 
-					'fa_name' => 'img_name',
-					'fa_archive_name' => 'NULL',
-					'fa_size' => 'img_size',
-					'fa_width' => 'img_width',
-					'fa_height' => 'img_height',
-					'fa_metadata' => 'img_metadata',
-					'fa_bits' => 'img_bits',
-					'fa_media_type' => 'img_media_type',
-					'fa_major_mime' => 'img_major_mime',
-					'fa_minor_mime' => 'img_minor_mime',
-					'fa_description' => 'img_description',
-					'fa_user' => 'img_user',
-					'fa_user_text' => 'img_user_text',
-					'fa_timestamp' => 'img_timestamp',
-				], $where, __METHOD__ );
+				'fa_name' => 'img_name',
+				'fa_archive_name' => 'NULL',
+				'fa_size' => 'img_size',
+				'fa_width' => 'img_width',
+				'fa_height' => 'img_height',
+				'fa_metadata' => 'img_metadata',
+				'fa_bits' => 'img_bits',
+				'fa_media_type' => 'img_media_type',
+				'fa_major_mime' => 'img_major_mime',
+				'fa_minor_mime' => 'img_minor_mime',
+				'fa_description' => 'img_description',
+				'fa_user' => 'img_user',
+				'fa_user_text' => 'img_user_text',
+				'fa_timestamp' => 'img_timestamp',
+			], $where, __METHOD__ );
 		}
 
 		if ( count( $oldRels ) ) {
@@ -1822,29 +1837,29 @@ class LocalFileDeleteBatch {
 				'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
 			];
 			$dbw->insertSelect( 'filearchive', 'oldimage', [
-					'fa_storage_group' => $encGroup,
-					'fa_storage_key' => "CASE WHEN oi_sha1='' THEN '' ELSE $concat END",
-					'fa_deleted_user' => $encUserId,
-					'fa_deleted_timestamp' => $encTimestamp,
-					'fa_deleted_reason' => $encReason,
-					'fa_deleted' => $this->suppress ? $bitfield : 'oi_deleted',
+				'fa_storage_group' => $encGroup,
+				'fa_storage_key' => "CASE WHEN oi_sha1='' THEN '' ELSE $concat END",
+				'fa_deleted_user' => $encUserId,
+				'fa_deleted_timestamp' => $encTimestamp,
+				'fa_deleted_reason' => $encReason,
+				'fa_deleted' => $this->suppress ? $bitfield : 'oi_deleted',
 
-					'fa_name' => 'oi_name',
-					'fa_archive_name' => 'oi_archive_name',
-					'fa_size' => 'oi_size',
-					'fa_width' => 'oi_width',
-					'fa_height' => 'oi_height',
-					'fa_metadata' => 'oi_metadata',
-					'fa_bits' => 'oi_bits',
-					'fa_media_type' => 'oi_media_type',
-					'fa_major_mime' => 'oi_major_mime',
-					'fa_minor_mime' => 'oi_minor_mime',
-					'fa_description' => 'oi_description',
-					'fa_user' => 'oi_user',
-					'fa_user_text' => 'oi_user_text',
-					'fa_timestamp' => 'oi_timestamp',
-					'fa_deleted' => $bitfield,
-				], $where, __METHOD__ );
+				'fa_name' => 'oi_name',
+				'fa_archive_name' => 'oi_archive_name',
+				'fa_size' => 'oi_size',
+				'fa_width' => 'oi_width',
+				'fa_height' => 'oi_height',
+				'fa_metadata' => 'oi_metadata',
+				'fa_bits' => 'oi_bits',
+				'fa_media_type' => 'oi_media_type',
+				'fa_major_mime' => 'oi_major_mime',
+				'fa_minor_mime' => 'oi_minor_mime',
+				'fa_description' => 'oi_description',
+				'fa_user' => 'oi_user',
+				'fa_user_text' => 'oi_user_text',
+				'fa_timestamp' => 'oi_timestamp',
+				'fa_deleted' => $bitfield,
+			], $where, __METHOD__ );
 		}
 	}
 
@@ -1854,9 +1869,9 @@ class LocalFileDeleteBatch {
 
 		if ( count( $oldRels ) ) {
 			$dbw->delete( 'oldimage', [
-					'oi_name' => $this->file->getName(),
-					'oi_archive_name' => array_keys( $oldRels ),
-				], __METHOD__ );
+				'oi_name' => $this->file->getName(),
+				'oi_archive_name' => array_keys( $oldRels ),
+			], __METHOD__ );
 		}
 
 		if ( $deleteCurrent ) {
@@ -1879,10 +1894,10 @@ class LocalFileDeleteBatch {
 
 		if ( !empty( $oldRels ) ) {
 			$res = $dbw->select( 'oldimage', [ 'oi_archive_name' ], [
-					'oi_name' => $this->file->getName(),
-					'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
-					$dbw->bitAnd( 'oi_deleted', File::DELETED_FILE ) => File::DELETED_FILE,
-				], __METHOD__ );
+				'oi_name' => $this->file->getName(),
+				'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')',
+				$dbw->bitAnd( 'oi_deleted', File::DELETED_FILE ) => File::DELETED_FILE,
+			], __METHOD__ );
 
 			foreach ( $res as $row ) {
 				$privateFiles[$row->oi_archive_name] = 1;
@@ -2504,9 +2519,9 @@ class LocalFileMoveBatch {
 		// Wikia change - begin
 		// @author macbre (PLATFORM-238)
 		$rowsWithEmptyArchiveName = $dbw->selectField( 'oldimage', 'count(*)', [
-				'oi_name' => $this->oldName,
-				'oi_archive_name = ""',
-			], __METHOD__ );
+			'oi_name' => $this->oldName,
+			'oi_archive_name = ""',
+		], __METHOD__ );
 
 		if ( $rowsWithEmptyArchiveName > 0 ) {
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name', [
@@ -2520,14 +2535,14 @@ class LocalFileMoveBatch {
 
 		// Update old images
 		$dbw->update( 'oldimage', [
-				'oi_name' => $this->newName,
-				'oi_archive_name = ' .
-				$dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ),
-					$dbw->addQuotes( $this->newName ) ),
-			], [
-				'oi_name' => $this->oldName,
-				'oi_archive_name <> ""', // Wikia change - @author macbre (PLATFORM-238)
-			], __METHOD__ );
+			'oi_name' => $this->newName,
+			'oi_archive_name = ' .
+			$dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ),
+				$dbw->addQuotes( $this->newName ) ),
+		], [
+			'oi_name' => $this->oldName,
+			'oi_archive_name <> ""', // Wikia change - @author macbre (PLATFORM-238)
+		], __METHOD__ );
 
 		$affected =
 			$dbw->affectedRows() +
