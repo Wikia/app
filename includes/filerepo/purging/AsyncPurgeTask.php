@@ -20,7 +20,7 @@ class AsyncPurgeTask extends BaseTask {
 		] );
 
 		$task = new AsyncPurgeTask();
-		$task->call( 'removeThumbnails', $fileId, $thumbnailUrls );
+		$task->call( 'removeThumbnails', $fileId->serializeForTask(), $thumbnailUrls );
 		$task->wikiId( $wgCityId );
 		$task->queue();
 	}
@@ -30,14 +30,14 @@ class AsyncPurgeTask extends BaseTask {
 	 * @param array $thumbnailUrls
 	 * @throws Exception
 	 */
-	public function removeThumbnails( FileId $fileId, array $thumbnailUrls ) {
+	public function removeThumbnails( array $fileId, array $thumbnailUrls ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
 			'thumbnail_urls' => json_encode( $thumbnailUrls ),
 		] );
 
 		try {
-			$this->removeThumbnailsInThumblr( $fileId->serializeForTask() );
+			$this->removeThumbnailsInThumblr( FieldId::deserializeFromTask( $fileId ) );
 			$this->purgerUrls( $thumbnailUrls );
 		}
 		catch ( \Exception $exception ) {
@@ -56,8 +56,8 @@ class AsyncPurgeTask extends BaseTask {
 		SquidUpdate::purge( $thumbnailUrls );
 	}
 
-	private function removeThumbnailsInThumblr( array $fileId ) {
-		$url = $this->getRemoveThumbnailsUrl( FileId::deserializeFromTask( $fileId ) );
+	private function removeThumbnailsInThumblr( \Wikia\Search\Field\Field $fileId ) {
+		$url = $this->getRemoveThumbnailsUrl( $fileId );
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
 			'remove_thumbnails_url' => $url,
