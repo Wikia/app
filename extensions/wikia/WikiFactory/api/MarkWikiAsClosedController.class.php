@@ -123,7 +123,7 @@ class MarkWikiAsClosedController extends WikiaController {
 	}
 
 	static private function isValidFandomCreatorCommunityId( $fandomCreatorCommunityId, $wikiId ) {
-		if (!is_numeric( $fandomCreatorCommunityId )) {
+		if ( !is_numeric( $fandomCreatorCommunityId ) ) {
 			return false;
 		}
 
