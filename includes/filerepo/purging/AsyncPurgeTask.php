@@ -13,6 +13,12 @@ class AsyncPurgeTask extends BaseTask {
 			'thumbnail_urls' => json_encode( $thumbnailUrls ),
 		] );
 
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'file' => json_encode( $fileId ),
+			'thumbnail_urls' => json_encode( $thumbnailUrls ),
+		] );
+
 		$task = new AsyncPurgeTask();
 		$task->call( 'removeThumbnails', $fileId, $thumbnailUrls );
 		$task->wikiId( $wgCityId );
