@@ -59,7 +59,15 @@
 		padding-bottom: 12px;
 
 		.wds-dropdown__toggle-chevron {
+			margin-left: 4px;
+			transform: scale(.75);
 			vertical-align: text-top;
+		}
+
+		&:hover {
+			.wds-dropdown__toggle-chevron {
+				transform: rotate(180deg) scale(.75);
+			}
 		}
 	}
 
@@ -142,7 +150,6 @@
 		&-back-icon {
 			fill: $color-links;
 			padding-right: 2px;
-			transform: rotate(270deg);
 			vertical-align: text-top;
 		}
 	}
