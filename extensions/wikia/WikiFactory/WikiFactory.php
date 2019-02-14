@@ -2034,8 +2034,15 @@ class WikiFactory {
 	 * @param null $user
 	 * @return string: HTML form
 	 */
-	static public function setPublicStatus( $city_public, $city_id, $reason = "", $user = null ) {
+	static public function setPublicStatus(
+		$city_public,
+		$city_id,
+		$reason = "",
+		$user = null,
+		$shouldUseMasterDbOnCheckFlags = false
+	) {
 		global $wgWikicitiesReadOnly;
+
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -2046,7 +2053,7 @@ class WikiFactory {
 			return false;
 		}
 
-		if ( (static::getFlags($city_id) & static::FLAG_PROTECTED) && $city_public != 1 ) {
+		if ( ( static::getFlags( $city_id, $shouldUseMasterDbOnCheckFlags ) & static::FLAG_PROTECTED ) && $city_public != 1 ) {
 			Wikia::log( __METHOD__, "", "Wiki is protected. Skipping update.");
 			return false;
 		}
@@ -2858,7 +2865,7 @@ class WikiFactory {
 	 *
 	 * @return flags
 	 */
-	static public function getFlags( $city_id ) {
+	static public function getFlags( $city_id, $shouldUseMasterDb = false ) {
 		if ( !static::isUsed() ) {
 			Wikia::log( __METHOD__, 'info', 'WikiFactory is not used.' );
 			return false;
@@ -2866,7 +2873,8 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$dbw = static::db( DB_SLAVE );
+		$dbw = ( $shouldUseMasterDb ) ? static::db( DB_MASTER ) : static::db( DB_SLAVE );
+
 		$city_flags = $dbw->selectField(
 			'city_list',
 			'city_flags',
