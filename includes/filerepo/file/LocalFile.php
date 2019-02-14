@@ -6,6 +6,9 @@
  * @ingroup FileAbstraction
  */
 
+use Wikia\Tasks\Tasks\AsyncPurgeTask;
+use Wikia\Tasks\Tasks\FileId;
+
 /**
  * Bump this number when serialized cache records may be incompatible.
  */

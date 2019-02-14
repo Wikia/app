@@ -486,10 +486,6 @@ $wgAutoloadLocalClasses = array(
 	'FSFile' => 'includes/filerepo/backend/FSFile.php',
 	'TempFSFile' => 'includes/filerepo/backend/TempFSFile.php',
 
-	# includes/filerepo/purging
-	'AsyncPurgeTask' => 'includes/filerepo/purging/AsyncPurgeTask.php',
-	'FileId' => 'includes/filerepo/purging/FileId.php',
-
 	# includes/filerepo/backend
 	'FileBackendGroup' => 'includes/filerepo/backend/FileBackendGroup.php',
 	'FileBackend' => 'includes/filerepo/backend/FileBackend.php',

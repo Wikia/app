@@ -1,14 +1,17 @@
 <?php
 
+namespace Wikia\Tasks\Tasks;
+
 use Wikia\Factory\ServiceFactory;
-use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Logger\WikiaLogger;
+
 
 class AsyncPurgeTask extends BaseTask {
 
 	public function publish( FileId $fileId, array $thumbnailUrls ) {
 		global $wgCityId;
 
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
 			'thumbnail_urls' => json_encode( $thumbnailUrls ),
 		] );
@@ -56,7 +59,7 @@ class AsyncPurgeTask extends BaseTask {
 		SquidUpdate::purge( $thumbnailUrls );
 	}
 
-	private function removeThumbnailsInThumblr( \Wikia\Search\Field\Field $fileId ) {
+	private function removeThumbnailsInThumblr( FileId $fileId ) {
 		$url = $this->getRemoveThumbnailsUrl( $fileId );
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
@@ -84,4 +87,42 @@ class AsyncPurgeTask extends BaseTask {
 		}
 	}
 
+}
+
+
+class FileId {
+
+	private $bucket;
+	private $relativePath;
+	private $pathPrefix;
+
+	public function __construct( string $bucket, string $relativePath, $pathPrefix ) {
+		$this->bucket = $bucket;
+		$this->relativePath = $relativePath;
+		$this->pathPrefix = $pathPrefix;
+	}
+
+	public static function deserializeFromTask( array $data ): FileId {
+		return new FileId( $data['bucket'], $data['relative-path'], $data['path-prefix'] );
+	}
+
+	public function serializeForTask(): array {
+		return [
+			'bucket' => $this->bucket,
+			'relative-path' => $this->relativePath,
+			'path-prefix' => $this->pathPrefix,
+		];
+	}
+
+	public function getBucket() {
+		return $this->bucket;
+	}
+
+	public function getRelativePath() {
+		return $this->relativePath;
+	}
+
+	public function getPathPrefix() {
+		return $this->pathPrefix;
+	}
 }
