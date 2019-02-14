@@ -12,6 +12,8 @@
  * @author Aaron Schulz
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Base class for all file backend classes (including multi-write backends).
  *
