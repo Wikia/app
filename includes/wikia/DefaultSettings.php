@@ -1815,3 +1815,9 @@ $wgProcessTasksOnKubernetes = false;
  * Determines the percentage of wikis that send tasks to k8s.
  */
 $wgPercentOfTasksOnKubernetes = 0;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3006
+ * If enabled, file storage operations will be logged.
+ */
+$wgLogFileStorageOperations = false;
