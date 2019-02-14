@@ -217,6 +217,18 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
+		$this->isUserAnon = $this->wg->User->isAnon();
+		$parserOptions = new ParserOptions();
+		$parserOptions->setEditSection( false );
+		$parserOptions->setTidy( true );
+		$this->imageDescription = false;
+		if ( !empty( $data['description'] ) ) {
+			$this->imageDescription = ParserPool::create()->parse( $data['description'], $title, $parserOptions )->getText();
+
+			if ( empty( $this->imageDescription ) ) {
+				$this->imageDescription = false;
+			}
+		}
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );
@@ -297,6 +309,7 @@ class LightboxController extends WikiaController {
 		$this->networks = $networks;
 		$this->fileTitle = $fileTitle;
 		$this->imageUrl = $thumbUrl;
+		$this->isUserAnon = $this->wg->User->isAnon();
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );

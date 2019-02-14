@@ -143,6 +143,7 @@ $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDim
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
+$wgAutoloadClasses['TemplatesApiController'] = "{$IP}/includes/wikia/api/TemplatesApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -228,6 +229,7 @@ $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/Da
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
 $wgAutoloadClasses[ 'WikiaTagBuilderHelper'           ] = "$IP/includes/wikia/helpers/WikiaTagBuilderHelper.class.php";
 $wgAutoloadClasses[ 'WikiaIFrameTagBuilderHelper'     ] = "$IP/includes/wikia/helpers/WikiaIFrameTagBuilderHelper.class.php";
+$wgAutoloadClasses[ 'OpenGraphImageHelper'            ] = "$IP/includes/wikia/helpers/OpenGraphImageHelper.class.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Driver'     ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
@@ -326,7 +328,6 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
-$wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
 $wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
@@ -967,6 +968,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
+ * Enables AdEngine3 extension on articles with Featured Video
+ */
+$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1001,6 +1008,20 @@ $wgAdDriverA9BidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverA9OptOutCountries = null;
+
+/**
+ * @name $wgAdDriverA9BidRefreshingCountries
+ * List of countries where A9 bids can refreshed
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidRefreshingCountries = null;
+
+/**
+ * @name $wgAdDriverA9IncontentBoxadCountries
+ * List of countries where A9 is used for incontent boxads
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9IncontentBoxadCountries = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane
@@ -1065,13 +1086,6 @@ $wgAdDriverAppNexusDfpCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
- * @name $wgAdDriverPrebidAdEngine3Countries
- * List of countries where Prebid bidding platform from AdEngine3 is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPrebidAdEngine3Countries = null;
-
-/**
  * @name $wgAdDriverPrebidOptOutCountries
  * List of countries where Prebid is enabled for opted-out users.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1100,13 +1114,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverAppNexusWebAdsBidderCountries
- * List of countries where appnexus via WebAds bidding platform is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAppNexusWebAdsBidderCountries = null;
-
-/**
  * @name $wgAdDriverUseAudienceNetworkBidder
  * Enables Facebook Audience Network bidding platform.
  */
@@ -1125,6 +1132,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBeachfrontBidderCountries = null;
+
+/**
+ * @name $wgAdDriverBeachfrontDfpCountries
+ * Enables Beachfront via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontDfpCountries = null;
 
 /**
  * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
@@ -1153,6 +1167,21 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticBidderCountries = null;
+
+
+/**
+ * @name $wgAdDriverLkqdBidderCountries
+ * List of countries where LKQD prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdBidderCountries = null;
+
+/**
+ * @name $wgAdDriverPubMaticDfpCountries
+ * Enables PubMatic via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticDfpCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1251,6 +1280,20 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
+ * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
+ * List of countries where incontent native is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverMobileWikiAE3SearchCountries
+ * List of countries where sections TLB is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3SearchCountries = null;
+
+/**
  * @name $wgAdDriverScrollDepthTrackingCountries
  * List of countries where scroll depth tracking is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1271,27 +1314,6 @@ $wgAdDriverSrcPremiumCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverStickySlotsLines = [];
-
-/**
- * @name $wgAdDriverKILOCountries
- * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverKILOCountries = null;
-
-/**
- * @name $wgAdDriverMEGACountries
- * Enables new way of building adUnits (currently limited for remnant).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMEGACountries = null;
-
-/**
- * @name $wgAdDriverMegaAdUnitBuilderForFVCountries
- * Enables new way of building adUnits for FeaturedVideo pages.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMegaAdUnitBuilderForFVCountries = null;
 
 /**
  * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
@@ -1368,6 +1390,20 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 $wgAdDriverGeoEdgeCountries = null;
 
 /**
+ * @name $wgAdDriverConfiantCountries
+ * List of countries Confiant will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantCountries = null;
+
+/**
+ * @name $wgAdDriverNielsenCountries
+ * List of countries Nielsen DCR will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNielsenCountries = null;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1419,10 +1455,10 @@ $wgAdDriverF2DisableSraCountries = null;
 $wgAdDriverWadBTCountries = null;
 
 /**
- * @name $wgAdDriverWadILCountries
- * List of countries to enable InstartLogic recovery
+ * @name $wgAdDriverWadHMDCountries
+ * List of countries to enable HOMAD recovery
  */
-$wgAdDriverWadILCountries = null;
+$wgAdDriverWadHMDCountries = null;
 
 /**
  * @name $wgEnableCMPCountries
@@ -1766,16 +1802,3 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
-
-/**
- * @name $wgProcessTasksOnKubernetes
- * When enabled, tasks will be processed on kubernetes.
- * This will only work on production.
- */
-$wgProcessTasksOnKubernetes = false;
-
-/**
- * @name $wgPercentOfTasksOnKubernetes
- * Determines the percentage of wikis that send tasks to k8s.
- */
-$wgPercentOfTasksOnKubernetes = 0;

@@ -1,0 +1,23 @@
+{
+	"presets": [
+		["env", {
+			"targets": {
+				"browsers": ["last 2 versions", "safari >= 9.0", "ie 11", "> 2%"]
+			},
+			"modules": false
+		}]
+	],
+	"plugins": [
+		"transform-class-properties",
+		"transform-object-rest-spread",
+		"transform-decorators-legacy",
+		["transform-runtime", {
+			"helpers": true,
+			"polyfill": true,
+			"regenerator": true,
+			"moduleName": "babel-runtime"
+		}],
+		"syntax-dynamic-import",
+		"lodash"
+	]
+}

@@ -37,9 +37,9 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
-			isStickyEvent,
 			now = new Date(),
-			timestamp = now.getTime();
+			timestamp = now.getTime(),
+			tzOffset = now.getTimezoneOffset();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -58,8 +58,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		creative = creative || {};
 		bidders = bidders || {};
 
-		isStickyEvent = ['sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(creative.status) > -1;
-
 		data = {
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.pvUID,
@@ -68,6 +66,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
+			'tz_offset': tzOffset,
 			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
@@ -98,17 +97,17 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_13': transformBidderPrice('onemobile'),
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
-			'bidder_16': transformBidderPrice('appnexusWebAds'),
 			'bidder_17': transformBidderPrice('kargo'),
+			'bidder_18': transformBidderPrice('lkqd'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',
 			'creative_size': (creative.creativeSize || '').replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
-			'scroll_y': isStickyEvent ? slotRegistry.getCurrentScrollY() : slotRegistry.getScrollY(slotName),
+			'scroll_y': slotRegistry.getCurrentScrollY(),
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
-			'btl': (billTheLizard && billTheLizard.serialize()) || '',
+			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
 			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),

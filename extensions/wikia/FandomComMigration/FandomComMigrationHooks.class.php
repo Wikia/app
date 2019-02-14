@@ -11,17 +11,29 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgFandomComMigrationScheduled, $wgFandomComMigrationDone;
+		global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
+			   $wgFandomComMigrationCustomMessageAfter;
 
 		if ( static::isEnabled() ) {
+			$parser = ParserPool::get();
 			// Send HTML instead of message key to avoid the issue of non-compatible i18n libs
 			if ( $wgFandomComMigrationDone ) {
-				$wikiVariables['fandomComMigrationNotificationAfter'] =
-					wfMessage( 'fandom-com-migration-after' )->parse();
-			} else if ( $wgFandomComMigrationScheduled ) {
-				$wikiVariables['fandomComMigrationNotificationBefore'] =
-					wfMessage( 'fandom-com-migration-before' )
-						->parse();
+				if ( !empty( $wgFandomComMigrationCustomMessageAfter ) ) {  // customized message
+					$wikiVariables['fandomComMigrationNotificationAfter'] = $parser->parse(
+						$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+				} else {
+					$wikiVariables['fandomComMigrationNotificationAfter'] =
+						wfMessage( 'fandom-com-migration-after' )->parse();
+				}
+			} elseif ( static::isMigrationScheduled() ) {
+				if ( !empty( $wgFandomComMigrationCustomMessageBefore ) ) {  // customized message
+					$wikiVariables['fandomComMigrationNotificationBefore'] = $parser->parse(
+						$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
+				} else {
+					$wikiVariables['fandomComMigrationNotificationBefore'] =
+						wfMessage( 'fandom-com-migration-before' )
+							->parse();
+				}
 			}
 		}
 
@@ -38,17 +50,23 @@ class FandomComMigrationHooks {
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		if ( static::isEnabled() ) {
-			global $wgFandomComMigrationScheduled, $wgFandomComMigrationDone;
+			$parser = ParserPool::get();
+			global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
+				   $wgFandomComMigrationCustomMessageAfter;
 
-			$vars['wgFandomComMigrationScheduled'] = $wgFandomComMigrationScheduled;
+			$vars['wgFandomComMigrationScheduled'] = static::isMigrationScheduled();
 			$vars['wgFandomComMigrationDone'] = $wgFandomComMigrationDone;
+			$vars['wgFandomComMigrationCustomMessageBefore'] = $parser->parse(
+				$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
+			$vars['wgFandomComMigrationCustomMessageAfter'] = $parser->parse(
+				$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
 		}
 
 		return true;
 	}
 
 	private static function isEnabled() {
-		global $wgDomainChangeDate, $wgFandomComMigrationScheduled, $wgFandomComMigrationDone;
+		global $wgDomainChangeDate, $wgFandomComMigrationDone;
 
 		if ( $wgFandomComMigrationDone && !empty( $wgDomainChangeDate ) ) {
 			$migrationDateTime = new DateTime( $wgDomainChangeDate );
@@ -57,6 +75,32 @@ class FandomComMigrationHooks {
 			return $migrationDateTime > $weekAgo;
 		}
 
-		return !empty( $wgFandomComMigrationScheduled );
+		return static::isMigrationScheduled();
+	}
+
+	/**
+	 * Check if the "migration scheduled" banner should be displayed.
+	 *
+	 * The banner will be displayed if either $wgFandomComMigrationScheduled is true
+	 * or the following criteria are met:
+	 *     - It is not a fandom.com already wiki
+	 *     - It is not a single subdomain non-English wiki
+	 *     - It is not in the wiki verticals "Other" or "Lifestyle"
+	 *
+	 * @return boolean
+	 */
+	private static function isMigrationScheduled(): bool {
+		global $wgFandomComMigrationScheduled, $wgCityId, $wgServer, $wgLanguageCode;
+		$hubService = WikiFactoryHub::getInstance();
+
+		return !empty( $wgFandomComMigrationScheduled )
+			|| (
+				!wfHttpsEnabledForURL( $wgServer )
+				&& ( !wfHttpsAllowedForURL( $wgServer ) || $wgLanguageCode === 'en' )
+				&& !in_array( $hubService->getVerticalId( $wgCityId ), [
+					WikiFactoryHub::VERTICAL_ID_OTHER,
+					WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
+				] )
+			);
 	}
 }

@@ -23,9 +23,10 @@ class NodeNavigationTest extends WikiaBaseTest {
 
 	public function dataProvider() {
 		return [
-			[ '<navigation></navigation>', [ ], [ 'value' => '' ] ],
-			[ '<navigation>kjdflkja dafkjlsdkfj</navigation>', [ ], [ 'value' => 'kjdflkja dafkjlsdkfj' ] ],
-			[ '<navigation>kjdflkja<ref>dafkjlsdkfj</ref></navigation>', [ ], [ 'value' => 'kjdflkja<ref>dafkjlsdkfj</ref>' ] ],
+			[ '<navigation></navigation>', [ ], [ 'value' => '', 'item-name' => null, 'source' => null ] ],
+			[ '<navigation name="navigation"></navigation>', [ ], [ 'value' => '', 'item-name' => 'navigation', 'source' => null ] ],
+			[ '<navigation>kjdflkja dafkjlsdkfj</navigation>', [ ], [ 'value' => 'kjdflkja dafkjlsdkfj', 'item-name' => null, 'source' => null ] ],
+			[ '<navigation>kjdflkja<ref>dafkjlsdkfj</ref></navigation>', [ ], [ 'value' => 'kjdflkja<ref>dafkjlsdkfj</ref>', 'item-name' => null, 'source' => null ] ],
 		];
 	}
 

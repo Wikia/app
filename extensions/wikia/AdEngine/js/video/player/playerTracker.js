@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
+	require.optional('ext.wikia.adEngine.lookup.bidders'),
 	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	browserDetect,
 	log,
 	win,
-	bidHelper,
+	bidders,
 	billTheLizard,
 	floater
 ) {
@@ -41,18 +41,20 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 		var pageLevelParams = pageLevel.getPageLevelParams(),
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
 			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
+			now = new Date(),
 			trackingData = {
 				'pv_unique_id': win.pvUID,
 				'pv_number': pageLevelParams.pv,
 				'country': bridge.geo.getCountryCode(),
-				'timestamp': (new Date()).getTime(),
+				'timestamp': now.getTime(),
+				'tz_offset': now.getTimezoneOffset(),
 				'skin': pageLevelParams.skin,
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
 				'position': (params.trackingpos || params.slotName || emptyValue.string).toLowerCase(),
 				'event_name': eventName,
-				'ad_error_code': errorCode || emptyValue.int,
+				'ad_error_code': errorCode || params.errorCode || emptyValue.int,
 				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
@@ -65,12 +67,14 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_3': params.conflictingAdSlot || '',
 				'vast_id': params.vastId || emptyValue.string,
 				'video_id': params.videoId || '',
-				'btl': billTheLizard && billTheLizard.getResponseStatus() || emptyValue.string,
+				'btl': billTheLizard ?
+					(billTheLizard.getResponseStatus('fv') || billTheLizard.BillTheLizard.NOT_USED) :
+					'',
 				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
 			};
 
-		if (bidHelper && params.bid) {
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+		if (bidders && params.bid) {
+			trackingData['price'] = bidders.transformPriceFromBid(params.bid);
 			trackingData['vast_id'] = params.bid.creativeId || emptyValue.string;
 		}
 

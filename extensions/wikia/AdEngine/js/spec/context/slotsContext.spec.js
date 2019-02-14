@@ -69,7 +69,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
-		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
+		expect(context.isApplicable('TOP_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('INCONTENT_PLAYER')).toBeTruthy();
 	});
 
@@ -78,7 +78,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
-		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
+		expect(context.isApplicable('TOP_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
@@ -111,13 +111,13 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
-				TOP_RIGHT_BOXAD: 2,
+				TOP_BOXAD: 2,
 				BOTTOM_LEADERBOARD: 9
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
-			TOP_RIGHT_BOXAD: 2,
+			TOP_BOXAD: 2,
 			BOTTOM_LEADERBOARD: 9
 		});
 	});
@@ -127,13 +127,13 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
-				TOP_RIGHT_BOXAD: 2,
+				TOP_BOXAD: 2,
 				BOTTOM_LEADERBOARD: 9
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
-			TOP_RIGHT_BOXAD: 2,
+			TOP_BOXAD: 2,
 			BOTTOM_LEADERBOARD: 9
 		});
 	});
@@ -151,14 +151,14 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
-				TOP_RIGHT_BOXAD: 2,
+				TOP_BOXAD: 2,
 				INVISIBLE_HIGH_IMPACT_2: 8,
 				BOTTOM_LEADERBOARD: 9
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
-			TOP_RIGHT_BOXAD: 2,
+			TOP_BOXAD: 2,
 			BOTTOM_LEADERBOARD: 9
 		});
 	});

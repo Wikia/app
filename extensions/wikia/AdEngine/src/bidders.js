@@ -126,39 +126,6 @@ export function getBiddersContext(skin) {
 							}
 						}
 					},
-					appnexusWebads: {
-						enabled: false,
-						slots: {
-							TOP_LEADERBOARD: {
-								placementId: '13104394',
-								sizes: [
-									[728, 90],
-									[970, 250]
-								]
-							},
-							TOP_RIGHT_BOXAD: {
-								placementId: '13104393',
-								sizes: [
-									[300, 250],
-									[300, 600]
-								]
-							},
-							BOTTOM_LEADERBOARD: {
-								placementId: '13104395',
-								sizes: [
-									[728, 90],
-									[970, 250]
-								]
-							},
-							INCONTENT_BOXAD_1: {
-								placementId: '12939349',
-								sizes: [
-									[120, 600],
-									[160, 600]
-								]
-							}
-						}
-					},
 					audienceNetwork: {
 						enabled: false,
 						slots: {}
@@ -216,6 +183,15 @@ export function getBiddersContext(skin) {
 						enabled: false,
 						slots: {}
 					},
+					lkqd: {
+						enabled: false,
+						slots: {
+							FEATURED: {
+								placementId: '523',
+								siteId: '890798'
+							}
+						}
+					},
 					onemobile: {
 						enabled: false,
 						slots: {}
@@ -259,6 +235,14 @@ export function getBiddersContext(skin) {
 						enabled: false,
 						publisherId: '156260',
 						slots: {
+							FEATURED: {
+								sizes: [
+									[0, 0]
+								],
+								ids: [
+									'1636185@0x0'
+								]
+							},
 							TOP_LEADERBOARD: {
 								sizes: [
 									[728, 90],

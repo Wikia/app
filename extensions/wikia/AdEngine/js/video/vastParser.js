@@ -6,18 +6,17 @@ define('ext.wikia.adEngine.video.vastParser', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.vastParser';
 
-	function getFirstNumber(possibleValues) {
-		var i, value;
+	function getLastNumber(possibleValues) {
+		var i;
+		var value = '';
 
 		for (i = 0; i < possibleValues.length; i++) {
-			value = possibleValues[i];
-
-			if (value && !isNaN(value)) {
-				return value;
+			if (!isNaN(possibleValues[i])) {
+				value = possibleValues[i];
 			}
 		}
 
-		return '';
+		return value;
 	}
 
 	function getAdInfo(imaAd) {
@@ -32,11 +31,11 @@ define('ext.wikia.adEngine.video.vastParser', [
 				wrapperCreativeIds = imaAd.getWrapperCreativeIds();
 
 			if (wrapperAdIds && wrapperAdIds.length) {
-				adInfo.lineItemId = getFirstNumber(wrapperAdIds);
+				adInfo.lineItemId = getLastNumber(wrapperAdIds);
 			}
 
 			if (wrapperCreativeIds && wrapperCreativeIds.length) {
-				adInfo.creativeId = getFirstNumber(wrapperCreativeIds);
+				adInfo.creativeId = getLastNumber(wrapperCreativeIds);
 			}
 		}
 

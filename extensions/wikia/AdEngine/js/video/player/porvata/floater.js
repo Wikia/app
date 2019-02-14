@@ -1,13 +1,23 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
 		'ext.wikia.adEngine.adContext',
+		'ext.wikia.adEngine.bridge',
 		'ext.wikia.adEngine.video.player.porvata.floaterConfiguration',
 		'ext.wikia.adEngine.video.player.porvata.floatingContextFactory',
 		'wikia.document',
 		'wikia.domCalculator',
 		'wikia.throttle',
 		'wikia.window'
-	], function (adContext, floaterConfiguration, floatingContextFactory, doc, domCalculator, throttle, win) {
+	], function (
+		adContext,
+		adEngineBridge,
+		floaterConfiguration,
+		floatingContextFactory,
+		doc,
+		domCalculator,
+		throttle,
+		win
+	) {
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
@@ -79,6 +89,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		function createOnCloseListener(floatingContext) {
 			return function () {
+				var slot = adEngineBridge.slotService.get('INCONTENT_PLAYER');
+				slot.emitEvent('force-unstick');
 				disableFloating(floatingContext);
 
 				if (floatingContext.pauseOnClose) {

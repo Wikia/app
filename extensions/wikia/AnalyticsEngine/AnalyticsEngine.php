@@ -47,10 +47,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderBillTheLizard();
 			case 'MoatYi':
 				return new AnalyticsProviderMoatYi();
-			case 'A9':
-				return new AnalyticsProviderA9();
-			case 'Prebid':
-				return new AnalyticsProviderPrebid();
+			case 'Nielsen':
+				return new AnalyticsProviderNielsen();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'NetzAthleten':

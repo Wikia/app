@@ -64,13 +64,16 @@ require([
 	trackingOptIn.pushToUserConsentQueue(function () {
 		var context = adContext.getContext();
 
+		if (context.opts.isSteamBrowser) {
+			pageInfoTracker.trackProp('steam_browser', 'no_ads');
+		}
+
 		messageListener.init();
 
 		// Custom ads (skins, footer, etc)
 		adEngineBridge.init(
 			adTracker,
 			slotRegistry,
-			null,
 			pageLevelParams.getPageLevelParams(),
 			adLogicZoneParams,
 			adContext,

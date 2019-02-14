@@ -18,7 +18,8 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 
 		var data,
 			slotFirstChildData = slot.container.firstChild.dataset,
-			slotParams = JSON.parse(slotFirstChildData.gptSlotParams);
+			slotParams = JSON.parse(slotFirstChildData.gptSlotParams),
+			now = new Date();
 
 		data = {
 			'pv_unique_id': win.pvUID,
@@ -26,7 +27,8 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 			'line_item_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
 			'rv': slotParams.rv || 1,
-			'timestamp': (new Date()).getTime()
+			'timestamp': now.getTime(),
+			'tz_offset': now.getTimezoneOffset()
 		};
 
 		log(['Slot viewable', slot.name, data], log.levels.info, logGroup);

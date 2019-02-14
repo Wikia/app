@@ -4,7 +4,7 @@ class CommunityPageSpecialHelpModel {
 	public function getData() {
 		return [
 			'title' => wfMessage( 'communitypage-help-module-title' )->text(),
-			'titleIcon' => DesignSystemHelper::renderSvg( 'wds-icons-help' ),
+			'titleIcon' => DesignSystemHelper::renderSvg( 'wds-icons-question' ),
 			'editPage' => wfMessage( 'communitypage-help-edit-page' )->text(),
 			'addLinks' => wfMessage( 'communitypage-help-add-link' )->text(),
 			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->text(),
@@ -36,6 +36,6 @@ class CommunityPageSpecialHelpModel {
  		}
 
  		// this is a business decision: fallback to landing page taken from preferences
- 		return UserService::getMainPage( $wgUser )->getLocalURL();
+ 		return UserService::getLandingPage( $wgUser )->getFullURL();
  	}
 }

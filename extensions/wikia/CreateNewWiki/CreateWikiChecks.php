@@ -27,22 +27,26 @@ class CreateWikiChecks {
 	 * @param string $language default null - choosen language
 	 * @param mixed $type type of domain, default false = wikia.com
 	 *
-	 * @return integer - 0 or 1
+	 * @return string|boolean
 	 */
-	public static function domainExists( $name, $language = null ) {
+	public static function getDomain( $name, $language = null ) {
 		global $wgExternalSharedDB;
 
 		$variants = self::getDomainVariantsToCheck( $name, $language );
 
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$cityId = $dbr->selectField(
-			"city_domains",
-			'city_id',
-			[ "city_domain" => $variants ],
+		$domain = $dbr->selectField(
+			'city_domains',
+			'city_domain',
+			[ 'city_domain' => $variants ],
 			__METHOD__
 		);
 
-		return !empty( $cityId );
+		if ( !empty( $domain ) ) {
+			return $domain;
+		}
+
+		return false;
 	}
 
 	private static function getDomainVariantsToCheck( string $domain, string $langCode = null ) {
@@ -87,7 +91,6 @@ class CreateWikiChecks {
 	}
 
 	public static function checkDomainIsCorrect( $sName, $sLang, $useUserLang = true ) {
-		wfProfileIn( __METHOD__ );
 		$message = null;
 
 		$sNameLength = strlen( $sName );
@@ -117,23 +120,24 @@ class CreateWikiChecks {
 			#-- invalid language code, most likely due to some frontend hacking
 			$message = wfMessage( 'autocreatewiki-violate-policy' );
 		} else {
-			$iExists = static::domainExists( $sName, $sLang );
-			if ( !empty($iExists) ) {
+			$domain = static::getDomain( $sName, $sLang );
+			if ( !empty( $domain ) ) {
 				#--- domain exists
-				$message = wfMessage( 'autocreatewiki-name-taken', (!is_null( $sLang ) && ($sLang != 'en')) ? sprintf( "%s.%s", $sLang, $sName ) : $sName );
+				$protocol = wfHttpsEnabledForDomain( $domain ) ? 'https' : 'http';
+				$message = wfMessage( 'autocreatewiki-name-taken' )
+					->rawParams(
+						Html::element( 'a', [ 'href' => "{$protocol}://{$domain}" ], $domain )
+					);
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-		if ( empty($message) ) {
-			return "";
-		} else {
-			if ( $useUserLang ) {
-				return $message->text();
-			} else {
-				return $message->inLanguage( 'en' );
-			}
+		if ( empty( $message ) ) {
+			return '';
+		} elseif ( $useUserLang ) {
+			return $message->escaped();
 		}
+
+		return $message->inLanguage( 'en' )->escaped();
 	}
 
 	public static function getLanguageNames() {

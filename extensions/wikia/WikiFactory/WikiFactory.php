@@ -614,6 +614,11 @@ class WikiFactory {
 					];
 				}
 				$dbr->freeResult( $dbResult );
+				Hooks::run( 'GetWikisUnderDomain', [ $domain, $includeRoot, &$cities ] );
+
+				// sort the wikis by their url, English wiki should come first
+				usort( $cities, function( $a, $b ) { return strcasecmp( $a['city_url'], $b['city_url'] ); } );
+
 				return $cities;
 			}
 		);
@@ -633,14 +638,11 @@ class WikiFactory {
 		}
 
 		$url = parse_url( $wgServer );
-		return self::getWikisUnderDomain( $url['host'] );
+		return self::getWikisUnderDomain( $url['host'], false );
 	}
 
 	/**
-	 * Checks if a wiki should display the language wikis index
-	 * It returns true in the following cases:
-	 * - Wiki is languagewikisindex.fandom.com
-	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 * Checks if a wiki is a non-existing domain root with language wikis underneath
 	 *
 	 * @param int|null $cityId
 	 * @return bool
@@ -655,6 +657,28 @@ class WikiFactory {
 		if ( $cityId == static::LANGUAGE_WIKIS_INDEX ) {
 			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Checks if a wiki should display the language wikis index
+	 * It returns true in the following cases:
+	 * - Wiki is languagewikisindex.fandom.com
+	 * - Wiki is closed or disabled and there are language wikis using the same domain
+	 *
+	 * @param int|null $cityId
+	 * @return bool
+	 */
+	public static function isLanguageWikisIndexOrClosed( $cityId = null ) {
+		global $wgCityId;
+
+		if ( $cityId === null ) {
+			$cityId = $wgCityId;
+		}
+
+		if ( self::isLanguageWikisIndex( $cityId ) ) {
+			return true;
+		}
 
 		if ( static::isPublic( $cityId ) ) {
 			return false;
@@ -663,7 +687,7 @@ class WikiFactory {
 		$wiki = static::getWikiByID( $cityId );
 		$wikiHost = parse_url( $wiki->city_url, PHP_URL_HOST );
 
-		return count( static::getWikisUnderDomain( $wikiHost ) ) > 0;
+		return count( static::getWikisUnderDomain( $wikiHost, false ) ) > 0;
 	}
 
 	/**
@@ -726,10 +750,11 @@ class WikiFactory {
 	 * @param $cityId
 	 * @param $value
 	 * @param null $reason
+	 * @param bool $ignoreBlacklist=false
 	 * @return bool
 	 * @throws WikiFactoryVariableParseException
 	 */
-	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null ) {
+	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null, $ignoreBlacklist = false ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( !static::isUsed() ) {
@@ -752,10 +777,27 @@ class WikiFactory {
 			$wikiFactoryVariableParser = new WikiFactoryVariableParser( $variable->cv_variable_type );
 			$value = $wikiFactoryVariableParser->transformValue( $value );
 
-			return static::setVarById( $varId, $cityId, $value, $reason );
+			return static::setVarById( $varId, $cityId, $value, $reason, $ignoreBlacklist );
 		}
 
 		return false;
+	}
+
+	/**
+	 * isReadonlyBlacklisted
+	 * 
+	 * Checks if the value is listed as read-only in blacklist
+	 * 
+	 * Putting a variable name in the blacklist is going to prevent
+	 * all the changes made to it via WikiFactory class.
+	 * 
+	 * @param string cv_variable_id
+	 * @return boolean
+	 */
+	static function isReadonlyBlacklisted( $cv_variable_id ) {
+		global $wgWikiFactoryReadonlyBlacklist;
+
+		return in_array( $cv_variable_id, $wgWikiFactoryReadonlyBlacklist, true );
 	}
 
 	/**
@@ -775,10 +817,11 @@ class WikiFactory {
 	 * @param integer $city_id        wiki id in city list
 	 * @param mixed $value            new value for variable
 	 * @param string $reason          optional extra reason text
+	 * @param boolean $ignoreBlacklist if the the blacklist check will be ignored
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
+	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null, $ignoreBlacklist = false ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
@@ -792,6 +835,11 @@ class WikiFactory {
 		}
 
 		if ( empty( $cv_variable_id ) || empty( $city_id ) ) {
+			return false;
+		}
+
+		if ( !$ignoreBlacklist && static::isReadonlyBlacklisted( $cv_variable_id ) ) {
+			Wikia::log( __METHOD__, "", "Variable is marked as readonly in wgWikiFactoryReadonlyBlacklist");
 			return false;
 		}
 
@@ -1986,8 +2034,15 @@ class WikiFactory {
 	 * @param null $user
 	 * @return string: HTML form
 	 */
-	static public function setPublicStatus( $city_public, $city_id, $reason = "", $user = null ) {
+	static public function setPublicStatus(
+		$city_public,
+		$city_id,
+		$reason = "",
+		$user = null,
+		$shouldUseMasterDbOnCheckFlags = false
+	) {
 		global $wgWikicitiesReadOnly;
+
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -1998,14 +2053,14 @@ class WikiFactory {
 			return false;
 		}
 
-		if ( (static::getFlags($city_id) & static::FLAG_PROTECTED) && $city_public != 1 ) {
+		if ( ( static::getFlags( $city_id, $shouldUseMasterDbOnCheckFlags ) & static::FLAG_PROTECTED ) && $city_public != 1 ) {
 			Wikia::log( __METHOD__, "", "Wiki is protected. Skipping update.");
 			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
 
-		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
+		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason, $user ] );
 
 		$update = [
 			"city_public" => $city_public,
@@ -2810,7 +2865,7 @@ class WikiFactory {
 	 *
 	 * @return flags
 	 */
-	static public function getFlags( $city_id ) {
+	static public function getFlags( $city_id, $shouldUseMasterDb = false ) {
 		if ( !static::isUsed() ) {
 			Wikia::log( __METHOD__, 'info', 'WikiFactory is not used.' );
 			return false;
@@ -2818,7 +2873,8 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$dbw = static::db( DB_SLAVE );
+		$dbw = ( $shouldUseMasterDb ) ? static::db( DB_MASTER ) : static::db( DB_SLAVE );
+
 		$city_flags = $dbw->selectField(
 			'city_list',
 			'city_flags',

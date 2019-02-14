@@ -151,6 +151,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					break;
 
 				case 'internal':
+					if (!data.link && element.getAttribute('data-uncrawlable-url')) {
+						//show proper target and text in case it's red link
+						var pattern = new RegExp('(?<=\\/)(.*?)(?=\\/)', 'g');
+						var domainPattern = new RegExp('^(http|https):', 'g');
+
+						var rawDecodedHref = atob(element.getAttribute('data-uncrawlable-url'));
+						var properTarget = rawDecodedHref
+							.replace(pattern,'')
+							.replace(/\//g,'')
+							.replace(domainPattern,'')
+							.split('?')[0]
+							.toLowerCase();
+
+						setValues('internal', properTarget, data.text);
+						linkTextDirty = true;
+						break;
+					}
 					setValues('internal', data.link, data.text);
 					linkTextDirty = true;
 					break;
@@ -353,6 +370,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			element = plugin.getSelectedLink( editor );
 			if ( element && element.getAttribute( 'href' ) ) {
+				selection.selectElement( element );
+			} else if (element && !element.getAttribute( 'href' ) && element.getAttribute('data-uncrawlable-url')) {
+				//show proper target and text in case it's red link
 				selection.selectElement( element );
 			} else {
 				element = null;

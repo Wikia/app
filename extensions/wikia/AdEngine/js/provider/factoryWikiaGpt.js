@@ -3,20 +3,16 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.services')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	btfBlocker,
 	gptHelper,
 	defaultAdUnitBuilder,
-	megaAdUnitBuilder,
 	slotRegistry,
 	log,
-	bidders,
-	lookups
+	bidders
 ) {
 	'use strict';
 
@@ -66,10 +62,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			if (megaAdUnitBuilder.isMegaSlot(slot.name)) {
-				return megaAdUnitBuilder.build(slot.name, src);
-			}
-
 			if (extra.getAdUnitBuilder) {
 				return extra.getAdUnitBuilder().build(slot.name, src);
 			}
@@ -98,12 +90,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				Object.keys(targeting).forEach(function (key) {
 					slotTargeting[key] = targeting[key];
 				});
-
-				slotRegistry.storeScrollY(slot.name);
-			} else if (lookups) {
-				lookups.storeRealSlotPrices(slot.name);
-				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
-				slotRegistry.storeScrollY(slot.name);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, rewriteExtras(slot.name, extra));

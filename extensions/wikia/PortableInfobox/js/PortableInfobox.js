@@ -42,8 +42,68 @@
 		}
 	};
 
+	var Panel = {
+		init: function($content) {
+			var $panels = $content.find('.pi-panel');
+
+			$panels.each( function( index ) {
+				var $panel = $panels.eq(index),
+					$scrollWrapper = $panel.find('.pi-panel-scroll-wrapper'),
+					$toggles = $panel.find('.pi-section-navigation'),
+					scrollHandler = this.handleScrollShadow($scrollWrapper, $toggles[0]);
+
+                $toggles
+	                .on('scroll', scrollHandler)
+	                .on('click', function(e) {
+					var toggle = e.target.closest('.pi-section-tab');
+
+					if (toggle !== null) {
+						var $newActiveToggle = $(toggle),
+							newRef = $newActiveToggle.attr('data-ref'),
+							$oldActiveToggle = $toggles.find('.pi-section-active'),
+							$oldActiveContent = $panel.find('.pi-section-content.pi-section-active'),
+							$newActiveContent = $panel.find('.pi-section-content[data-ref=' + newRef + ']');
+
+						$oldActiveToggle.removeClass('pi-section-active');
+						$oldActiveContent.removeClass('pi-section-active');
+
+						$newActiveToggle.addClass('pi-section-active');
+						$newActiveContent.addClass('pi-section-active');
+					}
+				});
+
+                scrollHandler();
+			}.bind(this));
+		},
+
+		handleScrollShadow: function($scrollWrapper, scrollEl) {
+            return function() {
+            	try {
+					var compensation = 20;
+					var didScrollToRight = scrollEl.scrollWidth - scrollEl.scrollLeft - compensation <= scrollEl.clientWidth;
+					var didScrollToLeft = scrollEl.scrollLeft < compensation;
+
+					if (didScrollToLeft) {
+						$scrollWrapper.removeClass('pi-panel-scroll-left');
+					} else {
+						$scrollWrapper.addClass('pi-panel-scroll-left');
+					}
+
+					if (didScrollToRight) {
+						$scrollWrapper.removeClass('pi-panel-scroll-right');
+					} else {
+						$scrollWrapper.addClass('pi-panel-scroll-right');
+					}
+				} catch (e) {
+					console.warn(e);
+				}
+            };
+        }
+	};
+
 	mw.hook('wikipage.content').add(function($content) {
 		ImageCollection.init($content);
 		CollapsibleGroup.init($content);
+		Panel.init($content);
 	});
 })(window, jQuery);

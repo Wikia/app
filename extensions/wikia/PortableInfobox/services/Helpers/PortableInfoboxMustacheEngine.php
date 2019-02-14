@@ -26,7 +26,9 @@ class PortableInfoboxMustacheEngine {
 		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
-		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
+		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache',
+		'panel' => 'PortableInfoboxPanel.mustache',
+		'panel-mobile' => 'PortableInfoboxPanelMobile.mustache',
 	];
 	protected $templateEngine;
 

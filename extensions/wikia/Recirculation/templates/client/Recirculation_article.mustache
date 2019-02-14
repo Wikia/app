@@ -9,7 +9,7 @@
 				{{{fandomHeartSvg}}}
 			</div>
         {{/thumbnail}}
-		{{#video}}
+		{{#hasVideo}}
 			<div class="mcf-card-article__video-container">
 				<svg class="mcf-card-article__video-icon" viewBox="0 0 180 180" width="100%" height="100%">
 					<g fill="none" fill-rule="evenodd">
@@ -21,12 +21,7 @@
 					</g>
 				</svg>
 			</div>
-		{{/video}}
-	    {{#presented_by}}
-		    <div class="mcf-card-article__sponsored-bagde">
-			    <span class="mcf-card-article__sponsored-text">Sponsored</span>
-		    </div>
-	    {{/presented_by}}
+		{{/hasVideo}}
         <span class="mcf-card-article__title">
             {{shortTitle}}
         </span>
@@ -34,9 +29,4 @@
             {{site_name}}
         </span>
     </a>
-	{{#isPlista}}
-		<a href="https://www.plista.com/au">
-			<img class="mcf-card-article__plista" src="https://static.plista.com/images/powered_by_plista_logo.png">
-		</a>
-	{{/isPlista}}
 </div>

@@ -1,22 +1,21 @@
 define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
-	'wikia.tracker',
-	'ext.wikia.recirculation.utils',
-	'ext.wikia.recirculation.plista'
-], function ($, w, tracker, utils, plista) {
+	'ext.wikia.recirculation.tracker',
+	'ext.wikia.recirculation.utils'
+], function ($, w, tracker, utils) {
 	'use strict';
 
-	var track = tracker.buildTrackingFunction({
-			category: 'mixed-content-footer',
-			trackingMethod: 'analytics'
-		}),
-		$mixedContentFooter = $('#mixed-content-footer');
+	var $mixedContentFooter = $('#mixed-content-footer'),
+		templatePaths = {
+			article: 'client/Recirculation_article.mustache',
+			sponsoredContent: 'client/Recirculation_sponsoredContent.mustache'
+		};
 
 	function render(data) {
-		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
-			wikiArticlesList = data.wikiItems.items,
-			templateList = getTemplateList(newsAndStoriesList),
+		var newsAndStoriesList = data.nsItems,
+			wikiArticlesList = data.wikiItems,
+			templateList = [templatePaths.article, templatePaths.sponsoredContent],
 			templates = {},
 			$discussions = $(data.discussions);
 		$('.mcf-discussions-placeholder').replaceWith($discussions);
@@ -28,37 +27,45 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 					templates[templateName] = data[index];
 				});
 			})
-			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
-				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
+				injectTemplates(templates, newsAndStoriesList, wikiArticlesList, data.sponsoredItem);
 				setupTracking();
-			})
+			});
 	}
 
-	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
+	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList, sponsoredItem) {
 		var $newsAndStoriesHook = $('.mcf-card-ns-placeholder'),
-			$wikiArticleHook = $('.mcf-card-wiki-placeholder');
+			$wikiArticleHook = $('.mcf-card-wiki-placeholder'),
+			$sponsoredContentHook = $('.mcf-card-sponsored-content');
+
+		if (sponsoredItem) {
+			if (sponsoredItem.title.length > 90) {
+				sponsoredItem.shortTitle = sponsoredItem.title.substring(0, 80) + '...';
+			} else {
+				sponsoredItem.shortTitle = sponsoredItem.title;
+			}
+
+			if (sponsoredItem.thumbnailUrl && window.Vignette) {
+				sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
+					mode: window.Vignette.mode.zoomCrop,
+					height: 337,
+					width: 386
+				});
+			}
+
+			sponsoredItem.trackingLabels = 'footer,sponsored-item';
+
+			$sponsoredContentHook.replaceWith(utils.renderTemplate(templates[templatePaths.sponsoredContent], sponsoredItem));
+		}
 
 		$.each($newsAndStoriesHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
-				newsAndStoriesItem = newsAndStoriesList[index],
-				type;
+				template = templates[templatePaths.article],
+				newsAndStoriesItem = newsAndStoriesList[index];
 
-			if(newsAndStoriesItem) {
-				type = newsAndStoriesItem.type;
+			if (newsAndStoriesItem) {
 				newsAndStoriesItem.shortTitle = newsAndStoriesItem.title;
-				if (type === 'topic') {
-					template = templates['client/Recirculation_topic.mustache'];
-					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
-				} else if (type === 'storyStream') {
-					template = templates['client/Recirculation_storyStream.mustache'];
-					newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
-				} else if (type === 'video') {
-					newsAndStoriesItem.video = true;
-				}
-
-				newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + type;
+				newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + 'ns,footer';
 				newsAndStoriesItem.liType = 'ns';
 				newsAndStoriesItem.classes = $this[0].className.replace('mcf-card-ns-placeholder', '');
 
@@ -68,62 +75,41 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 		$.each($wikiArticleHook, function (index) {
 			var $this = $(this),
-				template = templates['client/Recirculation_article.mustache'],
+				template = templates[templatePaths.article],
 				wikiArticle = wikiArticlesList[index];
-				wikiArticle.shortTitle = wikiArticle.title;
 
-			if(wikiArticle) {
+			if (wikiArticle) {
 				if (!wikiArticle.thumbnail) {
 					wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
 				}
 
 				if (wikiArticle.title.length > 90) {
 					wikiArticle.shortTitle = wikiArticle.title.substring(0, 80) + '...';
+				} else {
+					wikiArticle.shortTitle = wikiArticle.title;
 				}
 
-				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
+				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article,footer';
 				wikiArticle.classes = $this[0].className.replace('mcf-card-wiki-placeholder', '');
 				wikiArticle.liType = 'wiki';
-				if (wikiArticle.type === 'video') {
-					wikiArticle.video = true;
-				}
 
 				$this.replaceWith(utils.renderTemplate(template, wikiArticle));
 			}
 		});
 	}
 
-	function getTemplateList(newsAndStoriesArticles) {
-		var templateList = ['client/Recirculation_article.mustache'],
-			topicExist = false,
-			storyStreamExist = false;
-
-		newsAndStoriesArticles.forEach(function (article) {
-			if (article.type === 'topic' && !topicExist) {
-				templateList.push('client/Recirculation_topic.mustache');
-				topicExist = true;
-			} else if (article.type === 'storyStream' && !storyStreamExist) {
-				templateList.push('client/Recirculation_storyStream.mustache');
-				storyStreamExist = true;
-			}
-		});
-
-		return templateList;
-	}
-
 	function setupTracking() {
-		track({
-			action: tracker.ACTIONS.IMPRESSION
-		});
+		tracker.trackImpression('footer');
 
 		$mixedContentFooter.on('click', '[data-tracking]', function () {
-			var labels = $(this).data('tracking').split(',');
+			var $this = $(this),
+				labels = $this.data('tracking').split(','),
+				href = $this.attr('href');
+
 			labels.forEach(function (label) {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: label
-				});
+				tracker.trackClick(label);
 			});
+			tracker.trackSelect(href);
 		});
 	}
 

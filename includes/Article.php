@@ -930,6 +930,16 @@ class Article extends Page {
 					$fragment = Xml::escapeJsString( $this->getTitle()->getFragmentForURL() );
 					$wgOut->addInlineScript( "redirectToFragment(\"$fragment\");" );
 				}
+
+				if( !$this->getContext()->getUser()->isAnon() ) {
+					// Add the script to update the displayed URL and
+					// set the fragment if one was specified in the redirect
+					$wgOut->addJsConfigVars( [
+						'wgInternalRedirectTargetUrl' => $this->getTitle()->getLocalURL(),
+					] );
+					$wgOut->addModules( [ 'mediawiki.action.view.redirect' ] );
+				}
+
 				/**
 				 * Commented out by christian@wikia-inc.com
 				 * /extensions/wikia/CanonicalHref is used by Wikia to handle redirects and all of these cases:

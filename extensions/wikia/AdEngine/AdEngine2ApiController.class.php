@@ -23,7 +23,7 @@ class AdEngine2ApiController extends WikiaController {
 		}
 	}
 
-	public function getILCode() {
+	public function getHMDCode() {
 		global $wgUser;
 
 		$this->response->setContentType( 'text/javascript' );
@@ -31,7 +31,7 @@ class AdEngine2ApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		if ($wgUser->isAnon()) {
-			$resourceLoader = new ResourceLoaderAdEngineILCode();
+			$resourceLoader = new ResourceLoaderAdEngineHMDCode();
 			$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 			$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
 		} else {

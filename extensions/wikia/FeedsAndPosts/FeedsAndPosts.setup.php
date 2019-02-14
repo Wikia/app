@@ -12,6 +12,7 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\RecentChanges'] = $dir . 'RecentChanges.
 $wgAutoloadClasses['Wikia\FeedsAndPosts\TopArticles'] = $dir . 'TopArticles.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Thumbnails'] = $dir . 'Thumbnails.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\ThemeSettings'] = $dir . 'ThemeSettings.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\WikiVariables'] = $dir . 'WikiVariables.class.php';
 
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';

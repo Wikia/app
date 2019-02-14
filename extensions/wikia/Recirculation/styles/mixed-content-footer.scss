@@ -244,9 +244,9 @@ h1.mcf-header {
 
 		> svg {
 			$mcf-placeholder-svg-size: 34.5%;
-			fill: $wds-color-white;
+			fill: #00d6d6;
 			height: $mcf-placeholder-svg-size;
-			opacity: .15;
+			opacity: .2;
 			width: $mcf-placeholder-svg-size;
 		}
 	}
@@ -307,14 +307,6 @@ h1.mcf-header {
 
 	&__link {
 		position: relative;
-	}
-
-	&__plista {
-		bottom: 0;
-		padding: 5px;
-		position: absolute;
-		right: 0;
-		width: 100px;
 	}
 }
 
