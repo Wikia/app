@@ -110,7 +110,7 @@ class MarkWikiAsClosedController extends WikiaController {
 			true
 		);
 
-		return ($status === WikiFactory::CLOSE_ACTION);
+		return ( $status === WikiFactory::CLOSE_ACTION );
 	}
 
 	static private function removeProtectionFromFandomCreatorCommunityWiki( $wikiId, $reason ) {
@@ -129,6 +129,6 @@ class MarkWikiAsClosedController extends WikiaController {
 
 		$wikiFandomCreatorCommunityId = WikiFactory::getVarValueByName( CommunitySetup::WF_VAR_FC_COMMUNITY_ID, $wikiId );
 
-		return ($fandomCreatorCommunityId == $wikiFandomCreatorCommunityId);
+		return ( $fandomCreatorCommunityId == $wikiFandomCreatorCommunityId );
 	}
 }
