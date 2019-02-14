@@ -1377,6 +1377,12 @@ abstract class FileBackendStore extends FileBackend {
 	 * @see FileBackend::doOperationsInternal()
 	 */
 	protected function doOperationsInternal( array $ops, array $opts ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . '::' . __METHOD__,
+			[
+				'ops' => json_encode( array_column( $ops, 'op' ) )
+			]
+		);
 		wfProfileIn( __METHOD__ );
 		$status = Status::newGood();
 

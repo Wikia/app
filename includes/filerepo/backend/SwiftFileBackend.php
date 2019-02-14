@@ -95,7 +95,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected static function isValidContainerName( $container ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $container )
 			]
@@ -108,7 +108,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( [$container, $relStoragePath] )
 			]
@@ -126,7 +126,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function isPathUsableInternal( $storagePath ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $storagePath )
 			]
@@ -155,7 +155,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doCreateInternal( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( [$params['dst'], $params['overwrite']] )
 			]
@@ -228,7 +228,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doStoreInternal( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -310,7 +310,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doCopyInternal( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -377,7 +377,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doDeleteInternal( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -420,7 +420,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doPrepareInternal( $fullCont, $dir, array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -520,7 +520,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doCleanInternal( $fullCont, $dir, array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -572,7 +572,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doGetFileStat( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -675,7 +675,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function getFileContents( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -716,7 +716,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function getFileListInternal( $fullCont, $dir, array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -756,7 +756,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function doGetFileSha1base36( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -774,7 +774,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function doStreamFile( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
@@ -821,7 +821,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function getLocalCopy( array $params ) {
 		WikiaLogger::instance()->info(
-			__CLASS__ . ' ' . __METHOD__,
+			__CLASS__ . '::' . __METHOD__,
 			[
 				'params' => json_encode( $params )
 			]
