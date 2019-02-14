@@ -6,7 +6,7 @@ class FileId {
 	private $relativePath;
 	private $pathPrefix;
 
-	public function __construct( $bucket, $relativePath, $pathPrefix ) {
+	public function __construct( string $bucket, string $relativePath, $pathPrefix ) {
 		$this->bucket = $bucket;
 		$this->relativePath = $relativePath;
 		$this->pathPrefix = $pathPrefix;

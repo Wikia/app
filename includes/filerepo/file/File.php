@@ -1775,7 +1775,7 @@ abstract class File implements UrlGeneratorInterface {
 		return VignetteRequest::fromConfigMap( [
 			'is-archive' => $this->isOld(),
 			'timestamp' => $timestamp,
-			'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
+			'relative-path' => $this->getUrlRel(),
 			'bucket' => $this->getBucket(),
 			'path-prefix' => $this->getPathPrefix(),
 		] );

@@ -797,10 +797,7 @@ class LocalFile extends File {
 			'thumbnail_urls' => json_encode( $urls ),
 		] );
 		try {
-			$id =
-				new FileId( $this->getBucket(),
-					$this->getHashPath() . rawurlencode( $this->getName() ),
-					$this->getPathPrefix() );
+			$id = new FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
 			( new AsyncPurgeTask() )->publish( $id, $urls );
 		}
 		catch ( Exception $e ) {
@@ -1399,7 +1396,6 @@ class LocalFile extends File {
 	 * @return FileRepoStatus object.
 	 */
 	function delete( $reason, $suppress = false ) {
-		global $wgUseSquid;
 		$this->lock(); // begin
 
 		$batch = new LocalFileDeleteBatch( $this, $reason, $suppress );
@@ -1428,18 +1424,12 @@ class LocalFile extends File {
 
 		if ( $status->ok ) {
 			$this->purgeEverything();
+			$purgeUrls = [];
 			foreach ( $archiveNames as $archiveName ) {
+				$purgeUrls[] = $this->getArchiveUrl( $archiveName );
 				$this->purgeOldThumbnails( $archiveName );
 			}
-
-			if ( $wgUseSquid ) {
-				// Purge the squid
-				$purgeUrls = [];
-				foreach ( $archiveNames as $archiveName ) {
-					$purgeUrls[] = $this->getArchiveUrl( $archiveName );
-				}
-				SquidUpdate::purge( $purgeUrls );
-			}
+			SquidUpdate::purge( $purgeUrls );
 		}
 
 		return $status;
