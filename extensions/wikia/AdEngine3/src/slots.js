@@ -238,7 +238,7 @@ export default {
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 
 		if (!isApplicable || !parentNode) {
-			setSlotState(slotName, false);
+			slotService.setState(slotName, false);
 			return;
 		}
 
