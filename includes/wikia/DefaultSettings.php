@@ -1802,16 +1802,3 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
-
-/**
- * @name $wgProcessTasksOnKubernetes
- * When enabled, tasks will be processed on kubernetes.
- * This will only work on production.
- */
-$wgProcessTasksOnKubernetes = false;
-
-/**
- * @name $wgPercentOfTasksOnKubernetes
- * Determines the percentage of wikis that send tasks to k8s.
- */
-$wgPercentOfTasksOnKubernetes = 0;
