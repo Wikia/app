@@ -20,70 +20,60 @@ class CompareRobots extends Maintenance {
 		$this->addOption( 'diffsdir', 'Directory where differences in the responses are saved',
 			false, true, 'd' );
 		$this->addOption( 'staging', 'Staging env for service requests', false, true );
+		$this->addOption( 'mwProxy', 'Mediawiki proxy host (one of the apaches)', true, true );
 		$this->addOption( 'fc', 'Check only FC communities', false, false );
 	}
 
-	private function httpGet( $url, $headers, $ssl, $external = false ) {
-		if ( !$external ) {
-			$headers['Fastly-FF'] = 1;
-			if ( $ssl ) {
-				$headers['Fastly-SSL'] = 1;
-			}
-		} else {
-			if ( $ssl ) {
-				$url = str_replace( 'http://', 'https://', $url );
-			} else {
-				$url = str_replace( 'https://', 'http://', $url );
-			}
+	private function httpGet( $url, $headers, $ssl, $proxy ) {
+
+		$headers['Fastly-FF'] = 1;
+		if ( $ssl ) {
+			$headers['Fastly-SSL'] = 1;
 		}
 		$options = [
 			'returnInstance' => true,
 			'followRedirects' => false,
 			'timeout' => self::TIMEOUT,
 			'headers' => $headers,
+			'proxy' => $proxy
 		];
-		if ( !$external ) {
-			$response = \Http::get( $url, self::TIMEOUT, $options );
-		} else {
-			$response = \ExternalHttp::get( $url, self::TIMEOUT, $options );
-
-		}
+		$response = \Http::get( $url, self::TIMEOUT, $options );
 		return $response;
 	}
 
 	private function fetchRobotsFromMediaWiki( $domain, $ssl = false ) {
 		$url = $domain . '/robots.txt';
+		$headers = [
+			'X-Original-Host' => parse_url( $domain, PHP_URL_HOST ),
+		];
 
-		return $this->httpGet( $url, [], $ssl );
+		return $this->httpGet( $url, $headers, $ssl, $this->getOption( 'mwProxy', false ) );
 	}
 
 	private function fetchRobotsFromFC( $domain, $ssl = false ) {
-		/*
 		 $headers = [
 			'X-Original-Host' => parse_url( $domain, PHP_URL_HOST ),
 		];
 
-		return $this->httpGet( 'http://graph-cms.fandom.com/robots.txt', $headers, $ssl );
-		*/
-		$url = $domain . '/robots.txt';
-		return $this->httpGet( $url, [], $ssl, true );
-
+		return $this->httpGet( 'http://graph-cms.fandom.com/robots.txt', $headers, $ssl, 'prod.kubernetes-lb.service.sjc.consul:80' );
 	}
 
 	private function fetchRobotsFromK8s(
 		$domain, $ssl = false, $jaegerDebugId = false, $staging = ''
 	) {
-		$url = $domain . '/newrobots.txt';
-		$headers = [];
+		$headers = [
+			'X-Original-Host' => parse_url( $domain, PHP_URL_HOST )
+		];
 		if ( $jaegerDebugId ) {
 			$headers['jaeger-debug-id'] = $jaegerDebugId;
 		}
+		$url = 'http://robots-txt.prod.sjc.k8s.wikia.net/robots.txt';
 		if ( $staging ) {
 			$headers['X-Staging'] = $staging;
 			$url .= '?forcerobots=1';
 		}
 
-		return $this->httpGet( $url, $headers, $ssl );
+		return $this->httpGet( $url, $headers, $ssl, 'prod.kubernetes-lb.service.sjc.consul:80' );
 	}
 
 	private function responsesEqual( $prodResponse, $serviceResponse, $staging ) {
@@ -95,7 +85,6 @@ class CompareRobots extends Maintenance {
 		if ( $prodResponse->getStatus() >= 300 && $prodResponse->getStatus() < 400 ) {
 			$prodRedirect = $prodResponse->getResponseHeader( 'location' );
 			$serviceRedirect = $serviceResponse->getResponseHeader( 'location' );
-			$serviceRedirect = str_replace( 'newrobots.txt', 'robots.txt', $serviceRedirect );
 			$serviceRedirect = str_replace( '?forcerobots=1', '', $serviceRedirect );
 			if ( $staging ) {
 				$serviceRedirect = str_replace( ".{$staging}.", '.', $serviceRedirect );
@@ -151,7 +140,8 @@ class CompareRobots extends Maintenance {
 
 	public function execute() {
 		global $wgHTTPProxy;
-		$wgHTTPProxy = 'prod.border.service.sjc.consul:80';
+		// default proxy, most of the stuff is on k8s. we want to skip the vcl logic
+		$wgHTTPProxy = 'prod.kubernetes-lb.service.sjc.consul:80';
 
 		$diffsdir = $this->getOption( 'diffsdir', false );
 		if ( $diffsdir ) {
@@ -201,11 +191,6 @@ class CompareRobots extends Maintenance {
 						$prodResponse = $this->fetchRobotsFromMediaWiki( $url, $https );
 					} else {
 						$prodResponse = $this->fetchRobotsFromFC( $url, $https );
-						$servedBy = $prodResponse->getResponseHeaders()['x-served-by'];
-						if ( is_array( $servedBy ) && strpos( $servedBy[0], 'ap-s' ) === 0 ) {
-							$this->output( "\tSkipping this FC community as it seems to be served by MW\n" );
-							continue;
-						}
 					}
 					$jaegerDebugId = sprintf( "%04d%06d", rand( 1000, 9999 ), $domainsChecked );
 
