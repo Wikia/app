@@ -764,6 +764,10 @@ class LocalFile extends File {
 	 * Delete cached transformed files for the current version only.
 	 */
 	function purgeThumbnails( $options = [] ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - Start purging thumbnails', [
+			'original_url' => $this->getOriginalUrl(),
+		] );
+
 		// Delete thumbnails
 		$files = $this->getThumbnails();
 
@@ -779,6 +783,11 @@ class LocalFile extends File {
 		$this->purgeThumbList( array_shift( $files ), $files );
 
 		( new AsyncPurgeTask() )->publish( $this->getOriginalUrl(), $urls );
+
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - Finished purging thumbnails', [
+			'original_url' => $this->getOriginalUrl(),
+		] );
 	}
 
 	function getUrlsToPurge( $files ) {

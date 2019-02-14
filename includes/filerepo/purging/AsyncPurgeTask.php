@@ -23,10 +23,10 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	private function removeThumbnailsInThumblr( $originalUrl ) {
-		Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . ' - Remove thumbnails URL', [
-			'remove_thumbnails_url' => $this->getRemoveThumbnailsUrl( $originalUrl ),
+		$url = $this->getRemoveThumbnailsUrl( $originalUrl );
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - Remove thumbnails URL', [
+			'remove_thumbnails_url' => $url,
 		] );
-
 		\Http::request( "DELETE", $url, [ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
 	}
 
