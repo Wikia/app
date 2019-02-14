@@ -5,72 +5,70 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncPurgeTask extends BaseTask {
 
-	public function publish( $originalUrl, $thumbnailUrls ) {
+	public function publish( FileId $fileId, array $thumbnailUrls ) {
 		global $wgCityId;
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'original_url' => $originalUrl,
+			'file' => $fileId,
 			'thumbnail_urls' => $thumbnailUrls,
 		] );
 
 		$task = new AsyncPurgeTask();
-		$task->call( 'removeThumbnails', $originalUrl, $thumbnailUrls );
+		$task->call( 'removeThumbnails', $fileId, $thumbnailUrls );
 		$task->wikiId( $wgCityId );
 		$task->queue();
 	}
 
 	/**
-	 * @param string $originalUrl
+	 * @param string $fileId
 	 * @param array $thumbnailUrls
 	 * @throws Exception
 	 */
-	public function removeThumbnails( $originalUrl, $thumbnailUrls ) {
+	public function removeThumbnails( FileId $fileId, array $thumbnailUrls ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'original_url' => $originalUrl,
+			'file' => $fileId,
 			'thumbnail_urls' => $thumbnailUrls,
 		] );
 
 		try {
-			$this->removeThumbnailsInThumblr( $originalUrl );
+			$this->removeThumbnailsInThumblr( $fileId->serializeForTask() );
 			$this->purgerUrls( $thumbnailUrls );
 		}
 		catch ( \Exception $exception ) {
 			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-				'original_url' => $originalUrl,
+				'file' => $fileId,
 				'thumbnail_urls' => $thumbnailUrls,
 			] );
 			throw $exception;
 		}
 	}
 
-	private function removeThumbnailsInThumblr( $originalUrl ) {
-		$url = $this->getRemoveThumbnailsUrl( $originalUrl );
+	private function removeThumbnailsInThumblr( array $fileId ) {
+		$url = $this->getRemoveThumbnailsUrl( FileId::deserializeFromTask( $fileId ) );
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'original_url' => $originalUrl,
+			'file' => $fileId,
 			'remove_thumbnails_url' => $url,
 		] );
 		\Http::request( "DELETE", $url, [ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
 	}
 
-	private function getRemoveThumbnailsUrl( $originalUrl ) {
-		global $wgVignetteUrl;
-
+	private function getRemoveThumbnailsUrl( FileId $fileId ) {
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
-		$thumblrUrl = "http://{$urlProvider->getUrl( 'thumblr' )}/";
-
-		// replace base URL - we need to call Thumblr internally
-		$url = str_replace( $wgVignetteUrl, $thumblrUrl, $originalUrl );
-
-		// remove the query parameters if provided
-		if ( strpos( $url, '?' ) !== false ) {
-			$url = substr( $url, 0, strpos( $url, "?" ) );
+		$thumblrUrl = $this->removeTrailingSlash( "http://{$urlProvider->getUrl( 'thumblr' )}" );
+		$url = "{$thumblrUrl}/{$fileId->getBucket()}/{$fileId->getRelativePath()}/thumbnails";
+		if ( $fileId->getPathPrefix() ) {
+			$url = "{$url}?path-prefix={$fileId->getPathPrefix()}";
 		}
 
-		if ( substr( $url, - 1 ) != '/' ) {
-			$url = $url . '/';
-		}
+		return $url;
+	}
 
-		return $url . "thumbnails";
+	private function removeTrailingSlash( $text ) {
+		if ( substr( $text, - 1 ) != '/' ) {
+			return substr( $text, 0, - 1 );
+		} else {
+			return $text;
+		}
 	}
 
 	private function purgerUrls( $thumbnailUrls ) {

@@ -750,7 +750,7 @@ class LocalFile extends File {
 		foreach ( $files as $file ) {
 			$urls[] = $this->getArchiveThumbUrl( $archiveName, $file );
 		}
-		( new AsyncPurgeTask() )->publish( $this->getURL(), $urls );
+		$this->publishAsyncPurgeTask( $urls );
 	}
 
 	/**
@@ -775,8 +775,7 @@ class LocalFile extends File {
 
 		$urls = $this->getUrlsToPurge( $files );
 		$this->purgeThumbList( array_shift( $files ), $files );
-
-		( new AsyncPurgeTask() )->publish( $this->getURL(), $urls );
+		$this->publishAsyncPurgeTask( $urls );
 	}
 
 	function getUrlsToPurge( $files ) {
@@ -790,6 +789,13 @@ class LocalFile extends File {
 		 * @see PLATFORM-252
 		 */
 		return array_slice( $urls, 0, 1 );
+	}
+
+	private function publishAsyncPurgeTask( array $urls ) {
+		$id =
+			new FileId( $this->getBucket(), $this->getHashPath() . rawurlencode( $this->getName() ),
+				$this->getPathPrefix() );
+		( new AsyncPurgeTask() )->publish( $id, $urls );
 	}
 
 	/**
