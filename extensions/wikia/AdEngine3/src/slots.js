@@ -24,7 +24,7 @@ function isIncontentBoxadApplicable() {
  *
  * @returns {boolean}
  */
-function isTopBoxadEnabled() {
+function isTopBoxadApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
@@ -189,7 +189,7 @@ export default {
 
 	setupStates() {
 		slotService.setState('TOP_LEADERBOARD', true);
-		slotService.setState('TOP_BOXAD', isTopBoxadEnabled());
+		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
 		slotService.setState('INCONTENT_BOXAD_1', true);
 		slotService.setState('BOTTOM_LEADERBOARD', true);
 		slotService.setState('INVISIBLE_SKIN', true);
