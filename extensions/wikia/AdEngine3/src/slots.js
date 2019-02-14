@@ -4,7 +4,6 @@ import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
-import { matchMedia } from './match-media';
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -26,7 +25,7 @@ function isIncontentBoxadApplicable() {
  * @returns {boolean}
  */
 function isTopBoxadEnabled() {
-	return !matchMedia('screen and (max-width: 1023px)').matches;
+	return utils.getViewportWidth() >= 1024;
 }
 
 export default {
