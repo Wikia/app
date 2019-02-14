@@ -744,28 +744,24 @@ class LocalFile extends File {
 	 * @param $archiveName string name of the archived file
 	 */
 	function purgeOldThumbnails( $archiveName ) {
-		global $wgUseSquid;
 		// Get a list of old thumbnails and URLs
 		$files = $this->getThumbnails( $archiveName );
 		$dir = array_shift( $files );
 		$this->purgeThumbList( $dir, $files );
 
-		// Purge the squid
-		if ( $wgUseSquid ) {
-			$urls = [];
-			foreach ( $files as $file ) {
-				$urls[] = $this->getArchiveThumbUrl( $archiveName, $file );
-			}
-			SquidUpdate::purge( $urls );
+		$urls = [];
+		foreach ( $files as $file ) {
+			$urls[] = $this->getArchiveThumbUrl( $archiveName, $file );
 		}
+		( new AsyncPurgeTask() )->publish( $this->getURL(), $urls );
 	}
 
 	/**
 	 * Delete cached transformed files for the current version only.
 	 */
 	function purgeThumbnails( $options = [] ) {
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - Start purging thumbnails', [
-			'original_url' => $this->getOriginalUrl(),
+		Wikia\Logger\WikiaLogger::instance()->info( __CLASS__ . '::' . __METHOD__, [
+			'original_url' => $this->getURL(),
 		] );
 
 		// Delete thumbnails
@@ -782,12 +778,7 @@ class LocalFile extends File {
 		$urls = $this->getUrlsToPurge( $files );
 		$this->purgeThumbList( array_shift( $files ), $files );
 
-		( new AsyncPurgeTask() )->publish( $this->getOriginalUrl(), $urls );
-
-
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - Finished purging thumbnails', [
-			'original_url' => $this->getOriginalUrl(),
-		] );
+		( new AsyncPurgeTask() )->publish( $this->getURL(), $urls );
 	}
 
 	function getUrlsToPurge( $files ) {
@@ -809,6 +800,12 @@ class LocalFile extends File {
 	 * @param $files array of strings: relative filenames (to $dir)
 	 */
 	protected function purgeThumbList( $dir, $files ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __CLASS__ . '::' . __METHOD__, [
+			'original_url' => $this->getURL(),
+			'dir' => json_encode( $dir ),
+			'files' => json_encode( $files ),
+		] );
+
 		$fileListDebug = strtr( var_export( $files, true ), [ "\n" => '' ] );
 		wfDebug( __METHOD__ . ": $fileListDebug\n" );
 
