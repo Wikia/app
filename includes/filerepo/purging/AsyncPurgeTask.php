@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Factory\ServiceFactory;
-use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncPurgeTask extends BaseTask {
@@ -9,17 +8,34 @@ class AsyncPurgeTask extends BaseTask {
 	public function publish( $originalUrl, $thumbnailUrls ) {
 		global $wgCityId;
 
-		$task = ( new AsyncPurgeTask() )->title( $this->title );
-		$taskLists[] =
-			( new AsyncTaskList() )->wikiId( $wgCityId )->add( $task->call( 'removeThumbnails',
-				$originalUrl, $thumbnailUrls ) );
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'original_url' => $originalUrl,
+			'thumbnail_urls' => $thumbnailUrls,
+		] );
 
-		return AsyncTaskList::batch( $taskLists );
+		$task = new AsyncPurgeTask();
+		$task->call( 'removeThumbnails', $originalUrl, $thumbnailUrls );
+		$task->wikiId( $wgCityId );
+		$task->queue();
 	}
 
+	/**
+	 * @param string $originalUrl
+	 * @param array $thumbnailUrls
+	 * @throws Exception
+	 */
 	public function removeThumbnails( $originalUrl, $thumbnailUrls ) {
-		$this->removeThumbnailsInThumblr( $originalUrl );
-		$this->purgerUrls( $thumbnailUrls );
+		try {
+			$this->removeThumbnailsInThumblr( $originalUrl );
+			$this->purgerUrls( $thumbnailUrls );
+		}
+		catch ( \Exception $exception ) {
+			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+				'original_url' => $originalUrl,
+				'thumbnail_urls' => $thumbnailUrls,
+			] );
+			throw $exception;
+		}
 	}
 
 	private function removeThumbnailsInThumblr( $originalUrl ) {
