@@ -6,9 +6,6 @@
  * @ingroup FileAbstraction
  */
 
-use Wikia\Tasks\Tasks\AsyncPurgeTask;
-use Wikia\Tasks\Tasks\FileId;
-
 /**
  * Bump this number when serialized cache records may be incompatible.
  */
@@ -800,8 +797,8 @@ class LocalFile extends File {
 			'thumbnail_urls' => json_encode( $urls ),
 		] );
 		try {
-			$id = new FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
-			( new AsyncPurgeTask() )->publish( $id, $urls );
+			$id = new Wikia\Tasks\Tasks\FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
+			( new Wikia\Tasks\Tasks\AsyncPurgeTask() )->publish( $id, $urls );
 		}
 		catch ( Exception $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
