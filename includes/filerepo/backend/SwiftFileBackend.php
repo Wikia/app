@@ -33,7 +33,7 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $conn; // Swift connection handle
 	protected $connStarted = 0; // integer UNIX timestamp
 	protected $connContainers = array(); // container object cache
-	
+
 	protected $objCache = array();
 
 	/** @var BagOStuff */
@@ -94,13 +94,25 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::isValidContainerName()
 	 */
 	protected static function isValidContainerName( $container ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $container )
+			]
+		);
 		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
 	}
-	
+
 	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( [$container, $relStoragePath] )
+			]
+		);
 		if ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) { // mb_string required by CF
 			return null; // not UTF-8, makes it hard to use CF and the swift HTTP API
 		} elseif ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
@@ -113,6 +125,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::isPathUsableInternal()
 	 */
 	public function isPathUsableInternal( $storagePath ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $storagePath )
+			]
+		);
 		list( $container, $rel ) = $this->resolveStoragePathReal( $storagePath );
 		if ( $rel === null ) {
 			return false; // invalid
@@ -136,6 +154,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doCreateInternal()
 	 */
 	protected function doCreateInternal( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( [$params['dst'], $params['overwrite']] )
+			]
+		);
 		$status = Status::newGood();
 
 		list( $dstCont, $dstRel ) = $this->resolveStoragePathReal( $params['dst'] );
@@ -203,6 +227,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doStoreInternal()
 	 */
 	protected function doStoreInternal( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		list( $dstCont, $dstRel ) = $this->resolveStoragePathReal( $params['dst'] );
@@ -279,6 +309,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doCopyInternal()
 	 */
 	protected function doCopyInternal( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
@@ -330,7 +366,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
 		}
-		
+
 		Hooks::run( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
@@ -340,6 +376,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doDeleteInternal()
 	 */
 	protected function doDeleteInternal( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
@@ -369,7 +411,7 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		Hooks::run( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
-		
+
 		return $status;
 	}
 
@@ -377,6 +419,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doPrepareInternal()
 	 */
 	protected function doPrepareInternal( $fullCont, $dir, array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		// (a) Check if container already exists
@@ -471,6 +519,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doCleanInternal()
 	 */
 	protected function doCleanInternal( $fullCont, $dir, array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		// Only containers themselves can be removed, all else is virtual
@@ -517,6 +571,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doFileExists()
 	 */
 	protected function doGetFileStat( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 		if ( $srcRel === null ) {
 			return false; // invalid storage path
@@ -526,7 +586,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( isset( $this->objCache[ $params['src'] ] ) ) {
 			return $this->objCache[ $params['src'] ];
 		}
-		
+
 		if ( empty( $params['latest'] ) ) {
 			$params['latest'] = 1;
 		}
@@ -537,7 +597,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
 			// macbre - causes infinite loop / sha1 is stored in doStoreInternal() ?
-			$this->addMissingMetadata( $srcObj, $params['src'] ); 
+			$this->addMissingMetadata( $srcObj, $params['src'] );
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
@@ -567,7 +627,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
-		
+
 		# don't check SHA-1 for thumbnailers 
 		if ( $this->isThumbnailer( $path ) ) {
 			return true; //nothing to do
@@ -614,6 +674,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackend::getFileContents()
 	 */
 	public function getFileContents( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		static $existsCache = [];
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
@@ -649,6 +715,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::getFileListInternal()
 	 */
 	public function getFileListInternal( $fullCont, $dir, array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		return new SwiftFileBackendFileList( $this, $fullCont, $dir );
 	}
 
@@ -683,6 +755,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doGetFileSha1base36()
 	 */
 	public function doGetFileSha1base36( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$stat = $this->getFileStat( $params );
 		if ( $stat ) {
 			return $stat['sha1'];
@@ -695,6 +773,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doStreamFile()
 	 */
 	protected function doStreamFile( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
@@ -736,6 +820,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::getLocalCopy()
 	 */
 	public function getLocalCopy( array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . ' ' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 		if ( $srcRel === null ) {
 			return null;
@@ -1002,9 +1092,9 @@ class SwiftFileBackend extends FileBackendStore {
 		]);
 		// Wikia change - end
 	}
-	
+
 	/**
-	 * Check if image path contains /thumb/ 
+	 * Check if image path contains /thumb/
 	 *
 	 * @param $path image path
 	 * @return Boolean
