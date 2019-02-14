@@ -1379,12 +1379,7 @@ abstract class FileBackendStore extends FileBackend {
 	 * @see FileBackend::doOperationsInternal()
 	 */
 	protected function doOperationsInternal( array $ops, array $opts ) {
-		WikiaLogger::instance()->info(
-			__CLASS__ . '::' . __METHOD__,
-			[
-				'ops' => json_encode( array_column( $ops, 'op' ) )
-			]
-		);
+		$this->logOperations( $ops );
 		wfProfileIn( __METHOD__ );
 		$status = Status::newGood();
 
@@ -1424,6 +1419,26 @@ abstract class FileBackendStore extends FileBackend {
 
 		wfProfileOut( __METHOD__ );
 		return $status;
+	}
+
+	private function logOperations( $ops ) {
+		$callStackProvider = new Exception();
+		$opParams = array_map(
+			function( $op ) {
+				return [
+					'op' => $op['op'],
+					'src' => $op['src'],
+					'dst' => $op['dst']
+				];
+				},
+			$ops );
+		WikiaLogger::instance()->info(
+			__CLASS__ . '::' . __METHOD__,
+			[
+				'ops' => json_encode( $opParams ),
+				'call_stack' => $callStackProvider->getTraceAsString()
+			]
+		);
 	}
 
 	/**
