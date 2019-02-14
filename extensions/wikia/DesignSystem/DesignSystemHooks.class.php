@@ -13,6 +13,7 @@ class DesignSystemHooks {
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		\Wikia::addAssetsToOutput( 'design_system_scss' );
+		\Wikia::addAssetsToOutput( 'search_tracking_js' );
 
 		if ( $skin->getUser()->isLoggedIn() ) {
 			\Wikia::addAssetsToOutput( 'design_system_user_scss' );
