@@ -11,14 +11,6 @@ const PAGE_TYPES = {
 	home: 'h',
 };
 
-function setSlotState(slotName, state) {
-	if (state) {
-		slotService.enable(slotName);
-	} else {
-		slotService.disable(slotName);
-	}
-}
-
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
 
@@ -197,17 +189,17 @@ export default {
 	},
 
 	setupStates() {
-		setSlotState('TOP_LEADERBOARD', true);
-		setSlotState('TOP_BOXAD', isTopBoxadEnabled());
-		setSlotState('INCONTENT_BOXAD_1', true);
-		setSlotState('BOTTOM_LEADERBOARD', true);
-		setSlotState('INVISIBLE_SKIN', true);
+		slotService.setState('TOP_LEADERBOARD', true);
+		slotService.setState('TOP_BOXAD', isTopBoxadEnabled());
+		slotService.setState('INCONTENT_BOXAD_1', true);
+		slotService.setState('BOTTOM_LEADERBOARD', true);
+		slotService.setState('INVISIBLE_SKIN', true);
 
-		setSlotState('FEATURED', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('FEATURED', context.get('custom.hasFeaturedVideo'));
 
 		// TODO: Remove those slots once AE3 is globally enabled
-		setSlotState('TOP_LEADERBOARD_AB', false);
-		setSlotState('GPT_FLUSH', false);
+		slotService.setState('TOP_LEADERBOARD_AB', false);
+		slotService.setState('GPT_FLUSH', false);
 	},
 
 	setupIdentificators() {
