@@ -2,6 +2,7 @@
 
 namespace Wikia\Tasks\Tasks\Image;
 
+use SquidUpdate;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Tasks\BaseTask;
@@ -32,7 +33,7 @@ class AsyncPurgeTask extends BaseTask {
 	/**
 	 * @param string $fileId
 	 * @param array $thumbnailUrls
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function removeThumbnails( array $fileId, array $thumbnailUrls ) {
 		WikiaLogger::instance()->info( __METHOD__, [
