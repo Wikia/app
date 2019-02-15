@@ -10,14 +10,6 @@ const PAGE_TYPES = {
 	home: 'h',
 };
 
-function setSlotState(slotName, state) {
-	if (state) {
-		slotService.enable(slotName);
-	} else {
-		slotService.disable(slotName);
-	}
-}
-
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
 
@@ -25,6 +17,15 @@ function isIncontentBoxadApplicable() {
 		window.wgIsContentNamespace &&
 		context.get('wiki.opts.adsInContent') &&
 		!context.get('wiki.targeting.wikiIsCorporate');
+}
+
+/**
+ * Enables top_boxad on screen with width >= 1024px.
+ *
+ * @returns {boolean}
+ */
+function isTopBoxadApplicable() {
+	return utils.getViewportWidth() >= 1024;
 }
 
 export default {
@@ -187,17 +188,17 @@ export default {
 	},
 
 	setupStates() {
-		setSlotState('TOP_LEADERBOARD', true);
-		setSlotState('TOP_BOXAD', true);
-		setSlotState('INCONTENT_BOXAD_1', true);
-		setSlotState('BOTTOM_LEADERBOARD', true);
-		setSlotState('INVISIBLE_SKIN', true);
+		slotService.setState('TOP_LEADERBOARD', true);
+		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
+		slotService.setState('INCONTENT_BOXAD_1', true);
+		slotService.setState('BOTTOM_LEADERBOARD', true);
+		slotService.setState('INVISIBLE_SKIN', true);
 
-		setSlotState('FEATURED', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('FEATURED', context.get('custom.hasFeaturedVideo'));
 
 		// TODO: Remove those slots once AE3 is globally enabled
-		setSlotState('TOP_LEADERBOARD_AB', false);
-		setSlotState('GPT_FLUSH', false);
+		slotService.setState('TOP_LEADERBOARD_AB', false);
+		slotService.setState('GPT_FLUSH', false);
 	},
 
 	setupIdentificators() {
@@ -237,7 +238,7 @@ export default {
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 
 		if (!isApplicable || !parentNode) {
-			setSlotState(slotName, false);
+			slotService.setState(slotName, false);
 			return;
 		}
 
@@ -252,5 +253,5 @@ export default {
 
 			context.push('events.pushOnScroll.ids', slotName);
 		}, 10000);
-	}
+	},
 };

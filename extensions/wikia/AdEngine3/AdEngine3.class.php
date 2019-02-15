@@ -10,9 +10,14 @@ class AdEngine3
 
 		$articleId = $wg->Title->getArticleID();
 		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
-
 		if ($hasFeaturedVideo) {
 			return $wg->AdDriverAdEngine3EnabledOnFeaturedVideoPages;
+		}
+
+		$wikiaPageType = new WikiaPageType();
+		$isSearch = $wikiaPageType->isSearch();
+		if ($isSearch) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
 		}
 
 		return false;
