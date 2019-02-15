@@ -1804,19 +1804,6 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
 /**
- * @name $wgProcessTasksOnKubernetes
- * When enabled, tasks will be processed on kubernetes.
- * This will only work on production.
- */
-$wgProcessTasksOnKubernetes = false;
-
-/**
- * @name $wgPercentOfTasksOnKubernetes
- * Determines the percentage of wikis that send tasks to k8s.
- */
-$wgPercentOfTasksOnKubernetes = 0;
-
-/**
  * https://wikia-inc.atlassian.net/browse/SER-3006
  * If enabled, file storage operations will be logged.
  */
