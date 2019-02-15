@@ -27,7 +27,7 @@ var LatestActivity = {
 
 $(window).load(function() {
 	var showLatestActivity = window.Wikia.AbTest.inGroup('HIDE_LATEST_ACTIVITY', 'SHOW');
-	var $latestActivityModule = $('.rail-module activity-module');
+	var $latestActivityModule = $('.rail-module.activity-module');
 
 	if (showLatestActivity) {
 		$('.WikiaRail').on('afterLoad.rail', function() {
