@@ -67,7 +67,11 @@ class AsyncPurgeTask extends BaseTask {
 			'file' => json_encode( $fileId ),
 			'remove_thumbnails_url' => $url,
 		] );
-		\Http::request( "DELETE", $url, [ 'headers' => [ 'X-Wikia-Internal-Request' => '1' ] ] );
+		\Http::request( "DELETE", $url, [
+			'headers' => [ 'X-Wikia-Internal-Request' => '1' ],
+			'internalRequest' => true,
+			'noProxy' => true,
+		] );
 	}
 
 	private function getRemoveThumbnailsUrl( FileId $fileId ) {
