@@ -938,6 +938,9 @@ $messages['ru'] = array(
 	'right-insights' => 'Позволяет просматривать служебную страницу [[Special:Insights]] и её подстраницы со списком статей или шаблонов, которые требуется доработать.',
 );
 
+$messages['uk'] = array(
+);
+
 $messages['vi'] = array(
 	'insights' => 'Nội vụ',
 	'insights-desc' => 'Giới thiệu trang đặc biệt [[Special:Insights|Nội vụ]] và các tiểu trang trong đó liệt kê các bài viết hoặc bản mẫu cần được chú ý từ các thành viên.',
