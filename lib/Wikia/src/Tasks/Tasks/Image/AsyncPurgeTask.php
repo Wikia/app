@@ -42,7 +42,7 @@ class AsyncPurgeTask extends BaseTask {
 		] );
 
 		try {
-			$this->removeThumbnailsInThumblr( FieldId::deserializeFromTask( $fileId ) );
+			$this->removeThumbnailsInThumblr( FileId::deserializeFromTask( $fileId ) );
 			$this->purgerUrls( $thumbnailUrls );
 		}
 		catch ( \Exception $exception ) {
@@ -73,7 +73,8 @@ class AsyncPurgeTask extends BaseTask {
 	private function getRemoveThumbnailsUrl( FileId $fileId ) {
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
 		$thumblrUrl = $this->removeTrailingSlash( "http://{$urlProvider->getUrl( 'thumblr' )}" );
-		$url = "{$thumblrUrl}/{$fileId->getBucket()}/{$fileId->getRelativePath()}/thumbnails";
+		$url =
+			"{$thumblrUrl}/{$fileId->getBucket()}/images/{$fileId->getRelativePath()}/revision/{$fileId->getRevision()}/thumbnails";
 		if ( $fileId->getPathPrefix() ) {
 			$url = "{$url}?path-prefix={$fileId->getPathPrefix()}";
 		}
@@ -82,7 +83,7 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	private function removeTrailingSlash( string $text ) {
-		if ( substr( $text, - 1 ) != '/' ) {
+		if ( substr( $text, - 1 ) == '/' ) {
 			return substr( $text, 0, - 1 );
 		} else {
 			return $text;

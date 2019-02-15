@@ -793,26 +793,22 @@ class LocalFile extends File {
 
 	private function publishAsyncPurgeTask( array $urls ) {
 		$relativePath = $this->getHashPath() . rawurlencode( $this->getName() );
-
+		$revision = $this->isOld() ? $this->getArchiveTimestamp() : 'latest';
 		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 			'thumbnail_urls' => json_encode( $urls ),
 			'bucket' => $this->getBucket(),
 			'relative-path' => $relativePath,
-			'path-prefix' => $this->getPathPrefix()
+			'revision' => $revision,
+			'path-prefix' => $this->getPathPrefix(),
 		] );
-		try {
-			$id = new \Wikia\Tasks\Tasks\Image\FileId( $this->getBucket(), $relativePath, $this->getPathPrefix() );
-			( new \Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
-		}
-		catch ( \Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
-				'error' => $e->getMessage(),
-				'call_stack' => $e->getTraceAsString(),
-				'original_url' => $this->getURL(),
-				'thumbnail_urls' => json_encode( $urls ),
-			] );
-		}
+		$id = new \Wikia\Tasks\Tasks\Image\FileId(
+			$this->getBucket(),
+			$relativePath,
+			$revision,
+			$this->getPathPrefix()
+		);
+		( new \Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
 	}
 
 	/**
