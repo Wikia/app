@@ -792,16 +792,21 @@ class LocalFile extends File {
 	}
 
 	private function publishAsyncPurgeTask( array $urls ) {
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		$relativePath = $this->getHashPath() . rawurlencode( $this->getName() );
+
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 			'thumbnail_urls' => json_encode( $urls ),
+			'bucket' => $this->getBucket(),
+			'relative-path' => $relativePath,
+			'path-prefix' => $this->getPathPrefix()
 		] );
 		try {
-			$id = new Wikia\Tasks\Tasks\Image\FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
-			( new Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
+			$id = new \Wikia\Tasks\Tasks\Image\FileId( $this->getBucket(), $relativePath, $this->getPathPrefix() );
+			( new \Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
 		}
-		catch ( Exception $e ) {
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+		catch ( \Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 				'error' => $e->getMessage(),
 				'call_stack' => $e->getTraceAsString(),
 				'original_url' => $this->getURL(),
@@ -816,7 +821,7 @@ class LocalFile extends File {
 	 * @param $files array of strings: relative filenames (to $dir)
 	 */
 	protected function purgeThumbList( $dir, $files ) {
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 		] );
 
