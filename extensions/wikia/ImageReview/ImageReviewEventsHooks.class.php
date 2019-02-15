@@ -6,6 +6,8 @@ use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 
 class ImageReviewEventsHooks {
 	const ROUTING_KEY = 'image-review.mw-context.on-upload';
+	const REVIEWER_USERNAME = 'FANDOM';
+	const IMAGE_CLASSIFIER_USER = 'automatic image classifier';
 
 	public static function onImagePageAfterImageLinks( ImagePage $imagePage, &$html ) {
 		global $wgCityId;
@@ -214,8 +216,8 @@ class ImageReviewEventsHooks {
 			return array_map(
 				function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
 					$user = $item->getUser();
-					if ( $user == 'FANDOM' ) {
-						$user = 'automatic image classifier';
+					if ( $user == self::REVIEWER_USERNAME ) {
+						$user = self::IMAGE_CLASSIFIER_USER;
 					}
 					return [
 						$user,
