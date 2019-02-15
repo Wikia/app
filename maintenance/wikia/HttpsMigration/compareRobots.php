@@ -13,6 +13,9 @@ class CompareRobots extends Maintenance {
 
 	private $batchSize = 1000;
 	const TIMEOUT = 10;	// seconds
+	const K8S_PROXY = 'prod.kubernetes-lb.service.sjc.consul:80';
+	const SERVICE_HOST = 'robots-txt.prod.sjc.k8s.wikia.net';
+	const GRAPH_CMS_HOST = 'graph-cms.fandom.com';
 
 	public function __construct() {
 		parent::__construct();
@@ -55,7 +58,8 @@ class CompareRobots extends Maintenance {
 			'X-Original-Host' => parse_url( $domain, PHP_URL_HOST ),
 		];
 
-		return $this->httpGet( 'http://graph-cms.fandom.com/robots.txt', $headers, $ssl, 'prod.kubernetes-lb.service.sjc.consul:80' );
+		return $this->httpGet( 'http://' . self::GRAPH_CMS_HOST . '/robots.txt', $headers, $ssl,
+			self::K8S_PROXY );
 	}
 
 	private function fetchRobotsFromK8s(
@@ -67,13 +71,13 @@ class CompareRobots extends Maintenance {
 		if ( $jaegerDebugId ) {
 			$headers['jaeger-debug-id'] = $jaegerDebugId;
 		}
-		$url = 'http://robots-txt.prod.sjc.k8s.wikia.net/robots.txt';
+		$url = 'http://' . self::SERVICE_HOST . '/robots.txt';
 		if ( $staging ) {
 			$headers['X-Staging'] = $staging;
 			$url .= '?forcerobots=1';
 		}
 
-		return $this->httpGet( $url, $headers, $ssl, 'prod.kubernetes-lb.service.sjc.consul:80' );
+		return $this->httpGet( $url, $headers, $ssl, self::K8S_PROXY );
 	}
 
 	private function responsesEqual( $prodResponse, $serviceResponse, $staging ) {
@@ -141,7 +145,7 @@ class CompareRobots extends Maintenance {
 	public function execute() {
 		global $wgHTTPProxy;
 		// default proxy, most of the stuff is on k8s. we want to skip the vcl logic
-		$wgHTTPProxy = 'prod.kubernetes-lb.service.sjc.consul:80';
+		$wgHTTPProxy = self::K8S_PROXY;
 
 		$diffsdir = $this->getOption( 'diffsdir', false );
 		if ( $diffsdir ) {
