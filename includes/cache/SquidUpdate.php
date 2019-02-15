@@ -5,8 +5,6 @@
  * @ingroup Cache
  */
 
-use Wikia\Factory\ServiceFactory;
-
 /**
  * Handles purging appropriate Squid URLs given a title (or titles)
  * @ingroup Cache
@@ -105,7 +103,7 @@ class SquidUpdate {
 	 */
 	static function purge( $urlArr ) {
 		if( $urlArr ) {
-			ServiceFactory::instance()->purgerFactory()->purger()->addUrls( $urlArr );
+			\Wikia\Factory\ServiceFactory::instance()->purgerFactory()->purger()->addUrls( $urlArr );
 		}
 	}
 

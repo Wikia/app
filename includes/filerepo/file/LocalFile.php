@@ -797,8 +797,8 @@ class LocalFile extends File {
 			'thumbnail_urls' => json_encode( $urls ),
 		] );
 		try {
-			$id = new Wikia\Tasks\Tasks\FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
-			( new Wikia\Tasks\Tasks\AsyncPurgeTask() )->publish( $id, $urls );
+			$id = new Wikia\Tasks\Tasks\Image\FileId( $this->getBucket(), $this->getUrlRel(), $this->getPathPrefix() );
+			( new Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
 		}
 		catch ( Exception $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
