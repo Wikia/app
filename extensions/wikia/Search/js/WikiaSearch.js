@@ -108,7 +108,7 @@ require(['uuid', 'search-tracking', 'wikia.trackingOptIn'], function(uuid, searc
 					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
 				},
 				target: 'redirect',
-				app: 'app',
+				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				searchId: this.getUniqueSearchId(),
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
@@ -137,7 +137,7 @@ require(['uuid', 'search-tracking', 'wikia.trackingOptIn'], function(uuid, searc
 				page: parseInt(queryparams.get('page')) || 1,
 				limit: results.length,
 				sortOrder: 'default',
-				app: 'app',
+				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				searchId: searchUID,
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
