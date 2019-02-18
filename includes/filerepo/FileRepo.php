@@ -32,7 +32,6 @@ class FileRepo {
 	/** @var Array Map of zones to config */
 	protected $zones = array();
 
-	var $transformVia404;
 	var $descBaseUrl, $scriptDirUrl, $scriptExtension, $articleUrl;
 	var $fetchDescription, $initialCapital;
 	var $pathDisclosureProtection = 'simple'; // 'paranoid'
@@ -123,7 +122,6 @@ class FileRepo {
 		$this->deletedHashLevels = isset( $info['deletedHashLevels'] )
 			? $info['deletedHashLevels']
 			: $this->hashLevels;
-		$this->transformVia404 = !empty( $info['transformVia404'] );
 		$this->zones = isset( $info['zones'] )
 			? $info['zones']
 			: array();
@@ -460,15 +458,6 @@ class FileRepo {
 	 */
 	public function isHashed() {
 		return (bool)$this->hashLevels;
-	}
-
-	/**
-	 * Returns true if the repository can transform files via a 404 handler
-	 *
-	 * @return bool
-	 */
-	public function canTransformVia404() {
-		return $this->transformVia404;
 	}
 
 	/**
