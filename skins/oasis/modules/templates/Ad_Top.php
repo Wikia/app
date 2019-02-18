@@ -3,14 +3,14 @@
 	<div class="WikiaTopAdsInner">
 
 		<?= $app->renderView('Ad', 'Index', [
-			'slotName' => AdEngine3::isEnabled() ? 'top_leaderboard' : 'TOP_LEADERBOARD',
+			'slotName' => 'TOP_LEADERBOARD',
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 		]); ?>
 
 	</div>
 
 	<?= $app->renderView('Ad', 'Index', [
-		'slotName' => AdEngine3::isEnabled() ? 'invisible_skin' : 'INVISIBLE_SKIN',
+		'slotName' => 'INVISIBLE_SKIN',
 		'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 	]); ?>
 
