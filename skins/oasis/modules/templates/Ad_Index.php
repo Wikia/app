@@ -4,7 +4,7 @@ echo F::app()->renderView(
 	'AdEngine2',
 	'Ad',
 	[
-		'slotName' => $slotName,
+		'slotName' => AdEngine3::isEnabled() ? strtolower($slotName) : $slotName,
 		'pageTypes' => $pageTypes,
 		'includeLabel' => $includeLabel,
 		'onLoad' => $onLoad,

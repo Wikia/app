@@ -1,14 +1,12 @@
 import { AdEngine, context, events, templateService, utils } from '@wikia/ad-engine';
-import { utils as adProductsUtils, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
+import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
 import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
-import { getConfig as getRoadblockConfig } from './templates/roadblock-config';
-import { Skin } from './templates/skin';
-import { getConfig as getStickyTLBConfig } from './templates/sticky-tlb-config';
+import { templateRegistry } from './templates/templates-registry';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -58,14 +56,14 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('slots', slots.getContext());
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
-		context.push('slots.TOP_LEADERBOARD.defaultSizes', [3, 3]);
+		slots.addSlotSize('top_leaderboard', [3, 3]);
 	}
 
 	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
-		context.push('slots.TOP_LEADERBOARD.defaultTemplates', 'stickyTLB');
+		context.push('slots.top_leaderboard.defaultTemplates', 'stickyTLB');
 	}
 
 	context.set('state.isSteam', false);
@@ -163,9 +161,9 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	}
 
 	if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
-		context.push('slots.FEATURED.videoSizes', [480, 360]);
+		context.push('slots.featured.videoSizes', [480, 360]);
 	}
-	context.set('slots.FEATURED.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
+	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 
 	if (utils.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
@@ -201,9 +199,7 @@ function configure(adsContext, isOptedIn) {
 	setupAdContext(adsContext, isOptedIn);
 	adProductsUtils.setupNpaContext();
 
-	templateService.register(Roadblock, getRoadblockConfig());
-	templateService.register(Skin);
-	templateService.register(StickyTLB, getStickyTLBConfig());
+	templateRegistry.registerTemplates();
 
 	context.push('listeners.slot', slotTracker);
 	context.push('listeners.slot', viewabilityTracker);

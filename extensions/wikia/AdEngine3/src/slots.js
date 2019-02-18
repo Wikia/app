@@ -32,8 +32,9 @@ function isTopBoxadEnabled() {
 export default {
 	getContext() {
 		return {
-			TOP_LEADERBOARD: {
+			top_leaderboard: {
 				aboveTheFold: true,
+				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -82,7 +83,7 @@ export default {
 					rv: 1,
 				},
 			},
-			TOP_BOXAD: {
+			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
 				bidderAlias: 'TOP_RIGHT_BOXAD',
@@ -107,7 +108,7 @@ export default {
 					rv: 1,
 				},
 			},
-			INVISIBLE_SKIN: {
+			invisible_skin: {
 				adProduct: 'invisible_skin',
 				aboveTheFold: true,
 				slotNameSuffix: '',
@@ -129,8 +130,9 @@ export default {
 					rv: 1,
 				},
 			},
-			INCONTENT_BOXAD_1: {
+			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
+				bidderAlias: 'INCONTENT_BOXAD_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -142,8 +144,9 @@ export default {
 					rv: 1,
 				},
 			},
-			BOTTOM_LEADERBOARD: {
+			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
+				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -163,8 +166,9 @@ export default {
 					rv: 1,
 				},
 			},
-			FEATURED: {
+			featured: {
 				adProduct: 'featured',
+				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',
@@ -179,6 +183,15 @@ export default {
 		};
 	},
 
+	addSlotSize(slotName, size) {
+		const definedViewportSizes = context.get(`slots.${slotName}.sizes`);
+
+		context.push(`slots.${slotName}.defaultSizes`, size);
+		definedViewportSizes.forEach((sizeMap) => {
+			sizeMap.sizes.push(size);
+		})
+	},
+
 	setupSlotParameters(slot) {
 		const audioSuffix = slot.config.audio === true ? '-audio' : '';
 		const clickToPlaySuffix = slot.config.autoplay === true || slot.config.videoDepth > 1 ? '' : '-ctp';
@@ -189,17 +202,17 @@ export default {
 	},
 
 	setupStates() {
-		slotService.setState('TOP_LEADERBOARD', true);
-		slotService.setState('TOP_BOXAD', isTopBoxadEnabled());
-		slotService.setState('INCONTENT_BOXAD_1', true);
-		slotService.setState('BOTTOM_LEADERBOARD', true);
-		slotService.setState('INVISIBLE_SKIN', true);
+		slotService.setState('top_leaderboard', true);
+		slotService.setState('top_boxad', isTopBoxadEnabled());
+		slotService.setState('incontent_boxad_1', true);
+		slotService.setState('bottom_leaderboard', true);
+		slotService.setState('invisible_skin', true);
 
-		slotService.setState('FEATURED', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
 
 		// TODO: Remove those slots once AE3 is globally enabled
 		slotService.setState('TOP_LEADERBOARD_AB', false);
-		slotService.setState('GPT_FLUSH', false);
+		slotService.setState('gpt_flush', false);
 	},
 
 	setupIdentificators() {
@@ -215,7 +228,7 @@ export default {
 	},
 
 	injectBottomLeaderboard() {
-		const slotName = 'BOTTOM_LEADERBOARD';
+		const slotName = 'bottom_leaderboard';
 		const pushSlotAfterComments = throttle(() => {
 			if (window.ArticleComments && !window.ArticleComments.initCompleted) {
 				return;
@@ -234,7 +247,7 @@ export default {
 
 	// TODO: Extract floating medrec to separate module once we do refreshing
 	injectIncontentBoxad() {
-		const slotName = 'INCONTENT_BOXAD_1';
+		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 

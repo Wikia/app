@@ -3,14 +3,14 @@
 	<div class="WikiaTopAdsInner">
 
 		<?= $app->renderView('Ad', 'Index', [
-			'slotName' => 'TOP_LEADERBOARD',
+			'slotName' => AdEngine3::isEnabled() ? 'top_leaderboard' : 'TOP_LEADERBOARD',
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 		]); ?>
 
 	</div>
 
 	<?= $app->renderView('Ad', 'Index', [
-		'slotName' => 'INVISIBLE_SKIN',
+		'slotName' => AdEngine3::isEnabled() ? 'invisible_skin' : 'INVISIBLE_SKIN',
 		'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 	]); ?>
 
@@ -25,5 +25,6 @@
 			<div class="close-button"></div>
 		</a>
 	</div>
-	<div id="INVISIBLE_HIGH_IMPACT_2" class="wikia-ad noprint"></div>
+	<div id="<?php echo AdEngine3::isEnabled() ? 'invisible_high_impact_2' : 'INVISIBLE_HIGH_IMPACT_2'?>" class="wikia-ad noprint"></div>
 </div>
+

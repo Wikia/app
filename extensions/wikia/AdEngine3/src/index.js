@@ -62,7 +62,7 @@ function startAdEngine() {
 				slot.getElement().classList.remove('default-height');
 			},
 			onStatusChanged: (slot) => {
-				if (slot.getSlotName() === 'INCONTENT_BOXAD_1' && slot.getStatus() === 'success') {
+				if (slot.getSlotName() === 'incontent_boxad_1' && slot.getStatus() === 'success') {
 					document.getElementById('recirculation-rail').style.display = 'none';
 				}
 			}

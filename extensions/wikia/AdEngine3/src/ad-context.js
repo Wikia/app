@@ -481,7 +481,7 @@ export default {
 			btRec: {
 				enabled: false,
 				placementsMap: {
-					TOP_LEADERBOARD: {
+					top_leaderboard: {
 						uid: '5b33d3584c-188',
 						style: 'margin:10px 0; z-index:100;',
 						size: {
@@ -490,7 +490,7 @@ export default {
 						},
 						lazy: false
 					},
-					TOP_BOXAD: {
+					top_boxad: {
 						uid: '5b2d1649b2-188',
 						style: 'margin-bottom:10px; z-index:100;',
 						size: {
@@ -499,7 +499,7 @@ export default {
 						},
 						lazy: false
 					},
-					INCONTENT_BOXAD_1: {
+					incontent_boxad_1: {
 						uid: '5bbe13967e-188',
 						style: 'z-index:100;',
 						size: {
@@ -508,7 +508,7 @@ export default {
 						},
 						lazy: true
 					},
-					BOTTOM_LEADERBOARD: {
+					bottom_leaderboard: {
 						uid: '5b8f13805d-188',
 						style: 'margin-bottom:23px; z-index:100;',
 						size: {
