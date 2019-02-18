@@ -36,8 +36,8 @@ function isIncontentPlayerApplicable() {
  *
  * @returns {boolean}
  */
-function isTopBoxadEnabled() {
-	return !matchMedia('screen and (max-width: 1023px)').matches;
+function isTopBoxadApplicable() {
+	return utils.getViewportWidth() >= 1024;
 }
 
 export default {
@@ -92,6 +92,7 @@ export default {
 				targeting: {
 					loc: 'top',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			top_boxad: {
@@ -175,6 +176,7 @@ export default {
 				targeting: {
 					loc: 'footer',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			incontent_player: {
@@ -243,7 +245,7 @@ export default {
 
 	setupStates() {
 		slotService.setState('top_leaderboard', true);
-		slotService.setState('top_boxad', isTopBoxadEnabled());
+		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', isIncontentPlayerApplicable());
@@ -267,6 +269,13 @@ export default {
 			const slotParam = slotsDefinition[key].slotShortcut || 'x';
 			context.set(`slots.${key}.targeting.wsi`, `o${slotParam}${pageTypeParam}1`);
 		});
+	},
+
+	setupSizesAvailability() {
+		if (window.innerWidth >= 1024) {
+			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
+			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
+		}
 	},
 
 	injectBottomLeaderboard() {

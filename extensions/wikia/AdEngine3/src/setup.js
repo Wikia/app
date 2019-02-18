@@ -177,6 +177,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	slots.setupIdentificators();
 	slots.setupStates();
+	slots.setupSizesAvailability();
 
 	updateWadContext();
 

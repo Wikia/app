@@ -977,10 +977,10 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = false;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
+ * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
 $wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
@@ -1816,14 +1816,13 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
 /**
- * @name $wgProcessTasksOnKubernetes
- * When enabled, tasks will be processed on kubernetes.
- * This will only work on production.
+ * https://wikia-inc.atlassian.net/browse/SER-3006
+ * If enabled, file storage operations will be logged.
  */
-$wgProcessTasksOnKubernetes = false;
+$wgLogFileStorageOperations = false;
 
 /**
- * @name $wgPercentOfTasksOnKubernetes
- * Determines the percentage of wikis that send tasks to k8s.
+ * https://wikia-inc.atlassian.net/browse/SER-3008
+ * If enabled, Google Cloud Storage will be used for storing files.
  */
-$wgPercentOfTasksOnKubernetes = 0;
+$wgUseGoogleCloudStorage = false;
