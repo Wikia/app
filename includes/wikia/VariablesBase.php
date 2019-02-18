@@ -8890,6 +8890,13 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 $wgFandomComMigrationScheduled = false;
 
 /**
+ * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
+ * @see SEO-669
+ * @var bool $wgFandomComMigrationScheduled
+ */
+$wgWikiaOrgMigrationScheduled = false;
+
+/**
  * Custom messages to show on the migration banner (before and after migration).
  * @see PLATFORM-3895
  * @var string
