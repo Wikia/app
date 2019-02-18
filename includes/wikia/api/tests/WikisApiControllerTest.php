@@ -404,5 +404,68 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			[],
 			NotFoundApiException::class	// expected exception
 		];
+		// --------- Test case ------------
+		// wiki with city_public set to -1 (marked for closing)
+		$wikis = [
+			[
+				'city_id' => 123,
+				'city_url' => 'https://markedforclosing.fandom.com/',
+				'city_dbname' => 'markedforclosing'
+			]
+		];
+		yield [
+			'markedforclosing.fandom.com',	// request domain parameter
+			// WF mocks...
+			[
+				'DomainToID' => null,
+				'isLanguageWikisIndex' => false,
+				'getWikiByID' => (object) [
+					'city_id' => 123,
+					'city_public' => -1
+				],
+				'getWikisUnderDomain' => $wikis,
+				'getVarValueByName' => false
+			],
+			// expected response
+			[
+				'primaryDomain' => '',
+				'primaryProtocol' => '',
+				'isBlocked' => false,
+				'isPublic' => false,
+				'wikis' => $wikis
+			]
+		];
+		// --------- Test case ------------
+		// wiki with city_public set to -2 (marked as spam)
+		$wikis = [
+			[
+				'city_id' => 123,
+				'city_url' => 'https://spam.fandom.com/',
+				'city_dbname' => 'spam'
+			]
+		];
+		yield [
+			'spam.fandom.com',	// request domain parameter
+			// WF mocks...
+			[
+				'DomainToID' => null,
+				'isLanguageWikisIndex' => false,
+				'getWikiByID' => (object) [
+					'city_id' => 123,
+					'city_public' => -2
+				],
+				'getWikisUnderDomain' => $wikis,
+				'getVarValueByName' => false
+			],
+			// expected response
+			[
+				'primaryDomain' => '',
+				'primaryProtocol' => '',
+				'isBlocked' => false,
+				'isPublic' => false,
+				'wikis' => $wikis
+			]
+		];
+
 	}
 }
