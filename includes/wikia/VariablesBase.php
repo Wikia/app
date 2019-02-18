@@ -4606,15 +4606,6 @@ $wgGalleryOptions = [
 $wgGameGuidesContentForAdmins = true;
 
 /**
- * Allow thumbnail rendering on page view. If this is false, a valid thumbnail
- * URL is still output, but no file will be created at the target location. This
- * may save some time if you have a thumb.php or 404 handler set up which is
- * faster than the regular webserver(s).
- * @var bool $wgGenerateThumbnailOnParse
- */
-$wgGenerateThumbnailOnParse = false;
-
-/**
  * Global user preferences (options) filter.
  * @see lib/Wikia/src/Factory/PreferencesFactory.php
  * @var Array $wgGlobalUserPreferenceWhiteList
