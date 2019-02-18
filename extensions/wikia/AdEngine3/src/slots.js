@@ -4,7 +4,6 @@ import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
-import { matchMedia } from './match-media';
 
 const PAGE_TYPES = {
 	article: 'a',
