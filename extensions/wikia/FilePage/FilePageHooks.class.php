@@ -273,7 +273,9 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function purgeRedir( Title $title ) {
 		global $wgMemc;
-		$redirKey = wfMemcKey( 'redir', $title->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redir', 'http', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
+		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		$page = WikiPage::factory( $title );
 		$page->doPurge();
