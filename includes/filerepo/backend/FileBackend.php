@@ -6,8 +6,6 @@
  * This module regroup classes meant for MediaWiki to interacts with
  */
 
-use Wikia\Logger\WikiaLogger;
-
 /**
  * @file
  * @ingroup FileBackend
