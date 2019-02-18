@@ -6,6 +6,8 @@
  * This module regroup classes meant for MediaWiki to interacts with
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * @file
  * @ingroup FileBackend
@@ -61,6 +63,10 @@ abstract class FileBackend {
 	 * @param $config Array
 	 */
 	public function __construct( array $config ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'call_stack' => ( new Exception() )->getTraceAsString(),
+			'params' => json_encode( $config )
+		]);
 		$this->name = $config['name'];
 		if ( !preg_match( '!^[a-zA-Z0-9-_]{1,255}$!', $this->name ) ) {
 			throw new MWException( "Backend name `{$this->name}` is invalid." );

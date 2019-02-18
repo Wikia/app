@@ -7,6 +7,8 @@
  * @details
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Base code for file repositories.
  *
@@ -60,6 +62,9 @@ class FileRepo {
 	var $fileFactoryKey = false, $oldFileFactoryKey = false;
 
 	function __construct( Array $info = null ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'call_stack' => ( new Exception() )->getTraceAsString()
+		]);
 		// Verify required settings presence
 		if(
 			$info === null
