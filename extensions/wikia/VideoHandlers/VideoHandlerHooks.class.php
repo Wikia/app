@@ -49,7 +49,7 @@ class VideoHandlerHooks {
 	static public function onSetupAfterCache( ) {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
-			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
+			$wgGenerateThumbnailOnParse,
 			$wgLocalFileRepo, $wgDeletedDirectory;
 
 		$wgLocalFileRepo = array(
@@ -58,7 +58,6 @@ class VideoHandlerHooks {
 			'directory' => $wgUploadDirectory,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
-			'thumbScriptUrl' => $wgThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,

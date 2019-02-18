@@ -683,15 +683,6 @@ abstract class File implements UrlGeneratorInterface {
 	 * @return string
 	 */
 	function getTransformScript() {
-		if ( !isset( $this->transformScript ) ) {
-			$this->transformScript = false;
-			if ( $this->repo ) {
-				$script = $this->repo->getThumbScriptUrl();
-				if ( $script ) {
-					$this->transformScript = "$script?f=" . urlencode( $this->getName() );
-				}
-			}
-		}
 		return $this->transformScript;
 	}
 

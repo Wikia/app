@@ -148,7 +148,6 @@ if ( !$wgLocalFileRepo ) {
 		'scriptExtension' => $wgScriptExtension,
 		'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 		'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
-		'thumbScriptUrl' => $wgThumbnailScriptPath,
 		'transformVia404' => !$wgGenerateThumbnailOnParse,
 		'deletedDir' => $wgDeletedDirectory,
 		'deletedHashLevels' => $deletedHashLevel
@@ -165,7 +164,6 @@ if ( $wgUseSharedUploads ) {
 			'directory' => $wgSharedUploadDirectory,
 			'url' => $wgSharedUploadPath,
 			'hashLevels' => $wgHashedSharedUploadDirectory ? 2 : 0,
-			'thumbScriptUrl' => $wgSharedThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'dbType' => $wgDBtype,
 			'dbServer' => $wgDBserver,
@@ -186,7 +184,6 @@ if ( $wgUseSharedUploads ) {
 			'directory' => $wgSharedUploadDirectory,
 			'url' => $wgSharedUploadPath,
 			'hashLevels' => $wgHashedSharedUploadDirectory ? 2 : 0,
-			'thumbScriptUrl' => $wgSharedThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'descBaseUrl' => $wgRepositoryBaseUrl,
 			'fetchDescription' => $wgFetchCommonsDescriptions,
