@@ -24,6 +24,13 @@ function isHighImpactApplicable() {
 	return !context.get('custom.hasFeaturedVideo');
 }
 
+function isIncontentPlayerApplicable() {
+	const header = document.querySelectorAll('#mw-content-text > h2')[1];
+
+	return !context.get('custom.hasFeaturedVideo') &&
+		header && header.offsetWidth >= header.parentNode.offsetWidth;
+}
+
 /**
  * Enables top_boxad on screen with width >= 1024px.
  *
@@ -170,6 +177,24 @@ export default {
 					rv: 1,
 				},
 			},
+			incontent_player: {
+				adProduct: 'incontent_player',
+				avoidConflictWith: '.ad-slot',
+				autoplay: true,
+				audio: false,
+				bidderAlias: 'INCONTENT_PLAYER',
+				insertBeforeSelector: '.article-content > h2',
+				disabled: true,
+				slotNameSuffix: '',
+				group: 'HiVi',
+				slotShortcut: 'i',
+				defaultSizes: [[1, 1]],
+				targeting: {
+					loc: 'middle',
+					pos: ['incontent_player'],
+					rv: 1,
+				},
+			},
 			invisible_high_impact_2: {
 				adProduct: 'invisible_high_impact_2',
 				slotNameSuffix: '',
@@ -221,6 +246,7 @@ export default {
 		slotService.setState('top_boxad', isTopBoxadEnabled());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
+		slotService.setState('incontent_player', isIncontentPlayerApplicable());
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
@@ -259,6 +285,23 @@ export default {
 		}, 250);
 
 		document.addEventListener('scroll', pushSlotAfterComments);
+	},
+
+	injectIncontentPlayer() {
+		const header = document.querySelectorAll('#mw-content-text > h2')[1];
+
+		if (!header || !isIncontentPlayerApplicable()) {
+			return;
+		}
+
+		const slotName = 'incontent_player';
+		const wrapper = document.createElement('div');
+
+		wrapper.id = 'INCONTENT_WRAPPER';
+		wrapper.innerHTML = '<div id="' + slotName + '" class="wikia-ad hide"></div>';
+		header.parentNode.insertBefore(wrapper, header);
+
+		context.push('state.adStack', { id: slotName });
 	},
 
 	// TODO: Extract floating medrec to separate module once we do refreshing
