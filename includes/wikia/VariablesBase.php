@@ -4606,15 +4606,6 @@ $wgGalleryOptions = [
 $wgGameGuidesContentForAdmins = true;
 
 /**
- * Allow thumbnail rendering on page view. If this is false, a valid thumbnail
- * URL is still output, but no file will be created at the target location. This
- * may save some time if you have a thumb.php or 404 handler set up which is
- * faster than the regular webserver(s).
- * @var bool $wgGenerateThumbnailOnParse
- */
-$wgGenerateThumbnailOnParse = false;
-
-/**
  * Global user preferences (options) filter.
  * @see lib/Wikia/src/Factory/PreferencesFactory.php
  * @var Array $wgGlobalUserPreferenceWhiteList
@@ -5329,7 +5320,6 @@ $wgLocalDatabases = [];
  *                      container name and the container root as the zone directory.
  *   - url              Base public URL
  *   - hashLevels       The number of directory levels for hash-based division of files
- *   - thumbScriptUrl   The URL for thumb.php (optional, not recommended)
  *   - transformVia404  Whether to skip media file transformation on parse and rely on a 404
  *                      handler instead.
  *   - initialCapital   Equivalent to $wgCapitalLinks (or $wgCapitalLinkOverrides[NS_FILE],
@@ -7257,14 +7247,6 @@ $wgSharedPrefix = false;
  */
 $wgSharedTables = [ 'user', 'user_properties' ];
 
-/**
- * Give a path here to use thumb.php for thumbnail generation on client request,
- * instead of generating them on render and outputting a static URL. This is
- * necessary if some of your apache servers don't have read/write access to the
- * thumbnail path.
- * @var string|bool $wgSharedThumbnailScriptPath
- */
-$wgSharedThumbnailScriptPath = false;
 
 /**
  * DB name with metadata about shared directory. Set this to false if the
@@ -7902,15 +7884,6 @@ $wgThumbLimits = [ 120,150, 180, 200, 250, 300 ];
  * @var string $wgThumbnailEpoch
  */
 $wgThumbnailEpoch = '20030516000000';
-
-/**
- * Give a path here to use thumb.php for thumbnail generation on client request,
- * instead of generating them on render and outputting a static URL. This is
- * necessary if some of your apache servers don't have read/write access to the
- * thumbnail path.
- * @var string|bool $wgThumbnailScriptPath
- */
-$wgThumbnailScriptPath = false;
 
 /**
  * Adjust width of upright images when parameter 'upright' is used. This allows

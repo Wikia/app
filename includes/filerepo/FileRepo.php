@@ -32,7 +32,6 @@ class FileRepo {
 	/** @var Array Map of zones to config */
 	protected $zones = array();
 
-	var $thumbScriptUrl, $transformVia404;
 	var $descBaseUrl, $scriptDirUrl, $scriptExtension, $articleUrl;
 	var $fetchDescription, $initialCapital;
 	var $pathDisclosureProtection = 'simple'; // 'paranoid'
@@ -80,7 +79,7 @@ class FileRepo {
 		// Optional settings that can have no value
 		$optionalSettings = array(
 			'descBaseUrl', 'scriptDirUrl', 'articleUrl', 'fetchDescription',
-			'thumbScriptUrl', 'pathDisclosureProtection', 'descriptionCacheExpiry',
+			'pathDisclosureProtection', 'descriptionCacheExpiry',
 			'scriptExtension'
 		);
 		foreach ( $optionalSettings as $var ) {
@@ -123,7 +122,6 @@ class FileRepo {
 		$this->deletedHashLevels = isset( $info['deletedHashLevels'] )
 			? $info['deletedHashLevels']
 			: $this->hashLevels;
-		$this->transformVia404 = !empty( $info['transformVia404'] );
 		$this->zones = isset( $info['zones'] )
 			? $info['zones']
 			: array();
@@ -460,24 +458,6 @@ class FileRepo {
 	 */
 	public function isHashed() {
 		return (bool)$this->hashLevels;
-	}
-
-	/**
-	 * Get the URL of thumb.php
-	 *
-	 * @return string
-	 */
-	public function getThumbScriptUrl() {
-		return $this->thumbScriptUrl;
-	}
-
-	/**
-	 * Returns true if the repository can transform files via a 404 handler
-	 *
-	 * @return bool
-	 */
-	public function canTransformVia404() {
-		return $this->transformVia404;
 	}
 
 	/**
