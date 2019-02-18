@@ -253,10 +253,18 @@ export default {
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('gpt_flush', false);
 
 		// TODO: Remove those slots once AE3 is globally enabled
 		slotService.setState('TOP_LEADERBOARD_AB', false);
 		slotService.setState('gpt_flush', false);
+
+		// TODO: Remove me after 24h -- slots injected on backend
+		slotService.setState('TOP_LEADERBOARD', true);
+		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
+		slotService.setState('INVISIBLE_SKIN', true);
+		slotService.setState('GPT_FLUSH', false);
+
 	},
 
 	setupIdentificators() {

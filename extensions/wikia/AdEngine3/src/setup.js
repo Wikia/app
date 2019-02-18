@@ -8,6 +8,8 @@ import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
 
+const hasLowerSlotNames = !document.getElementById('TOP_LEADERBOARD');
+
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
 
@@ -32,6 +34,16 @@ function updateWadContext() {
 
 		// HMD rec
 		context.set('options.wad.hmdRec.enabled', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
+	}
+
+	// TODO: Remove me after 24h
+	if (!hasLowerSlotNames) {
+		const placementsMap = context.get('options.wad.btRec.placementsMap');
+
+		Object.keys(placementsMap).forEach((slotName) => {
+			placementsMap[slotName.toUpperCase()] = placementsMap[slotName];
+			delete placementsMap[slotName];
+		});
 	}
 }
 
@@ -180,6 +192,15 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	slots.setupSizesAvailability();
 
 	updateWadContext();
+
+	// TODO: Remove me after 24h
+	if (!hasLowerSlotNames) {
+		const slotsDefinition = context.get('slots');
+
+		Object.keys(slotsDefinition).forEach((slotName) => {
+			slotsDefinition[slotName.toUpperCase()] = slotsDefinition[slotName];
+		});
+	}
 
 	// TODO: Remove wrapper of window.adslots2 when we unify our push method
 	utils.makeLazyQueue(window.adslots2, (slot) => {
