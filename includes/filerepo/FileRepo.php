@@ -461,15 +461,6 @@ class FileRepo {
 	}
 
 	/**
-	 * Returns true if the repository can transform files via a 404 handler
-	 *
-	 * @return bool
-	 */
-	public function canTransformVia404() {
-		return true;
-	}
-
-	/**
 	 * Get the name of an image from its title object
 	 *
 	 * @param $title Title
