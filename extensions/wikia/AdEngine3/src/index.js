@@ -56,6 +56,7 @@ function startAdEngine() {
 			slots.injectBottomLeaderboard();
 			babDetection.run();
 		});
+		slots.injectHighImpact();
 
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {

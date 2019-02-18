@@ -20,6 +20,10 @@ function isIncontentBoxadApplicable() {
 		!context.get('wiki.targeting.wikiIsCorporate');
 }
 
+function isHighImpactApplicable() {
+	return !context.get('custom.hasFeaturedVideo');
+}
+
 /**
  * Enables top_boxad on screen with width >= 1024px.
  *
@@ -166,6 +170,17 @@ export default {
 					rv: 1,
 				},
 			},
+			invisible_high_impact_2: {
+				adProduct: 'invisible_high_impact_2',
+				slotNameSuffix: '',
+				group: 'PX',
+				options: {},
+				outOfPage: true,
+				targeting: {
+					loc: 'hivi',
+					rv: 1,
+				},
+			},
 			featured: {
 				adProduct: 'featured',
 				bidderAlias: 'FEATURED',
@@ -207,6 +222,7 @@ export default {
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('invisible_skin', true);
+		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
 
@@ -267,5 +283,9 @@ export default {
 
 			context.push('events.pushOnScroll.ids', slotName);
 		}, 10000);
+	},
+
+	injectHighImpact() {
+		context.push('state.adStack', { id: 'invisible_high_impact_2' });
 	},
 };
