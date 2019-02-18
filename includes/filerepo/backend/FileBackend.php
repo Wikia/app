@@ -14,6 +14,8 @@ use Wikia\Logger\WikiaLogger;
  * @author Aaron Schulz
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Base class for all file backend classes (including multi-write backends).
  *
@@ -1383,6 +1385,7 @@ abstract class FileBackendStore extends FileBackend {
 	 * @see FileBackend::doOperationsInternal()
 	 */
 	protected function doOperationsInternal( array $ops, array $opts ) {
+		$this->logOperations( $ops, new Exception() );
 		wfProfileIn( __METHOD__ );
 		$status = Status::newGood();
 
@@ -1422,6 +1425,30 @@ abstract class FileBackendStore extends FileBackend {
 
 		wfProfileOut( __METHOD__ );
 		return $status;
+	}
+
+	private function logOperations( $ops, $callStackProvider ) {
+		global $wgLogFileStorageOperations;
+		if ( !$wgLogFileStorageOperations ) {
+			return;
+		}
+		
+		$opParams = array_map(
+			function( $op ) {
+				return [
+					'op' => $op['op'],
+					'src' => $op['src'],
+					'dst' => $op['dst']
+				];
+				},
+			$ops );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'ops' => json_encode( $opParams ),
+				'call_stack' => $callStackProvider->getTraceAsString()
+			]
+		);
 	}
 
 	/**

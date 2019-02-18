@@ -134,7 +134,7 @@ $(function () {
 						id: suggestions[articleId]
 					};
 				}),
-				app: 'app',
+				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				suggestionId: trackingState.suggestionId,
 				pvUniqueId: window.pvUID || 'dev'
