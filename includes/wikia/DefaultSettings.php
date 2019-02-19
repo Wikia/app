@@ -983,7 +983,7 @@ $wgAdDriverAdEngine3EnabledOnOasisSearchPages = false;
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
+$wgAdDriverAdEngine3EnabledOnOasisArticlePages = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
