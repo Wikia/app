@@ -90,4 +90,13 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 
 		expect(getModule().getRecSrc()).toBe('test-rec');
 	});
+
+	it('returns srcTest from WF config preserving original one', function () {
+		mockContext({
+			'opts.isAdTestWiki': true,
+			'targeting.testSrc': 'externaltest'
+		});
+
+		expect(getModule().get('gpt')).toBe('gpt,externaltest');
+	});
 });
