@@ -184,14 +184,18 @@ class ImageReviewEventsHooks {
 		// latest revision of image is needed so we can not
 		// use $title->getLatestRevisionId() as it would return
 		// revision id for image description
-		$revisionId = $db->selectField(
-			['revision'],
-			'rev_id',
-			[
-				'rev_page' => $title->getArticleID(),
-				'rev_timestamp' => $timestamp
-			]
-		);
+		$revisionId = $db->selectField( [ 'revision' ], 'rev_id', [
+			'rev_page' => $title->getArticleID(),
+			'rev_timestamp' => $timestamp,
+		] );
+
+		if ( empty( $revisionId ) ) {
+			WikiaLogger::instance()->warning( __METHOD__ . " - revision ID was empty, fallback to article ID", [
+				'city_id' => $cityId,
+				'article_id' => $title->getArticleID(),
+			] );
+			$revisionId = $title->getArticleID();
+		}
 
 		$key = wfForeignMemcKey( $cityId, 'image-review', $title->getArticleID(), $revisionId );
 
