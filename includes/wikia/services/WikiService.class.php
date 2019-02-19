@@ -925,7 +925,7 @@ class WikiService extends WikiaModel {
 				);
 
 				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
-				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_LONG /* 12h */ );
+				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_STANDARD );
 				$results[$row->city_id] = $item;
 			}
 		}
