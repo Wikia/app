@@ -1,8 +1,8 @@
 <?php
 
+use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
-use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 
 class ImageReviewEventsHooks {
 	const ROUTING_KEY = 'image-review.mw-context.on-upload';
@@ -20,7 +20,8 @@ class ImageReviewEventsHooks {
 			return true;
 		}
 
-		$html .= Xml::element( 'h2', [], $context->msg( 'imagereview-imagepage-header' )->escaped() );
+		$html .= Xml::element( 'h2', [],
+			$context->msg( 'imagereview-imagepage-header' )->escaped() );
 
 		$headers = [
 			$context->msg( 'imagereview-imagepage-table-header-reviewer' )->text(),
@@ -34,14 +35,10 @@ class ImageReviewEventsHooks {
 			// image is in the queue but not reviewed yet
 			$html .= $context->msg( 'imagereview-state-0' )->escaped();
 		} else {
-			$html .= Xml::buildTable(
-				$reviews,
-				[
+			$html .= Xml::buildTable( $reviews, [
 					'class' => 'wikitable filehistory sortable',
 					'style' => 'width: 60%',
-				],
-				$headers
-			);
+				], $headers );
 		}
 
 		return true;
@@ -63,14 +60,16 @@ class ImageReviewEventsHooks {
 	 */
 	public static function onFileUpload( LocalFile $file ) {
 		// SUS-2988 | log uploads and image review pushes
-		WikiaLogger::instance()->info(
-			__METHOD__,
-			[
+		WikiaLogger::instance()->info( __METHOD__, [
 				'file_name' => $file->getTitle()->getPrefixedDBkey(),
-				'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class, Hooks::class ] ),
+				'caller' => wfGetCallerClassMethod( [
+					__CLASS__,
+					UploadBase::class,
+					LocalFile::class,
+					Hooks::class,
+				] ),
 				'file_class' => get_class( $file ),
-			]
-		);
+			] );
 
 		self::actionCreate( $file->getTitle() );
 
@@ -115,39 +114,29 @@ class ImageReviewEventsHooks {
 	}
 
 	public static function onOldFileDeleteComplete( Title $title, $oi_timestamp ) {
-		$revisionId = wfGetDB( DB_SLAVE )->selectField(
-			[ 'revision' ],
-			'rev_id',
-			[
+		$revisionId = wfGetDB( DB_SLAVE )->selectField( [ 'revision' ], 'rev_id', [
 				'rev_page' => $title->getArticleID(),
-				'rev_timestamp' => $oi_timestamp
-			],
-			__METHOD__
-		);
+				'rev_timestamp' => $oi_timestamp,
+			], __METHOD__ );
 
 		self::actionDelete( $title->getArticleID(), $revisionId );
 
 		return true;
 	}
 
-	public static function onOldImageRevisionVisibilityChange( Title $title, string $oiRevision, bool $imageHidden ) {
-		$oldLocalFile = OldLocalFile::newFromArchiveName(
-			$title,
-			RepoGroup::singleton()->getLocalRepo(),
-			$oiRevision . '!' . $title->getDBkey()
-		);
+	public static function onOldImageRevisionVisibilityChange(
+		Title $title, string $oiRevision, bool $imageHidden
+	) {
+		$oldLocalFile =
+			OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(),
+				$oiRevision . '!' . $title->getDBkey() );
 
 		$oiTimestamp = $oldLocalFile->getTimestamp();
 
-		$revisionId = wfGetDB( DB_SLAVE )->selectField(
-			[ 'revision' ],
-			'rev_id',
-			[
+		$revisionId = wfGetDB( DB_SLAVE )->selectField( [ 'revision' ], 'rev_id', [
 				'rev_page' => $title->getArticleID(),
-				'rev_timestamp' => $oiTimestamp
-			],
-			__METHOD__
-		);
+				'rev_timestamp' => $oiTimestamp,
+			], __METHOD__ );
 
 		if ( $imageHidden ) {
 			self::actionHide( $title->getArticleID(), $revisionId );
@@ -160,6 +149,7 @@ class ImageReviewEventsHooks {
 
 	public static function onCloseWikiPurgeSharedData( $wikiId ) {
 		self::actionPurge( $wikiId );
+
 		return true;
 	}
 
@@ -184,73 +174,87 @@ class ImageReviewEventsHooks {
 		// latest revision of image is needed so we can not
 		// use $title->getLatestRevisionId() as it would return
 		// revision id for image description
-		$revisionId = $db->selectField(
-			['revision'],
-			'rev_id',
-			[
+		$revisionId = $db->selectField( [ 'revision' ], 'rev_id', [
 				'rev_page' => $title->getArticleID(),
-				'rev_timestamp' => $timestamp
-			]
-		);
+				'rev_timestamp' => $timestamp,
+			] );
 
 
-		$key = wfForeignMemcKey( $cityId, 'image-review-s', $title->getArticleID(), $revisionId );
+		$key = wfForeignMemcKey( $cityId, 'image-review-d', $title->getArticleID(), $revisionId );
 
 
-		WikiaLogger::instance()->info(
-			__METHOD__,
-			[
+		WikiaLogger::instance()->info( __METHOD__ . "zorf", [
 				'city_id' => $cityId,
-				'key' => $key
-			]
-		);
+				'key' => $key,
+			] );
 
-		return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $title, $revisionId ) {
-			$statusMessages = [
-				'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
-				'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
-				'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
-				'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
-				'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
-			];
 
-			$reviewHistory = ( new ImageReviewService() )->getImageHistory(
-				$cityId,
-				$title->getArticleID(),
-				$revisionId,
-				RequestContext::getMain()->getUser()
-			);
+		try {
 
-			return array_map(
-				function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
-					return [
-						$item->getUser(),
-						$statusMessages[$item->getStatus()],
-						$item->getDate()
+		$result =
+			WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD,
+				function () use ( $cityId, $title, $revisionId ) {
+					$statusMessages = [
+						'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
+						'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
+						'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
+						'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
+						'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped(),
 					];
-				},
-				array_filter(
-					$reviewHistory,
-					function ( ImageHistoryEntry $item ) {
-						// Filter out entry with status 'UNREVIEWED' as it does
-						// make sense to display entry about unreviewed status
-						// with user that uploaded the file
-						return $item->getStatus() != 'UNREVIEWED';
-					}
-				)
-			);
-		} );
+
+					$reviewHistory =
+						( new ImageReviewService() )->getImageHistory( $cityId,
+							$title->getArticleID(), $revisionId,
+							RequestContext::getMain()->getUser() );
+
+					return array_map( function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
+						return [
+							$item->getUser(),
+							$statusMessages[$item->getStatus()],
+							$item->getDate(),
+						];
+					}, array_filter( $reviewHistory, function ( ImageHistoryEntry $item ) {
+							// Filter out entry with status 'UNREVIEWED' as it does
+							// make sense to display entry about unreviewed status
+							// with user that uploaded the file
+							return $item->getStatus() != 'UNREVIEWED';
+						} ) );
+				} );
+		} catch (Exception $e) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'city_id' => $cityId,
+				'key' => $key,
+				'stack_trace' => $e->getTraceAsString()
+			] );
+
+		} catch (Error $e) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'city_id' => $cityId,
+				'key' => $key,
+			] );
+
+		}
+
+		WikiaLogger::instance()->info( __METHOD__, [
+				'city_id' => $cityId,
+				'key' => $key,
+				'result' => json_encode( $result ),
+			] );
+
+		return $result;
+
 	}
 
 	/**
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function isFileForReview( Title $title ) : bool {
+	public static function isFileForReview( Title $title ): bool {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
-			return ( $localFile instanceof File ) && strpos( $localFile->getMimeType(), 'image' ) !== false;
+			return ( $localFile instanceof File ) &&
+				   strpos( $localFile->getMimeType(), 'image' ) !== false;
 		}
 
 		return false;
@@ -262,7 +266,9 @@ class ImageReviewEventsHooks {
 	 * @param string $action
 	 * @param int $userId allow user ID that makes an upload to be forced (instead of taken from the RequestContext)
 	 */
-	private static function actionCreate( Title $title, $revisionId = null, $action = 'created', $userId = null ) {
+	private static function actionCreate(
+		Title $title, $revisionId = null, $action = 'created', $userId = null
+	) {
 		if ( self::isFileForReview( $title ) ) {
 			global $wgCityId;
 
@@ -271,32 +277,31 @@ class ImageReviewEventsHooks {
 			$articleId = $title->getArticleID();
 
 			$data = [
-				'url' => ImageServingController::getUrl(
-					'getImageUrl',
-					[
+				'url' => ImageServingController::getUrl( 'getImageUrl', [
 						'id' => $articleId,
 						'revision' => $revisionId,
-					]
-				),
+					] ),
 				'userId' => $userId ?? RequestContext::getMain()->getUser()->getId(),
 				'wikiId' => $wgCityId,
 				'pageId' => $articleId,
 				'revisionId' => $revisionId,
 				'contextUrl' => $title->getFullURL(),
 				'top200' => !empty( $wamRank ) && $wamRank <= 200,
-				'action' => $action
+				'action' => $action,
 			];
 
 			self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 
 			// SUS-2988 | log uploads and image review pushes
-			WikiaLogger::instance()->info(
-				__METHOD__,
-				[
+			WikiaLogger::instance()->info( __METHOD__, [
 					'file_name' => $title->getPrefixedDBkey(),
-					'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class, Hooks::class ] )
-				]
-			);
+					'caller' => wfGetCallerClassMethod( [
+						__CLASS__,
+						UploadBase::class,
+						LocalFile::class,
+						Hooks::class,
+					] ),
+				] );
 		}
 	}
 
@@ -306,7 +311,7 @@ class ImageReviewEventsHooks {
 		$data = [
 			'wikiId' => $wgCityId,
 			'pageId' => $pageId,
-			'action' => $action
+			'action' => $action,
 		];
 
 		if ( !empty( $revisionId ) ) {
@@ -319,7 +324,7 @@ class ImageReviewEventsHooks {
 	private static function actionPurge( $wikiId, $action = 'purged' ) {
 		$data = [
 			'wikiId' => $wikiId,
-			'action' => $action
+			'action' => $action,
 		];
 		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
@@ -339,11 +344,11 @@ class ImageReviewEventsHooks {
 	 *
 	 * @return ConnectionBase
 	 */
-	private static function getRabbitConnection() : ConnectionBase {
+	private static function getRabbitConnection(): ConnectionBase {
 		global $wgImageReview;
 
 		if ( is_null( self::$rabbitConnection ) ) {
-			self::$rabbitConnection = new ConnectionBase($wgImageReview);
+			self::$rabbitConnection = new ConnectionBase( $wgImageReview );
 		}
 
 		return self::$rabbitConnection;
