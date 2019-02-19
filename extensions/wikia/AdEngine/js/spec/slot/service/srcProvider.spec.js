@@ -34,7 +34,9 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	});
 
 	it('adds test- prefix for test wikis', function () {
-		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		mockContext({
+			'opts.isAdTestWiki': true
+		});
 
 		expect(getModule().get('xyz')).toBe('test-xyz');
 		expect(getModule().get('abc')).toBe('test-abc');
