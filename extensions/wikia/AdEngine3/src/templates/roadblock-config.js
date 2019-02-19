@@ -3,9 +3,6 @@ export function getConfig() {
 		slotsToEnable: [
 			'top_boxad',
 			'invisible_skin',
-			// TODO: Remove me after 24h
-			'TOP_BOXAD',
-			'INVISIBLE_SKIN'
 		]
 	};
 }

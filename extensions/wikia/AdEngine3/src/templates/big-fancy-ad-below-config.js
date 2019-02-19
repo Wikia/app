@@ -18,7 +18,7 @@ export function getConfig() {
 		defaultStateAllowed: true,
 		fullscreenAllowed: true,
 		stickinessAllowed: context.get('options.bfabStickiness'),
-		bfaaSlotName: 'top_leaderboard',
+		bfaaSlotName: 'hivi_leaderboard',
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),
 		onInit() {

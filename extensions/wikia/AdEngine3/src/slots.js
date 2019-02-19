@@ -1,9 +1,10 @@
-import { context, slotService, utils } from '@wikia/ad-engine';
+import {AdSlot, context, events, slotService, utils} from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
+import slotTracker from "./tracking/slot-tracker";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -39,38 +40,44 @@ function isTopBoxadApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
-export const hasLowerSlotNames = !document.getElementById('TOP_LEADERBOARD');
-
 export default {
 	getContext() {
 		return {
+			hivi_leaderboard: {
+				aboveTheFold: true,
+				firstCall: true,
+				adProduct: 'hivi_leaderboard',
+				slotNameSuffix: '',
+				group: 'LB',
+				options: {},
+				slotShortcut: 'v',
+				sizes: [
+					{
+						viewportSize: [1024, 0],
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+					},
+				],
+				defaultSizes: [[728, 90]],
+				defaultTemplates: [],
+				targeting: {
+					loc: 'top',
+					rv: 1,
+					xna: 1,
+				},
+			},
 			top_leaderboard: {
 				aboveTheFold: true,
 				bidderAlias: 'TOP_LEADERBOARD',
-				firstCall: true,
+				firstCall: false,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
 				group: 'LB',
 				options: {},
 				slotShortcut: 'l',
 				sizes: [
-					{
-						viewportSize: [1440, 0],
-						sizes: [
-							[728, 90],
-							[970, 66],
-							[970, 90],
-							[970, 150],
-							[970, 180],
-							[970, 250],
-							[970, 365],
-							[1024, 416],
-							[1030, 65],
-							[1030, 130],
-							[1030, 250],
-							[1440, 585],
-						],
-					},
 					{
 						viewportSize: [1024, 0],
 						sizes: [
@@ -245,7 +252,8 @@ export default {
 	},
 
 	setupStates() {
-		slotService.setState('top_leaderboard', true);
+		slotService.setState('hivi_leaderboard', true);
+		slotService.setState('top_leaderboard', false);
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
@@ -259,15 +267,6 @@ export default {
 		// TODO: Remove those slots once AE3 is globally enabled
 		slotService.setState('top_leaderboard_ab', false);
 		slotService.setState('gpt_flush', false);
-
-		// TODO: Remove me after 24h -- slots injected on backend
-		if (!hasLowerSlotNames) {
-			slotService.setState('TOP_LEADERBOARD', true);
-			slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
-			slotService.setState('INVISIBLE_SKIN', true);
-			slotService.setState('TOP_LEADERBOARD_AB', false);
-			slotService.setState('GPT_FLUSH', false);
-		}
 	},
 
 	setupIdentificators() {
@@ -284,9 +283,17 @@ export default {
 
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
+			context.set('slots.hivi_leaderboard.targeting.xna', '0');
 			context.set('slots.top_leaderboard.targeting.xna', '0');
 			context.set('slots.bottom_leaderboard.targeting.xna', '0');
 		}
+	},
+
+	setupTopLeaderboard() {
+		slotService.once('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+			slotService.setState('top_leaderboard', true);
+			context.push('state.adStack', { id: 'top_leaderboard' });
+		});
 	},
 
 	injectBottomLeaderboard() {

@@ -3,8 +3,14 @@
 	<div class="WikiaTopAdsInner">
 
 		<?= $app->renderView('Ad', 'Index', [
-			'slotName' => 'TOP_LEADERBOARD',
+			'slotName' => 'hivi_leaderboard',
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+		]); ?>
+
+		<?= $app->renderView('Ad', 'Index', [
+			'slotName' => 'TOP_LEADERBOARD',
+			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'],
+            'addToAdQueue' => false
 		]); ?>
 
 	</div>
