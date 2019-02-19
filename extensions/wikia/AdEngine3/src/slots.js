@@ -10,14 +10,6 @@ const PAGE_TYPES = {
 	home: 'h',
 };
 
-function setSlotState(slotName, state) {
-	if (state) {
-		slotService.enable(slotName);
-	} else {
-		slotService.disable(slotName);
-	}
-}
-
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
 
@@ -25,6 +17,15 @@ function isIncontentBoxadApplicable() {
 		window.wgIsContentNamespace &&
 		context.get('wiki.opts.adsInContent') &&
 		!context.get('wiki.targeting.wikiIsCorporate');
+}
+
+/**
+ * Enables top_boxad on screen with width >= 1024px.
+ *
+ * @returns {boolean}
+ */
+function isTopBoxadApplicable() {
+	return utils.getViewportWidth() >= 1024;
 }
 
 export default {
@@ -78,6 +79,7 @@ export default {
 				targeting: {
 					loc: 'top',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			TOP_BOXAD: {
@@ -159,6 +161,7 @@ export default {
 				targeting: {
 					loc: 'footer',
 					rv: 1,
+					xna: 1,
 				},
 			},
 			FEATURED: {
@@ -187,17 +190,17 @@ export default {
 	},
 
 	setupStates() {
-		setSlotState('TOP_LEADERBOARD', true);
-		setSlotState('TOP_BOXAD', true);
-		setSlotState('INCONTENT_BOXAD_1', true);
-		setSlotState('BOTTOM_LEADERBOARD', true);
-		setSlotState('INVISIBLE_SKIN', true);
+		slotService.setState('TOP_LEADERBOARD', true);
+		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
+		slotService.setState('INCONTENT_BOXAD_1', true);
+		slotService.setState('BOTTOM_LEADERBOARD', true);
+		slotService.setState('INVISIBLE_SKIN', true);
 
-		setSlotState('FEATURED', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('FEATURED', context.get('custom.hasFeaturedVideo'));
 
 		// TODO: Remove those slots once AE3 is globally enabled
-		setSlotState('TOP_LEADERBOARD_AB', false);
-		setSlotState('GPT_FLUSH', false);
+		slotService.setState('TOP_LEADERBOARD_AB', false);
+		slotService.setState('GPT_FLUSH', false);
 	},
 
 	setupIdentificators() {
@@ -210,6 +213,13 @@ export default {
 			const slotParam = slotsDefinition[key].slotShortcut || 'x';
 			context.set(`slots.${key}.targeting.wsi`, `o${slotParam}${pageTypeParam}1`);
 		});
+	},
+
+	setupSizesAvailability() {
+		if (window.innerWidth >= 1024) {
+			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
+			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
+		}
 	},
 
 	injectBottomLeaderboard() {
@@ -237,7 +247,7 @@ export default {
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 
 		if (!isApplicable || !parentNode) {
-			setSlotState(slotName, false);
+			slotService.setState(slotName, false);
 			return;
 		}
 
@@ -252,5 +262,5 @@ export default {
 
 			context.push('events.pushOnScroll.ids', slotName);
 		}, 10000);
-	}
+	},
 };

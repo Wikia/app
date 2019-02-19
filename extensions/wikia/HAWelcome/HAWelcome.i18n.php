@@ -1037,38 +1037,38 @@ Divertiti su {{SITENAME}}!",
 $messages['ja'] = array(
 	'welcome-user-page' => '[[File:Placeholder|thumb|220px]]
 
-ここはあなたのユーザーページです。ページを編集し、自身のことについてコミュニティに紹介してみましょう！
+ここは{{PAGENAME}}さんの[[ヘルプ:プロフィール|ユーザーページ]]です。ページを編集し、コミュニティの皆さんに自己紹介しましょう！
 
 == お気に入りのページ ==
-* FANDOM上にあるWikiの、お気に入りのページのリンクを追加してください！
+* Wikiの、お気に入りのページの[[ヘルプ:リンク|]]を追加してください！
 * お気に入りのページ #2
 * お気に入りのページ #3',
 	'welcome-message-user' => '==ようこそ==
 
-はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
 $3',
 	'welcome-message-anon' => "==ようこそ==
 
-はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
-'''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
+はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます。
+'''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
 $3",
-	'welcome-message-log' => 'FANDOMへようこそ！',
+	'welcome-message-log' => '{{SITENAME}}へようこそ！',
 	'welcome-message-user-staff' => '==ようこそ==
 
-はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
 
-このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1077,13 +1077,13 @@ $3",
 $3',
 	'welcome-message-anon-staff' => "==ようこそ==
 
-はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
 
-'''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
+'''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1091,38 +1091,43 @@ $3',
 
 $3",
 	'welcome-message-wall-anon' => "はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
+'''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-'''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
-
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
-
-それでは、{{SITENAME}}をお楽しみください！",
-	'welcome-message-wall-anon-staff' => "はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
-
-'''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
-
-このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
-
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！",
-	'welcome-message-wall-user' => 'はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
+	'welcome-message-wall-anon-staff' => '==ようこそ==
 
-FANDOMを利用をはじめるにあたりご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
+
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+
+また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
+
+私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
 それでは、{{SITENAME}}をお楽しみください！',
-	'welcome-message-wall-user-staff' => 'はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+	'welcome-message-wall-user' => 'はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 
-このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
-また、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
+それでは、{{SITENAME}}をお楽しみください！',
+	'welcome-message-wall-user-staff' => '==ようこそ==
+
+はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
+
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+
+また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
+
+私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
 それでは、{{SITENAME}}をお楽しみください！',
 	'welcome-description' => '初めて編集をしたユーザーにウェルカムメッセージを送信',
 	'welcome-user' => '@latest',
 	'welcome-bot' => '@bot',
 	'welcome-enabled' => 'page-user message-anon message-user',
-	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
+	'staffsig-text' => '$1 <staff /> <small>([[w:c:ja.community:Special:Forum|フォーラム]] | [[w:c:ja.community:Blog:Fandomブログ|ブログ]])</small>',
 	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
 );
 
