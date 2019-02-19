@@ -193,7 +193,17 @@ class ImageReviewEventsHooks {
 			]
 		);
 
-		$key = wfForeignMemcKey( $cityId, 'image-review', $title->getArticleID(), $revisionId );
+
+		$key = wfForeignMemcKey( $cityId, 'image-review-s', $title->getArticleID(), $revisionId );
+
+
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'city_id' => $cityId,
+				'key' => $key
+			]
+		);
 
 		return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $title, $revisionId ) {
 			$statusMessages = [
