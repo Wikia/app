@@ -4,7 +4,6 @@ import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
-import slotTracker from "./tracking/slot-tracker";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -71,7 +70,7 @@ export default {
 			top_leaderboard: {
 				aboveTheFold: true,
 				bidderAlias: 'TOP_LEADERBOARD',
-				firstCall: false,
+				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
 				group: 'LB',
@@ -290,8 +289,9 @@ export default {
 	},
 
 	setupTopLeaderboard() {
-		slotService.once('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+		slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
 			slotService.setState('top_leaderboard', true);
+			context.set('slots.top_leaderboard.firstCall', false);
 			context.push('state.adStack', { id: 'top_leaderboard' });
 		});
 	},
