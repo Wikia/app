@@ -90,17 +90,13 @@ class FandomComMigrationHooks {
 	 * @return boolean
 	 */
 	private static function isMigrationScheduled(): bool {
-		global $wgFandomComMigrationScheduled, $wgCityId, $wgServer, $wgLanguageCode;
+		global $wgFandomComMigrationScheduled, $wgWikiaOrgMigrationScheduled, $wgCityId, $wgServer, $wgLanguageCode;
 		$hubService = WikiFactoryHub::getInstance();
 
-		return !empty( $wgFandomComMigrationScheduled )
-			|| (
-				!wfHttpsEnabledForURL( $wgServer )
-				&& ( !wfHttpsAllowedForURL( $wgServer ) || $wgLanguageCode === 'en' )
-				&& !in_array( $hubService->getVerticalId( $wgCityId ), [
-					WikiFactoryHub::VERTICAL_ID_OTHER,
-					WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
-				] )
+		return empty( $wgWikiaOrgMigrationScheduled ) &&
+			(
+				!empty( $wgFandomComMigrationScheduled )
+				|| !wfHttpsEnabledForURL( $wgServer )
 			);
 	}
 }
