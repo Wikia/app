@@ -5,16 +5,17 @@ require([
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine3.api')
 ], function(trackingOptIn, adContext, adsApi) {
-	var url = "{{ url }}";
+	var url = '{{ url }}';
 
 	function loadNetzAthletenScript() {
-		var scriptElementNetzAthleten = document.createElement("script");
-		scriptElementNetzAthleten.type = "text/javascript";
-		scriptElementNetzAthleten.src = url;
+		var scriptElementNetzAthleten = document.createElement('script');
 
-		scriptElementNetzAthleten.addEventListener("load", function() {
-			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+		scriptElementNetzAthleten.type = 'text/javascript';
+		scriptElementNetzAthleten.src = url;
+		scriptElementNetzAthleten.addEventListener('load', function () {
+			window.naMediaAd.setValue('homesite', window.wgIsMainpage);
 		});
+
 		document.head.appendChild(scriptElementNetzAthleten);
 	}
 
@@ -25,10 +26,7 @@ require([
 		}
 	}
 
-	if (
-		(adContext && adContext.get('opts.netzathleten')) ||
-		(adsApi && adsApi.isNetzathletenEnabled())
-	) {
+	if ((adContext && adContext.get('opts.netzathleten')) || (adsApi && adsApi.isNetzathletenEnabled())) {
 		trackingOptIn.pushToUserConsentQueue(loadNA);
 	}
 });
