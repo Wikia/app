@@ -39,6 +39,8 @@ function isTopBoxadApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
+export const hasLowerSlotNames = !document.getElementById('TOP_LEADERBOARD');
+
 export default {
 	getContext() {
 		return {
@@ -255,15 +257,17 @@ export default {
 		slotService.setState('gpt_flush', false);
 
 		// TODO: Remove those slots once AE3 is globally enabled
-		slotService.setState('TOP_LEADERBOARD_AB', false);
+		slotService.setState('top_leaderboard_ab', false);
 		slotService.setState('gpt_flush', false);
 
 		// TODO: Remove me after 24h -- slots injected on backend
-		slotService.setState('TOP_LEADERBOARD', true);
-		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
-		slotService.setState('INVISIBLE_SKIN', true);
-		slotService.setState('GPT_FLUSH', false);
-
+		if (!hasLowerSlotNames) {
+			slotService.setState('TOP_LEADERBOARD', true);
+			slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
+			slotService.setState('INVISIBLE_SKIN', true);
+			slotService.setState('TOP_LEADERBOARD_AB', false);
+			slotService.setState('GPT_FLUSH', false);
+		}
 	},
 
 	setupIdentificators() {
@@ -280,8 +284,8 @@ export default {
 
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
-			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
-			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
+			context.set('slots.top_leaderboard.targeting.xna', '0');
+			context.set('slots.bottom_leaderboard.targeting.xna', '0');
 		}
 	},
 

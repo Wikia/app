@@ -2,13 +2,11 @@ import { AdEngine, context, events, templateService, utils } from '@wikia/ad-eng
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
-import slots from './slots';
+import slots, { hasLowerSlotNames } from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
-
-const hasLowerSlotNames = !document.getElementById('TOP_LEADERBOARD');
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);

@@ -24,7 +24,9 @@ export const getConfig = () => ({
 	slotsToEnable: [
 		'bottom_leaderboard',
 		'incontent_boxad_1',
-		'top_boxad'
+		'top_boxad',
+		// TODO: Remove me after 24h
+		'TOP_BOXAD',
 	],
 
 	onInit(adSlot, params) {
