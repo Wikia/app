@@ -839,6 +839,14 @@ class WikiService extends WikiaModel {
 					$item = $this->wg->Memc->get( $cacheKey );
 
 					if ( is_array( $item ) ) {
+						// CORE-111: log cached data with missing entries
+						if ( empty( $item['lang'] ) ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning( 'CORE-111', [
+								'wiki_id' => $wikiId,
+								'item_json' => json_encode($item),
+							] );
+						}
+
 						$results[$wikiId] = $item;
 					}else {
 						$notFound[] = $wikiId;
