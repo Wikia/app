@@ -6588,6 +6588,12 @@ $wgPurgeVignetteUsingSurrogateKeys = true;
 $wgPutIPinRC = true;
 
 /**
+ * Qualaroo JS files to serve our user surveys.
+ */
+$wgQualarooUrl = '//s3.amazonaws.com/ki.js/52510/gQT.js';
+$wgQualarooDevUrl = '//s3.amazonaws.com/ki.js/52510/fCN.js';
+
+/**
  * Number of rows to cache in 'querycache' table when miser mode is on.
  * @var int $wgQueryCacheLimit
  */
