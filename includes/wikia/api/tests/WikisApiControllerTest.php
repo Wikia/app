@@ -146,6 +146,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 	 * Test the WikisApiController::getWikisUnderDomain method
 	 *
 	 * @param $domain domain parameter passed in the request
+	 * @param $localize "localizeUrls" param passed in the request
 	 * @param $env environment to mock
 	 * @param $wfMocks WikiFactory method names mapped to return values
 	 * @param $extectedResponseValues response field names mapped to expected values
@@ -153,11 +154,12 @@ class WikisApiControllerTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider provideGetWikisUnderDomain
 	 */
-	public function testGetWikisUnderDomain( $domain, $env, $wfMocks, $extectedResponseValues,
+	public function testGetWikisUnderDomain( $domain, $localize, $env, $wfMocks,
+$extectedResponseValues,
 											 $exception = null
 	) {
 		$this->mockEnvironment( $env );
-		$request = new WikiaRequest( [ 'domain' => $domain ] );
+		$request = new WikiaRequest( [ 'domain' => $domain, 'localizeUrls' => $localize ] );
 		$response = new WikiaResponse( WikiaResponse::FORMAT_JSON, $request );
 		$wikisApiController = new WikisApiController();
 		$wikisApiController->setRequest( $request );
@@ -184,7 +186,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 	 */
 	public function provideGetWikisUnderDomain() {
 		// --------- Test case ------------
-		// Make sure api works for a single wiki accessed through the primary wikia domain
+		// 1. Make sure api works for a single wiki accessed through the primary wikia domain
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -194,6 +196,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'test.wikia.com',	// request domain parameter
+			false,				// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -211,9 +214,10 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Also a simple test case, but for a fandom.com domain (so the url should be a https)
+		// 2. Also a simple test case, but for a fandom.com domain (so the url should be a https)
 		yield [
 			'test.fandom.com',	// request domain parameter
+			true,				// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -246,9 +250,10 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Use secondary fandom domain, expect a redirect to primary domain over https
+		// 3. Use secondary fandom domain, expect a redirect to primary domain over https
 		yield [
 			'secondary.fandom.com',	// request domain parameter
+			false,					// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -274,9 +279,10 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Use secondary wikia domain, expect a redirect to primary domain over http
+		// 4. Use secondary wikia domain, expect a redirect to primary domain over http
 		yield [
 			'secondary.wikia.com',	// request domain parameter
+			true,					// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -312,6 +318,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'blocked.wikia.com',	// request domain parameter
+			false,					// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -332,7 +339,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Check public flag flag
+		// 5. Check public flag flag
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -342,6 +349,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'closed.wikia.com',	// request domain parameter
+			false,					// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -362,7 +370,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Empty domain root with language wikis underneath
+		// 6. Empty domain root with language wikis underneath
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -379,6 +387,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'emptyroot.wikia.com',	// request domain parameter
+			true,					// localizeUrls param
 			WIKIA_ENV_PREVIEW,
 			// WF mocks...
 			[
@@ -398,18 +407,20 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// Corrupted domain parameter
+		// 7. Corrupted domain parameter
 		yield [
 			'wiki.fake.hacked',
+			false,				// localizeUrls param
 			WIKIA_ENV_PROD,
 			[],
 			[],
 			InvalidParameterApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// Unknown domain
+		// 8. Unknown domain
 		yield [
 			'empty.fandom.com',	// request domain parameter
+			false,					// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -423,7 +434,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			NotFoundApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// wiki with city_public set to -1 (marked for closing)
+		// 9. Wiki with city_public set to -1 (marked for closing)
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -433,6 +444,8 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'markedforclosing.fandom.com',	// request domain parameter
+			false,							// localizeUrls param
+			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
 				'DomainToID' => null,
@@ -454,7 +467,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// wiki with city_public set to -2 (marked as spam)
+		// 10. wiki with city_public set to -2 (marked as spam)
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -464,6 +477,8 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		];
 		yield [
 			'spam.fandom.com',	// request domain parameter
+			false,				// localizeUrls param
+			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
 				'DomainToID' => null,
