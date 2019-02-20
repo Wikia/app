@@ -818,30 +818,42 @@ class WikiService extends WikiaModel {
 	/**
 	 * Get details about one or more wikis
 	 *
-	 * @param array $wikiIds An array of one or more wiki ID's
+	 * @param int[] $wikiIds An array of one or more wiki ID's
 	 *
 	 * @return array A collection of results, the index is the wiki ID and each item has a name,
 	 * url, lang, hubId, headline, desc, image and flags index.
+	 *
+	 * @throws DBUnexpectedError
 	 */
-	public function getDetails( Array $wikiIds = null ) {
-		wfProfileIn(__METHOD__);
-
+	public function getDetails( Array $wikiIds ) {
 		$results = array();
 
 		if ( !empty( $wikiIds ) ) {
 			$notFound = array();
 
-			foreach ( $wikiIds as $index => $val ) {
-				$val = (int) $val;
+			foreach ( $wikiIds as $wikiId ) {
+				$wikiId = (int) $wikiId;
 
-				if ( !empty( $val ) ) {
-					$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $val );
+				if ( !empty( $wikiId ) ) {
+					$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $wikiId );
 					$item = $this->wg->Memc->get( $cacheKey );
 
 					if ( is_array( $item ) ) {
-						$results[$val] = $item;
+						// CORE-111: log cached data with missing entries
+						if ( empty( $item['lang'] ) || empty( $item['creation_date'] ) ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - cached with missing data', [
+								'wiki_id' => $wikiId,
+								'item_json' => json_encode($item),
+							] );
+
+							// mark a wiki for which we have corrupted data as not found
+							$notFound[] = $wikiId;
+						}
+						else {
+							$results[$wikiId] = $item;
+						}
 					}else {
-						$notFound[] = $val;
+						$notFound[] = $wikiId;
 					}
 				}
 			}
@@ -925,12 +937,11 @@ class WikiService extends WikiaModel {
 				);
 
 				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
-				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_LONG /* 12h */ );
+				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_STANDARD );
 				$results[$row->city_id] = $item;
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $results;
 	}
 

@@ -974,6 +974,12 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1802,3 +1808,15 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3006
+ * If enabled, file storage operations will be logged.
+ */
+$wgLogFileStorageOperations = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3008
+ * If enabled, Google Cloud Storage will be used for storing files.
+ */
+$wgUseGoogleCloudStorage = false;

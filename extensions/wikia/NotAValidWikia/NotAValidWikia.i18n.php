@@ -81,7 +81,7 @@ $messages['it'] = array(
 |-
 | [[homepage:Special:CreateWiki|Crea la tua wiki]]
 |
-| [[w:it:Blog:Blog ufficiale di FANDOM Italia|Leggi le ultime novità su FANDOM]]
+| [[w:it:Blog:Blog di FANDOM|Leggi le ultime novità su FANDOM]]
 |}',
 );
 
