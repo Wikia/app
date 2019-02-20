@@ -840,8 +840,8 @@ class WikiService extends WikiaModel {
 
 					if ( is_array( $item ) ) {
 						// CORE-111: log cached data with missing entries
-						if ( empty( $item['lang'] ) ) {
-							\Wikia\Logger\WikiaLogger::instance()->warning( 'CORE-111', [
+						if ( empty( $item['lang'] ) || empty( $item['creation_date'] ) ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - cached with missing data', [
 								'wiki_id' => $wikiId,
 								'item_json' => json_encode($item),
 							] );
