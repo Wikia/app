@@ -10,10 +10,10 @@
 		width: auto;
 	}
 
-	@for $i from 1 to 6 {
+	@for $i from 1 to 7 {
 		.wds-avatar:nth-child(#{$i}) {
 			position: relative;
-			z-index: 5 - $i;
+			z-index: 7 - $i;
 
 			@if $i > 1 {
 				margin-left: -10px;
