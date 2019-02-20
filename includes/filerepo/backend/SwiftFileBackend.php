@@ -33,7 +33,7 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $conn; // Swift connection handle
 	protected $connStarted = 0; // integer UNIX timestamp
 	protected $connContainers = array(); // container object cache
-	
+
 	protected $objCache = array();
 
 	/** @var BagOStuff */
@@ -96,7 +96,7 @@ class SwiftFileBackend extends FileBackendStore {
 	protected static function isValidContainerName( $container ) {
 		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
 	}
-	
+
 	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
@@ -330,7 +330,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
 		}
-		
+
 		Hooks::run( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
@@ -369,7 +369,7 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		Hooks::run( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
-		
+
 		return $status;
 	}
 
@@ -471,6 +471,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doCleanInternal()
 	 */
 	protected function doCleanInternal( $fullCont, $dir, array $params ) {
+		WikiaLogger::instance()->info(
+			__CLASS__ . '::' . __METHOD__,
+			[
+				'params' => json_encode( $params )
+			]
+		);
 		$status = Status::newGood();
 
 		// Only containers themselves can be removed, all else is virtual
@@ -526,7 +532,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( isset( $this->objCache[ $params['src'] ] ) ) {
 			return $this->objCache[ $params['src'] ];
 		}
-		
+
 		if ( empty( $params['latest'] ) ) {
 			$params['latest'] = 1;
 		}
@@ -537,7 +543,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
 			// macbre - causes infinite loop / sha1 is stored in doStoreInternal() ?
-			$this->addMissingMetadata( $srcObj, $params['src'] ); 
+			$this->addMissingMetadata( $srcObj, $params['src'] );
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
@@ -567,7 +573,7 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
-		
+
 		# don't check SHA-1 for thumbnailers 
 		if ( $this->isThumbnailer( $path ) ) {
 			return true; //nothing to do
@@ -1002,9 +1008,9 @@ class SwiftFileBackend extends FileBackendStore {
 		]);
 		// Wikia change - end
 	}
-	
+
 	/**
-	 * Check if image path contains /thumb/ 
+	 * Check if image path contains /thumb/
 	 *
 	 * @param $path image path
 	 * @return Boolean

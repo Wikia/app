@@ -444,8 +444,8 @@ Inserisci qui la descrizione.',
 
 $messages['ja'] = array(
 	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
-	'video-page-file-list-header' => 'このウィキアでの使用状況',
-	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
+	'video-page-file-list-header' => 'このWikiでの使用状況',
+	'video-page-global-file-list-header' => 'Fandomでの使用状況',
 	'video-page-from-provider' => '提供元: $1',
 	'video-page-expires' => '有効期限: $1',
 	'video-page-regional-restrictions-viewable' => 'この動画は地域制限がされています',
