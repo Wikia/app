@@ -155,9 +155,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 	 * @dataProvider provideGetWikisUnderDomain
 	 */
 	public function testGetWikisUnderDomain( $domain, $localize, $env, $wfMocks,
-$extectedResponseValues,
-											 $exception = null
-	) {
+											 $extectedResponseValues, $exception = null ) {
 		$this->mockEnvironment( $env );
 		$request = new WikiaRequest( [ 'domain' => $domain, 'localizeUrls' => $localize ] );
 		$response = new WikiaResponse( WikiaResponse::FORMAT_JSON, $request );
