@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 
 	function addTestPrefixForTestWiki(originalSrc, extra) {
 		if (adContext.get('opts.isAdTestWiki') && adContext.get('targeting.testSrc')) {
-			originalSrc = originalSrc + ',' + adContext.get('targeting.testSrc');
+			originalSrc = [originalSrc, adContext.get('targeting.testSrc')];
 		} else if (adContext.get('opts.isAdTestWiki')) {
 			originalSrc = extra && extra.testSrc ? extra.testSrc : 'test-' + originalSrc;
 		}

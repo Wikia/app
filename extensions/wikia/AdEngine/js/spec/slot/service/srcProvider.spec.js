@@ -99,6 +99,6 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			'targeting.testSrc': 'externaltest'
 		});
 
-		expect(getModule().get('gpt')).toBe('gpt,externaltest');
+		expect(getModule().get('gpt')).toEqual(['gpt', 'externaltest']);
 	});
 });
