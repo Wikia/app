@@ -299,6 +299,16 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$wikis = WikiFactory::getWikisUnderDomain( $domain, true );
+		// localize the urls
+		$wikis = array_map( function ( $wiki ) {
+			$url = WikiFactory::getLocalEnvURL( $wiki['city_url'] );
+			// getLocalEnvURL can sometimes lose the trailing slash, re-add it
+			if ( !endsWith( $url, '/' ) ) {
+				$url .= '/';
+			}
+			$wiki['city_url'] = $url;
+			return $wiki;
+		}, $wikis );
 
 		if ( wfHttpsEnabledForDomain( $domain ) ) {
 			$wikis = array_map( function ( $wiki ) {
