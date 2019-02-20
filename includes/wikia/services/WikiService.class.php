@@ -845,9 +845,13 @@ class WikiService extends WikiaModel {
 								'wiki_id' => $wikiId,
 								'item_json' => json_encode($item),
 							] );
-						}
 
-						$results[$wikiId] = $item;
+							// mark a wiki for which we have corrupted data as not found
+							$notFound[] = $wikiId;
+						}
+						else {
+							$results[$wikiId] = $item;
+						}
 					}else {
 						$notFound[] = $wikiId;
 					}
