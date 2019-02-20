@@ -26,7 +26,7 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#f197e1cf5d5997310ff2a12786e14cb4ac8088d5",
+    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#57554c833dbe2a04e883a346636e6ecd50005c1a",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "lodash": "4.17.10"
