@@ -1820,3 +1820,11 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * Google Cloud Storage settings. The default settings are for production.
+ */
+$wgGcsConfig = [
+	'gcsCredentialsPath' => getcwd() . '/../config/gcs_credentials_prod.json',
+	'gcsBucket' => 'static-assets-originals-prod'
+];

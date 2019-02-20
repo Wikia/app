@@ -40,7 +40,7 @@ class KubernetesUrlProvider implements UrlProvider, LoggerAwareInterface {
 	public function getUrl( $serviceName ) {
 		$url = "{$this->env}.{$this->dc}.k8s.wikia.net/$serviceName";
 
-		$this->logger->debug( "Url provider", [ 'provider_url' => $url ] );
+//		$this->logger->debug( "Url provider", [ 'provider_url' => $url ] );
 
 		return $url;
 	}
