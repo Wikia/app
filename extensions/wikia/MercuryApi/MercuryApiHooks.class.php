@@ -98,7 +98,7 @@ class MercuryApiHooks {
 		}
 		if ( $title->inNamespaces( NS_FILE ) ) {
 			// Request from MobileWiki to MediaWiki
-			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPrefixedURL() ] );
 		}
 		return true;
 	}
