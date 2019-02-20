@@ -279,7 +279,40 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// 4. Use secondary wikia domain, expect a redirect to primary domain over http
+		// 4. Use secondary fandom domain, expect a localized redirect to primary domain over https
+		yield [
+			'secondary.fandom.com',	// request domain parameter
+			true,					// localizeUrls param
+			WIKIA_ENV_PREVIEW,
+			// WF mocks...
+			[
+				'DomainToID' => 123,
+				'isLanguageWikisIndex' => false,
+				'getWikiByID' => (object) [
+					'city_id' => 123,
+					'city_public' => 1,
+					'city_url' => 'http://primary.fandom.com/',
+
+				],
+				'getWikisUnderDomain' => [
+					[
+						'city_id' => 123,
+						'city_url' => 'http://primary.fandom.com/',
+						'city_dbname' => 'test'
+					]
+				],
+				'getVarValueByName' => false
+			],
+			// expected response
+			[
+				'primaryDomain' => 'primary.preview.fandom.com',
+				'primaryProtocol' => 'https://',
+				'isBlocked' => false,
+				'wikis' => []
+			]
+		];
+		// --------- Test case ------------
+		// 5. Use secondary wikia domain, expect a redirect to primary domain over http
 		yield [
 			'secondary.wikia.com',	// request domain parameter
 			true,					// localizeUrls param
@@ -308,7 +341,7 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// Check blocked robots flag
+		// 6. Check blocked robots flag
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -339,7 +372,7 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// 5. Check public flag flag
+		// 7. Check public flag flag
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -349,7 +382,7 @@ $extectedResponseValues,
 		];
 		yield [
 			'closed.wikia.com',	// request domain parameter
-			false,					// localizeUrls param
+			false,				// localizeUrls param
 			WIKIA_ENV_PROD,
 			// WF mocks...
 			[
@@ -370,7 +403,7 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// 6. Empty domain root with language wikis underneath
+		// 8. Empty domain root with language wikis underneath
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -407,7 +440,7 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// 7. Corrupted domain parameter
+		// 9. Corrupted domain parameter
 		yield [
 			'wiki.fake.hacked',
 			false,				// localizeUrls param
@@ -417,7 +450,7 @@ $extectedResponseValues,
 			InvalidParameterApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// 8. Unknown domain
+		// 10. Unknown domain
 		yield [
 			'empty.fandom.com',	// request domain parameter
 			false,					// localizeUrls param
@@ -434,7 +467,7 @@ $extectedResponseValues,
 			NotFoundApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// 9. Wiki with city_public set to -1 (marked for closing)
+		// 11. Wiki with city_public set to -1 (marked for closing)
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -467,7 +500,7 @@ $extectedResponseValues,
 			]
 		];
 		// --------- Test case ------------
-		// 10. wiki with city_public set to -2 (marked as spam)
+		// 12. wiki with city_public set to -2 (marked as spam)
 		$wikis = [
 			[
 				'city_id' => 123,
