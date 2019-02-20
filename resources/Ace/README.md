@@ -8,11 +8,14 @@ This is a [Ace (Ajax.org Cloud9 Editor)]()https://ace.c9.io) installation.
 ## How to update?
 
 * please refer to https://github.com/ajaxorg/ace#embedding-ace
-* https://github.com/ajaxorg/ace-builds/tree/master/src-min has been copied over here
+* https://github.com/ajaxorg/ace-builds/tree/master/src-min-noconflict has been copied over here
 
 ## Wikia integration
 
-This code is injected for **MediaWiki source editor only** by `EditPageLayoutHelper::prepareVarsForCodePage` method.
+This code is injected for **MediaWiki source editor only** by `EditPageLayoutHelper::prepareVarsForCodePage`
+and `EditPageLayoutHelper::executeEditPage` methods.
+
+[Ace embedding docs]()https://ace.c9.io/#nav=embedding).
 
 ## Ace in action
 
