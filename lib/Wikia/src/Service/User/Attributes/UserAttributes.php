@@ -185,7 +185,7 @@ class UserAttributes {
 	}
 
 	private function logAttributeServiceRequest( $userId ) {
-		$this->info( 'USER_ATTRIBUTES request_from_service', [
+		$this->debug( 'USER_ATTRIBUTES request_from_service', [
 			'userId' => $userId
 		] );
 	}
