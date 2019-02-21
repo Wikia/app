@@ -26,7 +26,7 @@ class BannerNotificationsController extends WikiaController {
 		],
 		self::CONFIRMATION_ERROR => [
 			'class' => 'wds-alert',
-			'icon' => 'wds-icons-alert-small',
+			'icon' => 'wds-icons-error-small',
 		],
 		self::CONFIRMATION_WARN => [
 			'class' => 'wds-warning',

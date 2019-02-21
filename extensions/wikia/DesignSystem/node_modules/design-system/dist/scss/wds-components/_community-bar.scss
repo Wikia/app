@@ -40,13 +40,20 @@
 		height: 44px;
 		justify-content: center;
 		width: 44px;
+	}
 
-		> svg, .wds-dropdown__toggle svg {
+	&__discussions {
+		> svg {
 			opacity: .5;
 		}
 	}
 
 	&__navigation {
+		.wds-dropdown__toggle svg {
+			margin-left: 6px;
+			opacity: .5;
+		}
+
 		.wds-dropdown {
 			display: block;
 			position: static;
