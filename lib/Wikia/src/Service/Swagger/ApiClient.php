@@ -64,7 +64,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 
 		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
 		if ( $this->logSampler->shouldSample() ||  ( $code >= 500 ) ) {
-//			$this->$level( $message, $params );
+			$this->$level( $message, $params );
 		}
 
 		if ($exception != null) {
