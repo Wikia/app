@@ -26,3 +26,5 @@ $wgYoukuConfig = [
 ];
 
 $wgGoogleMapsKey = '';
+
+$wgGcsCredentialsProd = [];
