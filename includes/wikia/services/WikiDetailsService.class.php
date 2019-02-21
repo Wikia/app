@@ -186,7 +186,7 @@ class WikiDetailsService extends WikiService {
 	 * @param int $id WikiId
 	 * @return array
 	 */
-	protected function getFromService( $id ) {
+	protected function getFromService( int $id ) {
 		$wikiStats = $this->getSiteStats( $id );
 		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER );
 		$modelData = $this->getDetails( [ $id ] );

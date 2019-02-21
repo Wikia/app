@@ -977,7 +977,7 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries

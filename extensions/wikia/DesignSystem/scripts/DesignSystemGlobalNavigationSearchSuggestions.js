@@ -104,22 +104,20 @@ $(function () {
 			};
 
 			trackingOptIn.pushToUserConsentQueue(function () {
-				searchTracking.trackSuggestImpression(
+				window.searchTracking.trackSuggestImpression(
 					getSearchTrackingPayload(suggestions, query)
 				);
 			});
 		}
 
 		function trackSuggestionClick(suggestion) {
-			searchTracking.trackSuggestImpression(
-				searchTracking.trackSuggestClicked(
-					Object.assign(
-						{},
-						getSearchTrackingPayload(trackingState.suggestions, trackingState.query),
-						{
-							positionOfClickedItem: Object.values(trackingState.suggestions).indexOf(suggestion)
-						}
-					)
+			window.searchTracking.trackSuggestClicked(
+				Object.assign(
+					{},
+					getSearchTrackingPayload(trackingState.suggestions, trackingState.query),
+					{
+						positionOfClickedItem: Object.values(trackingState.suggestions).indexOf(suggestion)
+					}
 				)
 			);
 		}
