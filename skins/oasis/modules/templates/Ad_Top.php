@@ -25,5 +25,6 @@
 			<div class="close-button"></div>
 		</a>
 	</div>
-	<div id="INVISIBLE_HIGH_IMPACT_2" class="wikia-ad noprint"></div>
+	<div id="<?php echo AdEngine3::isEnabled() ? 'invisible_high_impact_2' : 'INVISIBLE_HIGH_IMPACT_2'?>" class="wikia-ad noprint"></div>
 </div>
+
