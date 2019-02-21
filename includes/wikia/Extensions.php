@@ -1400,7 +1400,7 @@ $wgFileBackends['gcs-backend'] = [
 	'class' => 'GcsFileBackend',
 	'lockManager' => 'nullLockManager',
 	'wikiId'	=> '',
-	'gcsCredentialsPath' => $wgGcsConfig['gcsCredentialsPath'],
+	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
 	'gcsBucket' => $wgGcsConfig['gcsBucket'],
 	'gcsObjectNamePrefix' => 'mediawiki/',
 ];

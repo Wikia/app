@@ -1825,6 +1825,6 @@ $wgUseGoogleCloudStorage = false;
  * Google Cloud Storage settings. The default settings are for production.
  */
 $wgGcsConfig = [
-	'gcsCredentialsPath' => getcwd() . '/../config/gcs_credentials_prod.json',
+	'gcsCredentials' => $wgGcsCredentialsProd,
 	'gcsBucket' => 'static-assets-originals-prod'
 ];

@@ -15,7 +15,7 @@ class GcsFileBackend extends FileBackendStore {
 	public function __construct( $config ) {
 		parent::__construct( $config );
 		$this->storage = new StorageClient( [
-			'keyFilePath' => $config['gcsCredentialsPath']
+			'keyFile' => $config['gcsCredentials']
 		] );
 		$this->bucketName = $config['gcsBucket'];
 		$this->objectNamePrefix = $config['gcsObjectNamePrefix'];
