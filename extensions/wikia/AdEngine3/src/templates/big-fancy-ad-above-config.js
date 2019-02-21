@@ -1,6 +1,7 @@
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
-import { scrollListener, slotService, slotTweaker } from '@wikia/ad-engine';
+import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
+import slots from '../slots';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -9,17 +10,35 @@ const {
 } = universalAdPackage;
 
 export const getConfig = () => ({
+	autoPlayAllowed: true,
+	defaultStateAllowed: true,
+	fullscreenAllowed: true,
+	stickinessAllowed: true,
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
+	slotsToDisable: [
+		'incontent_player',
+		'invisible_high_impact_2',
+	],
+	slotsToEnable: [
+		'bottom_leaderboard',
+		'incontent_boxad_1',
+		'top_boxad',
+		// TODO: Remove me after 24h
+		'TOP_BOXAD',
+	],
 
 	onInit(adSlot, params) {
 		this.adSlot = adSlot;
 		this.slotParams = params;
+		context.set('slots.bottom_leaderboard.viewportConflicts', []);
+		context.set('slots.bottom_leaderboard.sizes', []);
+		context.set('slots.bottom_leaderboard.defaultSizes', [[3, 3]]);
 
+		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 		const wrapper = document.getElementById('WikiaTopAds');
 
-		this.adSlot.getElement().classList.add('gpt-ad');
 		wrapper.style.opacity = '0';
 		slotTweaker.onReady(adSlot).then(() => {
 			wrapper.style.opacity = '';
@@ -28,7 +47,13 @@ export const getConfig = () => ({
 
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
-		slotService.disable('incontent_player', 'hivi-collapse');
+		if (!window.ads.runtime.disableCommunitySkinOverride) {
+			document.body.classList.add('uap-skin');
+		}
+
+		if (spotlightFooter) {
+			spotlightFooter.parentNode.style.display = 'none';
+		}
 	},
 
 	onAfterStickBfaaCallback() {
