@@ -27,7 +27,7 @@
     "dev": "npm run watch"
   },
   "dependencies": {
-    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#385588c6f23619394be072fe62aaaaff6532c342",
+    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#76a8581c65ff5cd94be048c1a07bc29d0f442d10",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "lodash": "4.17.10"
