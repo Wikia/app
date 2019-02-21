@@ -977,7 +977,7 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
@@ -1814,3 +1814,9 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * If enabled, file storage operations will be logged.
  */
 $wgLogFileStorageOperations = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3008
+ * If enabled, Google Cloud Storage will be used for storing files.
+ */
+$wgUseGoogleCloudStorage = false;

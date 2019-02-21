@@ -26,8 +26,9 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 *   http://garth.wikia.com/d/f?sort=latest
 	 */
 	public function redirectForumToDiscussions() {
-		$discussionUrl = $this->getDiscussionUrl();
-		$this->response->redirect( $discussionUrl );
+		global $wgScriptPath;
+
+		$this->response->redirect( $wgScriptPath . self::DISCUSSIONS_LINK );
 	}
 
 	/**
@@ -50,6 +51,8 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function redirectBoardToCategory() {
+		global $wgScriptPath;
+
 		// No template for this, we're only interested in setting the redirect.
 		$this->skipRendering();
 
@@ -61,7 +64,7 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 			$redirectUrl = self::DISCUSSIONS_LINK;
 		}
 
-		$this->response->redirect( $redirectUrl );
+		$this->response->redirect( $wgScriptPath . $redirectUrl );
 	}
 
 	/**
@@ -80,6 +83,8 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 * @param Title $thread
 	 */
 	public static function redirectThreadToPost( Title $thread ) {
+		global $wgScriptPath;
+
 		$threadId = $thread->getArticleID();
 
 		$legacyRedirect = new LegacyRedirect( F::App()->wg->CityId );
@@ -90,11 +95,7 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 			$redirectUrl = self::DISCUSSIONS_LINK;
 		}
 
-		F::app()->wg->Out->redirect( $redirectUrl );
-	}
-
-	private function getDiscussionUrl() {
-		return self::DISCUSSIONS_LINK;
+		F::app()->wg->Out->redirect( $wgScriptPath . $redirectUrl );
 	}
 
 	private function getBoardId() {

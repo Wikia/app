@@ -272,11 +272,11 @@
 		font-size: $wds-typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
-		left: 0;
+		left: -5px;
 		min-width: $notification-counter-size;
 		padding: 0 4px;
 		position: absolute;
-		top: 12px;
+		top: 10px;
 	}
 
 	&__avatar-notifications-counter {

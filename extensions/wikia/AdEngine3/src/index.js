@@ -3,7 +3,7 @@ import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
 import { context, events, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { billTheLizard, krux, moatYi } from '@wikia/ad-engine/dist/ad-services';
+import { billTheLizard, krux, moatYi, nielsen } from '@wikia/ad-engine/dist/ad-services';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -79,6 +79,8 @@ function trackLabradorValues() {
 }
 
 function callExternals() {
+	const targeting = context.get('targeting');
+
 	bidders.requestBids({
 		responseListener: biddersDelay.markAsReady,
 	});
@@ -86,6 +88,11 @@ function callExternals() {
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
+	nielsen.call({
+		type: 'static',
+		assetid: `fandom.com/${targeting.s0v}/${targeting.s1}/${targeting.artid}`,
+		section: `FANDOM ${targeting.s0v.toUpperCase()} NETWORK`,
+	});
 }
 
 function run() {

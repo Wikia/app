@@ -92,6 +92,8 @@ class DiscussionsThreadModel {
 	}
 
 	public function getData( $showLatest, $limit, $categoryIds ) {
+		global $wgScriptPath;
+
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
 		$invalidCategory = false;
 		$discussionsUrl = false;
@@ -131,7 +133,7 @@ class DiscussionsThreadModel {
 
 		return [
 			'siteId' => $this->cityId,
-			'discussionsUrl' => $discussionsUrl,
+			'discussionsUrl' => $wgScriptPath . $discussionsUrl,
 			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryIds ),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
 			'invalidCategory' => $invalidCategory,
