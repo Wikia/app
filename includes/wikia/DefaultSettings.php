@@ -1825,6 +1825,6 @@ $wgUseGoogleCloudStorage = false;
  * Google Cloud Storage settings. The default settings are for production.
  */
 $wgGcsConfig = [
-	'gcsCredentials' => $wgGcsCredentialsProd,
+	'gcsCredentials' => $wgGcsCredentialsProd ?: [], // fallback for Travis, since secrets are not loaded
 	'gcsBucket' => 'static-assets-originals-prod'
 ];
