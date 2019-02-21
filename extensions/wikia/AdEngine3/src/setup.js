@@ -65,7 +65,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	if (!wikiContext.targeting.hasFeaturedVideo) {
+	if (!wikiContext.targeting.hasFeaturedVideo && wikiContext.targeting.pageType !== 'search') {
 		slots.addSlotSize('top_leaderboard', [3, 3]);
 	}
 
