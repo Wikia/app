@@ -141,7 +141,15 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 			bar.find('.cancel').on('click', function() {
 				bar.hide();
+
 				log('Dismissing a draft');
+				tracker.track({
+					trackingMethod: 'analytics',
+					action: tracker.ACTIONS.IMPRESSION,
+					category: editorType,
+					label: 'draft-discard'
+				});
+
 				onDismiss(initialContent);
 			});
 		}
