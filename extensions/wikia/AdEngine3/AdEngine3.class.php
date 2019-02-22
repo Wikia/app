@@ -121,7 +121,8 @@ class AdEngine3
 				'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
 				'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
 				'hasFeaturedVideo' => $hasFeaturedVideo,
-				'featuredVideo' => $featuredVideoDetails
+				'featuredVideo' => $featuredVideoDetails,
+				'testSrc' => $wg->AdDriverAdTestWikiSrc
 			])
 		];
 	}

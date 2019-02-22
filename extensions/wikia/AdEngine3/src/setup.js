@@ -57,7 +57,11 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
 
-	if (context.get('wiki.opts.isAdTestWiki')) {
+	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
+		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
+		const originalSrc = context.get('src');
+		context.set('src', [originalSrc, context.get('wiki.targeting.testSrc')]);
+	} else if (context.get('wiki.opts.isAdTestWiki')) {
 		context.set('src', 'test');
 	}
 
