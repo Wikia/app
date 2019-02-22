@@ -14,30 +14,34 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 		});
 	}
 
+	function setContent(mode, draftText) {
+		var CKinstance = RTE.getInstance();
+
+		// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
+		if (CKinstance.mode !== mode) {
+			// we need to switch mode to apply a draft in a right one
+			CKinstance.setMode(
+				mode,
+				function () {
+					CKinstance.setData(draftText);
+				}
+			);
+		} else {
+			// we're in the right mode
+			CKinstance.setData(draftText);
+		}
+	}
+
 	CKEDITOR.on('instanceReady', function () {
 		var draftData = EditDraftSaving.readDraft(),
-			CKinstance = RTE.getInstance();
+			initialMode = RTE.getInstance().mode;
 
 		EditDraftSaving.storeOriginalContent(RTE.getInstance().getData());
 
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
-
-			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
-			if (CKinstance.mode !== draftData.mode) {
-
-				// we need to switch mode to apply a draft in a right one
-				CKinstance.setMode(
-					draftData.mode,
-					function () {
-						CKinstance.setData(draftText);
-					}
-				);
-			} else {
-				// we're in the right mode
-				CKinstance.setData(draftText);
-			}
+			setContent(draftData.mode, draftText);
 
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(
@@ -47,18 +51,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 				// function to be called when the draft is discarded,
 				// callback will get the original editor content
 				function(content) {
-					if (CKinstance.mode === 'source') {
-						// we first need to switch back to visual mode
-						CKinstance.setMode(
-							'wysiwyg',
-							function () {
-								CKinstance.setData(content);
-							}
-						);
-					}
-					else {
-						CKinstance.setData(content);
-					}
+					setContent(initialMode, content);
 				}
 			);
 		}
