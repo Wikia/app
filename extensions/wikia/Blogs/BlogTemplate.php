@@ -301,12 +301,12 @@ class BlogTemplateClass {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function setParserHook( $parser ) {
+	public static function setParserHook( Parser $parser ) {
 		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'renderBlog' ) );
 		return true;
 	}
 
-	public static function renderBlog( $input, $params, $parser, $frame = null ) {
+	public static function renderBlog( $input, $params, Parser $parser, $frame = null ) {
 		return static::parseTagForParser($input, $params, $parser, $frame, false );
 	}
 
@@ -328,6 +328,13 @@ class BlogTemplateClass {
 
 	/**
 	 * This method can be used by extensions to render blog listing
+	 *
+	 * @param $input
+	 * @param $params
+	 * @param $parser Parser
+	 * @param null $frame
+	 * @param bool $returnPlainData
+	 * @return array|int|String
 	 */
 	public static function parseTag( $input, $params, $parser, $frame = null, $returnPlainData = false ) {
 		global $wgTitle;
@@ -623,7 +630,13 @@ class BlogTemplateClass {
 		return $text;
 	}
 
-	private static function __getCategories ( $aParamValues, $parser ) {
+	/**
+	 * @param $aParamValues
+	 * @param $parser
+	 * @return int[]
+	 * @throws MWException
+	 */
+	private static function __getCategories ( $aParamValues, $parser ) : array {
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
     	if ( !empty( $aParamValues ) ) {
@@ -640,34 +653,21 @@ class BlogTemplateClass {
 			if ( !empty( self::$aOptions['timestamp'] ) ) {
 				$timestampLimit = self::$aOptions['timestamp'];
 			}
-			/* set max length of group concat query */
-			self::$dbr->query( 'SET group_concat_max_len = ' . GROUP_CONCAT, __METHOD__ );
-			/* run query */
-			$res = self::$dbr->select(
+
+			// this will return an array of integers
+		    $aPages = self::$dbr->selectFieldValues(
 				array( self::$dbr->tableName( 'page' ), self::$dbr->tableName( 'categorylinks' ) ),
-				array( "cl_to", "GROUP_CONCAT(DISTINCT cl_from SEPARATOR ',') AS cl_page" ),
+				'cl_from',
 				array(
 					"page_namespace" => NS_BLOG_ARTICLE,
 					"page_id = cl_from",
 					"cl_to in (" . self::$dbr->makeList( $aParamValues ) . ")",
 					"page_touched >= " . self::$dbr->addQuotes( $timestampLimit )
 				),
-				__METHOD__,
-				array( 'GROUP BY' => 'cl_to' )
+				__METHOD__
 			);
-			while ( $oRow = self::$dbr->fetchObject( $res ) ) {
-                                // BugId:49408
-                                // Since GROUP_CONCAT respects group_concat_max_len arbitrarily,
-                                // sometimes we end up with a comma or a truncated item, which
-                                // we don't want.
-                                if ( GROUP_CONCAT == strlen( $oRow->cl_page ) ) {
-                                    $aPages[] = preg_replace( '/,\d+,?$/', '', $oRow->cl_page );
-                                } else {
-                                    $aPages[] = $oRow->cl_page;
-                                }
-			}
-			self::$dbr->freeResult( $res );
 		}
+
     	return $aPages;
 	}
 
@@ -838,7 +838,7 @@ class BlogTemplateClass {
 	private static function __getResults() {
     	/* main query */
     	$aResult = array();
-    	$aFields = array( '/* BLOGS */ rev_page as page_id', 'page_namespace', 'page_title', 'min(rev_timestamp) as create_timestamp', 'unix_timestamp(rev_timestamp) as timestamp', 'rev_timestamp', 'min(rev_id) as rev_id', 'rev_user' );
+		$aFields = array( 'rev_page as page_id', 'page_namespace', 'page_title', 'min(rev_timestamp) as create_timestamp', 'unix_timestamp(rev_timestamp) as timestamp', 'rev_timestamp', 'min(rev_id) as rev_id', 'rev_user' );
 		$res = self::$dbr->select(
 			array_map( array( self::$dbr, 'tableName' ), self::$aTables ),
 			$aFields,
