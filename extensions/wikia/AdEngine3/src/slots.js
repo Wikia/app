@@ -1,4 +1,4 @@
-import {AdSlot, context, events, slotService, utils} from '@wikia/ad-engine';
+import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
