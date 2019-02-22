@@ -1,5 +1,4 @@
 <?php
-
 $wgExtensionCredits['other'][] = [
 	'name' => 'AdEngine',
 	'author' => 'Wikia',

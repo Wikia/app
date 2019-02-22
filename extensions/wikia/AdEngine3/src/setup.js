@@ -2,7 +2,7 @@ import { AdEngine, context, events, templateService, utils } from '@wikia/ad-eng
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
-import slots from './slots';
+import slots, { hasLowerSlotNames } from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
@@ -33,6 +33,16 @@ function updateWadContext() {
 		// HMD rec
 		context.set('options.wad.hmdRec.enabled', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
 	}
+
+	// TODO: Remove me after 24h
+	if (!hasLowerSlotNames) {
+		const placementsMap = context.get('options.wad.btRec.placementsMap');
+
+		Object.keys(placementsMap).forEach((slotName) => {
+			placementsMap[slotName.toUpperCase()] = placementsMap[slotName];
+			delete placementsMap[slotName];
+		});
+	}
 }
 
 function isGeoEnabled(key) {
@@ -47,7 +57,11 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
 
-	if (context.get('wiki.opts.isAdTestWiki')) {
+	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
+		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
+		const originalSrc = context.get('src');
+		context.set('src', [originalSrc, context.get('wiki.targeting.testSrc')]);
+	} else if (context.get('wiki.opts.isAdTestWiki')) {
 		context.set('src', 'test');
 	}
 
@@ -181,6 +195,15 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	slots.setupTopLeaderboard();
 
 	updateWadContext();
+
+	// TODO: Remove me after 24h
+	if (!hasLowerSlotNames) {
+		const slotsDefinition = context.get('slots');
+
+		Object.keys(slotsDefinition).forEach((slotName) => {
+			slotsDefinition[slotName.toUpperCase()] = slotsDefinition[slotName];
+		});
+	}
 
 	// TODO: Remove wrapper of window.adslots2 when we unify our push method
 	utils.makeLazyQueue(window.adslots2, (slot) => {

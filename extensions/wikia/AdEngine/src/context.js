@@ -1,5 +1,4 @@
 export default {
-	adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{custom.wikiIdentifier}//{targeting.s2}/{src}/{slotName}',
 	custom: {
 		dfpId: '5441',
 		dbNameElement: '_not_a_top1k_wiki',
