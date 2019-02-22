@@ -18,6 +18,8 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 		var draftData = EditDraftSaving.readDraft(),
 			CKinstance = RTE.getInstance();
 
+		EditDraftSaving.storeOriginalContent(RTE.getInstance().getData());
+
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
@@ -38,7 +40,16 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			}
 
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
-			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
+			EditDraftSaving.onDraftRestore(
+				EDITOR_TYPE,
+				// selector of an element to append a notification bar to
+				'#EditPageToolbar',
+				// function to be called when the draft is discarded,
+				// callback will get the original editor content
+				function(content) {
+					CKinstance.setData(content);
+				}
+			);
 		}
 
 		// register draft saving function
