@@ -112,7 +112,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	/**
 	 * Track draft restore and show the modal with a message saying what just happened
 	 */
-	function onDraftRestore(editorType) {
+	function onDraftRestore(editorType, appendTo, onDismiss) {
 		log('Restored a draft for ' + editorType);
 
 		// Wikia.Tracker:  trackingevent editor-ck/impression/draft-loaded/ [analytics track]
@@ -125,7 +125,25 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 		// CORE-84: in case of a conflict, let's only show the conflict notice
 		if (!inDraftConflict) {
-			jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-loaded').text());
+			jquery(appendTo).append(
+				'<div id="draft-restore-message" style="background: green; color: white; padding: 10px;">' +
+				window.mediaWiki.message('edit-draft-loaded').text() +
+				'<a href="#" class="ok">' + window.mediaWiki.message('ok').text() + '</a>' +
+				'<a href="#" class="cancel">' + window.mediaWiki.message('cancel').text() + '</a>' +
+				'</div>'
+			);
+
+			var bar = $('#draft-restore-message');
+
+			bar.find('.ok').on('click', function() {
+				bar.hide();
+			});
+
+			bar.find('.cancel').on('click', function() {
+				bar.hide();
+				log('Dismissing a draft');
+				onDismiss(initialContent);
+			});
 		}
 
 		// bind to editform submit event to track successful edits form draft restore

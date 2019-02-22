@@ -26,7 +26,16 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			jquery('#wpTextbox1').val(draftData.draftText);
 
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
-			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
+			EditDraftSaving.onDraftRestore(
+				EDITOR_TYPE,
+				// selector of an element to append a notification bar to
+				'#EditPageToolbar',
+				// function to be called when the draft is discarded,
+				// callback will get the original editor content
+				function(content) {
+					jquery('#wpTextbox1').val(content);
+				}
+			);
 		}
 
 		// register draft saving function that binds to change event
@@ -36,7 +45,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 		jquery('#wpTextbox1').on('input change', function() {
 			EditDraftSaving.log('Editor content has changed');
 
-			// wait 250 ms after user stops making changes
+			// wait a second after user stops making changes
 			if (draftSavingTimeout) clearTimeout(draftSavingTimeout);
 			draftSavingTimeout = setTimeout(saveDraft, 1000);
 		});
