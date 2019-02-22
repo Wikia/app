@@ -20,6 +20,10 @@ class AdEngine3
 			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
 		}
 
+		if ($wikiaPageType->isArticlePage()) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisArticlePages;
+		}
+
 		return false;
 	}
 

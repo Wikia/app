@@ -9,7 +9,7 @@ WikiaSearchApp = (function() {
 		this.searchField = this.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide TOP_BOXAD when showing search suggestions
-		this.ads = $("[id$='TOP_BOXAD']");
+		this.ads = $("#TOP_BOXAD,#top_boxad");
 
 		if ( !this.searchForm.hasClass('noautocomplete') ) {
 			this.searchField.bind({
