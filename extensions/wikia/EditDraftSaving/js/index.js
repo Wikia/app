@@ -126,7 +126,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 		// CORE-84: in case of a conflict, let's only show the conflict notice
 		if (!inDraftConflict) {
 			jquery(appendTo).append(
-				'<div id="draft-restore-message" style="background: green; color: white; padding: 10px;">' +
+				'<div id="draft-restore-message" style="background: white; color: green; border:solid 2px green; padding: 10px;">' +
 				window.mediaWiki.message('edit-draft-loaded').text() +
 				'<a href="#" class="ok">' + window.mediaWiki.message('ok').text() + '</a>' +
 				'<a href="#" class="cancel">' + window.mediaWiki.message('cancel').text() + '</a>' +
