@@ -47,7 +47,18 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 				// function to be called when the draft is discarded,
 				// callback will get the original editor content
 				function(content) {
-					CKinstance.setData(content);
+					if (CKinstance.mode === 'source') {
+						// we first need to switch back to visual mode
+						CKinstance.setMode(
+							'wysiwyg',
+							function () {
+								CKinstance.setData(content);
+							}
+						);
+					}
+					else {
+						CKinstance.setData(content);
+					}
 				}
 			);
 		}
