@@ -9,6 +9,9 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	// was draft conflict triggered?
 	var inDraftConflict = false;
 
+	// CORE-110 | initial content that will be used when user discards an edit
+	var initialContent;
+
 	/**
 	 * @param msg {string}
 	 */
@@ -52,6 +55,11 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 			console.error(e);
 			return null;
 		}
+	}
+
+	function storeOriginalContent(content) {
+		log('Stored original content: ' + content);
+		initialContent = content;
 	}
 
 	/**
@@ -151,6 +159,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 		// getDraftKey: getDraftKey,
 		storeDraft: storeDraft,
-		readDraft: readDraft
+		readDraft: readDraft,
+
+		storeOriginalContent: storeOriginalContent
 	}
 });

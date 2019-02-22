@@ -4,15 +4,21 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 
+	function getContent() {
+		return jquery('#wpTextbox1').val();
+	}
+
 	function saveDraft() {
 		EditDraftSaving.storeDraft({
 			editor: EDITOR_TYPE,
-			draftText: jquery('#wpTextbox1').val(),
+			draftText: getContent(),
 			startTime: editForm.wpStarttime.value
 		});
 	}
 
 	jquery(function () {
+		EditDraftSaving.storeOriginalContent(getContent());
+
 		var draftData = EditDraftSaving.readDraft();
 
 		// make sure that this draft comes from this editor
