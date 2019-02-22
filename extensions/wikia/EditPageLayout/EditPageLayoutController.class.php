@@ -86,6 +86,8 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
+		global $wgResourceBasePath;
+
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
@@ -99,7 +101,7 @@ class EditPageLayoutController extends WikiaController {
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
 			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
-				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
+				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
 
 				OasisController::addBodyClass( 'codeeditor' );
