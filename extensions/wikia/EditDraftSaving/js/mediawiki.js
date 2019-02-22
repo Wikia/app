@@ -29,7 +29,16 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 
-		// register draft saving function
-		setInterval(saveDraft, EditDraftSaving.SAVES_INTERVAL);
+		// register draft saving function that binds to change event
+		// @see https://developer.mozilla.org/en-US/docs/Web/Events/change
+		var draftSavingTimeout;
+
+		jquery('#wpTextbox1').on('input change', function() {
+			EditDraftSaving.log('Editor content has changed');
+
+			// wait 250 ms after user stops making changes
+			if (draftSavingTimeout) clearTimeout(draftSavingTimeout);
+			draftSavingTimeout = setTimeout(saveDraft, 1000);
+		});
 	});
 });
