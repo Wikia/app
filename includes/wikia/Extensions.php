@@ -1396,6 +1396,16 @@ $wgFileBackends['swift-backend'] = array(
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
 
+$wgFileBackends['gcs-backend'] = [
+	'name' => 'gcs-backend',
+	'class' => 'GcsFileBackend',
+	'lockManager' => 'nullLockManager',
+	'wikiId'	=> '',
+	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
+	'gcsBucket' => $wgGcsConfig['gcsBucket'],
+	'gcsObjectNamePrefix' => 'mediawiki/',
+];
+
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }
