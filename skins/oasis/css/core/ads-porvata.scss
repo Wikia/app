@@ -143,7 +143,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	line-height: 0;
 	text-align: center;
 
-	#INCONTENT_PLAYER {
+	#INCONTENT_PLAYER, #incontent_player {
 		margin: 0 auto -14px auto;
 
 		&.in-rail {
@@ -169,6 +169,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			&.porvata3 {
 				& > div {
 					height: 100%;
+				}
+
+				.volume-button {
+					right: 8px;
 				}
 			}
 

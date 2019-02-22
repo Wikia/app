@@ -34,7 +34,9 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	});
 
 	it('adds test- prefix for test wikis', function () {
-		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		mockContext({
+			'opts.isAdTestWiki': true
+		});
 
 		expect(getModule().get('xyz')).toBe('test-xyz');
 		expect(getModule().get('abc')).toBe('test-abc');
@@ -89,5 +91,14 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		});
 
 		expect(getModule().getRecSrc()).toBe('test-rec');
+	});
+
+	it('returns srcTest from WF config preserving original one', function () {
+		mockContext({
+			'opts.isAdTestWiki': true,
+			'targeting.testSrc': 'externaltest'
+		});
+
+		expect(getModule().get('gpt')).toEqual(['gpt', 'externaltest']);
 	});
 });

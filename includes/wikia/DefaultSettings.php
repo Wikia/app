@@ -980,6 +980,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
+ * Enables AdEngine3 extension on article pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1820,3 +1826,11 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * Google Cloud Storage settings. The default settings are for production.
+ */
+$wgGcsConfig = [
+	'gcsCredentials' => $wgGcsCredentialsProd,
+	'gcsBucket' => 'static-assets-originals-prod'
+];

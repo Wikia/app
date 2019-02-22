@@ -31,3 +31,13 @@
 .gpt-ad.slot-responsive > div.replay-overlay {
   position: absolute !important;
 }
+
+#InvisibleHighImpactWrapper.out-of-page-template-loaded {
+  .top-bar, .background {
+    display: none;
+  }
+
+  .out-of-page-template > .button-close {
+    border-radius: 0;
+  }
+}
