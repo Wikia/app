@@ -23,6 +23,8 @@ class EditDraftSavingHooks {
 				? 'ext.wikia.EditDraftSaving.rte'
 				: 'ext.wikia.EditDraftSaving.mediawiki'
 		);
+
+		$output->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/EditDraftSaving/styles/index.scss' ) );
 	}
 
 	/**

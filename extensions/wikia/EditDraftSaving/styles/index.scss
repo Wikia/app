@@ -1,0 +1,21 @@
+$fandom-draft-color: #008c8f;
+$fandom-draft-buttons-color: #088488;
+
+#draft-restore-message {
+    padding: 10px;
+    width: unset;
+
+    .wds-button {
+        align-self: center;
+        color: $fandom-draft-buttons-color;
+
+        &:hover {
+            background-color: unset;
+            background-image: unset;
+        }
+    }
+
+    .wds-banner-notification__icon {
+        background-color: $fandom-draft-buttons-color;
+    }
+}

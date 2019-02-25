@@ -112,7 +112,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	/**
 	 * Track draft restore and show the modal with a message saying what just happened
 	 */
-	function onDraftRestore(editorType, appendTo, onDismiss) {
+	function onDraftRestore(editorType, prependTo, onDismiss) {
 		log('Restored a draft for ' + editorType);
 
 		// Wikia.Tracker:  trackingevent editor-ck/impression/draft-loaded/ [analytics track]
@@ -125,21 +125,33 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 		// CORE-84: in case of a conflict, let's only show the conflict notice
 		if (!inDraftConflict) {
-			jquery(appendTo).append(
-				'<div id="draft-restore-message" style="background: white; color: green; border:solid 2px green; padding: 10px;">' +
-				window.mediaWiki.message('edit-draft-loaded').text() +
-				'<a href="#" class="ok">' + window.mediaWiki.message('ok').text() + '</a>' +
-				'<a href="#" class="cancel">' + window.mediaWiki.message('cancel').text() + '</a>' +
-				'</div>'
+			jquery(prependTo).prepend(
+			'<div id="draft-restore-message" class="wds-banner-notification__container">' +
+				'<div class="wds-banner-notification wds-message">' +
+					'<div class="wds-banner-notification__icon">' +
+						'<svg class="wds-icon wds-icon-small" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">' +
+							'<path d="M3 11h10.586l-3.293-3.293a.999.999 0 0 1 0-1.414L13.586 3H3v8zm-1 7a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0h13a1.002 1.002 0 0 1 .707 1.707L12.414 7l4.293 4.293A1 1 0 0 1 16 13H3v4a1 1 0 0 1-1 1z" fill-rule="evenodd"/>' +
+						'</svg>' +
+					'</div>' +
+					'<span class="wds-banner-notification__text">You are viewing a previously saved Draft.</span>' +
+					'<button id="discard" class="wds-button wds-is-text primary-only">DISCARD</button>' +
+					'<button id="keep" class="wds-button wds-is-text primary-only">OKAY</button>' +
+				'</div>  '  +
+			'</div>'
+				// '<div id="draft-restore-message" style="background: white; color: green; border:solid 2px green; padding: 10px;">' +
+				// window.mediaWiki.message('edit-draft-loaded').text() +
+				// '<a href="#" class="ok">' + window.mediaWiki.message('ok').text() + '</a>' +
+				// '<a href="#" class="cancel">' + window.mediaWiki.message('cancel').text() + '</a>' +
+				// '</div>'
 			);
 
 			var bar = $('#draft-restore-message');
 
-			bar.find('.ok').on('click', function() {
+			bar.find('.keep').on('click', function() {
 				bar.hide();
 			});
 
-			bar.find('.cancel').on('click', function() {
+			bar.find('.discard').on('click', function() {
 				bar.hide();
 
 				log('Dismissing a draft');

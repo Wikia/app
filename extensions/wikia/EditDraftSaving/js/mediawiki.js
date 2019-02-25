@@ -29,7 +29,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			EditDraftSaving.onDraftRestore(
 				EDITOR_TYPE,
 				// selector of an element to append a notification bar to
-				'#EditPageToolbar',
+				'#EditPageEditorWrapper',
 				// function to be called when the draft is discarded,
 				// callback will get the original editor content
 				function(content) {
