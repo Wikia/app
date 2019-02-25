@@ -59,15 +59,17 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
+	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
+
 	if (!wikiContext.targeting.hasFeaturedVideo && wikiContext.targeting.pageType !== 'search') {
-		slots.addSlotSize('hivi_leaderboard', [3, 3]);
+		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
 	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
-		context.push('slots.hivi_leaderboard.defaultTemplates', 'stickyTLB');
+		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
 	context.set('state.isSteam', false);

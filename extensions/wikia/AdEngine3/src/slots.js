@@ -251,7 +251,7 @@ export default {
 	},
 
 	setupStates() {
-		slotService.setState('hivi_leaderboard', true);
+		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', false);
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
@@ -289,11 +289,19 @@ export default {
 	},
 
 	setupTopLeaderboard() {
-		slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+		if (context.get('custom.hiviLeaderboard')) {
+			slotService.setState('hivi_leaderboard', true);
+			context.push('state.adStack', { id: 'hivi_leaderboard' });
+
+			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+				slotService.setState('top_leaderboard', true);
+				context.set('slots.top_leaderboard.firstCall', false);
+				context.push('state.adStack', { id: 'top_leaderboard' });
+			});
+		} else {
 			slotService.setState('top_leaderboard', true);
-			context.set('slots.top_leaderboard.firstCall', false);
 			context.push('state.adStack', { id: 'top_leaderboard' });
-		});
+		}
 	},
 
 	injectBottomLeaderboard() {

@@ -1306,6 +1306,13 @@ $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
 $wgAdDriverMobileWikiAE3SearchCountries = null;
 
 /**
+ * @name $wgAdDriverOasisHiviLeaderboardCountries
+ * List of countries where hivi_leaderboard slot on Oasis is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOasisHiviLeaderboardCountries = null;
+
+/**
  * @name $wgAdDriverScrollDepthTrackingCountries
  * List of countries where scroll depth tracking is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

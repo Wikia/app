@@ -4,7 +4,8 @@
 
 		<?= $app->renderView('Ad', 'Index', [
 			'slotName' => 'hivi_leaderboard',
-			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'],
+			'addToAdQueue' => false
 		]); ?>
 
 		<?= $app->renderView('Ad', 'Index', [
