@@ -11,6 +11,8 @@
  */
 define( 'MW_FILE_VERSION', 8 );
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class to represent a local file in the wiki's own database
  *
@@ -758,7 +760,7 @@ class LocalFile extends File {
 	 * @param array $options
 	 */
 	function purgeThumbnails( $options = [] ) {
-		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 		] );
 
@@ -794,7 +796,7 @@ class LocalFile extends File {
 	private function publishAsyncPurgeTask( array $urls ) {
 		$relativePath = $this->getHashPath() . rawurlencode( $this->getName() );
 		$revision = $this->isOld() ? $this->getArchiveTimestamp() : 'latest';
-		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 			'thumbnail_urls' => json_encode( $urls ),
 			'bucket' => $this->getBucket(),
@@ -802,7 +804,7 @@ class LocalFile extends File {
 			'revision' => $revision,
 			'path-prefix' => $this->getPathPrefix(),
 		] );
-		$id = new \Wikia\Tasks\Tasks\Image\FileId(
+		$id = new \Wikia\Tasks\Tasks\Image\FileInfo(
 			$this->getBucket(),
 			$relativePath,
 			$revision,
@@ -817,7 +819,7 @@ class LocalFile extends File {
 	 * @param $files array of strings: relative filenames (to $dir)
 	 */
 	protected function purgeThumbList( $dir, $files ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+		WikiaLogger::instance()->info( __METHOD__, [
 			'original_url' => $this->getURL(),
 		] );
 
@@ -1181,7 +1183,7 @@ class LocalFile extends File {
 					[ $wikiPage, $nullRevision, $latest, $user ] );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
 			} else {
-				\Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				WikiaLogger::instance()->warning( 'PLATFORM-1311', [
 					'reason' => 'LocalFile no nullRevision',
 					'page_id' => $descTitle->getArticleId(),
 					'exception' => new Exception(),
@@ -1203,7 +1205,7 @@ class LocalFile extends File {
 			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
 		}
 		catch ( \Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1311', [
+			WikiaLogger::instance()->error( 'PLATFORM-1311', [
 				'reason' => 'LocalFile rollback',
 				'exception' => $e,
 			] );
@@ -1648,7 +1650,7 @@ class LocalFile extends File {
 	 * Roll back the DB transaction and mark the image unlocked
 	 */
 	function unlockAndRollback() {
-		\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1311', [
+		WikiaLogger::instance()->error( 'PLATFORM-1311', [
 			'reason' => 'LocalFile::unlockAndRollback',
 			'exception' => new Exception(),
 			'name' => $this->getName(),
@@ -2515,7 +2517,7 @@ class LocalFileMoveBatch {
 		], __METHOD__ );
 
 		if ( $rowsWithEmptyArchiveName > 0 ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name', [
+			WikiaLogger::instance()->debug( 'Empty oi_archive_name', [
 				'oi_name' => $this->oldName,
 				'new_name' => $this->newName,
 				'count' => $rowsWithEmptyArchiveName,

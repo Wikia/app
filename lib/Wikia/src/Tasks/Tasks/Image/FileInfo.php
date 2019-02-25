@@ -2,7 +2,7 @@
 
 namespace Wikia\Tasks\Tasks\Image;
 
-class FileId {
+class FileInfo {
 
 	private $bucket;
 	private $relativePath;
@@ -16,8 +16,8 @@ class FileId {
 		$this->pathPrefix = $pathPrefix;
 	}
 
-	public static function deserializeFromTask( array $data ): FileId {
-		return new FileId( $data['bucket'], $data['relative-path'], $data['revision'], $data['path-prefix'] );
+	public static function deserializeFromTask( array $data ): FileInfo {
+		return new FileInfo( $data['bucket'], $data['relative-path'], $data['revision'], $data['path-prefix'] );
 	}
 
 	public function serializeForTask(): array {

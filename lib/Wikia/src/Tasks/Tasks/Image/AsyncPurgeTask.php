@@ -10,7 +10,7 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncPurgeTask extends BaseTask {
 
-	public function publish( FileId $fileId, array $thumbnailUrls ) {
+	public function publish( FileInfo $fileId, array $thumbnailUrls ) {
 		global $wgCityId;
 
 		WikiaLogger::instance()->info( __METHOD__, [
@@ -42,11 +42,11 @@ class AsyncPurgeTask extends BaseTask {
 		] );
 
 		try {
-			$this->removeThumbnailsInThumblr( FileId::deserializeFromTask( $fileId ) );
+			$this->removeThumbnailsInThumblr( FileInfo::deserializeFromTask( $fileId ) );
 			$this->purgerUrls( $thumbnailUrls );
 		}
 		catch ( \Exception $exception ) {
-			WikiaLogger::instance()->info( __METHOD__, [
+			WikiaLogger::instance()->error( __METHOD__, [
 				'file' => json_encode( $fileId ),
 				'thumbnail_urls' => $thumbnailUrls,
 			] );
@@ -61,7 +61,7 @@ class AsyncPurgeTask extends BaseTask {
 		SquidUpdate::purge( $thumbnailUrls );
 	}
 
-	private function removeThumbnailsInThumblr( FileId $fileId ) {
+	private function removeThumbnailsInThumblr( FileInfo $fileId ) {
 		$url = $this->getRemoveThumbnailsUrl( $fileId );
 		WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
@@ -74,7 +74,7 @@ class AsyncPurgeTask extends BaseTask {
 		] );
 	}
 
-	private function getRemoveThumbnailsUrl( FileId $fileId ) {
+	private function getRemoveThumbnailsUrl( FileInfo $fileId ) {
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
 		$thumblrUrl = $this->removeTrailingSlash( "http://{$urlProvider->getUrl( 'thumblr' )}" );
 		$url =
