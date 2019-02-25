@@ -133,7 +133,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 							'<path d="M3 11h10.586l-3.293-3.293a.999.999 0 0 1 0-1.414L13.586 3H3v8zm-1 7a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0h13a1.002 1.002 0 0 1 .707 1.707L12.414 7l4.293 4.293A1 1 0 0 1 16 13H3v4a1 1 0 0 1-1 1z" fill-rule="evenodd"/>' +
 						'</svg>' +
 					'</div>' +
-					'<span class="wds-banner-notification__text">You are viewing a previously saved Draft.</span>' +
+					'<span class="wds-banner-notification__text">' + window.mediaWiki.message('edit-draft-loaded').text() + '</span>' +
 					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">DISCARD</button>' +
 					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">OKAY</button>' +
 				'</div>  '  +
