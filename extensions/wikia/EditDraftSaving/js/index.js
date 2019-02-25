@@ -134,8 +134,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 						'</svg>' +
 					'</div>' +
 					'<span class="wds-banner-notification__text">You are viewing a previously saved Draft.</span>' +
-					'<button id="discard" class="wds-button wds-is-text primary-only">DISCARD</button>' +
-					'<button id="keep" class="wds-button wds-is-text primary-only">OKAY</button>' +
+					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">DISCARD</button>' +
+					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">OKAY</button>' +
 				'</div>  '  +
 			'</div>'
 				// '<div id="draft-restore-message" style="background: white; color: green; border:solid 2px green; padding: 10px;">' +
@@ -147,11 +147,11 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 			var bar = $('#draft-restore-message');
 
-			bar.find('.keep').on('click', function() {
+			bar.find('#keep').on('click', function() {
 				bar.hide();
 			});
 
-			bar.find('.discard').on('click', function() {
+			bar.find('#discard').on('click', function() {
 				bar.hide();
 
 				log('Dismissing a draft');
