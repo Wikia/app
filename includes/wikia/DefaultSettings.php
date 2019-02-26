@@ -1832,5 +1832,6 @@ $wgUseGoogleCloudStorage = false;
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
