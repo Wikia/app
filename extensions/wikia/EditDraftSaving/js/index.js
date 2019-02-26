@@ -112,7 +112,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 	/**
 	 * Track draft restore and show the modal with a message saying what just happened
 	 */
-	function onDraftRestore(editorType, prependTo, onDismiss) {
+	function onDraftRestore(editorType, prependTo, onDismiss, mode) {
 		log('Restored a draft for ' + editorType);
 
 		// Wikia.Tracker:  trackingevent editor-ck/impression/draft-loaded/ [analytics track]
@@ -141,6 +141,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 			);
 
 			var bar = $('#draft-restore-message');
+
+			if (editorType === 'editor-ck' && mode === 'source') {
+				bar.addClass('ck-source-mode')
+			}
 
 			bar.find('#keep').on('click', function() {
 				bar.hide();

@@ -52,7 +52,8 @@ require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 				// callback will get the original editor content
 				function(content) {
 					setContent(initialMode, content);
-				}
+				},
+				draftData.mode
 			);
 		}
 
