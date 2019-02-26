@@ -23,25 +23,32 @@ class GcsFileBackend extends FileBackendStore {
 	}
 
 	/**
-	 * Copied from SwiftFileBackend for compatibility. Might have no sense.
+	 * Container name is always valid if it is a UTF-8.
 	 * @see FileBackendStore::isValidContainerName()
+	 * @param $container
+	 * @return bool
 	 */
 	protected static function isValidContainerName( $container ) {
-		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
+		return mb_check_encoding( $container, 'UTF-8' );
 	}
 
 	/**
-	 * Copied from SwiftFileBackend for compatibility. Might have no sense.
+	 * https://cloud.google.com/storage/docs/naming
 	 * @see FileBackendStore::resolveContainerPath()
 	 * @param $container
 	 * @param $relStoragePath
 	 * @return string|null
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
-		if ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) { // mb_string required by CF
-			return null; // not UTF-8, makes it hard to use CF and the swift HTTP API
-		} elseif ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
-			return null; // too long for Swift
+		if ( strlen( $relStoragePath ) == 0 && strlen( $container ) == 0 ) {
+			return null; // path and container cannot be empty
+		} elseif ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) {
+			return null; // not UTF-8, not supported by GCS
+		} elseif ( strlen( urlencode( $container ) ) + strlen( urlencode( $relStoragePath ) ) >
+				   1024 ) {
+			// container name is now part of the path so, container name PLUS storage path cannot be longer than
+			// 1024 bytes when UTF-8 encoded
+			return null;
 		}
 
 		return $relStoragePath;
@@ -150,7 +157,6 @@ class GcsFileBackend extends FileBackendStore {
 			$this->bucket()->upload( fopen( $params['src'], 'r' ), [
 				'name' => $this->objectName( $params['dst'] ),
 				'metadata' => $this->getMetadata( $sha1 ),
-				'metadata.zorf' => 'morf',
 			] );
 		}
 		catch ( Exception $e ) {
@@ -231,8 +237,8 @@ class GcsFileBackend extends FileBackendStore {
 			}
 		}
 		catch ( NotFoundException $e ) {
-			WikiaLogger::instance()->debug(
-				__METHOD__ . " - at least one file has already been deleted",
+			WikiaLogger::instance()->debug( __METHOD__ .
+											" - at least one file has already been deleted",
 				[ 'exception' => $e ] );
 		}
 	}
@@ -321,7 +327,7 @@ class GcsFileBackend extends FileBackendStore {
 			// user metadata are nested like so: metadata.metadata
 			'metadata' => [
 				'sha1' => $sha1,
-			]
+			],
 		];
 	}
 
