@@ -134,8 +134,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 						'</svg>' +
 					'</div>' +
 					'<span class="wds-banner-notification__text">' + window.mediaWiki.message('edit-draft-loaded').text() + '</span>' +
-					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-discard').text() + '</button>' +
-					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-keep').text() + '</button>' +
+					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-discard').text().toUpperCase() + '</button>' +
+					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-keep').text().toUpperCase() + '</button>' +
 				'</div>'  +
 			'</div>'
 			);
