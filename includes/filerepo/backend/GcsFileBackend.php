@@ -1,5 +1,6 @@
 <?php
 
+use Google\Cloud\Core\Exception\NotFoundException;
 use Google\Cloud\Storage\Bucket;
 use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
@@ -138,10 +139,18 @@ class GcsFileBackend extends FileBackendStore {
 
 			return $status;
 		}
+
+		WikiaLogger::instance()->info( __METHOD__ . " - generating sha1", [
+			'call_stack' => ( new Exception() )->getTraceAsString(),
+			'params' => json_encode( $params ),
+			'sha1' => $sha1,
+		] );
+
 		try {
 			$this->bucket()->upload( fopen( $params['src'], 'r' ), [
 				'name' => $this->objectName( $params['dst'] ),
 				'metadata' => $this->getMetadata( $sha1 ),
+				'metadata.zorf' => 'morf',
 			] );
 		}
 		catch ( Exception $e ) {
@@ -197,19 +206,34 @@ class GcsFileBackend extends FileBackendStore {
 				'call_stack' => ( new Exception() )->getTraceAsString(),
 				'gcs_directory' => $directory,
 			] );
-			foreach ( $this->temporaryBucket()->objects( [ 'prefix' => $directory ] ) as $file ) {
-				$file->delete();
-			}
+
+			$objects = $this->temporaryBucket()->objects( [ 'prefix' => $directory ] );
+			$this->deleteFiles( $objects );
 		} else {
+			$path = $this->objectPath( $container, $dir );
 			WikiaLogger::instance()->warning( __METHOD__ . " - cleaning other than thumbnails", [
 				'call_stack' => ( new Exception() )->getTraceAsString(),
+				'path' => $path,
 			] );
 
-			$objects =
-				$this->bucket()->objects( [ 'prefix' => $this->objectPath( $container, $dir ), ] );
+			$objects = $this->bucket()->objects( [ 'prefix' => $path ] );
+			$this->deleteFiles( $objects );
+		}
+	}
+
+	/**
+	 * @param ObjectIterator $objects
+	 */
+	protected function deleteFiles( ObjectIterator $objects ) {
+		try {
 			foreach ( $objects as $file ) {
 				$file->delete();
 			}
+		}
+		catch ( NotFoundException $e ) {
+			WikiaLogger::instance()->debug(
+				__METHOD__ . " - at least one file has already been deleted",
+				[ 'exception' => $e ] );
 		}
 	}
 
@@ -294,7 +318,10 @@ class GcsFileBackend extends FileBackendStore {
 
 	private function getMetadata( $sha1 ) {
 		return [
-			'sha1' => $sha1,
+			// user metadata are nested like so: metadata.metadata
+			'metadata' => [
+				'sha1' => $sha1,
+			]
 		];
 	}
 
