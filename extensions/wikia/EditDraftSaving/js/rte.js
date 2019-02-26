@@ -1,4 +1,4 @@
-require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
+require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ck',
 		editForm = document.forms["editform"],
 		RTE = window.RTE;
@@ -46,8 +46,8 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(
 				EDITOR_TYPE,
-				// selector of an element to append a notification bar to
-				'#EditPageToolbar',
+				// selector of an element to prepend a notification bar to
+				'#cke_1_contents',
 				// function to be called when the draft is discarded,
 				// callback will get the original editor content
 				function(content) {

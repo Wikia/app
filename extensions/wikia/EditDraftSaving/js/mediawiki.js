@@ -1,11 +1,11 @@
-require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
+require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-mw',
 		editForm = document.forms["editform"];
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 
 	function getContent() {
-		return jquery('#wpTextbox1').val();
+		return $('#wpTextbox1').val();
 	}
 
 	function saveDraft() {
@@ -16,14 +16,14 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 		});
 	}
 
-	jquery(function () {
+	$(function () {
 		EditDraftSaving.storeOriginalContent(getContent());
 
 		var draftData = EditDraftSaving.readDraft();
 
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
-			jquery('#wpTextbox1').val(draftData.draftText);
+			$('#wpTextbox1').val(draftData.draftText);
 
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
 			EditDraftSaving.onDraftRestore(
@@ -33,7 +33,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 				// function to be called when the draft is discarded,
 				// callback will get the original editor content
 				function(content) {
-					jquery('#wpTextbox1').val(content);
+					$('#wpTextbox1').val(content);
 				}
 			);
 		}
@@ -42,7 +42,7 @@ require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 		// @see https://developer.mozilla.org/en-US/docs/Web/Events/change
 		var draftSavingTimeout;
 
-		jquery('#wpTextbox1').on('input change', function() {
+		$('#wpTextbox1').on('input change', function() {
 			EditDraftSaving.log('Editor content has changed');
 
 			// wait a second after user stops making changes

@@ -2,7 +2,8 @@ $fandom-draft-color: #008c8f;
 $fandom-draft-buttons-color: #088488;
 
 #draft-restore-message {
-    padding: 10px;
+	box-shadow: unset;
+	padding: 10px;
     width: unset;
 
     .wds-button {
@@ -18,4 +19,20 @@ $fandom-draft-buttons-color: #088488;
     .wds-banner-notification__icon {
         background-color: $fandom-draft-buttons-color;
     }
+
+	.wds-banner-notification {
+		box-shadow: 0 2px 6px 0 rgba(0,0,0,.2);
+	}
+}
+
+#cke_1_contents {
+	#draft-restore-message {
+		background-color: #fff;
+	}
+}
+
+#EditPage {
+	.editpage-widemode-trigger {
+		border-left: unset;
+	}
 }

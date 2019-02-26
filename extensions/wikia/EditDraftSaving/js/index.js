@@ -1,10 +1,10 @@
-define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jquery, logger, tracker) {
+define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, logger, tracker) {
 
 	// keep in sync with PHP code in EditDraftSavingHooks.class.php file
 	var EDIT_DRAFT_KEY_HIDDEN_FIELD = 'wpEditDraftKey';
 
 	// get MediaWiki edit form
-	var editForm = jquery('#editform');
+	var editForm = $('#editform');
 
 	// was draft conflict triggered?
 	var inDraftConflict = false;
@@ -104,7 +104,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 			label: 'draft-conflict'
 		});
 
-		jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
+		$.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
 
 		inDraftConflict = true;
 	}
@@ -125,7 +125,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 
 		// CORE-84: in case of a conflict, let's only show the conflict notice
 		if (!inDraftConflict) {
-			jquery(prependTo).prepend(
+			$(prependTo).prepend(
 			'<div id="draft-restore-message" class="wds-banner-notification__container">' +
 				'<div class="wds-banner-notification wds-message">' +
 					'<div class="wds-banner-notification__icon">' +
@@ -134,15 +134,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 						'</svg>' +
 					'</div>' +
 					'<span class="wds-banner-notification__text">' + window.mediaWiki.message('edit-draft-loaded').text() + '</span>' +
-					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">DISCARD</button>' +
-					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">OKAY</button>' +
-				'</div>  '  +
+					'<button type="button" id="discard" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-discard').text() + '</button>' +
+					'<button type="button" id="keep" class="wds-button wds-is-text primary-only">' + window.mediaWiki.message('edit-draft-keep').text() + '</button>' +
+				'</div>'  +
 			'</div>'
-				// '<div id="draft-restore-message" style="background: white; color: green; border:solid 2px green; padding: 10px;">' +
-				// window.mediaWiki.message('edit-draft-loaded').text() +
-				// '<a href="#" class="ok">' + window.mediaWiki.message('ok').text() + '</a>' +
-				// '<a href="#" class="cancel">' + window.mediaWiki.message('cancel').text() + '</a>' +
-				// '</div>'
 			);
 
 			var bar = $('#draft-restore-message');
@@ -178,9 +173,9 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	}
 
 	// store the draft key in the form as a hidden field
-	jquery(function () {
+	$(function () {
 		editForm.append(
-			jquery('<input>').
+			$('<input>').
 				attr('type', 'hidden').
 				attr('name', EDIT_DRAFT_KEY_HIDDEN_FIELD).
 				attr('value', getDraftKey())
