@@ -17,6 +17,8 @@ $wgResourceModules['ext.wikia.EditDraftSaving.base'] = [
 	'messages' => [
 		'edit-draft-loaded',
 		'edit-draft-edit-conflict',
+		'edit-draft-discard',
+		'edit-draft-keep',
 		'ok',
 		'cancel',
 	],
