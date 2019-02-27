@@ -58,7 +58,7 @@ class VideoHandlerHooks {
 			'directory' => $wgUploadDirectory,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
-			'thumbScriptUrl' => $wgThumbnailScriptPath,
+			'thumbScriptUrl' => $wgThumbnailScriptPath, // TODO: not used?
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,

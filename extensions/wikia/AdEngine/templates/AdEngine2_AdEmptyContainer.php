@@ -1,11 +1,15 @@
+<?php
+    $slotId = AdEngine3::isEnabled() ? strtolower( $slotName ) : $slotName;
+?>
+
 <?php if ($showAd): ?>
-	<!-- BEGIN CONTAINER: <?= htmlspecialchars( $slotName ) ?> -->
-	<div id="<?= htmlspecialchars( $slotName ) ?>">
+	<!-- BEGIN CONTAINER: <?= htmlspecialchars( $slotId ) ?> -->
+	<div id="<?= htmlspecialchars( $slotId ) ?>">
 		<script>
-			window.adslots2.push(<?= json_encode([$slotName]) ?>);
+			window.adslots2.push(<?= json_encode([$slotId]) ?>);
 		</script>
 	</div>
-	<!-- END CONTAINER: <?= htmlspecialchars($slotName) ?> -->
+	<!-- END CONTAINER: <?= htmlspecialchars($slotId) ?> -->
 <?php else: ?>
-	<!-- NO CONTAINER <?= htmlspecialchars($slotName) ?> (levels: <?= htmlspecialchars(json_encode($pageTypes)) ?>) -->
+	<!-- NO CONTAINER <?= htmlspecialchars($slotId) ?> (levels: <?= htmlspecialchars(json_encode($pageTypes)) ?>) -->
 <?php endif; ?>

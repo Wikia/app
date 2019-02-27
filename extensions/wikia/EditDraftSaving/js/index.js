@@ -6,6 +6,9 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	// get MediaWiki edit form
 	var editForm = jquery('#editform');
 
+	// was draft conflict triggered?
+	var inDraftConflict = false;
+
 	/**
 	 * @param msg {string}
 	 */
@@ -18,7 +21,19 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 * @returns {string}
 	 */
 	function getDraftKey() {
-		return window.wgPageName + '-draft';
+		var key = window.wgPageName + '-draft',
+			oldId = jquery('*[name="oldid"]').val(),
+			undoId = window.mw.config.get('EditDraftUndoId');
+
+		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
+		if (oldId > 0) {
+			key += '-oldid-' + oldId;
+		}
+		if (undoId) {
+			key += '-undo-' + undoId;
+		}
+
+		return key;
 	}
 
 	/**
@@ -43,12 +58,60 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 */
 	function readDraft() {
 		try {
-			log('Reading a draft...');
-			return JSON.parse(localStorage.getItem(getDraftKey()));
+			var key = getDraftKey();
+			log('Reading a draft from ' + key + ' ...');
+			return JSON.parse(localStorage.getItem(key));
 		} catch (e) {
 			console.error(e);
 			return null;
 		}
+	}
+
+	/**
+	 * Take edit draft timestamp and check if we're in edit conflict. Handle it accordingly.
+	 *
+	 * @see CORE-84
+	 */
+	function checkDraftConflict(draftStartTime, editorType) {
+		if (draftStartTime) {
+			var wpEdittime = editForm.find('[name="wpEdittime"]').val();
+
+			// restore "wpStarttime" field value in edit form to allow MediaWiki
+			// to handle edit conflicts when edit page is submitted
+			editForm.find('[name="wpStarttime"]').val(draftStartTime);
+
+			log('Checking conflict - our edit started at "' + draftStartTime + '", ' +
+				'the most recent article edit was at "' + wpEdittime + '"');
+
+			// and compare it with the wpEdittime value
+			if (draftStartTime < wpEdittime) {
+				// Set wpEdittime to a timestamp that is before the current article revision timestamp.
+				// This will trigger a condition in EditPage line 1320
+				// "# Article exists. Check for edit conflict."
+				editForm.find('[name="wpEdittime"]').val(draftStartTime);
+
+				onDraftConflict(editorType);
+			}
+		}
+	}
+
+	/**
+	 * Track draft conflict and show the modal with a message saying what just happened
+	 */
+	function onDraftConflict(editorType) {
+		log('Draft conflict for ' + editorType);
+
+		// Wikia.Tracker:  trackingevent editor-ck/impression/draft-conflict/ [analytics track]
+		tracker.track({
+			trackingMethod: 'analytics',
+			action: tracker.ACTIONS.IMPRESSION,
+			category: editorType,
+			label: 'draft-conflict'
+		});
+
+		jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-edit-conflict').text());
+
+		inDraftConflict = true;
 	}
 
 	/**
@@ -65,7 +128,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 			label: 'draft-loaded'
 		});
 
-		jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-loaded').text());
+		// CORE-84: in case of a conflict, let's only show the conflict notice
+		if (!inDraftConflict) {
+			jquery.showModal(window.wgPageName, window.mediaWiki.message('edit-draft-loaded').text());
+		}
 
 		// bind to editform submit event to track successful edits form draft restore
 		editForm.on('submit', function() {
@@ -92,6 +158,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 		SAVES_INTERVAL: 5000, // in [ms]
 
 		log: log,
+
+		checkDraftConflict: checkDraftConflict,
 		onDraftRestore: onDraftRestore,
 
 		// getDraftKey: getDraftKey,

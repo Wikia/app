@@ -10,9 +10,18 @@ class AdEngine3
 
 		$articleId = $wg->Title->getArticleID();
 		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
-
 		if ($hasFeaturedVideo) {
 			return $wg->AdDriverAdEngine3EnabledOnFeaturedVideoPages;
+		}
+
+		$wikiaPageType = new WikiaPageType();
+		$isSearch = $wikiaPageType->isSearch();
+		if ($isSearch) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
+		}
+
+		if ($wikiaPageType->isArticlePage()) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisArticlePages;
 		}
 
 		return false;
@@ -112,7 +121,8 @@ class AdEngine3
 				'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
 				'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
 				'hasFeaturedVideo' => $hasFeaturedVideo,
-				'featuredVideo' => $featuredVideoDetails
+				'featuredVideo' => $featuredVideoDetails,
+				'testSrc' => $wg->AdDriverAdTestWikiSrc
 			])
 		];
 	}

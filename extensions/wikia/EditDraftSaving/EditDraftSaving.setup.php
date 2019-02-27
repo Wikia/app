@@ -16,6 +16,7 @@ $wgResourceModules['ext.wikia.EditDraftSaving.base'] = [
 	],
 	'messages' => [
 		'edit-draft-loaded',
+		'edit-draft-edit-conflict',
 	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/EditDraftSaving',

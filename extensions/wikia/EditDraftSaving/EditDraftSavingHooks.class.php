@@ -17,6 +17,13 @@ class EditDraftSavingHooks {
 	static public function onEditPage_showEditForm_initial(EditPage $editPage, OutputPage $output) {
 		$isRTEenabled = class_exists('RTE') && RTE::isEnabled();
 
+		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
+		// e.g https://kirkburn.wikia.com/wiki/Garfield?action=edit&undoafter=4039&undo=9513
+		$request = $output->getContext()->getRequest();
+		if ( $request->getInt( 'undo' ) ) {
+			$output->addJsConfigVars( 'EditDraftUndoId', $request->getInt( 'undo' ) );
+		}
+
 		// load a different set of JS files when RTE is used on this edit page
 		$output->addModules(
 			$isRTEenabled

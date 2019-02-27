@@ -9,15 +9,18 @@
 		<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
-
-			<h1>
+	<h1>
 		<?php $title = $result->getTitle(); ?>
 
 		<?php
-			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link"'
+				. 'data-pos="'.$pos.'"'
+				. 'data-page-id="' . $result->pageid . '"'
+				. ' data-thumbnail="' . !empty($thumbnailHtml) . '"'
+				. ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
 		?>
 
-		<a href="<?= $result->getEscapedUrl() ?>" <?=$trackingData;?> ><?= $title ?></a>
+		<a href="<?= $result->getEscapedUrl() ?>" <?=$trackingData;?>><?= $title ?></a>
 	</h1>
 	<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
 		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>

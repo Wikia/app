@@ -971,7 +971,19 @@ $wgAdDriverIsAdTestWiki = false;
  * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
  * Enables AdEngine3 extension on articles with Featured Video
  */
-$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = false;
+$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
+
+/**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
+
+/**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
+ * Enables AdEngine3 extension on article pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
@@ -1134,6 +1146,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBeachfrontDfpCountries
+ * Enables Beachfront via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontDfpCountries = null;
+
+/**
  * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
  * List of countries where BOTTOM_LEADERBOARD lazy Prebid.js loading is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1273,7 +1292,14 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
- * @name wgAdDriverMobileWikiAE3SearchCountries
+ * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
+ * List of countries where incontent native is displayed on mobile wiki search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverMobileWikiAE3SearchCountries
  * List of countries where sections TLB is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
@@ -1790,14 +1816,21 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
 /**
- * @name $wgProcessTasksOnKubernetes
- * When enabled, tasks will be processed on kubernetes.
- * This will only work on production.
+ * https://wikia-inc.atlassian.net/browse/SER-3006
+ * If enabled, file storage operations will be logged.
  */
-$wgProcessTasksOnKubernetes = false;
+$wgLogFileStorageOperations = false;
 
 /**
- * @name $wgPercentOfTasksOnKubernetes
- * Determines the percentage of wikis that send tasks to k8s.
+ * https://wikia-inc.atlassian.net/browse/SER-3008
+ * If enabled, Google Cloud Storage will be used for storing files.
  */
-$wgPercentOfTasksOnKubernetes = 0;
+$wgUseGoogleCloudStorage = false;
+
+/**
+ * Google Cloud Storage settings. The default settings are for production.
+ */
+$wgGcsConfig = [
+	'gcsCredentials' => $wgGcsCredentialsProd,
+	'gcsBucket' => 'static-assets-originals-prod'
+];

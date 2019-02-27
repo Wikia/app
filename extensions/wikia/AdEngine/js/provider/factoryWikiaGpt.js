@@ -90,8 +90,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				Object.keys(targeting).forEach(function (key) {
 					slotTargeting[key] = targeting[key];
 				});
-
-				slotRegistry.storeScrollY(slot.name);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, rewriteExtras(slot.name, extra));
