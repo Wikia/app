@@ -48,8 +48,8 @@ class GcsFileBackend extends FileBackendStore {
 			return null; // not UTF-8, not supported by GCS
 		} elseif ( strlen( urlencode( $container ) ) + strlen( urlencode( $relStoragePath ) ) >
 				   1024 ) {
-			// container name is now part of the path so, container name PLUS storage path cannot be longer than
-			// 1024 bytes when UTF-8 encoded
+			// container name is now part of the path so, container name PLUS storage path
+			// cannot be longer than 1024 bytes when UTF-8 encoded
 			return null;
 		}
 
@@ -75,7 +75,6 @@ class GcsFileBackend extends FileBackendStore {
 		try {
 			$tmpFile = TempFSFile::factory( wfBaseName( $path ) . '_', $ext );
 			$name = $this->gcsPaths->objectName( [ $container, $path ] );
-
 			$this->getOriginal( $name )->downloadToFile( $tmpFile->getPath() );
 
 			return $tmpFile;
@@ -196,7 +195,6 @@ class GcsFileBackend extends FileBackendStore {
 	protected function doCleanInternal( $container, $dir, array $params ) {
 		$status = Status::newGood();
 		try {
-
 			// This is likely unnecessary as we call Thumblr explicitly to clean up thumbs, but just to be sure.
 			// We will use call_stack to see if there are any places we've missed and if not we can remove this
 			// condition and calls to clean thumbnails
@@ -257,7 +255,6 @@ class GcsFileBackend extends FileBackendStore {
 		try {
 			$src = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
 			$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
-
 			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst ] );
 		}
 		catch ( Exception $e ) {
