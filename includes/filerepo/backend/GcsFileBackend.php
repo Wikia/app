@@ -46,9 +46,11 @@ class GcsFileBackend extends FileBackendStore {
 			return null; // path and container cannot be empty
 		} elseif ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) {
 			return null; // not UTF-8, not supported by GCS
-		} elseif ( strlen( urlencode( $container ) ) + strlen( urlencode( $relStoragePath ) ) >
-				   1024 ) {
-			// container name is now part of the path so, container name PLUS storage path
+		} elseif ( strlen( urlencode( $this->gcsPaths->objectName( [
+				$container,
+				$relStoragePath,
+			] ) ) ) > 1024 ) {
+			// container name is now part of the path so, container name + storage path + prefix
 			// cannot be longer than 1024 bytes when UTF-8 encoded
 			return null;
 		}
