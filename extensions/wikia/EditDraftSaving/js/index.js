@@ -12,6 +12,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 	// CORE-110 | initial content that will be used when user discards an edit
 	var initialContent;
 
+	var editFormCurrentTime = document.forms["editform"].wpStarttime.value;
+
 	/**
 	 * @param msg {string}
 	 */
@@ -32,6 +34,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 	 * @param draftData {object}
 	 */
 	function storeDraft(draftData) {
+		draftData.startTime = editFormCurrentTime;
+
 		try {
 			localStorage.setItem(
 				getDraftKey(),
@@ -80,12 +84,14 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 
 			// and compare it with the wpEdittime value
 			if (draftStartTime < wpEdittime) {
+				// console.log(draftStartTime, wpEdittime);
 				// Set wpEdittime to a timestamp that is before the current article revision timestamp.
 				// This will trigger a condition in EditPage line 1320
 				// "# Article exists. Check for edit conflict."
 				editForm.find('[name="wpEdittime"]').val(draftStartTime);
 
 				onDraftConflict(editorType);
+				editFormCurrentTime = wpEdittime;
 			}
 		}
 	}
@@ -188,16 +194,12 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 
 	return {
 		SAVES_INTERVAL: 5000, // in [ms]
-
 		log: log,
-
 		checkDraftConflict: checkDraftConflict,
 		onDraftRestore: onDraftRestore,
-
 		// getDraftKey: getDraftKey,
 		storeDraft: storeDraft,
 		readDraft: readDraft,
-
-		storeOriginalContent: storeOriginalContent
+		storeOriginalContent: storeOriginalContent,
 	}
 });

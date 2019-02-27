@@ -1,6 +1,5 @@
 require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
-	var EDITOR_TYPE = 'editor-mw',
-		editForm = document.forms["editform"];
+	var EDITOR_TYPE = 'editor-mw';
 
 	EditDraftSaving.log('Initializing EditDraftSaving for ' + EDITOR_TYPE);
 
@@ -12,7 +11,6 @@ require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 		EditDraftSaving.storeDraft({
 			editor: EDITOR_TYPE,
 			draftText: getContent(),
-			startTime: editForm.wpStarttime.value
 		});
 	}
 

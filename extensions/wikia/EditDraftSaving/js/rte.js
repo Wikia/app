@@ -10,7 +10,6 @@ require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 			editor: EDITOR_TYPE,
 			mode: RTE.getInstance().mode,
 			draftText: RTE.getInstance().getData(),
-			startTime: editForm.wpStarttime.value
 		});
 	}
 
