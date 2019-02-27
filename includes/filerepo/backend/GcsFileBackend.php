@@ -191,28 +191,40 @@ class GcsFileBackend extends FileBackendStore {
 	 * @param $container
 	 * @param $dir
 	 * @param array $params
+	 * @return Status
 	 */
 	protected function doCleanInternal( $container, $dir, array $params ) {
-		// This is likely unnecessary as we call Thumblr explicitly to clean up thumbs, but just to be sure.
-		// We will use call_stack to see if there are any places we've missed and if not we can remove this
-		// condition and calls to clean thumbnails
-		if ( $this->gcsPaths->isDirAThumbnailPath( $dir ) ) {
-			$pathPrefix = $this->gcsPaths->thumbnailsPrefix( $container, $dir );
-			WikiaLogger::instance()->info( __METHOD__ . " - cleaning thumbnails", [
-				'call_stack' => ( new Exception() )->getTraceAsString(),
-				'gcs_directory' => $pathPrefix,
-			] );
-			$objects = $this->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
-			$this->deleteObjects( $objects );
-		} else {
-			$pathPrefix = $this->gcsPaths->objectsPrefix( $container, $dir );
-			WikiaLogger::instance()->warning( __METHOD__ . " - cleaning other than thumbnails", [
-				'call_stack' => ( new Exception() )->getTraceAsString(),
-				'gcs_directory' => $pathPrefix,
-			] );
-			$objects = $this->bucket()->objects( [ 'prefix' => $pathPrefix ] );
-			$this->deleteObjects( $objects );
+		$status = Status::newGood();
+		try {
+
+			// This is likely unnecessary as we call Thumblr explicitly to clean up thumbs, but just to be sure.
+			// We will use call_stack to see if there are any places we've missed and if not we can remove this
+			// condition and calls to clean thumbnails
+			if ( $this->gcsPaths->isDirAThumbnailPath( $dir ) ) {
+				$pathPrefix = $this->gcsPaths->thumbnailsPrefix( $container, $dir );
+				WikiaLogger::instance()->info( __METHOD__ . " - cleaning thumbnails", [
+					'call_stack' => ( new Exception() )->getTraceAsString(),
+					'gcs_directory' => $pathPrefix,
+				] );
+				$objects = $this->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
+				$this->deleteObjects( $objects );
+			} else {
+				$pathPrefix = $this->gcsPaths->objectsPrefix( $container, $dir );
+				WikiaLogger::instance()->warning( __METHOD__ . " - cleaning other than thumbnails",
+					[
+						'call_stack' => ( new Exception() )->getTraceAsString(),
+						'gcs_directory' => $pathPrefix,
+					] );
+				$objects = $this->bucket()->objects( [ 'prefix' => $pathPrefix ] );
+				$this->deleteObjects( $objects );
+			}
 		}
+		catch ( Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
+			$status->fatal( 'backend-fail-internal' );
+		}
+
+		return $status;
 	}
 
 	/**
@@ -331,7 +343,7 @@ class GcsFileBackend extends FileBackendStore {
 		return [
 			'mtime' => wfTimestamp( TS_MW, $obj->info()['updated'] ),
 			'size' => $obj->info()['size'],
-			'sha1' => $this->sha1ToHash( $obj->info()['sha1'] ),
+			'sha1' => $this->sha1ToHash( $obj->info()['metadata']['sha1'] ),
 		];
 	}
 
