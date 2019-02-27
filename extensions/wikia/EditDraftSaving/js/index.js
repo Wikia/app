@@ -34,7 +34,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 			key += '-undo-' + undoId;
 		}
 		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
-		if (blogPageId) {
+		if (blogPageId && window.wgCanonicalSpecialPageName === 'CreateBlogPage') {
 			key += '-blog-' + blogPageId;
 		}
 
