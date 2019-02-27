@@ -1,23 +1,17 @@
 <?php
-
-use Google\Cloud\Storage\StorageClient;
-use PHPUnit\Framework\MockObject\MockObject;
-
-require_once( "../GoogleCloudStorage.php" );
-require_once( "../ObjectName.php" );
-require_once( "../GoogleCloudFileList.php" );
+//
 
 class GoogleCloudStorageTest extends WikiaBaseTest {
 
 
-	/** @var MockObject */
+	/** @var PHPUnit\Framework\MockObject\MockObject */
 	private $client;
 	/** @var GoogleCloudStorage */
 	private $sut;
 
 	protected function setUp() {
 		parent::setUp();
-		$this->client = $this->createMock( StorageClient::class );
+		$this->client = $this->createMock( Google\Cloud\Storage\StorageClient::class );
 		$this->sut =
 			new GoogleCloudStorage( $this->client, "originals", "temporary", "mediawiki/" );
 	}
