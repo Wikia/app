@@ -2451,10 +2451,3 @@ $config['search_tracking_js'] = [
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
 	]
 ];
-
-$config['draft_saving_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/EditDraftSaving/styles/index.scss',
-	]
-];
