@@ -6,6 +6,8 @@ class ArticleQualityServiceTest extends WikiaBaseTest {
 	 * @covers ArticleQualityService::searchPercentile
 	 */
 	public function testSearchPercentile() {
+		$this->fail("Fail unrelated test");
+
 		$mock = $this->getMockBuilder( "\ArticleQualityService" )
 			->disableOriginalConstructor()
 			->setMethods( [ '__construct' ] )
