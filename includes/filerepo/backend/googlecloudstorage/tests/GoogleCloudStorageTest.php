@@ -10,7 +10,10 @@ class GoogleCloudStorageTest extends WikiaBaseTest {
 	/** @var GoogleCloudStorage */
 	private $sut;
 
-	protected function setUp() {
+	/**
+	 * @see WikiaBaseTest::setUp()
+	 */
+	public function setUp() {
 		parent::setUp();
 		$this->client = $this->createMock( StorageClient::class );
 		$this->sut =
