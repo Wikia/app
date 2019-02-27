@@ -21,7 +21,7 @@ class GoogleCloudStorageTest extends WikiaBaseTest {
 	}
 
 	public function testFail() {
-		self::fail( "verify this fails" );
+		$this->fail( "verify this fails" );
 	}
 
 	public function test_get_object_name() {
