@@ -1,24 +1,28 @@
 <?php
 
+use Google\Cloud\Storage\Bucket;
 use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
 use Wikia\Logger\WikiaLogger;
 
 class GcsFileBackend extends FileBackendStore {
 
-	/**
-	 * @var GoogleCloudStorage
-	 */
-	private $gcs;
+	/** @var GcsPathFactory */
+	private $gcsPaths;
+	/** @var StorageClient */
+	private $storage;
+	/** @var string */
+	private $bucketName;
+	/** @var string */
+	private $temporaryBucketName;
 
 	public function __construct( $config ) {
 		parent::__construct( $config );
-		$this->gcs =
-			new GoogleCloudStorage( new StorageClient( [ 'keyFile' => $config['gcsCredentials'] ] ),
-				$config['gcsBucket'], $config['gcsTemporaryBucket'],
-				$config['gcsObjectNamePrefix'] );
+		$this->bucketName = $config['gcsBucket'];
+		$this->temporaryBucketName = $config['gcsTemporaryBucket'];
+		$this->storage = new StorageClient( [ 'keyFile' => $config['gcsCredentials'] ] );
+		$this->gcsPaths = new GcsPathFactory( $config['gcsObjectNamePrefix'] );
 	}
-
 
 	/**
 	 * Container name is always valid if it is a UTF-8.
@@ -70,9 +74,9 @@ class GcsFileBackend extends FileBackendStore {
 		$ext = FileBackend::extensionFromPath( $path );
 		try {
 			$tmpFile = TempFSFile::factory( wfBaseName( $path ) . '_', $ext );
-			$name = $this->gcs->getObjectName( [ $container, $path ] );
+			$name = $this->gcsPaths->objectName( [ $container, $path ] );
 
-			$this->gcs->getOriginal( $name )->downloadToFile( $tmpFile->getPath() );
+			$this->getOriginal( $name )->downloadToFile( $tmpFile->getPath() );
 
 			return $tmpFile;
 		}
@@ -113,7 +117,7 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 		$status = Status::newGood();
 
-		$destination = $this->gcs->getObjectName( $params['dst'] );
+		$destination = $this->gcsPaths->objectName( $params['dst'] );
 		$data = $params['content'];
 		$sha1 = sha1( $params['content'] );
 
@@ -138,7 +142,7 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 		$status = Status::newGood();
 
-		$destination = $this->gcs->getObjectName( $params['dst'] );
+		$destination = $this->gcsPaths->objectName( $params['dst'] );
 		$data = fopen( $params['src'], 'r' );
 		$sha1 = sha1_file( $params['src'] );
 
@@ -167,7 +171,7 @@ class GcsFileBackend extends FileBackendStore {
 
 
 	public function upload( ObjectName $targetName, $data, string $sha1 ) {
-		$this->gcs->bucket()->upload( $data, [
+		$this->bucket()->upload( $data, [
 			'name' => $targetName->value(),
 			'metadata' => $this->getMetadata( $sha1 ),
 		] );
@@ -192,21 +196,21 @@ class GcsFileBackend extends FileBackendStore {
 		// This is likely unnecessary as we call Thumblr explicitly to clean up thumbs, but just to be sure.
 		// We will use call_stack to see if there are any places we've missed and if not we can remove this
 		// condition and calls to clean thumbnails
-		if ( $this->gcs->isDirAThumbnailPath( $dir ) ) {
-			$pathPrefix = $this->gcs->getThumbnailPathPrefix( $container, $dir );
+		if ( $this->gcsPaths->isDirAThumbnailPath( $dir ) ) {
+			$pathPrefix = $this->gcsPaths->thumbnailsPrefix( $container, $dir );
 			WikiaLogger::instance()->info( __METHOD__ . " - cleaning thumbnails", [
 				'call_stack' => ( new Exception() )->getTraceAsString(),
 				'gcs_directory' => $pathPrefix,
 			] );
-			$objects = $this->gcs->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$objects = $this->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
 			$this->deleteObjects( $objects );
 		} else {
-			$pathPrefix = $this->gcs->getPathPrefix( $container, $dir );
+			$pathPrefix = $this->gcsPaths->objectsPrefix( $container, $dir );
 			WikiaLogger::instance()->warning( __METHOD__ . " - cleaning other than thumbnails", [
 				'call_stack' => ( new Exception() )->getTraceAsString(),
 				'gcs_directory' => $pathPrefix,
 			] );
-			$objects = $this->gcs->bucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$objects = $this->bucket()->objects( [ 'prefix' => $pathPrefix ] );
 			$this->deleteObjects( $objects );
 		}
 	}
@@ -239,11 +243,10 @@ class GcsFileBackend extends FileBackendStore {
 		$status = Status::newGood();
 
 		try {
-			$src = $this->gcs->getObjectName( $this->resolveStoragePathReal( $params['src'] ) );
-			$dst = $this->gcs->getObjectName( $this->resolveStoragePathReal( $params['dst'] ) );
+			$src = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
+			$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 
-			$this->gcs->getOriginal( $src )
-				->rewrite( $this->gcs->bucket(), [ 'name' => $dst->value() ] );
+			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst->value() ] );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -255,6 +258,8 @@ class GcsFileBackend extends FileBackendStore {
 
 	/**
 	 * @see FileBackendStore::deleteInternal()
+	 * @param array $params
+	 * @return Status
 	 */
 	protected function doDeleteInternal( array $params ) {
 		WikiaLogger::instance()->info( __METHOD__, [
@@ -262,8 +267,8 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 		$status = Status::newGood();
 		try {
-			$name = $this->gcs->getObjectName( $this->resolveStoragePathReal( $params['src'] ) );
-			$this->gcs->getOriginal( $name )->delete();
+			$name = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
+			$this->getOriginal( $name )->delete();
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -292,8 +297,8 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 
 		try {
-			$pathPrefix = $this->gcs->getPathPrefix( $container, $dir );
-			$objects = $this->gcs->bucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$prefix = $this->gcsPaths->objectsPrefix( $container, $dir );
+			$objects = $this->bucket()->objects( [ 'prefix' => $prefix ] );
 
 			return new GoogleCloudFileList( $objects );
 		}
@@ -316,8 +321,8 @@ class GcsFileBackend extends FileBackendStore {
 			'storage_path' => $params['src'],
 		] );
 
-		$name = $this->gcs->getObjectName( $this->resolveStoragePathReal( $params['src'] ) );
-		$obj = $this->gcs->getOriginal( $name );
+		$name = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
+		$obj = $this->getOriginal( $name );
 
 		if ( !$obj->exists() ) {
 			return null;
@@ -346,5 +351,22 @@ class GcsFileBackend extends FileBackendStore {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Convenience method to fetch an object from the originals bucket.
+	 * @param ObjectName $name
+	 * @return \Google\Cloud\Storage\StorageObject
+	 */
+	public function getOriginal( ObjectName $name ) {
+		return $this->bucket()->object( $name->value() );
+	}
+
+	public function bucket(): Bucket {
+		return $this->storage->bucket( $this->bucketName );
+	}
+
+	public function temporaryBucket(): Bucket {
+		return $this->storage->bucket( $this->temporaryBucketName );
 	}
 }
