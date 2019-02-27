@@ -25,8 +25,8 @@ class EditDraftSavingHooks {
 
 		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
 		// e.g https://kirkburn.wikia.com/wiki/Special:CreateBlogPage?pageId=4572
-		if ( $request->getInt( 'pageid' ) ) {
-			$output->addJsConfigVars( 'EditDraftBlogPageId', $request->getInt( 'pageid' ) );
+		if ( $request->getInt( 'pageId' ) ) {
+			$output->addJsConfigVars( 'EditDraftBlogPageId', $request->getInt( 'pageId' ) );
 		}
 
 		// load a different set of JS files when RTE is used on this edit page
