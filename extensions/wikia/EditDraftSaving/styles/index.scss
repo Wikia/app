@@ -1,5 +1,4 @@
-$fandom-draft-color: #00acac;
-$fandom-draft-buttons-color: #00acac;
+@import '../../DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 #draft-restore-message {
 	box-shadow: unset;
@@ -8,7 +7,7 @@ $fandom-draft-buttons-color: #00acac;
 
 	.wds-button {
 		align-self: center;
-		color: $fandom-draft-buttons-color;
+		color: $wds-fandom-color-link;
 
 		&:hover {
 			background-color: unset;
@@ -17,7 +16,7 @@ $fandom-draft-buttons-color: #00acac;
 	}
 
 	.wds-banner-notification__icon {
-		background-color: $fandom-draft-buttons-color;
+		background-color: $wds-fandom-color-link;
 	}
 
 	.wds-banner-notification {
