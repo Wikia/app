@@ -20,10 +20,6 @@ class GoogleCloudStorageTest extends WikiaBaseTest {
 			new GoogleCloudStorage( $this->client, "originals", "temporary", "mediawiki/" );
 	}
 
-	public function testFail() {
-		$this->fail( "verify this fails" );
-	}
-
 	public function test_get_object_name() {
 		$this->assertThat( $this->sut->getObjectName( [ "fallout", "images/a/ac/image.png" ] )
 			->value(), $this->equalTo( "mediawiki/fallout/images/a/ac/image.png" ) );
