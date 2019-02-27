@@ -117,12 +117,12 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 		$status = Status::newGood();
 
-		$destination = $this->gcsPaths->objectName( $params['dst'] );
+		$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 		$data = $params['content'];
 		$sha1 = sha1( $params['content'] );
 
 		try {
-			$this->upload( $destination, $data, $sha1 );
+			$this->upload( $dst, $data, $sha1 );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -142,7 +142,7 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 		$status = Status::newGood();
 
-		$destination = $this->gcsPaths->objectName( $params['dst'] );
+		$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 		$data = fopen( $params['src'], 'r' );
 		$sha1 = sha1_file( $params['src'] );
 
@@ -159,7 +159,7 @@ class GcsFileBackend extends FileBackendStore {
 		] );
 
 		try {
-			$this->upload( $destination, $data, $sha1 );
+			$this->upload( $dst, $data, $sha1 );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
