@@ -21,7 +21,19 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 * @returns {string}
 	 */
 	function getDraftKey() {
-		return window.wgPageName + '-draft';
+		var key = window.wgPageName + '-draft',
+			oldId = jquery('*[name="oldid"]').val(),
+			undoId = window.mw.config.get('EditDraftUndoId');
+
+		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
+		if (oldId > 0) {
+			key += '-oldid-' + oldId;
+		}
+		if (undoId) {
+			key += '-undo-' + undoId;
+		}
+
+		return key;
 	}
 
 	/**
@@ -46,8 +58,9 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	 */
 	function readDraft() {
 		try {
-			log('Reading a draft...');
-			return JSON.parse(localStorage.getItem(getDraftKey()));
+			var key = getDraftKey();
+			log('Reading a draft from ' + key + ' ...');
+			return JSON.parse(localStorage.getItem(key));
 		} catch (e) {
 			console.error(e);
 			return null;

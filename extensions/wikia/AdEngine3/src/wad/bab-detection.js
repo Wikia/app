@@ -45,6 +45,17 @@ function setRuntimeParams(isBabDetected) {
 }
 
 /**
+ * Updates application src value
+ * @param {boolean} isBabDetected
+ * @returns {void}
+ */
+function updateSrcParameter(isBabDetected) {
+	if (isBabDetected) {
+		context.set('src', 'rec');
+	}
+}
+
+/**
  * Tracks WAD rec detection result to GA and DW
  * @param {boolean} isBabDetected
  * @returns {void}
@@ -55,6 +66,7 @@ function trackDetection(isBabDetected) {
 	utils.logger(logGroup, 'BAB detection, AB detected:', isBabDetected);
 
 	setRuntimeParams(isBabDetected);
+	updateSrcParameter(isBabDetected);
 	dispatchDetectionEvent(isBabDetected);
 
 	track({

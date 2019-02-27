@@ -136,6 +136,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.lazyqueue',
 	'wikia.tracker',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -146,22 +147,27 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	lazyQueue,
 	tracker,
 	trackingOptIn,
 	win
 ) {
 	'use strict';
 
-	function runOnPageReady(method) {
-		if (doc.readyState === 'complete') {
-			method();
-		} else {
-			win.addEventListener('load', method);
-		}
+	var pageReadyQueue = [];
+
+	lazyQueue.makeQueue(pageReadyQueue, function (callback) {
+		callback();
+	});
+
+	if (doc.readyState === 'complete') {
+		pageReadyQueue.start();
+	} else {
+		win.addEventListener('load', pageReadyQueue.start);
 	}
 
 	function initDesktopSlots() {
-		runOnPageReady(highImpact.init);
+		pageReadyQueue.push(highImpact.init);
 
 		if (adContext.get('opts.isIncontentPlayerDisabled')) {
 			tracker.track({
@@ -178,11 +184,11 @@ require([
 			if (adContext.get('opts.incontentPlayerRail.enabled')) {
 				initInContent();
 			} else {
-				runOnPageReady(initInContent);
+				pageReadyQueue.push(initInContent);
 			}
 		}
 
-		runOnPageReady(bottomLeaderboard.init);
+		pageReadyQueue.push(bottomLeaderboard.init);
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {

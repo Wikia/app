@@ -55,9 +55,6 @@ $wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAf
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
-# don't purge all thumbs - PLATFORM-161
-$wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
-
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
@@ -1525,12 +1522,17 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
-		$repo['backend'] = 'swift-backend';
+		if ( $wgUseGoogleCloudStorage ) {
+			$repo['backend'] = 'gcs-backend';
+		} else {
+			$repo['backend'] = 'swift-backend';
+		}
+
 		$repo['zones'] = array (
 			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
 			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
@@ -1708,24 +1710,6 @@ class Wikia {
 				$variants = ['zh-hans', 'zh-hant'];
 				break;
 		}
-
-		return true;
-	}
-
-	/**
-	 * No neeed to purge all thumbnails
-	 *
-	 * @author macbre
-	 * @see PLATFORM-161
-	 * @see PLATFORM-252
-	 *
-	 * @param LocalFile $file
-	 * @param array $urls thumbs to purge
-	 * @return bool
-	 */
-	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		// purge only the first thumbnail
-		$urls = array_slice($urls, 0, 1);
 
 		return true;
 	}
