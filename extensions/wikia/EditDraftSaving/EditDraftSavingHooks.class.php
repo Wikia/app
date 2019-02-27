@@ -23,6 +23,12 @@ class EditDraftSavingHooks {
 			$output->addJsConfigVars( 'EditDraftUndoId', $request->getInt( 'undo' ) );
 		}
 
+		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
+		// e.g https://kirkburn.wikia.com/wiki/Special:CreateBlogPage?pageId=4572
+		if ( $request->getInt( 'pageid' ) ) {
+			$output->addJsConfigVars( 'EditDraftBlogPageId', $request->getInt( 'pageid' ) );
+		}
+
 		// load a different set of JS files when RTE is used on this edit page
 		$isRTEenabled = class_exists('RTE') && RTE::isEnabled();
 

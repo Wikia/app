@@ -23,7 +23,8 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 	function getDraftKey() {
 		var key = window.wgPageName + '-draft',
 			oldId = jquery('*[name="oldid"]').val(),
-			undoId = window.mw.config.get('EditDraftUndoId');
+			undoId = window.mw.config.get('EditDraftUndoId'),
+			blogPageId = window.mw.config.get('EditDraftBlogPageId');
 
 		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
 		if (oldId > 0) {
@@ -31,6 +32,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function(jqu
 		}
 		if (undoId) {
 			key += '-undo-' + undoId;
+		}
+		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
+		if (blogPageId) {
+			key += '-blog-' + blogPageId;
 		}
 
 		return key;
