@@ -8,10 +8,10 @@ class GcsPathFactory {
 		$this->objectNamePrefix = $objectNamePrefix;
 	}
 
-	public function objectName( array $containerAndPath ): ObjectName {
+	public function objectName( array $containerAndPath ): string {
 		list ( $container, $path ) = $containerAndPath;
 
-		return new ObjectName( $this->objectNamePrefix . $container . '/' . $path );
+		return $this->objectNamePrefix . $container . '/' . $path;
 	}
 
 	public function objectsPrefix( string $container, string $directory ): string {

@@ -1,12 +1,9 @@
 <?php
 
-use Google\Cloud\Storage\StorageClient;
+use PHPUnit\Framework\TestCase;
 
-class GcsPathFactoryTest extends WikiaBaseTest {
+class GcsPathFactoryTest extends TestCase {
 
-
-	/** @var PHPUnit\Framework\MockObject\MockObject */
-	private $client;
 	/** @var GcsPathFactory */
 	private $sut;
 
@@ -15,13 +12,12 @@ class GcsPathFactoryTest extends WikiaBaseTest {
 	 */
 	public function setUp() {
 		parent::setUp();
-		$this->client = $this->createMock( StorageClient::class );
 		$this->sut = new GcsPathFactory( "mediawiki/" );
 	}
 
 	public function test_get_object_name() {
-		$this->assertThat( $this->sut->objectName( [ "fallout", "images/a/ac/image.png" ] )
-			->value(), $this->equalTo( "mediawiki/fallout/images/a/ac/image.png" ) );
+		$this->assertThat( $this->sut->objectName( [ "fallout", "images/a/ac/image.png" ] ),
+			$this->equalTo( "mediawiki/fallout/images/a/ac/image.png" ) );
 	}
 
 	public function test_get_thumbnail_prefix_with_language_path() {

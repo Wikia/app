@@ -170,9 +170,9 @@ class GcsFileBackend extends FileBackendStore {
 	}
 
 
-	public function upload( ObjectName $targetName, $data, string $sha1 ) {
+	public function upload( string $targetName, $data, string $sha1 ) {
 		$this->bucket()->upload( $data, [
-			'name' => $targetName->value(),
+			'name' => $targetName,
 			'metadata' => $this->getMetadata( $sha1 ),
 		] );
 	}
@@ -258,7 +258,7 @@ class GcsFileBackend extends FileBackendStore {
 			$src = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
 			$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 
-			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst->value() ] );
+			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst ] );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -367,11 +367,11 @@ class GcsFileBackend extends FileBackendStore {
 
 	/**
 	 * Convenience method to fetch an object from the originals bucket.
-	 * @param ObjectName $name
+	 * @param string $name
 	 * @return \Google\Cloud\Storage\StorageObject
 	 */
-	public function getOriginal( ObjectName $name ) {
-		return $this->bucket()->object( $name->value() );
+	public function getOriginal( string $name ) {
+		return $this->bucket()->object( $name );
 	}
 
 	public function bucket(): Bucket {
