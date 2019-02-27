@@ -1,5 +1,6 @@
 <?php
-//
+
+use Google\Cloud\Storage\StorageClient;
 
 class GoogleCloudStorageTest extends WikiaBaseTest {
 
@@ -11,7 +12,7 @@ class GoogleCloudStorageTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		parent::setUp();
-		$this->client = $this->createMock( Google\Cloud\Storage\StorageClient::class );
+		$this->client = $this->createMock( StorageClient::class );
 		$this->sut =
 			new GoogleCloudStorage( $this->client, "originals", "temporary", "mediawiki/" );
 	}
@@ -42,4 +43,24 @@ class GoogleCloudStorageTest extends WikiaBaseTest {
 			"images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ),
 			$this->equalTo( "mediawiki/fallout/images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ) );
 	}
+
+	public function test_is_dir_with_pt_br_lang_path_a_thumbnail_path() {
+		$this->assertThat( $this->sut->isDirAThumbnailPath( "pt_br/images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ),
+			$this->equalTo( true ) );
+	}
+
+	public function test_is_dir_with_dashed_pt_br_lang_path_a_thumbnail_path() {
+		$this->assertThat( $this->sut->isDirAThumbnailPath( "pt-br/images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ),
+			$this->equalTo( true ) );
+	}
+
+	public function test_is_dir_with_pl_lang_path_a_thumbnail_path() {
+		$this->assertThat( $this->sut->isDirAThumbnailPath( "pl/images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ),
+			$this->equalTo( true ) );
+	}
+	public function test_is_dir_without_lang_path_a_thumbnail_path() {
+		$this->assertThat( $this->sut->isDirAThumbnailPath( "images/thumb/e/ef/Screenshot_2019-02-05_at_12.14.36.png" ),
+			$this->equalTo( true ) );
+	}
+
 }

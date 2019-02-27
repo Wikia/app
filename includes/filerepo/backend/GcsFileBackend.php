@@ -1,6 +1,5 @@
 <?php
 
-use Google\Cloud\Storage\Bucket;
 use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
 use Wikia\Logger\WikiaLogger;
@@ -168,7 +167,7 @@ class GcsFileBackend extends FileBackendStore {
 
 
 	public function upload( ObjectName $targetName, $data, string $sha1 ) {
-		$this->bucket()->upload( $data, [
+		$this->gcs->bucket()->upload( $data, [
 			'name' => $targetName->value(),
 			'metadata' => $this->getMetadata( $sha1 ),
 		] );
@@ -199,7 +198,7 @@ class GcsFileBackend extends FileBackendStore {
 				'call_stack' => ( new Exception() )->getTraceAsString(),
 				'gcs_directory' => $pathPrefix,
 			] );
-			$objects = $this->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$objects = $this->gcs->temporaryBucket()->objects( [ 'prefix' => $pathPrefix ] );
 			$this->deleteObjects( $objects );
 		} else {
 			$pathPrefix = $this->gcs->getPathPrefix( $container, $dir );
@@ -207,7 +206,7 @@ class GcsFileBackend extends FileBackendStore {
 				'call_stack' => ( new Exception() )->getTraceAsString(),
 				'gcs_directory' => $pathPrefix,
 			] );
-			$objects = $this->bucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$objects = $this->gcs->bucket()->objects( [ 'prefix' => $pathPrefix ] );
 			$this->deleteObjects( $objects );
 		}
 	}
@@ -244,7 +243,7 @@ class GcsFileBackend extends FileBackendStore {
 			$dst = $this->gcs->getObjectName( $this->resolveStoragePathReal( $params['dst'] ) );
 
 			$this->gcs->getOriginal( $src )
-				->rewrite( $this->bucket(), [ 'name' => $dst->value() ] );
+				->rewrite( $this->gcs->bucket(), [ 'name' => $dst->value() ] );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -294,7 +293,7 @@ class GcsFileBackend extends FileBackendStore {
 
 		try {
 			$pathPrefix = $this->gcs->getPathPrefix( $container, $dir );
-			$objects = $this->bucket()->objects( [ 'prefix' => $pathPrefix ] );
+			$objects = $this->gcs->bucket()->objects( [ 'prefix' => $pathPrefix ] );
 
 			return new GoogleCloudFileList( $objects );
 		}
@@ -348,13 +347,4 @@ class GcsFileBackend extends FileBackendStore {
 			return false;
 		}
 	}
-
-	private function bucket(): Bucket {
-		return $this->gcs->getOriginalsBucket();
-	}
-
-	private function temporaryBucket(): Bucket {
-		return $this->gcs->getTemporaryBucket();
-	}
-
 }

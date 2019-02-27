@@ -20,11 +20,11 @@ class GoogleCloudStorage {
 		$this->objectNamePrefix = $objectNamePrefix;
 	}
 
-	public function getOriginalsBucket(): Bucket {
+	public function bucket(): Bucket {
 		return $this->storage->bucket( $this->bucketName );
 	}
 
-	public function getTemporaryBucket(): Bucket {
+	public function temporaryBucket(): Bucket {
 		return $this->storage->bucket( $this->temporaryBucketName );
 	}
 
@@ -34,7 +34,7 @@ class GoogleCloudStorage {
 	 * @return \Google\Cloud\Storage\StorageObject
 	 */
 	public function getOriginal( ObjectName $name ) {
-		return $this->getOriginalsBucket()->object( $name->value() );
+		return $this->bucket()->object( $name->value() );
 	}
 
 	public function getObjectName( array $containerAndPath ): ObjectName {
