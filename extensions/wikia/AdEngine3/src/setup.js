@@ -1,4 +1,4 @@
-import { AdEngine, context, events, templateService, utils } from '@wikia/ad-engine';
+import { AdEngine, context, events, eventService, templateService, utils } from '@wikia/ad-engine';
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
@@ -214,7 +214,7 @@ function configure(adsContext, isOptedIn) {
 function init() {
 	const engine = new AdEngine();
 
-	events.on(events.AD_SLOT_CREATED, (slot) => {
+	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		context.onChange(`slots.${slot.getSlotName()}.audio`, () => slots.setupSlotParameters(slot));
 		context.onChange(`slots.${slot.getSlotName()}.videoDepth`, () => slots.setupSlotParameters(slot));
 	});
