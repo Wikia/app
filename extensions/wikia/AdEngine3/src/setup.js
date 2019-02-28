@@ -59,9 +59,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
-
-	if (!wikiContext.targeting.hasFeaturedVideo && wikiContext.targeting.pageType !== 'search') {
+	if (!wikiContext.targeting.hasFeaturedVideo) {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
