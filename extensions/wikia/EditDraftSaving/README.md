@@ -60,12 +60,4 @@ We detected that someone edited the the page after your draft has been saved:
 Wikia.Tracker:  trackingevent editor-ck/impression/draft-conflict/ [analytics track]
 ```
 
-#### Draft discarded
-
-When a user rejects a draft and restores the original content:
-
-```
-Wikia.Tracker:  trackingevent editor-ck/impression/draft-discard/ [analytics track]
-```
-
 > `editor-ck` part is replaced wth an appropriate editor identifier (see the first section of this README file).
