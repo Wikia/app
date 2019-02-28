@@ -2,7 +2,7 @@ import { AdEngine, context, events, eventService, templateService, utils } from 
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
-import slots, { hasLowerSlotNames } from './slots';
+import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
@@ -33,16 +33,6 @@ function updateWadContext() {
 		// HMD rec
 		context.set('options.wad.hmdRec.enabled', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
 	}
-
-	// TODO: Remove me after 24h
-	if (!hasLowerSlotNames) {
-		const placementsMap = context.get('options.wad.btRec.placementsMap');
-
-		Object.keys(placementsMap).forEach((slotName) => {
-			placementsMap[slotName.toUpperCase()] = placementsMap[slotName];
-			delete placementsMap[slotName];
-		});
-	}
 }
 
 function isGeoEnabled(key) {
@@ -70,14 +60,14 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('slots', slots.getContext());
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
-		slots.addSlotSize('top_leaderboard', [3, 3]);
+		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
 	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
-		context.push('slots.top_leaderboard.defaultTemplates', 'stickyTLB');
+		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
 	context.set('state.isSteam', false);
@@ -192,17 +182,9 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	slots.setupIdentificators();
 	slots.setupStates();
 	slots.setupSizesAvailability();
+	slots.setupTopLeaderboard();
 
 	updateWadContext();
-
-	// TODO: Remove me after 24h
-	if (!hasLowerSlotNames) {
-		const slotsDefinition = context.get('slots');
-
-		Object.keys(slotsDefinition).forEach((slotName) => {
-			slotsDefinition[slotName.toUpperCase()] = slotsDefinition[slotName];
-		});
-	}
 
 	// TODO: Remove wrapper of window.adslots2 when we unify our push method
 	utils.makeLazyQueue(window.adslots2, (slot) => {
