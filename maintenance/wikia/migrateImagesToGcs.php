@@ -14,7 +14,8 @@ class MigrateImages extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Migrate images to GCS";
+		$this->mDescription =
+			"Migrate images to GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/migrateImagesToGcs.php`";
 	}
 
 	public function execute() {
@@ -28,7 +29,7 @@ class MigrateImages extends Maintenance {
 			->ON( 'revision.rev_page = page.page_id' )
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
-			->runLoop( $this->db, function ( &$pages, $row ) use ( &$display_order ) {
+			->runLoop( $this->db, function ( &$pages, $row ) {
 				$this->publishImageUploadRequest( $this->getFile( $row ), $row->page_id,
 					$row->rev_id, $row->rev_user );
 			} );
@@ -42,7 +43,8 @@ class MigrateImages extends Maintenance {
 		}
 	}
 
-	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId, $uploaderId ) {
+	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId, $uploaderId
+	) {
 		global $wgGoogleCloudUploaderPublisher;
 
 		$sha1 = $this->repo->getFullSha1( $file->getPath() );
