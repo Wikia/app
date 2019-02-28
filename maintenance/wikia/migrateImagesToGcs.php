@@ -19,6 +19,7 @@ class MigrateImages extends Maintenance {
 
 	public function execute() {
 		$this->db = wfGetDB( DB_SLAVE );
+		// This means that this script should be run for communities for which we have not switched to GCSFileBackend
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
 
 		( new \WikiaSQL() )->SELECT( "page.*, revision.*" )
@@ -41,11 +42,6 @@ class MigrateImages extends Maintenance {
 		}
 	}
 
-	public function todo( LocalFile $file ) {
-		$this->output( "file: " . $file->getPath() . "\n" );
-	}
-
-
 	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId ) {
 		global $wgGoogleCloudUploaderPublisher;
 
@@ -63,7 +59,6 @@ class MigrateImages extends Maintenance {
 			'originalFilename' => $file->getName(),
 			'mimeType' => $file->getMimeType(),
 			'sha1' => $sha1,
-			'sha1Hash' => $file->getSha1(),
 			'pageId' => $pageId,
 			'revisionId' => $revisionId,
 		];
