@@ -3,8 +3,14 @@
 
 class WatchShowService extends WikiaService {
 	public function index() {
-		global $wgWatchShowURL;
+		global $wgWatchShowURL, $wgWatchShowCTA;
 
-		$this->setVal('url', $wgWatchShowURL);
+		$this->response->setValues(
+			[
+				'url' => $wgWatchShowURL,
+				'callToAction' => !empty( $wgWatchShowCTA ) ? $wgWatchShowCTA : 'Watch This Show'
+			]
+
+		);
 	}
 }
