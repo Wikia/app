@@ -14,14 +14,9 @@ $wgResourceModules['ext.wikia.EditDraftSaving.base'] = [
 	'scripts' => [
 		'js/index.js',
 	],
-	'styles' => [
-		'styles/index.scss',
-	],
 	'messages' => [
 		'edit-draft-loaded',
 		'edit-draft-edit-conflict',
-		'edit-draft-discard',
-		'edit-draft-keep',
 	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/EditDraftSaving',
