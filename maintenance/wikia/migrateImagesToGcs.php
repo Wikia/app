@@ -30,7 +30,7 @@ class MigrateImages extends Maintenance {
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) use ( &$display_order ) {
 				$this->publishImageUploadRequest( $this->getFile( $row ), $row->page_id,
-					$row->rev_id );
+					$row->rev_id, $row->rev_user );
 			} );
 	}
 
@@ -42,7 +42,7 @@ class MigrateImages extends Maintenance {
 		}
 	}
 
-	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId ) {
+	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId, $uploaderId ) {
 		global $wgGoogleCloudUploaderPublisher;
 
 		$sha1 = $this->repo->getFullSha1( $file->getPath() );
@@ -61,6 +61,7 @@ class MigrateImages extends Maintenance {
 			'sha1' => $sha1,
 			'pageId' => $pageId,
 			'revisionId' => $revisionId,
+			'uploaderId' => $uploaderId,
 		];
 
 		$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
