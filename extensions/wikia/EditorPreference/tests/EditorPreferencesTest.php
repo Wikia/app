@@ -7,12 +7,15 @@ class EditorPreferencesTest extends WikiaBaseTest {
 	private function getSkinMock( int $ns, string $title) : Skin {
 		$skin = Skin::newFromKey('oasis');
 
+		$isCssJsSubpage = Title::newFromText( $title, $ns )->isCssJsSubpage();
+
 		/* @var $title Title */
 		$title = $this->mockClassWithMethods(Title::class, [
 			'getNamespace' => $ns,
 			'inNamespaces' => in_array( $ns, self::NAMESPACES ),
 			'getText' => $title,
 			'isRedirect' => false,
+			'isCssJsSubpage' => $isCssJsSubpage,
 		]);
 
 		/* @var $user User */
@@ -49,6 +52,8 @@ class EditorPreferencesTest extends WikiaBaseTest {
 	public function shouldShowVisualEditorLinkDataProvider() {
 		yield [ NS_MAIN, 'Foo', true, 'NS_MAIN is supported by VisualEditor' ] ;
 		yield [ NS_USER, 'Foo', true, 'NS_USER is supported by VisualEditor' ] ;
+		yield [ NS_USER, 'Rappy_4187/global.css ', false, 'User CSS is not editable by VisualEditor' ] ;
+		yield [ NS_USER, 'Rappy_4187/global.js ', false, 'User JS is not editable by VisualEditor' ] ;
 
 		yield [ NS_TEMPLATE, 'Foo', false, 'NS_TEMPLATE is not supported by VisualEditor'  ] ;
 	}
