@@ -1,4 +1,4 @@
-require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
+require(['jquery', 'EditDraftSaving'], function (jquery, EditDraftSaving) {
 	var EDITOR_TYPE = 'editor-ck',
 		editForm = document.forms["editform"],
 		RTE = window.RTE;
@@ -10,50 +10,35 @@ require(['jquery', 'EditDraftSaving'], function ($, EditDraftSaving) {
 			editor: EDITOR_TYPE,
 			mode: RTE.getInstance().mode,
 			draftText: RTE.getInstance().getData(),
+			startTime: editForm.wpStarttime.value
 		});
-	}
-
-	function setContent(mode, draftText) {
-		var CKinstance = RTE.getInstance();
-
-		// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
-		if (CKinstance.mode !== mode) {
-			// we need to switch mode to apply a draft in a right one
-			CKinstance.setMode(
-				mode,
-				function () {
-					CKinstance.setData(draftText);
-				}
-			);
-		} else {
-			// we're in the right mode
-			CKinstance.setData(draftText);
-		}
 	}
 
 	CKEDITOR.on('instanceReady', function () {
 		var draftData = EditDraftSaving.readDraft(),
-			initialMode = RTE.getInstance().mode;
-
-		EditDraftSaving.storeOriginalContent(RTE.getInstance().getData());
+			CKinstance = RTE.getInstance();
 
 		// make sure that this draft comes from this editor
 		if (draftData && draftData.editor === EDITOR_TYPE) {
 			var draftText = draftData.draftText;
-			setContent(draftData.mode, draftText);
+
+			// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setMode
+			if (CKinstance.mode !== draftData.mode) {
+
+				// we need to switch mode to apply a draft in a right one
+				CKinstance.setMode(
+					draftData.mode,
+					function () {
+						CKinstance.setData(draftText);
+					}
+				);
+			} else {
+				// we're in the right mode
+				CKinstance.setData(draftText);
+			}
 
 			EditDraftSaving.checkDraftConflict(draftData.startTime, EDITOR_TYPE);
-			EditDraftSaving.onDraftRestore(
-				EDITOR_TYPE,
-				// selector of an element to prepend a notification bar to
-				'#cke_1_contents',
-				// function to be called when the draft is discarded,
-				// callback will get the original editor content
-				function(content) {
-					setContent(initialMode, content);
-				},
-				draftData.mode
-			);
+			EditDraftSaving.onDraftRestore(EDITOR_TYPE);
 		}
 
 		// register draft saving function
