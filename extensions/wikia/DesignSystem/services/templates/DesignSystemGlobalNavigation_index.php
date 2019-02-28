@@ -28,16 +28,16 @@
 					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
 						[ 'model' => $model['create-wiki'] ] ); ?>
 				</div>
-				<?php if ( !empty( $model['partner-slot'] ) ): ?>
-					<?= $app->renderView(
-					'DesignSystemGlobalNavigationService',
-					'partnerSlot',
-					[
-						'model' => $model['partner-slot'],
-					]
-				); ?>
-				<?php endif; ?>
 			</div>
 		</div>
+        <?php if ( !empty( $model['partner-slot'] ) ): ?>
+            <?= $app->renderView(
+                'DesignSystemGlobalNavigationService',
+                'partnerSlot',
+                [
+                    'model' => $model['partner-slot'],
+                ]
+            ); ?>
+        <?php endif; ?>
 	</div>
 </div>

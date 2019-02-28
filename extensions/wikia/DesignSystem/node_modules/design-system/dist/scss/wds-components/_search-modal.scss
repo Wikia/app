@@ -70,6 +70,15 @@
 	.wds-dropdown {
 		&__content {
 			top: calc(100% + 12px);
+
+			@media #{$wds-breakpoint-small-down} {
+				// this is done in order to make dropdown suggestions full-width on mobile
+				// value was calculated using `getBoundingClientRect`
+				top: 120px;
+				position: fixed;
+				left: 0;
+				right: 0;
+			}
 		}
 
 		&:after {
