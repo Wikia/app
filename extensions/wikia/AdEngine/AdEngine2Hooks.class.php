@@ -93,6 +93,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverNielsenCountries';
+		$vars[] = 'wgAdDriverOasisHiviLeaderboardCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
