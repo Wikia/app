@@ -15,9 +15,12 @@ class AdEngine3
 		}
 
 		$wikiaPageType = new WikiaPageType();
-		$isSearch = $wikiaPageType->isSearch();
-		if ($isSearch) {
+		if ($wikiaPageType->isSearch()) {
 			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
+		}
+
+		if ($wikiaPageType->isMainPage()) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisMainPages;
 		}
 
 		if ($wikiaPageType->isArticlePage()) {
