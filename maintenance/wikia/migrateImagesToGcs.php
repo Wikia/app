@@ -11,18 +11,37 @@ class MigrateImages extends Maintenance {
 	private $db;
 	/** @var LocalRepo */
 	private $repo;
+	/** @var bool */
+	private $dryRun;
+	private $connectionBase;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription =
 			"Migrate images to GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/migrateImagesToGcs.php`";
+		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 	}
 
 	public function execute() {
+		global $wgGoogleCloudUploaderPublisher;
+
+		$this->dryRun = $this->hasOption( 'dry-run' );
+
 		$this->db = wfGetDB( DB_SLAVE );
 		// This means that this script should be run for communities for which we have not switched to GCSFileBackend
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
+		$this->connectionBase = new ConnectionBase( $wgGoogleCloudUploaderPublisher );
 
+		try {
+			$this->runForAllImages();
+		}
+		catch ( Exception $e ) {
+			$this->error( "Failure to migrate" . json_encode( $e ) );
+		}
+		return 0;
+	}
+
+	private function runForAllImages() {
 		( new \WikiaSQL() )->SELECT( "page.*, revision.*" )
 			->FROM( 'page' )
 			->LEFT_JOIN( 'revision' )
@@ -45,9 +64,12 @@ class MigrateImages extends Maintenance {
 
 	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId, $uploaderId
 	) {
-		global $wgGoogleCloudUploaderPublisher;
+		if ( $this->dryRun ) {
+			$sha1 = 'dry-run-sha1';
+		} else {
+			$sha1 = $this->repo->getFullSha1( $file->getPath() );
+		}
 
-		$sha1 = $this->repo->getFullSha1( $file->getPath() );
 		if ( $sha1 === false ) {
 			$this->output( "File does not exist: {$pageId}.{$revisionId} - {$file->getPath()}\n\n" );
 
@@ -66,10 +88,14 @@ class MigrateImages extends Maintenance {
 			'uploaderId' => $uploaderId,
 		];
 
-		$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
 
-		$connectionBase = new ConnectionBase( $wgGoogleCloudUploaderPublisher );
-		$connectionBase->publish( "{$file->getBucket()}", $data );
+		if ( !$this->dryRun ) {
+			$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
+			$this->connectionBase->publish( "{$file->getBucket()}", $data );
+		} else {
+			$this->output( "DRY RUN: Would have published a request to upload	" .
+						   json_encode( $data ) . "\n\n" );
+		}
 	}
 }
 
