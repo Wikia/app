@@ -81,7 +81,6 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRabbitExperiments(context) {
 		context.rabbits.ctpDesktop = isEnabled('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isEnabled('wgAdDriverCTPMobileRabbitCountries');
-		context.rabbits.queenDesktop = isEnabled('wgAdDriverCTPDesktopQueenCountries');
 	}
 
 	function areDelayServicesBlocked() {
