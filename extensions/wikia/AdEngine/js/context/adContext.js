@@ -78,10 +78,6 @@ define('ext.wikia.adEngine.adContext', [
 		return adEngineBridge.geo.isProperGeo(geos, name);
 	}
 
-	function updateAdContextRabbitExperiments(context) {
-		context.rabbits.ctpMobile = isEnabled('wgAdDriverCTPMobileRabbitCountries');
-	}
-
 	function areDelayServicesBlocked() {
 		return context.targeting.skin === 'mercury' && isEnabled('wgAdDriverBlockDelayServicesCountries');
 	}
@@ -156,7 +152,6 @@ define('ext.wikia.adEngine.adContext', [
 		updateAdContextRecServices(context, noExternals);
 
 		updateAdContextBidders(context);
-		updateAdContextRabbitExperiments(context);
 
 		// *.showcase.wikia.com
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
