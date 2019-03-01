@@ -1841,3 +1841,5 @@ $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
 	'gcsBucket' => 'static-assets-originals-prod'
 ];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';

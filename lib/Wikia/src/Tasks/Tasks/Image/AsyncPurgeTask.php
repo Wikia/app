@@ -79,8 +79,9 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	private function getRemoveThumbnailsUrl( FileInfo $fileId ) {
-		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
-		$thumblrUrl = $this->removeTrailingSlash( "https://{$urlProvider->getUrl( 'thumblr' )}" );
+		global $wgThumblrUrl;
+
+		$thumblrUrl = rtrim($wgThumblrUrl, '/');
 		$url =
 			"{$thumblrUrl}/{$fileId->getBucket()}/images/{$fileId->getRelativePath()}/revision/{$fileId->getRevision()}/thumbnails";
 		if ( $fileId->getPathPrefix() ) {
@@ -88,14 +89,6 @@ class AsyncPurgeTask extends BaseTask {
 		}
 
 		return $url;
-	}
-
-	private function removeTrailingSlash( string $text ) {
-		if ( substr( $text, - 1 ) == '/' ) {
-			return substr( $text, 0, - 1 );
-		} else {
-			return $text;
-		}
 	}
 
 }
