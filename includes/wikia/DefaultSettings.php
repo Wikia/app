@@ -1839,7 +1839,8 @@ $wgUseGoogleCloudStorage = false;
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
 
 $wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';
