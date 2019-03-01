@@ -213,8 +213,6 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
-			context.targeting.skin === 'oasis';
 
 		context.opts.isSteamBrowser = browserDetect.isSteam();
 		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
