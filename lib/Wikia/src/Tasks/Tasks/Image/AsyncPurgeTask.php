@@ -62,17 +62,16 @@ class AsyncPurgeTask extends BaseTask {
 	}
 
 	private function removeThumbnailsInThumblr( FileInfo $fileId ) {
-		global $wgThumblrUser;
-		global $wgThumblrPass;
+		global $wgThumblrUser, $wgThumblrPass;
 
 		$url = $this->getRemoveThumbnailsUrl( $fileId );
 		WikiaLogger::instance()->info( __METHOD__, [
 			'file' => json_encode( $fileId ),
 			'remove_thumbnails_url' => $url,
 		] );
-		$credentials = base64_encode($wgThumblrUser.':'.$wgThumblrPass);
+		$credentials = base64_encode( $wgThumblrUser . ':' . $wgThumblrPass );
 		\Http::request( "DELETE", $url, [
-			'headers' => [ 'Authorization' => 'Basic '.$credentials ],
+			'headers' => [ 'Authorization' => 'Basic ' . $credentials ],
 			'internalRequest' => true,
 			'noProxy' => true,
 		] );
@@ -81,7 +80,7 @@ class AsyncPurgeTask extends BaseTask {
 	private function getRemoveThumbnailsUrl( FileInfo $fileId ) {
 		global $wgThumblrUrl;
 
-		$thumblrUrl = rtrim($wgThumblrUrl, '/');
+		$thumblrUrl = rtrim( $wgThumblrUrl, '/' );
 		$url =
 			"{$thumblrUrl}/{$fileId->getBucket()}/images/{$fileId->getRelativePath()}/revision/{$fileId->getRevision()}/thumbnails";
 		if ( $fileId->getPathPrefix() ) {
