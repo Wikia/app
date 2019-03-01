@@ -12,6 +12,11 @@ class CreateWikiTask extends BaseTask {
 
 	const CREATION_LOG_TABLE = 'city_creation_log';
 
+	// possible values of city_creation_log.completed column
+	const CREATION_LOG_WIKI_CREATED = 1;
+	const CREATION_LOG_WIKI_CREATION_FAILED = 0;
+	const CREATION_LOG_WIKI_CREATION_CHECKS_FAILED = -1;
+
 	// we waited enough for the task to start, fail after a minute
 	const TASK_CREATION_DELAY_THRESHOLD = 60;
 
@@ -103,13 +108,22 @@ class CreateWikiTask extends BaseTask {
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
-		try {
+		// perform initial checks and prepare the context for the new wiki
+		// CORE-121 | if this fail at prepare or check stage do not assume that it's an issue
+		// with the process itself the reason was in the data provided by the user creating
+		// a new wiki
+		$prepareStagePassed = false;
 
-			$this->validateTimestamp( $timestamp );
+		try {
 
 			$taskRunner->prepare();
 
 			$taskRunner->check();
+
+			// SUS-121 | we passed the set up stage, failed creation will be marked differently
+			$prepareStagePassed = true;
+
+			$this->validateTimestamp( $timestamp );
 
 			$taskRunner->run();
 
@@ -117,7 +131,9 @@ class CreateWikiTask extends BaseTask {
 			// SUS-4383 | mark the wiki as not fully created and log the exception message
 			self::updateCreationLogEntry( $this->getTaskId(), [
 				'creation_ended' => wfTimestamp( TS_DB ),
-				'completed' => 0,
+				'completed' => $prepareStagePassed
+					? self::CREATION_LOG_WIKI_CREATION_FAILED
+					: self::CREATION_LOG_WIKI_CREATION_CHECKS_FAILED,
 				'exception_message' => substr( $ex->getMessage(), 0, 255 ),
 			] );
 
