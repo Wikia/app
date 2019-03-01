@@ -223,7 +223,7 @@ class MercuryApi {
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 				'openGraphImageUrl' => OpenGraphImageHelper::getUrl(),
-				'fandomCreatorCommunityId' => $wgFandomCreatorCommunityId
+				'fandomCreatorCommunityId' => !empty( $wgFandomCreatorCommunityId ) ? $wgFandomCreatorCommunityId : null
 			]
 		);
 
