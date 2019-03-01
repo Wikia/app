@@ -79,7 +79,6 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateAdContextRabbitExperiments(context) {
-		context.rabbits.ctpDesktop = isEnabled('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isEnabled('wgAdDriverCTPMobileRabbitCountries');
 	}
 
