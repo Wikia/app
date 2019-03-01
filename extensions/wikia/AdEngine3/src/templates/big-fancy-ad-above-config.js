@@ -25,8 +25,6 @@ export const getConfig = () => ({
 		'bottom_leaderboard',
 		'incontent_boxad_1',
 		'top_boxad',
-		// TODO: Remove me after 24h
-		'TOP_BOXAD',
 	],
 
 	onInit(adSlot, params) {
