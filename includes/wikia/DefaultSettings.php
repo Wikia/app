@@ -1658,15 +1658,6 @@ $wgAdDriverHighImpact2SlotCountries = null;
 $wgAdDriverMobileTransitionInterstitialCountries = null;
 
 /**
- * @name $wgAdDriverMobileFloorAdhesionCountries
- * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
- * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileFloorAdhesionCountries = null;
-
-/**
  * @name $wgAdDriverIncontentPlayerRailCountries
  * Moves INCONTENT_PLAYER slot into rail section in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
