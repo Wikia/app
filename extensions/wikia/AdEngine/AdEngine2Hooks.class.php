@@ -85,7 +85,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMobileSectionsCollapseCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3NativeSearchCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
-		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverNielsenCountries';
