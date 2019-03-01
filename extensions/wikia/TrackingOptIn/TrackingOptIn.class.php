@@ -12,8 +12,6 @@ class TrackingOptIn {
 
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgEnableTrackingOptInModal';
-		// TODO: Remove variable once @wikia/tracking-opt-in#1.0.36 is released
-		$vars[] = 'wgEnableCMPCountries';
 
 		return true;
 	}
