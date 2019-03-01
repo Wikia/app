@@ -1040,13 +1040,13 @@ $messages['ja'] = array(
 ここは{{PAGENAME}}さんの[[ヘルプ:プロフィール|ユーザーページ]]です。ページを編集し、コミュニティの皆さんに自己紹介しましょう！
 
 == お気に入りのページ ==
-* Wikiの、お気に入りのページの[[ヘルプ:リンク|]]を追加してください！
+* Wikiの、お気に入りのページの[[ヘルプ:リンク|リンク]]を追加してください！
 * お気に入りのページ #2
 * お気に入りのページ #3',
 	'welcome-message-user' => '==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます。
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
@@ -1056,7 +1056,7 @@ $3',
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます。
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
@@ -1066,7 +1066,7 @@ $3",
 
 はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
 
-このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
 また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 
@@ -1081,7 +1081,7 @@ $3',
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
 また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 
@@ -1093,14 +1093,14 @@ $3",
 	'welcome-message-wall-anon' => "はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流したりできるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！",
 	'welcome-message-wall-anon-staff' => '==ようこそ==
 
 はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
 
-このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
 また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 
@@ -1109,14 +1109,14 @@ $3",
 それでは、{{SITENAME}}をお楽しみください！',
 	'welcome-message-wall-user' => 'はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Fandomブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
 	'welcome-message-wall-user-staff' => '==ようこそ==
 
 はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、ページ編集をありがとうございます。
 
-このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
+このコミュニティではアクティブな[[Special:Listusers/sysop|アドミン]]は現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
 また、[[w:c:ja.community:Blog:Fandomブログ|ブログ]]ではFandomの最新情報やイベント情報をご紹介しています。
 

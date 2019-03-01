@@ -1,9 +1,9 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import { context, events, utils } from '@wikia/ad-engine';
+import { context, events, eventService, utils } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { billTheLizard, krux, moatYi, nielsen } from '@wikia/ad-engine/dist/ad-services';
+import { billTheLizard, krux, moatYi, moatYiEvents, nielsen } from '@wikia/ad-engine/dist/ad-services';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -26,11 +26,11 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
 
-	events.on(events.AD_SLOT_CREATED, (slot) => {
+	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
 	});
-	events.on(events.MOAT_YI_READY, (data) => {
+	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
 		pageTracker.trackProp('moat_yi', data);
 	});
 

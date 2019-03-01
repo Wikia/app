@@ -1,5 +1,5 @@
-import { context, events, utils } from '@wikia/ad-engine';
-import { billTheLizard } from '@wikia/ad-engine/dist/ad-services';
+import { context, eventService, utils } from '@wikia/ad-engine';
+import { billTheLizard, billTheLizardEvents } from '@wikia/ad-engine/dist/ad-services';
 import { methods } from './executor';
 import { bucketizeViewportHeight } from './buicketizer';
 import instantGlobals from '../instant-globals';
@@ -65,7 +65,7 @@ export const billTheLizardConfigurator = {
 		setupProjects();
 		setupExecutor();
 
-		events.on(events.BILL_THE_LIZARD_REQUEST, (event) => {
+		eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
 			let propName = 'btl_request';
 			if (event.callId !== undefined) {
 				propName = `${propName}_${event.callId}`;
@@ -74,7 +74,7 @@ export const billTheLizardConfigurator = {
 			pageTracker.trackProp(propName, event.query);
 		});
 
-		events.on(events.BILL_THE_LIZARD_RESPONSE, (event) => {
+		eventService.on(billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, (event) => {
 			let propName = 'btl_response';
 			if (event.callId !== undefined) {
 				propName = `${propName}_${event.callId}`;
