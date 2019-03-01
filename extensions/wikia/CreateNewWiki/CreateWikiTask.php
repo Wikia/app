@@ -120,7 +120,7 @@ class CreateWikiTask extends BaseTask {
 
 			$taskRunner->check();
 
-			// SUS-121 | we passed the set up stage, failed creation will be marked differently
+			// CORE-121 | we passed the set up stage, failed creation will be marked differently
 			$prepareStagePassed = true;
 
 			$this->validateTimestamp( $timestamp );
@@ -135,6 +135,12 @@ class CreateWikiTask extends BaseTask {
 					? self::CREATION_LOG_WIKI_CREATION_FAILED
 					: self::CREATION_LOG_WIKI_CREATION_CHECKS_FAILED,
 				'exception_message' => substr( $ex->getMessage(), 0, 255 ),
+			] );
+
+			// CORE-121 | log the CreateNewWiki failures
+			$this->error( __METHOD__ . '::failed', [
+				'exception' => $ex,
+				'is_failed_on_prepare' => !$prepareStagePassed
 			] );
 
 			throw $ex;
