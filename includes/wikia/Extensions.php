@@ -338,6 +338,7 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
+include ( "$IP/extensions/wikia/AdEngine3/AdHostMirrors.setup.php" );
 
 include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
 
@@ -1394,6 +1395,16 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
+
+$wgFileBackends['gcs-backend'] = [
+	'name' => 'gcs-backend',
+	'class' => 'GcsFileBackend',
+	'lockManager' => 'nullLockManager',
+	'wikiId'	=> '',
+	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
+	'gcsBucket' => $wgGcsConfig['gcsBucket'],
+	'gcsObjectNamePrefix' => 'mediawiki/',
+];
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
