@@ -103,14 +103,14 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		setupExecutor();
 
 		trackingOptIn.pushToUserConsentQueue(function () {
-			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_REQUEST, function (event) {
+			adEngine3.eventService.on(services.billTheLizardEvents.BILL_THE_LIZARD_REQUEST, function (event) {
 				var propName = 'btl_request';
 				if (event.callId !== undefined) {
 					propName = propName + '_' + event.callId;
 				}
 				pageInfoTracker.trackProp(propName, event.query);
 			});
-			adEngine3.events.on(adEngine3.events.BILL_THE_LIZARD_RESPONSE, function (event) {
+			adEngine3.eventService.on(services.billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, function (event) {
 				var propName = 'btl_response';
 				if (event.callId !== undefined) {
 					propName = propName + '_' + event.callId;

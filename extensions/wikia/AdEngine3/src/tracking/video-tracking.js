@@ -1,5 +1,5 @@
-import { events } from '@wikia/ad-engine';
-import { porvataTracker } from '@wikia/ad-engine/dist/ad-products';
+import { eventService } from '@wikia/ad-engine';
+import { porvataTracker, playerEvents } from '@wikia/ad-engine/dist/ad-products';
 import { track } from './tracker';
 
 function trackEvent(eventData) {
@@ -14,7 +14,7 @@ function trackEvent(eventData) {
 
 export default {
 	register: () => {
-		events.on(events.VIDEO_PLAYER_TRACKING_EVENT, trackEvent);
+		eventService.on(playerEvents.VIDEO_PLAYER_TRACKING_EVENT, trackEvent);
 
 		porvataTracker.register();
 	},
