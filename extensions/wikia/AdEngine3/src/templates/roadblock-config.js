@@ -1,3 +1,5 @@
+import { context } from '@wikia/ad-engine';
+
 export function getConfig() {
 	return {
 		slotsToEnable: [
@@ -5,7 +7,7 @@ export function getConfig() {
 			'invisible_skin',
 		],
 		onInit: () => {
-			window.adslots2.push('invisible_skin');
+			context.push('state.adStack', { id: 'invisible_skin' });
 		}
 	};
 }
