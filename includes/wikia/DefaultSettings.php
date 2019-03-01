@@ -1649,15 +1649,6 @@ $wgOasisBreakpoints = true;
 $wgAdDriverHighImpact2SlotCountries = null;
 
 /**
- * @name $wgAdDriverMobileTransitionInterstitialCountries
- * Enables Mercury Interstitial inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
- * Don't combine with $wgAdDriverMobileFloorAdhesionCountries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileTransitionInterstitialCountries = null;
-
-/**
  * @name $wgAdDriverIncontentPlayerRailCountries
  * Moves INCONTENT_PLAYER slot into rail section in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
