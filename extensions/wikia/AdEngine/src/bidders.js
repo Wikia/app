@@ -360,6 +360,16 @@ export function getBiddersContext(skin) {
 							}
 						}
 					},
+					vmg: {
+						enabled: false,
+						slots: {
+							TOP_LEADERBOARD: {
+								sizes: [
+									[3, 3]
+								]
+							}
+						}
+					},
 					wikia: {
 						enabled: false,
 						slots: {
