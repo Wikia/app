@@ -8480,9 +8480,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".
