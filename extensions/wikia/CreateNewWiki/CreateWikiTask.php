@@ -7,6 +7,7 @@
 
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\CreateNewWiki\Tasks\TaskContext;
+use Wikia\Metrics\Collector;
 
 class CreateWikiTask extends BaseTask {
 
@@ -114,6 +115,14 @@ class CreateWikiTask extends BaseTask {
 		// a new wiki
 		$prepareStagePassed = false;
 
+		// CORE-121 | labels for metrics that will be pushed to Prometheus
+		global $wgWikiaEnvironment;
+		$metrics_labels = [
+			'env' => $wgWikiaEnvironment,
+			'fandom_creator' => !is_null( $fandomCreatorCommunityId ),
+			'status' => 'completed',  # default to success, hopefully ;)
+		];
+
 		try {
 
 			$taskRunner->prepare();
@@ -143,19 +152,29 @@ class CreateWikiTask extends BaseTask {
 				'is_failed_on_prepare' => !$prepareStagePassed
 			] );
 
+			// CORE-121 | report wiki creations to Prometheus
+			if ( $prepareStagePassed ) {
+				$metrics_labels['status'] = 'failed';
+
+				Collector::getInstance()
+					->addCounter('wiki_creations_total', $metrics_labels, 'Number of wiki creations');
+			}
+
 			throw $ex;
 		}
 
-		// SUS-4383 | log the CreateNewWiki process time
-		$this->info( __METHOD__, [
-			'took' => microtime( true ) - $then, // [sec]
-		] );
+		$wiki_creation_duration = microtime( true ) - $then; // [sec]
 
 		// SUS-4383 | mark the wiki as created
 		self::updateCreationLogEntry( $this->getTaskId(), [
 			'creation_ended' => wfTimestamp( TS_DB ),
 			'completed' => 1,
 		] );
+
+		// SUS-121 | report wiki creations to Prometheus
+		Collector::getInstance()
+			->addCounter('wiki_creations_total', $metrics_labels, 'Number of wiki creations')
+			->addGauge('wiki_creations_duration_seconds', $wiki_creation_duration, $metrics_labels, 'Time it took to create a wiki');
 
 		wfProfileOut( __METHOD__ );
 	}
