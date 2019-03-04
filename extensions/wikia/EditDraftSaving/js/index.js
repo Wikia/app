@@ -27,7 +27,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 	 */
 	function getDraftKey() {
 		var key = window.wgPageName + '-draft',
-			oldId = jquery('*[name="oldid"]').val(),
+			oldId = $('*[name="oldid"]').val(),
 			undoId = window.mw.config.get('EditDraftUndoId');
 
 		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
@@ -210,7 +210,6 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 		log: log,
 		checkDraftConflict: checkDraftConflict,
 		onDraftRestore: onDraftRestore,
-		// getDraftKey: getDraftKey,
 		storeDraft: storeDraft,
 		readDraft: readDraft,
 		storeOriginalContent: storeOriginalContent,
