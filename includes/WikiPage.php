@@ -1297,6 +1297,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$flags = $this->checkFlags( $flags );
 
+
 		if ( !Hooks::run( 'ArticleSave', [
 			$this,
 			&$user,
@@ -1565,9 +1566,8 @@ class WikiPage extends Page implements IDBAccessObject {
 			$flags,
 			$revision,
 			&$status,
-			$baseRevId,
+			$baseRevId
 		] );
-
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}

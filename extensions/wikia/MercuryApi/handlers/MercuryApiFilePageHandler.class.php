@@ -36,11 +36,22 @@ class MercuryApiFilePageHandler {
 					}
 				);
 			}
+			$item['canRead'] = true;
+			$title = Title::newFromDBkey( $item['titleDBkey'] );
+			if ( $title->isRedirect() ) {
+				$item['canRead'] = false;
+			}
+			if ( !$title->userCan( 'read' ) ) {
+				$item['canRead'] = false;
+			}
 
 			return $item;
 		}, $fileUsageData['fileList']);
 
+		$url = FilePageHelper::getFilePageRedirect( $title );
+
 		return [
+			'anonRedir' => $url,
 			'fileUsageList' => $fileUsageList,
 			'fileUsageListSeeMoreUrl' => $fileUsageData['seeMoreLink'],
 			'media' => $mediaObject
