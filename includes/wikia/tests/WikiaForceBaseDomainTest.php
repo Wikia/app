@@ -39,6 +39,13 @@
 					'https://www.fandom.com/signin'
 				],
 				[
+					'https://muppet.wikia.org',
+					'',
+					'',
+					'https://www.wikia.com/signin',
+					'https://www.wikia.org/signin'
+				],
+				[
 					'https://muppet.wladek.wikia-dev.pl',
 					'wladek.wikia-dev.pl',
 					'wladek.fandom-dev.pl',
