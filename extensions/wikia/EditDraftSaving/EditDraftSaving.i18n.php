@@ -2,7 +2,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	'edit-draft-loaded' => 'Here are your unpublished changes. Keep up the great work!',
+	'edit-draft-loaded' => 'This is a draft that includes your unpublished changes. Keep up the great work!',
+	'edit-draft-discard' => 'Discard',
+	'edit-draft-keep' => 'Okay',
 	'edit-draft-edit-conflict' => 'Someone else has changed this page since your draft was saved. Please click "Show Changes" to see what\'s changed and merge the latest change with your draft.',
 );
 

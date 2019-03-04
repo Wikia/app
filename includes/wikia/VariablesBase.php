@@ -6825,6 +6825,13 @@ $wgRightsUrl = null;
 $wgReadOnlyFile = false;
 
 /**
+ * Whether or not to redirect all file pages to the first page they are used on for
+ * anonymous users.
+ * @var boolean
+ */
+$wgRedirectFilePagesForAnons = false;
+
+/**
  * Allow redirection to another page when a user logs in.
  * To enable, set to a string like 'Main Page'
  * @var string $wgRedirectOnLogin
@@ -8480,9 +8487,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".
