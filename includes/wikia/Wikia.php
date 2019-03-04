@@ -1522,13 +1522,16 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage,
+			   $wgUseGcsMigrationStorage;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
+		} elseif ( $wgUseGcsMigrationStorage ) {
+			$repo['backend'] = 'gcs-migration-backend';
 		} else {
 			$repo['backend'] = 'swift-backend';
 		}

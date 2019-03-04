@@ -1834,6 +1834,12 @@ $wgLogFileStorageOperations = false;
 $wgUseGoogleCloudStorage = false;
 
 /**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If enabled, a multi write will be used for storing files.
+ */
+$wgUseGcsMigrationStorage = false;
+
+/**
  * Google Cloud Storage settings. The default settings are for production.
  */
 $wgGcsConfig = [
