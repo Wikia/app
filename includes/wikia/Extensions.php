@@ -1407,25 +1407,26 @@ $wgFileBackends['gcs-backend'] = [
 	'gcsObjectNamePrefix' => 'mediawiki/',
 ];
 
-
 $wgFileBackends['gcs-migration-backend'] = [
 	'name' => 'gcs-migration-backend',
 	'class' => 'FileBackendMultiWrite',
 	'backends' => [
-		'name'=>'swift-backend',
-		'class' => 'SwiftFileBackend',
-		'lockManager' => 'nullLockManager',
-		'swiftAuthUrl' => $wgFSSwiftConfig['swiftAuthUrl'],  # defined in CommonSettings.php
-		'swiftUser' => $wgFSSwiftConfig['swiftUser'],
-		'swiftKey' => $wgFSSwiftConfig['swiftKey'],
-		'swiftAuthTTL' => 120,
-		'swiftTimeout' => 30,
-		'cacheAuthInfo' => true,
-		'wikiId' => '',
-		'isMultiMaster' => true,
-		'debug' => false,
-		'url' => "http://{$wgFSSwiftServer}/swift/v1",
-	]
+		[
+			'name' => 'swift-backend',
+			'class' => 'SwiftFileBackend',
+			'lockManager' => 'nullLockManager',
+			'swiftAuthUrl' => $wgFSSwiftConfig['swiftAuthUrl'],  # defined in CommonSettings.php
+			'swiftUser' => $wgFSSwiftConfig['swiftUser'],
+			'swiftKey' => $wgFSSwiftConfig['swiftKey'],
+			'swiftAuthTTL' => 120,
+			'swiftTimeout' => 30,
+			'cacheAuthInfo' => true,
+			'wikiId' => '',
+			'isMultiMaster' => true,
+			'debug' => false,
+			'url' => "http://{$wgFSSwiftServer}/swift/v1",
+		],
+	],
 ];
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
