@@ -1,11 +1,8 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
-	'ext.wikia.adEngine.adContext'
-], function (adContext) {
+define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [], function () {
 	'use strict';
 
-	var context = adContext.getContext(),
-		slotsConfiguration = {
+	var slotsConfiguration = {
 			'INCONTENT_PLAYER': {
 				enableKeyword: 'enableInContentFloating',
 				container: 'WikiaArticle',

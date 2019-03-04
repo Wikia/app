@@ -23,18 +23,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			return params.floatingContext && params.floatingContext.isActive();
 		}
 
-		function trackViewportConflict(conflictingAdSlot) {
-			var conflictParams = {
-				conflictingAdSlot: conflictingAdSlot
-			};
-
-			Object.keys(params).forEach(function(parameter) {
-				conflictParams[parameter] = params[parameter];
-			});
-
-			tracker.track(conflictParams, 'viewport-conflict');
-		}
-
 		function tryEnablingFloating(video, inViewportCallback) {
 			if (floater && floater.canFloat(params)) {
 				params.floatingContext = floater.makeFloat(video, params, {
