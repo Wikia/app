@@ -7,10 +7,16 @@
 
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\CreateNewWiki\Tasks\TaskContext;
+use Wikia\Metrics\Collector;
 
 class CreateWikiTask extends BaseTask {
 
 	const CREATION_LOG_TABLE = 'city_creation_log';
+
+	// possible values of city_creation_log.completed column
+	const CREATION_LOG_WIKI_CREATED = 1;
+	const CREATION_LOG_WIKI_CREATION_FAILED = 0;
+	const CREATION_LOG_WIKI_CREATION_CHECKS_FAILED = -1;
 
 	// we waited enough for the task to start, fail after a minute
 	const TASK_CREATION_DELAY_THRESHOLD = 60;
@@ -103,13 +109,30 @@ class CreateWikiTask extends BaseTask {
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
-		try {
+		// perform initial checks and prepare the context for the new wiki
+		// CORE-121 | if this fail at prepare or check stage do not assume that it's an issue
+		// with the process itself the reason was in the data provided by the user creating
+		// a new wiki
+		$prepareStagePassed = false;
 
-			$this->validateTimestamp( $timestamp );
+		// CORE-121 | labels for metrics that will be pushed to Prometheus
+		global $wgWikiaEnvironment;
+		$metrics_labels = [
+			'env' => $wgWikiaEnvironment,
+			'fandom_creator' => !is_null( $fandomCreatorCommunityId ),
+			'status' => 'completed',  # default to success, hopefully ;)
+		];
+
+		try {
 
 			$taskRunner->prepare();
 
 			$taskRunner->check();
+
+			// CORE-121 | we passed the set up stage, failed creation will be marked differently
+			$prepareStagePassed = true;
+
+			$this->validateTimestamp( $timestamp );
 
 			$taskRunner->run();
 
@@ -117,23 +140,41 @@ class CreateWikiTask extends BaseTask {
 			// SUS-4383 | mark the wiki as not fully created and log the exception message
 			self::updateCreationLogEntry( $this->getTaskId(), [
 				'creation_ended' => wfTimestamp( TS_DB ),
-				'completed' => 0,
+				'completed' => $prepareStagePassed
+					? self::CREATION_LOG_WIKI_CREATION_FAILED
+					: self::CREATION_LOG_WIKI_CREATION_CHECKS_FAILED,
 				'exception_message' => substr( $ex->getMessage(), 0, 255 ),
 			] );
+
+			// CORE-121 | log the CreateNewWiki failures
+			$this->error( __METHOD__ . '::failed', [
+				'exception' => $ex,
+				'is_failed_on_prepare' => !$prepareStagePassed
+			] );
+
+			// CORE-121 | report wiki creations to Prometheus
+			if ( $prepareStagePassed ) {
+				$metrics_labels['status'] = 'failed';
+
+				Collector::getInstance()
+					->addCounter('wiki_creations_total', $metrics_labels, 'Number of wiki creations');
+			}
 
 			throw $ex;
 		}
 
-		// SUS-4383 | log the CreateNewWiki process time
-		$this->info( __METHOD__, [
-			'took' => microtime( true ) - $then, // [sec]
-		] );
+		$wiki_creation_duration = microtime( true ) - $then; // [sec]
 
 		// SUS-4383 | mark the wiki as created
 		self::updateCreationLogEntry( $this->getTaskId(), [
 			'creation_ended' => wfTimestamp( TS_DB ),
 			'completed' => 1,
 		] );
+
+		// SUS-121 | report wiki creations to Prometheus
+		Collector::getInstance()
+			->addCounter('wiki_creations_total', $metrics_labels, 'Number of wiki creations')
+			->addGauge('wiki_creations_duration_seconds', $wiki_creation_duration, $metrics_labels, 'Time it took to create a wiki');
 
 		wfProfileOut( __METHOD__ );
 	}
