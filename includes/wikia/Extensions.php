@@ -1410,6 +1410,7 @@ $wgFileBackends['gcs-backend'] = [
 $wgFileBackends['gcs-migration-backend'] = [
 	'name' => 'gcs-migration-backend',
 	'class' => 'FileBackendMultiWrite',
+	'lockManager' => 'nullLockManager',
 	'backends' => [
 		[
 			'name' => 'swift-backend',
