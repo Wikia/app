@@ -6825,6 +6825,13 @@ $wgRightsUrl = null;
 $wgReadOnlyFile = false;
 
 /**
+ * Whether or not to redirect all file pages to the first page they are used on for
+ * anonymous users.
+ * @var boolean
+ */
+$wgRedirectFilePagesForAnons = false;
+
+/**
  * Allow redirection to another page when a user logs in.
  * To enable, set to a string like 'Main Page'
  * @var string $wgRedirectOnLogin
