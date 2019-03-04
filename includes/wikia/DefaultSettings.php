@@ -1835,9 +1835,9 @@ $wgUseGoogleCloudStorage = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033
- * If enabled, a multi write will be used for storing files.
+ * If provided, a multi write will be used for storing files for all wikis with buckets matching the prefix.
  */
-$wgUseGcsMigrationStorage = false;
+$wgUseGcsMigrationBucketPrefix = '';
 
 /**
  * Google Cloud Storage settings. The default settings are for production.

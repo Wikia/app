@@ -1533,7 +1533,8 @@ class Wikia {
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
-		} elseif ( substr( $wgFSSwiftContainer, 0, strlen( $wgUseGcsMigrationBucketPrefix ) ) ===
+		} elseif ( !empty( $wgUseGcsMigrationBucketPrefix ) &&
+				   substr( $wgFSSwiftContainer, 0, strlen( $wgUseGcsMigrationBucketPrefix ) ) ===
 				   $wgUseGcsMigrationBucketPrefix ) {
 			$repo['backend'] = 'gcs-migration-backend';
 		} else {
