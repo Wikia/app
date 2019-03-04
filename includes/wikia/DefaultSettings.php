@@ -980,6 +980,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+
+/**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
@@ -1285,13 +1291,6 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileSectionsCollapseCountries = null;
-
-/**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
  * List of countries where incontent native is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1304,6 +1303,13 @@ $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileWikiAE3SearchCountries = null;
+
+/**
+ * @name $wgAdDriverOasisHiviLeaderboardCountries
+ * List of countries where hivi_leaderboard slot on Oasis is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOasisHiviLeaderboardCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries
@@ -1832,5 +1838,8 @@ $wgUseGoogleCloudStorage = false;
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';

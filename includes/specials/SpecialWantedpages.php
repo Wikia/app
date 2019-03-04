@@ -83,7 +83,7 @@ class WantedPagesPage extends WantedQueryPage {
 		return $query;
 	}
 
-	function reallyDoQuery( $limit, $offset = false ) {
+	function reallyDoQuery( $limit, $offset = false ) : ResultWrapper {
 		$res = parent::reallyDoQuery( false, $offset );
 
 		// SUS-3561: Group, filter and sort the results in PHP level due to abysmal query performance
@@ -108,10 +108,27 @@ class WantedPagesPage extends WantedQueryPage {
 		} );
 
 		if ( $limit !== false ) {
-			return array_slice( $pageGroup, 0, intval( $limit ) );
+			$wrapper = new FakeResultWrapper( array_slice( $pageGroup, 0, intval( $limit ) ) );
+		}
+		else {
+			$wrapper = new FakeResultWrapper( $pageGroup );
 		}
 
-		return $pageGroup;
+		return $wrapper;
+	}
+
+	/**
+	 * @param DatabaseBase $db
+	 * @param ResultWrapper $res
+	 */
+	function preprocessResults( $db, $res ) {
+		$batch = new LinkBatch;
+		foreach ( $res as $row ) {
+			$batch->add( $row->namespace, $row->title );
+		}
+		$batch->execute();
+
+		$res->rewind();
 	}
 
 	function getOrderFields() {

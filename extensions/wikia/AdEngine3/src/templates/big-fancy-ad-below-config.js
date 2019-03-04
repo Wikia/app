@@ -17,8 +17,8 @@ export function getConfig() {
 		autoPlayAllowed: true,
 		defaultStateAllowed: true,
 		fullscreenAllowed: true,
-		stickinessAllowed: context.get('options.bfabStickiness'),
-		bfaaSlotName: 'top_leaderboard',
+		stickinessAllowed: false,
+		bfaaSlotName: context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard',
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),
 		onInit() {

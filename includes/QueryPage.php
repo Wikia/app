@@ -587,8 +587,8 @@ abstract class QueryPage extends SpecialPage {
 	 *
 	 * @param $out OutputPage to print to
 	 * @param $skin Skin: user skin to use
-	 * @param $dbr Database (read) connection to use
-	 * @param $res Integer: result pointer
+	 * @param $dbr DatabaseBase connection to use
+	 * @param $res ResultWrapper: result pointer
 	 * @param $num Integer: number of available result rows
 	 * @param $offset Integer: paging offset
 	 */
@@ -603,7 +603,7 @@ abstract class QueryPage extends SpecialPage {
 
 			# $res might contain the whole 1,000 rows, so we read up to
 			# $num [should update this to use a Pager]
-			for ( $i = 0; $i < $num && $row = $dbr->fetchObject( $res ); $i++ ) {
+			foreach ( $res as $row ) {
 				$line = $this->formatResult( $skin, $row );
 				if ( $line ) {
 					$attr = ( isset( $row->usepatrol ) && $row->usepatrol && $row->patrolled == 0 )

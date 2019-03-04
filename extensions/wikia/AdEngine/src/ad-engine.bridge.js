@@ -47,8 +47,6 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
-
 	TemplateRegistry.init();
 	scrollListener.init();
 
