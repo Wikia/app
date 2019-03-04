@@ -219,7 +219,7 @@ class LinkSuggest {
 			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
 			$res = $db->query($sql, __METHOD__);
 
-			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 			$sql2Measurement->stop();
 		}
 
