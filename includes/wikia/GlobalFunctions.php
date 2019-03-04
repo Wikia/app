@@ -1647,7 +1647,7 @@ function wfNormalizeHost( $host ) {
  * @throws Exception
  */
 function wfForceBaseDomain( $url, $targetServer ) {
-	global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+	global $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain;
 
 	$urlHost = parse_url( $url, PHP_URL_HOST );
 	$targetHost = parse_url( $targetServer, PHP_URL_HOST );
@@ -1665,6 +1665,8 @@ function wfForceBaseDomain( $url, $targetServer ) {
 
 	$count = 0;
 	if ( $targetBaseDomain === $wgFandomBaseDomain ) {
+		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+	} else if ( $targetBaseDomain === $wgWikiaOrgBaseDomain ) {
 		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
 	} else {
 		$finalHost = str_replace(".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count);
