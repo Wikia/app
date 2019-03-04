@@ -1672,13 +1672,6 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 $wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
- * @name $wgAdDriverIncontentPlayerRailCountries
- * Moves INCONTENT_PLAYER slot into rail section in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentPlayerRailCountries = null;
-
-/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

@@ -98,10 +98,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				} else {
 					endFloating(floatingContext);
 				}
-
-				if (adContext.get('opts.incontentPlayerRail.enabled')) {
-					floatingContext.elements.video.stop();
-				}
 			};
 		}
 

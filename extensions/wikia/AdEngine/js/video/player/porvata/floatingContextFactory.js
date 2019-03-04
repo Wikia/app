@@ -97,10 +97,6 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					return this.state === state.floating;
 				},
 				isOutsideOfViewport: function () {
-					if (configuration.floatingRailForced) {
-						return true;
-					}
-
 					var rect = this.elements.viewport.getBoundingClientRect();
 
 					return rect.top > (win.innerHeight || doc.documentElement.clientHeight) ||

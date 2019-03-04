@@ -45,14 +45,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						inViewportCallback(false);
 					}
 				});
-
-				if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
-					floater.registerConflictCallback(
-						params.floatingContext.elements.ad,
-						trackViewportConflict,
-						adContext.get('opts.incontentPlayerRail.conflictingSlots')
-					);
-				}
 			}
 		}
 

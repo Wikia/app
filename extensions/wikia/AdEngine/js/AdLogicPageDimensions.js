@@ -32,10 +32,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		mediaQueriesMet,
 		matchMedia;
 
-	if (adContext.get('opts.incontentPlayerRail.enabled')) {
-		slotsToHideOnMediaQuery.INCONTENT_PLAYER = 'oneColumn';
-	}
-
 	function matchMediaMoz(query) {
 		return win.matchMedia(query).matches;
 	}

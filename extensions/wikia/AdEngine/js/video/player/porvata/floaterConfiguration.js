@@ -9,7 +9,6 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 			'INCONTENT_PLAYER': {
 				enableKeyword: 'enableInContentFloating',
 				container: 'WikiaArticle',
-				floatingRailForced: context && context.opts.incontentPlayerRail.enabled,
 				configure: function (floatingContext) {
 					var elements = floatingContext.elements;
 
@@ -37,21 +36,13 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 					elements.ad.style.maxHeight = elements.ad.scrollHeight + 'px';
 					elements.viewport.style.removeProperty('height');
 					elements.providerContainer.style.removeProperty('height');
-
-					if (context.opts.incontentPlayerRail.enabled) {
-						elements.viewport.style.display = 'none';
-					}
 				},
 				onBeforeDetach: function (floatingContext) {
 					var viewport = floatingContext.elements.viewport;
 
-					if (context.opts.incontentPlayerRail.enabled) {
-						viewport.style.height = '0px';
-					} else {
-						// Magic 14 is related to #INCONTENT_WRAPPER > #INCONTENT_PLAYER margins
-						// and prevents jumping when video is going to float
-						viewport.style.height = (viewport.offsetHeight - 14) + 'px';
-					}
+					// Magic 14 is related to #INCONTENT_WRAPPER > #INCONTENT_PLAYER margins
+					// and prevents jumping when video is going to float
+					viewport.style.height = (viewport.offsetHeight - 14) + 'px';
 				},
 				onDetach: function (floatingContext) {
 					floatingContext.elements.providerContainer.style.height = floatingContext.getHeight() + 'px';

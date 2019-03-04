@@ -137,7 +137,7 @@ define('ext.wikia.adEngine.template.porvata', [
 					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
 				}
 				if (typeof params.fallbackBidEnableInContentFloating !== 'undefined') {
-					params.enableInContentFloating = adContext.get('opts.incontentPlayerRail.enabled') || params.fallbackBidEnableInContentFloating;
+					params.enableInContentFloating = params.fallbackBidEnableInContentFloating;
 				}
 				if (typeof params.fallbackBidEnableLeaderboardFloating !== 'undefined') {
 					params.enableLeaderboardFloating = params.fallbackBidEnableLeaderboardFloating;
@@ -232,10 +232,6 @@ define('ext.wikia.adEngine.template.porvata', [
 			trackDisabledOustream();
 
 			return;
-		}
-
-		if (params.slotName === 'INCONTENT_PLAYER' && adContext.get('opts.incontentPlayerRail.enabled')) {
-			params.trackingpos = adContext.get('opts.incontentPlayerRail.trackingAlias');
 		}
 
 		callSuccess(params, !params.setSlotStatusBasedOnVAST);

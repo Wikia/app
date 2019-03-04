@@ -219,15 +219,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
-		context.opts.incontentPlayerRail = {
-			enabled: context.targeting.skin === 'oasis' && isEnabled('wgAdDriverIncontentPlayerRailCountries'),
-			trackingAlias: 'INCONTENT_PLAYER_RAIL',
-			conflictingSlots: [
-				'TOP_BOXAD',
-				'INCONTENT_BOXAD_1',
-				'BOTTOM_LEADERBOARD'
-			]
-		};
 
 		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
 

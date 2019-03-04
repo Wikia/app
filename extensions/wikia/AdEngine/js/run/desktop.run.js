@@ -181,11 +181,7 @@ require([
 				inContent.init('INCONTENT_PLAYER');
 			};
 
-			if (adContext.get('opts.incontentPlayerRail.enabled')) {
-				initInContent();
-			} else {
-				pageReadyQueue.push(initInContent);
-			}
+			pageReadyQueue.push(initInContent);
 		}
 
 		pageReadyQueue.push(bottomLeaderboard.init);
