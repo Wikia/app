@@ -96,11 +96,6 @@ class MercuryApiHooks {
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL(), 'collapsibleSections' => '1' ] );
 			$urls[] = MercuryApiController::getUrl( 'getTrackingDimensions', [ 'title' => $title->getPartialURL() ] );
 		}
-		if ( $title->inNamespaces( NS_FILE ) ) {
-			// Request from MobileWiki to MediaWiki
-			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPrefixedURL() ] );
-			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPrefixedURL(), 'collapsibleSections' => '1' ] );
-		}
 		return true;
 	}
 
