@@ -1,7 +1,6 @@
 import { utils } from '@wikia/ad-engine';
 import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
 import { recInjector } from './rec-injector';
-import {babDetection} from "./bab-detection";
 
 const isDebug = utils.queryString.isUrlParamSet('hmd-rec-debug');
 const logGroup = 'hmd-loader';

@@ -1,5 +1,4 @@
 import { context, utils } from '@wikia/ad-engine';
-import { babDetection } from './bab-detection';
 import { recInjector } from './rec-injector';
 
 const isDebug = utils.queryString.isUrlParamSet('bt-rec-debug');
