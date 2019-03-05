@@ -113,8 +113,8 @@ export const babDetection = {
 	 * @returns {boolean}
 	 */
 	isBlocking() {
-		if (win.ads && win.ads.runtime && win.ads.runtime.bab) {
-			return win.ads.runtime.bab.blocking;
+		if (window.ads && window.ads.runtime && window.ads.runtime.bab) {
+			return window.ads.runtime.bab.blocking;
 		}
 
 		return undefined;
