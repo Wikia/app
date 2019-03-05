@@ -15,16 +15,23 @@ class EditDraftSavingHooks {
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/EditPage::showEditForm:initial
 	 */
 	static public function onEditPage_showEditForm_initial(EditPage $editPage, OutputPage $output) {
-		$isRTEenabled = class_exists('RTE') && RTE::isEnabled();
+		$request = $output->getContext()->getRequest();
 
 		// CORE-113 | Drafts ignore oldid and undo parameters when editing pages
 		// e.g https://kirkburn.wikia.com/wiki/Garfield?action=edit&undoafter=4039&undo=9513
-		$request = $output->getContext()->getRequest();
 		if ( $request->getInt( 'undo' ) ) {
 			$output->addJsConfigVars( 'EditDraftUndoId', $request->getInt( 'undo' ) );
 		}
 
+		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
+		// e.g https://kirkburn.wikia.com/wiki/Special:CreateBlogPage?pageId=4572
+		if ( $request->getInt( 'pageId' ) ) {
+			$output->addJsConfigVars( 'EditDraftBlogPageId', $request->getInt( 'pageId' ) );
+		}
+
 		// load a different set of JS files when RTE is used on this edit page
+		$isRTEenabled = class_exists('RTE') && RTE::isEnabled();
+
 		$output->addModules(
 			$isRTEenabled
 				? 'ext.wikia.EditDraftSaving.rte'

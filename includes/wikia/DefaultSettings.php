@@ -980,6 +980,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+
+/**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
@@ -1283,13 +1289,6 @@ $wgSitewideDisableKrux = false;
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgAdDriverKikimoraTrackingCountries
  */
 $wgAdDriverKikimoraTrackingCountries = [];
-
-/**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
