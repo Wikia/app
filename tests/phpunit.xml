@@ -21,6 +21,9 @@
 		<testsuite name="Wikia Includes Test Suite">
 			<directory>../includes/wikia/</directory>
 		</testsuite>
+		<testsuite name="FileRepo Includes Test Suite">
+			<directory>../includes/filerepo/</directory>
+		</testsuite>
 		<testsuite name="Wikia ResourceLoader Test Suite">
 			<directory>../includes/resourceloader/wikia/</directory>
 		</testsuite>

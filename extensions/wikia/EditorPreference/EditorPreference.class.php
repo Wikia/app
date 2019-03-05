@@ -192,6 +192,7 @@ class EditorPreference {
 		return
 			$title->inNamespaces( $wgVisualEditorNamespaces ) &&
 			!$title->isRedirect() &&
+			!$title->isCssJsSubpage() &&  # CORE-123 | skip user CSS and JS pages
 			!$skin->getUser()->isBlockedFrom( $title, true );
 	}
 

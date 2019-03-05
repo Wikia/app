@@ -980,6 +980,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+
+/**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
@@ -1285,11 +1291,18 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
+ * @name $wgAdDriverRepeatMobileIncontentCountries
+ * List of countries where Incontent Boxad ads are injected after h2 tag on Mobile-Wiki.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverMobileSectionsCollapseCountries = null;
+$wgAdDriverRepeatMobileIncontentCountries = null;
+
+/**
+ * @name $wgAdDriverRepeatMobileIncontentExtendedCountries
+ * List of countries where Incontent Boxad ads are injected after extended number of HTML elements on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
@@ -1839,5 +1852,8 @@ $wgUseGoogleCloudStorage = false;
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';

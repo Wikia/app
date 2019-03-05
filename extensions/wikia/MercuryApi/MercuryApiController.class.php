@@ -264,6 +264,8 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$title = $this->getTitleFromRequest();
+			Wikia::setSurrogateKeysHeaders( ( new LightboxHelper )->getShareSurrogateKey( $title ),
+				false );
 			$data = [
 				'ns' => $title->getNamespace(),
 				'isSpecialRandom' => false

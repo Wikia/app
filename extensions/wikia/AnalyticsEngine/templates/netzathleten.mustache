@@ -18,19 +18,15 @@ require([
 		document.head.appendChild(scriptElementNetzAthleten);
 	}
 
-	function loadNA(optIn) {
-		if (optIn) {
-			// user opt-ins for NetzAthleten
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		var isEnabled = (adContext && adContext.get('opts.netzathleten')) ||
+			(adsApi && adsApi.isNetzathletenEnabled());
+
+		// user opt-ins for NetzAthleten
+		if (optIn && isEnabled) {
 			loadNetzAthletenScript();
 		}
-	}
-
-	if (
-		(adContext && adContext.get('opts.netzathleten')) ||
-		(adsApi && adsApi.isNetzathletenEnabled())
-	) {
-		trackingOptIn.pushToUserConsentQueue(loadNA);
-	}
+	});
 });
 </script>
 <!-- End NetzAthleten (Netletix) Tag -->
