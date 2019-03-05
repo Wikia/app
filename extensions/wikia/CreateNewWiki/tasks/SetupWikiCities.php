@@ -88,10 +88,16 @@ class SetupWikiCities extends Task {
 				$this->taskContext->getDomain() );
 			// use LANG_CODE.SUBDOMAIN.wikia.com schema for language wikis on .wikia.com
 			if ( $this->taskContext->getLanguage() !== 'en' ) {
-				list($baseDomain, $langCode) = preg_split( '/\//', $wikiaDomain, 1 );
-				if ( $baseDomain && $langCode ) {
-					$wikiaDomain = $langCode . "." . $baseDomain;
+				$parts = preg_split( '/\//', $wikiaDomain, 2, PREG_SPLIT_NO_EMPTY );
+				if ( !empty( $parts ) && count( $parts ) == 2 ) {
+					$wikiaDomain = $parts[1] . "." . $parts[0];
 				}
+				$this->debug(
+					implode( ":",
+						[ __METHOD__, "Domain after processing: $wikiaDomain" ]
+					),
+					["language" => $parts[1], "base_domain" => $parts[0], ]
+				);
 			}
 			$domains[] = [
 				'city_id' => $this->taskContext->getCityId(),
