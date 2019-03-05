@@ -1,6 +1,4 @@
 /*global define*/
-import {babDetection} from "../../../AdEngine3/src/wad/bab-detection";
-
 define('ext.wikia.adEngine.wad.wadRecRunner', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wad.babDetection',
