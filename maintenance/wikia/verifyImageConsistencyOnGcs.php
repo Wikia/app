@@ -89,7 +89,7 @@ class CheckConsistency extends Maintenance {
 		$metadata = $object->info()['metadata'];
 
 		if ( !isset( $metadata['sha1'] ) ) {
-			$this->error( $path . " - sha1 not set! " );
+			$this->error( $path . " - sha1 not set! \n" );
 
 			return;
 		}
