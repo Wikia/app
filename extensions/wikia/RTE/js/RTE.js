@@ -15,7 +15,7 @@
 	var RTE = {
 
 		// configuration
-		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
+		// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
 		config: {
 			alignableElements: {
 				div: true,
