@@ -36,6 +36,7 @@ class CheckConsistency extends Maintenance {
 
 		try {
 			$this->runForAllImages();
+			$this->runForDeletedImages();
 		}
 		catch ( Exception $e ) {
 			$this->error( "Failure when calculating consistency" . json_encode( $e ) );
@@ -52,8 +53,27 @@ class CheckConsistency extends Maintenance {
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) {
-				$this->verifyConsistency( $this->getFile( $row ), $row->page_id, $row->rev_id,
-					$row->rev_user );
+				$file = $this->getFile( $row );
+				if ( $file->exists() ) {
+					$this->verifyObject( $this->toGcsPath( $file->getPath() ), $file->getSha1() );
+				}
+			} );
+	}
+
+	private function runForDeletedImages() {
+		( new \WikiaSQL() )->SELECT( "page.*, filearchive.*" )
+			->FROM( 'page' )
+			->SELECT( "filearchive.*" )
+			->JOIN( 'filearchive' )
+			->ON( 'page.page_title = filearchive.fa_name' )
+			->WHERE( 'page.page_namespace' )
+			->EQUAL_TO( NS_FILE )
+			->runLoop( $this->db, function ( &$pages, $row ) {
+				$relative =
+					$this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
+				$path = $this->repo->getZonePath( 'deleted' ) . $relative;
+				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
+				$this->verifyObject( $this->toGcsPath( $path ), $sha1 );
 			} );
 	}
 
@@ -65,13 +85,17 @@ class CheckConsistency extends Maintenance {
 		}
 	}
 
-	private function verifyConsistency( LocalFile $file, $pageId, $revisionId, $uploaderId ) {
-		$path = $file->getPath();
+	private function toGcsPath( $path ) {
 		// remove backend
 		$path = str_replace( "mwstore://swift-backend/", "mediawiki/", $path );
 		// we may have already switched to gcs here but that doesn't matter
 		$path = str_replace( "mwstore://gcs-backend/", "mediawiki/", $path );
 
+		// deleted files are elsewhere
+		return str_replace( "mwrepo://local/deleted", "mediawiki/deleted/", $path );
+	}
+
+	private function verifyObject( $path, $sha1 ) {
 		$object = $this->storage->bucket( $this->bucketName )->object( $path );
 
 		if ( !$object->exists() ) {
@@ -94,32 +118,16 @@ class CheckConsistency extends Maintenance {
 			return;
 		}
 
-		if ( $file->getSha1() !== wfBaseConvert( $metadata['sha1'], 16, 36, 31 ) ) {
+
+		if ( $sha1 !== wfBaseConvert( $metadata['sha1'], 16, 36, 31 ) ) {
 			$this->error( $path . " - sha1 mismatch!\n" );
 
 			return;
 		}
 
-		if ( $this->postMigrationCheck ) {
-			if ( $metadata['mw-revision'] != $revisionId ) {
-				$this->error( $path . " -revision does not match\n" );
-
-				return;
-			}
-			if ( $metadata['mw-page'] != $pageId ) {
-				$this->error( $path . " -page does not match\n" );
-
-				return;
-			}
-			if ( $metadata['uploader'] != $uploaderId ) {
-				$this->error( $path . " -uploader does not match\n" );
-
-				return;
-			}
-		}
-
 		$this->output( $path . " - everything is awesome!\n" );
 	}
+
 }
 
 $maintClass = "CheckConsistency";
