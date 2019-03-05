@@ -8926,3 +8926,10 @@ $wgWatchShowURL = '';
  * @var bool
  */
 $wgEnableEditDraftSavingExt = false;
+
+/**
+ * Enables EditDraftSaving extension
+ * @see CORE-128
+ * @var bool
+ */
+$wgEnableQualtricsSiteInterceptExt = false;

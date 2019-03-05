@@ -2451,3 +2451,11 @@ $config['search_tracking_js'] = [
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
 	]
 ];
+
+$config['qualtrics_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/QualtricsSiteIntercept/scripts/QualtricsSiteIntercept.js',
+	],
+];
