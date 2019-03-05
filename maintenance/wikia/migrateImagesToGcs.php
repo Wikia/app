@@ -75,7 +75,7 @@ class MigrateImages extends Maintenance {
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				$relative = $this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
-				$path = $this->repo->getZonePath( 'deleted' ) . $relative;
+				$path = $this->repo->getZonePath( 'deleted' ) . '/' . $relative;
 				$revision = $this->getRevisionId( $row->fa_archive_name );
 				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
 
