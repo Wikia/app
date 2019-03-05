@@ -11,8 +11,6 @@ class CheckConsistency extends Maintenance {
 	private $db;
 	/** @var LocalRepo */
 	private $repo;
-	/** @var bool */
-	private $postMigration;
 	/** @var StorageClient */
 	private $storage;
 	/** @var string */
@@ -22,13 +20,10 @@ class CheckConsistency extends Maintenance {
 		parent::__construct();
 		$this->mDescription =
 			"Verify image consistency on GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/verifyImageConsistencyOnGcs.php`";
-		$this->addOption( 'post-migration', 'Will involve checks on additional metadata', false,
-			false, 'm' );
 	}
 
 	public function execute() {
 		global $wgGcsConfig;
-		$this->postMigration = $this->hasOption( 'post-migration' );
 		$this->db = wfGetDB( DB_SLAVE );
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
 		$this->storage = new StorageClient( [ 'keyFile' => $wgGcsConfig['gcsCredentials'] ] );
@@ -71,7 +66,7 @@ class CheckConsistency extends Maintenance {
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				$relative =
 					$this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
-				$path = $this->repo->getZonePath( 'deleted' ) . $relative;
+				$path = $this->repo->getZonePath( 'deleted' ) . '/' . $relative;
 				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
 				$this->verifyObject( $this->toGcsPath( $path ), $sha1 );
 			} );
@@ -119,7 +114,7 @@ class CheckConsistency extends Maintenance {
 		}
 
 
-		if ( $sha1 !== wfBaseConvert( $metadata['sha1'], 16, 36, 31 ) ) {
+		if ( $sha1 !== $metadata['sha1'] ) {
 			$this->error( $path . " - sha1 mismatch!\n" );
 
 			return;
