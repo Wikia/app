@@ -193,6 +193,9 @@
 
 			RTE.config.startupMode = editor.config.mode;
 
+			// CORE-117 | allow empty <span> elements in CKeditor's visual mode
+			CKEDITOR.dtd.$removeEmpty['span'] = 0;
+
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
