@@ -76,6 +76,8 @@ class MigrateImages extends Maintenance {
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				if ( empty( $row->fa_storage_key ) ) {
 					$this->error( "Ignoring {$row->fa_id} due to a missing storage key." );
+
+					return;
 				}
 				$rel =
 					$this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
