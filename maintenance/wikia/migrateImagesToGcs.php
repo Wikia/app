@@ -34,10 +34,12 @@ class MigrateImages extends Maintenance {
 
 		try {
 			$this->runForAllImages();
+			$this->runForDeletedImages();
 		}
 		catch ( Exception $e ) {
 			$this->error( "Failure to migrate" . json_encode( $e ) );
 		}
+
 		return 0;
 	}
 
@@ -49,8 +51,37 @@ class MigrateImages extends Maintenance {
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) {
-				$this->publishImageUploadRequest( $this->getFile( $row ), $row->page_id,
-					$row->rev_id, $row->rev_user );
+				$file = $this->getFile( $row );
+
+				if ( !$file->exists() ) {
+					$this->output( "File does not exist: {$row->page_id}.{$row->rev_id} - {$file->getPath()}\n\n" );
+
+					return;
+				}
+
+				$this->publishImageUploadRequest( $file->getPath(), $file->getName(),
+					$file->getMimeType(), $file->getSha1(), $row->page_id, $row->rev_id,
+					$row->rev_user );
+			} );
+	}
+
+	private function runForDeletedImages() {
+		( new \WikiaSQL() )->SELECT( "page.*, filearchive.*" )
+			->FROM( 'page' )
+			->SELECT( "filearchive.*" )
+			->JOIN( 'filearchive' )
+			->ON( 'page.page_title = filearchive.fa_name' )
+			->WHERE( 'page.page_namespace' )
+			->EQUAL_TO( NS_FILE )
+			->runLoop( $this->db, function ( &$pages, $row ) {
+				$relative = $this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
+				$path = $this->repo->getZonePath( 'deleted' ) . $relative;
+				$revision = $this->getRevisionId( $row->fa_archive_name );
+				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
+
+				$this->publishImageUploadRequest( $path, $row->fa_name,
+					"{$row->fa_major_mime}/{$row->fa_minor_mime}", $sha1, $row->page_id, $revision,
+					$row->fa_user );
 			} );
 	}
 
@@ -62,26 +93,28 @@ class MigrateImages extends Maintenance {
 		}
 	}
 
-	private function publishImageUploadRequest( LocalFile $file, $pageId, $revisionId, $uploaderId
+	private function getRevisionId( $archiveName ) {
+		if ( empty( $archiveName ) ) {
+			return '';
+		}
+
+		return substr( $archiveName, 0, strcspn( $archiveName, '!' ) );
+	}
+
+	public function getBucket() {
+		global $wgUploadPath;
+
+		return VignetteRequest::parseBucket( $wgUploadPath );
+	}
+
+	private function publishImageUploadRequest(
+		$path, $filename, $mimeType, $sha1, $pageId, $revisionId, $uploaderId
 	) {
-		if ( $this->dryRun ) {
-			$sha1 = 'dry-run-sha1';
-		} else {
-			$sha1 = $this->repo->getFullSha1( $file->getPath() );
-		}
-
-		if ( $sha1 === false ) {
-			$this->output( "File does not exist: {$pageId}.{$revisionId} - {$file->getPath()}\n\n" );
-
-			return;
-		}
-
 		$data = [
-			'bucket' => $file->getBucket(),
-			'pathPrefix' => $file->getPathPrefix(),
-			'path' => $file->getPath(),
-			'originalFilename' => $file->getName(),
-			'mimeType' => $file->getMimeType(),
+			'bucket' => $this->getBucket(),
+			'path' => $path,
+			'originalFilename' => $filename,
+			'mimeType' => $mimeType,
 			'sha1' => $sha1,
 			'pageId' => $pageId,
 			'revisionId' => $revisionId,
@@ -97,6 +130,7 @@ class MigrateImages extends Maintenance {
 						   json_encode( $data ) . "\n\n" );
 		}
 	}
+
 }
 
 $maintClass = "MigrateImages";
