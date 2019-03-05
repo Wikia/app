@@ -64,8 +64,10 @@ class CheckConsistency extends Maintenance {
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) {
-				$relative =
-					$this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
+				if (empty($row->fa_storage_key)) {
+					$this->error("Ignoring {$row->fa_id} due to a missing storage key." );
+				}
+				$relative = $this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
 				$path = $this->repo->getZonePath( 'deleted' ) . '/' . $relative;
 				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
 				$this->verifyObject( $this->toGcsPath( $path ), $sha1 );

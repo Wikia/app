@@ -74,9 +74,11 @@ class MigrateImages extends Maintenance {
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
 			->runLoop( $this->db, function ( &$pages, $row ) {
-				$relative =
-					$this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
-				$path = $this->repo->getZonePath( 'deleted' ) . '/' . $relative;
+				if (empty($row->fa_storage_key)) {
+					$this->error("Ignoring {$row->fa_id} due to a missing storage key." );
+				}
+				$rel = $this->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
+				$path = $this->repo->getZonePath( 'deleted' ) . '/' . $rel;
 				$revision = $this->getRevisionId( $row->fa_archive_name );
 				$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
 
