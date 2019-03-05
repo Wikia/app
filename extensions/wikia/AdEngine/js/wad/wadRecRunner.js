@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.btRecLoader',
 	'ext.wikia.adEngine.wad.hmdRecLoader',
+	'wikia.document',
 	'wikia.log'
-], function (adContext, babDetection, btRecLoader, hmdRecLoader, log) {
+], function (adContext, babDetection, btRecLoader, hmdRecLoader, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner',
@@ -38,7 +39,7 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 				if (babDetection.isBlocking()) {
 					config.loader.run();
 				} else {
-					document.addEventListener('bab.blocking', config.loader.run);
+					doc.addEventListener('bab.blocking', config.loader.run);
 				}
 			}
 		});
