@@ -1,10 +1,13 @@
 /*global define*/
+import {babDetection} from "../../../AdEngine3/src/wad/bab-detection";
+
 define('ext.wikia.adEngine.wad.wadRecRunner', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.btRecLoader',
 	'ext.wikia.adEngine.wad.hmdRecLoader',
 	'wikia.log'
-], function (adContext, btRecLoader, hmdRecLoader, log) {
+], function (adContext, babDetection, btRecLoader, hmdRecLoader, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner',
@@ -34,7 +37,11 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 			if (!recEnabled[config.type] && adContext.get(config.context)) {
 				recEnabled[config.type] = rec;
 
-				config.loader.init();
+				if (babDetection.isBlocking()) {
+					config.loader.run();
+				} else {
+					document.addEventListener('bab.blocking', config.loader.run);
+				}
 			}
 		});
 	}

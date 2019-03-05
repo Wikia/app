@@ -1,6 +1,7 @@
 import { utils } from '@wikia/ad-engine';
 import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
 import { recInjector } from './rec-injector';
+import {babDetection} from "./bab-detection";
 
 const isDebug = utils.queryString.isUrlParamSet('hmd-rec-debug');
 const logGroup = 'hmd-loader';
@@ -206,17 +207,15 @@ export const hmdLoader = {
 	},
 
 	/**
-	 * Adds HMD rec service event listener on document
+	 * Runs HMD rec service and injects code
 	 * @returns {void}
 	 */
-	init() {
-		document.addEventListener('bab.blocking', () => {
-			utils.logger(logGroup, 'Initialising HMD rec loader');
+	run() {
+		utils.logger(logGroup, 'Initialising HMD rec loader');
 
-			initializeTracking();
+		initializeTracking();
 
-			recInjector.inject('hmd');
-		});
+		recInjector.inject('hmd');
 	},
 
 	/**

@@ -1,7 +1,9 @@
 import { context, utils } from '@wikia/ad-engine';
+import { babDetection } from './bab-detection';
 import { recInjector } from './rec-injector';
 
 const isDebug = utils.queryString.isUrlParamSet('bt-rec-debug');
+const logGroup = 'bt-loader';
 const placementClass = 'bt-uid-tg';
 
 let placementsMap = {};
@@ -90,13 +92,15 @@ export const btLoader = {
 	},
 
 	/**
-	 * Adds BT rec service event listener on document
+	 * Runs BT rec service and injects code
 	 * @returns {void}
 	 */
-	init() {
+	run() {
+		utils.logger(logGroup, 'Initialising BT rec loader');
+
 		placementsMap = context.get('options.wad.btRec.placementsMap') || {};
 
-		document.addEventListener('bab.blocking', injectScript);
+		injectScript();
 	},
 
 	triggerScript,
