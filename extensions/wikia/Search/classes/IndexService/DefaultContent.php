@@ -50,6 +50,11 @@ class DefaultContent extends AbstractService {
 	 */
 	protected $nolang_txt = [];
 
+	private static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
+
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 *
@@ -86,6 +91,8 @@ class DefaultContent extends AbstractService {
 			'lang' => $service->getSimpleLanguageCode(),
 			$this->field( 'wikititle' ) => $sitename,
 			'page_images' => count( $response['parse']['images'] ),
+			// @see http://php.net/manual/en/function.str-word-count.php
+			'page_words' => self::words_count( strip_tags( $response['parse']['text']['*'] ) ),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" )
