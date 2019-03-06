@@ -1202,6 +1202,13 @@ $wgAdDriverLkqdBidderCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
+ * @name $wgAdDriverDisableRecirculationCountries
+ * Disables recirculation in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableRecirculationCountries = null;
+
+/**
  * @name $wgAdDriverAdditionalVastSizeCountries
  * List of countries where vast requests has additional size 480x360.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

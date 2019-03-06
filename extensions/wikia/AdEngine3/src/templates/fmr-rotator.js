@@ -22,6 +22,7 @@ let currentRecNode = null;
 let currentAdSlot = null;
 let nextSlotName = null;
 let rotatorListener = null;
+let recirculationDisabled = false;
 let recirculationElement = null;
 
 /***********************
@@ -166,7 +167,9 @@ function rotateSlots() {
 
 			updateAdRefreshInformation();
 			swapRecirculation(true);
-		} else {
+		}
+
+		if (!refreshInfo.adVisible || recirculationDisabled) {
 			scrollListener.removeCallback(rotatorListener);
 
 			context.push('state.adStack', { id: nextSlotName });
@@ -182,7 +185,7 @@ function rotateSlots() {
  * @returns {void}
  */
 function showSlotWhenPossible() {
-	if (enoughTimeSinceLastRefresh() && isStartPositionReached()) {
+	if ((recirculationDisabled && isInViewport()) || (enoughTimeSinceLastRefresh() && isStartPositionReached())) {
 		scrollListener.removeCallback(rotatorListener);
 
 		context.push('state.adStack', { id: nextSlotName });
@@ -223,6 +226,7 @@ function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCC
  */
 export function rotateIncontentBoxad(slotName) {
 	nextSlotName = slotName;
+	recirculationDisabled = context.get('custom.isRecirculationDisabled');
 	recirculationElement = document.getElementById('recirculation-rail');
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
