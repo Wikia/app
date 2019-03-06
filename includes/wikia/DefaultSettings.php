@@ -1707,6 +1707,13 @@ $wgAdDriverIncontentPlayerRailCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableAdStackCountries
+ * Disables whole ad stack in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableAdStackCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
