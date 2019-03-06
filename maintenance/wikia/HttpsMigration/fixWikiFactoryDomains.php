@@ -74,11 +74,11 @@ class FixWikiFactoryDomains extends Maintenance {
 			}
 
 			if ( $saveChanges ) {
-				if ( !WikiFactory::removeDomain( $cityId, $originalDomain, [ 'fixing legacy domain after fandom.com migration' ] ) ) {
+				if ( !WikiFactory::removeDomain( $cityId, $originalDomain, 'fixing legacy domain after fandom.com migration' ) ) {
 					$this->output( "failed to remove original domain: {$this->COLOR_RED}$originalDomain{$this->COLOR_NONE}\n" );
 					continue;
 				}
-				if ( !WikiFactory::addDomain( $cityId, $finalDomain, [ 'fixing legacy domain after fandom.com migration' ] ) ) {
+				if ( !WikiFactory::addDomain( $cityId, $finalDomain, 'fixing legacy domain after fandom.com migration' ) ) {
 					$this->output( "failed to add new domain: {$this->COLOR_RED}$finalDomain{$this->COLOR_NONE}\n" );
 					continue;
 				}
