@@ -13,7 +13,8 @@ class ArticleTagEventsProducer {
         $message = [
             'wikiId' => $wgCityId,
             'articleId' => $newTitle->getArticleID(),
-            'articleTitle' => $newTitle->getPrefixedText()
+            'articleTitle' => $newTitle->getPrefixedText(),
+            'relativeUrl' => $newTitle->getLocalURL(),
         ];
 
         self::getPublisher()->publish( self::RENAMED_ROUTING_KEY, $message );
