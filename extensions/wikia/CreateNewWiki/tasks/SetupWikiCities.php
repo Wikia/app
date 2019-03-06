@@ -90,13 +90,13 @@ class SetupWikiCities extends Task {
 			if ( $this->taskContext->getLanguage() !== 'en' ) {
 				$parts = preg_split( '/\//', $wikiaDomain, 2, PREG_SPLIT_NO_EMPTY );
 				if ( !empty( $parts ) && count( $parts ) == 2 ) {
-					$wikiaDomain = $parts[1] . "." . $parts[0];
+					$wikiaDomain = $parts[1] . '.' . $parts[0];
 				}
 				$this->debug(
-					implode( ":",
+					implode( ':',
 						[ __METHOD__, "Domain after processing: $wikiaDomain" ]
 					),
-					["language" => $parts[1], "base_domain" => $parts[0], ]
+					[ 'language' => $parts[1], 'base_domain' => $parts[0], ]
 				);
 			}
 			$domains[] = [

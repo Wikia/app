@@ -45,7 +45,7 @@ class FixWikiFactoryDomains extends Maintenance {
 			$originalDomain = $row->city_domain;
 
 			$this->output(
-				sprintf("[%0{$counterWidth}d/%0{$counterWidth}d]: Processing wiki ", $currentIndex, $totalCount ) .
+				sprintf( "[%0{$counterWidth}d/%0{$counterWidth}d]: Processing wiki ", $currentIndex, $totalCount ) .
 				"(id: {$this->COLOR_PURPLE}$cityId{$this->COLOR_NONE}, domain: {$this->COLOR_GREEN}$originalDomain){$this->COLOR_NONE}: "
 			);
 			if ( !WikiFactory::isPublic( $cityId ) ) {
@@ -59,7 +59,7 @@ class FixWikiFactoryDomains extends Maintenance {
 				continue;
 			}
 
-			$finalDomain = "";
+			$finalDomain = '';
 			$parts = preg_split('/\//', $originalDomain, 2, PREG_SPLIT_NO_EMPTY );
 			if ( count( $parts ) == 2 ) {
 				$finalDomain = $parts[1] . "." . $parts[0];
@@ -74,11 +74,11 @@ class FixWikiFactoryDomains extends Maintenance {
 			}
 
 			if ( $saveChanges ) {
-				if ( !WikiFactory::removeDomain( $cityId, $originalDomain, [ "fixing legacy domain after fandom.com migration" ] ) ) {
-					$this->output("failed to remove original domain: {$this->COLOR_RED}$originalDomain{$this->COLOR_NONE}\n" );
+				if ( !WikiFactory::removeDomain( $cityId, $originalDomain, [ 'fixing legacy domain after fandom.com migration' ] ) ) {
+					$this->output( "failed to remove original domain: {$this->COLOR_RED}$originalDomain{$this->COLOR_NONE}\n" );
 					continue;
 				}
-				if ( !WikiFactory::addDomain( $cityId, $finalDomain, ["fixing legacy domain after fandom.com migration" ] ) ) {
+				if ( !WikiFactory::addDomain( $cityId, $finalDomain, [ 'fixing legacy domain after fandom.com migration' ] ) ) {
 					$this->output( "failed to add new domain: {$this->COLOR_RED}$finalDomain{$this->COLOR_NONE}\n" );
 					continue;
 				}
@@ -88,7 +88,7 @@ class FixWikiFactoryDomains extends Maintenance {
 				$this->output( "{$this->COLOR_BLUE}dry run - skipping{$this->COLOR_NONE}\n" );
 			}
 		}
-		$this->output("{$this->COLOR_GREEN}All done!{$this->COLOR_NONE}\n");
+		$this->output( "{$this->COLOR_GREEN}All done!{$this->COLOR_NONE}\n" );
 	}
 }
 
