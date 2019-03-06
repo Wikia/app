@@ -10,12 +10,4 @@ All `*.js` files are build into `dist/` using webpack command.
 
 ## To do
 
-- missing DW params
-  - scroll_y
-  - bidder_won, bidder_won_price
-- inline video ads
 - steam browser
-- templates:
-  - outstream
-  - intersitital
-  - floor adhesion
