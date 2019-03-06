@@ -148,20 +148,4 @@ class WikiaFilePage extends ImagePage {
 		return new WikiaWikiFilePage( $title );
 	}
 
-	/**
-	 * Render the image or video
-	 */
-	public function view() {
-		global $wgRedirectFilePagesForAnons;
-		if ( !$this->getContext()->getUser()->isAnon() || empty( $wgRedirectFilePagesForAnons ) ) {
-			parent::view();
-
-			return;
-		}
-		$redir = FilePageHelper::getFilePageRedirect( $this->getTitle() );
-		if ( !is_null( $redir ) ) {
-			$this->getContext()->getOutput()->redirect( $redir , '301' );
-		}
-	}
-
 }

@@ -1213,6 +1213,21 @@ class FileRepo {
 	 * @param $virtualUrl string
 	 * @return string|false
 	 */
+	public function getFullSha1( $virtualUrl ) {
+		$path = $this->resolveToStoragePath( $virtualUrl );
+		$tmpFile = $this->backend->getLocalReference( array( 'src' => $path ) );
+		if ( !$tmpFile ) {
+			return false;
+		}
+		return sha1_file( $tmpFile->getPath() );
+	}
+
+	/**
+	 * Get the sha1 of a file with a given virtual URL/storage path
+	 *
+	 * @param $virtualUrl string
+	 * @return string|false
+	 */
 	public function getFileSha1( $virtualUrl ) {
 		$path = $this->resolveToStoragePath( $virtualUrl );
 		$tmpFile = $this->backend->getLocalReference( array( 'src' => $path ) );
