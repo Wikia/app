@@ -1609,12 +1609,15 @@ function wfGetEffectiveHostname() {
 }
 
 function wfGetBaseDomainForHost( $host ) {
-	global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+	global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain;
 	if ( strpos( $host, ".{$wgFandomBaseDomain}" ) !== false ) {
 		return $wgFandomBaseDomain;
 	}
+	if ( strpos( $host, ".{$wgWikiaBaseDomain}" ) !== false ) {
+		return $wgWikiaBaseDomain;
+	}
 
-	return $wgWikiaBaseDomain;
+	return $wgWikiaOrgBaseDomain;
 }
 
 /**

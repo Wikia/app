@@ -8530,6 +8530,7 @@ $wgWikiaBarMainLanguages = [ 'de', 'en', 'es', 'fr' ];
  */
 $wgWikiaBaseDomain = 'wikia.com';
 $wgFandomBaseDomain = 'fandom.com';
+$wgWikiaOrgBaseDomain = 'wikia.org';
 
 /**
  * User accounts that are used as bots but do not have the bot flag.

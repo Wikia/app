@@ -499,7 +499,7 @@ class WikiFactory {
 	 * @return string
 	 */
 	static public function prepareUrlToParse( $url ) {
-		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+		global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain;
 		$httpPrefix = 'http://';
 
 		if ( strpos( $url, $httpPrefix ) === false ) {
@@ -507,7 +507,8 @@ class WikiFactory {
 		}
 
 		if ( strpos( $url, '.' . $wgWikiaBaseDomain ) === false &&
-			strpos( $url, '.' . $wgFandomBaseDomain ) === false
+			 strpos( $url, '.' . $wgFandomBaseDomain ) === false &&
+			 strpos( $url, '.' . $wgWikiaOrgBaseDomain ) === false
 		) {
 			$url = $url . '.' . $wgWikiaBaseDomain;
 		}
@@ -1375,7 +1376,7 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain,
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain,
 			$wgDevDomain, $wgWikiaBaseDomainRegex, $wgWikiaDevDomain, $wgFandomDevDomain;
 
 		// first - normalize URL
@@ -1399,7 +1400,7 @@ class WikiFactory {
 
 		$server = wfNormalizeHost( $server );
 
-		$wikiaDomainUsed = $fandomDomainUsed = false;
+		$wikiaDomainUsed = $wikiaOrgDomainUsed = $fandomDomainUsed = false;
 		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {
 			$server = str_replace( ".{$wgWikiaBaseDomain}", '', $server );
 			$wikiaDomainUsed = true;
@@ -1407,6 +1408,10 @@ class WikiFactory {
 		if ( endsWith($server, ".{$wgFandomBaseDomain}" ) ) {
 			$server = str_replace( ".{$wgFandomBaseDomain}", '', $server );
 			$fandomDomainUsed = true;
+		}
+		if ( endsWith( $server, ".{$wgWikiaOrgBaseDomain}" ) ) {
+			$server = str_replace( ".{$wgWikiaOrgBaseDomain}", '', $server );
+			$wikiaOrgDomainUsed = true;
 		}
 
 		// determine the environment we want to get url for
