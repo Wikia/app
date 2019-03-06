@@ -4779,6 +4779,18 @@ $wgGoogleAmpArticleBlacklist = [];
  */
 $wgGoogleAmpNamespaces = [];
 
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see maintenance/wikia/migrateImagesToGcs.php
+ * @var array $wgWikiStatusChangePublisher
+ */
+$wgGoogleCloudUploaderPublisher = [
+	'exchange' => 'google-cloud-uploader.mediawiki-events',
+	'vhost' => 'dc-file-sync',
+];
+
+
 /**
  * Go button goes straight to the edit screen if the article doesn't exist.
  * @var bool $wgGoToEdit
@@ -8480,9 +8492,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".

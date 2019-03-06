@@ -18,7 +18,8 @@
 
 	<?= $app->renderView('Ad', 'Index', [
 		'slotName' => 'INVISIBLE_SKIN',
-		'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+		'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'],
+		'addToAdQueue' => false
 	]); ?>
 
 </div>

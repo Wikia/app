@@ -195,7 +195,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 		if (slot instanceof Array) {
 			slotName = slot[0];
-		} else if (typeof slot === 'string') {
+		} else if (typeof slot === 'object' && slot.slotName) {
 			slotName = slot.slotName;
 		}
 
