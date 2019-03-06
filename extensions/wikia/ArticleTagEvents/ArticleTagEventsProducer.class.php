@@ -4,7 +4,7 @@ use Wikia\Rabbit\ConnectionBase;
 
 class ArticleTagEventsProducer {
 
-    const RENAMED_ROUTING_KEY= 'article-changed.renamed';
+    const RENAMED_ROUTING_KEY= 'article-tags.renamed';
 
     private static $rabbitPublisher;
 
