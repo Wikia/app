@@ -977,7 +977,19 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
+
+/**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+
+/**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
+ * Enables AdEngine3 extension on article pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
@@ -1279,11 +1291,18 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
+ * @name $wgAdDriverRepeatMobileIncontentCountries
+ * List of countries where Incontent Boxad ads are injected after h2 tag on Mobile-Wiki.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverMobileSectionsCollapseCountries = null;
+$wgAdDriverRepeatMobileIncontentCountries = null;
+
+/**
+ * @name $wgAdDriverRepeatMobileIncontentExtendedCountries
+ * List of countries where Incontent Boxad ads are injected after extended number of HTML elements on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
@@ -1298,6 +1317,13 @@ $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileWikiAE3SearchCountries = null;
+
+/**
+ * @name $wgAdDriverOasisHiviLeaderboardCountries
+ * List of countries where hivi_leaderboard slot on Oasis is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOasisHiviLeaderboardCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries
@@ -1820,3 +1846,14 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * Google Cloud Storage settings. The default settings are for production.
+ */
+$wgGcsConfig = [
+	'gcsCredentials' => $wgGcsCredentialsProd,
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
+];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';

@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.tracking.moatYi', [
 		adEngine3.context.set('services.moatYi.enabled', adContext.get('opts.moatYi'));
 		adEngine3.context.set('services.moatYi.partnerCode', 'wikiaprebidheader490634422386');
 
-		adEngine3.events.on(adEngine3.events.MOAT_YI_READY, function (data) {
+		adEngine3.eventService.on(services.moatYiEvents.MOAT_YI_READY, function (data) {
 			pageInfoTracker.trackProp('moat_yi', data);
 		});
 

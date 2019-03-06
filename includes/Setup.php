@@ -140,6 +140,7 @@ if ( !$wgLocalFileRepo ) {
 	} else {
 		$deletedHashLevel = $wgHashedUploadDirectory ? 3 : 0;
 	}
+
 	$wgLocalFileRepo = array(
 		'class' => 'LocalRepo',
 		'name' => 'local',

@@ -4779,6 +4779,18 @@ $wgGoogleAmpArticleBlacklist = [];
  */
 $wgGoogleAmpNamespaces = [];
 
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see maintenance/wikia/migrateImagesToGcs.php
+ * @var array $wgWikiStatusChangePublisher
+ */
+$wgGoogleCloudUploaderPublisher = [
+	'exchange' => 'google-cloud-uploader.mediawiki-events',
+	'vhost' => 'dc-file-sync',
+];
+
+
 /**
  * Go button goes straight to the edit screen if the article doesn't exist.
  * @var bool $wgGoToEdit
@@ -6586,6 +6598,12 @@ $wgPurgeVignetteUsingSurrogateKeys = true;
  * @var bool $wgPutIPinRC
  */
 $wgPutIPinRC = true;
+
+/**
+ * Qualaroo JS files to serve our user surveys.
+ */
+$wgQualarooUrl = '//s3.amazonaws.com/ki.js/52510/gQT.js';
+$wgQualarooDevUrl = '//s3.amazonaws.com/ki.js/52510/fCN.js';
 
 /**
  * Number of rows to cache in 'querycache' table when miser mode is on.
@@ -8474,9 +8492,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".

@@ -9,6 +9,7 @@ let trackingStatus = {
 	hmdSetuped: false,
 	hmdReady: false,
 	adRequested: false,
+	adPlayed: false,
 	hmdErrors: {
 		mediaerror: 1001,
 		malformattedXML: 1004,
@@ -46,6 +47,8 @@ const trackingEventsMap = {
 			}
 		}
 
+		trackingStatus.adPlayed = true;
+
 		trackEvent('hmd_impression', {
 			statusName: 'success',
 			vastParams: trackingStatus.vastIds,
@@ -58,22 +61,37 @@ const trackingEventsMap = {
 	adComplete: 'hmd_completed',
 	adClick: 'hmd_clicked',
 	adSkipped: 'hmd_skipped',
-	contentPlayerPlay: 'hmd_content_started',
 	contentPlayerPause: (event) => {
 		if (event.detail.state === 'setup') {
 			trackingStatus.hmdSetuped = true;
 			trackEvent('hmd_setup');
-		} else if (trackingStatus.hmdSetuped) {
-			if (!trackingStatus.hmdReady) {
-				trackingStatus.hmdReady = true;
-				trackEvent('hmd_ready');
-			} else if (trackingStatus.adRequested) {
-				trackingStatus.adRequested = false;
-				trackEvent('hmd_loaded');
-			}
+			return;
+		}
+
+		if (!trackingStatus.hmdSetuped) {
+			return;
+		}
+
+		if (!trackingStatus.hmdReady) {
+			trackingStatus.hmdReady = true;
+			trackEvent('hmd_ready');
+			return;
+		}
+
+		if (trackingStatus.adRequested) {
+			trackingStatus.adRequested = false;
+			trackEvent('hmd_loading');
 		}
 	},
-	continueContent: 'hmd_continue',
+	contentPlayerPlay: () => {
+		if (!trackingStatus.adPlayed) {
+			trackEvent('hmd_noad');
+		}
+
+		trackingStatus.hmdReady = false;
+		trackingStatus.adRequested = false;
+		trackingStatus.adPlayed = false;
+	},
 	viewable: 'hmd_viewable_impression',
 	penalty: 'hmd_blocked',
 	adError: (event) => {
@@ -188,17 +206,15 @@ export const hmdLoader = {
 	},
 
 	/**
-	 * Adds HMD rec service event listener on document
+	 * Runs HMD rec service and injects code
 	 * @returns {void}
 	 */
-	init() {
-		document.addEventListener('bab.blocking', () => {
-			utils.logger(logGroup, 'Initialising HMD rec loader');
+	run() {
+		utils.logger(logGroup, 'Initialising HMD rec loader');
 
-			initializeTracking();
+		initializeTracking();
 
-			recInjector.inject('hmd');
-		});
+		recInjector.inject('hmd');
 	},
 
 	/**

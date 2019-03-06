@@ -1,8 +1,13 @@
+import { context } from '@wikia/ad-engine';
+
 export function getConfig() {
 	return {
 		slotsToEnable: [
-			'TOP_BOXAD',
-			'INVISIBLE_SKIN'
-		]
+			'top_boxad',
+			'invisible_skin',
+		],
+		onInit: () => {
+			context.push('state.adStack', { id: 'invisible_skin' });
+		}
 	};
 }

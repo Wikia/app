@@ -28,7 +28,7 @@ export const getConfig = () => ({
 
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
-		slotService.disable('INCONTENT_PLAYER', 'hivi-collapse');
+		slotService.disable('incontent_player', 'hivi-collapse');
 	},
 
 	onAfterStickBfaaCallback() {

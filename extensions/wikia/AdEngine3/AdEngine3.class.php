@@ -15,9 +15,16 @@ class AdEngine3
 		}
 
 		$wikiaPageType = new WikiaPageType();
-		$isSearch = $wikiaPageType->isSearch();
-		if ($isSearch) {
+		if ($wikiaPageType->isSearch()) {
 			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
+		}
+
+		if ($wikiaPageType->isMainPage()) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisMainPages;
+		}
+
+		if ($wikiaPageType->isArticlePage()) {
+			return $wg->AdDriverAdEngine3EnabledOnOasisArticlePages;
 		}
 
 		return false;
@@ -117,7 +124,8 @@ class AdEngine3
 				'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
 				'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
 				'hasFeaturedVideo' => $hasFeaturedVideo,
-				'featuredVideo' => $featuredVideoDetails
+				'featuredVideo' => $featuredVideoDetails,
+				'testSrc' => $wg->AdDriverAdTestWikiSrc
 			])
 		];
 	}

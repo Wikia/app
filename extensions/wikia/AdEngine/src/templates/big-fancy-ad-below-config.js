@@ -17,7 +17,7 @@ export function getConfig() {
 		autoPlayAllowed: true,
 		defaultStateAllowed: true,
 		fullscreenAllowed: true,
-		stickinessAllowed: context.get('options.bfabStickiness'),
+		stickinessAllowed: false,
 		bfaaSlotName: 'TOP_LEADERBOARD',
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),

@@ -1,4 +1,4 @@
-import { context, slotService, utils } from '@wikia/ad-engine';
+import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
 import { babDetection } from './wad/bab-detection';
@@ -19,6 +19,17 @@ function isIncontentBoxadApplicable() {
 		!context.get('wiki.targeting.wikiIsCorporate');
 }
 
+function isHighImpactApplicable() {
+	return !context.get('custom.hasFeaturedVideo');
+}
+
+function isIncontentPlayerApplicable() {
+	const header = document.querySelectorAll('#mw-content-text > h2')[1];
+
+	return !context.get('custom.hasFeaturedVideo') &&
+		header && header.offsetWidth >= header.parentNode.offsetWidth;
+}
+
 /**
  * Enables top_boxad on screen with width >= 1024px.
  *
@@ -31,8 +42,34 @@ function isTopBoxadApplicable() {
 export default {
 	getContext() {
 		return {
-			TOP_LEADERBOARD: {
+			hivi_leaderboard: {
 				aboveTheFold: true,
+				firstCall: true,
+				adProduct: 'hivi_leaderboard',
+				slotNameSuffix: '',
+				group: 'LB',
+				options: {},
+				slotShortcut: 'v',
+				sizes: [
+					{
+						viewportSize: [1024, 0],
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+					},
+				],
+				defaultSizes: [[728, 90]],
+				defaultTemplates: [],
+				targeting: {
+					loc: 'top',
+					rv: 1,
+					xna: 1,
+				},
+			},
+			top_leaderboard: {
+				aboveTheFold: true,
+				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -40,23 +77,6 @@ export default {
 				options: {},
 				slotShortcut: 'l',
 				sizes: [
-					{
-						viewportSize: [1440, 0],
-						sizes: [
-							[728, 90],
-							[970, 66],
-							[970, 90],
-							[970, 150],
-							[970, 180],
-							[970, 250],
-							[970, 365],
-							[1024, 416],
-							[1030, 65],
-							[1030, 130],
-							[1030, 250],
-							[1440, 585],
-						],
-					},
 					{
 						viewportSize: [1024, 0],
 						sizes: [
@@ -82,7 +102,7 @@ export default {
 					xna: 1,
 				},
 			},
-			TOP_BOXAD: {
+			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
 				bidderAlias: 'TOP_RIGHT_BOXAD',
@@ -107,7 +127,7 @@ export default {
 					rv: 1,
 				},
 			},
-			INVISIBLE_SKIN: {
+			invisible_skin: {
 				adProduct: 'invisible_skin',
 				aboveTheFold: true,
 				slotNameSuffix: '',
@@ -129,8 +149,9 @@ export default {
 					rv: 1,
 				},
 			},
-			INCONTENT_BOXAD_1: {
+			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
+				bidderAlias: 'INCONTENT_BOXAD_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -142,8 +163,9 @@ export default {
 					rv: 1,
 				},
 			},
-			BOTTOM_LEADERBOARD: {
+			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
+				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -164,8 +186,38 @@ export default {
 					xna: 1,
 				},
 			},
-			FEATURED: {
+			incontent_player: {
+				adProduct: 'incontent_player',
+				avoidConflictWith: '.ad-slot',
+				autoplay: true,
+				audio: false,
+				bidderAlias: 'INCONTENT_PLAYER',
+				insertBeforeSelector: '.article-content > h2',
+				disabled: true,
+				slotNameSuffix: '',
+				group: 'HiVi',
+				slotShortcut: 'i',
+				defaultSizes: [[1, 1]],
+				targeting: {
+					loc: 'middle',
+					pos: ['incontent_player'],
+					rv: 1,
+				},
+			},
+			invisible_high_impact_2: {
+				adProduct: 'invisible_high_impact_2',
+				slotNameSuffix: '',
+				group: 'PX',
+				options: {},
+				outOfPage: true,
+				targeting: {
+					loc: 'hivi',
+					rv: 1,
+				},
+			},
+			featured: {
 				adProduct: 'featured',
+				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',
@@ -180,6 +232,15 @@ export default {
 		};
 	},
 
+	addSlotSize(slotName, size) {
+		const definedViewportSizes = context.get(`slots.${slotName}.sizes`);
+
+		context.push(`slots.${slotName}.defaultSizes`, size);
+		definedViewportSizes.forEach((sizeMap) => {
+			sizeMap.sizes.push(size);
+		})
+	},
+
 	setupSlotParameters(slot) {
 		const audioSuffix = slot.config.audio === true ? '-audio' : '';
 		const clickToPlaySuffix = slot.config.autoplay === true || slot.config.videoDepth > 1 ? '' : '-ctp';
@@ -190,17 +251,21 @@ export default {
 	},
 
 	setupStates() {
-		slotService.setState('TOP_LEADERBOARD', true);
-		slotService.setState('TOP_BOXAD', isTopBoxadApplicable());
-		slotService.setState('INCONTENT_BOXAD_1', true);
-		slotService.setState('BOTTOM_LEADERBOARD', true);
-		slotService.setState('INVISIBLE_SKIN', true);
+		slotService.setState('hivi_leaderboard', false);
+		slotService.setState('top_leaderboard', false);
+		slotService.setState('top_boxad', isTopBoxadApplicable());
+		slotService.setState('incontent_boxad_1', true);
+		slotService.setState('bottom_leaderboard', true);
+		slotService.setState('incontent_player', isIncontentPlayerApplicable());
+		slotService.setState('invisible_skin', true);
+		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
-		slotService.setState('FEATURED', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('gpt_flush', false);
 
 		// TODO: Remove those slots once AE3 is globally enabled
-		slotService.setState('TOP_LEADERBOARD_AB', false);
-		slotService.setState('GPT_FLUSH', false);
+		slotService.setState('top_leaderboard_ab', false);
+		slotService.setState('gpt_flush', false);
 	},
 
 	setupIdentificators() {
@@ -217,13 +282,30 @@ export default {
 
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
-			context.set('slots.TOP_LEADERBOARD.targeting.xna', '0');
-			context.set('slots.BOTTOM_LEADERBOARD.targeting.xna', '0');
+			context.set('slots.hivi_leaderboard.targeting.xna', '0');
+			context.set('slots.top_leaderboard.targeting.xna', '0');
+			context.set('slots.bottom_leaderboard.targeting.xna', '0');
+		}
+	},
+
+	setupTopLeaderboard() {
+		if (context.get('custom.hiviLeaderboard')) {
+			slotService.setState('hivi_leaderboard', true);
+			context.push('state.adStack', { id: 'hivi_leaderboard' });
+
+			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+				slotService.setState('top_leaderboard', true);
+				context.set('slots.top_leaderboard.firstCall', false);
+				context.push('state.adStack', { id: 'top_leaderboard' });
+			});
+		} else {
+			slotService.setState('top_leaderboard', true);
+			context.push('state.adStack', { id: 'top_leaderboard' });
 		}
 	},
 
 	injectBottomLeaderboard() {
-		const slotName = 'BOTTOM_LEADERBOARD';
+		const slotName = 'bottom_leaderboard';
 		const pushSlotAfterComments = throttle(() => {
 			if (window.ArticleComments && !window.ArticleComments.initCompleted) {
 				return;
@@ -240,9 +322,26 @@ export default {
 		document.addEventListener('scroll', pushSlotAfterComments);
 	},
 
+	injectIncontentPlayer() {
+		const header = document.querySelectorAll('#mw-content-text > h2')[1];
+
+		if (!header || !isIncontentPlayerApplicable()) {
+			return;
+		}
+
+		const slotName = 'incontent_player';
+		const wrapper = document.createElement('div');
+
+		wrapper.id = 'INCONTENT_WRAPPER';
+		wrapper.innerHTML = '<div id="' + slotName + '" class="wikia-ad hide"></div>';
+		header.parentNode.insertBefore(wrapper, header);
+
+		context.push('state.adStack', { id: slotName });
+	},
+
 	// TODO: Extract floating medrec to separate module once we do refreshing
 	injectIncontentBoxad() {
-		const slotName = 'INCONTENT_BOXAD_1';
+		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 
@@ -262,5 +361,9 @@ export default {
 
 			context.push('events.pushOnScroll.ids', slotName);
 		}, 10000);
+	},
+
+	injectHighImpact() {
+		context.push('state.adStack', { id: 'invisible_high_impact_2' });
 	},
 };

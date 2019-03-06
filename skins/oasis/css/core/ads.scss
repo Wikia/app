@@ -1,4 +1,4 @@
-@import 'extensions/wikia/AdEngine/dist/bridge.scss';
+@import 'extensions/wikia/AdEngine3/dist/ads.scss';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/transition';
 @import 'layout';
@@ -23,6 +23,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
+#invisible_skin,
 .wikia-ad.hidden,
 .wikia-ad .hidden {
 	display: none !important;
@@ -104,7 +105,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 		width: 100%;
 	}
 
-	#TOP_LEADERBOARD {
+	#TOP_LEADERBOARD, #top_leaderboard {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
 		max-width: none;
@@ -126,14 +127,14 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	position: relative;
 }
 
-#TOP_LEADERBOARD {
+#TOP_LEADERBOARD, #top_leaderboard {
 	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-#TOP_LEADERBOARD {
+#TOP_LEADERBOARD, #top_leaderboard {
 	&.default-height {
 		height: 90px;
 	}
@@ -176,7 +177,7 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	margin: 0 -5px;
 }
 
-#BOTTOM_LEADERBOARD {
+#BOTTOM_LEADERBOARD, #bottom_leaderboard {
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
@@ -212,15 +213,13 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 
 /* end transistion temp code */
 
-#TOP_BOXAD {
+#TOP_BOXAD, #top_boxad {
+	margin-bottom: 10px;
+	z-index: 100;
+
 	img {
 		display: block;
 	}
-}
-
-#TOP_BOXAD {
-	margin-bottom: 10px;
-	z-index: 100;
 
 	&.default-height {
 		height: 250px;
@@ -289,7 +288,7 @@ body > a > img[src$="noad.gif"] {
 		position: absolute;
 	}
 
-	#INCONTENT_BOXAD_1 {
+	#INCONTENT_BOXAD_1, #incontent_boxad_1 {
 		position: relative;
 		text-align: center;
 		width: 300px;

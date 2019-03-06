@@ -1,6 +1,6 @@
 (function($, window) {
 
-require(['uuid', 'search-tracking', 'wikia.trackingOptIn'], function(uuid, searchTracking, trackingOptIn) {
+require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
 	var WikiaSearch = {
 		searchUID: null,
 
@@ -115,7 +115,7 @@ require(['uuid', 'search-tracking', 'wikia.trackingOptIn'], function(uuid, searc
 			};
 
 			trackingOptIn.pushToUserConsentQueue(function () {
-				searchTracking.trackSearchClicked(payload);
+				window.searchTracking.trackSearchClicked(payload);
 			});
 		},
 		trackSearchResultsImpression: function() {
@@ -144,7 +144,7 @@ require(['uuid', 'search-tracking', 'wikia.trackingOptIn'], function(uuid, searc
 			};
 
 			trackingOptIn.pushToUserConsentQueue(function () {
-				searchTracking.trackSearchImpression(payload);
+				window.searchTracking.trackSearchImpression(payload);
 			});
 		},
 		getSearchResults: function() {
