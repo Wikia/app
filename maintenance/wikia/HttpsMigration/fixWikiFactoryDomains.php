@@ -25,16 +25,24 @@ class FixWikiFactoryDomains extends Maintenance {
 			__METHOD__
 		);
 
+		$totalCount = $res->numRows();
+		$this->output( "Processing wikis, $totalCount in total\n");
+
+		$currentIndex = 0;
 		foreach ( $res as $row ) {
+			++$currentIndex;
 			$cityId = $row->city_id;
+			$originalDomain = $row->city_domain;
+
+			$this->output("$currentIndex/$totalCount: Processing wiki (id: $cityId, domain: $originalDomain): ");
 			if ( !WikiFactory::isPublic( $cityId ) ) {
+				$this->output( "wiki not public - skipping\n");
 				continue;
 			}
-			$originalDomain = $row->city_domain;
 
 			$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
 			if ( strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) === false ) {
-				$this->output( "Not an fandom.com wiki (id: $cityId, domain: $originalDomain): skipping\n" );
+				$this->output( "not an fandom.com wiki - skipping\n" );
 				continue;
 			}
 
@@ -43,9 +51,9 @@ class FixWikiFactoryDomains extends Maintenance {
 			if ( count( $parts ) == 2 ) {
 				$finalDomain = $parts[1] . "." . $parts[0];
 			}
-			$this->output( "Updating WF domain for wiki (id: $cityId, domain: $originalDomain) to: $finalDomain\n" );
+			$this->output( "updating WF domain for wiki to: $finalDomain" );
 			if ( empty( $finalDomain) ) {
-				$this->output( "No change computed for wiki (id: $cityId, domain: $originalDomain): skipping\n");
+				$this->output( "no change computed for wiki - skipping\n");
 				continue;
 			}
 
@@ -65,10 +73,12 @@ class FixWikiFactoryDomains extends Maintenance {
 
 				$wgMemc->delete( wfMemcKey( 'wiki_domains', md5( $cityId ) ) );
 
-				$this->output( "Updated wiki (id: $cityId, domain: $originalDomain)!\n" );
+				$this->output( "done\n" );
+			} else {
+				$this->output( "dry run - skipping\n" );
 			}
 		}
-		$this->output("Done!\n");
+		$this->output("All done!\n");
 	}
 }
 
