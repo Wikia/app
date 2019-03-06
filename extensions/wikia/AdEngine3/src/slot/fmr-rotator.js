@@ -167,15 +167,17 @@ function rotateSlots() {
 
 			updateAdRefreshInformation();
 			swapRecirculation(true);
+
+			if (!recirculationDisabled) {
+				return;
+			}
 		}
 
-		if (!refreshInfo.adVisible || recirculationDisabled) {
-			scrollListener.removeCallback(rotatorListener);
+		scrollListener.removeCallback(rotatorListener);
 
-			context.push('state.adStack', { id: nextSlotName });
+		context.push('state.adStack', { id: nextSlotName });
 
-			applyRec(slotStatusChanged);
-		}
+		applyRec(slotStatusChanged);
 	}
 }
 
