@@ -187,7 +187,10 @@ function rotateSlots() {
  * @returns {void}
  */
 function showSlotWhenPossible() {
-	if ((recirculationDisabled && isInViewport()) || (enoughTimeSinceLastRefresh() && isStartPositionReached())) {
+	const isViewportAndNoRecirculation = recirculationDisabled && isInViewport();
+	const isPositionAndTime = enoughTimeSinceLastRefresh() && isStartPositionReached();
+
+	if (isViewportAndNoRecirculation || isPositionAndTime) {
 		scrollListener.removeCallback(rotatorListener);
 
 		context.push('state.adStack', { id: nextSlotName });
