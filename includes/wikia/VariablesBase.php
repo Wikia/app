@@ -8935,9 +8935,9 @@ $wgEnableEditDraftSavingExt = false;
 /**
  * ArticleTags RabbitMQ configuration.
  * @see extensions/wikia/articleTagEvents
- * @var array $wgArticleTagQueue
+ * @var array $wgArticleTagExchangeConfig
  */
-$wgArticleTagQueue = [
+$wgArticleTagExchangeConfig = [
     'vhost' => 'events',
     'exchange' => 'article-tags',
 ];

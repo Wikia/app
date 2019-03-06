@@ -21,10 +21,10 @@ class ArticleTagEventsProducer {
 
     /** @return \Wikia\Rabbit\ConnectionBase */
     protected static function getPublisher() {
-        global $wgArticleTagQueue;
+        global $wgArticleTagExchangeConfig;
 
         if ( !isset( self::$rabbitPublisher ) ) {
-            self::$rabbitPublisher = new ConnectionBase( $wgArticleTagQueue );
+            self::$rabbitPublisher = new ConnectionBase( $wgArticleTagExchangeConfig );
         }
 
         return self::$rabbitPublisher;
