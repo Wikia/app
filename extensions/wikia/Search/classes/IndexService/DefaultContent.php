@@ -87,7 +87,7 @@ class DefaultContent extends AbstractService {
 			$this->field( 'wikititle' ) => $sitename,
 			'page_images' => count( $response['parse']['images'] ),
 			// @see http://php.net/manual/en/function.str-word-count.php
-			'page_words' => \Wikia::words_count( strip_tags( $response['parse']['text']['*'] ) ),
+			'page_words_i' => \Wikia::words_count( strip_tags( $response['parse']['text']['*'] ) ),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" )
