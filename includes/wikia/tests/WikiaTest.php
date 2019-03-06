@@ -159,9 +159,9 @@ class WikiaTest extends WikiaBaseTest {
 		yield [ '', 1 ];
 		yield [ 'foo', 1 ];
 		yield [ ' foo ', 1 ];
-		yield [ 'foo bar', 2 ];
+		yield [ '<h1>foo bar</h1>', 2 ];
 		yield [ "foo\nbar", 2 ];
 		yield [ 'foo - bar', 3 ];
-		yield [ 'wcześniej nazywany również gziką', 4 ];
+		yield [ 'wcześniej <span>nazywany</span> również gziką', 4 ];
 	}
 }
