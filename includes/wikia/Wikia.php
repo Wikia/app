@@ -1949,4 +1949,17 @@ class Wikia {
 		}
 		return true;
 	}
+
+	/**
+	 * Removes HTML tags from a given text and counts words.
+	 *
+	 * Text is split by spaces and newlines.(
+	 *
+	 * @param string $text
+	 * @return int
+	 */
+	public static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
 }
