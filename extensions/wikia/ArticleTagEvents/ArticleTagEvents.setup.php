@@ -10,4 +10,4 @@ $wgAutoloadClasses['ArticleTagEventsProducer'] = $dir . 'ArticleTagEventsProduce
 /**
  * Hooks
  */
-$wgHooks['SpecialMovepageAfterMove'][] = 'ArticleTagEventsProducer::onSpecialMovepageAfterMove';
+$wgHooks['TitleMoveComplete'][] = 'ArticleTagEventsProducer::onTitleMoveComplete';

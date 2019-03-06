@@ -8,7 +8,7 @@ class ArticleTagEventsProducer {
 
     private static $rabbitPublisher;
 
-    public static function onSpecialMovepageAfterMove( MovePageForm $form, Title $oldTitle, Title $newTitle ) {
+    public static function onTitleMoveComplete( Title $oldTitle, Title $newTitle, User $user, $pageId, $redirectId ) {
         global $wgCityId;
         $message = [
             'wikiId' => $wgCityId,
