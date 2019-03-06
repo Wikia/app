@@ -2,7 +2,15 @@
 
 require_once __DIR__ . '/../../Maintenance.php';
 
+
 class FixWikiFactoryDomains extends Maintenance {
+	private $COLOR_GREEN = "\e[0;32m";
+	private $COLOR_CYAN = "\e[0;36m";
+	private $COLOR_RED = "\e[0;31m";
+	private $COLOR_BLUE = "\e[0;34m";
+	private $COLOR_PURPLE = "\e[0;35m";
+	private $COLOR_NONE = "\e[0m";
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Fixes Wiki Factory domains for non english wikis that were migrated to fandom.com';
@@ -10,11 +18,12 @@ class FixWikiFactoryDomains extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgMemc, $wgFandomBaseDomain;
+		global $wgFandomBaseDomain, $wgUser;
 
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = WikiFactory::db( DB_MASTER );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$res = $dbw->select(
 			[ 'city_domains' ],
@@ -26,7 +35,8 @@ class FixWikiFactoryDomains extends Maintenance {
 		);
 
 		$totalCount = $res->numRows();
-		$this->output( "Processing wikis, $totalCount in total\n");
+		$counterWidth = floor( log10( $totalCount ) ) + 1;
+		$this->output( "Processing wikis, {$this->COLOR_CYAN}$totalCount{$this->COLOR_NONE} in total\n" );
 
 		$currentIndex = 0;
 		foreach ( $res as $row ) {
@@ -34,51 +44,51 @@ class FixWikiFactoryDomains extends Maintenance {
 			$cityId = $row->city_id;
 			$originalDomain = $row->city_domain;
 
-			$this->output("$currentIndex/$totalCount: Processing wiki (id: $cityId, domain: $originalDomain): ");
+			$this->output(
+				sprintf("[%0{$counterWidth}d/%0{$counterWidth}d]: Processing wiki ", $currentIndex, $totalCount ) .
+				"(id: {$this->COLOR_PURPLE}$cityId{$this->COLOR_NONE}, domain: {$this->COLOR_GREEN}$originalDomain){$this->COLOR_NONE}: "
+			);
 			if ( !WikiFactory::isPublic( $cityId ) ) {
-				$this->output( "wiki not public - skipping\n");
+				$this->output( "wiki not public - skipping\n" );
 				continue;
 			}
 
 			$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
 			if ( strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) === false ) {
-				$this->output( "not an fandom.com wiki - skipping\n" );
+				$this->output( "not an fandom.com wiki - {$this->COLOR_BLUE}skipping{$this->COLOR_NONE}\n" );
 				continue;
 			}
 
 			$finalDomain = "";
-			$parts = preg_split('/\//', $originalDomain, 2, PREG_SPLIT_NO_EMPTY);
+			$parts = preg_split('/\//', $originalDomain, 2, PREG_SPLIT_NO_EMPTY );
 			if ( count( $parts ) == 2 ) {
 				$finalDomain = $parts[1] . "." . $parts[0];
 			}
-			$this->output( "updating WF domain for wiki to: $finalDomain" );
+			$this->output(
+				"updating WF domain for wiki: {$this->COLOR_GREEN}$originalDomain{$this->COLOR_NONE} -> " .
+				"{$this->COLOR_CYAN}$finalDomain{$this->COLOR_NONE}: "
+			);
 			if ( empty( $finalDomain) ) {
-				$this->output( "no change computed for wiki - skipping\n");
+				$this->output( "no change computed for wiki - {$this->COLOR_CYAN}skipping{$this->COLOR_NONE}\n" );
 				continue;
 			}
 
 			if ( $saveChanges ) {
-				$dbw->update(
-					'city_domains',
-					[
-						'city_id' => $cityId,
-						'city_domain'=> $finalDomain
-					],
-					[
-						'city_id' => $cityId,
-						'city_domain'=> $originalDomain
-					],
-					__METHOD__
-				);
+				if ( !WikiFactory::removeDomain( $cityId, $originalDomain, [ "fixing legacy domain after fandom.com migration" ] ) ) {
+					$this->output("failed to remove original domain: {$this->COLOR_RED}$originalDomain{$this->COLOR_NONE}\n" );
+					continue;
+				}
+				if ( !WikiFactory::addDomain( $cityId, $finalDomain, ["fixing legacy domain after fandom.com migration" ] ) ) {
+					$this->output( "failed to add new domain: {$this->COLOR_RED}$finalDomain{$this->COLOR_NONE}\n" );
+					continue;
+				}
 
-				$wgMemc->delete( wfMemcKey( 'wiki_domains', md5( $cityId ) ) );
-
-				$this->output( "done\n" );
+				$this->output( "{$this->COLOR_GREEN}done{$this->COLOR_NONE}\n" );
 			} else {
-				$this->output( "dry run - skipping\n" );
+				$this->output( "{$this->COLOR_BLUE}dry run - skipping{$this->COLOR_NONE}\n" );
 			}
 		}
-		$this->output("All done!\n");
+		$this->output("{$this->COLOR_GREEN}All done!{$this->COLOR_NONE}\n");
 	}
 }
 
