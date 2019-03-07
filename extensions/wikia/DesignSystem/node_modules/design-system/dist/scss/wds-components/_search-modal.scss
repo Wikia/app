@@ -34,6 +34,16 @@
 }
 
 .wds-search-is-active .wds-search-modal {
+	.wds-dropdown {
+		&__content {
+			top: calc(100% + 12px);
+		}
+
+		&:after {
+			bottom: -12px;
+		}
+	}
+
 	.wds-global-navigation__search-container {
 		border-top: 1px solid rgba($wds-color-white, .25);
 		height: auto;
@@ -74,15 +84,5 @@
 	// so we are detecting if href contains Special:CreateNewWiki
 	.wds-global-navigation__link-button[href *= "Special:CreateNewWiki"] {
 		display: none;
-	}
-
-	.wds-dropdown {
-		&__content {
-			top: calc(100% + 12px);
-		}
-
-		&:after {
-			bottom: -12px;
-		}
 	}
 }

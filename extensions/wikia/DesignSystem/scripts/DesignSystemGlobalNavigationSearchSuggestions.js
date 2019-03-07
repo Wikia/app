@@ -67,7 +67,7 @@ $(function () {
 						suggestionWrapperElement: 'li',
 						fnContainerMarkup: function (mainContainerId, autocompleteElId) {
 							return '<div id="' + mainContainerId +
-								'" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
+								'" class="wds-dropdown__content wds-global-navigation__search-suggestions wds-is-not-scrollable">' +
 								'<ul id="' + autocompleteElId +
 								'" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
 								'</div>';
