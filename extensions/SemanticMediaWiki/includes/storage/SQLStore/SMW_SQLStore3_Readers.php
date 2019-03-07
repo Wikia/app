@@ -451,9 +451,13 @@ class SMWSQLStore3Readers {
 		$proptable = $proptables[$tableid];
 		$db = $this->store->getConnection();
 
+		// CORE-95 | performance fix backport frpm https://github.com/SemanticMediaWiki/SemanticMediaWiki/pull/3142
+		$group = false;
+
 		if ( $proptable->usesIdSubject() ) { // join with ID table to get title data
 			$from = $db->tableName( SMWSql3SmwIds::TABLE_NAME ) . " INNER JOIN " . $db->tableName( $proptable->getName() ) . " AS t1 ON t1.s_id=smw_id";
 			$select = 'smw_title, smw_namespace, smw_iw, smw_sortkey, smw_subobject';
+			$group = true;
 		} else { // no join needed, title+namespace as given in proptable
 			$from = $db->tableName( $proptable->getName() ) . " AS t1";
 			$select = 's_title AS smw_title, s_namespace AS smw_namespace, \'\' AS smw_iw, s_title AS smw_sortkey, \'\' AS smw_subobject';
@@ -476,9 +480,15 @@ class SMWSQLStore3Readers {
 			}
 		}
 
-		$res = $db->select( $from, 'DISTINCT ' . $select,
+		// CORE-95 | performance fix backport frpm https://github.com/SemanticMediaWiki/SemanticMediaWiki/pull/3142
+		$options = $this->store->getSQLOptions( $requestOptions, 'smw_sortkey' );
+		if ( $group ) {
+			$options['GROUP BY'] = 'smw_sortkey, smw_id';
+		}
+
+		$res = $db->select( $from, $select,
 		                    $where . $this->store->getSQLConditions( $requestOptions, 'smw_sortkey', 'smw_sortkey', $where !== '' ),
-		                    __METHOD__, $this->store->getSQLOptions( $requestOptions, 'smw_sortkey' ) );
+		                    __METHOD__,  $options);
 
 		$diHandler = $this->store->getDataItemHandlerForDIType( SMWDataItem::TYPE_WIKIPAGE );
 
