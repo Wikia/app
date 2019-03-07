@@ -200,7 +200,7 @@ class FilePageHooks extends WikiaObject{
 	 */
 	public static function onArticleSave( WikiPage $page ) {
 		if( $page->getTitle()->getNamespace() === NS_FILE &&
-		   $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
+		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
 			return true;
 		}
 		self::purgeTitle( $page->getTitle() );
