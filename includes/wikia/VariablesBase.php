@@ -8784,7 +8784,6 @@ $wgWikicitiesReadOnly = false;
 $wgWikiFactoryDomains = [
 	# gTLDs
 	'wikia.net',
-	'wikia.org',
 	'wikia.info',
 	# ccTLDs
 	'wikia.at',
