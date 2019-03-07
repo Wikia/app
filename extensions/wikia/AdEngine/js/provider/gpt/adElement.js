@@ -103,6 +103,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			}
 		}
 
+		this.node.setAttribute('data-gpt-order-id', event.campaignId);
 		this.node.setAttribute('data-gpt-line-item-id', lineItemId);
 		this.node.setAttribute('data-gpt-creative-id', creativeId);
 		this.node.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
