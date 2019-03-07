@@ -103,7 +103,7 @@ class MigrateImagesForWikis extends Maintenance {
 			$this->output( $output . "\n\n" );
 		} else {
 			$this->error( "Migration failure for {$wikiId}:{$output}\n" );
-			throw new RuntimeException( "Failure to migrate images for wiki {$wikiId}\n" );
+//			throw new RuntimeException( "Failure to migrate images for wiki {$wikiId}\n" );
 		}
 	}
 }
