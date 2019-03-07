@@ -6,7 +6,6 @@ use Job;
 use JobQueueGroup;
 use SMW\Store;
 use Title;
-use Wikia\Tasks\Queues\SMWQueue;
 
 /**
  * @ingroup SMW
@@ -142,13 +141,12 @@ abstract class JobBase extends Job {
 			wfDebug( __METHOD__ . " {$job->getType()}\n" . wfBacktrace() . "\n" );
 
 			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-			// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurency
-			$task->setQueue( SMWQueue::NAME );
 			$task->call( $job->getType(), $job->getTitle(), $job->params );
 			$tasks[] = $task;
 		}
 
-		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks );
+		// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurency
+		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks, \Wikia\Tasks\Queues\SMWQueue::NAME );
 		return true;
 		// Wikia change - end
 /**

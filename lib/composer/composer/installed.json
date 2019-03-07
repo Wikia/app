@@ -5625,9 +5625,7 @@
         "version_normalized": "1.0.7.0",
         "dist": {
             "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar",
-            "reference": null,
-            "shasum": null
+            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar"
         },
         "require-dev": {
             "phpunit/phpunit": "*"
@@ -5945,12 +5943,12 @@
     },
     {
         "name": "wikia/semantic-media-wiki",
-        "version": "2.4.6.1",
-        "version_normalized": "2.4.6.1",
+        "version": "2.4.6.2",
+        "version_normalized": "2.4.6.2",
         "source": {
             "type": "git",
             "url": "https://github.com/Wikia/SemanticMediaWiki",
-            "reference": "01061bc3cb24ace83321f7bd93c502aab3afdd53"
+            "reference": "d7f2ddbf9bdc497ef7924e26de2ef7dffb0b0d5c"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
@@ -5980,7 +5978,7 @@
             "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
             "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
         },
-        "time": "2018-04-30T07:49:22+00:00",
+        "time": "2019-03-07T09:21:19+00:00",
         "type": "mediawiki-extension",
         "extra": {
             "branch-alias": {
@@ -6063,9 +6061,7 @@
         "version_normalized": "1.1.4.0",
         "dist": {
             "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-scribunto/semantic-scribunto-1.1.4.tar",
-            "reference": null,
-            "shasum": null
+            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-scribunto/semantic-scribunto-1.1.4.tar"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
