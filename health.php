@@ -1,4 +1,5 @@
 <?php
+// Used for determining backend health, do not remove!
 
 $statusCode = 200;
 $statusMsg = 'OK';
