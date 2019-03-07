@@ -43,7 +43,7 @@
 					<?= $app->renderView('Ad', 'Index', [
 						'slotName' => 'incontent_native',
 						'pageTypes' => ['search'],
-						'addToAdQueue' => true
+						'addToAdQueue' => AdEngine3::isEnabled()
 					]); ?>
 
 					<?php foreach ( $results as $result ): ?>

@@ -1320,11 +1320,11 @@ $wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
 
 /**
- * @name $wgAdDriverAE3NativeSearchCountries
+ * @name $wgAdDriverNativeSearchDesktopCountries
  * List of countries where incontent native is displayed on app search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverAE3NativeSearchCountries = null;
+$wgAdDriverNativeSearchDesktopCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
