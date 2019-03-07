@@ -3,9 +3,9 @@
 namespace SMW\MediaWiki\Jobs;
 
 use Job;
-use JobQueueGroup;
 use SMW\Store;
 use Title;
+use Wikia\Tasks\Queues\SMWQueue;
 
 /**
  * @ingroup SMW
@@ -130,7 +130,7 @@ abstract class JobBase extends Job {
 	 * @see https://gerrit.wikimedia.org/r/#/c/162009
 	 *
 	 * @param self[] $jobs
-	 * @return bool
+	 * @return true
 	 */
 	public static function batchInsert( $jobs ) {
 		// Wikia change - start
@@ -140,24 +140,17 @@ abstract class JobBase extends Job {
 		foreach( $jobs as $job ) {
 			wfDebug( __METHOD__ . " {$job->getType()}\n" . wfBacktrace() . "\n" );
 
+			// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurrency
 			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$task->setQueue( SMWQueue::NAME );
 			$task->call( $job->getType(), $job->getTitle(), $job->params );
 			$tasks[] = $task;
 		}
 
-		// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurency
-		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks, \Wikia\Tasks\Queues\SMWQueue::NAME );
+		// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurrency
+		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks );
 		return true;
 		// Wikia change - end
-/**
-
-		if ( class_exists( 'JobQueueGroup' ) ) {
-			JobQueueGroup::singleton()->push( $jobs );
-			return true;
-		}
-
-		return parent::batchInsert( $jobs );
-**/
 	}
 
 	/**
