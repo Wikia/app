@@ -1,4 +1,4 @@
-define('QualtricsSiteIntercept', ['jquery', 'wikia.trackingOptIn'], function($, trackingOptIn) {
+require(['jquery', 'wikia.trackingOptIn'], function($, trackingOptIn) {
 	function loadQualtrics() {
 		$("body").after('<div id=\'SI_0UkUboGRCD68K6V\'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>');
 

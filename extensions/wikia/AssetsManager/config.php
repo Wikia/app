@@ -2454,8 +2454,7 @@ $config['search_tracking_js'] = [
 
 $config['qualtrics_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/QualtricsSiteIntercept/scripts/QualtricsSiteIntercept.js',
+		'//extensions/wikia/QualtricsSiteIntercept/scripts/index.js',
 	],
 ];
