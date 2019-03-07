@@ -71,6 +71,9 @@ $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 $wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 $wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 
+# Add words count statistics to page_props after each article's wikitext parsing
+$wgHooks['LinksUpdateConstructed'][] = 'Wikia::onLinksUpdateConstructed';
+
 
 use Wikia\Tracer\WikiaTracer;
 
@@ -1956,5 +1959,33 @@ class Wikia {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes HTML tags from a given text and counts words.
+	 *
+	 * Text is split by spaces and newlines.(
+	 *
+	 * @param string $text
+	 * @return int
+	 */
+	public static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
+
+	/**
+	 * Update words_count page property kept in page_props per-wiki table
+	 *
+	 * @param LinksUpdate $linksUpdate
+	 */
+	public static function onLinksUpdateConstructed( LinksUpdate $linksUpdate ) {
+		$parserOutput = $linksUpdate->getParserOutput();
+		$words_count = self::words_count( $parserOutput->getText() );
+
+		$parserOutput->setProperty( 'words_count', $words_count );
+
+		// keep LinksUpdate instance in sync with our updated parser output properties
+		$linksUpdate->mProperties = $parserOutput->getProperties();
 	}
 }
