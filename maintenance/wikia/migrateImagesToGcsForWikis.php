@@ -10,6 +10,7 @@ class MigrateImagesForWikis extends Maintenance {
 	private $allWikis;
 	/** @var string */
 	private $wikiPrefix;
+	private $centralDbr;
 
 	/**
 	 * Define available options
