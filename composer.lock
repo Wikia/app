@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "611db131236ba5ba623fa516d306714b",
+    "content-hash": "aaa8c5b165a43c8a03fe8381d9a8a187",
     "packages": [
         {
             "name": "composer/installers",
@@ -5429,9 +5429,7 @@
             "version": "1.0.7",
             "dist": {
                 "type": "tar",
-                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar",
-                "reference": null,
-                "shasum": null
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -5736,11 +5734,11 @@
         },
         {
             "name": "wikia/semantic-media-wiki",
-            "version": "2.4.6.1",
+            "version": "2.4.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/SemanticMediaWiki",
-                "reference": "01061bc3cb24ace83321f7bd93c502aab3afdd53"
+                "reference": "d7f2ddbf9bdc497ef7924e26de2ef7dffb0b0d5c"
             },
             "require": {
                 "composer/installers": "1.*,>=1.0.1",
@@ -5844,16 +5842,14 @@
                 "wiki": "https://www.semantic-mediawiki.org/wiki/",
                 "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
             },
-            "time": "2018-04-30T07:49:22+00:00"
+            "time": "2019-03-07T09:21:19+00:00"
         },
         {
             "name": "wikia/semantic-scribunto",
             "version": "1.1.4",
             "dist": {
                 "type": "tar",
-                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-scribunto/semantic-scribunto-1.1.4.tar",
-                "reference": null,
-                "shasum": null
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-scribunto/semantic-scribunto-1.1.4.tar"
             },
             "require": {
                 "composer/installers": "1.*,>=1.0.1",

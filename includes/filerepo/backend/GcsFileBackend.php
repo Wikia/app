@@ -120,7 +120,7 @@ class GcsFileBackend extends FileBackendStore {
 
 		$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 		$data = $params['content'];
-		$sha1 = sha1( $params['content'] );
+		$sha1 = $this->sha1ToHash( sha1( $params['content'] ) );
 
 		try {
 			$this->upload( $dst, $data, $sha1 );
@@ -145,7 +145,7 @@ class GcsFileBackend extends FileBackendStore {
 
 		$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 		$data = fopen( $params['src'], 'r' );
-		$sha1 = sha1_file( $params['src'] );
+		$sha1 = $this->sha1ToHash( sha1_file( $params['src'] ) );
 
 		if ( $sha1 === false ) { // source doesn't exist?
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
@@ -170,6 +170,9 @@ class GcsFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	private function sha1ToHash( $sha1 ) {
+		return wfBaseConvert( $sha1, 16, 36, 31 );
+	}
 
 	public function upload( string $targetName, $data, string $sha1 ) {
 		$this->bucket()->upload( $data, [
@@ -342,12 +345,8 @@ class GcsFileBackend extends FileBackendStore {
 		return [
 			'mtime' => wfTimestamp( TS_MW, $obj->info()['updated'] ),
 			'size' => $obj->info()['size'],
-			'sha1' => $this->sha1ToHash( $obj->info()['metadata']['sha1'] ),
+			'sha1' => $obj->info()['metadata']['sha1'],
 		];
-	}
-
-	private function sha1ToHash( $sha1 ) {
-		return wfBaseConvert( $sha1, 16, 36, 31 );
 	}
 
 	/**

@@ -314,13 +314,8 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * @return string The absolute URL
 	 */
 	public static function getFullUrl( $method, $params = null, $format = null ) {
-		global $wgWikiaEnvironment;
 		$app = F::app();
-		$url = wfExpandUrl( $app->wg->Server . self::getLocalUrl( $method, $params, $format ) );
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$url = wfHttpsToHttp( $url );
-		}
-		return $url;
+		return wfExpandUrl( $app->wg->Server . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 	/**

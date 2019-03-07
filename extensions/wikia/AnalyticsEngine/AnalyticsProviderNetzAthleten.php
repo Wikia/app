@@ -4,7 +4,7 @@ class AnalyticsProviderNetzAthleten implements iAnalyticsProvider {
 
 	const TEMPLATE_PATH = 'extensions/wikia/AnalyticsEngine/templates/netzathleten.mustache';
 	const DISABLED_MESSAGE = '<!-- NetzAthleten disabled -->';
-	const URL = '//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js';
+	const URL = '//tag.md-nx.com/nx/438359d5-7944-441e-8720-1ab8a1f65560/loader.js';
 
 	/**
 	 * @param array $params

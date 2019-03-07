@@ -63,7 +63,7 @@
     "wikia/simplehtmldom": "^1.6",
     "php-amqplib/php-amqplib": "^2.6",
     "wikia/file_ogg": "^1.0",
-    "wikia/semantic-media-wiki": "^2.4",
+    "wikia/semantic-media-wiki": "2.4.6.2",
     "wikia/semantic-scribunto": "^1.1",
     "phpunit/dbunit": "^3.0",
     "mediawiki/validator": "2.2.2.1",
