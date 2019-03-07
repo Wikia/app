@@ -1427,6 +1427,16 @@ $wgFileBackends['gcs-migration-backend'] = [
 			'debug' => false,
 			'url' => "http://{$wgFSSwiftServer}/swift/v1",
 		],
+		[
+			'name' => 'gcs-ignore-source-backend',
+			'class' => 'GcsIgnoreSourceFileBackend',
+			'lockManager' => 'nullLockManager',
+			'wikiId'	=> '',
+			'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
+			'gcsBucket' => $wgGcsConfig['gcsBucket'],
+			'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
+			'gcsObjectNamePrefix' => 'mediawiki/',
+		]
 	],
 ];
 
