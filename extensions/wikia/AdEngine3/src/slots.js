@@ -32,6 +32,15 @@ function isIncontentPlayerApplicable() {
 }
 
 /**
+ * Enables incontent native on search pages.
+ *
+ * @returns {boolean}
+ */
+function isIncontentNativeApplicable() {
+	return context.get('options.incontentNative') && context.get('custom.pageType') === 'search';
+}
+
+/**
  * Enables top_boxad on screen with width >= 1024px.
  *
  * @returns {boolean}
@@ -243,6 +252,20 @@ export default {
 				trackEachStatus: true,
 				trackingKey: 'featured-video',
 			},
+			incontent_native: {
+				firstCall: false,
+				defaultSizes: ['fluid'],
+				adProduct: 'incontent_native',
+				slotNameSuffix: '',
+				nonUapSlot: true,
+				group: 'NATIVE',
+				slotShortcut: 'n',
+				lowerSlotName: 'incontent_native',
+				targeting: {
+					rv: 1
+				},
+				trackingKey: 'incontent_native',
+			},
 		};
 	},
 
@@ -273,6 +296,7 @@ export default {
 		slotService.setState('incontent_player', isIncontentPlayerApplicable());
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
+		slotService.setState('incontent_native', isIncontentNativeApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
 		slotService.setState('gpt_flush', false);
