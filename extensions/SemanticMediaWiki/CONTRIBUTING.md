@@ -2,7 +2,7 @@
 
 * Merge pull requests to `2.4.2_Wikia` branch
 * When changes are merged tag them with `2.4.2.x` version
-* Update [`composer.json` file](https://github.com/Wikia/app/blob/dev/composer.json) in the app repo (`mediawiki/semantic-media-wiki` entry)
+* Update [`composer.json` file](https://github.com/Wikia/app/blob/dev/composer.json) in the app repo (`wikia/semantic-media-wiki` entry)
 
 
 There are different ways to make a contribution to [Semantic MediaWiki][smw] (SMW) while a few guidelines are necessary to keep the workflow and review process most efficient.

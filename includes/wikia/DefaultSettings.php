@@ -587,6 +587,7 @@ include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
+include_once( "$IP/extensions/wikia/ArticleTagEvents/ArticleTagEvents.setup.php" );
 
 
 /**
