@@ -53,6 +53,12 @@ class MigrateImages extends Maintenance {
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				$file = $this->getFile( $row );
 
+				if ( $file === null ) {
+					$this->output( "File could not have been created: {$row->page_id}.{$row->rev_id}\n\n" );
+
+					return;
+				}
+
 				if ( !$file->exists() ) {
 					$this->output( "File does not exist: {$row->page_id}.{$row->rev_id} - {$file->getPath()}\n\n" );
 
@@ -91,7 +97,7 @@ class MigrateImages extends Maintenance {
 			} );
 	}
 
-	private function getFile( $row ): LocalFile {
+	private function getFile( $row ) {
 		if ( $row->page_latest === $row->rev_id ) {
 			return $this->repo->newFile( $row->page_title );
 		} else {
