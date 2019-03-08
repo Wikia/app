@@ -1,6 +1,6 @@
 require(['jquery', 'wikia.trackingOptIn'], function($, trackingOptIn) {
 	function loadQualtrics() {
-		$("body").after('<div id=\'SI_0UkUboGRCD68K6V\'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>');
+		$(".WikiaSiteWrapper").after('<div id=\'SI_0UkUboGRCD68K6V\'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>');
 
 		<!--BEGIN QUALTRICS SITE INTERCEPT-->
 		(function(){var g=function(e,h,f,g){
