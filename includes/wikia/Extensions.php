@@ -183,8 +183,6 @@ if ( $wgSharedUploadDBname ) {
 		'directory'        => $wgSharedUploadDirectory,
 		'url'              => $wgSharedUploadPath,
 		'hashLevels'       => $wgHashedSharedUploadDirectory ? 2 : 0,
-		'thumbScriptUrl'   => $wgSharedThumbnailScriptPath,
-		'transformVia404'  => !$wgGenerateThumbnailOnParse,
 		'hasSharedCache'   => $wgCacheSharedUploads,
 		'descBaseUrl'      => $wgRepositoryBaseUrl,
 		'fetchDescription' => $wgFetchCommonsDescriptions,
@@ -340,6 +338,7 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
+include ( "$IP/extensions/wikia/AdEngine3/AdHostMirrors.setup.php" );
 
 include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
 
@@ -1202,8 +1201,6 @@ if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevel
 		'directory'        => $starterDirectory,
 		'url'              => $starterPath,
 		'hashLevels'       => 2,
-		'thumbScriptUrl'   => '',
-		'transformVia404'  => true,
 		'hasSharedCache'   => true,
 		'descBaseUrl'      => $starterUrl,
 		'fetchDescription' => true,
@@ -1398,6 +1395,17 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
+
+$wgFileBackends['gcs-backend'] = [
+	'name' => 'gcs-backend',
+	'class' => 'GcsFileBackend',
+	'lockManager' => 'nullLockManager',
+	'wikiId'	=> '',
+	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
+	'gcsBucket' => $wgGcsConfig['gcsBucket'],
+	'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
+	'gcsObjectNamePrefix' => 'mediawiki/',
+];
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
@@ -1787,4 +1795,9 @@ include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" )
 
 if ( !empty( $wgWatchShowURL ) ) {
 	include "$IP/extensions/wikia/WatchShow/WatchShow.setup.php";
+}
+
+// SUS-79
+if ( !empty( $wgEnableEditDraftSavingExt ) ) {
+	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
 }

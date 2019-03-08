@@ -30,6 +30,7 @@ class DeleteImageRevision extends Maintenance {
 
 		$title = Title::newFromID( $pageId );
 		if ( empty( $title ) ) {
+			$this->output( __METHOD__ . " - cannot find file\n");
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				"can not find a file with page_id ${pageId}"
 			);
@@ -49,10 +50,18 @@ class DeleteImageRevision extends Maintenance {
 			__METHOD__
 		);
 
-		if ( $this->isOldImageRevision( $timestamp, $title->getDBkey() ) ) {
-			$this->removeOldRevision( $title, $timestamp, $revisionId, $pageId, $reason );
-		} else {
-			$this->removeLatestRevision( $title, $timestamp, $revisionId, $pageId, $reason );
+		try {
+			if ( $this->isOldImageRevision( $timestamp, $title->getDBkey() ) ) {
+				$this->removeOldRevision( $title, $timestamp, $revisionId, $pageId, $reason );
+			} else {
+				$this->removeLatestRevision( $title, $timestamp, $revisionId, $pageId, $reason );
+			}
+		}
+		catch ( Error $e ) {
+			$this->output( __METHOD__ . " - ERROR " . json_encode( $e ) . "\n" );
+		}
+		catch ( Exception $e ) {
+			$this->output( __METHOD__ . "\n" . $e->getMessage() . "\n" . $e->getTraceAsString() . "\n" );
 		}
 	}
 

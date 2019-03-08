@@ -55,9 +55,6 @@ $wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAf
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
-# don't purge all thumbs - PLATFORM-161
-$wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
-
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
@@ -73,6 +70,9 @@ $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 # ResourceLoader and api on empty/closed English wikis
 $wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 $wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
+
+# Add words count statistics to page_props after each article's wikitext parsing
+$wgHooks['LinksUpdateConstructed'][] = 'Wikia::onLinksUpdateConstructed';
 
 
 use Wikia\Tracer\WikiaTracer;
@@ -1525,12 +1525,17 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
-		$repo['backend'] = 'swift-backend';
+		if ( $wgUseGoogleCloudStorage ) {
+			$repo['backend'] = 'gcs-backend';
+		} else {
+			$repo['backend'] = 'swift-backend';
+		}
+
 		$repo['zones'] = array (
 			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
 			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
@@ -1708,24 +1713,6 @@ class Wikia {
 				$variants = ['zh-hans', 'zh-hant'];
 				break;
 		}
-
-		return true;
-	}
-
-	/**
-	 * No neeed to purge all thumbnails
-	 *
-	 * @author macbre
-	 * @see PLATFORM-161
-	 * @see PLATFORM-252
-	 *
-	 * @param LocalFile $file
-	 * @param array $urls thumbs to purge
-	 * @return bool
-	 */
-	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		// purge only the first thumbnail
-		$urls = array_slice($urls, 0, 1);
 
 		return true;
 	}
@@ -1964,5 +1951,33 @@ class Wikia {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes HTML tags from a given text and counts words.
+	 *
+	 * Text is split by spaces and newlines.(
+	 *
+	 * @param string $text
+	 * @return int
+	 */
+	public static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
+
+	/**
+	 * Update words_count page property kept in page_props per-wiki table
+	 *
+	 * @param LinksUpdate $linksUpdate
+	 */
+	public static function onLinksUpdateConstructed( LinksUpdate $linksUpdate ) {
+		$parserOutput = $linksUpdate->getParserOutput();
+		$words_count = self::words_count( $parserOutput->getText() );
+
+		$parserOutput->setProperty( 'words_count', $words_count );
+
+		// keep LinksUpdate instance in sync with our updated parser output properties
+		$linksUpdate->mProperties = $parserOutput->getProperties();
 	}
 }

@@ -92,3 +92,6 @@ extensions/wikia/SpecialMultipleLookup/*		@Wikia/sus
 extensions/wikia/SpecialProtectSite/*		@Wikia/sus 
 extensions/wikia/StaffLog/*		@Wikia/sus 
 extensions/wikia/WhereIsExtension/*		@Wikia/sus
+
+# JS code
+resources/Ace/*     @Wikia/core-team

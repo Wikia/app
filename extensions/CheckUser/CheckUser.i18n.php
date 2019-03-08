@@ -84,7 +84,7 @@ Here are the IPs used (5000 max, sorted by address):',
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
-[http://www.infosniper.net/index.php?ip_address=$1 Geolocate] ·
+[http://geoipinfo.org/?ip=$1 Geolocate] ·
 [http://rbls.org/$1 Proxy check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
 [http://en.utrace.de/ip-address/$1 uTrace] ·
@@ -1538,7 +1538,7 @@ IP-Adressen werden für eine Woche gesperrt (nur für unangemeldete Benutzer, di
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
-[http://www.infosniper.net/index.php?ip_address=$1 Geolocate] ·
+[http://geoipinfo.org/?ip=$1 Geolocate] ·
 [http://rbls.org/$1 Proxy check] ·
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
@@ -1951,7 +1951,7 @@ Aquí se ven las IPs usadas (máximo 5000, ordenadas según dirección):',
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] ·
-[http://www.infosniper.net/index.php?ip_address=$1 Geolocate] ·
+[http://geoipinfo.org/?ip=$1 Geolocate] ·
 [http://rbls.org/$1 Proxy check] ·
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
@@ -3441,7 +3441,7 @@ Di seguito sono indicati gli indirizzi IP utilizzati (fino a un massimo di 5000,
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
-[http://www.infosniper.net/index.php?ip_address=$1 Geolocate] ·
+[http://geoipinfo.org/?ip=$1 Geolocate] ·
 [http://rbls.org/$1 Proxy check] ·
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·
@@ -5286,7 +5286,7 @@ Użytych adresów IP jest (nie więcej niż 5000, posortowane według adresu):',
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
-[http://www.infosniper.net/index.php?ip_address=$1 Geolocate] ·
+[http://geoipinfo.org/?ip=$1 Geolocate] ·
 [http://rbls.org/$1 Proxy check] ·
 [https://www.dan.me.uk/torcheck?ip=$1 Tor check] ·
 [http://www.google.com/search?safe=off&num=50&hl=en&q=$1 Google] ·

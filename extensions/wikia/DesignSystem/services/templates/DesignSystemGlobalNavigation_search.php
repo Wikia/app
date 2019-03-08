@@ -28,7 +28,7 @@
 			>
 			<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
 				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-plus-tiny',
+					'wds-icons-close-tiny',
 					'wds-icon wds-icon-tiny wds-global-navigation__search-close-icon'
 				) ?>
 			</button>

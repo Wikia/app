@@ -12,7 +12,7 @@
 	<ul class="mcf-card-discussions__list">
 		<? if($showZeroState): ?>
 		<a href="<?= Sanitizer::encodeAttribute( $discussionsUrl ) ?>" class="mcf-card-discussions__zero-state">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-plus', 'wds-icon mcf-card-discussions__zero-state-icon' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-add', 'wds-icon mcf-card-discussions__zero-state-icon' ) ?>
 			<div
 				class="mcf-card-discussions__zero-state-text"><?= wfMessage( 'recirculation-discussions-no-posts' )
 					->inContentLanguage()
@@ -49,7 +49,7 @@
 						<div class="mcf-card-discussions__counters">
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['upvoteCount'] ) ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-reply', 'wds-icon wds-icon-tiny' ) ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-comment', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['postCount'] ) ?>
 						</div>
 					</div>

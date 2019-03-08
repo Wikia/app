@@ -32,7 +32,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				} else if (notification.type === c.notificationTypes.discussionUpvoteReply) {
 					return this._getReplyUpvoteText(notification);
 				} else if (notification.type === c.notificationTypes.announcement) {
-					return notification.snippet;
+					return escape(notification.snippet);
 				} else {
 					return notification.title;
 				}

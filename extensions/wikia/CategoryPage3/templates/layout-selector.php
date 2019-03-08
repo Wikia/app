@@ -1,7 +1,7 @@
 <ul class="category-layout-selector">
 	<li class="category-layout-selector__information"
 		title="<?= Sanitizer::encodeAttribute( wfMessage( 'category-page3-layout-selector-information' )->escaped() ) ?>">
-		<?= DesignSystemHelper::renderSvg( 'wds-icons-information', 'wds-icon wds-icon-small' ); ?>
+		<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
 	</li>
 
 	<?php /** @var string $currentLayout */ ?>

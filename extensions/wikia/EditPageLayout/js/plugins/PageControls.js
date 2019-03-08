@@ -113,6 +113,11 @@
 				this.textarea.val('');
 			}
 
+			this.editor.track({
+				action: Wikia.Tracker.ACTIONS.SUBMIT,
+				label: 'publish'
+			});
+
 			try {
 				if (window.veTrack) {
 					veTrack({
@@ -120,11 +125,6 @@
 						isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
 					});
 				}
-
-				this.editor.track({
-					action: Wikia.Tracker.ACTIONS.SUBMIT,
-					label: 'publish'
-				});
 			} finally {
 				this.editor.setState(this.editor.states.SAVING);
 

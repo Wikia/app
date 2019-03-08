@@ -1612,13 +1612,13 @@ $messages['ja'] = array(
 	'createnewwiki-desc' => 'Wiki作成ウィザード',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
-	'cnw-title' => '新しいFANDOMコミュニティを作成する',
+	'cnw-title' => '新しいWikiを作成する',
 	'cnw-name-wiki-headline' => 'Wikiをはじめる',
 	'cnw-name-wiki-creative' => '世界中で大人気のエンターテイメントに関するコミュニティでも、個人的なプロジェクトについてのコミュニティでも、そのコミュニティを適切に表す名称が必要です。',
 	'cnw-name-wiki-label' => 'Wikiの名称を入力してください',
 	'cnw-name-wiki-domain-label' => 'このWikiのアドレスを指定してください（半角英数字のみ）',
 	'cnw-name-wiki-submit-error' => '次へ進むには、上の欄をどちらも入力する必要があります。',
-	'cnw-desc-headline' => 'これは何についてのwikiですか？',
+	'cnw-desc-headline' => 'これは何についてのWikiですか？',
 	'cnw-desc-creative' => 'このWikiが見つけやすくなるよう、わかりやすい紹介文を書いてみましょう。',
 	'cnw-desc-placeholder' => 'この内容はWikiのメインページに表示されます。',
 	'cnw-desc-select-one' => 'ひとつ選択',
@@ -1630,8 +1630,8 @@ $messages['ja'] = array(
 	'cnw-theme-instruction' => 'Wikiのデザインは、テーマデザイナーでいつでもカスタマイズできます。',
 	'cnw-welcome-headline' => '$1 が作成されました！',
 	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを追加できます。',
-	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、FANDOMコミュニティ作成のヒントやアドバイスを見つけることができます。',
-	'cnw-error-general' => 'FANDOMコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
+	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、Fandomコミュニティ作成のヒントやアドバイスを見つけることができます。',
+	'cnw-error-general' => 'Fandomコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
 	'cnw-error-general-heading' => '申し訳ありません',
 	'cnw-error-blocked-header' => 'アカウントがブロックされています',
 	'cnw-error-anon-user-header' => 'ログインしてください',
@@ -1639,12 +1639,12 @@ $messages['ja'] = array(
 	'cnw-desc-select-vertical' => 'このWikiが属するハブ：',
 	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
 	'cnw-badword-header' => '不適切な言葉です',
-	'cnw-badword-msg' => 'FANDOMコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
-	'cnw-error-wiki-limit-header' => 'FANDOMコミュニティの上限に達しました',
-	'cnw-error-wiki-limit' => '1日に作成できるFANDOMコミュニティの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいコミュニティを作成するには24時間お待ちください。',
+	'cnw-badword-msg' => 'Fandomコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
+	'cnw-error-wiki-limit-header' => 'Fandomコミュニティの上限に達しました',
+	'cnw-error-wiki-limit' => '1日に作成できるFandomコミュニティの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいコミュニティを作成するには24時間お待ちください。',
 	'cnw-error-blocked' => '$1さんによりブロックされています。理由：$2（参照用ブロックID：$3）。',
-	'cnw-error-anon-user' => '未登録ユーザーはFANDOMコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
-	'cnw-error-torblock' => 'Torネットワーク経由でFANDOMコミュニティを作成することはできません。',
+	'cnw-error-anon-user' => '未登録ユーザーはFandomコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
+	'cnw-error-torblock' => 'Torネットワーク経由でFandomコミュニティを作成することはできません。',
 	'cnw-theme-loading-state' => 'Wikiを作成中です。この間に必要であればテーマを変更していただけます。',
 	'cnw-theme-show-wiki' => 'Wikiを表示',
 	'cnw-next-create-wiki' => '新しいWikiを作成する',
@@ -1657,43 +1657,44 @@ $messages['ja'] = array(
 	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
 	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また入力は必須になります。',
 	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのFANDOMコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> をチェックしてみましょう。',
+	'autocreatewiki-name-taken' => 'このアドレスのFandomコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> をチェックしてみましょう。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
-	'autocreatewiki-empty-wikiname' => 'FANDOMコミュニティ名は入力が必須になります。',
+	'autocreatewiki-empty-wikiname' => 'Fandomコミュニティ名は必ず入力してください。',
 	'autocreatewiki-category-label' => 'カテゴリ：',
 	'autocreatewiki-welcometalk-log' => 'ウェルカム・メッセージ',
-	'autocreatewiki-regex-error-comment' => 'FANDOMコミュニティ「$1」で使用されています（全文：$2）',
+	'autocreatewiki-regex-error-comment' => 'Fandomコミュニティ「$1」で使用されています（全文：$2）',
 	'autocreatewiki-protect-reason' => '公式インターフェースの一部です。',
-	'autocreatewiki-welcometalk' => '==ようこそ！==
+	'autocreatewiki-welcometalk' => '== ようこそ！ ==
+このたびは、Fandomにて「$4」を立ち上げていただきありがとうございます。
 
-FANDOMにて「$4」を立ち上げていただきありがとうございます！このメールでは、Wikiを盛り上げていくためのヒントやリンクをご紹介します。
+充実したWikiを作成するにあたり、コミュニティ・サポートチームでは様々なお手伝いをさせていただいております。下記にWikiを盛り上げていくためのヒントをご紹介しますので、参考にしていただけましたら幸いです。
 
-*[[Special:WikiFeatures|Wikiフィーチャーズ]]では、あなたのWikiで有効にできる機能（チャット、アチーブメントなど）が確認できます。
-*FANDOMの最新情報は、[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]でご案内しています。わからないことがある時は、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]で質問したり、[[w:c:ja.community:Wikia_ユニバーシティ|FANDOMユニバーシティ]]で参考動画を見たり、FANDOMのコミュニティ・メンバーとチャットしてみましょう。
-*[[ヘルプ:コンテンツ|ヘルプページ]]では、FANDOMの活用法についてさまざまなヘルプ記事を掲載しています。
+*[[Special:WikiFeatures|Wikiフィーチャーズ]]では、Wikiで有効にできる機能（チャット、アチーブメントなど）が確認できます。
+*Fandomの最新情報は、[[w:c:ja.community|コミュニティセントラル]]の[[w:c:ja.community:Blog:Fandomブログ|ブログ]]でご案内しています。わからないことがある時は、[[w:c:ja.community:Special:Forum|コミュニティ・フォーラム]]で質問してみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]では、Fandomの活用法についてさまざまなヘルプ記事を掲載しています。
 
-FANDOMをお楽しみいただく上で、ぜひこれらの記事を役立てていただけると幸いです。
+Fandomをお楽しみいただく上で、これらの記事を役立てていただけると幸いです。
 
 -- [[ユーザー:$2|$3]]<staff />',
 	'autocreatewiki-welcometalk-wall-title' => 'ようこそ！',
-	'autocreatewiki-welcometalk-wall' => 'こんにちは、FANDOMコミュニティ・サポートチームです。このたびは、FANDOMにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
+	'autocreatewiki-welcometalk-wall' => 'こんにちは、Fandomコミュニティ・サポートチームです。このたびは、Fandomにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
 
-充実したWikiを作成するにあたり、コミュニティ・サポートチームでは様々なお手伝いをさせていただいております。下記にWikiを盛り上げていくためのヒントをご紹介しますので、ご参考にしていただけましたら幸いです。
+充実したWikiを作成するにあたり、コミュニティ・サポートチームでは様々なお手伝いをさせていただいております。下記にWikiを盛り上げていくためのヒントをご紹介しますので、参考にしていただけましたら幸いです。
 
 *[[Special:WikiFeatures|Wikiフィーチャーズ]]で、コミュニティチャットなど、有効にできる機能をチェックしてみましょう。
 *[[Special:ThemeDesigner|テーマデザイナー]]で、コミュニティの色やスタイルをカスタマイズしてみましょう。
-*[[w:c:ja.communtiy|コミュニティ・セントラル]]で[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]を最新情報を収集したり、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]でわからないことを質問したりしてみましょう。
-*[[ヘルプ:コンテンツ|ヘルプページ]]でFANDOMについての様々なヘルプ記事を読んだり、[[w:c:ja.community:Wikia_ユニバーシティ|FANDOMユニバーシティ]]で使い方の動画をチェックしてみましょう。
+*[[w:c:ja.communtiy|コミュニティセントラル]]の[[w:c:ja.communtiy:Blog:Fandomブログ|ブログ]]で最新情報を収集したり、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]でわからないことを質問したりしてみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]でFandomについての様々なヘルプ記事を読んでみましょう。
 
-今後ともFANDOMをよろしくお願いいたします。',
+今後ともFandomをよろしくお願いいたします。',
 	'autocreatewiki-welcomebody-HTML' => '<p>$2さん<br /><br />
 このたび作成されたWikiに、<a href="$1">$1</a>からアクセスしていただけるようになりました。さっそく、編集をお楽しみください。<br /><br />
-なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">FANDOMヘルプページ</a>をご参照ください。<br /><br />
-今後ともFANDOMをよろしくお願いいたします。<br /><br />
+なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
+今後ともFandomをよろしくお願いいたします。<br /><br />
 <a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
-FANDOMコミュニティ・チーム<br /></p>',
-	'cnw-error-unconfirmed-email' => 'FANDOMコミュニティを作成するには、メールの認証を行っていただく必要があります。',
+Fandomコミュニティ・チーム<br /></p>',
+	'cnw-error-unconfirmed-email' => 'Fandomコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
 );
 
@@ -2854,7 +2855,7 @@ $messages['ru'] = array(
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и является обязательным для заполнения.',
 	'autocreatewiki-violate-policy' => 'Название вики содержит слово, нарушающее наши правила именования.',
-	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой URL.',
+	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту $1 или выбрать другой URL.',
 	'autocreatewiki-name-too-short' => 'Слишком короткий адрес. Выберите адрес длиной не менее 3 символов.',
 	'autocreatewiki-name-too-long' => 'Слишком длинный адрес. Выберите адрес длиной не более 50 символов.',
 	'autocreatewiki-empty-wikiname' => 'Поле имени вики не может быть пустым.',

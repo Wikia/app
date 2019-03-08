@@ -63,7 +63,7 @@
     "wikia/simplehtmldom": "^1.6",
     "php-amqplib/php-amqplib": "^2.6",
     "wikia/file_ogg": "^1.0",
-    "wikia/semantic-media-wiki": "^2.4",
+    "wikia/semantic-media-wiki": "2.4.6.2",
     "wikia/semantic-scribunto": "^1.1",
     "phpunit/dbunit": "^3.0",
     "mediawiki/validator": "2.2.2.1",
@@ -72,7 +72,8 @@
     "tpyo/amazon-s3-php-class": "^0.5.1",
     "overtrue/phplint": "^1.1",
     "wikimedia/scoped-callback": "^2.0",
-    "wikia/prometheus_client_php": "^0.9.2"
+    "wikia/prometheus_client_php": "^0.9.2",
+    "google/cloud-storage": "^1.11"
   },
   "require-dev": {
     "ext-yaml": "*",

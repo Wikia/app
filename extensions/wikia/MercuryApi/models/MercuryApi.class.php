@@ -209,7 +209,8 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds;
+			   $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds,
+			   $wgFandomCreatorCommunityId;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
@@ -223,6 +224,7 @@ class MercuryApi {
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 				'openGraphImageUrl' => OpenGraphImageHelper::getUrl(),
+				'fandomCreatorCommunityId' => !empty( $wgFandomCreatorCommunityId ) ? $wgFandomCreatorCommunityId : null
 			]
 		);
 
