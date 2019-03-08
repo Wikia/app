@@ -231,10 +231,11 @@ export default {
 		}
 
 		return {
+			bidder_0: transformBidderPrice('wikia'),
 			bidder_1: transformBidderPrice('indexExchange'),
 			bidder_2: transformBidderPrice('appnexus'),
 			bidder_4: transformBidderPrice('rubicon'),
-			bidder_5: transformBidderPrice('wikia'),
+			bidder_5: transformBidderPrice('vmg'),
 			bidder_6: transformBidderPrice('aol'),
 			bidder_7: transformBidderPrice('audienceNetwork'),
 			bidder_8: transformBidderPrice('wikiaVideo'),

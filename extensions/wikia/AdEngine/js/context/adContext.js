@@ -115,6 +115,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.pubmatic = isEnabled('wgAdDriverPubMaticBidderCountries');
 		context.bidders.lkqd = isEnabled('wgAdDriverLkqdBidderCountries');
 		context.bidders.pubmaticDfp = isEnabled('wgAdDriverPubMaticDfpCountries');
+		context.bidders.vmg = isEnabled('wgAdDriverVmgBidderCountries');
 	}
 
 	function isMOATTrackingForFVEnabled() {
