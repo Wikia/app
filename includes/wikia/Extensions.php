@@ -1403,6 +1403,7 @@ $wgFileBackends['gcs-backend'] = [
 	'wikiId'	=> '',
 	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
 	'gcsBucket' => $wgGcsConfig['gcsBucket'],
+	'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
 	'gcsObjectNamePrefix' => 'mediawiki/',
 ];
 

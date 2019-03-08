@@ -103,6 +103,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_18': transformBidderPrice('lkqd'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
+			'order_id': creative.orderId || '',
 			'creative_id': creative.creativeId || '',
 			'creative_size': (creative.creativeSize || '').replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,

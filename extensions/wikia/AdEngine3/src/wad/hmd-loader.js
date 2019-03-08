@@ -206,17 +206,15 @@ export const hmdLoader = {
 	},
 
 	/**
-	 * Adds HMD rec service event listener on document
+	 * Runs HMD rec service and injects code
 	 * @returns {void}
 	 */
-	init() {
-		document.addEventListener('bab.blocking', () => {
-			utils.logger(logGroup, 'Initialising HMD rec loader');
+	run() {
+		utils.logger(logGroup, 'Initialising HMD rec loader');
 
-			initializeTracking();
+		initializeTracking();
 
-			recInjector.inject('hmd');
-		});
+		recInjector.inject('hmd');
 	},
 
 	/**

@@ -1507,6 +1507,7 @@ class User implements JsonSerializable {
 	 *
 	 * @param $action String Action to enforce; 'edit' if unspecified
 	 * @return Bool True if a rate limiter was tripped
+	 * @throws MWException
 	 */
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
@@ -1532,6 +1533,7 @@ class User implements JsonSerializable {
 		$id = $this->getId();
 		$ip = $this->getRequest()->getIP();
 		$userLimit = false;
+		$isNewbie = $this->isNewbie();
 
 		if( isset( $limits['anon'] ) && $id == 0 ) {
 			$keys[wfMemcKey( 'limiter', $action, 'anon' )] = $limits['anon'];
@@ -1540,13 +1542,14 @@ class User implements JsonSerializable {
 		if( isset( $limits['user'] ) && $id != 0 ) {
 			$userLimit = $limits['user'];
 		}
-		if( $this->isNewbie() ) {
-			if( isset( $limits['newbie'] ) && $id != 0 ) {
-				$keys[wfMemcKey( 'limiter', $action, 'user', $id )] = $limits['newbie'];
-			}
+
+		// limits for anons and for newbie logged-in users
+		if ( $isNewbie ) {
+			// ip-based limits
 			if( isset( $limits['ip'] ) ) {
 				$keys["mediawiki:limiter:$action:ip:$ip"] = $limits['ip'];
 			}
+			// subnet-based limits
 			$matches = array();
 			if( isset( $limits['subnet'] ) && preg_match( '/^(\d+\.\d+\.\d+)\.\d+$/', $ip, $matches ) ) {
 				$subnet = $matches[1];
@@ -1562,6 +1565,12 @@ class User implements JsonSerializable {
 				}
 			}
 		}
+
+		// limits for newbie logged-in users (override all the normal user limits)
+		if ( $id !== 0 && $isNewbie && isset( $limits['newbie'] ) ) {
+			$userLimit = $limits['newbie'];
+		}
+
 		// Set the user limit key
 		if ( $userLimit !== false ) {
 			$keys[ wfMemcKey( 'limiter', $action, 'user', $id ) ] = $userLimit;

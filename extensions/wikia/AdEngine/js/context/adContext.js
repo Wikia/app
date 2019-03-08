@@ -214,13 +214,10 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
-			context.targeting.skin === 'oasis';
 
 		context.opts.isSteamBrowser = browserDetect.isSteam();
 		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
-		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.incontentPlayerRail = {

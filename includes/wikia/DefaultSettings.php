@@ -587,6 +587,7 @@ include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
+include_once( "$IP/extensions/wikia/ArticleTagEvents/ArticleTagEvents.setup.php" );
 
 
 /**
@@ -980,6 +981,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+
+/**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
@@ -1196,6 +1203,13 @@ $wgAdDriverLkqdBidderCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
+ * @name $wgAdDriverDisableRecirculationCountries
+ * Disables recirculation in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableRecirculationCountries = null;
+
+/**
  * @name $wgAdDriverAdditionalVastSizeCountries
  * List of countries where vast requests has additional size 480x360.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1285,11 +1299,18 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
+ * @name $wgAdDriverRepeatMobileIncontentCountries
+ * List of countries where Incontent Boxad ads are injected after h2 tag on Mobile-Wiki.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverMobileSectionsCollapseCountries = null;
+$wgAdDriverRepeatMobileIncontentCountries = null;
+
+/**
+ * @name $wgAdDriverRepeatMobileIncontentExtendedCountries
+ * List of countries where Incontent Boxad ads are injected after extended number of HTML elements on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
@@ -1297,6 +1318,13 @@ $wgAdDriverMobileSectionsCollapseCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverNativeSearchDesktopCountries
+ * List of countries where incontent native is displayed on app search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNativeSearchDesktopCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
@@ -1687,6 +1715,13 @@ $wgAdDriverIncontentPlayerRailCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableAdStackCountries
+ * Disables whole ad stack in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableAdStackCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
@@ -1839,5 +1874,8 @@ $wgUseGoogleCloudStorage = false;
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';
