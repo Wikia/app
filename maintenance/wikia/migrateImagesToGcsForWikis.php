@@ -22,7 +22,6 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'wiki-prefix', 'Prefix for wikis', false, true, 'p' );
 		$this->addOption( 'all-wikis', 'Which cluster to run on', false, false, 'a' );
-		$this->addOption( 'modulo', 'Modulo', true, true, 'm' );
 	}
 
 
@@ -30,7 +29,6 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->wikiPrefix = $this->getOption( 'wiki-prefix' );
 		$this->allWikis = $this->hasOption( 'all-wikis' );
-		$this->modulo = $this->getOption( 'modulo' );
 
 		if ( !$this->wikiPrefix && !$this->allWikis ) {
 			throw new RuntimeException( 'No wiki prefix provided, but "allWikis" option has not been selected' );
@@ -46,8 +44,6 @@ class MigrateImagesForWikis extends Maintenance {
 			->LIKE( $this->getUploadPathCondition() )
 			->AND_( 'wikicities.city_variables_pool.cv_name' )
 			->EQUAL_TO( 'wgUploadPath' )
-			->AND_( 'MOD(wikicities.city_list.city_id, 10)' )
-			->EQUAL_TO( $this->modulo )
 			->runLoop( $this->getCentralDbr(), function ( &$pages, $row ) {
 				$this->runMigrateImagesToGcs( $row->city_id, unserialize( $row->cv_value ) );
 			} );
@@ -88,7 +84,7 @@ class MigrateImagesForWikis extends Maintenance {
 			}
 		}
 
-		$this->output( "Migrating images for {$wikiId} becuase {$this->modulo}\n" );
+		$this->output( "Migrating images for {$wikiId}\n" );
 		$command = "php -d display_errors=1 migrateImagesToGcs.php";
 
 
