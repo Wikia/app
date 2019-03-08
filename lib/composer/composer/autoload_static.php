@@ -3703,6 +3703,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Tasks\\Tasks\\HTMLCacheUpdateTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/HTMLCacheUpdateTask.php',
         'Wikia\\Tasks\\Tasks\\ImageReviewTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php',
         'Wikia\\Tasks\\Tasks\\ImageSyncTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/ImageSyncTask.php',
+        'Wikia\\Tasks\\Tasks\\Image\\AsyncPurgeTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/Image/AsyncPurgeTask.php',
+        'Wikia\\Tasks\\Tasks\\Image\\FileInfo' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/Image/FileInfo.php',
         'Wikia\\Tasks\\Tasks\\IncrementEditCountTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/IncrementEditCountTask.php',
         'Wikia\\Tasks\\Tasks\\JobWrapperTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/JobWrapperTask.php',
         'Wikia\\Tasks\\Tasks\\MaintenanceTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/MaintenanceTask.php',
