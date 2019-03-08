@@ -1,5 +1,6 @@
 <?php
 
+use Google\Cloud\Core\Exception\NotFoundException;
 use Google\Cloud\Storage\Bucket;
 use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
@@ -64,29 +65,7 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 	 * @return Status|TempFSFile|null
 	 */
 	public function getLocalCopy( array $params ) {
-		WikiaLogger::instance()->info( __METHOD__, [
-			'params' => $params,
-			'call_stack' => ( new Exception() )->getTraceAsString(),
-		] );
-
-		list( $container, $path ) = $this->resolveStoragePathReal( $params['src'] );
-		if ( $path === null ) {
-			return null;
-		}
-		$ext = FileBackend::extensionFromPath( $path );
-		try {
-			$tmpFile = TempFSFile::factory( wfBaseName( $path ) . '_', $ext );
-			$name = $this->gcsPaths->objectName( [ $container, $path ] );
-			$this->getOriginal( $name )->downloadToFile( $tmpFile->getPath() );
-
-			return $tmpFile;
-		}
-		catch ( Exception $e ) {
-			//WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
-			WikiaLogger::instance()->debug( __METHOD__, [ 'exception' => $e, ] );
-
-			return null;
-		}
+		throw new BadMethodCallException( "Not implemented!" );
 	}
 
 	/**
@@ -149,9 +128,7 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 		$sha1 = $this->sha1ToHash( sha1_file( $params['src'] ) );
 
 		if ( $sha1 === false ) { // source doesn't exist?
-			//$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
-			//ignore source error
-			$status->ok;
+			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 
 			return $status;
 		}
@@ -265,6 +242,9 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 			$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst ] );
 		}
+		catch ( NotFoundException $e ) {
+			WikiaLogger::instance()->info( __METHOD__, [ 'exception' => $e, ] );
+		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
 			$status->fatal( 'backend-fail-internal' );
@@ -286,6 +266,9 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 		try {
 			$name = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
 			$this->getOriginal( $name )->delete();
+		}
+		catch ( NotFoundException $e ) {
+			WikiaLogger::instance()->info( __METHOD__, [ 'exception' => $e, ] );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
