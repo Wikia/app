@@ -7,6 +7,19 @@ $wgExtensionCredits['other'][] = [
 	Please note we are ALSO maintaining Qualaroo for more general survey purposes that do not require the granularity Qualtrics provides.',
 ];
 
+/**
+ * Resources Loader modules
+ */
+
+// a base "QualtricsSiteIntercept" AMD module with a generic code
+$wgResourceModules['ext.wikia.QualtricsSiteIntercept'] = [
+	'scripts' => [
+		'scripts/index.js',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/QualtricsSiteIntercept',
+];
+
 $wgAutoloadClasses['QualtricsSiteInterceptHooks'] = __DIR__.'/QualtricsSiteInterceptHooks.class.php';
 
-$wgHooks['OasisSkinAssetGroups'][] = 'QualtricsSiteInterceptHooks::onOasisSkinAssetGroups';
+$wgHooks['BeforePageDisplay'][] = 'QualtricsSiteInterceptHooks::onBeforePageDisplay';
