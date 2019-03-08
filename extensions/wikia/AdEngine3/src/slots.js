@@ -1,6 +1,7 @@
 import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
+import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
@@ -158,6 +159,19 @@ export default {
 				slotShortcut: 'f',
 				sizes: [],
 				defaultSizes: [[300, 250]],
+				insertBeforeSelector: '#incontent_boxad_1',
+				repeat: {
+					additionalClasses: 'hide',
+					index: 1,
+					limit: 20,
+					slotNamePattern: 'incontent_boxad_{slotConfig.repeat.index}',
+					updateProperties: {
+						adProduct: '{slotConfig.slotName}',
+						'targeting.rv': '{slotConfig.repeat.index}',
+					},
+					insertBelowScrollPosition: false,
+					disablePushOnScroll: true,
+				},
 				targeting: {
 					loc: 'hivi',
 					rv: 1,
@@ -339,7 +353,6 @@ export default {
 		context.push('state.adStack', { id: slotName });
 	},
 
-	// TODO: Extract floating medrec to separate module once we do refreshing
 	injectIncontentBoxad() {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
@@ -356,11 +369,7 @@ export default {
 
 		parentNode.appendChild(element);
 
-		setTimeout(() => {
-			// TODO: Add FMR recovery logic from AE2::floatingMedrec.js
-
-			context.push('events.pushOnScroll.ids', slotName);
-		}, 10000);
+		rotateIncontentBoxad(slotName);
 	},
 
 	injectHighImpact() {
