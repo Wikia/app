@@ -145,4 +145,23 @@ class WikiaTest extends WikiaBaseTest {
 		);
 		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
+
+	/**
+	 * @param string $text
+	 * @param int $expected
+	 * @dataProvider wordsCountDataProvider
+	 */
+	public function testWordsCount( $text, $expected ) {
+		$this->assertEquals( $expected, Wikia::words_count( $text ) );
+	}
+
+	public function wordsCountDataProvider() {
+		yield [ '', 1 ];
+		yield [ 'foo', 1 ];
+		yield [ ' foo ', 1 ];
+		yield [ '<h1>foo bar</h1>', 2 ];
+		yield [ "foo\nbar", 2 ];
+		yield [ 'foo - bar', 3 ];
+		yield [ 'wcześniej <span>nazywany</span> również gziką', 4 ];
+	}
 }

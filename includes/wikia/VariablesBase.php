@@ -8931,3 +8931,13 @@ $wgWatchShowURL = '';
  * @var bool
  */
 $wgEnableEditDraftSavingExt = false;
+
+/**
+ * ArticleTags RabbitMQ configuration.
+ * @see extensions/wikia/articleTagEvents
+ * @var array $wgArticleTagExchangeConfig
+ */
+$wgArticleTagExchangeConfig = [
+    'vhost' => 'events',
+    'exchange' => 'article-tags',
+];
