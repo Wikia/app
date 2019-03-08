@@ -73,7 +73,7 @@ class SetupWikiCities extends Task {
 	}
 
 	public function addToCityDomains() {
-		global $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain;
+		global $wgFandomBaseDomain, $wgWikiaBaseDomain;
 		$host = parse_url( $this->taskContext->getURL(), PHP_URL_HOST );
 		$domains = [
 			[

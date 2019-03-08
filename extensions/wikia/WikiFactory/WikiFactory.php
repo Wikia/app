@@ -1411,7 +1411,6 @@ class WikiFactory {
 		}
 		if ( endsWith( $server, ".{$wgWikiaOrgBaseDomain}" ) ) {
 			$server = str_replace( ".{$wgWikiaOrgBaseDomain}", '', $server );
-			$wikiaOrgDomainUsed = true;
 		}
 
 		// determine the environment we want to get url for
