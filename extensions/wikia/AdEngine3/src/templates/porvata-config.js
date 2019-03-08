@@ -1,8 +1,4 @@
-function getNavbarHeight() {
-	const navbar = document.getElementById('globalNavigation');
-
-	return navbar ? navbar.offsetHeight : 0;
-}
+import { getNavbarHeight } from './navbar-updater';
 
 export const getConfig = () => ({
 		inViewportOffsetTop: getNavbarHeight(),
