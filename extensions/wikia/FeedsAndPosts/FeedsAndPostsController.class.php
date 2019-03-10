@@ -1,11 +1,12 @@
 <?php
 
+use Wikia\FeedsAndPosts\ArticleData;
 use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\ThemeSettings;
 use Wikia\FeedsAndPosts\TopArticles;
 use Wikia\FeedsAndPosts\WikiVariables;
 
-class FeedsAndPostsController extends WikiaController {
+class FeedsAndPostsController extends WikiaApiController {
 	public function getRecentChanges() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new RecentChanges() )->get() );
@@ -34,5 +35,19 @@ class FeedsAndPostsController extends WikiaController {
 	public function getWikiVariables() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new WikiVariables() )->get() );
+	}
+
+	public function getArticleData() {
+		$articleId = intval( $this->getRequiredParam( 'id' ) );
+
+		$images = ArticleData::getImages($articleId);
+
+		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
+		$this->response->setValues([
+			'title' => 'some title', //TODO
+			'thumbnail' => $images[0] ?? null,
+			'content_images' => count($images) > 1 ? array_slice($images, 1) : [],
+			'snippet' => 'some snippet', // TODO
+		]);
 	}
 }
