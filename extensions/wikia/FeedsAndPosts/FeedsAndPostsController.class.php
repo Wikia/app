@@ -44,10 +44,10 @@ class FeedsAndPostsController extends WikiaApiController {
 
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
 		$this->response->setValues([
-			'title' => 'some title', //TODO
+			'title' => ArticleData::getArticleTitle($articleId),
 			'thumbnail' => $images[0] ?? null,
 			'content_images' => count($images) > 1 ? array_slice($images, 1) : [],
-			'snippet' => 'some snippet', // TODO
+			'snippet' => ArticleData::getTextSnippet($articleId),
 		]);
 	}
 }

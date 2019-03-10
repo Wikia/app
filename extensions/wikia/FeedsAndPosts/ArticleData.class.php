@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ryba
- * Date: 10/03/2019
- * Time: 15:20
- */
 
 namespace Wikia\FeedsAndPosts;
 
+use ArticleService;
 use ImageServing;
 
 class ArticleData {
@@ -19,5 +14,13 @@ class ArticleData {
 		}, $imageData);
 
 		return $urls;
+	}
+
+	public static function getTextSnippet(int $articleId) {
+		return htmlspecialchars((new ArticleService($articleId))->getTextSnippet(300, 350));
+	}
+
+	public static function getArticleTitle(int $articleId) {
+		return \Title::newFromID($articleId)->getText();
 	}
 }
