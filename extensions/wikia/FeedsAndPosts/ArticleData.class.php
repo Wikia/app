@@ -4,10 +4,11 @@ namespace Wikia\FeedsAndPosts;
 
 use ArticleService;
 use ImageServing;
+use Title;
 
 class ArticleData {
 	public static function getImages(int $articleId, $limit=11): array {
-		$imageData = (new ImageServing([$articleId]))->getImages($limit)[strval($articleId)] ?? [];
+		$imageData = ( new ImageServing( [ $articleId ] ) )->getImages( $limit )[strval( $articleId )] ?? [];
 
 		$urls = array_map(function($imageData) {
 			return $imageData['url'];
@@ -16,11 +17,7 @@ class ArticleData {
 		return $urls;
 	}
 
-	public static function getTextSnippet(int $articleId) {
-		return htmlspecialchars((new ArticleService($articleId))->getTextSnippet(300, 350));
-	}
-
-	public static function getArticleTitle(int $articleId) {
-		return \Title::newFromID($articleId)->getText();
+	public static function getTextSnippet(Title $title) {
+		return htmlspecialchars((new ArticleService($title))->getTextSnippet(300, 350));
 	}
 }
