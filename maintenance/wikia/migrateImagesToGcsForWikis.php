@@ -23,7 +23,7 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'wiki-prefix', 'Prefix for wikis', false, true, 'p' );
 		$this->addOption( 'wiki-id', 'Specific wiki ID', false, true, 'i' );
-		$this->addOption( 'all-wikis', 'Which cluster to run on', false, false, 'a' );
+		$this->addOption( 'all-wikis', 'Run on all wikis', false, false, 'a' );
 		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
 	}
 
