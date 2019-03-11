@@ -154,8 +154,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
@@ -183,8 +181,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 	}
 
