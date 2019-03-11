@@ -22,7 +22,7 @@
  */
 
 global $wgFetchBlobApiURL;
-$wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+$wgFetchBlobApiURL = "https://community.fandom.com/api.php";
 
 $wgHooks[ "ExternalStoreDB::fetchBlob" ][ ] = "ExternalStoreDBFetchBlobHook";
 
