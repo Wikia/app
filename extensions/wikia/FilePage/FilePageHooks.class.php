@@ -203,7 +203,7 @@ class FilePageHooks extends WikiaObject{
 		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
 			return true;
 		}
-		self::purgeTitle( $page->getTitle() );
+		//self::purgeTitle( $page->getTitle() );
 
 		return true;
 	}
