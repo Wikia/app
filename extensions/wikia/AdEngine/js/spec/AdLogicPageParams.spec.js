@@ -286,6 +286,20 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('wiki');
 
 		params = getParams({}, {
+			document: { referrer: 'http://gta.fandom.com/wiki/Other_PAGE' },
+			hostname: 'gta.fandom.com'
+		});
+
+		expect(params.ref).toBe('wiki');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.org/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.org'
+		});
+
+		expect(params.ref).toBe('wiki');
+
+		params = getParams({}, {
 			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search?search=text' },
 			hostname: 'gta.wikia.com'
 		});
