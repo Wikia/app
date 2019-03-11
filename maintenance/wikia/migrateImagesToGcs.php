@@ -122,8 +122,10 @@ class MigrateImages extends Maintenance {
 	private function publishImageUploadRequest(
 		$path, $filename, $mimeType, $sha1, $pageId, $revisionId, $uploaderId
 	) {
+		$bucket = $this->getBucket();
+
 		$data = [
-			'bucket' => $this->getBucket(),
+			'bucket' => $bucket,
 			'path' => $path,
 			'originalFilename' => $filename,
 			'mimeType' => $mimeType,
@@ -136,7 +138,7 @@ class MigrateImages extends Maintenance {
 
 		if ( !$this->dryRun ) {
 			$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
-			$this->connectionBase->publish( $this->getBucket(), $data );
+			$this->connectionBase->publish( "migrate-file.{$bucket}" , $data );
 		} else {
 			$this->output( "DRY RUN: Would have published a request to upload	" .
 						   json_encode( $data ) . "\n\n" );
