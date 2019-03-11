@@ -100,7 +100,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isEnabled('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
-		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
+		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isEnabled('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.beachfrontDfp = isEnabled('wgAdDriverBeachfrontDfpCountries');
 		context.bidders.appnexusAst = isEnabled('wgAdDriverAppNexusAstBidderCountries');
