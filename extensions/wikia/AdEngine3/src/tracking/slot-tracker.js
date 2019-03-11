@@ -43,6 +43,7 @@ function prepareData(slot, data) {
 		device: context.get('state.deviceType'),
 		ad_load_time: data.timestamp - window.performance.timing.connectStart,
 		product_lineitem_id: data.line_item_id || '',
+		order_id: data.order_id || '',
 		creative_id: data.creative_id || '',
 		creative_size: data.creative_size || '',
 		slot_size: data.creative_size || '',

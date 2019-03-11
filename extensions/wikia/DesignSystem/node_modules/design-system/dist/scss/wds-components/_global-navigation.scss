@@ -1,15 +1,17 @@
 @import 'global-navigation-search';
 
 .wds-global-navigation {
-	$search-input-padding: 3px 4px;
 	$notification-counter-size: 18px;
-	$partner-slot-width: 80px;
+	$partner-slot-width: 75px;
 	$scroll-animation-duration: .4s;
 
 	background-color: $wds-fandom-color-navy;
 	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
 	font-family: Rubik,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	left: 0;
+	padding: 0 12px;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -17,27 +19,6 @@
 
 	@media #{$wds-breakpoint-small-down} {
 		padding: 0 3px 0 12px;
-	}
-
-	&__content-container {
-		margin: 0 auto;
-		display: flex;
-
-		@media #{$wds-breakpoint-medium-up} {
-			width: calc(100vw - 24px)
-		}
-
-		@media #{$wds-breakpoint-l-up} {
-			width: 1004px;
-		}
-
-		@media #{$wds-breakpoint-xl-up} {
-			width: 1064px;
-		}
-
-		@media #{$wds-breakpoint-xxl-up} {
-			width: 1278px;
-		}
 	}
 
 	&__content-bar-left,
@@ -164,10 +145,10 @@
 		display: none;
 		font-size: 18px;
 		font-weight: bold;
-		height: 100%;
 
 		@media #{$wds-breakpoint-medium-up} {
-			display: flex
+			display: flex;
+			height: 100%;
 		}
 
 		@media #{$wds-breakpoint-large-down} {
@@ -207,7 +188,7 @@
 		}
 
 		@media #{$wds-breakpoint-medium-down} {
-			margin-left: 24px;
+			margin-left: 18px;
 		}
 	}
 
@@ -290,6 +271,7 @@
 		align-items: center;
 		border-left: 1px solid rgba($wds-color-white, .25);
 		display: flex;
+		flex-basis: 100%;
 		height: 100%;
 		max-width: $partner-slot-width;
 		position: absolute;
@@ -313,7 +295,7 @@
 			border: none;
 			height: 30px;
 			justify-content: flex-end;
-			max-width: 100vw;
+			max-width: none;
 			width: 100vw;
 			margin-top: -10px;
 			position: relative;
@@ -341,10 +323,6 @@
 		@media #{$wds-breakpoint-small-down} {
 			margin-right: 0;
 		}
-	}
-
-	&.wds-has-partner-slot .wds-global-navigation__content-container {
-		flex-wrap: wrap;
 	}
 
 	.wds-avatar {
@@ -473,6 +451,7 @@
 
 		a {
 			color: $wds-color-white;
+			text-decoration: none;
 		}
 	}
 
@@ -496,6 +475,10 @@
 
 				&__modal-control-user {
 					visibility: hidden;
+				}
+
+				&__content-bar-left {
+					z-index: 0;
 				}
 			}
 

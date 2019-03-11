@@ -113,8 +113,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			refHostname,
 			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
 			wikiDomains = [
-				'wikia.com', 'fandom.com', 'ffxiclopedia.org', 'jedipedia.de',
-				'memory-alpha.org', 'uncyclopedia.org',
+				'wikia.com', 'fandom.com', 'wikia.org', 'ffxiclopedia.org',
+				'jedipedia.de', 'memory-alpha.org', 'uncyclopedia.org',
 				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
 			],
 			wikiDomainsRegex = new RegExp('(^|\\.)(' + wikiDomains.join('|').replace(/\./g, '\\.') + ')$');

@@ -173,4 +173,149 @@ class FilePageHooks extends WikiaObject{
 
 		return true;
 	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onUndeleteComplete( Title $title ) {
+		self::purgeTitle( $title );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onArticleSave( WikiPage $page ) {
+		if( $page->getTitle()->getNamespace() === NS_FILE &&
+		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
+			return true;
+		}
+		self::purgeTitle( $page->getTitle() );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onArticleDelete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials after material was edited
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onArticleSaveComplete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+
+		return true;
+	}
+
+
+	/**
+	 * Hook to fetch linked materials
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 * @param $links container for links
+	 *
+	 * @return true -- because it's hook
+	 */
+	public static function onGetFileLinks( $id, &$links ) {
+		$links = self::getFileLinks( $id );
+
+		return true;
+	}
+
+
+	/**
+	 * Clear memcache and purge page
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 */
+	private static function purgeTitle( Title $title ) {
+		if ( $title->inNamespace( NS_FILE ) ) {
+			self::purgeRedir( $title );
+		} else {
+			self::clearLinkedFilesCache( $title->getArticleID() );
+		}
+	}
+
+
+	/**
+	 * Clear memcache and purge page
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 */
+	private static function purgeRedir( Title $title ) {
+		global $wgMemc;
+		$redirKey = wfMemcKey( 'redir', 'http', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
+		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
+		$page = WikiPage::factory( $title );
+		$page->doPurge();
+	}
+
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
+	 */
+	private static function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select(
+			[ 'imagelinks' ],
+			[ 'il_to' ],
+			[ 'il_from' => $id ],
+			__METHOD__,
+			[ 'ORDER BY' => 'il_to', ] );
+	}
+
+	/**
+	 * Clear memcache redirs before db changed
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 */
+	private static function clearLinkedFilesCache( $id, $results = null ) {
+		if ( is_null( $results ) ) {
+			$results = self::getFileLinks( $id );
+		}
+		foreach ( $results as $row ) {
+			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
+			self::purgeRedir( $title );
+		}
+	}
 }
