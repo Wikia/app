@@ -1,10 +1,12 @@
 <?php
 
+use Wikia\FeedsAndPosts\ArticleData;
 use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\ThemeSettings;
 use Wikia\FeedsAndPosts\TopArticles;
+use Wikia\FeedsAndPosts\WikiVariables;
 
-class FeedsAndPostsController extends WikiaController {
+class FeedsAndPostsController extends WikiaApiController {
 	public function getRecentChanges() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new RecentChanges() )->get() );
@@ -17,9 +19,10 @@ class FeedsAndPostsController extends WikiaController {
 
 	public function getAll() {
 		$this->response->setValues( [
-				'recentChanges' => ( new RecentChanges() )->get(),
-				'topArticles' => ( new TopArticles() )->get(),
-				'theme' => ( new ThemeSettings() )->get(),
+			'recentChanges' => ( new RecentChanges() )->get(),
+			'topArticles' => ( new TopArticles() )->get(),
+			'theme' => ( new ThemeSettings() )->get(),
+			'wikiVariables' => ( new WikiVariables() )->get(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -27,5 +30,25 @@ class FeedsAndPostsController extends WikiaController {
 	public function getThemeSettings() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( ( new ThemeSettings() )->get() );
+	}
+
+	public function getWikiVariables() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues( ( new WikiVariables() )->get() );
+	}
+
+	public function getArticleData() {
+		$articleId = intval( $this->getRequiredParam( 'id' ) );
+
+		$title = Title::newFromID($articleId);
+		$images = ArticleData::getImages($articleId);
+
+		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
+		$this->response->setValues([
+			'title' => $title->getText(),
+			'thumbnail' => $images[0] ?? null,
+			'content_images' => count($images) > 1 ? array_slice($images, 1) : [],
+			'snippet' => ArticleData::getTextSnippet($title),
+		]);
 	}
 }

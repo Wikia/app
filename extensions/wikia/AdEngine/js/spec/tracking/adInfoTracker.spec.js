@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 			}
 		},
 		slotRegistry: {
-			getScrollY: noop
+			getCurrentScrollY: noop
 		},
 		browserDetect: {
 			getOS: function () {

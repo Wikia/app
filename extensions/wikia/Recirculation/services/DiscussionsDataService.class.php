@@ -26,8 +26,8 @@ class DiscussionsDataService {
 		$this->server = WikiFactory::cityIDtoUrl( $this->cityId );
 	}
 
-	public function getData( $type, $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ) {
-		$memcKey = wfMemcKey( __METHOD__, $this->cityId, $type, self::MCACHE_VER );
+	public function getPosts( string $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ): array {
+		$memcKey = wfMemcKey( __METHOD__, $this->cityId, 'posts', self::MCACHE_VER );
 
 		$rawData =
 			WikiaDataAccess::cache( $memcKey, WikiaResponse::CACHE_VERY_SHORT,
@@ -35,43 +35,17 @@ class DiscussionsDataService {
 					return $this->apiRequest( $sortKey );
 				} );
 
-		if ( $type === 'posts' ) {
-			$data = $this->getPosts( $rawData );
-		} else {
-			$data = $this->formatData( $rawData );
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Get posts for discussions
-	 * @return an array of posts
-	 */
-	private function getPosts( $rawData ) {
-		$data = [
-			'posts' => []
-		];
+		$posts = [];
 
 		$rawPosts = $rawData['_embedded']['threads'];
 
 		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
 			foreach ( $rawPosts as $key => $value ) {
-				$data['posts'][] = $this->buildPost( $value, $key );
+				$posts[] = $this->buildPost( $value, $key );
 			}
 		}
 
-		return $data;
-	}
-
-	private function formatData( $rawData ) {
-		$data = [];
-
-		$data['discussionsUrl'] = $this->server . '/d/f';
-		$data['postCount'] = $rawData['threadCount'];
-		$data['posts'] = $this->getPosts( $rawData )['posts'];
-
-		return $data;
+		return $posts;
 	}
 
 	/**

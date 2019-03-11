@@ -1265,18 +1265,6 @@ $wgCountTotalSearchHits = false;
 $wgCreateDatabaseActiveCluster = 'c7';
 
 /**
- * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
- * @var bool $wgCreateLanguageWikisWithPath
- */
-$wgCreateLanguageWikisWithPath = false;
-
-/**
- * Whether to create new English wikis under the fandom.com domain.
- * @var bool $wgCreateEnglishWikisOnFandomCom
- */
-$wgCreateEnglishWikisOnFandomCom = true;
-
-/**
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
@@ -4618,15 +4606,6 @@ $wgGalleryOptions = [
 $wgGameGuidesContentForAdmins = true;
 
 /**
- * Allow thumbnail rendering on page view. If this is false, a valid thumbnail
- * URL is still output, but no file will be created at the target location. This
- * may save some time if you have a thumb.php or 404 handler set up which is
- * faster than the regular webserver(s).
- * @var bool $wgGenerateThumbnailOnParse
- */
-$wgGenerateThumbnailOnParse = false;
-
-/**
  * Global user preferences (options) filter.
  * @see lib/Wikia/src/Factory/PreferencesFactory.php
  * @var Array $wgGlobalUserPreferenceWhiteList
@@ -4799,6 +4778,18 @@ $wgGoogleAmpArticleBlacklist = [];
  * @var Array $wgGoogleAmpNamespaces
  */
 $wgGoogleAmpNamespaces = [];
+
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see maintenance/wikia/migrateImagesToGcs.php
+ * @var array $wgWikiStatusChangePublisher
+ */
+$wgGoogleCloudUploaderPublisher = [
+	'exchange' => 'google-cloud-uploader.mediawiki-events',
+	'vhost' => 'dc-file-sync',
+];
+
 
 /**
  * Go button goes straight to the edit screen if the article doesn't exist.
@@ -5341,7 +5332,6 @@ $wgLocalDatabases = [];
  *                      container name and the container root as the zone directory.
  *   - url              Base public URL
  *   - hashLevels       The number of directory levels for hash-based division of files
- *   - thumbScriptUrl   The URL for thumb.php (optional, not recommended)
  *   - transformVia404  Whether to skip media file transformation on parse and rely on a 404
  *                      handler instead.
  *   - initialCapital   Equivalent to $wgCapitalLinks (or $wgCapitalLinkOverrides[NS_FILE],
@@ -6235,6 +6225,12 @@ $wgPageShareServices = [
 $wgPageShowWatchingUsers = false;
 
 /**
+ * Base URL used for Parsely API calls
+ * @var string $wgParselyApiUrl
+ */
+$wgParselyApiUrl = 'https://api.parsely.com/v2/';
+
+/**
  * The expiry time for the parser cache, in seconds.
  * @var int $wgParserCacheExpireTime
  */
@@ -6604,6 +6600,12 @@ $wgPurgeVignetteUsingSurrogateKeys = true;
 $wgPutIPinRC = true;
 
 /**
+ * Qualaroo JS files to serve our user surveys.
+ */
+$wgQualarooUrl = '//s3.amazonaws.com/ki.js/52510/gQT.js';
+$wgQualarooDevUrl = '//s3.amazonaws.com/ki.js/52510/fCN.js';
+
+/**
  * Number of rows to cache in 'querycache' table when miser mode is on.
  * @var int $wgQueryCacheLimit
  */
@@ -6833,6 +6835,13 @@ $wgRightsUrl = null;
  * @var string $wgReadOnlyFile
  */
 $wgReadOnlyFile = false;
+
+/**
+ * Whether or not to redirect all file pages to the first page they are used on for
+ * anonymous users.
+ * @var boolean
+ */
+$wgRedirectFilePagesForAnons = false;
 
 /**
  * Allow redirection to another page when a user logs in.
@@ -7263,14 +7272,6 @@ $wgSharedPrefix = false;
  */
 $wgSharedTables = [ 'user', 'user_properties' ];
 
-/**
- * Give a path here to use thumb.php for thumbnail generation on client request,
- * instead of generating them on render and outputting a static URL. This is
- * necessary if some of your apache servers don't have read/write access to the
- * thumbnail path.
- * @var string|bool $wgSharedThumbnailScriptPath
- */
-$wgSharedThumbnailScriptPath = false;
 
 /**
  * DB name with metadata about shared directory. Set this to false if the
@@ -7910,15 +7911,6 @@ $wgThumbLimits = [ 120,150, 180, 200, 250, 300 ];
 $wgThumbnailEpoch = '20030516000000';
 
 /**
- * Give a path here to use thumb.php for thumbnail generation on client request,
- * instead of generating them on render and outputting a static URL. This is
- * necessary if some of your apache servers don't have read/write access to the
- * thumbnail path.
- * @var string|bool $wgThumbnailScriptPath
- */
-$wgThumbnailScriptPath = false;
-
-/**
  * Adjust width of upright images when parameter 'upright' is used. This allows
  * a nicer look for upright images without the need to fix the width by
  * hardcoded px in wiki sourcecode.
@@ -8507,9 +8499,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".
@@ -8891,9 +8883,23 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
  * @see SEO-669
- * @var string $wgFandomComMigrationScheduled
+ * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
+
+/**
+ * Whether the community is scheduled to be migrated to a wikia.org domain
+ * @var bool $wgWikiaOrgMigrationScheduled
+ */
+$wgWikiaOrgMigrationScheduled = false;
+
+/**
+ * Custom messages to show on the migration banner (before and after migration).
+ * @see PLATFORM-3895
+ * @var string
+ */
+$wgFandomComMigrationCustomMessageBefore = '';
+$wgFandomComMigrationCustomMessageAfter = '';
 
 /**
  * Whether the community was migrated to a fandom.com domain, triggers a banner notification
@@ -8918,3 +8924,27 @@ $wgEnableFastlyInsights = false;
  * Whether the closed wiki page should be shown, variable set by WikiFactoryLoader for closed wikis.
  */
 $wgIncludeClosedWikiHandler = false;
+
+/**
+ * If set, the "Watch now" button is visible and leads to the url from this variable
+ * @see IW-1470
+ * @var string
+ */
+$wgWatchShowURL = '';
+
+/**
+ * Enables EditDraftSaving extension
+ * @see SUS-79
+ * @var bool
+ */
+$wgEnableEditDraftSavingExt = false;
+
+/**
+ * ArticleTags RabbitMQ configuration.
+ * @see extensions/wikia/articleTagEvents
+ * @var array $wgArticleTagExchangeConfig
+ */
+$wgArticleTagExchangeConfig = [
+    'vhost' => 'events',
+    'exchange' => 'article-tags',
+];

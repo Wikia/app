@@ -34,10 +34,6 @@ class RailController extends WikiaController {
 		$this->getLazyRail();
 	}
 
-	public function stickyModule() {
-		// It loads Rail_stickyModule.php
-	}
-
 	/**
 	 * Get lazy right rail modules
 	 */
@@ -79,8 +75,6 @@ class RailController extends WikiaController {
 		$railLazyContent = '';
 
 		krsort( $railModules );
-
-		array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
 
 		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {
 			foreach ( $railModules as $railModule ) {

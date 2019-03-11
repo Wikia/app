@@ -683,15 +683,6 @@ abstract class File implements UrlGeneratorInterface {
 	 * @return string
 	 */
 	function getTransformScript() {
-		if ( !isset( $this->transformScript ) ) {
-			$this->transformScript = false;
-			if ( $this->repo ) {
-				$script = $this->repo->getThumbScriptUrl();
-				if ( $script ) {
-					$this->transformScript = "$script?f=" . urlencode( $this->getName() );
-				}
-			}
-		}
 		return $this->transformScript;
 	}
 
@@ -839,7 +830,7 @@ abstract class File implements UrlGeneratorInterface {
 
 			if ( $this->repo ) {
 				// Defer rendering if a 404 handler is set up...
-				if ( $this->repo->canTransformVia404() && !( $flags & self::RENDER_NOW ) ) {
+				if ( !( $flags & self::RENDER_NOW ) ) {
 					wfDebug( __METHOD__ . " transformation deferred." );
 					// XXX: Pass in the storage path even though we are not rendering anything
 					// and the path is supposed to be an FS path. This is due to getScalerType()

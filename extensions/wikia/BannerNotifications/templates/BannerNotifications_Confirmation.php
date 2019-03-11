@@ -9,7 +9,7 @@
 				<span class="wds-banner-notification__text">
 					<?= $notification['message'] ?>
 				</span>
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-cross-tiny',
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-close-tiny',
 					'wds-icon wds-icon-tiny wds-banner-notification__close' ) ?>
 			</div>
 		<? endforeach ?>

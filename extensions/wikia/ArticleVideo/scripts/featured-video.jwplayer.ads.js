@@ -2,7 +2,6 @@
 define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
@@ -12,13 +11,10 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.wrappers.prebid'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
+	require.optional('ext.wikia.adEngine.lookup.bidders')
 ], function (
 	adContext,
 	vastUrlBuilder,
-	megaAdUnitBuilder,
 	slotRegistry,
 	srcProvider,
 	articleVideoAd,
@@ -28,9 +24,7 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	fvLagger,
 	log,
 	win,
-	prebidWrapper,
-	bidders,
-	prebid
+	bidders
 ) {
 	'use strict';
 
@@ -65,8 +59,8 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && prebid.getSlotParams && adContext.get('bidders.prebid')) {
-			return prebid.getSlotParams(featuredVideoSlotName);
+		if (bidders && bidders.isEnabled()) {
+			return bidders.getBidParameters(featuredVideoSlotName);
 		}
 
 		return {};
@@ -105,13 +99,11 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 		};
 
 		function requestBidder() {
-			if (!prebidWrapper) {
+			if (!bidders || !bidders.isEnabled()) {
 				return;
 			}
 
-			var bid = bidders && bidders.isEnabled()
-				? bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders)
-				: prebidWrapper.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+			var bid = bidders.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';
@@ -227,7 +219,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 
 			player.on('adRequest', function (event) {
 				var vastParams = parseVastParamsFromEvent(event);
-				slotRegistry.storeScrollY(featuredVideoSlotName);
 				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 

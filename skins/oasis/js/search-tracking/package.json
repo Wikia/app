@@ -1,0 +1,7 @@
+{
+  "name": "wikia-search-tracking",
+  "scripts": {},
+  "dependencies": {
+    "@wikia/search-tracking": "github:Wikia/search-tracking#1.1.1"
+  }
+}

@@ -58,10 +58,12 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	public function discussionsLink() {
+		global $wgScriptPath;
+
 		$this->response->setValues(
 			[
 				'discussionsActiveMessage' => wfMessage( 'discussions-active' )->escaped(),
-				'discussionsLink' => self::DISCUSSIONS_LINK,
+				'discussionsLink' => $wgScriptPath . self::DISCUSSIONS_LINK,
 				'discussionsLinkCaption' => wfMessage( 'discussions-navigate' )->escaped(),
 			]
 		);

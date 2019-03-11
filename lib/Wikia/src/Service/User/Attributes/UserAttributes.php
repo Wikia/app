@@ -22,7 +22,7 @@ class UserAttributes {
 	/** @var string[string] */
 	private $defaultAttributes;
 
-	/** @var Attribute[] $changedAttributes */
+	/** @var Attribute[][] $changedAttributes */
 	private $changedAttributes;
 
 	/**
@@ -95,32 +95,34 @@ class UserAttributes {
 
 		// SRE-97: Only set the attribute if it was not set before or the value was changed
 		if ( !isset( $this->attributes[$userId][$name] ) || $this->attributes[$userId][$name] !== $value ) {
-			$this->changedAttributes[$name] = $attribute;
+			$this->changedAttributes[$userId][$name] = $attribute;
 			$this->attributes[$userId][$name] = $attribute->getValue();
 		}
 	}
 
 	public function save( $userId ) {
-		$savedAttributes = [];
+		if ( isset( $this->changedAttributes[$userId] ) ) {
+			$savedAttributes = [];
 
-		foreach( $this->changedAttributes as $name => $attribute ) {
-			$value = $attribute->getValue();
+			foreach ( $this->changedAttributes[$userId] as $name => $attribute ) {
+				$value = $attribute->getValue();
 
-			if ( $this->isReadOnlyAttribute( $name ) ) {
-				continue;
-			}
-
-			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
-				$savedAttributes[$name] = $value;
-				if ( $name == 'avatar' ) {
-					$this->logIfBadAvatarVal( $value, $userId );
+				if ( $this->isReadOnlyAttribute( $name ) ) {
+					continue;
 				}
-			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
-				$this->deleteFromService( $userId, $attribute );
-			}
-		}
 
-		$this->attributeService->set( $userId, $savedAttributes );
+				if ( $this->attributeShouldBeSaved( $name, $value ) ) {
+					$savedAttributes[$name] = $value;
+					if ( $name == 'avatar' ) {
+						$this->logIfBadAvatarVal( $value, $userId );
+					}
+				} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
+					$this->deleteFromService( $userId, $attribute );
+				}
+			}
+
+			$this->attributeService->set( $userId, $savedAttributes );
+		}
 	}
 
 	private function isReadOnlyAttribute( $name ) {
@@ -183,7 +185,7 @@ class UserAttributes {
 	}
 
 	private function logAttributeServiceRequest( $userId ) {
-		$this->info( 'USER_ATTRIBUTES request_from_service', [
+		$this->debug( 'USER_ATTRIBUTES request_from_service', [
 			'userId' => $userId
 		] );
 	}

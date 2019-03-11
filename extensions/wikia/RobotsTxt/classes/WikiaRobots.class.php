@@ -80,10 +80,11 @@ class WikiaRobots {
 		'/d/g',
 		// Fandom old URLs
 		'/fandom?p=',
+		//Mobile Wiki search URL
+		'/search',
 
 		// AdEngine recovery api
-		'/wikia.php?controller=AdEngine2ApiController&method=getBTCode',
-		'/wikia.php?controller=AdEngine2ApiController&method=getILCode'
+		'/wikia.php?controller=AdEngine2ApiController&method=getBTCode'
 	];
 
 	/**
@@ -155,7 +156,12 @@ class WikiaRobots {
 		}
 	}
 
-	public function configureRobotsBuilder( RobotsTxt $robots ) {
+	/**
+	 * @param RobotsTxt $robots
+	 * @param bool $shallow when false, returns rules for other wikis on the same domain.
+	 * @return RobotsTxt
+	 */
+	public function configureRobotsBuilder( RobotsTxt $robots, $shallow = false ) {
 		global $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
@@ -214,7 +220,7 @@ class WikiaRobots {
 		// Paranoid check to make sure language wikis return only their rules without calling other
 		// wikis recursively.
 		// TODO - remove the code below once robots are served by the robots-txt service
-		if ( !$wgRequest->getBool( 'shallow' ) ) {
+		if ( !$wgRequest->getBool( 'shallow' ) && !$shallow ) {
 			// fetch from foreign wikis...
 			$languageWikis = \WikiFactory::getLanguageWikis();
 			foreach ( $languageWikis as $wiki ) {

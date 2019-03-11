@@ -91,18 +91,18 @@ Se hai delle domande riguardo lo strumento di benvenuto di FANDOM, [[Special:Con
 );
 
 $messages['ja'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">FANDOMへようこそ！</h2>
+	'static-user-pages-user-content' => '<h2 style="overflow:auto">Fandomへようこそ！</h2>
 
 このアカウントからのウェルカムメッセージは、新しくこのWikiの編集者になられた方にお送りしています。
 
-サポートが必要な際には、ウェルカムメッセージの送り主にメッセージをお送りください。リンクを使用して該当するユーザーのトークページに移動し、ページを編集することでメッセージを投稿していただけます。
+サポートが必要な際には、ウェルカムメッセージの送り主にメッセージをお送りください。リンクから該当するユーザーのトークページに移動し、ページを編集することでメッセージを投稿していただけます。
 
-FANDOMに関する一般的なサポートが必要な場合は、[[ヘルプ:コンテンツ|FANDOMヘルプ]]をご利用ください。ヘルプで答えが見つからない場合は、[[Special:Contact|スタッフでお問い合わせ]]ください。
+Fandomに関する一般的なサポートが必要な場合は、[[ヘルプ:コンテンツ|Fandomヘルプ]]をご利用ください。ヘルプで答えが見つからない場合は、[[Special:Contact|スタッフまでお問い合わせ]]ください。
 
 ==ウェルカムツールに関する情報とサポート==
-自動ウェルカムメッセージについて詳しくは、[[ヘルプ:ウェルカムツール|ウェルカムツールのヘルプページ]]をご覧ください。
+自動ウェルカムメッセージについての詳細は、[[ヘルプ:ウェルカムツール|ウェルカムツールのヘルプページ]]をご覧ください。
 
-FANDOMウェルカムツールについてご不明な点がございましたら、[[Special:Contact|FANDOMスタッフ]]にお問い合わせください。
+Fandomウェルカムツールについてご不明な点がございましたら、[[Special:Contact|Fandomスタッフ]]にお問い合わせください。
 ',
 	'static-user-pages-bot-content' => 'User:FANDOMbotは、一括編集や一括変更のためにFANDOMスタッフが運営しているボット・アカウントです。',
 );
@@ -113,18 +113,18 @@ $messages['lol'] = array(
 );
 
 $messages['pl'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Witamy w FANDOMIE!</h2>
+	'static-user-pages-user-content' => '== Witamy w Fandomie! ==
 
 Jeśli {{GENDER:|otrzymałeś|otrzymałaś}} powitanie z tego konta, oznacza to, że jesteś nowym edytorem tej wiki. Cześć!
 
 Jeśli szukasz pomocy, możesz zostawić wiadomość osobie, która podpisała wiadomość powitalną. Kliknij odnośnik do ich strony dyskusji, a następnie edytuj stronę, aby napisać wiadomość.
 
-Aby znaleźć ogólną pomoc FANDOMU, odwiedź [[w:pl:Pomoc:Zawartość|pomoc FANDOMU]], [[w:c:spolecznosc|Centrum Społeczności]] lub [[Special:Contact|skontaktuj się z pracownikami]], jeśli nadal masz pytania.
+Aby znaleźć ogólną pomoc Fandomu, odwiedź [[w:pl:Pomoc:Zawartość|pomoc Fandomu]], [[w:c:spolecznosc|Centrum Społeczności]] lub [[Special:Contact|skontaktuj się z pracownikami]], jeśli nadal masz pytania.
 
 == Informacje i pomoc dla narzędzia witania ==
 Aby uzyskać więcej informacji o automatycznych wiadomościach powitalnych, zobacz [[w:pl:Pomoc:Narzędzie witania|stronę pomocy narzędzia witania]].
 
-Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania FANDOMU, [[Special:Contact|skontaktuj się z pracownikami FANDOMU]].
+Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania Fandomu, [[Special:Contact|skontaktuj się z personelem]].
 ',
 	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to [[Pomoc:Boty|konto bota]], obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
 );

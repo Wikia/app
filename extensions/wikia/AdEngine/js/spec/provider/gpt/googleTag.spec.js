@@ -57,7 +57,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getSlots: noop
 			},
 			slotRegistry: {
-				get: noop
+				get: noop,
+				isEnabled: function () { return true; }
 			},
 			srcProvider: {},
 			window: {
@@ -95,7 +96,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					}
 				}, {
 					getTargeting: function () {
-						return ['TOP_RIGHT_BOXAD']
+						return ['TOP_BOXAD']
 					}
 				}, {
 					getTargeting: function () {

@@ -20,6 +20,10 @@ trait HttpIntegrationTest {
 		return new StaticUrlProvider( "{$this->getMockServerHost()}:{$this->getMockServerPort()}") ;
 	}
 
+	protected final function getMockServerBaseUrl(): string {
+		return "http://{$this->getMockServerHost()}:{$this->getMockServerPort()}/";
+	}
+
 	protected final function getMockServerHost(): string {
 		return getenv( 'PHIREMOCK_HOST' );
 	}

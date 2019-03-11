@@ -6,7 +6,7 @@ class ApiAccessService {
 	const ENV_SANDBOX = 2;
 	const WIKIA_CORPORATE = 32;
 	const WIKIA_NON_CORPORATE = 64;
-	const URL_TEST = 128;	
+	const URL_TEST = 128;
 
 	/**
 	 * @var WikiaRequest
@@ -35,7 +35,7 @@ class ApiAccessService {
 					return $actions[ $action ];
 				} else if ( isset ( $actions[ '*' ] ) ) {
 					return $actions[ '*' ];
-				} 
+				}
 			} else {
 				return $actions;
 			}
@@ -65,11 +65,12 @@ class ApiAccessService {
 	 * @return bool result
 	 */
 	public function canUse( $controller, $action ) {
+		global $wgCityId;
 		$access = $this->getApiAccess($controller, $action );
 		if ( ($access & self::WIKIA_NON_CORPORATE) && $this->isCorporateWiki() ) {
 			return false;
 		}
-		if ( ($access & self::WIKIA_CORPORATE) && !($this->isCorporateWiki()) ) {
+		if ( ($access & self::WIKIA_CORPORATE) && !( $this->isCorporateWiki() || $wgCityId == Wikia::COMMUNITY_WIKI_ID ) ) {
 			return false;
 		}
 		$isTest = $this->isTestLocation();

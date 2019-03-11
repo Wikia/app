@@ -61,6 +61,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 					'ATF_SLOT'
 				],
 				highlyViewableSlots: [
+					'TOP_BOXAD',
 					'HIVI_BTF_SLOT',
 					'INVISIBLE_HIGH_IMPACT_2'
 				]
@@ -80,7 +81,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			success: function () {
 				this.callback();
 			},
-			pre: function (result, callback) {
+			post: function (result, callback) {
 				this.callback = callback;
 			}
 		};
@@ -188,5 +189,37 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 
 		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
 		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('Process TOP_BOXAD slot when second call is not disabled', function () {
+
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			topBoxadSlot = getFakeSlot('TOP_BOXAD'),
+			fakeProvider = getFakeProvider();
+
+		mocks.win.ads.runtime.disableSecondCall = false;
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		fillInSlot(topBoxadSlot);
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
+	});
+
+	it('Collapse TOP_BOXAD slot when second call is disabled', function () {
+
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			topBoxadSlot = getFakeSlot('TOP_BOXAD'),
+			fakeProvider = getFakeProvider();
+
+		mocks.win.ads.runtime.disableSecondCall = true;
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		fillInSlot(topBoxadSlot);
+
+		expect(topBoxadSlot.collapse).toHaveBeenCalled();
 	});
 });

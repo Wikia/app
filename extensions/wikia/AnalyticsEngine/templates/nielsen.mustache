@@ -1,0 +1,9 @@
+<script>
+	require([
+		require.optional('ext.wikia.adEngine.tracking.nielsen')
+	], function (nielsen) {
+		if (nielsen) {
+			nielsen.call();
+		}
+	});
+</script>

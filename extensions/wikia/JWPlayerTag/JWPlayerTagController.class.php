@@ -34,20 +34,11 @@ class JWPlayerTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'jwplayer-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		if ( ArticleVideoContext::isFeaturedVideoEmbedded(
-			RequestContext::getMain()->getTitle()->getArticleID()
-		) ) {
-			$script = JSSnippets::addToStack( [
-				'jwplayer_tag_with_featured_video_js',
-				'jwplayer_tag_scss'
-			] );
-		} else {
-			$script = JSSnippets::addToStack( [
-				'jwplayer_tag_js',
-				'jwplayer_tag_css',
-				'jwplayer_tag_scss'
-			] );
-		}
+		$script = JSSnippets::addToStack( [
+			'jwplayer_tag_js',
+			'jwplayer_tag_css',
+			'jwplayer_tag_scss'
+		] );
 
 		$elementId = self::getElementId();
 

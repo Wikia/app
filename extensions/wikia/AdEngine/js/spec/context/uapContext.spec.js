@@ -75,7 +75,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		var context = getContext();
 
 		expect(context.shouldDispatchEvent('INVISIBLE_SKIN')).toBeFalsy();
-		expect(context.shouldDispatchEvent('TOP_RIGHT_BOXAD')).toBeFalsy();
+		expect(context.shouldDispatchEvent('TOP_BOXAD')).toBeFalsy();
 	});
 
 	it('should dispatch event only once', function () {

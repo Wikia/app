@@ -69,7 +69,11 @@ define('ext.wikia.adEngine.wad.babDetection', [
 	}
 
 	function isBlocking() {
-		return win.ads && win.ads.runtime && win.ads.runtime.bab && win.ads.runtime.bab.blocking;
+		if (win.ads && win.ads.runtime && win.ads.runtime.bab) {
+			return win.ads.runtime.bab.blocking;
+		}
+
+		return undefined;
 	}
 
 	resetState();

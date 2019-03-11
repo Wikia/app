@@ -62,7 +62,6 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-sorting-option-newest-threads' => 'Newest Threads',
 	'forum-sorting-option-oldest-threads' => 'Oldest Threads',
 	'forum-discussion-post' => 'Post',
-	'forum-discussion-highlight' => 'Highlight this discussion',
 	'forum-discussion-placeholder-title' => 'What do you want to talk about?',
 	'forum-discussion-placeholder-message' => 'Post a new message to the $1 board',
 	'forum-discussion-placeholder-message-short' => 'Post a new message',
@@ -195,7 +194,6 @@ Parameters:
 	'forum-sorting-option-oldest-threads' => 'Sorting option, oldest threads first',
 	'forum-discussion-post' => 'Text of the submit button when creating a new thread.
 {{Identical|Post}}',
-	'forum-discussion-highlight' => 'Checkbox option to highlight a discussion displayed when creating a thread.',
 	'forum-discussion-placeholder-title' => 'Placeholder text shown in an input box when creating a thread.',
 	'forum-discussion-placeholder-message' => 'Placeholder text shown in an input box when creating a thread. Paramaters:
 * $1 is the title of the board the thread will be posted to',
@@ -427,7 +425,6 @@ $messages['ar'] = array(
 	'forum-sorting-option-newest-threads' => 'أحدث النقاشات',
 	'forum-sorting-option-oldest-threads' => 'أقدم النقاشات',
 	'forum-discussion-post' => 'منشور',
-	'forum-discussion-highlight' => 'تسليط الضوء على هذا النقاش',
 	'forum-discussion-placeholder-title' => 'عما تريد أن تتحدث؟',
 	'forum-discussion-placeholder-message' => 'نشر رسالة جديدة على جدار $1',
 	'forum-discussion-placeholder-message-short' => 'إرسال رسالة جديدة',
@@ -586,7 +583,6 @@ $messages['br'] = array(
 	'forum-sorting-option-newest-threads' => 'Neudennadoù nevesañ',
 	'forum-sorting-option-oldest-threads' => 'Neudennadoù koshañ',
 	'forum-discussion-post' => 'Postañ',
-	'forum-discussion-highlight' => "Dreistlinennañ ar c'hendiviz-mañ",
 	'forum-discussion-placeholder-title' => "Eus petra e fell deoc'h kaozeal ?",
 	'forum-discussion-placeholder-message' => 'Postañ ur gemennadenn nevez en isforom $1',
 	'forum-discussion-placeholder-message-short' => 'Postañ ur gemennadenn nevez',
@@ -606,7 +602,6 @@ $messages['br'] = array(
 	'forum-mail-notification-html-button' => 'Gwelet ar gaoz',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Salud deoc\'h $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -744,7 +739,6 @@ Abans de contribuir al fòrum de {{SITENAME}} tingues en compte les següents pr
 	'forum-sorting-option-newest-threads' => 'Temes més nous',
 	'forum-sorting-option-oldest-threads' => 'Temes més antics',
 	'forum-discussion-post' => 'Publicar',
-	'forum-discussion-highlight' => 'Destacar aquest tema',
 	'forum-discussion-placeholder-title' => 'Sobre què vols parlar?',
 	'forum-discussion-placeholder-message' => 'Publicar un nou tema al subfòrum $1',
 	'forum-discussion-placeholder-message-short' => 'Publicar un missatge nou',
@@ -764,7 +758,6 @@ Abans de contribuir al fòrum de {{SITENAME}} tingues en compte les següents pr
 	'forum-mail-notification-html-button' => 'Veure la discussió',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hola $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -892,7 +885,6 @@ $messages['cs'] = array(
 	'forum-sorting-option-newest-threads' => 'Nejnovější vlákna',
 	'forum-sorting-option-oldest-threads' => 'Nejstarší vlákna',
 	'forum-discussion-post' => 'Poslat',
-	'forum-discussion-highlight' => 'Zvýraznit tuto diskuzi',
 	'forum-discussion-placeholder-title' => 'O čem chcete mluvit?',
 	'forum-discussion-placeholder-message-short' => 'Napsat novou zprávu',
 	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|odpověděl|odpověděla}} na vaše vlákno v subfóru $3',
@@ -980,7 +972,6 @@ Denke bitte daran, dich an die bestehenden Forenregeln zu halten, wenn du dich i
 	'forum-sorting-option-newest-threads' => 'Neuste',
 	'forum-sorting-option-oldest-threads' => 'Älteste',
 	'forum-discussion-post' => 'Posten',
-	'forum-discussion-highlight' => 'Hervorheben',
 	'forum-discussion-placeholder-title' => 'Über welches Thema möchtest du diskutieren?',
 	'forum-discussion-placeholder-message' => 'Neue Nachricht im Forum „$1“ posten',
 	'forum-discussion-placeholder-message-short' => 'Neue Nachricht verfassen',
@@ -1000,7 +991,6 @@ Denke bitte daran, dich an die bestehenden Forenregeln zu halten, wenn du dich i
 	'forum-mail-notification-html-button' => 'Die Konversation ansehen',
 	'forum-mail-notification-subject' => '$1 – $2',
 	'forum-mail-notification-body' => 'Hallo $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -1145,7 +1135,6 @@ $messages['el'] = array(
 	'forum-board-validation-count' => 'Το ανώτατο όριο πινάκων είναι $1',
 	'forum-confirmation-board-deleted' => 'Το "$1" διεγράφη.',
 	'forum-contributions-line' => '[[$1|$2]] στον [[$3|$4 πίνακα]]',
-	'forum-discussion-highlight' => 'Επισημάνετε αυτή τη συζύτηση',
 	'forum-discussion-placeholder-message-short' => 'Αναρτήστ ένα νέο μήνυμα',
 	'forum-discussion-placeholder-message' => 'Αναρτήστε νέο μήνυμα στον πίνακα $1',
 	'forum-discussion-placeholder-title' => 'Σχετικά με τί θέλετε να μιλήσετε;',
@@ -1297,7 +1286,6 @@ La comunidad de {{SITENAME}} se alegra de que estés aquí. Queremos verte habla
 	'forum-sorting-option-newest-threads' => 'Temas más nuevos',
 	'forum-sorting-option-oldest-threads' => 'Temas más antiguos',
 	'forum-discussion-post' => 'Publicar',
-	'forum-discussion-highlight' => 'Destacar este tema',
 	'forum-discussion-placeholder-title' => '¿Sobre qué quieres hablar?',
 	'forum-discussion-placeholder-message' => 'Publicar un nuevo tema en el subforo $1',
 	'forum-discussion-placeholder-message-short' => 'Publicar un mensaje nuevo',
@@ -1317,7 +1305,6 @@ La comunidad de {{SITENAME}} se alegra de que estés aquí. Queremos verte habla
 	'forum-mail-notification-html-button' => 'Ver la conversación',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hola $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -1523,7 +1510,6 @@ Ennen kuin alat käyttää {{SITENAME}}n Foorumeja, pidäthän mielessä muutama
 	'forum-sorting-option-newest-threads' => 'Uusimmat keskustelut',
 	'forum-sorting-option-oldest-threads' => 'Vanhimmat keskustelut',
 	'forum-discussion-post' => 'Luo keskustelu',
-	'forum-discussion-highlight' => 'Korosta tämä keskustelu',
 	'forum-discussion-placeholder-title' => 'Mistä haluat keskustella?',
 	'forum-discussion-placeholder-message' => 'Kirjoita uusi viesti $1 -palstalle',
 	'forum-discussion-placeholder-message-short' => 'Lähetä uusi viesti',
@@ -1543,7 +1529,6 @@ Ennen kuin alat käyttää {{SITENAME}}n Foorumeja, pidäthän mielessä muutama
 	'forum-mail-notification-html-button' => 'Näe keskustelu',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hei $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -1693,7 +1678,6 @@ Avant de contribuer aux forums de {{SITENAME}}, veuillez garder à l'esprit quel
 	'forum-sorting-option-newest-threads' => 'Fils les plus récents en premier',
 	'forum-sorting-option-oldest-threads' => 'Fils les plus anciens en premier',
 	'forum-discussion-post' => 'Envoyer',
-	'forum-discussion-highlight' => 'Épingler la discussion',
 	'forum-discussion-placeholder-title' => 'De quoi souhaitez-vous discuter ?',
 	'forum-discussion-placeholder-message' => 'Envoyer un nouveau message sur le sous-forum $1',
 	'forum-discussion-placeholder-message-short' => 'Envoyer un nouveau message',
@@ -1713,7 +1697,6 @@ Avant de contribuer aux forums de {{SITENAME}}, veuillez garder à l'esprit quel
 	'forum-mail-notification-html-button' => 'Voir la conversation',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Bonjour $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -1877,7 +1860,6 @@ Antes de colaborar nos foros de {{SITENAME}} teña en conta as seguintes prácti
 	'forum-sorting-option-newest-threads' => 'Fíos máis novos',
 	'forum-sorting-option-oldest-threads' => 'Fíos máis vellos',
 	'forum-discussion-post' => 'Publicar',
-	'forum-discussion-highlight' => 'Destacar este debate',
 	'forum-discussion-placeholder-title' => 'Sobre que quere falar?',
 	'forum-discussion-placeholder-message' => 'Publicar unha nova mensaxe no taboleiro "$1"',
 	'forum-discussion-placeholder-message-short' => 'Publicar unha nova mensaxe',
@@ -2079,7 +2061,6 @@ Sebelum berkontribusi di forum {{SITENAME}}, harap di ingat beberapa hal yang ha
 	'forum-sorting-option-newest-threads' => 'Diskusi Terbaru',
 	'forum-sorting-option-oldest-threads' => 'Diskusi Terlama',
 	'forum-discussion-post' => 'Kirim',
-	'forum-discussion-highlight' => 'Menyorotkan diskusi ini',
 	'forum-discussion-placeholder-title' => 'Apa yang anda ingin bicarakan tentang?',
 	'forum-discussion-placeholder-message' => 'Mengirimkan pesan baru ke panel $1',
 	'forum-discussion-placeholder-message-short' => 'Kirim pesan baru',
@@ -2251,7 +2232,6 @@ Prima di contribuire ai Forum di {{SITENAME}}, tieni a mente alcune buone pratic
 	'forum-board-validation-count' => 'Il numero massimo di sottoforum è $1',
 	'forum-confirmation-board-deleted' => '"$1" è stato cancellato.',
 	'forum-contributions-line' => '[[$1|$2]] nel [[$3|sottoforum $4]]',
-	'forum-discussion-highlight' => 'Evidenzia questa discussione',
 	'forum-discussion-placeholder-message-short' => 'Pubblica un nuovo post',
 	'forum-discussion-placeholder-message' => 'Inserisci un nuovo messaggio nel sottoforum $1',
 	'forum-discussion-placeholder-title' => 'Di cosa vuoi parlare?',
@@ -2371,7 +2351,6 @@ $messages['ja'] = array(
 	'forum-sorting-option-newest-threads' => '新しいスレッドを表示',
 	'forum-sorting-option-oldest-threads' => '前のスレッドを表示',
 	'forum-discussion-post' => '投稿',
-	'forum-discussion-highlight' => 'このスレッドをハイライトする',
 	'forum-discussion-placeholder-title' => 'スレッドタイトルを入力',
 	'forum-discussion-placeholder-message' => '$1板に投稿するメッセージを入力',
 	'forum-discussion-placeholder-message-short' => '投稿するメッセージを入力',
@@ -2485,6 +2464,7 @@ ___________________________________________<br />
 	'right-forumadmin' => 'フォーラムでアドミンの権限を持つ',
 	'right-forumoldedit' => '旧フォーラムのアーカイブを編集することができます',
 	'right-boardedit' => 'フォーラムのボードの情報を編集できる',
+	'forum-discussion-highlight' => 'このスレッドをハイライトする',
 );
 
 $messages['kn'] = array(
@@ -2551,7 +2531,6 @@ $messages['ko'] = array(
 	'forum-sorting-option-newest-threads' => '최근순',
 	'forum-sorting-option-oldest-threads' => '오래된순',
 	'forum-discussion-post' => '게시',
-	'forum-discussion-highlight' => '이 글을 강조하기',
 	'forum-discussion-placeholder-title' => '메시지 제목',
 	'forum-discussion-placeholder-message' => '$1 게시판에 새 메시지 남기기',
 	'forum-discussion-placeholder-message-short' => '새 메시지 남기기',
@@ -2738,7 +2717,6 @@ $messages['lol'] = array(
 	'forum-sorting-option-newest-threads' => 'crwdns63290:0crwdne63290:0',
 	'forum-sorting-option-oldest-threads' => 'crwdns63291:0crwdne63291:0',
 	'forum-discussion-post' => 'crwdns63292:0crwdne63292:0',
-	'forum-discussion-highlight' => 'crwdns63293:0crwdne63293:0',
 	'forum-discussion-placeholder-title' => 'crwdns63294:0crwdne63294:0',
 	'forum-discussion-placeholder-message' => 'crwdns63295:0crwdne63295:0',
 	'forum-discussion-placeholder-message-short' => 'crwdns63296:0crwdne63296:0',
@@ -2815,6 +2793,7 @@ $messages['lol'] = array(
 	'right-forumadmin' => 'crwdns63367:0crwdne63367:0',
 	'right-forumoldedit' => 'crwdns63368:0crwdne63368:0',
 	'right-boardedit' => 'crwdns63369:0crwdne63369:0',
+	'forum-discussion-highlight' => 'crwdns63293:0crwdne63293:0',
 );
 
 $messages['lrc'] = array(
@@ -2898,7 +2877,6 @@ Sebelum menyumbang kepada forum-forum {{SITENAME}}, sila ingati tatatertib kami:
 	'forum-sorting-option-newest-threads' => 'Kiriman Terbaru',
 	'forum-sorting-option-oldest-threads' => 'Kiriman Terdahulu',
 	'forum-discussion-post' => 'Kiriman',
-	'forum-discussion-highlight' => 'Mengetengahkan perbincangan ini',
 	'forum-discussion-placeholder-title' => 'Apa yang anda mahu bincangkan?',
 	'forum-discussion-placeholder-message' => 'Kirimkan pesanan baru kepada papan $1',
 	'forum-discussion-placeholder-message-short' => 'Kirimkan pesanan baru',
@@ -2918,7 +2896,6 @@ Sebelum menyumbang kepada forum-forum {{SITENAME}}, sila ingati tatatertib kami:
 	'forum-mail-notification-html-button' => 'Lihat perbualan',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hi $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -3070,7 +3047,6 @@ Houd alstublieft een aantal richtlijnen met betrekking tot gedrag in gedachten v
 	'forum-sorting-option-newest-threads' => 'Nieuwste overleg',
 	'forum-sorting-option-oldest-threads' => 'Oudste onderwerpen',
 	'forum-discussion-post' => 'Opslaan',
-	'forum-discussion-highlight' => 'Discussie uitlichten',
 	'forum-discussion-placeholder-title' => 'Waar wilt u over praten?',
 	'forum-discussion-placeholder-message' => 'Nieuw bericht plaatsen op het board $1',
 	'forum-discussion-placeholder-message-short' => 'Nieuw bericht plaatsen',
@@ -3090,7 +3066,6 @@ Houd alstublieft een aantal richtlijnen met betrekking tot gedrag in gedachten v
 	'forum-mail-notification-html-button' => 'Zie het gesprek',
 	'forum-mail-notification-subject' => '$1 - $2',
 	'forum-mail-notification-body' => 'Hallo $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -3210,7 +3185,6 @@ $messages['oc'] = array(
 	'forum-sorting-option-newest-threads' => 'Fials los mai recents en primièr',
 	'forum-sorting-option-oldest-threads' => 'Fials los mai ancians en primièr',
 	'forum-discussion-post' => 'Mandar',
-	'forum-discussion-highlight' => 'Espingolar la discussion',
 	'forum-discussion-placeholder-message-short' => 'Mandar un messatge novèl',
 	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|a respondut}} a vòstre fial sul sosforum $3',
 	'forum-mail-notification-html-greeting' => 'Bonjorn $1,',
@@ -3311,7 +3285,6 @@ Zanim zaczniesz publikować na Forach {{SITENAME}}, pamiętaj o kilku ogólnych 
 	'forum-sorting-option-newest-threads' => 'Najnowsze wątki',
 	'forum-sorting-option-oldest-threads' => 'Najstarsze wątki',
 	'forum-discussion-post' => 'Publikuj',
-	'forum-discussion-highlight' => 'Wyróżnij ten wątek',
 	'forum-discussion-placeholder-title' => 'Temat wiadomości',
 	'forum-discussion-placeholder-message' => 'Napisz nową wiadomość na subforum $1',
 	'forum-discussion-placeholder-message-short' => 'Dodaj nową wiadomość',
@@ -3331,7 +3304,6 @@ Zanim zaczniesz publikować na Forach {{SITENAME}}, pamiętaj o kilku ogólnych 
 	'forum-mail-notification-html-button' => 'Przejdź do wiadomości',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Witaj $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -3491,7 +3463,6 @@ Você vê algo que não está certo? Ou você tem uma pergunta? Peça ajuda aqui
 	'forum-sorting-option-newest-threads' => 'Novos Tópicos',
 	'forum-sorting-option-oldest-threads' => 'Tópicos Antigos',
 	'forum-discussion-post' => 'Postar',
-	'forum-discussion-highlight' => 'Destacar esta discussão',
 	'forum-discussion-placeholder-title' => 'Sobre o que você quer falar?',
 	'forum-discussion-placeholder-message' => 'Postar uma nova mensagem no painel $1',
 	'forum-discussion-placeholder-message-short' => 'Postar uma nova mensagem',
@@ -3511,7 +3482,6 @@ Você vê algo que não está certo? Ou você tem uma pergunta? Peça ajuda aqui
 	'forum-mail-notification-html-button' => 'Veja a conversa',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Olá $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -3668,7 +3638,6 @@ $messages['ru'] = array(
 	'forum-sorting-option-newest-threads' => 'Новые темы',
 	'forum-sorting-option-oldest-threads' => 'Старые темы',
 	'forum-discussion-post' => 'Опубликовать',
-	'forum-discussion-highlight' => 'Сообщить всем об этой теме',
 	'forum-discussion-placeholder-title' => 'Что вы хотите обсудить?',
 	'forum-discussion-placeholder-message' => 'Оставить сообщение в главной теме: $1',
 	'forum-discussion-placeholder-message-short' => 'Оставить новое сообщение',
@@ -3688,7 +3657,6 @@ $messages['ru'] = array(
 	'forum-mail-notification-html-button' => 'Посмотреть обсуждение',
 	'forum-mail-notification-subject' => '$1 — $2',
 	'forum-mail-notification-body' => 'Привет, $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -3781,6 +3749,7 @@ ___________________________________________<br>
 	'right-forumadmin' => 'Имеет доступ статуса администратора на форуме',
 	'right-forumoldedit' => 'Может редактировать архивы старого форума',
 	'right-boardedit' => 'Редактирование главных тем форума',
+	'forum-discussion-highlight' => 'Сообщить всем об этой теме',
 );
 
 $messages['sr-ec'] = array(
@@ -3852,7 +3821,6 @@ Innan du bidrar till {{SITENAME}}s forum, var god lägg dessa punkter på minnet
 	'forum-sorting-option-newest-threads' => 'Nyaste trådarna',
 	'forum-sorting-option-oldest-threads' => 'Äldsta trådarna',
 	'forum-discussion-post' => 'Skicka',
-	'forum-discussion-highlight' => 'Belys denna diskussion',
 	'forum-discussion-placeholder-title' => 'Vad vill du prata om?',
 	'forum-discussion-placeholder-message' => 'Gör ett nytt inlägg på underforumet $1',
 	'forum-discussion-placeholder-message-short' => 'Skicka ett nytt meddelande',
@@ -3872,7 +3840,6 @@ Innan du bidrar till {{SITENAME}}s forum, var god lägg dessa punkter på minnet
 	'forum-mail-notification-html-button' => 'Se konversationen',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hej $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -4022,7 +3989,6 @@ $messages['te'] = array(
 	'forum-sorting-option-newest-threads' => 'సరికొత్త తీగలు',
 	'forum-sorting-option-oldest-threads' => 'అతిపాత తీగలు',
 	'forum-discussion-post' => 'పంపించు',
-	'forum-discussion-highlight' => 'ఈ చర్చను ఉద్యోతించు',
 	'forum-discussion-placeholder-title' => 'మీరు దేని గురించి మాట్లాడాలనుకుంటున్నారు?',
 	'forum-discussion-placeholder-message' => 'బోర్డు $1 కి కొత్ సందేశాన్ని పంపించండి',
 	'forum-discussion-placeholder-message-short' => 'కొత్త సందేశాన్ని పంపించండి',
@@ -4042,7 +4008,6 @@ $messages['te'] = array(
 	'forum-mail-notification-html-button' => 'సంభాషణ చూదండి',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'హల్లో $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -4199,7 +4164,6 @@ $messages['uk'] = array(
 	'forum-sorting-option-newest-threads' => 'Найновіші потоки',
 	'forum-sorting-option-oldest-threads' => 'Найстаріші потоки',
 	'forum-discussion-post' => 'Публікація',
-	'forum-discussion-highlight' => 'Оповістити всіх про цю дискусію',
 	'forum-discussion-placeholder-title' => 'Про що ви хочете повідомити?',
 	'forum-discussion-placeholder-message' => 'Залишити нове повідомлення в головній темі $1',
 	'forum-discussion-placeholder-message-short' => 'Залишити нове повідомлення',
@@ -4219,7 +4183,6 @@ $messages['uk'] = array(
 	'forum-mail-notification-html-button' => 'Переглянути розмову',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Привіт $WATCHER,
-
 $SUBJECT
 
 $METATITLE
@@ -4370,7 +4333,6 @@ Trước khi đóng góp cho các diễn đàn trên {{SITENAME}}, hãy ghi nh�
 	'forum-sorting-option-newest-threads' => 'Luồng mới nhất',
 	'forum-sorting-option-oldest-threads' => 'Luồng cũ nhất',
 	'forum-discussion-post' => 'Gửi',
-	'forum-discussion-highlight' => 'Làm nổi bật cuộc thảo luận này',
 	'forum-discussion-placeholder-title' => 'Bạn muốn chia sẻ điều gì về?',
 	'forum-discussion-placeholder-message' => 'Gửi một tin nhắn mới đến tường $1 này',
 	'forum-discussion-placeholder-message-short' => 'Gửi một tin nhắn mới',
@@ -4390,7 +4352,6 @@ Trước khi đóng góp cho các diễn đàn trên {{SITENAME}}, hãy ghi nh�
 	'forum-mail-notification-html-button' => 'Xem cuộc hội thoại',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-mail-notification-body' => 'Hi $WATCHER,
-
  $SUBJECT
 
  $METATITLE
@@ -4541,7 +4502,6 @@ $messages['xw-3171'] = array(
 	'forum-sorting-option-newest-threads' => '最新的討論串',
 	'forum-sorting-option-oldest-threads' => '最舊的討論串',
 	'forum-discussion-post' => '發表',
-	'forum-discussion-highlight' => '突出顯示此討論',
 	'forum-discussion-placeholder-title' => '您希望討論些什麼？',
 	'forum-discussion-placeholder-message' => '發布新訊息至 $1 討論板',
 	'forum-discussion-placeholder-message-short' => '發布新訊息',
@@ -4684,7 +4644,6 @@ $messages['zh-hans'] = array(
 	'forum-sorting-option-newest-threads' => '最新的帖子',
 	'forum-sorting-option-oldest-threads' => '最旧的帖子',
 	'forum-discussion-post' => '发布',
-	'forum-discussion-highlight' => '高亮此讨论',
 	'forum-discussion-placeholder-title' => '您希望谈论些什么？',
 	'forum-discussion-placeholder-message' => '发送一条新信息至$1板面',
 	'forum-discussion-placeholder-message-short' => '创建新消息',
@@ -4859,7 +4818,6 @@ $messages['zh-hant'] = array(
 	'forum-sorting-option-newest-threads' => '最新的討論串',
 	'forum-sorting-option-oldest-threads' => '最舊的討論串',
 	'forum-discussion-post' => '發表',
-	'forum-discussion-highlight' => '突出顯示此討論',
 	'forum-discussion-placeholder-title' => '您希望討論些什麼？',
 	'forum-discussion-placeholder-message' => '發布新訊息至 $1 討論板',
 	'forum-discussion-placeholder-message-short' => '發布新訊息',

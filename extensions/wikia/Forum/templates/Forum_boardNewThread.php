@@ -35,12 +35,6 @@
 						<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 					<? endif ?>
 					<div class="speech-bubble-buttons" data-space-type="buttons">
-						<?php if ( $notify_everyone ): ?>
-							<label class="highlight">
-								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMessage( 'forum-discussion-highlight' )->escaped() ?>
-							</label>
-						<?php endif; ?>
-
 						<button disabled="disabled" class="submit"><?= wfMessage( 'forum-discussion-post' )->escaped() ?></button>
 						<button disabled="disabled" class="preview secondary"><?= wfMessage( 'wall-button-to-preview-comment' )->escaped() ?></button>
 					</div>

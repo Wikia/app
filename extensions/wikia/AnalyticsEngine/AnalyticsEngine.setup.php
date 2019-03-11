@@ -17,11 +17,10 @@ $wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderC
 $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
 $wgAutoloadClasses['AnalyticsProviderBillTheLizard'] = __DIR__ . '/AnalyticsProviderBillTheLizard.php';
 $wgAutoloadClasses['AnalyticsProviderMoatYi'] = __DIR__ . '/AnalyticsProviderMoatYi.php';
-$wgAutoloadClasses['AnalyticsProviderA9'] = __DIR__ . '/AnalyticsProviderA9.php';
+$wgAutoloadClasses['AnalyticsProviderNielsen'] = __DIR__ . '/AnalyticsProviderNielsen.php';
 $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
 $wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
-$wgAutoloadClasses['AnalyticsProviderPrebid'] = __DIR__ . '/AnalyticsProviderPrebid.php';
 $wgAutoloadClasses['AnalyticsProviderNetzAthleten'] = __DIR__ . '/AnalyticsProviderNetzAthleten.php';
 
 //hooks

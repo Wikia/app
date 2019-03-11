@@ -1,6 +1,6 @@
 <div class="wds-hidden-svg">
-	<?= DesignSystemHelper::renderSvg( 'wds-icons-megaphone' ) ?>
-	<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small' ) ?>
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-flag-small' ) ?>
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-comment-small' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small' ) ?>
 </div>
 
@@ -17,7 +17,7 @@
 		<div id="onSiteNotificationsCount" class="wds-global-navigation__notifications-counter wds-is-hidden">
 			<? //= will be populated by jQuery ?>
 		</div>
-		<?= DesignSystemHelper::renderSvg( 'wds-icons-bell', 'wds-icon wds-icon-small',
+		<?= DesignSystemHelper::renderSvg( 'wds-icons-bell', 'wds-icon',
 			wfMessage( 'global-navigation-notifications-title' )->escaped() ) ?>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny',
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ) ?>

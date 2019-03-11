@@ -163,13 +163,15 @@ class BlogsHelper {
 	 * @return bool false if we're trying to move out of or into blog comment namespace, true otherwise
 	 */
 	public static function onAbortMove( Title $sourceTitle, Title $targetTitle, User $user, &$err, string $reason ): bool {
+		$isAllowed = $user->isAllowed( 'blog-articles-move' );
 		$blogsNS = [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ];
-		if ( $sourceTitle->inNamespaces( $blogsNS ) && !$targetTitle->inNamespace( $sourceTitle->getNamespace() ) ) {
+
+		if ( $sourceTitle->inNamespaces( $blogsNS ) && !$targetTitle->inNamespace( $sourceTitle->getNamespace() ) && !$isAllowed ) {
 			$err = wfMessage( 'immobile-source-namespace', $sourceTitle->getNsText() )->escaped();
 			return false;
 		}
 
-		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
+		if ( $targetTitle->inNamespaces( $blogsNS ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) && !$isAllowed ) {
 			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
 			return false;
 		}
@@ -205,7 +207,7 @@ class BlogsHelper {
 			array_unshift(
 				$buttons,
 				new Button(
-					$label, 'wds-icons-plus', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
+					$label, 'wds-icons-add', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
 				)
 			);
 		}

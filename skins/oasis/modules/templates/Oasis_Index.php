@@ -59,7 +59,6 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-<?= $il ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
@@ -72,8 +71,7 @@
 <?= $quantServe ?>
 <?= $billTheLizard ?>
 <?= $moatYi ?>
-<?= $a9 ?>
-<?= $prebid ?>
+<?= $nielsen ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>

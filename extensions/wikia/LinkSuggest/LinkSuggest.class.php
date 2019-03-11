@@ -13,7 +13,7 @@ use Wikia\Measurements\Time as T;
  * @author Robert Elwell <robert@wikia-inc.com>
  */
 class LinkSuggest {
-
+	const MAX_LINK_SUGGESTIONS_LIMIT = 100;
 	/**
 	 * Get list of suggested images
 	 *
@@ -51,7 +51,6 @@ class LinkSuggest {
 
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
-		$measurement = T::start(__FUNCTION__);
 		wfProfileIn(__METHOD__);
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -59,11 +58,16 @@ class LinkSuggest {
 		// - this is how MediaWiki store article titles in database
 		$query = urldecode( trim( $request->getText('query') ) );
 		$query = str_replace(' ', '_', $query);
+		$limit = min($request->getInt('limit', $wgLinkSuggestLimit), self::MAX_LINK_SUGGESTIONS_LIMIT);
+
+		if ($limit <= 0) {
+			$limit = $wgLinkSuggestLimit;
+		}
 
 		if ( $isMobile ) {
-			$key = wfMemcKey( __METHOD__, md5( $query.'_'.$request->getText('format').$request->getText('nospecial', '') ), 'WikiaMobile' );
+			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ), 'WikiaMobile' );
 		} else {
-			$key = wfMemcKey( __METHOD__, md5( $query.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
+			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
 		}
 
 		// use mb_strlen to test string length accurately
@@ -147,7 +151,7 @@ class LinkSuggest {
 		$sql1Measurement = T::start([ __FUNCTION__ , "sql-1" ]);
 		$res = $db->select(
 			array( 'querycache', 'page' ),
-			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
+			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect' ),
 			array(
 				'qc_title = page_title',
 				'qc_namespace = page_namespace',
@@ -157,17 +161,17 @@ class LinkSuggest {
 				'qc_namespace' => $namespaces
 			),
 			__METHOD__,
-			array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => $wgLinkSuggestLimit )
+			array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => $limit )
 		);
 
-		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 		$sql1Measurement->stop();
 		if (count($namespaces) > 0) {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
 
 		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
-		if( count($results) < $wgLinkSuggestLimit ) {
+		if( count($results) < $limit ) {
 			/**
 			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
 			 * It uses fact that page titles can't start with lowercase letter.
@@ -210,12 +214,12 @@ class LinkSuggest {
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
 						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )
 							AND qc_type IS NULL
-						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
+						LIMIT ".($limit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
 			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
 			$res = $db->query($sql, __METHOD__);
 
-			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 			$sql2Measurement->stop();
 		}
 
@@ -229,11 +233,9 @@ class LinkSuggest {
 			if ($row->page_is_redirect == 0) {
 
 				// remove any instances of original array's value
-				$resultsFlipped = array_flip($results);
-				unset($resultsFlipped[$titleFormatted]);
-				$results = array_flip($resultsFlipped);
+				unset( $results[$row->page_id] );
 
-				array_unshift($results, $titleFormatted);
+				$results = [ $row->page_id => $titleFormatted ] + $results;
 
 				$flippedRedirs = array_flip($redirects);
 				if (isset($flippedRedirs[$titleFormatted])) {
@@ -245,11 +247,10 @@ class LinkSuggest {
 				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
 
 				// remove any instances of original array's value
-				$resultsFlipped = array_flip($results);
-				unset($resultsFlipped[$redirTitleFormatted]);
-				$results = array_flip($resultsFlipped);
+				unset( $results[$row->page_id] );
 
-				array_unshift($results, $redirTitleFormatted);
+				$results = [ $row->page_id => $redirTitleFormatted ] + $results;
+
 				$redirects[$redirTitleFormatted] = $titleFormatted;
 			}
 		}
@@ -264,10 +265,12 @@ class LinkSuggest {
 				$specialPagesByAlpha = get_object_vars($specialPagesByAlpha);
 
 				ksort($specialPagesByAlpha, SORT_STRING);
+				$dummySpecialPageId = -1;
 				array_walk( $specialPagesByAlpha,
-					function($val,$key) use (&$results, $query) {
+					function($val,$key) use (&$results, $query, &$dummySpecialPageId) {
 						if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
-							$results[] = self::formatTitle('-1', $key);
+							$results[$dummySpecialPageId] = self::formatTitle('-1', $key);
+							$dummySpecialPageId--;
 						}
 					}
 				);
@@ -279,19 +282,29 @@ class LinkSuggest {
 
 		$format = $request->getText('format');
 
-		if ($format == 'json') {
-			$result_values = array_values($results);
+		if ( $format == 'json' ) {
+			$result_values = array_values( $results );
 
 			if ( $isMobile ) {
-				$out = json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
+				$out =
+					json_encode( [
+						array_splice( $result_values, 0, 10 ),
+						array_splice( $redirects, - 1, 1 ),
+					] );
 			} else {
-				$out = json_encode(array('query' => $request->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
+				$out =
+					json_encode( [
+						'query' => $request->getText( 'query' ),
+						'ids' => array_flip( $results ),
+						'suggestions' => $result_values,
+						'redirects' => $redirects,
+					] );
 			}
-		} elseif ($format == 'array') {
+		} elseif ( $format == 'array' ) {
 			$out = $results;
 		} else {
 			// legacy: LinkSuggest.js uses plain text
-			$out = implode("\n", $results);
+			$out = implode( "\n", $results );
 		}
 
 		// 15 minutes times four (one hour, but easier to slice and dice)
@@ -356,13 +369,13 @@ class LinkSuggest {
 	 * @param $redirects
 	 * @param $results
 	 * @param $exactMatchRow
+	 * @param $limit
 	 *
 	 * @author dymsza
 	 */
 
-	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
-		global $wgLinkSuggestLimit;
-		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
+	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow, $limit) {
+		while(($row = $db->fetchObject($res)) && count($results) < $limit ) {
 
 			// SUS-846: Ensure we only have one exact match, to prevent overwriting it and losing the suggestion
 			if ( is_null( $exactMatchRow ) && strtolower( $row->page_title ) == $query ) {
@@ -374,8 +387,8 @@ class LinkSuggest {
 
 			if ($row->page_is_redirect == 0) {
 
-				if (!in_array($titleFormatted, $results)) {
-					$results[] = $titleFormatted;
+				if ( !isset( $results[$row->page_id] ) ) {
+					$results[$row->page_id] = $titleFormatted;
 				}
 
 				$flippedRedirs = array_flip($redirects);

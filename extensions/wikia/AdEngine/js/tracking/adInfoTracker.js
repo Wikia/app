@@ -37,7 +37,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
-			isStickyEvent,
 			now = new Date(),
 			timestamp = now.getTime(),
 			tzOffset = now.getTimezoneOffset();
@@ -58,8 +57,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 		slotParams = slotParams || {};
 		creative = creative || {};
 		bidders = bidders || {};
-
-		isStickyEvent = ['sticky-ready', 'sticked', 'unsticked', 'force-unstick'].indexOf(creative.status) > -1;
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -88,9 +85,11 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'kv_abi': slotParams.abi || '',
 			'bidder_won': bidders.bidderWon || '',
 			'bidder_won_price': bidders.bidderWon ? bidders.realSlotPrices[bidders.bidderWon] : '',
+			'bidder_0': transformBidderPrice('wikia'),
 			'bidder_1': transformBidderPrice('indexExchange'),
 			'bidder_2': transformBidderPrice('appnexus'),
 			'bidder_4': transformBidderPrice('rubicon'),
+			'bidder_5': transformBidderPrice('vmg'),
 			'bidder_6': transformBidderPrice('aol'),
 			'bidder_7': transformBidderPrice('audienceNetwork'),
 			'bidder_9': transformBidderPrice('openx'),
@@ -101,13 +100,15 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
 			'bidder_17': transformBidderPrice('kargo'),
+			'bidder_18': transformBidderPrice('lkqd'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
+			'order_id': creative.orderId || '',
 			'creative_id': creative.creativeId || '',
 			'creative_size': (creative.creativeSize || '').replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
-			'scroll_y': isStickyEvent ? slotRegistry.getCurrentScrollY() : slotRegistry.getScrollY(slotName),
+			'scroll_y': slotRegistry.getCurrentScrollY(),
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',

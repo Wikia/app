@@ -4,13 +4,15 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.document',
+	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (adContext, DOMElementTweaker, scriptLoader, doc, qs, win) {
+], function (adContext, DOMElementTweaker, scriptLoader, doc, log, qs, win) {
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
 		wikiaApiMethod = 'getBTCode',
+		logGroup = 'wikia.adEngine.wad.btRecLoader',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
 			TOP_LEADERBOARD: {
@@ -22,7 +24,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 				},
 				lazy: false
 			},
-			TOP_RIGHT_BOXAD: {
+			TOP_BOXAD: {
 				uid: '5b2d1649b2-188',
 				style: 'margin-bottom:10px; z-index:100;',
 				size: {
@@ -111,14 +113,16 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		}
 	}
 
-	function init() {
-		doc.addEventListener('bab.blocking', injectScript);
+	function run() {
+		log('Initialising BT rec loader', log.levels.info, logGroup);
+
+		injectScript();
 	}
 
 	return {
 		duplicateSlot: duplicateSlot,
 		getPlacementId: getPlacementId,
-		init: init,
+		run: run,
 		triggerScript: triggerScript
 	};
 });

@@ -41,8 +41,5 @@
 				'currentPage' => $currentPage
 			] ) ?>
 		<? endif ?>
-		<div id="WallTooltipMeta">
-			<div class="tooltip-text tooltip-highlight-thread"><?= wfMessage( 'wall-message-notifyeveryone-tooltip' )->escaped() ?></div>
-		</div>
 	</section>
 </div>

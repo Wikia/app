@@ -19,7 +19,9 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 		logGroup = 'wikia.adEngine.wad.hmdRecLoader',
 		trackingStatus = {
 			hmdSetuped: false,
+			hmdReady: false,
 			adRequested: false,
+			adPlayed: false,
 			hmdErrors: {
 				mediaerror: 1001,
 				malformattedXML: 1004,
@@ -56,6 +58,8 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 					}
 				}
 
+				trackingStatus.adPlayed = true;
+
 				trackEvent('hmd_impression');
 				eventDispatcher.dispatch('adengine.video.status', {
 					vastUrl: adsConfiguration.getCurrentVast('last'),
@@ -71,25 +75,43 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			adComplete: 'hmd_completed',
 			adClick: 'hmd_clicked',
 			adSkipped: 'hmd_skipped',
-			contentPlayerPlay: 'hmd_content_started',
 			contentPlayerPause: function (event) {
 				if (event.detail.state === 'setup') {
 					trackingStatus.hmdSetuped = true;
 					trackEvent('hmd_setup');
-				} else if (trackingStatus.hmdSetuped) {
-					if (trackingStatus.adRequested) {
-						trackingStatus.adRequested = false;
-						trackEvent('hmd_loaded');
-					} else {
-						trackEvent('hmd_ready');
-					}
+					return;
+				}
+
+				if (!trackingStatus.hmdSetuped) {
+					return;
+				}
+
+				if (!trackingStatus.hmdReady) {
+					trackingStatus.hmdReady = true;
+					trackEvent('hmd_ready');
+					return;
+				}
+
+				if (trackingStatus.adRequested) {
+					trackingStatus.adRequested = false;
+					trackEvent('hmd_loading');
 				}
 			},
-			continueContent: 'hmd_continue',
+			contentPlayerPlay: function () {
+				if (!trackingStatus.adPlayed) {
+					trackEvent('hmd_noad');
+				}
+
+				trackingStatus.hmdReady = false;
+				trackingStatus.adRequested = false;
+				trackingStatus.adPlayed = false;
+			},
 			viewable: 'hmd_viewable_impression',
 			penalty: 'hmd_blocked',
 			adError: function (event) {
 				var type = event.detail.type;
+
+				trackingStatus.adRequested = false;
 
 				if (trackingStatus.hmdErrors[type]) {
 					trackEvent('hmd_error', {
@@ -127,18 +149,18 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 			clientConfig: isDebug ? configDev.clientConfig : configClient,
 			admessage: 'The ad ends in [time] seconds',
 			adjustAdVolumeToContentPlayer: true,
-			adTag: isDebug ? configDev.adTag : false,
-			prerollAdTag: isDebug ? false : function () {
+			adTag: false,
+			prerollAdTag: function () {
 				log('Requesting preroll adTag', log.levels.info, logGroup);
 
-				return adsConfiguration.getCurrentVast('pre') || false;
+				return isDebug ? configDev.adTag : adsConfiguration.getCurrentVast('pre') || false;
 			},
-			midrollAdTag: isDebug ? false : function () {
+			midrollAdTag: function () {
 				log('Requesting midroll adTag', log.levels.info, logGroup);
 
 				return adsConfiguration.getCurrentVast('mid') || false;
 			},
-			postrollAdTag: isDebug ? false : function () {
+			postrollAdTag: function () {
 				log('Requesting postroll adTag', log.levels.info, logGroup);
 
 				return adsConfiguration.getCurrentVast('post') || false;
@@ -178,9 +200,13 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 
 	function initializeTracking() {
 		window.addEventListener('hdEvent', function(event) {
-			log(['HMD event registered', event], log.levels.info, logGroup);
+			log(['HMD event registered', event, event.detail.name], log.levels.info, logGroup);
 
-			if (event.detail && event.detail.name && trackingEventsMap[event.detail.name]) {
+			if (
+				event.detail && event.detail.name && event.detail.state &&
+				['setup', 'preroll'].indexOf(event.detail.state) !== -1 &&
+				trackingEventsMap[event.detail.name]
+			) {
 				var eventName = event.detail.name,
 					trackingMethod = trackingEventsMap[eventName];
 
@@ -193,18 +219,16 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 		});
 	}
 
-	function init() {
-		doc.addEventListener('bab.blocking', function () {
-			log('Initialising HMD rec loader', log.levels.info, logGroup);
+	function run() {
+		log('Initialising HMD rec loader', log.levels.info, logGroup);
 
-			initializeTracking();
-			injectScript();
-		});
+		initializeTracking();
+		injectScript();
 	}
 
 	return {
 		getConfig: getConfig,
-		setOnReady: setOnReady,
-		init: init
+		run: run,
+		setOnReady: setOnReady
 	};
 });

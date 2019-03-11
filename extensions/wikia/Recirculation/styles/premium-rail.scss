@@ -1,83 +1,74 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/flexbox';
 
-$recirculation-thumbnail-margin: 6px;
-$recirculation-thumbnail-size: 20px;
+%rail-thumbnaili {
+	border: 1px solid $color-page-border;
+	border-radius: 4px;
+	height: 53px;
+	min-width: 53px;
+	width: 53px;
+}
 
 .WikiaRail .premium-recirculation-rail {
-	.placeholder-thumbnail {
-		background-color: $color-article-thumb-background;
-		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgResourceBasePath */
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: contain;
+	.recirculation-rail__placeholder, img {
+		@extend %rail-thumbnaili;
+
+		align-self: center;
 		display: block;
+	}
+
+	.recirculation-rail__placeholder {
+		@extend %rail-thumbnaili;
+
+		background: #002A32;
 		position: relative;
 
-		&::before {
-			content: '';
-			display: block;
-			padding-top: 56.25%;
-		}
-
-		img {
-			bottom: 0;
-			left: 0;
+		svg {
+			fill: #00d6d6;
+			height: 50%;
+			left: 50%;
+			opacity: .2;
 			position: absolute;
-			right: 0;
-			top: 0;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 35%;
 		}
 	}
 
-	.recirculation-sponsored-footer {
-		font-size: 12px;
-		font-style: italic;
-		font-weight: bold;
-		opacity: 0.5;
-		padding-top: 3px;
+	h2 {
+		text-transform: capitalize;
 	}
 
-	.item {
+	li {
 		margin: 0 6px 16px;
-
-		&.is-video .image-thumbnail::after {
-			bottom: $recirculation-thumbnail-margin;
-			height: $recirculation-thumbnail-size;
-			right: $recirculation-thumbnail-margin;
-			width: $recirculation-thumbnail-size;
-		}
-	}
-
-	.image-thumbnail {
-		@include flex(0 0 94px);
-	}
-
-	.content {
-		font-size: 12px;
-		margin-left: 12px;
-		margin-top: 3px;
-	}
-
-	.video-icon-container {
-		@include flexbox();
-		@include align-items(center);
-		@include justify-content(center);
-
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
 	}
 
 	a {
-		@include flexbox();
-		@include align-items(flex-start);
 		color: $color-text;
+		display: flex;
 
 		&:hover {
 			color: $color-links;
 			text-decoration: none;
 		}
+	}
+
+	p {
+		margin: 16px 12px 0;
+	}
+
+	.rail-sponsored-content {
+		p {
+			margin: 0 0 5px;
+		}
+
+		span {
+			font-style: italic;
+			font-weight: bold;
+			opacity: 0.5;
+		}
+	}
+
+	.rail-sponsored-content-desc {
+		margin: 5px 12px;
 	}
 }

@@ -16,7 +16,7 @@
 					<div class="featured-video__title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 				</div>
 				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-cross-tiny',
+					'wds-icons-close-tiny',
 					'wds-icon wds-icon-tiny featured-video__close'
 				) ?>
 			</div>

@@ -5,6 +5,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const HOMEPAGE_URL = 'https://www.fandom.com';
+
 	const COMMUNITY_CENTRAL_LABEL = 'global-navigation-wikis-community-central';
 	const COMMUNITY_CENTRAL_TRACKING_LABEL = 'link.community-central';
 
@@ -35,6 +37,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'search' => $this->getSearchData(),
 			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
 			'main-navigation' => $this->getMainNavigation(),
+			'content-recommendations' => $this->getContentRecommendations(),
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -51,7 +54,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		if ( !empty( $partnerSlot ) ) {
 			$data[ 'partner-slot' ] = $partnerSlot;
 		}
-		
+
 		$data['services-domain'] = $wgServicesExternalDomain;
 
 		return $data;
@@ -62,6 +65,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$this->getFandomLinks(),
 			[ $this->getWikisMenu() ]
 		);
+	}
+
+	private function getContentRecommendations() {
+		$url = RecirculationApiController::getFullUrl( 'getTrendingFandomArticles' );
+
+		if ( wfHttpsAllowedForURL( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+
+		return [
+			'url' => $url
+		];
 	}
 
 	private function getWikisMenu() {
@@ -98,8 +113,10 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
+
+		$server = $this->product === static::PRODUCT_FANDOMS ? static::HOMEPAGE_URL : $wgServer;
 		if ( $useWikiBaseDomain ) {
-			$url = wfForceBaseDomain( $url, $wgServer );
+			$url = wfForceBaseDomain( $url, $server );
 		}
 		return $url;
 	}
@@ -144,7 +161,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		if ( $isCorporatePageOrFandom && $this->lang === static::DEFAULT_LANG ) {
 			$search['results']['param-name'] = 's';
-			$search['results']['url'] = 'http://fandom.wikia.com/';
+			$search['results']['url'] = 'https://www.fandom.com/';
 			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-fandom';
 		} elseif ( $isCorporatePageOrFandom ) {
 			// Non-English Fandom or non-English corporate pages
@@ -266,7 +283,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'line-image',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-note',
+					'name' => 'wds-icons-message',
 				],
 				'title' => [
 					'type' => 'translatable-text',

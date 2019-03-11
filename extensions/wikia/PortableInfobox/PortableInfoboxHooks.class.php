@@ -68,7 +68,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->invalidateCache();
 
 		return true;
 	}
@@ -81,7 +81,7 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onArticlePurge( Page $article ) {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->invalidateCache();
 
 		return true;
 	}
@@ -89,13 +89,13 @@ class PortableInfoboxHooks {
 	/**
 	 * Purge articles memcache when template is edited
 	 *
-	 * @param $articles Array of Titles
+	 * @param Title[] $articles
 	 *
 	 * @return bool
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			PortableInfoboxDataService::newFromTitle( $title )->delete();
+			PortableInfoboxDataService::newFromTitle( $title )->invalidateCache();
 		}
 
 		return true;

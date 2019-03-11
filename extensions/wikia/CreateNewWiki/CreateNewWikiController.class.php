@@ -25,8 +25,7 @@ class CreateNewWikiController extends WikiaController {
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar,
-			   $wgRequest, $wgUser, $wgWikiaBaseDomain, $wgCreateEnglishWikisOnFandomCom, $wgFandomBaseDomain,
-			   $wgAllowCommunityBuilderCNWPrompt;
+			   $wgRequest, $wgUser, $wgFandomBaseDomain, $wgAllowCommunityBuilderCNWPrompt;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -94,7 +93,7 @@ class CreateNewWikiController extends WikiaController {
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
-		$this->wikiBaseDomain = $wgCreateEnglishWikisOnFandomCom ? $wgFandomBaseDomain : $wgWikiaBaseDomain;
+		$this->wikiBaseDomain = $wgFandomBaseDomain;
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -351,7 +350,7 @@ class CreateNewWikiController extends WikiaController {
 			// we're done, but did we succeed?
 			$completed = (int) $task_details->completed;
 
-			if ( $completed === 1 ) {
+			if ( $completed === CreateWikiTask::CREATION_LOG_WIKI_CREATED ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
 				// if user was not logged in when starting the CNW process, the editToken is not available
 				// in client JS yet. Send it in the response so it can be used when calling finishCreate.

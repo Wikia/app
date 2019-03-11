@@ -75,7 +75,8 @@ class AdEngine2ContextService {
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
 					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
 					'hasFeaturedVideo' => $hasFeaturedVideo,
-					'featuredVideo' => $featuredVideoDetails
+					'featuredVideo' => $featuredVideoDetails,
+					'testSrc' => $wg->AdDriverAdTestWikiSrc
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder

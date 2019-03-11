@@ -10,6 +10,7 @@ class UserPreferencesV2 {
 	const LANDING_PAGE_MAIN_PAGE = 1;
 	const LANDING_PAGE_WIKI_ACTIVITY = 2;
 	const LANDING_PAGE_RECENT_CHANGES = 3;
+	const LANDING_PAGE_FEEDS = 4;
 
 	/**
 	 * @brief This function change user preferences special page
@@ -86,7 +87,10 @@ class UserPreferencesV2 {
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-main-page' )->plain()] = self::LANDING_PAGE_MAIN_PAGE;
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-wiki-activity' )->plain()] = self::LANDING_PAGE_WIKI_ACTIVITY;
 			$redirectOptions[wfMessage( 'preferences-v2-redirect-recent-changes' )->plain()] = self::LANDING_PAGE_RECENT_CHANGES;
+			$redirectOptions[wfMessage( 'preferences-v2-redirect-feeds' )->plain()] = self::LANDING_PAGE_FEEDS;
+
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['default'] = UserService::getLandingPagePreference( $user );
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
@@ -340,19 +344,6 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['nocache'] );
 		unset( $defaultPreferences['numberheadings'] );
 		unset( $defaultPreferences['showjumplinks'] );
-
-		return true;
-	}
-
-	/**
-	 * @desc Sets default landing page property for users who don't have this property set in user_properties
-	 *
-	 * @param $defOpt
-	 *
-	 * @return bool true
-	 */
-	static public function onUserGetDefaultOptions( &$defOpt ) {
-		$defOpt[self::LANDING_PAGE_PROP_NAME] = self::LANDING_PAGE_MAIN_PAGE;
 
 		return true;
 	}

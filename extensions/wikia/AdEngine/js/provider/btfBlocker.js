@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads = win.ads || {};
 	win.ads.runtime = win.ads.runtime || {};
 	win.ads.runtime.disableBtf = false;
+	win.ads.runtime.disableSecondCall = false;
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
 	var secondCallQueue = [],
@@ -25,13 +26,21 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		win.ads.runtime.disableBtf = Boolean(msg.disableBtf);
 	}
 
+	function disableSecondCallByMessage(msg) {
+		win.ads.runtime.disableSecondCall = Boolean(msg.disableSecondCall);
+	}
+
 	function unblock(slotName) {
 		log(['unblocking', slotName], log.levels.info, logGroup);
 		unblockedSlots.push(slotName);
 	}
 
-	function isSecondCallEnabled() {
+	function isBtfEnabled() {
 		return !win.ads.runtime.disableBtf;
+	}
+
+	function isSecondCallEnabled() {
+		return !win.ads.runtime.disableSecondCall;
 	}
 
 	function decorate(fillInSlot, config) {
@@ -42,17 +51,19 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			secondCallQueueStarted = false;
 			firstCallSlots = [];
 			win.ads.runtime.disableBtf = false;
+			win.ads.runtime.disableSecondCall = false;
 			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
 
 			messageListener.register({dataKey: 'disableBtf', infinite: true}, disableBtfByMessage);
+			messageListener.register({dataKey: 'disableSecondCall', infinite: true}, disableSecondCallByMessage);
 		});
 
 		// as soon as we know that user has adblock, unblock BTF slots
 		win.addEventListener('wikia.blocking', startSecondCallSlots);
 
 		function processSecondCallSlots(slot) {
-			if (unblockedSlots.indexOf(slot.name) > -1 || isSecondCallEnabled()) {
+			if ((unblockedSlots.indexOf(slot.name) > -1 || isBtfEnabled()) && isSecondCallEnabled()) {
 				log(['Filling slot', slot.name], log.levels.info, logGroup);
 				fillInSlotCallbacks[slot.name](slot);
 				return;
@@ -80,7 +91,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// ATF slots are always called in second call if not called in first
-			if (config.atfSlots) {
+			if (config.atfSlots && isSecondCallEnabled()) {
 				config.atfSlots
 				// remove slot already called in first call
 				.filter(function(slotName) {
@@ -140,10 +151,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			if (config && config.firstCallSlots && config.firstCallSlots.indexOf(slot.name) > -1) {
 				firstCallSlots.push(slot.name);
 
-				slot.pre('renderEnded', fillInSlotOnResponse);
-				slot.pre('collapse', fillInSlotOnResponse);
-				slot.pre('hop', fillInSlotOnResponse);
-				slot.pre('success', fillInSlotOnResponse);
+				slot.post('renderEnded', fillInSlotOnResponse);
+				slot.post('collapse', fillInSlotOnResponse);
+				slot.post('hop', fillInSlotOnResponse);
+				slot.post('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
@@ -158,6 +169,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	}
 
 	messageListener.register({dataKey: 'disableBtf', infinite: true}, disableBtfByMessage);
+	messageListener.register({dataKey: 'disableSecondCall', infinite: true}, disableSecondCallByMessage);
 
 	return {
 		decorate: decorate,

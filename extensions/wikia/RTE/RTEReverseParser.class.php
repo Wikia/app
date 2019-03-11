@@ -53,8 +53,12 @@ class RTEReverseParser {
 
 	/**
 	 * Converts given HTML into wikitext using extra information stored in meta data
+	 *
+	 * @param string $html
+	 * @param array $data
+	 * @return string
 	 */
-	public function parse($html, $data = array()) {
+	public function parse(string $html, array $data = array()) {
 		wfProfileIn(__METHOD__);
 		$out = '';
 
@@ -80,6 +84,8 @@ class RTEReverseParser {
 				RTE::log(__METHOD__, 'parsing as XML failed! Trying HTML parser');
 				$bodyNode = $this->parseToDOM($html, false);
 			}
+
+			// print($bodyNode->ownerDocument->saveHTML());
 
 			// now we should have properly parsed HTML
 			if (!empty($bodyNode)) {
@@ -130,6 +136,10 @@ class RTEReverseParser {
 
 	/**
 	 * Parses given HTML into DOM tree (using XML/HTML parser)
+	 *
+	 * @param string $html
+	 * @param bool $parseAsXML
+	 * @return false|DOMElement
 	 */
 	private function parseToDOM($html, $parseAsXML = true) {
 		wfProfileIn(__METHOD__);
@@ -1537,12 +1547,11 @@ class RTEReverseParser {
 
 	/**
 	 * Handle <span> nodes
-	 *
-	 * @see http://www.mediawiki.org/wiki/Images
 	 */
-	private function handleSpan($node, $textContent) {
+	private function handleSpan(DOMElement $node, string $textContent) {
 		// if tag contains style attribute, preserve full HTML (BugId:7098)
-		if ($node->hasAttribute('style')) {
+		// CORE-117 | the same applies to <span> nodes with ID attribute
+		if ($node->hasAttribute('style') || $node->hasAttribute('id')) {
 			$attrs = self::getAttributesStr($node);
 			$out = "<{$node->nodeName}{$attrs}>{$textContent}</{$node->nodeName}>";
 		}
