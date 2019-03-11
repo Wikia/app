@@ -23,8 +23,7 @@ function updateWadContext() {
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('opts.showAds') !== false &&
-		!window.wgUserName &&
-		!context.get('opts.delayBlocked');
+		!window.wgUserName;
 
 	if (serviceCanBeEnabled) {
 		// BT rec

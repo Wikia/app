@@ -60,8 +60,7 @@ define('ext.wikia.adEngine.adContext', [
 		var serviceCanBeEnabled = !noExternals &&
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
-			context.targeting.skin === 'oasis' &&
-			!context.opts.delayBlocked;
+			context.targeting.skin === 'oasis';
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -84,19 +83,15 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits.queenDesktop = isEnabled('wgAdDriverCTPDesktopQueenCountries');
 	}
 
-	function areDelayServicesBlocked() {
-		return context.targeting.skin === 'mercury' && isEnabled('wgAdDriverBlockDelayServicesCountries');
-	}
-
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebid = isEnabled('wgAdDriverPrebidBidderCountries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
-		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9 = isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
-		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
+		context.bidders.a9Video = isEnabled('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isEnabled('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
@@ -145,7 +140,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		context.opts.delayEngine = true;
-		context.opts.delayBlocked = areDelayServicesBlocked();
 		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
