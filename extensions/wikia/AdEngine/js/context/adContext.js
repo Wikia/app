@@ -203,7 +203,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
-		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
 		context.opts.replayAdsForFV = isEnabled('wgAdDriverPlayAdsOnNextFVCountries');

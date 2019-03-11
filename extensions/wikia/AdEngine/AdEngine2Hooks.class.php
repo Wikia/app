@@ -62,7 +62,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableAdStackCountries';
 		$vars[] = 'wgAdDriverDisableRecirculationCountries';
-		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverGeoEdgeCountries';
@@ -137,7 +136,6 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
-		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
@@ -168,7 +166,6 @@ class AdEngine2Hooks {
 	}
 
 	public static function onInstantGlobalsGetFandomCreatorVariables( array &$vars ) {
-		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
