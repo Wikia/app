@@ -282,7 +282,9 @@ class FilePageHooks extends WikiaObject{
 		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		$page = WikiPage::factory( $title );
-		$page->doPurge();
+		if( $page->getFile()->exists() ){
+			$page->doPurge();
+		}
 	}
 
 
