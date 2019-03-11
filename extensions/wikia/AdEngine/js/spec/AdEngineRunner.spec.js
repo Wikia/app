@@ -155,9 +155,6 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('sets overwritten timeout value by instant global', function () {
-		mockContext({
-			'opts.overwriteDelayEngine': true
-		});
 		var runner = getRunner(mocks.bidders, {
 			wgAdDriverDelayTimeout: 666
 		});

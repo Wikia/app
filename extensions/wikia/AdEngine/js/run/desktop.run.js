@@ -107,7 +107,7 @@ require([
 
 			// Ads
 			win.adslots2 = win.adslots2 || [];
-			adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
+			adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 
 			actionHandler.registerMessageListener();
 

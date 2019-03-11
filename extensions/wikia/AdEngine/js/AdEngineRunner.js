@@ -20,11 +20,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	}
 
 	function getTimeout() {
-		if (adContext.get('opts.overwriteDelayEngine')) {
-			return instantGlobals.wgAdDriverDelayTimeout || 0;
-		}
-
-		return 2000;
+		return instantGlobals.wgAdDriverDelayTimeout || 2000;
 	}
 
 	/**
@@ -111,9 +107,8 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 * @param {object} config - ext.wikia.adEngine.config.*
 	 * @param {array} slots - slot names to fill in
 	 * @param {string} queueName
-	 * @param {boolean} delayEnabled
 	 */
-	function run(config, slots, queueName, delayEnabled) {
+	function run(config, slots, queueName) {
 		var engineStarted = false;
 
 		/**
@@ -129,12 +124,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			adEngine.run(config, slots, queueName);
 		}
 
-		if (delayEnabled) {
-			delayRun(runAdEngine);
-		} else {
-			log('Run AdEngine without delay', log.levels.info, logGroup);
-			runAdEngine();
-		}
+		delayRun(runAdEngine);
 	}
 
 	return {

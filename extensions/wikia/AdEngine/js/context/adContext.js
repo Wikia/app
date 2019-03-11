@@ -139,9 +139,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.templates = context.templates || {};
 		context.opts.noExternals = noExternals;
 
-		context.opts.delayEngine = true;
-		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
-
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
