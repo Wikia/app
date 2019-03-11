@@ -24,8 +24,7 @@ require([
 	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.trackingOptIn',
-	'wikia.window',
-	require.optional('wikia.articleVideo.featuredVideo.lagger')
+	'wikia.window'
 ], function (
 	adEngineBridge,
 	adContext,
@@ -50,8 +49,7 @@ require([
 	babDetection,
 	wadRecRunner,
 	trackingOptIn,
-	win,
-	fvLagger
+	win
 ) {
 	'use strict';
 
@@ -92,16 +90,6 @@ require([
 
 		if (bidders.isEnabled()) {
 			bidders.runBidding();
-		}
-
-		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
-			fvLagger.addResponseListener(function (lineItemId) {
-				win.loadCustomAd({
-					adProduct: 'jwp',
-					type: 'bfp',
-					uap: lineItemId
-				});
-			});
 		}
 
 		// Everything starts after content and JS
