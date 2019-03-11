@@ -11,7 +11,7 @@ class MigrateImagesForWikis extends Maintenance {
 	/** @var string */
 	private $wikiPrefix;
 	private $centralDbr;
-	private $modulo;
+	private $parallel;
 
 	/**
 	 * Define available options
@@ -22,6 +22,7 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'wiki-prefix', 'Prefix for wikis', false, true, 'p' );
 		$this->addOption( 'all-wikis', 'Which cluster to run on', false, false, 'a' );
+		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
 	}
 
 
@@ -29,6 +30,7 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->wikiPrefix = $this->getOption( 'wiki-prefix' );
 		$this->allWikis = $this->hasOption( 'all-wikis' );
+		$this->parallel = $this->getOption( 'parallel', 1 );
 
 		if ( !$this->wikiPrefix && !$this->allWikis ) {
 			throw new RuntimeException( 'No wiki prefix provided, but "allWikis" option has not been selected' );
@@ -71,6 +73,8 @@ class MigrateImagesForWikis extends Maintenance {
 	 * @throws Exception
 	 */
 	private function runMigrateImagesToGcs( $wikiId, $uploadPath ) {
+		global $wgWikiaDatacenter, $wgWikiaEnvironment;
+
 		// if not running on all wikis, verify the bucket matches our prefix as we may have selected a bit more
 		if ( !$this->allWikis ) {
 			$path = trim( parse_url( $uploadPath, PHP_URL_PATH ), '/' );
@@ -94,11 +98,25 @@ class MigrateImagesForWikis extends Maintenance {
 		if ( $this->dryRun ) {
 			$command = $command . " --dry-run";
 		}
-		$this->output( $command . "\n" );
 
-		$environ = [ 'SERVER_ID' => $wikiId ];
+		if ($this->parallel > 1) {
+			$fullCommand = "parallel \"$command --parallel={$this->parallel} --thread={}\"  --args{} :::";
+			for ($i = 0; $i < $this->parallel; ++$i) {
+				$fullCommand = $fullCommand . " {$i}";
+			}
+		} else {
+			$fullCommand = $command;
+		}
 
-		$output = wfShellExec( $command, $exitStatus, $environ );
+		$this->output( $fullCommand . "\n" );
+
+		$environ = [
+			'SERVER_ID' => $wikiId,
+			'WIKIA_DATACENTER' => $wgWikiaDatacenter,
+			'WIKIA_ENVIRONMENT' => $wgWikiaEnvironment,
+		];
+
+		$output = wfShellExec( $fullCommand, $exitStatus, $environ );
 
 		if ( $exitStatus === 0 ) {
 			$this->output( "Migration success for {$wikiId}:\n" );
