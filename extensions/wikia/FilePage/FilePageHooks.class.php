@@ -233,7 +233,8 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
-		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+		// Temporarily commented out as this causes a lot of purge requests
+		// self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
 
 		return true;
 	}
