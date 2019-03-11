@@ -90,13 +90,7 @@ class WikiaOrgMigrationHooks {
 	 * @return boolean
 	 */
 	private static function isMigrationScheduled(): bool {
-		global $wgWikiaOrgMigrationScheduled, $wgWikiaOrgMigrationScheduled, $wgCityId, $wgServer, $wgLanguageCode;
-		$hubService = WikiFactoryHub::getInstance();
-
-		return empty( $wgWikiaOrgMigrationScheduled ) &&
-			(
-				!empty( $wgWikiaOrgMigrationScheduled )
-				|| !wfHttpsEnabledForURL( $wgServer )
-			);
+		global $wgWikiaOrgMigrationScheduled;
+		return $wgWikiaOrgMigrationScheduled ;
 	}
 }

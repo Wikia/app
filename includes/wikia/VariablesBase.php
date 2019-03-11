@@ -8896,6 +8896,13 @@ $wgFandomComMigrationCustomMessageAfter = '';
  */
 $wgFandomComMigrationDone = false;
 
+
+/**
+ * Whether the community is migrated to a wikia.org domain
+ * @var bool $wgWikiaOrgMigrationDone
+ */
+$wgWikiaOrgMigrationDone = false;
+
 /**
  * Whether we should enable tracking cookie reset page. This is needed in transition phase
  * when we migrate wikis from .wikia.com to .fandom.com domain.

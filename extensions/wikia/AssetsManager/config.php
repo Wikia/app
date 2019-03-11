@@ -2398,6 +2398,13 @@ $config['fandom_com_migration_js'] = [
 	]
 ];
 
+$config['wikia_org_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/WikiaOrgMigration/scripts/fwikia-org-migration.js',
+	]
+];
+
 $config['language_wikis_index_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

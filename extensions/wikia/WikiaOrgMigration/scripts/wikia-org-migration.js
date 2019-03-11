@@ -11,10 +11,10 @@ require([
 ) {
 	'use strict';
 
-	var wgFandomComMigrationScheduled = mw.config.get('wgFandomComMigrationScheduled');
-	var wgFandomComMigrationDone = mw.config.get('wgFandomComMigrationDone');
-	var wgFandomComMigrationCustomMessageBefore = mw.config.get('wgFandomComMigrationCustomMessageBefore');
-	var wgFandomComMigrationCustomMessageAfter = mw.config.get('wgFandomComMigrationCustomMessageAfter');
+	var wgWikiaOrgMigrationScheduled = mw.config.get('wgWikiaOrgMigrationScheduled');
+	var wgWikiaOrgMigrationDone = mw.config.get('wgWikiaOrgMigrationDone');
+	var wgWikiaOrgMigrationCustomMessageBefore = mw.config.get('wgWikiaOrgMigrationCustomMessageBefore');
+	var wgWikiaOrgMigrationCustomMessageAfter = mw.config.get('wgWikiaOrgMigrationCustomMessageAfter');
 
 	var afterMigrationClosedStorageKey = 'fandom-com-migration-after-closed';
 	var beforeMigrationClosedStorageKey = 'fandom-com-migration-before-closed';
@@ -24,17 +24,20 @@ require([
 	var localStorageTTL = 60 * 60 * 24 * 365;
 
 	function shouldShowAfterMigrationNotification() {
-		return wgFandomComMigrationDone && cache.get(afterMigrationClosedStorageKey) !== storageTrueValue;
+		alert("1111");
+		return wgWikiaOrgMigrationDone && cache.get(afterMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function shouldShowBeforeMigrationNotification() {
-		return wgFandomComMigrationScheduled && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
+		alert("1111");
+		return wgWikiaOrgMigrationScheduled && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function showAfterMigrationNotification() {
+		alert("1111");
 		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
-				wgFandomComMigrationCustomMessageAfter ? wgFandomComMigrationCustomMessageAfter : mw.message('fandom-com-migration-after').parse(),
+				wgWikiaOrgMigrationCustomMessageAfter ? wgWikiaOrgMigrationCustomMessageAfter : mw.message('fandom-com-migration-after').parse(),
 				'warn',
 				null
 			);
@@ -48,9 +51,10 @@ require([
 	}
 
 	function showBeforeMigrationNotification() {
+		alert("1111");
 		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
-				wgFandomComMigrationCustomMessageBefore ? wgFandomComMigrationCustomMessageBefore : mw.message('fandom-com-migration-before').parse(),
+				wgWikiaOrgMigrationCustomMessageBefore ? wgWikiaOrgMigrationCustomMessageBefore : mw.message('fandom-com-migration-before').parse(),
 				'warn',
 				null
 			);
