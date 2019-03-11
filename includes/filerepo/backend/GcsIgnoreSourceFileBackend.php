@@ -289,7 +289,24 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 	 * @return Traversable|array|null
 	 */
 	public function getFileListInternal( $container, $dir, array $params ) {
-		throw new BadMethodCallException( "Not implemented!" );
+		WikiaLogger::instance()->info( __METHOD__, [
+			'call_stack' => ( new Exception() )->getTraceAsString(),
+			'container' => $container,
+			'dir' => $dir,
+			'params' => json_encode( $params ),
+		] );
+
+		try {
+			$prefix = $this->gcsPaths->objectsPrefix( $container, $dir );
+			$objects = $this->bucket()->objects( [ 'prefix' => $prefix ] );
+
+			return new GoogleCloudFileList( $objects );
+		}
+		catch ( Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
+
+			return [];
+		}
 	}
 
 	/**
@@ -299,7 +316,23 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 	 * @throws MWException
 	 */
 	protected function doGetFileStat( array $params ) {
-		throw new BadMethodCallException( "Not implemented!" );
+		WikiaLogger::instance()->info( __METHOD__, [
+			'call_stack' => ( new Exception() )->getTraceAsString(),
+			'storage_path' => $params['src'],
+		] );
+
+		$name = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
+		$obj = $this->getOriginal( $name );
+
+		if ( !$obj->exists() ) {
+			return null;
+		}
+
+		return [
+			'mtime' => wfTimestamp( TS_MW, $obj->info()['updated'] ),
+			'size' => $obj->info()['size'],
+			'sha1' => $obj->info()['metadata']['sha1'],
+		];
 	}
 
 	/**
