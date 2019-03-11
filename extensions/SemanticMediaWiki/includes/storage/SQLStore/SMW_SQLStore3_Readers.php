@@ -452,7 +452,12 @@ class SMWSQLStore3Readers {
 		$db = $this->store->getConnection();
 
 		if ( $proptable->usesIdSubject() ) { // join with ID table to get title data
-			$from = $db->tableName( SMWSql3SmwIds::TABLE_NAME ) . " INNER JOIN " . $db->tableName( $proptable->getName() ) . " AS t1 ON t1.s_id=smw_id";
+			$from = $db->tableName( SMWSql3SmwIds::TABLE_NAME );
+
+			// CORE-95 | force an index on smw_object_ids, MySQL picks PRIMARY for large tables (1mm+ rows)
+			$from .= ' FORCE KEY(smw_sortkey)';
+
+			$from .= " INNER JOIN " . $db->tableName( $proptable->getName() ) . " AS t1 ON t1.s_id=smw_id";
 			$select = 'smw_title, smw_namespace, smw_iw, smw_sortkey, smw_subobject';
 		} else { // no join needed, title+namespace as given in proptable
 			$from = $db->tableName( $proptable->getName() ) . " AS t1";
@@ -476,7 +481,13 @@ class SMWSQLStore3Readers {
 			}
 		}
 
-		$res = $db->select( $from, 'DISTINCT ' . $select,
+		// CORE-95 | performance fix backport from https://github.com/SemanticMediaWiki/SemanticMediaWiki/pull/3142
+		$options = $this->store->getSQLOptions( $requestOptions, 'smw_sortkey' );
+		if ( $group ) {
+			$options['GROUP BY'] = 'smw_sortkey, smw_id';
+		}
+
+		$res = $db->select( $from, $select,
 		                    $where . $this->store->getSQLConditions( $requestOptions, 'smw_sortkey', 'smw_sortkey', $where !== '' ),
 		                    __METHOD__, $this->store->getSQLOptions( $requestOptions, 'smw_sortkey' ) );
 
