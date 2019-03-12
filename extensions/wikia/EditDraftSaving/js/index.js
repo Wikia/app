@@ -101,7 +101,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 				'the most recent article edit was at "' + wpEdittime + '"');
 
 			// and compare it with the wpEdittime value
-			if (draftStartTime < wpEdittime && initialContent.length > 0) {
+			if (draftStartTime < wpEdittime && window.wgArticleId > 0) {
 				// Set wpEdittime to a timestamp that is before the current article revision timestamp.
 				// This will trigger a condition in EditPage line 1320
 				// "# Article exists. Check for edit conflict."
