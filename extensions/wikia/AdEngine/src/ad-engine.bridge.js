@@ -88,6 +88,7 @@ function init(
 
 	if (legacyContext.get('bidders.prebid')) {
 		context.set('bidders.prebid.enabled', true);
+		context.set('bidders.prebid.useBuiltInTargetingLogic', legacyContext.get('opts.usePrebidBuiltInTargetingLogic'));
 		context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
 		context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
 		context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
