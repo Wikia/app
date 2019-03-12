@@ -5,8 +5,12 @@ class MultiLookupHooks {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $id == 0 && $user->isAllowed( 'multilookup' ) ) {
+			$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL );
+			$url = $mlTitle->getFullURL( [
+				'wptarget' => $nt->getText(),
+			] );
 			$attribs = [
-				'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?wptarget=' . urlencode( $nt->getText() ),
+				'href' => $url,
 				'title' => wfMessage( 'multilookupselectuser' )->text(),
 			];
 

@@ -104,8 +104,8 @@ function getRefParam() {
 	const ref = document.referrer;
 	const searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/;
 	const wikiDomains = [
-		'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-		'memory-alpha.org', 'uncyclopedia.org',
+		'wikia.com', 'fandom.com', 'wikia.org', 'ffxiclopedia.org',
+		'jedipedia.de', 'memory-alpha.org', 'uncyclopedia.org',
 		'websitewiki.de', 'wowwiki.com', 'yoyowiki.org',
 	];
 	const wikiDomainsRegex = new RegExp(`(^|\\.)(${wikiDomains.join('|').replace(/\./g, '\\.')})$`);

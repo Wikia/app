@@ -56,7 +56,7 @@ class UserPageRedirectsHelper {
 			case NS_PROJECT_TALK:
 				if (!$title->exists()) {
 					//"Project" namespace hardcoded because MW will rename it to name of redirecting page - not the destination wiki
-					$redirect = 'http://community.wikia.com/wiki/Project:' . $title->getPartialURL();
+					$redirect = 'https://community.fandom.com/wiki/Project:' . $title->getPartialURL();
 				}
 				break;
 
