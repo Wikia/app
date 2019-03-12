@@ -1402,6 +1402,12 @@ $wgAdDriverForcedProvider = null;
 $wgAdDriverEnableAdsInMaps = true;
 
 /**
+ * @name $wgAdDriverEnableCheshireCat
+ * Whether to use Cheshire Cat
+ */
+$wgAdDriverEnableCheshireCat = true;
+
+/**
  * @name $wgAdDriverDelayCountries
  * List of countries with enabled AdEngine delay
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

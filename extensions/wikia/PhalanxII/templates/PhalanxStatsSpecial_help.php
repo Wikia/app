@@ -13,16 +13,3 @@
 		<li><?= $action ?>?blockId=123456</li>
 	</ul>
 </fieldset>
-<!--
-<fieldset class="lu_fieldset">
-	<legend>Recent blocks on a wiki</legend>
-	<form method="get" action="<?= $action ?>">
-	ID: <input id="wikiId" name="wikiId" size="5" value="wiki/" /><button class="submit">Load</button>
-	</form>
-	<br />
-	Example:
-	<ul>
-		<li>http://community.wikia.com/wiki/Special:PhalanxStats/wiki/123456</li>
-	</ul>
-</fieldset>
--->

@@ -21,6 +21,8 @@ class MigrateImages extends Maintenance {
 	private $verify;
 	/** @var string */
 	private $correlationId;
+	private $parallel;
+	private $thread;
 
 
 	public function __construct() {
@@ -29,6 +31,8 @@ class MigrateImages extends Maintenance {
 			"Migrate images to GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/migrateImagesToGcs.php`";
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'verify', 'Verify consistency between metadata and storage', false, false, 'v' );
+		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
+		$this->addOption( 'thread', 'Which thread is running', false, true, 't' );
 	}
 
 	public function execute() {
@@ -38,6 +42,8 @@ class MigrateImages extends Maintenance {
 		$this->bucket = VignetteRequest::parseBucket( $wgUploadPath );
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->verify = $this->hasOption( 'verify' );
+		$this->parallel = $this->getOption( 'parallel', 1 );
+		$this->thread = $this->getOption( 'thread', 0 );
 
 		$this->db = wfGetDB( DB_SLAVE );
 		// This means that this script should be run for communities for which we have not switched to GCSFileBackend
@@ -63,6 +69,8 @@ class MigrateImages extends Maintenance {
 			->ON( 'revision.rev_page = page.page_id' )
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
+			->AND_("MOD(page.page_id, {$this->parallel})")
+			->EQUAL_TO($this->thread)
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				$file = $this->getFile( $row );
 
@@ -91,6 +99,8 @@ class MigrateImages extends Maintenance {
 			->ON( 'page.page_title = filearchive.fa_name' )
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
+			->AND_("MOD(page.page_id, {$this->parallel})")
+			->EQUAL_TO($this->thread)
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				if ( empty( $row->fa_storage_key ) ) {
 					$this->error( "Ignoring {$row->fa_id} due to a missing storage key." );
@@ -149,7 +159,7 @@ class MigrateImages extends Maintenance {
 			$this->output( "Publishing message to {$routingKey}: " . json_encode( $data ) . "\n\n" );
 			$this->rabbitConnection->publish( $routingKey , $data );
 		} else {
-			$this->output( "DRY RUN: Would have published message to {$routingKey}: " .
+			$this->output( "DRY RUN ({$this->thread}, {$this->parallel}): Would have published message to {$routingKey}: " .
 						   json_encode( $data ) . "\n\n" );
 		}
 	}

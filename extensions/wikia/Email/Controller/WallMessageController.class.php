@@ -131,7 +131,7 @@ abstract class WallMessageController extends EmailController {
 					'type' => 'text',
 					'name' => 'titleUrl',
 					'label' => 'Title URL',
-					'tooltip' => 'URL of the specific wall thread, eg http://community.wikia.com/wiki/Thread:8410302'
+					'tooltip' => 'URL of the specific wall thread, eg https://community.fandom.com/wiki/Thread:8410302'
 				],
 				[
 					'type' => 'text',
@@ -149,7 +149,7 @@ abstract class WallMessageController extends EmailController {
 					'type' => 'text',
 					'name' => 'threadId',
 					'label' => 'Thread ID',
-					'tooltip' => 'Message thread ID, eg. http://community.wikia.com/wiki/Thread:<threadId>'
+					'tooltip' => 'Message thread ID, eg. https://community.fandom.com/wiki/Thread:<threadId>'
 				],
 			]
 		];
@@ -238,7 +238,7 @@ class ReplyWallMessageController extends WallMessageController {
 					'type'  => 'text',
 					'name' => 'parentId',
 					'label' => 'parentID',
-					'tooltip' => 'Message thread ID, eg. http://community.wikia.com/wiki/Thread:<threadId>. ' .
+					'tooltip' => 'Message thread ID, eg. https://community.fandom.com/wiki/Thread:<threadId>. ' .
 						'Use the same value as you did for threadId.'
 				]
 			]

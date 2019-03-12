@@ -102,7 +102,7 @@ class ForumController extends EmailController {
 					'type' => 'text',
 					'name' => 'titleUrl',
 					'label' => 'Title URL',
-					'tooltip' => 'URL of the specific forum thread, eg http://community.wikia.com/wiki/Thread:841030'
+					'tooltip' => 'URL of the specific forum thread, eg https://community.fandom.com/wiki/Thread:841030'
 				],
 				[
 					'type' => 'text',
@@ -210,7 +210,7 @@ class ReplyForumController extends ForumController {
 			'type' => 'text',
 			'name' => 'parentId',
 			'label' => 'Parent ID',
-			'tooltip' => 'The id of the forum thread, eg "841030" from URL like:  http://community.wikia.com/wiki/Thread:841030'
+			'tooltip' => 'The id of the forum thread, eg "841030" from URL like:  https://community.fandom.com/wiki/Thread:841030'
 		];
 
 		return $formFields;
