@@ -33,12 +33,13 @@ class MigrateImages extends Maintenance {
 		$this->addOption( 'verify', 'Verify consistency between metadata and storage', false, false, 'v' );
 		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
 		$this->addOption( 'thread', 'Which thread is running', false, true, 't' );
+		$this->addOption( 'correlation-id', 'Correlation id used for this process', true, true, 'c' );
 	}
 
 	public function execute() {
 		global $wgGoogleCloudUploaderPublisher, $wgUploadPath;
 
-		$this->correlationId = \Wikia\Tracer\WikiaTracer::instance()->getTraceId();
+		$this->correlationId = $this->getOption("correlation-id");
 		$this->bucket = VignetteRequest::parseBucket( $wgUploadPath );
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->verify = $this->hasOption( 'verify' );

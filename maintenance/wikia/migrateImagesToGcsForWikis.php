@@ -13,6 +13,7 @@ class MigrateImagesForWikis extends Maintenance {
 	private $centralDbr;
 	private $parallel;
 	private $wikiId;
+	private $correlationId;
 
 	/**
 	 * Define available options
@@ -34,6 +35,8 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->allWikis = $this->hasOption( 'all-wikis' );
 		$this->parallel = $this->getOption( 'parallel', 1 );
 		$this->wikiId = $this->getOption( 'wiki-id' );
+
+		$this->correlationId = \Wikia\Tracer\WikiaTracer::instance()->getTraceId();
 
 		if ( empty( $this->wikiPrefix ) && empty( $this->wikiId ) && !$this->allWikis ) {
 			throw new RuntimeException( 'No wiki prefix provided, but "allWikis" option has not been selected' );
@@ -101,8 +104,10 @@ class MigrateImagesForWikis extends Maintenance {
 	private function runMigrateImagesToGcs( $wikiId ) {
 		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-		$this->output( "Migrating images for {$wikiId}\n" );
+		$this->output( "Migrating images for {$wikiId} with correlation-id={$this->correlationId}\n" );
 		$command = "php -d display_errors=1 migrateImagesToGcs.php";
+
+		$command = $command . " --correlation-id={$this->correlationId}";
 
 		if ( $this->isQuiet() ) {
 			$command = $command . " --quiet";
