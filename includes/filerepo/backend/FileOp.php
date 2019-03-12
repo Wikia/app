@@ -548,7 +548,8 @@ class CopyFileOp extends FileOp {
 	protected function doPrecheck( array &$predicates ) {
 		$status = Status::newGood();
 		// Check if the source file exists
-		if ( !$this->fileExists( $this->params['src'], $predicates ) ) {
+		if ( !$this->backend->ignoresSourceExistence() &&
+			 !$this->fileExists( $this->params['src'], $predicates ) ) {
 			$status->fatal( 'backend-fail-notexists', $this->params['src'] );
 			return $status;
 		// Check if a file can be placed at the destination

@@ -1785,4 +1785,8 @@ class FileBackendStoreShardListIterator implements Iterator {
 			return $this->iter->valid();
 		}
 	}
+
+	public function ignoresSourceExistence() {
+		return false;
+	}
 }

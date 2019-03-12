@@ -365,4 +365,8 @@ class GcsIgnoreSourceFileBackend extends FileBackendStore {
 	public function temporaryBucket(): Bucket {
 		return $this->storage->bucket( $this->temporaryBucketName );
 	}
+
+	public function ignoresSourceExistence() {
+		return true;
+	}
 }
