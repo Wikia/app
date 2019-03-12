@@ -51,14 +51,14 @@ class FilePageHelper {
 		$res = self::fetchLinks( $img->getTitle()->getDBkey() );
 		if ( $res ) {
 			foreach ( $res as $row ) {
-				$ImageTitle = Title::newFromRow( $row );
-				if ( $ImageTitle->isRedirect() ) {
+				$PageTitle = Title::newFromRow( $row );
+				if ( $PageTitle->isRedirect() ) {
 					continue;
 				}
-				if ( !$ImageTitle->userCan( 'read' ) ) {
+				if ( !$PageTitle->userCan( 'read' ) ) {
 					continue;
 				}
-				$url = $ImageTitle->getFullURL();
+				$url = $PageTitle->getFullURL();
 				break;
 			}
 		}
@@ -69,6 +69,48 @@ class FilePageHelper {
 		}
 		$wgMemc->set( $redirKey, $url );
 		return $url;
+	}
+
+	/**
+	 * Returns list of surrogate keys for purging.
+	 *
+	 * @requestParam Title
+	 *
+	 * @return array $keys - surrogate keys to purge
+	 */
+	public static function getSurrogateKeys( Title $title ) {
+		global $wgMemc;
+		$keys = [];
+		$keys[] = self::getRedirSurrogateKey( $title );
+		if ( $title->inNamespace( NS_FILE ) ) {
+			$keys[] =
+			$res = self::fetchLinks( $title->getDBkey() );
+			if ( $res ) {
+				foreach ( $res as $row ) {
+					$PageTitle = Title::newFromRow( $row );
+					if ( $PageTitle->isRedirect() ) {
+						continue;
+					}
+					if ( !$PageTitle->userCan( 'read' ) ) {
+						continue;
+					}
+					$keys[] = array_merge( $keys, self::getSurrogateKeys( $PageTitle ) );
+					break;
+				}
+			}
+		}
+		return $keys;
+	}
+
+	/**
+	 * Returns surrogate keys for purging
+	 *
+	 * @requestParam Title
+	 *
+	 * @return string $key - surrogate key to purge
+	 */
+	public static function getRedirSurrogateKey( Title $title ) {
+		return 'redirect-' . $title->getPrefixedText();
 	}
 
 
@@ -92,5 +134,23 @@ class FilePageHelper {
 			'LIMIT' => 5,
 			'ORDER BY' => 'page_namespace, page_id',
 		] );
+	}
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
+	 */
+	public static function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select(
+			[ 'imagelinks' ],
+			[ 'il_to' ],
+			[ 'il_from' => $id ],
+			__METHOD__,
+			[ 'ORDER BY' => 'il_to', ] );
 	}
 }

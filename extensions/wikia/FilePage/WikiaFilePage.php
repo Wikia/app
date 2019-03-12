@@ -153,6 +153,8 @@ class WikiaFilePage extends ImagePage {
 	 */
 	public function view() {
 		global $wgRedirectFilePagesForAnons;
+		Wikia::setSurrogateKeysHeaders( FilePageHelper::getSurrogateKeys( $this->getTitle()	) ,
+			false );
 		if ( !$this->getContext()->getUser()->isAnon() || empty( $wgRedirectFilePagesForAnons ) ) {
 			parent::view();
 

@@ -218,7 +218,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleDelete( WikiPage $page ) {
-		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
+		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
 	}
@@ -233,22 +233,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
-		self::clearLinkedFilesCache( $page->mTitle->getArticleID() );
-
-		return true;
-	}
-
-
-	/**
-	 * Hook to fetch linked materials
-	 *
-	 * @param $id Int: page_id value of the page being deleted
-	 * @param $links container for links
-	 *
-	 * @return true -- because it's hook
-	 */
-	public static function onGetFileLinks( $id, &$links ) {
-		$links = self::getFileLinks( $id );
+		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
 	}
@@ -262,9 +247,10 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function purgeTitle( Title $title ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
+			FilePageHelper::getRedirSurrogateKey( $title );
 			self::purgeRedir( $title );
 		} else {
-			self::clearLinkedFilesCache( $title->getArticleID() );
+			self::clearLinkedFilesCache( $title );
 		}
 	}
 
@@ -281,27 +267,7 @@ class FilePageHooks extends WikiaObject{
 		$wgMemc->delete( $redirKey );
 		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
-		$page = WikiPage::factory( $title );
-		$page->doPurge();
-	}
-
-
-	/**
-	 * getFileLinks get links to material
-	 *
-	 * @param $id Int: page_id value of the page being deleted
-	 *
-	 * @return ResultWrapper -  image links
-	 */
-	private static function getFileLinks( $id ) {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		return $dbr->select(
-			[ 'imagelinks' ],
-			[ 'il_to' ],
-			[ 'il_from' => $id ],
-			__METHOD__,
-			[ 'ORDER BY' => 'il_to', ] );
+		Wikia::purgeSurrogateKey( FilePageHelper::getRedirSurrogateKey( $title ) );
 	}
 
 	/**
@@ -309,13 +275,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	private static function clearLinkedFilesCache( $id, $results = null ) {
-		if ( is_null( $results ) ) {
-			$results = self::getFileLinks( $id );
-		}
-		foreach ( $results as $row ) {
-			$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
-			self::purgeRedir( $title );
-		}
+	private static function clearLinkedFilesCache( Title $title  ) {
+		Wikia::purgeSurrogateKey( FilePageHelper::getRedirSurrogateKey( $title ) );
 	}
 }

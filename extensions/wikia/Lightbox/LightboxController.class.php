@@ -258,6 +258,9 @@ class LightboxController extends WikiaController {
 
 		if ( !empty( $file ) ) {
 			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
+			Wikia::setSurrogateKeysHeaders( FilePageHelper::getSurrogateKeys( $fileTitleObj
+			),
+				false );
 
 			Wikia::setSurrogateKeysHeaders( ( new LightboxHelper )->getShareSurrogateKey( $fileTitleObj ),
 				false );
