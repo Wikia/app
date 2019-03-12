@@ -11,28 +11,41 @@ class MigrateImages extends Maintenance {
 	private $db;
 	/** @var LocalRepo */
 	private $repo;
+	/** @var string */
+	private $bucket;
 	/** @var bool */
 	private $dryRun;
-	private $connectionBase;
+	/** @var ConnectionBase */
+	private $rabbitConnection;
+	/** @var bool */
+	private $verify;
+	/** @var string */
+	private $correlationId;
+
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription =
 			"Migrate images to GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/migrateImagesToGcs.php`";
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
+		$this->addOption( 'verify', 'Verify consistency between metadata and storage', false, false, 'v' );
 	}
 
 	public function execute() {
-		global $wgGoogleCloudUploaderPublisher;
+		global $wgGoogleCloudUploaderPublisher, $wgUploadPath;
 
+		$this->correlationId = \Wikia\Tracer\WikiaTracer::instance()->getTraceId();
+		$this->bucket = VignetteRequest::parseBucket( $wgUploadPath );
 		$this->dryRun = $this->hasOption( 'dry-run' );
+		$this->verify = $this->hasOption( 'verify' );
 
 		$this->db = wfGetDB( DB_SLAVE );
 		// This means that this script should be run for communities for which we have not switched to GCSFileBackend
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
-		$this->connectionBase = new ConnectionBase( $wgGoogleCloudUploaderPublisher );
+		$this->rabbitConnection = new ConnectionBase( $wgGoogleCloudUploaderPublisher );
 
 		try {
+			$this->output( "Starting process with id = {$this->correlationId}\n" );
 			$this->runForAllImages();
 			$this->runForDeletedImages();
 		}
@@ -60,8 +73,7 @@ class MigrateImages extends Maintenance {
 				}
 
 				if ( !$file->exists() ) {
-					$this->output( "File does not exist: {$row->page_id}.{$row->rev_id} - {$file->getPath()}\n\n" );
-
+					$this->output( "File does not exist: {$row->page_title} {$row->page_id}.{$row->rev_id} - {$file->getPath()}\n\n" );
 					return;
 				}
 
@@ -113,18 +125,13 @@ class MigrateImages extends Maintenance {
 		return substr( $archiveName, 0, strcspn( $archiveName, '!' ) );
 	}
 
-	public function getBucket() {
-		global $wgUploadPath;
-
-		return VignetteRequest::parseBucket( $wgUploadPath );
-	}
-
 	private function publishImageUploadRequest(
 		$path, $filename, $mimeType, $sha1, $pageId, $revisionId, $uploaderId
 	) {
-		$bucket = $this->getBucket();
+		$bucket = $this->bucket;
 
 		$data = [
+			'correlationId' => $this->correlationId,
 			'bucket' => $bucket,
 			'path' => $path,
 			'originalFilename' => $filename,
@@ -135,12 +142,14 @@ class MigrateImages extends Maintenance {
 			'uploaderId' => $uploaderId,
 		];
 
+		$routingKey = $this->verify ? "verify-file.{$bucket}" : "migrate-file.{$bucket}";
+
 
 		if ( !$this->dryRun ) {
-			$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
-			$this->connectionBase->publish( "migrate-file.{$bucket}" , $data );
+			$this->output( "Publishing message to {$routingKey}: " . json_encode( $data ) . "\n\n" );
+			$this->rabbitConnection->publish( $routingKey , $data );
 		} else {
-			$this->output( "DRY RUN: Would have published a request to upload	" .
+			$this->output( "DRY RUN: Would have published message to {$routingKey}: " .
 						   json_encode( $data ) . "\n\n" );
 		}
 	}
