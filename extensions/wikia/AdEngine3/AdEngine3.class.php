@@ -98,6 +98,7 @@ class AdEngine3
 			]),
 			'opts' => array_filter([
 				'adsInContent' => $wg->EnableAdsInContent,
+				'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
 				'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 				'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 				'pageType' => $adPageTypeService->getPageType(),
