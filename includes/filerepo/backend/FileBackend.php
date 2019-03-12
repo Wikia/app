@@ -713,6 +713,10 @@ abstract class FileBackend {
 		$i = strrpos( $path, '.' );
 		return strtolower( $i ? substr( $path, $i + 1 ) : '' );
 	}
+
+	public function ignoresSourceExistence() {
+		return false;
+	}
 }
 
 /**
@@ -1784,9 +1788,5 @@ class FileBackendStoreShardListIterator implements Iterator {
 		} else {
 			return $this->iter->valid();
 		}
-	}
-
-	public function ignoresSourceExistence() {
-		return false;
 	}
 }
