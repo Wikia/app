@@ -113,7 +113,7 @@ class MigrateImagesForWikis extends Maintenance {
 
 		if ( $this->parallel > 1 ) {
 			$fullCommand =
-				"parallel \"$command --parallel={$this->parallel} --thread={}\"  --args{} :::";
+				"parallel --jobs 0 \"$command --parallel={$this->parallel} --thread={}\"  --args{} :::";
 			for ( $i = 0; $i < $this->parallel; ++ $i ) {
 				$fullCommand = $fullCommand . " {$i}";
 			}
