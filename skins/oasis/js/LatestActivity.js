@@ -26,15 +26,8 @@ var LatestActivity = {
 };
 
 $(window).load(function() {
-	var showLatestActivity = window.Wikia.AbTest.inGroup('HIDE_LATEST_ACTIVITY', 'SHOW');
-	var $latestActivityModule = $('.rail-module.activity-module');
-
-	if (showLatestActivity) {
-		$('.WikiaRail').on('afterLoad.rail', function() {
-			LatestActivity.init();
-		});
-	} else {
-		$latestActivityModule.hide();
-	}
+	$('.WikiaRail').on('afterLoad.rail', function() {
+		LatestActivity.init();
+	});
 });
 
