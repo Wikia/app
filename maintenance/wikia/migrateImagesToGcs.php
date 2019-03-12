@@ -14,18 +14,24 @@ class MigrateImages extends Maintenance {
 	/** @var bool */
 	private $dryRun;
 	private $connectionBase;
+	private $parallel;
+	private $thread;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription =
 			"Migrate images to GCS. `Usage SERVER_DBNAME=muppet php -d display_errors=1 ./wikia/migrateImagesToGcs.php`";
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
+		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
+		$this->addOption( 'thread', 'Which thread is running', false, true, 't' );
 	}
 
 	public function execute() {
 		global $wgGoogleCloudUploaderPublisher;
 
 		$this->dryRun = $this->hasOption( 'dry-run' );
+		$this->parallel = $this->getOption( 'parallel', 1 );
+		$this->thread = $this->getOption( 'thread', 0 );
 
 		$this->db = wfGetDB( DB_SLAVE );
 		// This means that this script should be run for communities for which we have not switched to GCSFileBackend
@@ -50,6 +56,8 @@ class MigrateImages extends Maintenance {
 			->ON( 'revision.rev_page = page.page_id' )
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
+			->AND_("MOD(page.page_id, {$this->parallel})")
+			->EQUAL_TO($this->thread)
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				$file = $this->getFile( $row );
 
@@ -79,6 +87,8 @@ class MigrateImages extends Maintenance {
 			->ON( 'page.page_title = filearchive.fa_name' )
 			->WHERE( 'page.page_namespace' )
 			->EQUAL_TO( NS_FILE )
+			->AND_("MOD(page.page_id, {$this->parallel})")
+			->EQUAL_TO($this->thread)
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				if ( empty( $row->fa_storage_key ) ) {
 					$this->error( "Ignoring {$row->fa_id} due to a missing storage key." );
@@ -122,8 +132,10 @@ class MigrateImages extends Maintenance {
 	private function publishImageUploadRequest(
 		$path, $filename, $mimeType, $sha1, $pageId, $revisionId, $uploaderId
 	) {
+		$bucket = $this->getBucket();
+
 		$data = [
-			'bucket' => $this->getBucket(),
+			'bucket' => $bucket,
 			'path' => $path,
 			'originalFilename' => $filename,
 			'mimeType' => $mimeType,
@@ -136,9 +148,9 @@ class MigrateImages extends Maintenance {
 
 		if ( !$this->dryRun ) {
 			$this->output( "Publishing a request to upload: " . json_encode( $data ) . "\n\n" );
-			$this->connectionBase->publish( $this->getBucket(), $data );
+			$this->connectionBase->publish( "migrate-file.{$bucket}" , $data );
 		} else {
-			$this->output( "DRY RUN: Would have published a request to upload	" .
+			$this->output( "DRY RUN ({$this->thread}, {$this->parallel}): Would have published a request to upload " .
 						   json_encode( $data ) . "\n\n" );
 		}
 	}

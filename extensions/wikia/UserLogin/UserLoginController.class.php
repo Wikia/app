@@ -23,7 +23,7 @@ class UserLoginController extends WikiaController {
 			$emailParams = array (
 				'$USERNAME' => 'testUser',
 				'$EDITPROFILEURL' => $this->wg->Server . '/wiki/User:testUser',
-				'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
+				'$LEARNBASICURL' => 'https://community.fandom.com/wiki/Help:Wikia_Basics',
 				'$EXPLOREWIKISURL' => 'http://www.wikia.com',
 			);
 		} else {
