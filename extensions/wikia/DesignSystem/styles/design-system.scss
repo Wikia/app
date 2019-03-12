@@ -54,7 +54,6 @@ $global-navigation-z-index: 5000101;
 	button:hover,
 	button:active {
 		background-image: none;
-		border-radius: 0;
 		height: auto;
 	}
 
@@ -97,6 +96,10 @@ $global-navigation-z-index: 5000101;
 
 .wds-global-navigation__search-toggle-text {
   font-size: 14px;
+}
+
+.wds-global-navigation__search-dropdown:hover:not(.wds-is-active) .wds-global-navigation__search-suggestions {
+	display: none !important;
 }
 
 @if $widthType == 0 {
