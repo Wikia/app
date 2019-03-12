@@ -247,7 +247,6 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function purgeTitle( Title $title ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
-			FilePageHelper::getRedirSurrogateKey( $title );
 			self::purgeRedir( $title );
 		} else {
 			self::clearLinkedFilesCache( $title );
@@ -263,11 +262,14 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function purgeRedir( Title $title ) {
 		global $wgMemc;
+		$keys = FilePageHelper::getSurrogateKeys( $title );
 		$redirKey = wfMemcKey( 'redir', 'http', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
-		Wikia::purgeSurrogateKey( FilePageHelper::getRedirSurrogateKey( $title ) );
+		foreach( $keys  as $key) {
+			Wikia::purgeSurrogateKey( $key );
+		}
 	}
 
 	/**
@@ -276,6 +278,8 @@ class FilePageHooks extends WikiaObject{
 	 * @param $id Int: page_id value of the page being deleted
 	 */
 	private static function clearLinkedFilesCache( Title $title  ) {
-		Wikia::purgeSurrogateKey( FilePageHelper::getRedirSurrogateKey( $title ) );
+		foreach( FilePageHelper::getSurrogateKeys( $title )  as $key) {
+			Wikia::purgeSurrogateKey( $key );
+		}
 	}
 }

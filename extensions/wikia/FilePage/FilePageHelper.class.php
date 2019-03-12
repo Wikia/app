@@ -79,25 +79,12 @@ class FilePageHelper {
 	 * @return array $keys - surrogate keys to purge
 	 */
 	public static function getSurrogateKeys( Title $title ) {
-		global $wgMemc;
 		$keys = [];
 		$keys[] = self::getRedirSurrogateKey( $title );
 		if ( $title->inNamespace( NS_FILE ) ) {
-			$keys[] =
-			$res = self::fetchLinks( $title->getDBkey() );
-			if ( $res ) {
-				foreach ( $res as $row ) {
-					$PageTitle = Title::newFromRow( $row );
-					if ( $PageTitle->isRedirect() ) {
-						continue;
-					}
-					if ( !$PageTitle->userCan( 'read' ) ) {
-						continue;
-					}
-					$keys[] = array_merge( $keys, self::getSurrogateKeys( $PageTitle ) );
-					break;
-				}
-			}
+			$url = self::getFilePageRedirect( $title );
+			$pageTitle = Title::newFromURL($url);
+			$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
 		}
 		return $keys;
 	}
