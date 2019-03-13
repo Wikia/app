@@ -283,8 +283,9 @@ class FilePageHooks extends WikiaObject{
 		$wgMemc->delete( $redirKey );
 
 		// commented out until we figure out the purging flood on prod
-		// $page = WikiPage::factory( $title );
-		// $page->doPurge();
+		// if( $page->getFile()->exists() ){
+		//		$page->doPurge();
+		//	}
 		\Wikia\Logger\WikiaLogger::instance()->info( 'FilePageHooks::purgeRedir', [
 			'ex' => new \Exception(),
 			'title' => $title->getText()
