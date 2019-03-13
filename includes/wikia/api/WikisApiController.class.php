@@ -284,10 +284,6 @@ class WikisApiController extends WikiaApiController {
 		$normalizedDomain = wfNormalizeHost( $domain );
 		$cityId = WikiFactory::DomainToID( $normalizedDomain );
 
-		if ( empty( $cityId ) ) {
-			throw new InvalidParameterApiException( 'domain' );
-		}
-
 		if ( !empty( $cityId ) && !WikiFactory::isLanguageWikisIndex( $cityId ) ) {
 			// there is a community at the domain root, make sure it is the primary domain
 			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
