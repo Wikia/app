@@ -984,7 +984,7 @@ $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
 
 /**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
