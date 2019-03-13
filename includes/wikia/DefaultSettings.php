@@ -1196,6 +1196,20 @@ $wgAdDriverPubMaticBidderCountries = null;
 $wgAdDriverLkqdBidderCountries = null;
 
 /**
+ * @name $wgAdDriverLkqdOutstreamCountries
+ * List of countries where LKQD Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdOutstreamCountries = null;
+
+/**
+ * @name $wgAdDriverPubMaticOutstreamCountries
+ * List of countries where Pubmatic Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticOutstreamCountries = null;
+
+/**
  * @name $wgAdDriverPubMaticDfpCountries
  * Enables PubMatic via DFP in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

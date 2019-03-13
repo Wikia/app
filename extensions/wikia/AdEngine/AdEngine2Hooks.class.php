@@ -82,6 +82,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxNewParamsCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 		$vars[] = 'wgAdDriverLABradorTestCountries';
+		$vars[] = 'wgAdDriverLkqdBidderCountries';
+		$vars[] = 'wgAdDriverLkqdOutstreamCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
@@ -104,8 +106,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPrebidOptOutCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
-		$vars[] = 'wgAdDriverLkqdBidderCountries';
 		$vars[] = 'wgAdDriverPubMaticDfpCountries';
+		$vars[] = 'wgAdDriverPubMaticOutstreamCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRepeatMobileIncontentExtendedCountries';
