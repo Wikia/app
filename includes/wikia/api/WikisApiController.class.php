@@ -279,15 +279,14 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
 	public function getWikisUnderDomain() {
-		global $wgWikiaBaseDomainRegex;
 		$domain = $this->request->getVal( 'domain' );
 		$localizeUrls = $this->request->getBool( 'localizeUrls', false );
-		if ( !preg_match( '/\.' . $wgWikiaBaseDomainRegex . '$/', $domain ) ) {
-			throw new InvalidParameterApiException( 'domain' );
-		}
-
 		$normalizedDomain = wfNormalizeHost( $domain );
 		$cityId = WikiFactory::DomainToID( $normalizedDomain );
+
+		if ( empty( $cityId ) ) {
+			throw new InvalidParameterApiException( 'domain' );
+		}
 
 		if ( !empty( $cityId ) && !WikiFactory::isLanguageWikisIndex( $cityId ) ) {
 			// there is a community at the domain root, make sure it is the primary domain
