@@ -46,7 +46,9 @@ class MigrateImagesForWikis extends Maintenance {
 			$this->runMigrateImagesToGcs( $this->wikiId );
 		}
 
-		( new \WikiaSQL() )->SELECT( "wikicities.city_list.city_id, wikicities.city_variables.cv_value" )
+		$migratedCommunities = [];
+
+		( new \WikiaSQL() )->SELECT( "wikicities.city_list.city_id, wikicities.city_list.city_url , wikicities.city_variables.cv_value" )
 			->FROM( 'wikicities.city_list' )
 			->JOIN( 'wikicities.city_variables' )
 			->ON( 'wikicities.city_list.city_id = wikicities.city_variables.cv_city_id' )
@@ -56,11 +58,16 @@ class MigrateImagesForWikis extends Maintenance {
 			->LIKE( $this->getUploadPathCondition() )
 			->AND_( 'wikicities.city_variables_pool.cv_name' )
 			->EQUAL_TO( 'wgUploadPath' )
-			->runLoop( $this->getCentralDbr(), function ( &$pages, $row ) {
-				if ( $this->bucketMatches( $row->city_id, unserialize( $row->cv_value ) ) ) {
-					$this->runMigrateImagesToGcs( $row->city_id );
-				}
-			} );
+			->runLoop( $this->getCentralDbr(),
+				function ( &$pages, $row ) use ( &$migratedCommunities ) {
+					if ( $this->bucketMatches( $row->city_id, unserialize( $row->cv_value ) ) ) {
+						$this->runMigrateImagesToGcs( $row->city_id );
+						$migratedCommunities[$row->city_id] = $row->city_url;
+					}
+				} );
+
+		$this->output( "Migrated the following communities: " .
+					   json_encode( $migratedCommunities ) );
 	}
 
 	private function getUploadPathCondition() {
