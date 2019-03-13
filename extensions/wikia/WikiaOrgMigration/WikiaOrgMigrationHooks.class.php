@@ -60,6 +60,7 @@ class WikiaOrgMigrationHooks {
 				$wgWikiaOrgMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
 			$vars['wgWikiaOrgMigrationCustomMessageAfter'] = $parser->parse(
 				$wgWikiaOrgMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+
 		}
 
 		return true;

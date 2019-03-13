@@ -17,7 +17,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'WikiaOrgMigrationHooks::onWikiaSkinTopScrip
 
 $wgExtensionMessagesFiles['WikiaOrgMigration'] = __DIR__ . '/WikiaOrgMigration.i18n.php';
 
-$wgResourceModules['ext.WikiaOrgMigration'] = [
+$wgResourceModules['ext.wikiaOrgMigration'] = [
 	'messages' => [
 		'wikia-org-migration-after',
 		'wikia-org-migration-before'

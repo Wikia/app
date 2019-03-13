@@ -2401,7 +2401,7 @@ $config['fandom_com_migration_js'] = [
 $config['wikia_org_migration_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/WikiaOrgMigration/scripts/fwikia-org-migration.js',
+		'//extensions/wikia/WikiaOrgMigration/scripts/wikia-org-migration.js',
 	]
 ];
 
