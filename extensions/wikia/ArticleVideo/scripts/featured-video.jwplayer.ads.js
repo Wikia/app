@@ -8,7 +8,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracker',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.vastParser',
-	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.bidders')
@@ -21,7 +20,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 	adsTracker,
 	vastDebugger,
 	vastParser,
-	fvLagger,
 	log,
 	win,
 	bidders
@@ -221,8 +219,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				var vastParams = parseVastParamsFromEvent(event);
 				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
-
-				fvLagger.markAsReady(vastParams.lineItemId);
 			});
 
 			player.on('adError', function (event) {
@@ -233,7 +229,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 				// JW Error Code = 21009
 				var emptyImaVastErrorCode = 20000 + win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
 
-				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 
 				if (bidderEnabled && event.adErrorCode === emptyImaVastErrorCode) {
@@ -262,7 +257,6 @@ define('wikia.articleVideo.featuredVideo.adsConfiguration', [
 			}
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
-			fvLagger.markAsReady(null);
 		}
 
 		adsTracker.register(player, trackingParams);

@@ -60,8 +60,7 @@ define('ext.wikia.adEngine.adContext', [
 		var serviceCanBeEnabled = !noExternals &&
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
-			context.targeting.skin === 'oasis' &&
-			!context.opts.delayBlocked;
+			context.targeting.skin === 'oasis';
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -84,23 +83,19 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits.queenDesktop = isEnabled('wgAdDriverCTPDesktopQueenCountries');
 	}
 
-	function areDelayServicesBlocked() {
-		return context.targeting.skin === 'mercury' && isEnabled('wgAdDriverBlockDelayServicesCountries');
-	}
-
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebid = isEnabled('wgAdDriverPrebidBidderCountries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
-		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9 = isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
-		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
+		context.bidders.a9Video = isEnabled('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isEnabled('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
-		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
+		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isEnabled('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.beachfrontDfp = isEnabled('wgAdDriverBeachfrontDfpCountries');
 		context.bidders.appnexusAst = isEnabled('wgAdDriverAppNexusAstBidderCountries');
@@ -143,10 +138,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits = context.rabbits || {};
 		context.templates = context.templates || {};
 		context.opts.noExternals = noExternals;
-
-		context.opts.delayEngine = true;
-		context.opts.delayBlocked = areDelayServicesBlocked();
-		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
@@ -203,8 +194,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
-		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
-		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
 		context.opts.replayAdsForFV = isEnabled('wgAdDriverPlayAdsOnNextFVCountries');
