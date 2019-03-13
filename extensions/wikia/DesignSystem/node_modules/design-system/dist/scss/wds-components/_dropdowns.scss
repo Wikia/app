@@ -8,6 +8,10 @@
 	&__toggle {
 		cursor: default;
 		position: relative;
+
+		.wds-is-clickable & {
+			cursor: pointer;
+		}
 	}
 
 	&__content {
@@ -105,7 +109,7 @@
 	}
 
 	&.wds-is-active,
-	&:not(.wds-is-touch-device):hover {
+	&:not(.wds-is-touch-device):not(.wds-is-not-hoverable):hover {
 		&:not(.wds-no-chevron) {
 			&::before, &::after {
 				display: block;

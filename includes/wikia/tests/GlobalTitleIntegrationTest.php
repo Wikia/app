@@ -143,9 +143,9 @@ class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 
 	public function urlsSpacesProvider() {
 		return [
-			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.fandom.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.fandom.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.fandom.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
 
@@ -173,8 +173,8 @@ class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 
 	public function httpsUrlsProvider() {
 		return [
-			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
-			[ 177, 'https', 'https://community.wikia.com/wiki/Test' ],
+			[ 177, 'http', 'http://community.fandom.com/wiki/Test' ],
+			[ 177, 'https', 'https://community.fandom.com/wiki/Test' ],
 			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
 			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
 			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],

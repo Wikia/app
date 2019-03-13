@@ -713,6 +713,10 @@ abstract class FileBackend {
 		$i = strrpos( $path, '.' );
 		return strtolower( $i ? substr( $path, $i + 1 ) : '' );
 	}
+
+	public function ignoresSourceExistence() {
+		return false;
+	}
 }
 
 /**

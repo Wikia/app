@@ -15,7 +15,7 @@
 	var RTE = {
 
 		// configuration
-		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
+		// @see https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
 		config: {
 			alignableElements: {
 				div: true,
@@ -192,6 +192,9 @@
 			}
 
 			RTE.config.startupMode = editor.config.mode;
+
+			// CORE-117 | allow empty <span> elements in CKeditor's visual mode
+			CKEDITOR.dtd.$removeEmpty['span'] = 0;
 
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);

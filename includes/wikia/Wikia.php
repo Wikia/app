@@ -71,6 +71,9 @@ $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 $wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 $wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 
+# Add words count statistics to page_props after each article's wikitext parsing
+$wgHooks['LinksUpdateConstructed'][] = 'Wikia::onLinksUpdateConstructed';
+
 
 use Wikia\Tracer\WikiaTracer;
 
@@ -81,7 +84,7 @@ class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
 
-	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const COMMUNITY_WIKI_ID = 177; // community.fandom.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
 
@@ -99,6 +102,7 @@ class Wikia {
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+	const DEFAULT_WIKI_ID = 177;
 
 	private static $vars = [];
 	private static $cachedLinker;
@@ -1523,12 +1527,19 @@ class Wikia {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
 		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
+		$wgUseGcsMigrationBucketPrefix =
+			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketPrefix",
+				static::DEFAULT_WIKI_ID );
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-		$wgFSSwiftContainer = substr( $path, 0, -7 );
+		$wgFSSwiftContainer = substr( $path, 0, - 7 );
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
+		} elseif ( !empty( $wgUseGcsMigrationBucketPrefix ) &&
+				   substr( $wgFSSwiftContainer, 0, strlen( $wgUseGcsMigrationBucketPrefix ) ) ===
+				   $wgUseGcsMigrationBucketPrefix ) {
+			$repo['backend'] = 'gcs-migration-backend';
 		} else {
 			$repo['backend'] = 'swift-backend';
 		}
@@ -1948,5 +1959,33 @@ class Wikia {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes HTML tags from a given text and counts words.
+	 *
+	 * Text is split by spaces and newlines.(
+	 *
+	 * @param string $text
+	 * @return int
+	 */
+	public static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
+
+	/**
+	 * Update words_count page property kept in page_props per-wiki table
+	 *
+	 * @param LinksUpdate $linksUpdate
+	 */
+	public static function onLinksUpdateConstructed( LinksUpdate $linksUpdate ) {
+		$parserOutput = $linksUpdate->getParserOutput();
+		$words_count = self::words_count( $parserOutput->getText() );
+
+		$parserOutput->setProperty( 'words_count', $words_count );
+
+		// keep LinksUpdate instance in sync with our updated parser output properties
+		$linksUpdate->mProperties = $parserOutput->getProperties();
 	}
 }

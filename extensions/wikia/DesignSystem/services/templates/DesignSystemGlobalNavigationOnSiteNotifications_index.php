@@ -1,5 +1,5 @@
 <div class="wds-hidden-svg">
-	<?= DesignSystemHelper::renderSvg( 'wds-icons-flag' ) ?>
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-flag-small' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-comment-small' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small' ) ?>
 </div>

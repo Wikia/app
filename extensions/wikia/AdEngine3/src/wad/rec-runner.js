@@ -1,4 +1,5 @@
 import { context, utils } from '@wikia/ad-engine';
+import { babDetection } from './bab-detection';
 import { btLoader } from './bt-loader';
 import { hmdLoader } from './hmd-loader';
 
@@ -38,7 +39,11 @@ export const recRunner = {
 			if (!recEnabled[config.type] && context.get(config.context)) {
 				recEnabled[config.type] = rec;
 
-				config.loader.init();
+				if (babDetection.isBlocking()) {
+					config.loader.run();
+				} else {
+					document.addEventListener('bab.blocking', config.loader.run);
+				}
 			}
 		});
 	},

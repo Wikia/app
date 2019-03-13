@@ -81,6 +81,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			slotParams,
 			{
 				adProduct: adInfo.adProduct,
+				orderId: slotFirstChildData.gptOrderId,
 				creativeId: slotFirstChildData.gptCreativeId,
 				creativeSize: slotFirstChildData.gptCreativeSize,
 				lineItemId: slotFirstChildData.gptLineItemId,

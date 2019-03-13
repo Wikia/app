@@ -219,18 +219,16 @@ define('ext.wikia.adEngine.wad.hmdRecLoader', [
 		});
 	}
 
-	function init() {
-		doc.addEventListener('bab.blocking', function () {
-			log('Initialising HMD rec loader', log.levels.info, logGroup);
+	function run() {
+		log('Initialising HMD rec loader', log.levels.info, logGroup);
 
-			initializeTracking();
-			injectScript();
-		});
+		initializeTracking();
+		injectScript();
 	}
 
 	return {
 		getConfig: getConfig,
-		setOnReady: setOnReady,
-		init: init
+		run: run,
+		setOnReady: setOnReady
 	};
 });

@@ -40,6 +40,12 @@
 
 					<ul class="Results">
 					<?php $pos = 0; ?>
+					<?= $app->renderView('Ad', 'Index', [
+						'slotName' => 'incontent_native',
+						'pageTypes' => ['search'],
+						'addToAdQueue' => AdEngine3::isEnabled()
+					]); ?>
+
 					<?php foreach ( $results as $result ): ?>
 						<?php
 							$pos++;
