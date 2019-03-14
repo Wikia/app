@@ -23,8 +23,7 @@ function updateWadContext() {
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('opts.showAds') !== false &&
-		!window.wgUserName &&
-		!context.get('opts.delayBlocked');
+		!window.wgUserName;
 
 	if (serviceCanBeEnabled) {
 		// BT rec
@@ -167,8 +166,16 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 		context.set('custom.rubiconInFV',
-			isGeoEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo);
+			isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo);
 		context.set('custom.isCMPEnabled', true);
+
+		if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
+		}
+
+		if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
 	}
 
 	if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {

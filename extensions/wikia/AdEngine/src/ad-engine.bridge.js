@@ -120,6 +120,14 @@ function init(
 		context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
 		context.set('custom.lkqdDfp', legacyContext.get('bidders.lkqd'));
 		context.set('custom.isCMPEnabled', true);
+
+		if (!legacyContext.get('bidders.lkqdOutstream')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
+		}
+
+		if (!legacyContext.get('bidders.pubmaticOutstream')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
 	}
 
 	context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));

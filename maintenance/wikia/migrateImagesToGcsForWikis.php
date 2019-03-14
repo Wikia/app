@@ -13,6 +13,9 @@ class MigrateImagesForWikis extends Maintenance {
 	private $centralDbr;
 	private $parallel;
 	private $wikiId;
+	private $correlationId;
+	/** @var bool */
+	private $verify;
 
 	/**
 	 * Define available options
@@ -25,6 +28,8 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->addOption( 'wiki-id', 'Specific wiki ID', false, true, 'i' );
 		$this->addOption( 'all-wikis', 'Run on all wikis', false, false, 'a' );
 		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
+		$this->addOption( 'verify', 'Verify consistency between metadata and storage', false, false,
+			'v' );
 	}
 
 
@@ -34,6 +39,9 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->allWikis = $this->hasOption( 'all-wikis' );
 		$this->parallel = $this->getOption( 'parallel', 1 );
 		$this->wikiId = $this->getOption( 'wiki-id' );
+		$this->verify = $this->hasOption( 'verify' );
+
+		$this->correlationId = \Wikia\Tracer\WikiaTracer::instance()->getTraceId();
 
 		if ( empty( $this->wikiPrefix ) && empty( $this->wikiId ) && !$this->allWikis ) {
 			throw new RuntimeException( 'No wiki prefix provided, but "allWikis" option has not been selected' );
@@ -41,9 +49,13 @@ class MigrateImagesForWikis extends Maintenance {
 
 		if ( !empty( $this->wikiId ) ) {
 			$this->runMigrateImagesToGcs( $this->wikiId );
+
+			return;
 		}
 
-		( new \WikiaSQL() )->SELECT( "wikicities.city_list.city_id, wikicities.city_variables.cv_value" )
+		$migratedCommunities = [];
+
+		( new \WikiaSQL() )->SELECT( "wikicities.city_list.city_id, wikicities.city_list.city_url , wikicities.city_variables.cv_value" )
 			->FROM( 'wikicities.city_list' )
 			->JOIN( 'wikicities.city_variables' )
 			->ON( 'wikicities.city_list.city_id = wikicities.city_variables.cv_city_id' )
@@ -53,11 +65,16 @@ class MigrateImagesForWikis extends Maintenance {
 			->LIKE( $this->getUploadPathCondition() )
 			->AND_( 'wikicities.city_variables_pool.cv_name' )
 			->EQUAL_TO( 'wgUploadPath' )
-			->runLoop( $this->getCentralDbr(), function ( &$pages, $row ) {
-				if ( $this->bucketMatches( $row->city_id, unserialize( $row->cv_value ) ) ) {
-					$this->runMigrateImagesToGcs( $row->city_id );
-				}
-			} );
+			->runLoop( $this->getCentralDbr(),
+				function ( &$pages, $row ) use ( &$migratedCommunities ) {
+					if ( $this->bucketMatches( $row->city_id, unserialize( $row->cv_value ) ) ) {
+						$this->runMigrateImagesToGcs( $row->city_id );
+						$migratedCommunities[$row->city_id] = $row->city_url;
+					}
+				} );
+
+		$this->output( "Run on the following communities:\n" .
+					   json_encode( $migratedCommunities ) );
 	}
 
 	private function getUploadPathCondition() {
@@ -101,8 +118,10 @@ class MigrateImagesForWikis extends Maintenance {
 	private function runMigrateImagesToGcs( $wikiId ) {
 		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-		$this->output( "Migrating images for {$wikiId}\n" );
+		$this->output( "Migrating images for {$wikiId} with correlation-id={$this->correlationId}\n" );
 		$command = "php -d display_errors=1 migrateImagesToGcs.php";
+
+		$command = $command . " --correlation-id={$this->correlationId}";
 
 		if ( $this->isQuiet() ) {
 			$command = $command . " --quiet";
@@ -110,10 +129,13 @@ class MigrateImagesForWikis extends Maintenance {
 		if ( $this->dryRun ) {
 			$command = $command . " --dry-run";
 		}
+		if ( $this->verify ) {
+			$command = $command . " --verify";
+		}
 
 		if ( $this->parallel > 1 ) {
 			$fullCommand =
-				"parallel \"$command --parallel={$this->parallel} --thread={}\"  --args{} :::";
+				"parallel --jobs 0 \"$command --parallel={$this->parallel} --thread={}\"  --args{} :::";
 			for ( $i = 0; $i < $this->parallel; ++ $i ) {
 				$fullCommand = $fullCommand . " {$i}";
 			}

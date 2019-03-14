@@ -102,6 +102,7 @@ class Wikia {
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+	const DEFAULT_WIKI_ID = 177;
 
 	private static $vars = [];
 	private static $cachedLinker;
@@ -1526,12 +1527,19 @@ class Wikia {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
 		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
+		$wgUseGcsMigrationBucketPrefix =
+			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketPrefix",
+				static::DEFAULT_WIKI_ID );
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-		$wgFSSwiftContainer = substr( $path, 0, -7 );
+		$wgFSSwiftContainer = substr( $path, 0, - 7 );
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
+		} elseif ( !empty( $wgUseGcsMigrationBucketPrefix ) &&
+				   substr( $wgFSSwiftContainer, 0, strlen( $wgUseGcsMigrationBucketPrefix ) ) ===
+				   $wgUseGcsMigrationBucketPrefix ) {
+			$repo['backend'] = 'gcs-migration-backend';
 		} else {
 			$repo['backend'] = 'swift-backend';
 		}

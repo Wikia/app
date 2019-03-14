@@ -6,7 +6,7 @@ use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
 use Wikia\Logger\WikiaLogger;
 
-class GcsFileBackend extends FileBackendStore {
+class GcsIgnoreSourceFileBackend extends FileBackendStore {
 
 	/** @var GcsPathFactory */
 	private $gcsPaths;
@@ -65,28 +65,7 @@ class GcsFileBackend extends FileBackendStore {
 	 * @return Status|TempFSFile|null
 	 */
 	public function getLocalCopy( array $params ) {
-		WikiaLogger::instance()->info( __METHOD__, [
-			'params' => $params,
-			'call_stack' => ( new Exception() )->getTraceAsString(),
-		] );
-
-		list( $container, $path ) = $this->resolveStoragePathReal( $params['src'] );
-		if ( $path === null ) {
-			return null;
-		}
-		$ext = FileBackend::extensionFromPath( $path );
-		try {
-			$tmpFile = TempFSFile::factory( wfBaseName( $path ) . '_', $ext );
-			$name = $this->gcsPaths->objectName( [ $container, $path ] );
-			$this->getOriginal( $name )->downloadToFile( $tmpFile->getPath() );
-
-			return $tmpFile;
-		}
-		catch ( Exception $e ) {
-			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
-
-			return null;
-		}
+		throw new BadMethodCallException( "Not implemented!" );
 	}
 
 	/**
@@ -263,6 +242,9 @@ class GcsFileBackend extends FileBackendStore {
 			$dst = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['dst'] ) );
 			$this->getOriginal( $src )->rewrite( $this->bucket(), [ 'name' => $dst ] );
 		}
+		catch ( NotFoundException $e ) {
+			WikiaLogger::instance()->info( __METHOD__, [ 'exception' => $e, ] );
+		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
 			$status->fatal( 'backend-fail-internal' );
@@ -284,6 +266,9 @@ class GcsFileBackend extends FileBackendStore {
 		try {
 			$name = $this->gcsPaths->objectName( $this->resolveStoragePathReal( $params['src'] ) );
 			$this->getOriginal( $name )->delete();
+		}
+		catch ( NotFoundException $e ) {
+			WikiaLogger::instance()->info( __METHOD__, [ 'exception' => $e, ] );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -379,5 +364,9 @@ class GcsFileBackend extends FileBackendStore {
 
 	public function temporaryBucket(): Bucket {
 		return $this->storage->bucket( $this->temporaryBucketName );
+	}
+
+	public function ignoresSourceExistence() {
+		return true;
 	}
 }

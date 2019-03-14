@@ -984,7 +984,7 @@ $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
 
 /**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
@@ -1194,6 +1194,20 @@ $wgAdDriverPubMaticBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverLkqdBidderCountries = null;
+
+/**
+ * @name $wgAdDriverLkqdOutstreamCountries
+ * List of countries where LKQD Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdOutstreamCountries = null;
+
+/**
+ * @name $wgAdDriverPubMaticOutstreamCountries
+ * List of countries where Pubmatic Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticOutstreamCountries = null;
 
 /**
  * @name $wgAdDriverPubMaticDfpCountries
@@ -1408,32 +1422,11 @@ $wgAdDriverEnableAdsInMaps = true;
 $wgAdDriverEnableCheshireCat = true;
 
 /**
- * @name $wgAdDriverDelayCountries
- * List of countries with enabled AdEngine delay
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverDelayCountries = null;
-
-/**
  * @name $wgAdDriverDelayTimeout
  * AdEngine delay timeout (in ms)
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutOasis
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutOasis = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutMobileWiki
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
  * @name $wgAdDriverGeoEdgeCountries
@@ -1815,7 +1808,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1874,6 +1867,12 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If provided, a multi write will be used for storing files for all wikis with buckets matching the prefix.
+ */
+$wgUseGcsMigrationBucketPrefix = '';
 
 /**
  * Google Cloud Storage settings. The default settings are for production.

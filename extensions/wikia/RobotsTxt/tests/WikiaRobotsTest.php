@@ -160,7 +160,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 			[ false, false, [] ],
 			[ false, true, [] ],
 			[ true, false, [] ],
-			[ true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
+			[ true, true, [ 'https://server/sitemap-newsitemapxml-index.xml' ] ],
 		];
 	}
 
