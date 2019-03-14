@@ -6,14 +6,12 @@
 $GLOBALS['wgAutoloadClasses']['UpdateCityListTask'] = __DIR__ . '/UpdateCityListTask.php';
 
 function wfScheduleCityListUpdateTask() {
-	global $wgCityId;
-
 	$timestamp = wfTimestampNow();
 
-	$task = ( new UpdateCityListTask() )->wikiId( $wgCityId );
+	$task = UpdateCityListTask::newLocalTask();
 
 	$task->call( 'updateLastTimestamp', $timestamp );
-
+	$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 	$task->queue();
 }
 
