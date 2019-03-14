@@ -46,7 +46,7 @@ $wgAllowExternalImagesFrom = "http://images.$wgWikiaBaseDomain/";
  * of the scanners output. The relevant part should be matched as group one
  * (\1). If not defined or the pattern does not match, the full message is shown
  * to the user.
- * 
+ *
  * @see includes/upload/UploadBase.php
  * @see $wgAntivirus
  * @var Array $wgAntivirusSetup
@@ -118,7 +118,7 @@ $wgAuthServiceInternalUrl = "http://prod.$wgWikiaDatacenter.k8s.wikia.net/helios
  *
  * If $wgEmailAuthentication is off, APCOND_EMAILCONFIRMED will be true for any
  * user who has provided an e-mail address.
- * 
+ *
  * @see includes/Autopromote.php
  * @var Array $wgAutopromote
  */
@@ -167,7 +167,7 @@ $wgCookieDomain = ".$wgWikiaBaseDomain";
  * @see extensions/wikia/UserPageRedirects
  * @var string $wgCorporatePageRedirectWiki
  */
-$wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
+$wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
 
 /**
  * Settings for incoming cross-site AJAX requests. Newer browsers support

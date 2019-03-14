@@ -1,6 +1,6 @@
 city_list:
   - city_id: 177
-    city_url: http://community.wikia.com/
+    city_url: http://community.fandom.com/
     city_cluster: c1
     city_dbname: wikia
   - city_id: 113

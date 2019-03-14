@@ -20,7 +20,7 @@
 		<td><?php echo ($variable->cv_is_unique == 1 ? "yes":"no"); ?></td>
 	</tr>
 </table>
-<ul><?php $WIEbase = "http://community.wikia.com/wiki/Special:WhereIsExtension?var=" . $variable->cv_id; ?>
+<ul><?php $WIEbase = "https://community.fandom.com/wiki/Special:WhereIsExtension?var=" . $variable->cv_id; ?>
 	<li>
 		Where is... <a href="<? echo $WIEbase ?>&val=2">Any value</a><?php
 		if( $variable->cv_variable_type == 'boolean' ) {
@@ -30,7 +30,7 @@
 		?></li>
 	<?php global $wgEnableWikiFactoryReporter;
 		if( !empty($wgEnableWikiFactoryReporter) ): ?><li>
-		<a href="http://community.wikia.com/wiki/Special:WikiFactoryReporter?varid=<?php echo $variable->cv_id ?>">Values Reporter</a>
+		<a href="https://community.fandom.com/wiki/Special:WikiFactoryReporter?varid=<?php echo $variable->cv_id ?>">Values Reporter</a>
 	</li><?php endif; ?>
 	<li>
 		Manual:

@@ -33,14 +33,14 @@ class ContactForm extends SpecialPage {
 		),
 
 		'close-account' => array(
-			'format' => "User requested account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s?wpAction=closeaccount",
+			'format' => "User requested account \"%s\" to be disabled.\n\nhttps://community.fandom.com/wiki/Special:EditAccount/%s?wpAction=closeaccount",
 			'vars' => array( 'wpUserName', 'wpUrlencUserName' ),
 			'subject' => 'Disable account: %s',
 			'markuser' => 'requested-closure',
 		),
 
 		'rename-account' => array(
-			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
+			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttps://community.fandom.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
 			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUrlencUserName', 'wpUrlencUserNameNew' ),
 			'subject' => 'Rename account: %s',
 			'markuser' => 'requested-rename',
@@ -98,7 +98,7 @@ class ContactForm extends SpecialPage {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
 		}
-		
+
 		if ( $par === 'rename-account' && $this->isRenameAccountSupported() ) {
 			$renameAccountTitle = SpecialPage::getTitleFor( 'UserRenameTool' );
 			$out->redirect( $renameAccountTitle->getFullURL() );
@@ -322,9 +322,9 @@ class ContactForm extends SpecialPage {
 		//smush it all together
 		$info = $this->mBrowser . "\n\n";
 		if ( !empty($uid) ) {
-			$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
+			$info .= 'https://community.fandom.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
 		}
-		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
+		$info .= 'https://community.fandom.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
 		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n\n"; // giving it its own line so that it stands out more
 		$info .= implode("; ", $items) . "\n\n";
 		//end wikia debug data
@@ -806,7 +806,7 @@ class ContactForm extends SpecialPage {
 		return !empty( $wgEnableCloseMyAccountExt )
 				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
 	}
-	
+
 	private function isRenameAccountSupported() {
 		global $wgEnableUserRenameToolExt;
 		return !empty( $wgEnableUserRenameToolExt );

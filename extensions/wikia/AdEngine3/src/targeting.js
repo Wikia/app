@@ -104,8 +104,8 @@ function getRefParam() {
 	const ref = document.referrer;
 	const searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/;
 	const wikiDomains = [
-		'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-		'memory-alpha.org', 'uncyclopedia.org',
+		'wikia.com', 'fandom.com', 'wikia.org', 'ffxiclopedia.org',
+		'jedipedia.de', 'memory-alpha.org', 'uncyclopedia.org',
 		'websitewiki.de', 'wowwiki.com', 'yoyowiki.org',
 	];
 	const wikiDomainsRegex = new RegExp(`(^|\\.)(${wikiDomains.join('|').replace(/\./g, '\\.')})$`);
@@ -231,10 +231,11 @@ export default {
 		}
 
 		return {
+			bidder_0: transformBidderPrice('wikia'),
 			bidder_1: transformBidderPrice('indexExchange'),
 			bidder_2: transformBidderPrice('appnexus'),
 			bidder_4: transformBidderPrice('rubicon'),
-			bidder_5: transformBidderPrice('wikia'),
+			bidder_5: transformBidderPrice('vmg'),
 			bidder_6: transformBidderPrice('aol'),
 			bidder_7: transformBidderPrice('audienceNetwork'),
 			bidder_8: transformBidderPrice('wikiaVideo'),

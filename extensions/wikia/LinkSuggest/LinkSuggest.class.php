@@ -13,7 +13,7 @@ use Wikia\Measurements\Time as T;
  * @author Robert Elwell <robert@wikia-inc.com>
  */
 class LinkSuggest {
-
+	const MAX_LINK_SUGGESTIONS_LIMIT = 100;
 	/**
 	 * Get list of suggested images
 	 *
@@ -58,11 +58,16 @@ class LinkSuggest {
 		// - this is how MediaWiki store article titles in database
 		$query = urldecode( trim( $request->getText('query') ) );
 		$query = str_replace(' ', '_', $query);
+		$limit = min($request->getInt('limit', $wgLinkSuggestLimit), self::MAX_LINK_SUGGESTIONS_LIMIT);
+
+		if ($limit <= 0) {
+			$limit = $wgLinkSuggestLimit;
+		}
 
 		if ( $isMobile ) {
-			$key = wfMemcKey( __METHOD__, md5( $query.'_'.$request->getText('format').$request->getText('nospecial', '') ), 'WikiaMobile' );
+			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ), 'WikiaMobile' );
 		} else {
-			$key = wfMemcKey( __METHOD__, md5( $query.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
+			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
 		}
 
 		// use mb_strlen to test string length accurately
@@ -156,17 +161,17 @@ class LinkSuggest {
 				'qc_namespace' => $namespaces
 			),
 			__METHOD__,
-			array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => $wgLinkSuggestLimit )
+			array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => $limit )
 		);
 
-		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 		$sql1Measurement->stop();
 		if (count($namespaces) > 0) {
 			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 		}
 
 		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
-		if( count($results) < $wgLinkSuggestLimit ) {
+		if( count($results) < $limit ) {
 			/**
 			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
 			 * It uses fact that page titles can't start with lowercase letter.
@@ -209,12 +214,12 @@ class LinkSuggest {
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
 						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )
 							AND qc_type IS NULL
-						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
+						LIMIT ".($limit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
 			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
 			$res = $db->query($sql, __METHOD__);
 
-			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 			$sql2Measurement->stop();
 		}
 
@@ -364,13 +369,13 @@ class LinkSuggest {
 	 * @param $redirects
 	 * @param $results
 	 * @param $exactMatchRow
+	 * @param $limit
 	 *
 	 * @author dymsza
 	 */
 
-	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
-		global $wgLinkSuggestLimit;
-		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
+	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow, $limit) {
+		while(($row = $db->fetchObject($res)) && count($results) < $limit ) {
 
 			// SUS-846: Ensure we only have one exact match, to prevent overwriting it and losing the suggestion
 			if ( is_null( $exactMatchRow ) && strtolower( $row->page_title ) == $query ) {

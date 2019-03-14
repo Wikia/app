@@ -587,6 +587,7 @@ include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
+include_once( "$IP/extensions/wikia/ArticleTagEvents/ArticleTagEvents.setup.php" );
 
 
 /**
@@ -983,7 +984,7 @@ $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
  * Enables AdEngine3 extension on search pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = false;
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
 
 /**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
@@ -1202,6 +1203,13 @@ $wgAdDriverLkqdBidderCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
+ * @name $wgAdDriverDisableRecirculationCountries
+ * Disables recirculation in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableRecirculationCountries = null;
+
+/**
  * @name $wgAdDriverAdditionalVastSizeCountries
  * List of countries where vast requests has additional size 480x360.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1291,11 +1299,32 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
+ * @name $wgAdDriverRepeatMobileIncontentCountries
+ * List of countries where Incontent Boxad ads are injected after h2 tag on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentCountries = null;
+
+/**
+ * @name $wgAdDriverRepeatMobileIncontentExtendedCountries
+ * List of countries where Incontent Boxad ads are injected after extended number of HTML elements on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentExtendedCountries = null;
+
+/**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
  * List of countries where incontent native is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverNativeSearchDesktopCountries
+ * List of countries where incontent native is displayed on app search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNativeSearchDesktopCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
@@ -1373,11 +1402,10 @@ $wgAdDriverForcedProvider = null;
 $wgAdDriverEnableAdsInMaps = true;
 
 /**
- * @name $wgAdDriverDelayCountries
- * List of countries with enabled AdEngine delay
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * @name $wgAdDriverEnableCheshireCat
+ * Whether to use Cheshire Cat
  */
-$wgAdDriverDelayCountries = null;
+$wgAdDriverEnableCheshireCat = true;
 
 /**
  * @name $wgAdDriverDelayTimeout
@@ -1385,20 +1413,6 @@ $wgAdDriverDelayCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutOasis
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutOasis = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutMobileWiki
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
  * @name $wgAdDriverGeoEdgeCountries
@@ -1686,6 +1700,13 @@ $wgAdDriverIncontentPlayerRailCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableAdStackCountries
+ * Disables whole ad stack in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableAdStackCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
@@ -1773,7 +1794,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1832,6 +1853,12 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If provided, a multi write will be used for storing files for all wikis with buckets matching the prefix.
+ */
+$wgUseGcsMigrationBucketPrefix = '';
 
 /**
  * Google Cloud Storage settings. The default settings are for production.

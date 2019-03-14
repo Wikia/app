@@ -62,11 +62,6 @@ function startAdEngine() {
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {
 				slot.getElement().classList.remove('default-height');
-			},
-			onStatusChanged: (slot) => {
-				if (slot.getSlotName() === 'incontent_boxad_1' && slot.getStatus() === 'success') {
-					document.getElementById('recirculation-rail').style.display = 'none';
-				}
 			}
 		});
 	}

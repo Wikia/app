@@ -4779,6 +4779,18 @@ $wgGoogleAmpArticleBlacklist = [];
  */
 $wgGoogleAmpNamespaces = [];
 
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see maintenance/wikia/migrateImagesToGcs.php
+ * @var array $wgWikiStatusChangePublisher
+ */
+$wgGoogleCloudUploaderPublisher = [
+	'exchange' => 'google-cloud-uploader.mediawiki-events',
+	'vhost' => 'dc-file-sync',
+];
+
+
 /**
  * Go button goes straight to the edit screen if the article doesn't exist.
  * @var bool $wgGoToEdit
@@ -8784,7 +8796,6 @@ $wgWikicitiesReadOnly = false;
 $wgWikiFactoryDomains = [
 	# gTLDs
 	'wikia.net',
-	'wikia.org',
 	'wikia.info',
 	# ccTLDs
 	'wikia.at',
@@ -8927,3 +8938,13 @@ $wgWatchShowURL = '';
  * @var bool
  */
 $wgEnableEditDraftSavingExt = false;
+
+/**
+ * ArticleTags RabbitMQ configuration.
+ * @see extensions/wikia/articleTagEvents
+ * @var array $wgArticleTagExchangeConfig
+ */
+$wgArticleTagExchangeConfig = [
+    'vhost' => 'events',
+    'exchange' => 'article-tags',
+];

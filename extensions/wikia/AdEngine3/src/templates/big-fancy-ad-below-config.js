@@ -1,10 +1,5 @@
 import { context } from '@wikia/ad-engine';
-
-function getNavbarHeight() {
-	const navbar = document.getElementById('globalNavigation');
-
-	return navbar ? navbar.offsetHeight : 0;
-}
+import { getNavbarHeight } from './navbar-updater';
 
 function getUnstickThreshold() {
 	const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth, 0);
