@@ -49,6 +49,8 @@ class MigrateImagesForWikis extends Maintenance {
 
 		if ( !empty( $this->wikiId ) ) {
 			$this->runMigrateImagesToGcs( $this->wikiId );
+
+			return;
 		}
 
 		$migratedCommunities = [];
