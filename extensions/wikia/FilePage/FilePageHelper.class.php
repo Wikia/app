@@ -86,19 +86,17 @@ class FilePageHelper {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$url = self::getFilePageRedirect( $title );
 			if( isset($url) ){
-				$aUrl = explode( "?", $url);
-				$aUrl = explode( "/", $aUrl[0]);
-				$titleString = array_pop($aUrl);
-				$pageTitle = Title::newFromURL($titleString);
-				$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				$pageTitle = self::rawURLToTitle( $url );
+				if( $pageTitle ){
+					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				}
 			}
 			$url2 = self::getFilePageRedirect( $title, true );
 			if( isset($url2) && $url != $url2 ){
-				$aUrl = explode( "?", $url2);
-				$aUrl = explode( "/", $aUrl[0]);
-				$titleString = array_pop($aUrl);
-				$pageTitle = Title::newFromURL($titleString);
-				$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				$pageTitle = self::rawURLToTitle( $url2 );
+				if( $pageTitle ){
+					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				}
 			}
 		}
 		return $keys;
@@ -113,6 +111,20 @@ class FilePageHelper {
 	 */
 	public static function getRedirSurrogateKey( Title $title ) {
 		return 'redirect-' . $title->getPrefixedText();
+	}
+
+	/**
+	 * Returns Title object based on araw URL
+	 *
+	 * @requestParam string
+	 *
+	 * @return Title $title or null
+	 */
+	private static function rawURLToTitle( string $url ) {
+		$aUrl = explode( "?", $url);
+		$aUrl = explode( "/", $aUrl[0]);
+		$titleString = array_pop($aUrl);
+		return Title::newFromText( urldecode( $titleString ) );
 	}
 
 
