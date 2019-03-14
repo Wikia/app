@@ -14,6 +14,8 @@ class MigrateImagesForWikis extends Maintenance {
 	private $parallel;
 	private $wikiId;
 	private $correlationId;
+	/** @var bool */
+	private $verify;
 
 	/**
 	 * Define available options
@@ -26,6 +28,8 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->addOption( 'wiki-id', 'Specific wiki ID', false, true, 'i' );
 		$this->addOption( 'all-wikis', 'Run on all wikis', false, false, 'a' );
 		$this->addOption( 'parallel', 'How many threads per wiki', false, true, 'm' );
+		$this->addOption( 'verify', 'Verify consistency between metadata and storage', false, false,
+			'v' );
 	}
 
 
@@ -35,6 +39,7 @@ class MigrateImagesForWikis extends Maintenance {
 		$this->allWikis = $this->hasOption( 'all-wikis' );
 		$this->parallel = $this->getOption( 'parallel', 1 );
 		$this->wikiId = $this->getOption( 'wiki-id' );
+		$this->verify = $this->hasOption( 'verify' );
 
 		$this->correlationId = \Wikia\Tracer\WikiaTracer::instance()->getTraceId();
 
@@ -121,6 +126,9 @@ class MigrateImagesForWikis extends Maintenance {
 		}
 		if ( $this->dryRun ) {
 			$command = $command . " --dry-run";
+		}
+		if ( $this->verify ) {
+			$command = $command . " --verify";
 		}
 
 		if ( $this->parallel > 1 ) {
