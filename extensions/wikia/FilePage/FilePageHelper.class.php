@@ -21,7 +21,7 @@ class FilePageHelper {
 	 *
 	 * @return string $url - url to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title , bool $onlyDB) {
+	public static function getFilePageRedirect( Title $title , bool $onlyDB=false) {
 		global $wgMemc;
 
 		//fallback to main page
