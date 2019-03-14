@@ -1516,6 +1516,13 @@ class Wikia {
 		return true;
 	}
 
+	static function text_starts_with( $text, $prefix ) {
+		if ( empty( $prefix ) ) {
+			return false;
+		}
+		return substr( $text, 0, strlen( $prefix ) ) === $prefix;
+	}
+
 	/**
 	 * Register Swift file backend
 	 *
@@ -1530,15 +1537,18 @@ class Wikia {
 		$wgUseGcsMigrationBucketPrefix =
 			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketPrefix",
 				static::DEFAULT_WIKI_ID );
+		$wgUseGcsBucketPrefix =
+			\WikiFactory::getVarValueByName( "wgUseGcsBucketPrefix",
+				static::DEFAULT_WIKI_ID );
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, - 7 );
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
-		} elseif ( !empty( $wgUseGcsMigrationBucketPrefix ) &&
-				   substr( $wgFSSwiftContainer, 0, strlen( $wgUseGcsMigrationBucketPrefix ) ) ===
-				   $wgUseGcsMigrationBucketPrefix ) {
+		} elseif (  Wikia::text_starts_with($wgFSSwiftContainer, $wgUseGcsBucketPrefix) ) {
+			$repo['backend'] = 'gcs-backend';
+		} elseif ( Wikia::text_starts_with($wgFSSwiftContainer, $wgUseGcsMigrationBucketPrefix) ) {
 			$repo['backend'] = 'gcs-migration-backend';
 		} else {
 			$repo['backend'] = 'swift-backend';

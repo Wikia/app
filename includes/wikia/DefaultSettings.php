@@ -1875,6 +1875,12 @@ $wgUseGoogleCloudStorage = false;
 $wgUseGcsMigrationBucketPrefix = '';
 
 /**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If provided, Google Cloud Storage will be used for storing files for all wikis with buckets matching the prefix.
+ */
+$wgUseGcsBucketPrefix = '';
+
+/**
  * Google Cloud Storage settings. The default settings are for production.
  */
 $wgGcsConfig = [
