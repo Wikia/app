@@ -1616,6 +1616,7 @@ function wfGetBaseDomainForHost( $host ) {
 	if ( strpos( $host, ".{$wgWikiaOrgBaseDomain}" ) !== false ) {
 		return $wgWikiaOrgBaseDomain;
 	}
+
 	return $wgFandomBaseDomain;
 }
 
