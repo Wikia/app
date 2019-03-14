@@ -1516,11 +1516,8 @@ class Wikia {
 		return true;
 	}
 
-	static function text_starts_with( $text, $prefix ) {
-		if ( empty( $prefix ) ) {
-			return false;
-		}
-		return substr( $text, 0, strlen( $prefix ) ) === $prefix;
+	static function textMatchesRegex( $text, $regex ) {
+		return !empty($regex) && preg_match($regex, $text);
 	}
 
 	/**
@@ -1534,11 +1531,11 @@ class Wikia {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
 		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
-		$wgUseGcsMigrationBucketPrefix =
-			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketPrefix",
+		$wgUseGcsMigrationBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
 				static::DEFAULT_WIKI_ID );
-		$wgUseGcsBucketPrefix =
-			\WikiFactory::getVarValueByName( "wgUseGcsBucketPrefix",
+		$wgUseGcsBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex",
 				static::DEFAULT_WIKI_ID );
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
@@ -1546,9 +1543,9 @@ class Wikia {
 
 		if ( $wgUseGoogleCloudStorage ) {
 			$repo['backend'] = 'gcs-backend';
-		} elseif (  Wikia::text_starts_with($wgFSSwiftContainer, $wgUseGcsBucketPrefix) ) {
+		} elseif (  Wikia::textMatchesRegex($wgFSSwiftContainer, $wgUseGcsBucketRegex) ) {
 			$repo['backend'] = 'gcs-backend';
-		} elseif ( Wikia::text_starts_with($wgFSSwiftContainer, $wgUseGcsMigrationBucketPrefix) ) {
+		} elseif ( Wikia::textMatchesRegex($wgFSSwiftContainer, $wgUseGcsMigrationBucketRegex) ) {
 			$repo['backend'] = 'gcs-migration-backend';
 		} else {
 			$repo['backend'] = 'swift-backend';
