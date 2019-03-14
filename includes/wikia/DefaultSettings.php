@@ -1422,32 +1422,11 @@ $wgAdDriverEnableAdsInMaps = true;
 $wgAdDriverEnableCheshireCat = true;
 
 /**
- * @name $wgAdDriverDelayCountries
- * List of countries with enabled AdEngine delay
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverDelayCountries = null;
-
-/**
  * @name $wgAdDriverDelayTimeout
  * AdEngine delay timeout (in ms)
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutOasis
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutOasis = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutMobileWiki
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
  * @name $wgAdDriverGeoEdgeCountries
@@ -1829,7 +1808,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis

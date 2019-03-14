@@ -32,23 +32,15 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			wasCalled: noop,
 			addResponseListener: noop
 		},
-		fvLagger: {
-			addResponseListener: noop,
-			wasCalled: function () {
-				return false;
-			},
-			getName: noop
-		},
 		log: noop,
 		win: {}
 	};
 
 	mocks.log.levels = {};
 
-	function getRunner(bidders, instantGlobals, fvLagger) {
+	function getRunner(bidders, instantGlobals) {
 		bidders = bidders || null;
 		instantGlobals = instantGlobals || {};
-		fvLagger = fvLagger || fvLagger;
 		return modules['ext.wikia.adEngine.adEngineRunner'](
 			mocks.adContext,
 			mocks.adEngine,
@@ -57,8 +49,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			mocks.log,
 			mocks.win,
 			bidders,
-			null,
-			fvLagger
+			null
 		);
 	}
 
@@ -164,53 +155,12 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('sets overwritten timeout value by instant global', function () {
-		mockContext({
-			'opts.overwriteDelayEngine': true
-		});
 		var runner = getRunner(mocks.bidders, {
 			wgAdDriverDelayTimeout: 666
 		});
 		spyOn(mocks.adEngine, 'run');
 		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout');
-
-		runner.run({}, [], 'queue.name', true);
-		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(666);
-	});
-
-	it('overwrites overwritten timeout value by instant global for featured video on mercury (mobile-wiki)', function () {
-		mockContext({
-			'targeting.skin': 'mercury',
-			'targeting.hasFeaturedVideo': true
-		});
-		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.win, 'setTimeout');
-
-		var runner = getRunner(mocks.bidders, {
-			wgAdDriverFVDelayTimeoutOasis: 666,
-			wgAdDriverFVDelayTimeoutMobileWiki: 11111
-		}, mocks.fvLagger);
-
-		runner.run({}, [], 'queue.name', true);
-		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(11111);
-	});
-
-	it('overwrites overwritten timeout value by instant global for featured video on oasis', function () {
-		mockContext({
-			'targeting.skin': 'oasis',
-			'targeting.hasFeaturedVideo': true
-		});
-		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.bidders, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.win, 'setTimeout');
-
-		var runner = getRunner(mocks.bidders, {
-			wgAdDriverFVDelayTimeoutOasis: 666,
-			wgAdDriverFVDelayTimeoutMobileWiki: 11111
-		}, mocks.fvLagger);
 
 		runner.run({}, [], 'queue.name', true);
 		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(666);
