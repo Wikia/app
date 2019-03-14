@@ -1675,7 +1675,7 @@ function wfForceBaseDomain( $url, $targetServer ) {
 		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
 		if ( $count !== 1 ) {
 			$finalHost =
-				str_replace( ".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $finalHost, $count );
+				str_replace( ".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
 		}
 	} else {
 		$finalHost = str_replace(".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count);
