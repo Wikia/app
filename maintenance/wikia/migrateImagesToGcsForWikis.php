@@ -71,7 +71,7 @@ class MigrateImagesForWikis extends Maintenance {
 					}
 				} );
 
-		$this->output( "Migrated the following communities: " .
+		$this->output( "Run on the following communities:\n" .
 					   json_encode( $migratedCommunities ) );
 	}
 
