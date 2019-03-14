@@ -347,17 +347,7 @@ abstract class BaseTask {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority( PriorityQueue::NAME );
-	}
-
-	/**
-	 * @deprecated
-	 * @see AsyncTaskList::setPriority
-	 * @param $queueName
-	 * @return $this
-	 */
-	public function setPriority( $queueName ) {
-		return $this->setQueue( $queueName );
+		return $this->setQueue( PriorityQueue::NAME );
 	}
 
 	/**

@@ -49,7 +49,7 @@ class ParsoidHooks {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
 				->title( $title )
-				->setPriority(ParsoidPurgeQueue::NAME);
+				->setQueue(ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'imagelinks' );
 			$task->queue();
@@ -57,7 +57,7 @@ class ParsoidHooks {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
 				->title( $title )
-				->setPriority(ParsoidPurgePriorityQueue::NAME);
+				->setQueue((ParsoidPurgePriorityQueue::NAME);
 
 			$task->call( 'onEdit' );
 			$task->queue();
@@ -65,7 +65,7 @@ class ParsoidHooks {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
 				->title( $title )
-				->setPriority(ParsoidPurgeQueue::NAME);
+				->setQueue((ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'templatelinks' );
 			$task->queue();
