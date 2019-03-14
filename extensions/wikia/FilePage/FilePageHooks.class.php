@@ -184,6 +184,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onUndeleteComplete( Title $title ) {
+		global $wgRedirectFilePagesForAnons;
+		if( !$wgRedirectFilePagesForAnons ){
+			return true;
+		}
 		self::purgeTitle( $title );
 
 		return true;
@@ -199,6 +203,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if( !$wgRedirectFilePagesForAnons ){
+			return true;
+		}
 		if( $page->getTitle()->inNamespace( NS_FILE ) &&
 		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
 			return true;
@@ -218,6 +226,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleDelete( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if( !$wgRedirectFilePagesForAnons ){
+			return true;
+		}
 		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
@@ -233,6 +245,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if( !$wgRedirectFilePagesForAnons ){
+			return true;
+		}
 		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
