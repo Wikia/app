@@ -12,6 +12,7 @@ namespace Wikia\Tasks\Tasks;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\PriorityQueue;
+use Wikia\Tasks\Queues\Queue;
 
 abstract class BaseTask {
 	use Loggable;
@@ -147,6 +148,7 @@ abstract class BaseTask {
 	public function queue() {
 		$this->info( 'Queueing task to be published: ' . get_class( $this ), [
 			'task' => get_class( $this ),
+			'queue' => $this->queueName ?: Queue::MAIN_QUEUE_NAME,
 			'caller' => wfGetCallerClassMethod( __CLASS__ ),
 			'backtrace' => new \Exception()
 		] );
