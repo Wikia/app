@@ -106,7 +106,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconDfpCountries';
-		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
