@@ -188,7 +188,7 @@ class FilePageHooks extends WikiaObject{
 		if( !$wgRedirectFilePagesForAnons ){
 			return true;
 		}
-		self::purgeTitle( $title );
+		self::clearLinkedFilesCache( $title , true);
 
 		return true;
 	}
@@ -207,11 +207,7 @@ class FilePageHooks extends WikiaObject{
 		if( !$wgRedirectFilePagesForAnons ){
 			return true;
 		}
-		if( $page->getTitle()->inNamespace( NS_FILE ) &&
-		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
-			return true;
-		}
-		self::purgeTitle( $page->getTitle() );
+		self::clearLinkedFilesCache( $page->getTitle(), true );
 
 		return true;
 	}
@@ -249,7 +245,7 @@ class FilePageHooks extends WikiaObject{
 		if( !$wgRedirectFilePagesForAnons ){
 			return true;
 		}
-		self::clearLinkedFilesCache( $page->mTitle );
+		self::clearLinkedFilesCache( $page->mTitle , true );
 
 		return true;
 	}
@@ -261,13 +257,13 @@ class FilePageHooks extends WikiaObject{
 	 * @param Title $title -- instance of Title class
 	 *
 	 */
-	private static function purgeTitle( Title $title ) {
-		if ( $title->inNamespace( NS_FILE ) ) {
-			self::purgeRedir( $title );
-		} else {
-			self::clearLinkedFilesCache( $title );
-		}
-	}
+//	private static function purgeTitle( Title $title ) {
+//		if ( $title->inNamespace( NS_FILE ) ) {
+//			self::purgeRedir( $title );
+//		} else {
+//			self::clearLinkedFilesCache( $title );
+//		}
+//	}
 
 
 	/**
@@ -304,7 +300,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	private static function clearLinkedFilesCache( Title $title  ) {
+	private static function clearLinkedFilesCache( Title $title  , bool $memcacheOnly=false) {
 		$results = FilePageHelper::getFileLinks( $title->getArticleID() );
 		if ( $results ) {
 			foreach ( $results as $row ) {
@@ -312,8 +308,10 @@ class FilePageHooks extends WikiaObject{
 				self::purgeMemcache( $title );
 			}
 		}
-		foreach( FilePageHelper::getSurrogateKeys( $title )  as $key) {
-			Wikia::purgeSurrogateKey( $key );
+		if( !$memcacheOnly ){
+			foreach( FilePageHelper::getSurrogateKeys( $title )  as $key) {
+				Wikia::purgeSurrogateKey( $key );
+			}
 		}
 	}
 }
