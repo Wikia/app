@@ -199,7 +199,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
-		if( $page->getTitle()->getNamespace() === NS_FILE &&
+		if( $page->getTitle()->inNamespace( NS_FILE ) &&
 		    $page->getFile()->getMediaType() === MEDIATYPE_VIDEO ) {
 			return true;
 		}

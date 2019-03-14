@@ -21,7 +21,7 @@ class FilePageHelper {
 	 *
 	 * @return string $url - url to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title ) {
+	public static function getFilePageRedirect( Title $title , bool $onlyDB) {
 		global $wgMemc;
 
 		//fallback to main page
@@ -43,7 +43,7 @@ class FilePageHelper {
 		}
 
 		$urlMem = $wgMemc->get( $redirKey );
-		if ( $urlMem ) {
+		if ( $urlMem && !$onlyDB ) {
 			$url = $urlMem;
 			return $url;
 		}
@@ -67,7 +67,9 @@ class FilePageHelper {
 				'file' => $title->getText()
 			] );
 		}
-		$wgMemc->set( $redirKey, $url );
+		if( !$onlyDB ) {
+			$wgMemc->set( $redirKey, $url );
+		}
 		return $url;
 	}
 
@@ -83,8 +85,21 @@ class FilePageHelper {
 		$keys[] = self::getRedirSurrogateKey( $title );
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$url = self::getFilePageRedirect( $title );
-			$pageTitle = Title::newFromURL($url);
-			$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+			if( isset($url) ){
+				$aUrl = explode( "?", $url);
+				$aUrl = explode( "/", $aUrl[0]);
+				$titleString = array_pop($aUrl);
+				$pageTitle = Title::newFromURL($titleString);
+				$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+			}
+			$url2 = self::getFilePageRedirect( $title, true );
+			if( isset($url2) && $url != $url2 ){
+				$aUrl = explode( "?", $url2);
+				$aUrl = explode( "/", $aUrl[0]);
+				$titleString = array_pop($aUrl);
+				$pageTitle = Title::newFromURL($titleString);
+				$keys[] = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+			}
 		}
 		return $keys;
 	}
