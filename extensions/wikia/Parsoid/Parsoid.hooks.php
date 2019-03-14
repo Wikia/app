@@ -53,7 +53,7 @@ class ParsoidHooks {
 		} else {
 			$task = ParsoidCacheUpdateTask::newLocalTask()
 				->title( $title )
-				->setQueue((ParsoidPurgePriorityQueue::NAME);
+				->setQueue(ParsoidPurgePriorityQueue::NAME);
 
 			$task->call( 'onEdit' );
 			$task->queue();
