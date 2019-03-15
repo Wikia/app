@@ -35192,7 +35192,7 @@ Wikia Community Team
 www.wikia.com
 ___________________________________________________________
 
-    * Om du vill ändra dina inställningar eller lösenord, gå till: http://community.wikia.com/wiki/Special:Preferences.
+    * Om du vill ändra dina inställningar eller lösenord, gå till: https://community.fandom.com/wiki/Special:Preferences.
     * Detta lösenord påminnelse begärdes från följande adress: $1.',
 	'passwordsent' => 'Ett nytt lösenord har skickats till den e-postadress som användaren "$1" har registrerat. När du får meddelandet, var god logga in igen.',
 	'php-mail-error-unknown' => "Okänt fel i PHP's mail()-funktion",

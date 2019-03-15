@@ -8542,6 +8542,7 @@ $wgWikiaBarMainLanguages = [ 'de', 'en', 'es', 'fr' ];
  */
 $wgWikiaBaseDomain = 'wikia.com';
 $wgFandomBaseDomain = 'fandom.com';
+$wgWikiaOrgBaseDomain = 'wikia.org';
 
 /**
  * User accounts that are used as bots but do not have the bot flag.
@@ -8795,7 +8796,6 @@ $wgWikicitiesReadOnly = false;
 $wgWikiFactoryDomains = [
 	# gTLDs
 	'wikia.net',
-	'wikia.org',
 	'wikia.info',
 	# ccTLDs
 	'wikia.at',
@@ -8948,3 +8948,10 @@ $wgArticleTagExchangeConfig = [
     'vhost' => 'events',
     'exchange' => 'article-tags',
 ];
+
+/**
+ * Enables QualtricsSiteIntercept extension
+ * @see CORE-128
+ * @var bool
+ */
+$wgEnableQualtricsSiteInterceptExt = false;

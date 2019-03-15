@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'emailext-password-summary' => "It looks like you're having trouble logging in. Sorry about that! As much as we'd like to just send you your password, for security reasons, we'll need you to login with a temporary password.",
 	'emailext-password-intro' => 'Please see your temporary password below:',
 	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to FANDOM with your old password.",
-	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
+	'emailext-password-questions' => 'Questions or concerns? Feel free to [https://community.fandom.com/wiki/Special:Contact/account-issue contact us].',
 	'emailext-password-signature' => 'The FANDOM Community Team',
 	'emailext-password-reset-link-intro' => 'Please click the link below to set your new password:',
 	'emailext-password-reset-link-summary' => "It looks like you're having trouble logging in. Sorry about that! As much as we'd like to just send you your password, for security reasons, we'll need you to set a new password on FANDOM.",
@@ -91,7 +91,7 @@ $messages['ko'] = array(
 	'emailext-password-summary' => '안녕하세요! 마음 같아서는 지금 당장이라도 귀하에게 비밀번호를 보내드리고 싶지만 안전상의 이유로 과정을 하나 거치셔야 합니다. 먼저 임시 비밀번호를 통해 귀하의 계정으로 로그인해 주세요.',
 	'emailext-password-unrequested' => '새 비밀번호를 요청하신 적이 없으시다면 걱정하지 마세요! 귀하의 계정은 안전합니다. 그냥 이 이메일은 무시하시고 기존의 비밀번호로 로그인하시면 됩니다.',
 	'emailext-password-intro' => '아래의 임시 비밀번호를 확인해 주세요.',
-	'emailext-password-questions' => '질문이나 의견이 있으신가요? 부담 갖지 마시고 저희에게 [http://community.wikia.com/wiki/Special:Contact/account-issue 연락]해 주세요.',
+	'emailext-password-questions' => '질문이나 의견이 있으신가요? 부담 갖지 마시고 저희에게 [https://community.fandom.com/wiki/Special:Contact/account-issue 연락]해 주세요.',
 );
 
 $messages['nl'] = array(
@@ -99,7 +99,7 @@ $messages['nl'] = array(
 	'emailext-password-summary' => 'It looks like you’re having trouble logging in. Sorry about that! As much as we’d like to just send you your password, for security reasons, we’ll need you to login with a temporary password.',
 	'emailext-password-intro' => 'Please see your temporary password below:',
 	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Wikia with your old password.",
-	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
+	'emailext-password-questions' => 'Questions or concerns? Feel free to [https://community.fandom.com/wiki/Special:Contact/account-issue contact us].',
 	'emailext-password-signature' => 'The Wikia Community Team',
 	'emailext-password-reset-link-intro' => 'Please click the link below to set your new password:',
 	'emailext-password-reset-link-summary' => "It looks like you're having trouble logging in. Sorry about that! As much as we'd like to just send you your password, for security reasons, we'll need you to set a new password on FANDOM.",

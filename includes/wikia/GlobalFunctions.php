@@ -1583,10 +1583,10 @@ function wfHttpsEnabledForURL( $url ): bool {
  * @return bool
  */
 function wfHttpsEnabledForDomain( $domain ) : bool {
-	global $wgFandomBaseDomain;
+	global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
 	$domain = wfNormalizeHost( $domain );
 
-	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain;
+	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain || wfGetBaseDomainForHost( $domain ) === $wgWikiaOrgBaseDomain;
 }
 /**
  * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
@@ -1609,12 +1609,15 @@ function wfGetEffectiveHostname() {
 }
 
 function wfGetBaseDomainForHost( $host ) {
-	global $wgWikiaBaseDomain, $wgFandomBaseDomain;
-	if ( strpos( $host, ".{$wgFandomBaseDomain}" ) !== false ) {
-		return $wgFandomBaseDomain;
+	global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain;
+	if ( strpos( $host, ".{$wgWikiaBaseDomain}" ) !== false ) {
+		return $wgWikiaBaseDomain;
+	}
+	if ( strpos( $host, ".{$wgWikiaOrgBaseDomain}" ) !== false ) {
+		return $wgWikiaOrgBaseDomain;
 	}
 
-	return $wgWikiaBaseDomain;
+	return $wgFandomBaseDomain;
 }
 
 /**

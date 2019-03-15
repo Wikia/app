@@ -64,7 +64,7 @@ class SitemapHooks {
 		$targetHost = wfNormalizeHost( $targetUrlParsed['host'] );
 
 		if ( strpos( $currentHost, ".{$wgWikiaBaseDomain}" ) === false ||
-			strpos( $targetHost, ".{$wgFandomBaseDomain}" ) === false
+			 strpos( $targetHost, ".{$wgFandomBaseDomain}" ) === false
 		) {
 			return false;
 		}

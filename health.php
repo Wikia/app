@@ -2,7 +2,7 @@
 // Used for determining backend health, do not remove!
 
 $statusCode = 200;
-$statusMsg = 'OK';
+$statusMsg = 'Server status is: OK';
 
 if ( file_exists( "/usr/wikia/conf/current/host_disabled" ) ||
 	 file_exists( "/etc/disabled/apache" ) ) {

@@ -48,18 +48,18 @@ class FileBackendMultiWrite extends FileBackend {
 		$namesUsed = array();
 		// Construct backends here rather than via registration
 		// to keep these backends hidden from outside the proxy.
-		foreach ( $config['backends'] as $index => $config ) {
-			$name = $config['name'];
+		foreach ( $config['backends'] as $index => $backendConfig ) {
+			$name = $backendConfig['name'];
 			if ( isset( $namesUsed[$name] ) ) { // don't break FileOp predicates
 				throw new MWException( "Two or more backends defined with the name $name." );
 			}
 			$namesUsed[$name] = 1;
-			if ( !isset( $config['class'] ) ) {
+			if ( !isset( $backendConfig['class'] ) ) {
 				throw new MWException( 'No class given for a backend config.' );
 			}
-			$class = $config['class'];
-			$this->backends[$index] = new $class( $config );
-			if ( !empty( $config['isMultiMaster'] ) ) {
+			$class = $backendConfig['class'];
+			$this->backends[$index] = new $class( $backendConfig );
+			if ( !empty( $backendConfig['isMultiMaster'] ) ) {
 				if ( $this->masterIndex >= 0 ) {
 					throw new MWException( 'More than one master backend defined.' );
 				}
