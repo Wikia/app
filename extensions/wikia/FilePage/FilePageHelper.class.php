@@ -28,6 +28,9 @@ class FilePageHelper {
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$title->userCan( 'read' ) ) {
+			$url = wfAppendQuery($url, [
+				'file' => $title->getText()
+			] );
 			return $url;
 		}
 		$redirKey = wfMemcKey( 'redir', WebRequest::detectProtocol(), $title->getPrefixedText() );
