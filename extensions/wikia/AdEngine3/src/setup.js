@@ -45,6 +45,10 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
+	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
+
+	context.set('wiki.targeting.hasIncontentPlayer', slots.isIncontentPlayerApplicable());
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
 		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
@@ -57,8 +61,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	isGeoEnabled('wgAdDriverLABradorTestCountries');
 
 	context.set('slots', slots.getContext());
-
-	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
@@ -117,7 +119,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('custom.wikiIdentifier', '_top1k_wiki');
 		context.set('custom.dbNameForAdUnit', context.get('targeting.s1'));
 	}
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+
 	context.set('custom.hasPortableInfobox', !!context.get('wiki.targeting.hasPortableInfobox'));
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));

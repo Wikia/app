@@ -11,6 +11,18 @@ const PAGE_TYPES = {
 	home: 'h',
 };
 
+/**
+ * Gets article H2 node where ICP can be injected
+ *
+ * @returns {Node}
+ */
+function getIncontentPlayerHeaderNode() {
+	return Array.prototype.slice.call(
+		document.querySelectorAll('#mw-content-text > h2'),
+		1
+	).filter((el) => utils.getTopOffset(el) > utils.getViewportHeight())[0];
+}
+
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
 
@@ -22,13 +34,6 @@ function isIncontentBoxadApplicable() {
 
 function isHighImpactApplicable() {
 	return !context.get('custom.hasFeaturedVideo');
-}
-
-function isIncontentPlayerApplicable() {
-	const header = document.querySelectorAll('#mw-content-text > h2')[1];
-
-	return !context.get('custom.hasFeaturedVideo') &&
-		header && header.offsetWidth >= header.parentNode.offsetWidth;
 }
 
 /**
@@ -293,7 +298,7 @@ export default {
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', isIncontentPlayerApplicable());
+		slotService.setState('incontent_player', this.isIncontentPlayerApplicable());
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 		slotService.setState('incontent_native', isIncontentNativeApplicable());
@@ -360,10 +365,21 @@ export default {
 		document.addEventListener('scroll', pushSlotAfterComments);
 	},
 
-	injectIncontentPlayer() {
-		const header = document.querySelectorAll('#mw-content-text > h2')[1];
+	/**
+	 * Checks whether ICP can be applied on this page
+	 *
+	 * @returns {boolean}
+	 */
+	isIncontentPlayerApplicable() {
+		const header = getIncontentPlayerHeaderNode();
 
-		if (!header || !isIncontentPlayerApplicable()) {
+		return !context.get('custom.hasFeaturedVideo') && header && header.offsetWidth >= header.parentNode.offsetWidth;
+	},
+
+	injectIncontentPlayer() {
+		const header = getIncontentPlayerHeaderNode();
+
+		if (!header || !this.isIncontentPlayerApplicable()) {
 			return;
 		}
 
