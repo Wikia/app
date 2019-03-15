@@ -82,12 +82,7 @@ class WikiaOrgMigrationHooks {
 	/**
 	 * Check if the "migration scheduled" banner should be displayed.
 	 *
-	 * The banner will be displayed if either $wgWikiaOrgMigrationScheduled is true
-	 * or the following criteria are met:
-	 *     - It is not a wikia.org already wiki
-	 *     - It is not a single subdomain non-English wiki
-	 *     - It is not in the wiki verticals "Other" or "Lifestyle"
-	 *
+	 * The banner will be displayed if $wgWikiaOrgMigrationScheduled is true
 	 * @return boolean
 	 */
 	private static function isMigrationScheduled(): bool {

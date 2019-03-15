@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikia-org-migration-after' => "Attention: We have migrated your community's domain to wikia.org. Find out more in [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
-	'wikia-org-migration-before' => "Attention: Over the next few weeks, we are migrating your community's domain to wikia.org. Find out more on [https://community.wikia.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
+	'wikia-org-migration-after' => "Attention: We have migrated your community's domain to wikia.org. Find out more in [https://community.fandom.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
+	'wikia-org-migration-before' => "Attention: Over the next few weeks, we are migrating your community's domain to wikia.org. Find out more on [https://community.fandom.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
 );
 
 $messages['qqq'] = array(
@@ -38,8 +38,8 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'wikia-org-migration-after' => 'お知らせ:こちらのコミュニティのドメインをwikia.orgに移行致しました。詳細は[https://community.wikia.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
-	'wikia-org-migration-before' => 'お知らせ：数週間のうちに、こちらのコミュニティのドメインをwikia.orgに移行致します。詳細は[https://community.wikia.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
+	'wikia-org-migration-after' => 'お知らせ:こちらのコミュニティのドメインをwikia.orgに移行致しました。詳細は[https://community.fandom.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
+	'wikia-org-migration-before' => 'お知らせ：数週間のうちに、こちらのコミュニティのドメインをwikia.orgに移行致します。詳細は[https://community.fandom.com/wiki/Help:Fandom_domain_migration こちらのFandomヘルプ]をご参照ください。',
 );
 
 $messages['nl'] = array(

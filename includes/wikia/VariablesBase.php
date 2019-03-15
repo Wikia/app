@@ -8876,7 +8876,7 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Whether the community is scheduled to be migrated to a wikia.org domain
+ * Whether the community was migrated to a wikia.org domain, triggers a banner notification
  * @var bool $wgWikiaOrgMigrationScheduled
  */
 $wgWikiaOrgMigrationScheduled = false;
