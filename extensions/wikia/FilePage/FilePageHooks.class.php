@@ -181,7 +181,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param User $user -- current user
 	 * @param string $reason -- undeleting reason
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	public static function onUndeleteComplete( Title $title ) {
 		global $wgRedirectFilePagesForAnons;
@@ -200,7 +200,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param User $user -- current user
 	 * @param string $reason -- undeleting reason
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
 		global $wgRedirectFilePagesForAnons;
@@ -219,7 +219,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param User $user -- current user
 	 * @param string $reason -- undeleting reason
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	public static function onArticleDelete( WikiPage $page ) {
 		global $wgRedirectFilePagesForAnons;
@@ -238,7 +238,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param User $user -- current user
 	 * @param string $reason -- undeleting reason
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
 		global $wgRedirectFilePagesForAnons;
@@ -248,36 +248,6 @@ class FilePageHooks extends WikiaObject{
 		self::clearLinkedFilesCache( $page->mTitle , true );
 
 		return true;
-	}
-
-
-	/**
-	 * Clear memcache and purge page
-	 *
-	 * @param Title $title -- instance of Title class
-	 *
-	 */
-//	private static function purgeTitle( Title $title ) {
-//		if ( $title->inNamespace( NS_FILE ) ) {
-//			self::purgeRedir( $title );
-//		} else {
-//			self::clearLinkedFilesCache( $title );
-//		}
-//	}
-
-
-	/**
-	 * Clear memcache and purge page
-	 *
-	 * @param Title $title -- instance of Title class
-	 *
-	 */
-	private static function purgeRedir( Title $title ) {
-		$keys = FilePageHelper::getSurrogateKeys( $title );
-		self::purgeMemcache( $title );
-		foreach( $keys  as $key) {
-			Wikia::purgeSurrogateKey( $key );
-		}
 	}
 
 
@@ -302,6 +272,7 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function clearLinkedFilesCache( Title $title  , bool $memcacheOnly=false) {
 		$results = FilePageHelper::getFileLinks( $title->getArticleID() );
+		$keys = FilePageHelper::getSurrogateKeys( $title );
 		if ( $results ) {
 			foreach ( $results as $row ) {
 				$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
@@ -309,7 +280,7 @@ class FilePageHooks extends WikiaObject{
 			}
 		}
 		if( !$memcacheOnly ){
-			foreach( FilePageHelper::getSurrogateKeys( $title )  as $key) {
+			foreach( $keys  as $key) {
 				Wikia::purgeSurrogateKey( $key );
 			}
 		}
