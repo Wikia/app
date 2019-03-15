@@ -266,7 +266,7 @@ class WikiFactoryLoader {
 		// Override wikia.org related config
 		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgWikiaOrgBaseDomain ) !== false ) {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
-			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
+			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgWikiaOrgBaseDomain}";
 		}
 
