@@ -1528,38 +1528,49 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
-		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
-		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
+		global $wgFSSwiftServer;
+		$bucket = Wikia::getBucket();
+		$repo['backend'] = Wikia::getBackend($bucket);
+		$repo['zones'] = array (
+			'public' => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+			'temp'   => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+			'thumb'  => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+			'deleted'=> array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+			'archive'=> array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+		);
+
+		return true;
+	}
+
+	/**
+	 * For example $wgUploadPath: http://images.wikia.com/poznan/pl/images then bucket is "poznan/pl"
+	 * @return bool|string
+	 */
+	static function getBucket() {
+		global $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		return substr( $path, 0, - 7 );
+	}
+
+	static function getBackend( $bucket ) {
+		global $wgUseGoogleCloudStorage;
 		$wgUseGcsMigrationBucketRegex =
 			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
 				static::DEFAULT_WIKI_ID );
 		$wgUseGcsBucketRegex =
-			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex",
-				static::DEFAULT_WIKI_ID );
+			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex", static::DEFAULT_WIKI_ID );
 
-		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-		$wgFSSwiftContainer = substr( $path, 0, - 7 );
 
 		if ( $wgUseGoogleCloudStorage ) {
-			$repo['backend'] = 'gcs-backend';
-		} elseif (  Wikia::textMatchesRegex($wgFSSwiftContainer, $wgUseGcsBucketRegex) ) {
-			$repo['backend'] = 'gcs-backend';
-		} elseif ( Wikia::textMatchesRegex($wgFSSwiftContainer, $wgUseGcsMigrationBucketRegex) ) {
-			$repo['backend'] = 'gcs-migration-backend';
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsBucketRegex ) ) {
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsMigrationBucketRegex ) ) {
+			return 'gcs-migration-backend';
 		} else {
-			$repo['backend'] = 'swift-backend';
+			return 'swift-backend';
 		}
-
-		$repo['zones'] = array (
-			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-			'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-			'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-			'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
-		);
-
-		return true;
 	}
 
 	/**
@@ -1571,9 +1582,7 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		global $wgFSSwiftContainer;
-
-		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+		$backend = FileBackendGroup::singleton()->get( Wikia::getBackend(Wikia::getBucket()) );
 		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 
 		return true;
