@@ -24,8 +24,11 @@ function isHighImpactApplicable() {
 	return !context.get('custom.hasFeaturedVideo');
 }
 
-function isIncontentPlayerApplicable(header) {
-	return !context.get('custom.hasFeaturedVideo') && header && header.offsetWidth >= header.parentNode.offsetWidth;
+function isIncontentPlayerApplicable() {
+	const header = document.querySelectorAll('#mw-content-text > h2')[1];
+
+	return !context.get('custom.hasFeaturedVideo') &&
+		header && header.offsetWidth >= header.parentNode.offsetWidth;
 }
 
 /**
@@ -358,21 +361,11 @@ export default {
 	},
 
 	injectIncontentPlayer() {
-		console.log(utils.getViewportHeight());
-
-		/*const header = Array.prototype.slice.call(
-			document.querySelectorAll('#mw-content-text > h2'),
-		).filter((el) => utils.getTopOffset(el) > utils.getViewportHeight())[0];*/
-
 		const header = document.querySelectorAll('#mw-content-text > h2')[1];
 
-		console.log(header);
-
-		if (!isIncontentPlayerApplicable(header)) {
+		if (!header || !isIncontentPlayerApplicable()) {
 			return;
 		}
-
-		console.log('apply');
 
 		const slotName = 'incontent_player';
 		const wrapper = document.createElement('div');

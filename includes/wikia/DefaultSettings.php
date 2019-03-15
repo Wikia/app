@@ -990,7 +990,7 @@ $wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
-$wgAdDriverAdEngine3EnabledOnOasisArticlePages = true;
+$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
