@@ -238,7 +238,8 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment,
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain,
+			   $wgWikiaOrgBaseDomain, $wgDevelEnvironment,
 			   $wgIncludeClosedWikiHandler;
 
 		wfProfileIn(__METHOD__);
@@ -260,6 +261,13 @@ class WikiFactoryLoader {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgWikiaBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
+		}
+
+		// Override wikia.org related config
+		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgWikiaOrgBaseDomain ) !== false ) {
+			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
+			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
+			$GLOBALS['wgCookieDomain'] = ".{$wgWikiaOrgBaseDomain}";
 		}
 
 		/**
