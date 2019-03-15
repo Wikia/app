@@ -8948,3 +8948,10 @@ $wgArticleTagExchangeConfig = [
     'vhost' => 'events',
     'exchange' => 'article-tags',
 ];
+
+/**
+ * Enables QualtricsSiteIntercept extension
+ * @see CORE-128
+ * @var bool
+ */
+$wgEnableQualtricsSiteInterceptExt = false;
