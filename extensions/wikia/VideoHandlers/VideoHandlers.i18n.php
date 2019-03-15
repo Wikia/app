@@ -41,7 +41,7 @@ $messages['en'] = array(
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
-	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
+	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [https://community.fandom.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
 );
 
 $messages['qqq'] = array(
@@ -362,7 +362,7 @@ $messages['it'] = array(
 	'videos-error-admin-only' => 'Solo gli amministratori di questa wiki sono autorizzati ad aggiungere video',
 	'videos-initial-upload-edit-summary' => 'video aggiunto',
 	'videos-update-edit-summary' => 'video aggiornato',
-	'videos-error-provider-not-supported' => 'Questo provider di video non è supportato. Vedi la lista dei [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites provider supportati].',
+	'videos-error-provider-not-supported' => 'Questo provider di video non è supportato. Vedi la lista dei [https://community.fandom.com/wiki/Help:Video_Embed_Tool#Supported_sites provider supportati].',
 );
 
 $messages['ja'] = array(
@@ -544,7 +544,7 @@ $messages['nl'] = array(
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
-	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
+	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [https://community.fandom.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
 );
 
 $messages['pa'] = array(
@@ -644,7 +644,7 @@ $messages['pt'] = array(
 	'videos-error-admin-only' => 'Apenas os administradores desta wikia são autorizados a adicionar vídeos',
 	'videos-initial-upload-edit-summary' => 'criou vídeo',
 	'videos-update-edit-summary' => 'atualizou vídeo',
-	'videos-error-provider-not-supported' => 'Este provedor de vídeo não é suportado. Veja nossa lista de [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites suportada provedores].',
+	'videos-error-provider-not-supported' => 'Este provedor de vídeo não é suportado. Veja nossa lista de [https://community.fandom.com/wiki/Help:Video_Embed_Tool#Supported_sites suportada provedores].',
 );
 
 $messages['ro'] = array(

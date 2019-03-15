@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'dump-database-request-submit' => 'Send request',
 	'dump-database-request-already-submitted' => 'Dump has been requested recently (less than 7 days ago)',
 	'dump-database-request-requested' => 'Request for database dump sent',
-	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info',
+	'dump-database-info-more' => 'Please <a href="https://community.fandom.com/wiki/Help:Database_download">see</a> for more info',
 	'dump-database-last-unknown' => 'Unknown',
 	'right-dumpsondemand' => 'User can request database dumps on demand, via Special:Statistics',
 );
@@ -36,7 +36,7 @@ FANDOM maak outomaties rugsteunkopieë van alle wiki's.",
 	'dump-database-request-info' => '(Dumps word gewoonlik weekliks gegenereer)',
 	'dump-database-request-submit' => 'Stuur versoek',
 	'dump-database-request-requested' => "U versoek vir 'n databasisdump is ingedien",
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer inligting</a>.',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Meer inligting</a>.',
 );
 
 $messages['ar'] = array(
@@ -51,7 +51,7 @@ $messages['ar'] = array(
 	'dump-database-request-submit' => 'إرسال طلب',
 	'dump-database-request-already-submitted' => 'تم طلب المقلب مؤخرا (منذ 7 أيام على الأقل)',
 	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
-	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
+	'dump-database-info-more' => 'الرجاء <a href="https://community.fandom.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 	'dump-database-last-unknown' => 'غير معروف',
 );
 
@@ -71,7 +71,7 @@ $messages['be-tarask'] = array(
 	'dump-database-request-submit' => 'Даслаць запыт',
 	'dump-database-request-already-submitted' => 'Копія была запытаная нядаўна (меней 7 дзён таму)',
 	'dump-database-request-requested' => 'Запыт копіі базы зьвестак дасланы',
-	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="https://community.fandom.com/wiki/Help:Database_download">тут</a>',
 	'dump-database-last-unknown' => 'Невядома',
 );
 
@@ -102,7 +102,7 @@ $messages['br'] = array(
 	'dump-database-request-submit' => 'Kas ar reked',
 	'dump-database-request-already-submitted' => "Goulennet ez eus bet krouiñ un diell nevez zo (nebetoc'h eget 7 devezh zo)",
 	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
-	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
+	'dump-database-info-more' => 'Mar plij lennit <a href="https://community.fandom.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
 	'dump-database-last-unknown' => 'Dianav',
 );
 
@@ -124,7 +124,7 @@ $messages['ca'] = array(
 	'dump-database-request-submit' => 'Enviar sol·licitud',
 	'dump-database-request-already-submitted' => "L'abocador ' han demanat recentment (fa menys de 7 dies)",
 	'dump-database-request-requested' => "Sol·licitud d'abocador de base de dades enviat",
-	'dump-database-info-more' => 'Si us plau, <a href="http://community.wikia.com/wiki/Help:Database_download">veure</a> per a més informació',
+	'dump-database-info-more' => 'Si us plau, <a href="https://community.fandom.com/wiki/Help:Database_download">veure</a> per a més informació',
 	'dump-database-last-unknown' => 'Desconegut',
 );
 
@@ -144,7 +144,7 @@ $messages['cs'] = array(
 	'dump-database-request-submit' => 'Odeslat požadavek',
 	'dump-database-request-already-submitted' => 'O výstup z databáze bylo požádáno nedávno (před méně než 7 dny)',
 	'dump-database-request-requested' => 'Žádost o výstup z databáze odeslána',
-	'dump-database-info-more' => 'Více informací <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a>',
+	'dump-database-info-more' => 'Více informací <a href="https://community.fandom.com/wiki/Help:Database_download">zde</a>',
 	'dump-database-last-unknown' => 'Neznámé',
 );
 
@@ -159,7 +159,7 @@ $messages['da'] = array(
 	'dump-database-request-info' => '(Dumps genereres normalt ugentligt)',
 	'dump-database-request-submit' => 'Send forespørgsel',
 	'dump-database-request-requested' => 'Anmodning om database dump sendt',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Se</a> venligst for mere info',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Se</a> venligst for mere info',
 );
 
 $messages['de'] = array(
@@ -184,7 +184,7 @@ $messages['diq'] = array(
 	'dump-database-curr-pages' => 'Pelê tedeestey',
 	'dump-database-request' => 'Wastışi neweke',
 	'dump-database-request-submit' => 'Pers bırışe',
-	'dump-database-info-more' => 'Şıma ra reca, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
+	'dump-database-info-more' => 'Şıma ra reca, şırê melumati <a href="https://community.fandom.com/wiki/Help:Database_download">bıvinê</a>',
 );
 
 $messages['el'] = array(
@@ -193,7 +193,7 @@ $messages['el'] = array(
 	'dump-database-full-pages-info' => '(Προσοχή: αυτό το αρχείο μπορεί να είναι πολύ μεγάλο)',
 	'dump-database-request' => 'Ζητήστε μια ενημέρωση',
 	'dump-database-request-submit' => 'Αποστολή αίτησης',
-	'dump-database-info-more' => 'Παρακαλώ να <a href="http://community.wikia.com/wiki/Help:Database_download">δείτε</a>  για περισσότερες πληροφορίες',
+	'dump-database-info-more' => 'Παρακαλώ να <a href="https://community.fandom.com/wiki/Help:Database_download">δείτε</a>  για περισσότερες πληροφορίες',
 );
 
 $messages['es'] = array(
@@ -217,7 +217,7 @@ $messages['eu'] = array(
 	'dump-database-full-pages-info' => '(Oharra: fitxategi hau handiegia izan daiteke)',
 	'dump-database-request' => 'Eguneraketa eskatu',
 	'dump-database-request-submit' => 'Eskaera bidali',
-	'dump-database-info-more' => 'Mesedez <a href="http://community.wikia.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
+	'dump-database-info-more' => 'Mesedez <a href="https://community.fandom.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
 );
 
 $messages['fa'] = array(
@@ -237,7 +237,7 @@ $messages['fi'] = array(
 	'dump-database-request-submit' => 'Lähetä pyyntö',
 	'dump-database-request-already-submitted' => 'Vedosta on pyydetty lähiaikoina (alle 7 päivää sitten)',
 	'dump-database-request-requested' => 'Pyyntö tietokantavedoksesta lähetetty',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Katso lisätietoja</a>',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Katso lisätietoja</a>',
 	'dump-database-last-unknown' => 'Tuntematon',
 );
 
@@ -270,7 +270,7 @@ $messages['gl'] = array(
 	'dump-database-request-submit' => 'Enviar a solicitude',
 	'dump-database-request-already-submitted' => 'A copia de seguridade solicitouse recentemente (hai menos de 7 días)',
 	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
-	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">lea isto</a> para obter máis información',
+	'dump-database-info-more' => 'Por favor, <a href="https://community.fandom.com/wiki/Help:Database_download">lea isto</a> para obter máis información',
 	'dump-database-last-unknown' => 'Descoñecido',
 );
 
@@ -291,7 +291,7 @@ $messages['hu'] = array(
 	'dump-database-request-submit' => 'Kérelem elküldése',
 	'dump-database-request-already-submitted' => 'Friss dump igény érkezett (kevesebb mint 7 napja)',
 	'dump-database-request-requested' => 'Aadtbázis-dump készítési kérelem elküldve',
-	'dump-database-info-more' => 'További információkat <a href="http://community.wikia.com/wiki/Help:Database_download">itt</a> találsz',
+	'dump-database-info-more' => 'További információkat <a href="https://community.fandom.com/wiki/Help:Database_download">itt</a> találsz',
 );
 
 $messages['ia'] = array(
@@ -306,7 +306,7 @@ $messages['ia'] = array(
 	'dump-database-request-submit' => 'Inviar requesta',
 	'dump-database-request-already-submitted' => 'Un discarga ha essite requestate recentemente (minus de 7 dies retro)',
 	'dump-database-request-requested' => 'Requesta de un copia del base de datos inviate',
-	'dump-database-info-more' => 'Vide <a href="http://community.wikia.com/wiki/Help:Database_download">ulterior informationes</a>',
+	'dump-database-info-more' => 'Vide <a href="https://community.fandom.com/wiki/Help:Database_download">ulterior informationes</a>',
 );
 
 $messages['id'] = array(
@@ -320,7 +320,7 @@ $messages['id'] = array(
 	'dump-database-request-info' => '(pelimpahan biasanya dibuat mingguan)',
 	'dump-database-request-submit' => 'Kirim permintaan',
 	'dump-database-request-requested' => 'Permintaan untuk pelimpahan basis data dikirim',
-	'dump-database-info-more' => 'Silakan <a href="http://community.wikia.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
+	'dump-database-info-more' => 'Silakan <a href="https://community.fandom.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
 );
 
 $messages['it'] = array(
@@ -352,7 +352,7 @@ $messages['ja'] = array(
 	'dump-database-request-submit' => 'リクエストを送信',
 	'dump-database-request-already-submitted' => 'ダンプは最近（7日未満前）リクエストされています',
 	'dump-database-request-requested' => 'データベースダンプのリクエストを送信しました',
-	'dump-database-info-more' => '詳しくは<a href="http://community.wikia.com/wiki/Help:Database_download">データベースダウンロード</a>をご覧ください。',
+	'dump-database-info-more' => '詳しくは<a href="https://community.fandom.com/wiki/Help:Database_download">データベースダウンロード</a>をご覧ください。',
 	'dump-database-last-unknown' => '不明',
 	'right-dumpsondemand' => 'ユーザーはオンデマンドで、データベースダンプを統計特別ページからリクエストできます。',
 );
@@ -361,7 +361,7 @@ $messages['kn'] = array(
 	'dump-database-curr-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು',
 	'dump-database-full-pages' => 'ಪ್ರಸ್ತುತ ಪುಟಗಳು ಮತ್ತು ಇತಿಹಾಸ',
 	'dump-database-request-submit' => 'ಕೋರಿಕೆಯನ್ನು ಕಳುಹಿಸು',
-	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
+	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="https://community.fandom.com/wiki/Help:Database_download">ನೋಡಿ</a>',
 );
 
 $messages['ko'] = array(
@@ -375,7 +375,7 @@ $messages['ko'] = array(
 	'dump-database-request-info' => '(덤프는 일반적으로 1주일마다 생성됩니다)',
 	'dump-database-request-submit' => '요청하기',
 	'dump-database-request-requested' => '데이터베이스 덤프가 요청되었습니다',
-	'dump-database-info-more' => '자세한 정보는 <a href="http://community.wikia.com/wiki/Help:Database_download">여기를</a> 참고하세요',
+	'dump-database-info-more' => '자세한 정보는 <a href="https://community.fandom.com/wiki/Help:Database_download">여기를</a> 참고하세요',
 );
 
 $messages['krc'] = array(
@@ -389,7 +389,7 @@ $messages['krc'] = array(
 	'dump-database-request-info' => '(Асламысы бла дампла хар кюн къураладыла)',
 	'dump-database-request-submit' => 'Соруу джибер',
 	'dump-database-request-requested' => 'Билгиле базаны дампына соруу джиберилгенди',
-	'dump-database-info-more' => 'Тилейбиз, <a href="http://community.wikia.com/wiki/Help:Database_download"> къошакъ билгилеге къарагъыз</a>',
+	'dump-database-info-more' => 'Тилейбиз, <a href="https://community.fandom.com/wiki/Help:Database_download"> къошакъ билгилеге къарагъыз</a>',
 );
 
 $messages['lb'] = array(
@@ -411,7 +411,7 @@ $messages['mk'] = array(
 	'dump-database-request-submit' => 'Испрати барање',
 	'dump-database-request-already-submitted' => 'Базната резерва е побарана неодамна (пред помалку од 7 дена)',
 	'dump-database-request-requested' => 'Барањето за базната резерва е испратено',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
 	'dump-database-last-unknown' => 'Непознато',
 );
 
@@ -421,7 +421,7 @@ $messages['mr'] = array(
 	'dump-database-full-pages-info' => '(चेतावणी:हि संचिका मोठी असु शकते)',
 	'dump-database-request' => 'सुधारित आवृत्तीची विनंती',
 	'dump-database-request-submit' => 'मागणी पाठवा',
-	'dump-database-info-more' => 'कृपया अधिक माहितीसाठी हे<a href="http://community.wikia.com/wiki/Help:Database_download">पाहा</a>',
+	'dump-database-info-more' => 'कृपया अधिक माहितीसाठी हे<a href="https://community.fandom.com/wiki/Help:Database_download">पाहा</a>',
 );
 
 $messages['ms'] = array(
@@ -436,7 +436,7 @@ $messages['ms'] = array(
 	'dump-database-request-submit' => 'Hantar permohonan',
 	'dump-database-request-already-submitted' => 'Longgokan telah dipohon baru-baru ini (tidak lebih 7 hari yang lalu)',
 	'dump-database-request-requested' => 'Permohonan longgokan pangkalan data dihantar',
-	'dump-database-info-more' => 'Sila <a href="http://community.wikia.com/wiki/Help:Database_download">rujuk di sini</a> untuk maklumat lanjut',
+	'dump-database-info-more' => 'Sila <a href="https://community.fandom.com/wiki/Help:Database_download">rujuk di sini</a> untuk maklumat lanjut',
 	'dump-database-last-unknown' => 'Tidak dikenali',
 );
 
@@ -456,7 +456,7 @@ $messages['nb'] = array(
 	'dump-database-request-submit' => 'Send forespørsel',
 	'dump-database-request-already-submitted' => 'Dumping har nylig blitt etterspurt (mindre enn 7 dager siden)',
 	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
-	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
+	'dump-database-info-more' => 'Vennligst <a href="https://community.fandom.com/wiki/Help:Database_download">se</a> for mer info',
 );
 
 $messages['nl'] = array(
@@ -472,7 +472,7 @@ FANDOM maakt automatisch back-ups van alle wiki's.",
 	'dump-database-request-submit' => 'Verzoek versturen',
 	'dump-database-request-already-submitted' => 'Dump is onlangs gevraagd (minder dan 7 dagen geleden)',
 	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Meer informatie</a>.',
 	'dump-database-last-unknown' => 'Onbekend',
 );
 
@@ -517,7 +517,7 @@ $messages['pms'] = array(
 	'dump-database-request-submit' => 'Manda arcesta',
 	'dump-database-request-already-submitted' => "La creassion ëd n'archivi a l'é stàita ciamà recentement (men che 7 di fà)",
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
-	'dump-database-info-more' => 'Për piasì <a href="http://community.wikia.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
+	'dump-database-info-more' => 'Për piasì <a href="https://community.fandom.com/wiki/Help:Database_download">varda</a> për savèjne ëd pi',
 );
 
 $messages['ps'] = array(
@@ -559,7 +559,7 @@ $messages['roa-tara'] = array(
 	'dump-database-request-submit' => "Manne 'a richieste",
 	'dump-database-request-already-submitted' => "'U dump ha state cercate recendemende (mene de 7 sciurne fa)",
 	'dump-database-request-requested' => "Richieste pu dump d'u database mannate",
-	'dump-database-info-more' => 'Pe piacere <a href="http://community.wikia.com/wiki/Help:Database_download">\'ndruche</a> pe cchiù \'mbormaziune',
+	'dump-database-info-more' => 'Pe piacere <a href="https://community.fandom.com/wiki/Help:Database_download">\'ndruche</a> pe cchiù \'mbormaziune',
 	'dump-database-last-unknown' => 'Scanusciute',
 );
 
@@ -598,7 +598,7 @@ $messages['sr-ec'] = array(
 	'dump-database-request-submit' => 'Пошаљи захтев',
 	'dump-database-request-already-submitted' => 'Испис је недавно затражен (пре мање од седам дана)',
 	'dump-database-request-requested' => 'Захтев за исписивање базе података је послат',
-	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте ово</a> за више информација',
+	'dump-database-info-more' => '<a href="https://community.fandom.com/wiki/Help:Database_download">Погледајте ово</a> за више информација',
 );
 
 $messages['sv'] = array(
@@ -613,7 +613,7 @@ $messages['sv'] = array(
 	'dump-database-request-submit' => 'Skicka begäran',
 	'dump-database-request-already-submitted' => 'Dump har begärts nyligen (mindre än 7 dagar sedan)',
 	'dump-database-request-requested' => 'Begäran om databasdump har skickats',
-	'dump-database-info-more' => 'Vänligen <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> för mer info',
+	'dump-database-info-more' => 'Vänligen <a href="https://community.fandom.com/wiki/Help:Database_download">se</a> för mer info',
 	'dump-database-last-unknown' => 'Okänd',
 );
 
@@ -626,7 +626,7 @@ $messages['ta'] = array(
 $messages['te'] = array(
 	'dump-database-curr-pages' => 'ప్రస్తుత పేజీలు',
 	'dump-database-full-pages' => 'ప్రస్తుత పేజీలు, చరిత్ర',
-	'dump-database-info-more' => 'మరింత సమాచారం కోసం <a href="http://community.wikia.com/wiki/Help:Database_download">ఇది చూడండి</a>',
+	'dump-database-info-more' => 'మరింత సమాచారం కోసం <a href="https://community.fandom.com/wiki/Help:Database_download">ఇది చూడండి</a>',
 );
 
 $messages['tl'] = array(
@@ -641,7 +641,7 @@ $messages['tl'] = array(
 	'dump-database-request-submit' => 'Ipadala ang hiling',
 	'dump-database-request-already-submitted' => 'Ang pagtatapon ay hiniling kamakailan lamang (mababa kaysa 7 mga araw na ang nakalilipas)',
 	'dump-database-request-requested' => 'Hilingin ang ipinadalang tapunan ng talaan ng mga dato',
-	'dump-database-info-more' => 'Paki <a href="http://community.wikia.com/wiki/Help:Database_download">tingnan</a> para sa iba pang kabatiran',
+	'dump-database-info-more' => 'Paki <a href="https://community.fandom.com/wiki/Help:Database_download">tingnan</a> para sa iba pang kabatiran',
 );
 
 $messages['uk'] = array(
@@ -656,7 +656,7 @@ $messages['uk'] = array(
 	'dump-database-request-submit' => 'Надіслати запит',
 	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
 	'dump-database-request-requested' => 'Запит на створення дампу бази даних надіслано.',
-	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="https://community.fandom.com/wiki/Help:Database_download">тут</a>',
 	'dump-database-last-unknown' => 'Невідомо',
 );
 
@@ -672,7 +672,7 @@ $messages['vi'] = array(
 	'dump-database-request-submit' => 'Gửi yêu cầu',
 	'dump-database-request-already-submitted' => 'Kết xuất đã được yêu cầu mới (ít hơn 7 ngày trước)',
 	'dump-database-request-requested' => 'Yêu cầu cho bãi chứa cơ sở dữ liệu được gửi',
-	'dump-database-info-more' => 'Xin vui lòng <a href="http://community.wikia.com/wiki/Help:Database_download">xem</a> để biết thêm chi tiết',
+	'dump-database-info-more' => 'Xin vui lòng <a href="https://community.fandom.com/wiki/Help:Database_download">xem</a> để biết thêm chi tiết',
 	'dump-database-last-unknown' => 'Không rõ',
 );
 
