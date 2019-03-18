@@ -281,7 +281,7 @@ class LightboxController extends WikiaController {
 			);
 			$shareUrl = ( !empty( $articleUrl ) && in_array( $articleNS, $sharingNamespaces ) ) ? $articleUrl : $fileUrl;
 
-			$anonRedir = FilePageHelper::getFilePageRedirect( $fileTitleObj );
+			$anonRedir = FilePageHelper::getFilePageRedirectUrl( $fileTitleObj );
 
 			$mpUrl = wfAppendQuery(Title::newMainPage()->getFullURL() , [
 				'file' => $fileTitleObj->getText()

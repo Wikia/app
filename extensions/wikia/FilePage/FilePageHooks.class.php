@@ -273,9 +273,9 @@ class FilePageHooks extends WikiaObject{
 	 */
 	private static function purgeMemcache( Title $title ) {
 		global $wgMemc;
-		$redirKey = wfMemcKey( 'redir', 'http', $title->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redirprefix', 'http', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
-		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redirprefix', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
 			'key' => $redirKey,

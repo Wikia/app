@@ -20,22 +20,48 @@ class FilePageHelper {
 	 * @param Title $title - page title object
 	 * @param bool $onlyDB - ignore memcache and fetch based on db
 	 *
-	 * @return string $url - url to redirect to
+	 * @return string $purl - prefixedText to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title, bool $onlyDB = false ) {
-		global $wgMemc;
-
-		//fallback to main page
-		$url = Title::newMainPage()->getFullURL();
-		//wiki needs read privileges
-		if ( !$title->userCan( 'read' ) ) {
+	public static function getFilePageRedirectUrl( Title $title, bool $onlyDB = false ) {
+		$prefixedText = self::getFilePageRedirectPrefixedText( $title, $onlyDB );
+		if ( $prefixedText == "" ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( __FUNCTION__, [
+				'key' => "empty",
+			] );
+			return "";
+		}
+		$title = Title::newFromText( $prefixedText );
+		$url = $title->getFullURL();
+		if( Title::newMainPage()->getPrefixedText() == $prefixedText ){
 			$url = wfAppendQuery( $url, [
 				'file' => $title->getText(),
 			] );
-
-			return $url;
 		}
-		$redirKey = wfMemcKey( 'redir', WebRequest::detectProtocol(), $title->getPrefixedText() );
+		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+			'url' => $url,
+			'key' => wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() ),
+		] );
+		return $url;
+	}
+
+	/**
+	 * Returns an url when file needs to be redirected.
+	 *
+	 * @param Title $title - page title object
+	 * @param bool $onlyDB - ignore memcache and fetch based on db
+	 *
+	 * @return string $prefixedText - prefixedText to redirect to
+	 */
+	public static function getFilePageRedirectPrefixedText( Title $title, bool $onlyDB = false ) {
+		global $wgMemc;
+
+		//fallback to main page
+		$prefixedText = Title::newMainPage()->getPrefixedText();
+		//wiki needs read privileges
+		if ( !$title->userCan( 'read' ) ) {
+			return $prefixedText;
+		}
+		$redirKey = wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() );
 
 		$img = wfFindFile( $title );
 		if ( !$img ) {
@@ -43,17 +69,17 @@ class FilePageHelper {
 		}
 
 		if ( !$img || $img && !$img->exists() ) {
-			$wgMemc->set( $redirKey, $url );
+			$wgMemc->set( $redirKey, $prefixedText );
 
-			return $url;
+			return $prefixedText;
 		}
 
 		if ( !$onlyDB ) {
 			$urlMem = $wgMemc->get( $redirKey );
 			if ( $urlMem ) {
-				$url = $urlMem;
+				$prefixedText = $urlMem;
 
-				return $url;
+				return $prefixedText;
 			}
 		}
 
@@ -67,20 +93,15 @@ class FilePageHelper {
 				if ( !$PageTitle->userCan( 'read' ) ) {
 					continue;
 				}
-				$url = $PageTitle->getFullURL();
+				$prefixedText = $PageTitle->getFullURL();
 				break;
 			}
 		}
-		if ( $url === Title::newMainPage()->getFullURL() ) {
-			$url = wfAppendQuery( $url, [
-				'file' => $title->getText(),
-			] );
-		}
 		if ( !$onlyDB ) {
-			$wgMemc->set( $redirKey, $url );
+			$wgMemc->set( $redirKey, $prefixedText );
 		}
 
-		return $url;
+		return $prefixedText;
 	}
 
 	/**
@@ -94,16 +115,16 @@ class FilePageHelper {
 		$keys = [];
 		$keys[] = self::getRedirSurrogateKey( $title );
 		if ( $title->inNamespace( NS_FILE ) ) {
-			$url = self::getFilePageRedirect( $title );
-			if ( isset( $url ) ) {
-				$pageTitle = self::rawURLToTitle( $url );
+			$prefixedText = self::getFilePageRedirectPrefixedText( $title );
+			if ( isset( $prefixedText ) ) {
+				$pageTitle = Title::newFromText( $prefixedText );
 				if ( $pageTitle ) {
 					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
 				}
 			}
-			$urlFromDB = self::getFilePageRedirect( $title, true );
-			if ( isset( $urlFromDB ) && $url != $urlFromDB ) {
-				$pageTitle = self::rawURLToTitle( $urlFromDB );
+			$prefixedTextFromDB = self::getFilePageRedirectPrefixedText( $title, true );
+			if ( isset( $prefixedTextFromDB ) && $prefixedText != $prefixedTextFromDB ) {
+				$pageTitle = Title::newFromText( $prefixedTextFromDB );
 				if ( $pageTitle ) {
 					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
 				}
@@ -122,21 +143,6 @@ class FilePageHelper {
 	 */
 	protected static function getRedirSurrogateKey( Title $title ) {
 		return Wikia::surrogateKey( 'redirect', $title->getPrefixedText() );
-	}
-
-	/**
-	 * Returns Title object based on araw URL
-	 *
-	 * @param string
-	 *
-	 * @return Title $title or null
-	 */
-	private static function rawURLToTitle( string $url ) {
-		$aUrl = explode( "?", $url );
-		$aUrl = explode( "/", $aUrl[0] );
-		$titleString = array_pop( $aUrl );
-
-		return Title::newFromText( urldecode( $titleString ) );
 	}
 
 
