@@ -1580,10 +1580,15 @@ class Wikia {
 	 * @param string $fname mwstore abstract path
 	 * @param string $hash file hash
 	 * @return bool true - it's a hook
+	 * @throws MWException
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		$backend = FileBackendGroup::singleton()->get( Wikia::getBackend(Wikia::getBucket()) );
-		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		$bucket = Wikia::getBucket();
+		$backendName = Wikia::getBackend( $bucket );
+
+		// modify input parameters
+		$backend = FileBackendGroup::singleton()->get( $backendName );
+		$fname = "mwstore://$backendName/$bucket/images/timeline/$hash";
 
 		return true;
 	}
