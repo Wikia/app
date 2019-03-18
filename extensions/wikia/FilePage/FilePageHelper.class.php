@@ -30,8 +30,8 @@ class FilePageHelper {
 			] );
 			return "";
 		}
-		$title = Title::newFromText( $prefixedText );
-		$url = $title->getFullURL();
+		$redirTitle = Title::newFromText( $prefixedText );
+		$url = $redirTitle->getFullURL();
 		if( Title::newMainPage()->getPrefixedText() == $prefixedText ){
 			$url = wfAppendQuery( $url, [
 				'file' => $title->getText(),
@@ -39,6 +39,7 @@ class FilePageHelper {
 		}
 		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
 			'url' => $url,
+			'prefix' => $prefixedText,
 			'key' => wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() ),
 		] );
 		return $url;
