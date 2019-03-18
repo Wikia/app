@@ -1516,9 +1516,6 @@ class Wikia {
 		return true;
 	}
 
-	static function textMatchesRegex( $text, $regex ) {
-		return !empty($regex) && preg_match($regex, $text);
-	}
 
 	/**
 	 * Register Swift file backend
@@ -1543,37 +1540,6 @@ class Wikia {
 	}
 
 	/**
-	 * For example $wgUploadPath: http://images.wikia.com/poznan/pl/images then bucket is "poznan/pl"
-	 * @return bool|string
-	 */
-	static function getBucket() {
-		global $wgUploadPath;
-
-		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-		return substr( $path, 0, - 7 );
-	}
-
-	static function getBackend( $bucket ) {
-		global $wgUseGoogleCloudStorage;
-		$wgUseGcsMigrationBucketRegex =
-			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
-				static::DEFAULT_WIKI_ID );
-		$wgUseGcsBucketRegex =
-			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex", static::DEFAULT_WIKI_ID );
-
-
-		if ( $wgUseGoogleCloudStorage ) {
-			return 'gcs-backend';
-		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsBucketRegex ) ) {
-			return 'gcs-backend';
-		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsMigrationBucketRegex ) ) {
-			return 'gcs-migration-backend';
-		} else {
-			return 'swift-backend';
-		}
-	}
-
-	/**
 	 * Modify timeline extension to use Swift storage (BAC-893)
 	 *
 	 * @param FileBackend $backend
@@ -1591,6 +1557,41 @@ class Wikia {
 		$fname = "mwstore://$backendName/$bucket/images/timeline/$hash";
 
 		return true;
+	}
+
+
+	/**
+	 * For example $wgUploadPath: http://images.wikia.com/poznan/pl/images then bucket is "poznan/pl"
+	 * @return bool|string
+	 */
+	private static function getBucket() {
+		global $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		return substr( $path, 0, - 7 );
+	}
+
+	private static function getBackend( $bucket ) {
+		global $wgUseGoogleCloudStorage;
+		$wgUseGcsMigrationBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
+				static::DEFAULT_WIKI_ID );
+		$wgUseGcsBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex", static::DEFAULT_WIKI_ID );
+
+		if ( $wgUseGoogleCloudStorage ) {
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsBucketRegex ) ) {
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsMigrationBucketRegex ) ) {
+			return 'gcs-migration-backend';
+		} else {
+			return 'swift-backend';
+		}
+	}
+
+	private static function textMatchesRegex( $text, $regex ) {
+		return !empty($regex) && preg_match($regex, $text);
 	}
 
 	/**
