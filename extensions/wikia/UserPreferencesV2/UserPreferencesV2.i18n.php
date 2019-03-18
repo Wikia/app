@@ -89,7 +89,7 @@ $messages['qqq'] = array(
 	'unsubscribe-preferences-toggle-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-unsubscribe}}.',
 	'tog-watchlistdigest-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-me-v2}}.',
 	'tog-justify-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-under-the-hood}} > {{int:prefs-advanced-displayv2}}.',
-	'preferences-v2-user-landing-page' => "Label for the option to change which page the user should be taken to when they navigate to the wiki's URL without specifying a page (i.e. http://community.wikia.com/).",
+	'preferences-v2-user-landing-page' => "Label for the option to change which page the user should be taken to when they navigate to the wiki's URL without specifying a page (i.e. https://community.fandom.com/).",
 	'preferences-v2-redirect-wiki-activity' => 'Option to be taken to the Wiki Activity page when the user navigates to the main wiki URL without a specific page.',
 	'preferences-v2-redirect-main-page' => "Option to be taken to the wiki's main page page when the user navigates to the main wiki URL without a specific page.
 {{Identical|Main page}}",

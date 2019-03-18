@@ -13,7 +13,11 @@ require([
 		scriptElementNetzAthleten.type = 'text/javascript';
 		scriptElementNetzAthleten.src = url;
 		scriptElementNetzAthleten.addEventListener('load', function () {
-			window.naMediaAd.setValue('homesite', window.wgIsMainpage);
+			if (window.naMediaAd) {
+				window.naMediaAd.setValue('homesite', window.wgIsMainpage);
+			} else {
+				console.warn('window.naMediaAd has not been loaded.');
+			}
 		});
 
 		document.head.appendChild(scriptElementNetzAthleten);

@@ -1835,3 +1835,8 @@ if ( !empty( $wgWatchShowURL ) ) {
 if ( !empty( $wgEnableEditDraftSavingExt ) ) {
 	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
 }
+
+// CORE-128
+if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
+	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
+}
