@@ -84,7 +84,7 @@ class FilePageHelper {
 	}
 
 	/**
-	 * Returns list of surrogate keys fgetRedirSurrogateKeyor purging.
+	 * Returns list of surrogate keys for purging.
 	 *
 	 * @param Title
 	 *

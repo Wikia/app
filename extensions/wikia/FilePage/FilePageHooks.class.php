@@ -175,20 +175,14 @@ class FilePageHooks extends WikiaObject{
 	}
 
 	/**
-	 * Hook to clear caches for linked materials
+	 * Hook to set surrogate keys on pages
 	 *
 	 * @param Title $title -- instance of Title class
-	 * @param User $user -- current user
-	 * @param string $reason -- undeleting reason
 	 *
 	 * @return true -- because it's a hook
 	 */
-	public static function onUndeleteComplete( Title $title ) {
-		global $wgRedirectFilePagesForAnons;
-		if( !$wgRedirectFilePagesForAnons ){
-			return true;
-		}
-		self::clearLinkedFilesCache( $title , true);
+	public static function onInsertSurrogateKey( Title $title ) {
+		Wikia::setSurrogateKeysHeaders( FilePageHelper::getSurrogateKeys( $title ), false );
 
 		return true;
 	}
@@ -197,16 +191,23 @@ class FilePageHooks extends WikiaObject{
 	 * Hook to clear caches for linked materials
 	 *
 	 * @param Title $title -- instance of Title class
-	 * @param User $user -- current user
-	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onUndeleteComplete( Title $title ) {
+		self::clearLinkedFilesCache( $title, true );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param WikiPage $page
 	 *
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
-		global $wgRedirectFilePagesForAnons;
-		if( !$wgRedirectFilePagesForAnons ){
-			return true;
-		}
 		self::clearLinkedFilesCache( $page->getTitle(), true );
 
 		return true;
@@ -222,10 +223,6 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleDelete( WikiPage $page ) {
-		global $wgRedirectFilePagesForAnons;
-		if( !$wgRedirectFilePagesForAnons ){
-			return true;
-		}
 		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
@@ -241,11 +238,7 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
-		global $wgRedirectFilePagesForAnons;
-		if( !$wgRedirectFilePagesForAnons ){
-			return true;
-		}
-		self::clearLinkedFilesCache( $page->mTitle , true );
+		self::clearLinkedFilesCache( $page->mTitle, true );
 
 		return true;
 	}
@@ -270,7 +263,7 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param $id Int: page_id value of the page being deleted
 	 */
-	private static function clearLinkedFilesCache( Title $title  , bool $memcacheOnly=false) {
+	private static function clearLinkedFilesCache( Title $title, bool $memcacheOnly = false ) {
 		$results = FilePageHelper::getFileLinks( $title->getArticleID() );
 		$keys = FilePageHelper::getSurrogateKeys( $title );
 		if ( $results ) {
@@ -279,8 +272,8 @@ class FilePageHooks extends WikiaObject{
 				self::purgeMemcache( $title );
 			}
 		}
-		if( !$memcacheOnly ){
-			foreach( $keys  as $key) {
+		if ( !$memcacheOnly ) {
+			foreach ( $keys as $key ) {
 				\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
 					'key' => $key,
 				] );
