@@ -94,7 +94,7 @@ class FilePageHelper {
 				if ( !$PageTitle->userCan( 'read' ) ) {
 					continue;
 				}
-				$prefixedText = $PageTitle->getFullURL();
+				$prefixedText = $PageTitle->getPrefixedText();
 				break;
 			}
 		}
