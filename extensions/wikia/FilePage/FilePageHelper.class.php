@@ -7,7 +7,7 @@ class FilePageHelper {
 		$content = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $content );
 
 		// If we have an empty string or a bunch of whitespace, return null
-		if( trim($content) == "" ) {
+		if ( trim( $content ) == "" ) {
 			$content = null;
 		}
 
@@ -17,20 +17,22 @@ class FilePageHelper {
 	/**
 	 * Returns an url when file needs to be redirected.
 	 *
-	 * @requestParam Title
+	 * @param Title $title - page title object
+	 * @param bool $onlyDB - ignore memcache and fetch based on db
 	 *
 	 * @return string $url - url to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title , bool $onlyDB=false) {
+	public static function getFilePageRedirect( Title $title, bool $onlyDB = false ) {
 		global $wgMemc;
 
 		//fallback to main page
 		$url = Title::newMainPage()->getFullURL();
 		//wiki needs read privileges
 		if ( !$title->userCan( 'read' ) ) {
-			$url = wfAppendQuery($url, [
-				'file' => $title->getText()
+			$url = wfAppendQuery( $url, [
+				'file' => $title->getText(),
 			] );
+
 			return $url;
 		}
 		$redirKey = wfMemcKey( 'redir', WebRequest::detectProtocol(), $title->getPrefixedText() );
@@ -42,13 +44,17 @@ class FilePageHelper {
 
 		if ( !$img || $img && !$img->exists() ) {
 			$wgMemc->set( $redirKey, $url );
+
 			return $url;
 		}
 
-		$urlMem = $wgMemc->get( $redirKey );
-		if ( $urlMem && !$onlyDB ) {
-			$url = $urlMem;
-			return $url;
+		if ( !$onlyDB ) {
+			$urlMem = $wgMemc->get( $redirKey );
+			if ( $urlMem ) {
+				$url = $urlMem;
+
+				return $url;
+			}
 		}
 
 		$res = self::fetchLinks( $img->getTitle()->getDBkey() );
@@ -66,20 +72,21 @@ class FilePageHelper {
 			}
 		}
 		if ( $url === Title::newMainPage()->getFullURL() ) {
-			$url = wfAppendQuery($url, [
-				'file' => $title->getText()
+			$url = wfAppendQuery( $url, [
+				'file' => $title->getText(),
 			] );
 		}
-		if( !$onlyDB ) {
+		if ( !$onlyDB ) {
 			$wgMemc->set( $redirKey, $url );
 		}
+
 		return $url;
 	}
 
 	/**
-	 * Returns list of surrogate keys for purging.
+	 * Returns list of surrogate keys fgetRedirSurrogateKeyor purging.
 	 *
-	 * @requestParam Title
+	 * @param Title
 	 *
 	 * @return array $keys - surrogate keys to purge
 	 */
@@ -88,45 +95,47 @@ class FilePageHelper {
 		$keys[] = self::getRedirSurrogateKey( $title );
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$url = self::getFilePageRedirect( $title );
-			if( isset($url) ){
+			if ( isset( $url ) ) {
 				$pageTitle = self::rawURLToTitle( $url );
-				if( $pageTitle ){
+				if ( $pageTitle ) {
 					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
 				}
 			}
-			$url2 = self::getFilePageRedirect( $title, true );
-			if( isset($url2) && $url != $url2 ){
-				$pageTitle = self::rawURLToTitle( $url2 );
-				if( $pageTitle ){
+			$urlFromDB = self::getFilePageRedirect( $title, true );
+			if ( isset( $urlFromDB ) && $url != $urlFromDB ) {
+				$pageTitle = self::rawURLToTitle( $urlFromDB );
+				if ( $pageTitle ) {
 					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
 				}
 			}
 		}
+
 		return $keys;
 	}
 
 	/**
 	 * Returns surrogate keys for purging
 	 *
-	 * @requestParam Title
+	 * @param Title
 	 *
 	 * @return string $key - surrogate key to purge
 	 */
-	public static function getRedirSurrogateKey( Title $title ) {
-		return 'redirect-' . $title->getPrefixedText();
+	protected static function getRedirSurrogateKey( Title $title ) {
+		return Wikia::surrogateKey( 'redirect', $title->getPrefixedText() );
 	}
 
 	/**
 	 * Returns Title object based on araw URL
 	 *
-	 * @requestParam string
+	 * @param string
 	 *
 	 * @return Title $title or null
 	 */
 	private static function rawURLToTitle( string $url ) {
-		$aUrl = explode( "?", $url);
-		$aUrl = explode( "/", $aUrl[0]);
-		$titleString = array_pop($aUrl);
+		$aUrl = explode( "?", $url );
+		$aUrl = explode( "/", $aUrl[0] );
+		$titleString = array_pop( $aUrl );
+
 		return Title::newFromText( urldecode( $titleString ) );
 	}
 
@@ -163,11 +172,7 @@ class FilePageHelper {
 	public static function getFileLinks( $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		return $dbr->select(
-			[ 'imagelinks' ],
-			[ 'il_to' ],
-			[ 'il_from' => $id ],
-			__METHOD__,
+		return $dbr->select( [ 'imagelinks' ], [ 'il_to' ], [ 'il_from' => $id ], __METHOD__,
 			[ 'ORDER BY' => 'il_to', ] );
 	}
 }

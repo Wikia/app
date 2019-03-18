@@ -281,6 +281,9 @@ class FilePageHooks extends WikiaObject{
 		}
 		if( !$memcacheOnly ){
 			foreach( $keys  as $key) {
+				\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+					'key' => $key,
+				] );
 				Wikia::purgeSurrogateKey( $key );
 			}
 		}
