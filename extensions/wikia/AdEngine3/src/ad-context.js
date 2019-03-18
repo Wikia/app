@@ -317,7 +317,7 @@ export default {
 					}
 				}
 			},
-			rubiconDisplay: {
+			rubicon_display: {
 				enabled: false,
 				accountId: 7450,
 				slots: {
