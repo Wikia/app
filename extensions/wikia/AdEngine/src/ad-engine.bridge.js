@@ -101,7 +101,7 @@ function init(
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
 		context.set('bidders.prebid.rubicon.enabled', legacyContext.get('bidders.rubicon'));
-		context.set('bidders.prebid.rubiconDisplay.enabled', legacyContext.get('bidders.rubiconDisplay'));
+		context.set('bidders.prebid.rubicon_display.enabled', legacyContext.get('bidders.rubiconDisplay'));
 		context.set('bidders.prebid.vmg.enabled', legacyContext.get('bidders.vmg'));
 
 		context.set('bidders.prebid.targeting', {
