@@ -256,6 +256,9 @@ class FilePageHooks extends WikiaObject{
 		$wgMemc->delete( $redirKey );
 		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
+		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+			'key' => $title->getPrefixedText(),
+		] );
 	}
 
 	/**
