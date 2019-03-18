@@ -182,6 +182,11 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onInsertSurrogateKey( Title $title ) {
+		global $wgRedirectFilePagesForAnons;
+		if ( !$wgRedirectFilePagesForAnons ) {
+			return true;
+		}
+
 		Wikia::setSurrogateKeysHeaders( FilePageHelper::getSurrogateKeys( $title ), false );
 
 		return true;
@@ -195,6 +200,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onUndeleteComplete( Title $title ) {
+		global $wgRedirectFilePagesForAnons;
+		if ( !$wgRedirectFilePagesForAnons ) {
+			return true;
+		}
 		self::clearLinkedFilesCache( $title, true );
 
 		return true;
@@ -208,6 +217,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSave( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if ( !$wgRedirectFilePagesForAnons ) {
+			return true;
+		}
 		self::clearLinkedFilesCache( $page->getTitle(), true );
 
 		return true;
@@ -223,6 +236,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleDelete( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if ( !$wgRedirectFilePagesForAnons ) {
+			return true;
+		}
 		self::clearLinkedFilesCache( $page->mTitle );
 
 		return true;
@@ -238,6 +255,10 @@ class FilePageHooks extends WikiaObject{
 	 * @return true -- because it's a hook
 	 */
 	public static function onArticleSaveComplete( WikiPage $page ) {
+		global $wgRedirectFilePagesForAnons;
+		if ( !$wgRedirectFilePagesForAnons ) {
+			return true;
+		}
 		self::clearLinkedFilesCache( $page->mTitle, true );
 
 		return true;
@@ -257,7 +278,7 @@ class FilePageHooks extends WikiaObject{
 		$redirKey = wfMemcKey( 'redir', 'https', $title->getPrefixedText() );
 		$wgMemc->delete( $redirKey );
 		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
-			'key' => $title->getPrefixedText(),
+			'key' => $redirKey,
 		] );
 	}
 
