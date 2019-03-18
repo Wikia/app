@@ -301,8 +301,8 @@ Thanks!
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'rcshowhideenhanced' => '$1 grouped recent changes',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -35919,8 +35919,8 @@ Thanks!
 - Wikia Community Support
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'rcshowhideenhanced' => '$1 mudanças recentes destacadas',
 	'refreshpage' => 'Recarregue a página para ativar este widget',
 	'requestcreatewiki' => 'Enviar solicitação',

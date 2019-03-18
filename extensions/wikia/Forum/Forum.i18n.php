@@ -458,8 +458,8 @@ $MESSAGE_NO_HTML
 فريق ويكيا
 
 ___________________________________________
-* يمكنك إيجاد المساعدة والنصائح على المجتمع المركزي: http://community.wikia.com
-* أتريد استقبال رسائل أقل من؟ يمكنك إلغاء الاشتراك أو تغيير تفضيلات بريدك الإلكتروني من هنا: http://community.wikia.com/Special:Preferences',
+* يمكنك إيجاد المساعدة والنصائح على المجتمع المركزي: https://community.fandom.com
+* أتريد استقبال رسائل أقل من؟ يمكنك إلغاء الاشتراك أو تغيير تفضيلات بريدك الإلكتروني من هنا: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'مرحبا $WATCHER،
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -468,9 +468,9 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">مشاهدة المحادثة</a></p>
 <p>فريق ويكيا</p>
 ___________________________________________<br />
-* يمكنك البحث عن النصائح والمساعدة في المجتمع المركزي: http://community.wikia.com
+* يمكنك البحث عن النصائح والمساعدة في المجتمع المركزي: https://community.fandom.com
 * تريد تلقي رسائل أقل منا؟ يمكنك إلغاء الاشتراك أو تغيير
-تفضيلات بريدك الإلكتروني هنا: http://community.wikia.com/Special:Preferences',
+تفضيلات بريدك الإلكتروني هنا: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'على $1',
 	'forum-wiki-activity-msg-name' => '$1 لوحة',
 	'forum-activity-module-heading' => 'نشاط المنتدى',
@@ -615,8 +615,8 @@ Gwelet ar c\'hendiviz :($MESSAGE_LINK)
 Skipailh Wikia
 
 ___________________________________________
-* Kavit skoazell hag alioù e : http://community.wikia.com
-* Fellout a ra deoc\'h resev nebeutoc\'h a gemennadennoù diganeoc\'h ? Gallout a rit digoumanantiñ pe cheñch ho tibarzhioù postel amañ : http://community.wikia.com/Special:Preferences',
+* Kavit skoazell hag alioù e : https://community.fandom.com
+* Fellout a ra deoc\'h resev nebeutoc\'h a gemennadennoù diganeoc\'h ? Gallout a rit digoumanantiñ pe cheñch ho tibarzhioù postel amañ : https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'war an $1',
 	'forum-wiki-activity-msg-name' => 'rann $1',
 	'forum-activity-module-heading' => 'Oberiantiz ar forom',
@@ -772,7 +772,7 @@ L\'Equip de Wikia
 
 ___________________________________________
 * Vés a la Comunitat Central anglesa:
-http://community.wikia.com
+https://community.fandom.com
 * Vés a la Comunitat Central catalana:
 http://ca.wikia.com
 * No vols rebre missatges de Wikia? Us podeu donar de baixa seguint l\'enllaç següent: http://ca.wikia.com/Special:Preferences',
@@ -1004,9 +1004,9 @@ Die Konversation ansehen: ($MESSAGE_LINK)
 Das Wikia-Team
 
 ___________________________________________
-* Bekomme Hilfe und Ratschläge auf Community Central: http://community.wikia.com
+* Bekomme Hilfe und Ratschläge auf Community Central: https://community.fandom.com
 * Möchtest du weniger Nachrichten von uns erhalten? Du kannst dich von den E-Mail-Benachrichtigungen
-abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.com/Special:Preferences',
+abmelden oder deine E-Mail-Einstellungen hier ändern: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hallo $WATCHER,
 			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -1543,7 +1543,7 @@ Wikia -tiimi
 
 ___________________________________________
 * Löydä apua ja neuvoja Yhteisöwikiltä: http://yhteiso.wikia.com
-* Haluatko saada vähemmäm viestejä meiltä? Voit peruuttaa tilauksen tai muuttaa sähköpostiasetuksia täällä: http://community.wikia.com/Special:Preferences',
+* Haluatko saada vähemmäm viestejä meiltä? Voit peruuttaa tilauksen tai muuttaa sähköpostiasetuksia täällä: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hei $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -1553,7 +1553,7 @@ ___________________________________________
 <p>Wikia-tiimi</p>
 ___________________________________________<br />
 * Löydä apua ja neuvoja Yhteisöwikiltä: http://yhteiso.wikia.com
-* Haluatko saada vähemmäm viestejä meiltä? Voit peruuttaa tilauksen tai muuttaa sähköpostiasetuksia täällä: http://community.wikia.com/Special:Preferences',
+* Haluatko saada vähemmäm viestejä meiltä? Voit peruuttaa tilauksen tai muuttaa sähköpostiasetuksia täällä: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'palstalla $1',
 	'forum-wiki-activity-msg-name' => '$1',
 	'forum-activity-module-heading' => 'Foorumitoiminta',
@@ -1710,7 +1710,7 @@ Voir la conversation ($MESSAGE_LINK)
 — L’équipe Wikia
 
 ___________________________________________
-* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://community.wikia.com
+* Pour voir les derniers évènements sur Wikia, rendez-vous sur https://community.fandom.com
 * Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.',
 	'forum-mail-notification-body-HTML' => 'Bonjour $WATCHER,
 <p>$SUBJECT.</p>
@@ -1893,9 +1893,9 @@ Ollar a conversa: ($MESSAGE_LINK)
 O equipo de Wikia
 
 ___________________________________________
-* Atope axuda e consellos na central da comunidade: http://community.wikia.com
+* Atope axuda e consellos na central da comunidade: https://community.fandom.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
-as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
+as preferencias de correo electrónico aquí: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Boas $WATCHER:
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -1904,9 +1904,9 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ollar a conversa</a></p>
 <p>O equipo de Wikia</p>
 ___________________________________________<br />
-* Atope axuda e consellos na central da comunidade: http://community.wikia.com
+* Atope axuda e consellos na central da comunidade: https://community.fandom.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
-as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
+as preferencias de correo electrónico aquí: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'en "$1"',
 	'forum-wiki-activity-msg-name' => 'taboleiro "$1"',
 	'forum-activity-module-heading' => 'Actividade do foro',
@@ -2564,8 +2564,8 @@ $MESSAGE_NO_HTML
 위키아 팀
 
 ___________________________________________
-* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
-* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+* 중앙 커뮤니티에서 도움을 구하세요: https://community.fandom.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => '$WATCHER님 안녕하세요.
 			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -2574,8 +2574,8 @@ ___________________________________________
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">글 보기</a></p>
 			<p>위키아 팀 드림</p>
 ___________________________________________<br>
-* 중앙 커뮤니티에서 도움말과 조언을 찾아볼 수 있습니다. http://community.wikia.com
-* 위키아에서 받는 메일을 줄이고 싶으신가요? 다음 링크에서 설정하실 수 있습니다. http://community.wikia.com/Special:Preferences',
+* 중앙 커뮤니티에서 도움말과 조언을 찾아볼 수 있습니다. https://community.fandom.com
+* 위키아에서 받는 메일을 줄이고 싶으신가요? 다음 링크에서 설정하실 수 있습니다. https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '$1의 새 주제',
 	'forum-wiki-activity-msg-name' => '$1 게시판',
 	'forum-activity-module-heading' => '최근 포럼 활동',
@@ -2909,9 +2909,9 @@ Lihat perbualan: ($MESSAGE_LINK)
 Kumpulan Wikia
 
 ___________________________________________
-* Dapatkan bantuan dan nasihat di Pusat Komuniti: http://community.wikia.com
+* Dapatkan bantuan dan nasihat di Pusat Komuniti: https://community.fandom.com
 * Mahu menerima sedikit mesej daripada kami? Anda boleh berhenti melanggan atau mengubah
-keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
+keutamaan e-mel anda di sini: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hai $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -2920,9 +2920,9 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Lihat perbualan</a></p>
 <p>Kumpulan Wikia</p>
 ___________________________________________<br />
-* Dapatkan bantuan dan nasihat di Pusat Komuniti: http://community.wikia.com
+* Dapatkan bantuan dan nasihat di Pusat Komuniti: https://community.fandom.com
 * Mahu menerima sedikit mesej daripada kami? Anda boleh berhenti melanggan atau mengubah
-keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
+keutamaan e-mel anda di sini: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'di $1',
 	'forum-wiki-activity-msg-name' => 'Papan $1',
 	'forum-activity-module-heading' => 'Aktiviti Forum',
@@ -3078,9 +3078,9 @@ Zie die conversatie: ($MESSAGE_LINK)
 
 Het Wikia-team
 ___________________________________________
-* Vind hulp en advies op de Gemeenschapswiki: http://community.wikia.com
+* Vind hulp en advies op de Gemeenschapswiki: https://community.fandom.com
 * Wilt u minder berichten ontvangen van ons? U kunt zich afmelden of uw
-e-mailvoorkeuren wijzigen: http://community.wikia.com/Special:Preferences',
+e-mailvoorkeuren wijzigen: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hallo $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3089,9 +3089,9 @@ e-mailvoorkeuren wijzigen: http://community.wikia.com/Special:Preferences',
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Zie de conversatie</a></p>
 <p>Het Wikia-team</p>
 ___________________________________________<br />
- * Vind hulp en advies op Community Central: http://community.wikia.com
+ * Vind hulp en advies op Community Central: https://community.fandom.com
  * Wilt u minder berichten ontvangen van ons? U kunt hier afmelden of uw
-e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
+e-mailvoorkeuren wijzingen: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'op de $1',
 	'forum-wiki-activity-msg-name' => 'prikbord $1',
 	'forum-activity-module-heading' => 'Forumactiviteit',
@@ -3318,7 +3318,7 @@ Zespół Wikii
 
 ___________________________________________
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
-* Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
+* Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Witaj $WATCHER,
 <p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3328,7 +3328,7 @@ ___________________________________________
 <p>Zespół Wikii</p>
 ___________________________________________<br>
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
-* Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
+* Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'na $1',
 	'forum-wiki-activity-msg-name' => 'subforum $1',
 	'forum-activity-module-heading' => 'Aktywność na Forum',
@@ -3495,8 +3495,8 @@ Veja a conversa: ($MESSAGE_LINK)
 Equipe Wikia
 
 ___________________________________________
-* Encontre ajuda e conselho na Comunidade Central: http://community.wikia.com
-* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+* Encontre ajuda e conselho na Comunidade Central: https://community.fandom.com
+* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Olá $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3505,8 +3505,8 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
 <p>The Wikia Team</p>
 ___________________________________________<br />
-* Encontre ajuda e conselho na Comunidade Central: http://community.wikia.com
-* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+* Encontre ajuda e conselho na Comunidade Central: https://community.fandom.com
+* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'no $1',
 	'forum-wiki-activity-msg-name' => 'quadro $1',
 	'forum-activity-module-heading' => 'Atividade no Fórum',
@@ -3670,8 +3670,8 @@ $MESSAGE_NO_HTML
 Команда Викия
 
 ___________________________________________
-* Найти помощь и совет можно на Community Central: http://community.wikia.com
-* Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
+* Найти помощь и совет можно на Community Central: https://community.fandom.com
+* Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Привет, $WATCHER
 			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3680,8 +3680,8 @@ ___________________________________________
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Посмотреть обсуждение</a></p>
 			<p>Команда Викия</p>
 ___________________________________________<br>
-* Найти помощь и поддержку можно на Центральной Вики Сообщества: http://community.wikia.com
-* Хотите получать меньше уведомлений? Вы можете настроить рассылку на странице личных настроек: http://community.wikia.com/Special:Preferences',
+* Найти помощь и поддержку можно на Центральной Вики Сообщества: https://community.fandom.com
+* Хотите получать меньше уведомлений? Вы можете настроить рассылку на странице личных настроек: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'на $1',
 	'forum-wiki-activity-msg-name' => 'гл. тема $1',
 	'forum-activity-module-heading' => 'Активность на форуме',
@@ -3853,8 +3853,8 @@ Se diskussionen: ($MESSAGE_LINK)
 Wikia-teamet
 
 ___________________________________________
-* Hitta svar, råd och mer på Community Central: http://community.wikia.com
-* Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra dina e-postadressinställningar här: http://community.wikia.com/Special:Preferences',
+* Hitta svar, råd och mer på Community Central: https://community.fandom.com
+* Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra dina e-postadressinställningar här: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hej $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3863,8 +3863,8 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Se konversationen</a></p>
 <p>Wikia-teamet</p>
 ___________________________________________<br />
-* Hitta svar, råd och mer på Community Central: http://community.wikia.com
-* Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra dina e-postadressinställningar här: http://community.wikia.com/Special:Preferences',
+* Hitta svar, råd och mer på Community Central: https://community.fandom.com
+* Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra dina e-postadressinställningar här: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'på $1',
 	'forum-wiki-activity-msg-name' => 'Underforumet $1',
 	'forum-activity-module-heading' => 'Forumaktivitet',
@@ -4021,8 +4021,8 @@ $MESSAGE_NO_HTML
 Wikia బృందం
 
 ___________________________________________
-* సముదాయ కేంద్రంలో సహాయం పొందండి: http://community.wikia.com
-* మా దగ్గర నుండి సందేశాలు తక్కువగా రావాలనుకుంటున్నారా? చందా విరమించవచ్చు లేదా మీ ఈమెయిలు అభిరుచులను మార్చుకోవచ్చు: http://community.wikia.com/Special:Preferences',
+* సముదాయ కేంద్రంలో సహాయం పొందండి: https://community.fandom.com
+* మా దగ్గర నుండి సందేశాలు తక్కువగా రావాలనుకుంటున్నారా? చందా విరమించవచ్చు లేదా మీ ఈమెయిలు అభిరుచులను మార్చుకోవచ్చు: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hi $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -4031,8 +4031,8 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">సంభాషణ చూడండి</a></p>
 <p>Wikia బృందం</p>
 ___________________________________________<br />
-* సముదాయ కేంద్రంలో సహాయం పొందండి: http://community.wikia.com
-* మా దగ్గర నుండి సందేశాలు తక్కువగా రావాలనుకుంటున్నారా? చందా విరమించవచ్చు లేదా మీ ఈమెయిలు అభిరుచులను మార్చుకోవచ్చు: http://community.wikia.com/Special:Preferences',
+* సముదాయ కేంద్రంలో సహాయం పొందండి: https://community.fandom.com
+* మా దగ్గర నుండి సందేశాలు తక్కువగా రావాలనుకుంటున్నారా? చందా విరమించవచ్చు లేదా మీ ఈమెయిలు అభిరుచులను మార్చుకోవచ్చు: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '$1 లో',
 	'forum-wiki-activity-msg-name' => 'బోర్డు $1',
 	'forum-activity-module-heading' => 'వేదిక కార్యకలాపాలు',
@@ -4196,8 +4196,8 @@ $MESSAGE_NO_HTML
 Команда Вікії
 
 ___________________________________________
-* Ви можете знайти допомогу та поради на (http://community.wikia.com)
-* Хочете отримувати менше таких повідомлень? Ви можете відмовитися від розсилки даних повідомлень, або внести в неї корективи на сторінці власних налаштувань: http://community.wikia.com/Special:Preferences',
+* Ви можете знайти допомогу та поради на (https://community.fandom.com)
+* Хочете отримувати менше таких повідомлень? Ви можете відмовитися від розсилки даних повідомлень, або внести в неї корективи на сторінці власних налаштувань: https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Hi $WATCHER,
 			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -4206,8 +4206,8 @@ ___________________________________________
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Переглянути обговорення</a></p>
 			<p>Команда Вікія</p>
 ___________________________________________<br>
-* Ви можете знайти підтримку і допомогу на Центральній Вікі Спільноти: http://community.wikia.com
-* Хочете отримувати менше таких повідомлень? Ви можете налаштувати розсилку службових повідомлень на сторінці персональних налаштувань: http://community.wikia.com/Special:Preferences',
+* Ви можете знайти підтримку і допомогу на Центральній Вікі Спільноти: https://community.fandom.com
+* Хочете отримувати менше таких повідомлень? Ви можете налаштувати розсилку службових повідомлень на сторінці персональних налаштувань: https://community.fandom.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'на $1',
 	'forum-wiki-activity-msg-name' => 'головна тема $1',
 	'forum-activity-module-heading' => 'Активність на Форумі',
@@ -4677,8 +4677,8 @@ $MESSAGE_NO_HTML
 Wikia团队
 
 ___________________________________________
-* 在社群中心寻求帮助和建议：http://community.wikia.com
-* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
+* 在社群中心寻求帮助和建议：https://community.fandom.com
+* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：https://community.fandom.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => '您好$WATCHER,
 <p>$SUBJECT.</p>
 <p><a href=\\"$MESSAGE_LINK\\">$METATITLE</a></p>
