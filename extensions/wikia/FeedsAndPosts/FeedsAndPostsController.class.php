@@ -51,7 +51,7 @@ class FeedsAndPostsController extends WikiaApiController {
 			$title = Title::newFromText( $articleTitle );
 		}
 
-		$images = ArticleData::getImages($articleId);
+		$images = ArticleData::getImages($title->getArticleID());
 
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
 		$this->response->setValues([
