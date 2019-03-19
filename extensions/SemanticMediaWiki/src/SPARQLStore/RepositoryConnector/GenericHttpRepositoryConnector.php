@@ -64,7 +64,7 @@ class GenericHttpRepositoryConnector implements RepositoryConnection {
 		$this->httpRequest->setOption( CURLOPT_RETURNTRANSFER, true ); // put result into variable
 		$this->httpRequest->setOption( CURLOPT_FAILONERROR, true );
 
-		$this->setConnectionTimeoutInSeconds( 10 );
+		$this->setConnectionTimeoutInSeconds( 10 ); // TODO: allow this to be customised
 	}
 
 	/**
@@ -399,6 +399,8 @@ class GenericHttpRepositoryConnector implements RepositoryConnection {
 			throw new BadHttpDatabaseResponseException( BadHttpDatabaseResponseException::ERROR_NOSERVICE, $sparql, 'not specified' );
 		}
 
+		$then = microtime( true ); // CORE-129 | measure request time
+
 		$this->httpRequest->setOption( CURLOPT_URL, $this->repositoryClient->getQueryEndpoint() );
 
 		$this->httpRequest->setOption( CURLOPT_HTTPHEADER, array(
@@ -416,6 +418,15 @@ class GenericHttpRepositoryConnector implements RepositoryConnection {
 		$this->httpRequest->setOption( CURLOPT_POSTFIELDS, $parameterString );
 
 		$httpResponse = $this->httpRequest->execute();
+
+		// Wikia change
+		// CORE-129 | log HTTP request
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'endpoint' =>  $this->repositoryClient->getQueryEndpoint(),
+			'sparql' => $sparql,
+			'exception' => new \Exception( $this->httpRequest->getLastErrorCode() ),
+			'requestTimeMS' => (int) ( ( microtime( true ) - $then ) * 1000 ),
+		] );
 
 		if ( $this->httpRequest->getLastErrorCode() == 0 ) {
 			$xmlResponseParser = new XmlResponseParser();

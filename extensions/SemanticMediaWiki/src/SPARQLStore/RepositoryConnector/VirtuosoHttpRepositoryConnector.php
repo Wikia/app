@@ -154,6 +154,8 @@ class VirtuosoHttpRepositoryConnector extends GenericHttpRepositoryConnector {
 			throw new BadHttpDatabaseResponseException( BadHttpDatabaseResponseException::ERROR_NOSERVICE, $sparql, 'not specified' );
 		}
 
+		$then = microtime( true ); // CORE-129 | measure request time
+
 		$this->httpRequest->setOption( CURLOPT_URL, $this->repositoryClient->getUpdateEndpoint() );
 		$this->httpRequest->setOption( CURLOPT_POST, true );
 
@@ -161,6 +163,15 @@ class VirtuosoHttpRepositoryConnector extends GenericHttpRepositoryConnector {
 
 		$this->httpRequest->setOption( CURLOPT_POSTFIELDS, $parameterString );
 		$this->httpRequest->execute();
+
+		// Wikia change
+		// CORE-129 | log HTTP request
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'endpoint' =>  $this->repositoryClient->getQueryEndpoint(),
+			'sparql' => $sparql,
+			'exception' => new \Exception( $this->httpRequest->getLastErrorCode() ),
+			'requestTimeMS' => (int) ( ( microtime( true ) - $then ) * 1000 ),
+		] );
 
 		if ( $this->httpRequest->getLastErrorCode() == 0 ) {
 			return true;
