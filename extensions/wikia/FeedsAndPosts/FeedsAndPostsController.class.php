@@ -38,10 +38,11 @@ class FeedsAndPostsController extends WikiaApiController {
 	}
 
 	public function getArticleData() {
-		$articleId = intval( $this->getRequiredParam( 'id' ) );
+		$articleTitle = $this->getRequiredParam( 'title' );
 
-		$title = Title::newFromID($articleId);
-		$images = ArticleData::getImages($articleId);
+		$title = Title::newFromText( $articleTitle );
+
+		$images = ArticleData::getImages($title->getArticleID());
 
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
 		$this->response->setValues([
