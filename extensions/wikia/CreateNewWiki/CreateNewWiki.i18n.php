@@ -1977,7 +1977,7 @@ $messages['lol'] = array(
 	'cnw-theme-show-wiki' => 'crwdns57497:0crwdne57497:0',
 	'cnw-welcome-headline' => 'crwdns15091:0crwdne15091:0',
 	'cnw-welcome-instruction1' => 'crwdns52828:0crwdne52828:0',
-	'cnw-welcome-help' => 'crwdns15093:0crwdne15093:0',
+	'cnw-welcome-help' => 'crwdns83246:0crwdne83246:0',
 	'cnw-error-general' => 'crwdns15094:0crwdne15094:0',
 	'cnw-error-general-heading' => 'crwdns15095:0crwdne15095:0',
 	'cnw-badword-header' => 'crwdns15096:0crwdne15096:0',
@@ -2009,7 +2009,7 @@ $messages['lol'] = array(
 	'autocreatewiki-welcometalk-wall-title' => 'crwdns61643:0crwdne61643:0',
 	'autocreatewiki-welcometalk-wall' => 'crwdns66793:0{{subst:SITENAME}}crwdne66793:0',
 	'autocreatewiki-welcometalk' => 'crwdns66794:0crwdne66794:0',
-	'autocreatewiki-welcomebody-HTML' => 'crwdns66795:0crwdne66795:0',
+	'autocreatewiki-welcomebody-HTML' => 'crwdns83248:0crwdne83248:0',
 	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
 	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
 );
