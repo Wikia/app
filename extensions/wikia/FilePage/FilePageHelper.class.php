@@ -41,7 +41,7 @@ class FilePageHelper {
 				'file' => $title->getText(),
 			] );
 		}
-		\Wikia\Logger\WikiaLogger::instance()->debug( __FUNCTION__, [
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled( __FUNCTION__, [
 			'url' => $url,
 			'prefix' => $prefixedText,
 			'key' => wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() ),
