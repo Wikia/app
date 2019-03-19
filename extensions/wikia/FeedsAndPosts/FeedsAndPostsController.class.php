@@ -38,9 +38,19 @@ class FeedsAndPostsController extends WikiaApiController {
 	}
 
 	public function getArticleData() {
-		$articleId = intval( $this->getRequiredParam( 'id' ) );
+		$articleId = intval( $this->getVal( 'id', null ) );
+		$articleTitle = $this->getVal( 'title' );
 
-		$title = Title::newFromID($articleId);
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException('id or title needs to be provided');
+		}
+
+		if ( !empty( $articleId ) ) {
+			$title = Title::newFromID($articleId);
+		} elseif ( !empty( $articleTitle ) ) {
+			$title = Title::newFromText( $articleTitle );
+		}
+
 		$images = ArticleData::getImages($articleId);
 
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
