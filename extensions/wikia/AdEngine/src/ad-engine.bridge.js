@@ -88,6 +88,7 @@ function init(
 
 	if (legacyContext.get('bidders.prebid')) {
 		context.set('bidders.prebid.enabled', true);
+		context.set('bidders.prebid.useBuiltInTargetingLogic', legacyContext.get('opts.usePrebidBuiltInTargetingLogic'));
 		context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
 		context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
 		context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
@@ -100,7 +101,7 @@ function init(
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
 		context.set('bidders.prebid.rubicon.enabled', legacyContext.get('bidders.rubicon'));
-		context.set('bidders.prebid.rubiconDisplay.enabled', legacyContext.get('bidders.rubiconDisplay'));
+		context.set('bidders.prebid.rubicon_display.enabled', legacyContext.get('bidders.rubiconDisplay'));
 		context.set('bidders.prebid.vmg.enabled', legacyContext.get('bidders.vmg'));
 
 		context.set('bidders.prebid.targeting', {

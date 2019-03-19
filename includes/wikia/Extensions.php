@@ -1797,6 +1797,7 @@ if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+include "$IP/extensions/wikia/WikiaOrgMigration/WikiaOrgMigration.setup.php";
 
 // SUS-5817
 if ( $wgEnableFastlyInsights ) {
@@ -1834,4 +1835,9 @@ if ( !empty( $wgWatchShowURL ) ) {
 // SUS-79
 if ( !empty( $wgEnableEditDraftSavingExt ) ) {
 	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
+}
+
+// CORE-128
+if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
+	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
 }

@@ -317,7 +317,7 @@ export function getBiddersContext(skin) {
 							}
 						}
 					},
-					rubiconDisplay: {
+					rubicon_display: {
 						enabled: false,
 						accountId: 7450,
 						slots: {

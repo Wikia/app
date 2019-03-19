@@ -12,12 +12,12 @@ $messages['en'] = array(
 	'emailext-welcome-fandom-connect-description' => 'Follow @getfandom on your favorite social network for the latest in pop culture, our site and more.',
 	'emailext-welcome-mobile-header' => 'Take FANDOM everywhere',
 	'emailext-welcome-mobile-description' => 'Download your favorite FANDOM Community apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Wikia_University',
+	'emailext-welcome-basics-url' => 'https://community.fandom.com/wiki/Wikia_University',
 	'emailext-welcome-basics-header' => 'Learn the basics',
 	'emailext-welcome-basics-description' => 'Need a quick guide on how to edit a page, start a discussion, or upload stuff? Check out [$1 these tutorials]!',
 	'emailext-welcome-fandom-header' => 'Find your favorite fandom',
 	'emailext-welcome-fandom-description' => 'Discover communities across movies, TV, games, and more. Leave a comment or follow your favorite discussion.',
-	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com FANDOM Community Central].',
+	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [https://community.fandom.com FANDOM Community Central].',
 	'emailext-welcome-footer-closing' => 'Thanks for joining FANDOM!',
 );
 
@@ -107,7 +107,7 @@ $messages['it'] = array(
 	'emailext-welcome-profile-description' => 'Costruisci la tua identità su FANDOM. Connettiti con altri e condividi i tuoi fandom.',
 	'emailext-welcome-mobile-header' => 'Porta FANDOM ovunque',
 	'emailext-welcome-mobile-description' => 'Scarica le tue app di FANDOM preferite per [$1 iOS] o [$2 Android] e non smettere più di pensare ai tuoi fandom.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Fandom_University',
+	'emailext-welcome-basics-url' => 'https://community.fandom.com/wiki/Fandom_University',
 	'emailext-welcome-basics-header' => 'Impara le basi',
 	'emailext-welcome-basics-description' => 'Hai bisogno di un tutorial veloce su come modificare una pagina, dare inizio a una discussione o caricare materiali? Guarda questi [$1 tutorial].',
 	'emailext-welcome-fandom-header' => 'Trova il tuo fandom preferito',
@@ -166,12 +166,12 @@ $messages['nl'] = array(
 	'emailext-welcome-fandom-connect-description' => 'Follow @getfandom on your favorite social network for the latest in pop culture, our site and more.',
 	'emailext-welcome-mobile-header' => 'Take FANDOM everywhere',
 	'emailext-welcome-mobile-description' => 'Download your favorite FANDOM Community apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Wikia_University',
+	'emailext-welcome-basics-url' => 'https://community.fandom.com/wiki/Wikia_University',
 	'emailext-welcome-basics-header' => 'De basics leren',
 	'emailext-welcome-basics-description' => 'Nog een snelle gids nodig over hoe je een pagina bewerkt, een discussie begint of dingen uploadt? Bekijk [$1 deze tutorials]!',
 	'emailext-welcome-fandom-header' => 'Je favoriete fandom vinden',
 	'emailext-welcome-fandom-description' => 'Discover communities across movies, TV, games, and more. Leave a comment or follow your favorite discussion.',
-	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com FANDOM Community Central].',
+	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [https://community.fandom.com FANDOM Community Central].',
 	'emailext-welcome-footer-closing' => 'Thanks for joining FANDOM!',
 );
 

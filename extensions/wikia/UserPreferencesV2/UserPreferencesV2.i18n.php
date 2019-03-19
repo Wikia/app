@@ -89,7 +89,7 @@ $messages['qqq'] = array(
 	'unsubscribe-preferences-toggle-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-unsubscribe}}.',
 	'tog-watchlistdigest-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-me-v2}}.',
 	'tog-justify-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-under-the-hood}} > {{int:prefs-advanced-displayv2}}.',
-	'preferences-v2-user-landing-page' => "Label for the option to change which page the user should be taken to when they navigate to the wiki's URL without specifying a page (i.e. http://community.wikia.com/).",
+	'preferences-v2-user-landing-page' => "Label for the option to change which page the user should be taken to when they navigate to the wiki's URL without specifying a page (i.e. https://community.fandom.com/).",
 	'preferences-v2-redirect-wiki-activity' => 'Option to be taken to the Wiki Activity page when the user navigates to the main wiki URL without a specific page.',
 	'preferences-v2-redirect-main-page' => "Option to be taken to the wiki's main page page when the user navigates to the main wiki URL without a specific page.
 {{Identical|Main page}}",
@@ -339,6 +339,7 @@ $messages['de'] = array(
 	'tog-enotifdiscussions-follows-v2' => '... Diskussionen, denen ich folge, neue Antworten erhalten haben',
 	'tog-enotifdiscussions-votes-v2' => '... meine Diskussionsbeiträge Antworten erhalten haben',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'Community-Newsfeed',
 );
 
 $messages['diq'] = array(
@@ -454,6 +455,8 @@ $messages['es'] = array(
 	'tog-enotifdiscussions-follows-v2' => '... discusiones que estoy siguiendo tengan nuevas respuestas',
 	'tog-enotifdiscussions-votes-v2' => '... mis discusiones reciban votos',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => '
+Feeds de la comunidad',
 );
 
 $messages['eu'] = array(
@@ -599,6 +602,7 @@ $messages['fr'] = array(
 	'tog-enotifdiscussions-follows-v2' => '...des réponses sont ajoutées aux publications de Discussions que je suis',
 	'tog-enotifdiscussions-votes-v2' => '...mes publications de Discussions reçoivent des votes',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'Fil de la communauté',
 );
 
 $messages['fy'] = array(
@@ -765,6 +769,7 @@ $messages['it'] = array(
 	'tog-enotifdiscussions-follows-v2' => '...i post di Discussioni che sto seguendo contengono nuove risposte',
 	'tog-enotifdiscussions-votes-v2' => '...i miei post in Discussioni ricevono voti',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'Feed della Comunità',
 );
 
 $messages['ja'] = array(
@@ -820,6 +825,7 @@ $messages['ja'] = array(
 	'tog-enotifdiscussions-follows-v2' => '自分がフォローしているディスカッションに新しい返信があった場合',
 	'tog-enotifdiscussions-votes-v2' => '自分のディスカッションの投稿に「イイね！」された場合',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'コミュニティ・フィード',
 );
 
 $messages['ko'] = array(
@@ -1164,6 +1170,7 @@ $messages['pl'] = array(
 	'tog-enotifdiscussions-follows-v2' => '...śledzone posty na Dyskusjach otrzymają nowe odpowiedzi.',
 	'tog-enotifdiscussions-votes-v2' => '...moje posty na Dyskusjach otrzymają głosy.',
 	'prefs-monobookv2' => 'Monobook',
+	'preferences-v2-redirect-feeds' => 'Kanały Społeczności',
 );
 
 $messages['ps'] = array(
@@ -1249,6 +1256,7 @@ $messages['pt'] = array(
 	'tog-enotifdiscussions-follows-v2' => '... houver novas respostas em posts que estou seguindo em Discussões',
 	'tog-enotifdiscussions-votes-v2' => '... meus posts em Discussões recebem votos',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'Feeds da comunidade',
 );
 
 $messages['ru'] = array(
@@ -1305,6 +1313,7 @@ $messages['ru'] = array(
 	'tog-enotifdiscussions-follows-v2' => '…в обсуждениях, которые я отслеживаю, появляются новые ответы',
 	'tog-enotifdiscussions-votes-v2' => '…мои сообщения в обсуждениях получают оценки',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => 'Новостная лента',
 );
 
 $messages['sco'] = array(
@@ -1654,6 +1663,7 @@ $messages['zh-hans'] = array(
 	'tog-enotifdiscussions-follows-v2' => '...我关注的讨论帖有新的回复',
 	'tog-enotifdiscussions-votes-v2' => '...我的讨论帖被赞',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => '社区讨论',
 );
 
 $messages['zh-hant'] = array(
@@ -1709,5 +1719,6 @@ $messages['zh-hant'] = array(
 	'tog-enotifdiscussions-follows-v2' => '...我關注的討論文章有新的回覆',
 	'tog-enotifdiscussions-votes-v2' => '...我的討論文章有人按讚',
 	'prefs-monobookv2' => 'MonoBook',
+	'preferences-v2-redirect-feeds' => '社區討論',
 );
 

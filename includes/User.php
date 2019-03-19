@@ -2949,7 +2949,7 @@ class User implements JsonSerializable {
 	 * @param $title Title of the article to look at
 	 */
 	public function clearNotification( Title $title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
+		global $wgUseEnotif, $wgShowUpdatedMarker;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
@@ -2963,11 +2963,10 @@ class User implements JsonSerializable {
 
 			// SUS-2161: Only schedule a notification update if there are new messages
 			if ( $this->getNewtalk() ) {
-				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
-					->title( $title )
-					->wikiId( $wgCityId );
-
+				$task = \Wikia\Tasks\Tasks\WatchlistUpdateTask::newLocalTask();
+				$task->title( $title );
 				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 				$task->queue();
 			}
 		}
@@ -2997,11 +2996,10 @@ class User implements JsonSerializable {
 		// any matching rows
 		if ( $watched ) {
 			// SUS-2161: Use a background task for watchlist update
-			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
-				->title( $title )
-				->wikiId( $wgCityId );
-
+			$task = \Wikia\Tasks\Tasks\WatchlistUpdateTask::newLocalTask();
+			$task->title( $title );
 			$task->call( 'clearWatch', $this->getId() );
+			$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 			$task->queue();
 		}
 	}

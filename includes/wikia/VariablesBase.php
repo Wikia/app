@@ -8908,6 +8908,13 @@ $wgFandomComMigrationCustomMessageAfter = '';
  */
 $wgFandomComMigrationDone = false;
 
+
+/**
+ * Whether the community was migrated to a wikia.org domain, triggers a banner notification
+ * @var bool $wgWikiaOrgMigrationDone
+ */
+$wgWikiaOrgMigrationDone = false;
+
 /**
  * Whether we should enable tracking cookie reset page. This is needed in transition phase
  * when we migrate wikis from .wikia.com to .fandom.com domain.
@@ -8948,3 +8955,10 @@ $wgArticleTagExchangeConfig = [
     'vhost' => 'events',
     'exchange' => 'article-tags',
 ];
+
+/**
+ * Enables QualtricsSiteIntercept extension
+ * @see CORE-128
+ * @var bool
+ */
+$wgEnableQualtricsSiteInterceptExt = false;

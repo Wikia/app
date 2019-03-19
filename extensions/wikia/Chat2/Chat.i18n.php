@@ -82,7 +82,7 @@ $messages['en'] = array(
 	'chat-chatbanremove-log-entry' => 'unbanned $1 from chat',
 	'chat-chatbanchange-log-entry' => 'changed ban settings for $1 with an expiry time of $2, ends $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|This user}} is currently banned from chat. The latest chat ban log entry is provided below for reference:',
-	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="https://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
+	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="https://community.fandom.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
@@ -243,7 +243,7 @@ $messages['ar'] = array(
 	'chat-chatbanremove-log-entry' => 'رفعت الحظر من الدردشة عن $1',
 	'chat-chatbanchange-log-entry' => 'غيرت إعدادات الحظر ل$1 مع مدة انتهاء تساوي $2, وتنتهي في $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|هذا المستخدم ممنوع|هذه المستخدمة ممنوعة}} حاليا من الدردشة. فيما يلي أحدث سجل حظر الدردشة للرجوع إليها:',
-	'chat-browser-is-notsupported' => 'المتصفح الخاص بك غير معتمد. لتجربة أفضل, استخدم <a href="https://community.wikia.com/wiki/Help:Supported_browsers">متصفح أحدث</a>.',
+	'chat-browser-is-notsupported' => 'المتصفح الخاص بك غير معتمد. لتجربة أفضل, استخدم <a href="https://community.fandom.com/wiki/Help:Supported_browsers">متصفح أحدث</a>.',
 	'chat-checkuser-join-action' => 'انضممت للدردشة',
 	'chat-status-away' => 'مشغول',
 );
@@ -958,7 +958,7 @@ $messages['fa'] = array(
 	'chat-chatbanremove-log-entry' => 'تحریم $1 از گپ را لغو کرد',
 	'chat-chatbanchange-log-entry' => 'تحریم از گپ $1 را تا $2 تغییر داد، پایان در $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|این کاربر}} هم‌اکنون از گپ تحریم شده است. آخرین سیاههٔ تحریم از گپ در زیر آمده است:',
-	'chat-browser-is-notsupported' => '	مرورگر شما پشتیبانی نشده است. برای داشتن بهترین تجربه، از یک <a href="https://community.wikia.com/wiki/Help:Supported_browsers">مرورگر تازه‌تر</a> استفاده کنید.',
+	'chat-browser-is-notsupported' => '	مرورگر شما پشتیبانی نشده است. برای داشتن بهترین تجربه، از یک <a href="https://community.fandom.com/wiki/Help:Supported_browsers">مرورگر تازه‌تر</a> استفاده کنید.',
 	'chat-checkuser-join-action' => 'به گپ پیوست',
 	'chat-status-away' => 'دور',
 );
@@ -1038,7 +1038,7 @@ $messages['fi'] = array(
 	'chat-chatbanremove-log-entry' => 'kumosi käyttäjän $1 chattikiellon',
 	'chat-chatbanchange-log-entry' => 'muutti käyttäjän $1 chattikiellon asetuksia. Eston kesto $2, päättyy $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Tämä käyttäjä}} on tällä hetkellä chattikiellossa. Viimeisin chattikieltolokin merkintä viitteenä alla:',
-	'chat-browser-is-notsupported' => 'Selaimesi ei tue Chat-toimintoa. Käytä <a href="https://community.wikia.com/wiki/Help:Supported_browsers">uudempaa selainta</a> parhaimman kokemuksen saamiseksi.',
+	'chat-browser-is-notsupported' => 'Selaimesi ei tue Chat-toimintoa. Käytä <a href="https://community.fandom.com/wiki/Help:Supported_browsers">uudempaa selainta</a> parhaimman kokemuksen saamiseksi.',
 	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
 );
@@ -1287,7 +1287,7 @@ $messages['gl'] = array(
 	'chat-chatbanremove-log-entry' => 'retirou o veto do chat a $1',
 	'chat-chatbanchange-log-entry' => 'cambiou as configuracións do veto de $1 cunha caducidade de $2, remata o $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Este usuario|Esta usuaria}} está {{GENDER:$1|vetado|vetada}} do chat. Velaquí está a última entrada do rexistro de vetos do chat, por se quere consultala:',
-	'chat-browser-is-notsupported' => 'O seu navegador non está soportado. Para obter a mellor experiencia, utilice un <a href="https://community.wikia.com/wiki/Help:Supported_browsers">navegador máis recente</a>.',
+	'chat-browser-is-notsupported' => 'O seu navegador non está soportado. Para obter a mellor experiencia, utilice un <a href="https://community.fandom.com/wiki/Help:Supported_browsers">navegador máis recente</a>.',
 	'chat-checkuser-join-action' => 'Chat unido',
 	'chat-status-away' => 'Ausente',
 );
@@ -1327,7 +1327,7 @@ $messages['he'] = array(
 	'group-chatmoderator-member' => "מנהל צ'אט",
 	'chat-ban-option-list' => 'שעתיים:שעתיים,יום:יום אחד,שלושה ימים:שלושה ימים,שבוע:שבוע אחד,שבועיים:שבועיים,חודש אחד:חודש אחד,שלושה חודשים:שלושה חודשים,שישה חודשים:שישה חודשים,שנה:שנה,לזמן בלתי מוגבל:לזמן בלתי מוגבל',
 	'chat-ban-log-change-ban-link' => 'שינוי החרמה',
-	'chat-browser-is-notsupported' => '	הדפדפן שלך אינו נתמך. לחווייה הטובה ביותר, יש להשתמש <a href="https://community.wikia.com/wiki/Help:Supported_browsers">דפדפן חדש יותר</a>.',
+	'chat-browser-is-notsupported' => '	הדפדפן שלך אינו נתמך. לחווייה הטובה ביותר, יש להשתמש <a href="https://community.fandom.com/wiki/Help:Supported_browsers">דפדפן חדש יותר</a>.',
 	'chat-checkuser-join-action' => "{{GENDER:הצטרף|הצטרפה}} לצ'אט",
 	'chat-status-away' => 'לא זמין',
 );
@@ -1388,7 +1388,7 @@ $messages['hu'] = array(
 	'group-chatmoderator' => 'Csevegés moderátorok',
 	'group-chatmoderator-member' => 'Csevegés moderátorok',
 	'chat-ban-log-change-ban-link' => 'tiltás megváltoztatása',
-	'chat-browser-is-notsupported' => 'A böngésződet nem támogatjuk. A legjobb élményért használj egy <a href="https://community.wikia.com/wiki/Help:Supported_browsers">újabbat</a>.',
+	'chat-browser-is-notsupported' => 'A böngésződet nem támogatjuk. A legjobb élményért használj egy <a href="https://community.fandom.com/wiki/Help:Supported_browsers">újabbat</a>.',
 	'chat-status-away' => 'Távol',
 );
 
@@ -1467,7 +1467,7 @@ Si tu pensa que isto es un error o si tu vole esser reconsiderate, per favor con
 	'chat-chatbanremove-log-entry' => 'disbanniva $1 del chat',
 	'chat-chatbanchange-log-entry' => 'modificava le banno pro $1 con un tempore de expiration de $2, termina $3',
 	'chat-contributions-ban-notice' => 'Iste usator es actualmente bannite del chat. Le ultime entrata del registro de bannos es fornite a basso pro referentia:',
-	'chat-browser-is-notsupported' => 'Iste navigator del web non es supportate. Pro le melior experientia, per favor usa un <a href="https://community.wikia.com/wiki/Help:Supported_browsers">navigator plus nove</a>.',
+	'chat-browser-is-notsupported' => 'Iste navigator del web non es supportate. Pro le melior experientia, per favor usa un <a href="https://community.fandom.com/wiki/Help:Supported_browsers">navigator plus nove</a>.',
 	'chat-checkuser-join-action' => 'Entrava in chat',
 	'chat-status-away' => 'Absente',
 );
@@ -1546,7 +1546,7 @@ $messages['id'] = array(
 	'chat-chatbanremove-log-entry' => '$1 tidak diblokir dari obrolan',
 	'chat-chatbanchange-log-entry' => 'mengubah pengaturan blokir untuk $1 dengan masa akhir $2, dan berakhir $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Pengguna ini}} sedang diblokir dari chat. Chat terbaru dari catatan masukan akan disedikan dibawah untuk referensi:',
-	'chat-browser-is-notsupported' => 'Browser anda tidak didukung, untuk pengalaman yang terbaik, gunakan <a href="https://community.wikia.com/wiki/Help:Supported_browsers">browser terbaru</a>.',
+	'chat-browser-is-notsupported' => 'Browser anda tidak didukung, untuk pengalaman yang terbaik, gunakan <a href="https://community.fandom.com/wiki/Help:Supported_browsers">browser terbaru</a>.',
 	'chat-checkuser-join-action' => 'Bergabung kedalam Obrolan',
 	'chat-status-away' => 'Sibuk',
 	'chatbanlist' => 'Daftar Obrolan yang dilarang',
@@ -1739,7 +1739,7 @@ $messages['ja'] = array(
 	'chat-chatbanremove-log-entry' => '$1 の追放を解除しました。',
 	'chat-chatbanchange-log-entry' => '$1 のチャット追放設定を$2の有効期限で、$3までに変更しました。',
 	'chat-contributions-ban-notice' => 'このユーザーは現在チャットから追放されています。 参考のために最新の追放記録を以下に表示します：',
-	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
+	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="https://community.fandom.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
 	'grouppage-chatmoderator' => 'w:c:ja.community:ヘルプ:チャット',
@@ -1892,7 +1892,7 @@ $messages['ko'] = array(
 	'chat-chatbanremove-log-entry' => '$1 사용자의 채팅방 차단을 해제함',
 	'chat-chatbanchange-log-entry' => '$1 사용자의 채팅방 차단 기간을 $2로 재설정함 ($3에 종료)',
 	'chat-contributions-ban-notice' => '이 사용자는 현재 채팅방에서 차단되어 있습니다. 차단된 이유는 다음과 같습니다:',
-	'chat-browser-is-notsupported' => '회원님께서 사용하고 계신 웹 브라우저는 더 이상 지원되지 않습니다. 더 나은 경험을 위해 <a href="https://community.wikia.com/wiki/Help:Supported_browsers">새로 나온 웹 브라우저</a>를 사용해보세요.',
+	'chat-browser-is-notsupported' => '회원님께서 사용하고 계신 웹 브라우저는 더 이상 지원되지 않습니다. 더 나은 경험을 위해 <a href="https://community.fandom.com/wiki/Help:Supported_browsers">새로 나온 웹 브라우저</a>를 사용해보세요.',
 	'chat-checkuser-join-action' => '참여한 채팅방',
 	'chat-status-away' => '부재중',
 );
@@ -2025,7 +2025,7 @@ $messages['lol'] = array(
 	'chat-chatbanremove-log-entry' => 'crwdns61350:0crwdne61350:0',
 	'chat-chatbanchange-log-entry' => 'crwdns61351:0crwdne61351:0',
 	'chat-contributions-ban-notice' => 'crwdns71039:0{GENDER:$1|This user}crwdne71039:0',
-	'chat-browser-is-notsupported' => 'crwdns61353:0crwdne61353:0',
+	'chat-browser-is-notsupported' => 'crwdns83242:0crwdne83242:0',
 	'chat-checkuser-join-action' => 'crwdns61354:0crwdne61354:0',
 	'chat-status-away' => 'crwdns61355:0crwdne61355:0',
 	'chat-blocklist-timestamp' => 'crwdns71041:0crwdne71041:0',
@@ -2121,7 +2121,7 @@ $messages['lt'] = array(
 	'chat-private-headline' => 'Privatus pokalbis su $1',
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
-	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="https://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
+	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="https://community.fandom.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
 );
 
 $messages['lv'] = array(
@@ -2203,7 +2203,7 @@ $messages['mk'] = array(
 	'chat-chatbanremove-log-entry' => 'отповикана забрана на корисникот $1',
 	'chat-chatbanchange-log-entry' => 'изменети поставките за забрана на пристап на корисникот $1 со траење од $2; истекува $3',
 	'chat-contributions-ban-notice' => 'На {{GENDER:$1|овој корисник}} моментално му е забранет пристапот во разговор. Последните ставки во дневникот на забрани, за ваша информација се дадени подолу:',
-	'chat-browser-is-notsupported' => 'Вашиот прелистувач не е поддржан. Најдобро е да користите <a href="https://community.wikia.com/wiki/Help:Supported_browsers">понов прелистувач</a>.',
+	'chat-browser-is-notsupported' => 'Вашиот прелистувач не е поддржан. Најдобро е да користите <a href="https://community.fandom.com/wiki/Help:Supported_browsers">понов прелистувач</a>.',
 	'chat-checkuser-join-action' => 'Се приклучил во разговорот',
 	'chat-status-away' => 'Отсутен',
 );
@@ -2288,7 +2288,7 @@ Jika anda rasa ini kesilapan atau ingin merayu untuk dibenarkan semula, sila hub
 	'chat-chatbanremove-log-entry' => 'membenarkan semula $1 untuk bersembang',
 	'chat-chatbanchange-log-entry' => 'mengubah tetapan larangan untuk $1 selama $2, berakhir pada $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Pengguna}} ini kini dilarang daripada bersembang. Masukan log sekatan sembang terkin disediakan di bawah sebagai rujukan:',
-	'chat-browser-is-notsupported' => 'Pelayar anda tidak disokong. Demi kemudahan anda, gunakan <a href="https://community.wikia.com/wiki/Help:Supported_browsers">pelayar yang lebih baharu</a>.',
+	'chat-browser-is-notsupported' => 'Pelayar anda tidak disokong. Demi kemudahan anda, gunakan <a href="https://community.fandom.com/wiki/Help:Supported_browsers">pelayar yang lebih baharu</a>.',
 	'chat-checkuser-join-action' => 'Menyertai Sembang',
 	'chat-status-away' => 'Keluar',
 );
@@ -2368,7 +2368,7 @@ $messages['nb'] = array(
 	'chat-chatbanremove-log-entry' => 'opphevet utestengelsen til $1 fra chatten',
 	'chat-chatbanchange-log-entry' => 'endret utestengningsinnstillinger for $1 med en varighet på $2, oppheves $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Denne brukeren}} er for øyeblikket utestengt fra chatten. Den siste oppføringen i loggen over chatutestengninger oppgis nedenfor for referanse:',
-	'chat-browser-is-notsupported' => 'Nettleseren din støttes ikke. For en best mulig opplevelse, bruk en <a href="https://community.wikia.com/wiki/Help:Supported_browsers">nyere nettleser</a>.',
+	'chat-browser-is-notsupported' => 'Nettleseren din støttes ikke. For en best mulig opplevelse, bruk en <a href="https://community.fandom.com/wiki/Help:Supported_browsers">nyere nettleser</a>.',
 	'chat-checkuser-join-action' => 'Ble med i chatten',
 	'chat-status-away' => 'Borte',
 );
@@ -2458,7 +2458,7 @@ $messages['nl'] = array(
 	'chat-chatbanchange-log-entry' => 'heeft de verbanningsinstellingen voor $1 gewijzigd naar een verlooptijd van $2; eindigt $3.',
 	'chat-contributions-ban-notice' => 'Deze gebruik{{GENDER:$1|er|ster}} is op het moment verbannen uit de chat.
 De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie weergegeven:',
-	'chat-browser-is-notsupported' => 'Uw browser wordt niet ondersteund. Gebruik een <a href="https://community.wikia.com/wiki/Help:Supported_browsers">nieuwere browser</a> voor de beste ervaring.',
+	'chat-browser-is-notsupported' => 'Uw browser wordt niet ondersteund. Gebruik een <a href="https://community.fandom.com/wiki/Help:Supported_browsers">nieuwere browser</a> voor de beste ervaring.',
 	'chat-checkuser-join-action' => 'Verbonden met chat',
 	'chat-status-away' => 'Weg',
 );
@@ -2702,7 +2702,7 @@ $messages['pms'] = array(
 	'chat-chatbanremove-log-entry' => "a l'ha sganfà l'espulsion ëd $1 da le ciaciarade dal viv",
 	'chat-chatbanchange-log-entry' => "a l'ha modificà j'ampostassion dël blocagi për $1 con na durà ëd $2, a finiss ai $3",
 	'chat-contributions-ban-notice' => "{{GENDER:$1|St'utent-sì}} a l'é al moment blocà da le ciaciarade dal viv. L'ùltima vos dël registr dij blocagi dle ciaciarade dal viv a l'é butà sì-sota 'me arferiment:",
-	'chat-browser-is-notsupported' => 'Sò navigador a l\'é pa mantnù. Për na mej esperiensa, ch\'a deuvra un <a href="https://community.wikia.com/wiki/Help:Supported_browsers">navigador pi neuv</a>.',
+	'chat-browser-is-notsupported' => 'Sò navigador a l\'é pa mantnù. Për na mej esperiensa, ch\'a deuvra un <a href="https://community.fandom.com/wiki/Help:Supported_browsers">navigador pi neuv</a>.',
 	'chat-checkuser-join-action' => "A l'é intrà ant la ciaciarada dal viv",
 	'chat-status-away' => 'Assent',
 );
@@ -3069,7 +3069,7 @@ $messages['sco'] = array(
 	'chat-chatbanremove-log-entry' => 'onbanned $1 fae the bleather',
 	'chat-chatbanchange-log-entry' => 'chynged ban settins fer $1 wi aen expirie time o $2, ends $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|This uiser}} is banned fae the bleather fer nou. The laitest bleather ban log entrie is providit ablo fer referance:',
-	'chat-browser-is-notsupported' => '	Yer brouser isna supportit. Fer the best expereeance, uise ae <a href="https://community.wikia.com/wiki/Help:Supported_browsers">newer brouser</a>.',
+	'chat-browser-is-notsupported' => '	Yer brouser isna supportit. Fer the best expereeance, uise ae <a href="https://community.fandom.com/wiki/Help:Supported_browsers">newer brouser</a>.',
 	'chat-checkuser-join-action' => 'Jyned Bleather',
 	'chat-status-away' => 'Awa',
 );
@@ -3261,7 +3261,7 @@ $messages['sv'] = array(
 	'chat-chatbanremove-log-entry' => 'upphävde förbud från chatten för $1',
 	'chat-chatbanchange-log-entry' => 'ändrade förbudsinställningar för $1 med en varaktighet på $2, som upphör $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Denna användare}} är för tillfället förbjuden från chatten. Den senaste inlägget i chattförbudsloggen finns nedan som referens:',
-	'chat-browser-is-notsupported' => 'Din webbläsare stöds inte. För den bästa upplevelsen, använd en <a href="https://community.wikia.com/wiki/Help:Supported_browsers">nyare webbläsare</a>.',
+	'chat-browser-is-notsupported' => 'Din webbläsare stöds inte. För den bästa upplevelsen, använd en <a href="https://community.fandom.com/wiki/Help:Supported_browsers">nyare webbläsare</a>.',
 	'chat-checkuser-join-action' => 'Gick med i chatten',
 	'chat-status-away' => 'Borta',
 );
@@ -3415,7 +3415,7 @@ Kung iniisip mong isa itong pagkakamali o nais mong muling maisaalang-alang, man
 	'chat-chatbanremove-log-entry' => 'hindi na pinagbawalan si $1 mula sa satsatan',
 	'chat-chatbanchange-log-entry' => 'binago ang katakdaan ng paghadlang para kay $1 na may oras ng pagtatapos na $2, magwawakas sa $3',
 	'chat-contributions-ban-notice' => 'Kasalukuyang pinagbabawalan ang tagagamit na ito mula sa satsatan. Ang pinakahuling lahok sa talaan ng pagbabawal sa satsatan ay ibinigay sa ibaba para sa pagsangguni:',
-	'chat-browser-is-notsupported' => 'Hindi sinusuportahan ang pantingin-tingin mo. Para sa pinaka mahusay na karanasan, gumamit ng isang <a href="https://community.wikia.com/wiki/Help:Supported_browsers">mas bagong pantingin-tingin</a>.',
+	'chat-browser-is-notsupported' => 'Hindi sinusuportahan ang pantingin-tingin mo. Para sa pinaka mahusay na karanasan, gumamit ng isang <a href="https://community.fandom.com/wiki/Help:Supported_browsers">mas bagong pantingin-tingin</a>.',
 	'chat-checkuser-join-action' => 'Sumali sa Satsatan',
 	'chat-status-away' => 'Nasa malayo',
 );
@@ -3524,7 +3524,7 @@ $messages['uk'] = array(
 	'chat-chatbanremove-log-entry' => '$1 розблокований у чаті',
 	'chat-chatbanchange-log-entry' => 'змінено параметри заборони для $1 на термін $2, завершується $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Цей користувач заблокований|Ця користувачка заблокована}} на даний час у чаті. Ниже наведено останній запис із журналу блокувань у чаті:',
-	'chat-browser-is-notsupported' => 'Ваш браузер не підтримується. Для найкращого результату використовуйте <a href="https://community.wikia.com/wiki/Help:Supported_browsers">новий браузер</a>.',
+	'chat-browser-is-notsupported' => 'Ваш браузер не підтримується. Для найкращого результату використовуйте <a href="https://community.fandom.com/wiki/Help:Supported_browsers">новий браузер</a>.',
 	'chat-checkuser-join-action' => 'Приєднатися',
 	'chat-status-away' => 'Відсутній',
 );
@@ -3610,7 +3610,7 @@ $messages['vi'] = array(
 	'chat-chatbanremove-log-entry' => 'bỏ cấm $1 khỏi tán gẫu',
 	'chat-chatbanchange-log-entry' => 'thay đổi thiết lập cấm cho $1 với thời hạn $2, kết thúc $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Thành viên này}} bị cấm không được tham gia chat. Nhật kí cấm được cung cấp dưới đây để tham khảo:',
-	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="https://community.wikia.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
+	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="https://community.fandom.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
 	'chat-status-away' => 'Vắng',
 	'grouppage-chatmoderator' => 'w:c:vi:Help:Tán gẫu',
