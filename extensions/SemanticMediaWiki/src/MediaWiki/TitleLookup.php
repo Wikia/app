@@ -74,7 +74,8 @@ class TitleLookup {
 			$options = array( 'USE INDEX' => 'PRIMARY' );
 		}
 
-		$res = $this->connection->select(
+		$db_mw = wfGetDB( DB_SLAVE ); // Wikia change
+		$res = $db_mw->select(
 			$tableName,
 			$fields,
 			$conditions,

@@ -116,8 +116,9 @@ class ByIdDataRebuildDispatcher {
 	public function getMaxId() {
 
 		$db = $this->store->getConnection( 'mw.db' );
+		$db_mw = wfGetDB( DB_SLAVE ); // Wikia change
 
-		$maxByPageId = (int)$db->selectField(
+		$maxByPageId = (int)$db_mw->selectField(
 			'page',
 			'MAX(page_id)',
 			'',
@@ -362,11 +363,12 @@ class ByIdDataRebuildDispatcher {
 
 		$nextPosition = $id + $this->iterationLimit;
 		$db = $this->store->getConnection( 'mw.db' );
+		$db_mw = wfGetDB( DB_SLAVE ); // Wikia change
 
 		// nothing found, check if there will be more pages later on
 		if ( $emptyRange && $nextPosition > \SMWSql3SmwIds::FXD_PROP_BORDER_ID ) {
 
-			$nextByPageId = (int)$db->selectField(
+			$nextByPageId = (int)$db_mw->selectField(
 				'page',
 				'page_id',
 				"page_id >= $nextPosition",
