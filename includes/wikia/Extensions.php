@@ -353,6 +353,17 @@ if (!empty($wgEnableSimpleCalendarExt)) {
 if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSemanticMediaWikiExt)) {
 	$smwgNamespaceIndex = 300;
 
+	// CORE-129 | use triple store database for SMW queries
+	// @see https://www.semantic-mediawiki.org/wiki/Help:Using_SPARQL_and_RDF_stores
+	if ( !empty( $smwgUseSparqlStore ) ) {
+		$smwgDefaultStore = 'SMWSparqlStore';
+		$smwgSparqlDatabaseConnector = 'virtuoso';
+		$smwgSparqlQueryEndpoint = 'http://dev-docker-s2:8890/sparql/';
+		$smwgSparqlUpdateEndpoint = 'http://dev-docker-s2:8890/sparql/';
+		$smwgSparqlDataEndpoint = '';
+		$smwgSparqlDefaultGraph = 'http://fandom.com/smw';
+	}
+
 	include("$IP/extensions/SemanticMediaWiki/SemanticMediaWiki.php");
 
 	// hack for devboxes and other undefined environment, wgServer should be
