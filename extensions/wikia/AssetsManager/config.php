@@ -177,7 +177,6 @@ $config['adengine2_top_js'] = [
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.lagger.js',
 		'//extensions/wikia/AdEngine/dist/bidders.js',
 		'//extensions/wikia/AdEngine/dist/bridge.js',
 		'//extensions/wikia/AdEngine/dist/engine.js',
@@ -2294,7 +2293,6 @@ $config['jwplayer_mobile_featured_video_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.lagger.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];
@@ -2395,6 +2393,13 @@ $config['fandom_com_migration_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/FandomComMigration/scripts/fandom-com-migration.js',
+	]
+];
+
+$config['wikia_org_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/WikiaOrgMigration/scripts/wikia-org-migration.js',
 	]
 ];
 

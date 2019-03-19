@@ -189,6 +189,10 @@ export function getBiddersContext(skin) {
 							FEATURED: {
 								placementId: '523',
 								siteId: '890798'
+							},
+							INCONTENT_PLAYER: {
+								placementId: '523',
+								siteId: '892126'
 							}
 						}
 					},
@@ -241,6 +245,14 @@ export function getBiddersContext(skin) {
 								],
 								ids: [
 									'1636185@0x0'
+								]
+							},
+							INCONTENT_PLAYER: {
+								sizes: [
+									[0, 0]
+								],
+								ids: [
+									'1636186@0x0'
 								]
 							},
 							TOP_LEADERBOARD: {
@@ -305,7 +317,7 @@ export function getBiddersContext(skin) {
 							}
 						}
 					},
-					rubiconDisplay: {
+					rubicon_display: {
 						enabled: false,
 						accountId: 7450,
 						slots: {

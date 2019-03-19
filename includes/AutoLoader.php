@@ -514,6 +514,7 @@ $wgAutoloadLocalClasses = array(
 	'CreateFileOp' => 'includes/filerepo/backend/FileOp.php',
 	'NullFileOp' => 'includes/filerepo/backend/FileOp.php',
 	'GcsFileBackend' => 'includes/filerepo/backend/GcsFileBackend.php',
+	'GcsIgnoreSourceFileBackend' => 'includes/filerepo/backend/GcsIgnoreSourceFileBackend.php',
 	'GcsPathFactory' => 'includes/filerepo/backend/googlecloudstorage/GcsPathFactory.php',
 	'GoogleCloudFileList' => 'includes/filerepo/backend/googlecloudstorage/GoogleCloudFileList.php',
 

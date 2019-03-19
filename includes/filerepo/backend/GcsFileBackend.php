@@ -1,5 +1,6 @@
 <?php
 
+use Google\Cloud\Core\Exception\NotFoundException;
 use Google\Cloud\Storage\Bucket;
 use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;

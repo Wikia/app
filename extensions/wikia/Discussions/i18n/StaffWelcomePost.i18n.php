@@ -6,9 +6,9 @@ $messages['en'] = array(
 	'discussions-staff-welcome-post' => "
 This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others. The content from your Forum has been converted to Discussions posts, so nothing has been lost.
 
-To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
+To learn more about what you can do here, check out https://community.fandom.com/wiki/Help:Discussions
 
-If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: http://community.wikia.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
+If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: https://community.fandom.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
 
 Have fun!
 ",
@@ -111,9 +111,9 @@ $messages['ko'] = array(
 	'discussions-staff-welcome-post' => "
 This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others. The content from your Forum has been converted to Discussions posts, so nothing has been lost.
 
-To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
+To learn more about what you can do here, check out https://community.fandom.com/wiki/Help:Discussions
 
-If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: http://community.wikia.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
+If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: https://community.fandom.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
 
 Have fun!
 ",
@@ -124,9 +124,9 @@ $messages['nl'] = array(
 	'discussions-staff-welcome-post' => "
 This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others. The content from your Forum has been converted to Discussions posts, so nothing has been lost.
 
-To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
+To learn more about what you can do here, check out https://community.fandom.com/wiki/Help:Discussions
 
-If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: http://community.wikia.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
+If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: https://community.fandom.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
 
 Have fun!
 ",
@@ -178,9 +178,9 @@ $messages['vi'] = array(
 	'discussions-staff-welcome-post' => "
 This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others. The content from your Forum has been converted to Discussions posts, so nothing has been lost.
 
-To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
+To learn more about what you can do here, check out https://community.fandom.com/wiki/Help:Discussions
 
-If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: http://community.wikia.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
+If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: https://community.fandom.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
 
 Have fun!
 ",

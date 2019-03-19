@@ -49,8 +49,8 @@ See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the new page.
 <br /><hr />
 <p>
 <ul>
-<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
-<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.
+<li>Find help and advice on <a href="https://community.fandom.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.
 </li>
 </ul>
 </p>',
@@ -63,8 +63,8 @@ Go to "$PAGETITLE_URL" to read the new post.
 - Wikia Community Team
 
 ___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: https://community.fandom.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: https://community.fandom.com/Special:Preferences',
 	'enotif_body_blogpost-HTML' => 'Hi $WATCHINGUSERNAME,
 <br /><br />
 A new blog post has been added to <a href="$BLOGLISTING_URL">$BLOGLISTING</a> on {{SITENAME}}.
@@ -75,8 +75,8 @@ Go to <a href="$PAGETITLE_URL">$PAGETITLE</a> to read the new post.
 <br /><hr />
 <p>
 <ul>
-<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
-<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>
+<li>Find help and advice on <a href="https://community.fandom.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="https://community.fandom.com/Special:Preferences">here</a>.</li>
 </ul>
 </p>',
 );

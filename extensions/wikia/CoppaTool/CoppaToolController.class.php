@@ -162,7 +162,7 @@ class CoppaToolController extends WikiaController {
 			'reason' => wfMessage( 'coppatool-reason' )->plain(),
 		];
 		$task = ( new RenameIPTask() )
-			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
+			->setQueue( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call('renameIP', $wikiIDs, $taskParams);
 		$taskID = $task->queue();
 

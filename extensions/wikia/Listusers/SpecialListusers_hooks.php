@@ -32,6 +32,7 @@ class ListusersHooks {
 
 		$task = UpdateListUsersTask::newLocalTask();
 		$task->call( 'updateUserGroups', $listUsersUpdate );
+		$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 		$task->queue();
 	}
 
@@ -48,6 +49,7 @@ class ListusersHooks {
 
 		$task = UpdateListUsersTask::newLocalTask();
 		$task->call( 'updateEditInformation', $editUpdate );
+		$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 		$task->queue();
 	}
 }

@@ -43,29 +43,24 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
-		global $wgCityId;
-
 		if ( $title->getNamespace() == NS_FILE ) {
-			$task = ( new ParsoidCacheUpdateTask() )
-				->wikiId( $wgCityId )
+			$task = ParsoidCacheUpdateTask::newLocalTask()
 				->title( $title )
-				->setPriority(ParsoidPurgeQueue::NAME);
+				->setQueue(ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'imagelinks' );
 			$task->queue();
 		} else {
-			$task = ( new ParsoidCacheUpdateTask() )
-				->wikiId( $wgCityId )
+			$task = ParsoidCacheUpdateTask::newLocalTask()
 				->title( $title )
-				->setPriority(ParsoidPurgePriorityQueue::NAME);
+				->setQueue(ParsoidPurgePriorityQueue::NAME);
 
 			$task->call( 'onEdit' );
 			$task->queue();
 
-			$task = ( new ParsoidCacheUpdateTask() )
-				->wikiId( $wgCityId )
+			$task = ParsoidCacheUpdateTask::newLocalTask()
 				->title( $title )
-				->setPriority(ParsoidPurgeQueue::NAME);
+				->setQueue(ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'templatelinks' );
 			$task->queue();

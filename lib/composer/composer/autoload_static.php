@@ -3684,6 +3684,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Tasks\\AsyncTaskList' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/AsyncTaskList.php',
         'Wikia\\Tasks\\Producer\\EditCountTaskProducer' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Producer/EditCountTaskProducer.php',
         'Wikia\\Tasks\\Producer\\SiteStatsUpdateTaskProducer' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Producer/SiteStatsUpdateTaskProducer.php',
+        'Wikia\\Tasks\\Queues\\DeferredInsertsQueue' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Queues/DeferredInsertsQueue.php',
         'Wikia\\Tasks\\Queues\\DumpsOnDemandQueue' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Queues/DumpsOnDemandQueue.php',
         'Wikia\\Tasks\\Queues\\ParsoidPurgePriorityQueue' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Queues/ParsoidPurgePriorityQueue.php',
         'Wikia\\Tasks\\Queues\\ParsoidPurgeQueue' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Queues/ParsoidPurgeQueue.php',
