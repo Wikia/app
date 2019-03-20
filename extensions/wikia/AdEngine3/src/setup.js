@@ -48,8 +48,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
 	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
-	context.set('wiki.targeting.hasIncontentPlayer', slots.isIncontentPlayerApplicable());
-
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
 		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
 		const originalSrc = context.get('src');
@@ -61,6 +59,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	isGeoEnabled('wgAdDriverLABradorTestCountries');
 
 	context.set('slots', slots.getContext());
+
+	context.set('wiki.targeting.hasIncontentPlayer', slots.isIncontentPlayerApplicable());
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);

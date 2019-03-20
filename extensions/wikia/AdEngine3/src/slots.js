@@ -1,4 +1,4 @@
-import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
+import { AdSlot, context, events, slotInjector, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
@@ -10,18 +10,6 @@ const PAGE_TYPES = {
 	article: 'a',
 	home: 'h',
 };
-
-/**
- * Gets article H2 node where ICP can be injected
- *
- * @returns {Node}
- */
-function getIncontentPlayerHeaderNode() {
-	return Array.prototype.slice.call(
-		document.querySelectorAll('#mw-content-text > h2'),
-		1
-	).filter((el) => utils.getTopOffset(el) > utils.getViewportHeight())[0];
-}
 
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
@@ -216,11 +204,12 @@ export default {
 			},
 			incontent_player: {
 				adProduct: 'incontent_player',
-				avoidConflictWith: '.ad-slot',
+				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
 				bidderAlias: 'INCONTENT_PLAYER',
-				insertBeforeSelector: '.article-content > h2',
+				insertBeforeSelector: '#mw-content-text > h2',
+				insertBelowFirstViewport: true,
 				disabled: true,
 				slotNameSuffix: '',
 				group: 'HiVi',
@@ -298,7 +287,7 @@ export default {
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', this.isIncontentPlayerApplicable());
+		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 		slotService.setState('incontent_native', isIncontentNativeApplicable());
@@ -371,26 +360,19 @@ export default {
 	 * @returns {boolean}
 	 */
 	isIncontentPlayerApplicable() {
-		const header = getIncontentPlayerHeaderNode();
+		const slotName = 'incontent_player';
 
-		return !context.get('custom.hasFeaturedVideo') && header && header.offsetWidth >= header.parentNode.offsetWidth;
+		return !context.get('custom.hasFeaturedVideo') && slotInjector.inject(slotName, true);
 	},
 
 	injectIncontentPlayer() {
-		const header = getIncontentPlayerHeaderNode();
+		const slotName = 'incontent_player';
 
-		if (!header || !this.isIncontentPlayerApplicable()) {
+		if (!context.get('wiki.targeting.hasIncontentPlayer')) {
 			return;
 		}
 
-		const slotName = 'incontent_player';
-		const wrapper = document.createElement('div');
-
-		wrapper.id = 'INCONTENT_WRAPPER';
-		wrapper.innerHTML = '<div id="' + slotName + '" class="wikia-ad hide"></div>';
-		header.parentNode.insertBefore(wrapper, header);
-
-		context.push('state.adStack', { id: slotName });
+		slotInjector.inject(slotName);
 	},
 
 	injectIncontentBoxad() {
