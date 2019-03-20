@@ -44,9 +44,12 @@ $wgHooks['GlobalUsageImagePageWikiLink'][] = 'FilePageHooks::onGlobalUsageImageP
 $wgHooks['GlobalUsageLinksUpdateComplete'][] = 'FilePageHooks::onGlobalUsageLinksUpdateComplete';
 $wgHooks['BeforePageDisplay'][] = 'FilePageHooks::onBeforePageDisplay';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'FilePageHooks::onWikiaMobileAssetsPackages';
-$wgHooks['FilePages:InsertSurrogateKey'][] = 'FilePageHooks::onInsertSurrogateKey';
-$wgHooks['UndeleteComplete'][] = 'FilePageHooks::onUndeleteComplete';
-$wgHooks['ArticleDelete'][] = 'FilePageHooks::onArticleDelete';
-$wgHooks['ArticleSaveComplete'][] = 'FilePageHooks::onArticleSaveComplete';
-$wgHooks['ArticleGetFileLinks'][] = 'FilePageHooks::onGetFileLinks';
-$wgHooks['ArticleSave'][] = 'FilePageHooks::onArticleSave';
+
+if ( $wgRedirectFilePagesForAnons ) {
+	$wgHooks['FilePages:InsertSurrogateKey'][] = 'FilePageHooks::onInsertSurrogateKey';
+	$wgHooks['UndeleteComplete'][] = 'FilePageHooks::onUndeleteComplete';
+	$wgHooks['ArticleDelete'][] = 'FilePageHooks::onArticleDelete';
+	$wgHooks['ArticleSaveComplete'][] = 'FilePageHooks::onArticleSaveComplete';
+	$wgHooks['ArticleGetFileLinks'][] = 'FilePageHooks::onGetFileLinks';
+	$wgHooks['ArticleSave'][] = 'FilePageHooks::onArticleSave';
+}

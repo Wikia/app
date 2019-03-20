@@ -1801,3 +1801,6 @@ if ( !empty( $wgWatchShowURL ) ) {
 if ( !empty( $wgEnableEditDraftSavingExt ) ) {
 	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
 }
+
+// PLATFORM-3973
+include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );

@@ -23,10 +23,6 @@ class FilePageHelper {
 	 * @return string $purl - prefixedText to redirect to
 	 */
 	public static function getFilePageRedirectUrl( Title $title, bool $onlyDB = false ) {
-		global $wgRedirectFilePagesForAnons;
-		if ( !$wgRedirectFilePagesForAnons ) {
-			return "";
-		}
 		$prefixedText = self::getFilePageRedirectPrefixedText( $title, $onlyDB );
 		if ( $prefixedText == "" ) {
 			\Wikia\Logger\WikiaLogger::instance()->warning( __FUNCTION__, [
