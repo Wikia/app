@@ -166,18 +166,11 @@ function getZone(adsContext) {
 }
 
 function getLikhoParams() {
-  const likhoStorage = JSON.parse(localStorage.getItem('likho')) || [];
-  const params = [];
+  let likhoStorage = JSON.parse(localStorage.getItem('likho')) || [];
 
-  likhoStorage.forEach((item, index, object) => {
-    if (item.expirationTime > Date.now()) {
-      params.push(item.likhoType);
-    } else {
-      object.splice(index, 1);
-    }
-  });
+  likhoStorage = likhoStorage.filter(item => item.expirationTime > Date.now());
   localStorage.setItem('likho', JSON.stringify(likhoStorage));
-  return params.join();
+  return likhoStorage.map(item => item.likhoType);
 }
 
 export default {
