@@ -84,6 +84,18 @@ class PlacesParserHookHandler {
 
 		$html = self::cleanHTML($html);
 
+		// tag pages with <place> tag using SemanticMediaWiki "Geo" property
+		global $wgEnableSemanticMediaWikiExt;
+		if ( !empty( $wgEnableSemanticMediaWikiExt ) ) {
+			# [[Test geographic coordinate:: -32.715°, -77.03201°]]
+			$smw_set = sprintf( "{{#set:Geo=%.6f°, %.6f°}}",
+					$placeModel->getLat(), $placeModel->getLon() );
+
+			$html .= $parser->recursiveTagParse( $smw_set );
+		}
+
+		# var_dump(__METHOD__, $placeModel, $smw_set ); print_pre($html); die;
+
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
