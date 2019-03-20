@@ -165,6 +165,21 @@ function getZone(adsContext) {
 	};
 }
 
+function getLikhoParams() {
+  const likhoStorage = JSON.parse(localStorage.getItem('likho')) || [];
+  const params = [];
+
+  likhoStorage.forEach((item, index, object) => {
+    if (item.expirationTime > Date.now()) {
+      params.push(item.likhoType);
+    } else {
+      object.splice(index, 1);
+    }
+  });
+  localStorage.setItem('likho', JSON.stringify(likhoStorage));
+  return params.join();
+}
+
 export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
@@ -187,6 +202,7 @@ export default {
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
 			geo: utils.getCountryCode() || 'none',
+			likho: getLikhoParams(),
 		};
 
 		if (window.pvNumber) {
