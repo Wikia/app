@@ -181,8 +181,8 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @return true -- because it's a hook
 	 */
-	public static function onInsertSurrogateKey( Title $title ) {
-		Wikia::setSurrogateKeysHeaders( FilePageHelper::getSurrogateKeys( $title ), false );
+	public static function onInsertSurrogateKey( Title $title , &$surrogateKeys ) {
+		$surrogateKeys = array_merge( $surrogateKeys, FilePageHelper::getSurrogateKeys( $title ) );
 
 		return true;
 	}
