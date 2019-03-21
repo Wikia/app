@@ -42,11 +42,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				appendChild: noop
 			},
 			slotTargetingData: {},
-			sraHelper: {
-				shouldFlush: function () {
-					return true;
-				}
-			},
 			uapContext: {
 				getUapId: noop,
 				getCreativeId: noop
@@ -122,8 +117,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.slotTweaker,
 			mocks.doc,
 			mocks.log,
-			undefined,
-			mocks.sraHelper
+			undefined
 		);
 	}
 
@@ -185,45 +179,15 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(mocks.googleTag.init).not.toHaveBeenCalled();
 	});
 
-	it('Push and flush ATF slot when SRA is not enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
-
-		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, {});
-
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
-	});
-
-	it('Only push ATF slot when SRA is enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
-		spyOn(mocks.sraHelper, 'shouldFlush').and.returnValue(false);
-
-		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, {sraEnabled: true});
-
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).not.toHaveBeenCalled();
-	});
-
-	it('Always push and flush BTF slot even if SRA is enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
-
-		getModule().pushAd(createSlot('TOP_BOXAD'), '/foo/slot/path', {}, {sraEnabled: true});
-
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
-	});
-
 	it('Prevent push when given slot is flushOnly', function () {
+		var slot = createSlot('GPT_FLUSH');
 		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
+		spyOn(slot, 'success');
 
-		getModule().pushAd(createSlot('GPT_FLUSH'), '/foo/slot/path', {flushOnly: true}, {});
+		getModule().pushAd(slot, '/foo/slot/path', {flushOnly: true}, {});
 
 		expect(mocks.googleTag.push).not.toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
+		expect(slot.success).toHaveBeenCalled();
 	});
 
 	it('Prevent push when given slot is disabled', function () {

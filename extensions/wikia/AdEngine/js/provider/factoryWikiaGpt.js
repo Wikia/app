@@ -18,8 +18,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 	function rewriteExtras(slotName, extra) {
 		return {
-			testSrc: extra.testSrc,
-			sraEnabled: extra.sraEnabled,
+			testSrc: extra.testSrc
 		};
 	}
 
@@ -36,7 +35,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {function} [extra.afterCollapse] - function to call before calling collapse
 	 * @param {function} [extra.afterHop]      - function to call before calling hop
 	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
-	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */

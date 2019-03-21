@@ -11,16 +11,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		sraEnabled = !context.opts.disableSra,
-		firstCallSlots = [
+	var firstCallSlots = [
 			'TOP_LEADERBOARD',
 			'GPT_FLUSH'
 		];
-
-	if (sraEnabled) {
-		firstCallSlots.push('TOP_BOXAD', 'INVISIBLE_SKIN');
-	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
@@ -51,7 +45,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_LEADERBOARD',
 				'TOP_BOXAD'
 			],
-			sraEnabled: sraEnabled,
 			firstCallSlots: firstCallSlots,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
