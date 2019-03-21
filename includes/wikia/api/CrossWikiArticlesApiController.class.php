@@ -51,7 +51,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		// getting articles data
 		global $wgExternalDatawareDB;
 		$db = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-		$dbResult = $db->query( 'select * from pages where '. $multiArticleSqlFilter, __METHOD__ );
+		$dbResult = $db->query( 'select page_wikia_id, page_id, page_title from pages where '. $multiArticleSqlFilter, __METHOD__ );
 		$items = [];
 		while ( $row = $db->fetchObject( $dbResult ) ) { 
 			$title = Title::newFromRow($row);
