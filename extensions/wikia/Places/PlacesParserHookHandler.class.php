@@ -84,6 +84,26 @@ class PlacesParserHookHandler {
 
 		$html = self::cleanHTML($html);
 
+		// tag pages with <place> tag using SemanticMediaWiki "Geo" property
+		global $wgEnableSemanticMediaWikiExt;
+		if ( !empty( $wgEnableSemanticMediaWikiExt ) ) {
+			$value = sprintf( "%.6f°, %.6f°", $placeModel->getLat(), $placeModel->getLon() );
+
+			// code borrowed from \SMW\SetParserFunction::parse method
+			$parserData = new \SMW\ParserData($parser->getTitle(), $parser->getOutput());
+			$subject = $parserData->getSemanticData()->getSubject();
+
+			$dataValue = \SMW\DataValueFactory::getInstance()->newDataValueByText(
+				'Geo',
+				$value,
+				false,
+				$subject
+			);
+			$parserData->addDataValue( $dataValue );
+			$parserData->pushSemanticDataToParserOutput();
+			$parserData->updateStore( true );
+		}
+
 		wfProfileOut(__METHOD__);
 		return $html;
 	}

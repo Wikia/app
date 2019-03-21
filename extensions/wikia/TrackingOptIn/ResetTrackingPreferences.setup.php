@@ -8,7 +8,8 @@ $GLOBALS['wgResourceModules']['ext.wikia.resetTrackingSettingsManager'] = [
 	'styles' => [ 'styles/ext.wikia.trackingSettingsManager.css' ],
 	'messages' => [
 		'privacy-settings-button-toggle',
-		'privacy-settings-button-toggle-fandom'
+		'privacy-settings-button-toggle-fandom',
+		'privacy-settings-button-toggle-wikia-org'
 	],
 
 	'localBasePath' => __DIR__,
