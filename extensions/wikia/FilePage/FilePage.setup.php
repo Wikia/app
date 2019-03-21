@@ -47,7 +47,7 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'FilePageHooks::onWikiaMobileAssetsPac
 
 if ( $wgRedirectFilePagesForAnons ) {
 	$wgHooks['FilePages:InsertSurrogateKey'][] = 'FilePageHooks::onInsertSurrogateKey';
-	$wgHooks['UndeleteComplete'][] = 'FilePageHooks::onUndeleteComplete';
+	$wgHooks['ArticleUndelete'][] = 'FilePageHooks::onUndeleteComplete';
 	$wgHooks['ArticleDelete'][] = 'FilePageHooks::onArticleDelete';
 	$wgHooks['ArticleSaveComplete'][] = 'FilePageHooks::onArticleSaveComplete';
 	$wgHooks['ArticleGetFileLinks'][] = 'FilePageHooks::onGetFileLinks';
