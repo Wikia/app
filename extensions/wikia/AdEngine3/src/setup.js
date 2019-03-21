@@ -1,4 +1,4 @@
-import { AdEngine, context, events, eventService, templateService, utils } from '@wikia/ad-engine';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
@@ -60,7 +60,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	context.set('wiki.targeting.hasIncontentPlayer', slots.isIncontentPlayerApplicable());
+	context.set('wiki.targeting.hasIncontentPlayer', !context.get('custom.hasFeaturedVideo') && slotInjector.inject('incontent_player'));
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);

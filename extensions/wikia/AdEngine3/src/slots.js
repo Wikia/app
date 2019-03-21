@@ -354,27 +354,6 @@ export default {
 		document.addEventListener('scroll', pushSlotAfterComments);
 	},
 
-	/**
-	 * Checks whether ICP can be applied on this page
-	 *
-	 * @returns {boolean}
-	 */
-	isIncontentPlayerApplicable() {
-		const slotName = 'incontent_player';
-
-		return !context.get('custom.hasFeaturedVideo') && slotInjector.inject(slotName, true);
-	},
-
-	injectIncontentPlayer() {
-		const slotName = 'incontent_player';
-
-		if (!context.get('wiki.targeting.hasIncontentPlayer')) {
-			return;
-		}
-
-		slotInjector.inject(slotName);
-	},
-
 	injectIncontentBoxad() {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
