@@ -31,7 +31,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				$wikiToArticleMap[$wikiId] = array();
 			}
 			$wikiToArticleMap[$wikiId][] = $articleId;
-			$sqlFilters[] = sprintf('(page_wikia_id=%s and page_id=%s)', $wikiId, $articleId);
+			$sqlFilters[] = sprintf('(page_wikia_id=%s and page_id=%s)', intval($wikiId), intval($articleId));
 		}
 		$multiArticleSqlFilter = implode(' or ', $sqlFilters);
 		
