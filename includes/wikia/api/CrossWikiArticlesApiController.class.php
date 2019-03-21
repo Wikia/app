@@ -55,7 +55,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'url' => $wikisData[$row->page_wikia_id]['baseUrl'] . $title->getLocalUrl(),
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikisData[$row->page_wikia_id]['title'],
-				'thumbnail' => $this->getThumbnail($wikisData[$row->page_wikia_id]['baseUrl'], $row->page_id)
+				'thumbnail' => $this->getThumbnail($wikisData[$row->page_wikia_id]['dbname'], $row->page_id)
 			);
 		}
 		$db->freeResult( $dbResult );
@@ -66,14 +66,9 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	protected function getThumbnail( $baseUrl, $articleId ) {
-		$response = json_decode(
-			file_get_contents(
-				sprintf("%s/api.php?action=imageserving&wisId=%s&format=json", $baseUrl, $articleId), 
-				false, 
-				stream_context_create(array("ssl"=>array( "verify_peer"=>false,"verify_peer_name"=>false)))
-			)
-		);
-		return is_object($response) ? $response->image->imageserving : null;
+	protected function getThumbnail( $dbname, $articleId ) {
+		$params = array( 'action' => 'imageserving', 'wisId' => $articleId, 'format' => 'json' );
+		$response = \ApiService::foreignCall( $dbname, $params );
+		return is_array($response) ? $response['image']['imageserving'] : null;
 	}
 }
