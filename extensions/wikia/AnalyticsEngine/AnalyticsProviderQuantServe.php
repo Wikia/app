@@ -4,6 +4,31 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider
 {
 	private $account = 'p-8bG6eLqkH6Avk';
 
+	static function getQuantcastLabels() {
+		$keyValues = F::app()->wg->DartCustomKeyValues;
+		$quantcastLabels = array();
+		$labels = array(
+			'gnre' => 'Genre',
+			'media' => 'Media',
+			'theme' => 'Theme',
+			'tv' => 'TV'
+		);
+
+		if (gettype($keyValues) === 'string') {
+			foreach (explode(';', $keyValues) as $keyValue) {
+				$keyValue = explode('=', $keyValue);
+				$key = isset($keyValue[0]) ? $keyValue[0] : '';
+				$value = isset($keyValue[1]) ? $keyValue[1] : '';
+
+				if ($key && isset($labels[$key]) && $value) {
+					$quantcastLabels[] = $labels[$key] . '.' . $value;
+				}
+			}
+		}
+
+		return join(',', $quantcastLabels);
+	}
+
 	function getSetupHtml($params = array())
 	{
 		static $called = false;
@@ -44,28 +69,7 @@ EOT;
 	{
 		switch ($event) {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				$keyValues = F::app()->wg->DartCustomKeyValues;
-				$quantcastLabels = array();
-				$labels = array(
-					'gnre' => 'Genre',
-					'media' => 'Media',
-					'theme' => 'Theme',
-					'tv' => 'TV'
-				);
-
-				if (gettype($keyValues) === 'string') {
-					foreach (explode(';', $keyValues) as $keyValue) {
-						$keyValue = explode('=', $keyValue);
-						$key = isset($keyValue[0]) ? $keyValue[0] : '';
-						$value = isset($keyValue[1]) ? $keyValue[1] : '';
-
-						if ($key && isset($labels[$key]) && $value) {
-							$quantcastLabels[] = $labels[$key] . '.' . $value;
-						}
-					}
-				}
-
-				$quantcastLabels = join(',', $quantcastLabels);
+				$quantcastLabels = self::getQuantcastLabels();
 
 				return <<<EOT
 <script type="text/javascript">
