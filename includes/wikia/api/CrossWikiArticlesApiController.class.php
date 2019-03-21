@@ -22,12 +22,15 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
                 $articles = explode( ',', $this->request->getVal( 'ids', null ) );
 
-		// looking for unique wikis and preparing cross-wiki sql
-		$wikisCollection = array();
+		// mapping parameters to wikiId => listOfArticles, and preparing cross-wiki sql
+		$wikiToArticleMap = array();
 		$sqlFilters = array();
 		foreach ( $articles as $article ) {
 			list( $wikiId, $articleId ) = explode('_', $article);
-			$wikisCollection[] = $wikiId;
+			if ( ! isset($wikiToArticleMap[$wikiId]) ) {
+				$wikiToArticleMap[$wikiId] = array();
+			}
+			$wikiToArticleMap[$wikiId][] = $articleId;
 			$sqlFilters[] = sprintf('(page_wikia_id=%s and page_id=%s)', $wikiId, $articleId);
 		}
 		$multiArticleSqlFilter = implode(' or ', $sqlFilters);
@@ -35,12 +38,13 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		// getting wikis details 
 		$wds = new WikiDetailsService();
 		$wikisData = array();
-		foreach (array_unique($wikisCollection) as $wikiId) {
+		foreach (array_keys($wikiToArticleMap) as $wikiId) {
 			$wikiDetails = $wds->getWikiDetails($wikiId);
+			$dbname = WikiFactory::IDtoDB($wikiId);
 			$wikisData[$wikiId] = array(
 				'title' => $wikiDetails['title'],
 				'baseUrl' => $wikiDetails['url'],
-				'dbname' => WikiFactory::IDtoDB($wikiId)
+				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] )
 			);
 		}
 
@@ -51,11 +55,12 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$items = [];
 		while ( $row = $db->fetchObject( $dbResult ) ) { 
 			$title = Title::newFromRow($row);
+			$articleApiDetails = $wikisData[$row->page_wikia_id]['images'];
 			$items[ $row->page_wikia_id . '_' . $row->page_id ] = array(
 				'url' => $wikisData[$row->page_wikia_id]['baseUrl'] . $title->getLocalUrl(),
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikisData[$row->page_wikia_id]['title'],
-				'thumbnail' => $this->getThumbnail($wikisData[$row->page_wikia_id]['dbname'], $row->page_id)
+				'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null
 			);
 		}
 		$db->freeResult( $dbResult );
@@ -66,9 +71,16 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	protected function getThumbnail( $dbname, $articleId ) {
-		$params = array( 'action' => 'imageserving', 'wisId' => $articleId, 'format' => 'json' );
-		$response = \ApiService::foreignCall( $dbname, $params );
-		return is_array($response) ? $response['image']['imageserving'] : null;
+	protected function getThumbnails( $dbname, $articleIds ) {
+		$params = array(
+			'controller' => 'ArticlesApiController', 
+			'method' => 'getDetails', 
+			'abstract' => '0', 
+			'ids' => implode(',', $articleIds), 
+			'format' => 'json'
+		);
+		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );
+		return is_array($response) ? $response['items'] : array();
 	}
+
 }
