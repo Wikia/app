@@ -375,6 +375,7 @@ $wgGroupPermissions['vstf']['protectsite'] = true;
 $wgGroupPermissions['helper']['protectsite-exempt'] = true;
 $wgGroupPermissions['staff']['protectsite-exempt'] = true;
 $wgGroupPermissions['vstf']['protectsite-exempt'] = true;
+$wgGroupPermissions['sysop']['protectsite-exempt'] = true;
 
 $wgGroupPermissions['helper']['protectsite-nolimit'] = true;
 $wgGroupPermissions['staff']['protectsite-nolimit'] = true;
