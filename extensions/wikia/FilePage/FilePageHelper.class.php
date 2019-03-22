@@ -143,7 +143,7 @@ class FilePageHelper {
 	 * @return string $key - surrogate key to purge
 	 */
 	protected static function getRedirSurrogateKey( Title $title ) {
-		return Wikia::surrogateKey( 'redirect', $title->getPrefixedText() );
+		return Wikia::surrogateKey( 'redirect', $title->getPrefixedDBkey() );
 	}
 
 
