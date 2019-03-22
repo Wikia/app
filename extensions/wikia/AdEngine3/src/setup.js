@@ -60,7 +60,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	context.set('wiki.targeting.hasIncontentPlayer', !context.get('custom.hasFeaturedVideo') && slotInjector.inject('incontent_player'));
+	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
 
 	if (!wikiContext.targeting.hasFeaturedVideo) {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);

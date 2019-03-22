@@ -354,6 +354,13 @@ export default {
 		document.addEventListener('scroll', pushSlotAfterComments);
 	},
 
+	injectIncontentPlayer() {
+		const isApplicable = !context.get('custom.hasFeaturedVideo');
+		const isInjected = !!slotInjector.inject('incontent_player');
+
+		return isApplicable && isInjected;
+	},
+
 	injectIncontentBoxad() {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
