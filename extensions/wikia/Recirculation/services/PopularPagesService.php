@@ -57,6 +57,9 @@ class PopularPagesService {
 				$data[$mapping->getId()]['hasVideo'] = true;
 			}
 		}
+		foreach ( $data as $id => $article ) {
+			$data[$id]['id'] = $id;
+		}
 
 		return array_values( $data );
 	}
