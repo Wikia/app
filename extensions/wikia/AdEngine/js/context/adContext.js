@@ -227,7 +227,7 @@ define('ext.wikia.adEngine.adContext', [
 			Original line:
 			context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
 		*/
-		context.opts.stickySlotsLines = adEngineBridge.geo.isProperGeo(['US', 'UK', 'GB', 'DE']) ? instantGlobals.wgAdDriverStickySlotsLines : [];
+		context.opts.stickySlotsLines = adEngineBridge.geo.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.wgAdDriverStickySlotsLines : [];
 
 		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
 		context.opts.nielsen = isEnabled('wgAdDriverNielsenCountries');
