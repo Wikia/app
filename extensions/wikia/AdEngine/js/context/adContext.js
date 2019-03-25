@@ -1,6 +1,4 @@
 /*global define*/
-import instantGlobals from "../../../AdEngine3/src/instant-globals";
-
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
