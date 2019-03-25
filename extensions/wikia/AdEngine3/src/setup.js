@@ -66,7 +66,12 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
-	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	/*
+		ToDo: remove temporary stickyTLB prevention hack
+		Original line:
+		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	*/
+	const stickySlotsLines = utils.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
