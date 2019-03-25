@@ -1,4 +1,6 @@
 /*global define*/
+import instantGlobals from "../../../AdEngine3/src/instant-globals";
+
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
@@ -222,7 +224,12 @@ define('ext.wikia.adEngine.adContext', [
 			]
 		};
 
-		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+		/*
+			ToDo: remove temporary stickyTLB prevention hack
+			Original line:
+			context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+		*/
+		context.opts.stickySlotsLines = adEngineBridge.geo.isProperGeo(['US', 'UK', 'GB', 'DE']) ? instantGlobals.wgAdDriverStickySlotsLines : [];
 
 		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
 		context.opts.nielsen = isEnabled('wgAdDriverNielsenCountries');
