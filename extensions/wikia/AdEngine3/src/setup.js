@@ -181,7 +181,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		}
 
 		const unbiddedSlotName = hasFeaturedVideo ? 'INCONTENT_PLAYER' : 'FEATURED';
-		let videoBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
+		const videoBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
 
 		videoBidders.forEach((bidder) => {
 			context.remove(`bidders.prebid.${bidder}.slots.${unbiddedSlotName}`);

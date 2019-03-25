@@ -116,6 +116,7 @@ export function getBiddersContext(skin) {
 					},
 					appnexusAst: {
 						enabled: false,
+						videoBidder: true,
 						debugPlacementId: '5768085',
 						slots: {
 							FEATURED: {
@@ -132,6 +133,7 @@ export function getBiddersContext(skin) {
 					},
 					beachfront: {
 						enabled: false,
+						videoBidder: true,
 						debugAppId: '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
 						slots: {
 							INCONTENT_PLAYER: {
@@ -185,6 +187,7 @@ export function getBiddersContext(skin) {
 					},
 					lkqd: {
 						enabled: false,
+						videoBidder: true,
 						slots: {
 							FEATURED: {
 								placementId: '523',
@@ -237,6 +240,7 @@ export function getBiddersContext(skin) {
 					},
 					pubmatic: {
 						enabled: false,
+						videoBidder: true,
 						publisherId: '156260',
 						slots: {
 							FEATURED: {
@@ -301,6 +305,7 @@ export function getBiddersContext(skin) {
 					},
 					rubicon: {
 						enabled: false,
+						videoBidder: true,
 						accountId: 7450,
 						slots: {
 							FEATURED: {
@@ -409,6 +414,7 @@ export function getBiddersContext(skin) {
 					},
 					wikiaVideo: {
 						enabled: false,
+						videoBidder: true,
 						slots: {
 							FEATURED: {
 								videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
