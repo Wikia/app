@@ -25,8 +25,14 @@ function decodeLegacyDartParams(dartString) {
 function getAdLayout(adsContext) {
 	let layout = adsContext.targeting.pageType || 'article';
 
-	if (layout === 'article' && adsContext.targeting.hasFeaturedVideo) {
-		layout = `fv-${layout}`;
+	if (layout === 'article') {
+		if (adsContext.targeting.hasFeaturedVideo) {
+			layout = `fv-${layout}`;
+		}
+
+		if (adsContext.targeting.hasIncontentPlayer) {
+			layout = `${layout}-ic`;
+		}
 	}
 
 	return layout;
