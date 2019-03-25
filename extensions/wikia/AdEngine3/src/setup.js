@@ -71,7 +71,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		Original line:
 		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 	*/
-	const stickySlotsLines = utils.isProperGeo(['US', 'UK', 'GB', 'DE']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
+	const stickySlotsLines = utils.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
