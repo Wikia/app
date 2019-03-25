@@ -53,7 +53,6 @@ function startAdEngine() {
 		ads.init();
 
 		window.wgAfterContentAndJS.push(() => {
-			slots.injectIncontentPlayer();
 			slots.injectBottomLeaderboard();
 			babDetection.run();
 		});
