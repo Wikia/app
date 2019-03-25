@@ -129,6 +129,19 @@ function init(
 		if (!legacyContext.get('bidders.pubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
+
+		const notBiddedSlotName = legacyContext.get('targeting.hasFeaturedVideo') ? 'INCONTENT_PLAYER' : 'FEATURED';
+		let videoBidders = [];
+
+		Object.keys(context.get('bidders.prebid')).forEach((bidder) => {
+			if (context.get(`bidders.prebid.${bidder}.videoBidder`)) {
+				videoBidders.push(bidder);
+			}
+		});
+
+		videoBidders.forEach((bidder) => {
+			context.remove(`bidders.prebid.${bidder}.slots.${notBiddedSlotName}`);
+		});
 	}
 
 	context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));

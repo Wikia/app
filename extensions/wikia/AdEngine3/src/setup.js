@@ -180,11 +180,17 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
 
-		const unbiddedSlotName = hasFeaturedVideo ? 'INCONTENT_PLAYER' : 'FEATURED';
-		const videoBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
+		const notBiddedSlotName = hasFeaturedVideo ? 'INCONTENT_PLAYER' : 'FEATURED';
+		let videoBidders = [];
+
+		Object.keys(context.get('bidders.prebid')).forEach((bidder) => {
+			if (context.get(`bidders.prebid.${bidder}.videoBidder`)) {
+				videoBidders.push(bidder);
+			}
+		});
 
 		videoBidders.forEach((bidder) => {
-			context.remove(`bidders.prebid.${bidder}.slots.${unbiddedSlotName}`);
+			context.remove(`bidders.prebid.${bidder}.slots.${notBiddedSlotName}`);
 		});
 	}
 

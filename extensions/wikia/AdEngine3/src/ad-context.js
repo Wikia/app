@@ -6,6 +6,7 @@ export default {
 		a9: {
 			dealsEnabled: false,
 			enabled: false,
+			videoBidder: true,
 			videoEnabled: false,
 			amazonId: '3115',
 			slots: {
