@@ -171,21 +171,21 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('custom.isCMPEnabled', true);
 
 		const outstreamSlotName = 'INCONTENT_PLAYER';
-		let bidders = [];
+		let otDisableBidders = [];
 
 		if (context.get('custom.hasFeaturedVideo')) {
-			bidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
+			otDisableBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
 		} else {
 			if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
-				bidders.push('lkqd');
+				otDisableBidders.push('lkqd');
 			}
 
 			if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
-				bidders.push('pubmatic');
+				otDisableBidders.push('pubmatic');
 			}
 		}
 
-		bidders.forEach((bidder) => {
+		otDisableBidders.forEach((bidder) => {
 			context.remove(`bidders.prebid.${bidder}.slots.${outstreamSlotName}`);
 		});
 	}
