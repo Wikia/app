@@ -172,23 +172,19 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo);
 		context.set('custom.isCMPEnabled', true);
 
-		const outstreamSlotName = 'INCONTENT_PLAYER';
-		let otDisableBidders = [];
-
-		if (context.get('custom.hasFeaturedVideo')) {
-			otDisableBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
-		} else {
-			if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
-				otDisableBidders.push('lkqd');
-			}
-
-			if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
-				otDisableBidders.push('pubmatic');
-			}
+		if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
 		}
 
-		otDisableBidders.forEach((bidder) => {
-			context.remove(`bidders.prebid.${bidder}.slots.${outstreamSlotName}`);
+		if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
+
+		const unbiddedSlotName = hasFeaturedVideo ? 'INCONTENT_PLAYER' : 'FEATURED';
+		let videoBidders = ['appnexusAst', 'beachfront', 'lkqd', 'pubmatic', 'rubicon'];
+
+		videoBidders.forEach((bidder) => {
+			context.remove(`bidders.prebid.${bidder}.slots.${unbiddedSlotName}`);
 		});
 	}
 
