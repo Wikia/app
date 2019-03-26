@@ -445,7 +445,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			WIKIA_ENV_PROD,
 			[],
 			[],
-			InvalidParameterApiException::class	// expected exception
+			NotFoundApiException::class	// expected exception
 		];
 		// --------- Test case ------------
 		// 10. Unknown domain

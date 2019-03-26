@@ -11,6 +11,7 @@ namespace Wikia\Tasks;
 
 use Wikia\Factory\ServiceFactory;
 use Wikia\Rabbit\TaskPublisher;
+use Wikia\Tasks\Queues\DeferredInsertsQueue;
 use Wikia\Tasks\Queues\DumpsOnDemandQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
@@ -117,6 +118,9 @@ class AsyncTaskList {
 				break;
 			case ScheduledMaintenanceQueue::NAME:
 				$queue = new ScheduledMaintenanceQueue();
+				break;
+			case DeferredInsertsQueue::NAME:
+				$queue = new DeferredInsertsQueue();
 				break;
 			default:
 				$queue = new Queue( $queue );

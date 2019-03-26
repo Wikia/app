@@ -46,6 +46,7 @@ class AdEngine2ContextService {
 					'adsInContent' => $wg->EnableAdsInContent,
 					'delayBtf' => $delayBtf,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
+					'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,

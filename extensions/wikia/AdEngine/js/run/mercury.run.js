@@ -17,8 +17,7 @@ require([
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.trackingOptIn',
-	'wikia.window',
-	require.optional('wikia.articleVideo.featuredVideo.lagger')
+	'wikia.window'
 ], function (
 	adEngineBridge,
 	adContext,
@@ -37,8 +36,7 @@ require([
 	adLogicZoneParams,
 	babDetection,
 	trackingOptIn,
-	win,
-	fvLagger
+	win
 ) {
 	'use strict';
 
@@ -64,21 +62,7 @@ require([
 
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-	function passFVLineItemIdToUAP() {
-		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
-			fvLagger.addResponseListener(function (lineItemId) {
-				win.loadCustomAd({
-					adProduct: 'jwp',
-					type: 'bfp',
-					uap: lineItemId
-				});
-			});
-		}
-	}
-
 	function callOnConsecutivePageView() {
-		passFVLineItemIdToUAP();
-
 		adEngineBridge.readSessionId();
 
 		// Track Labrador values to DW

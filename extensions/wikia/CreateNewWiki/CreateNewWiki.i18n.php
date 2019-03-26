@@ -29,7 +29,7 @@ $messages['en'] = array(
 	'cnw-theme-show-wiki' => 'Show me my wiki',
 	'cnw-welcome-headline' => 'Congratulations! You successfully created $1',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
-	'cnw-welcome-help' => 'Continue your fan experience. Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Continue your fan experience. Find answers, advice, and more on <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Oops, something went wrong on our side!  Please try again, or [[Special:Contact|contact us]] for help.',
 	'cnw-error-general-heading' => 'Our apologies',
 	'cnw-badword-header' => 'Whoa there',
@@ -85,7 +85,7 @@ All of the above links are a great place to start exploring, and have fun!
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
 Good luck with the project,<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
 );
 
@@ -333,7 +333,7 @@ $messages['bg'] = array(
 	'cnw-theme-instruction' => 'Също така можете да направите своя тема по-късно като отидете в „Моите инструменти“.',
 	'cnw-welcome-headline' => 'Поздравления! Уикито $1 беше създадено',
 	'cnw-welcome-instruction1' => 'Щракнете върху бутона по-долу, за да започнете да добавяте страници към вашето уики.',
-	'cnw-welcome-help' => 'Можете да откриете отговори, съвети и други полезни неща в <a href="http://community.wikia.com">Централната общност</a>.',
+	'cnw-welcome-help' => 'Можете да откриете отговори, съвети и други полезни неща в <a href="https://community.fandom.com">Централната общност</a>.',
 	'cnw-error-blocked-header' => 'Сметката е блокирана',
 	'cnw-error-blocked' => 'Потребителската ви сметка е била блокирана от $1. Причината за блокирането, която е посочена, е: $2. (Номер на блокирането, за референции: $3)',
 	'cnw-error-torblock' => 'Създаването на укита чрез Tor мрежа не е позволено.',
@@ -381,7 +381,7 @@ $messages['br'] = array(
 	'cnw-theme-instruction' => 'Gellout a rit ivez krouiñ ho todenn hiniennel un tamm diwezhatoc\'h en ur vont e "Ma ostilhoù".',
 	'cnw-welcome-headline' => "Gourc'hemennoù, krouet hoc'h eus $1",
 	'cnw-welcome-instruction1' => "Klikit war ar bouton amañ dindan evit kregiñ da ouzhpennañ pajennoù d'ho wiki.",
-	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="http://community.wikia.com">Kalonenn ar gumuniezh</a>.',
+	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="https://community.fandom.com">Kalonenn ar gumuniezh</a>.',
 	'cnw-error-general' => 'Un dra bennak a zo aet a-dreuz eus hon tu ! Esaeit en-dro, mar plij pe [[Special:Contact|deuit e darempred ganimp]] evit bezañ sikouret.',
 	'cnw-error-general-heading' => "Digarezit ac'hanomp",
 	'cnw-badword-header' => "Oc'ho",
@@ -1202,7 +1202,7 @@ $messages['gl'] = array(
 	'cnw-theme-instruction' => 'Tamén pode deseñar o seu propio tema visual máis tarde indo ata "As miñas ferramentas".',
 	'cnw-welcome-headline' => 'Parabéns! Creouse $1',
 	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
-	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="http://community.wikia.com">central da comunidade</a>.',
+	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="https://community.fandom.com">central da comunidade</a>.',
 	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténtao de novo ou [[Special:Contact|ponte en contacto con nós]] para solicitar axuda.',
 	'cnw-error-general-heading' => 'As nosas desculpas',
 	'cnw-badword-header' => 'Vaites!',
@@ -1278,7 +1278,7 @@ $messages['he'] = array(
 	'cnw-theme-instruction' => 'אפשר גם לעצב ערכת עיצוב משלכם דרך "הכלים שלי".',
 	'cnw-welcome-headline' => 'ברכות! הוויקי $1 נוצר',
 	'cnw-welcome-instruction1' => 'לחצו על הכפתור להלן כדי להתחיל להוסיף דפים לוויקי שלכם.',
-	'cnw-welcome-help' => 'מצאו תשובות, עצות ועוד ב־<a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'מצאו תשובות, עצות ועוד ב־<a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-badword-msg' => 'שלום, נא להימנע משימוש במילים הגסות או האסורות להלן בתיאור הוויקיה: $1',
 	'cnw-error-wiki-limit' => 'שלום, הינך מוגבל ליצירת {{PLURAL:$1|$1 ויקיה אחת|$1 ויקיות}} ביום. נא להמתין 24 שעות לפני יצירת ויקיה נוספת.',
 	'cnw-error-blocked-header' => 'חשבונך חסום',
@@ -1322,7 +1322,7 @@ $messages['hu'] = array(
 	'cnw-theme-instruction' => 'Saját stílusodat később is megtervezheted a "My Tools" eszköztáron keresztül.',
 	'cnw-welcome-headline' => 'Gratulálunk!A(z) $1 létrehozása sikerült.',
 	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.',
-	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="http://community.wikia.com">Community Central</a> wikin.',
+	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="https://community.fandom.com">Community Central</a> wikin.',
 	'cnw-error-general' => 'Valami hiba történt a wikid létrehozása közben. Kérlek, próbáld újra később.',
 	'cnw-error-general-heading' => 'Elnézést',
 	'cnw-badword-header' => 'Hoppácska',
@@ -1389,7 +1389,7 @@ $messages['ia'] = array(
 	'cnw-theme-instruction' => 'Es equalmente possibile designar tu proprie apparentia usante "Mi instrumentos".',
 	'cnw-welcome-headline' => 'Felicitationes, tu ha create $1',
 	'cnw-welcome-instruction1' => 'Clicca sur le button hic infra pro comenciar a adder paginas a tu wiki.',
-	'cnw-welcome-help' => 'Trova responsas, consilios e plus in <a href="http://community.wikia.com">le centro del communitate</a>.',
+	'cnw-welcome-help' => 'Trova responsas, consilios e plus in <a href="https://community.fandom.com">le centro del communitate</a>.',
 	'cnw-error-general' => 'Qualcosa errava durante le creation de tu wiki. Per favor reproba plus tarde.',
 	'cnw-error-general-heading' => 'Error de creation de nove wiki',
 	'cnw-badword-header' => 'Stop!',
@@ -1456,7 +1456,7 @@ $messages['id'] = array(
 	'cnw-theme-instruction' => 'Anda bisa menyesuaikan tampilan wiki anda di Tema Desain kapan saja Anda mau!',
 	'cnw-welcome-headline' => 'Selamat! Anda berhasil membuat $1',
 	'cnw-welcome-instruction1' => 'Klik tombol dibawah ini untuk menambakan halaman di wiki Anda.',
-	'cnw-welcome-help' => 'Lanjutkan pengalaman penggemar Anda. Temukan jawaban, saran, dan lagi di <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Lanjutkan pengalaman penggemar Anda. Temukan jawaban, saran, dan lagi di <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Ups, sepertinya sesuatu ada yang salah dari pihak kami! Silakan coba lagi, atau [[Istimewa:Kontak|Hubungi kami]] untuk bantuan.',
 	'cnw-error-general-heading' => 'Kami minta maaf',
 	'cnw-badword-header' => 'Wah ada',
@@ -1611,7 +1611,7 @@ Buon divertimento!",
 La wiki che hai creato è ora disponibile su <a href="$1">$1</a>.  Ci auguriamo di vederti contribuire lì presto!<br /><br />
 Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina di discussione utente</a> per aiutarti a iniziare. Se hai domande, rispondi semplicemente a questa e-mail o leggi le nostre guide sull\'<a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Aiuto di FANDOM</a>.<br /><br />
 Buona fortuna con il tuo progetto,<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 Team della community di FANDOM<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wiki.',
 	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
@@ -1727,7 +1727,7 @@ $messages['km'] = array(
 	'cnw-theme-instruction' => 'អ្នកក៏អាចធ្វើការឌីស្សាញរចនាបថដោយខ្លួនអ្នកនាពេលក្រោយដោយចូលទៅ"ឧបករណ៍"។',
 	'cnw-welcome-headline' => 'សូមអបអរសាទរ! $1 ត្រូវបានបង្កើតហើយ',
 	'cnw-welcome-instruction1' => 'ចុចលើប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្ដើមបន្ថែមទំព័រទៅលើវិគីរបស់អ្នក។',
-	'cnw-welcome-help' => 'រកចំលើយ ដំបូន្មាន និង អ្វីៗបន្ថែមទៀតនៅលើ<a href="http://community.wikia.com">មជ្ឍមណ្ឌលសហគមន៍</a>។',
+	'cnw-welcome-help' => 'រកចំលើយ ដំបូន្មាន និង អ្វីៗបន្ថែមទៀតនៅលើ<a href="https://community.fandom.com">មជ្ឍមណ្ឌលសហគមន៍</a>។',
 	'cnw-error-general' => 'មានបញ្ហាពេលបង្កើតវិគីរបស់អ្នក។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។',
 	'cnw-error-general-heading' => 'បញ្ហាក្នុងការបង្កើតវិគីថ្មី',
 	'autocreatewiki' => 'បង្កើតវិគីថ្មីមួយ',
@@ -1786,7 +1786,7 @@ $messages['ko'] = array(
 	'cnw-theme-instruction' => "나중에 '마이 툴'의 테마 디자이너를 이용하여 자신만의 테마를 만드실 수도 있습니다.",
 	'cnw-welcome-headline' => '축하드립니다! $1가 생성되었습니다.',
 	'cnw-welcome-instruction1' => '아래 버튼을 클릭하셔서 새 문서를 추가하실 수 있습니다.',
-	'cnw-welcome-help' => '위키 관리에 관한 질문에 대한 답변이나 조언 등을 <a href="http://ko.wikia.com">위키아 중앙 커뮤니티</a> (<a href="http://community.wikia.com">영어</a>)에서 찾아보세요.',
+	'cnw-welcome-help' => '위키 관리에 관한 질문에 대한 답변이나 조언 등을 <a href="http://ko.wikia.com">위키아 중앙 커뮤니티</a> (<a href="https://community.fandom.com">영어</a>)에서 찾아보세요.',
 	'cnw-error-general' => '위키를 생성하는 중에 오류가 발생했습니다. 다시 시도해주세요.',
 	'cnw-error-general-heading' => '위키 생성 오류',
 	'cnw-badword-header' => '금칙어 감지',
@@ -1842,7 +1842,7 @@ $messages['ko'] = array(
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
 Good luck with the project,<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
 );
 
@@ -1977,7 +1977,7 @@ $messages['lol'] = array(
 	'cnw-theme-show-wiki' => 'crwdns57497:0crwdne57497:0',
 	'cnw-welcome-headline' => 'crwdns15091:0crwdne15091:0',
 	'cnw-welcome-instruction1' => 'crwdns52828:0crwdne52828:0',
-	'cnw-welcome-help' => 'crwdns15093:0crwdne15093:0',
+	'cnw-welcome-help' => 'crwdns83246:0crwdne83246:0',
 	'cnw-error-general' => 'crwdns15094:0crwdne15094:0',
 	'cnw-error-general-heading' => 'crwdns15095:0crwdne15095:0',
 	'cnw-badword-header' => 'crwdns15096:0crwdne15096:0',
@@ -2009,7 +2009,7 @@ $messages['lol'] = array(
 	'autocreatewiki-welcometalk-wall-title' => 'crwdns61643:0crwdne61643:0',
 	'autocreatewiki-welcometalk-wall' => 'crwdns66793:0{{subst:SITENAME}}crwdne66793:0',
 	'autocreatewiki-welcometalk' => 'crwdns66794:0crwdne66794:0',
-	'autocreatewiki-welcomebody-HTML' => 'crwdns66795:0crwdne66795:0',
+	'autocreatewiki-welcomebody-HTML' => 'crwdns83248:0crwdne83248:0',
 	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
 	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
 );
@@ -2084,7 +2084,7 @@ $messages['mk'] = array(
 	'cnw-theme-instruction' => 'Подоцна можете да изработите свој изглед преку „Мои алатки“.',
 	'cnw-welcome-headline' => 'Честитаме! Го создадовте $1',
 	'cnw-welcome-instruction1' => 'Стиснете на копчето подолу за да почнете да додавате страници на викито.',
-	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
+	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="https://community.fandom.com">Центарот на заедницата</a>.',
 	'cnw-error-general' => 'Нешто тргна наопаку од кај вас! Обидете се подоцна или [[Special:Contact|конрактирајте нè]] за помош.',
 	'cnw-error-general-heading' => 'Се извинуваме',
 	'cnw-badword-header' => 'Предупредување',
@@ -2183,7 +2183,7 @@ $messages['ms'] = array(
 	'cnw-theme-instruction' => 'Nak ubah suai? Anda boleh mereka tema sendiri kelak dengan Theme Designer melalui Papan Pemuka Admin anda.',
 	'cnw-welcome-headline' => 'Tahniah! $1 sudah tercipta',
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mula menambah halaman pada wikia anda.',
-	'cnw-welcome-help' => 'Timbalah pengalaman sebagai peminat. Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Timbalah pengalaman sebagai peminat. Cari jawapan, nasihat, dan banyak lagi di <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Maaf, terdapat masalah di pihak kami! Sila cuba lagi atau [[Special:Contact|hubungi kami]] untuk meminta bantuan.',
 	'cnw-error-general-heading' => 'Harap maaf',
 	'cnw-badword-header' => 'Nanti kejap',
@@ -2264,7 +2264,7 @@ $messages['nb'] = array(
 	'cnw-theme-instruction' => 'Du kan også utforme ditt eget tema senere ved å gå til «Mine verktøy».',
 	'cnw-welcome-headline' => 'Gratulerer! $1 har blitt opprettet',
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
-	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen, eller [[Special:Contact|kontakt oss]] for hjelp.',
 	'cnw-error-general-heading' => 'Våre unnskyldninger',
 	'cnw-badword-header' => 'Hei der',
@@ -2352,7 +2352,7 @@ $messages['nl'] = array(
 	'cnw-theme-instruction' => 'Je kunt je ontwerp altijd later aanpassen via de "Themaontwerper".',
 	'cnw-welcome-headline' => 'Gefeliciteerd. Je hebt de wiki $1 aangemaakt',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
-	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of [[Special:Contact|neem contact met ons op]] voor hulp.',
 	'cnw-error-general-heading' => 'Onze excuses',
 	'cnw-badword-header' => 'Pas op!',
@@ -2416,7 +2416,7 @@ Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]].
 Je wiki is nu beschikbaar op <a href="$1">$1</a>.  We hopen dat je snel aan de slag gaat!<br /><br />
 We hebben nog wat extra informatie en tips op je <a href="$5">prikbord</a> om je op weg te helpen. Als je vragen hebt kun je reageren op deze email of onze hulppagina\'s verkennen.<br /><br />
 Veel success met je project,<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 FANDOM Community Team<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Je e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-error-unconfirmed-email-header' => 'Je e-mailadres is niet bevestigd',
@@ -2574,7 +2574,7 @@ Wszystkie powyższe linki to świetne miejsca, od których możesz rozpocząć s
 Stworzona przez Ciebie wiki jest dostępna tutaj: <a href="$1">$1</a>. Mamy nadzieję już niedługo zobaczyć pierwsze efekty Twoich edycji!<br /><br />
 Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji</a>. Pomogą Ci postawić pierwsze kroki na portalu FANDOM. Jeżeli masz jakieś pytania, po prostu odpisz na ten e-mail lub poszukaj odpowiedzi na <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87">stronach pomocy</a>.<br /><br />
 Powodzenia,<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 Zespół Społeczności portalu FANDOM<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Musisz mieć potwierdzony adres e-mail, aby stworzyć wiki.',
 	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
@@ -2601,7 +2601,7 @@ $messages['pms'] = array(
 	'cnw-theme-instruction' => 'A peul ëdcò progeté sò tema përsonal pi tard andasend su «Ij mè utiss».',
 	'cnw-welcome-headline' => "Congratulassion! $1 a l'é stàita creà",
 	'cnw-welcome-instruction1' => "Ch'a sgnaca an sël boton sì-sota për ancaminé a gionté dle pàgine a soa wiki.",
-	'cnw-welcome-help' => 'Ch\'a treuva dle rispòste, dij consej, e ancor ëd pi dzora la <a href="http://community.wikia.com">Sentral dla comunità</a>.',
+	'cnw-welcome-help' => 'Ch\'a treuva dle rispòste, dij consej, e ancor ëd pi dzora la <a href="https://community.fandom.com">Sentral dla comunità</a>.',
 	'cnw-error-general' => "Contacc, quaicòs a l'é andàit mal da nòstra part. Për piasì, ch'a preuva torna pi tard, o <a href=\"/Special:Contact\">ch'a contata</a> për dl'agiut.",
 	'cnw-error-general-heading' => 'Scus-ne',
 	'cnw-badword-header' => "Ch'a scota",
@@ -2937,7 +2937,7 @@ $messages['sco'] = array(
 	'cnw-welcome-headline' => 'Weel Dun! Ye successfullie creautit $1',
 	'cnw-welcome-instruction1' => 'Clap the button ablo tae stairt eikin pages tae yer wikia.',
 	'cnw-welcome-help' => 'Continue yer fan experiance.
-Fynd answers, advice, n mair oan <a href="http://community.wikia.com">Communitie Central</a>.',
+Fynd answers, advice, n mair oan <a href="https://community.fandom.com">Communitie Central</a>.',
 	'cnw-error-general' => 'Oops, sommit went wrang oan oor side!  Please gie it anither gae, or [[Special:Contact|contact us]] fer heelp.',
 	'cnw-error-general-heading' => 'Oor apologies',
 	'cnw-badword-header' => 'Haud oan ae minute',
@@ -2975,7 +2975,7 @@ $messages['sr-ec'] = array(
 	'cnw-theme-instruction' => 'Касније можете да израдите сопствену тему преко „Мојих алатки“.',
 	'cnw-welcome-headline' => 'Честитамо! Вики $1 је направљен',
 	'cnw-welcome-instruction1' => 'Кликните на дугме испод да почнете с додавањем страница на вики.',
-	'cnw-welcome-help' => 'Одговори на питања, савети и друго се налазе на <a href="http://community.wikia.com">Центру заједнице</a>.',
+	'cnw-welcome-help' => 'Одговори на питања, савети и друго се налазе на <a href="https://community.fandom.com">Центру заједнице</a>.',
 	'cnw-error-general' => 'Дошло је до грешке при стварању викија. Покушајте касније.',
 	'cnw-error-general-heading' => 'Грешка при стварању новог викија',
 	'cnw-badword-header' => 'Упозорење',
@@ -3021,7 +3021,7 @@ $messages['sv'] = array(
 	'cnw-theme-instruction' => 'Vill du anpassa den? Du kan utforma ditt egna tema senare med Temadesignern i instrumentpanelen för administratörer.',
 	'cnw-welcome-headline' => 'Gratulerar! Du har skapat $1',
 	'cnw-welcome-instruction1' => 'Klicka på knappen nedan för att börja lägga till sidor i din wikia.',
-	'cnw-welcome-help' => 'Fortsätt din fanupplevelse. Hitta svar, råd och mer på <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-welcome-help' => 'Fortsätt din fanupplevelse. Hitta svar, råd och mer på <a href="https://community.fandom.com">Community Central</a>.',
 	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller [[Special:Contact|kontakta oss]] för hjälp.',
 	'cnw-error-general-heading' => 'Vi beklagar',
 	'cnw-badword-header' => 'Hallå där',
@@ -3093,7 +3093,7 @@ Vi har lagt till lite information och tips om din <a href="$5">användardiskussi
 <br />
 Lycka till med projektet,<br />
 <br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+<a href="https://community.fandom.com/wiki/User:$4">$3</a><br />
 Wikia Community Support <br />
 </p>',
 );
@@ -3134,7 +3134,7 @@ $messages['te'] = array(
 	'cnw-theme-instruction' => 'తరువాత "నా పరికరాలు" కు వెళ్ళి మీ స్వంత థీమును తయారుచేసుకోవచ్చు కూడాను.',
 	'cnw-welcome-headline' => 'అభినందనలు! $1 సృష్టించబడింది',
 	'cnw-welcome-instruction1' => 'మీ వికీకి పేజీలను చేర్చేందుకు కింది బొత్తాన్ని నొక్కండి.',
-	'cnw-welcome-help' => '<a href="http://community.wikia.com">సముదాయ కేంద్రం</a> లో జవాబులు, సలహాలు, ఇంకా ఇతర వివరాల్ను పొందండి.',
+	'cnw-welcome-help' => '<a href="https://community.fandom.com">సముదాయ కేంద్రం</a> లో జవాబులు, సలహాలు, ఇంకా ఇతర వివరాల్ను పొందండి.',
 	'cnw-error-general' => 'అడెడె, మా వైపు ఏదో తప్పు జరిగింది! మళ్ళీ ప్రయత్నించండి, లేదా సహాయం కోసం [[Special:Contact|మమ్మల్ని సంప్రదించండి]].',
 	'cnw-error-general-heading' => 'క్షమించండి',
 	'cnw-badword-header' => 'ఎవరదీ..',
@@ -3173,7 +3173,7 @@ $messages['tl'] = array(
 	'cnw-theme-instruction' => 'Makakapagdisenyo ka rin ng sarili mong tema paglaon sa pamamagitan ng pagpunta sa "Mga Kasangkapan Ko".',
 	'cnw-welcome-headline' => 'Maligayang bati! Nalikha na ang $1',
 	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
-	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
+	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="https://community.fandom.com">Lunduyan ng Pamayanan</a>.',
 	'cnw-error-general' => 'May masamang bagay na nangyari habang nililikha ang wiki mo. Paki subukan ulit mamaya.',
 	'cnw-error-general-heading' => 'Kamalian sa Paglikha ng Bagong Wiki',
 	'cnw-badword-header' => 'Aba riyan',
@@ -3246,7 +3246,7 @@ $messages['tr'] = array(
 	'cnw-theme-instruction' => 'Kendi temanızı "Araçlarım" bölümüne giderek, daha sonra da tasarlayabilirsiniz.',
 	'cnw-welcome-headline' => 'Tebrikler!  $1  oluşturuldu',
 	'cnw-welcome-instruction1' => 'Wikinize sayfalar eklemeye başlamak için aşağıdaki düğmeye tıklayın.',
-	'cnw-welcome-help' => 'Daha fazla cevap ve öneri bulabilmek için <a href="http://community.wikia.com">Topluluk Merkezini</a> ziyaret edin.',
+	'cnw-welcome-help' => 'Daha fazla cevap ve öneri bulabilmek için <a href="https://community.fandom.com">Topluluk Merkezini</a> ziyaret edin.',
 	'cnw-error-general' => 'Üzgünüz, ters giden bir şeyler var!  Lütfen tekrar deneyin veya yardım için  bizimle [[Special:Contact|iletişim]] kurun.',
 	'cnw-error-general-heading' => 'Özür dileriz',
 	'cnw-badword-header' => 'Dur bakalım',
@@ -3287,7 +3287,7 @@ $messages['tt-cyrl'] = array(
 	'cnw-theme-instruction' => 'Соңрак, "Минем коралларым"а кереп, сез үзегезнең темаларыгызны ясый аласыз.',
 	'cnw-welcome-headline' => 'Котлыйбыз! $1 ачылды!',
 	'cnw-welcome-instruction1' => 'Викигә мәкаләләр өстәр өчен, астагы төймәгә басыгыз',
-	'cnw-welcome-help' => 'Җаваплар, киңәшләр һәм башка бик күп кирәк нәрсәләрне <a href="http://community.wikia.com">Үзәк викидә</a> табарсыз.',
+	'cnw-welcome-help' => 'Җаваплар, киңәшләр һәм башка бик күп кирәк нәрсәләрне <a href="https://community.fandom.com">Үзәк викидә</a> табарсыз.',
 	'cnw-error-general' => 'Викине ясаганда ниндидер хата киткән. Зинһар өчен, соңрак кабатлап карагыз.',
 	'cnw-error-general-heading' => 'Гафу үтенәбез',
 	'cnw-badword-header' => 'Әй, кем анда!',
@@ -3363,7 +3363,7 @@ $messages['uk'] = array(
 	'cnw-theme-instruction' => 'Ви також можете створювати свої власні теми пізніше, перейшовши в "Мої інструменти".',
 	'cnw-welcome-headline' => 'Вітаємо! $1 створена',
 	'cnw-welcome-instruction1' => 'Натисніть на кнопку нижче, щоб почати додавати сторінки на вікі.',
-	'cnw-welcome-help' => 'Знайті відповіді, поради та багато іншого на <a href="http://community.wikia.com">Центральній вікі</a>.',
+	'cnw-welcome-help' => 'Знайті відповіді, поради та багато іншого на <a href="https://community.fandom.com">Центральній вікі</a>.',
 	'cnw-error-general' => "Ой, щось пішло не так на нашому боці! Будь ласка, спробуйте ще раз або [[Special:Contact|зв'яжіться з нами]].",
 	'cnw-error-general-heading' => 'Просимо вибачення',
 	'cnw-badword-header' => 'Шо за фігня?',

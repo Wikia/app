@@ -3143,6 +3143,7 @@ return array(
     'Wikia\\Tasks\\AsyncTaskList' => $baseDir . '/lib/Wikia/src/Tasks/AsyncTaskList.php',
     'Wikia\\Tasks\\Producer\\EditCountTaskProducer' => $baseDir . '/lib/Wikia/src/Tasks/Producer/EditCountTaskProducer.php',
     'Wikia\\Tasks\\Producer\\SiteStatsUpdateTaskProducer' => $baseDir . '/lib/Wikia/src/Tasks/Producer/SiteStatsUpdateTaskProducer.php',
+    'Wikia\\Tasks\\Queues\\DeferredInsertsQueue' => $baseDir . '/lib/Wikia/src/Tasks/Queues/DeferredInsertsQueue.php',
     'Wikia\\Tasks\\Queues\\DumpsOnDemandQueue' => $baseDir . '/lib/Wikia/src/Tasks/Queues/DumpsOnDemandQueue.php',
     'Wikia\\Tasks\\Queues\\ParsoidPurgePriorityQueue' => $baseDir . '/lib/Wikia/src/Tasks/Queues/ParsoidPurgePriorityQueue.php',
     'Wikia\\Tasks\\Queues\\ParsoidPurgeQueue' => $baseDir . '/lib/Wikia/src/Tasks/Queues/ParsoidPurgeQueue.php',

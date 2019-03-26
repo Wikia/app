@@ -215,7 +215,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (bidders && bidders.isEnabled() && params.hbAdId) {
-			params.bid = bidders.getBidByAdId(params.hbAdId);
+			params.bid = bidders.getBidByAdId(params.slotName, params.hbAdId);
 			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
 			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}

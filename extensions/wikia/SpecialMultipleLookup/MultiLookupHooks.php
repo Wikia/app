@@ -28,11 +28,9 @@ class MultiLookupHooks {
 		$ip = $recentChange->getUserIp();
 
 		if ( IP::isIPAddress( $ip ) ) {
-			global $wgCityId;
-
-			$task = ( new \Wikia\Tasks\Tasks\MultiLookupTask() )
-				->wikiId( $wgCityId );
+			$task = \Wikia\Tasks\Tasks\MultiLookupTask::newLocalTask();
 			$task->call( 'updateMultiLookup', $ip );
+			$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 			$task->queue();
 		}
 	}

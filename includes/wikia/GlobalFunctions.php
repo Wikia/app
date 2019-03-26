@@ -1583,10 +1583,10 @@ function wfHttpsEnabledForURL( $url ): bool {
  * @return bool
  */
 function wfHttpsEnabledForDomain( $domain ) : bool {
-	global $wgFandomBaseDomain;
+	global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
 	$domain = wfNormalizeHost( $domain );
 
-	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain;
+	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain || wfGetBaseDomainForHost( $domain ) === $wgWikiaOrgBaseDomain;
 }
 /**
  * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
@@ -1609,12 +1609,15 @@ function wfGetEffectiveHostname() {
 }
 
 function wfGetBaseDomainForHost( $host ) {
-	global $wgWikiaBaseDomain, $wgFandomBaseDomain;
-	if ( strpos( $host, ".{$wgFandomBaseDomain}" ) !== false ) {
-		return $wgFandomBaseDomain;
+	global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain;
+	if ( strpos( $host, ".{$wgWikiaBaseDomain}" ) !== false ) {
+		return $wgWikiaBaseDomain;
+	}
+	if ( strpos( $host, ".{$wgWikiaOrgBaseDomain}" ) !== false ) {
+		return $wgWikiaOrgBaseDomain;
 	}
 
-	return $wgWikiaBaseDomain;
+	return $wgFandomBaseDomain;
 }
 
 /**
@@ -1642,12 +1645,12 @@ function wfNormalizeHost( $host ) {
 
 /**
  * @param $url string full string to be modified
- * @param $targetServer string host which will be used as na replacement (i.e. $wgServer)
+ * @param $targetServer string url, its host will used as na replacement (i.e. $wgServer)
  * @return string modified string if successful or original url in case of some failure
  * @throws Exception
  */
 function wfForceBaseDomain( $url, $targetServer ) {
-	global $wgFandomBaseDomain, $wgWikiaBaseDomain;
+	global $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain;
 
 	$urlHost = parse_url( $url, PHP_URL_HOST );
 	$targetHost = parse_url( $targetServer, PHP_URL_HOST );
@@ -1666,6 +1669,14 @@ function wfForceBaseDomain( $url, $targetServer ) {
 	$count = 0;
 	if ( $targetBaseDomain === $wgFandomBaseDomain ) {
 		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+	} else if ( $targetBaseDomain === $wgWikiaOrgBaseDomain ) {
+		// wikia.org is special, we don't know if we're transforming from wikia.com or fandom.com
+		// so we just perform both replacements here
+		$finalHost = str_replace(".{$wgWikiaBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+		if ( $count !== 1 ) {
+			$finalHost =
+				str_replace( ".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count );
+		}
 	} else {
 		$finalHost = str_replace(".{$wgFandomBaseDomain}", ".{$targetBaseDomain}", $normalizedUrlHost, $count);
 	}

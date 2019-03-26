@@ -261,6 +261,26 @@ class FilePageHooks extends WikiaObject{
 		] );
 	}
 
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
+	 */
+	private static function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select(
+			[ 'imagelinks' ],
+			[ 'il_to' ],
+			[ 'il_from' => $id ],
+			__METHOD__,
+			[ 'ORDER BY' => 'il_to', ] );
+
+	}
+
 	/**
 	 * Clear memcache redirs before db changed
 	 *
