@@ -38,14 +38,20 @@ class FeedsAndPostsController extends WikiaApiController {
 	}
 
 	public function getArticleData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$articleTitle = $this->getRequiredParam( 'title' );
 
 		$title = Title::newFromText( $articleTitle );
 
-		if ( $title ) {
+		if ( !$title ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		if ( $title->exists() ) {
 			$images = ArticleData::getImages( $title->getArticleID() );
 
-			$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 			$this->response->setValues( [
 				'title' => $title->getText(),
 				'exists' => $title->exists(),
@@ -53,10 +59,16 @@ class FeedsAndPostsController extends WikiaApiController {
 				'content_images' => count( $images ) > 1 ? array_slice( $images, 1 ) : [],
 				'snippet' => ArticleData::getTextSnippet( $title ),
 			] );
-			
+
 			return;
 		}
 
-		$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+		$this->response->setValues( [
+			'title' => $title->getText(),
+			'exists' => $title->exists(),
+			'thumbnail' => null,
+			'content_images' => [],
+			'snippet' => '',
+		] );
 	}
 }
