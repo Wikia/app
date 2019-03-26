@@ -90,10 +90,12 @@ class FandomComMigrationHooks {
 	 * @return boolean
 	 */
 	private static function isMigrationScheduled(): bool {
-		global $wgFandomComMigrationScheduled, $wgWikiaOrgMigrationScheduled, $wgCityId, $wgServer, $wgLanguageCode;
-		$hubService = WikiFactoryHub::getInstance();
+		global $wgFandomComMigrationScheduled, $wgWikiaOrgMigrationScheduled, $wgServer,
+			   $wgDomainMigrationDisabled, $wgEnableAnswers;
 
-		return empty( $wgWikiaOrgMigrationScheduled ) &&
+		return empty( $wgDomainMigrationDisabled ) &&
+			empty( $wgEnableAnswers ) &&
+			empty( $wgWikiaOrgMigrationScheduled ) &&
 			(
 				!empty( $wgFandomComMigrationScheduled )
 				|| !wfHttpsEnabledForURL( $wgServer )
