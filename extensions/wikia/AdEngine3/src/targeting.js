@@ -176,6 +176,7 @@ function getLikhoParams() {
 
   likhoStorage = likhoStorage.filter(item => item.expirationTime > Date.now());
   localStorage.setItem('likho', JSON.stringify(likhoStorage));
+
   return likhoStorage.map(item => item.likhoType);
 }
 
