@@ -6,6 +6,8 @@ class AdEngine3
 
 	public static function isEnabled()
 	{
+		return true;
+
 		$wg = F::app()->wg;
 
 		$articleId = $wg->Title->getArticleID();
