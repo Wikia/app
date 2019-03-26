@@ -41,22 +41,22 @@ class FeedsAndPostsController extends WikiaApiController {
 		$articleTitle = $this->getRequiredParam( 'title' );
 
 		$title = Title::newFromText( $articleTitle );
-		$articleId = $title->getArticleID();
 
-		if ( $articleId ) {
-			$images = ArticleData::getImages( $articleId );
+		if ( $title ) {
+			$images = ArticleData::getImages( $title->getArticleID() );
 
 			$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 			$this->response->setValues( [
 				'title' => $title->getText(),
+				'exists' => $title->exists(),
 				'thumbnail' => $images[0] ?? null,
 				'content_images' => count( $images ) > 1 ? array_slice( $images, 1 ) : [],
 				'snippet' => ArticleData::getTextSnippet( $title ),
 			] );
-
+			
 			return;
 		}
 
-		$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 	}
 }
