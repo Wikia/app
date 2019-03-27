@@ -58,6 +58,7 @@ class FeedsAndPostsController extends WikiaApiController {
 				'thumbnail' => $images[0] ?? null,
 				'content_images' => count( $images ) > 1 ? array_slice( $images, 1 ) : [],
 				'snippet' => ArticleData::getTextSnippet( $title ),
+        'relativeUrl' => $title->getLocalURL(),
 			] );
 
 			return;
@@ -66,9 +67,10 @@ class FeedsAndPostsController extends WikiaApiController {
 		$this->response->setValues( [
 			'title' => $title->getText(),
 			'exists' => $title->exists(),
-			'thumbnail' => null,
-			'content_images' => [],
-			'snippet' => '',
-		] );
+			'thumbnail' => $images[0] ?? null,
+			'content_images' => count($images) > 1 ? array_slice($images, 1) : [],
+			'snippet' => ArticleData::getTextSnippet($title),
+			'relativeUrl' => '',
+		]);
 	}
 }
