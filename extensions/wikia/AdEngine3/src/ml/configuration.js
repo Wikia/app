@@ -30,7 +30,7 @@ export const billTheLizardConfigurator = {
 				browser: browserName,
 				device: utils.client.getDeviceType(),
 				esrb: context.get('targeting.esrb') || null,
-				geo: utils.getCountryCode() || null,
+				geo: utils.geoService.getCountryCode() || null,
 				lang: context.get('targeting.lang'),
 				npa: context.get('targeting.npa'),
 				os: utils.client.getOperatingSystem(),

@@ -63,7 +63,7 @@ require([
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
 	function callOnConsecutivePageView() {
-		adEngineBridge.readSessionId();
+		adEngineBridge.geo.readSessionId();
 
 		// Track Labrador values to DW
 		var labradorPropValue = adEngineBridge.geo.getSamplingResults().join(';');

@@ -200,7 +200,7 @@ export default {
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.getCountryCode() || 'none',
+			geo: utils.geoService.getCountryCode() || 'none',
 			likho: getLikhoParams(),
 		};
 

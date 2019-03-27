@@ -67,7 +67,7 @@ function startAdEngine() {
 }
 
 function trackLabradorValues() {
-	const labradorPropValue = utils.getSamplingResults().join(';');
+	const labradorPropValue = utils.geoService.getSamplingResults().join(';');
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
