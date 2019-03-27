@@ -28,6 +28,7 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 	function getDraftKey() {
 		var key = window.wgPageName + '-draft',
 			oldId = $('*[name="oldid"]').val(),
+			sectionId = $('*[name="wpSection"]').val(),
 			undoId = window.mw.config.get('EditDraftUndoId'),
 			blogPageId = window.mw.config.get('EditDraftBlogPageId');
 
@@ -37,6 +38,10 @@ define('EditDraftSaving', ['jquery', 'wikia.log', 'wikia.tracker'], function($, 
 		}
 		if (undoId) {
 			key += '-undo-' + undoId;
+		}
+		// CORE-249 | Drafts: incorrectly applies section edit drafts to full editor
+		if (sectionId > 0) {
+			key += '-section-' + sectionId;
 		}
 		// CORE-114 | Drafts ignore pageid parameter for Special:CreateBlogPage
 		if (blogPageId && window.wgCanonicalSpecialPageName === 'CreateBlogPage') {
