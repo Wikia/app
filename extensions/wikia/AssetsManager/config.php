@@ -15,7 +15,6 @@ $config['oasis_shared_core_js'] = [
 		'#group_ui_repo_api_js',
 		// Parametrized links to category pages might be everywhere and we need to catch 'em all
 		'#group_seo_tweaks_uncrawlable_urls',
-		'//extensions/wikia/AutoLogin/js/passive_autologin.js'
 	],
 ];
 
