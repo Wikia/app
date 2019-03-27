@@ -50,6 +50,7 @@ class FeedsAndPostsController extends WikiaApiController {
 			'thumbnail' => $images[0] ?? null,
 			'content_images' => count($images) > 1 ? array_slice($images, 1) : [],
 			'snippet' => ArticleData::getTextSnippet($title),
+			'relativeUrl' => $title->getLocalURL(),
 		]);
 	}
 }
