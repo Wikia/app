@@ -113,7 +113,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),
+			'document_visibility': bridge.getDocumentVisibilityStatus(),
 			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};

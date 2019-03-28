@@ -311,6 +311,7 @@ function passSlotEvent(slotName, eventName) {
 }
 
 const geo = utils.geoService;
+const getDocumentVisibilityStatus = utils.getDocumentVisibilityStatus;
 
 export {
 	init,
@@ -323,4 +324,5 @@ export {
 	universalAdPackage,
 	slotService,
 	geo,
+	getDocumentVisibilityStatus,
 };
