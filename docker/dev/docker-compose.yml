@@ -30,6 +30,10 @@ services:
       - WIKIA_DEV_DOMAIN=dev.wikia-local.com
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
+    # https://docs.docker.com/compose/compose-file/#extra_hosts
+    extra_hosts:
+      - "geo-db-dev-db-master.query.consul:10.12.70.106"
+      - "geo-db-dev-db-slave.query.consul:10.14.30.107"
   memcached:
     image: memcached:alpine
   # MW log output, see K8s_LOGGING.md
