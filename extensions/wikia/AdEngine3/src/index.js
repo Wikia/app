@@ -83,7 +83,6 @@ function trackLikhoToDW() {
 
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));
-		utils.logger(logGroup, 'likho props', likhoPropValue);
 	}
 }
 
