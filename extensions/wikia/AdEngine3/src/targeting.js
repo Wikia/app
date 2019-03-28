@@ -175,7 +175,7 @@ export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
-		const likho = likhoService.refresh().map(item => item.likhoType);
+		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
