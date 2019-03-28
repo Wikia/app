@@ -68,7 +68,7 @@ function getLinkSuggest() {
 
 	$ar = new AjaxResponse( $out );
 	$ar->setCacheDuration(60 * 60);
-	$ar->setVary( implode( ",",[ "Accept-Encoding", WebRequest::MW_WIKI_ID_HEADER ] ) );
+	$ar->setVary( implode( ",", [ "Accept-Encoding", WebRequest::MW_WIKI_ID_HEADER ] ) );
 
 	if ($wgRequest->getText('format') == 'json') {
 		$ar->setContentType('application/json; charset=utf-8');
