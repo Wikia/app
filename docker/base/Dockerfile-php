@@ -1,5 +1,5 @@
 # This is a base Docker image used in prod/sandbox/preview Jenkinsfile
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:9af347f
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
