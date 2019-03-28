@@ -277,7 +277,7 @@ class ContactForm extends SpecialPage {
 	 */
 	function processCreation() {
 		global $wgCityId, $wgSpecialContactEmail;
-		global $wgLanguageCode, $wgServer;
+		global $wgLanguageCode, $wgServer, $wgScriptPath;
 
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@fandom.com" : $wgSpecialContactEmail );
@@ -298,7 +298,7 @@ class ContactForm extends SpecialPage {
 		}
 		$m_shared .= ( !empty( $this->mRealName ) ) ? ( $this->mRealName ) : ( ( ( !empty( $this->mUserName ) ) ? ( $this->mUserName ) : ('--') ) );
 		$m_shared .= " ({$this->mEmail})";
-		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
+		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . $wgScriptPath . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
 
 
 		//start wikia debug info, sent only to the internal email, not cc'd

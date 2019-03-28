@@ -7,7 +7,7 @@ class FilePageHelper {
 		$content = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $content );
 
 		// If we have an empty string or a bunch of whitespace, return null
-		if( trim($content) == "" ) {
+		if ( trim( $content ) == "" ) {
 			$content = null;
 		}
 
@@ -17,20 +17,52 @@ class FilePageHelper {
 	/**
 	 * Returns an url when file needs to be redirected.
 	 *
-	 * @requestParam Title
+	 * @param Title $title - page title object
+	 * @param bool $onlyDB - ignore memcache and fetch based on db
 	 *
-	 * @return string $url - url to redirect to
+	 * @return string $purl - prefixedText to redirect to
 	 */
-	public static function getFilePageRedirect( Title $title ) {
+	public static function getFilePageRedirectUrl( Title $title, bool $onlyDB = false ) {
+		$prefixedText = self::getFilePageRedirectPrefixedText( $title, $onlyDB );
+		if ( $prefixedText == "" ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( __FUNCTION__, [
+				'key' => "empty",
+			] );
+			return "";
+		}
+		$redirTitle = Title::newFromText( $prefixedText );
+		$url = $redirTitle->getFullURL();
+		if( Title::newMainPage()->getPrefixedText() == $prefixedText ){
+			$url = wfAppendQuery( $url, [
+				'file' => $title->getText(),
+			] );
+		}
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.01, __FUNCTION__, [
+			'url' => $url,
+			'prefix' => $prefixedText,
+			'key' => wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() ),
+		] );
+		return $url;
+	}
+
+	/**
+	 * Returns an url when file needs to be redirected.
+	 *
+	 * @param Title $title - page title object
+	 * @param bool $onlyDB - ignore memcache and fetch based on db
+	 *
+	 * @return string $prefixedText - prefixedText to redirect to
+	 */
+	public static function getFilePageRedirectPrefixedText( Title $title, bool $onlyDB = false ) {
 		global $wgMemc;
 
 		//fallback to main page
-		$url = Title::newMainPage()->getFullURL();
+		$prefixedText = Title::newMainPage()->getPrefixedText();
 		//wiki needs read privileges
 		if ( !$title->userCan( 'read' ) ) {
-			return $url;
+			return $prefixedText;
 		}
-		$redirKey = wfMemcKey( 'redir', WebRequest::detectProtocol(), $title->getPrefixedText() );
+		$redirKey = wfMemcKey( 'redirprefix', WebRequest::detectProtocol(), $title->getPrefixedText() );
 
 		$img = wfFindFile( $title );
 		if ( !$img ) {
@@ -38,37 +70,80 @@ class FilePageHelper {
 		}
 
 		if ( !$img || $img && !$img->exists() ) {
-			$wgMemc->set( $redirKey, $url );
-			return $url;
+			$wgMemc->set( $redirKey, $prefixedText );
+
+			return $prefixedText;
 		}
 
-		$urlMem = $wgMemc->get( $redirKey );
-		if ( $urlMem ) {
-			$url = $urlMem;
-			return $url;
+		if ( !$onlyDB ) {
+			$urlMem = $wgMemc->get( $redirKey );
+			if ( $urlMem ) {
+				$prefixedText = $urlMem;
+
+				return $prefixedText;
+			}
 		}
 
 		$res = self::fetchLinks( $img->getTitle()->getDBkey() );
 		if ( $res ) {
 			foreach ( $res as $row ) {
-				$ImageTitle = Title::newFromRow( $row );
-				if ( $ImageTitle->isRedirect() ) {
+				$PageTitle = Title::newFromRow( $row );
+				if ( $PageTitle->isRedirect() ) {
 					continue;
 				}
-				if ( !$ImageTitle->userCan( 'read' ) ) {
+				if ( !$PageTitle->userCan( 'read' ) ) {
 					continue;
 				}
-				$url = $ImageTitle->getFullURL();
+				$prefixedText = $PageTitle->getPrefixedText();
 				break;
 			}
 		}
-		if ( $url === Title::newMainPage()->getFullURL() ) {
-			$url = wfAppendQuery($url, [
-				'file' => $title->getText()
-			] );
+		if ( !$onlyDB ) {
+			$wgMemc->set( $redirKey, $prefixedText );
 		}
-		$wgMemc->set( $redirKey, $url );
-		return $url;
+
+		return $prefixedText;
+	}
+
+	/**
+	 * Returns list of surrogate keys for purging.
+	 *
+	 * @param Title
+	 *
+	 * @return array $keys - surrogate keys to purge
+	 */
+	public static function getSurrogateKeys( Title $title ) {
+		$keys = [];
+		$keys[] = self::getRedirSurrogateKey( $title );
+		if ( $title->inNamespace( NS_FILE ) ) {
+			$prefixedText = self::getFilePageRedirectPrefixedText( $title );
+			if ( isset( $prefixedText ) ) {
+				$pageTitle = Title::newFromText( $prefixedText );
+				if ( $pageTitle ) {
+					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				}
+			}
+			$prefixedTextFromDB = self::getFilePageRedirectPrefixedText( $title, true );
+			if ( isset( $prefixedTextFromDB ) && $prefixedText != $prefixedTextFromDB ) {
+				$pageTitle = Title::newFromText( $prefixedTextFromDB );
+				if ( $pageTitle ) {
+					$keys = array_merge( $keys, self::getSurrogateKeys( $pageTitle ) );
+				}
+			}
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * Returns surrogate keys for purging
+	 *
+	 * @param Title
+	 *
+	 * @return string $key - surrogate key to purge
+	 */
+	protected static function getRedirSurrogateKey( Title $title ) {
+		return Wikia::surrogateKey( 'redirect', $title->getPrefixedDBkey() );
 	}
 
 
@@ -92,5 +167,19 @@ class FilePageHelper {
 			'LIMIT' => 5,
 			'ORDER BY' => 'page_namespace, page_id',
 		] );
+	}
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
+	 */
+	public static function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select( [ 'imagelinks' ], [ 'il_to' ], [ 'il_from' => $id ], __METHOD__,
+			[ 'ORDER BY' => 'il_to', ] );
 	}
 }
