@@ -1,4 +1,4 @@
-import { utils } from '@wikia/ad-engine';
+import { utils, likhoService } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
@@ -171,18 +171,11 @@ function getZone(adsContext) {
 	};
 }
 
-function getLikhoParams() {
-  let likhoStorage = JSON.parse(localStorage.getItem('likho')) || [];
-
-  likhoStorage = likhoStorage.filter(item => item.expirationTime > Date.now());
-  localStorage.setItem('likho', JSON.stringify(likhoStorage));
-  return likhoStorage.map(item => item.likhoType);
-}
-
 export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
+		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
@@ -201,7 +194,7 @@ export default {
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
 			geo: utils.getCountryCode() || 'none',
-			likho: getLikhoParams(),
+			likho,
 		};
 
 		if (window.pvNumber) {
