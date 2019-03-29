@@ -1604,6 +1604,7 @@ $wgDefaultUserOptions = [
 	'cols' => 80,
 	'date' => 'default',
 	'diffonly' => 0,
+	'disablefeaturedvideo' => 1,
 	'disablemail' => 0,
 	'disablesuggest' => 0,
 	'editfont' => 'default',

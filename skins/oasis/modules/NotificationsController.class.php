@@ -51,10 +51,9 @@ class NotificationsController extends WikiaController {
 	 * Show notifications
 	 */
 	public function executeIndex() {
-		global $wgEnableArticleFeaturedVideo;
-
 		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		if ( !empty( $wgEnableArticleFeaturedVideo ) && !ArticleVideoContext::isFeaturedVideoEmbedded( $articleId ) ) {
+
+		if ( !ArticleVideoContext::isFeaturedVideoAvailable( $articleId ) ) {
 			// render notifications
 			$this->notifications = self::$notificationsStack;
 
