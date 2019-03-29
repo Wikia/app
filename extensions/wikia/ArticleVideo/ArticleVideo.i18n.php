@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'articlevideo-preference-label' => 'Featured Video',
 	'articlevideo-preference-option-show-featured-video' => 'Show all videos',
 	'articlevideo-preference-option-disable-featured-video' => 'Don\'t show all videos',
+	'right-showfeaturedvideo' => 'Always show featured videos',
 );
 
 $messages['qqq'] = array(
@@ -17,6 +18,7 @@ $messages['qqq'] = array(
 	'articlevideo-preference-label' => 'Label used for video viewing preferences on Special:Preferences',
 	'articlevideo-preference-option-show-featured-video' => 'Label for preference option to enable all videos',
 	'articlevideo-preference-option-disable-featured-video' => 'Label for preference option to disable videos',
+	'right-showfeaturedvideo' => 'Description used on Special:ListGroupRights for the "showfeaturedvideo" right',
 );
 
 $messages['de'] = array(
