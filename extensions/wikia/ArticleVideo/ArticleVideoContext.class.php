@@ -24,7 +24,7 @@ class ArticleVideoContext {
 		}
 
 		if ( $wgUser->isLoggedIn() && !$wgUser->isAllowed( self::SHOW_FEATURED_VIDEO_RIGHT ) &&
-			 $wgUser->getGlobalPreference( self::DISABLE_FEATURED_VIDEO_PREFERENCE ) ) {
+			 $wgUser->getGlobalPreference( self::DISABLE_FEATURED_VIDEO_PREFERENCE, 1 ) ) {
 			return false;
 		}
 
