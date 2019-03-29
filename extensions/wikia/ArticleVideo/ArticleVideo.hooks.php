@@ -15,8 +15,8 @@ class ArticleVideoHooks {
 
 	public static function onGetPreferences( User $user, &$defaultPreferences ) {
 		if ( !$user->isAllowed( ArticleVideoContext::SHOW_FEATURED_VIDEO_RIGHT ) ) {
-			$showFeaturedVideo = wfMessage( 'articlevideo-preference-option-show-featured-video' )->escaped();
-			$disableFeaturedVideo = wfMessage( 'articlevideo-preference-option-disable-featured-video' )->escaped();
+			$showFeaturedVideo = wfMessage( 'articlevideo-preference-option-show-featured-video' )->text();
+			$disableFeaturedVideo = wfMessage( 'articlevideo-preference-option-disable-featured-video' )->text();
 
 			$defaultPreferences[ArticleVideoContext::DISABLE_FEATURED_VIDEO_PREFERENCE] = [
 				'label-message' => 'articlevideo-preference-label',
