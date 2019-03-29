@@ -39,10 +39,10 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					getCountryCode: function () {
 						return 'XY';
 					},
-					getDocumentVisibilityStatus: function () {
-						return 'visible';
-					}
-				}
+				},
+				getDocumentVisibilityStatus: function () {
+					return 'visible';
+				},
 			},
 			log: noop,
 			bidders: {

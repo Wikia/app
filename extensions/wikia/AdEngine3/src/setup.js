@@ -35,7 +35,7 @@ function updateWadContext() {
 }
 
 function isGeoEnabled(key) {
-	return utils.isProperGeo(instantGlobals.get(key), key);
+	return utils.geoService.isProperGeo(instantGlobals.get(key), key);
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
@@ -71,7 +71,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		Original line:
 		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 	*/
-	const stickySlotsLines = utils.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
+	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
@@ -191,7 +191,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 
-	if (utils.isProperGeo(['AU', 'NZ'])) {
+	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
 	}
 
@@ -199,7 +199,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('services.netzathleten.enabled', isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', utils.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', utils.geoService.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
 
 	slots.setupIdentificators();
 	slots.setupStates();
