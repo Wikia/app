@@ -89,7 +89,7 @@ class WikiFactoryLoader {
 			$this->mWikiIdForced = true;
 
 			// differ CDN caching on X-Mw-Wiki-Id request header value
-			RequestContext::getMain()->getOutput()->addVaryHeader( 'X-Mw-Wiki-Id' );
+			RequestContext::getMain()->getOutput()->addVaryHeader( WebRequest::MW_WIKI_ID_HEADER );
 		}
 		elseif ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
