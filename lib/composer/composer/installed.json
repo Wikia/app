@@ -6139,20 +6139,20 @@
     },
     {
         "name": "wikia/simplehtmldom",
-        "version": "v1.6.2",
-        "version_normalized": "1.6.2.0",
+        "version": "v1.8.1",
+        "version_normalized": "1.8.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Wikia/simplehtmldom.git",
-            "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a"
+            "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/17c40a62d1eaea267ce10aa3530815766efe7c1a",
-            "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a",
+            "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
+            "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
             "shasum": ""
         },
-        "time": "2017-07-21T10:54:58+00:00",
+        "time": "2019-03-29T12:37:03+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

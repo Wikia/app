@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaa8c5b165a43c8a03fe8381d9a8a187",
+    "content-hash": "f30296fc233ea6964cda7504f45738da",
     "packages": [
         {
             "name": "composer/installers",
@@ -5926,16 +5926,16 @@
         },
         {
             "name": "wikia/simplehtmldom",
-            "version": "v1.6.2",
+            "version": "v1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/simplehtmldom.git",
-                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a"
+                "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/17c40a62d1eaea267ce10aa3530815766efe7c1a",
-                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a",
+                "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
+                "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
                 "shasum": ""
             },
             "type": "library",
@@ -5949,7 +5949,7 @@
                 "MIT"
             ],
             "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements.",
-            "time": "2017-07-21T10:54:58+00:00"
+            "time": "2019-03-29T12:37:03+00:00"
         },
         {
             "name": "wikimedia/scoped-callback",
