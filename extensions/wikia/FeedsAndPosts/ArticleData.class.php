@@ -17,7 +17,7 @@ class ArticleData {
 		return $urls;
 	}
 
-	public static function getTextSnippet(Title $title) {
-		return htmlspecialchars((new ArticleService($title))->getTextSnippet(300, 350));
+	public static function getTextSnippet( Title $title ) {
+		return ( new ArticleService( $title ) )->getTextSnippet( 300, 350 );
 	}
 }
