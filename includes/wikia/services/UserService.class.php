@@ -29,13 +29,13 @@ class UserService {
 	 * @throws MWException
 	 */
 	public static function getLandingPage( User $user ): Title {
-		global $wgEnableFeedsAndPostsExt;
+		global $wgEnableFeedsAndPostsExt, $wgContLang;
 
 		$value = self::getLandingPagePreference( $user );
 
 		switch ( $value ) {
 			case UserPreferencesV2::LANDING_PAGE_FEEDS:
-				if ( $wgEnableFeedsAndPostsExt ) {
+				if ( $wgEnableFeedsAndPostsExt && $wgContLang->getCode() === 'en' ) {
 					return new class extends Title {
 						public function getFullURL( $query = '', $query2 = false ) {
 							global $wgScriptPath;
