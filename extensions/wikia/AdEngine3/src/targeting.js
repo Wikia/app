@@ -90,7 +90,7 @@ function getPageCategories(adsContext) {
 		return undefined;
 	}
 
-	const categories = window.wgCategories.map(item => item.title);
+	const categories = window.wgCategories;
 	let outCategories;
 
 	if (categories && categories.length > 0) {
