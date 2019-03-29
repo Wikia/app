@@ -137,6 +137,9 @@ class MercuryApi {
 				'netzathleten' => [
 					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
 					'url' => AnalyticsProviderNetzAthleten::URL
+				],
+				'quantcast' => [
+					'labels' => AnalyticsProviderQuantServe::getQuantcastLabels()
 				]
 			],
 		];

@@ -1160,6 +1160,8 @@ HTML;
 		return $this->getHeader( self::MW_AUTH_OK_HEADER ) !== false;
 	}
 
+	const MW_WIKI_ID_HEADER = 'X-Mw-Wiki-Id';
+
 	/**
 	 * Get the number of seconds to have elapsed since request start,
 	 * in fractional seconds, with microsecond resolution.

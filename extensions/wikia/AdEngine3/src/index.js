@@ -44,6 +44,7 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	}
 
 	trackLabradorValues();
+	trackLikhoToDW();
 }
 
 function startAdEngine() {
@@ -71,6 +72,17 @@ function trackLabradorValues() {
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
+	}
+}
+
+/**
+ * @private
+ */
+function trackLikhoToDW() {
+	const likhoPropValue = context.get('targeting.likho') || [];
+
+	if (likhoPropValue.length) {
+		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
 }
 
