@@ -19,7 +19,7 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
 		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
 
-		$result = ArticleVideoContext::isFeaturedVideoEmbedded( 123 );
+		$result = ArticleVideoContext::isFeaturedVideoAvailable( 123 );
 
 		$this->assertEquals( $expected, $result, $message );
 	}

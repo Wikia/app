@@ -18,9 +18,10 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 			$articleId = $title->getArticleID();
-			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
-				ArticleVideoContext::isFeaturedVideoEmbedded( $articleId );
+
+			$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoAvailable( $articleId );
 			$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
+
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 

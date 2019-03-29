@@ -5,12 +5,18 @@ $messages['en'] = array(
 	'articlevideo-watch' => 'watch',
 	'articlevideo-feedback-question' => 'Do you like this video?',
 	'articlevideo-attribution-from' => 'from',
+	'articlevideo-preference-label' => 'Featured Video',
+	'articlevideo-preference-option-show-featured-video' => 'Show all videos',
+	'articlevideo-preference-option-disable-featured-video' => 'Don\'t show all videos',
 );
 
 $messages['qqq'] = array(
 	'articlevideo-watch' => '"Watch" string',
 	'articlevideo-feedback-question' => 'Question in featured video feedback box',
 	'articlevideo-attribution-from' => 'Label displayed before username of the author of video',
+	'articlevideo-preference-label' => 'Label used for video viewing preferences on Special:Preferences',
+	'articlevideo-preference-option-show-featured-video' => 'Label for preference option to enable all videos',
+	'articlevideo-preference-option-disable-featured-video' => 'Label for preference option to disable videos',
 );
 
 $messages['de'] = array(
