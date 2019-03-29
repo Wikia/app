@@ -16,7 +16,9 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider
 
 		if (is_string($keyValues)) {
 			foreach (explode(';', $keyValues) as $keyValue) {
-				list($key, $value) = explode('=', $keyValue);
+				$keyValue = explode('=', $keyValue);
+				$key = isset($keyValue[0]) ? $keyValue[0] : '';
+				$value = isset($keyValue[1]) ? $keyValue[1] : '';
 
 				if ($key && isset($labels[$key]) && $value) {
 					$quantcastLabels[] = $labels[$key] . '.' . $value;
