@@ -19,6 +19,8 @@ services:
 install:
   - pecl channel-update pecl.php.net
   - wget https://pecl.php.net/get/mustache-0.8.1.tgz && pecl install mustache-0.8.1.tgz
+  - wget https://pecl.php.net/get/uopz-6.0.1.tgz && pecl install uopz-6.0.1.tgz
+  - php -v && php -m
 before_script:
   # make sure indices are upgraded, see https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-23.html#mysqld-5-7-23-bug
   - sudo mysql_upgrade
