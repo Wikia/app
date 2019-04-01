@@ -1,21 +1,21 @@
 language: php
 php: 7.3
-dist: trusty
+dist: xenial
 sudo: required
+
 addons:
   apt:
     sources:
-      # same as mysql-5.7-trusty travis alias, but you can't mix & match different source declaration types
-      - sourceline: "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7"
-        key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8C718D3B5072E1F5"
-      - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu trusty main"
+      # https://launchpad.net/~jbboehr/+archive/ubuntu/mustache
+      - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu xenial main"
         key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x7DAD64617A3EC228D368C50F9A90195D619F9E2B"
     packages:
-      - mysql-server
-      - mysql-client
       - libmustache-dev
+      - rabbitmq-server  # https://travis-ci.community/t/rabbitmq-on-xenial/1827
+
 services:
-  - rabbitmq
+  - mysql  # https://docs.travis-ci.com/user/database-setup/#mysql
+
 install:
   - pecl channel-update pecl.php.net
   - wget https://pecl.php.net/get/mustache-0.8.1.tgz && pecl install mustache-0.8.1.tgz
