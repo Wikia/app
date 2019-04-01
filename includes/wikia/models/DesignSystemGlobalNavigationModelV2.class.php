@@ -61,10 +61,14 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getMainNavigation() {
-		return array_merge(
-			$this->getFandomLinks(),
-			[ $this->getWikisMenu() ]
-		);
+		if ( $this->isWikiaOrgCommunity() ) {
+			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
+		} else {
+			return array_merge(
+				$this->getFandomLinks(),
+				[ $this->getWikisMenu() ]
+			);
+		}
 	}
 
 	private function getContentRecommendations() {
@@ -318,6 +322,11 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
+	private function isWikiaOrgCommunity() {
+		return $this->product === self::PRODUCT_WIKIS &&
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+	}
+
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
@@ -350,6 +359,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getLogo() {
+		if ( $this->isWikiaOrgCommunity() === true ) {
+			return [
+				'type' => 'link-image',
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org-white',
+				],
+				'tracking_label' => 'logo',
+			];
+		}
+
 		return [
 			'type' => 'link-image',
 			'href' => $this->getHref( 'fandom-logo' ),

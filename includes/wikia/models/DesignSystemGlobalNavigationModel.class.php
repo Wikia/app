@@ -47,7 +47,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			]
 		];
 
-		if ( $this->lang === static::DEFAULT_LANG ) {
+		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
 			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = [
 				'header' => [
@@ -418,6 +418,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
+	private function isWikiaOrgCommunity() {
+		return $this->product === self::PRODUCT_WIKIS &&
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+	}
+
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
@@ -495,6 +500,22 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getLogoMain() {
+		if ( $this->isWikiaOrgCommunity() === true ) {
+			return [
+				'type' => 'link-image',
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org',
+				],
+				'title' => [
+					'type' => 'text',
+					'value' => 'Wikia.org'
+				],
+				'tracking_label' => 'logo',
+			];
+		}
+
 		return [
 			'type' => 'link-image',
 			'href' => $this->getHref( 'fandom-logo' ),
@@ -513,6 +534,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getLogoTagline() {
+		if ( $this->isWikiaOrgCommunity() === true ) {
+			return null;
+		}
+
 		return [
 			'type' => 'link-image',
 			'href' => $this->getHref( 'fandom-logo' ),
