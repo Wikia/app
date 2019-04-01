@@ -43,6 +43,7 @@ class NavigationTest extends WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testDiscussLink( $globals, $expected ) {
+		$this->mockGlobalVariable('wgContLanguageCode', $globals['wgContLanguageCode'] ?? 'en');
 		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function ( $variable/*, $id*/ ) use (
 			$globals
 		) {
@@ -367,7 +368,7 @@ class NavigationTest extends WikiaBaseTest {
 				'globals' => [
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => true,
-					'wgContLanguageCode' => 'de',
+					'wgContLanguageCode' => 'es',
 				],
 				'expected' => $this->prepareDiscussLink( [
 						'label' => [
