@@ -8,7 +8,7 @@ use WikiaDataAccess;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgCityId;
+		global $wgServer, $wgDBname, $wgCityId, $wgLanguageCode;
 
 		$wikiVariables = [
 			'basePath' => $wgServer,
@@ -16,6 +16,9 @@ class WikiVariables {
 			'getStartedUrl' =>  $this->getStartedUrl(),
 			'wikiDescription' => ( new CommunityDataService( $wgCityId ) )->getCommunityDescription(),
 			'openGraphImageUrl' => \OpenGraphImageHelper::getUrl(),
+			'language' => [
+				'content' => $wgLanguageCode,
+			],
 		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
