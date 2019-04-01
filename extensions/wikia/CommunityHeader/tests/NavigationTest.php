@@ -367,6 +367,7 @@ class NavigationTest extends WikiaBaseTest {
 				'globals' => [
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => true,
+					'wgContLanguageCode' => 'de',
 				],
 				'expected' => $this->prepareDiscussLink( [
 						'label' => [
@@ -382,6 +383,7 @@ class NavigationTest extends WikiaBaseTest {
 				'globals' => [
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => false,
+					'wgContLanguageCode' => 'de',
 				],
 				'expected' => $this->prepareDiscussLink( [
 						'label' => [
@@ -392,6 +394,38 @@ class NavigationTest extends WikiaBaseTest {
 						'href' => '/d/f',
 						'tracking' => 'discuss',
 					] ),
+			],
+			[
+				'globals' => [
+					'wgEnableDiscussions' => true,
+					'wgEnableForumExt' => true,
+					'wgContLanguageCode' => 'en',
+				],
+				'expected' => $this->prepareDiscussLink( [
+					'label' => [
+						'type' => 'translatable-text',
+						'key' => 'community-header-discuss',
+						'iconKey' => 'wds-icons-comment-tiny',
+					],
+					'href' => '/f',
+					'tracking' => 'discuss',
+				] ),
+			],
+			[
+				'globals' => [
+					'wgEnableDiscussions' => true,
+					'wgEnableForumExt' => false,
+					'wgContLanguageCode' => 'en',
+				],
+				'expected' => $this->prepareDiscussLink( [
+					'label' => [
+						'type' => 'translatable-text',
+						'key' => 'community-header-discuss',
+						'iconKey' => 'wds-icons-comment-tiny',
+					],
+					'href' => '/f',
+					'tracking' => 'discuss',
+				] ),
 			],
 			[
 				'globals' => [

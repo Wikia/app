@@ -404,6 +404,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getDiscussLinkData(): array {
 		if ( $this->discussLinkData === null ) {
+			global $wgContLanguageCode;
+
 			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
 			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
 
@@ -412,7 +414,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$tracking = '';
 
 			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/d/f';
+				if ($wgContLanguageCode == 'en') {
+					$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/f';
+				} else {
+					$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/d/f';
+				}
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
 			} else if ( !empty( $wgEnableForumExt ) ) {
