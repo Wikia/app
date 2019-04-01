@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt, $wgContLang;
+		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt;
 
 		parent::__construct();
 
@@ -25,10 +25,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$this->mainPageUrl =
-			( !empty( $wgFandomCreatorCommunityId ) ||
-			  ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' ) )
-				?
+		$this->mainPageUrl = ( !empty( $wgFandomCreatorCommunityId ) || !empty( $wgEnableFeedsAndPostsExt ) ) ?
 			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
 			// for Feeds And Posts alpha communities we need it as well
 			wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) ) :
