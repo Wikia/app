@@ -4623,6 +4623,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'date',
 		'diffonly',
 		'disablecategoryselect',
+		'disablefeaturedvideo',
 		'disablelinksuggest',
 		'disablemail',
 		'disablesuggest',
