@@ -10,8 +10,9 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
+      maxUnavailable: 20%
+      maxSurge: 20%
+  replicas: 80
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
@@ -114,26 +115,6 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
----
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: mediawiki-prod
-  namespace: prod
-  labels:
-    app: mediawiki-prod
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: mediawiki-prod
-  maxReplicas: 75
-  minReplicas: 20
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 50
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
