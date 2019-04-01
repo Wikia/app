@@ -12,7 +12,7 @@ spec:
     rollingUpdate:
       maxUnavailable: 20%
       maxSurge: 20%
-  replicas: 80
+  replicas: 150
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
