@@ -10,7 +10,7 @@ export function createTracker(legacyContext, pageLevelParams, tracker) {
 			const trackingData = Object.assign(data, {
 				pv_unique_id: window.pvUID,
 				pv_number: pageLevelParams.pv,
-				country: utils.getCountryCode(),
+				country: utils.geoService.getCountryCode(),
 				skin: pageLevelParams.skin,
 				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)',
 				document_visibility: utils.getDocumentVisibilityStatus(),

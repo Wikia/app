@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'btl': billTheLizard ?
 					(billTheLizard.getResponseStatus('fv') || billTheLizard.BillTheLizard.NOT_USED) :
 					'',
-				'document_visibility': bridge.geo.getDocumentVisibilityStatus()
+				'document_visibility': bridge.getDocumentVisibilityStatus()
 			};
 
 		if (bidders && params.bid) {
