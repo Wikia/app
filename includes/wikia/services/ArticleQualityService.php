@@ -153,48 +153,56 @@ class ArticleQualityService {
 		$percentile = $this->app->wg->Memc->get( $cacheKey );
 
 		if ( $percentile === false ) {
-			$title = Title::newFromID( $this->articleId );
-			if ( $title === null ) {
+			$inputs = $this->getArticleQualityFactors( $this->articleId );
+			if ( $inputs === null ) {
 				return null;
 			}
-			$article = new Article( $title );
-			$parserOutput = $article->getParserOutput();
-
-			if ( !$parserOutput ) {
-				//MAIN-3592
-				$this->error(
-					__METHOD__,
-					[
-						'message' => 'Article::getParserOutput returned false',
-						'articleId' => $this->articleId,
-					]
-				);
-				return null;
-			}
-
-			$inputs = [
-				'outbound' => 0,
-				'inbound' => 0,
-				'length' => 0,
-				'sections' => 0,
-				'images' => 0
-			];
-
-			/**
-			 *  $title->getLinksTo() and  $title->getLinksFrom() function are
-			 * too expensive to call it here as we want only the number of links
-			 */
-			$inputs[ 'outbound' ] = $this->countOutboundLinks( $this->articleId );
-			$inputs[ 'inbound' ] = $this->countInboundLinks( $this->articleId );
-			$inputs[ 'sections' ] = count( $parserOutput->getSections() );
-			$inputs[ 'images' ] = count( $parserOutput->getImages() );
-			$inputs[ 'length' ] = $this->getCharsCountFromHTML( $parserOutput->getText() );
 			$quality = $this->computeFormula( $inputs );
 			$percentile = $this->searchPercentile( $quality );
 
 			$this->app->wg->Memc->set( $cacheKey, $percentile, self::MEMC_CACHE_TIME );
 		}
 		return $percentile;
+	}
+
+	public function getArticleQualityFactors( $articleId ) {
+		$title = Title::newFromID( $articleId );
+		if ( $title === null ) {
+			return null;
+		}
+		$article = new Article( $title );
+		$parserOutput = $article->getParserOutput();
+
+		if ( !$parserOutput ) {
+			//MAIN-3592
+			$this->error(
+				__METHOD__,
+				[
+					'message' => 'Article::getParserOutput returned false',
+					'articleId' => $articleId,
+				]
+			);
+			return null;
+		}
+
+		$factors = [
+			'outbound' => 0,
+			'inbound' => 0,
+			'length' => 0,
+			'sections' => 0,
+			'images' => 0
+		];
+
+		/**
+		 *  $title->getLinksTo() and  $title->getLinksFrom() function are
+		 * too expensive to call it here as we want only the number of links
+		 */
+		$factors[ 'outbound' ] = $this->countOutboundLinks( $articleId );
+		$factors[ 'inbound' ] = $this->countInboundLinks( $articleId );
+		$factors[ 'sections' ] = count( $parserOutput->getSections() );
+		$factors[ 'images' ] = count( $parserOutput->getImages() );
+		$factors[ 'length' ] = $this->getCharsCountFromHTML( $parserOutput->getText() );
+		return $factors;
 	}
 
 	/**
