@@ -189,6 +189,10 @@ export default {
 					FEATURED: {
 						placementId: '523',
 						siteId: '890798'
+					},
+					INCONTENT_PLAYER: {
+						placementId: '523',
+						siteId: '892126'
 					}
 				}
 			},
@@ -241,6 +245,14 @@ export default {
 						],
 						ids: [
 							'1636185@0x0'
+						]
+					},
+					INCONTENT_PLAYER: {
+						sizes: [
+							[0, 0]
+						],
+						ids: [
+							'1636186@0x0'
 						]
 					},
 					TOP_LEADERBOARD: {
@@ -305,7 +317,7 @@ export default {
 					}
 				}
 			},
-			rubiconDisplay: {
+			rubicon_display: {
 				enabled: false,
 				accountId: 7450,
 				slots: {
@@ -357,6 +369,16 @@ export default {
 						position: 'btf',
 						siteId: '148804',
 						zoneId: '704674'
+					}
+				}
+			},
+			vmg: {
+				enabled: false,
+				slots: {
+					TOP_LEADERBOARD: {
+						sizes: [
+							[3, 3]
+						]
 					}
 				}
 			},

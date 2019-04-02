@@ -713,6 +713,10 @@ abstract class FileBackend {
 		$i = strrpos( $path, '.' );
 		return strtolower( $i ? substr( $path, $i + 1 ) : '' );
 	}
+
+	public function ignoresSourceExistence() {
+		return false;
+	}
 }
 
 /**
@@ -829,7 +833,7 @@ abstract class FileBackendStore extends FileBackend {
 	 *     dst           : destination storage path
 	 *     overwrite     : overwrite any file that exists at the destination
 	 * 
-	 * @param $params Array
+	 * @param $params array
 	 * @return Status
 	 */
 	final public function copyInternal( array $params ) {
@@ -1296,7 +1300,7 @@ abstract class FileBackendStore extends FileBackend {
 	}
 
 	/**
-	 * @copydoc FileBackend::getFileList() 
+	 * @see FileBackend::getFileList()
 	 */
 	final public function getFileList( array $params ) {
 		list( $fullCont, $dir, $shard ) = $this->resolveStoragePath( $params['dir'] );

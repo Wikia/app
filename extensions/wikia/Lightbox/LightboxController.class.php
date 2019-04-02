@@ -258,6 +258,10 @@ class LightboxController extends WikiaController {
 
 		if ( !empty( $file ) ) {
 			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
+			$keys = array();
+			Hooks::run( 'FilePages:InsertSurrogateKey', [ $fileTitleObj, &$keys ] );
+			Wikia::setSurrogateKeysHeaders( $keys, false );
+
 			$fileTitle = $fileTitleObj->getText();
 			$articleTitle = $this->request->getVal( 'articleTitle' );
 			$articleTitleObj = Title::newFromText( $articleTitle );
@@ -277,6 +281,17 @@ class LightboxController extends WikiaController {
 				NS_CATEGORY,
 			);
 			$shareUrl = ( !empty( $articleUrl ) && in_array( $articleNS, $sharingNamespaces ) ) ? $articleUrl : $fileUrl;
+
+			$anonRedir = FilePageHelper::getFilePageRedirectUrl( $fileTitleObj );
+
+			$mpUrl = wfAppendQuery(Title::newMainPage()->getFullURL() , [
+				'file' => $fileTitleObj->getText()
+			] );
+
+			if ( $anonRedir && $anonRedir === $mpUrl ) {
+				$shareUrl = $anonRedir;
+			}
+
 			$thumb = $file->transform( array( 'width' => 300, 'height' => 250 ) );
 			$thumbUrl = $thumb->getUrl();
 

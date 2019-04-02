@@ -151,5 +151,4 @@ class LightboxHelper extends WikiaModel {
 
 		return $timestamp;
 	}
-
 }

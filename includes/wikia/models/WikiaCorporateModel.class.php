@@ -3,6 +3,7 @@
 class WikiaCorporateModel extends WikiaModel {
 
 	const LANG_TO_WIKI_ID = [
+		'search' => Wikia::SEARCH_WIKI_ID,
 		'en' => Wikia::CORPORATE_WIKI_ID,
 		'de' => 111264,
 		'fr' => 208826,

@@ -4,7 +4,7 @@ class ResetTrackingPreferencesSpecialController extends WikiaSpecialPageControll
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	private $defaultReturnToTarget = 'https://www.wikia.com/Privacy_Policy';
+	private $defaultReturnToTarget = 'https://www.fandom.com/privacy-policy';
 
 	public function __construct() {
 		parent::__construct( 'ResetTrackingPreferences' );

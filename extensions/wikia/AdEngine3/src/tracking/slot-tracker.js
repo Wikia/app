@@ -32,17 +32,19 @@ function getCurrentScrollY() {
 function prepareData(slot, data) {
 	const now = new Date();
 	const slotName = slot.getSlotName();
+	const likho = context.get('targeting.likho');
 
 	return Object.assign({
 		pv: window.pvNumber,
 		browser: data.browser,
-		country: utils.getCountryCode(),
+		country: utils.geoService.getCountryCode(),
 		time_bucket: data.time_bucket,
 		timestamp: data.timestamp,
 		tz_offset: now.getTimezoneOffset(),
 		device: context.get('state.deviceType'),
 		ad_load_time: data.timestamp - window.performance.timing.connectStart,
 		product_lineitem_id: data.line_item_id || '',
+		order_id: data.order_id || '',
 		creative_id: data.creative_id || '',
 		creative_size: data.creative_size || '',
 		slot_size: data.creative_size || '',
@@ -62,7 +64,8 @@ function prepareData(slot, data) {
 		kv_esrb: context.get('targeting.esrb'),
 		kv_ref: context.get('targeting.ref'),
 		kv_top: context.get('targeting.top'),
-		labrador: utils.getSamplingResults().join(';'),
+		labrador: utils.geoService.getSamplingResults().join(';'),
+		likho: likho.join(';'),
 		btl: '',
 		opt_in: checkOptIn(),
 		document_visibility: utils.getDocumentVisibilityStatus(),

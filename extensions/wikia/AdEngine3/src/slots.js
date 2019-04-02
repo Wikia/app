@@ -1,6 +1,7 @@
-import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
+import { AdSlot, context, events, slotInjector, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
+import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
@@ -23,11 +24,13 @@ function isHighImpactApplicable() {
 	return !context.get('custom.hasFeaturedVideo');
 }
 
-function isIncontentPlayerApplicable() {
-	const header = document.querySelectorAll('#mw-content-text > h2')[1];
-
-	return !context.get('custom.hasFeaturedVideo') &&
-		header && header.offsetWidth >= header.parentNode.offsetWidth;
+/**
+ * Enables incontent native on search pages.
+ *
+ * @returns {boolean}
+ */
+function isIncontentNativeApplicable() {
+	return context.get('options.incontentNative') && context.get('custom.pageType') === 'search';
 }
 
 /**
@@ -110,17 +113,7 @@ export default {
 				group: 'MR',
 				options: {},
 				slotShortcut: 'm',
-				sizes: [
-					{
-						viewportSize: [1024, 1300],
-						sizes: [
-							[300, 250],
-							[300, 600],
-							[300, 1050]
-						],
-					},
-				],
-				defaultSizes: [[300, 250], [300, 600]],
+				defaultSizes: [[300, 250], [300, 600], [300, 1050]],
 				targeting: {
 					loc: 'top',
 					pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
@@ -157,7 +150,20 @@ export default {
 				options: {},
 				slotShortcut: 'f',
 				sizes: [],
-				defaultSizes: [[300, 250]],
+				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+				insertBeforeSelector: '#incontent_boxad_1',
+				repeat: {
+					additionalClasses: 'hide',
+					index: 1,
+					limit: 20,
+					slotNamePattern: 'incontent_boxad_{slotConfig.repeat.index}',
+					updateProperties: {
+						adProduct: '{slotConfig.slotName}',
+						'targeting.rv': '{slotConfig.repeat.index}',
+					},
+					insertBelowScrollPosition: false,
+					disablePushOnScroll: true,
+				},
 				targeting: {
 					loc: 'hivi',
 					rv: 1,
@@ -188,11 +194,12 @@ export default {
 			},
 			incontent_player: {
 				adProduct: 'incontent_player',
-				avoidConflictWith: '.ad-slot',
+				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
 				bidderAlias: 'INCONTENT_PLAYER',
-				insertBeforeSelector: '.article-content > h2',
+				insertBeforeSelector: '#mw-content-text > h2',
+				insertBelowFirstViewport: true,
 				disabled: true,
 				slotNameSuffix: '',
 				group: 'HiVi',
@@ -229,6 +236,20 @@ export default {
 				trackEachStatus: true,
 				trackingKey: 'featured-video',
 			},
+			incontent_native: {
+				firstCall: false,
+				defaultSizes: ['fluid'],
+				adProduct: 'incontent_native',
+				slotNameSuffix: '',
+				nonUapSlot: true,
+				group: 'NATIVE',
+				slotShortcut: 'n',
+				lowerSlotName: 'incontent_native',
+				targeting: {
+					rv: 1
+				},
+				trackingKey: 'incontent_native',
+			},
 		};
 	},
 
@@ -256,9 +277,10 @@ export default {
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', isIncontentPlayerApplicable());
+		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
+		slotService.setState('incontent_native', isIncontentNativeApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
 		slotService.setState('gpt_flush', false);
@@ -323,23 +345,12 @@ export default {
 	},
 
 	injectIncontentPlayer() {
-		const header = document.querySelectorAll('#mw-content-text > h2')[1];
+		const isApplicable = !context.get('custom.hasFeaturedVideo');
+		const isInjected = !!slotInjector.inject('incontent_player');
 
-		if (!header || !isIncontentPlayerApplicable()) {
-			return;
-		}
-
-		const slotName = 'incontent_player';
-		const wrapper = document.createElement('div');
-
-		wrapper.id = 'INCONTENT_WRAPPER';
-		wrapper.innerHTML = '<div id="' + slotName + '" class="wikia-ad hide"></div>';
-		header.parentNode.insertBefore(wrapper, header);
-
-		context.push('state.adStack', { id: slotName });
+		return isApplicable && isInjected;
 	},
 
-	// TODO: Extract floating medrec to separate module once we do refreshing
 	injectIncontentBoxad() {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
@@ -356,11 +367,7 @@ export default {
 
 		parentNode.appendChild(element);
 
-		setTimeout(() => {
-			// TODO: Add FMR recovery logic from AE2::floatingMedrec.js
-
-			context.push('events.pushOnScroll.ids', slotName);
-		}, 10000);
+		rotateIncontentBoxad(slotName);
 	},
 
 	injectHighImpact() {

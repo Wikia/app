@@ -1,4 +1,4 @@
-import { AdEngine, context, events, eventService, templateService, utils } from '@wikia/ad-engine';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
@@ -23,8 +23,7 @@ function updateWadContext() {
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('opts.showAds') !== false &&
-		!window.wgUserName &&
-		!context.get('opts.delayBlocked');
+		!window.wgUserName;
 
 	if (serviceCanBeEnabled) {
 		// BT rec
@@ -36,7 +35,7 @@ function updateWadContext() {
 }
 
 function isGeoEnabled(key) {
-	return utils.isProperGeo(instantGlobals.get(key), key);
+	return utils.geoService.isProperGeo(instantGlobals.get(key), key);
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
@@ -46,6 +45,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
+	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
 		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
@@ -59,13 +60,20 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
+	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	if (!wikiContext.targeting.hasFeaturedVideo) {
+	if (wikiContext.targeting.hasFeaturedVideo) {
+		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
+	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
-	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	/*
+		ToDo: remove temporary stickyTLB prevention hack
+		Original line:
+		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	*/
+	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
@@ -93,6 +101,9 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('options.tracking.kikimora.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
+	context.set('options.slotRepeater', true);
+
+	context.set('options.incontentNative', isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
 
 	context.set('services.geoEdge.enabled', isGeoEnabled('wgAdDriverGeoEdgeCountries'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
@@ -115,11 +126,12 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('custom.wikiIdentifier', '_top1k_wiki');
 		context.set('custom.dbNameForAdUnit', context.get('targeting.s1'));
 	}
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+
 	context.set('custom.hasPortableInfobox', !!context.get('wiki.targeting.hasPortableInfobox'));
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
+	context.set('custom.isRecirculationDisabled', isGeoEnabled('wgAdDriverDisableRecirculationCountries'));
 	context.set('custom.beachfrontDfp', isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
 	context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
@@ -135,6 +147,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	if (isGeoEnabled('wgAdDriverPrebidBidderCountries')) {
 		context.set('bidders.prebid.enabled', true);
+		context.set('bidders.prebid.useBuiltInTargetingLogic', isGeoEnabled('wgAdDriverPrebidBuiltInTargetingCountries'));
 		context.set('bidders.prebid.aol.enabled', isGeoEnabled('wgAdDriverAolBidderCountries'));
 		context.set('bidders.prebid.appnexus.enabled', isGeoEnabled('wgAdDriverAppNexusBidderCountries'));
 		context.set('bidders.prebid.audienceNetwork.enabled', isGeoEnabled('wgAdDriverAudienceNetworkBidderCountries'));
@@ -145,7 +158,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('bidders.prebid.onemobile.enabled', isGeoEnabled('wgAdDriverAolOneMobileBidderCountries'));
 		context.set('bidders.prebid.openx.enabled', isGeoEnabled('wgAdDriverOpenXPrebidBidderCountries'));
 		context.set('bidders.prebid.pubmatic.enabled', isGeoEnabled('wgAdDriverPubMaticBidderCountries'));
-		context.set('bidders.prebid.rubiconDisplay.enabled', isGeoEnabled('wgAdDriverRubiconDisplayPrebidCountries'));
+		context.set('bidders.prebid.rubicon_display.enabled', isGeoEnabled('wgAdDriverRubiconDisplayPrebidCountries'));
+		context.set('bidders.prebid.vmg.enabled', isGeoEnabled('wgAdDriverVmgBidderCountries'));
 
 		context.set('bidders.prebid.appnexusAst.enabled', isGeoEnabled('wgAdDriverAppNexusAstBidderCountries'));
 		context.set('bidders.prebid.rubicon.enabled', isGeoEnabled('wgAdDriverRubiconPrebidCountries'));
@@ -162,8 +176,16 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
 		context.set('custom.rubiconInFV',
-			isGeoEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo);
+			isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo);
 		context.set('custom.isCMPEnabled', true);
+
+		if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
+		}
+
+		if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
 	}
 
 	if (isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
@@ -171,7 +193,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 
-	if (utils.isProperGeo(['AU', 'NZ'])) {
+	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
 	}
 
@@ -179,7 +201,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('services.netzathleten.enabled', isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', utils.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', utils.geoService.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
 
 	slots.setupIdentificators();
 	slots.setupStates();
@@ -194,7 +216,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 		if (slot instanceof Array) {
 			slotName = slot[0];
-		} else if (typeof slot === 'string') {
+		} else if (typeof slot === 'object' && slot.slotName) {
 			slotName = slot.slotName;
 		}
 

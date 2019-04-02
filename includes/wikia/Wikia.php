@@ -71,6 +71,9 @@ $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 $wgHooks['ShowLanguageWikisIndex'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 $wgHooks['ClosedWikiHandler'][] = 'Wikia::onClosedOrEmptyWikiDomains';
 
+# Add words count statistics to page_props after each article's wikitext parsing
+$wgHooks['LinksUpdateConstructed'][] = 'Wikia::onLinksUpdateConstructed';
+
 
 use Wikia\Tracer\WikiaTracer;
 
@@ -81,9 +84,10 @@ class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
 
-	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const COMMUNITY_WIKI_ID = 177; // community.fandom.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
+	const SEARCH_WIKI_ID = 1956520; // community-search.fandom.com
 
 	const USER = 'FANDOM';
 	const BOT_USER = 'FANDOMbot';
@@ -99,6 +103,7 @@ class Wikia {
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+	const DEFAULT_WIKI_ID = 177;
 
 	private static $vars = [];
 	private static $cachedLinker;
@@ -1512,6 +1517,7 @@ class Wikia {
 		return true;
 	}
 
+
 	/**
 	 * Register Swift file backend
 	 *
@@ -1520,25 +1526,15 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
-		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
-		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath, $wgUseGoogleCloudStorage;
-
-		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-		$wgFSSwiftContainer = substr( $path, 0, -7 );
-
-		if ( $wgUseGoogleCloudStorage ) {
-			$repo['backend'] = 'gcs-backend';
-		} else {
-			$repo['backend'] = 'swift-backend';
-		}
-
+		global $wgFSSwiftServer;
+		$bucket = Wikia::getBucket();
+		$repo['backend'] = Wikia::getBackend($bucket);
 		$repo['zones'] = array (
-			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-			'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-			'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-			'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+			'public' => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+			'temp'   => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+			'thumb'  => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+			'deleted'=> array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+			'archive'=> array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
 		);
 
 		return true;
@@ -1551,14 +1547,52 @@ class Wikia {
 	 * @param string $fname mwstore abstract path
 	 * @param string $hash file hash
 	 * @return bool true - it's a hook
+	 * @throws MWException
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		global $wgFSSwiftContainer;
+		$bucket = Wikia::getBucket();
+		$backendName = Wikia::getBackend( $bucket );
 
-		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		// modify input parameters
+		$backend = FileBackendGroup::singleton()->get( $backendName );
+		$fname = "mwstore://$backendName/$bucket/images/timeline/$hash";
 
 		return true;
+	}
+
+
+	/**
+	 * For example $wgUploadPath: http://images.wikia.com/poznan/pl/images then bucket is "poznan/pl"
+	 * @return bool|string
+	 */
+	private static function getBucket() {
+		global $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		return substr( $path, 0, - 7 );
+	}
+
+	private static function getBackend( $bucket ) {
+		global $wgUseGoogleCloudStorage;
+		$wgUseGcsMigrationBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
+				static::DEFAULT_WIKI_ID );
+		$wgUseGcsBucketRegex =
+			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex", static::DEFAULT_WIKI_ID );
+
+		if ( $wgUseGoogleCloudStorage ) {
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsBucketRegex ) ) {
+			return 'gcs-backend';
+		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsMigrationBucketRegex ) ) {
+			return 'gcs-migration-backend';
+		} else {
+			return 'swift-backend';
+		}
+	}
+
+	private static function textMatchesRegex( $text, $regex ) {
+		return !empty($regex) && preg_match($regex, $text);
 	}
 
 	/**
@@ -1948,5 +1982,33 @@ class Wikia {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes HTML tags from a given text and counts words.
+	 *
+	 * Text is split by spaces and newlines.(
+	 *
+	 * @param string $text
+	 * @return int
+	 */
+	public static function words_count( string $text ) : int {
+		$text = trim( strip_tags( $text ) );
+		return count( preg_split('#\s+#', $text ) );
+	}
+
+	/**
+	 * Update words_count page property kept in page_props per-wiki table
+	 *
+	 * @param LinksUpdate $linksUpdate
+	 */
+	public static function onLinksUpdateConstructed( LinksUpdate $linksUpdate ) {
+		$parserOutput = $linksUpdate->getParserOutput();
+		$words_count = self::words_count( $parserOutput->getText() );
+
+		$parserOutput->setProperty( 'words_count', $words_count );
+
+		// keep LinksUpdate instance in sync with our updated parser output properties
+		$linksUpdate->mProperties = $parserOutput->getProperties();
 	}
 }

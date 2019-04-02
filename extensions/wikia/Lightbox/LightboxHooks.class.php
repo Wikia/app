@@ -25,5 +25,4 @@ class LightboxHooks {
 		}
 		return true;
 	}
-
 }

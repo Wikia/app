@@ -2,6 +2,7 @@ $(function ($) {
 	'use strict';
 
 	var $globalNav = $('.wds-global-navigation'),
+		$searchContainer = $globalNav.find('.wds-global-navigation__search-container'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
 		$searchToggle = $globalNav.find('.wds-global-navigation__search-toggle'),
@@ -18,6 +19,7 @@ $(function ($) {
 		$searchSubmit.prop('disabled', true);
 		$searchInput.val('');
 		$globalNav.removeClass(activeSearchClass);
+		$searchContainer.removeClass('wds-search-is-focused');
 	}
 
 	$searchInput.on('input', function () {
@@ -42,6 +44,9 @@ $(function ($) {
 			if (!this.value.length) {
 				deactivateSearch();
 			}
+		})
+		.on('focus', function () {
+			$searchContainer.addClass('wds-search-is-focused');
 		});
 
 	$globalNav.find('.wds-global-navigation__search-close').on('click', deactivateSearch);

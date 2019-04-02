@@ -5,6 +5,7 @@ class PagesHooks {
 		$task = UpdatePagesTask::newLocalTask();
 
 		$task->call( 'deleteEntry', $articleId );
+		$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 		$task->queue();
 	}
 
@@ -13,6 +14,7 @@ class PagesHooks {
 		$task = UpdatePagesTask::newLocalTask();
 
 		$task->call( 'insertOrUpdateEntry', $pagesEntry );
+		$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 		$task->queue();
 	}
 }

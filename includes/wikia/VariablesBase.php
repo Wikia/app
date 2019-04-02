@@ -2671,7 +2671,7 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsExt = false;
+$wgEnableFeedsAndPostsExt = true;
 
 /**
  * Enable the Embedded Feeds module from Community Feeds
@@ -4779,6 +4779,18 @@ $wgGoogleAmpArticleBlacklist = [];
  */
 $wgGoogleAmpNamespaces = [];
 
+
+/**
+ * Configure RabbitMQ publisher for wiki status change events.
+ * @see maintenance/wikia/migrateImagesToGcs.php
+ * @var array $wgWikiStatusChangePublisher
+ */
+$wgGoogleCloudUploaderPublisher = [
+	'exchange' => 'google-cloud-uploader.mediawiki-events',
+	'vhost' => 'dc-file-sync',
+];
+
+
 /**
  * Go button goes straight to the edit screen if the article doesn't exist.
  * @var bool $wgGoToEdit
@@ -6825,6 +6837,13 @@ $wgRightsUrl = null;
 $wgReadOnlyFile = false;
 
 /**
+ * Whether or not to redirect all file pages to the first page they are used on for
+ * anonymous users.
+ * @var boolean
+ */
+$wgRedirectFilePagesForAnons = false;
+
+/**
  * Allow redirection to another page when a user logs in.
  * To enable, set to a string like 'Main Page'
  * @var string $wgRedirectOnLogin
@@ -8480,9 +8499,9 @@ $wgVisualEditorNoCache = false;
  * Skins integrated with VisualEditor.
  * @see extensions/VisualEditor/VisualEditor.hooks.php
  * @see extensions/wikia/EditorPreference/EditorPreference.class.php
- * @var Array $wgVisualEditorSupportedSkins
+ * @var array $wgVisualEditorSupportedSkins
  */
-$wgVisualEditorSupportedSkins = [ 'oasis', 'venus' ];
+$wgVisualEditorSupportedSkins = [ 'oasis' ];
 
 /**
  * Number of links to a page required before it is deemed "wanted".
@@ -8523,6 +8542,7 @@ $wgWikiaBarMainLanguages = [ 'de', 'en', 'es', 'fr' ];
  */
 $wgWikiaBaseDomain = 'wikia.com';
 $wgFandomBaseDomain = 'fandom.com';
+$wgWikiaOrgBaseDomain = 'wikia.org';
 
 /**
  * User accounts that are used as bots but do not have the bot flag.
@@ -8776,7 +8796,6 @@ $wgWikicitiesReadOnly = false;
 $wgWikiFactoryDomains = [
 	# gTLDs
 	'wikia.net',
-	'wikia.org',
 	'wikia.info',
 	# ccTLDs
 	'wikia.at',
@@ -8848,13 +8867,6 @@ $wgXMLMimeTypes = [
 $wgYoukuConfig['playerColor'] = 0;
 
 /**
- * Used for test wikis copied on prod. Top articles data should use pageviews of the original wiki.
- * @see PLATFORM-3671
- * @var int $wgDataMartOriginalCityId
- */
-$wgDataMartOriginalCityId = 0;
-
-/**
  * whether or not create new wiki prompts users to alternatively create their community
  * in the community builder (fandom creator)
  * @see CAKE-2151
@@ -8867,6 +8879,13 @@ $wgAllowCommunityBuilderCNWPrompt = true;
  * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
+
+/**
+ * Whether the community is excluded from the fandom.com migration, disables the migration banner
+ * @see SEO-669
+ * @var bool $wgFandomComMigrationScheduled
+ */
+$wgDomainMigrationDisabled = false;
 
 /**
  * Whether the community is scheduled to be migrated to a wikia.org domain
@@ -8888,6 +8907,13 @@ $wgFandomComMigrationCustomMessageAfter = '';
  * @var bool $wgFandomComMigrationDone
  */
 $wgFandomComMigrationDone = false;
+
+
+/**
+ * Whether the community was migrated to a wikia.org domain, triggers a banner notification
+ * @var bool $wgWikiaOrgMigrationDone
+ */
+$wgWikiaOrgMigrationDone = false;
 
 /**
  * Whether we should enable tracking cookie reset page. This is needed in transition phase
@@ -8919,3 +8945,20 @@ $wgWatchShowURL = '';
  * @var bool
  */
 $wgEnableEditDraftSavingExt = false;
+
+/**
+ * ArticleTags RabbitMQ configuration.
+ * @see extensions/wikia/articleTagEvents
+ * @var array $wgArticleTagExchangeConfig
+ */
+$wgArticleTagExchangeConfig = [
+    'vhost' => 'events',
+    'exchange' => 'article-tags',
+];
+
+/**
+ * Enables QualtricsSiteIntercept extension
+ * @see CORE-128
+ * @var bool
+ */
+$wgEnableQualtricsSiteInterceptExt = false;

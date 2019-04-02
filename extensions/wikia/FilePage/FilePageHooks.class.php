@@ -173,4 +173,136 @@ class FilePageHooks extends WikiaObject{
 
 		return true;
 	}
+
+	/**
+	 * Hook to set surrogate keys on pages
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onInsertSurrogateKey( Title $title , &$surrogateKeys ) {
+		$surrogateKeys = array_merge( $surrogateKeys, FilePageHelper::getSurrogateKeys( $title ) );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onUndeleteComplete( Title $title ) {
+		self::clearLinkedFilesCache( $title, true );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param WikiPage $page
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onArticleSave( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->getTitle(), true );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onArticleDelete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle );
+
+		return true;
+	}
+
+	/**
+	 * Hook to clear caches for linked materials after material was edited
+	 *
+	 * @param Title $title -- instance of Title class
+	 * @param User $user -- current user
+	 * @param string $reason -- undeleting reason
+	 *
+	 * @return true -- because it's a hook
+	 */
+	public static function onArticleSaveComplete( WikiPage $page ) {
+		self::clearLinkedFilesCache( $page->mTitle, true );
+
+		return true;
+	}
+
+
+	/**
+	 * Clear memcache and purge page
+	 *
+	 * @param Title $title -- instance of Title class
+	 *
+	 */
+	private static function purgeMemcache( Title $title ) {
+		global $wgMemc;
+		$redirKey = wfMemcKey( 'redirprefix', 'http', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
+		$redirKey = wfMemcKey( 'redirprefix', 'https', $title->getPrefixedText() );
+		$wgMemc->delete( $redirKey );
+		\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+			'key' => $redirKey,
+		] );
+	}
+
+
+	/**
+	 * getFileLinks get links to material
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 *
+	 * @return ResultWrapper -  image links
+	 */
+	private static function getFileLinks( $id ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select(
+			[ 'imagelinks' ],
+			[ 'il_to' ],
+			[ 'il_from' => $id ],
+			__METHOD__,
+			[ 'ORDER BY' => 'il_to', ] );
+
+	}
+
+	/**
+	 * Clear memcache redirs before db changed
+	 *
+	 * @param $id Int: page_id value of the page being deleted
+	 */
+	private static function clearLinkedFilesCache( Title $title, bool $memcacheOnly = false ) {
+		$results = FilePageHelper::getFileLinks( $title->getArticleID() );
+		$keys = FilePageHelper::getSurrogateKeys( $title );
+		if ( $results ) {
+			foreach ( $results as $row ) {
+				$title = Title::makeTitleSafe( NS_FILE, $row->il_to );
+				self::purgeMemcache( $title );
+			}
+		}
+		if ( !$memcacheOnly ) {
+			foreach ( $keys as $key ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+					'key' => $key,
+				] );
+				Wikia::purgeSurrogateKey( $key );
+				Wikia::purgeSurrogateKey( $key, 'mercury' );
+			}
+		}
+	}
 }

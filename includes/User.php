@@ -1507,6 +1507,7 @@ class User implements JsonSerializable {
 	 *
 	 * @param $action String Action to enforce; 'edit' if unspecified
 	 * @return Bool True if a rate limiter was tripped
+	 * @throws MWException
 	 */
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
@@ -1532,6 +1533,7 @@ class User implements JsonSerializable {
 		$id = $this->getId();
 		$ip = $this->getRequest()->getIP();
 		$userLimit = false;
+		$isNewbie = $this->isNewbie();
 
 		if( isset( $limits['anon'] ) && $id == 0 ) {
 			$keys[wfMemcKey( 'limiter', $action, 'anon' )] = $limits['anon'];
@@ -1540,13 +1542,14 @@ class User implements JsonSerializable {
 		if( isset( $limits['user'] ) && $id != 0 ) {
 			$userLimit = $limits['user'];
 		}
-		if( $this->isNewbie() ) {
-			if( isset( $limits['newbie'] ) && $id != 0 ) {
-				$keys[wfMemcKey( 'limiter', $action, 'user', $id )] = $limits['newbie'];
-			}
+
+		// limits for anons and for newbie logged-in users
+		if ( $isNewbie ) {
+			// ip-based limits
 			if( isset( $limits['ip'] ) ) {
 				$keys["mediawiki:limiter:$action:ip:$ip"] = $limits['ip'];
 			}
+			// subnet-based limits
 			$matches = array();
 			if( isset( $limits['subnet'] ) && preg_match( '/^(\d+\.\d+\.\d+)\.\d+$/', $ip, $matches ) ) {
 				$subnet = $matches[1];
@@ -1562,6 +1565,12 @@ class User implements JsonSerializable {
 				}
 			}
 		}
+
+		// limits for newbie logged-in users (override all the normal user limits)
+		if ( $id !== 0 && $isNewbie && isset( $limits['newbie'] ) ) {
+			$userLimit = $limits['newbie'];
+		}
+
 		// Set the user limit key
 		if ( $userLimit !== false ) {
 			$keys[ wfMemcKey( 'limiter', $action, 'user', $id ) ] = $userLimit;
@@ -2940,7 +2949,7 @@ class User implements JsonSerializable {
 	 * @param $title Title of the article to look at
 	 */
 	public function clearNotification( Title $title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
+		global $wgUseEnotif, $wgShowUpdatedMarker;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
@@ -2954,11 +2963,10 @@ class User implements JsonSerializable {
 
 			// SUS-2161: Only schedule a notification update if there are new messages
 			if ( $this->getNewtalk() ) {
-				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
-					->title( $title )
-					->wikiId( $wgCityId );
-
+				$task = \Wikia\Tasks\Tasks\WatchlistUpdateTask::newLocalTask();
+				$task->title( $title );
 				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 				$task->queue();
 			}
 		}
@@ -2988,11 +2996,10 @@ class User implements JsonSerializable {
 		// any matching rows
 		if ( $watched ) {
 			// SUS-2161: Use a background task for watchlist update
-			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
-				->title( $title )
-				->wikiId( $wgCityId );
-
+			$task = \Wikia\Tasks\Tasks\WatchlistUpdateTask::newLocalTask();
+			$task->title( $title );
 			$task->call( 'clearWatch', $this->getId() );
+			$task->setQueue( \Wikia\Tasks\Queues\DeferredInsertsQueue::NAME );
 			$task->queue();
 		}
 	}

@@ -1,4 +1,4 @@
-import { utils } from '@wikia/ad-engine';
+import { utils, likhoService } from '@wikia/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
@@ -25,8 +25,14 @@ function decodeLegacyDartParams(dartString) {
 function getAdLayout(adsContext) {
 	let layout = adsContext.targeting.pageType || 'article';
 
-	if (layout === 'article' && adsContext.targeting.hasFeaturedVideo) {
-		layout = `fv-${layout}`;
+	if (layout === 'article') {
+		if (adsContext.targeting.hasFeaturedVideo) {
+			layout = `fv-${layout}`;
+		}
+
+		if (adsContext.targeting.hasIncontentPlayer) {
+			layout = `${layout}-ic`;
+		}
 	}
 
 	return layout;
@@ -84,7 +90,7 @@ function getPageCategories(adsContext) {
 		return undefined;
 	}
 
-	const categories = window.wgCategories.map(item => item.title);
+	const categories = window.wgCategories;
 	let outCategories;
 
 	if (categories && categories.length > 0) {
@@ -104,8 +110,8 @@ function getRefParam() {
 	const ref = document.referrer;
 	const searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/;
 	const wikiDomains = [
-		'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-		'memory-alpha.org', 'uncyclopedia.org',
+		'wikia.com', 'fandom.com', 'wikia.org', 'ffxiclopedia.org',
+		'jedipedia.de', 'memory-alpha.org', 'uncyclopedia.org',
 		'websitewiki.de', 'wowwiki.com', 'yoyowiki.org',
 	];
 	const wikiDomainsRegex = new RegExp(`(^|\\.)(${wikiDomains.join('|').replace(/\./g, '\\.')})$`);
@@ -169,6 +175,7 @@ export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
+		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
@@ -186,7 +193,8 @@ export default {
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.getCountryCode() || 'none',
+			geo: utils.geoService.getCountryCode() || 'none',
+			likho,
 		};
 
 		if (window.pvNumber) {
@@ -231,10 +239,11 @@ export default {
 		}
 
 		return {
+			bidder_0: transformBidderPrice('wikia'),
 			bidder_1: transformBidderPrice('indexExchange'),
 			bidder_2: transformBidderPrice('appnexus'),
 			bidder_4: transformBidderPrice('rubicon'),
-			bidder_5: transformBidderPrice('wikia'),
+			bidder_5: transformBidderPrice('vmg'),
 			bidder_6: transformBidderPrice('aol'),
 			bidder_7: transformBidderPrice('audienceNetwork'),
 			bidder_8: transformBidderPrice('wikiaVideo'),

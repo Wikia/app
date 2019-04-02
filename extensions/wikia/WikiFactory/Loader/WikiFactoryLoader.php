@@ -89,7 +89,7 @@ class WikiFactoryLoader {
 			$this->mWikiIdForced = true;
 
 			// differ CDN caching on X-Mw-Wiki-Id request header value
-			RequestContext::getMain()->getOutput()->addVaryHeader( 'X-Mw-Wiki-Id' );
+			RequestContext::getMain()->getOutput()->addVaryHeader( WebRequest::MW_WIKI_ID_HEADER );
 		}
 		elseif ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
@@ -238,7 +238,8 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain, $wgDevelEnvironment,
+			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain,
+			   $wgWikiaOrgBaseDomain, $wgDevelEnvironment,
 			   $wgIncludeClosedWikiHandler;
 
 		wfProfileIn(__METHOD__);
@@ -260,6 +261,13 @@ class WikiFactoryLoader {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgWikiaBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
+		}
+
+		// Override wikia.org related config
+		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgWikiaOrgBaseDomain ) !== false ) {
+			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
+			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgFandomBaseDomain}/";
+			$GLOBALS['wgCookieDomain'] = ".{$wgWikiaOrgBaseDomain}";
 		}
 
 		/**

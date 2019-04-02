@@ -346,7 +346,8 @@ node("docker-daemon-big") {
                 'IMAGE_TAG': imageTag,
                 'DATACENTER': 'sjc',
                 'APP_VERSION': nextAppTag,
-                'CONFIG_VERSION': nextConfigTag
+                'CONFIG_VERSION': nextConfigTag,
+                'PODS': '150'
               ])
 
               sh("""cat > docker/prod/sjc.yaml <<EOL
@@ -368,7 +369,8 @@ EOL""")
                 'IMAGE_TAG': imageTag,
                 'DATACENTER': 'res',
                 'APP_VERSION': nextAppTag,
-                'CONFIG_VERSION': nextConfigTag
+                'CONFIG_VERSION': nextConfigTag,
+                'PODS': '100'
               ])
 
               sh("""cat > docker/prod/res.yaml <<EOL

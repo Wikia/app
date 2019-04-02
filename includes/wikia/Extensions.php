@@ -96,7 +96,7 @@ if ( ! empty( $wgEnableWikisApi ) ) {
 
 // During migration drop parser expiry on non-English wikis to 24 hours (PLATFORM-3765)
 if ( ( !wfHttpsAllowedForURL( $wgServer ) && !empty( $wgFandomComMigrationScheduled ) ) ||
-	( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
+	 ( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
 ) {
 	$wgParserCacheExpireTime = 24 * 3600;
 }
@@ -199,8 +199,8 @@ putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
 include_once "$IP/extensions/timeline/Timeline.php";
 
 if ( $wgDevelEnvironment ) {
-    # lazy-load blobs from production when there's a miss on devbox blobs cluster
-    include_once "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php";
+	# lazy-load blobs from production when there's a miss on devbox blobs cluster
+	include_once "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php";
 }
 
 if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
@@ -312,7 +312,7 @@ if (!empty( $wgWikiaEnableCreatepageExt)) {
 
 #--- 38. SyntaxHighlight_GeSHi parser ext.; requires lib/geshi
 if (!empty($wgEnableSyntaxHighlightGeSHiExt)) {
-   	include "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php";
+	include "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php";
 }
 
 #--- 39. SharedHelp
@@ -402,7 +402,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 	if (isset($smwgLinksInValuesLocal))
 		$smwgLinksInValues = $smwgLinksInValuesLocal;
 
- 	global $wgContentNamespaces;
+	global $wgContentNamespaces;
 	foreach ($wgContentNamespaces as $ns) {
 		$smwgNamespacesWithSemanticLinks[$ns] = true;
 	}
@@ -578,7 +578,7 @@ if (!empty($wgEnableRegexParserFunctions)) {
 }
 
 if(!empty($wgEnableWikiaMiniUploadExt)) {
-		include("$IP/extensions/wikia/WikiaMiniUpload/WikiaMiniUpload_setup.php");
+	include("$IP/extensions/wikia/WikiaMiniUpload/WikiaMiniUpload_setup.php");
 }
 
 if(!empty($wgEnableLinkSuggestExt)) {
@@ -695,7 +695,7 @@ if( !empty( $wgEnableHAWelcomeExt ) ) {
 
 // Enable CategorySelect extension for all not RTL wikis
 if (!in_array($wgLanguageCode, array('ar', 'fa', 'he', 'ps', 'yi')) && !isset($wgEnableCategorySelectExt) ) {
-    $wgEnableCategorySelectExt = true;
+	$wgEnableCategorySelectExt = true;
 }
 
 if(!empty($wgEnableCategorySelectExt)) {
@@ -830,7 +830,7 @@ if ( !empty( $wgArchiveWikiForums ) ) {
 
 //If Discussions are enabled, the forum disabled and the Discussions should be in the navigation
 if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
-     && empty( $wgEnableForumExt )
+	 && empty( $wgEnableForumExt )
 ) {
 	// Then add /d/f Discussions link to Oasis Global Navigation if it doesn't have a custom value
 	if ( empty( $wgOasisGlobalNavigation ) ) {
@@ -1073,7 +1073,7 @@ if ( !empty( $wgEnableSpecialUnsubscribeExt ) ) {
 }
 
 if ( !empty( $wgEnableUserStatisticsExt ) ) {
-	 include( "$IP/extensions/3rdparty/UserStatistics/UserStatistics.php" );
+	include( "$IP/extensions/3rdparty/UserStatistics/UserStatistics.php" );
 }
 
 /**
@@ -1081,7 +1081,7 @@ if ( !empty( $wgEnableUserStatisticsExt ) ) {
  * Enables Admin Dashboard extension
  */
 if ($wgEnableAdminDashboardExt) {
-	 include( "$IP/extensions/wikia/AdminDashboard/AdminDashboard.setup.php" );
+	include( "$IP/extensions/wikia/AdminDashboard/AdminDashboard.setup.php" );
 }
 
 /**
@@ -1089,7 +1089,7 @@ if ($wgEnableAdminDashboardExt) {
  * Enables Founder Progress Bar extension
  */
 if ($wgEnableFounderProgressBarExt) {
-	 include( "$IP/extensions/wikia/FounderProgressBar/FounderProgressBar.setup.php" );
+	include( "$IP/extensions/wikia/FounderProgressBar/FounderProgressBar.setup.php" );
 }
 
 if ( !empty( $wgEnableMobileContentExt ) ) {
@@ -1170,17 +1170,17 @@ if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevel
 	//       use WikiFactory::setFlags( <city_id>, WikiFactory::FLAG_PROTECTED )
 	$languageStarters = array(
 		//	"en" => "starter", # handled by the default/else case below
-			"de" => "destarter",
-			"es" => "esstarter",
-			"fi" => "fistarter",
-			"fr" => "starterbeta",
-			"ja" => "jastarter",
-			"ko" => "starterko",
-			"nl" => "nlstarter",
-			"pl" => "plstarter",
-			"ru" => "rustarter",
+		"de" => "destarter",
+		"es" => "esstarter",
+		"fi" => "fistarter",
+		"fr" => "starterbeta",
+		"ja" => "jastarter",
+		"ko" => "starterko",
+		"nl" => "nlstarter",
+		"pl" => "plstarter",
+		"ru" => "rustarter",
 		//	"it" => "italianstarter", # ARGH, this won't work without clumsy logic, thankfully it has no images
-			"zh" => "zhstarter",
+		"zh" => "zhstarter",
 	);
 
 	if ( array_key_exists( $wgLanguageCode, $languageStarters ) ) {
@@ -1374,7 +1374,7 @@ if ( empty( $wgRightsUrl ) ) {
 }
 
 if( !empty( $wgOasisResponsive ) ) {
-        include("$IP/extensions/wikia/EditPreview/EditPreview.setup.php");
+	include("$IP/extensions/wikia/EditPreview/EditPreview.setup.php");
 }
 
 // Swift client library, must be enabled globally
@@ -1403,7 +1403,42 @@ $wgFileBackends['gcs-backend'] = [
 	'wikiId'	=> '',
 	'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
 	'gcsBucket' => $wgGcsConfig['gcsBucket'],
+	'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
 	'gcsObjectNamePrefix' => 'mediawiki/',
+];
+
+$wgFileBackends['gcs-migration-backend'] = [
+	'name' => 'gcs-migration-backend',
+	'class' => 'FileBackendMultiWrite',
+	'syncChecks' => 0,
+	'lockManager' => 'nullLockManager',
+	'backends' => [
+		[
+			'name' => 'swift-backend',
+			'class' => 'SwiftFileBackend',
+			'lockManager' => 'nullLockManager',
+			'swiftAuthUrl' => $wgFSSwiftConfig['swiftAuthUrl'],  # defined in CommonSettings.php
+			'swiftUser' => $wgFSSwiftConfig['swiftUser'],
+			'swiftKey' => $wgFSSwiftConfig['swiftKey'],
+			'swiftAuthTTL' => 120,
+			'swiftTimeout' => 30,
+			'cacheAuthInfo' => true,
+			'wikiId' => '',
+			'isMultiMaster' => true,
+			'debug' => false,
+			'url' => "http://{$wgFSSwiftServer}/swift/v1",
+		],
+		[
+			'name' => 'gcs-ignore-source-backend',
+			'class' => 'GcsIgnoreSourceFileBackend',
+			'lockManager' => 'nullLockManager',
+			'wikiId'	=> '',
+			'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
+			'gcsBucket' => $wgGcsConfig['gcsBucket'],
+			'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
+			'gcsObjectNamePrefix' => 'mediawiki/',
+		]
+	],
 ];
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
@@ -1441,10 +1476,10 @@ if ( !empty( $wgEnablePoolCounter ) ) {
 }
 
 if( !empty( $wgEnableLyricsApi ) ) {
-    // This is not a secret.  The token is used for attribution in Apple Music links.
-    // https://affiliate.itunes.apple.com/resources/documentation/basic_affiliate_link_guidelines_for_the_phg_network/
-    $wgLyricsItunesAffiliateToken = '11lwWb';
-    include "$IP/extensions/wikia/LyricsApi/LyricsApi.setup.php";
+	// This is not a secret.  The token is used for attribution in Apple Music links.
+	// https://affiliate.itunes.apple.com/resources/documentation/basic_affiliate_link_guidelines_for_the_phg_network/
+	$wgLyricsItunesAffiliateToken = '11lwWb';
+	include "$IP/extensions/wikia/LyricsApi/LyricsApi.setup.php";
 }
 
 if ( !empty( $wgEnableEditorPreferenceExt ) ) {
@@ -1456,7 +1491,7 @@ if( !empty( $wgEnableVisualEditorUI ) ) {
 }
 
 if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
-        include "$IP/extensions/wikia/EditorSyntaxHighlighting/EditorSyntaxHighlighting.setup.php";
+	include "$IP/extensions/wikia/EditorSyntaxHighlighting/EditorSyntaxHighlighting.setup.php";
 }
 
 if ( !empty( $wgEnableCloseMyAccountExt ) ) {
@@ -1563,7 +1598,7 @@ if ( !empty( $wgEnablePortableInfoboxBuilderExt ) ) {
 	include "$IP/extensions/wikia/PortableInfoboxBuilder/PortableInfoboxBuilder.setup.php";
 }
 if ( !empty( $wgEnablePortabilityDashboardExt ) ) {
-        include "$IP/extensions/wikia/PortabilityDashboard/PortabilityDashboard.setup.php";
+	include "$IP/extensions/wikia/PortabilityDashboard/PortabilityDashboard.setup.php";
 }
 
 include "$IP/extensions/wikia/PortabilityDashboard/PortabilityDashboardHooks.setup.php";
@@ -1655,7 +1690,7 @@ if ( !empty( $wgEnableWeiboTagExt ) ) {
  * SEO extensions (keep them ordered)
  */
 if ( $wgEnableCustom404PageExt === true
-	|| ( $wgEnableCustom404PageExt === null && in_array( $wgLanguageCode, $wgEnableCustom404PageExtInLanguages ) )
+	 || ( $wgEnableCustom404PageExt === null && in_array( $wgLanguageCode, $wgEnableCustom404PageExtInLanguages ) )
 ) {
 	include( "$IP/extensions/wikia/Custom404Page/Custom404Page.setup.php" );
 }
@@ -1754,14 +1789,12 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
 
-// PLATFORM-3558 |
-include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
-
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
 
 include "$IP/extensions/wikia/FandomComMigration/FandomComMigration.setup.php";
+include "$IP/extensions/wikia/WikiaOrgMigration/WikiaOrgMigration.setup.php";
 
 // SUS-5817
 if ( $wgEnableFastlyInsights ) {
@@ -1800,3 +1833,12 @@ if ( !empty( $wgWatchShowURL ) ) {
 if ( !empty( $wgEnableEditDraftSavingExt ) ) {
 	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
 }
+
+// PLATFORM-3973
+include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
+
+// CORE-128
+if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
+	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
+}
+

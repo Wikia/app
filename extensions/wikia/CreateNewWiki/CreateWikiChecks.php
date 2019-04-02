@@ -50,7 +50,7 @@ class CreateWikiChecks {
 	}
 
 	private static function getDomainVariantsToCheck( string $domain, string $langCode = null ) {
-		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
+		global $wgWikiaBaseDomain, $wgFandomBaseDomain,$wgWikiaOrgBaseDomain;
 
 		if ( $langCode != null && $langCode !== 'en' ) {
 			return [
@@ -58,6 +58,8 @@ class CreateWikiChecks {
 				"$domain.$wgWikiaBaseDomain/$langCode",
 				"$langCode.$domain.$wgFandomBaseDomain",
 				"$domain.$wgFandomBaseDomain/$langCode",
+				"$langCode.$domain.$wgWikiaOrgBaseDomain",
+				"$domain.$wgWikiaOrgBaseDomain/$langCode",
 			];
 		}
 
@@ -66,6 +68,8 @@ class CreateWikiChecks {
 			"www.$domain.$wgWikiaBaseDomain",
 			"$domain.$wgFandomBaseDomain",
 			"www.$domain.$wgFandomBaseDomain",
+			"$domain.$wgWikiaOrgBaseDomain",
+			"www.$domain.$wgWikiaOrgBaseDomain",
 		];
 	}
 

@@ -85,9 +85,11 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'kv_abi': slotParams.abi || '',
 			'bidder_won': bidders.bidderWon || '',
 			'bidder_won_price': bidders.bidderWon ? bidders.realSlotPrices[bidders.bidderWon] : '',
+			'bidder_0': transformBidderPrice('wikia'),
 			'bidder_1': transformBidderPrice('indexExchange'),
 			'bidder_2': transformBidderPrice('appnexus'),
 			'bidder_4': transformBidderPrice('rubicon'),
+			'bidder_5': transformBidderPrice('vmg'),
 			'bidder_6': transformBidderPrice('aol'),
 			'bidder_7': transformBidderPrice('audienceNetwork'),
 			'bidder_9': transformBidderPrice('openx'),
@@ -101,6 +103,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_18': transformBidderPrice('lkqd'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
+			'order_id': creative.orderId || '',
 			'creative_id': creative.creativeId || '',
 			'creative_size': (creative.creativeSize || '').replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
@@ -110,7 +113,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'btl': billTheLizard ? billTheLizard.BillTheLizard.NOT_USED : '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'document_visibility': bridge.geo.getDocumentVisibilityStatus(),
+			'document_visibility': bridge.getDocumentVisibilityStatus(),
 			'labrador': bridge.geo.getSamplingResults().join(';'),
 			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};

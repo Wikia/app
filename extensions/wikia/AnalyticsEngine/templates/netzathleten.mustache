@@ -5,32 +5,33 @@ require([
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine3.api')
 ], function(trackingOptIn, adContext, adsApi) {
-	var url = "{{ url }}";
+	var url = '{{ url }}';
 
 	function loadNetzAthletenScript() {
-		var scriptElementNetzAthleten = document.createElement("script");
-		scriptElementNetzAthleten.type = "text/javascript";
-		scriptElementNetzAthleten.src = url;
+		var scriptElementNetzAthleten = document.createElement('script');
 
-		scriptElementNetzAthleten.addEventListener("load", function() {
-			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+		scriptElementNetzAthleten.type = 'text/javascript';
+		scriptElementNetzAthleten.src = url;
+		scriptElementNetzAthleten.addEventListener('load', function () {
+			if (window.naMediaAd) {
+				window.naMediaAd.setValue('homesite', window.wgIsMainpage);
+			} else {
+				console.warn('window.naMediaAd has not been loaded.');
+			}
 		});
+
 		document.head.appendChild(scriptElementNetzAthleten);
 	}
 
-	function loadNA(optIn) {
-		if (optIn) {
-			// user opt-ins for NetzAthleten
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		var isEnabled = (adContext && adContext.get('opts.netzathleten')) ||
+			(adsApi && adsApi.isNetzathletenEnabled());
+
+		// user opt-ins for NetzAthleten
+		if (optIn && isEnabled) {
 			loadNetzAthletenScript();
 		}
-	}
-
-	if (
-		(adContext && adContext.get('opts.netzathleten')) ||
-		(adsApi && adsApi.isNetzathletenEnabled())
-	) {
-		trackingOptIn.pushToUserConsentQueue(loadNA);
-	}
+	});
 });
 </script>
 <!-- End NetzAthleten (Netletix) Tag -->

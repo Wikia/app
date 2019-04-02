@@ -137,6 +137,9 @@ class MercuryApi {
 				'netzathleten' => [
 					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
 					'url' => AnalyticsProviderNetzAthleten::URL
+				],
+				'quantcast' => [
+					'labels' => AnalyticsProviderQuantServe::getQuantcastLabels()
 				]
 			],
 		];
@@ -168,7 +171,7 @@ class MercuryApi {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
 		       $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
-		       $wgWatchShowURL;
+		       $wgWatchShowURL, $wgRedirectFilePagesForAnons;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -181,6 +184,7 @@ class MercuryApi {
 				'defaultSkin' => $wgDefaultSkin,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
+				'enableFilePageRedirectsForAnons' => $wgRedirectFilePagesForAnons,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 				'namespaces' => $wgContLang->getNamespaces(),
@@ -208,7 +212,8 @@ class MercuryApi {
 
 	public function getDiscussionsWikiVariables() {
 		global $wgDefaultSkin, $wgEnableDiscussions, $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride,
-		       $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds;
+			   $wgEnableLightweightContributions, $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds,
+			   $wgFandomCreatorCommunityId;
 
 		$wikiVariables = array_merge(
 			$this->getCommonVariables(),
@@ -222,6 +227,7 @@ class MercuryApi {
 				'siteMessage' => $this->getSiteMessage(),
 				'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 				'openGraphImageUrl' => OpenGraphImageHelper::getUrl(),
+				'fandomCreatorCommunityId' => !empty( $wgFandomCreatorCommunityId ) ? $wgFandomCreatorCommunityId : null
 			]
 		);
 

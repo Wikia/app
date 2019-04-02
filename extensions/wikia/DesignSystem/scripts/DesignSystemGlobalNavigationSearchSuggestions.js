@@ -1,8 +1,9 @@
 $(function () {
 	require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function (searchTracking, uuid, trackingOptIn) {
 		'use strict';
-		var $globalNav = $('.wds-global-navigation'),
-			$searchDropdown = $globalNav.find('.wds-global-navigation__search'),
+		var searchDropdownSelector = '.wds-global-navigation__search-dropdown',
+            $globalNav = $('.wds-global-navigation'),
+			$searchDropdown = $globalNav.find(searchDropdownSelector),
 			$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 			searchSuggestionsUrl = $searchInput.data('suggestions-url'),
 			trackingState = {};
@@ -12,26 +13,26 @@ $(function () {
 				var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
-				$searchInput
-					.on({
-						suggestShow: function (event) {
-							$searchDropdown.addClass('wds-is-active');
-						},
-						suggestHide: function () {
-							$searchDropdown.removeClass('wds-is-active');
-						}
-					})
-					.autocomplete({
-						serviceUrl: searchSuggestionsUrl,
-						queryParamName: $searchInput.data('suggestions-param-name'),
-						appendTo: '.wds-global-navigation__search',
-						deferRequestBy: 200,
-						minLength: 3,
-						maxHeight: 1000,
-						onSelect: function (value, data, event) {
-							var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
-								// slashes can't be urlencoded because they break routing
-								location = window.wgArticlePath.replace(/\$1/, valueEncoded).replace(encodeURIComponent('/'), '/');
+			$searchInput
+				.on({
+					suggestShow: function () {
+						$searchDropdown.addClass('wds-is-active');
+					},
+					suggestHide: function () {
+						$searchDropdown.removeClass('wds-is-active');
+					}
+				})
+				.autocomplete({
+					serviceUrl: searchSuggestionsUrl,
+					queryParamName: $searchInput.data('suggestions-param-name'),
+					appendTo: searchDropdownSelector,
+					deferRequestBy: 200,
+					minLength: 3,
+					maxHeight: 1000,
+					onSelect: function (value, data, event) {
+						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+							// slashes can't be urlencoded because they break routing
+							location = window.wgArticlePath.replace(/\$1/, valueEncoded).replace(encodeURIComponent('/'), '/');
 
 							window.Wikia.Tracker.track({
 								eventName: 'search_start_suggest',
@@ -66,7 +67,7 @@ $(function () {
 						suggestionWrapperElement: 'li',
 						fnContainerMarkup: function (mainContainerId, autocompleteElId) {
 							return '<div id="' + mainContainerId +
-								'" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
+								'" class="wds-dropdown__content wds-global-navigation__search-suggestions wds-is-not-scrollable">' +
 								'<ul id="' + autocompleteElId +
 								'" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
 								'</div>';

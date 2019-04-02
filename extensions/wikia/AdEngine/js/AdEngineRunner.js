@@ -7,34 +7,20 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.wad.babDetection'),
-	require.optional('wikia.articleVideo.featuredVideo.lagger')
-], function (adContext, adEngine, adTracker, instantGlobals, log, win, bidders, babDetection, fvLagger) {
+	require.optional('ext.wikia.adEngine.wad.babDetection')
+], function (adContext, adEngine, adTracker, instantGlobals, log, win, bidders, babDetection) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [babDetection, fvLagger],
+		supportedModules = [babDetection],
 		timeout = getTimeout();
 
 	if (bidders && bidders.isEnabled()) {
 		supportedModules.push(bidders);
 	}
 
-	function getDisplayAdTimeout() {
-		if (adContext.get('opts.overwriteDelayEngine')) {
-			return instantGlobals.wgAdDriverDelayTimeout || 0;
-		}
-
-		return 2000;
-	}
-
 	function getTimeout() {
-		if (fvLagger && fvLagger.wasCalled() && adContext.get('targeting.hasFeaturedVideo')) {
-			return adContext.get('targeting.skin') === 'oasis' ?
-				instantGlobals.wgAdDriverFVDelayTimeoutOasis : instantGlobals.wgAdDriverFVDelayTimeoutMobileWiki;
-		}
-
-		return getDisplayAdTimeout();
+		return instantGlobals.wgAdDriverDelayTimeout || 2000;
 	}
 
 	/**
@@ -121,9 +107,8 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 * @param {object} config - ext.wikia.adEngine.config.*
 	 * @param {array} slots - slot names to fill in
 	 * @param {string} queueName
-	 * @param {boolean} delayEnabled
 	 */
-	function run(config, slots, queueName, delayEnabled) {
+	function run(config, slots, queueName) {
 		var engineStarted = false;
 
 		/**
@@ -139,12 +124,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			adEngine.run(config, slots, queueName);
 		}
 
-		if (delayEnabled) {
-			delayRun(runAdEngine);
-		} else {
-			log('Run AdEngine without delay', log.levels.info, logGroup);
-			runAdEngine();
-		}
+		delayRun(runAdEngine);
 	}
 
 	return {

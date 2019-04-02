@@ -60,8 +60,7 @@ define('ext.wikia.adEngine.adContext', [
 		var serviceCanBeEnabled = !noExternals &&
 			context.opts.showAds !== false &&
 			!w.wgUserName &&
-			context.targeting.skin === 'oasis' &&
-			!context.opts.delayBlocked;
+			context.targeting.skin === 'oasis';
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled &&
@@ -78,23 +77,19 @@ define('ext.wikia.adEngine.adContext', [
 		return adEngineBridge.geo.isProperGeo(geos, name);
 	}
 
-	function areDelayServicesBlocked() {
-		return context.targeting.skin === 'mercury' && isEnabled('wgAdDriverBlockDelayServicesCountries');
-	}
-
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !areDelayServicesBlocked() && isEnabled('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebid = isEnabled('wgAdDriverPrebidBidderCountries');
 		context.bidders.prebidOptOut = isEnabled('wgAdDriverPrebidOptOutCountries');
-		context.bidders.a9 = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9BidderCountries');
+		context.bidders.a9 = isEnabled('wgAdDriverA9BidderCountries');
 		context.bidders.a9Deals = isEnabled('wgAdDriverA9DealsCountries');
 		context.bidders.a9OptOut = isEnabled('wgAdDriverA9OptOutCountries');
-		context.bidders.a9Video = !areDelayServicesBlocked() && isEnabled('wgAdDriverA9VideoBidderCountries');
+		context.bidders.a9Video = isEnabled('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isEnabled('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isEnabled('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconDfp = isEnabled('wgAdDriverRubiconDfpCountries');
-		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
+		context.bidders.rubiconInFV = isEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isEnabled('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.beachfrontDfp = isEnabled('wgAdDriverBeachfrontDfpCountries');
 		context.bidders.appnexusAst = isEnabled('wgAdDriverAppNexusAstBidderCountries');
@@ -108,7 +103,10 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.openx = isEnabled('wgAdDriverOpenXPrebidBidderCountries');
 		context.bidders.pubmatic = isEnabled('wgAdDriverPubMaticBidderCountries');
 		context.bidders.lkqd = isEnabled('wgAdDriverLkqdBidderCountries');
+		context.bidders.lkqdOutstream = isEnabled('wgAdDriverLkqdOutstreamCountries');
+		context.bidders.pubmaticOutstream = isEnabled('wgAdDriverPubMaticOutstreamCountries');
 		context.bidders.pubmaticDfp = isEnabled('wgAdDriverPubMaticDfpCountries');
+		context.bidders.vmg = isEnabled('wgAdDriverVmgBidderCountries');
 	}
 
 	function isMOATTrackingForFVEnabled() {
@@ -136,10 +134,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits = context.rabbits || {};
 		context.templates = context.templates || {};
 		context.opts.noExternals = noExternals;
-
-		context.opts.delayEngine = true;
-		context.opts.delayBlocked = areDelayServicesBlocked();
-		context.opts.overwriteDelayEngine = isEnabled('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo;
 
@@ -195,24 +189,20 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isScrollDepthTrackingEnabled = isEnabled('wgAdDriverScrollDepthTrackingCountries');
 
-		context.opts.isFVDelayEnabled = !context.opts.delayBlocked && isEnabled('wgAdDriverFVDelayCountries');
-		context.opts.isFVUapKeyValueEnabled = isEnabled('wgAdDriverFVAsUapKeyValueCountries');
 		context.opts.isFVMidrollEnabled = isEnabled('wgAdDriverFVMidrollCountries');
 		context.opts.isFVPostrollEnabled = isEnabled('wgAdDriverFVPostrollCountries');
 		context.opts.replayAdsForFV = isEnabled('wgAdDriverPlayAdsOnNextFVCountries');
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = true;
+		context.opts.usePrebidBuiltInTargetingLogic = isEnabled('wgAdDriverPrebidBuiltInTargetingCountries');
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverBottomLeaderBoardLazyPrebidCountries');
 		context.opts.additionalBLBSizes = isEnabled('wgAdDriverBottomLeaderBoardAdditionalSizesCountries');
 		context.opts.isBLBSingleSizeForUAPEnabled = isEnabled('wgAdDriverSingleBLBSizeForUAPCountries');
-		context.opts.isDesktopBfabStickinessEnabled = isEnabled('wgAdDriverBfabStickinessOasisCountries') &&
-			context.targeting.skin === 'oasis';
 
 		context.opts.isSteamBrowser = browserDetect.isSteam();
 		context.opts.labradorTest = isEnabled('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
-		context.opts.mobileSectionsCollapse = isEnabled('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isEnabled('wgAdDriverNetzAthletenCountries');
 		context.opts.additionalVastSize = isEnabled('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.incontentPlayerRail = {
@@ -225,7 +215,12 @@ define('ext.wikia.adEngine.adContext', [
 			]
 		};
 
-		context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+		/*
+			ToDo: remove temporary stickyTLB prevention hack
+			Original line:
+			context.opts.stickySlotsLines = instantGlobals.wgAdDriverStickySlotsLines;
+		*/
+		context.opts.stickySlotsLines = adEngineBridge.geo.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.wgAdDriverStickySlotsLines : [];
 
 		context.opts.moatYi = isEnabled('wgAdDriverMoatYieldIntelligenceCountries');
 		context.opts.nielsen = isEnabled('wgAdDriverNielsenCountries');

@@ -144,6 +144,7 @@ $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DW
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgAutoloadClasses['TemplatesApiController'] = "{$IP}/includes/wikia/api/TemplatesApiController.class.php";
+$wgAutoloadClasses['CrossWikiArticlesApiController'] = "{$IP}/includes/wikia/api/CrossWikiArticlesApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -159,6 +160,7 @@ $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/Movies
 $wgWikiaApiControllers['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
+$wgWikiaApiControllers['CrossWikiArticlesApiController'] = "{$IP}/includes/wikia/api/CrossWikiArticlesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -567,7 +569,6 @@ include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
-include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
@@ -587,6 +588,7 @@ include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
+include_once( "$IP/extensions/wikia/ArticleTagEvents/ArticleTagEvents.setup.php" );
 
 
 /**
@@ -980,6 +982,12 @@ $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
 $wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
 
 /**
+ * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
+ * Enables AdEngine3 extension on search pages
+ */
+$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
+
+/**
  * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
  * Enables AdEngine3 extension on article pages
  */
@@ -1189,11 +1197,32 @@ $wgAdDriverPubMaticBidderCountries = null;
 $wgAdDriverLkqdBidderCountries = null;
 
 /**
+ * @name $wgAdDriverLkqdOutstreamCountries
+ * List of countries where LKQD Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLkqdOutstreamCountries = null;
+
+/**
+ * @name $wgAdDriverPubMaticOutstreamCountries
+ * List of countries where Pubmatic Prebid bidding partner is enabled in Outstream.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticOutstreamCountries = null;
+
+/**
  * @name $wgAdDriverPubMaticDfpCountries
  * Enables PubMatic via DFP in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticDfpCountries = null;
+
+/**
+ * @name $wgAdDriverDisableRecirculationCountries
+ * Disables recirculation in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableRecirculationCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1285,11 +1314,18 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
- * @name $wgAdDriverMobileSectionsCollapseCountries
- * List of countries where sections on mobile wiki are collapsed after page load.
+ * @name $wgAdDriverRepeatMobileIncontentCountries
+ * List of countries where Incontent Boxad ads are injected after h2 tag on Mobile-Wiki.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverMobileSectionsCollapseCountries = null;
+$wgAdDriverRepeatMobileIncontentCountries = null;
+
+/**
+ * @name $wgAdDriverRepeatMobileIncontentExtendedCountries
+ * List of countries where Incontent Boxad ads are injected after extended number of HTML elements on Mobile-Wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
@@ -1297,6 +1333,13 @@ $wgAdDriverMobileSectionsCollapseCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileWikiAE3NativeSearchCountries = null;
+
+/**
+ * @name $wgAdDriverNativeSearchDesktopCountries
+ * List of countries where incontent native is displayed on app search page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNativeSearchDesktopCountries = null;
 
 /**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
@@ -1374,11 +1417,10 @@ $wgAdDriverForcedProvider = null;
 $wgAdDriverEnableAdsInMaps = true;
 
 /**
- * @name $wgAdDriverDelayCountries
- * List of countries with enabled AdEngine delay
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * @name $wgAdDriverEnableCheshireCat
+ * Whether to use Cheshire Cat
  */
-$wgAdDriverDelayCountries = null;
+$wgAdDriverEnableCheshireCat = true;
 
 /**
  * @name $wgAdDriverDelayTimeout
@@ -1386,20 +1428,6 @@ $wgAdDriverDelayCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutOasis
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutOasis = 2000;
-
-/**
- * @name $wgAdDriverFVDelayTimeoutMobileWiki
- * AdEngine delay timeout (in ms)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
  * @name $wgAdDriverGeoEdgeCountries
@@ -1687,6 +1715,13 @@ $wgAdDriverIncontentPlayerRailCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableAdStackCountries
+ * Disables whole ad stack in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableAdStackCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
@@ -1774,7 +1809,7 @@ $wgAutoapproveJS = false;
  * A central regex string for use in domain checking, so we can easily
  * update/add/change domains in the future
  */
-$wgWikiaBaseDomainRegex = '((wikia|fandom)\\.com|(wikia|fandom)-dev\\.(com|us|pl))';
+$wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
  * @name $wgShortArticlePathWikis
@@ -1835,9 +1870,24 @@ $wgLogFileStorageOperations = false;
 $wgUseGoogleCloudStorage = false;
 
 /**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If provided, a multi write will be used for storing files for all wikis with buckets matching the regex.
+ */
+$wgUseGcsMigrationBucketRegex = '';
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3033
+ * If provided, Google Cloud Storage will be used for storing files for all wikis with buckets matching the regex.
+ */
+$wgUseGcsBucketRegex = '';
+
+/**
  * Google Cloud Storage settings. The default settings are for production.
  */
 $wgGcsConfig = [
 	'gcsCredentials' => $wgGcsCredentialsProd,
-	'gcsBucket' => 'static-assets-originals-prod'
+	'gcsBucket' => 'static-assets-originals-prod',
+	'gcsTemporaryBucket' => 'static-assets-temporary-prod',
 ];
+
+$wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';

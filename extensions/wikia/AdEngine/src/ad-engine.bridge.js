@@ -47,8 +47,6 @@ function init(
 ) {
 	const isOptedIn = trackingOptIn.isOptedIn();
 
-	context.set('options.bfabStickiness', legacyContext.get('opts.isDesktopBfabStickinessEnabled'));
-
 	TemplateRegistry.init();
 	scrollListener.init();
 
@@ -90,6 +88,7 @@ function init(
 
 	if (legacyContext.get('bidders.prebid')) {
 		context.set('bidders.prebid.enabled', true);
+		context.set('bidders.prebid.useBuiltInTargetingLogic', legacyContext.get('opts.usePrebidBuiltInTargetingLogic'));
 		context.set('bidders.prebid.aol.enabled', legacyContext.get('bidders.aol'));
 		context.set('bidders.prebid.appnexus.enabled', legacyContext.get('bidders.appnexus'));
 		context.set('bidders.prebid.appnexusAst.enabled', legacyContext.get('bidders.appnexusAst'));
@@ -102,7 +101,8 @@ function init(
 		context.set('bidders.prebid.openx.enabled', legacyContext.get('bidders.openx'));
 		context.set('bidders.prebid.pubmatic.enabled', legacyContext.get('bidders.pubmatic'));
 		context.set('bidders.prebid.rubicon.enabled', legacyContext.get('bidders.rubicon'));
-		context.set('bidders.prebid.rubiconDisplay.enabled', legacyContext.get('bidders.rubiconDisplay'));
+		context.set('bidders.prebid.rubicon_display.enabled', legacyContext.get('bidders.rubiconDisplay'));
+		context.set('bidders.prebid.vmg.enabled', legacyContext.get('bidders.vmg'));
 
 		context.set('bidders.prebid.targeting', {
 			src: [legacyContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile'],
@@ -121,6 +121,14 @@ function init(
 		context.set('custom.pubmaticDfp', legacyContext.get('bidders.pubmaticDfp'));
 		context.set('custom.lkqdDfp', legacyContext.get('bidders.lkqd'));
 		context.set('custom.isCMPEnabled', true);
+
+		if (!legacyContext.get('bidders.lkqdOutstream')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
+		}
+
+		if (!legacyContext.get('bidders.pubmaticOutstream')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
 	}
 
 	context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
@@ -302,11 +310,8 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
-function readSessionId() {
-	utils.readSessionId();
-}
-
-const geo = utils;
+const geo = utils.geoService;
+const getDocumentVisibilityStatus = utils.getDocumentVisibilityStatus;
 
 export {
 	init,
@@ -314,10 +319,10 @@ export {
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
-	readSessionId,
 	context,
 	unifySlotInterface,
 	universalAdPackage,
 	slotService,
 	geo,
+	getDocumentVisibilityStatus,
 };
