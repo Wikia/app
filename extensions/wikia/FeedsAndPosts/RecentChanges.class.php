@@ -73,23 +73,23 @@ class RecentChanges {
 				);
 		}
 
-		$resultTitles =
-			\TitleBatch::newFromIds( array_map( function ( $article ) {
+		$titles = \TitleBatch::newFromIds( array_map( function ( $article ) {
 				return $article['pageid'];
 			}, $resultArticles ), DB_SLAVE );
 
-		$resultTitles = array_filter($resultTitles, function ( $title ) {
-			return $title != null;
-		});
+		$resultTitles = [];
+		foreach ( $resultArticles as $article ) {
+			if ( isset( $titles[$article['pageid']] ) ) {
+				$title = $titles[$article['pageid']];
 
-		return array_map( function ( $article ) use ( $resultTitles ) {
-			$title = $resultTitles[$article['pageid']];
+				$resultTitles[] = [
+					'title' => $title->getText(),
+					'url' => $title->getLocalURL(),
+				];
+			}
+		}
 
-			return [
-				'title' => $title->getText(),
-				'url' => $title->getLocalURL(),
-			];
-		}, $resultArticles );
+		return $resultTitles;
 	}
 
 	private function getRecentChanges() {
