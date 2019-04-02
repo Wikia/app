@@ -92,7 +92,7 @@ spec:
           resources:
             limits:
               cpu: 5
-              memory: 5.5Gi  # 10 fpm workers x 512 MB PHP memory limit
+              memory: 4.5Gi  # 20 fpm workers x 200 MB PHP memory limit
             requests:
               cpu: 2.5
               memory: 3Gi
