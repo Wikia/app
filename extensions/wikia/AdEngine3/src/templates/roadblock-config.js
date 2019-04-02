@@ -6,6 +6,9 @@ export function getConfig() {
 			'top_boxad',
 			'invisible_skin',
 		],
+		slotsToDisable: [
+			'incontent_player'
+		],
 		onInit: () => {
 			context.push('state.adStack', { id: 'invisible_skin' });
 		}
