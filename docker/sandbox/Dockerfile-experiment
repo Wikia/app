@@ -4,7 +4,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
 
-ADD docker/sandbox/php-fpm.conf /usr/local/etc/php-fpm.d/zz-www.conf
+ADD app/docker/sandbox/php-fpm.conf /usr/local/etc/php-fpm.d/zz-www.conf
 
 # WIKIA_ENVIRONMENT and WIKIA_DATACENTER - needed for maintenance scripts to run, but they are not used by rebuildLocalisationCache.php
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \
