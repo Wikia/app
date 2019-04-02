@@ -62,7 +62,9 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	if (!wikiContext.targeting.hasFeaturedVideo) {
+	if (wikiContext.targeting.hasFeaturedVideo) {
+		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
+	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
