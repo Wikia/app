@@ -8,26 +8,7 @@ class AdEngine3
 	{
 		$wg = F::app()->wg;
 
-		$articleId = $wg->Title->getArticleID();
-		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
-		if ($hasFeaturedVideo) {
-			return $wg->AdDriverAdEngine3EnabledOnFeaturedVideoPages;
-		}
-
-		$wikiaPageType = new WikiaPageType();
-		if ($wikiaPageType->isSearch()) {
-			return $wg->AdDriverAdEngine3EnabledOnOasisSearchPages;
-		}
-
-		if ($wikiaPageType->isMainPage()) {
-			return $wg->AdDriverAdEngine3EnabledOnOasisMainPages;
-		}
-
-		if ($wikiaPageType->isArticlePage()) {
-			return $wg->AdDriverAdEngine3EnabledOnOasisArticlePages;
-		}
-
-		return false;
+		return $wg->AdDriverAdEngine3EnabledOnOasis;
 	}
 
 	public static function onWikiaSkinTopScripts(&$vars, &$scripts)
