@@ -78,6 +78,10 @@ class RecentChanges {
 				return $article['pageid'];
 			}, $resultArticles ), DB_SLAVE );
 
+		$resultTitles = array_filter($resultTitles, function ( $title ) {
+			return $title != null;
+		});
+
 		return array_map( function ( $article ) use ( $resultTitles ) {
 			$title = $resultTitles[$article['pageid']];
 
