@@ -1,6 +1,7 @@
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
+def mediawikiExperimentalImage = "artifactory.wikia-inc.com/sus/mediawiki-php-experiment"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
 def rolloutStatusSjc = 1
@@ -301,6 +302,31 @@ node("docker-daemon-big") {
             } else {
               println("Php image tag ($imageTag) already exists")
             }
+
+            // ab performance tests
+            def experimentalImageExists = false
+            def experimentalStatus = sh(script: """
+              curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+              -w "%{http_code}" -s -I -o /dev/null \
+              -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-php-experiment/${imageTag}"
+            """, returnStdout: true).trim()
+
+            if (experimentalStatus == "200") {
+              experimentalImageExists = true
+            }
+
+            if (!experimentalImageExists) {
+              if (params.dry_run) {
+                println("Dry run: docker build .. -f docker/experiment/Dockerfile-php -t $mediawikiExperimentalImage:$imageTag")
+              } else {
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+                sh("docker build .. -f docker/experiment/Dockerfile-php -t $mediawikiExperimentalImage:$imageTag")
+                sh("docker push $mediawikiExperimentalImage:$imageTag")
+              }
+            } else {
+              println("Php experimental image tag ($imageTag) already exists")
+            }
           }
         }
       },
@@ -347,7 +373,8 @@ node("docker-daemon-big") {
                 'DATACENTER': 'sjc',
                 'APP_VERSION': nextAppTag,
                 'CONFIG_VERSION': nextConfigTag,
-                'PODS': '150'
+                'PODS_A': '70',
+                'PODS_B': '40',
               ])
 
               sh("""cat > docker/prod/sjc.yaml <<EOL
@@ -370,7 +397,8 @@ EOL""")
                 'DATACENTER': 'res',
                 'APP_VERSION': nextAppTag,
                 'CONFIG_VERSION': nextConfigTag,
-                'PODS': '100'
+                'PODS_A': '50',
+                'PODS_B': '25',
               ])
 
               sh("""cat > docker/prod/res.yaml <<EOL

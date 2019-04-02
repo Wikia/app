@@ -1,26 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki-prod
+  name: mediawiki-prod-a
   namespace: prod
   labels:
     app: mediawiki-prod
     type: mediawiki
+    pool: mediawiki-prod-a
 spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 20%
       maxSurge: 20%
-  replicas: ${PODS}
+  replicas: ${PODS_A}
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
-      app: mediawiki-prod
+      pool: mediawiki-prod-a
   template:
     metadata:
       labels:
         app: mediawiki-prod
+        pool: mediawiki-prod-a
         app_version: "${APP_VERSION}"
         config_version: "${CONFIG_VERSION}"
     spec:
@@ -96,6 +98,126 @@ spec:
             requests:
               cpu: "1200m"
               memory: 1.5Gi
+        # MW log output, see K8s_LOGGING.md
+        - name: logger
+          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-prod-b
+  namespace: prod
+  labels:
+    app: mediawiki-prod
+    type: mediawiki
+    pool: mediawiki-prod-b
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 20%
+      maxSurge: 20%
+  replicas: ${PODS_B}
+  progressDeadlineSeconds: 180
+  selector:
+    matchLabels:
+      pool: mediawiki-prod-b
+  template:
+    metadata:
+      labels:
+        app: mediawiki-prod
+        pool: mediawiki-prod-b
+        app_version: "${APP_VERSION}"
+        config_version: "${CONFIG_VERSION}"
+    spec:
+      containers:
+        - name: nginx
+          image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: php
+          image: artifactory.wikia-inc.com/sus/mediawiki-php-experiment:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 5
+          env:
+            # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              value: mediawiki-prod
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: WIKIA_DATACENTER
+              value: "${DATACENTER}"
+            - name: WIKIA_ENVIRONMENT
+              value: prod
+            - name: LOG_SOCKET_ONLY
+              value: "yes"
+            - name: LOG_SOCKET_ADDRESS
+              value: "tcp://localhost:9999"
+          resources:
+            limits:
+              cpu: 5
+              memory: 5.5Gi  # 10 fpm workers x 512 MB PHP memory limit
+            requests:
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
