@@ -113,17 +113,7 @@ export default {
 				group: 'MR',
 				options: {},
 				slotShortcut: 'm',
-				sizes: [
-					{
-						viewportSize: [1024, 1300],
-						sizes: [
-							[300, 250],
-							[300, 600],
-							[300, 1050]
-						],
-					},
-				],
-				defaultSizes: [[300, 250], [300, 600]],
+				defaultSizes: [[300, 250], [300, 600], [300, 1050]],
 				targeting: {
 					loc: 'top',
 					pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
@@ -160,7 +150,7 @@ export default {
 				options: {},
 				slotShortcut: 'f',
 				sizes: [],
-				defaultSizes: [[300, 250]],
+				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 				insertBeforeSelector: '#incontent_boxad_1',
 				repeat: {
 					additionalClasses: 'hide',

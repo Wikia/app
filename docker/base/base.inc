@@ -30,7 +30,7 @@ if ($arg_func) {
     rewrite ^(.*)$ $1?action=lyrics last;
 }
  # SUS-6154
-rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?(index|load|metrics|opensearch_desc|wikia).php(.*)" /$1.php$2 break;
+rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?(index|load|opcache_stats|metrics|opensearch_desc|wikia).php(.*)" /$1.php$2 break;
 
 # article URL
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?wiki/(.*)" /index.php?title=$1 break;
