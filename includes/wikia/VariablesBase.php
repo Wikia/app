@@ -8941,10 +8941,10 @@ $wgWatchShowURL = '';
 
 /**
  * Enables EditDraftSaving extension
- * @see SUS-79
+ * @see CORE-79 CORE-241
  * @var bool
  */
-$wgEnableEditDraftSavingExt = false;
+$wgEnableEditDraftSavingExt = true;
 
 /**
  * ArticleTags RabbitMQ configuration.
