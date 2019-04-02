@@ -1846,12 +1846,6 @@ $wgDisableSearchUpdate = true;
 $wgDisableShowInRecirculation = false;
 
 /**
- * Set this to true to disable the full text search feature.
- * @var bool $wgDisableTextSearch
- */
-$wgDisableTextSearch = false;
-
-/**
  * Whether to enable language variant conversion for links.
  * @var bool $wgDisableTitleConversion
  */
@@ -7121,19 +7115,6 @@ $wgScriptPath = '';
  */
 $wgSearchEverythingOnlyLoggedIn = false;
 
-/**
- * Set this to a URL to forward search requests to some external location.
- * If the URL includes '$1', this will be replaced with the URL-encoded
- * search term.
- *
- * For example, to forward to Google you'd have something like:
- * $wgSearchForwardUrl = 'http://www.google.com/search?q=$1' .
- *                       '&domains=http://example.com' .
- *                       '&sitesearch=http://example.com' .
- *                       '&ie=utf-8&oe=utf-8';
- * @var string $wgSearchForwardUrl
- */
-$wgSearchForwardUrl = null;
 
 /**
  * Regexp to match word boundaries, defaults for non-CJK languages
