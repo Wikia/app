@@ -277,10 +277,10 @@ class SpecialSearch extends SpecialPage {
 		}
 		// start rendering the page
 		$out->addHtml( Xml::openElement( 'form', [
-			'id' => ( $this->profile === 'advanced' ? 'powersearch' : 'search' ),
-			'method' => 'get',
-			'action' => $wgScript,
-		] ) );
+				'id' => ( $this->profile === 'advanced' ? 'powersearch' : 'search' ),
+				'method' => 'get',
+				'action' => $wgScript,
+			] ) );
 
 		$out->addHtml( Xml::openElement( 'table', [
 				'id' => 'mw-search-top-table',
@@ -666,9 +666,9 @@ class SpecialSearch extends SpecialPage {
 		if ( $result->hasRelated() ) {
 			$st = SpecialPage::getTitleFor( 'Search' );
 			$stParams = array_merge( $this->powerSearchOptions(), [
-				'search' => wfMsgForContent( 'searchrelated' ) . ':' . $t->getPrefixedText(),
-				'fulltext' => wfMsg( 'search' ),
-			] );
+					'search' => wfMsgForContent( 'searchrelated' ) . ':' . $t->getPrefixedText(),
+					'fulltext' => wfMsg( 'search' ),
+				] );
 
 			$related =
 				' -- ' . Linker::linkKnown( $st, wfMsg( 'search-relatedarticle' ), [], $stParams );
@@ -824,9 +824,9 @@ class SpecialSearch extends SpecialPage {
 			// "more results" link (special page stuff could be localized, but we might not know target lang)
 			$searchTitle = Title::newFromText( $t->getInterwiki() . ":Special:Search" );
 			$searchLink = Linker::linkKnown( $searchTitle, wfMsg( 'search-interwiki-more' ), [], [
-				'search' => $query,
-				'fulltext' => 'Search',
-			] );
+					'search' => $query,
+					'fulltext' => 'Search',
+				] );
 			$out .= "</ul><div class='mw-search-interwiki-project'><span class='mw-search-interwiki-more'>
 				{$searchLink}</span>{$caption}</div>\n<ul>";
 		}
@@ -926,14 +926,14 @@ class SpecialSearch extends SpecialPage {
 			   Xml::tags( 'div', [ 'id' => 'mw-search-togglebox' ],
 				   Xml::label( wfMsg( 'powersearch-togglelabel' ), 'mw-search-togglelabel' ) .
 				   Xml::element( 'input', [
-					   'type' => 'button',
-					   'id' => 'mw-search-toggleall',
-					   'value' => wfMsg( 'powersearch-toggleall' ),
-				   ] ) . Xml::element( 'input', [
-					   'type' => 'button',
-					   'id' => 'mw-search-togglenone',
-					   'value' => wfMsg( 'powersearch-togglenone' ),
-				   ] ) ) . Xml::element( 'div', [ 'class' => 'divider' ], '', false ) .
+						   'type' => 'button',
+						   'id' => 'mw-search-toggleall',
+						   'value' => wfMsg( 'powersearch-toggleall' ),
+					   ] ) . Xml::element( 'input', [
+						   'type' => 'button',
+						   'id' => 'mw-search-togglenone',
+						   'value' => wfMsg( 'powersearch-togglenone' ),
+					   ] ) ) . Xml::element( 'div', [ 'class' => 'divider' ], '', false ) .
 			   implode( Xml::element( 'div', [ 'class' => 'divider' ], '', false ),
 				   $showSections ) . $hidden . Xml::closeElement( 'fieldset' );
 	}
@@ -1009,14 +1009,15 @@ class SpecialSearch extends SpecialPage {
 	 */
 	protected function formHeader( $term, $resultsShown, $totalNum ) {
 		/* Wikia change begin - @author: Macbre */
-		$out = Xml::openElement( 'table', [
+		$out =
+			Xml::openElement( 'table', [
 				'id' => 'mw-search-top-table',
 				'border' => 0,
 				'cellpadding' => 0,
 				'cellspacing' => 0,
 			] ) . Xml::openElement( 'tr' ) . Xml::openElement( 'td' ) . "\n" .
-			   $this->shortDialog( $term ) . Xml::closeElement( 'td' ) . Xml::closeElement( 'tr' ) .
-			   Xml::closeElement( 'table' );
+			$this->shortDialog( $term ) . Xml::closeElement( 'td' ) . Xml::closeElement( 'tr' ) .
+			Xml::closeElement( 'table' );
 		/* Wikia change end */
 
 		$out .= Xml::openElement( 'div', [ 'class' => 'mw-search-formheader' ] );
@@ -1043,8 +1044,8 @@ class SpecialSearch extends SpecialPage {
 				isset( $profile['namespace-messages'] )
 					? $lang->commaList( $profile['namespace-messages'] ) : null;
 			$out .= Xml::tags( 'li', [
-				'class' => $this->profile === $id ? 'current' : 'normal',
-			], $this->makeSearchLink( $bareterm, [], wfMsg( $profile['message'] ),
+					'class' => $this->profile === $id ? 'current' : 'normal',
+				], $this->makeSearchLink( $bareterm, [], wfMsg( $profile['message'] ),
 				wfMsg( $profile['tooltip'], $tooltipParam ), $profile['parameters'] ) );
 		}
 		$out .= Xml::closeElement( 'ul' );
@@ -1129,9 +1130,9 @@ class SpecialSearch extends SpecialPage {
 		], $opt );
 
 		return Xml::element( 'a', [
-			'href' => $this->getTitle()->getLocalURL( $stParams ),
-			'title' => $tooltip,
-		], $label );
+				'href' => $this->getTitle()->getLocalURL( $stParams ),
+				'title' => $tooltip,
+			], $label );
 	}
 
 	/**
