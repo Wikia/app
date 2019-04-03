@@ -46,6 +46,32 @@ Right now the logs are sent to console in JSON format. We may add Kibana logger 
 For performance reasons the opcache is enabled, but it checks for file updates every 10 seconds.
 So you should see your code changes shortly after uploading them to your devbox.
 
+### Tests (in progress)
+
+You can still start a container with MediaWiki/PHP:
+
+```bash
+$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src -v "$HOME/config":/usr/wikia/slot1/current/config -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest bash
+```
+
+Then you can run a single test:
+```bash
+nobody@2d25d207a7a7:/usr/wikia/slot1/current/src$ cd tests
+nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php ../includes/wikia/tests/WikiaForceBaseDomainTest.php
+PHPUnit 6.5.8 by Sebastian Bergmann and contributors.
+
+.........                                                           9 / 9 (100%)
+
+Time: 328 ms, Memory: 16.00MB
+```
+
+Or run the whole test suite:
+```bash
+nobody@2d25d207a7a7:/usr/wikia/slot1/current/src$ cd tests
+nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation
+nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --group Integration
+```
+
 ### Rebuilding docker images
 
 nginx image:
