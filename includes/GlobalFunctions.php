@@ -3449,6 +3449,8 @@ function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
 			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 
+	wfSuppressWarnings();
+
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {
 			global $IP;
@@ -3482,7 +3484,6 @@ function wfSetupSession( $sessionId = false ) {
 	} else {
 		wfFixSessionID();
 	}
-	wfSuppressWarnings();
 	session_start();
 	wfRestoreWarnings();
 
