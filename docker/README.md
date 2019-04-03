@@ -4,8 +4,8 @@ We assume that you have `app` and `config` repository cloned in the same directo
 
 ```sh
 # 1. build a base image
-docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:225a68a ./base
-docker push artifactory.wikia-inc.com/sus/php-wikia-base:225a68a
+docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:3c14b4f ./base
+docker push artifactory.wikia-inc.com/sus/php-wikia-base:3c14b4f
 
 # 2. and then dev image
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
