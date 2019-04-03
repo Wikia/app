@@ -9,10 +9,10 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 				getSamplingResults: function () {
 					return [];
 				},
-				getDocumentVisibilityStatus: function () {
-					return 'visible';
-				}
-			}
+			},
+			getDocumentVisibilityStatus: function () {
+				return 'visible';
+			},
 		},
 		adTracker: {
 			trackDW: function () {

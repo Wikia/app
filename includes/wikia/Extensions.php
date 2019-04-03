@@ -1789,9 +1789,6 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
 
-// PLATFORM-3558 |
-include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
-
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }

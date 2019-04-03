@@ -10,8 +10,9 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
+      maxUnavailable: 20%
+      maxSurge: 20%
+  replicas: ${PODS}
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
@@ -90,16 +91,17 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "2500m"
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: "1200m"
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
           resources:
             limits:
+              cpu: 100m
               memory: 200Mi
             requests:
               cpu: 100m
@@ -110,30 +112,11 @@ spec:
             - containerPort: 9253
           resources:
             limits:
+              cpu: 50m
               memory: 200Mi
             requests:
               cpu: 50m
               memory: 50Mi
----
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: mediawiki-prod
-  namespace: prod
-  labels:
-    app: mediawiki-prod
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: mediawiki-prod
-  maxReplicas: 75
-  minReplicas: 20
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 50
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -278,11 +261,11 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: 4
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: 2
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest

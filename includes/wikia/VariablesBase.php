@@ -2671,7 +2671,7 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsExt = false;
+$wgEnableFeedsAndPostsExt = true;
 
 /**
  * Enable the Embedded Feeds module from Community Feeds
@@ -8941,10 +8941,10 @@ $wgWatchShowURL = '';
 
 /**
  * Enables EditDraftSaving extension
- * @see SUS-79
+ * @see CORE-79 CORE-241
  * @var bool
  */
-$wgEnableEditDraftSavingExt = false;
+$wgEnableEditDraftSavingExt = true;
 
 /**
  * ArticleTags RabbitMQ configuration.

@@ -90,7 +90,7 @@ function getPageCategories(adsContext) {
 		return undefined;
 	}
 
-	const categories = window.wgCategories.map(item => item.title);
+	const categories = window.wgCategories;
 	let outCategories;
 
 	if (categories && categories.length > 0) {
@@ -193,7 +193,7 @@ export default {
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.getCountryCode() || 'none',
+			geo: utils.geoService.getCountryCode() || 'none',
 			likho,
 		};
 

@@ -310,11 +310,8 @@ function passSlotEvent(slotName, eventName) {
 	slotService.get(slotName).emit(eventName);
 }
 
-function readSessionId() {
-	utils.readSessionId();
-}
-
-const geo = utils;
+const geo = utils.geoService;
+const getDocumentVisibilityStatus = utils.getDocumentVisibilityStatus;
 
 export {
 	init,
@@ -322,10 +319,10 @@ export {
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
-	readSessionId,
 	context,
 	unifySlotInterface,
 	universalAdPackage,
 	slotService,
 	geo,
+	getDocumentVisibilityStatus,
 };

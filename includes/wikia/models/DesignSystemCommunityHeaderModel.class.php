@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt;
+		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt, $wgContLang;
 
 		parent::__construct();
 
@@ -25,7 +25,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$this->mainPageUrl = ( !empty( $wgFandomCreatorCommunityId ) || !empty( $wgEnableFeedsAndPostsExt ) ) ?
+		$this->mainPageUrl =
+			( !empty( $wgFandomCreatorCommunityId ) ||
+			  ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' ) )
+				?
 			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
 			// for Feeds And Posts alpha communities we need it as well
 			wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) ) :
@@ -401,6 +404,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getDiscussLinkData(): array {
 		if ( $this->discussLinkData === null ) {
+			global $wgContLanguageCode;
+
 			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
 			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
 
@@ -409,7 +414,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$tracking = '';
 
 			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/d/f';
+				if ($wgContLanguageCode == 'en') {
+					$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/f';
+				} else {
+					$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/d/f';
+				}
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
 			} else if ( !empty( $wgEnableForumExt ) ) {
