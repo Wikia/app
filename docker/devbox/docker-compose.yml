@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  web:
+    image: artifactory.wikia-inc.com/platform/nginx-wikia-devbox:latest
+    ports:
+      - "80:8080"
+    volumes:
+      - ../base/base.inc:/etc/nginx/conf.d/base.inc:ro
+      - ./site.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../base/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../../app/skins:/usr/wikia/slot1/current/src/skins:ro
+      - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro
+      - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions:ro
+      - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
+    depends_on:
+      - php-wikia
+  php-wikia:
+    image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
+    volumes:
+      - ../../../app:/usr/wikia/slot1/current/src:ro
+      - ../../../config:/usr/wikia/slot1/current/config:ro
+      - ../../../cache:/usr/wikia/slot1/current/cache/messages:ro
+    environment:
+      - WIKIA_DATACENTER=$WIKIA_DATACENTER
+      - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
+      - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
+      - LOG_SOCKET_ONLY=yes
+      - LOG_SOCKET_ADDRESS=tcp://logger:9999
+  logger:
+    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
