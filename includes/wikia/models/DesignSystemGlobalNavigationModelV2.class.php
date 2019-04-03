@@ -38,6 +38,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
 			'main-navigation' => $this->getMainNavigation(),
 			'content-recommendations' => $this->getContentRecommendations(),
+			'is-wikia-org' => $this->isWikiaOrgCommunity(),
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -325,7 +326,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	private function isWikiaOrgCommunity() {
 		global $wgWikiaOrgMigrationScheduled;
 
-		return $this->product === self::PRODUCT_WIKIS && $wgWikiaOrgMigrationScheduled;
+		//return $this->product === self::PRODUCT_WIKIS && $wgWikiaOrgMigrationScheduled;
+		return true;
 	}
 
 	private function getCorporatePageSearchUrl() {
@@ -366,9 +368,9 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'href' => $this->getHref( 'wikia-org-logo' ),
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-wikia-org-white',
+					'name' => 'wds-company-logo-wikia-org',
 				],
-				'tracking_label' => 'logo',
+				'tracking-label' => 'logo',
 			];
 		}
 

@@ -97,6 +97,7 @@ class DesignSystemSharedLinks {
 			'app-store' => 'https://itunes.apple.com/us/app/fandom-videos-news-reviews/id1230063803?ls=1&mt=8',
 			'google-play' => 'https://play.google.com/store/apps/details?id=com.fandom.app',
 			'fandom-logo' => 'https://www.fandom.com/',
+			'wikia-org-logo' => 'https://www.wikia.org/',
 			'games' => 'https://www.fandom.com/topics/games',
 			'movies' => 'https://www.fandom.com/topics/movies',
 			'tv' => 'https://www.fandom.com/topics/tv',
