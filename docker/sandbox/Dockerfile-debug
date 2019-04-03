@@ -1,5 +1,5 @@
 # This is a base Docker image used in prod/sandbox/preview Jenkinsfile
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:9af347f
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:225a68a
 
 # disable the opcache
 RUN sed -i 's/zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
