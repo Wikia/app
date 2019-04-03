@@ -100,9 +100,9 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 		// Scanning large datasets for rare categories sucks, and I already told
 		// how to have efficient subcategory access :-) ~~~~ (oh well, domas)
 		global $wgMiserMode;
-		$miser_ns = array();
+		$miser_ns = [];
 		if ( $wgMiserMode ) {
-			$miser_ns = $params['namespace'];
+			$miser_ns = $params['namespace'] ?: [];
 		} else {
 			$this->addWhereFld( 'page_namespace', $params['namespace'] );
 		}
