@@ -59,6 +59,8 @@ class LoggerFactory {
 		$logger = new Logger( $ident );
 
 		if( $this->shouldLogToStdOut ) {
+			// CORE=260 | STDOUT constant is not set when running in fpm mode
+			if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
 			$handler = new StreamHandler( STDOUT );
 		} else if( $this->shouldLogToSocket ) {
 			$handler = new SocketHandler( $this->socketAddress );
