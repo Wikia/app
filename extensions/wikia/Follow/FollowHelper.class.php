@@ -29,7 +29,7 @@ class FollowHelper {
 		$action = self::LOG_ACTION_CATEGORY_ADD;
 		$catList = array_keys( $categoryInserts );
 
-		$queryIn = "";
+		$queryIn = [];
 		foreach ( $catList as $value ) {
 			$queryIn[] = $value;
 		}
@@ -51,7 +51,7 @@ class FollowHelper {
 	 *
 	 * @throws MWException
 	 */
-	public static function emailNotification( $childTitle, $list, $namespace, $user, $action, $message ) {
+	public static function emailNotification( Title $childTitle, array $list, $namespace, $user, $action, $message ) {
 
 		if ( count( $list ) < 1 ) {
 			return;
