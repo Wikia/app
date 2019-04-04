@@ -86,3 +86,15 @@
 		display: none;
 	}
 }
+
+.wds-is-wikia-org {
+	.wds-search-modal {
+		&__form-and-links-wrapper {
+			background-color: $wds-color-white;
+		}
+
+		&__search-icon {
+			fill: $wds-color-slate-gray;
+		}
+	}
+}

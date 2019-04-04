@@ -234,6 +234,59 @@ $toggle-active-margin-right: 17px;
 	}
 }
 
+.wds-is-wikia-org {
+	.wds-global-navigation__search {
+		color: $wds-color-slate-gray;
+
+		&-toggle {
+			&:hover {
+				color: $wds-fandom-color-aqua;
+			}
+		}
+
+		&-input-wrapper {
+			border-bottom: 2px solid $wds-color-faint-gray;
+			width: 100%;
+		}
+
+		&-input {
+			color: $wds-color-slate-gray;
+
+			&::placeholder {
+				color: $wds-fandom-color-aqua;
+			}
+		}
+
+		&-submit {
+			@include button-theming($wds-color-slate-gray, $wds-color-white, $wds-color-white, 'darker');
+			border-radius: 3px;
+			display: none;
+			padding: 4px 10px;
+
+			&-icon {
+				transform: rotate(180deg);
+			}
+		}
+
+		&-clear {
+			svg {
+				fill: $wds-color-slate-gray;
+			}
+		}
+
+		&-close {
+			&.wds-button.wds-is-text {
+				color: $wds-color-slate-gray;
+
+				&:hover {
+					color: $wds-fandom-color-aqua;
+				}
+			}
+		}
+
+	}
+}
+
 // for the largest breakpoint we want to have search input expanded initially
 @media #{$wds-breakpoint-xxlarge-up} {
 	@include wds-active-search;

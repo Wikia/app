@@ -488,6 +488,54 @@
 		}
 	}
 
+	&.wds-is-wikia-org {
+		background-color: $wds-color-white;
+		border-bottom: 1px solid $wds-color-faint-gray;
+		border-top: 6px solid $wds-color-dark-blue-gray;
+
+		.wds-avatar {
+			@include wds-avatar(30px, $wds-color-slate-gray, $wds-fandom-color-aqua, $wds-color-white);
+		}
+
+		.wds-global-navigation__modal-control {
+			&-search,
+			&-close {
+				svg {
+					fill: $wds-color-slate-gray;
+				}
+			}
+		}
+
+		.wds-global-navigation__community-bar {
+			height: 49px;
+		}
+
+		.wds-community-bar {
+			&__sitename {
+				a {
+					color: $wds-color-slate-gray;
+				}
+			}
+
+			&__separator {
+				display: none;
+			}
+		}
+
+		.wds-global-navigation__notifications-dropdown {
+			color: $wds-color-slate-gray;
+
+			&:hover {
+				color: $wds-fandom-color-aqua;
+			}
+		}
+
+		> * {
+			// This is applied to all GN children to make up for a 6px top border
+			margin: -3px 0 -3px;
+		}
+	}
+
 }
 
 @keyframes separator {
