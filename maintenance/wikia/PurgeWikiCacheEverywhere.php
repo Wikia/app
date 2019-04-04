@@ -2,11 +2,12 @@
 require_once __DIR__ . '/../Maintenance.php';
 require_once( dirname( __FILE__ ) . '/../../includes/objectcache/BagOStuff.php' );
 require_once( dirname( __FILE__ ) . '/../../includes/objectcache/MemcachedBagOStuff.php' );
-require_once( dirname( __FILE__ ) . '/../../includes/objectcache/MemcachedPeclBagOStuff.php' );
+require_once( dirname( __FILE__ ) . '/../../includes/objectcache/MemcachedPhpBagOStuff.php' );
 
 class PurgeWikiCacheEverywhere extends Maintenance {
 	public function __construct() {
 		parent::__construct();
+		$this->addArg("memcachedServer", "Additional memcached server to purge. Defaults to prod.twemproxy.service.res.consul", false);
 		$this->mDescription = 'Purges the WikiFactory ,Fastly cache and memcache of a single wiki';
 	}
 
@@ -14,7 +15,7 @@ class PurgeWikiCacheEverywhere extends Maintenance {
 		global $wgCityId, $wgMemc;
 
 		//config values
-		$memCacheAlternativeServer = $_ENV['MEMCACHED_ALTERNATIVE_SERVER'] ? $_ENV['MEMCACHED_ALTERNATIVE_SERVER'] : 'prod.twemproxy.service.res.consul';
+		$memCacheAlternativeServer = $this->getArg(0, 'prod.twemproxy.service.res.consul' );
 		$prodKey = Wikia::wikiSurrogateKey( $wgCityId );
 		$previewKey = 'staging-s1-wiki-' . $wgCityId;
 		$verifyKey = 'staging-s2-wiki-' . $wgCityId;
@@ -24,13 +25,17 @@ class PurgeWikiCacheEverywhere extends Maintenance {
 		$this->output( 'Purge memcache' );
 		$wgMemc->delete( $key );
 		WikiFactory::clearCache( $wgCityId );
-		$memCacheClient = new MemcachedPeclBagOStuff(['servers' => [
+		$mc = new MemcachedPhpBagOStuff(['servers' => [
 			0 => $memCacheAlternativeServer . ':21000',
 			1 => $memCacheAlternativeServer . ':31000',
 		]]);
-		$wgMemc = $memCacheClient;
-		WikiFactory::clearCache( $wgCityId );
-		$wgMemc->delete( $key );
+		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgMemc' => $mc
+		] );
+		$globalStateWrapper->wrap( function () use ( $wgCityId, $mc, $key ) {
+			WikiFactory::clearCache( $wgCityId );
+			$mc->delete( $key );
+		} );
 
 		//proxy purge
 		$this->output( 'Purge prod surrogate keys' );
