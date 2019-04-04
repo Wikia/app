@@ -106,7 +106,7 @@ spec:
               cpu: 100m
               memory: 50Mi
         - name: fpm-prometheus-exporter
-          image: hipages/php-fpm_exporter:0.5.2
+          image: hipages/php-fpm_exporter:1.0.0
           ports:
             - containerPort: 9253
           resources:
