@@ -251,7 +251,7 @@ class LinkSuggest {
 
 				$results = [ $row->page_id => $redirTitleFormatted ] + $results;
 
-				$redirects[$redirTitleFormatted] = $titleFormatted;
+				$redirects[$titleFormatted] = $redirTitleFormatted;
 			}
 		}
 
@@ -376,9 +376,11 @@ class LinkSuggest {
 
 	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow, $limit) {
 		while(($row = $db->fetchObject($res)) && count($results) < $limit ) {
+			$upperCaseTitle = mb_strtoupper( $row->page_title, 'UTF-8' );
+			$upperCaseQuery = mb_strtoupper( $query, 'UTF-8' );
 
 			// SUS-846: Ensure we only have one exact match, to prevent overwriting it and losing the suggestion
-			if ( is_null( $exactMatchRow ) && strtolower( $row->page_title ) == $query ) {
+			if ( is_null( $exactMatchRow ) && $upperCaseQuery === $upperCaseTitle ) {
 				$exactMatchRow = $row;
 				continue;
 			}
