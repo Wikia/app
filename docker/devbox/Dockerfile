@@ -4,7 +4,6 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
 # install dev dependencies
 
-# uopz extension / @see https://pecl.php.net/package/uopz
 # yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
 #
 # these require autoconf package to be present
