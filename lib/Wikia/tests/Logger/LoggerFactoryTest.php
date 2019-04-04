@@ -56,7 +56,7 @@ class LoggerFactoryTest extends TestCase {
 	 * @param string $ident
 	 */
 	public function testGetLoggerSyslogNoDebug( string $ident ) {
-		$loggerFactory = new LoggerFactory( false, true );
+		$loggerFactory = new LoggerFactory( true, false );
 
 		$logger = $loggerFactory->getLogger( __METHOD__ . $ident );
 
