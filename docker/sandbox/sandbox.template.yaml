@@ -85,10 +85,8 @@ spec:
               value: "${SANDBOX_ENVIRONMENT}"
             - name: HOSTNAME_OVERRIDE
               value: "${SANDBOX_NAME}"
-            - name: LOG_SOCKET_ONLY
+            - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: "4"

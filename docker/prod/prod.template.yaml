@@ -85,10 +85,8 @@ spec:
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
               value: prod
-            - name: LOG_SOCKET_ONLY
+            - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5
@@ -255,10 +253,8 @@ spec:
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
               value: prod
-            - name: LOG_SOCKET_ONLY
+            - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5

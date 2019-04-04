@@ -13,10 +13,8 @@ spec:
         env:
          - name: SERVER_ID
            value: "177"
-         - name: LOG_SOCKET_ONLY
+         - name: LOG_STDOUT_ONLY
            value: "yes"
-         - name: LOG_SOCKET_ADDRESS
-           value: "tcp://localhost:9999"
         args:
         - php
         - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
