@@ -1817,13 +1817,6 @@ $wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\
  */
 $wgShortArticlePathWikis = [
 	80433,   // www.wikia.com
-	111264,  // de.wikia.com
-	208826,  // fr.wikia.com
-	435095,  // pl.wikia.com
-	637291,  // es.wikia.com
-	875569,  // ja.wikia.com
-	1169860, // ru.wikia.com
-	1618258  // it.wikia.com
 ];
 
 /**
