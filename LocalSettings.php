@@ -51,7 +51,7 @@ if ( empty( $wgWikiaEnvironment ) ) {
 if ( !empty( getenv( 'WIKIA_FORCE_DEV_ONLY' ) ) &&
 	 $wgWikiaEnvironment !== WIKIA_ENV_DEV &&
 	 !$wgCommandLineMode ) {
-	throw new RuntimeException( 'This setup if not allowed to connect to production.' );
+	throw new RuntimeException( 'This setup is not allowed to connect to production.' );
 }
 
 /**
