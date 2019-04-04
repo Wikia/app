@@ -50,3 +50,8 @@ location ~ ^/(lib|serialized|tests|mw-config|includes|cache|maintenance|language
 }
 
 error_page 404 = /redirect-canonical.php;
+
+# Larger buffers
+fastcgi_buffer_size       16k;
+fastcgi_buffers           32 16k;
+fastcgi_busy_buffers_size 32k;
