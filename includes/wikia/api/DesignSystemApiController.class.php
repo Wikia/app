@@ -78,6 +78,7 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
+		$isWikiaOrgCommunity = $this->isWikiaOrgCommunity();
 
 		$footerModel = new DesignSystemGlobalFooterModel(
 			$params[static::PARAM_PRODUCT],
@@ -102,8 +103,8 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->cors->setHeaders( $this->response );
 
 		$responseData = [
-			'global-footer' => $footerModel->getData(),
-			'global-navigation' => $navigationModel->getData(),
+			'global-footer' => $footerModel->getData( $isWikiaOrgCommunity ),
+			'global-navigation' => $navigationModel->getData( $isWikiaOrgCommunity ),
 		];
 
 		if (

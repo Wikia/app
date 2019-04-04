@@ -232,12 +232,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-fandom-white',
+					'name' => 'wds-company-logo-wikia-org',
 				],
-				'href' => $this->getHref( 'fandom-logo' ),
+				'href' => $this->getHref( 'wikia-org-logo' ),
 				'title' => [
 					'type' => 'text',
-					'value' => 'Fandom powered by Wikia'
+					'value' => 'Wikia.org'
 				],
 				'tracking_label' => 'logo',
 			],
@@ -261,26 +261,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'href' => $this->getHref( 'privacy-policy' ),
 						'tracking_label' => 'site-overview.privacy-policy',
 					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-global-sitemap'
-						],
-						'href' => $this->getHref( 'global-sitemap' ),
-						'tracking_label' => 'site-overview.global-sitemap',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-local-sitemap'
-						],
-						'href' => $this->getLocalSitemapUrl(),
-						'tracking_label' => 'site-overview.local-sitemap',
-					]
 				]
 			],
+			'is-wikia-org' => true,
 		];
 
 		if ( $this->getHref( 'support' ) ) {
