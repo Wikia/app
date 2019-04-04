@@ -94,16 +94,6 @@ spec:
             requests:
               cpu: 2.5
               memory: 3Gi
-        # MW log output, see K8s_LOGGING.md
-        - name: logger
-          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
-          resources:
-            limits:
-              cpu: 100m
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:0.5.2
           ports:
@@ -262,16 +252,6 @@ spec:
             requests:
               cpu: 2.5
               memory: 3Gi
-        # MW log output, see K8s_LOGGING.md
-        - name: logger
-          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
-          resources:
-            limits:
-              cpu: 1
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:0.5.2
           ports:

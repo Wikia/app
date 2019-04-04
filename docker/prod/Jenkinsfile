@@ -1,7 +1,6 @@
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
-def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
 def rolloutStatusSjc = 1
 def rolloutStatusRes = 1
