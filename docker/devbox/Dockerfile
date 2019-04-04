@@ -8,8 +8,8 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 # yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
 #
 # these require autoconf package to be present
-RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
-    && docker-php-ext-enable uopz yaml
+RUN pecl install yaml-2.0.2 \
+    && docker-php-ext-enable yaml
 
 # Configure dev opcache
 ADD ./opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
