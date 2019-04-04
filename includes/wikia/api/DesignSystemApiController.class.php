@@ -28,7 +28,7 @@ class DesignSystemApiController extends WikiaApiController {
 		);
 
 		$this->cors->setHeaders( $this->response );
-		$this->setResponseData( $footerModel->getData() );
+		$this->setResponseData( $footerModel->getData( $this->isWikiaOrgCommunity() ) );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
@@ -53,7 +53,7 @@ class DesignSystemApiController extends WikiaApiController {
 			);
 
 		$this->cors->setHeaders( $this->response );
-		$this->setResponseData( $navigationModel->getData() );
+		$this->setResponseData( $navigationModel->getData($this->isWikiaOrgCommunity()) );
 		$this->addCachingHeaders();
 	}
 
@@ -164,5 +164,16 @@ class DesignSystemApiController extends WikiaApiController {
 		} else {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		}
+	}
+
+	private function isWikiaOrgCommunity() {
+		global $wgServer;
+
+		$wikiaOrgDomainsWhitelist = ['wikia.org', 'fandom-dev.pl'];
+		$domainSegments = explode('.', $wgServer);
+		$sizeOfDomainSegments = sizeof($domainSegments);
+		$lastTwoSegmentsOfDomain = $domainSegments[$sizeOfDomainSegments - 2] . '.' . $domainSegments[$sizeOfDomainSegments - 1];
+
+		return !empty(array_search($lastTwoSegmentsOfDomain, $wikiaOrgDomainsWhitelist));
 	}
 }

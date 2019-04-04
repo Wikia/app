@@ -24,8 +24,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$this->lang = $lang;
 	}
 
-	public function getData() {
+	public function getData( $isWikiaOrgCommunity ) {
 		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
+
+		if ( $isWikiaOrgCommunity ) {
+			return $this->getWikiaOrgModel();
+		}
 
 		$data = [
 			'header' => [
@@ -216,6 +220,92 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 		$data['advertise'] = $this->getAdvertise();
+
+		return $data;
+	}
+
+	private function getWikiaOrgModel() {
+		$data = [
+			'header' => [
+				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
+				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-fandom-white',
+				],
+				'href' => $this->getHref( 'fandom-logo' ),
+				'title' => [
+					'type' => 'text',
+					'value' => 'Fandom powered by Wikia'
+				],
+				'tracking_label' => 'logo',
+			],
+			'site_overview' => [
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-terms-of-use'
+						],
+						'href' => $this->getHref( 'terms-of-use' ),
+						'tracking_label' => 'site-overview.terms-of-use',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-privacy-policy'
+						],
+						'href' => $this->getHref( 'privacy-policy' ),
+						'tracking_label' => 'site-overview.privacy-policy',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-global-sitemap'
+						],
+						'href' => $this->getHref( 'global-sitemap' ),
+						'tracking_label' => 'site-overview.global-sitemap',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-local-sitemap'
+						],
+						'href' => $this->getLocalSitemapUrl(),
+						'tracking_label' => 'site-overview.local-sitemap',
+					]
+				]
+			],
+		];
+
+		if ( $this->getHref( 'support' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-support'
+				],
+				'href' => $this->getHref( 'support' ),
+				'tracking_label' => 'community.support',
+			];
+		}
+
+		if ( $this->getHref( 'help' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-help'
+				],
+				'href' => $this->getHref( 'help' ),
+				'tracking_label' => 'community.help',
+			];
+		}
 
 		return $data;
 	}

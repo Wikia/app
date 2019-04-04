@@ -29,16 +29,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		$this->lang = $lang;
 	}
 
-	public function getData() {
+	public function getData( $isWikiaOrgCommunity = false ) {
 		global $wgUser, $wgServicesExternalDomain;
 
 		$data = [
-			'logo' => $this->getLogo(),
+			'logo' => $this->getLogo( $isWikiaOrgCommunity ),
 			'search' => $this->getSearchData(),
 			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
-			'main-navigation' => $this->getMainNavigation(),
+			'main-navigation' => $this->getMainNavigation( $isWikiaOrgCommunity ),
 			'content-recommendations' => $this->getContentRecommendations(),
-			'is-wikia-org' => $this->isWikiaOrgCommunity(),
+			'is-wikia-org' => $isWikiaOrgCommunity,
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -61,8 +61,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $data;
 	}
 
-	private function getMainNavigation() {
-		if ( $this->isWikiaOrgCommunity() ) {
+	private function getMainNavigation( $isWikiaOrgCommunity ) {
+		if ( $isWikiaOrgCommunity ) {
 			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
 		} else {
 			return array_merge(
@@ -323,13 +323,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
-	private function isWikiaOrgCommunity() {
-		global $wgWikiaOrgMigrationScheduled;
-
-		//return $this->product === self::PRODUCT_WIKIS && $wgWikiaOrgMigrationScheduled;
-		return true;
-	}
-
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
@@ -361,8 +354,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return null;
 	}
 
-	private function getLogo() {
-		if ( $this->isWikiaOrgCommunity() === true ) {
+	private function getLogo( $isWikiaOrgCommunity ) {
+		if ( $isWikiaOrgCommunity === true ) {
 			return [
 				'type' => 'link-image',
 				'href' => $this->getHref( 'wikia-org-logo' ),
