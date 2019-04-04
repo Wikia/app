@@ -302,6 +302,21 @@ export default {
 		});
 	},
 
+	setupSlotVideoAdUnit(adSlot, params) {
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+				{
+					slotConfig: {
+						group: adProductInfo.adGroup,
+						adProduct: adProductInfo.adProduct,
+					},
+				},
+		);
+
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
+	},
+
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
 			context.set('slots.hivi_leaderboard.targeting.xna', '0');
