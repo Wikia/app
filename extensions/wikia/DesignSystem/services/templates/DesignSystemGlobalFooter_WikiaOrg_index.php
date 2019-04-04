@@ -1,6 +1,6 @@
-<footer class="wds-global-footer">
+<footer class="wds-global-footer-wikia-org">
 	<?php if ( isset ( $model['header'] ) ) : ?>
-		<h2 class="wds-global-footer__header">
+		<h2 class="wds-global-footer-wikia-org__header">
 			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
 			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
 			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
@@ -15,27 +15,18 @@
 	<ul class="wds-global-footer-wikia-org__links">
 		<li class="wds-global-footer-wikia-org__link">
 			<?= DesignSystemHelper::renderText( [
+				'type' => 'translatable-text',
 				'key' => 'global-footer-site-overview-link-wikia-inc',
-				'params' => ['year' => date("Y")]
+				'params' => ['year' => ['type' => 'text', 'value' => date("Y")]]
 			] ) ?>
 		</li>
 
 		<?php foreach ( $model['site_overview']['links'] as $link ) : ?>
 			<li class="wds-global-footer-wikia-org__link">
 				<a href="<?= $link['href'] ?>" data-tracking-label="<?= $link['tracking_label'] ?>">
-					<?= DesignSystemHelper::renderText( $link['title'] ); ?>
+					<?= DesignSystemHelper::renderText( $link ); ?>
 				</a>
 			</li>
 		<?php endforeach; ?>
 	</ul>
-	<div class="wds-global-footer__bottom-bar">
-		<?= $app->renderPartial(
-			'DesignSystemGlobalFooterService',
-			'mobileSiteButton',
-			[
-				'model' => $model['mobile_site_button']
-			]
-		); ?>
-	</div>
-
 </footer>

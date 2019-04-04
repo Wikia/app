@@ -1,4 +1,5 @@
 {
+  "back": "Back",
   "community-header-add": "Tambahkan",
   "community-header-add-new-image": "Menambahkan Gambar Baru",
   "community-header-add-new-page": "Menambahkan gambar baru",
@@ -41,8 +42,8 @@
   "global-footer-create-wiki-link-start-wikia": "Memulai Wiki",
   "global-footer-fandom-app-description": "Lihat fandom yang anda favoritkan dan jangan pernah ketinggalan",
   "global-footer-fandom-app-header": "Fandom App",
-  "global-footer-fandom-overview-header": "Jelajahi",
-  "global-footer-fandom-overview-link-explore-wikis": "Wiki",
+  "global-footer-fandom-overview-header": "Explore",
+  "global-footer-fandom-overview-link-explore-wikis": "Wikis",
   "global-footer-fandom-overview-link-vertical-games": "Permainan",
   "global-footer-fandom-overview-link-vertical-movies": "Film",
   "global-footer-fandom-overview-link-vertical-tv": "TV",

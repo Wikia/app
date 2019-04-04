@@ -491,7 +491,7 @@
 	&.wds-is-wikia-org {
 		background-color: $wds-color-white;
 		border-bottom: 1px solid $wds-color-faint-gray;
-		border-top: 6px solid $wds-color-dark-blue-gray;
+		border-top: 6px solid $wds-color-dark-blue;
 
 		.wds-avatar {
 			@include wds-avatar(30px, $wds-color-slate-gray, $wds-fandom-color-aqua, $wds-color-white);

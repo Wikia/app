@@ -1,5 +1,5 @@
 {
-  "back": "뒤로",
+  "back": "Back",
   "community-header-add": "생성",
   "community-header-add-new-image": "그림 추가하기",
   "community-header-add-new-page": "새 문서 생성",
@@ -42,8 +42,8 @@
   "global-footer-create-wiki-link-start-wikia": "새 위키 만들기",
   "global-footer-fandom-app-description": "모바일에서도 팬덤과 함께해 보세요!",
   "global-footer-fandom-app-header": "The FANDOM App",
-  "global-footer-fandom-overview-header": "둘러보기",
-  "global-footer-fandom-overview-link-explore-wikis": "위키",
+  "global-footer-fandom-overview-header": "Explore",
+  "global-footer-fandom-overview-link-explore-wikis": "Wikis",
   "global-footer-fandom-overview-link-vertical-games": "게임",
   "global-footer-fandom-overview-link-vertical-movies": "영화",
   "global-footer-fandom-overview-link-vertical-tv": "TV",
