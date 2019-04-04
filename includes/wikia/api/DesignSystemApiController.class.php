@@ -170,7 +170,7 @@ class DesignSystemApiController extends WikiaApiController {
 	private function isWikiaOrgCommunity() {
 		global $wgServer;
 
-		$wikiaOrgDomainsWhitelist = ['wikia.org', 'fandom-dev.pl'];
+		$wikiaOrgDomainsWhitelist = ['wikia.org', 'fandom-dev.pl', 'wikia.com'];
 		$domainSegments = explode('.', $wgServer);
 		$sizeOfDomainSegments = sizeof($domainSegments);
 		$lastTwoSegmentsOfDomain = $domainSegments[$sizeOfDomainSegments - 2] . '.' . $domainSegments[$sizeOfDomainSegments - 1];
