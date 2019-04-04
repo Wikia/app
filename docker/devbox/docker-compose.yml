@@ -27,5 +27,6 @@ services:
       - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
+      - WIKIA_FORCE_DEV_ONLY=yes
   logger:
     image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
