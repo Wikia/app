@@ -7,17 +7,11 @@ use Monolog\Logger;
 
 class LoggerFactory {
 
-	/** @var bool $shouldLogToSocket */
-	private $shouldLogToSocket;
-
 	/** @var bool $shouldLogToStdOut */
 	private $shouldLogToStdOut;
 
 	/** @var bool $shouldExcludeDebugLevel */
 	private $shouldExcludeDebugLevel;
-
-	/** @var string $socketAddress */
-	private $socketAddress;
 
 	/** @var StatusProcessor $statusProcessor */
 	private $statusProcessor;
@@ -33,22 +27,16 @@ class LoggerFactory {
 	 */
 	public static function getInstance(): LoggerFactory {
 		if( static::$instance === null ) {
-			global $wgWikiaEnvironment,
-				$wgLoggerLogToSocketOnly,
-				$wgLoggerSocketAddress,
-				$wgLoggerLogToStdOutOnly;
-
-			static::$instance = new self( $wgLoggerLogToSocketOnly, $wgWikiaEnvironment === WIKIA_ENV_PROD, $wgLoggerSocketAddress, $wgLoggerLogToStdOutOnly );
+			global $wgWikiaEnvironment, $wgLoggerLogToStdOutOnly;
+			static::$instance = new self( $wgWikiaEnvironment === WIKIA_ENV_PROD, $wgLoggerLogToStdOutOnly );
 		}
 
 		return self::$instance;
 	}
 
-	public function __construct( bool $shouldLogToSocket, bool $shouldExcludeDebugLevel, string $socketAddress, bool $shouldLogToStdOut = false ) {
-		$this->shouldLogToSocket = $shouldLogToSocket;
+	public function __construct( bool $shouldExcludeDebugLevel, bool $shouldLogToStdOut = false ) {
 		$this->shouldLogToStdOut = $shouldLogToStdOut;
 		$this->shouldExcludeDebugLevel = $shouldExcludeDebugLevel;
-		$this->socketAddress = $socketAddress;
 	}
 
 	public function getLogger( string $ident ): Logger {
@@ -62,9 +50,8 @@ class LoggerFactory {
 			// CORE=260 | STDOUT constant is not set when running in fpm mode
 			if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
 			$handler = new StreamHandler( STDOUT );
-		} else if( $this->shouldLogToSocket ) {
-			$handler = new SocketHandler( $this->socketAddress );
 		} else {
+			// TODO: remove when we fully migrate to k8s
 			$handler = new SyslogHandler( $ident );
 		}
 
