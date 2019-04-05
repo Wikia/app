@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'articlevideo-attribution-from' => 'from',
 	'articlevideo-preference-label' => 'Featured Video',
 	'articlevideo-preference-option-show-featured-video' => 'Show all videos',
-	'articlevideo-preference-option-disable-featured-video' => 'Don\'t show all videos',
+	'articlevideo-preference-option-disable-featured-video' => "Don't show all videos",
 	'right-showfeaturedvideo' => 'Always show featured videos',
 );
 
@@ -43,6 +43,10 @@ $messages['it'] = array(
 	'articlevideo-watch' => 'guarda',
 	'articlevideo-feedback-question' => 'Ti piace questo video?',
 	'articlevideo-attribution-from' => 'da',
+	'right-showfeaturedvideo' => 'Mostra sempre i video sponsorizzati',
+	'articlevideo-preference-label' => 'Video sponsorizzati',
+	'articlevideo-preference-option-show-featured-video' => 'Mostra tutti i video',
+	'articlevideo-preference-option-disable-featured-video' => 'Non mostrare tutti i video',
 );
 
 $messages['ja'] = array(
