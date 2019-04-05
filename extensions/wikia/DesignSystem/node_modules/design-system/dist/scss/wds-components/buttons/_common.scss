@@ -1,5 +1,5 @@
 .wds-button {
-	@include button-theming($wds-fandom-color-button-background, $wds-fandom-color-black, $wds-color-dark-gray);
+	@include button-theming($wds-fandom-color-button-background, $wds-fandom-color-black, $wds-fandom-color-dark-gray);
 
 	align-items: center;
 	border-style: solid;
