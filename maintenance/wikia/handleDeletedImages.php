@@ -68,6 +68,7 @@ class HandleDeletedImages extends Maintenance {
 
 					return;
 				}
+
 				$name = $row->fa_name;
 				$revision = $this->getRevisionId( $row->fa_archive_name );
 				$path = $this->getPath( $name, $revision );
