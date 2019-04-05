@@ -1,5 +1,5 @@
 {
-  "back": "Back",
+  "back": "戻る",
   "community-header-add": "投稿",
   "community-header-add-new-image": "画像を追加",
   "community-header-add-new-page": "新しいページをつくる",
@@ -42,8 +42,8 @@
   "global-footer-create-wiki-link-start-wikia": "Wikiをはじめる",
   "global-footer-fandom-app-description": "アプリをダウンロードして、いつでもどこでもお気に入りのファンダムにアクセスしよう！",
   "global-footer-fandom-app-header": "FANDOM App",
-  "global-footer-fandom-overview-header": "Explore",
-  "global-footer-fandom-overview-link-explore-wikis": "Wikis",
+  "global-footer-fandom-overview-header": "検索",
+  "global-footer-fandom-overview-link-explore-wikis": "Wiki",
   "global-footer-fandom-overview-link-vertical-games": "ゲーム",
   "global-footer-fandom-overview-link-vertical-movies": "映画",
   "global-footer-fandom-overview-link-vertical-tv": "TV",

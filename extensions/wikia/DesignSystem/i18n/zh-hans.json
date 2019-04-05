@@ -1,5 +1,5 @@
 {
-  "back": "Back",
+  "back": "返回",
   "community-header-add": "添加",
   "community-header-add-new-image": "添加新图片",
   "community-header-add-new-page": "添加新页面",
@@ -42,8 +42,8 @@
   "global-footer-create-wiki-link-start-wikia": "创建Wiki",
   "global-footer-fandom-app-description": "和你最喜爱的粉丝社区保持同步，不要错过精彩内容。",
   "global-footer-fandom-app-header": "FANDOM App",
-  "global-footer-fandom-overview-header": "Explore",
-  "global-footer-fandom-overview-link-explore-wikis": "Wikis",
+  "global-footer-fandom-overview-header": "发现",
+  "global-footer-fandom-overview-link-explore-wikis": "Wiki",
   "global-footer-fandom-overview-link-vertical-games": "游戏",
   "global-footer-fandom-overview-link-vertical-movies": "电影",
   "global-footer-fandom-overview-link-vertical-tv": "电视",

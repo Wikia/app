@@ -1,5 +1,5 @@
 {
-  "back": "Back",
+  "back": "Trở lại",
   "community-header-add": "Tạo",
   "community-header-add-new-image": "Thêm hình ảnh mới",
   "community-header-add-new-page": "Tạo trang mới",
@@ -42,8 +42,8 @@
   "global-footer-create-wiki-link-start-wikia": "Tạo lập wiki",
   "global-footer-fandom-app-description": "Mang những fandom yêu thích theo cùng bạn và không bao giờ bỏ lỡ tin tức cập nhật",
   "global-footer-fandom-app-header": "Ứng dụng FANDOM",
-  "global-footer-fandom-overview-header": "Explore",
-  "global-footer-fandom-overview-link-explore-wikis": "Wikis",
+  "global-footer-fandom-overview-header": "Khám phá",
+  "global-footer-fandom-overview-link-explore-wikis": "Các wiki",
   "global-footer-fandom-overview-link-vertical-games": "Trò chơi",
   "global-footer-fandom-overview-link-vertical-movies": "Phim ảnh",
   "global-footer-fandom-overview-link-vertical-tv": "Truyền hình",
