@@ -65,7 +65,7 @@
 				> li {
 					padding: 0;
 
-					> a {
+					> a:not(.wds-button) {
 						color: $wds-color-dark-blue-gray;
 						padding-left: $wds-dropdown-padding / 2;
 						padding-right: $wds-dropdown-padding / 2;
