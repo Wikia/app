@@ -95,11 +95,11 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "4"
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: "2"
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
