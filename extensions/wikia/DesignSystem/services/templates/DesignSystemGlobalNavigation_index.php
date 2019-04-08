@@ -1,5 +1,5 @@
 <div class="wds-global-navigation-wrapper">
-	<div id="globalNavigation" class="wds-global-navigation wds-search-is-always-visible<?= !empty($model['partner-slot']) ? ' wds-has-partner-slot' : ''?><?= !empty($model['is-wikia-org']) ? ' wds-is-wikia-org' : ''?>">
+	<div id="globalNavigation" class="wds-global-navigation wds-search-is-always-visible<?= !empty($model['partner-slot']) && empty($model['is-wikia-org']) ? ' wds-has-partner-slot' : ''?><?= !empty($model['is-wikia-org']) ? ' wds-is-wikia-org' : ''?>">
 		<div class="wds-global-navigation__content-bar-left">
 			<a
 				href="<?= Sanitizer::encodeAttribute( $model['logo']['href'] ); ?>"
@@ -32,7 +32,7 @@
 				<?php endif; ?>
 			</div>
 		</div>
-        <?php if ( !empty( $model['partner-slot'] ) ): ?>
+        <?php if ( !empty( $model['partner-slot'] ) && empty($model['is-wikia-org']) ): ?>
             <?= $app->renderView(
                 'DesignSystemGlobalNavigationService',
                 'partnerSlot',

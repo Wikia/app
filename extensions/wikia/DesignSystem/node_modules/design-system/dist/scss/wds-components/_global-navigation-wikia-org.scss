@@ -117,7 +117,8 @@
 		}
 
 		.wds-dropdown__content .wds-list.wds-is-linked > li:hover > a:not(.wds-button),
-		.wds-dropdown__content .wds-list.wds-is-linked > li.selected > a:not(.wds-button) {
+		.wds-dropdown__content .wds-list.wds-is-linked > li.selected > a:not(.wds-button),
+		.wds-sign-out__button:hover {
 			background-color: rgba($wds-color-light-blue, 0.1);
 		}
 
@@ -126,12 +127,7 @@
 		}
 
 		.wds-button:not(.wds-is-text) {
-			background-color: $wds-color-light-blue;
-			color: $wds-color-white;
-
-			&:hover {
-				background-color: $wds-color-slate-gray;
-			}
+			@include button-theming($wds-color-light-blue, $wds-color-white, $wds-color-light-blue, 'darker');
 
 			&.wds-is-secondary {
 				background: $wds-color-white;
@@ -148,6 +144,14 @@
 }
 
 .wds-is-wikia-org {
+	&.wds-search-is-active {
+		.wds-global-navigation__search {
+			&-input-wrapper {
+				border-bottom: 2px solid $wds-color-blue-gray;
+			}
+		}
+	}
+
 	.wds-global-navigation__search {
 		color: $wds-color-slate-gray;
 
@@ -157,17 +161,16 @@
 			}
 		}
 
-		&-input-wrapper {
-			border-bottom: 2px solid $wds-color-blue-gray;
-			width: 100%;
-		}
-
 		&-input {
 			color: $wds-color-slate-gray;
 
 			&::placeholder {
-				color: $wds-color-blue-gray;
+				color: $wds-color-slate-gray;
 			}
+		}
+
+		&-input-wrapper {
+			border-bottom: 2px solid $wds-color-blue-gray;
 		}
 
 		&-submit {
