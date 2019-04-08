@@ -174,13 +174,8 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function isWikiaOrgCommunity() {
-		global $wgServer;
+		global $wgServer, $wgWikiaOrgBaseDomain;
 
-		$wikiaOrgDomainsWhitelist = ['wikia.org', 'fandom-dev.pl', 'fandom.com'];
-		$domainSegments = explode('.', $wgServer);
-		$sizeOfDomainSegments = sizeof($domainSegments);
-		$lastTwoSegmentsOfDomain = $domainSegments[$sizeOfDomainSegments - 2] . '.' . $domainSegments[$sizeOfDomainSegments - 1];
-
-		return !empty(array_search($lastTwoSegmentsOfDomain, $wikiaOrgDomainsWhitelist));
+		return wfGetBaseDomainForHost( parse_url( $wgServer, PHP_URL_HOST ) ) === $wgWikiaOrgBaseDomain;
 	}
 }
