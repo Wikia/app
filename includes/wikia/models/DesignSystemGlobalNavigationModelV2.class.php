@@ -65,14 +65,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getMainNavigation() {
-		if ( $this->isWikiaOrgCommunity ) {
-			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
-		} else {
-			return array_merge(
-				$this->getFandomLinks(),
-				[ $this->getWikisMenu() ]
-			);
-		}
+		return $this->isWikiaOrgCommunity ? [
+			$this->getLink(
+				self::COMMUNITY_CENTRAL_LABEL,
+				$this->getHref('community-central'),
+				self::COMMUNITY_CENTRAL_TRACKING_LABEL
+			)
+		] : array_merge(
+			$this->getFandomLinks(),
+			[ $this->getWikisMenu() ]
+		);
 	}
 
 	private function getContentRecommendations() {
