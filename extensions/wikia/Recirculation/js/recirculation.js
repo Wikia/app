@@ -9,7 +9,7 @@ require([
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.discussions',
 	'ext.wikia.recirculation.helpers.sponsoredContent',
-	'ext.wikia.recirculation.helpers.blacklist',
+	'ext.wikia.recirculation.helpers.recommendedContent',
 	'ext.wikia.recirculation.discussions',
 	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
@@ -23,7 +23,7 @@ require([
              mixedFooter,
              discussions,
              sponsoredContentHelper,
-             blacklist,
+             recommendedContent,
              oldDiscussions,
              tracker,
              videosModule) {
@@ -34,11 +34,6 @@ require([
 		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
 		numberOfFandomPostFooterSlots = $mixedContentFooter.data('number-of-ns-articles');
 
-	/** Discard redundant data returned by jQuery */
-	function mapAjaxCall(data /*, code, jqXHR */) {
-		return data;
-	}
-
 	function getTrendingFandomArticles() {
 		return nirvana.sendRequest({
 			controller: 'RecirculationApi',
@@ -47,65 +42,9 @@ require([
 			data: {
 				limit: numberOfFandomPostFooterSlots,
 			}
-		}).then(mapAjaxCall);
-	}
-
-	function getFilteredItems(response) {
-		var blacklistedItems = blacklist.get();
-
-		return response.article_recommendation
-			.concat(response.wiki_recommendation)
-			.filter(function (el) {
-				return blacklistedItems.indexOf(el.item_id) === -1;
-			});
-	}
-
-	function mapExperimentalDataResponse(response) {
-		var filteredItems = getFilteredItems(response);
-
-		if (filteredItems < numberOfArticleFooterSlots) {
-			blacklist.remove(5);
-
-			filteredItems = getFilteredItems(response);
-		}
-
-		return filteredItems
-			.map(function (el) {
-				return {
-					id: el.item_id,
-					site_name: el.wiki_title,
-					url: el.url,
-					thumbnail: el.thumbnail_url,
-					title: el.article_title || el.wiki_title,
-				};
-			});
-	}
-
-	function getExperimentalRecommendedData() {
-		var deferred = $.Deferred();
-		var itemId = window.wgCityId + '_' + window.wgArticleId;
-
-		blacklist.update(itemId);
-
-		$.ajax({
-			url: window.wgServicesExternalDomain + 'recommendations/recommendations',
-			data: {
-				wikiId: window.wgCityId,
-				articleId: window.wgArticleId,
-				beacon: window.beacon_id,
-			}
-		}).done(function (result) {
-			deferred.resolve(mapExperimentalDataResponse(result));
-		}).fail(function (err) {
-			log('Failed to fetch experimental recommended data, using getPopularPages as backup' + err, log.levels.error);
-
-			getPopularPages()
-				.then(function (response) {
-					deferred.resolve(mapAjaxCall(response));
-				});
+		}).then(function (data) {
+			return data;
 		});
-
-		return deferred.promise();
 	}
 
 	function waitForRail() {
@@ -123,28 +62,11 @@ require([
 		return deferred.promise();
 	}
 
-	function getRecommendedArticles() {
-		var shouldUseExperimentalService = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
-
-		return shouldUseExperimentalService ? getExperimentalRecommendedData() : getPopularPages();
-	}
-
-	function getPopularPages() {
-		return nirvana.sendRequest({
-			controller: 'RecirculationApi',
-			method: 'getPopularPages',
-			type: 'get',
-			data: {
-				limit: numberOfArticleFooterSlots,
-			}
-		}).then(mapAjaxCall);
-	}
-
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
 			getTrendingFandomArticles(),
-			getRecommendedArticles(),
+			recommendedContent.getRecommendedArticles(),
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
@@ -170,7 +92,7 @@ require([
 
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
-			getRecommendedArticles(),
+			recommendedContent.getRecommendedArticles(),
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];

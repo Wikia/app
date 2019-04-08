@@ -2,8 +2,9 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
 	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils'
-], function ($, w, tracker, utils) {
+	'ext.wikia.recirculation.utils',
+	'ext.wikia.recirculation.helpers.recommendedContent'
+], function ($, w, tracker, utils, recommendedContent) {
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
@@ -99,17 +100,28 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function setupTracking() {
+		var shouldSendAdditionalData = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
+
 		tracker.trackImpression('footer');
 
 		$mixedContentFooter.on('click', '[data-tracking]', function () {
 			var $this = $(this),
 				labels = $this.data('tracking').split(','),
-				href = $this.attr('href');
+				href = $this.attr('href'),
+				additionalParams;
+
+			if (shouldSendAdditionalData && labels.indexOf('wiki-article') !== -1) {
+				additionalParams = {
+					recommendation_request_id: recommendedContent.getRequestId(),
+					item_id: $this.attr('data-item-id'),
+					item_type: 'wiki_article'
+				};
+			}
 
 			labels.forEach(function (label) {
-				tracker.trackClick(label);
+				tracker.trackClick(label, additionalParams);
 			});
-			tracker.trackSelect(href);
+			tracker.trackSelect(href, additionalParams);
 		});
 	}
 
