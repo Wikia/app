@@ -116,7 +116,6 @@ export default {
 				defaultSizes: [[300, 250], [300, 600], [300, 1050]],
 				targeting: {
 					loc: 'top',
-					pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
 					rv: 1,
 				},
 			},

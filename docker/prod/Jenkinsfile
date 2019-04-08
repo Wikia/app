@@ -347,7 +347,7 @@ node("docker-daemon-big") {
                 'DATACENTER': 'sjc',
                 'APP_VERSION': nextAppTag,
                 'CONFIG_VERSION': nextConfigTag,
-                'PODS': '80'
+                'PODS': '120'
               ])
 
               sh("""cat > docker/prod/sjc.yaml <<EOL
@@ -370,7 +370,7 @@ EOL""")
                 'DATACENTER': 'res',
                 'APP_VERSION': nextAppTag,
                 'CONFIG_VERSION': nextConfigTag,
-                'PODS': '50'
+                'PODS': '80'
               ])
 
               sh("""cat > docker/prod/res.yaml <<EOL
