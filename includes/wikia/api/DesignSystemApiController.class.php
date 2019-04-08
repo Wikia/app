@@ -24,11 +24,12 @@ class DesignSystemApiController extends WikiaApiController {
 		$footerModel = new DesignSystemGlobalFooterModel(
 			$params[static::PARAM_PRODUCT],
 			$params[static::PARAM_ID],
+			$this->isWikiaOrgCommunity(),
 			$params[static::PARAM_LANG]
 		);
 
 		$this->cors->setHeaders( $this->response );
-		$this->setResponseData( $footerModel->getData( $this->isWikiaOrgCommunity() ) );
+		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
@@ -44,16 +45,18 @@ class DesignSystemApiController extends WikiaApiController {
 			? new DesignSystemGlobalNavigationModelV2(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
 				$params[static::PARAM_LANG]
 			)
 			: new DesignSystemGlobalNavigationModel(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
 				$params[static::PARAM_LANG]
 			);
 
 		$this->cors->setHeaders( $this->response );
-		$this->setResponseData( $navigationModel->getData($this->isWikiaOrgCommunity()) );
+		$this->setResponseData( $navigationModel->getData() );
 		$this->addCachingHeaders();
 	}
 
@@ -83,6 +86,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$footerModel = new DesignSystemGlobalFooterModel(
 			$params[static::PARAM_PRODUCT],
 			$params[static::PARAM_ID],
+			$isWikiaOrgCommunity,
 			$params[static::PARAM_LANG]
 		);
 
@@ -92,19 +96,21 @@ class DesignSystemApiController extends WikiaApiController {
 			? new DesignSystemGlobalNavigationModelV2(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
 				$params[static::PARAM_LANG]
 			)
 			: new DesignSystemGlobalNavigationModel(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
 				$params[static::PARAM_LANG]
 			);
 
 		$this->cors->setHeaders( $this->response );
 
 		$responseData = [
-			'global-footer' => $footerModel->getData( $isWikiaOrgCommunity ),
-			'global-navigation' => $navigationModel->getData( $isWikiaOrgCommunity ),
+			'global-footer' => $footerModel->getData(),
+			'global-navigation' => $navigationModel->getData(),
 		];
 
 		if (

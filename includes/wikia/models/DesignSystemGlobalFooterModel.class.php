@@ -8,6 +8,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $product;
 	private $productInstanceId;
 	private $lang;
+	private $isWikiaOrgCommunity;
 
 	/**
 	 * DesignSystemGlobalFooterModel constructor.
@@ -16,18 +17,19 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	 * @param int $productInstanceId Identifier for given product, ex: wiki id
 	 * @param string $lang
 	 */
-	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $product, $productInstanceId, $isWikiaOrgCommunity, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->product = $product;
 		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
+		$this->isWikiaOrgCommunity = $isWikiaOrgCommunity;
 	}
 
-	public function getData( $isWikiaOrgCommunity ) {
+	public function getData() {
 		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
 
-		if ( $isWikiaOrgCommunity ) {
+		if ( $this->isWikiaOrgCommunity ) {
 			return $this->getWikiaOrgModel();
 		}
 
@@ -228,8 +230,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data = [
 			'header' => [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-company-logo-wikia-org',

@@ -1,17 +1,15 @@
 <footer class="wds-global-footer-wikia-org">
-	<?php if ( isset ( $model['header'] ) ) : ?>
-		<h2 class="wds-global-footer-wikia-org__header">
-			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
-			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
-			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
-				<?= DesignSystemHelper::renderApiImage(
-					$model['header']['image-data'],
-					'wds-global-footer__header-logo',
-					DesignSystemHelper::renderText( $model['header']['title'] )
-				) ?>
-			</a>
-		</h2>
-	<?php endif; ?>
+	<h2 class="wds-global-footer-wikia-org__header">
+		<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
+		   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
+		   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
+			<?= DesignSystemHelper::renderApiImage(
+				$model['header']['image-data'],
+				'wds-global-footer__header-logo',
+				DesignSystemHelper::renderText( $model['header']['title'] )
+			) ?>
+		</a>
+	</h2>
 	<ul class="wds-global-footer-wikia-org__links">
 		<li class="wds-global-footer-wikia-org__link">
 			<?= DesignSystemHelper::renderText( [

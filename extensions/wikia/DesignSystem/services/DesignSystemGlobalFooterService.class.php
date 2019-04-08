@@ -6,8 +6,7 @@ class DesignSystemGlobalFooterService extends WikiaService {
 
 		$this->setVal( 'model', $model );
 
-		//if ($model['is-wikia-org']) {
-		if (true) {
+		if ($model['is-wikia-org']) {
 			$this->overrideTemplate('WikiaOrg_index');
 		}
 	}
