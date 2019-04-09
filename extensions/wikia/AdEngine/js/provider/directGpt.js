@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_BOXAD:                  {
 				size: '300x250,300x600,300x1050',
 				loc: 'top',
-				pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD']
+				pos: ['top_boxad']
 			}
 		},
 		{

@@ -75,6 +75,10 @@ spec:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
               value: mediawiki-${SANDBOX_NAME}
+            - name: KUBERNETES_POD
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -89,11 +93,11 @@ spec:
               value: "yes"
           resources:
             limits:
-              cpu: "4"
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: "2"
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:

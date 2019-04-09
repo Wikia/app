@@ -47,6 +47,13 @@ if ( empty( $wgWikiaEnvironment ) ) {
     throw new RuntimeException( 'Environment not configured in WIKIA_ENVIRONMENT env variable.' );
 }
 
+// /docker/devbox/docker-compose web setup is not allowed to connect to production
+if ( !empty( getenv( 'WIKIA_FORCE_DEV_ONLY' ) ) &&
+	 $wgWikiaEnvironment !== WIKIA_ENV_DEV &&
+	 !$wgCommandLineMode ) {
+	throw new RuntimeException( 'This setup is not allowed to connect to production.' );
+}
+
 /**
  * If LOG_STDOUT_ONLY {@code true}, then logs will be sent to stdout formatted as JSON, instead of
  * using syslog.
