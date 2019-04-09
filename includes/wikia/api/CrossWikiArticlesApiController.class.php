@@ -67,6 +67,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			[ 'items' => $items ],
+			null,
 			WikiaResponse::CACHE_STANDARD
 		);
 	}
