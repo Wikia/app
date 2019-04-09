@@ -32,7 +32,11 @@ function getCurrentScrollY() {
 function prepareData(slot, data) {
 	const now = new Date();
 	const slotName = slot.getSlotName();
-	const likho = context.get('targeting.likho');
+
+	// Careful when tracking numbers - zero (0) value will not be tracked!
+	const keyVals = {
+		likho: (context.get('targeting.likho') || []).join('|'),
+	};
 
 	return Object.assign({
 		pv: window.pvNumber,
@@ -65,7 +69,10 @@ function prepareData(slot, data) {
 		kv_ref: context.get('targeting.ref'),
 		kv_top: context.get('targeting.top'),
 		labrador: utils.geoService.getSamplingResults().join(';'),
-		likho: likho.join(';'),
+		key_vals: Object.keys(keyVals)
+			.filter(key => keyVals[key])
+			.map(key => `${key}=${keyVals[key]}`)
+			.join(';'),
 		btl: '',
 		opt_in: checkOptIn(),
 		document_visibility: utils.getDocumentVisibilityStatus(),

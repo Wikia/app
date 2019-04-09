@@ -77,6 +77,10 @@ spec:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
               value: mediawiki-prod
+            - name: KUBERNETES_POD
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -247,6 +251,10 @@ spec:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
               value: mediawiki-tasks
+            - name: KUBERNETES_POD
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
