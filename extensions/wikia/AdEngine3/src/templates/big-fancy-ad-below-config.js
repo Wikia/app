@@ -18,11 +18,11 @@ export function getConfig() {
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),
 		onInit() {
+			slots.setupSlotVideoAdUnit(adSlot, params);
+
 			const wrapper = document.getElementById('bottomLeaderboardWrapper');
 
 			wrapper.style.width = `${wrapper.offsetWidth}px`;
-
-			slots.setupSlotVideoAdUnit(adSlot, params);
 		}
 	};
 }
