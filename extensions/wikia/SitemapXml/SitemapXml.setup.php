@@ -51,4 +51,3 @@ $wgAutoloadClasses['SitemapXmlController'] = __DIR__ . '/SitemapXmlController.cl
 
 $wgHooks['BeforeTitleRedirect'][] = 'SitemapHooks::onBeforeTitleRedirect';
 $wgHooks['TestCanonicalRedirect'][] = 'SitemapHooks::onTestCanonicalRedirect';
-$wgHooks['WebRequestPathInfoRouterAbort'][] = 'SitemapHooks::onWebRequestPathInfoRouterAbort';

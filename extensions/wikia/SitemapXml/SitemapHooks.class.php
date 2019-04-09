@@ -41,21 +41,6 @@ class SitemapHooks {
 		return false;
 	}
 
-	/**
-	 * Used to abort rewriting the title URL parameter for sitemap URLs on
-	 * short URL wikis (i.e. those with an article path of /$1 rather than
-	 * /wiki/$1).
-	 *
-	 * @param  string $path
-	 * @return bool
-	 */
-	public static function onWebRequestPathInfoRouterAbort( $path ): bool {
-		if ( preg_match( '/^\/(sitemap.+\.xml[.gz]*)$/', $path ) ) {
-			return false;
-		}
-		return true;
-	}
-
 	private static function shouldCancelRedirect( $currentHost, Title $targetTitle ): bool {
 		global $wgWikiaBaseDomain, $wgFandomBaseDomain;
 
