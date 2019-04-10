@@ -1794,21 +1794,6 @@ $wgAutoapproveJS = false;
 $wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
 
 /**
- * @name $wgShortArticlePathWikis
- * List of wikis that don't have the '/wiki' prefix in the article path. To be removed
- */
-$wgShortArticlePathWikis = [
-	80433,   // www.wikia.com
-	111264,  // de.wikia.com
-	208826,  // fr.wikia.com
-	435095,  // pl.wikia.com
-	637291,  // es.wikia.com
-	875569,  // ja.wikia.com
-	1169860, // ru.wikia.com
-	1618258  // it.wikia.com
-];
-
-/**
  * Whether to inline the ResourceLoader startup script (for certain error pages)
  * SUS-4734
  */

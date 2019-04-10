@@ -77,6 +77,10 @@ spec:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
               value: mediawiki-prod
+            - name: KUBERNETES_POD
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -91,26 +95,28 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "2500m"
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: "1200m"
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
           resources:
             limits:
+              cpu: 100m
               memory: 200Mi
             requests:
               cpu: 100m
               memory: 50Mi
         - name: fpm-prometheus-exporter
-          image: hipages/php-fpm_exporter:0.5.2
+          image: hipages/php-fpm_exporter:1.0.0
           ports:
             - containerPort: 9253
           resources:
             limits:
+              cpu: 50m
               memory: 200Mi
             requests:
               cpu: 50m
@@ -245,6 +251,10 @@ spec:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
               value: mediawiki-tasks
+            - name: KUBERNETES_POD
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -259,11 +269,11 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: 4
-              memory: 3Gi  # 5 fpm workers x 512 MB PHP memory limit
+              cpu: 5
+              memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: 2
-              memory: 1.5Gi
+              cpu: 2.5
+              memory: 3Gi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
@@ -275,7 +285,7 @@ spec:
               cpu: 100m
               memory: 50Mi
         - name: fpm-prometheus-exporter
-          image: hipages/php-fpm_exporter:0.5.2
+          image: hipages/php-fpm_exporter:1.0.0
           ports:
             - containerPort: 9253
           resources:
