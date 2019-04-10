@@ -1,4 +1,4 @@
-define('ext.wikia.recirculation.helpers.blacklist', [
+define('ext.wikia.recirculation.helpers.recommendationBlacklist', [
     'wikia.cache',
     'wikia.window',
     'wikia.cookies'

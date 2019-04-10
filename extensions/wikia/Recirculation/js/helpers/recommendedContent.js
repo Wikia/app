@@ -3,17 +3,18 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
     'jquery',
     'wikia.window',
     'wikia.nirvana',
-    'ext.wikia.recirculation.helpers.blacklist',
+    'ext.wikia.recirculation.helpers.recommendationBlacklist',
     'wikia.log',
     'wikia.eventLogger'
-], function ($, w, nirvana, blacklist, log, eventLogger) {
+], function ($, w, nirvana, recommendationBlacklist, log, eventLogger) {
     'use strict';
 
+    var NUMBER_OF_RECOMMENDATIONS_TO_REMOVE = 5;
     var numberOfArticleFooterSlots = $('#mixed-content-footer').data('number-of-wiki-articles');
-    var REQUEST_ID;
+    var requestId;
 
-    function getFilteredItems(response) {
-        var blacklistedItems = blacklist.get();
+    function getNonBlacklistedRecommendedData(response) {
+        var blacklistedItems = recommendationBlacklist.get();
 
         return response.article_recommendation
             .filter(function (el) {
@@ -23,12 +24,12 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
     }
 
     function mapExperimentalDataResponse(response) {
-        var filteredItems = getFilteredItems(response);
+        var filteredItems = getNonBlacklistedRecommendedData(response);
 
-        REQUEST_ID = response.recommendation_request_id;
+        requestId = response.recommendation_request_id;
 
         if (filteredItems < numberOfArticleFooterSlots) {
-            blacklist.remove(5);
+            recommendationBlacklist.remove(NUMBER_OF_RECOMMENDATIONS_TO_REMOVE);
 
             eventLogger.logError(
                 w.wgServicesExternalDomain,
@@ -39,7 +40,7 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
                 }
             );
 
-            filteredItems = getFilteredItems(response);
+            filteredItems = getNonBlacklistedRecommendedData(response);
         }
 
         return filteredItems
@@ -58,7 +59,7 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
         var deferred = $.Deferred();
         var itemId = w.wgCityId + '_' + w.wgArticleId;
 
-        blacklist.update(itemId);
+        recommendationBlacklist.update(itemId);
 
         $.ajax({
             url: w.wgServicesExternalDomain + 'recommendations/recommendations',
@@ -97,7 +98,7 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
     }
 
     function getRequestId() {
-        return REQUEST_ID;
+        return requestId;
     }
 
     return {

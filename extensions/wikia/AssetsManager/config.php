@@ -126,7 +126,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/sponsoredContent.js',
-		'//extensions/wikia/Recirculation/js/helpers/blacklist.js',
+		'//extensions/wikia/Recirculation/js/helpers/recommendationBlacklist.js',
 		'//extensions/wikia/Recirculation/js/helpers/recommendedContent.js',
 		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
