@@ -32,10 +32,9 @@ You can safely purge this folder to reclaim the disk space if needed.
 	```bash
 	echo HOST_HOSTNAME=$(hostname) > app/docker/devbox/.env
 	```
-4 Create NGINX logs dir
+4. Create NGINX logs dir
 	```bash
-	mkdir nginx_logs
-	chown o+x nginx_logs
+	mkdir ~/nginx_logs && chmod 0777 ~/nginx_logs
 	```
 5. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
