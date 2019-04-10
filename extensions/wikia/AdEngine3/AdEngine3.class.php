@@ -9,7 +9,7 @@ class AdEngine3
 		$wg = F::app()->wg;
 
 		$articleId = $wg->Title->getArticleID();
-		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
+		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoAvailable($articleId);
 		if ($hasFeaturedVideo) {
 			return $wg->AdDriverAdEngine3EnabledOnFeaturedVideoPages;
 		}
@@ -61,8 +61,7 @@ class AdEngine3
 		return true;
 	}
 
-	public static function getContext()
-	{
+	public static function getContext() {
 		$wg = F::app()->wg;
 
 		$title = $wg->Title;
@@ -74,8 +73,9 @@ class AdEngine3
 		$wikiaPageType = new WikiaPageType();
 		$pageType = $wikiaPageType->getPageType();
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded($articleId);
-		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData($articleId);
+
+		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoAvailable( $articleId );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
 
 		// 1 of 3 verticals
 		$oldWikiVertical = $hubService->getCategoryInfoForCity($wg->CityId)->cat_name;
