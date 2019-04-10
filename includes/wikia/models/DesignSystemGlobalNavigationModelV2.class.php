@@ -328,6 +328,11 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
+	private function isWikiaOrgCommunity() {
+		return $this->product === self::PRODUCT_WIKIS &&
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+	}
+
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
