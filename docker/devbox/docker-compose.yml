@@ -13,15 +13,17 @@ services:
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions:ro
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
+      - /tmp/nginx/logs:/var/log/nginx
     depends_on:
       - php-wikia
   logger:
-    image: artifactory.wikia-dev.us/platform/fluentd_elastic:0.0.1
-    ports:
-      - "127.0.0.1:9999:9999"
+    image: artifactory.wikia-dev.us/platform/fluentd_elastic:latest
     volumes:
       - ./fluent.conf:/fluentd/etc/config:ro
+      - /tmp/nginx/logs:/var/nginx/logs:ro
     command: "fluentd -c /fluentd/etc/config -v"
+    environment:
+      - HOST_HOSTNAME=$HOST_HOSTNAME
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
