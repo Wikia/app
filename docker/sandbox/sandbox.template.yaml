@@ -167,6 +167,13 @@ metadata:
     app: mediawiki-${SANDBOX_NAME}
   annotations:
     kubernetes.io/ingress.class: traefik
+    # CORE-400 | the biggest response in nginx logs weights ~16 MB, most are under 2 MB
+    traefik.ingress.kubernetes.io/buffering: |
+      maxrequestbodybytes: 16000000
+      memrequestbodybytes: 2000000
+      maxresponsebodybytes: 16000000
+      memresponsebodybytes: 2000000
+      retryexpression: false
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
