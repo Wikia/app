@@ -2189,42 +2189,6 @@ $config['special_admindashboard_js'] = [
 	],
 ];
 
-$config['article_featured_video_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
-		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
-		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss',
-	],
-];
-
-$config['article_featured_video_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
-		'//extensions/wikia/ArticleVideo/scripts/tracking-queue.js',
-		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
-	],
-];
-
-$config['article_related_video_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/article-related-video.scss',
-	],
-];
-
-$config['article_related_video_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/article-related-video.js',
-	],
-];
-
 $config['jwplayer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
