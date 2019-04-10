@@ -16,6 +16,9 @@ class DesignSystemHelper {
 		'global-navigation-search-placeholder-in-wiki' => [
 			'sitename',
 		],
+		'global-footer-site-overview-link-wikia-inc' => [
+			'year',
+		],
 	];
 
 	const MAX_RECURSION_DEPTH = 10;
@@ -103,6 +106,7 @@ class DesignSystemHelper {
 	 *       - link-text
 	 *
 	 * @param array $fields
+	 * @param boolean $inContentLang
 	 * @param int $recursionDepth
 	 *
 	 * @return string

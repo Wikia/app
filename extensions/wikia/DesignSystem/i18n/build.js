@@ -1,6 +1,6 @@
 var fs = require('fs'),
 	path = require('path'),
-	rootDir = process.cwd() + '/node_modules/design-system-i18n/i18n',
+	rootDir = process.cwd() + '/node_modules/design-system/i18n',
 	filename = 'design-system.json',
 	destDir = './i18n',
 	// keep in sync with DesignSystem/DesignSystemHelper.class.php
@@ -15,6 +15,9 @@ var fs = require('fs'),
 		},
 		'global-footer-copyright-wikia': {
 			date: '$1'
+		},
+		'global-footer-site-overview-link-wikia-inc': {
+			year: '$1'
 		}
 	};
 
