@@ -45,7 +45,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'title' => $wikiDetails['title'],
 				'baseUrl' => $wikiDetails['url'],
 				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] ),
-				'videos' => $this->getVideos( $wikiId )
+				'videos' => $this->getVideosIds( $wikiId )
 			);
 		}
 
@@ -86,7 +86,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		return is_array($response) ? $response['items'] : array();
 	}
 
-	protected function getVideos( $wikiId ) {
+	protected function getVideosIds( $wikiId ) {
 		return array_map( function( $video ) { return $video->getId(); }, ArticleVideoService::getFeaturedVideosForWiki( $wikiId ) );
 	}
 
