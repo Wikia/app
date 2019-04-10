@@ -741,8 +741,7 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function cityUrlToArticlePath( $cityUrl, $cityId ) {
-		global $wgShortArticlePathWikis;
-		$path = in_array( $cityId, $wgShortArticlePathWikis ) ? '/$1' : '/wiki/$1';
+		$path = $cityId == Wikia::CORPORATE_WIKI_ID ? '/$1' : '/wiki/$1';
 		return static::cityUrlToLanguagePath( $cityUrl ) . $path;
 	}
 
@@ -786,12 +785,12 @@ class WikiFactory {
 
 	/**
 	 * isReadonlyBlacklisted
-	 * 
+	 *
 	 * Checks if the value is listed as read-only in blacklist
-	 * 
+	 *
 	 * Putting a variable name in the blacklist is going to prevent
 	 * all the changes made to it via WikiFactory class.
-	 * 
+	 *
 	 * @param string cv_variable_id
 	 * @return boolean
 	 */
