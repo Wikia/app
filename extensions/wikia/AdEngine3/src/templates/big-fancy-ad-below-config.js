@@ -17,7 +17,7 @@ export function getConfig() {
 		bfaaSlotName: context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard',
 		unstickInstantlyBelowPosition: getUnstickThreshold(),
 		topThreshold: getNavbarHeight(),
-		onInit() {
+		onInit(adSlot, params) {
 			slots.setupSlotVideoAdUnit(adSlot, params);
 
 			const wrapper = document.getElementById('bottomLeaderboardWrapper');
