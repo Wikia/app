@@ -220,7 +220,9 @@ function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCC
 
 		updateAdRefreshInformation();
 
-		swapRecirculation(false);
+		if (slotStatus === AdSlot.STATUS_SUCCESS) {
+			swapRecirculation(false);
+		}
 
 		rotatorListener = scrollListener.addCallback(() => rotateSlots());
 	}
@@ -241,7 +243,7 @@ export function rotateIncontentBoxad(slotName) {
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		slot.once(AdSlot.STATUS_SUCCESS, () => {
-			slotStatusChanged(slot.getSlotName(), slot);
+			slotStatusChanged(slot.getSlotName(), AdSlot.STATUS_SUCCESS);
 		})
 	});
 
