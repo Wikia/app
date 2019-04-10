@@ -17,7 +17,7 @@ services:
     depends_on:
       - php-wikia
   logger:
-    image: artifactory.wikia-dev.us/platform/fluentd_elastic:latest
+    image: artifactory.wikia-inc.com/platform/fluentd_elastic:latest
     volumes:
       - ./fluent.conf:/fluentd/etc/config:ro
       - /tmp/nginx/logs:/var/nginx/logs:ro
