@@ -1,4 +1,4 @@
-import { AdSlot, context, scrollListener, slotService, slotTweaker, utils } from '@wikia/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotService, slotTweaker, utils } from '@wikia/ad-engine';
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
 import { getNavbarHeight } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
@@ -207,7 +207,12 @@ function showSlotWhenPossible() {
  * @returns {void}
  */
 function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCCESS) {
-	if (!universalAdPackage.isFanTakeoverLoaded() && slotName.substring(0, 16) === fmrPrefix) {
+	if (slotName.substring(0, 16) === fmrPrefix) {
+		if (universalAdPackage.isFanTakeoverLoaded()) {
+			swapRecirculation(false);
+
+			return;
+		}
 		if (!btRec) {
 			currentAdSlot = slotService.get(nextSlotName);
 			nextSlotName = fmrPrefix + (currentAdSlot.getConfigProperty('repeat.index') + 1);
@@ -215,9 +220,7 @@ function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCC
 
 		updateAdRefreshInformation();
 
-		if (slotStatus === AdSlot.STATUS_SUCCESS) {
-			swapRecirculation(false);
-		}
+		swapRecirculation(false);
 
 		rotatorListener = scrollListener.addCallback(() => rotateSlots());
 	}
@@ -236,10 +239,10 @@ export function rotateIncontentBoxad(slotName) {
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
 
-	context.push('listeners.slot', {
-		onStatusChanged: (slot) => {
-			slotStatusChanged(slot.getSlotName(), slot.getStatus());
-		}
+	eventService.on(events.AD_SLOT_CREATED, (slot) => {
+		slot.once(AdSlot.STATUS_SUCCESS, () => {
+			slotStatusChanged(slot.getSlotName(), slot);
+		})
 	});
 
 	rotatorListener = scrollListener.addCallback(() => showSlotWhenPossible());
