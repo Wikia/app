@@ -2,7 +2,13 @@
 
 class DesignSystemGlobalFooterService extends WikiaService {
 	public function index() {
-		$this->setVal( 'model', $this->getData() );
+		$model = $this->getData();
+
+		$this->setVal( 'model', $model );
+
+		if ($model['is-wikia-org']) {
+			$this->overrideTemplate('WikiaOrg_index');
+		}
 	}
 
 	public function section() {

@@ -1,0 +1,237 @@
+.wds-global-navigation {
+	&.wds-is-wikia-org {
+		background-color: $wds-color-white;
+		border-bottom: 1px solid $wds-color-faint-gray;
+		border-top: 6px solid $wds-color-dark-blue;
+
+		.wds-avatar {
+			@include wds-avatar(30px, $wds-color-slate-gray, $wds-fandom-color-aqua, $wds-color-white);
+		}
+
+		.wds-global-navigation__modal-control {
+			&-search,
+			&-close {
+				svg {
+					fill: $wds-color-slate-gray;
+				}
+			}
+		}
+
+		.wds-global-navigation__community-bar {
+			height: 49px;
+		}
+
+		.wds-community-bar {
+			&__sitename {
+				a {
+					color: $wds-color-slate-gray;
+				}
+			}
+
+			&__separator {
+				display: none;
+			}
+		}
+
+		.wds-global-navigation__notifications-dropdown {
+			.wds-global-navigation__dropdown-toggle {
+				.wds-icon {
+					fill: $wds-color-slate-gray;
+				}
+			}
+		}
+
+		.wds-global-navigation__notifications-dropdown-content {
+			color: $wds-color-light-blue;
+
+			&:hover {
+				color: $wds-color-light-blue;
+			}
+		}
+
+		.wds-notifications__mark-all-as-read,
+		.wds-user-modal__sign-out-container .wds-sign-out__button {
+			color: $wds-color-light-blue;
+		}
+
+		.wds-dropdown {
+			.wds-dropdown__toggle-chevron {
+				fill: $wds-color-slate-gray;
+			}
+		}
+
+		.wds-notification-card__icon-wrapper .wds-icon {
+			fill: $wds-color-slate-gray;
+		}
+
+		.wds-is-unread .wds-notification-card__icon-wrapper .wds-icon {
+			fill: $wds-color-light-blue;
+		}
+
+		.wds-global-navigation__notifications-counter,
+		.wds-global-navigation__avatar-notifications-counter {
+			background-color: $wds-color-light-blue;
+			color: $wds-color-white;
+		}
+
+		.wds-avatar .wds-avatar__image:hover {
+			fill: $wds-color-light-blue;
+		}
+
+		.wds-dropdown {
+			.wds-dropdown__toggle {
+				.wds-icon:hover {
+					fill: $wds-color-light-blue;
+				}
+			}
+
+			&:hover {
+				.wds-dropdown__toggle {
+					.wds-icon {
+						fill: $wds-color-light-blue;
+					}
+				}
+			}
+		}
+
+
+		> * {
+			// This is applied to all GN children to make up for a 6px top border
+			margin: -3px 0 -3px;
+		}
+
+		.wds-avatar img.wds-avatar__image:hover {
+			border-color: $wds-color-light-blue;
+		}
+
+		.wds-global-navigation__search-dropdown:hover .wds-dropdown__toggle .wds-global-navigation__search-submit-icon {
+			fill: $wds-color-white;
+
+			&:hover {
+				fill: $wds-color-white;
+			}
+		}
+
+		.wds-dropdown__content .wds-list.wds-is-linked > li > a:not(.wds-button) {
+			color: $wds-color-light-blue;
+		}
+
+		.wds-dropdown__content .wds-list.wds-is-linked > li:hover > a:not(.wds-button),
+		.wds-dropdown__content .wds-list.wds-is-linked > li.selected > a:not(.wds-button),
+		.wds-sign-out__button:hover {
+			background-color: rgba($wds-color-light-blue, 0.1);
+		}
+
+		.wds-sign-out__button {
+			color: $wds-color-light-blue;
+		}
+
+		.wds-button:not(.wds-is-text) {
+			@include button-theming($wds-color-light-blue, $wds-color-white, $wds-color-light-blue, 'darker');
+
+			&.wds-is-secondary {
+				background: $wds-color-white;
+				border: 1px solid $wds-color-light-blue;
+				color: $wds-color-light-blue;
+
+				&:hover {
+					color: $wds-color-slate-gray;
+					border-color: $wds-color-slate-gray;
+				}
+			}
+		}
+	}
+}
+
+.wds-is-wikia-org {
+	&.wds-search-is-active {
+		.wds-global-navigation__search {
+			&-input-wrapper {
+				border-bottom: 2px solid $wds-color-blue-gray;
+			}
+		}
+	}
+
+	.wds-global-navigation__search {
+		color: $wds-color-slate-gray;
+
+		&-toggle {
+			&:hover {
+				color: $wds-color-light-blue;
+			}
+		}
+
+		&-input {
+			color: $wds-color-slate-gray;
+
+			&::placeholder {
+				color: $wds-color-slate-gray;
+			}
+		}
+
+		&-input-wrapper {
+			border-bottom: 2px solid $wds-color-blue-gray;
+		}
+
+		&-submit {
+			@include button-theming($wds-color-slate-gray, $wds-color-white, $wds-color-white, 'darker');
+			border-radius: 3px;
+			padding: 4px 10px;
+
+			&-icon {
+				transform: rotate(180deg);
+
+				&:hover {
+				}
+			}
+		}
+
+		&-clear {
+			svg {
+				fill: $wds-color-slate-gray;
+			}
+		}
+
+		&-clear-icon {
+			fill: $wds-color-blue-gray;
+		}
+
+		&-close {
+			&.wds-button.wds-is-text {
+				color: $wds-color-slate-gray;
+
+				&:hover {
+					color: $wds-color-light-blue;
+				}
+			}
+		}
+
+		&-suggestions.wds-dropdown__content {
+			.wds-list.wds-is-linked > li > a:not(.wds-button) {
+				color: $wds-color-light-blue;
+			}
+
+			.wds-list.wds-is-linked > li:hover:not(.wds-is-selected) > a {
+				background-color: transparent;
+				color: $wds-color-light-blue;
+			}
+
+			.wds-list.wds-is-linked > li.wds-is-selected > a:not(.wds-button) {
+				background-color: rgba($wds-color-light-blue, 0.1);
+			}
+		}
+	}
+}
+
+.wds-is-wikia-org {
+	.wds-search-modal {
+		&__form-and-links-wrapper {
+			background-color: $wds-color-white;
+		}
+
+		&__search-icon {
+			fill: $wds-color-slate-gray;
+		}
+	}
+}
+
