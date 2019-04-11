@@ -327,20 +327,17 @@ export default {
 	setupTopLeaderboard() {
 		if (context.get('custom.hiviLeaderboard')) {
 			slotService.setState('hivi_leaderboard', true);
+			context.set('slots.top_leaderboard.firstCall', false);
 			context.push('state.adStack', { id: 'hivi_leaderboard' });
 
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_SUCCESS, () => {
 				slotService.setState('top_leaderboard', false);
-				context.set('slots.top_leaderboard.firstCall', false);
 			});
 
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
-				slotService.setState('top_leaderboard', true);
-				context.set('slots.top_leaderboard.firstCall', false);
 				context.push('state.adStack', { id: 'top_leaderboard' });
 			});
 		} else {
-			slotService.setState('top_leaderboard', true);
 			context.push('state.adStack', { id: 'top_leaderboard' });
 		}
 	},
