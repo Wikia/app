@@ -7,8 +7,10 @@
 				data-tracking-label="<?= Sanitizer::encodeAttribute( $model['logo']['tracking-label'] ); ?>">
 				<?= DesignSystemHelper::renderSvg( $model['logo']['image-data']['name'], 'wds-global-navigation__logo-image' ); ?>
 			</a>
-			<?= empty($model['is-wikia-org']) && $app->renderPartial( 'DesignSystemGlobalNavigationService', 'mainNavigation',
-				[ 'model' => $model['main-navigation'] ] ); ?>
+			<?php if ( empty( $model['is-wikia-org'] ) ): ?>
+				<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'mainNavigation',
+					[ 'model' => $model['main-navigation'] ] ); ?>
+			<?php endif; ?>
 		</div>
 		<div class="wds-global-navigation__content-bar-right">
 			<div class="wds-global-navigation__dropdown-controls">
