@@ -244,7 +244,7 @@ export function rotateIncontentBoxad(slotName) {
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		slot.once(AdSlot.STATUS_SUCCESS, () => {
 			slotStatusChanged(slot.getSlotName(), AdSlot.STATUS_SUCCESS);
-		})
+		});
 	});
 
 	rotatorListener = scrollListener.addCallback(() => showSlotWhenPossible());
