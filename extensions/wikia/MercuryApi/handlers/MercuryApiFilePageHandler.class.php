@@ -48,7 +48,7 @@ class MercuryApiFilePageHandler {
 			return $item;
 		}, $fileUsageData['fileList']);
 
-		$url = FilePageHelper::getFilePageRedirect( $title );
+		$url = FilePageHelper::getFilePageRedirectUrl( $title );
 
 		return [
 			'anonRedir' => $url,

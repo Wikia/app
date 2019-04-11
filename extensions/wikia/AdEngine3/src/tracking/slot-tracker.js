@@ -33,10 +33,15 @@ function prepareData(slot, data) {
 	const now = new Date();
 	const slotName = slot.getSlotName();
 
+	// Careful when tracking numbers - zero (0) value will not be tracked!
+	const keyVals = {
+		likho: (context.get('targeting.likho') || []).join('|'),
+	};
+
 	return Object.assign({
 		pv: window.pvNumber,
 		browser: data.browser,
-		country: utils.getCountryCode(),
+		country: utils.geoService.getCountryCode(),
 		time_bucket: data.time_bucket,
 		timestamp: data.timestamp,
 		tz_offset: now.getTimezoneOffset(),
@@ -63,7 +68,11 @@ function prepareData(slot, data) {
 		kv_esrb: context.get('targeting.esrb'),
 		kv_ref: context.get('targeting.ref'),
 		kv_top: context.get('targeting.top'),
-		labrador: utils.getSamplingResults().join(';'),
+		labrador: utils.geoService.getSamplingResults().join(';'),
+		key_vals: Object.keys(keyVals)
+			.filter(key => keyVals[key])
+			.map(key => `${key}=${keyVals[key]}`)
+			.join(';'),
 		btl: '',
 		opt_in: checkOptIn(),
 		document_visibility: utils.getDocumentVisibilityStatus(),

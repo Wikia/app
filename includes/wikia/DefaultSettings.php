@@ -569,7 +569,6 @@ include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
-include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
@@ -971,28 +970,10 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
- * Enables AdEngine3 extension on articles with Featured Video
+ * @name $wgAdDriverAdEngine3EnabledOnOasis
+ * Enables AdEngine3 extension on all pages on oasis
  */
-$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
- * Enables AdEngine3 extension on search pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
- * Enables AdEngine3 extension on search pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
- * Enables AdEngine3 extension on article pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisArticlePages = false;
+$wgAdDriverAdEngine3EnabledOnOasis = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
@@ -1805,21 +1786,6 @@ $wgAutoapproveJS = false;
  * update/add/change domains in the future
  */
 $wgWikiaBaseDomainRegex = '((wikia\\.(com|org)|fandom\\.com)|(wikia|fandom)-dev\\.(com|us|pl))';
-
-/**
- * @name $wgShortArticlePathWikis
- * List of wikis that don't have the '/wiki' prefix in the article path. To be removed
- */
-$wgShortArticlePathWikis = [
-	80433,   // www.wikia.com
-	111264,  // de.wikia.com
-	208826,  // fr.wikia.com
-	435095,  // pl.wikia.com
-	637291,  // es.wikia.com
-	875569,  // ja.wikia.com
-	1169860, // ru.wikia.com
-	1618258  // it.wikia.com
-];
 
 /**
  * Whether to inline the ResourceLoader startup script (for certain error pages)

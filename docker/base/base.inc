@@ -10,8 +10,10 @@ rewrite "^/(sitemap.+\.xml(.gz)*)$" /index.php?title=Special:Sitemap/$1&uselang=
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?__load/[^/]*/([^/]*)/([^$].+)" /load.php?modules=$2&$1 break;
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?__am/(\d+)/([A-Za-z]+)/([^/]*)/(.*)" /index.php?action=ajax&rs=AssetsManagerEntryPoint&cb=$1&type=$2&params=$3&oid=$4 break;
 
-rewrite ^/api/(?:v1|test)/?$ /wikia.php?controller=ApiDocs&method=index break;
-rewrite ^/api/(?:v1|test)/([^/]*)/([^/]*) /wikia.php?controller=$1Api&method=get$2 break;
+rewrite "^/api/(?:v1|test)/?$" /wikia.php?controller=ApiDocs&method=index break;
+rewrite "^/api/(?:v1|test)/([^/]*)/([^/]*)" /wikia.php?controller=$1Api&method=get$2 break;
+rewrite "^/[a-z]{2,3}(?:-[a-z-]{2,12})?/api/(?:v1|test)/?$" /wikia.php?controller=ApiDocs&method=index break;
+rewrite "^/[a-z]{2,3}(?:-[a-z-]{2,12})?/api/(?:v1|test)/([^/]*)/([^/]*)" /wikia.php?controller=$1Api&method=get$2 break;
 
 # SUS-5798 / SUS-5824: alternative article paths - /wiki/index.php and /w
 # SUS-6051 | because of The Complex Way wiki domain is passed down to nginx
@@ -30,7 +32,7 @@ if ($arg_func) {
     rewrite ^(.*)$ $1?action=lyrics last;
 }
  # SUS-6154
-rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?(index|load|metrics|opensearch_desc|wikia).php(.*)" /$1.php$2 break;
+rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?(index|load|opcache_stats|metrics|opensearch_desc|wikia).php(.*)" /$1.php$2 break;
 
 # article URL
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?wiki/(.*)" /index.php?title=$1 break;

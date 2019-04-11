@@ -44,6 +44,7 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	}
 
 	trackLabradorValues();
+	trackLikhoToDW();
 }
 
 function startAdEngine() {
@@ -53,7 +54,6 @@ function startAdEngine() {
 		ads.init();
 
 		window.wgAfterContentAndJS.push(() => {
-			slots.injectIncontentPlayer();
 			slots.injectBottomLeaderboard();
 			babDetection.run();
 		});
@@ -68,10 +68,21 @@ function startAdEngine() {
 }
 
 function trackLabradorValues() {
-	const labradorPropValue = utils.getSamplingResults().join(';');
+	const labradorPropValue = utils.geoService.getSamplingResults().join(';');
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
+	}
+}
+
+/**
+ * @private
+ */
+function trackLikhoToDW() {
+	const likhoPropValue = context.get('targeting.likho') || [];
+
+	if (likhoPropValue.length) {
+		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
 }
 

@@ -1604,6 +1604,7 @@ $wgDefaultUserOptions = [
 	'cols' => 80,
 	'date' => 'default',
 	'diffonly' => 0,
+	'disablefeaturedvideo' => 1,
 	'disablemail' => 0,
 	'disablesuggest' => 0,
 	'editfont' => 'default',
@@ -2671,7 +2672,7 @@ $wgEnableFastLinkCache = true;
  * @see extensions/wikia/FeedsAndPosts
  * @var bool $wgEnableFeedsAndPostsExt
  */
-$wgEnableFeedsAndPostsExt = false;
+$wgEnableFeedsAndPostsExt = true;
 
 /**
  * Enable the Embedded Feeds module from Community Feeds
@@ -4622,6 +4623,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'date',
 		'diffonly',
 		'disablecategoryselect',
+		'disablefeaturedvideo',
 		'disablelinksuggest',
 		'disablemail',
 		'disablesuggest',
@@ -8867,13 +8869,6 @@ $wgXMLMimeTypes = [
 $wgYoukuConfig['playerColor'] = 0;
 
 /**
- * Used for test wikis copied on prod. Top articles data should use pageviews of the original wiki.
- * @see PLATFORM-3671
- * @var int $wgDataMartOriginalCityId
- */
-$wgDataMartOriginalCityId = 0;
-
-/**
  * whether or not create new wiki prompts users to alternatively create their community
  * in the community builder (fandom creator)
  * @see CAKE-2151
@@ -8886,6 +8881,13 @@ $wgAllowCommunityBuilderCNWPrompt = true;
  * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
+
+/**
+ * Whether the community is excluded from the fandom.com migration, disables the migration banner
+ * @see SEO-669
+ * @var bool $wgFandomComMigrationScheduled
+ */
+$wgDomainMigrationDisabled = false;
 
 /**
  * Whether the community is scheduled to be migrated to a wikia.org domain
@@ -8941,10 +8943,10 @@ $wgWatchShowURL = '';
 
 /**
  * Enables EditDraftSaving extension
- * @see SUS-79
+ * @see CORE-79 CORE-241
  * @var bool
  */
-$wgEnableEditDraftSavingExt = false;
+$wgEnableEditDraftSavingExt = true;
 
 /**
  * ArticleTags RabbitMQ configuration.

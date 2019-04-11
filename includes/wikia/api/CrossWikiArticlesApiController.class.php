@@ -44,7 +44,8 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			$wikisData[$wikiId] = array(
 				'title' => $wikiDetails['title'],
 				'baseUrl' => $wikiDetails['url'],
-				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] )
+				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] ),
+				'videos' => $this->getVideosIds( $wikiId )
 			);
 		}
 
@@ -60,13 +61,15 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'url' => $wikisData[$row->page_wikia_id]['baseUrl'] . $title->getLocalUrl(),
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikisData[$row->page_wikia_id]['title'],
-				'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null
+				'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null,
+				'hasVideo' => in_array( $row->page_id , $wikisData[ $row->page_wikia_id ]['videos'] )
 			);
 		}
 		$db->freeResult( $dbResult );
 
 		$this->setResponseData(
 			[ 'items' => $items ],
+			null,
 			WikiaResponse::CACHE_STANDARD
 		);
 	}
@@ -81,6 +84,10 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		);
 		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );
 		return is_array($response) ? $response['items'] : array();
+	}
+
+	protected function getVideosIds( $wikiId ) {
+		return array_map( function( $video ) { return $video->getId(); }, ArticleVideoService::getFeaturedVideosForWiki( $wikiId ) );
 	}
 
 }

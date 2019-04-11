@@ -53,10 +53,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
+		$vars[] = 'wgAdDriverCollapseTopLeaderboardMobileWikiCountries';
 		$vars[] = 'wgAdDriverConfiantCountries';
-		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
-		$vars[] = 'wgAdDriverCTPMobileRabbitCountries';
-		$vars[] = 'wgAdDriverCTPDesktopQueenCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableAdStackCountries';
 		$vars[] = 'wgAdDriverDisableRecirculationCountries';
@@ -83,11 +81,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
 		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
 		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
-		$vars[] = 'wgAdDriverMobileNivensRabbitCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3NativeSearchCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
-		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
-		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverOasisHiviLeaderboardCountries';

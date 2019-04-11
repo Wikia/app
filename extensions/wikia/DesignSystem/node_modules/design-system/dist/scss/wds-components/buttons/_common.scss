@@ -1,5 +1,5 @@
 .wds-button {
-	@include button-theming($wds-color-link, $wds-color-white);
+	@include button-theming($wds-fandom-color-button-background, $wds-fandom-color-black, $wds-fandom-color-dark-gray);
 
 	align-items: center;
 	border-style: solid;
@@ -81,5 +81,11 @@
 
 	.wds-dropdown__content {
 		top: calc(100% + 1px);
+	}
+
+	&.wds-is-text, &.wds-is-secondary {
+		&.wds-is-light {
+			@include button-theming($wds-fandom-color-mid-light-gray, $wds-fandom-color-mid-light-gray);
+		}
 	}
 }

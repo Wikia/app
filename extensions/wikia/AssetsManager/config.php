@@ -15,7 +15,6 @@ $config['oasis_shared_core_js'] = [
 		'#group_ui_repo_api_js',
 		// Parametrized links to category pages might be everywhere and we need to catch 'em all
 		'#group_seo_tweaks_uncrawlable_urls',
-		'//extensions/wikia/AutoLogin/js/passive_autologin.js'
 	],
 ];
 
@@ -2186,42 +2185,6 @@ $config['special_admindashboard_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
-	],
-];
-
-$config['article_featured_video_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
-		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
-		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss',
-	],
-];
-
-$config['article_featured_video_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
-		'//extensions/wikia/ArticleVideo/scripts/tracking-queue.js',
-		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
-	],
-];
-
-$config['article_related_video_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/article-related-video.scss',
-	],
-];
-
-$config['article_related_video_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/article-related-video.js',
 	],
 ];
 

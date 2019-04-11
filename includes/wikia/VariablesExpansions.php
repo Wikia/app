@@ -93,13 +93,6 @@ $wgArticleCommentsNamespaces = [ NS_MAIN, 500 /* NS_BLOG_ARTICLE */ ];
 $wgArticlePath = "$wgScriptPath/wiki/$1";
 
 /**
- * Helios URL.
- * @see lib/Wikia/src/Factory/HeliosFactory.php
- * @var string $wgAuthServiceInternalUrl
- */
-$wgAuthServiceInternalUrl = "http://prod.$wgWikiaDatacenter.k8s.wikia.net/helios/";
-
-/**
  * Automatically add a usergroup to any user who matches certain conditions.
  * The format is
  *   [ '&' or '|' or '^' or '!', cond1, cond2, ... )

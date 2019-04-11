@@ -1,4 +1,4 @@
-import { AdEngine, context, events, eventService, templateService, utils } from '@wikia/ad-engine';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
@@ -35,7 +35,7 @@ function updateWadContext() {
 }
 
 function isGeoEnabled(key) {
-	return utils.isProperGeo(instantGlobals.get(key), key);
+	return utils.geoService.isProperGeo(instantGlobals.get(key), key);
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
@@ -45,6 +45,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
+	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
 		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
@@ -58,13 +60,20 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('slots', slots.getContext());
 
-	context.set('custom.hiviLeaderboard', isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
+	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	if (!wikiContext.targeting.hasFeaturedVideo) {
+	if (wikiContext.targeting.hasFeaturedVideo) {
+		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
+	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
-	const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	/*
+		ToDo: remove temporary stickyTLB prevention hack
+		Original line:
+		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
+	*/
+	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
@@ -117,7 +126,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('custom.wikiIdentifier', '_top1k_wiki');
 		context.set('custom.dbNameForAdUnit', context.get('targeting.s1'));
 	}
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
+
 	context.set('custom.hasPortableInfobox', !!context.get('wiki.targeting.hasPortableInfobox'));
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
@@ -138,7 +147,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	if (isGeoEnabled('wgAdDriverPrebidBidderCountries')) {
 		context.set('bidders.prebid.enabled', true);
-		context.set('bidders.prebid.useBuiltInTargetingLogic', isGeoEnabled('wgAdDriverPrebidBuiltInTargetingCountries'));
 		context.set('bidders.prebid.aol.enabled', isGeoEnabled('wgAdDriverAolBidderCountries'));
 		context.set('bidders.prebid.appnexus.enabled', isGeoEnabled('wgAdDriverAppNexusBidderCountries'));
 		context.set('bidders.prebid.audienceNetwork.enabled', isGeoEnabled('wgAdDriverAudienceNetworkBidderCountries'));
@@ -184,7 +192,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 
-	if (utils.isProperGeo(['AU', 'NZ'])) {
+	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
 	}
 
@@ -192,7 +200,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('services.netzathleten.enabled', isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', utils.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', utils.geoService.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
 
 	slots.setupIdentificators();
 	slots.setupStates();

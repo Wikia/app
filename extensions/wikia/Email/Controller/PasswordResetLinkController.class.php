@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Fatal;
+use WikiFactory;
 
 /**
  * Class PasswordResetLinkController
@@ -20,7 +21,7 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
-	const RESET_URL = 'https://www.wikia.com/reset-password';
+	const RESET_URL = 'https://www.fandom.com/reset-password';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
@@ -80,7 +81,9 @@ class PasswordResetLinkController extends EmailController {
 			$query['redirect'] = $this->returnUrl;
 		}
 
-		return wfAppendQuery( $this->getResetURL(), $query );
+		$resetUrl = WikiFactory::getLocalEnvURL( self::RESET_URL );
+
+		return wfAppendQuery( $resetUrl, $query );
 	}
 
 	protected function getResetLinkCaption( $resetLink ) {
@@ -100,20 +103,6 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getInstructions() {
 		return $this->getMessage( 'emailext-password-unrequested' )->text();
-	}
-
-	private function getResetURL() {
-		global $wgDevelEnvironment;
-
-		if ( !empty( $wgDevelEnvironment ) && !empty( $this->returnUrl ) ) {
-			$parts = wfParseUrl( $this->returnUrl );
-			if ( !empty( $parts ) &&
-				preg_match( '/\.wikia-dev\.(com|us|pl)$/', $parts['host'] )
-			) {
-				return "{$parts['scheme']}://{$parts['host']}/reset-password";
-			}
-		}
-		return self::RESET_URL;
 	}
 
     /**

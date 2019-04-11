@@ -1789,9 +1789,6 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
 
-// PLATFORM-3558 |
-include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
-
 if ( !empty( $wgEnableFeedsAndPostsExt ) ) {
 	include "$IP/extensions/wikia/FeedsAndPosts/FeedsAndPosts.setup.php";
 }
@@ -1837,7 +1834,11 @@ if ( !empty( $wgEnableEditDraftSavingExt ) ) {
 	include "$IP/extensions/wikia/EditDraftSaving/EditDraftSaving.setup.php";
 }
 
+// PLATFORM-3973
+include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
+
 // CORE-128
 if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
 	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
 }
+

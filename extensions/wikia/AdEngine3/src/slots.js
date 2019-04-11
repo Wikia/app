@@ -1,4 +1,4 @@
-import { AdSlot, context, events, slotService, utils } from '@wikia/ad-engine';
+import { AdSlot, context, events, slotInjector, slotService, utils } from '@wikia/ad-engine';
 import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
@@ -22,13 +22,6 @@ function isIncontentBoxadApplicable() {
 
 function isHighImpactApplicable() {
 	return !context.get('custom.hasFeaturedVideo');
-}
-
-function isIncontentPlayerApplicable() {
-	const header = document.querySelectorAll('#mw-content-text > h2')[1];
-
-	return !context.get('custom.hasFeaturedVideo') &&
-		header && header.offsetWidth >= header.parentNode.offsetWidth;
 }
 
 /**
@@ -120,20 +113,9 @@ export default {
 				group: 'MR',
 				options: {},
 				slotShortcut: 'm',
-				sizes: [
-					{
-						viewportSize: [1024, 1300],
-						sizes: [
-							[300, 250],
-							[300, 600],
-							[300, 1050]
-						],
-					},
-				],
-				defaultSizes: [[300, 250], [300, 600]],
+				defaultSizes: [[300, 250], [300, 600], [300, 1050]],
 				targeting: {
 					loc: 'top',
-					pos: ['TOP_BOXAD', 'TOP_RIGHT_BOXAD'],
 					rv: 1,
 				},
 			},
@@ -167,7 +149,7 @@ export default {
 				options: {},
 				slotShortcut: 'f',
 				sizes: [],
-				defaultSizes: [[300, 250]],
+				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 				insertBeforeSelector: '#incontent_boxad_1',
 				repeat: {
 					additionalClasses: 'hide',
@@ -211,11 +193,12 @@ export default {
 			},
 			incontent_player: {
 				adProduct: 'incontent_player',
-				avoidConflictWith: '.ad-slot',
+				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
 				bidderAlias: 'INCONTENT_PLAYER',
-				insertBeforeSelector: '.article-content > h2',
+				insertBeforeSelector: '#mw-content-text > h2',
+				insertBelowFirstViewport: true,
 				disabled: true,
 				slotNameSuffix: '',
 				group: 'HiVi',
@@ -293,7 +276,7 @@ export default {
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', isIncontentPlayerApplicable());
+		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 		slotService.setState('incontent_native', isIncontentNativeApplicable());
@@ -316,6 +299,21 @@ export default {
 			const slotParam = slotsDefinition[key].slotShortcut || 'x';
 			context.set(`slots.${key}.targeting.wsi`, `o${slotParam}${pageTypeParam}1`);
 		});
+	},
+
+	setupSlotVideoAdUnit(adSlot, params) {
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+				{
+					slotConfig: {
+						group: adProductInfo.adGroup,
+						adProduct: adProductInfo.adProduct,
+					},
+				},
+		);
+
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
 	},
 
 	setupSizesAvailability() {
@@ -361,20 +359,10 @@ export default {
 	},
 
 	injectIncontentPlayer() {
-		const header = document.querySelectorAll('#mw-content-text > h2')[1];
+		const isApplicable = !context.get('custom.hasFeaturedVideo');
+		const isInjected = !!slotInjector.inject('incontent_player');
 
-		if (!header || !isIncontentPlayerApplicable()) {
-			return;
-		}
-
-		const slotName = 'incontent_player';
-		const wrapper = document.createElement('div');
-
-		wrapper.id = 'INCONTENT_WRAPPER';
-		wrapper.innerHTML = '<div id="' + slotName + '" class="wikia-ad hide"></div>';
-		header.parentNode.insertBefore(wrapper, header);
-
-		context.push('state.adStack', { id: slotName });
+		return isApplicable && isInjected;
 	},
 
 	injectIncontentBoxad() {

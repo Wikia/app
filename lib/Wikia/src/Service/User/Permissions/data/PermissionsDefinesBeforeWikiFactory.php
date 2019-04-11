@@ -132,6 +132,7 @@ $wgGroupPermissions['staff']['edituserjs'] = true;
 $wgGroupPermissions['staff']['hideblockername'] = true;
 $wgGroupPermissions['staff']['smw-patternedit'] = true;
 $wgGroupPermissions['staff']['smw-admin'] = true;
+$wgGroupPermissions['staff']['showfeaturedvideo'] = true;
 
 // Util permissions (BugId:9238)
 $wgGroupPermissions['util'] = array();
