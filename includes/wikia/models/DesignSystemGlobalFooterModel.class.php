@@ -8,6 +8,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $product;
 	private $productInstanceId;
 	private $lang;
+	private $isWikiaOrgCommunity;
 
 	/**
 	 * DesignSystemGlobalFooterModel constructor.
@@ -16,16 +17,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	 * @param int $productInstanceId Identifier for given product, ex: wiki id
 	 * @param string $lang
 	 */
-	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $product, $productInstanceId, $isWikiaOrgCommunity, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->product = $product;
 		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
+		$this->isWikiaOrgCommunity = $isWikiaOrgCommunity;
 	}
 
 	public function getData() {
 		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
+
+		if ( $this->isWikiaOrgCommunity ) {
+			return $this->getWikiaOrgModel();
+		}
 
 		$data = [
 			'header' => [
@@ -216,6 +222,80 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 		$data['advertise'] = $this->getAdvertise();
+
+		return $data;
+	}
+
+	private function getWikiaOrgModel() {
+		$data = [
+			'header' => [
+				'type' => 'link-image',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org',
+				],
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'title' => [
+					'type' => 'text',
+					'value' => 'Wikia.org'
+				],
+				'tracking_label' => 'logo',
+			],
+			'site_overview' => [
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-terms-of-use'
+						],
+						'href' => $this->getHref( 'terms-of-use' ),
+						'tracking_label' => 'site-overview.terms-of-use',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-privacy-policy'
+						],
+						'href' => $this->getHref( 'privacy-policy' ),
+						'tracking_label' => 'site-overview.privacy-policy',
+					],
+				]
+			],
+			'mobile_site_button' => [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-mobile-site-link'
+				]
+			],
+			'is-wikia-org' => true,
+		];
+
+		if ( $this->getHref( 'support' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-support'
+				],
+				'href' => $this->getHref( 'support' ),
+				'tracking_label' => 'community.support',
+			];
+		}
+
+		if ( $this->getHref( 'help' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-help'
+				],
+				'href' => $this->getHref( 'help' ),
+				'tracking_label' => 'community.help',
+			];
+		}
 
 		return $data;
 	}
