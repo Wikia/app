@@ -970,28 +970,10 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
- * Enables AdEngine3 extension on articles with Featured Video
+ * @name $wgAdDriverAdEngine3EnabledOnOasis
+ * Enables AdEngine3 extension on all pages on oasis
  */
-$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
- * Enables AdEngine3 extension on search pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
- * Enables AdEngine3 extension on search pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
- * Enables AdEngine3 extension on article pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisArticlePages = true;
+$wgAdDriverAdEngine3EnabledOnOasis = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
