@@ -58,10 +58,14 @@ class HandleDeletedImages extends Maintenance {
 	}
 
 	private function runForDeletedImages() {
-		( new \WikiaSQL() )->SELECT( "filearchive.*" )
+		( new \WikiaSQL() )->SELECT( "filearchive.*, page.*" )
 			->FROM( 'filearchive' )
+			->LEFT_JOIN( 'page' )
+			->ON( 'filearchive.fa_name = page.page_title' )
 			->WHERE( "MOD(filearchive.fa_id, {$this->parallel})" )
 			->EQUAL_TO( $this->thread )
+			->AND_( 'page.page_title' )
+			->IS_NULL()
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				if ( empty( $row->fa_storage_key ) ) {
 					$this->error( "Ignoring {$row->fa_id} due to a missing storage key." );
