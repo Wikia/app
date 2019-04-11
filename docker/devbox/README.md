@@ -75,7 +75,7 @@ nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly ph
 ```
 ### Xdebug
 
-Xdebug extensions is enabled and configured to connect to port 9000 of the docker host. In order to use xdebug follow
+The Xdebug extension is enabled and configured to connect to port 9000 of the docker host. In order to use xdebug follow
 this article: https://wikia-inc.atlassian.net/wiki/spaces/EN/pages/35723807/Debugging+with+Xdebug+and+Charles. 
 
 In a nutshell:
