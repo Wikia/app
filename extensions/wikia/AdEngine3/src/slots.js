@@ -110,6 +110,7 @@ export default {
 				aboveTheFold: true,
 				bidderAlias: 'TOP_RIGHT_BOXAD',
 				slotNameSuffix: '',
+				slotName: 'top_boxad',
 				group: 'MR',
 				options: {},
 				slotShortcut: 'm',
