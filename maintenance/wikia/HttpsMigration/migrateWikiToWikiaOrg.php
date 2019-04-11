@@ -28,7 +28,7 @@ class MigrateWikiToWikiaOrg extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgUser;
+		global $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgUser, $wgFandomBaseDomain;
 
 		$fileName = $this->getArg( 0 );
 		$saveChanges = $this->hasOption( 'saveChanges' );
@@ -61,7 +61,8 @@ class MigrateWikiToWikiaOrg extends Maintenance {
 				continue;
 			}
 
-			if ( strpos( $sourceDomain, $wgWikiaBaseDomain ) === false ||
+			if ( ( strpos( $sourceDomain, $wgWikiaBaseDomain ) === false &&
+				   strpos( $sourceDomain, $wgFandomBaseDomain ) === false ) ||
 				substr_count( $sourceDomain, '.' ) > 3
 			) {
 				$this->output( "Wiki with ID {$sourceWikiId} with the domain {$sourceDomain} is not a valid wikia.com domain to move!\n" );
