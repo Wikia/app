@@ -72,6 +72,7 @@ export default {
 			},
 			top_leaderboard: {
 				aboveTheFold: true,
+				alwaysBid: true,
 				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
