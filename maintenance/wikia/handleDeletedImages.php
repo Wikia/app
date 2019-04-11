@@ -64,8 +64,6 @@ class HandleDeletedImages extends Maintenance {
 			->ON( 'filearchive.fa_name = page.page_title' )
 			->WHERE( "MOD(filearchive.fa_id, {$this->parallel})" )
 			->EQUAL_TO( $this->thread )
-			->AND_( 'page.page_title' )
-			->IS_NULL()
 			->runLoop( $this->db, function ( &$pages, $row ) {
 				if ( empty( $row->fa_storage_key ) ) {
 					$this->error( "Ignoring {$row->fa_id} due to a missing storage key." );
@@ -75,6 +73,11 @@ class HandleDeletedImages extends Maintenance {
 
 				$name = $row->fa_name;
 				$revision = $this->getRevisionId( $row->fa_archive_name );
+				if ( empty( $revision ) && !empty( $row->page_id ) ) {
+					$this->output( "Ignoring {$row->fa_id} due to existing a page with the same name." );
+
+					return;
+				}
 				$path = $this->getPath( $name, $revision );
 
 				$this->publishFileDeleteRequest( $path );
