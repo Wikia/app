@@ -33,6 +33,7 @@ export const getConfig = () => ({
 		context.set('slots.bottom_leaderboard.viewportConflicts', []);
 		context.set('slots.bottom_leaderboard.sizes', []);
 		context.set('slots.bottom_leaderboard.defaultSizes', [[3, 3]]);
+		slots.setupSlotVideoAdUnit(adSlot, params);
 
 		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 		const wrapper = document.getElementById('WikiaTopAds');

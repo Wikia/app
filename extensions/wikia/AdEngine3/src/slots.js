@@ -272,7 +272,7 @@ export default {
 
 	setupStates() {
 		slotService.setState('hivi_leaderboard', false);
-		slotService.setState('top_leaderboard', false);
+		slotService.setState('top_leaderboard', true);
 		slotService.setState('top_boxad', isTopBoxadApplicable());
 		slotService.setState('incontent_boxad_1', true);
 		slotService.setState('bottom_leaderboard', true);
@@ -301,6 +301,21 @@ export default {
 		});
 	},
 
+	setupSlotVideoAdUnit(adSlot, params) {
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+				{
+					slotConfig: {
+						group: adProductInfo.adGroup,
+						adProduct: adProductInfo.adProduct,
+					},
+				},
+		);
+
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
+	},
+
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
 			context.set('slots.hivi_leaderboard.targeting.xna', '0');
@@ -312,15 +327,17 @@ export default {
 	setupTopLeaderboard() {
 		if (context.get('custom.hiviLeaderboard')) {
 			slotService.setState('hivi_leaderboard', true);
+			context.set('slots.top_leaderboard.firstCall', false);
 			context.push('state.adStack', { id: 'hivi_leaderboard' });
 
+			slotService.on('hivi_leaderboard', AdSlot.STATUS_SUCCESS, () => {
+				slotService.setState('top_leaderboard', false);
+			});
+
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
-				slotService.setState('top_leaderboard', true);
-				context.set('slots.top_leaderboard.firstCall', false);
 				context.push('state.adStack', { id: 'top_leaderboard' });
 			});
 		} else {
-			slotService.setState('top_leaderboard', true);
 			context.push('state.adStack', { id: 'top_leaderboard' });
 		}
 	},

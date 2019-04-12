@@ -1,0 +1,42 @@
+.wds-global-footer-wikia-org {
+	background: $wds-color-white;
+	border-top: 1px solid $wds-color-blue-gray;
+	width: 100%;
+
+	&__header {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 24px 0 0;
+		width: 100%;
+	}
+
+	&__links {
+		align-items: center;
+		color: $wds-color-dark-blue-gray;
+		display: flex;
+		flex-wrap: wrap;
+		font-size: $wds-font-size-s;
+		justify-content: center;
+		list-style: none;
+		margin-left: 0;
+		padding: 19px 13px 24px;
+		width: 100%;
+
+		a {
+			color: $wds-color-dark-blue-gray;
+		}
+	}
+
+	&__link {
+		align-items: center;
+		display: flex;
+	}
+
+	&__link:not(:last-child)::after {
+		color: $wds-color-dark-blue-gray;
+		content:'\00B7';
+		font-size: $wds-font-size-s;
+		padding: 0 5px;
+	}
+}
