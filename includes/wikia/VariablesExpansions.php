@@ -173,7 +173,10 @@ $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
  * @see wfHandleCrossSiteAJAXdomain()
  * @var string $wgCrossSiteAJAXdomains
  */
-$wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
+$wgCrossSiteAJAXdomains = [
+	"internal-vstf.$wgWikiaBaseDomain",
+	"internal-vstf.$wgFandomBaseDomain",
+];
 
 /**
  * The datacenter that hosts the starter dumps for CreateNewWiki
