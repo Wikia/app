@@ -269,12 +269,21 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $this->bgImageUrl;
 	}
 
+	public function getLandingPagePreference() {
+		global $wgUser;
+
+		return UserService::getLandingPagePreference( $wgUser );
+	}
+
 	public function getNavigation(): array {
 		$localNav = $this->getWikiLocalNavigation();
 		array_push( $localNav, $this->getExploreMenu() );
 
 		$discuss = $this->getDiscussLinkData();
-		if ( !empty( $discuss ) ) {
+		$mainPage = $this->getMainPageLinkData();
+		if ( !empty( $mainPage ) ) {
+			array_push( $localNav, $mainPage );
+		} elseif ( !empty( $discuss ) ) {
 			array_push( $localNav, $discuss );
 		}
 
@@ -327,6 +336,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					$this->productInstanceId, false, F::app()->wg->enableSpecialVideosExt );
 
 			$exploreItems = [
+				[
+					'title' => 'MainPage',
+					'key' => 'community-header-main-page',
+					'tracking' => 'explore-main-page',
+					'include' => in_array( $this->getLandingPagePreference(), [
+						UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES,
+						UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY,
+					] ),
+				],
 				[
 					'title' => 'WikiActivity',
 					'key' => 'community-header-wiki-activity',
@@ -400,6 +418,26 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 		return $url;
+	}
+
+	public function getMainPageLinkData(): array {
+		if ( self::getLandingPagePreference() == UserPreferencesV2::LANDING_PAGE_FEEDS ) {
+			return [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'community-header-main-page',
+				],
+				'href' => wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() ),
+				'tracking_label' => 'main-page',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-home-tiny',
+				],
+			];
+		}
+
+		return [];
 	}
 
 	public function getDiscussLinkData(): array {
