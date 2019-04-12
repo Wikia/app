@@ -1412,13 +1412,6 @@ $wgAdDriverEnableCheshireCat = true;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
- * @name $wgAdDriverGeoEdgeCountries
- * List of countries Geo Edge will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverGeoEdgeCountries = null;
-
-/**
  * @name $wgAdDriverConfiantCountries
  * List of countries Confiant will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
