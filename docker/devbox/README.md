@@ -83,8 +83,11 @@ In a nutshell:
     ```sh
     ssh -o ServerAliveInterval=20 -R 9000:localhost:9000 dev-<devboxname>-18
     ```
-2. Enable the `Listen for debug connections` button in PhpStorm
-3. Add `XDEBUG_SESSION_START=1` query parameter to the request
+2. When mapping the paths is PhpStorm, please keep in mind that use should use `/usr/wikia/slot1/current/` as the remote 
+path instead of the path on your devbox. That is the path that sources are mounted at in the docker
+container.
+3. Enable the `Listen for debug connections` button in PhpStorm
+4. Add `XDEBUG_SESSION_START=1` query parameter to the request
 
 ### Rebuilding docker images
 
