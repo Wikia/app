@@ -16,8 +16,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.ml.rabbit'),
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
+	require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (
 	adContext,
 	adLogicPageParams,
@@ -34,8 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTweaker,
 	doc,
 	log,
-	rabbit,
-	sraHelper
+	rabbit
 ) {
 	'use strict';
 
@@ -60,7 +58,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}  slotPath               - slot path
 	 * @param {Object}  slotTargetingData      - slot targeting details
 	 * @param {Object}  extra                  - optional parameters
-	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
 	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
@@ -166,11 +163,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (!slotTargetingData.flushOnly) {
 			slot.pre('renderEnded', gptCallback);
 			googleTag.push(queueAd);
-		}
-
-		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
-			log('flushing', log.levels.debug, logGroup);
-			googleTag.flush();
 		}
 
 		if (slotTargetingData.flushOnly) {

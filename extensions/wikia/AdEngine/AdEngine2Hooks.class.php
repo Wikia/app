@@ -152,7 +152,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
-		$vars[] = 'wgAdDriverF2DisableSraCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nCountries';
 		$vars[] = 'wgAdDriverF2VideoF15nMap';
 
