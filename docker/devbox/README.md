@@ -73,6 +73,21 @@ nobody@2d25d207a7a7:/usr/wikia/slot1/current/src$ cd tests
 nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation
 nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --group Integration
 ```
+### Xdebug
+
+The Xdebug extension is enabled and configured to connect to port 9000 of the docker host. In order to use xdebug follow
+this article: https://wikia-inc.atlassian.net/wiki/spaces/EN/pages/35723807/Debugging+with+Xdebug+and+Charles. 
+
+In a nutshell:
+1. Forward port 9000 to your laptop by running this command in the terminal:
+    ```sh
+    ssh -o ServerAliveInterval=20 -R 9000:localhost:9000 dev-<devboxname>-18
+    ```
+2. When mapping the paths is PhpStorm, please keep in mind that use should use `/usr/wikia/slot1/current/` as the remote 
+path instead of the path on your devbox. That is the path that sources are mounted at in the docker
+container.
+3. Enable the `Listen for debug connections` button in PhpStorm
+4. Add `XDEBUG_SESSION_START=1` query parameter to the request
 
 ### Rebuilding docker images
 

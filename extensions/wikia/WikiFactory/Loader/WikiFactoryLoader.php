@@ -508,6 +508,17 @@ class WikiFactoryLoader {
 		}
 		// end of PLATFORM-3878 hack
 
+		// PLATFORM-4025 - needed to migrate slot1.wikia.com to fandom.com, to be removed afterwards.
+		// Allows everything but the article path (/wiki/) to work over every community domain configured
+		// in WikiFactory.
+		if ( $this->mWikiID == 470538
+			&& isset( $this->parsedUrl['path'] )
+			&& strpos( $this->parsedUrl['path'], '/wiki/' ) !== 0
+		) {
+			$this->mServerName = strtolower( $url['host'] );
+		}
+		// end of PLATFORM-4025 hack
+
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) && $this->mWikiIdForced === false &&
 				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'] ?? '', '/' ) !== rtrim( "/{$this->langCode}", '/' ) );

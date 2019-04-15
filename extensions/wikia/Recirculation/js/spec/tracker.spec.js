@@ -14,6 +14,7 @@ describe('ext.wikia.recirculation.tracker', function () {
 
 	function getTracker() {
 		return modules['ext.wikia.recirculation.tracker'](
+			$,
 			mocks.wikiaTracker
 		);
 	}
