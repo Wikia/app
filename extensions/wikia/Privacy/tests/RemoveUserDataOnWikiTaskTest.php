@@ -8,6 +8,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	const TEST_USER_ID = 1;
 	const TEST_USER = 'Test user';
 	const TEST_USER_DB_KEY = 'Test_user';
+	const OLD_TEST_USER_ID = 4;
 	const OLD_TEST_USER = 'Old test user';
 	const OLD_TEST_USER_DB_KEY = 'Old_test_user';
 	const OTHER_TEST_USER = 'Other test user';
@@ -35,7 +36,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserData() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 		$logPager = new CheckUserLogPager( null, [], null, null );
 		$this->assertEquals( 1,  $logPager->getNumRows() );
 		foreach ( $logPager->getResult() as $row ) {
@@ -44,7 +45,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveIpsFromRecentChanges() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_user', 'rc_user_text', 'rc_ip_bin'] );
 		foreach ( $changes as $change ) {
@@ -57,7 +58,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveAbuseFilterData() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 		$dbr = wfGetDB( DB_SLAVE );
 		// check filter author
 		$filters = $dbr->select( 'abuse_filter', ['af_user', 'af_user_text'] );
@@ -79,7 +80,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserPageHistoryFromRecentChanges() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_namespace', 'rc_title'] );
 		foreach ( $changes as $change ) {
@@ -90,7 +91,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserPages() {
-		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER,
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID,
 			self::OLD_TEST_USER );
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -112,7 +113,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveActionLogs() {
-		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 
 		$db = wfGetDB( DB_MASTER );
 
@@ -123,7 +124,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveWatchlist() {
-		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 
 		$db = wfGetDB( DB_SLAVE );
 
@@ -133,7 +134,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldHaveAuditLog() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::OLD_TEST_USER_ID );
 
 		$dbr = wfGetDB( DB_SLAVE );
 
