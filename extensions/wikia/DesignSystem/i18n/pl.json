@@ -1,5 +1,5 @@
 {
-  "back": "Wróć",
+  "back": "Wstecz",
   "community-header-add": "Dodaj",
   "community-header-add-new-image": "Dodaj nowy obraz",
   "community-header-add-new-page": "Dodaj nową stronę",
@@ -13,6 +13,7 @@
   "community-header-explore": "Eksploruj",
   "community-header-forum": "Forum",
   "community-header-images": "Obrazy",
+  "community-header-main-page": "Strona główna",
   "community-header-page": "Strona",
   "community-header-pages": "Stron",
   "community-header-random-page": "Losowa strona",
@@ -68,6 +69,7 @@
   "global-footer-site-overview-link-local-sitemap": "Lokalna mapa strony",
   "global-footer-site-overview-link-privacy-policy": "Polityka prywatności",
   "global-footer-site-overview-link-terms-of-use": "Zasady Użytkowania",
+  "global-footer-site-overview-link-wikia-inc": "Copyright $1 Wikia, Inc.",
   "global-navigation-anon-my-account": "Moje konto",
   "global-navigation-anon-register": "Zarejestruj się",
   "global-navigation-anon-register-description": "Nie masz konta?",
