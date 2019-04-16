@@ -56,7 +56,8 @@ Replace `SERVER_ID` with any other city identifier.
 
 ### Logging
 
-Right now the logs are sent to console in JSON format. We may add Kibana logger later on.
+Both mediawiki and nginx logs are sent to ELK using fluentd. The are available in Kibana in the
+logstash-dev-mediawiki-* index and could e filtered by `@hostname`.
 
 ### Opcache
 
