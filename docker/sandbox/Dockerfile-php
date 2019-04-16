@@ -1,3 +1,14 @@
+# AdEngine3 assets
+FROM node:8.15-alpine as AdEngine3Assets
+
+ADD app/extensions/wikia/AdEngine3 /AdEngine3
+
+WORKDIR /AdEngine3
+
+RUN npm ci && \
+  npm run build --production && \
+  echo 'AdEngine3 assets built'
+
 # This is a base Docker image used in prod/sandbox/preview Jenkinsfile
 FROM artifactory.wikia-inc.com/sus/php-wikia-base:225a68a
 
@@ -8,8 +19,10 @@ RUN apt update && apt install -q -y vim procps less
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
+COPY --from=AdEngine3Assets /AdEngine3/dist /usr/wikia/slot1/current/src/extensions/wikia/AdEngine3
 
 # WIKIA_ENVIRONMENT and WIKIA_DATACENTER - needed for maintenance scripts to run, but they are not used by rebuildLocalisationCache.php
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \
   chmod 777 /usr/wikia/slot1/current/cache/messages && \
   WIKIA_ENVIRONMENT=prod WIKIA_DATACENTER=sjc SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=16
+
