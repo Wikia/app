@@ -197,7 +197,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		}
 	}
 
-	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $username, $oldUsername = null ) {
+	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $oldUserId= null ) {
 		global $wgUser, $wgCityId;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 
@@ -205,11 +205,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			'right_to_be_forgotten' => 1,
 			'rtbf_log_id' => $auditLogId,
 			'user_id' => $userId,
-			'username' => $username,
-			'old_username' => $oldUsername
+			'old_user_id' => $oldUserId
 		];
 
 		RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
+
+		$user = User::newFromId( $userId );
+		$oldUser = User::newFromId( $oldUserId );
 
 		// gather results of all removal operations
 		// if something fails, we still want to continue the process
@@ -220,12 +222,12 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		$results[] = $this->removeIpFromRecentChanges( $userId );
 		$results[] = $this->removeWatchlist( $userId );
 
-		$userDbKey = Title::newFromText( $username )->getDBkey();
+		$userDbKey = Title::newFromText( $user->getName() )->getDBkey();
 		$results[] = $this->removeUserPages( $userDbKey );
 		$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
 		$results[] = $this->removeActionLogs( $userDbKey );
-		if ( !empty( $oldUsername ) ) {
-			$oldUserDbKey = Title::newFromText( $oldUsername )->getDBkey();
+		if ( !empty( $oldUserId ) ) {
+			$oldUserDbKey = Title::newFromText( $oldUser->getName() )->getDBkey();
 			$results[] = $this->removeUserPages( $oldUserDbKey );
 			$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
 			$results[] = $this->removeActionLogs( $oldUserDbKey );
@@ -237,6 +239,98 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			array_reduce( $results, function( $acc, $res ) { return $acc && $res; }, true ) );
 
 		$this->info( "Removed user data from wiki" );
+
+		if ( RemovalAuditLog::getNumberOfFinishedTasks( $auditLogId ) ==
+			 RemovalAuditLog::getNumberOfWikis( $auditLogId ) ) {
+			if ( !empty( $oldUserId ) ) {
+				$this->removeUserData( $oldUser );
+				$this->connectUserToRenameRecord( $userId, $oldUserId );
+				$this->info( "Removed data connected to old username",
+					[ 'rename_user_id' => $oldUserId ] );
+			}
+
+			$this->removeUserData( $user );
+		}
+	}
+
+	private function removeUserData( User $user ) {
+		try {
+			global $wgExternalSharedDB;
+
+			$userId = $user->getId();
+			$newUserName = uniqid( 'Anonymous ' );
+
+			// anonimize antispoof record
+			$spoofRecord = new SpoofUser( $user->getName() );
+			$spoofRecord->makeRecordPrivate();
+
+			$userIdentityBox = new UserIdentityBox( $user );
+			$userIdentityBox->clearMastheadContents();
+			Wikia::invalidateUser( $user, true, false );
+
+			$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
+			// commit changes performed by Wikia::invalidateUser
+			$dbMaster->commit( __METHOD__ );
+			wfWaitForSlaves( $dbMaster->getDBname() );
+
+			$dbMaster->update( 'user', [
+				'user_name' => $newUserName,
+				'user_birthdate' => null,
+			], [ 'user_id' => $userId ], __METHOD__ );
+
+			$dbMaster->delete( 'user_email_log', [ 'user_id' => $userId ] );
+			$dbMaster->delete( 'user_properties', [ 'up_user' => $userId ] );
+			$dbMaster->insert( 'user_properties', [
+				[
+					'up_user' => $userId,
+					'up_property' => 'disabled',
+					'up_value' => '1',
+				],
+			] );
+
+			// commit early so that cache is properly invalidated
+			$dbMaster->commit( __METHOD__ );
+			wfWaitForSlaves( $dbMaster->getDBname() );
+
+			$user->deleteCache();
+			$this->removeUserDataFromStaffLog( $userId );
+
+			$this->info( "Removed user's global data", [ 'new_user_name' => $newUserName ] );
+
+		}
+		catch ( Exception $error ) {
+			// just log and rethrow
+			$this->error( "Couldn't remove global user data", [ 'exception' => $error ] );
+			throw $error;
+		}
+	}
+
+	private function removeUserDataFromStaffLog( int $userId ) {
+		global $wgExternalDatawareDB;
+
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+
+		$dbMaster->delete( 'wikiastaff_log', [
+			'slog_user' => $userId,
+		] );
+
+		$dbMaster->delete( 'wikiastaff_log', [
+			'slog_userdst' => $userId,
+		] );
+	}
+
+	private function connectUserToRenameRecord( int $userId, int $fakeUserId ) {
+		global $wgExternalSharedDB;
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
+		$dbMaster->insert( 'user_properties', [
+			[
+				'up_user' => $fakeUserId,
+				'up_property' => 'removedRenamedUser',
+				'up_value' => $userId,
+			],
+		] );
 	}
 
 	protected function getLoggerContext() {
