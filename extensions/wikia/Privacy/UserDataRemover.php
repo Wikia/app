@@ -18,6 +18,7 @@ class UserDataRemover {
 		$user = User::newFromId( $userId );
 		if ( $user->isAnon() ) {
 			$this->warning( "Can't remove data for anon" );
+
 			return;
 		}
 
@@ -63,12 +64,13 @@ class UserDataRemover {
 	private function getUserWikis( int $userId ) {
 		global $wgSpecialsDB;
 		$specialsDbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
+
+		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id',
+			[ 'user_id' => $userId ], __METHOD__, [ 'DISTINCT' ] );
 	}
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
 		return $this->logContext;
 	}
-
 }

@@ -10,7 +10,8 @@ class RemovalAuditLog {
 
 	public static function createLog( $userId ) {
 		$db = self::getDb( DB_MASTER );
-		$db->insert( self::LOG_TABLE, ['user_id' => $userId], __METHOD__ );
+		$db->insert( self::LOG_TABLE, [ 'user_id' => $userId ], __METHOD__ );
+
 		return $db->insertId();
 	}
 
@@ -46,6 +47,7 @@ class RemovalAuditLog {
 
 	private static function getDb( $type ) {
 		global $wgSpecialsDB;
+
 		return wfGetDB( $type, [], $wgSpecialsDB );
 	}
 
