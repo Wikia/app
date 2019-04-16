@@ -88,7 +88,7 @@ class MigrateWikiaComLogging extends Maintenance {
 								'log_deleted' => $row->log_deleted,
 								'log_page' => $row->log_page
 							],
-							_METHOD__
+							__METHOD__
 						);
 					}
 				}
