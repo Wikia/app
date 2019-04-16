@@ -7,10 +7,16 @@ means containerized mediawiki&nginx. But also to have the flexibility of "old" d
 modify the source code and just refresh the page without rebuilding any images.
 General overview of the setup:
 * app and config repos are stored somewhere in the kvm devbox filesystem
-* docker compose is used to run nginx server and php-fpm container
+* docker compose is used to run nginx server, php-fpm and fluentd containers
 * nginx binds to port 80 of the host
 * `app` and `config` folders and mounted as docker volumes when containers are started
 
+Since we are pushing all the logs from the nginx and mediawiki to elastic search all of them have to pass through fluentd.
+This means that whenever your fluentd is misconfigured or dead you'll see no logs in kibana and/or stdout.
+
+Additionally to pass nginx logs to fluentd we are using shared volume that is mounted on your host (see: [docker-compose.yml](docker-compose.yml)).
+You can safely purge this folder to reclaim the disk space if needed.
+ 
 ### Usage
 
 1. Clone the app and config repos, this readme file assumes those repos are stored in you home dir root.
@@ -21,7 +27,16 @@ General overview of the setup:
     docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest php maintenance/rebuildLocalisationCache.php --primary
     chmod 775 ~/cache
     ``` 
-3. Starting mediawiki
+    
+3. Create .env file with the name of the devbox (this is needed to properly set @hostname field in the logs)
+	```bash
+	echo HOST_HOSTNAME=$(hostname) > app/docker/devbox/.env
+	```
+4. Create NGINX logs dir
+	```bash
+	mkdir ~/nginx_logs && chmod 0777 ~/nginx_logs
+	```
+5. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
 running the the background.
 
@@ -30,7 +45,7 @@ running the the background.
 	docker-compose up
 	```
 
-4. Stopping mediawiki
+6. Stopping mediawiki
 	Usualy the best option is to stop it with Ctrl+C and then run `docker-compose down`.
 
 ### Running eval.php
@@ -41,7 +56,8 @@ Replace `SERVER_ID` with any other city identifier.
 
 ### Logging
 
-Right now the logs are sent to console in JSON format. We may add Kibana logger later on.
+Both mediawiki and nginx logs are sent to ELK using fluentd. The are available in Kibana in the
+logstash-dev-mediawiki-* index and could e filtered by `@hostname`.
 
 ### Opcache
 
@@ -97,6 +113,15 @@ docker build -f Dockerfile-nginx -t artifactory.wikia-inc.com/platform/nginx-wik
  ```
  
 php-fpm image:
- ```
+ ```bash
 docker build -t artifactory.wikia-inc.com/platform/php-wikia-devbox:latest .
  ```
+
+fluentd_elastic image:
+
+Notice: this will overwrite fluent.conf in this folder you can either revert it back to the original or use different folder for the image build
+```bash
+mkdir plugins
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
+docker build -f Dockerfile-fluentd -t artifactory.wikia-inc.com/platform/fluentd_elastic:latest .
+```

@@ -13,8 +13,17 @@ services:
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions:ro
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
+      - ../../../nginx_logs:/var/log/nginx
     depends_on:
       - php-wikia
+  logger:
+    image: artifactory.wikia-inc.com/platform/fluentd_elastic:latest
+    volumes:
+      - ./fluent.conf:/fluentd/etc/config:ro
+      - ../../../nginx_logs:/var/nginx/logs
+    command: "fluentd -c /fluentd/etc/config -v"
+    environment:
+      - HOST_HOSTNAME=$HOST_HOSTNAME
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
@@ -28,5 +37,5 @@ services:
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
       - WIKIA_FORCE_DEV_ONLY=yes
-  logger:
-    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+    depends_on:
+      - logger
