@@ -9,7 +9,7 @@ RUN npm ci && \
   npm run build --production && \
   echo 'AdEngine3 assets built'
 
-# This is a base Docker image used in prod/sandbox/preview Jenkinsfile
+# This is a base Docker image used in sandbox Jenkinsfile
 FROM artifactory.wikia-inc.com/sus/php-wikia-base:225a68a
 
 # disable the opcache
