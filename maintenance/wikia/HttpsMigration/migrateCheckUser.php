@@ -102,7 +102,6 @@ class MigrateCheckUser extends Maintenance {
 					}
 				}
 			}
-			var_dump('Processing next batch', $logDuplicates, $logMigrated);
 		}
 
 		while(true) {
@@ -162,7 +161,6 @@ class MigrateCheckUser extends Maintenance {
 					}
 				}
 			}
-			var_dump('Processing next batch', $changesDuplicates, $changesMigrated);
 		}
 
 		WikiaLogger::instance()->info('Finished',
