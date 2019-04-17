@@ -182,6 +182,7 @@ $config['adengine3_dev_top_js'] = [
 		'//extensions/wikia/AdEngine3/dist-dev/vendors/prebid.js',
 		'//extensions/wikia/AdEngine3/dist-dev/vendors/products.js',
 		'//extensions/wikia/AdEngine3/dist-dev/vendors/services.js',
+		'//extensions/wikia/AdEngine3/alert.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
 ];
