@@ -1,9 +1,9 @@
 # AdEngine3 assets
-FROM node:8.15-alpine as AdEngine3Assets
+FROM node:8.15.0-alpine AS AdEngine3Assets
 
 RUN apk update && apk upgrade && \
   apk add --no-cache git openssh && \
-  npm install -g npm@6.8.0
+  npm install -g npm@6.1.0
 
 ADD app/extensions/wikia/AdEngine3 /AdEngine3
 
@@ -12,7 +12,7 @@ WORKDIR /AdEngine3
 RUN npm --version
 
 RUN npm set unsafe-perm=true
-RUN npm install
+RUN npm ci && npm dedupe && npm prune
 
 RUN npm run build --production
 
