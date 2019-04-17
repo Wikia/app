@@ -3,15 +3,17 @@
 class AdEngine3
 {
 	const AD_ENGINE_3_ASSET_GROUP = 'adengine3_top_js';
+	const AD_ENGINE_3_ASSET_DEV_GROUP = 'adengine3_dev_top_js';
 
-	public static function isEnabled()
-	{
+	static $forceProductionAssets = false;
+
+	public static function isEnabled() {
 		$wg = F::app()->wg;
-		return $wg->AdDriverAdEngine3EnabledOnOasis;
+
+		return $wg->AdDriverAdEngine3Enabled;
 	}
 
-	public static function onWikiaSkinTopScripts(&$vars, &$scripts)
-	{
+	public static function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		if (!self::isEnabled()) {
 			return true;
 		}
@@ -30,13 +32,27 @@ class AdEngine3
 		return true;
 	}
 
-	public static function onOasisSkinAssetGroupsBlocking(&$jsAssets)
-	{
+	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
+		self::$forceProductionAssets = $request->getBool( 'ae3_prod' );
+
+		$distDirectory = self::shouldUseProductionAssets() ? 'dist' : 'dist-dev';
+		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/ads.scss';
+
+		$output->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( $assetsPath ) );
+
+		return true;
+	}
+
+	public static function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
 		if (!self::isEnabled()) {
 			return true;
 		}
 
-		$jsAssets[] = static::AD_ENGINE_3_ASSET_GROUP;
+		if (self::shouldUseProductionAssets()) {
+			$jsAssets[] = static::AD_ENGINE_3_ASSET_GROUP;
+		} else {
+			$jsAssets[] = static::AD_ENGINE_3_ASSET_DEV_GROUP;
+		}
 
 		return true;
 	}
@@ -109,5 +125,11 @@ class AdEngine3
 				'testSrc' => $wg->AdDriverAdTestWikiSrc
 			])
 		];
+	}
+
+	private static function shouldUseProductionAssets() {
+		$wg = F::app()->wg;
+
+		return self::$forceProductionAssets || $wg->AdDriverAdEngine3ProductionAssets;
 	}
 }

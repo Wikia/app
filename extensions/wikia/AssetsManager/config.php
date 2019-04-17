@@ -172,6 +172,19 @@ $config['adengine3_top_js'] = [
 		'//extensions/wikia/AdEngine3/module.js'
 	],
 ];
+$config['adengine3_fallback_top_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdEngine3/dist-fallback/ads.js',
+		'//extensions/wikia/AdEngine3/dist-fallback/vendors/bidders.js',
+		'//extensions/wikia/AdEngine3/dist-fallback/vendors/engine.js',
+		'//extensions/wikia/AdEngine3/dist-fallback/vendors/prebid.js',
+		'//extensions/wikia/AdEngine3/dist-fallback/vendors/products.js',
+		'//extensions/wikia/AdEngine3/dist-fallback/vendors/services.js',
+		'//extensions/wikia/AdEngine3/module.js'
+	],
+];
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,

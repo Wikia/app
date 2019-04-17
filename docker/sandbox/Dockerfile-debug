@@ -26,7 +26,7 @@ RUN apt update && apt install -q -y vim procps less
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
-COPY --from=AdEngine3Assets /AdEngine3/dist /usr/wikia/slot1/current/src/extensions/wikia/AdEngine3/dist
+COPY --from=AdEngine3Assets /AdEngine3/dist /usr/wikia/slot1/current/src/extensions/wikia/AdEngine3/dist-dev
 
 # WIKIA_ENVIRONMENT and WIKIA_DATACENTER - needed for maintenance scripts to run, but they are not used by rebuildLocalisationCache.php
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \

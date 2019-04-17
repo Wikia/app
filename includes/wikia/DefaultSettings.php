@@ -970,10 +970,16 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnOasis
+ * @name $wgAdDriverAdEngine3Enabled
  * Enables AdEngine3 extension on all pages on oasis
  */
-$wgAdDriverAdEngine3EnabledOnOasis = true;
+$wgAdDriverAdEngine3Enabled = true;
+
+/**
+ * @name $wgAdDriverAdEngine3ProductionAssets
+ * Enables AdEngine3 production (dist) assets
+ */
+$wgAdDriverAdEngine3ProductionAssets = true;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
