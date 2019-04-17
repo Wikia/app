@@ -32,11 +32,7 @@ You can safely purge this folder to reclaim the disk space if needed.
 	```bash
 	echo HOST_HOSTNAME=$(hostname) > app/docker/devbox/.env
 	```
-4. Create NGINX logs dir
-	```bash
-	mkdir ~/nginx_logs && chmod 0777 ~/nginx_logs
-	```
-5. Starting mediawiki
+4. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
 running the the background.
 
@@ -46,7 +42,7 @@ running the the background.
 	```
 
 6. Stopping mediawiki
-	Usualy the best option is to stop it with Ctrl+C and then run `docker-compose down`.
+	Usually the best option is to stop it with Ctrl+C and then run `docker-compose down`.
 
 ### Running eval.php
 ```bash
