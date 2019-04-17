@@ -341,7 +341,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			$exploreItems = [
 				[
-					'title' => 'MainPage',
+					'url' => Title::newMainPage()->getFullURL(),
 					'key' => 'community-header-main-page',
 					'tracking' => 'explore-main-page',
 					'include' => in_array( $this->getLandingPagePreference(), [
@@ -350,37 +350,37 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					] ),
 				],
 				[
-					'title' => 'WikiActivity',
+					'url' => $this->getFullUrl( 'WikiActivity', NS_SPECIAL, true ),
 					'key' => 'community-header-wiki-activity',
 					'tracking' => 'explore-activity',
 					'include' => true,
 				],
 				[
-					'title' => 'Random',
+					'url' => $this->getFullUrl( 'Random', NS_SPECIAL, true ),
 					'key' => 'community-header-random-page',
 					'tracking' => 'explore-random',
 					'include' => true,
 				],
 				[
-					'title' => 'Community',
+					'url' => $this->getFullUrl( 'Community', NS_SPECIAL, true ),
 					'key' => 'community-header-community',
 					'tracking' => 'explore-community',
 					'include' => !empty( $wgEnableCommunityPageExt ),
 				],
 				[
-					'title' => 'Videos',
+					'url' => $this->getFullUrl( 'Videos', NS_SPECIAL, true ),
 					'key' => 'community-header-videos',
 					'tracking' => 'explore-videos',
 					'include' => !empty( $wgEnableSpecialVideosExt ),
 				],
 				[
-					'title' => 'Images',
+					'url' => $this->getFullUrl( 'Images', NS_SPECIAL, true ),
 					'key' => 'community-header-images',
 					'tracking' => 'explore-images',
 					'include' => true,
 				],
 				[
-					'title' => 'Forum',
+					'url' => $this->getFullUrl( 'Forum', NS_SPECIAL, true ),
 					'key' => 'community-header-forum',
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
@@ -404,7 +404,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => $item[ 'key' ],
 						],
-						'href' => $this->getFullUrl( $item[ 'title' ], NS_SPECIAL, true ),
+						'href' => $item[ 'url' ],
 						'tracking_label' => $item[ 'tracking' ]
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
