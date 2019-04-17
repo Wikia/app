@@ -25,14 +25,18 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$this->mainPageUrl =
-			( !empty( $wgFandomCreatorCommunityId ) ||
-			  ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' ) )
-				?
-			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
-			// for Feeds And Posts alpha communities we need it as well
-			wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) ) :
-			wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
+
+		// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
+		// for Feeds And Posts alpha communities we need it as well
+		if ( !empty( $wgFandomCreatorCommunityId ) ||
+		     ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' )
+		) {
+			$this->mainPageUrl = wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) );
+		} elseif ( $wgContLang->getCode() !== 'en' ) {
+			$this->mainPageUrl = wfProtocolUrlToRelative( WikiFactory::cityIdToLanguagePath( $wgCityId ) );
+		} else {
+			$this->mainPageUrl = wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
+		}
 	}
 
 	public function getData(): array {
