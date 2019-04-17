@@ -1,1 +1,1 @@
-console.warn('⚠️ AdEngine in development mode is loaded', window.ads.adEngineVersion);
+console.warn('🚀️ Using AdEngine in development mode');
