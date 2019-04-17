@@ -130,6 +130,6 @@ class AdEngine3
 	private static function shouldUseProductionAssets() {
 		$wg = F::app()->wg;
 
-		return self::$forceProductionAssets || $wg->AdDriverAdEngine3ProductionAssets;
+		return self::$forceProductionAssets || !$wg->AdDriverAdEngine3DevAssets;
 	}
 }

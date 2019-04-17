@@ -976,10 +976,10 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverAdEngine3Enabled = true;
 
 /**
- * @name $wgAdDriverAdEngine3ProductionAssets
- * Enables AdEngine3 production (dist) assets
+ * @name $wgAdDriverAdEngine3DevAssets
+ * Enables AdEngine3 dev assets (from AdEngine3/dist-dev)
  */
-$wgAdDriverAdEngine3ProductionAssets = true;
+$wgAdDriverAdEngine3DevAssets = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
