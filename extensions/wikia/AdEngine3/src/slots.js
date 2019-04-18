@@ -274,7 +274,7 @@ export default {
 		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', true);
 		slotService.setState('top_boxad', isTopBoxadApplicable());
-		slotService.setState('incontent_boxad_1', true);
+		slotService.setState('incontent_boxad_1', isTopBoxadApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
