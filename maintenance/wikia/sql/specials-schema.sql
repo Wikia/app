@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
--- Server version	5.7.18-15-log
+-- Server version	5.7.25-28-log
 
 
 --
@@ -95,6 +95,7 @@ CREATE TABLE `rtbf_log` (
   `user_id` int(5) unsigned NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `number_of_wikis` int(10) unsigned DEFAULT NULL,
+  `global_data_removed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -115,4 +116,4 @@ CREATE TABLE `rtbf_log_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-07-09  9:15:15
+-- Dump completed on 2019-04-18 12:56:28

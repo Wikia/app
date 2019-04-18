@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-dataware-slave.query.consul    Database: statsdb
 -- ------------------------------------------------------
--- Server version	5.7.18-15-log
+-- Server version	5.7.25-28-log
 
 
 --
@@ -4221,4 +4221,4 @@ CREATE TABLE `rollup_wiki_user_events` (
  PARTITION p20300101 VALUES LESS THAN ('2030-01-02') ENGINE = InnoDB) */;
 
 
--- Dump completed on 2018-07-06 12:59:35
+-- Dump completed on 2019-04-18 12:56:46
