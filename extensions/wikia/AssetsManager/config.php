@@ -2421,11 +2421,3 @@ $config['search_tracking_js'] = [
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
 	]
 ];
-
-$config['trivia_quizzes_js'] = [
-    'type' => AssetsManager::TYPE_JS,
-    'skin' => 'oasis',
-    'assets' => [
-        '//extensions/wikia/TriviaQuizzes/js/ext.consumption.js',
-    ],
-];
