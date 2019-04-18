@@ -27,7 +27,6 @@ class MigrateCheckUser extends Maintenance {
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
 		$srcDB = wfGetDB( DB_SLAVE, [], 'wikiaglobal' );
-		$dstSlave = wfGetDB( DB_SLAVE, [], 'wikia' );
 		$dstMaster = wfGetDB( DB_MASTER, [], 'wikia' );
 		// this script would generate a ton of db logs, disable them
 		$zeroSampler =  new BernoulliTrial( 0.0 );
