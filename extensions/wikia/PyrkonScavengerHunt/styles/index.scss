@@ -1,0 +1,39 @@
+.pyrkon-question-box {
+	background: $wds-color-white;
+	bottom: 50px;
+	position: fixed;
+	right: 50px;
+
+	&__header {
+		background: #501992;
+		color: white;
+		display: flex;
+		text-align: center;
+	}
+
+	&__body {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__title {
+
+	}
+
+	&__form {
+		display: flex;
+	}
+
+	&__input {
+
+	}
+
+	&__submit {
+
+	}
+
+	&__skip-link {
+
+	}
+}

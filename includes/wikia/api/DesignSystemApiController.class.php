@@ -1,6 +1,7 @@
 <?php
 
-class DesignSystemApiController extends WikiaApiController {
+class
+DesignSystemApiController extends WikiaApiController {
 	const PARAM_PRODUCT = 'product';
 	const PARAM_ID = 'id';
 	const PARAM_LANG = 'lang';
