@@ -30,7 +30,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 	}
 
 	public function getQuestion($index = 0) {
-		$this->setResponseData( $questions[$index] );
+		$this->setResponseData( $this->questions[$index] );
 	}
 
 	public function validateAnswer($index, $answer) {
@@ -38,7 +38,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 
 		if ( !empty( $question ) && array_search( $normalizedAnswer, $question['answers'] ) > -1 ) {
 			$data = [
-				'next-url' => $questions[$index + 1]['url']
+				'next-url' => $this->questions[$index + 1]['url']
 			];
 		} else {
 			$this->setResponseData( ['is-correct' => false] );

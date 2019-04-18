@@ -1,10 +1,25 @@
-define('index.pyrkon', ['jquery', 'wikia.cookies', 'templates.pyrkon'], function ($, cookies, templates) {
+require([
+	'jquery',
+	'wikia.cookies',
+	'templates.pyrkon',
+	'wikia.mustache'
+], function (
+	$,
+	cookies,
+	templates,
+	mustache
+) {
 	'use strict';
 
 	var currentQuestionIndex = 0;
 
 	function init() {
-		getQuestions().then(function () {
+		debugger;
+		setCurrentQuestionIndex(
+			cookies.get('pyrkon-scavenger-hunt.question')
+		);
+
+		getQuestion().done(function () {
 			setCurrentQuestionIndex();
 
 			document.body.appendChild(
@@ -28,7 +43,7 @@ define('index.pyrkon', ['jquery', 'wikia.cookies', 'templates.pyrkon'], function
 			currentQuestionIndex +
 			'&answer=' +
 			submittedAnswer
-		).then(onAnswerValidated);
+		).done(onAnswerValidated);
 	}
 
 	function onAnswerValidated(data) {
@@ -37,11 +52,18 @@ define('index.pyrkon', ['jquery', 'wikia.cookies', 'templates.pyrkon'], function
 		window.location.href = data.url;
 	}
 
-	function getQuestionBoxMarkup() {
-
+	function getQuestionBoxMarkup(question) {
+		return mustache.render(templates['questionBox'], {
+			question: question
+		});
 	}
 
-	function getQuestions() {
-		return $.get('/index.php?controller=PyrkonScavengerHuntApiController&method=getQuestions');
+	function getQuestion() {
+		return $.get(
+			'/index.php?controller=PyrkonScavengerHuntApiController&method=getQuestion&index=' +
+			currentQuestionIndex
+		);
 	}
+
+	init();
 });

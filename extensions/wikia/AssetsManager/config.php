@@ -2421,3 +2421,19 @@ $config['search_tracking_js'] = [
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
 	]
 ];
+
+$config['pyrkon_scavenger_hunt_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/PyrkonScavengerHunt/scripts/index.pyrkon.js',
+		'//extensions/wikia/PyrkonScavengerHunt/scripts/templates.pyrkon.js',
+	]
+];
+
+$config['pyrkon_scavenger_hunt_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/PyrkonScavengerHunt/styles/index.scss',
+	]
+];
