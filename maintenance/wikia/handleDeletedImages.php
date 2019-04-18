@@ -58,8 +58,10 @@ class HandleDeletedImages extends Maintenance {
 	}
 
 	private function runForDeletedImages() {
-		( new \WikiaSQL() )->SELECT( "filearchive.*, page.*" )
+		( new \WikiaSQL() )->SELECT( "filearchive.*, image.img_name, page.page_title" )
 			->FROM( 'filearchive' )
+			->LEFT_JOIN( 'image' )
+			->ON( 'filearchive.fa_name = image.img_name' )
 			->LEFT_JOIN( 'page' )
 			->ON( 'filearchive.fa_name = page.page_title' )
 			->WHERE( "MOD(filearchive.fa_id, {$this->parallel})" )
@@ -73,8 +75,9 @@ class HandleDeletedImages extends Maintenance {
 
 				$name = $row->fa_name;
 				$revision = $this->getRevisionId( $row->fa_archive_name );
-				if ( empty( $revision ) && !empty( $row->page_id ) ) {
-					$this->output( "Ignoring {$row->fa_id} due to existing a page with the same name." );
+				if ( empty( $revision ) &&
+					 ( !empty( $row->img_name ) || !empty( $row->page_title ) ) ) {
+					$this->output( "Ignoring {$row->fa_id} due to existing page or image with the same name." );
 
 					return;
 				}
