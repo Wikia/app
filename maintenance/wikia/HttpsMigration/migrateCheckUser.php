@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: abador
- * Date: 16.04.19
- * Time: 10:15
- */
-
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
 
@@ -44,11 +37,9 @@ class MigrateCheckUser extends Maintenance {
 
 		$logLastId = 0;
 		$logLastTimestamp = 0;
-		$logDuplicates = 0;
 		$logMigrated = 0;
 		$changesLastId = 0;
 		$changesLastTimestamp = 0;
-		$changesDuplicates = 0;
 		$changesMigrated = 0;
 
 		while(true) {
@@ -68,38 +59,24 @@ class MigrateCheckUser extends Maintenance {
 			foreach ( $res as $row ) {
 				$logLastId = $row->cul_id;
 				$logLastTimestamp = $row->cul_timestamp;
-				$duplicateRes = $dstSlave->select(
-					self::CU_LOG_TABLE,
-					'cul_id',
-					[
-						'cul_timestamp' => $row->cul_timestamp,
-						'cul_user' => $row->cul_user,
-						'cul_type' => $row->cul_type
-					],
-					__METHOD__
-				);
-				if ( $duplicateRes->numRows() >= 1 ) {
-					$logDuplicates += 1;
-				} else {
-					$logMigrated += 1;
-					if ( $saveChanges ) {
-						$dstMaster->insert(
-							self::CU_LOG_TABLE,
-							[
-								'cul_timestamp' => $row->cul_timestamp,
-								'cul_user' => $row->cul_user,
-								'cul_user_text' => $row->cul_user_text,
-								'cul_reason' => $row->cul_reason,
-								'cul_type' => $row->cul_type,
-								'cul_target_id' => $row->cul_target_id,
-								'cul_target_text' => $row->cul_target_text,
-								'cul_target_hex' => $row->cul_target_hex,
-								'cul_range_start' => $row->cul_range_start,
-								'cul_range_end' => $row->cul_range_end,
-							],
-							__METHOD__
-						);
-					}
+				$logMigrated += 1;
+				if ( $saveChanges ) {
+					$dstMaster->insert(
+						self::CU_LOG_TABLE,
+						[
+							'cul_timestamp' => $row->cul_timestamp,
+							'cul_user' => $row->cul_user,
+							'cul_user_text' => $row->cul_user_text,
+							'cul_reason' => $row->cul_reason,
+							'cul_type' => $row->cul_type,
+							'cul_target_id' => $row->cul_target_id,
+							'cul_target_text' => $row->cul_target_text,
+							'cul_target_hex' => $row->cul_target_hex,
+							'cul_range_start' => $row->cul_range_start,
+							'cul_range_end' => $row->cul_range_end,
+						],
+						__METHOD__
+					);
 				}
 			}
 		}
@@ -121,52 +98,37 @@ class MigrateCheckUser extends Maintenance {
 			foreach ( $res as $row ) {
 				$changesLastId = $row->cuc_id;
 				$changesLastTimestamp = $row->cuc_timestamp;
-				$duplicateRes = $dstSlave->select(
-					self::CU_CHANGES_TABLE,
-					'cuc_id',
-					[
-						'cuc_timestamp' => $row->cuc_timestamp,
-						'cuc_user' => $row->cuc_user,
-						'cuc_type' => $row->cuc_type
-					],
-					__METHOD__
-				);
-				if ( $duplicateRes->numRows() >= 1 ) {
-					$changesDuplicates += 1;
-				} else {
-					$changesMigrated += 1;
-					if ( $saveChanges ) {
-						$dstMaster->insert(
-							self::CU_CHANGES_TABLE,
-							[
-								'cuc_namespace' => $row->cuc_namespace,
-								'cuc_title' => $row->cuc_title,
-								'cuc_user' => $row->cuc_user,
-								'cuc_actiontext' => $row->cuc_actiontext,
-								'cuc_comment' => $row->cuc_comment,
-								'cuc_minor' => $row->cuc_minor,
-								'cuc_page_id' => $row->cuc_page_id,
-								'cuc_this_oldid' => $row->cuc_this_oldid,
-								'cuc_last_oldid' => $row->cuc_last_oldid,
-								'cuc_type' => $row->cuc_type,
-								'cuc_timestamp' => $row->cuc_timestamp,
-								'cuc_ip' => $row->cuc_ip,
-								'cuc_ip_hex' => $row->cuc_ip_hex,
-								'cuc_xff' => $row->cuc_xff,
-								'cuc_xff_hex' => $row->cuc_xff_hex,
-								'cuc_agent' => $row->cuc_agent,
-							],
-							__METHOD__
-						);
-					}
+				$changesMigrated += 1;
+				if ( $saveChanges ) {
+					$dstMaster->insert(
+						self::CU_CHANGES_TABLE,
+						[
+							'cuc_namespace' => $row->cuc_namespace,
+							'cuc_title' => $row->cuc_title,
+							'cuc_user' => $row->cuc_user,
+							'cuc_actiontext' => $row->cuc_actiontext,
+							'cuc_comment' => $row->cuc_comment,
+							'cuc_minor' => $row->cuc_minor,
+							'cuc_page_id' => $row->cuc_page_id,
+							'cuc_this_oldid' => $row->cuc_this_oldid,
+							'cuc_last_oldid' => $row->cuc_last_oldid,
+							'cuc_type' => $row->cuc_type,
+							'cuc_timestamp' => $row->cuc_timestamp,
+							'cuc_ip' => $row->cuc_ip,
+							'cuc_ip_hex' => $row->cuc_ip_hex,
+							'cuc_xff' => $row->cuc_xff,
+							'cuc_xff_hex' => $row->cuc_xff_hex,
+							'cuc_agent' => $row->cuc_agent,
+						],
+						__METHOD__
+					);
 				}
 			}
 		}
 
 		WikiaLogger::instance()->info('Finished',
 			[
-				'log_migrated' => $logMigrated,
-				'log_duplicates' => $logDuplicates
+				'log_migrated' => $logMigrated
 			]
 		);
 	}
