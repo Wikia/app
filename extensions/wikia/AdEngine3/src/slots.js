@@ -38,7 +38,7 @@ function isIncontentNativeApplicable() {
  *
  * @returns {boolean}
  */
-function isTopBoxadApplicable() {
+function isRightRailApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
@@ -273,8 +273,8 @@ export default {
 	setupStates() {
 		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', true);
-		slotService.setState('top_boxad', isTopBoxadApplicable());
-		slotService.setState('incontent_boxad_1', isTopBoxadApplicable());
+		slotService.setState('top_boxad', isRightRailApplicable());
+		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
