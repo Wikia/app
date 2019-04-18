@@ -8964,3 +8964,10 @@ $wgArticleTagExchangeConfig = [
  * @var bool
  */
 $wgEnableQualtricsSiteInterceptExt = false;
+
+/**
+ * Enables Quizzes extension on select communities
+ * @see CAKE-4585
+ * @var bool
+ */
+$wgEnableTriviaQuizzesAlpha = false;
