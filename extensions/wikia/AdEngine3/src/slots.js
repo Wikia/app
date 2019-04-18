@@ -335,7 +335,11 @@ export default {
 			});
 
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
-				context.push('state.adStack', { id: 'top_leaderboard' });
+				const adSlot = slotService.get('hivi_leaderboard');
+
+				if (adSlot.isEmpty) {
+					context.push('state.adStack', { id: 'top_leaderboard' });
+				}
 			});
 		} else {
 			context.push('state.adStack', { id: 'top_leaderboard' });
