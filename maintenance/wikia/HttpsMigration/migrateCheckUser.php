@@ -32,7 +32,6 @@ class MigrateCheckUser extends Maintenance {
 		// this script would generate a ton of db logs, disable them
 		$zeroSampler =  new BernoulliTrial( 0.0 );
 		$srcDB->setSampler( $zeroSampler );
-		$dstSlave->setSampler( $zeroSampler );
 		$dstMaster->setSampler( $zeroSampler );
 
 		$logLastId = 0;
