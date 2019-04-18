@@ -1,4 +1,4 @@
-define('index.pyrkon', ['jquery'], function ($) {
+define('index.pyrkon', ['jquery', 'wikia.cookies', 'templates.pyrkon'], function ($, cookies, templates) {
 	'use strict';
 
 	var currentQuestionIndex = 0;
@@ -12,8 +12,10 @@ define('index.pyrkon', ['jquery'], function ($) {
 			);
 		});
 	}
+
 	function setCurrentQuestionIndex (index) {
 		currentQuestionIndex = index;
+		cookies.set('pyrkon-scavenger-hunt.question', index, wgCookieDomain);
 	}
 
 	function goToUrl(url) {
