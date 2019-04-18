@@ -48,4 +48,4 @@ $wgAutoloadClasses['TriviaQuizzesController'] = __DIR__ . '/TriviaQuizzesControl
 $wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesController::onBeforePageDisplay';
 
 // i18n
-$wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';
+// $wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';

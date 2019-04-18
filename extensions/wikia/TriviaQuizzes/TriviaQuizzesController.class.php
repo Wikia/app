@@ -20,7 +20,7 @@ class TriviaQuizzesController {
 
         if ( $wgEnableTriviaQuizzesAlpha ) {
             $out->addModules('ext.wikia.TriviaQuizzes');
-            Wikia::addAssetsToOutput( 'trivia_quizzes' );
+            // Wikia::addAssetsToOutput( 'trivia_quizzes' );
         }
 
 		return true;
