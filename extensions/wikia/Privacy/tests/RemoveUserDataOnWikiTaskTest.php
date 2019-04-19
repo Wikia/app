@@ -8,7 +8,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	const TEST_USER_ID = 1;
 	const TEST_USER = 'Test user';
 	const TEST_USER_DB_KEY = 'Test_user';
-	const OLD_TEST_USER_ID = 1;
+	const OLD_TEST_USER_ID = 3;
 	const OLD_TEST_USER = 'Old test user';
 	const OLD_TEST_USER_DB_KEY = 'Old_test_user';
 	const OTHER_TEST_USER = 'Other test user';
