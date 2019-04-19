@@ -34,6 +34,7 @@ require([
 
 		$('.scavenger-hunt form').on('submit', function (evt) {
 			evt.preventDefault();
+			$('.scavenger-hunt button').prop('disabled', true);
 
 			var nick = $('.scavenger-hunt input').val();
 
@@ -56,7 +57,9 @@ require([
 		}
 
 		getQuestion().done(function (data) {
-			$('.scavenger-hunt').html(getQuestionBoxMarkup(data.text));
+			if (data.text) {
+				$('.scavenger-hunt').html(getQuestionBoxMarkup(data.text));
+			}
 
 			initListeners();
 		});
@@ -68,7 +71,10 @@ require([
 		$questionBox = $('.pyrkon-question-box');
 
 		$questionBox.find('form').on('submit', onSubmit.bind(this));
-		$questionBox.find('.pyrkon-question-box__skip-link').on('click', goToNextQuestion.bind(this));
+		$questionBox.find('.pyrkon-question-box__skip-link').on('click', function () {
+			$('.scavenger-hunt button').prop('disabled', true);
+			goToNextQuestion.bind(this)()
+		});
 	}
 
 	function goToNextQuestion() {
@@ -84,7 +90,7 @@ require([
 
 		var answer = $questionBox.find('input').val();
 		if (answer) {
-			validateAnswer(answer).done(onAnswerValidated);
+			validateAnswer(answer.trim().toLowerCase()).done(onAnswerValidated);
 		}
 	}
 

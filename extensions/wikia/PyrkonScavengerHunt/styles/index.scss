@@ -81,8 +81,13 @@
 	}
 
 	&__final-text {
+		color: black;
 		font-size: 16px;
 		margin: 20px 0;
+
+		p {
+			color: black;
+		}
 
 		strong {
 			font-weight: bold;

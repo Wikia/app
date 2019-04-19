@@ -5,17 +5,25 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 
 	const QUESTIONS = [
 		[
-			'text' => 'What\s the last name of Krzysztof D?',
-			'wikiId' => '1575417',
+			'text' => 'Which Muppets character is known for his catchphrase "Wocka wocka wocka!"?',
+			'wikiId' => '831',
 			'answers' => [
-				'Derek',
+				'fozzie',
+				'fozzie bear'
 			],
 		],
 		[
-			'text' => 'On what planet did Yoda train Luke?',
-			'wikiId' => '147',
+			'text' => 'What’s the name of The Red Witch from Games of Thrones?',
+			'wikiId' => '130814',
 			'answers' => [
-				'Dagobah',
+				'melisandre',
+			],
+		],
+		[
+			'text' => 'Name one sorceresses able to polymorph from Witcher.',
+			'wikiId' => '3443',
+			'answers' => [
+				'philippa eilhart',
 			],
 		],
 	];
