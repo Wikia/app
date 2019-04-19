@@ -165,7 +165,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		const s1 = context.get('wiki.targeting.wikiIsTop1000') ? context.get('targeting.s1') : 'not a top1k wiki';
 
 		context.set('bidders.prebid.targeting', {
-			src: ['mobile'],
+			src: ['gpt'],
 			s0: [context.get('targeting.s0') || ''],
 			s1: [s1],
 			s2: [context.get('targeting.s2') || ''],
