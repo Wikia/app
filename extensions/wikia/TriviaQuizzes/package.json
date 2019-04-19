@@ -4,12 +4,5 @@
   "private": true,
   "dependencies": {
     "@wikia/content-types-consumption": "^0.4.1"
-  },
-  "devDependencies": {
-  },
-  "scripts": {
-    "build": "webpack -p",
-    "watch": "webpack -p -w",
-    "vendor-update": "node ./vendor-cli.js"
   }
 }

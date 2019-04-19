@@ -1,6 +1,15 @@
-require(['jquery'], function ($, TriviaQuizzes) {
+require(['jquery', 'mw', 'content_types_consumption'], function ($, mw, consumption) {
+	'use strict';
 	$(function () {
-		console.log('THE THING IS LOADED!');
+		consumption.default('PageHeader', {
+			user: {
+				id: 0,
+				isGDPRApproved: true,
+			},
+		});
+
 		// load the thing
+
+		//railModule('wikia-recent-activity');
 	});
 });
