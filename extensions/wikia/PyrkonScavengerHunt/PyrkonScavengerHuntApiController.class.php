@@ -6,8 +6,8 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 	const QUESTIONS = [
 		[
 			'text' => 'Who asked this question?',
-			'url' => 'https://harrypotter.bkowalczyk.wikia-dev.pl',
-			'wikiId' => '509',
+			'url' => 'https://xkxd02.bkowalczyk.fandom-dev.pl',
+			'wikiId' => '1575417',
 			'answers' => [
 				'Bart',
 				'Bartłomiej Kowalczyk',
@@ -52,7 +52,16 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 		}
 	}
 
-	public function validateAnswer($index, $answer) {
-		$this->setResponseData( ['validated' => true] );
+	public function validateAnswer() {
+		$index = $this->getRequest()->getVal( 'index', 0 );
+		$answer = $this->getRequest()->getVal( 'answer', 0 );
+		$question = self::QUESTIONS[$index];
+		$normalizedAnswer = htmlspecialchars($answer);
+
+		if (array_search($normalizedAnswer, $question['answers']) > -1) {
+			$this->setResponseData( ['is-valid' => true] );
+		} else {
+			$this->setResponseData( ['is-valid' => false] );
+		}
 	}
 }

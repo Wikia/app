@@ -23,13 +23,14 @@ require([
 
 		if (!$.cookie('pyrkon-scavenger-hunt.nick')) {
 			$('.scavenger-hunt').html(getInitialMarkup());
+			initNickListener();
+		} else {
+			initQuestion();
 		}
-
-		initQuestion();
 	}
 
 	function initNickListener() {
-		$('.scavenger-hunt').form.on('submit', function (evt) {
+		$('.scavenger-hunt form').on('submit', function (evt) {
 			evt.preventDefault();
 
 			var nick = $('.scavenger-hunt input').val();
@@ -37,9 +38,9 @@ require([
 			if (nick) {
 				$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
 
-				initQuestion();
+				goToQuestion(0);
 			}
-		});
+		}.bind(this));
 	}
 
 	function initQuestion() {
@@ -62,8 +63,8 @@ require([
 	function initListeners() {
 		$questionBox = $('.pyrkon-question-box');
 
-		$questionBox.find('form').on('submit', onSubmit);
-		$questionBox.find('.pyrkon-question-box__skip-link').on('click', goToNextQuestion);
+		$questionBox.find('form').on('submit', onSubmit.bind(this));
+		$questionBox.find('.pyrkon-question-box__skip-link').on('click', goToNextQuestion.bind(this));
 	}
 
 	function goToNextQuestion() {
@@ -74,10 +75,24 @@ require([
 		);
 	}
 
-	function onSubmit() {
-		var answer = $questionBox.find('input').val();
+	function onSubmit(evt) {
+		evt.preventDefault();
 
-		validateAnswer(answer).done(goToNextQuestion);
+		var answer = $questionBox.find('input').val();
+		if (answer) {
+			validateAnswer(answer).done(onAnswerValidated);
+		}
+	}
+
+	function onAnswerValidated(data) {
+		var isValid = data['is-valid'];
+		var score = Number($.cookie('pyrkon-scavenger-hunt.score'));
+
+		if (isValid) {
+			$.cookie('pyrkon-scavenger-hunt.score', score + 1, {domain: wgCookieDomain});
+		}
+
+		goToNextQuestion();
 	}
 
 	function setCurrentQuestionIndex (index) {
@@ -105,8 +120,10 @@ require([
 	}
 
 	function resolveGame() {
-		var time = Date.now() - $.cookie('pyrkon-scavenger-hunt.time');
+		var time = Date.now() - Number($.cookie('pyrkon-scavenger-hunt.time'));
 		console.log(time);
+
+		$('.scavenger-hunt').html(getFinalMarkup());
 	}
 
 	function validateAnswer(submittedAnswer) {
@@ -126,6 +143,14 @@ require([
 
 	function getInitialMarkup() {
 		return mustache.render(templates['questionBoxInitial']);
+	}
+
+	function getFinalMarkup() {
+		return mustache.render(templates['questionBox'], {
+			time: Date.now() - Number($.cookie('pyrkon-scavenger-hunt.time')),
+			nick: $.cookie('pyrkon-scavenger-hunt.nick'),
+			score: $.cookie('pyrkon-scavenger-hunt.score')
+		});
 	}
 
 	function getQuestion() {
