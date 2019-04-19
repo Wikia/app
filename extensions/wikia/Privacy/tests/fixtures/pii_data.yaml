@@ -181,7 +181,8 @@ watchlist:
 rtbf_log:
   - id: 1
     user_id: 1
-    number_of_wikis: 2
+    number_of_wikis: 3
+    global_data_removed: 0
 rtbf_log_details:
   - log_id: 1
     wiki_id: 1

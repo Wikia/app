@@ -267,19 +267,19 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 
 		$this->info( "Removed user data from wiki" );
 
-		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId ) ) {
-			$dataRemover = new UserDataRemover();
-			if ( !empty( $oldUserId ) ) {
-				$dataRemover->removeGlobalUserData( $oldUser );
-				$this->connectUserToRenameRecord( $userId, $oldUserId );
-				$this->info( "Removed data connected to old username",
-					[ 'rename_user_id' => $oldUserId ] );
-			}
-
-			$dataRemover->removeGlobalUserData( $user );
-			RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
-			$this->info( "All data removed for $userId" );
-		}
+//		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId ) ) {
+//			$dataRemover = new UserDataRemover();
+//			if ( !empty( $oldUserId ) ) {
+//				$dataRemover->removeGlobalUserData( $oldUser );
+//				$this->connectUserToRenameRecord( $userId, $oldUserId );
+//				$this->info( "Removed data connected to old username",
+//					[ 'rename_user_id' => $oldUserId ] );
+//			}
+//
+//			$dataRemover->removeGlobalUserData( $user );
+//			RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
+//			$this->info( "All data removed for $userId" );
+//		}
 	}
 
 	private function connectUserToRenameRecord( int $userId, int $fakeUserId ) {
