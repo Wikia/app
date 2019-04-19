@@ -1,6 +1,47 @@
 # user 1 data should be removed/anonimized
 # user 2 should be preserved
 
+user:
+  - user_id: 1
+    user_name: Test user
+    user_real_name: user real name
+    user_email: user@gmail.com
+    user_touched: 20140101110111
+    user_token: something
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-01'
+    user_options: ''
+  - user_id: 2
+    user_name: Other test user
+    user_real_name: user real name2
+    user_email: user2@gmail.com
+    user_touched: 20140101110111
+    user_token: something2
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken2
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 102
+    user_birthdate: '1998-01-02'
+    user_options: ''
+  - user_id: 3
+    user_name: Old test user
+    user_real_name: user real name2
+    user_email: user2@gmail.com
+    user_touched: 20140101110111
+    user_token: something2
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken2
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 102
+    user_birthdate: '1998-01-02'
+    user_options: ''
+
 cu_log:
   - cul_target_id: 1
     cul_type: 'userips'
