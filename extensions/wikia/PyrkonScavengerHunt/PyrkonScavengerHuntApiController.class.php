@@ -5,21 +5,17 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 
 	const QUESTIONS = [
 		[
-			'text' => 'Who asked this question?',
-			'url' => 'https://xkxd02.bkowalczyk.fandom-dev.pl',
+			'text' => 'What\s the last name of Krzysztof D?',
 			'wikiId' => '1575417',
 			'answers' => [
-				'Bart',
-				'Bartłomiej Kowalczyk',
+				'Derek',
 			],
 		],
 		[
-			'text' => 'Who asked this other question?',
-			'url' => 'https://starwars.bkowalczyk.fandom-dev.pl',
+			'text' => 'On what planet did Yoda train Luke?',
 			'wikiId' => '147',
 			'answers' => [
-				'Yoda',
-				'Yoda Yodowski',
+				'Dagobah',
 			],
 		],
 	];
@@ -36,6 +32,11 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 
 		$index = $this->getRequest()->getVal( 'index', 0 );
 		$question = self::QUESTIONS[$index];
+		$url = WikiFactory::cityIDtoUrl( $question['wikiId'] );
+		$response = [
+			'text' => $question['text'],
+			'url' => $url
+		];
 
 		if ( $wgCityId === $question['wikiId']) {
 			$this->setResponseData( $question );
@@ -48,7 +49,11 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 		if ($index >= sizeof(self::QUESTIONS)) {
 			$this->setResponseData( ['is-over' => true] );
 		} else {
-			$this->setResponseData( ['url' => self::QUESTIONS[$index]['url']] );
+			$this->setResponseData( [
+				'url' => WikiFactory::cityIDtoUrl(
+					self::QUESTIONS[$index]['wikiId']
+				)]
+			);
 		}
 	}
 

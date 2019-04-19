@@ -146,10 +146,10 @@ require([
 	}
 
 	function getFinalMarkup() {
-		return mustache.render(templates['questionBox'], {
-			time: Date.now() - Number($.cookie('pyrkon-scavenger-hunt.time')),
+		return mustache.render(templates['questionBoxFinal'], {
+			time: Math.round((Date.now() - Number($.cookie('pyrkon-scavenger-hunt.time'))) / 1000) + 's',
 			nick: $.cookie('pyrkon-scavenger-hunt.nick'),
-			score: $.cookie('pyrkon-scavenger-hunt.score')
+			score: $.cookie('pyrkon-scavenger-hunt.score') + ' points'
 		});
 	}
 
@@ -159,6 +159,15 @@ require([
 			currentQuestionIndex
 		);
 	}
+
+	function resetGame() {
+		$.cookie('pyrkon-scavenger-hunt.score', null, {domain: wgCookieDomain});
+		$.cookie('pyrkon-scavenger-hunt.nick', null, {domain: wgCookieDomain});
+		$.cookie('pyrkon-scavenger-hunt.time', null, {domain: wgCookieDomain});
+		$.cookie('pyrkon-scavenger-hunt.question', null, {domain: wgCookieDomain});
+	}
+
+	window.resetPyrkon = resetGame.bind(this);
 
 	init();
 });
