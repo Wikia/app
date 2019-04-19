@@ -10,14 +10,43 @@ class RemovalAuditLog {
 
 	public static function createLog( $userId ) {
 		$db = self::getDb( DB_MASTER );
-		$db->insert( self::LOG_TABLE, [ 'user_id' => $userId ], __METHOD__ );
+		$db->insert( self::LOG_TABLE, [ 'user_id' => $userId, 'global_data_removed' => false ], __METHOD__ );
 
 		return $db->insertId();
 	}
 
-	public static function getNumberOfWikis( $logId ) {
-		return (int)self::getDb( DB_MASTER )
+	/**
+	 * Mark that global user data was removed for the given log id.
+	 *
+	 * @param $logId
+	 */
+	public static function markGlobalDataRemoved( $logId ) {
+		self::getDb( DB_MASTER )
+			->update( self::LOG_TABLE, [ 'global_data_removed' => true ], [ 'log_id' => $logId ], __METHOD__ );
+	}
+
+	public static function allWikiDataWasRemoved( $logId, $detailsDbType = DB_MASTER ) {
+		$expectedWikis = (int)self::getDb( DB_SLAVE )
 			->selectField( self::LOG_TABLE, 'number_of_wikis', [ 'id' => $logId ], __METHOD__ );
+
+		// since we're using this right after updating a row
+		$finishedWikis = (int)self::getDb( $detailsDbType )->selectField(
+			RemovalAuditLog::DETAILS_TABLE,
+			'count(*)',
+			[
+				'log_id' => $logId,
+				'was_successful' => true
+			]
+		);
+
+		return $expectedWikis == $finishedWikis;
+	}
+
+	public static function allDataWasRemoved( $logId ) {
+		$wikiDataRemoved = self::allWikiDataWasRemoved( $logId, DB_SLAVE );
+		$globalDataRemoved = (bool)self::getDb(DB_SLAVE )
+			->selectField( self::LOG_TABLE, [ 'global_data_removed' ], [ 'log_id' => $logId ], __METHOD__ );
+		return $wikiDataRemoved && $globalDataRemoved;
 	}
 
 	public static function setNumberOfWikis( $logId, $numberOfWikis ) {

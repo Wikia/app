@@ -9,12 +9,12 @@ class UserDataRemover {
 	private $logContext = [];
 
 	/**
-	 * Permanently removes or anonimizes all personal data of the given user.
+	 * Start the MW data removal process for RTBF requests.
 	 *
 	 * @param $userId
-	 * @return removal data
+	 * @return int audit log id
 	 */
-	public function removeAllPersonalUserData( $userId ) {
+	public function startRemovalProcess( $userId ) {
 		$user = User::newFromId( $userId );
 		if ( $user->isAnon() ) {
 			$this->warning( "Can't remove data for anon" );
@@ -30,8 +30,7 @@ class UserDataRemover {
 			'user_id' => $userId
 		];
 
-		$username = $user->getName();
-		$fakeUserId = $this->getFakeUserId( $username );
+		$fakeUserId = $this->getFakeUserId( $user->getName() );
 
 		// remove local data on all wikis edited by the user
 		$userWikis = $this->getUserWikis( $userId );

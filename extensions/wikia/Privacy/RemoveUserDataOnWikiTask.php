@@ -267,8 +267,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 
 		$this->info( "Removed user data from wiki" );
 
-		if ( RemovalAuditLog::getNumberOfFinishedTasks( $auditLogId ) ==
-			 RemovalAuditLog::getNumberOfWikis( $auditLogId ) ) {
+		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId ) ) {
 			if ( !empty( $oldUserId ) ) {
 				$this->removeUserData( $oldUser );
 				$this->connectUserToRenameRecord( $userId, $oldUserId );
@@ -277,6 +276,8 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			}
 
 			$this->removeUserData( $user );
+			RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
+			$this->info( "All data removed for $userId" );
 		}
 	}
 

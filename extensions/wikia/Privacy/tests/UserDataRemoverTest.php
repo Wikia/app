@@ -55,7 +55,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::REMOVED_USER_ID );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
 		$otherUser = User::newFromId( self::OTHER_USER_ID );
@@ -73,7 +73,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -99,7 +99,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -128,7 +128,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::RENAMED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::RENAMED_USER_ID );
 
 		$fakeUser = User::newFromId( self::FAKE_USER_ID );
 
@@ -140,7 +140,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testStaffLogsShouldBeRemoved() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::REMOVED_USER_ID );
 
 		$db = wfGetDB( DB_SLAVE, [] );
 
@@ -158,7 +158,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldAnonymizeAnfispoof() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->startRemovalProcess( self::REMOVED_USER_ID );
 
 		// check basic functionality
 		$spoof = new SpoofUser( self::REMOVED_USER_NAME );
