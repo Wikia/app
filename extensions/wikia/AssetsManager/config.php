@@ -2427,7 +2427,7 @@ $config['pyrkon_scavenger_hunt_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//extensions/wikia/PyrkonScavengerHunt/scripts/index.pyrkon.js',
-		'//extensions/wikia/PyrkonScavengerHunt/scripts/templates.pyrkon.js',
+		'//extensions/wikia/PyrkonScavengerHunt/scripts/templates.mustache.js',
 	]
 ];
 

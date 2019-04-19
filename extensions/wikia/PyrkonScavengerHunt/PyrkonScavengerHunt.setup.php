@@ -10,6 +10,7 @@ $dir = __DIR__ . '/';
  * Classes
  */
 $wgAutoloadClasses['PyrkonScavengerHuntHooks'] = $dir . 'PyrkonScavengerHuntHooks.class.php';
+$wgAutoloadClasses['PyrkonScavengerHuntApiController'] = $dir . 'PyrkonScavengerHuntApiController.class.php';
 
 /**
  * Hooks

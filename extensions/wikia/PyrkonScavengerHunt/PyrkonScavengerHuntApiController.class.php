@@ -3,10 +3,11 @@
 class PyrkonScavengerHuntApiController extends WikiaApiController {
 	protected $cors;
 
-	protected $questions = [
+	const QUESTIONS = [
 		[
 			'text' => 'Who asked this question?',
-			'url' => 'https://harrypotter.fandom.com',
+			'url' => 'https://harrypotter.bkowalczyk.wikia-dev.pl',
+			'wikiId' => '509',
 			'answers' => [
 				'Bart',
 				'Bartłomiej Kowalczyk',
@@ -14,7 +15,8 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 		],
 		[
 			'text' => 'Who asked this other question?',
-			'url' => 'https://starwars.fandom.com',
+			'url' => 'https://starwars.bkowalczyk.fandom-dev.pl',
+			'wikiId' => '147',
 			'answers' => [
 				'Yoda',
 				'Yoda Yodowski',
@@ -29,19 +31,28 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 		$this->cors->setAllowCredentials( true );
 	}
 
-	public function getQuestion($index = 0) {
-		$this->setResponseData( $this->questions[$index] );
+	public function getQuestion() {
+		global $wgCityId;
+
+		$index = $this->getRequest()->getVal( 'index', 0 );
+		$question = self::QUESTIONS[$index];
+
+		if ( $wgCityId === $question['wikiId']) {
+			$this->setResponseData( $question );
+		}
+	}
+
+	public function getQuestionUrl() {
+		$index = $this->getRequest()->getVal( 'index', 0 );
+
+		if ($index >= sizeof(self::QUESTIONS)) {
+			$this->setResponseData( ['is-over' => true] );
+		} else {
+			$this->setResponseData( ['url' => self::QUESTIONS[$index]['url']] );
+		}
 	}
 
 	public function validateAnswer($index, $answer) {
-		$question = $questions[$index];
-
-		if ( !empty( $question ) && array_search( $normalizedAnswer, $question['answers'] ) > -1 ) {
-			$data = [
-				'next-url' => $this->questions[$index + 1]['url']
-			];
-		} else {
-			$this->setResponseData( ['is-correct' => false] );
-		}
+		$this->setResponseData( ['validated' => true] );
 	}
 }

@@ -11,45 +11,111 @@ require([
 ) {
 	'use strict';
 
-	var currentQuestionIndex = 0;
+	var currentQuestionIndex = null;
+	var cookieData = {
+		domain: window.wgCookieDomain,
+		path: window.wgCookiePath
+	};
+	var $questionBox = null;
 
 	function init() {
-		debugger;
+		$(document.body).append('<div class="scavenger-hunt"></div>');
+
+		if (!$.cookie('pyrkon-scavenger-hunt.nick')) {
+			$('.scavenger-hunt').html(getInitialMarkup());
+		}
+
+		initQuestion();
+	}
+
+	function initNickListener() {
+		$('.scavenger-hunt').form.on('submit', function (evt) {
+			evt.preventDefault();
+
+			var nick = $('.scavenger-hunt input').val();
+
+			if (nick) {
+				$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
+
+				initQuestion();
+			}
+		});
+	}
+
+	function initQuestion() {
 		setCurrentQuestionIndex(
-			cookies.get('pyrkon-scavenger-hunt.question')
+			Number($.cookie('pyrkon-scavenger-hunt.question') || 0)
 		);
 
-		getQuestion().done(function () {
-			setCurrentQuestionIndex();
+		if (currentQuestionIndex === 0) {
+			$.cookie('pyrkon-scavenger-hunt.time', Date.now(), {domain: wgCookieDomain});
+			$.cookie('pyrkon-scavenger-hunt.score', 0, {domain: wgCookieDomain});
+		}
 
-			document.body.appendChild(
-				getQuestionBoxMarkup()
-			);
+		getQuestion().done(function (data) {
+			$('.scavenger-hunt').html(getQuestionBoxMarkup(data.text));
+
+			initListeners();
 		});
+	}
+
+	function initListeners() {
+		$questionBox = $('.pyrkon-question-box');
+
+		$questionBox.find('form').on('submit', onSubmit);
+		$questionBox.find('.pyrkon-question-box__skip-link').on('click', goToNextQuestion);
+	}
+
+	function goToNextQuestion() {
+		setCurrentQuestionIndex(currentQuestionIndex + 1);
+
+		goToQuestion(
+			currentQuestionIndex
+		);
+	}
+
+	function onSubmit() {
+		var answer = $questionBox.find('input').val();
+
+		validateAnswer(answer).done(goToNextQuestion);
 	}
 
 	function setCurrentQuestionIndex (index) {
 		currentQuestionIndex = index;
-		cookies.set('pyrkon-scavenger-hunt.question', index, wgCookieDomain);
+		$.cookie('pyrkon-scavenger-hunt.question', index, {domain: wgCookieDomain});
 	}
 
-	function goToUrl(url) {
-		window.location.href = url;
+	function goToQuestion(index) {
+		$.get(
+			'/wikia.php?controller=PyrkonScavengerHuntApiController&method=getQuestionUrl&index=' +
+			index
+		).done(function (data) {
+			if (!data) {
+				return;
+			}
+
+			if (data.url) {
+				window.location.href = data.url;
+			}
+
+			if (data['is-over']) {
+				resolveGame();
+			}
+		});
 	}
 
-	function validateAnswer(questionIndex, submittedAnswer) {
+	function resolveGame() {
+		var time = Date.now() - $.cookie('pyrkon-scavenger-hunt.time');
+		console.log(time);
+	}
+
+	function validateAnswer(submittedAnswer) {
 		return $.get(
-			'/index.php?controller=PyrkonScavengerHuntApiController&method=validateAnswer&index=' +
+			'/wikia.php?controller=PyrkonScavengerHuntApiController&method=validateAnswer&index=' +
 			currentQuestionIndex +
 			'&answer=' +
 			submittedAnswer
-		).done(onAnswerValidated);
-	}
-
-	function onAnswerValidated(data) {
-		setCurrentQuestionIndex();
-
-		window.location.href = data.url;
+		);
 	}
 
 	function getQuestionBoxMarkup(question) {
@@ -58,9 +124,13 @@ require([
 		});
 	}
 
+	function getInitialMarkup() {
+		return mustache.render(templates['questionBoxInitial']);
+	}
+
 	function getQuestion() {
 		return $.get(
-			'/index.php?controller=PyrkonScavengerHuntApiController&method=getQuestion&index=' +
+			'/wikia.php?controller=PyrkonScavengerHuntApiController&method=getQuestion&index=' +
 			currentQuestionIndex
 		);
 	}

@@ -1842,3 +1842,4 @@ if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
 	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
 }
 
+include_once( "$IP/extensions/wikia/PyrkonScavengerHunt/PyrkonScavengerHunt.setup.php" );
