@@ -1,6 +1,6 @@
 {
-  "name": "trivia-quizzes-consumption",
-  "version": "0.0.0",
+  "name": "mw-trivia-quizzes-consumption",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@wikia/content-types-consumption": "^0.5.0"

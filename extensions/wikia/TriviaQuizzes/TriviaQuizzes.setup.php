@@ -21,4 +21,4 @@ $wgAutoloadClasses['TriviaQuizzesHooks'] = __DIR__ . '/TriviaQuizzesHooks.class.
 $wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesHooks::onBeforePageDisplay';
 
 // i18n
-// $wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';
+$wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';

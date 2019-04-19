@@ -4,8 +4,8 @@ class LatestActivityController extends WikiaController {
 	const MAX_ELEMENTS = 4;
 
 	public function executeIndex() {
-		global $wgLang, $wgTitle, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
-		global $wgEnableTriviaQuizzesAlpha, $wgTriviaQuizzesEnabledPages;
+		global $wgLang, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
+		global $wgEnableTriviaQuizzesAlpha, $wgTriviaQuizzesEnabledPages, $wgTitle;
 
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
@@ -61,7 +61,9 @@ class LatestActivityController extends WikiaController {
 
 		if ( $wgEnableTriviaQuizzesAlpha && in_array($wgTitle->getText(), $wgTriviaQuizzesEnabledPages) ) {
             $this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesAlpha );
-            $this->setVal( 'moduleHeader', "Featured Quizzes" );
+            // TODO use this string instead when we have i18n support, for now, hard code the string for all languages
+            // $this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
+            $this->setVal( 'moduleHeader', 'Featured Quizzes');
             $this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
         }
 
