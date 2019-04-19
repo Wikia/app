@@ -30,12 +30,12 @@ user:
     user_options: ''
   - user_id: 3
     user_name: Old test user
-    user_real_name: user real name2
-    user_email: user2@gmail.com
+    user_real_name: user real name3
+    user_email: user3@gmail.com
     user_touched: 20140101110111
-    user_token: something2
+    user_token: something3
     user_email_authenticated: 20140101110113
-    user_email_token: somefunnytoken2
+    user_email_token: somefunnytoken3
     user_email_token_expires: 20140130110113
     user_registration: sadfss
     user_editcount: 102
@@ -126,7 +126,7 @@ abuse_filter_log:
 page:
   - page_id: 1
     page_namespace: 2
-    page_title: 'Test user'
+    page_title: 'Test_user'
     page_is_redirect: 0
     page_len: 1
     page_latest: 1
