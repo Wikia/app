@@ -2,6 +2,7 @@
 
     <h2 class="has-icon"><?= $activityIcon ?><?= $moduleHeader ?></h2>
 
+    <!-- TODO CAKE-4746 -->
     <? if ( !isset($renderTriviaQuizzes) ): ?>
         <? if ( !empty( $changeList ) ): ?>
             <ul class="activity-items">

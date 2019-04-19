@@ -59,6 +59,7 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-activity-small', 'wds-icon wds-icon-small wds-activity-icon' ) );
 		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
 
+		// TODO https://wikia-inc.atlassian.net/browse/CAKE-4746
 		if ( $wgEnableTriviaQuizzesAlpha && in_array($wgTitle->getText(), $wgTriviaQuizzesEnabledPages) ) {
             $this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesAlpha );
             // TODO use this string instead when we have i18n support, for now, hard code the string for all languages
