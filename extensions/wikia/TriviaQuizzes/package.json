@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@wikia/content-types-consumption": "^0.4.1"
+    "@wikia/content-types-consumption": "^0.5.0"
   }
 }

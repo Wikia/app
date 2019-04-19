@@ -8971,3 +8971,10 @@ $wgEnableQualtricsSiteInterceptExt = false;
  * @var bool
  */
 $wgEnableTriviaQuizzesAlpha = false;
+
+/**
+ * Enables Quizzes extension on select pages
+ * @see CAKE-4585
+ * @var string[] $wgTriviaQuizzesEnabledPages
+ */
+$wgTriviaQuizzesEnabledPages = [];

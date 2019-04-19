@@ -2,7 +2,7 @@
 
     <h2 class="has-icon"><?= $activityIcon ?><?= $moduleHeader ?></h2>
 
-    <? if ( !$renderTriviaQuizzes ): ?>
+    <? if ( !isset($renderTriviaQuizzes) ): ?>
         <? if ( !empty( $changeList ) ): ?>
             <ul class="activity-items">
                 <? foreach ( $changeList as $item ): ?>

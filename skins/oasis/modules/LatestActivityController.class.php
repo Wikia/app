@@ -4,7 +4,8 @@ class LatestActivityController extends WikiaController {
 	const MAX_ELEMENTS = 4;
 
 	public function executeIndex() {
-		global $wgLang, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt, $wgEnableTriviaQuizzesAlpha;
+		global $wgLang, $wgTitle, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
+		global $wgEnableTriviaQuizzesAlpha, $wgTriviaQuizzesEnabledPages;
 
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
@@ -58,12 +59,11 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-activity-small', 'wds-icon wds-icon-small wds-activity-icon' ) );
 		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
 
-		if ($wgEnableTriviaQuizzesAlpha) {
+		if ( $wgEnableTriviaQuizzesAlpha && in_array($wgTitle->getText(), $wgTriviaQuizzesEnabledPages) ) {
             $this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesAlpha );
             $this->setVal( 'moduleHeader', "Featured Quizzes" );
             $this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
         }
-
 
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity( 600 );
