@@ -30,6 +30,8 @@ require([
 	}
 
 	function initNickListener() {
+		clearListeners();
+
 		$('.scavenger-hunt form').on('submit', function (evt) {
 			evt.preventDefault();
 
@@ -61,6 +63,8 @@ require([
 	}
 
 	function initListeners() {
+		clearListeners();
+
 		$questionBox = $('.pyrkon-question-box');
 
 		$questionBox.find('form').on('submit', onSubmit.bind(this));
@@ -124,6 +128,15 @@ require([
 		console.log(time);
 
 		$('.scavenger-hunt').html(getFinalMarkup());
+
+		clearListeners();
+
+		$('.scavenger-hunt button').on('click', function () {
+			resetGame();
+
+			$('.scavenger-hunt').html(getInitialMarkup());
+			initNickListener();
+		});
 	}
 
 	function validateAnswer(submittedAnswer) {
@@ -165,6 +178,16 @@ require([
 		$.cookie('pyrkon-scavenger-hunt.nick', null, {domain: wgCookieDomain});
 		$.cookie('pyrkon-scavenger-hunt.time', null, {domain: wgCookieDomain});
 		$.cookie('pyrkon-scavenger-hunt.question', null, {domain: wgCookieDomain});
+
+		currentQuestionIndex = null;
+		$questionBox = null;
+	}
+
+	function clearListeners() {
+		$('.scavenger-hunt button').off('click');
+		$('.pyrkon-question-box__form').off('submit');
+		$('.pyrkon-question-box__skip-link').off('click');
+
 	}
 
 	window.resetPyrkon = resetGame.bind(this);
