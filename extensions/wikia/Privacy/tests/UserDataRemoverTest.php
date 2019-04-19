@@ -130,19 +130,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		);
 	}
 
-	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		$testUser = User::newFromId( self::REMOVED_USER_ID );
-		( new UserDataRemover() )->removeGlobalUserData( $testUser );
-
-		$fakeUser = User::newFromId( self::FAKE_USER_ID );
-
-		$this->assertStringStartsWith( 'Anonymous', $fakeUser->getName(),
-			'User name does not start with \'Anonymous\'' );
-		$this->assertEquals( '', $fakeUser->getRealName(), 'User real name is not cleared' );
-		$this->assertEquals( '', $fakeUser->getEmail(), 'User email is not cleared' );
-		$this->assertEquals( '', $fakeUser->mBirthDate, 'User birth date is not cleared' );
-	}
-
 	public function testStaffLogsShouldBeRemoved() {
 		$testUser = User::newFromId( self::REMOVED_USER_ID );
 		( new UserDataRemover() )->removeGlobalUserData( $testUser );
