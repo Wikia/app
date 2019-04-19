@@ -7,19 +7,13 @@ $wgExtensionCredits['other'][] = [
 /**
  * Resources Loader modules
  */
-$wgResourceModules['quizzes.consumption'] = [
-    'remoteExtPath' => 'wikia/TriviaQuizzes',
-    'localBasePath' => __DIR__,
-    'scripts' => [ 'js/consumption.umd.js' ],
-];
-
 $wgResourceModules['ext.wikia.TriviaQuizzes'] = [
     'remoteExtPath' => 'wikia/TriviaQuizzes',
     'localBasePath' => __DIR__,
-    'scripts' => [ 'js/ext.TriviaQuizzes.js' ],
-    'dependencies' => [
-        'quizzes.consumption'
-    ],
+    'scripts' => [
+        'js/ext.TriviaQuizzes.js',
+        'js/consumption.umd.js' // dist-only verison of consumption lib
+    ]
 ];
 
 // controller

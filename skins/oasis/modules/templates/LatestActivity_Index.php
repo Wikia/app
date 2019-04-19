@@ -2,9 +2,7 @@
 
     <h2 class="has-icon"><?= $activityIcon ?><?= $moduleHeader ?></h2>
 
-    <? if ( $renderTriviaQuizzes ): ?>
-        <p>Here's a box and stuff and if you click it you can spawn a quiz it's pretty cool</p>
-    <? else: ?>
+    <? if ( !$renderTriviaQuizzes ): ?>
         <? if ( !empty( $changeList ) ): ?>
             <ul class="activity-items">
                 <? foreach ( $changeList as $item ): ?>
@@ -28,5 +26,7 @@
         <? if ( $renderCommunityEntryPoint ): ?>
             <?= F::app()->renderView( 'CommunityPageEntryPoint', 'Index' ) ?>
         <? endif; ?>
+    <? else: ?>
+        <div id="wikia-trivia-quizzes"></div>
     <? endif; ?>
 </section>

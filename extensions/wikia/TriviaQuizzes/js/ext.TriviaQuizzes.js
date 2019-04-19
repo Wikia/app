@@ -1,15 +1,13 @@
-require(['jquery', 'mw', 'content_types_consumption'], function ($, mw, consumption) {
+require(['jquery', 'content_types_consumption'], function ($, consumption) {
 	'use strict';
-	$(function () {
-		consumption.default('PageHeader', {
-			user: {
-				id: 0,
-				isGDPRApproved: true,
-			},
+	$(function() {
+		$('.WikiaRail').on('afterLoad.rail', function() {
+			consumption.default('wikia-trivia-quizzes', {
+				user: {
+					id: 0,
+					isGDPRApproved: true,
+				},
+			});
 		});
-
-		// load the thing
-
-		//railModule('wikia-recent-activity');
 	});
 });
