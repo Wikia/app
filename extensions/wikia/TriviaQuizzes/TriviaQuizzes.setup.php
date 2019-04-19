@@ -13,15 +13,12 @@ $wgResourceModules['ext.wikia.TriviaQuizzes'] = [
     'scripts' => [
         'js/ext.TriviaQuizzes.js',
         'js/consumption.umd.js' // dist-only verison of consumption lib
-    ]
+    ],
 ];
 
-// controller
-$wgAutoloadClasses['TriviaQuizzesController'] = __DIR__ . '/TriviaQuizzesController.class.php';
-
 // hooks
-//$wgHooks['ParserFirstCallInit'][] = 'TriviaQuizzesController::onParserFirstCallInit';
-$wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesController::onBeforePageDisplay';
+$wgAutoloadClasses['TriviaQuizzesHooks'] = __DIR__ . '/TriviaQuizzesHooks.class.php';
+$wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesHooks::onBeforePageDisplay';
 
 // i18n
 // $wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';
