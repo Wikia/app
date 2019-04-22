@@ -5,7 +5,8 @@ class LatestActivityController extends WikiaController {
 
 	public function executeIndex() {
 		global $wgLang, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
-		global $wgEnableTriviaQuizzesExt, $wgTriviaQuizzesEnabledPages, $wgTitle;
+		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
+		global $wgEnableTriviaQuizzesExt, $wgTriviaQuizzesEnabledPages;
 
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
