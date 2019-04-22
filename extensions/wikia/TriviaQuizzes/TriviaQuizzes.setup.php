@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = [
-	'name' => 'Trivia Quizzes',
-	'description' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TriviaQuizzes',
+    'name' => 'Trivia Quizzes',
+    'description' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TriviaQuizzes',
 ];
 
 /**
