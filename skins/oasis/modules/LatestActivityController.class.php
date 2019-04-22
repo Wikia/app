@@ -59,14 +59,13 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-activity-small', 'wds-icon wds-icon-small wds-activity-icon' ) );
 		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
 
-		// TODO https://wikia-inc.atlassian.net/browse/CAKE-4746
-		if ( $wgEnableTriviaQuizzesExt && in_array($wgTitle->getText(), $wgTriviaQuizzesEnabledPages) ) {
-            $this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
-            // TODO use this string instead when we have i18n support, for now, hard code the string for all languages
-            // $this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
-            $this->setVal( 'moduleHeader', 'Featured Quizzes');
-            $this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
-        }
+		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
+		$currentPageTitle = $this->getContext()->getTitle()->getPrefixedText();
+		if ( $wgEnableTriviaQuizzesExt && in_array($currentPageTitle, $wgTriviaQuizzesEnabledPages) ) {
+				$this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
+				$this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
+				$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
+		}
 
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity( 600 );
