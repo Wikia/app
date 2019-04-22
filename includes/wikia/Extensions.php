@@ -1843,7 +1843,7 @@ if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
 }
 
 // CAKE-4585
-if ( !empty( $wgEnableTriviaQuizzesAlpha ) ) {
+if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 

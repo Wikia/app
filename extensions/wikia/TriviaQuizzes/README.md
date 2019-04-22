@@ -2,7 +2,7 @@ This extension powers the new Trivia Quizzes module in Mediawiki. It requires th
 
 At the moment the extension will be visible in the right rail if the current conditions are true:
 
-- `wgEnableTriviaQuizzesAlpha` is `true`
+- `wgEnableTriviaQuizzesExt` is `true`
 - The current article page is whitelisted in `wgTriviaQuizzesEnabledPages`
 
 The embedded module will replace the "Recent Wiki Activity" (Oasis extension) if this is the case.

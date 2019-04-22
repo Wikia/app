@@ -8970,7 +8970,7 @@ $wgEnableQualtricsSiteInterceptExt = false;
  * @see CAKE-4585
  * @var bool
  */
-$wgEnableTriviaQuizzesAlpha = false;
+$wgEnableTriviaQuizzesExt = false;
 
 /**
  * Enables Quizzes extension on select pages

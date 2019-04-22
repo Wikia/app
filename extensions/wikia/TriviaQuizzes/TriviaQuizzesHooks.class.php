@@ -2,9 +2,9 @@
 
 class TriviaQuizzesHooks {
     public static function onBeforePageDisplay( OutputPage $out ) {
-        global $wgTitle, $wgEnableTriviaQuizzesAlpha, $wgTriviaQuizzesEnabledPages;
+        global $wgTitle, $wgEnableTriviaQuizzesExt, $wgTriviaQuizzesEnabledPages;
 
-        if ( $wgEnableTriviaQuizzesAlpha && in_array( $wgTitle->getText(), $wgTriviaQuizzesEnabledPages ) ) {
+        if ( $wgEnableTriviaQuizzesExt && in_array( $wgTitle->getText(), $wgTriviaQuizzesEnabledPages ) ) {
             $out->addModules( 'ext.wikia.TriviaQuizzes' );
         }
 
