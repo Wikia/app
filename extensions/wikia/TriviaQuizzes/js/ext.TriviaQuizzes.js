@@ -9,7 +9,7 @@ require(['jquery', 'content_types_consumption', 'wikia.trackingOptIn', 'mw'], fu
 				// https://github.com/Wikia/content-types/tree/master/consumption#usage
 				consumption.default('wikia-trivia-quizzes', {
 					environment: 'media-wiki',
-					pageType: 'article',
+					pageType: 'Article',
 					user: {
 						id: mw.config.get('wgUserId') || 0,
 						isGDPRApproved: trackingOptIn.isOptedIn(),
