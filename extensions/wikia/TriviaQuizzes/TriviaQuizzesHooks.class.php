@@ -1,10 +1,10 @@
 <?php
 
-class TriviaQuizzesHooks {
+class TriviaQuizzesHooks extends WikiaController {
 	public static function onBeforePageDisplay( OutputPage $out ) {
 		global $wgTitle, $wgEnableTriviaQuizzesExt, $wgTriviaQuizzesEnabledPages;
 
-		if ( $wgEnableTriviaQuizzesExt && in_array( $wgTitle->getText(), $wgTriviaQuizzesEnabledPages ) ) {
+		if ( $wgEnableTriviaQuizzesExt && in_array( $wgTitle->getPrefixedText(), $wgTriviaQuizzesEnabledPages ) ) {
 			$out->addModules( 'ext.wikia.TriviaQuizzes' );
 		}
 
