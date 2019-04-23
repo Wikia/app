@@ -133,7 +133,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldHaveAuditLog() {
-//		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID );
 
 		$dbr = wfGetDB( DB_SLAVE );
 
