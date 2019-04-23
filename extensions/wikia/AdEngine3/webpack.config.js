@@ -7,15 +7,18 @@ const compact = (collection) => Array.from(collection).filter(v => v != null);
 
 module.exports = function (env) {
 	const hoistDependencies = env && env['hoist-dependencies'];
+	const isDevelopment = process.env.NODE_ENV !== 'production';
+	const mode = isDevelopment ? 'development' : 'production';
+	const buildDirectory = isDevelopment ? 'dist-dev' : 'dist';
 
 	const core = {
-		mode: 'production',
+		mode,
 		context: __dirname,
 		entry: {
 			'engine': './src/vendors/ad-engine.js',
 		},
 		output: {
-			path: path.resolve(__dirname, 'dist/vendors'),
+			path: path.resolve(__dirname, `${buildDirectory}/vendors`),
 			filename: '[name].js',
 			libraryTarget: 'amd',
 			library: 'ext.wikia.adEngine3'
@@ -44,7 +47,7 @@ module.exports = function (env) {
 	};
 
 	const vendors = {
-		mode: 'production',
+		mode,
 		context: __dirname,
 		entry: {
 			'bidders': './src/vendors/ad-bidders.js',
@@ -57,7 +60,7 @@ module.exports = function (env) {
 			}
 		},
 		output: {
-			path: path.resolve(__dirname, 'dist/vendors'),
+			path: path.resolve(__dirname, `${buildDirectory}/vendors`),
 			filename: '[name].js',
 			libraryTarget: 'amd',
 			library: 'ext.wikia.adEngine3.[name]'
@@ -86,7 +89,7 @@ module.exports = function (env) {
 	};
 
 	const packages = {
-		mode: 'production',
+		mode,
 		context: __dirname,
 		entry: {
 			'ads': './src/index.js',
@@ -106,7 +109,7 @@ module.exports = function (env) {
 			}
 		},
 		output: {
-			path: path.resolve(__dirname, 'dist'),
+			path: path.resolve(__dirname, buildDirectory),
 			filename: '[name].js',
 			libraryTarget: 'amd',
 			library: 'ext.wikia.adEngine3.[name]'
