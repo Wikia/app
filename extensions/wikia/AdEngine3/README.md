@@ -3,7 +3,9 @@ This extensions runs ad stack using [@Wikia/ad-engine](https://github.com/Wikia/
 ## How does it work?
 
 All `*.js` files are build into `dist/` using webpack command 
-on each merge to dev branch (by using `build_adengine_assets_app` Jenkins job)
+on each merge to dev branch (by using `build_adengine_assets_app` Jenkins job).
+
+Everything starts in `module.js` file.
 
 ### Build assets for development
 
