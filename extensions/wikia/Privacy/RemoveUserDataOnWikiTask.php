@@ -30,7 +30,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeCheckUserData( int $userId ) {
-		try {
+//		try {
 			$db = wfGetDB( DB_MASTER );
 			// remove check user data
 			$db->delete( 'cu_changes', [ 'cuc_user' => $userId ], __METHOD__ );
@@ -38,12 +38,12 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$this->info( "Removed CheckUser data" );
 
 			return true;
-		}
-		catch ( DBError $error ) {
-			$this->error( "Couldn't remove CheckUser data", [ 'exception' => $error ] );
-
-			return false;
-		}
+//		}
+//		catch ( DBError $error ) {
+//			$this->error( "Couldn't remove CheckUser data", [ 'exception' => $error ] );
+//
+//			return false;
+//		}
 	}
 
 	/**
@@ -53,20 +53,20 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeIpFromRecentChanges( int $userId ) {
-		try {
+//		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->update( 'recentchanges', [ 'rc_ip_bin' => '' ], [ 'rc_user' => $userId ],
 				__METHOD__ );
 			$this->info( "Removed IPs from recent changes", [ 'user_id' => $userId ] );
 
 			return true;
-		}
-		catch ( DBError $error ) {
-			$this->error( "Couldn't remove IP from recent changes",
-				[ 'exception' => $error, 'user_id' => $userId ] );
-
-			return false;
-		}
+//		}
+//		catch ( DBError $error ) {
+//			$this->error( "Couldn't remove IP from recent changes",
+//				[ 'exception' => $error, 'user_id' => $userId ] );
+//
+//			return false;
+//		}
 	}
 
 	/**
@@ -78,7 +78,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	private function removeAbuseFilterData( int $userId ) {
 		global $wgEnableAbuseFilterExtension;
 		if ( $wgEnableAbuseFilterExtension ) {
-			try {
+//			try {
 				$db = wfGetDB( DB_MASTER );
 				$db->update( 'abuse_filter', [ 'af_user_text' => '' ], [ 'af_user' => $userId ],
 					__METHOD__ );
@@ -88,12 +88,12 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$this->info( "Removed abuse filter data" );
 
 				return true;
-			}
-			catch ( DBError $error ) {
-				$this->error( "Couldn't remove abuse filter data", [ 'exception' => $error ] );
-
-				return false;
-			}
+//			}
+//			catch ( DBError $error ) {
+//				$this->error( "Couldn't remove abuse filter data", [ 'exception' => $error ] );
+//
+//				return false;
+//			}
 		} else {
 			$this->info( "Skipping abuse filter, the extension is disabled" );
 
@@ -111,7 +111,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeUserPages( string $userDbKey ) {
-		try {
+//		try {
 			$dbr = wfGetDB( DB_SLAVE );
 
 			// We must only remove pages from user namespaces that have titles exactly like the username
@@ -134,13 +134,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$this->info( "Removed user pages", [ 'user_db_key' => $userDbKey ] );
 
 			return true;
-		}
-		catch ( Exception $error ) {
-			$this->error( "Couldn't remove user pages",
-				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
-
-			return false;
-		}
+//		}
+//		catch ( Exception $error ) {
+//			$this->error( "Couldn't remove user pages",
+//				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
+//
+//			return false;
+//		}
 	}
 
 	private function removePages( $pages ) {
@@ -157,7 +157,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeUserPagesFromRecentChanges( $userDbKey ) {
-		try {
+//		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'recentchanges',
 				[ 'rc_namespace' => self::USER_NAMESPACES, 'rc_title' => $userDbKey ], __METHOD__ );
@@ -168,13 +168,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$this->info( "Removed recent changes on user pages", [ "user_db_key" => $userDbKey ] );
 
 			return true;
-		}
-		catch ( DBError $error ) {
-			$this->error( "Couldn't remove user page history form recent changes",
-				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
-
-			return false;
-		}
+//		}
+//		catch ( DBError $error ) {
+//			$this->error( "Couldn't remove user page history form recent changes",
+//				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
+//
+//			return false;
+//		}
 	}
 
 	/**
@@ -184,7 +184,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeActionLogs( $userDbKey ) {
-		try {
+//		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'logging',
 				[ 'log_namespace' => self::USER_NAMESPACES, 'log_title' => $userDbKey ],
@@ -196,13 +196,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$this->info( 'Removed action logs on user pages', [ 'user_db_key' => $userDbKey ] );
 
 			return true;
-		}
-		catch ( DBError $error ) {
-			$this->error( "Couldn't remove action logs",
-				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
-
-			return false;
-		}
+//		}
+//		catch ( DBError $error ) {
+//			$this->error( "Couldn't remove action logs",
+//				[ 'exception' => $error, 'user_db_key' => $userDbKey ] );
+//
+//			return false;
+//		}
 	}
 
 	/**
@@ -212,18 +212,18 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeWatchlist( $userId ) {
-		try {
+//		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'watchlist', [ 'wl_user' => $userId ], __METHOD__ );
 			$this->info( "Removed user's watchlist" );
 
 			return true;
-		}
-		catch ( DBError $error ) {
-			$this->error( "Couldn't remove user's watchlist", [ 'exception' => $error ] );
-
-			return false;
-		}
+//		}
+//		catch ( DBError $error ) {
+//			$this->error( "Couldn't remove user's watchlist", [ 'exception' => $error ] );
+//
+//			return false;
+//		}
 	}
 
 	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $oldUserId = null ) {
