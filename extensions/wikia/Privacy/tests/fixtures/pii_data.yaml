@@ -179,10 +179,6 @@ watchlist:
     wl_title: 'A different page'
 
 rtbf_log:
-  - id: 1
-    user_id: 1
-    number_of_wikis: 2
-    global_data_removed: 0
   - id: 999
     user_id: 1
     number_of_wikis: 1
