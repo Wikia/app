@@ -17,13 +17,7 @@ services:
     depends_on:
       - php-wikia
   logger:
-    image: artifactory.wikia-inc.com/platform/fluentd_elastic:latest
-    volumes:
-      - ./fluent.conf:/fluentd/etc/config:ro
-      - ../../../nginx_logs:/var/nginx/logs
-    command: "fluentd -c /fluentd/etc/config -v"
-    environment:
-      - HOST_HOSTNAME=$HOST_HOSTNAME
+    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
