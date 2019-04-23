@@ -416,7 +416,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getMainPageLinkData(): array {
-		if ( self::getLandingPagePreference() == UserPreferencesV2::LANDING_PAGE_FEEDS ) {
+		global $wgContLanguageCode;
+
+		if ( self::getLandingPagePreference() == UserPreferencesV2::LANDING_PAGE_FEEDS && $wgContLanguageCode == 'en' ) {
 			return [
 				'type' => 'link-text',
 				'title' => [
