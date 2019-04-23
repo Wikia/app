@@ -27,8 +27,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->settings = $this->themeSettings->getSettings();
 		$domain = WikiFactory::cityIDtoDomain( $wgCityId );
 		$this->homePageUrl =
-			wfProtocolUrlToRelative( $domain . WikiFactory::cityIdToLanguagePath( $wgCityId ) .
-			                         '/' );
+			wfProtocolUrlToRelative( $domain . WikiFactory::cityIdToLanguagePath( $wgCityId ) );
 	}
 
 	public function getData(): array {
