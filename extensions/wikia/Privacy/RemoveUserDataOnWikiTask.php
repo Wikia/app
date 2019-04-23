@@ -268,7 +268,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 
 		$result = $removalWasSuccessful ? "yes" : "no";
 
-		throw new Exception("Removal status: $result - $auditLogId - $wgCityId - $userDbKey - $oldUserDbKey");
+		throw new Exception("Removal status: $result - $auditLogId - $wgCityId - $userDbKey");
 
 		$this->info( "Removed user data from wiki" );
 
