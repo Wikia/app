@@ -9,7 +9,10 @@ ENV LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
     PATH="/opt/pyenv/shims:/opt/pyenv/bin:$PATH" \
     PYENV_ROOT="/opt/pyenv" \
-    PYENV_SHELL="bash"
+    PYENV_SHELL="bash" \
+    WIKIA_ENVIRONMENT="sandbox" \
+    WIKIA_DATACENTER="sjc" \
+    SERVER_ID="177"
 RUN git clone --single-branch --depth 1 git://github.com/yyuu/pyenv.git $PYENV_ROOT
 
 # Install needed version, skip if already exists
@@ -19,12 +22,17 @@ RUN dash ~/.pyenv_profile
 RUN pyenv local 3.6.4
 RUN pip install --upgrade pip
 
-ADD app /usr/wikia/slot1/current/src/app
-ADD config /usr/wikia/slot1/current/src/config
+ADD app /usr/wikia/slot1/current/src
+ADD config /usr/wikia/slot1/current/config
 ADD rebuild /usr/wikia/slot1/current/src/rebuild
 
 RUN pip install pytest
 RUN pip install -r rebuild/requirements.txt
 
 ARG VAULT_TOKEN
-RUN echo "cd rebuild &&\n dash ~/.pyenv_profile &&\n   pyenv local 3.6.4  &&\n  export PYTHONWARNINGS="ignore:Unverified HTTPS request" &&\n pytest .    &&\n export WIKIA_ENVIRONMENT=sandbox &&\n SERVER_ID=177 php ../app/maintenance/rebuildLocalisationCache.php --threads=16 --primary   &&\n python ./bin/recreate_wiki.py --env=sjc  --debug --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --city-dbname=szlmercurycc --app-base-path='../app'   &&\n python bin/clear_fastly_cache.py --env=sjc --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --app-base-path='../app'" >> run_script
+RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  export PYTHONWARNINGS="ignore:Unverified HTTPS request" && pytest .
+
+
+RUN php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
+RUN echo "cd rebuild &&\n  echo '2' &&\n  python ./bin/recreate_wiki.py --env=sjc  --debug --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --city-dbname=szlmercurycc --app-base-path='../app'   &&\n echo '4' &&\n  python bin/clear_fastly_cache.py --env=sjc --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --app-base-path='../app'" >> run_script
+RUN dash ./run_script
