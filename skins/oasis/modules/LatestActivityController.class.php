@@ -62,7 +62,7 @@ class LatestActivityController extends WikiaController {
 
 		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
 		$currentPageTitle = $this->getContext()->getTitle()->getPrefixedText();
-		if ( $wgEnableTriviaQuizzesExt && in_array($currentPageTitle, $wgTriviaQuizzesEnabledPages) ) {
+		if ( $wgEnableTriviaQuizzesExt && in_array( $currentPageTitle, $wgTriviaQuizzesEnabledPages ) ) {
 				$this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
 				$this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
 				$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
