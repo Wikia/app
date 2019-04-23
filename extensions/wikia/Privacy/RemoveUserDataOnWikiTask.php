@@ -262,8 +262,11 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$results[] = $this->removeActionLogs( $oldUserDbKey );
 		}
 
-		RemovalAuditLog::markTaskAsFinished( $auditLogId, $wgCityId,
-			array_reduce( $results, function ( $acc, $res ) { return $acc && $res; }, true ) );
+		$removalWasSuccessful = array_reduce( $results, function ( $acc, $res ) { return $acc && $res; }, true );
+
+		RemovalAuditLog::markTaskAsFinished( $auditLogId, $wgCityId, $removalWasSuccessful);
+
+		throw new Exception("Removal status: $removalWasSuccessful - $auditLogId - $wgCityId");
 
 		$this->info( "Removed user data from wiki" );
 
