@@ -7,7 +7,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $langCode;
 	private $themeSettings;
 	private $settings;
-	private $mainPageUrl;
+	private $homePageUrl;
 
 	private $wordmarkData = null;
 	private $sitenameData = null;
@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt, $wgContLang;
+		global $wgCityId;
 
 		parent::__construct();
 
@@ -25,18 +25,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-
-		// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
-		// for Feeds And Posts alpha communities we need it as well
-		if ( !empty( $wgFandomCreatorCommunityId ) ||
-		     ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' )
-		) {
-			$this->mainPageUrl = wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) );
-		} elseif ( $wgContLang->getCode() !== 'en' ) {
-			$this->mainPageUrl = wfProtocolUrlToRelative( WikiFactory::cityIdToLanguagePath( $wgCityId ) );
-		} else {
-			$this->mainPageUrl = wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
-		}
+		$domain = WikiFactory::cityIDtoDomain( $wgCityId );
+		$this->homePageUrl =
+			wfProtocolUrlToRelative( $domain . WikiFactory::cityIdToLanguagePath( $wgCityId ) .
+			                         '/' );
 	}
 
 	public function getData(): array {
@@ -219,7 +211,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					if ( $file instanceof File && $file->width > 0 && $file->height > 0 ) {
 						$this->wordmarkData = [
 							'type' => 'link-image',
-							'href' => $this->mainPageUrl,
+							'href' => $this->homePageUrl,
 							'image-data' => [
 								'type' => 'image-external',
 								'url' => $this->themeSettings->getWordmarkUrl(),
@@ -257,7 +249,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'type' => 'text',
 					'value' => F::app()->wg->Sitename,
 				],
-				'href' => $this->mainPageUrl,
+				'href' => $this->homePageUrl,
 				'tracking_label' => 'sitename',
 			];
 		}
