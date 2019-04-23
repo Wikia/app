@@ -17,6 +17,7 @@ require([
 		path: window.wgCookiePath
 	};
 	var $questionBox = null;
+	var answer = null;
 
 	function init() {
 		$(document.body).append('<div class="scavenger-hunt"></div>');
@@ -73,6 +74,7 @@ require([
 		$questionBox.find('form').on('submit', onSubmit.bind(this));
 		$questionBox.find('.pyrkon-question-box__skip-link').on('click', function () {
 			$('.scavenger-hunt button').prop('disabled', true);
+			saveCurrentAnswerInCookies.bind(this)(false);
 			goToNextQuestion.bind(this)()
 		});
 	}
@@ -88,10 +90,24 @@ require([
 	function onSubmit(evt) {
 		evt.preventDefault();
 
-		var answer = $questionBox.find('input').val();
+		answer = $questionBox.find('input').val().trim().toLowerCase();
+
 		if (answer) {
-			validateAnswer(answer.trim().toLowerCase()).done(onAnswerValidated);
+			validateAnswer(answer).done(onAnswerValidated);
 		}
+	}
+
+	function saveCurrentAnswerInCookies(isValid) {
+		var answers = $.cookie('pyrkon-scavenger-hunt.answers');
+		var answersParsed = answers ? JSON.parse(answers) : [];
+
+		answersParsed.push({
+			questionId: currentQuestionIndex,
+			value: answer,
+			isValid: isValid
+		});
+
+		$.cookie('pyrkon-scavenger-hunt.answers', JSON.stringify(answersParsed), {domain: wgCookieDomain});
 	}
 
 	function onAnswerValidated(data) {
@@ -101,6 +117,8 @@ require([
 		if (isValid) {
 			$.cookie('pyrkon-scavenger-hunt.score', score + 1, {domain: wgCookieDomain});
 		}
+
+		saveCurrentAnswerInCookies(isValid);
 
 		goToNextQuestion();
 	}
@@ -136,6 +154,8 @@ require([
 		$('.scavenger-hunt').html(getFinalMarkup());
 
 		clearListeners();
+
+		saveScorePermanently();
 
 		$('.scavenger-hunt button').on('click', function () {
 			resetGame();
@@ -181,6 +201,7 @@ require([
 
 	function resetGame() {
 		$.cookie('pyrkon-scavenger-hunt.score', null, {domain: wgCookieDomain});
+		$.cookie('pyrkon-scavenger-hunt.answers', null, {domain: wgCookieDomain});
 		$.cookie('pyrkon-scavenger-hunt.nick', null, {domain: wgCookieDomain});
 		$.cookie('pyrkon-scavenger-hunt.time', null, {domain: wgCookieDomain});
 		$.cookie('pyrkon-scavenger-hunt.question', null, {domain: wgCookieDomain});
@@ -193,7 +214,18 @@ require([
 		$('.scavenger-hunt button').off('click');
 		$('.pyrkon-question-box__form').off('submit');
 		$('.pyrkon-question-box__skip-link').off('click');
+	}
 
+	function saveScorePermanently() {
+		var nick = $.cookie('pyrkon-scavenger-hunt.nick');
+		var time = $.cookie('pyrkon-scavenger-hunt.time');
+		var answers = JSON.parse($.cookie('pyrkon-scavenger-hunt.answers'));
+
+		$.post('https://services.wikia.com/pyrkonscavengerhunt/games', {
+			userName: nick,
+			totalTime: time,
+			answers: answers
+		});
 	}
 
 	window.resetPyrkon = resetGame.bind(this);
