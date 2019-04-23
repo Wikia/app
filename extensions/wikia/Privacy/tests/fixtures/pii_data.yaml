@@ -42,7 +42,7 @@ user:
     user_birthdate: '1998-01-02'
     user_options: ''
   - user_id: 32769627
-    user_name: FANDOMBot
+    user_name: FANDOMbot
     user_real_name: fandom bot
     user_email: bot@fandom.com
     user_touched: 20140101110111
