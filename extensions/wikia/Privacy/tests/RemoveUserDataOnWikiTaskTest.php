@@ -132,14 +132,4 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 			'Watchlist is not empty');
 	}
 
-	public function testShouldHaveAuditLog() {
-		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID );
-
-		$dbr = wfGetDB( DB_SLAVE );
-
-		$this->assertEquals( 1,
-			$dbr->selectField( 'rtbf_log_details', 'count(*)', [ 'log_id' => self::TEST_AUDIT_ID, 'was_successful' => 1 ],
-				__METHOD__ ), 'No audit log found' );
-	}
-
 }
