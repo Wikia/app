@@ -26,7 +26,7 @@ class SpecialRequestToBeForgottenInternalController extends WikiaSpecialPageCont
 		} else {
 			$userId = $user->getId();
 			$dataRemover = new UserDataRemover();
-			$dataRemover->removeAllPersonalUserData( $userId );
+			$dataRemover->startRemovalProcess( $userId );
 			$this->setVal( 'message', 'Request to forget ' . $userName . ' with id=' . $userId . ' sent' );
 		}
 	}

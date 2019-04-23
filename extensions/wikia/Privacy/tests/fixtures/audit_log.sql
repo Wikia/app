@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS rtbf_log (
   id int PRIMARY KEY AUTO_INCREMENT,
 	user_id int(5) NOT NULL,
 	created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	number_of_wikis int
+	number_of_wikis int,
+	global_data_removed bool
 );
 
 CREATE TABLE IF NOT EXISTS rtbf_log_details (

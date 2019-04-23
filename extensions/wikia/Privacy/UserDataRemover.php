@@ -9,15 +9,16 @@ class UserDataRemover {
 	private $logContext = [];
 
 	/**
-	 * Permanently removes or anonimizes all personal data of the given user.
+	 * Start the MW data removal process for RTBF requests.
 	 *
 	 * @param $userId
-	 * @return removal data
+	 * @return int audit log id
 	 */
-	public function removeAllPersonalUserData( $userId ) {
+	public function startRemovalProcess( $userId ) {
 		$user = User::newFromId( $userId );
 		if ( $user->isAnon() ) {
 			$this->warning( "Can't remove data for anon" );
+
 			return;
 		}
 
@@ -29,19 +30,7 @@ class UserDataRemover {
 			'user_id' => $userId
 		];
 
-		$username = $user->getName();
-		$fakeUserId = $this->getFakeUserId( $username );
-		$oldUsername = null;
-		if ( !empty( $fakeUserId ) ) {
-			$fakeUser = User::newFromId( $fakeUserId );
-			$oldUsername = $fakeUser->getName();
-			$this->removeUserData( $fakeUser );
-			$this->connectUserToRenameRecord( $userId, $fakeUserId );
-
-			$this->info( "Removed data connected to old username", ['rename_user_id' => $fakeUserId] );
-		}
-
-		$this->removeUserData( $user );
+		$fakeUserId = $this->getFakeUserId( $user->getName() );
 
 		// remove local data on all wikis edited by the user
 		$userWikis = $this->getUserWikis( $userId );
@@ -49,7 +38,7 @@ class UserDataRemover {
 		RemovalAuditLog::setNumberOfWikis( $auditLogId, count( $userWikis ) );
 
 		$task = new RemoveUserDataOnWikiTask();
-		$task->call( 'removeUserDataOnCurrentWiki', $auditLogId, $userId, $username, $oldUsername );
+		$task->call( 'removeUserDataOnCurrentWiki', $auditLogId, $userId, $fakeUserId );
 		$task->setQueue( Queue::RTBF_QUEUE_NAME )->wikiId( $userWikis )->queue();
 
 		$this->info( "Wiki data removal queued for user $userId" );
@@ -58,7 +47,7 @@ class UserDataRemover {
 		return $auditLogId;
 	}
 
-	private function removeUserData( User $user ) {
+	public function removeGlobalUserData( User $user ) {
 		try {
 			global $wgExternalSharedDB;
 
@@ -80,9 +69,9 @@ class UserDataRemover {
 			wfWaitForSlaves( $dbMaster->getDBname() );
 
 			$dbMaster->update( 'user', [
-					'user_name' => $newUserName,
-					'user_birthdate' => null,
-				], [ 'user_id' => $userId ], __METHOD__ );
+				'user_name' => $newUserName,
+				'user_birthdate' => null,
+			], [ 'user_id' => $userId ], __METHOD__ );
 
 			$dbMaster->delete( 'user_email_log', [ 'user_id' => $userId ] );
 			$dbMaster->delete( 'user_properties', [ 'up_user' => $userId ] );
@@ -101,11 +90,12 @@ class UserDataRemover {
 			$user->deleteCache();
 			$this->removeUserDataFromStaffLog( $userId );
 
-			$this->info( "Removed user's global data", ['new_user_name' => $newUserName ] );
+			$this->info( "Removed user's global data", [ 'new_user_name' => $newUserName ] );
 
-		} catch ( Exception $error ) {
+		}
+		catch ( Exception $error ) {
 			// just log and rethrow
-			$this->error( "Couldn't remove global user data", ['exception' => $error] );
+			$this->error( "Couldn't remove global user data", [ 'exception' => $error ] );
 			throw $error;
 		}
 	}
@@ -137,28 +127,16 @@ class UserDataRemover {
 		], __METHOD__ );
 	}
 
-	private function connectUserToRenameRecord( int $userId, int $fakeUserId ) {
-		global $wgExternalSharedDB;
-		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-
-		$dbMaster->insert( 'user_properties', [
-			[
-				'up_user' => $fakeUserId,
-				'up_property' => 'removedRenamedUser',
-				'up_value' => $userId,
-			],
-		] );
-	}
-
 	private function getUserWikis( int $userId ) {
 		global $wgSpecialsDB;
 		$specialsDbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
+
+		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id',
+			[ 'user_id' => $userId ], __METHOD__, [ 'DISTINCT' ] );
 	}
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
 		return $this->logContext;
 	}
-
 }

@@ -30,7 +30,7 @@ class RemoveUserDataController extends WikiaController {
 		$this->info( "Right to be forgotten request for user $userId", ['userId' => $userId] );
 
 		$dataRemover = new UserDataRemover();
-		$auditLogId = $dataRemover->removeAllPersonalUserData( $userId );
+		$auditLogId = $dataRemover->startRemovalProcess( $userId );
 		
 
 		$this->response->setCode( self::ACCEPTED );
@@ -92,14 +92,8 @@ class RemoveUserDataController extends WikiaController {
 			return;
 		}
 
-		// count all completed per-wiki tasks
-		$wikisCompleted = (int) $specialsDbr->selectField(
-			RemovalAuditLog::DETAILS_TABLE,
-			'count(*)',
-			[
-				'log_id' => $logEntry->id
-			]
-		);
+		// check if all data was removed
+		$processIsCompleted = RemovalAuditLog::allDataWasRemoved( $logEntry->id );
 
 		// we assume that the process is completed when all per-wiki tasks are done
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
@@ -107,7 +101,7 @@ class RemoveUserDataController extends WikiaController {
 			'userId' => $userId,
 			'logId' => $logEntry->id,
 			'created' => $logEntry->created,
-			'is_completed' => $wikisCompleted === (int) $logEntry->number_of_wikis,
+			'is_completed' => $processIsCompleted,
 		] );
 	}
 

@@ -55,7 +55,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		$testUser = User::newFromId( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalUserData( $testUser );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
 		$otherUser = User::newFromId( self::OTHER_USER_ID );
@@ -73,7 +74,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		$testUser = User::newFromId( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalUserData( $testUser );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -99,7 +101,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		$testUser = User::newFromId( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalUserData( $testUser );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -127,20 +130,9 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		);
 	}
 
-	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::RENAMED_USER_ID );
-
-		$fakeUser = User::newFromId( self::FAKE_USER_ID );
-
-		$this->assertStringStartsWith( 'Anonymous', $fakeUser->getName(),
-			'User name does not start with \'Anonymous\'' );
-		$this->assertEquals( '', $fakeUser->getRealName(), 'User real name is not cleared' );
-		$this->assertEquals( '', $fakeUser->getEmail(), 'User email is not cleared' );
-		$this->assertEquals( '', $fakeUser->mBirthDate, 'User birth date is not cleared' );
-	}
-
 	public function testStaffLogsShouldBeRemoved() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		$testUser = User::newFromId( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalUserData( $testUser );
 
 		$db = wfGetDB( DB_SLAVE, [] );
 
@@ -158,7 +150,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldAnonymizeAnfispoof() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		$testUser = User::newFromId( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalUserData( $testUser );
 
 		// check basic functionality
 		$spoof = new SpoofUser( self::REMOVED_USER_NAME );
