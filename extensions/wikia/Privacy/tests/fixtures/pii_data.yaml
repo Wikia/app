@@ -41,6 +41,19 @@ user:
     user_editcount: 102
     user_birthdate: '1998-01-02'
     user_options: ''
+  - user_id: 32769627
+    user_name: FANDOMBot
+    user_real_name: fandom bot
+    user_email: bot@fandom.com
+    user_touched: 20140101110111
+    user_token: something4
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken4
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 102
+    user_birthdate: '1998-01-02'
+    user_options: ''
 
 cu_log:
   - cul_target_id: 1
