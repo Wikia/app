@@ -65,6 +65,7 @@ class OasisController extends WikiaController {
 		$this->dynamicYield = null;
 		$this->krux = null;
 		$this->netzathleten = null;
+		$this->samba = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -249,6 +250,7 @@ class OasisController extends WikiaController {
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->samba = AnalyticsEngine::track('Samba', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		wfProfileOut(__METHOD__);
