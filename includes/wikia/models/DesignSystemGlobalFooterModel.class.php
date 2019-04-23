@@ -34,6 +34,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		$data = [
+			'is-wikia-org' => false,
 			'header' => [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
