@@ -130,6 +130,12 @@ class AdEngine3
 	private static function shouldUseProductionAssets() {
 		$wg = F::app()->wg;
 
-		return self::$forceProductionAssets || !$wg->AdDriverAdEngine3DevAssets;
+		if (self::$forceProductionAssets || !$wg->AdDriverAdEngine3DevAssets) {
+			return true;
+		}
+
+		$mainFile = __DIR__ . '/dist-dev/ads.js';
+
+		return !file_exists( $mainFile );
 	}
 }
