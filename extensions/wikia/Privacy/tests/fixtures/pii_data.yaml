@@ -183,6 +183,11 @@ rtbf_log:
     user_id: 1
     number_of_wikis: 2
     global_data_removed: 0
+  - id: 999
+    user_id: 1
+    number_of_wikis: 1
+    global_data_removed: 1
 rtbf_log_details:
   - log_id: 999
     wiki_id: 1
+    was_successful: 1
