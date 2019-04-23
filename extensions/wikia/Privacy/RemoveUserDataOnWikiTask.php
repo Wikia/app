@@ -267,7 +267,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 
 		$this->info( "Removed user data from wiki" );
 
-		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId ) ) {
+		// after removing data from a wiki, we must check if all the user's wikis (all wikis that the user edited) were cleared of their data
+		// only after all wiki-specific data is removed, we can proceed with removing the user's global data
+		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId, DB_MASTER ) ) {
 			$dataRemover = new UserDataRemover();
 			if ( !empty( $oldUserId ) ) {
 				$dataRemover->removeGlobalUserData( $oldUser );

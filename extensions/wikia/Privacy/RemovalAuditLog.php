@@ -25,11 +25,12 @@ class RemovalAuditLog {
 			->update( self::LOG_TABLE, [ 'global_data_removed' => true ], [ 'log_id' => $logId ], __METHOD__ );
 	}
 
-	public static function allWikiDataWasRemoved( $logId, $detailsDbType = DB_MASTER ) {
+	public static function allWikiDataWasRemoved( $logId, $detailsDbType ) {
 		$expectedWikis = (int)self::getDb( DB_SLAVE )
 			->selectField( self::LOG_TABLE, 'number_of_wikis', [ 'id' => $logId ], __METHOD__ );
 
-		// since we're using this right after updating a row
+		// since we're usually using this right after updating a row, we must use DB_MASTER to read the current state of the db
+		// when checking a (potentially) finished process, DB_SLAVE can be used as well
 		$finishedWikis = (int)self::getDb( $detailsDbType )->selectField(
 			RemovalAuditLog::DETAILS_TABLE,
 			'count(*)',
