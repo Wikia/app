@@ -155,14 +155,14 @@ require([
 
 		clearListeners();
 
-		saveScorePermanently();
-
-		$('.scavenger-hunt button').on('click', function () {
+		saveScorePermanently().then(function () {
 			resetGame();
 
-			$('.scavenger-hunt').html(getInitialMarkup());
-			initNickListener();
-		});
+			$('.scavenger-hunt button').on('click', function () {
+				$('.scavenger-hunt').html(getInitialMarkup());
+				initNickListener();
+			});
+		}.bind(this));
 	}
 
 	function validateAnswer(submittedAnswer) {
@@ -221,11 +221,11 @@ require([
 		var time = $.cookie('pyrkon-scavenger-hunt.time');
 		var answers = JSON.parse($.cookie('pyrkon-scavenger-hunt.answers'));
 
-		$.post('https://services.wikia.com/pyrkonscavengerhunt/games', {
+		return $.post('https://services.wikia.com/pyrkon-scavenger-hunt/games', JSON.stringify({
 			userName: nick,
 			totalTime: time,
 			answers: answers
-		});
+		}));
 	}
 
 	window.resetPyrkon = resetGame.bind(this);
