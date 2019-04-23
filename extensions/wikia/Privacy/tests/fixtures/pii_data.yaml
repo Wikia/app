@@ -186,3 +186,4 @@ rtbf_log:
 rtbf_log_details:
   - log_id: 1
     wiki_id: 1
+    was_successful: 1
