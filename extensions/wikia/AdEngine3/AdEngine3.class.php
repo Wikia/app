@@ -128,13 +128,14 @@ class AdEngine3
 	}
 
 	private static function shouldUseProductionAssets() {
+		global $IP;
+
 		$wg = F::app()->wg;
 
 		if (self::$forceProductionAssets || !$wg->AdDriverAdEngine3DevAssets) {
 			return true;
 		}
-
-		$mainFile = __DIR__ . '/dist-dev/ads.js';
+		$mainFile = $IP . '/extensions/wikia/AdEngine3/dist-dev/ads.js';
 
 		return !file_exists( $mainFile );
 	}
