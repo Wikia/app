@@ -31,7 +31,9 @@ $wgAdDriverAdEngine3DevAssets = true;
 ```
 
 When you are using dev assets it is possible to easily access prod (dist) assets 
-by appending query url parameter: `?ae3_prod=1`
+by appending query url parameter: `?ae3_prod=1`.
+
+⚠️ Sandbox is using dev assets by default when code is deployed with `debug` parameter.
 
 
 ### Build assets for production
