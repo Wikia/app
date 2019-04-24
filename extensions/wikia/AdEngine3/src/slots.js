@@ -166,6 +166,7 @@ export default {
 				targeting: {
 					loc: 'hivi',
 					rv: 1,
+					xna: 0,
 				},
 			},
 			bottom_leaderboard: {
@@ -321,6 +322,10 @@ export default {
 			context.set('slots.hivi_leaderboard.targeting.xna', '0');
 			context.set('slots.top_leaderboard.targeting.xna', '0');
 			context.set('slots.bottom_leaderboard.targeting.xna', '0');
+		}
+
+		if (context.get('custom.hasFeaturedVideo')) {
+			context.set(`slots.incontent_boxad_1.targeting.xna`, '1')
 		}
 	},
 
