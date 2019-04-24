@@ -35,4 +35,4 @@ RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  export PYTHON
 
 
 RUN php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
-RUN echo "cd rebuild &&\n  python ./bin/recreate_wiki.py --env=sjc  --debug --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --city-dbname=szlmercurycc --app-base-path='../app'   &&\n  python bin/clear_fastly_cache.py --env=sjc --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --app-base-path='../app'" >> run_script
+RUN echo "cd rebuild &&\n  echo "Vault token: $VAULT_TOKEN" &&\n  python ./bin/recreate_wiki.py --env=sjc  --debug --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --city-dbname=szlmercurycc --app-base-path='../app'   &&\n  python bin/clear_fastly_cache.py --env=sjc --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --app-base-path='../app'" >> run_script
