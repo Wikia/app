@@ -22,6 +22,7 @@ class Navigation {
 		);
 		$this->exploreItems = $this->getExploreItems();
 		$this->discussLink = $this->getDiscussLink();
+		$this->mainPageLink = $this->getMainPageLink();
 	}
 
 	private function getExploreItems(): array {
@@ -39,22 +40,37 @@ class Navigation {
 		);
 	}
 
+	private function mapLinkDataToLink($linkData) {
+		return new Link(
+			new Label(
+				$linkData['title']['key'],
+				Label::TYPE_TRANSLATABLE_TEXT,
+				$linkData['image-data']['name']
+			),
+			$linkData['href'],
+			$linkData['tracking_label']
+		);
+	}
+
 	private function getDiscussLink() {
 		$discussData = $this->model->getDiscussLinkData();
 		$discussLink = null;
 
 		if ( !empty( $discussData ) ) {
-			$discussLink = new Link(
-				new Label(
-					$discussData['title']['key'],
-					Label::TYPE_TRANSLATABLE_TEXT,
-					$discussData['image-data']['name']
-				),
-				$discussData['href'],
-				$discussData['tracking_label']
-			);
+			$discussLink = $this->mapLinkDataToLink( $discussData );
 		}
 
 		return $discussLink;
+	}
+
+	private function getMainPageLink() {
+		$mainPageLinkData = $this->model->getMainPageLinkData();
+		$mainPageLink = null;
+
+		if ( !empty( $mainPageLinkData ) ) {
+			$mainPageLink = $this->mapLinkDataToLink( $mainPageLinkData );
+		}
+
+		return $mainPageLink;
 	}
 }
