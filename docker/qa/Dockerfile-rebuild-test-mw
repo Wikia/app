@@ -13,7 +13,8 @@ ENV LANG="C.UTF-8" \
     PYENV_SHELL="bash" \
     WIKIA_ENVIRONMENT="sandbox" \
     WIKIA_DATACENTER="sjc" \
-    SERVER_ID="177"
+    SERVER_ID="177" \
+    PYTHONWARNINGS="ignore:Unverified HTTPS request"
 RUN git clone --single-branch --depth 1 git://github.com/yyuu/pyenv.git $PYENV_ROOT
 
 # Install needed version, skip if already exists
@@ -30,9 +31,8 @@ ADD rebuild /usr/wikia/slot1/current/src/rebuild
 RUN pip install pytest
 RUN pip install -r rebuild/requirements.txt
 
-RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  export PYTHONWARNINGS="ignore:Unverified HTTPS request" && pytest .
+RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  pytest .
 
 
-#RUN php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
-#RUN echo "#!/bin/bash\n cd rebuild &&\n  echo "Vault token: $VAULT_TOKEN" &&\n  python ./bin/recreate_wiki.py --env=sjc  --debug --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --city-dbname=szlmercurycc --app-base-path='../app'   &&\n  python bin/clear_fastly_cache.py --env=sjc --vault-address=https://active.vault.service.sjc.consul:8200 --vault-token=$VAULT_TOKEN --app-base-path='../app'" >> run_script
+RUN php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
 RUN chmod 0777 /usr/wikia/slot1/current/src/docker/qa/run_script.sh
