@@ -56,6 +56,7 @@
 <? endif ?>
 
 <?= $headItems ?>
+<?= $samba ?>
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
