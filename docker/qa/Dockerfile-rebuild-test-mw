@@ -5,6 +5,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:225a68a
 RUN sed -i 's/zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN apt update && apt install -q -y vim procps less git openssl make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+
 ENV LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
     PATH="/opt/pyenv/shims:/opt/pyenv/bin:$PATH" \
@@ -12,7 +13,8 @@ ENV LANG="C.UTF-8" \
     PYENV_SHELL="bash" \
     WIKIA_ENVIRONMENT="sandbox" \
     WIKIA_DATACENTER="sjc" \
-    SERVER_ID="177"
+    SERVER_ID="177" \
+    VAULT_TOKEN
 RUN git clone --single-branch --depth 1 git://github.com/yyuu/pyenv.git $PYENV_ROOT
 
 # Install needed version, skip if already exists
