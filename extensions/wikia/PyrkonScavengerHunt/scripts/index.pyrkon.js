@@ -18,6 +18,7 @@ require([
 	};
 	var $questionBox = null;
 	var answer = null;
+	var isLoading = false;
 
 	function init() {
 		$(document.body).append('<div class="scavenger-hunt"></div>');
@@ -73,9 +74,13 @@ require([
 
 		$questionBox.find('form').on('submit', onSubmit.bind(this));
 		$questionBox.find('.pyrkon-question-box__skip-link').on('click', function () {
-			$('.scavenger-hunt button').prop('disabled', true);
-			saveCurrentAnswerInCookies.bind(this)(false);
-			goToNextQuestion.bind(this)()
+			if (!isLoading) {
+				$('.scavenger-hunt button').prop('disabled', true);
+				saveCurrentAnswerInCookies.bind(this)(false);
+				goToNextQuestion.bind(this)();
+
+				isLoading = true;
+			}
 		});
 	}
 
@@ -93,7 +98,11 @@ require([
 		answer = $questionBox.find('input').val().trim().toLowerCase();
 
 		if (answer) {
-			validateAnswer(answer).done(onAnswerValidated);
+			if (!isLoading) {
+				validateAnswer(answer).done(onAnswerValidated);
+
+				isLoading = true;
+			}
 		}
 	}
 
@@ -208,6 +217,7 @@ require([
 
 		currentQuestionIndex = null;
 		$questionBox = null;
+		isLoading = false;
 	}
 
 	function clearListeners() {
