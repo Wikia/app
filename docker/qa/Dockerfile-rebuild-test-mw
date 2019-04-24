@@ -13,8 +13,8 @@ ENV LANG="C.UTF-8" \
     PYENV_SHELL="bash" \
     WIKIA_ENVIRONMENT="sandbox" \
     WIKIA_DATACENTER="sjc" \
-    SERVER_ID="177" \
-    VAULT_TOKEN
+    SERVER_ID="177"
+ENV VAULT_TOKEN
 RUN git clone --single-branch --depth 1 git://github.com/yyuu/pyenv.git $PYENV_ROOT
 
 # Install needed version, skip if already exists
