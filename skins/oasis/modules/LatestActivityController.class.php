@@ -61,7 +61,7 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
 
 		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
-		$currentPageTitle = $wgTitle->getTitle()->getPrefixedText();
+		$currentPageTitle = $wgTitle->getPrefixedText();
 		if ( $wgEnableTriviaQuizzesExt && in_array( $currentPageTitle, $wgTriviaQuizzesEnabledPages ) ) {
 			$this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
 			$this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
