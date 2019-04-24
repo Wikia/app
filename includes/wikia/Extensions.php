@@ -1842,3 +1842,8 @@ if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
 	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
 }
 
+// CAKE-4585
+if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
+    include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
+}
+
