@@ -21,6 +21,14 @@ require([
 	var isLoading = false;
 
 	function init() {
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			},
+			contentType: 'application/json; charset=utf-8'
+		});
+
 		$(document.body).append('<div class="scavenger-hunt"></div>');
 
 		if (!$.cookie('pyrkon-scavenger-hunt.nick')) {
@@ -36,16 +44,32 @@ require([
 
 		$('.scavenger-hunt form').on('submit', function (evt) {
 			evt.preventDefault();
-			$('.scavenger-hunt button').prop('disabled', true);
-
 			var nick = $('.scavenger-hunt input').val();
 
 			if (nick) {
-				$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
+				$('.scavenger-hunt button').prop('disabled', true);
 
-				goToQuestion(0);
+				validateNick(nick);
 			}
 		}.bind(this));
+	}
+
+	function validateNick(nick) {
+		$.post(
+			'https://services.fandom.com/pyrkon-scavenger-hunt/games/verify',
+			JSON.stringify({
+				userName: nick
+			})
+		).done(function () {
+			$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
+			goToQuestion(0);
+		}).fail(function () {
+			new window.BannerNotification('This nick is already taken by someone else')
+				.setType('error')
+				.show();
+
+			isLoading = false;
+		});
 	}
 
 	function initQuestion() {
@@ -164,7 +188,7 @@ require([
 
 		clearListeners();
 
-		saveScorePermanently().then(function () {
+		saveScorePermanently().always(function () {
 			resetGame();
 
 			$('.scavenger-hunt button').on('click', function () {
@@ -231,7 +255,7 @@ require([
 		var time = $.cookie('pyrkon-scavenger-hunt.time');
 		var answers = JSON.parse($.cookie('pyrkon-scavenger-hunt.answers'));
 
-		return $.post('https://services.wikia.com/pyrkon-scavenger-hunt/games', JSON.stringify({
+		return $.post('https://services.fandom.com/pyrkon-scavenger-hunt/games', JSON.stringify({
 			userName: nick,
 			totalTime: Math.round((Date.now() - Number(time)) / 1000),
 			answers: answers

@@ -2437,3 +2437,12 @@ $config['pyrkon_scavenger_hunt_scss'] = [
 		'//extensions/wikia/PyrkonScavengerHunt/styles/index.scss',
 	]
 ];
+
+$config['pyrkon_results_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/PyrkonScavengerHunt/scripts/results.pyrkon.js',
+		'//extensions/wikia/PyrkonScavengerHunt/scripts/templates.mustache.js',
+	]
+];
