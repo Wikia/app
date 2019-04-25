@@ -233,7 +233,7 @@ require([
 
 		return $.post('https://services.wikia.com/pyrkon-scavenger-hunt/games', JSON.stringify({
 			userName: nick,
-			totalTime: time,
+			totalTime: Math.round((Date.now() - Number(time)) / 1000),
 			answers: answers
 		}));
 	}
