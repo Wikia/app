@@ -322,6 +322,7 @@ export default {
 			context.set('slots.top_leaderboard.targeting.xna', '0');
 			context.set('slots.bottom_leaderboard.targeting.xna', '0');
 		}
+		context.set(`slots.incontent_boxad_1.targeting.xna`, context.get('custom.hasFeaturedVideo') ? '1' : '0');
 	},
 
 	setupTopLeaderboard() {
