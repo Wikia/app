@@ -36,11 +36,11 @@ require([
 
 		$('.scavenger-hunt form').on('submit', function (evt) {
 			evt.preventDefault();
+			var nick = $('.scavenger-hunt input').val();
 
 			if (nick) {
 				$('.scavenger-hunt button').prop('disabled', true);
 
-				var nick = $('.scavenger-hunt input').val();
 				$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
 
 				goToQuestion(0);
