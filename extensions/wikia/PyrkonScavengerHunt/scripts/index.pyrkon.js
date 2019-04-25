@@ -164,7 +164,7 @@ require([
 
 		clearListeners();
 
-		saveScorePermanently().then(function () {
+		saveScorePermanently().always(function () {
 			resetGame();
 
 			$('.scavenger-hunt button').on('click', function () {
