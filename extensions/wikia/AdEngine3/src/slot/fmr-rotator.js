@@ -236,8 +236,6 @@ function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCC
  */
 export function rotateIncontentBoxad(slotName) {
 	nextSlotName = slotName;
-	context.set(`slots.${slotName}.targeting.xna`, context.get('custom.hasFeaturedVideo') ? '1' : '0');
-
 	recirculationDisabled = context.get('custom.isRecirculationDisabled');
 	recirculationElement = document.getElementById('recirculation-rail');
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
