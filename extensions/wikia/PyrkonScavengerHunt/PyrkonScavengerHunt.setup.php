@@ -11,11 +11,21 @@ $dir = __DIR__ . '/';
  */
 $wgAutoloadClasses['PyrkonScavengerHuntHooks'] = $dir . 'PyrkonScavengerHuntHooks.class.php';
 $wgAutoloadClasses['PyrkonScavengerHuntApiController'] = $dir . 'PyrkonScavengerHuntApiController.class.php';
+$wgAutoloadClasses['SpecialPyrkonScavengerHuntController'] = $dir . 'SpecialPyrkonScavengerHuntController.class.php';
 
 /**
  * Hooks
  */
 $wgHooks['BeforePageDisplay'][] = 'PyrkonScavengerHuntHooks::onBeforePageDisplay';
+
+/**
+ * Special Pages
+ */
+$wgSpecialPages['PyrkonScavengerHunt'] = 'SpecialPyrkonScavengerHuntController';
+
+/**
+ * Credits
+ */
 
 $wgExtensionCredits['other'][] = [
 	'name' => 'Pyrkon Scavenger Hunt',
