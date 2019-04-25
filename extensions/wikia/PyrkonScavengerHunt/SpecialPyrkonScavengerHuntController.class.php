@@ -5,7 +5,7 @@
  */
 class SpecialPyrkonScavengerHuntController extends WikiaSpecialPageController {
 	public function __construct() {
-		parent::__construct( 'PyrkonScavengerHunt', '', false );
+		parent::__construct( 'Pyrkon', '', false );
 	}
 
 	public function index() {

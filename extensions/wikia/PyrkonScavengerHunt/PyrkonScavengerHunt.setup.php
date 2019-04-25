@@ -21,7 +21,7 @@ $wgHooks['BeforePageDisplay'][] = 'PyrkonScavengerHuntHooks::onBeforePageDisplay
 /**
  * Special Pages
  */
-$wgSpecialPages['PyrkonScavengerHunt'] = 'SpecialPyrkonScavengerHuntController';
+$wgSpecialPages['Pyrkon'] = 'SpecialPyrkonScavengerHuntController';
 
 /**
  * Credits
