@@ -21,6 +21,13 @@ require([
 	var isLoading = false;
 
 	function init() {
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+
 		$(document.body).append('<div class="scavenger-hunt"></div>');
 
 		if (!$.cookie('pyrkon-scavenger-hunt.nick')) {

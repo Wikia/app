@@ -10,7 +10,14 @@ require([
 	'use strict';
 
 	function showResults() {
-		return $.get('https://services.fandom.com/pyrkon-scavenger-hunt/games')
+		$.ajaxSetup({
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+
+		return $.get('https://services.wikia.com/pyrkon-scavenger-hunt/games')
 			.then(function (data) {
 				if (!data) {
 					// no results
