@@ -41,11 +41,27 @@ require([
 			if (nick) {
 				$('.scavenger-hunt button').prop('disabled', true);
 
-				$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
-
-				goToQuestion(0);
+				validateNick(nick);
 			}
 		}.bind(this));
+	}
+
+	function validateNick(nick) {
+		$.post(
+			'https://services.wikia.com/pyrkon-scavenger-hunt/games/verify',
+			JSON.stringify({
+				userName: nick
+			})
+		).done(function () {
+			$.cookie('pyrkon-scavenger-hunt.nick', nick, {domain: wgCookieDomain});
+			goToQuestion(0);
+		}).fail(function () {
+			new window.BannerNotification('This nick is already taken by someone else')
+				.setType('error')
+				.show();
+
+			isLoading = false;
+		});
 	}
 
 	function initQuestion() {
