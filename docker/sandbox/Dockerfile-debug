@@ -12,7 +12,7 @@ WORKDIR /AdEngine3
 RUN npm --version
 
 RUN npm set unsafe-perm=true
-RUN npm ci && npm dedupe && npm prune
+RUN npm install
 
 RUN npm run build --production
 
