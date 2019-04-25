@@ -130,28 +130,28 @@ require([
 		}
 	}
 
-	function saveCurrentAnswerInCookies(isValid) {
+	function saveCurrentAnswerInCookies(isCorrect) {
 		var answers = $.cookie('pyrkon-scavenger-hunt.answers');
 		var answersParsed = answers ? JSON.parse(answers) : [];
 
 		answersParsed.push({
 			questionId: currentQuestionIndex,
 			value: answer,
-			isValid: isValid
+			isCorrect: isCorrect
 		});
 
 		$.cookie('pyrkon-scavenger-hunt.answers', JSON.stringify(answersParsed), {domain: wgCookieDomain});
 	}
 
 	function onAnswerValidated(data) {
-		var isValid = data['is-valid'];
+		var isCorrect = data['is-valid'];
 		var score = Number($.cookie('pyrkon-scavenger-hunt.score'));
 
-		if (isValid) {
+		if (isCorrect) {
 			$.cookie('pyrkon-scavenger-hunt.score', score + 1, {domain: wgCookieDomain});
 		}
 
-		saveCurrentAnswerInCookies(isValid);
+		saveCurrentAnswerInCookies(isCorrect);
 
 		goToNextQuestion();
 	}
