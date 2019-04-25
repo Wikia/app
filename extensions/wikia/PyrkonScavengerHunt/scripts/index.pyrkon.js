@@ -25,7 +25,8 @@ require([
 			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			}
+			},
+			contentType: 'application/json; charset=utf-8'
 		});
 
 		$(document.body).append('<div class="scavenger-hunt"></div>');

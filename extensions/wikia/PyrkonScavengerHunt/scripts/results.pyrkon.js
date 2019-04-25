@@ -14,7 +14,8 @@ require([
 			crossDomain: true,
 			xhrFields: {
 				withCredentials: true
-			}
+			},
+			contentType: 'application/json; charset=utf-8'
 		});
 
 		return $.get('https://services.wikia.com/pyrkon-scavenger-hunt/games')
