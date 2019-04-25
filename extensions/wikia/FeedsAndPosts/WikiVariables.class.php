@@ -11,6 +11,7 @@ class WikiVariables {
 		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions;
 
 		$wikiVariables = [
+			'wikiId' => $wgCityId,
 			'basePath' => $wgServer . $wgScriptPath,
 			'dbName' => $wgDBname,
 			'getStartedUrl' =>  $this->getStartedUrl(),
