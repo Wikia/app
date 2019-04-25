@@ -48,7 +48,7 @@ require([
 
 	function validateNick(nick) {
 		$.post(
-			'https://services.wikia.com/pyrkon-scavenger-hunt/games/verify',
+			'https://services.fandom.com/pyrkon-scavenger-hunt/games/verify',
 			JSON.stringify({
 				userName: nick
 			})
@@ -247,7 +247,7 @@ require([
 		var time = $.cookie('pyrkon-scavenger-hunt.time');
 		var answers = JSON.parse($.cookie('pyrkon-scavenger-hunt.answers'));
 
-		return $.post('https://services.wikia.com/pyrkon-scavenger-hunt/games', JSON.stringify({
+		return $.post('https://services.fandom.com/pyrkon-scavenger-hunt/games', JSON.stringify({
 			userName: nick,
 			totalTime: time,
 			answers: answers
