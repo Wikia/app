@@ -9,6 +9,6 @@ class SpecialPyrkonScavengerHuntController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-
+		\Wikia::addAssetsToOutput( 'pyrkon_results_js' );
 	}
 }
