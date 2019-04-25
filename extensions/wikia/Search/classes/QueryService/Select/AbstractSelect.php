@@ -4,6 +4,7 @@
  */
 namespace Wikia\Search\QueryService\Select;
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Search\QueryService\DependencyContainer, Wikia\Search\Config, \Solarium_Client, Wikia\Search\ResultSet, Wikia\Search\Utilities, \Solarium_Query_Select, \Solarium_Result_Select;
 
 /**
@@ -326,6 +327,9 @@ abstract class AbstractSelect {
 		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
 			$fields[] = Utilities::field( $field, $language );
 		}
+
+		WikiaLogger::instance()->info("fields " .json_encode( $fields));
+
 
 		return $fields;
 	}

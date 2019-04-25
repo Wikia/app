@@ -3,8 +3,12 @@
  * Class definition for WikiaSearchController.
  */
 
-use \Wikia\Logger\WikiaLogger;
-use \Wikia\Search\Result\ResultHelper;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Search\Result\ResultHelper;
+use Wikia\Search\UnifiedSearch\SearchResultWrapper;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
  * Responsible for handling search requests.
@@ -100,17 +104,34 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
-		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
-			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
-			$search->getMatch();
 
-			$this->handleArticleMatchTracking( $searchConfig );
-			$search->search();
+		WikiaLogger::instance()->info("fields " .json_encode( $searchConfig->getRequestedFields()));
+
+
+		if ( $this->useUnifiedSearch() ) {
+			$service = new UnifiedSearchService();
+			$request = new UnifiedSearchRequest( $searchConfig );
+			$result = $service->search( $request );
+			$this->setResponseFromUnifiedSearch( $searchConfig, $result );
+		} else {
+			if ( $searchConfig->getQuery()->hasTerms() ) {
+				$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
+				/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
+				$search->getMatch();
+
+				$this->handleArticleMatchTracking( $searchConfig );
+				$search->search();
+			}
+
+			$this->setResponseValuesFromConfig( $searchConfig );
 		}
-
 		$this->setPageTitle( $searchConfig );
-		$this->setResponseValuesFromConfig( $searchConfig );
+	}
+
+	private function useUnifiedSearch(): bool {
+		$header = RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' );
+
+		return !empty( $header );
 	}
 
 	/**
@@ -121,12 +142,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function fandomStories() {
-		$this->response->setValues(
-			[
-				'stories' => $this->getVal( 'stories', [] ),
-				'viewMoreLink' => $this->getVal( 'viewMoreLink', null ),
-			]
-		);
+		$this->response->setValues( [
+			'stories' => $this->getVal( 'stories', [] ),
+			'viewMoreLink' => $this->getVal( 'viewMoreLink', null ),
+		] );
 	}
 
 	/**
@@ -135,7 +154,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function getPages() {
 		$this->wg->AllowMemcacheWrites = false;
 		$indexer = new Wikia\Search\Indexer();
-		$this->getResponse()->setData( $indexer->getPages( explode( '|', $this->getVal( 'ids' ) ) ) );
+		$this->getResponse()->setData( $indexer->getPages( explode( '|',
+			$this->getVal( 'ids' ) ) ) );
 		$this->getResponse()->setFormat( 'json' );
 	}
 
@@ -188,7 +208,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$entityResponse = [];
 		$service = new Wikia\Search\MediaWikiService();
 		foreach ( $entities as $entity ) {
-			$match = $service->getArticleMatchForTermAndNamespaces( $entity, $this->wg->ContentNamespaces );
+			$match =
+				$service->getArticleMatchForTermAndNamespaces( $entity,
+					$this->wg->ContentNamespaces );
 			$entityResponse[$entity] = ( $match === null ) ? '' : $match->getResult()->getTitle();
 		}
 		$response = $this->getResponse();
@@ -212,33 +234,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
-		$videoOnly = (bool) $request->getVal( 'videoOnly', false );
+		$videoOnly = (bool)$request->getVal( 'videoOnly', false );
 		$config->setQuery( $query )
 			->setCombinedMediaSearch( true )
 			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 			->setLimit( 4 )
 			->setStart( $this->getVal( 'next', 0 ) );
 
-		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi(
-			[ 'url', 'id', 'pageid', 'wid', 'title' ],
-			true
-		);
+		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [
+			'url',
+			'id',
+			'pageid',
+			'wid',
+			'title',
+		], true );
 		$dimensions = [ 'width' => 120, 'height' => 90 ];
 		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
 			if ( !isset( $result['thumbnail'] ) ) {
-				$result['thumbnail'] = $service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
+				$result['thumbnail'] =
+					$service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
 			}
 		}
 		$title = SpecialPage::getTitleFor( "Search" );
-		$results['videoUrl'] = $title->getLocalURL(
-			[
-				'ns6' => 1,
-				'fulltext' => 'Search',
-				'search' => $query,
-				'filters[]' => $videoOnly ? 'is_video' : ''
-			]
-		);
+		$results['videoUrl'] = $title->getLocalURL( [
+			'ns6' => 1,
+			'fulltext' => 'Search',
+			'search' => $query,
+			'filters[]' => $videoOnly ? 'is_video' : '',
+		] );
 
 		$response = $this->getResponse();
 		$response->setFormat( 'json' );
@@ -256,28 +280,34 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			try {
 				$category = $result['title'];
 				$colonSploded = explode( ':', $category );
-				$namespace = ( new Wikia\Search\MediaWikiService )->getNamespaceIdForString( $colonSploded[0] );
+				$namespace =
+					( new Wikia\Search\MediaWikiService )->getNamespaceIdForString( $colonSploded[0] );
 				// remove "Category:", since it doesn't work with ArticlesApiController
-				$category = ( is_int( $namespace ) && $namespace == NS_CATEGORY ) ?
-					implode( ':', array_slice( $colonSploded, 1 ) ) : $category;
+				$category =
+					( is_int( $namespace ) && $namespace == NS_CATEGORY ) ? implode( ':',
+						array_slice( $colonSploded, 1 ) ) : $category;
 				//@todo use single API call here when expansion is released
-				$pageData = $this->app->sendRequest(
-					'ArticlesApiController',
-					'getTop',
-					[ 'namespaces' => 0, 'category' => $category ]
-				)->getData();
+				$pageData =
+					$this->app->sendRequest( 'ArticlesApiController', 'getTop',
+						[ 'namespaces' => 0, 'category' => $category ] )->getData();
 				$ids = [];
 				$counter = 0;
 				foreach ( $pageData['items'] as $pageDatum ) {
 					$ids[] = $pageDatum['id'];
-					if ( $counter++ >= 9 ) {
+					if ( $counter ++ >= 9 ) {
 						break;
 					}
 				}
 				if ( !empty( $ids ) ) {
-					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
+					$params = [
+						'ids' => implode( ',', $ids ),
+						'height' => 50,
+						'width' => 50,
+						'abstract' => 150,
+					];
 					$detailResponse =
-						$this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+						$this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )
+							->getData();
 					foreach ( $detailResponse['items'] as $item ) {
 						$processed = static::processArticleItem( $item );
 						if ( !empty( $processed ) ) {
@@ -285,7 +315,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						}
 					}
 				}
-			} catch ( Exception $e ) {
+			}
+			catch ( Exception $e ) {
 			} // ignoring api errors for gracefulness
 		}
 		//limit number of results
@@ -332,7 +363,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		//dont substr if next char is alphanumeric
 		$splitted = str_split( $lowerAbstract );
-		if ( isset( $cutIn ) && ( ctype_punct( $splitted[$cutIn] ) || ctype_space( $splitted[$cutIn] ) ) ) {
+		if ( isset( $cutIn ) &&
+			 ( ctype_punct( $splitted[$cutIn] ) || ctype_space( $splitted[$cutIn] ) ) ) {
 			$item['abstract'] = substr( $normSpacesAbs, $cutIn );
 		} elseif ( !empty( $item['abstract'] ) ) {
 			$item['abstract'] = ' - ' . preg_replace( '|^[^\pL\pN\p{Pi}"]+|', '', $normSpacesAbs );
@@ -355,7 +387,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 *
-	 * @param  Wikia\Search\Config $searchConfig
+	 * @param Wikia\Search\Config $searchConfig
 	 *
 	 * @return boolean true if on page 1 and not routed, false if not on page 1
 	 */
@@ -395,9 +427,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		// For backwards compatibility ?fulltext=0 means use Go search
 		// and if fulltext is set and not equal to 0, it means that the
 		// user is trying to manually go to search and override their preference
-		return $fulltext === '0' ||
-		$this->getVal( 'go' ) !== null ||
-		( $fulltext === null && $this->getUser()->getGlobalPreference( 'enableGoSearch' ) );
+		return $fulltext === '0' || $this->getVal( 'go' ) !== null ||
+			   ( $fulltext === null && $this->getUser()->getGlobalPreference( 'enableGoSearch' ) );
 	}
 
 	/**
@@ -412,12 +443,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		// Nirvana request does not process certain Unicode stuff correctly which causes HTTP 500
 		$request = $wgRequest;
 		$searchConfig = new Wikia\Search\Config();
-		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
-		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
+		$resultsPerPage =
+			$this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
+		$resultsPerPage =
+			empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage
+				: $this->wg->SearchResultsPerPage;
 		$searchConfig->setQuery( $request->getVal( 'query', $request->getVal( 'search' ) ) )
-			->setCityId(
-				$this->wg->CityId
-			)
+			->setCityId( $this->wg->CityId )
 			->setLimit( $request->getInt( 'limit', $resultsPerPage ) )
 			->setPage( $request->getInt( 'page', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
@@ -435,17 +467,66 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$wikiArticleThreshold = $languageService->getWikiArticlesThreshold();
 
 			if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
-				$wikiArticleThreshold = $request->getVal( 'minArticleCount', $wikiArticleThreshold );
+				$wikiArticleThreshold =
+					$request->getVal( 'minArticleCount', $wikiArticleThreshold );
 			}
 			$searchConfig->setXwikiArticleThreshold( $wikiArticleThreshold );
 		}
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
-			$searchConfig->setRequestedFields( explode( ',', $request->getVal( 'jsonfields', '' ) ) );
+			$searchConfig->setRequestedFields( explode( ',',
+				$request->getVal( 'jsonfields', '' ) ) );
 		}
 
 		return $searchConfig;
+	}
+
+	private function setResponseFromUnifiedSearch(
+		\Wikia\Search\Config $searchConfig, UnifiedSearchResult $result
+	) {
+		$resultsForDisplay = new SearchResultWrapper($result->results);
+
+		$response = $this->getResponse();
+		$format = $response->getFormat();
+		if ( $format == 'json' || $format == 'jsonp' ) {
+			$response->setData( $resultsForDisplay->toArray( $this->getSelectedJsonFields() ) );
+			return;
+		}
+
+		$tabsArgs = [
+			'config' => $searchConfig,
+			'filters' => $this->getVal( 'filters', [] ),
+		];
+
+		$this->setVal( 'correctedQuery', /* we don't do that */ null  );
+		$this->setVal( 'results', $resultsForDisplay->getIterable() );
+		$this->setVal( 'resultsFound', $result->resultsFound );
+		$this->setVal( 'resultsFoundTruncated', $result->resultsFound );
+		$this->setVal( 'isOneResultsPageOnly', $result->pagesCount < 2 );
+		$this->setVal( 'pagesCount', $result->pagesCount );
+		$this->setVal( 'currentPage', $result->currentPage );
+		$this->setVal( 'paginationLinks', $this->sendSelfRequest( 'pagination', $tabsArgs ) );
+		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', $tabsArgs ) );
+		$this->setVal( 'query', $searchConfig->getQuery()->getQueryForHtml() );
+		$this->setVal( 'resultsPerPage', $searchConfig->getLimit() );
+		$this->setVal( 'specialSearchUrl', $this->wg->Title->getFullUrl() );
+		$this->setVal( 'isInterWiki', $searchConfig->getInterWiki() );
+		$this->setVal( 'namespaces', $searchConfig->getNamespaces() );
+		$this->setVal( 'hub', $searchConfig->getHub() );
+		$this->setVal( 'hasArticleMatch', false );//$searchConfig->hasArticleMatch() );
+		$this->setVal( 'isCorporateWiki', false ); //$this->isCorporateWiki() );
+		$this->setVal( 'wgExtensionsPath', $this->wg->ExtensionsPath );
+		$this->setVal( 'isGridLayoutEnabled', BodyController::isGridLayoutEnabled() );
+	}
+
+	private function getSelectedJsonFields() {
+		$fields = $this->getVal( 'jsonfields', 'title,url,pageid' );
+		if ( $fields != null ) {
+			return explode( ',', $fields );
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -459,9 +540,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $format == 'json' || $format == 'jsonp' ) {
 			$results = $searchConfig->getResults();
 			if ( $results ) {
-				$response->setData(
-					$results->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) )
-				);
+				$response->setData( $results->toArray( $this->getSelectedJsonFields() ) );
 			} else {
 				$response->setData( [] );
 			}
@@ -469,10 +548,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 		if ( !$searchConfig->getInterWiki() ) {
-			$this->setVal(
-				'advancedSearchBox',
-				$this->sendSelfRequest( 'advancedBox', [ 'config' => $searchConfig ] )
-			);
+			$this->setVal( 'advancedSearchBox',
+				$this->sendSelfRequest( 'advancedBox', [ 'config' => $searchConfig ] ) );
 		}
 
 		$isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
@@ -482,7 +559,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
-		$this->setVal( 'results', $searchConfig->getResults() );
+		$this->setVal( 'correctedQuery', $searchConfig->getResults()->getQuery() );
+		$this->setVal( 'results', $searchConfig->getResults()->getResults() );
 		$this->setVal( 'resultsFound', $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
 		$this->setVal( 'isOneResultsPageOnly', $searchConfig->getNumPages() < 2 );
@@ -500,7 +578,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isCorporateWiki', $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath', $this->wg->ExtensionsPath );
 		$this->setVal( 'isGridLayoutEnabled', $isGridLayoutEnabled );
-		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
 
 		if ( $this->isCorporateWiki() ) {
 			$resultsLang = $searchConfig->getLanguageCode();
@@ -516,14 +593,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
-		if ( strlen( $sanitizedQuery ) > 0 &&
-			in_array( 0, $searchConfig->getNamespaces() ) &&
-			!in_array( 6, $searchConfig->getNamespaces() )
-		) {
-			$combinedMediaResult = $this->sendSelfRequest(
-				'combinedMediaSearch',
-				[ 'q' => $sanitizedQuery, 'videoOnly' => true ]
-			)->getData();
+		if ( strlen( $sanitizedQuery ) > 0 && in_array( 0, $searchConfig->getNamespaces() ) &&
+			 !in_array( 6, $searchConfig->getNamespaces() ) ) {
+			$combinedMediaResult =
+				$this->sendSelfRequest( 'combinedMediaSearch',
+					[ 'q' => $sanitizedQuery, 'videoOnly' => true ] )->getData();
 			if ( isset( $combinedMediaResult ) && sizeof( $combinedMediaResult['items'] ) == 4 ) {
 				$this->setVal( 'mediaData', $combinedMediaResult );
 			}
@@ -541,12 +615,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
-		$this->response->setValues(
-			[
-				'fandomStories' => [],
-				'topWikiArticles' => [],
-			]
-		);
+		$this->response->setValues( [
+			'fandomStories' => [],
+			'topWikiArticles' => [],
+		] );
 
 		if ( $searchConfig->getInterWiki() ) {
 			return;
@@ -554,47 +626,41 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		// SUS-1219: Use proper sanity check to handle space-only queries correctly
 		$hasTerms = $searchConfig->getQuery()->hasTerms();
-		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && $hasTerms ) {
+		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' &&
+			 $hasTerms ) {
 			$query = $searchConfig->getQuery()->getSanitizedQuery();
 
 			WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
 				'query' => $query,
 			] );
 
-			$fandomStories = \WikiaDataAccess::cache(
-				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
-				\WikiaResponse::CACHE_STANDARD,
-				function() use ( $query ) {
-					return ( new \Wikia\Search\Services\ESFandomSearchService() )->query( $query );
-				}
-			);
+			$fandomStories =
+				\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
+					\WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
+						return ( new \Wikia\Search\Services\ESFandomSearchService() )->query( $query );
+					} );
 
 			if ( !empty( $fandomStories ) ) {
-				if ( count( $fandomStories ) === \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
+				if ( count( $fandomStories ) ===
+					 \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
 					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
 				} else {
 					$viewMoreFandomStoriesLink = null;
 				}
 
-				$this->response->setValues(
-					[
-						'fandomStories' => array_slice(
-							$fandomStories,
-							0,
-							static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE
-						),
-						'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
-					]
-				);
+				$this->response->setValues( [
+					'fandomStories' => array_slice( $fandomStories, 0,
+						static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE ),
+					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
+				] );
 
 				return;
 			}
 		}
 
-		$topWikiArticles = \Wikia\Search\TopWikiArticles::getArticlesWithCache(
-			$this->wg->CityId,
-			$this->response->getVal( 'isGridLayoutEnabled' )
-		);
+		$topWikiArticles =
+			\Wikia\Search\TopWikiArticles::getArticlesWithCache( $this->wg->CityId,
+				$this->response->getVal( 'isGridLayoutEnabled' ) );
 
 		if ( !empty( $topWikiArticles ) ) {
 			$this->setVal( 'topWikiArticles', $topWikiArticles );
@@ -610,23 +676,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$matchResult = $searchConfig->getWikiMatch()->getResult();
 		if ( $matchResult !== null ) {
 			$matchResult['onWikiMatch'] = true;
-			$this->setVal(
-				'wikiMatch',
-				$this->getApp()->getView(
-					'WikiaSearch',
-					'exactWikiMatch',
-					ResultHelper::extendResult(
-						$matchResult,
-						'wiki',
-						ResultHelper::MAX_WORD_COUNT_EXACT_MATCH,
-						[
+			$this->setVal( 'wikiMatch', $this->getApp()
+				->getView( 'WikiaSearch', 'exactWikiMatch',
+					ResultHelper::extendResult( $matchResult, 'wiki',
+						ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, [
 							'width' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_WIDTH,
-							'height' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT
-						],
-						$searchConfig->getQuery()->getSanitizedQuery()
-					)
-				)
-			);
+							'height' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT,
+						], $searchConfig->getQuery()->getSanitizedQuery() ) ) );
 		}
 	}
 
@@ -637,22 +693,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$this->wg->Out->setPageTitle(
-				wfMsg(
-					'wikiasearch2-page-title-with-query',
-					[ ucwords( $searchConfig->getQuery()->getSanitizedQuery() ), $this->wg->Sitename ]
-				)
-			);
+			$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-with-query', [
+				ucwords( $searchConfig->getQuery()->getSanitizedQuery() ),
+				$this->wg->Sitename,
+			] ) );
 		} else {
 			if ( $searchConfig->getInterWiki() ) {
 				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->wg->Out->setPageTitle(
-					wfMsg(
-						'wikiasearch2-page-title-no-query-intrawiki',
-						[ $this->wg->Sitename ]
-					)
-				);
+				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-intrawiki',
+					[ $this->wg->Sitename ] ) );
 			}
 		}
 	}
@@ -732,8 +782,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
 	 *
-	 * @see    SearchControllerTest::testAdvancedBox
 	 * @throws Exception
+	 * @see    SearchControllerTest::testAdvancedBox
 	 */
 	public function advancedBox() {
 		$config = $this->getVal( 'config', false );
@@ -754,8 +804,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * This is how we generate the search type tabs in the left-hand rail
 	 *
-	 * @see    SearchControllerTest::tabs
 	 * @throws Exception
+	 * @see    SearchControllerTest::tabs
 	 */
 	public function tabs() {
 		$config = $this->getVal( 'config', false );
@@ -789,32 +839,37 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * This handles pagination via a template script.
 	 *
-	 * @see    SearchControllerTest::testPagination
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
+	 * @see    SearchControllerTest::testPagination
 	 */
 	public function pagination() {
 		$config = $this->getVal( 'config', false );
 		if ( ( !$config instanceof Wikia\Search\Config ) || !$this->request->isInternal() ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			$this->skipRendering();
+
 			return false;
 		}
 
 		if ( !$config->getResultsFound() ) {
 			$this->skipRendering();
+
 			return false;
 		}
 
 		$page = $config->getPage();
 
-		$windowFirstPage = ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1;
+		$windowFirstPage =
+			( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1;
 
 		$windowLastPage =
-			( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) ? ( $page + self::PAGES_PER_WINDOW ) :
-				$config->getNumPages() );
+			( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) ? ( $page +
+																				  self::PAGES_PER_WINDOW )
+				: $config->getNumPages() );
 
 		if ( $windowLastPage <= 1 ) {
 			$this->skipRendering();
+
 			return false;
 		}
 
@@ -832,11 +887,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		foreach ( $config->getNamespaces() as $ns ) {
-			$extraParams['ns'.$ns] = 1;
+			$extraParams['ns' . $ns] = 1;
 		}
 
 		$limit = $config->getLimit();
-		if (  $limit !== WikiaSearchController::RESULTS_PER_PAGE ) {
+		if ( $limit !== WikiaSearchController::RESULTS_PER_PAGE ) {
 			$extraParams['limit'] = $limit;
 		}
 
@@ -854,13 +909,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$extraParams['searchId'] = $searchId;
 		}
 
-		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );
-		$this->setVal( 'pagesNum', 			$config->getNumPages() );
-		$this->setVal( 'currentPage', 		$page );
-		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
-		$this->setVal( 'windowLastPage', 	$windowLastPage );
-		$this->setVal( 'pageTitle', 		$pageTitle );
-		$this->setVal( 'extraParams',       $extraParams );
+		$this->setVal( 'query', $config->getQuery()->getSanitizedQuery() );
+		$this->setVal( 'pagesNum', $config->getNumPages() );
+		$this->setVal( 'currentPage', $page );
+		$this->setVal( 'windowFirstPage', $windowFirstPage );
+		$this->setVal( 'windowLastPage', $windowLastPage );
+		$this->setVal( 'pageTitle', $pageTitle );
+		$this->setVal( 'extraParams', $extraParams );
 	}
 }
 

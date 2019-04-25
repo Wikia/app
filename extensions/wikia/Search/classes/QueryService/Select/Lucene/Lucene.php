@@ -30,7 +30,7 @@ class Lucene extends AbstractSelect {
 		'wikititle',
 		'url',
 		'wid',
-		'canonical',
+//		'canonical',
 		'host',
 		'ns',
 		'indexed',
@@ -39,14 +39,14 @@ class Lucene extends AbstractSelect {
 		'score',
 		'created',
 		'views',
-		'categories',
+//		'categories',
 		'hub',
 		'lang',
 		'html',
 		'article_quality_i',
-		'recommendations_ss',
-		'snippet_s',
-		'article_type_s'
+//		'recommendations_ss',
+//		'snippet_s',
+//		'article_type_s'
 	];
 
 	/**

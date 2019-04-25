@@ -27,7 +27,7 @@ class Video extends OnWiki {
 		'canonical',
 		'host',
 		'ns',
-		'indexed',
+//		'indexed',
 		'backlinks',
 		'title',
 		'score',
