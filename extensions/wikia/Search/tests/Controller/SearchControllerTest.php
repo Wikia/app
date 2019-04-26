@@ -3,8 +3,13 @@
  * Class definition for Wikia\Search\Test\Controller\ControllerTest
  */
 namespace Wikia\Search\Test\Controller;
-use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEngine, Exception, F;
+use Exception;
+use ReflectionMethod;
+use ReflectionProperty;
+use SearchEngine;
+use Wikia;
 use Wikia\Search\Test\BaseTest;
+use WikiaSearchController;
 
 /**
  * Tests WikiaSearchController, currently in global namespace
@@ -710,97 +715,49 @@ class SearchControllerTest extends BaseTest {
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBoxWithoutConfig() {
-		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockController = $this->searchController->setMethods( [ 'getVal', 'setVal' ] )->getMock();
 
-		$mockController
-			->expects	( $this->any() )
-			->method	( 'getVal' )
-			->with		( 'config', false )
-			->will		( $this->returnValue( false ) )
-		;
+		$mockController->expects( $this->any() )
+			->method( 'getVal' )
+			->with( 'namespaces', false )
+			->will( $this->returnValue( false ) );
 		$e = null;
 		try {
-		    $mockController->advancedBox();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::advancedBox should throw an exception if the "config" is not set in the request.'
-		    );
-		} catch ( Exception $e ) { }
-		$this->assertInstanceOf(
-				'Exception',
-				$e,
-				'WikiaSearchController::advancedBox should throw an exception if there is no search config set'
-		);
-
-	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.07797 ms
-	 * @covers WikiaSearchController::advancedBox
-	 */
-	public function testAdvancedBoxWithBadConfig() {
-		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
-
-		$mockController
-			->expects	( $this->any() )
-			->method	( 'getVal' )
-			->with		( 'config', false )
-			->will		( $this->returnValue( 'foo' ) )
-		;
-		$e = null;
-		try {
-		    $mockController->advancedBox();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::advancedBox should throw an exception if the "config" is set incorrectly in the request.'
-		    );
-		} catch ( Exception $e ) { }
-		$this->assertInstanceOf(
-				'Exception',
-				$e,
-				'WikiaSearchController::advancedBox should throw an exception if there is an improper search config set'
-		);
-
+			$mockController->advancedBox();
+			$this->assertFalse( true,
+				'WikiaSearchController::advancedBox should throw an exception if the "namespaces" is not set in the request.' );
+		}
+		catch ( Exception $e ) {
+		}
+		$this->assertInstanceOf( 'BadRequest', $e,
+			'WikiaSearchController::advancedBox should throw an exception if "namespaces" have not been set' );
 	}
 
 	/**
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBox() {
-		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
-		$mockSearchConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'getNamespaces', 'getAdvanced' ) );
-		$searchableNamespaces	=	array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+		$mockController = $this->searchController->setMethods( [ 'getVal', 'setVal' ] )->getMock();
+		$searchableNamespaces = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ];
 
-		$mockController
-			->expects	( $this->at( 0 ) )
-			->method	( 'getVal' )
-			->with		( 'config', false )
-			->will		( $this->returnValue( $mockSearchConfig ) )
-		;
+		$mockController->expects( $this->at( 0 ) )
+			->method( 'getVal' )
+			->with( 'namespaces', false )
+			->will( $this->returnValue( [ 0, 14 ] ) );
+
 		$this->getStaticMethodMock( SearchEngine::class, 'searchableNamespaces' )
 			->expects( $this->any() )
 			->method( 'searchableNamespaces' )
 			->will( $this->returnValue( $searchableNamespaces ) );
 
-		$mockController
-			->expects	( $this->at( 1 ) )
-			->method	( 'setVal' )
-			->with		( 'namespaces', array( 0, 14 ) )
-		;
-		$mockController
-			->expects	( $this->at( 2 ) )
-			->method	( 'setVal' )
-			->with		( 'searchableNamespaces', $searchableNamespaces )
-		;
-		$mockSearchConfig
-			->expects	( $this->any() )
-			->method	( 'getNamespaces' )
-			->will		( $this->returnValue( array( 0, 14) ) )
-		;
+		$mockController->expects( $this->at( 1 ) )
+			->method( 'setVal' )
+			->with( 'namespaces', [ 0, 14 ] );
+		$mockController->expects( $this->at( 2 ) )
+			->method( 'setVal' )
+			->with( 'searchableNamespaces', $searchableNamespaces );
 
 		$mockController->advancedBox();
-
 	}
 
 	/**

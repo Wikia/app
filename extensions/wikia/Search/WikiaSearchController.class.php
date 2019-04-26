@@ -4,16 +4,15 @@
  */
 
 use Wikia\Logger\WikiaLogger;
-use Wikia\Search\Result\ResultHelper;
-use Wikia\Search\UnifiedSearch\SearchResultWrapper;
-use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
-use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
-use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 use Wikia\Search\Language\LanguageService;
 use Wikia\Search\MediaWikiService;
+use Wikia\Search\Result\ResultHelper;
 use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
  * Responsible for handling search requests.
@@ -112,9 +111,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
-
-		WikiaLogger::instance()->info("fields " .json_encode( $searchConfig->getRequestedFields()));
-
 
 		if ( $this->useUnifiedSearch() ) {
 			$service = new UnifiedSearchService();
@@ -493,15 +489,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return $searchConfig;
 	}
 
+	/**
+	 * @param \Wikia\Search\Config $searchConfig configuration is used to render the view
+	 * @param UnifiedSearchResult $result the actual content of the view
+	 */
 	private function setResponseFromUnifiedSearch(
 		\Wikia\Search\Config $searchConfig, UnifiedSearchResult $result
 	) {
-		$resultsForDisplay = new SearchResultWrapper($result->results);
+		$resultsForDisplay = $result->getResults();
 
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
 			$response->setData( $resultsForDisplay->toArray( $this->getSelectedJsonFields() ) );
+
 			return;
 		}
 
@@ -510,7 +511,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
-		$this->setVal( 'correctedQuery', /* we don't do that */ null  );
+		// Solr would auto-correct the query, but our backend does not do that
+		//it does however account for misspellings when querying
+		$this->setVal( 'correctedQuery', null );
 		$this->setVal( 'results', $resultsForDisplay->getIterable() );
 		$this->setVal( 'resultsFound', $result->resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $result->resultsFound );
@@ -559,8 +562,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 		if ( !$searchConfig->getInterWiki() ) {
-			$this->setVal( 'advancedSearchBox',
-				$this->sendSelfRequest( 'advancedBox', [ 'config' => $searchConfig ] ) );
+			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox',
+				[ 'config' => $searchConfig->getNamespaces() ] ) );
 		}
 
 		$isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
@@ -570,7 +573,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
-		$this->setVal( 'correctedQuery', $searchConfig->getResults()->getQuery() );
 		$this->setVal( 'results', $searchConfig->getResults()->getResults() );
 		$this->setVal( 'resultsFound', $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
@@ -579,6 +581,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'currentPage', $searchConfig->getPage() );
 		$this->setVal( 'paginationLinks', $this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', $tabsArgs ) );
+		$this->setVal( 'correctedQuery', $searchConfig->getResults()->getQuery() );
 		$this->setVal( 'query', $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage', $searchConfig->getLimit() );
 		$this->setVal( 'specialSearchUrl', $this->wg->Title->getFullUrl() );
@@ -791,23 +794,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
-	 *
 	 * @throws Exception
-	 * @see    SearchControllerTest::testAdvancedBox
+	 * @see SearchControllerTest::testAdvancedBox
 	 */
 	public function advancedBox() {
-		$config = $this->getVal( 'config', false );
-		if ( !$config instanceof Wikia\Search\Config ) {
-			throw new Exception( "This should not be called outside of self-request context." );
+		$namespaces = $this->getVal( 'namespaces', [] );
+		if ( empty( $namespaces ) ) {
+			throw new BadRequestException( "This should not be called outside of self-request context." );
 		}
-
-		$searchEngine = ( new SearchEngine );
-
-		$searchableNamespaces = $searchEngine->searchableNamespaces();
-
+		$searchableNamespaces = ( new SearchEngine() )->searchableNamespaces();
 		Hooks::run( 'AdvancedBoxSearchableNamespaces', [ &$searchableNamespaces ] );
-
-		$this->setVal( 'namespaces', $config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
 	}
 
