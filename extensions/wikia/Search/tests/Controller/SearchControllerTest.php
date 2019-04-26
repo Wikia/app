@@ -40,7 +40,7 @@ class SearchControllerTest extends BaseTest {
 	 */
 	public function testIndex() {
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest',
-				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig',
+				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValues', 'setJsonResponse',
 				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 
@@ -1298,10 +1298,9 @@ class SearchControllerTest extends BaseTest {
 			->setMethods( [ 'getFormat', 'setData' ] )
 			->getMock();
 
-		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-			->setMethods( [ 'getInterwiki' ] )
+		$mockView = $this->getMockBuilder( 'Wikia\Search\SearchResultView' )
+			->setMethods( [ 'toArray' ] )
 			->getMock();
-
 
 		$mockController
 			->expects( $this->at( 0 ) )
@@ -1323,14 +1322,6 @@ class SearchControllerTest extends BaseTest {
 			->expects( $this->once() )
 			->method( 'setData' )
 			->with( [ 'foo' ] );
-		$mockConfig
-			->expects( $this->never() )
-			->method( 'getInterWiki' );
-
-		$mockView = $this->getMockBuilder( 'Wikia\Search\SearchResultView' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'toArray' ] )
-			->getMock();
 
 		$mockView
 			->expects( $this->once() )
@@ -1340,7 +1331,7 @@ class SearchControllerTest extends BaseTest {
 
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setJsonResponse' );
 		$reflSet->setAccessible( true );
-		$reflSet->invoke( $mockController, $mockConfig , $mockView );
+		$reflSet->invoke( $mockController, 	$mockView );
 	}
 
 	/**
