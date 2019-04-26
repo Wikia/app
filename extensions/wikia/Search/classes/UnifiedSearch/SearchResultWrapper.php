@@ -2,14 +2,11 @@
 
 namespace Wikia\Search\UnifiedSearch;
 
-use ArrayAccess;
 use ArrayIterator;
-use Iterator;
 use Wikia\Search\Result;
-use Wikia\Search\Traits\AttributeIterableTrait;
+use Wikia\Search\SearchResultItems as SearchResultItemsAlias;
 
-class SearchResultWrapper implements Iterator, ArrayAccess {
-	use AttributeIterableTrait;
+class SearchResultWrapper implements SearchResultItemsAlias {
 
 	private $results = [];
 
@@ -19,15 +16,11 @@ class SearchResultWrapper implements Iterator, ArrayAccess {
 		}
 	}
 
-	/**
-	 * @return ArrayIterator
-	 */
-	function getIterable() {
-		return new ArrayIterator($this->results);
+	public function getResults(): ArrayIterator {
+		return new ArrayIterator( $this->results );
 	}
 
-
-	function toArray( $expectedFields, $key = null ) {
+	function toArray( array $expectedFields = null, $key = null ): array {
 		if ( $expectedFields === null ) {
 			$expectedFields = [ 'title', 'url', 'pageid' ];
 		}

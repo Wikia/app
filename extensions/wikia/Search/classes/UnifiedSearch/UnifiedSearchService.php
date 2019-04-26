@@ -4,8 +4,7 @@ namespace Wikia\Search\UnifiedSearch;
 
 class UnifiedSearchService {
 
-	public function search( UnifiedSearchRequest $request ) {
-
+	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
 		return new UnifiedSearchResult( [
 			[
 				'pageid' => 2709,

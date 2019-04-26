@@ -753,6 +753,9 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->at( 1 ) )
 			->method( 'setVal' )
+			->with( 'namespaces', [ 0, 14 ] );
+		$mockController->expects( $this->at( 2 ) )
+			->method( 'setVal' )
 			->with( 'searchableNamespaces', $searchableNamespaces );
 
 		$mockController->advancedBox();
