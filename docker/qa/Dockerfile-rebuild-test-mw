@@ -13,7 +13,6 @@ ENV LANG="C.UTF-8" \
     PYENV_SHELL="bash" \
     WIKIA_ENVIRONMENT="sandbox" \
     WIKIA_DATACENTER="sjc" \
-    SERVER_ID="177" \
     PYTHONWARNINGS="ignore:Unverified HTTPS request"
 RUN git clone --single-branch --depth 1 git://github.com/yyuu/pyenv.git $PYENV_ROOT
 
@@ -34,5 +33,5 @@ RUN pip install -r rebuild/requirements.txt
 RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  pytest .
 
 
-RUN php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
+RUN SERVER_ID="177" php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
 RUN chmod 0777 /usr/wikia/slot1/current/src/docker/qa/run_script.sh
