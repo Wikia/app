@@ -771,7 +771,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @see SearchControllerTest::testAdvancedBox
 	 */
 	public function advancedBox() {
-		$namespaces = $this->getVal( 'namespaces', null );
+		$namespaces = $this->getVal( 'namespaces' );
 		if ( !is_array( $namespaces ) ) {
 			throw new BadRequestException( "This should not be called outside of self-request context." );
 		}

@@ -718,17 +718,18 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->any() )
 			->method( 'getVal' )
-			->with( 'namespaces', [ ] )
+			->with( 'namespaces', null )
 			->will( $this->returnValue( false ) );
-		$e = null;
+		$exception = null;
 		try {
 			$mockController->advancedBox();
 			$this->assertFalse( true,
 				'WikiaSearchController::advancedBox should throw an exception if the "namespaces" is not set in the request.' );
 		}
 		catch ( Exception $e ) {
+			$exception = $e;
 		}
-		$this->assertInstanceOf( 'BadRequestException', $e,
+		$this->assertInstanceOf( 'BadRequestException', $exception,
 			'WikiaSearchController::advancedBox should throw an exception if "namespaces" have not been set' );
 	}
 
@@ -741,7 +742,7 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'namespaces', [ ] )
+			->with( 'namespaces' )
 			->will( $this->returnValue( [ 0, 14 ] ) );
 
 		$this->getStaticMethodMock( SearchEngine::class, 'searchableNamespaces' )
@@ -1283,9 +1284,9 @@ class SearchControllerTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08588 ms
-	 * @covers WikiaSearchController::setResponseValues
+	 * @covers WikiaSearchController::setResponseValuesFromConfig
 	 */
-	public function testSetResponseValues()
+	public function testSetResponseValuesFromConfigAsJson()
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 			->disableOriginalConstructor()
@@ -1300,6 +1301,7 @@ class SearchControllerTest extends BaseTest {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 			->setMethods( [ 'getInterwiki' ] )
 			->getMock();
+
 
 		$mockController
 			->expects( $this->at( 0 ) )
@@ -1336,7 +1338,7 @@ class SearchControllerTest extends BaseTest {
 			->with( [ 'title', 'url', 'pageid' ] )
 			->will( $this->returnValue( [ 'foo' ] ) );
 
-		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValues' );
+		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setJsonResponse' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig , $mockView );
 	}
