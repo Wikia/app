@@ -69,6 +69,8 @@ require([
 				.show();
 
 			isLoading = false;
+
+			$('.scavenger-hunt button').prop('disabled', false);
 		});
 	}
 
