@@ -718,7 +718,7 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->any() )
 			->method( 'getVal' )
-			->with( 'namespaces', null )
+			->with( 'namespaces' )
 			->will( $this->returnValue( false ) );
 		$exception = null;
 		try {
