@@ -75,15 +75,6 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			],
 		],
 		[
-			'text' => 'Iron Man: J.A.R.V.I.S is an artificially intelligent system, tasked with running business for Stark Industries as well as security for Tony Stark\'s Mansion and Stark Tower. What is it named after?',
-			'wikiId' => '6782',
-			'answers' => [
-				'edwin jarvis',
-				'butler',
-                'jarvis',
-			],
-		],
-		[
 			'text' => 'How many incarnations of doctors there were in Doctor Who?',
 			'wikiId' => '125',
 			'answers' => [
@@ -109,33 +100,11 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			],
 		],
 		[
-			'text' => 'God of War: Which snake like monster from Norse mythology appeared in God of War?',
-			'wikiId' => '2935',
-			'answers' => [
-				'jörmungandr',
-                'jormungandr',
-				'world serpent',
-			],
-		],
-		[
 			'text' => 'Dragon Ball: What is Goku\'s syan name?',
 			'wikiId' => '530',
 			'answers' => [
 				'kakarot',
 				'kakarotto',
-			],
-		],
-		[
-			'text' => 'Who\'s bodyguard was Cassandra Cain trained to be?',
-			'wikiId' => '3166',
-			'answers' => [
-				'ra\'s al ghul',
-				'ras al ghul',
-				'al ghul',
-				'ras ghul',
-				'ra\'s ghul',
-				'ghul',
-				'ra\'s',
 			],
 		],
 	];
