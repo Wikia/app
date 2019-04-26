@@ -25,6 +25,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'answers' => [
 				'philippa eilhart',
 				'the crones',
+				'crones',
 				'brewes',
 				'weavess',
 				'whispess',
@@ -44,6 +45,9 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'wikiId' => '177996',
 			'answers' => [
 				'neurosurgeon',
+				'neurosurgery',
+				'surgeon',
+				'surgery',
 			],
 		],
 		[
@@ -53,6 +57,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 				'species',
 				'aliens',
 				'alien',
+				'specie',
 			],
 		],
 		[
@@ -75,6 +80,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'answers' => [
 				'edwin jarvis',
 				'butler',
+                'jarvis',
 			],
 		],
 		[
@@ -90,6 +96,9 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'wikiId' => '35171',
 			'answers' => [
 				'natalie dormer',
+                'natali dormer',
+                'dormer',
+                'dormer natalie',
 			],
 		],
 		[
@@ -104,6 +113,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'wikiId' => '2935',
 			'answers' => [
 				'jörmungandr',
+                'jormungandr',
 				'world serpent',
 			],
 		],
@@ -120,6 +130,12 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			'wikiId' => '3166',
 			'answers' => [
 				'ra\'s al ghul',
+				'ras al ghul',
+				'al ghul',
+				'ras ghul',
+				'ra\'s ghul',
+				'ghul',
+				'ra\'s',
 			],
 		],
 	];
