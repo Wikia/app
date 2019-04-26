@@ -64,12 +64,12 @@ logstash-dev-mediawiki-* index and could e filtered by `@hostname`.
 For performance reasons the opcache is enabled, but it checks for file updates every 10 seconds.
 So you should see your code changes shortly after uploading them to your devbox.
 
-### Tests (in progress)
+### Tests
 
-You can still start a container with MediaWiki/PHP:
+Test require the uopz extension which is available in a dedicated docker image:
 
 ```bash
-$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest bash
+$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-tests:latest bash
 ```
 
 Then you can run a single test:
@@ -115,6 +115,11 @@ docker build -f Dockerfile-nginx -t artifactory.wikia-inc.com/platform/nginx-wik
 php-fpm image:
  ```bash
 docker build -t artifactory.wikia-inc.com/platform/php-wikia-devbox:latest .
+ ```
+
+php-tests images:
+ ```bash
+docker build -f Dockerfile-tests -t artifactory.wikia-inc.com/platform/php-wikia-tests:latest .
  ```
 
 fluentd_elastic image:
