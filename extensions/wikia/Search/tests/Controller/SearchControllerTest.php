@@ -3,12 +3,12 @@
  * Class definition for Wikia\Search\Test\Controller\ControllerTest
  */
 namespace Wikia\Search\Test\Controller;
-use BadRequestException;
 use Exception;
 use ReflectionMethod;
 use ReflectionProperty;
 use SearchEngine;
 use Wikia;
+use Wikia\Search\SearchResultView;
 use Wikia\Search\Test\BaseTest;
 use WikiaSearchController;
 
@@ -1283,16 +1283,14 @@ class SearchControllerTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08588 ms
-	 * @covers WikiaSearchController::setResponseValuesFromConfig
+	 * @covers WikiaSearchController::setResponseValues
 	 */
-	public function testSetResponseValuesFromConfigAsJson()
+	public function testSetResponseValues()
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getResponse', 'getVal' ] )
 			->getMock();
-
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getQueryForHtml' ], [ 'foo' ] );
 
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
 			->disableOriginalConstructor()
@@ -1300,12 +1298,7 @@ class SearchControllerTest extends BaseTest {
 			->getMock();
 
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-			->setMethods( [ 'getResults', 'getInterwiki' ] )
-			->getMock();
-
-		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'toArray' ] )
+			->setMethods( [ 'getInterwiki' ] )
 			->getMock();
 
 		$mockController
@@ -1318,22 +1311,12 @@ class SearchControllerTest extends BaseTest {
 		    ->method ( 'getFormat' )
 		    ->will   ( $this->returnValue( 'json' ) )
 		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getResults' )
-		    ->will   ( $this->returnValue( $mockResults ) )
-		;
 		$mockController
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getVal' )
 		    ->with   ( 'jsonfields', 'title,url,pageid' )
 		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
 		;
-		$mockResults
-			->expects( $this->once() )
-			->method( 'toArray' )
-			->with( [ 'title', 'url', 'pageid' ] )
-			->will( $this->returnValue( [ 'foo' ] ) );
 		$mockResponse
 			->expects( $this->once() )
 			->method( 'setData' )
@@ -1342,9 +1325,20 @@ class SearchControllerTest extends BaseTest {
 			->expects( $this->never() )
 			->method( 'getInterWiki' );
 
+		$mockView = $this->getMockBuilder( 'Wikia\Search\SearchResultView' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'toArray' ] )
+			->getMock();
+
+		$mockView
+			->expects( $this->once() )
+			->method( 'toArray' )
+			->with( [ 'title', 'url', 'pageid' ] )
+			->will( $this->returnValue( [ 'foo' ] ) );
+
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValues' );
 		$reflSet->setAccessible( true );
-		$reflSet->invoke( $mockController, $mockConfig );
+		$reflSet->invoke( $mockController, $mockConfig , $mockView );
 	}
 
 	/**
