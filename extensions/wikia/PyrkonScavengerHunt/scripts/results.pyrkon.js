@@ -39,7 +39,7 @@ require([
 
 	function getNormalizedData(data) {
 		return data.map(function (each, index) {
-			return Object.assign(each, {index: index});
+			return Object.assign(each, {index: index + 1});
 		});
 	}
 

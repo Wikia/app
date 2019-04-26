@@ -1,6 +1,6 @@
 <h2>Best Savenger Hunt results of the day at Pyrkon</h2>
 
-<table class="pyrkon-results">
+<table class="pyrkon-results article-table">
 	<thead>
 		<tr>
 			<th>Place</th>
