@@ -125,18 +125,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	private function setJsonResponse( SearchResultView $searchResultView ) {
 		$response = $this->getResponse();
 		if ( $searchResultView->hasResults() ) {
-			$response->setData( $searchResultView->toArray( $this->getSelectedJsonFields() ) );
+			$fields = explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) );
+			$response->setData( $searchResultView->toArray( $fields ) );
 		} else {
 			$response->setData( [] );
-		}
-	}
-
-	protected function getSelectedJsonFields() {
-		$fields = $this->getVal( 'jsonfields', 'title,url,pageid' );
-		if ( $fields != null ) {
-			return explode( ',', $fields );
-		} else {
-			return null;
 		}
 	}
 
@@ -146,7 +138,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 * @param SearchResultView $resultsView
 	 */
-	protected function setResponseValues( Wikia\Search\Config $searchConfig, SearchResultView $resultsView ) {
+	protected function setResponseValues(
+		Wikia\Search\Config $searchConfig, SearchResultView $resultsView
+	) {
 		if ( !$searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox',
 				[ 'namespaces' => $searchConfig->getNamespaces() ] ) );
