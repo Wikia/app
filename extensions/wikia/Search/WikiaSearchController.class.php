@@ -9,6 +9,11 @@ use Wikia\Search\UnifiedSearch\SearchResultWrapper;
 use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
+use Wikia\Search\Language\LanguageService;
+use Wikia\Search\MediaWikiService;
+use Wikia\Search\Services\ESFandomSearchService;
+use Wikia\Search\Services\FandomSearchService;
+use Wikia\Search\TopWikiArticles;
 
 /**
  * Responsible for handling search requests.
@@ -91,6 +96,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is the main search action. Special:Search points here.
+	 * @throws FatalError
+	 * @throws MWException
+	 * @throws WikiaException
 	 */
 	public function index() {
 		global $wgEnableSpecialSearchCaching;
@@ -226,6 +234,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 *  -- videoOnly (optional) whether to only include videos (false by default)
 	 *  -- next (optional) pagination value
 	 *
+	 * @throws Exception
 	 */
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
@@ -249,7 +258,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'title',
 		], true );
 		$dimensions = [ 'width' => 120, 'height' => 90 ];
-		$service = new \Wikia\Search\MediaWikiService();
+		$service = new MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
 			if ( !isset( $result['thumbnail'] ) ) {
 				$result['thumbnail'] =
@@ -390,6 +399,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 *
 	 * @return boolean true if on page 1 and not routed, false if not on page 1
+	 * @throws FatalError
+	 * @throws MWException
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getPage() != 1 ) {
@@ -462,7 +473,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->isCorporateWiki() ) {
 			$searchConfig->setLanguageCode( $request->getVal( 'resultsLang' ) );
 
-			$languageService = new \Wikia\Search\Language\LanguageService();
+			$languageService = new LanguageService();
 			$languageService->setLanguageCode( $searchConfig->getLanguageCode() );
 			$wikiArticleThreshold = $languageService->getWikiArticlesThreshold();
 
@@ -637,12 +648,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$fandomStories =
 				\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
 					\WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
-						return ( new \Wikia\Search\Services\ESFandomSearchService() )->query( $query );
+						return ( new ESFandomSearchService() )->query( $query );
 					} );
 
 			if ( !empty( $fandomStories ) ) {
-				if ( count( $fandomStories ) ===
-					 \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
+				if ( count( $fandomStories ) === FandomSearchService::RESULTS_COUNT ) {
 					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
 				} else {
 					$viewMoreFandomStoriesLink = null;
@@ -659,7 +669,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$topWikiArticles =
-			\Wikia\Search\TopWikiArticles::getArticlesWithCache( $this->wg->CityId,
+			TopWikiArticles::getArticlesWithCache( $this->wg->CityId,
 				$this->response->getVal( 'isGridLayoutEnabled' ) );
 
 		if ( !empty( $topWikiArticles ) ) {
@@ -709,8 +719,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Called in index action to manipulate the view based on the user's skin
-	 *
 	 * @return boolean true
+	 * @throws WikiaException
 	 */
 	protected function handleSkinSettings() {
 		global $wgCityId;
@@ -840,6 +850,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This handles pagination via a template script.
 	 *
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
+	 * @throws MWException
 	 * @see    SearchControllerTest::testPagination
 	 */
 	public function pagination() {
