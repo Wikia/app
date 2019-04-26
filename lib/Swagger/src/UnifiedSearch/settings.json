@@ -1,0 +1,6 @@
+{
+  "packagePath": "Swagger",
+  "srcBasePath": "src",
+  "modelPackage": "Swagger\\Client\\UnifiedSearch\\Models",
+  "apiPackage": "Swagger\\Client\\UnifiedSearch\\Api"
+}
