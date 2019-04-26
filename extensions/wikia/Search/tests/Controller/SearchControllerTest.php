@@ -3,6 +3,7 @@
  * Class definition for Wikia\Search\Test\Controller\ControllerTest
  */
 namespace Wikia\Search\Test\Controller;
+use BadRequestException;
 use Exception;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -719,7 +720,7 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->any() )
 			->method( 'getVal' )
-			->with( 'namespaces', false )
+			->with( 'namespaces', [ ] )
 			->will( $this->returnValue( false ) );
 		$e = null;
 		try {
@@ -729,7 +730,7 @@ class SearchControllerTest extends BaseTest {
 		}
 		catch ( Exception $e ) {
 		}
-		$this->assertInstanceOf( 'BadRequest', $e,
+		$this->assertInstanceOf( 'BadRequestException', $e,
 			'WikiaSearchController::advancedBox should throw an exception if "namespaces" have not been set' );
 	}
 
@@ -742,7 +743,7 @@ class SearchControllerTest extends BaseTest {
 
 		$mockController->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'namespaces', false )
+			->with( 'namespaces', [ ] )
 			->will( $this->returnValue( [ 0, 14 ] ) );
 
 		$this->getStaticMethodMock( SearchEngine::class, 'searchableNamespaces' )
