@@ -39,7 +39,6 @@ class SearchControllerTest extends BaseTest {
 	 * @covers WikiaSearchController::index
 	 */
 	public function testIndex() {
-
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest',
 				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig',
 				'getVal', 'handleLayoutAbTest' );
@@ -111,8 +110,7 @@ class SearchControllerTest extends BaseTest {
 		;
 		$mockController
 		    ->expects( $this->once() )
-		    ->method ( 'setResponseValuesFromConfig' )
-		    ->with   ( $mockConfig )
+		    ->method ( 'setResponseValues' )
 		;
 		$reflProperty = new ReflectionProperty( 'WikiaSearchController', 'queryServiceFactory' );
 		$reflProperty->setAccessible( true );
@@ -1344,11 +1342,10 @@ class SearchControllerTest extends BaseTest {
 			->expects( $this->never() )
 			->method( 'getInterWiki' );
 
-		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
+		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValues' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
 	}
-
 
 	/**
 	 * @group Slow
