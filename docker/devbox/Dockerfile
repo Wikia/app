@@ -1,6 +1,6 @@
 # This is a Docker image for  Wikia's MediaWiki app that can be used on devboxes.
 # Simply mount your app and config repositories clone (refer to README.md)
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:959312e
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 
 # install dev dependencies
 
@@ -8,7 +8,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:959312e
 #
 # these require autoconf package to be present
 
-RUN pecl install yaml-2.0.4 xdebug-2.7.0 \
+RUN pecl install yaml-2.0.2 xdebug-2.6.0 \
     && docker-php-ext-enable yaml xdebug
 
 # Configure dev opcache
