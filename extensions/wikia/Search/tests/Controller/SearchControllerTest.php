@@ -751,7 +751,7 @@ class SearchControllerTest extends BaseTest {
 			->method( 'searchableNamespaces' )
 			->will( $this->returnValue( $searchableNamespaces ) );
 
-		$mockController->expects( $this->at( 2 ) )
+		$mockController->expects( $this->at( 1 ) )
 			->method( 'setVal' )
 			->with( 'searchableNamespaces', $searchableNamespaces );
 
