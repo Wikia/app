@@ -302,8 +302,6 @@ class BannerNotificationsController extends WikiaController {
 
 			if ( empty( $user->getEmail() ) && empty( $user->getNewEmail() ) ) {
 				$message = wfMessage( 'bannernotifications-no-email' )->parse();
-			} elseif ( !$user->isEmailConfirmed() ) {
-				$message = wfMessage( 'bannernotifications-not-confirmed-email' )->parse();
 			}
 
 			// Do not show the message if user is currently finishing the email confirmation flow
