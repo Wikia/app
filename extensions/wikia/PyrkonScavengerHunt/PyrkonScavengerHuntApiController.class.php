@@ -76,7 +76,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 		],
 		[
 			'text' => 'Iron Man: J.A.R.V.I.S is an artificially intelligent system, tasked with running business for Stark Industries as well as security for Tony Stark\'s Mansion and Stark Tower. What is it named after?',
-			'wikiId' => '130814',
+			'wikiId' => '177996',
 			'answers' => [
 				'edwin jarvis',
 				'butler',
