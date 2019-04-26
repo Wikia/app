@@ -5,14 +5,6 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 
 	const QUESTIONS = [
 		[
-			'text' => 'Which Muppets character is known for his catchphrase "Wocka wocka wocka!"?',
-			'wikiId' => '831',
-			'answers' => [
-				'fozzie',
-				'fozzie bear'
-			],
-		],
-		[
 			'text' => 'What\'s the name of The Red Witch from the Game of Thrones?',
 			'wikiId' => '130814',
 			'answers' => [
@@ -20,7 +12,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			],
 		],
 		[
-			'text' => 'Name one sorceresses able to polymorph from Witcher.',
+			'text' => 'Name one sorceresses able to polymorph from The Witcher.',
 			'wikiId' => '3443',
 			'answers' => [
 				'philippa eilhart',
@@ -68,13 +60,6 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			],
 		],
 		[
-			'text' => 'Theon Greyjoy was tortured and forced into servitude by Ramsay Snow. By what pet name did Ramsey call Theon?',
-			'wikiId' => '130814',
-			'answers' => [
-				'reek',
-			],
-		],
-		[
 			'text' => 'How many incarnations of doctors there were in Doctor Who?',
 			'wikiId' => '125',
 			'answers' => [
@@ -93,7 +78,7 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 			],
 		],
 		[
-			'text' => 'Which publisher published the Battlestar Galactica comics series?',
+			'text' => 'Which publisher published the Battlestar Galactica comic series?',
 			'wikiId' => '694',
 			'answers' => [
 				'marvel',
