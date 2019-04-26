@@ -14,6 +14,8 @@ class UnifiedSearchRequest {
 	private $languageCode;
 	/** @var integer */
 	private $wikiId;
+	/** @var array */
+	private $namespaces = [];
 
 	/** @var integer */
 	private $page;
@@ -21,8 +23,6 @@ class UnifiedSearchRequest {
 	private $limit;
 	/** @var integer */
 	private $offset;
-	/** @var array */
-	private $namespaces = [];
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
@@ -39,5 +39,26 @@ class UnifiedSearchRequest {
 	 */
 	public function getQuery(): Select {
 		return $this->query;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguageCode(): string {
+		return $this->languageCode;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getWikiId(): int {
+		return $this->wikiId;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getNamespaces(): array {
+		return $this->namespaces;
 	}
 }

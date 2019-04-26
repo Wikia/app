@@ -2,9 +2,18 @@
 
 namespace Wikia\Search\UnifiedSearch;
 
-class UnifiedSearchService {
+use UnifiedSearchService;
+use Wikia\Logger\WikiaLogger;
+
+class UniSearchService {
 
 	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
+		$result =
+			( new UnifiedSearchService() )->query( $request->getWikiId(),
+				$request->getLanguageCode(), $request->getQuery()->getSanitizedQuery(),
+				$request->getNamespaces() );
+		WikiaLogger::instance()->info( "fetched" . json_encode( $result ) );
+
 		return new UnifiedSearchResult( [
 			[
 				'pageid' => 2709,
