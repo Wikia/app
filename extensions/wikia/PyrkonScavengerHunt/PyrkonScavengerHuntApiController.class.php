@@ -50,6 +50,9 @@ class PyrkonScavengerHuntApiController extends WikiaApiController {
 				'aliens',
 				'alien',
 				'specie',
+				'planet',
+				'a planet',
+				'the planet',
 			],
 		],
 		[
