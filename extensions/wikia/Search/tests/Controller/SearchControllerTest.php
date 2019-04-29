@@ -8,7 +8,6 @@ use ReflectionMethod;
 use ReflectionProperty;
 use SearchEngine;
 use Wikia;
-use Wikia\Search\SearchResultView;
 use Wikia\Search\Test\BaseTest;
 use WikiaSearchController;
 
@@ -75,7 +74,7 @@ class SearchControllerTest extends BaseTest {
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->exactly( 2 ) )
 		    ->method ( 'getQuery' )
 		    ->will   ( $this->returnValue( $mockQuery ) )
 		;
@@ -1310,7 +1309,7 @@ class SearchControllerTest extends BaseTest {
 		$mockController
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getVal' )
-		    ->with   ( 'useUnifiedSearch' )
+			->with( 'useUnifiedSearch', null )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockResponse
