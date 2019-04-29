@@ -164,7 +164,7 @@ class GcsFileBackend extends FileBackendStore {
 		// so we have to set content-type explicitly
 		$magic = MimeMagic::singleton();
 		$contentType = $magic->guessMimeType( $params['src'], false );
-		$contentType = $magic->improveTypeFromExtension( $contentType, FsFile::extensionFromPath( $params['dst'] ) );
+		$contentType = $magic->improveTypeFromExtension( $contentType, $this->extensionFromPath( $params['dst'] ) );
 
 		try {
 			$this->upload( $dst, $data, $sha1, $contentType );
