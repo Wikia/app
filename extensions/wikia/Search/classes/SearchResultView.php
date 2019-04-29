@@ -21,7 +21,8 @@ class SearchResultView {
 	/** @var SearchResultItems */
 	private $items;
 
-	public static function fromUnifiedSearchResult(UnifiedSearchResult $result): SearchResultView {
+	public static function fromUnifiedSearchResult( UnifiedSearchResult $result
+	): SearchResultView {
 		$view = new SearchResultView();
 
 		$view->correctedQuery = null;
@@ -64,13 +65,12 @@ class SearchResultView {
 		return $this->currentPage;
 	}
 
-
 	/**
 	 * Returns results number based on a truncated heuristic
 	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
 	 */
-	public function getTruncatedResultsNum( bool $formatted ) {
+	public function getTruncatedResultsNum( bool $formatted = false ) {
 		$resultsNum = $this->getResultsFound();
 
 		$result = $resultsNum;
@@ -82,10 +82,14 @@ class SearchResultView {
 		}
 
 		if ( $formatted ) {
-			$result = F::app()->wg->Lang->formatNum( $result );
+			return $this->formatNumber( $result );
+		} else {
+			return $result;
 		}
+	}
 
-		return $result;
+	private function formatNumber( $number ) {
+		return F::app()->wg->Lang->formatNum( $number );
 	}
 
 	public function isOneResultsPageOnly() {
