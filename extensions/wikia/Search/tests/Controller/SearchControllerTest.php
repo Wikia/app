@@ -1325,6 +1325,11 @@ class SearchControllerTest extends BaseTest {
 
 		$mockView
 			->expects( $this->once() )
+			->method( 'hasResults' )
+			->will( $this->returnValue( true ) );
+
+		$mockView
+			->expects( $this->once() )
 			->method( 'toArray' )
 			->with( [ 'title', 'url', 'pageid' ] )
 			->will( $this->returnValue( [ 'foo' ] ) );

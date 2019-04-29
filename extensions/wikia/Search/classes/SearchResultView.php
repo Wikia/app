@@ -36,7 +36,7 @@ class SearchResultView {
 
 	public static function fromConfig( Config $config ): SearchResultView {
 		$view = new SearchResultView();
-		$view->correctedQuery = $config->getResults()->getQuery();
+		$view->correctedQuery = $config->getQuery()->getQueryForHtml();
 		$view->totalResults = $config->getResultsFound();
 		$view->currentPage = $config->getPage();
 		$view->items = $config->getResults();
