@@ -6,14 +6,18 @@ class UnifiedSearchResult {
 
 	/** @var array */
 	private $results;
-	public $resultsFound = 1;
-	public $resultsFoundTruncatedtrue = 1;
-	public $isOneResultsPageOnly = true;
-	public $pagesCount = 1;
-	public $currentPage = 0;
+	public $resultsFound;
+	public $pagesCount;
+	public $currentPage;
 
-	public function __construct( $results ) {
+	public function __construct(
+		$resultsFound, $pagesCount, $currentPage, $results
+
+	) {
 		$this->results = $results;
+		$this->resultsFound = $resultsFound;
+		$this->pagesCount = $pagesCount;
+		$this->currentPage = $currentPage;
 	}
 
 	public function getResults(): SearchResultWrapper {

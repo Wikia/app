@@ -12,7 +12,7 @@ use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
 use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
-use Wikia\Search\UnifiedSearch\UniSearchService;
+use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
  * Responsible for handling search requests.
@@ -213,7 +213,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResultView {
 		if ( $this->useUnifiedSearch() ) {
-			$service = new UniSearchService();
+			$service = new UnifiedSearchService();
 			$request = new UnifiedSearchRequest( $searchConfig );
 
 			return SearchResultView::fromUnifiedSearchResult( $service->search( $request ) );
@@ -239,13 +239,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	private function useUnifiedSearch(): bool {
-//		if ( $this->isCorporateWiki() ) {
-//			return false;
-//		}
+		global $wgUseUnifiedSearch;
 
-		$header = RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' );
+		if ( $this->isCorporateWiki() ) {
+			return false;
+		}
 
-		return !empty( $header );
+		$queryForce = $this->getVal( 'useUnifiedSearch', null );
+		if ( !is_null( $queryForce ) ) {
+			return $queryForce;
+		}
+
+		return $wgUseUnifiedSearch;
 	}
 
 	/**

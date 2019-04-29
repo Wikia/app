@@ -17,21 +17,26 @@ class UnifiedSearchRequest {
 	/** @var array */
 	private $namespaces = [];
 
+	/** @var boolean */
+	private $imageOnly;
+	/** @var boolean */
+	private $videoOnly;
+
 	/** @var integer */
 	private $page;
 	/** @var integer */
 	private $limit;
-	/** @var integer */
-	private $offset;
+
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->languageCode = $config->getLanguageCode();
 		$this->wikiId = $config->getWikiId();
-		$this->page = $config->getPage();
+		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
-		$this->offset = $config->getStart();
 		$this->namespaces = $config->getNamespaces();
+		$this->imageOnly = $config->getCombinedMediaSearchIsImageOnly();
+		$this->videoOnly = $config->getCombinedMediaSearchIsVideoOnly();
 	}
 
 	/**
@@ -60,5 +65,33 @@ class UnifiedSearchRequest {
 	 */
 	public function getNamespaces(): array {
 		return $this->namespaces;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isImageOnly(): bool {
+		return $this->imageOnly;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isVideoOnly(): bool {
+		return $this->videoOnly;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getPage(): int {
+		return $this->page;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLimit(): int {
+		return $this->limit;
 	}
 }

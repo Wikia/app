@@ -26,7 +26,8 @@ class SearchResultView {
 
 		$view->correctedQuery = null;
 		$view->totalResults = $result->resultsFound;
-		$view->currentPage = $result->currentPage;
+		$view->currentPage = $result->currentPage + 1;
+		$view->pageCount = $result->pagesCount;
 		$view->items = $result->getResults();
 
 		return $view;

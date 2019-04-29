@@ -1831,6 +1831,12 @@ $wgLogFileStorageOperations = false;
 $wgUseGoogleCloudStorage = false;
 
 /**
+ * https://wikia-inc.atlassian.net/browse/SER-3150
+ * If enabled, Unified Search will be used for Special:Search.
+ */
+$wgUseUnifiedSearch = false;
+
+/**
  * https://wikia-inc.atlassian.net/browse/SER-3033
  * If provided, a multi write will be used for storing files for all wikis with buckets matching the regex.
  */
