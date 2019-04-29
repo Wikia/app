@@ -239,9 +239,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	private function useUnifiedSearch(): bool {
-		if ( $this->isCorporateWiki() ) {
-			return false;
-		}
+//		if ( $this->isCorporateWiki() ) {
+//			return false;
+//		}
 
 		$header = RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' );
 
