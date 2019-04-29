@@ -160,14 +160,8 @@ class GcsFileBackend extends FileBackendStore {
 			'sha1' => $sha1,
 		] );
 
-		// it seems that the GCS client doesn't correctly detect all mimetypes that MW support,
-		// so we have to set content-type explicitly
-		$magic = MimeMagic::singleton();
-		$contentType = $magic->guessMimeType( $params['src'], false );
-		$contentType = $magic->improveTypeFromExtension( $contentType, FsFile::extensionFromPath( $params['dst'] ) );
-
 		try {
-			$this->upload( $dst, $data, $sha1, $contentType );
+			$this->upload( $dst, $data, $sha1 );
 		}
 		catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
@@ -181,21 +175,20 @@ class GcsFileBackend extends FileBackendStore {
 		return wfBaseConvert( $sha1, 16, 36, 31 );
 	}
 
-	public function upload( string $targetName, $data, string $sha1, $contentType = null ) {
-		$metadata = [
-			'metadata' => [
-				'sha1' => $sha1
-			]
-		];
-
-		if ( !empty( $contentType ) ) {
-			$metadata['contentType'] = $contentType;
-		}
-
+	public function upload( string $targetName, $data, string $sha1 ) {
 		$this->bucket()->upload( $data, [
 			'name' => $targetName,
-			'metadata' => $metadata
+			'metadata' => $this->getMetadata( $sha1 ),
 		] );
+	}
+
+	private function getMetadata( $sha1 ) {
+		return [
+			// user metadata are nested like so: metadata.metadata
+			'metadata' => [
+				'sha1' => $sha1,
+			],
+		];
 	}
 
 	/**
