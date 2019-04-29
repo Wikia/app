@@ -1,7 +1,7 @@
 <?php
 
 use Swagger\Client\ApiException;
-use Swagger\Client\Swagger\Client\UnifiedSearch\Api\UnifiedSearchApi;
+use Swagger\Client\UnifiedSearch\Api\UnifiedSearchApi;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 
@@ -10,13 +10,12 @@ class UnifiedSearchService {
 	const SERVICE_NAME = 'unified-search';
 
 	/**
-	 * @var null
+	 * @var UnifiedSearchApi
 	 */
-	private $unifiedSearchApiClient = null;
+	private $apiClient = null;
 
 	public function query( $wikiId, $languageCode, $query, array $namespaces ): array {
 		$api = $this->getImageApiClient();
-
 		try {
 			return $api->specialSearchWithHttpInfo( $query, $languageCode, $wikiId, $namespaces );
 		}
@@ -34,11 +33,11 @@ class UnifiedSearchService {
 	}
 
 	private function getImageApiClient(): UnifiedSearchApi {
-		if ( is_null( $this->unifiedSearchApiClient ) ) {
-			$this->unifiedSearchApiClient = $this->createClient();
+		if ( is_null( $this->apiClient ) ) {
+			$this->apiClient = $this->createClient();
 		}
 
-		return $this->unifiedSearchApiClient;
+		return $this->apiClient;
 	}
 
 	private function createClient(): UnifiedSearchApi {
