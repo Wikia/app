@@ -22,7 +22,7 @@ class RemovalAuditLog {
 	 */
 	public static function markGlobalDataRemoved( $logId ) {
 		self::getDb( DB_MASTER )
-			->update( self::LOG_TABLE, [ 'global_data_removed' => true ], [ 'log_id' => $logId ], __METHOD__ );
+			->update( self::LOG_TABLE, [ 'global_data_removed' => true ], [ 'id' => $logId ], __METHOD__ );
 	}
 
 	public static function allWikiDataWasRemoved( $logId, $detailsDbType ) {
@@ -46,7 +46,7 @@ class RemovalAuditLog {
 	public static function allDataWasRemoved( $logId ) {
 		$wikiDataRemoved = self::allWikiDataWasRemoved( $logId, DB_SLAVE );
 		$globalDataRemoved = (bool)self::getDb(DB_SLAVE )
-			->selectField( self::LOG_TABLE, [ 'global_data_removed' ], [ 'log_id' => $logId ], __METHOD__ );
+			->selectField( self::LOG_TABLE, [ 'global_data_removed' ], [ 'id' => $logId ], __METHOD__ );
 		return $wikiDataRemoved && $globalDataRemoved;
 	}
 
