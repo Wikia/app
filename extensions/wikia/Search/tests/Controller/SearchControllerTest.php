@@ -1299,7 +1299,7 @@ class SearchControllerTest extends BaseTest {
 			->getMock();
 
 		$mockView = $this->getMockBuilder( 'Wikia\Search\SearchResultView' )
-			->setMethods( [ 'toArray' ] )
+			->setMethods( [ 'toArray', 'hasResults' ] )
 			->getMock();
 
 		$mockController
