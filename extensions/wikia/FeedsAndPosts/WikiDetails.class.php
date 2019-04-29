@@ -13,7 +13,7 @@ class WikiDetails {
 
 		$topUsers = [];
 
-		foreach ( $topUsers as $userId => $edits ) {
+		foreach ( $topUserInfo as $userId => $edits ) {
 			$user = \User::newFromId( $userId );
 
 			$topUsers[] = [
@@ -25,7 +25,6 @@ class WikiDetails {
 
 		$themeSettings = new \ThemeSettings();
 
-		$topUsers = array_keys( $topUserInfo );
 		$pageCount = \SiteStats::articles();
 		$editCount = \SiteStats::edits();
 		$wordmark = $themeSettings->getWordmarkUrl();
