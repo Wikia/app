@@ -62,7 +62,7 @@ class SearchControllerTest extends BaseTest {
 		    ->method ( 'handleSkinSettings' )
 		;
 		$mockController
-			->expects( $this->once() )
+			->expects( $this->exactly(2) )
 			->method ( 'getVal' )
 		;
 		$mockController
