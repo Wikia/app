@@ -38,7 +38,7 @@ class SearchControllerTest extends BaseTest {
 	 * @covers WikiaSearchController::index
 	 */
 	public function testIndex() {
-		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest',
+		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 'getResponse',
 				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValues', 'setJsonResponse',
 				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
@@ -55,6 +55,21 @@ class SearchControllerTest extends BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getFromConfig' ) )
 		                    ->getMock();
+
+		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getFormat' ] )
+			->getMock();
+
+		$mockController->expects( $this->once() )
+			->method	( 'getResponse' )
+			->will		( $this->returnValue( $mockResponse ) )
+		;
+
+		$mockResponse->expects( $this->once() )
+			->method( 'getFormat' )
+			->will( $this->returnValue( 'html' ) )
+		;
 
 		$mockController
 		    ->expects( $this->once() )
@@ -1306,19 +1321,13 @@ class SearchControllerTest extends BaseTest {
 		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $mockResponse ) )
 		;
-		$mockController
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getVal' )
-			->with( 'useUnifiedSearch', null )
-		    ->will   ( $this->returnValue( false ) )
-		;
 		$mockResponse
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getFormat' )
 		    ->will   ( $this->returnValue( 'json' ) )
 		;
 		$mockController
-		    ->expects( $this->at( 2 ) )
+		    ->expects( $this->once() )
 		    ->method ( 'getVal' )
 		    ->with   ( 'jsonfields', 'title,url,pageid' )
 		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
