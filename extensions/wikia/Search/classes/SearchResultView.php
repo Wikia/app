@@ -88,7 +88,7 @@ class SearchResultView {
 		}
 	}
 
-	private function formatNumber( $number ) {
+	protected function formatNumber( $number ) {
 		return F::app()->wg->Lang->formatNum( $number );
 	}
 

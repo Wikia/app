@@ -75,5 +75,4 @@ class SearchResultViewTest extends BaseTest {
 			->will( $this->returnValue( $bigDigit ) );
 		$this->assertEquals( '56,000', $view->getTruncatedResultsNum( true ) );
 	}
-
 }
