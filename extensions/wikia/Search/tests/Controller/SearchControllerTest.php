@@ -1317,14 +1317,9 @@ class SearchControllerTest extends BaseTest {
 			->getMock();
 
 		$mockController
-			->expects( $this->at( 0 ) )
+			->expects(  $this->once() )
 		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $mockResponse ) )
-		;
-		$mockResponse
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getFormat' )
-		    ->will   ( $this->returnValue( 'json' ) )
 		;
 		$mockController
 		    ->expects( $this->once() )
