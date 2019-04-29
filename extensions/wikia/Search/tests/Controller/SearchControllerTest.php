@@ -1307,13 +1307,19 @@ class SearchControllerTest extends BaseTest {
 		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $mockResponse ) )
 		;
-		$mockResponse
+		$mockController
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'useUnifiedSearch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockResponse
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getFormat' )
 		    ->will   ( $this->returnValue( 'json' ) )
 		;
 		$mockController
-		    ->expects( $this->at( 1 ) )
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getVal' )
 		    ->with   ( 'jsonfields', 'title,url,pageid' )
 		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
@@ -1321,8 +1327,8 @@ class SearchControllerTest extends BaseTest {
 		$mockResponse
 			->expects( $this->once() )
 			->method( 'setData' )
-			->with( [ 'foo' ] );
-
+			->with( [ 'foo' ] )
+		;
 		$mockView
 			->expects( $this->once() )
 			->method( 'hasResults' )
