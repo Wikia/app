@@ -1,4 +1,5 @@
 {
+  "back": "Kembali",
   "community-header-add": "Tambahkan",
   "community-header-add-new-image": "Menambahkan Gambar Baru",
   "community-header-add-new-page": "Menambahkan gambar baru",
@@ -12,6 +13,7 @@
   "community-header-explore": "Jelajahi",
   "community-header-forum": "Forum",
   "community-header-images": "Gambar",
+  "community-header-main-page": "Halaman Utama",
   "community-header-page": "Halaman",
   "community-header-pages": "Halaman",
   "community-header-random-page": "Halaman Acak",
@@ -67,6 +69,7 @@
   "global-footer-site-overview-link-local-sitemap": "Peta Situs Lokal",
   "global-footer-site-overview-link-privacy-policy": "Kebijakan Privasi",
   "global-footer-site-overview-link-terms-of-use": "Syarat Penggunanaan",
+  "global-footer-site-overview-link-wikia-inc": "Hak Cipta $1 Wikia. inc.",
   "global-navigation-anon-my-account": "Akun Saya",
   "global-navigation-anon-register": "Daftar",
   "global-navigation-anon-register-description": "Belum mempunyai akun?",

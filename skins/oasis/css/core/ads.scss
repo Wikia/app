@@ -1,4 +1,9 @@
+// TODO: Remove dist/ads.scss in the next release
+// For now styles are duplicated in order to keep
+// cached version looking fine. Asset is going to
+// be loaded in AdEngine3::onAfterInitialize
 @import 'extensions/wikia/AdEngine3/dist/ads.scss';
+
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/transition';
 @import 'layout';

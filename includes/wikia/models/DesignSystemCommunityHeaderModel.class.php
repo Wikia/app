@@ -7,7 +7,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $langCode;
 	private $themeSettings;
 	private $settings;
-	private $mainPageUrl;
+	private $homePageUrl;
 
 	private $wordmarkData = null;
 	private $sitenameData = null;
@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId, $wgFandomCreatorCommunityId, $wgEnableFeedsAndPostsExt, $wgContLang;
+		global $wgCityId;
 
 		parent::__construct();
 
@@ -25,14 +25,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$this->mainPageUrl =
-			( !empty( $wgFandomCreatorCommunityId ) ||
-			  ( !empty( $wgEnableFeedsAndPostsExt ) && $wgContLang->getCode() === 'en' ) )
-				?
-			// for FC communities we need only domain as it's not redirected to /wiki/Main_Page'
-			// for Feeds And Posts alpha communities we need it as well
-			wfProtocolUrlToRelative( WikiFactory::cityIDtoDomain( $wgCityId ) ) :
-			wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
+		$domain = WikiFactory::cityIDtoDomain( $wgCityId );
+		$this->homePageUrl =
+			wfProtocolUrlToRelative( $domain . WikiFactory::cityIdToLanguagePath( $wgCityId ) );
 	}
 
 	public function getData(): array {
@@ -215,7 +210,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					if ( $file instanceof File && $file->width > 0 && $file->height > 0 ) {
 						$this->wordmarkData = [
 							'type' => 'link-image',
-							'href' => $this->mainPageUrl,
+							'href' => $this->homePageUrl,
 							'image-data' => [
 								'type' => 'image-external',
 								'url' => $this->themeSettings->getWordmarkUrl(),
@@ -253,7 +248,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'type' => 'text',
 					'value' => F::app()->wg->Sitename,
 				],
-				'href' => $this->mainPageUrl,
+				'href' => $this->homePageUrl,
 				'tracking_label' => 'sitename',
 			];
 		}
@@ -269,12 +264,21 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $this->bgImageUrl;
 	}
 
+	public function getLandingPagePreference() {
+		global $wgUser;
+
+		return UserService::getLandingPagePreference( $wgUser );
+	}
+
 	public function getNavigation(): array {
 		$localNav = $this->getWikiLocalNavigation();
 		array_push( $localNav, $this->getExploreMenu() );
 
 		$discuss = $this->getDiscussLinkData();
-		if ( !empty( $discuss ) ) {
+		$mainPage = $this->getMainPageLinkData();
+		if ( !empty( $mainPage ) ) {
+			array_push( $localNav, $mainPage );
+		} elseif ( !empty( $discuss ) ) {
 			array_push( $localNav, $discuss );
 		}
 
@@ -328,37 +332,46 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			$exploreItems = [
 				[
-					'title' => 'WikiActivity',
+					'url' => Title::newMainPage()->getFullURL(),
+					'key' => 'community-header-main-page',
+					'tracking' => 'explore-main-page',
+					'include' => in_array( $this->getLandingPagePreference(), [
+						UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES,
+						UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY,
+					] ),
+				],
+				[
+					'url' => $this->getFullUrl( 'WikiActivity', NS_SPECIAL, true ),
 					'key' => 'community-header-wiki-activity',
 					'tracking' => 'explore-activity',
 					'include' => true,
 				],
 				[
-					'title' => 'Random',
+					'url' => $this->getFullUrl( 'Random', NS_SPECIAL, true ),
 					'key' => 'community-header-random-page',
 					'tracking' => 'explore-random',
 					'include' => true,
 				],
 				[
-					'title' => 'Community',
+					'url' => $this->getFullUrl( 'Community', NS_SPECIAL, true ),
 					'key' => 'community-header-community',
 					'tracking' => 'explore-community',
 					'include' => !empty( $wgEnableCommunityPageExt ),
 				],
 				[
-					'title' => 'Videos',
+					'url' => $this->getFullUrl( 'Videos', NS_SPECIAL, true ),
 					'key' => 'community-header-videos',
 					'tracking' => 'explore-videos',
 					'include' => !empty( $wgEnableSpecialVideosExt ),
 				],
 				[
-					'title' => 'Images',
+					'url' => $this->getFullUrl( 'Images', NS_SPECIAL, true ),
 					'key' => 'community-header-images',
 					'tracking' => 'explore-images',
 					'include' => true,
 				],
 				[
-					'title' => 'Forum',
+					'url' => $this->getFullUrl( 'Forum', NS_SPECIAL, true ),
 					'key' => 'community-header-forum',
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
@@ -382,7 +395,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => $item[ 'key' ],
 						],
-						'href' => $this->getFullUrl( $item[ 'title' ], NS_SPECIAL, true ),
+						'href' => $item[ 'url' ],
 						'tracking_label' => $item[ 'tracking' ]
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
@@ -400,6 +413,28 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$url = wfProtocolUrlToRelative( $url );
 		}
 		return $url;
+	}
+
+	public function getMainPageLinkData(): array {
+		global $wgContLanguageCode;
+
+		if ( self::getLandingPagePreference() == UserPreferencesV2::LANDING_PAGE_FEEDS && $wgContLanguageCode == 'en' ) {
+			return [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'community-header-main-page',
+				],
+				'href' => wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() ),
+				'tracking_label' => 'main-page',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-home-tiny',
+				],
+			];
+		}
+
+		return [];
 	}
 
 	public function getDiscussLinkData(): array {

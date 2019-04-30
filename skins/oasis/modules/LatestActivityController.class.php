@@ -5,6 +5,8 @@ class LatestActivityController extends WikiaController {
 
 	public function executeIndex() {
 		global $wgLang, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
+		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
+		global $wgUser, $wgTitle, $wgEnableTriviaQuizzesExt, $wgTriviaQuizzesEnabledPages;
 
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
@@ -57,6 +59,14 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'moduleHeader', wfMessage( 'oasis-activity-header' )->escaped() );
 		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-activity-small', 'wds-icon wds-icon-small wds-activity-icon' ) );
 		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
+
+		// TODO: https://wikia-inc.atlassian.net/browse/CAKE-4746
+		$currentPageTitle = $wgTitle->getPrefixedText();
+		if ( $wgEnableTriviaQuizzesExt && !$wgUser->isLoggedIn() && in_array( $currentPageTitle, $wgTriviaQuizzesEnabledPages ) ) {
+			$this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
+			$this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
+			$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
+		}
 
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity( 600 );

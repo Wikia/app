@@ -16,3 +16,5 @@
 
 # node_modules in app root weights over 130 MB
 app/node_modules
+app/extensions/wikia/AdEngine3/node_modules
+!app/extensions/wikia/AdEngine3/.*

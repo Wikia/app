@@ -38,7 +38,7 @@ function isIncontentNativeApplicable() {
  *
  * @returns {boolean}
  */
-function isTopBoxadApplicable() {
+function isRightRailApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
@@ -273,8 +273,8 @@ export default {
 	setupStates() {
 		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', true);
-		slotService.setState('top_boxad', isTopBoxadApplicable());
-		slotService.setState('incontent_boxad_1', true);
+		slotService.setState('top_boxad', isRightRailApplicable());
+		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
@@ -322,6 +322,7 @@ export default {
 			context.set('slots.top_leaderboard.targeting.xna', '0');
 			context.set('slots.bottom_leaderboard.targeting.xna', '0');
 		}
+		context.set(`slots.incontent_boxad_1.targeting.xna`, context.get('custom.hasFeaturedVideo') ? '1' : '0');
 	},
 
 	setupTopLeaderboard() {
@@ -332,9 +333,15 @@ export default {
 
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_SUCCESS, () => {
 				slotService.setState('top_leaderboard', false);
+				context.push('state.adStack', { id: 'top_leaderboard' });
 			});
 
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
+				const adSlot = slotService.get('hivi_leaderboard');
+
+				if (!adSlot.isEmpty) {
+					slotService.setState('top_leaderboard', false);
+				}
 				context.push('state.adStack', { id: 'top_leaderboard' });
 			});
 		} else {

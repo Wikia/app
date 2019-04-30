@@ -8943,10 +8943,10 @@ $wgWatchShowURL = '';
 
 /**
  * Enables EditDraftSaving extension
- * @see CORE-79 CORE-241
+ * @see SUS-79
  * @var bool
  */
-$wgEnableEditDraftSavingExt = true;
+$wgEnableEditDraftSavingExt = false;
 
 /**
  * ArticleTags RabbitMQ configuration.
@@ -8964,3 +8964,17 @@ $wgArticleTagExchangeConfig = [
  * @var bool
  */
 $wgEnableQualtricsSiteInterceptExt = false;
+
+/**
+ * Enables Quizzes extension on select communities
+ * @see CAKE-4585
+ * @var bool
+ */
+$wgEnableTriviaQuizzesExt = false;
+
+/**
+ * Enables Quizzes extension on select pages
+ * @see CAKE-4585
+ * @var string[] $wgTriviaQuizzesEnabledPages
+ */
+$wgTriviaQuizzesEnabledPages = [];
