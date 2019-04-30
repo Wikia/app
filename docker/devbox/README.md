@@ -60,7 +60,7 @@ Our tests rely on the uopz extension when mocking static methods and constructor
 with xdebug (https://github.com/krakjoe/uopz/issues/110). That's why a dedicated docker images has to be used:
 
 ```bash
-$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -e "HOSTNAME_OVERRID=`hostname`" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-tests:latest bash
+$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -e "HOSTNAME_OVERRIDE=`hostname`" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-tests:latest bash
 ```
 
 Then you can run a single test:
