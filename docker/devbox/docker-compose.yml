@@ -13,7 +13,6 @@ services:
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions:ro
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
-      - ../../../nginx_logs:/var/log/nginx
     depends_on:
       - php-wikia
   logger:
