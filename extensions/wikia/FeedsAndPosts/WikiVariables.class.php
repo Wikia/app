@@ -8,12 +8,13 @@ use WikiaDataAccess;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions;
+		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
 
 		$wikiVariables = [
 			'wikiId' => $wgCityId,
 			'basePath' => $wgServer . $wgScriptPath,
 			'dbName' => $wgDBname,
+			'name' => $wgSitename,
 			'getStartedUrl' =>  $this->getStartedUrl(),
 			'wikiDescription' => ( new CommunityDataService( $wgCityId ) )->getCommunityDescription(),
 			'openGraphImageUrl' => \OpenGraphImageHelper::getUrl(),
