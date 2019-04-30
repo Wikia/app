@@ -40,13 +40,6 @@ class FullContent extends AbstractService {
 	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
 
 	/**
-	 * Stores multivalued nolang_txt field as we add stuff to it.
-	 *
-	 * @var array
-	 */
-	protected $nolang_txt = [];
-
-	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 *
 	 * @return array
@@ -54,7 +47,6 @@ class FullContent extends AbstractService {
 	 */
 	public function execute() {
 		$service = $this->getService();
-		$sitename = $service->getGlobal( 'Sitename' );
 		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
 			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
 		}
@@ -65,68 +57,20 @@ class FullContent extends AbstractService {
 		$response = $service->getParseResponseFromPageId( $pageId );
 
 		// ensure the response is an array, even if empty.
-		$response = $response == false ? [] : $response;
+		$response = empty( $response ) ? [] : $response;
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 
-		$this->pushNolangTxt( $titleStr );
-		$this->pushNolangTxt( preg_replace( '/([[:punct:]])/', ' $1 ', $titleStr ) );
-
-		$pageFields = [
+		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
 			'pageid' => $pageId,
 			$this->field( 'title' ) => $titleStr,
-			'titleStrict' => $titleStr,
-			'title_em' => $titleStr,
 			'url' => $service->getUrlFromPageId( $pageId ),
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'host' => $service->getHostName(),
 			'lang' => $service->getSimpleLanguageCode(),
-			$this->field( 'wikititle' ) => $sitename,
-			'page_images' => count( $response['parse']['images'] ),
-			// @see http://php.net/manual/en/function.str-word-count.php
-			'page_words_i' => \Wikia::words_count( strip_tags( $response['parse']['text']['*'] ) ),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
-			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" ),
-		];
-
-		return array_merge( $this->getPageContentFromParseResponse( $response ),
-			$this->getCategoriesFromParseResponse( $response ),
-			$this->getHeadingsFromParseResponse( $response ), $this->getOutboundLinks(),
-			$pageFields, $this->getNolangTxt() );
-	}
-
-	/**
-	 * @return \Wikia\Search\IndexService\DefaultContent
-	 */
-	protected function reinitialize() {
-		$this->nolang_txt = [];
-
-		return $this;
-	}
-
-	/**
-	 * Provides an array of outbound links from the current document to other doc IDs.
-	 * Filters out self-links (e.g. Edit and the like)
-	 *
-	 * @return array
-	 */
-	protected function getOutboundLinks() {
-		$service = $this->getService();
-		$result = [];
-		$docId = $this->getCurrentDocumentId();
-		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
-			$backlinks = ( new \Wikia\Search\Hooks )->popLinks();
-			$backlinksProcessed = [];
-			foreach ( $backlinks as $backlink ) {
-				if ( substr_count( $backlink, $docId . ' |' ) == 0 ) {
-					$backlinksProcessed[] = $backlink;
-				}
-			}
-			$result = [ 'outbound_links_txt' => $backlinksProcessed ];
-		}
-
-		return $result;
+		] );
 	}
 
 	/**
@@ -161,24 +105,6 @@ class FullContent extends AbstractService {
 	}
 
 	/**
-	 * Extracts categories from the MW parse response.
-	 *
-	 * @param array $response
-	 *
-	 * @return array $categories
-	 */
-	protected function getCategoriesFromParseResponse( array $response ) {
-		$categories = [];
-		if ( !empty( $response['parse']['categories'] ) ) {
-			foreach ( $response['parse']['categories'] as $category ) {
-				$categories[] = str_replace( '_', ' ', $category['*'] );
-			}
-		}
-
-		return [ $this->field( 'categories' ) => $categories ];
-	}
-
-	/**
 	 * Returns an array with section headings for the page.
 	 *
 	 * @param array $response
@@ -194,28 +120,6 @@ class FullContent extends AbstractService {
 		}
 
 		return [ $this->field( 'headings' ) => $headings ];
-	}
-
-	/**
-	 * Add a language-agnostic field value
-	 *
-	 * @param string $txt
-	 *
-	 * @return DefaultContent
-	 */
-	protected function pushNolangTxt( $txt ) {
-		$this->nolang_txt[] = $txt;
-
-		return $this;
-	}
-
-	/**
-	 * Returns language-agnostic multi-valued text
-	 *
-	 * @return array
-	 */
-	protected function getNolangTxt() {
-		return [ 'nolang_txt' => $this->nolang_txt ];
 	}
 
 	/**
@@ -239,27 +143,17 @@ class FullContent extends AbstractService {
 		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
 		if ( $dom->root ) {
 			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
-				$result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
+				$result = array_merge( $result, $this->extractInfoboxes( $dom ) );
 			}
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
-			$paragraphs = $this->getParagraphsFromDom( $dom );
 		} else {
 			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
 		$plaintext = trim( preg_replace( static::SPACE_SEQUENCE_REGEXP, ' ', $plaintext ) );
-		$paragraphString =
-			trim( preg_replace( static::SPACE_SEQUENCE_REGEXP, ' ',
-				implode( ' ', $paragraphs ) ) ); // can be empty
-		$words = preg_split( '/ /', $paragraphString ?: $plaintext );
-		$wordCount = count( $words );
-		$upTo100Words = implode( ' ', array_slice( $words, 0, min( [ $wordCount, 100 ] ) ) );
-		$this->pushNolangTxt( $upTo100Words );
 
 		return array_merge( $result, [
 			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-			'nolang_txt' => $upTo100Words,
-			'words' => $wordCount,
 			$this->field( 'html' ) => $plaintext,
 		] );
 	}
@@ -335,9 +229,9 @@ class FullContent extends AbstractService {
 	protected function extractAsidesFromDom( simple_html_dom $dom ) {
 		$plaintext = '';
 		foreach ( $this->asideSelectors as $aside ) {
-			foreach ( $dom->find( $aside ) as $aside ) {
-				$plaintext .= $aside->plaintext;
-				$aside->outertext = ' ';
+			foreach ( $dom->find( $aside ) as $a ) {
+				$plaintext .= $a->plaintext;
+				$a->outertext = ' ';
 			}
 		}
 		$dom->load( $dom->save() );
