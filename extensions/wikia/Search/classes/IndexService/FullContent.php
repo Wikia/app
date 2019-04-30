@@ -1,9 +1,4 @@
 <?php
-/**
- * Class definition for \Wikia\Search\IndexService\DefaultContent
- *
- * @author relwell
- */
 
 namespace Wikia\Search\IndexService;
 
@@ -15,8 +10,6 @@ use Wikia\Search\Utilities;
  * It has been copy pasted from DefaultContent.php but allso includes full_html, so that it can be parsed by
  * an article snippet parser.
  *
- * @author relwell
- * @package Search
  * @subpackage IndexService
  */
 class FullContent extends AbstractService {

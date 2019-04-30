@@ -1,8 +1,8 @@
 <?php
-/**
- * Class definition for \Wikia\Search\IndexService\All
- */
+
 namespace Wikia\Search\IndexService;
+
+use Exception;
 
 /**
  * Aggregates all other services into a single request -- good for populating a full index.
@@ -10,8 +10,6 @@ namespace Wikia\Search\IndexService;
  * This is a copy paste from All.php, which has been adjusted for Unified Search purposes.
  * This class is not meant to stay, rather than that it's meant to be a stage in the migration to use Unified Search
  * rather than Solr.
- *
- * @author relwell
  * @package Search
  * @subpackage IndexService
  */
@@ -27,22 +25,20 @@ class AllUnifiedSearch extends AbstractService {
 		'Wikia\Search\IndexService\MediaData' => null,
 		'Wikia\Search\IndexService\Metadata' => null,
 		'Wikia\Search\IndexService\Redirects' => null,
-//		'Wikia\Search\IndexService\Wam' => null,
 		'Wikia\Search\IndexService\WikiViews' => null,
 		'Wikia\Search\IndexService\VideoViews' => null, // note the order of operations -- AFTER metadata
-//		'Wikia\Search\IndexService\ArticleQuality' => null,
 	];
 
 	/**
 	 * Invokes a bunch of other services' execute functions
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 * @return array
 	 */
 	public function execute() {
 		if ( $this->currentPageId === null ) {
-			throw new \Exception( "This service requires a page ID to be set." );
+			throw new Exception( "This service requires a page ID to be set." );
 		}
 		$result = [];
 		foreach ( $this->services as $serviceName => $service ) {
