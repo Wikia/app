@@ -28,15 +28,7 @@ You can safely purge this folder to reclaim the disk space if needed.
     chmod 775 ~/cache
     ``` 
     
-3. Create .env file with the name of the devbox (this is needed to properly set @hostname field in the logs)
-	```bash
-	echo HOST_HOSTNAME=$(hostname) > app/docker/devbox/.env
-	```
-4. Create NGINX logs dir
-	```bash
-	mkdir ~/nginx_logs && chmod 0777 ~/nginx_logs
-	```
-5. Starting mediawiki
+3. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
 running the the background.
 
@@ -45,19 +37,14 @@ running the the background.
 	docker-compose up
 	```
 
-6. Stopping mediawiki
-	Usualy the best option is to stop it with Ctrl+C and then run `docker-compose down`.
+4. Stopping mediawiki
+	Usually the best option is to stop it with Ctrl+C and then run `docker-compose down`.
 
 ### Running eval.php
 ```bash
 docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest php maintenance/eval.php
 ```
 Replace `SERVER_ID` with any other city identifier.
-
-### Logging
-
-Both mediawiki and nginx logs are sent to ELK using fluentd. The are available in Kibana in the
-logstash-dev-mediawiki-* index and could e filtered by `@hostname`.
 
 ### Opcache
 
@@ -122,12 +109,3 @@ php-tests images:
  ```bash
 docker build -f Dockerfile-tests -t artifactory.wikia-inc.com/platform/php-wikia-tests:latest .
  ```
-
-fluentd_elastic image:
-
-Notice: this will overwrite fluent.conf in this folder you can either revert it back to the original or use different folder for the image build
-```bash
-mkdir plugins
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
-docker build -f Dockerfile-fluentd -t artifactory.wikia-inc.com/platform/fluentd_elastic:latest .
-```
