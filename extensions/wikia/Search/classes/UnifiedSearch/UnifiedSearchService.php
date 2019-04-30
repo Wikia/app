@@ -58,7 +58,7 @@ class UnifiedSearchService {
 			$params['videoOnly'] = true;
 		}
 
-		$response = $this->doApiRequest( 'special-search', $params );
+		$response = $this->doApiRequest( 'page-search', $params );
 
 		return json_decode( $response->getBody(), true );
 	}
