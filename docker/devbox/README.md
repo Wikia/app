@@ -27,16 +27,11 @@ You can safely purge this folder to reclaim the disk space if needed.
     docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest php maintenance/rebuildLocalisationCache.php --primary
     chmod 775 ~/cache
     ``` 
-    
-3. Create .env file with the name of the devbox (this is needed to properly set @hostname field in the logs)
+3. Setup environment variables
 	```bash
-	echo HOST_HOSTNAME=$(hostname) > app/docker/devbox/.env
+		echo "HOSTNAME_OVERRIDE=`hostname`" >> .env
 	```
-4. Create NGINX logs dir
-	```bash
-	mkdir ~/nginx_logs && chmod 0777 ~/nginx_logs
-	```
-5. Starting mediawiki
+4. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
 running the the background.
 
@@ -45,31 +40,27 @@ running the the background.
 	docker-compose up
 	```
 
-6. Stopping mediawiki
-	Usualy the best option is to stop it with Ctrl+C and then run `docker-compose down`.
+5. Stopping mediawiki
+	Usually the best option is to stop it with Ctrl+C and then run `docker-compose down`.
 
 ### Running eval.php
 ```bash
-docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest php maintenance/eval.php
+docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -e "HOSTNAME_OVERRIDE=`hostname`" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest php maintenance/eval.php
 ```
 Replace `SERVER_ID` with any other city identifier.
-
-### Logging
-
-Both mediawiki and nginx logs are sent to ELK using fluentd. The are available in Kibana in the
-logstash-dev-mediawiki-* index and could e filtered by `@hostname`.
 
 ### Opcache
 
 For performance reasons the opcache is enabled, but it checks for file updates every 10 seconds.
 So you should see your code changes shortly after uploading them to your devbox.
 
-### Tests (in progress)
+### Tests
 
-You can still start a container with MediaWiki/PHP:
+Our tests rely on the uopz extension when mocking static methods and constructors. Unfortunately uopz is not compatible
+with xdebug (https://github.com/krakjoe/uopz/issues/110). That's why a dedicated docker images has to be used:
 
 ```bash
-$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-devbox:latest bash
+$ docker run -it --rm -e "SERVER_ID=177" -e "WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN" -e "WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT" -e "WIKIA_DATACENTER=$WIKIA_DATACENTER" -e "LOG_STDOUT_ONLY=yes" -e "HOSTNAME_OVERRIDE=`hostname`" -v "$HOME/app":/usr/wikia/slot1/current/src:ro -v "$HOME/config":/usr/wikia/slot1/current/config:ro -v "$HOME/cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/platform/php-wikia-tests:latest bash
 ```
 
 Then you can run a single test:
@@ -117,11 +108,7 @@ php-fpm image:
 docker build -t artifactory.wikia-inc.com/platform/php-wikia-devbox:latest .
  ```
 
-fluentd_elastic image:
-
-Notice: this will overwrite fluent.conf in this folder you can either revert it back to the original or use different folder for the image build
-```bash
-mkdir plugins
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
-docker build -f Dockerfile-fluentd -t artifactory.wikia-inc.com/platform/fluentd_elastic:latest .
-```
+php-tests images:
+ ```bash
+docker build -f Dockerfile-tests -t artifactory.wikia-inc.com/platform/php-wikia-tests:latest .
+ ```
