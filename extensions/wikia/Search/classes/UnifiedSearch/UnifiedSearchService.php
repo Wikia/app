@@ -43,7 +43,7 @@ class UnifiedSearchService {
 	private function callSpecialSearch( UnifiedSearchRequest $request ) {
 		$params = [
 			'wikiId' => $request->getWikiId(),
-			'languageCode' => $request->getLanguageCode(),
+			'lang' => $request->getLanguageCode(),
 			'query' => $request->getQuery()->getSanitizedQuery(),
 			'namespace' => $request->getNamespaces(),
 			'page' => $request->getPage(),
