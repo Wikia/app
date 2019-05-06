@@ -314,21 +314,21 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
           }
         },
         "config": {
           dir("config") {
-            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
           }
         }
       )
 
-      imageTag = "$appHash.$configHash"
+      imageTag = "$appHash_$configHash"
 
       println("Image tag: $imageTag")
     }

@@ -212,7 +212,7 @@ node("docker-daemon-big") {
               nextAppTag = createTag(currentAppTag)
             }
 
-            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
 
             println("Wikia/app commit: $appHash")
           }
@@ -231,14 +231,14 @@ node("docker-daemon-big") {
               nextConfigTag = createTag(currentConfigTag)
             }
 
-            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
 
             println("Wikia/config commit: $configHash")
           }
         }
       )
 
-      imageTag = "$appHash.$configHash"
+      imageTag = "$appHash_$configHash"
 
       println("Image tag: $imageTag")
       println("App Tag: $nextAppTag")
