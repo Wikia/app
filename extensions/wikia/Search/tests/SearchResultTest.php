@@ -11,46 +11,46 @@ class SearchResultTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::getTruncatedResultsNum
 	 */
 	public function testGetTruncatedResultsNum() {
-		$view =
+		$searchResult =
 			$this->getMockBuilder( 'Wikia\\Search\\SearchResult' )
 				->setMethods( [ 'getResultsFound' ] )
 				->getMock();
 
 		$singleDigit = 9;
 
-		$view->expects( $this->at( 0 ) )
+		$searchResult->expects( $this->at( 0 ) )
 			->method( 'getResultsFound' )
 			->will( $this->returnValue( $singleDigit ) );
 
 
-		$this->assertEquals( $singleDigit, $view->getTruncatedResultsNum(),
+		$this->assertEquals( $singleDigit, $searchResult->getTruncatedResultsNum(),
 			"We should not truncate a single digit result number value." );
 
 		$doubleDigit = 26;
 
-		$view->expects( $this->at( 0 ) )
+		$searchResult->expects( $this->at( 0 ) )
 			->method( 'getResultsFound' )
 			->will( $this->returnValue( $doubleDigit ) );
 
-		$this->assertEquals( 30, $view->getTruncatedResultsNum(),
+		$this->assertEquals( 30, $searchResult->getTruncatedResultsNum(),
 			"We should round only for double digits." );
 
 		$tripleDigit = 492;
 
-		$view->expects( $this->at( 0 ) )
+		$searchResult->expects( $this->at( 0 ) )
 			->method( 'getResultsFound' )
 			->will( $this->returnValue( $tripleDigit ) );
 
-		$this->assertEquals( 500, $view->getTruncatedResultsNum(),
+		$this->assertEquals( 500, $searchResult->getTruncatedResultsNum(),
 			"We should round to hundreds for triple digits." );
 
 		$bigDigit = 55555;
 
-		$view->expects( $this->at( 0 ) )
+		$searchResult->expects( $this->at( 0 ) )
 			->method( 'getResultsFound' )
 			->will( $this->returnValue( $bigDigit ) );
 
-		$this->assertEquals( 56000, $view->getTruncatedResultsNum(),
+		$this->assertEquals( 56000, $searchResult->getTruncatedResultsNum(),
 			"Larger digits should round to the nearest n-1 radix." );
 	}
 
@@ -59,20 +59,20 @@ class SearchResultTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::getTruncatedResultsNum
 	 */
 	public function testGetTruncatedResultsNumWithFormatting() {
-		$view =
+		$searchResult =
 			$this->getMockBuilder( 'Wikia\\Search\\SearchResult' )
 				->setMethods( [ 'getResultsFound', 'formatNumber' ] )
 				->getMock();
 
 		$bigDigit = 55555;
 
-		$view->expects( $this->once() )
+		$searchResult->expects( $this->once() )
 			->method( 'formatNumber' )
 			->with( 56000 )
 			->will( $this->returnValue( '56,000' ) );
-		$view->expects( $this->once() )
+		$searchResult->expects( $this->once() )
 			->method( 'getResultsFound' )
 			->will( $this->returnValue( $bigDigit ) );
-		$this->assertEquals( '56,000', $view->getTruncatedResultsNum( true ) );
+		$this->assertEquals( '56,000', $searchResult->getTruncatedResultsNum( true ) );
 	}
 }

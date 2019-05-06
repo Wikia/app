@@ -114,19 +114,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setPageTitle( $searchConfig );
 
-		$searchResultView = $this->performSearch( $searchConfig );
+		$searchResult = $this->performSearch( $searchConfig );
 		if ( $this->isJsonRequest() ) {
-			$this->setJsonResponse( $searchResultView );
+			$this->setJsonResponse( $searchResult );
 		} else {
-			$this->setResponseValues( $searchConfig, $searchResultView );
+			$this->setResponseValues( $searchConfig, $searchResult );
 		}
 	}
 
-	private function setJsonResponse( SearchResult $searchResultView ) {
+	private function setJsonResponse( SearchResult $searchResult ) {
 		$response = $this->getResponse();
-		if ( $searchResultView->hasResults() ) {
+		if ( $searchResult->hasResults() ) {
 			$fields = explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) );
-			$response->setData( $searchResultView->toArray( $fields ) );
+			$response->setData( $searchResult->toArray( $fields ) );
 		} else {
 			$response->setData( [] );
 		}
@@ -136,10 +136,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Sets values for the view to work with during index method.
 	 *
 	 * @param Wikia\Search\Config $searchConfig
-	 * @param SearchResult $resultsView
+	 * @param SearchResult $results
 	 */
 	protected function setResponseValues(
-		Wikia\Search\Config $searchConfig, SearchResult $resultsView
+		Wikia\Search\Config $searchConfig, SearchResult $results
 	) {
 		if ( !$searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox',
@@ -151,15 +151,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
-		$this->setVal( 'results', $resultsView->getResults() );
-		$this->setVal( 'resultsFound', $resultsView->getResultsFound() );
-		$this->setVal( 'resultsFoundTruncated', $resultsView->getTruncatedResultsNum( true ) );
-		$this->setVal( 'isOneResultsPageOnly', $resultsView->isOneResultsPageOnly() );
-		$this->setVal( 'pagesCount', $resultsView->getNumPages() );
-		$this->setVal( 'currentPage', $resultsView->getPage() );
+		$this->setVal( 'results', $results->getResults() );
+		$this->setVal( 'resultsFound', $results->getResultsFound() );
+		$this->setVal( 'resultsFoundTruncated', $results->getTruncatedResultsNum( true ) );
+		$this->setVal( 'isOneResultsPageOnly', $results->isOneResultsPageOnly() );
+		$this->setVal( 'pagesCount', $results->getNumPages() );
+		$this->setVal( 'currentPage', $results->getPage() );
 		$this->setVal( 'paginationLinks', $this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'correctedQuery', $resultsView->getCorrectedQuery() );
+		$this->setVal( 'correctedQuery', $results->getCorrectedQuery() );
 		$this->setVal( 'query', $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage', $searchConfig->getLimit() );
 		$this->setVal( 'specialSearchUrl', $this->wg->Title->getFullUrl() );
@@ -178,10 +178,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
-		if ( $resultsView->getPage() == $resultsView->getNumPages() ) {
-			$this->setVal( 'shownResultsEnd', $resultsView->getResultsFound() );
+		if ( $results->getPage() == $results->getNumPages() ) {
+			$this->setVal( 'shownResultsEnd', $results->getResultsFound() );
 		} else {
-			$this->setVal( 'shownResultsEnd', $searchConfig->getLimit() * $resultsView->getPage() );
+			$this->setVal( 'shownResultsEnd', $searchConfig->getLimit() * $results->getPage() );
 		}
 
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
