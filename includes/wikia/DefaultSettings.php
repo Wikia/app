@@ -1122,12 +1122,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverUseAudienceNetworkBidder
- * Enables Facebook Audience Network bidding platform.
- */
-$wgAdDriverUseAudienceNetworkBidder = false;
-
-/**
  * @name $wgAdDriverBeachfrontBidderCountries
  * List of countries where Beachfront bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
