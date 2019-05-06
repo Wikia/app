@@ -34,4 +34,5 @@ RUN cd rebuild && dash ~/.pyenv_profile &&  pyenv local 3.6.4  &&  pytest .
 
 
 RUN SERVER_ID="177" php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php --primary
+WORKDIR /usr/wikia/slot1/current/src/rebuild
 RUN chmod 0777 /usr/wikia/slot1/current/src/docker/qa/run_script.sh
