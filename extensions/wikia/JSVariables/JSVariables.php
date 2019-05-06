@@ -47,6 +47,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
+		$vars['wgUserId'] = $user->getId();
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();

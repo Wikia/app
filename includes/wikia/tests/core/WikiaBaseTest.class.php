@@ -147,12 +147,7 @@ abstract class WikiaBaseTest extends TestCase {
 				trigger_error( sprintf( '%s: mock of class %s cannot be empty', __METHOD__, $className ), E_USER_WARNING );
 				return;
 			}
-			if ( empty($functionName) ) { // regular constructor
-				// FIXME uopz is broken on PHP 7.2, hangs indefinitely when mocking new with PHPUnit mock object
-				if ( version_compare( PHP_VERSION, '7.2', '>=' ) ) {
-					$this->markTestSkipped( 'skipping test on PHP 7.2 due to uopz bug' );
-				}
-
+			if ( empty($functionName) ) { // regular constructorg
 				$action = $this->getMockProxy()->getClassConstructor($className);
 			} else {
 				$action = $this->getMockProxy()->getStaticMethod($className,$functionName);
