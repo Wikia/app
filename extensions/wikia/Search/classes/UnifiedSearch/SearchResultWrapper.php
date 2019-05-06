@@ -4,9 +4,9 @@ namespace Wikia\Search\UnifiedSearch;
 
 use ArrayIterator;
 use Wikia\Search\Result;
-use Wikia\Search\SearchResultItems as SearchResultItemsAlias;
+use Wikia\Search\SearchResultItems;
 
-class SearchResultWrapper implements SearchResultItemsAlias {
+class SearchResultWrapper implements SearchResultItems {
 
 	private $results = [];
 

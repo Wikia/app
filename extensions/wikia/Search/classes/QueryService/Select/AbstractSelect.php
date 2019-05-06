@@ -327,10 +327,6 @@ abstract class AbstractSelect {
 		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
 			$fields[] = Utilities::field( $field, $language );
 		}
-
-		WikiaLogger::instance()->info("fields " .json_encode( $fields));
-
-
 		return $fields;
 	}
 
