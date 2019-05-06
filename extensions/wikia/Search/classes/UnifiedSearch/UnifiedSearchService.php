@@ -7,9 +7,11 @@ use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
+use WikiaException;
 use function GuzzleHttp\Psr7\build_query;
 
 class UnifiedSearchService {
+	const FAILED_TO_CALL_UNIFIED_SEARCH = "Failed to call unified-search";
 
 	/** @var string */
 	private $baseUrl;
@@ -63,6 +65,12 @@ class UnifiedSearchService {
 		return json_decode( $response->getBody(), true );
 	}
 
+	/**
+	 * @param $uri
+	 * @param $params
+	 * @return ResponseInterface
+	 * @throws WikiaException
+	 */
 	private function doApiRequest( $uri, $params ): ResponseInterface {
 		$client = new Client( [
 			// Base URI is used with relative requests
@@ -81,11 +89,12 @@ class UnifiedSearchService {
 			] );
 		}
 		catch ( ClientException $e ) {
-			WikiaLogger::instance()->error( "Failed to call unified-search", [
+			WikiaLogger::instance()->error( self::FAILED_TO_CALL_UNIFIED_SEARCH, [
 				'error_message' => $e->getMessage(),
 				'status_code' => $e->getCode(),
 			] );
-			throw $e;
+
+			throw new WikiaException( self::FAILED_TO_CALL_UNIFIED_SEARCH, 500, $e );
 		}
 	}
 
