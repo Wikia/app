@@ -4755,8 +4755,8 @@ $wgGlobalUserPreferenceWhiteList = [
  * @var Array $wgGlobalWhitelistedFromAutoblocks
  */
 $wgGlobalWhitelistedFromAutoblocks = [
-		'38.127.199.5',  // chat-s2
-		'38.127.199.4'   // chat-s1
+		'38.127.199.5',  //chat-s2
+		'38.127.199.4'   //chat-s1
 ];
 // CONFIG_REVISION: make sure, it's still needed
 
@@ -7901,7 +7901,7 @@ $wgTemplateExcludeList = [ '!' ];
  * list of settings the user can choose from:
  * @var Array $wgThumbLimits
  */
-$wgThumbLimits = [ 120, 150, 180, 200, 250, 300 ];
+$wgThumbLimits = [ 120,150, 180, 200, 250, 300 ];
 
 /**
  * If rendered thumbnail files are older than this timestamp, they will be
