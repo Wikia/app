@@ -8985,6 +8985,6 @@ $wgTriviaQuizzesEnabledPages = [];
  * @var array $wgTaxonomyArticleExchange
  */
 $wgTaxonomyArticleExchange = [
-    'vhost' => '/',
-    'exchange' => 'taxonomy-ex',
+	'vhost' => '/',
+	'exchange' => 'taxonomy-ex',
 ];
