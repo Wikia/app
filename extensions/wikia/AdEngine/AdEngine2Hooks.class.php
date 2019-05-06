@@ -272,25 +272,4 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.window';
 		return true;
 	}
-
-	/**
-	 * Modify assets appended to the bottom of wikiaMobileSkin
-	 *
-	 * @static
-	 * @param $jsStaticPackages
-	 * @param $jsExtensionPackages
-	 * @param $scssPackages
-	 * @return bool
-	 */
-	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
-		$coreGroupIndex = array_search( static::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
-
-		if ( $coreGroupIndex === false ) {
-			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
-			return true;
-		}
-
-		return true;
-	}
-
 }
