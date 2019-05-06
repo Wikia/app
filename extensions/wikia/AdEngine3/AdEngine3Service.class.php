@@ -1,25 +1,25 @@
 <?php
 
-class AdEngine2Service {
+class AdEngine3Service {
 	/**
 	 * Check if for current page the ads can be displayed or not.
 	 *
 	 * @return bool
 	 */
 	public static function areAdsShowableOnPage() {
-		return ( new AdEngine2PageTypeService() )->areAdsShowableOnPage();
+		return ( new AdEngine3PageTypeService() )->areAdsShowableOnPage();
 	}
 
 	public static function shouldShowAd( $pageTypes = null ) {
-		$adEnginePageTypeService = new AdEngine2PageTypeService();
+		$adEnginePageTypeService = new AdEngine3PageTypeService();
 
 		$pageType = $adEnginePageTypeService->getPageType();
 
 		if ( $pageTypes === null ) {
-			$pageTypes = [AdEngine2PageTypeService::PAGE_TYPE_ALL_ADS];
+			$pageTypes = [AdEngine3PageTypeService::PAGE_TYPE_ALL_ADS];
 		}
 
-		if ( in_array( '*', $pageTypes ) && $pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS ) {
+		if ( in_array( '*', $pageTypes ) && $pageType !== AdEngine3PageTypeService::PAGE_TYPE_NO_ADS ) {
 			return true;
 		}
 

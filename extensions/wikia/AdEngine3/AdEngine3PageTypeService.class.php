@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class AdEngine2PageTypeService
+ * Class AdEngine3PageTypeService
  *
  * Globals used: F::app()->checkSkin, F::app()->wg, WikiaPageType
  */
-class AdEngine2PageTypeService {
+class AdEngine3PageTypeService {
 	/**
 	 * @var WikiaGlobalRegistry
 	 */

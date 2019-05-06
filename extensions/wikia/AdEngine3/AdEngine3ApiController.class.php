@@ -4,6 +4,11 @@ class AdEngine3ApiController extends WikiaController
 {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	public function getCollapse()
+	{
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+	}
+
 	public function getRecCode()
 	{
 		global $wgUser;
