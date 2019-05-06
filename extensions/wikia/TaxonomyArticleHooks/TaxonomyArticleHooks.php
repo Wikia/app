@@ -8,4 +8,4 @@
 $wgAutoloadClasses['TaxonomyArticleHooks'] = dirname(__FILE__)."/TaxonomyArticleHooks.class.php";
 
 // Hooks
-$wgHooks['ArticleSaveComplete'][] = 'TaxonomyArticleHooks::onArticleSaveComplete';
+$wgHooks['ArticleEditUpdates'][] = 'TaxonomyArticleHooks::onArticleEditUpdates';

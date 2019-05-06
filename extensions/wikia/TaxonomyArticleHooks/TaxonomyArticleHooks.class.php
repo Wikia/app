@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
 
 /**
@@ -8,18 +9,34 @@ use Wikia\Rabbit\ConnectionBase;
  * Something
  */
 
-use Wikia\Tasks\Tasks\GenerateArticlePlaintextTask;
-
 class TaxonomyArticleHooks {
+    const ROUTING_KEY = "taxonomy-jamie-mw-test";
 
-	static public function onArticleSaveComplete($article) {
+    protected static $rabbitConnection;
+
+	static public function onArticleEditUpdates(\WikiPage $page, $editInfo, bool $changed) {
         global $wgCityId;
 
-        $task = new GenerateArticlePlaintextTask();
-        $task->wikiId( $wgCityId );
-        $task->call( 'generateArticlePlaintext', $wgCityId, $article );
-        $task->queue();
+        $message = [
+            'wikiId' => $wgCityId,
+            'articleId' => $page->getId(),
+            'articleTitle' => $page->getTitle()->getText(),
+            // 'articleWikitext' => $article->getText(),
+            'articlePlaintext' => html_entity_decode( strip_tags( $editInfo->output->getText()), ENT_COMPAT, 'UTF-8' )
+        ];
+
+        self::getRabbitConnection()->publish( self::ROUTING_KEY, $message );
 
         return true;
 	}
+
+    protected static function getRabbitConnection() {
+        global $wgTaxonomyArticleExchange;
+
+        if ( !isset( self::$rabbitConnection ) ) {
+            self::$rabbitConnection = new ConnectionBase( $wgTaxonomyArticleExchange );
+        }
+
+        return self::$rabbitConnection;
+    }
 }
