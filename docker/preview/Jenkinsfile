@@ -328,7 +328,7 @@ node("docker-daemon") {
         }
       )
 
-      imageTag = $appHash + "_" + $configHash
+      imageTag = appHash + "_" + configHash
 
       println("Image tag: $imageTag")
     }
