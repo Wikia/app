@@ -8,7 +8,7 @@ use WikiaDataAccess;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgCityId, $wgScriptPath, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
+		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
 
 		$wikiVariables = [
 			'wikiId' => $wgCityId,
