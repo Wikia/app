@@ -8978,3 +8978,13 @@ $wgEnableTriviaQuizzesExt = false;
  * @var string[] $wgTriviaQuizzesEnabledPages
  */
 $wgTriviaQuizzesEnabledPages = [];
+
+/**
+ * ArticleSaveHooks RabbitMQ configuration.
+ * @see extensions/wikia/TaxonomyArticleHooks
+ * @var array $wgTaxonomyArticleExchange
+ */
+$wgTaxonomyArticleExchange = [
+    'vhost' => '/',
+    'exchange' => 'taxonomy-ex',
+];

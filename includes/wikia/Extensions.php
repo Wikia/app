@@ -1847,3 +1847,5 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
+include_once( "$IP/extensions/wikia/TaxonomyArticleHooks/TaxonomyArticleHooks.php" );
+
