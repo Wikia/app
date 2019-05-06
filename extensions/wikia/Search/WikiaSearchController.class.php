@@ -7,7 +7,7 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Language\LanguageService;
 use Wikia\Search\MediaWikiService;
 use Wikia\Search\Result\ResultHelper;
-use Wikia\Search\SearchResultView;
+use Wikia\Search\SearchResult;
 use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
@@ -122,7 +122,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function setJsonResponse( SearchResultView $searchResultView ) {
+	private function setJsonResponse( SearchResult $searchResultView ) {
 		$response = $this->getResponse();
 		if ( $searchResultView->hasResults() ) {
 			$fields = explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) );
@@ -136,10 +136,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Sets values for the view to work with during index method.
 	 *
 	 * @param Wikia\Search\Config $searchConfig
-	 * @param SearchResultView $resultsView
+	 * @param SearchResult $resultsView
 	 */
 	protected function setResponseValues(
-		Wikia\Search\Config $searchConfig, SearchResultView $resultsView
+		Wikia\Search\Config $searchConfig, SearchResult $resultsView
 	) {
 		if ( !$searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox',
@@ -207,16 +207,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * @param \Wikia\Search\Config $searchConfig
-	 * @return SearchResultView
+	 * @return SearchResult
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResultView {
+	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
 		if ( $this->useUnifiedSearch() ) {
 			$service = new UnifiedSearchService();
 			$request = new UnifiedSearchRequest( $searchConfig );
 
-			return SearchResultView::fromUnifiedSearchResult( $service->search( $request ) );
+			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
 		} else {
 			if ( $searchConfig->getQuery()->hasTerms() ) {
 				$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
@@ -226,7 +226,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$this->handleArticleMatchTracking( $searchConfig );
 				$search->search();
 
-				return SearchResultView::fromConfig( $searchConfig );
+				return SearchResult::fromConfig( $searchConfig );
 			}
 		}
 	}

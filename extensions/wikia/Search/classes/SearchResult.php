@@ -8,7 +8,7 @@ use ArrayIterator;
 use F;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 
-class SearchResultView {
+class SearchResult {
 
 	/** @var string */
 	private $correctedQuery;
@@ -22,8 +22,8 @@ class SearchResultView {
 	private $items;
 
 	public static function fromUnifiedSearchResult( UnifiedSearchResult $result
-	): SearchResultView {
-		$view = new SearchResultView();
+	): SearchResult {
+		$view = new SearchResult();
 
 		$view->correctedQuery = null;
 		$view->totalResults = $result->resultsFound;
@@ -35,8 +35,8 @@ class SearchResultView {
 
 	}
 
-	public static function fromConfig( Config $config ): SearchResultView {
-		$view = new SearchResultView();
+	public static function fromConfig( Config $config ): SearchResult {
+		$view = new SearchResult();
 		$view->correctedQuery = $config->getQuery()->getQueryForHtml();
 		$view->totalResults = $config->getResultsFound();
 		$view->currentPage = $config->getPage();

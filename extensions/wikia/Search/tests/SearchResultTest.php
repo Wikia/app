@@ -5,14 +5,14 @@ namespace Wikia\Search\Test;
 /**
  * Tests for Config class
  */
-class SearchResultViewTest extends BaseTest {
+class SearchResultTest extends BaseTest {
 
 	/**
 	 * @covers \Wikia\Search\Config::getTruncatedResultsNum
 	 */
 	public function testGetTruncatedResultsNum() {
 		$view =
-			$this->getMockBuilder( 'Wikia\\Search\\SearchResultView' )
+			$this->getMockBuilder( 'Wikia\\Search\\SearchResult' )
 				->setMethods( [ 'getResultsFound' ] )
 				->getMock();
 
@@ -60,7 +60,7 @@ class SearchResultViewTest extends BaseTest {
 	 */
 	public function testGetTruncatedResultsNumWithFormatting() {
 		$view =
-			$this->getMockBuilder( 'Wikia\\Search\\SearchResultView' )
+			$this->getMockBuilder( 'Wikia\\Search\\SearchResult' )
 				->setMethods( [ 'getResultsFound', 'formatNumber' ] )
 				->getMock();
 
