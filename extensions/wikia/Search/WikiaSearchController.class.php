@@ -149,6 +149,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$tabsArgs = [
 			'config' => $searchConfig,
 			'filters' => $this->getVal( 'filters', [] ),
+			'result' => $results,
 		];
 
 		$this->setVal( 'results', $results->getResults() );
@@ -830,28 +831,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function pagination() {
 		$config = $this->getVal( 'config', false );
-		if ( ( !$config instanceof Wikia\Search\Config ) || !$this->request->isInternal() ) {
+		$result = $this->getVal( 'result' );
+		if ( !( $config instanceof Wikia\Search\Config ) || !( $result instanceof SearchResult ) ||
+			 !$this->request->isInternal() ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			$this->skipRendering();
 
 			return false;
 		}
 
-		if ( !$config->getResultsFound() ) {
+		if ( !$result->hasResults() ) {
 			$this->skipRendering();
 
 			return false;
 		}
 
-		$page = $config->getPage();
+		$page = $result->getPage();
+		$pageNumber = $result->getNumPages();
 
-		$windowFirstPage =
-			( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1;
+		if ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) {
+			$windowFirstPage = $page - self::PAGES_PER_WINDOW;
+		} else {
+			$windowFirstPage = 1;
+		}
 
-		$windowLastPage =
-			( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) ? ( $page +
-																				  self::PAGES_PER_WINDOW )
-				: $config->getNumPages() );
+		if ( ( $page + self::PAGES_PER_WINDOW ) < $pageNumber ) {
+			$windowLastPage = $page + self::PAGES_PER_WINDOW;
+		} else {
+			$windowLastPage = $pageNumber;
+		}
 
 		if ( $windowLastPage <= 1 ) {
 			$this->skipRendering();
@@ -896,7 +904,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal( 'query', $config->getQuery()->getSanitizedQuery() );
-		$this->setVal( 'pagesNum', $config->getNumPages() );
+		$this->setVal( 'pagesNum', $pageNumber );
 		$this->setVal( 'currentPage', $page );
 		$this->setVal( 'windowFirstPage', $windowFirstPage );
 		$this->setVal( 'windowLastPage', $windowLastPage );
