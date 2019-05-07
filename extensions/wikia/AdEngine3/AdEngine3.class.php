@@ -89,9 +89,7 @@ class AdEngine3
 		}
 
 		return [
-			'bidders' => array_filter([
-				'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
-			]),
+			'bidders' => [],
 			'opts' => array_filter([
 				'adsInContent' => $wg->EnableAdsInContent,
 				'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
