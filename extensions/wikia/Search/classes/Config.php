@@ -626,6 +626,13 @@ class Config {
 				!$isVideoFile ) );
 	}
 
+	public function imageOnly() :bool {
+		return in_array( Config::FILTER_IMAGE, $this->getPublicFilterKeys() );
+	}
+	public function videoOnly() :bool {
+		return in_array( Config::FILTER_VIDEO, $this->getPublicFilterKeys() );
+	}
+
 	/**
 	 * Overloading __set to type hint
 	 *
