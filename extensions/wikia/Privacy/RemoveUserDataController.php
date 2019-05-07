@@ -83,7 +83,11 @@ class RemoveUserDataController extends WikiaController {
 			[
 				'user_id' => $userId
 			],
-			__METHOD__
+			__METHOD__,
+			[
+				// we only want the last log related to the user
+				'ORDER BY' => 'created DESC'
+			]
 		);
 
 		// there's no entry for a given user ID
