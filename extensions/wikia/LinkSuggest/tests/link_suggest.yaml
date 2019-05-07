@@ -1,0 +1,21 @@
+page:
+  - page_id: 1
+    page_namespace: 0
+    page_title: Thrawn
+    page_is_redirect: 1
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+  - page_id: 2
+    page_namespace: 0
+    page_title: Mitth'raw'nuruodo
+    page_is_redirect: 0
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+redirect:
+  - rd_from: 1
+    rd_namespace: 0
+    rd_title: Mitth'raw'nuruodo
