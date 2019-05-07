@@ -256,7 +256,7 @@ class LinkSuggest {
 
 			} else {
 
-				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
+				$redirTitleFormatted = self::formatTitle( $row->rd_namespace, $row->rd_title );
 
 				// remove any instances of original array's value
 				unset( $results[$row->page_id] );
