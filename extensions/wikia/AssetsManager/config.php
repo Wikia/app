@@ -2186,5 +2186,6 @@ $config['search_tracking_js'] = [
 	'assets' => [
 		'//resources/wikia/modules/uuid.js',
 		'//skins/oasis/js/search-tracking/node_modules/@wikia/search-tracking/dist/search-tracking.js',
+		'//skins/oasis/js/search-tracking/pageOnTimeTracker.js',
 	]
 ];

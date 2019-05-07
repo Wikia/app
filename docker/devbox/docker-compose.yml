@@ -30,5 +30,6 @@ services:
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
       - WIKIA_FORCE_DEV_ONLY=yes
+      - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
     depends_on:
       - logger

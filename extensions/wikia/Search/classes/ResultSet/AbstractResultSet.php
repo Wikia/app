@@ -6,8 +6,12 @@
  */
 namespace Wikia\Search\ResultSet;
 
+use ArrayAccess;
+use ArrayIterator;
+use Iterator;
+use Wikia\Search\Config;
+use Wikia\Search\SearchResultItems;
 use Wikia\Search\Traits\AttributeIterableTrait;
-use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
 
 /**
  * This allows us to do a lot of the utility stuff separated out from the core logic of each class.
@@ -17,7 +21,7 @@ use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
  * @package Search
  * @subpackage ResultSet
  */
-abstract class AbstractResultSet implements Iterator, ArrayAccess {
+abstract class AbstractResultSet implements Iterator, ArrayAccess, SearchResultItems {
 	use AttributeIterableTrait;
 
 	/**
@@ -164,8 +168,10 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess {
 	 *
 	 * @return ArrayIterator
 	 */
-	public function getResults() {
-		$this->results = $this->results instanceof ArrayIterator ? $this->results : new ArrayIterator( $this->results );
+	public function getResults(): ArrayIterator {
+		$this->results = $this->results instanceof ArrayIterator
+				? $this->results
+				: new ArrayIterator( $this->results );
 
 		return $this->results;
 	}
@@ -186,9 +192,10 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess {
 	 *
 	 * @param array $expectedFields the fields we should surface
 	 *
+	 * @param null $key
 	 * @return array
 	 */
-	public function toArray( array $expectedFields = null, $key = null ) {
+	public function toArray( array $expectedFields = null, $key = null ): array {
 		if ( $expectedFields === null ) {
 			$expectedFields = [ 'title', 'url', 'pageid' ];
 		}

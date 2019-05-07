@@ -24,6 +24,7 @@ $wgAutoloadClasses['WikiaSearchIndexerController'] = $dir . 'WikiaSearchIndexerC
 $wgAutoloadClasses['WikiaSearchAjaxController'] = $dir . 'WikiaSearchAjaxController.class.php';
 $wgAutoloadClasses['WikiaSearchHelper'] = $dir . 'WikiaSearchHelper.class.php';
 
+
 /**
  * special pages
  */
