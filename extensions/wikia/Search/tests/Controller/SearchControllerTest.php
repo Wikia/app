@@ -444,7 +444,7 @@ class SearchControllerTest extends BaseTest {
 		$configMock = $this->getMockBuilder( Wikia\Search\Config::class )
 			->getMock();
 		$mockResult = $this->getMockBuilder( SearchResult::class )
-			->setMethods( [ 'getResultsFound' ] )
+			->setMethods( [ 'hasResults' ] )
 			->getMock();
 
 		$mockResult
@@ -473,13 +473,13 @@ class SearchControllerTest extends BaseTest {
 			->will( $this->returnValue( 'foo' ) );
 
 		$mockConfig = $this->getMockBuilder( Wikia\Search\Config::class )
-			->setMethods([ 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getInterWiki',
+			->setMethods([ 'getPage', 'getQuery', 'getNumPages', 'getInterWiki',
 					   'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced',
 					   'getLimit', 'getPublicFilterKeys', 'getRank' ])
 			->getMock();
 
 		$mockResult = $this->getMockBuilder( SearchResult::class )
-			->setMethods( [ 'getResultsFound' ] )
+			->setMethods( [ 'hasResults', 'getPage', 'getNumPages' ] )
 			->getMock();
 
 		$mockResult
