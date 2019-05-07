@@ -251,6 +251,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return $queryForce;
 		}
 
+		if ( RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' ) ) {
+			return true;
+		}
+
 		return $wgUseUnifiedSearch;
 	}
 
