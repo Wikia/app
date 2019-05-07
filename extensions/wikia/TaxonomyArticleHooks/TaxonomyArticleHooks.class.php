@@ -13,7 +13,7 @@ class TaxonomyArticleHooks {
 
 	protected static $rabbitConnection;
 
-	static public function onArticleEditUpdates( \WikiPage $page, $editInfo ) {
+	public static function onArticleEditUpdates( \WikiPage $page, $editInfo ) {
 		global $wgCityId;
 
 		// We currently do not need wikitext for the classifier, but it may be useful
