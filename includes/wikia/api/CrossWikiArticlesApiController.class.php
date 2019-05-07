@@ -43,7 +43,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			$dbname = WikiFactory::IDtoDB($wikiId);
 			$wikisData[$wikiId] = array(
 				'title' => $wikiDetails['title'],
-				'baseUrl' => $wikiDetails['url'],
+				'baseUrl' => rtrim($wikiDetails['url'], "/"),
 				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] ),
 				'videos' => $this->getVideosIds( $wikiId )
 			);
