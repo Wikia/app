@@ -46,7 +46,7 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
  * Force override consul suffix
  * @var string $wgForceConsulDatacenter
  */
-$wgForceConsulDatacenter = getenv( 'WIKIA_OVERWRITE_CONSUL_SUFFIX' );
+$wgForceConsulDatacenter = getenv( 'WIKIA_FORCE_CONSUL_DATACENTER' );
 
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 if ( empty( $wgWikiaEnvironment ) ) {
