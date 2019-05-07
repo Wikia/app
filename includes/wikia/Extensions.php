@@ -1847,5 +1847,7 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
-include_once( "$IP/extensions/wikia/TaxonomyArticleHooks/TaxonomyArticleHooks.php" );
-
+// LORE-495
+if ( !empty( $wgEnableTaxonomyArticles ) ) {
+    include_once( "$IP/extensions/wikia/TaxonomyArticleHooks/TaxonomyArticleHooks.php" );
+}
