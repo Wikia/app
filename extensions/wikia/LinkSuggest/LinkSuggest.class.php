@@ -166,11 +166,7 @@ class LinkSuggest {
 
 		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 		$sql1Measurement->stop();
-		if (count($namespaces) > 0) {
-			$commaJoinedNamespaces = count($namespaces) > 1 ?  $db->makeList( $namespaces ) : $db->addQuotes( $namespaces[0] );
-		}
 
-		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page.page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $limit ) {
 			/**
 			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
@@ -220,7 +216,8 @@ class LinkSuggest {
 					'redirect_target.page_id AS redirect_target_id'
 				],
 				[
-					"{$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page.page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )",
+					'page.page_namespace' => $namespaces,
+					"{$pageTitlePrefilter} (convert(binary convert(page.page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )",
 					'page.page_is_redirect = 0 OR redirect_target.page_id IS NOT NULL',
 				],
 				__METHOD__,
