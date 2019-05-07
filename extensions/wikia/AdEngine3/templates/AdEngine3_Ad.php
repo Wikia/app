@@ -1,7 +1,6 @@
 <?php $slotId = strtolower( $slotName ); ?>
 
 <?php if ($showAd): ?>
-	<?php // For Ad Mix experiment - XW-3156 ?>
 	<?php // Let's keep 'top-right-boxad-wrapper' id because of custom wiki scripts ?>
 	<?php if ( $slotName === 'TOP_BOXAD' ): ?>
 		<div id="top-right-boxad-wrapper">
@@ -14,11 +13,11 @@
 		<? if ($addToAdQueue): ?>
 			<script>
 				<? if ($onLoad) { ?>
-                wgAfterContentAndJS.push(function () {
-                    window.adslots2.push(<?= json_encode([ $slotId ]) ?>);
-                });
+					wgAfterContentAndJS.push(function () {
+						window.adslots2.push(<?= json_encode([ $slotId ]) ?>);
+					});
 				<? } else { ?>
-                window.adslots2.push(<?= json_encode([ $slotId ]) ?>);
+					window.adslots2.push(<?= json_encode([ $slotId ]) ?>);
 				<? } ?>
 			</script>
 		<? endif; ?>

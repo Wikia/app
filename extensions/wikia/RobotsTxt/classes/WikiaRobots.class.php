@@ -82,6 +82,10 @@ class WikiaRobots {
 		'/fandom?p=',
 		//Mobile Wiki search URL
 		'/search',
+
+		// AdEngine recovery API
+		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=bt',
+		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=hmd',
 	];
 
 	/**

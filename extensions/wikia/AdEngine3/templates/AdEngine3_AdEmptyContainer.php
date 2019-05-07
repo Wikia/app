@@ -4,7 +4,7 @@
 	<!-- BEGIN CONTAINER: <?= htmlspecialchars( $slotId ) ?> -->
 	<div id="<?= htmlspecialchars( $slotId ) ?>">
 		<script>
-            window.adslots2.push(<?= json_encode([$slotId]) ?>);
+			window.adslots2.push(<?= json_encode([$slotId]) ?>);
 		</script>
 	</div>
 	<!-- END CONTAINER: <?= htmlspecialchars($slotId) ?> -->
