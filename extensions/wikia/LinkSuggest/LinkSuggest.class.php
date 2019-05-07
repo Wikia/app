@@ -289,9 +289,6 @@ class LinkSuggest {
 			}
 		}
 
-		// Overwrite canonical title with redirect title for all formats
-		self::replaceResultIfRedirected($results, $redirects);
-
 		$format = $request->getText('format');
 
 		if ( $format == 'json' ) {
@@ -351,27 +348,6 @@ class LinkSuggest {
 
 	static function getEmptyResponse($format) {
 		return $format == 'json' ? json_encode(array('suggestions'=>array(),'redirects'=>array())) : '';
-	}
-
-	/**
-	 *
-	 * Helper function for replacing results if redirections are available
-	 *
-	 * @param Array $results
-	 * @param Array $redirects
-	 *
-	 * @return Array
-	 *
-	 * @author Artur Klajnerok <arturk@wikia-inc.com>
-	 *
-	 */
-
-	static private function replaceResultIfRedirected(&$results, &$redirects) {
-		foreach($results as &$val){
-			if (isset($redirects[$val])) {
-				$val = $redirects[$val];
-			}
-		}
 	}
 
 	/**
