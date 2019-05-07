@@ -957,31 +957,6 @@ class Config {
 	}
 
 	/**
-	 * Returns results number based on a truncated heuristic
-	 *
-	 * @param boolean $formatted whether we should also format the number
-	 *
-	 * @return integer
-	 */
-	public function getTruncatedResultsNum( $formatted = false ) {
-		$resultsNum = $this->getResultsFound();
-
-		$result = $resultsNum;
-
-		$digits = strlen( $resultsNum );
-		if ( $digits > 1 ) {
-			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
-			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
-		}
-
-		if ( $formatted ) {
-			$result = $this->getService()->formatNumber( $result );
-		}
-
-		return $result;
-	}
-
-	/**
 	 * These search profiles are used to figure out what tab we're on and how we should be searching based on that
 	 * While kind of a view concern, moved here so it can play nicely with the namespaces value
 	 *
@@ -1418,7 +1393,7 @@ class Config {
 	 *
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	protected function getService(): MediaWikiService {
+	public function getService(): MediaWikiService {
 		if ( $this->service === null ) {
 			$this->service = new MediaWikiService();
 		}
