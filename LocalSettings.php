@@ -44,27 +44,9 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
 /**
  * Force override consul suffix
- * @var string $wgOverwriteConsulSuffix
+ * @var string $wgForceConsulDatacenter
  */
-$wgOverwriteConsulSuffix = getenv( 'WIKIA_OVERWRITE_CONSUL_SUFFIX' );
-if( $wgOverwriteConsulSuffix ){
-	switch($wgWikiaEnvironment){
-		case 'dev':
-			if( $wgWikiaDatacenter != 'sjc' && $wgWikiaDatacenter != 'poz' ){
-				throw new RuntimeException( 'Combination of $wgWikiaEnvironment & $wgWikiaDatacenter not permitted: ' .
-											$wgWikiaEnvironment . '-' . $wgWikiaDatacenter );
-			}
-			break;
-		case 'prod':
-			if( $wgWikiaDatacenter != 'sjc' && $wgWikiaDatacenter != 'res' ){
-				throw new RuntimeException( 'Combination of $wgWikiaEnvironment & $wgWikiaDatacenter not permitted: ' .
-											$wgWikiaEnvironment . '-' . $wgWikiaDatacenter );
-			}
-			break;
-		default:
-			throw new RuntimeException( 'Unknown $wgWikiaEnvironment: ' . $wgWikiaEnvironment );
-	}
-}
+$wgForceConsulDatacenter = getenv( 'WIKIA_OVERWRITE_CONSUL_SUFFIX' );
 
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 if ( empty( $wgWikiaEnvironment ) ) {

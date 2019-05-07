@@ -5872,7 +5872,7 @@ $wgMemCachedServers = [
 	1 => 'prod.twemproxy.service.consul:31000',
 ];
 
-if($wgOverwriteConsulSuffix) {
+if($wgForceConsulDatacenter) {
 	$wgMemCachedServers = [
 		0 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:21000',
 		1 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:31000',
@@ -6400,8 +6400,10 @@ $wgPoolCounterConf = null;
  */
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
-if($wgOverwriteConsulSuffix) {
-	$wgPoolCounterServers = [ $wgWikiaEnvironment . '.kubernetes-lb-l4.' . $wgWikiaDatacenter . '.consul' ];
+if($wgForceConsulDatacenter) {
+	$wgPoolCounterServers = [ $wgWikiaEnvironment . '.kubernetes-lb-l4.service.' .
+							  $wgWikiaDatacenter .
+							  '.consul' ];
 }
 
 /**
@@ -6636,7 +6638,7 @@ $wgQueryPageDefaultLimit = 50;
  * @var string $wgRabbitHost
  */
 $wgRabbitHost = 'prod.rabbit.service.consul';
-if($wgOverwriteConsulSuffix) {
+if($wgForceConsulDatacenter) {
 	$wgRabbitHost = $wgWikiaEnvironment . '.rabbit.service.' . $wgWikiaDatacenter . '.consul';
 }
 
@@ -7233,7 +7235,7 @@ $wgSessionMemCachedServers = [
 	0 => 'prod.twemproxy.service.consul:31001',
 	1 => 'prod.twemproxy.service.consul:21001',
 ];
-if($wgOverwriteConsulSuffix) {
+if($wgForceConsulDatacenter) {
 	$wgSessionMemCachedServers = [
 		0 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:31001',
 		1 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:21001',
@@ -7530,8 +7532,8 @@ $wgSMTP = [
 	'IDHost' => ''
 ];
 
-if($wgOverwriteConsulSuffix) {
-	$wgSMTP['host'] = $wgWikiaEnvironment . '.smtp.' . $wgWikiaDatacenter . '.consul';
+if($wgForceConsulDatacenter) {
+	$wgSMTP['host'] = $wgWikiaEnvironment . '.smtp.service.' . $wgWikiaDatacenter . '.consul';
 }
 
 /**
@@ -7542,9 +7544,6 @@ if($wgOverwriteConsulSuffix) {
  */
 $wgSolrHost = 'prod.search-fulltext.service.consul';
 
-if($wgOverwriteConsulSuffix) {
-	$wgSolrHost = $wgWikiaEnvironment . '.search-fulltext.' . $wgWikiaDatacenter . '.consul';
-}
 
 /**
  * Solr host for key-value storage for ArticleService.
@@ -7553,9 +7552,6 @@ if($wgOverwriteConsulSuffix) {
  */
 $wgSolrKvHost = 'prod.search-kv.service.consul';
 
-if($wgOverwriteConsulSuffix) {
-	$wgSolrKvHost = $wgWikiaEnvironment . '.search-kv.' . $wgWikiaDatacenter . '.consul';
-}
 
 /**
  * Master Solr server used by multiple components.
