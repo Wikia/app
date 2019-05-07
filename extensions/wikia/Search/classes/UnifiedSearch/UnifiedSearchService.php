@@ -53,11 +53,11 @@ class UnifiedSearchService {
 		];
 
 		if ( $request->isImageOnly() ) {
-			$params['imagesOnly'] = true;
+			$params['imagesOnly'] = 'true';
 		}
 
 		if ( $request->isVideoOnly() ) {
-			$params['videoOnly'] = true;
+			$params['videoOnly'] = 'true';
 		}
 
 		$response = $this->doApiRequest( 'page-search', $params );

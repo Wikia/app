@@ -35,8 +35,8 @@ class UnifiedSearchRequest {
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
-		$this->imageOnly = $config->imageOnly();
-		$this->videoOnly = $config->videoOnly();
+		$this->imageOnly = $config->isImageOnly();
+		$this->videoOnly = $config->isVideoOnly();
 	}
 
 	/**
