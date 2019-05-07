@@ -7,7 +7,9 @@ use Exception;
 use ReflectionMethod;
 use ReflectionProperty;
 use SearchEngine;
+use Title;
 use Wikia;
+use Wikia\Search\SearchResult;
 use Wikia\Search\Test\BaseTest;
 use WikiaSearchController;
 
@@ -439,13 +441,20 @@ class SearchControllerTest extends BaseTest {
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithConfigNoResults() {
-		$configMock = $this->getMock( Wikia\Search\Config::class, [ 'getResultsFound' ] );
-		$configMock->expects( $this->once() )
-			->method( 'getResultsFound' )
-			->willReturn( 0 );
+		$configMock = $this->getMockBuilder( Wikia\Search\Config::class )
+			->getMock();
+		$mockResult = $this->getMockBuilder( SearchResult::class )
+			->setMethods( [ 'getResultsFound' ] )
+			->getMock();
+
+		$mockResult
+			->expects( $this->once() )
+			->method( 'hasResults' )
+			->willReturn( true );
 
 		$res = $this->app->sendRequest( WikiaSearchController::class, 'pagination', [
-			'config' => $configMock
+			'config' => $configMock,
+			'result' => $mockResult,
 		] );
 
 		$this->assertEmpty( $res->getBody(), 'WikiaSearchController::pagination must render no response if search config set in the request does not have its resultsFound value set, or that value is 0.' );
@@ -463,22 +472,27 @@ class SearchControllerTest extends BaseTest {
 			->method( 'getSanitizedQuery' )
 			->will( $this->returnValue( 'foo' ) );
 
-		$configMethods = [ 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getInterWiki',
-			'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced',
-			'getLimit', 'getPublicFilterKeys', 'getRank' ];
-		$mockConfig = $this->getMock( Wikia\Search\Config::class, $configMethods );
-		$incr = 0;
-		$mockConfig
-			->expects( $this->once() )
-			->method( 'getResultsFound' )
-			->will( $this->returnValue( 200 ) );
+		$mockConfig = $this->getMockBuilder( Wikia\Search\Config::class )
+			->setMethods([ 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getInterWiki',
+					   'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced',
+					   'getLimit', 'getPublicFilterKeys', 'getRank' ])
+			->getMock();
 
-		$mockConfig
+		$mockResult = $this->getMockBuilder( SearchResult::class )
+			->setMethods( [ 'getResultsFound' ] )
+			->getMock();
+
+		$mockResult
+			->expects( $this->once() )
+			->method( 'hasResults' )
+			->willReturn(true );
+
+		$mockResult
 			->expects( $this->once() )
 			->method( 'getPage' )
 			->will( $this->returnValue( 2 ) );
 
-		$mockConfig
+		$mockResult
 			->expects( $this->atLeastOnce() )
 			->method( 'getNumPages' )
 			->will( $this->returnValue( 10 ) );
@@ -495,11 +509,6 @@ class SearchControllerTest extends BaseTest {
 
 		$mockConfig
 			->expects( $this->once() )
-			->method( 'getResultsFound' )
-			->will( $this->returnValue( 200 ) );
-
-		$mockConfig
-			->expects( $this->once() )
 			->method( 'getNamespaces' )
 			->will( $this->returnValue( [ NS_MAIN ] ) );
 
@@ -513,11 +522,12 @@ class SearchControllerTest extends BaseTest {
 			->method( 'getPublicFilterKeys' )
 			->will( $this->returnValue( [ 'is_image' ] ) );
 
-		$mockTitle = new \Title();
+		$mockTitle = new Title();
 		$this->mockStaticMethod( \SpecialPage::class, 'getTitleFor', $mockTitle );
 
 		$res = $this->app->sendRequest( WikiaSearchController::class, 'pagination', [
-			'config' => $mockConfig
+			'config' => $mockConfig,
+			'result' => $mockResult,
 		] );
 
 		$expectedExtraParams = [
