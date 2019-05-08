@@ -1847,3 +1847,7 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
+// LORE-519
+if ( !empty ( $wgEnableArticleExporter ) ) {
+	include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
+}
