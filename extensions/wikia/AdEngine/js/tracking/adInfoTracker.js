@@ -91,7 +91,6 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_4': transformBidderPrice('rubicon'),
 			'bidder_5': transformBidderPrice('vmg'),
 			'bidder_6': transformBidderPrice('aol'),
-			'bidder_7': transformBidderPrice('audienceNetwork'),
 			'bidder_9': transformBidderPrice('openx'),
 			'bidder_10': transformBidderPrice('appnexusAst'),
 			'bidder_11': transformBidderPrice('rubicon_display'),

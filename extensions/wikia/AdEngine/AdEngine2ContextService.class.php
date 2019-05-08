@@ -80,9 +80,7 @@ class AdEngine2ContextService {
 					'featuredVideo' => $featuredVideoDetails,
 					'testSrc' => $wg->AdDriverAdTestWikiSrc
 				] ),
-				'providers' => $this->filterOutEmptyItems( [
-					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
-				] ),
+				'providers' => [],
 				'slots' => $this->filterOutEmptyItems( [
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),

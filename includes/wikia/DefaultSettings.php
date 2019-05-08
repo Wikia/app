@@ -330,6 +330,7 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
+$wgAutoloadClasses['UnifiedSearchService'] = $IP . '/includes/wikia/services/UnifiedSearchService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
 $wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
@@ -1122,19 +1123,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverUseAudienceNetworkBidder
- * Enables Facebook Audience Network bidding platform.
- */
-$wgAdDriverUseAudienceNetworkBidder = false;
-
-/**
- * @name $wgAdDriverAudienceNetworkBidderCountries
- * List of countries where Facebook Audience Network bidding platform is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAudienceNetworkBidderCountries = null;
-
-/**
  * @name $wgAdDriverBeachfrontBidderCountries
  * List of countries where Beachfront bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1668,9 +1656,7 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
- * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
- * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
+ * Enables Mobile-Wiki floor_adhesion slot.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
@@ -1828,6 +1814,12 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3150
+ * If enabled, Unified Search will be used for Special:Search.
+ */
+$wgUseUnifiedSearch = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033
