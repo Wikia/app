@@ -2,7 +2,7 @@
 // def sandbox = params.sandbox.endsWith("-k8s") ?  params.sandbox : params.sandbox + '-k8s';
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
-def mediawikiImageName = "mediawiki-servicesmw-k8s"
+def mediawikiImageName = "mediawiki-servicesmw"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}"
 def nginxImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}-nginx"
 def phpDockerFile = "docker/servicesmw/Dockerfile-php"
