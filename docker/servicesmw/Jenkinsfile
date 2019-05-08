@@ -38,8 +38,8 @@ EOL""")
     }
 
     withDockerContainer(kubectlImage) {
-      sh "kubectl --context kube-${datacenter}-dev -n dev apply -f app/docker/servicesmw/k8s-${suffix}.yaml"
-      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-dev -n dev rollout status deployment/mediawiki-servicesmw-'${suffix}'")
+      sh "kubectl --context kube-${datacenter}-dev -n 'dev' apply -f app/docker/servicesmw/k8s-${suffix}.yaml"
+      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-dev -n 'dev' rollout status deployment/mediawiki-servicesmw-'${suffix}'")
     }
 }
 
@@ -74,7 +74,7 @@ node("docker-daemon-big") {
 
       println("Updating servicesmw mediawiki-servicesmw-s1\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
     } catch (exc) {
-      println("Deploying new servicesmw named mediawiki-servicesmw-s1\napp - dev \nconfig - dev")
+      println("Deploying new servicesmw named mediawiki-servicesmw-s1\napp - 'dev' \nconfig - 'dev'")
     }
   }
 
@@ -83,7 +83,7 @@ node("docker-daemon-big") {
       "app": {
         dir("app") {
           git url: "git@github.com:Wikia/app.git",
-            branch: dev,
+            branch: 'dev',
             credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
           appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -95,7 +95,7 @@ node("docker-daemon-big") {
       "config": {
         dir("config") {
           git url: "git@github.com:Wikia/config.git",
-            branch: dev,
+            branch: 'dev',
             credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
           configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
