@@ -228,6 +228,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$search->search();
 
 				return SearchResult::fromConfig( $searchConfig );
+			} else {
+				return SearchResult::empty();
 			}
 		}
 	}
