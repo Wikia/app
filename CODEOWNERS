@@ -103,4 +103,3 @@ includes/wikia/api/CrossWikiArticlesApiController.class.php		@Wikia/data-enginee
 includes/wikia/api/DWDimensionApiController.class.php    @Wikia/data-engineering
 includes/wikia/api/DWDimensionApiControllerSQL.class.php    @Wikia/data-engineering
 extensions/wikia/DataWarehouse/*    @Wikia/data-engineering
-extensions/wikia/Track/*    @Wikia/data-engineering
