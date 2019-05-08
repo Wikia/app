@@ -1,0 +1,194 @@
+// todo use it when border settings for handling `-k8s` suffix will be prepared
+// def sandbox = params.sandbox.endsWith("-k8s") ?  params.sandbox : params.sandbox + '-k8s';
+
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
+def mediawikiImageName = "mediawiki-servicesmw-k8s"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawikiImageName-nginx"
+def phpDockerFile = "docker/base/Dockerfile-php"
+
+def rolloutStatus = 1
+
+def render(String template, java.util.LinkedHashMap binding) {
+  def engine = new groovy.text.SimpleTemplateEngine()
+
+  return engine.createTemplate(template).make(binding).toString()
+}
+
+def deploy_servicesmw(String datacenter, String suffix) {
+	dir("app") {
+      def template = sh(script: 'cat docker/servicesmw/servicesmw.template.yaml', returnStdout: true)
+      def k8s = render(template, [
+        'MEDIAWIKI_IMAGE': mediawikiImage,
+        'IMAGE_TAG': imageTag,
+        'SERVICESMW_NAME': 'servicesmw-' + suffix,
+        'ENVIRONMENT': 'dev',
+        'DATACENTER': datacenter,
+        'APP_VERSION': 'dev',
+        'CONFIG_VERSION': 'dev',
+        'REPLICAS': 1,
+        'MAX_REPLICAS': 2
+      ])
+
+      sh("""cat > docker/servicesmw/k8s-${suffix}.yaml <<EOL
+${k8s}
+EOL""")
+
+      sh("cat docker/sandbox/k8s-${suffix}.yaml")
+    }
+
+    withDockerContainer(kubectlImage) {
+      sh "kubectl --context kube-${datacenter}-dev -n dev apply -f app/docker/servicesmw/k8s-${suffix}.yaml"
+      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-dev -n dev rollout status deployment/mediawiki-servicesmw-'${suffix}'")
+    }
+}
+
+node("docker-daemon-big") {
+  def buildUser = "Anonymous"
+  def appHash
+  def configHash
+  def imageTag
+
+  wrap([$class: 'BuildUser']) {
+    try {
+      buildUser = "${BUILD_USER}"
+    } catch (MissingPropertyException ex) {
+      buildUser = "Jenkins"
+    }
+  }
+
+  stage("Fetch version") {
+    def deploymentInfo
+
+    try {
+      withDockerContainer(kubectlImage) {
+        deploymentInfo = sh(
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=${mediawikiImageName}-s1"
+          + " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+          returnStdout: true
+        )
+      }
+
+      def prevConfigVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+      def prevAppVersion = sh(script: "echo \"${deploymentInfo}\" | sed 's/.*app_version:\\([^] ]*\\).*/\\1/'", returnStdout: true)
+
+      println("Updating servicesmw mediawiki-servicesmw-s1\napp - ${prevAppVersion} ==> ${params.app_branch} \nconfig - ${prevConfigVersion} ==> ${params.config_branch}")
+    } catch (exc) {
+      println("Deploying new servicesmw named mediawiki-servicesmw-s1\napp - dev \nconfig - dev")
+    }
+  }
+
+  stage("Clone repositories") {
+    parallel (
+      "app": {
+        dir("app") {
+          git url: "git@github.com:Wikia/app.git",
+            branch: dev,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+          appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+          println("Wikia/app commit: $appHash")
+        }
+      },
+
+      "config": {
+        dir("config") {
+          git url: "git@github.com:Wikia/config.git",
+            branch: dev,
+            credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+          configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+          println("Wikia/config commit: $configHash")
+        }
+      }
+    )
+
+    imageTag = "$appHash.$configHash"
+
+    println("Image tag: $imageTag")
+  }
+
+  stage("Bump cachebuster and version") {
+    parallel (
+      "app": {
+        dir("app") {
+          def cacheBuster = new Date().getTime()
+
+          sh('echo "<?php\n\\\$wgStyleVersion = ' + cacheBuster + ';" > wgStyleVersion.php')
+          sh('echo "dev@' + appHash + '" > wikia.version.txt')
+        }
+      },
+
+      "config": {
+        dir("config") {
+          sh('echo "dev@' + configHash + '" > wikia.version.txt')
+        }
+      }
+    )
+  }
+
+  parallel (
+    "php": {
+      stage("Build and push php image") {
+        dir("app") {
+          def imageExists = false
+          def status = sh(script: """
+            curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+            -w "%{http_code}" -s -I -o /dev/null \
+            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/${mediawikiImageName}/${imageTag}"
+          """, returnStdout: true).trim()
+
+          if (status == "200") {
+            imageExists = true
+          }
+
+          if (!imageExists) {
+            // SUS-5284 - make the image a bit smaller
+            sh("cp docker/.dockerignore ..")
+            sh("docker build .. -f $phpDockerFile -t $mediawikiImage:$imageTag")
+            sh("docker push $mediawikiImage:$imageTag")
+          } else {
+            println("Php image tag ($imageTag) already exists")
+          }
+        }
+      }
+    },
+
+    "nginx": {
+      stage("Build and push nginx image") {
+        dir("app") {
+          def imageExists = false
+          def status = sh(script: """
+            curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+            -w "%{http_code}" -s -I -o /dev/null \
+            -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/${mediawikiImageName}-nginx/${imageTag}"
+          """, returnStdout: true).trim()
+
+          if (status == "200") {
+            imageExists = true
+          }
+
+          if (!imageExists) {
+            // SUS-5284 - make the image a bit smaller
+            sh("cp docker/.dockerignore ..")
+            sh("docker build . -f docker/servicesmw/Dockerfile-nginx -t $nginxImage:$imageTag")
+            sh("docker push $nginxImage:$imageTag")
+          } else {
+            println("Nginx image tag ($imageTag) already exists")
+          }
+        }
+      }
+    }
+  )
+
+  stage('Notify Slack Channel publish') {
+    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
+  }
+
+  stage("Apply new k8s descriptor s1") {
+    deploy_servicesmw('sjc', 's1')
+    deploy_servicesmw('poz', 'p1')
+  }
+}
