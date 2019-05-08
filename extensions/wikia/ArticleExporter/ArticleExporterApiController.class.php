@@ -26,7 +26,7 @@ class ArticleExporterApiController extends WikiaApiController {
 					'revisionId' => strval( $article['parse']['revid'] ),
 					'title' => $article['parse']['title'],
 					'url' => $this->getPageUrl( $id ),
-					'plaintextContent' => substr( $this->getPlaintext( $article['parse']['text']['*'] ), 0, 2000 ),
+					'plaintextContent' => $this->getPlaintext( $article['parse']['text']['*'] ),
 					'categories' => $this->getCategories( $article['parse']['categories'] ),
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
 					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] ),
