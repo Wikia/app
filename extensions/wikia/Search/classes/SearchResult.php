@@ -6,6 +6,7 @@ namespace Wikia\Search;
 
 use ArrayIterator;
 use F;
+use Wikia\Search\UnifiedSearch\SearchResultWrapper;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 
 class SearchResult {
@@ -49,7 +50,7 @@ class SearchResult {
 		$searchResult->totalResults = 0;
 		$searchResult->currentPage = 1;
 		$searchResult->pageCount = 0;
-		$searchResult->items = [];
+		$searchResult->items = new SearchResultWrapper( [] );
 
 		return $searchResult;
 	}
