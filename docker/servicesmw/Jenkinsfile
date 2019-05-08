@@ -15,7 +15,7 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-def deploy_servicesmw(String datacenter, String suffix) {
+def deploy_servicesmw(String datacenter, String suffix, String mediawikiImage) {
 	dir("app") {
       def template = sh(script: 'cat docker/servicesmw/servicesmw.template.yaml', returnStdout: true)
       def k8s = render(template, [
@@ -188,7 +188,7 @@ node("docker-daemon-big") {
   }
 
   stage("Apply new k8s descriptor s1") {
-    deploy_servicesmw('sjc', 's1')
-    deploy_servicesmw('poz', 'p1')
+    deploy_servicesmw('sjc', 's1',mediawikiImage)
+    deploy_servicesmw('poz', 'p1', mediawikiImage)
   }
 }
