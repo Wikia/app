@@ -15,13 +15,14 @@ def render(String template, java.util.LinkedHashMap binding) {
   return engine.createTemplate(template).make(binding).toString()
 }
 
-def deploy_servicesmw(String datacenter, String suffix, String mediawikiImage) {
+def deploy_servicesmw(String datacenter, String suffix, String mediawikiImage, String imageTag, String kubectlImage) {
 	dir("app") {
       def template = sh(script: 'cat docker/servicesmw/servicesmw.template.yaml', returnStdout: true)
       def k8s = render(template, [
         'MEDIAWIKI_IMAGE': mediawikiImage,
         'IMAGE_TAG': imageTag,
         'SERVICESMW_NAME': 'servicesmw-' + suffix,
+        'SERVICES_INSTANCE': suffix,
         'ENVIRONMENT': 'dev',
         'DATACENTER': datacenter,
         'APP_VERSION': 'dev',
@@ -34,7 +35,7 @@ def deploy_servicesmw(String datacenter, String suffix, String mediawikiImage) {
 ${k8s}
 EOL""")
 
-      sh("cat docker/sandbox/k8s-${suffix}.yaml")
+      sh("cat docker/servicesmw/k8s-${suffix}.yaml")
     }
 
     withDockerContainer(kubectlImage) {
@@ -63,7 +64,7 @@ node("docker-daemon-big") {
     try {
       withDockerContainer(kubectlImage) {
         deploymentInfo = sh(
-          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=${mediawikiImageName}-s1"
+          script: "kubectl --context kube-${datacenter}-dev -n 'dev' get deployments -l app=${mediawikiImageName}-s1"
           + " -o jsonpath='{.items[0].spec.template.metadata.labels}'",
           returnStdout: true
         )
@@ -188,7 +189,7 @@ node("docker-daemon-big") {
   }
 
   stage("Apply new k8s descriptor s1") {
-    deploy_servicesmw('sjc', 's1',mediawikiImage)
-    deploy_servicesmw('poz', 'p1', mediawikiImage)
+    deploy_servicesmw('sjc', 's1',mediawikiImage, imageTag, kubectlImage)
+    deploy_servicesmw('poz', 'p1', mediawikiImage, imageTag, kubectlImage)
   }
 }

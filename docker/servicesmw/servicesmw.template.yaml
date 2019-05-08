@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mediawiki-servicesmw-${SERVICES_INSTANCE}
-  namespace: prod
+  namespace: dev
   labels:
     app: mediawiki-servicesmw-${SERVICES_INSTANCE}
     type: mediawiki
@@ -126,7 +126,7 @@ metadata:
   name: mediawiki-servicesmw-${SERVICES_INSTANCE}
   labels:
     app: mediawiki-servicesmw-${SERVICES_INSTANCE}
-  namespace: prod
+  namespace: dev
 spec:
   jobLabel: app
   selector:
@@ -134,7 +134,7 @@ spec:
       app: mediawiki-servicesmw-${SERVICES_INSTANCE}
   namespaceSelector:
     matchNames:
-    - prod
+    - dev
   endpoints:
   - port: main
     path: /metrics.php
