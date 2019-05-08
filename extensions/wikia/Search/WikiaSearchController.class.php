@@ -218,20 +218,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$request = new UnifiedSearchRequest( $searchConfig );
 
 			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
-		} else {
-			if ( $searchConfig->getQuery()->hasTerms() ) {
-				$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
-				/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
-				$search->getMatch();
-
-				$this->handleArticleMatchTracking( $searchConfig );
-				$search->search();
-
-				return SearchResult::fromConfig( $searchConfig );
-			} else {
-				return SearchResult::empty();
-			}
 		}
+		if ( $searchConfig->getQuery()->hasTerms() ) {
+			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
+			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
+			$search->getMatch();
+
+			$this->handleArticleMatchTracking( $searchConfig );
+			$search->search();
+
+			return SearchResult::fromConfig( $searchConfig );
+		}
+
+		return SearchResult::empty();
 	}
 
 	private function isJsonRequest(): bool {
