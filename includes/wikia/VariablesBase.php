@@ -8978,3 +8978,20 @@ $wgEnableTriviaQuizzesExt = false;
  * @var string[] $wgTriviaQuizzesEnabledPages
  */
 $wgTriviaQuizzesEnabledPages = [];
+
+/**
+ * Enables the Article Exporter API
+ * @see LORE-519
+ * @var bool
+ */
+$wgEnableArticleExporter = false;
+
+/**
+ * ArticleExporter RabbitMQ configuration.
+ * @see extensions/wikia/ArticleExporter
+ * @var array $wgArticleExporterExchange
+ */
+$wgArticleExporterExchange = [
+    'vhost' => '/',
+    'exchange' => 'taxonomy-ex',
+];
