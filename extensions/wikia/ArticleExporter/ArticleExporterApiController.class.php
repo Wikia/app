@@ -31,10 +31,7 @@ class ArticleExporterApiController extends WikiaApiController {
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
 					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] ),
 				];
-
-				var_dump( $articles[$id]['plaintextContent'] );
 			}
-
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
