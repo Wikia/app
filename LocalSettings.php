@@ -220,7 +220,7 @@ require_once "$IP/includes/wikia/VariablesBase.php";
 /**
  * Override some of the consul url's.
  */
-if( $wgForceConsulDatacenter ){
+if ( $wgForceConsulDatacenter ) {
 	require_once "$IP/includes/wikia/VariablesDatacenterOverrides.php";
 }
 
