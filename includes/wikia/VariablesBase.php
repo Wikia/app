@@ -5872,13 +5872,6 @@ $wgMemCachedServers = [
 	1 => 'prod.twemproxy.service.consul:31000',
 ];
 
-if($wgForceConsulDatacenter) {
-	$wgMemCachedServers = [
-		0 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:21000',
-		1 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:31000',
-	];
-}
-
 /**
  * Read/write timeout for MemCached server communication, in microseconds.
  * @var int $wgMemCachedTimeout
@@ -6400,12 +6393,6 @@ $wgPoolCounterConf = null;
  */
 $wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
-if($wgForceConsulDatacenter) {
-	$wgPoolCounterServers = [ $wgWikiaEnvironment . '.kubernetes-lb-l4.service.' .
-							  $wgWikiaDatacenter .
-							  '.consul' ];
-}
-
 /**
  * Whether to emit more detailed debug logs for a PoolWorkArticleView
  * Controlled by $wgPoolWorkArticleViewDebugSampleRatio
@@ -6638,9 +6625,6 @@ $wgQueryPageDefaultLimit = 50;
  * @var string $wgRabbitHost
  */
 $wgRabbitHost = 'prod.rabbit.service.consul';
-if($wgForceConsulDatacenter) {
-	$wgRabbitHost = $wgWikiaEnvironment . '.rabbit.service.' . $wgWikiaDatacenter . '.consul';
-}
 
 /**
  * Port used by the datacenter-local Rabbit cluster.
@@ -7235,12 +7219,6 @@ $wgSessionMemCachedServers = [
 	0 => 'prod.twemproxy.service.consul:31001',
 	1 => 'prod.twemproxy.service.consul:21001',
 ];
-if($wgForceConsulDatacenter) {
-	$wgSessionMemCachedServers = [
-		0 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:31001',
-		1 => $wgWikiaEnvironment . '.twemproxy.service.' . $wgWikiaDatacenter . '.consul:21001',
-	];
-}
 
 /**
  * Override to customise the session name.
@@ -7531,10 +7509,6 @@ $wgSMTP = [
 	'auth'   => false,
 	'IDHost' => ''
 ];
-
-if($wgForceConsulDatacenter) {
-	$wgSMTP['host'] = $wgWikiaEnvironment . '.smtp.service.' . $wgWikiaDatacenter . '.consul';
-}
 
 /**
  * Solr host for Search and ArticleService.
