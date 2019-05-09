@@ -38,9 +38,19 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	}
 
 	function getApplicableContent(sponsoredContent) {
-		return sponsoredContent.filter(function (el) {
-			return !el.geos.length || el.geos.indexOf(userGeo) !== -1;
+		var applicableContent = sponsoredContent.filter(function (el) {
+			return (!el.geos.length || el.geos.indexOf(userGeo) !== -1) && (!el.wikiIds.length || el.wikiIds.indexOf(w.wgCityId) !== -1);
 		});
+		var siteSpecificContent = applicableContent.filter(function (item) {
+			return item.wikiIds.indexOf(w.wgCityId) !== -1;
+		});
+
+		// If there are any sponsored items targeted specifically for this community, they have to take precedence over others
+		if (siteSpecificContent) {
+			return siteSpecificContent;
+		}
+
+		return applicableContent;
 	}
 
 	function getWeightsSum(applicableContent) {
