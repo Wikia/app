@@ -1848,6 +1848,4 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
 }
 
 // LORE-519
-if ( !empty ( $wgEnableArticleExporter ) ) {
-	include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
-}
+include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
