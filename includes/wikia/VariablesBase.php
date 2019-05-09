@@ -8980,11 +8980,11 @@ $wgEnableTriviaQuizzesExt = false;
 $wgTriviaQuizzesEnabledPages = [];
 
 /**
- * Enables the Article Exporter API
+ * Enables the Article Exporter Hooks
  * @see LORE-519
  * @var bool
  */
-$wgEnableArticleExporter = false;
+$wgEnableArticleExporterHooks = false;
 
 /**
  * ArticleExporter RabbitMQ configuration.
@@ -8994,4 +8994,5 @@ $wgEnableArticleExporter = false;
 $wgArticleExporterExchange = [
     'vhost' => '/',
     'exchange' => 'taxonomy-ex',
+    'routing' => 'taxonomy.article-edit'
 ];

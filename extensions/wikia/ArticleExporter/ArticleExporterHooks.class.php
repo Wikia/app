@@ -9,19 +9,18 @@ use Wikia\Rabbit\ConnectionBase;
  */
 
 class ArticleExporterHooks {
-    const ROUTING_KEY = "taxonomy.article-edits";
-
     protected static $rabbitConnection;
 
     public static function onArticleSaveComplete( WikiPage $page ) {
         global $wgCityId;
+        global $wgArticleExporterExchange;
 
         $message = [
             'wikiId' => $wgCityId,
             'pageIds' => [ strval($page->getId()) ],
         ];
 
-        self::getRabbitConnection()->publish( self::ROUTING_KEY, $message );
+        self::getRabbitConnection()->publish( $wgArticleExporterExchange['routing'], $message );
 
         return true;
     }
