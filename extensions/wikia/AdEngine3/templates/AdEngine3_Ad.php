@@ -1,7 +1,7 @@
 <?php $slotId = strtolower( $slotName ); ?>
 
 <?php if ($showAd): ?>
-	<?php // Let's keep 'top-right-boxad-wrapper' id because of custom wiki scripts ?>
+	<?php // Let's keep 'top-right-boxad-wrapper' div because of custom wiki scripts ?>
 	<?php if ( $slotName === 'TOP_BOXAD' ): ?>
 		<div id="top-right-boxad-wrapper">
 	<?php endif; ?>
