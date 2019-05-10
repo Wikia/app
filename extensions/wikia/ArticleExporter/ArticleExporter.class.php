@@ -12,11 +12,12 @@ class ArticleExporter {
         $articles = [];
         foreach ( $ids as $id ) {
             $article = $this->getArticle( $id );
-            $title = Title::newFromID( $id ); // some items not available through parse api
+            $title = $this->loadTitle( $id ); // some items not available through parse api
 
             if ( $article ) {
                 $articles[$id] = [
                     'wikiId' => $cityId,
+					'lang' => $this->getContentLang(),
                     'pageId' => $id,
                     'namespace' => $title->getNamespace(),
                     'revisionId' => strval( $article['parse']['revid'] ),
@@ -43,6 +44,11 @@ class ArticleExporter {
         );
     }
 
+    public function getContentLang() {
+    	global $wgContLanguageCode;
+    	return $wgContLanguageCode;
+	}
+
     // Return a quick plaintext version of the article content. Ideally we want to pull out things
     // like "Edit" and the TOC - but for the first version this should get us 99% of the way there
     public function getPlaintext( $text ) {
@@ -51,6 +57,10 @@ class ArticleExporter {
 
         return str_replace( [ "&lt;", "&gt;" ], "", $text );
     }
+
+    public function loadTitle( $id ) {
+    	return Title::newFromID($id);
+	}
 
     public function getCategories( $rawCategories ) {
         $categories = [];
