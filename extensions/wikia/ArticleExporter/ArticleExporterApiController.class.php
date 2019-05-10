@@ -8,13 +8,13 @@
 */
 class ArticleExporterApiController extends WikiaApiController {
 	public function getArticles() {
-        global $wgCityId;
+		global $wgCityId;
 		global $wgRequest;
 
 		$ids = $wgRequest->getArray( 'ids' );
 
 		$exporter = new ArticleExporter();
-        $articles = $exporter->build($wgCityId, $ids);
+		$articles = $exporter->build($wgCityId, $ids);
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( [ 'articles' => $articles ] );
