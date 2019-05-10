@@ -1851,3 +1851,5 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
 if ( !empty ( $wgEnableArticleExporterHooks ) ) {
     include "$IP/extensions/wikia/ArticleExporter/ArticleExporterHooks.setup.php";
 }
+// LORE-519
+include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";

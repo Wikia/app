@@ -8,11 +8,11 @@ use WikiaDataAccess;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgCityId, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
+		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
 
 		$wikiVariables = [
 			'wikiId' => $wgCityId,
-			'basePath' => $wgServer,
+			'basePath' => $wgServer . $wgScriptPath,
 			'dbName' => $wgDBname,
 			'name' => $wgSitename,
 			'getStartedUrl' =>  $this->getStartedUrl(),
