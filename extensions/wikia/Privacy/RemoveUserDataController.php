@@ -72,7 +72,7 @@ class RemoveUserDataController extends WikiaController {
 
 		$specialsDbr = self::getSpecialsDB();
 
-		$logEntries = $specialsDbr->select(
+		$rows = $specialsDbr->select(
 			RemovalAuditLog::LOG_TABLE,
 			[
 				'id',
@@ -88,6 +88,8 @@ class RemoveUserDataController extends WikiaController {
 				'ORDER BY' => 'created DESC'
 			]
 		);
+
+		$logEntries = iterator_to_array( $rows );
 
 		// there's no entry for a given user ID
 		if( empty( $logEntries ) ) {
