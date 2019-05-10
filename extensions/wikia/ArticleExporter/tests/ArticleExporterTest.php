@@ -79,7 +79,7 @@ class ArticleExporterTest extends TestCase {
 		$mockArticleExporter = $this->getMockBuilder('ArticleExporter')
 			->setMethods( [ 'getArticle', 'loadTitle', 'getContentLang' ] )
 			->getMock();
-		$mockArticleExporter->expects($this->atLeastOnce())
+		$mockArticleExporter->expects($this->any())
 			->method('getContentLang')
 			->will($this->returnValue('en'));
 
@@ -90,10 +90,10 @@ class ArticleExporterTest extends TestCase {
 		$mockTitle = $this->getMockBuilder('Title')
 			->setMethods([ 'getFullUrl', 'getNamespace' ])
 			->getMock();
-		$mockTitle->expects($this->once())
+		$mockTitle->expects($this->any())
 			->method('getFullUrl')
-			->will($this->returnValue( 'https://community.fandom/wiki/Jon_Snow' ));
-		$mockTitle->expects($this->once())
+			->will($this->returnValue( $url ));
+		$mockTitle->expects($this->any())
 			->method('getNamespace')
 			->will($this->returnValue(NS_MAIN));
 
