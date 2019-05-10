@@ -22,33 +22,34 @@ class ArticleExporterTest extends TestCase {
 
 	public function testSingleArticle() {
 		$jonSnow = $this->buildMockTitle( 'https://community.fandom/wiki/Jon_Snow' );
-		$articleExplorer = $this->buildMockArticleExplorer();
+		$articleExporter = $this->buildMockArticleExporter();
 
-		$articleExplorer->expects($this->once())
+		$articleExporter->expects($this->once())
 			->method('getArticle')
 			->will($this->returnValue( $this->parseResponse ));
 
-		$articleExplorer->expects($this->once())
+		$articleExporter->expects($this->once())
 			->method('loadTitle')
 			->will($this->returnValue( $jonSnow ));
 
-		$articles = $articleExplorer->build('1', ['1']);
+		$articles = $articleExporter->build('1', ['1']);
 
 		$this->assertEquals(1, sizeof($articles));
 	}
 
 	public function testMultipleArticles() {
-		$mockArticleExporter = $this->buildMockArticleExplorer();
+		$jonSnow = $this->buildMockTitle( 'https://community.fandom/wiki/Jon_Snow' );
+		$articleExporter = $this->buildMockArticleExporter();
 
-		$mockArticleExporter->expects($this->exactly(2))
+		$articleExporter->expects($this->exactly(2))
 			->method('getArticle')
 			->will($this->returnValue( $this->parseResponse ));
 
-		$mockArticleExporter->expects($this->exactly(2))
-			->method('getPageUrl')
-			->will($this->returnValue( 'https://community.fandom/wiki/Jon_Snow' ));
+		$articleExporter->expects($this->exactly(2))
+			->method('loadTitle')
+			->will($this->returnValue($jonSnow));
 
-		$articles = $mockArticleExporter->build('1', ['1', '2']);
+		$articles = $articleExporter->build('1', ['1', '2']);
 
 		$this->assertEquals(2, sizeof($articles));
 	}
@@ -74,7 +75,7 @@ class ArticleExporterTest extends TestCase {
 		$this->assertEquals($expected, $updated);
 	}
 
-	private function buildMockArticleExplorer() {
+	private function buildMockArticleExporter() {
 		$mockArticleExporter = $this->getMockBuilder('ArticleExporter')
 			->setMethods( [ 'getArticle', 'loadTitle', 'getContentLang' ] )
 			->getMock();
