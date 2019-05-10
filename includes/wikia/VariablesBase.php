@@ -7518,6 +7518,7 @@ $wgSMTP = [
  */
 $wgSolrHost = 'prod.search-fulltext.service.consul';
 
+
 /**
  * Solr host for key-value storage for ArticleService.
  * @see includes/wikia/services/ArticleService.class.php
@@ -7525,13 +7526,14 @@ $wgSolrHost = 'prod.search-fulltext.service.consul';
  */
 $wgSolrKvHost = 'prod.search-kv.service.consul';
 
+
 /**
  * Master Solr server used by multiple components.
  * @see includes/wikia/services/tests/ArticleServiceTest.php
  * @see extensions/3rdparty/LyricWiki
  * @see extensions/wikia/Search
  * @see extensions/wikia/VideoHandlers
- * @var strig $wgSolrMaster
+ * @var string $wgSolrMaster
  */
 $wgSolrMaster = 'prod.search-master.service.sjc.consul';
 
