@@ -5,3 +5,4 @@ node_modules/@wikia/*
 !node_modules/@wikia/content-types-consumption
 node_modules/@wikia/content-types-consumption/*
 !node_modules/@wikia/content-types-consumption/dist
+!node_modules/@wikia/content-types-consumption/dist/consumption.umd.js
