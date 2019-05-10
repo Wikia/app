@@ -12,14 +12,16 @@ class ArticleExporter {
         $articles = [];
         foreach ( $ids as $id ) {
             $article = $this->getArticle( $id );
+            $title = Title::newFromID( $id ); // some items not available through parse api
 
             if ( $article ) {
                 $articles[$id] = [
                     'wikiId' => $cityId,
                     'pageId' => $id,
+                    'namespace' => $title->getNamespace(),
                     'revisionId' => strval( $article['parse']['revid'] ),
                     'title' => $article['parse']['title'],
-                    'url' => $this->getPageUrl( $id ),
+                    'url' => $title->getFullURL(),
                     'plaintextContent' => $this->getPlaintext( $article['parse']['text']['*'] ),
                     'categories' => $this->getCategories( $article['parse']['categories'] ),
                     'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
@@ -48,10 +50,6 @@ class ArticleExporter {
         $text = preg_replace( self::SPACE_SEQUENCE_REGEXP, ' ', $text );
 
         return str_replace( [ "&lt;", "&gt;" ], "", $text );
-    }
-
-    public function getPageUrl( $id ) {
-        return Title::newFromId( $id )->getFullURL();
     }
 
     public function getCategories( $rawCategories ) {
