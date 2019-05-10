@@ -15,12 +15,21 @@ class ArticleExporterHooks {
         global $wgCityId;
         global $wgArticleExporterExchange;
 
-        $message = [
-            'wikiId' => $wgCityId,
-            'pageIds' => [ strval($page->getId()) ],
-        ];
+        $namespace = $page->getTitle()->getNamespace();
 
-        self::getRabbitConnection()->publish( $wgArticleExporterExchange['routing'], $message );
+        if ( $namespace == NS_MAIN ) {
+            $message = [
+                'wikiId' => $wgCityId,
+                'pages' => [
+                    [
+                        'pageId' => strval( $page->getId() ),
+                        'namespace' => $namespace
+                    ]
+                ],
+            ];
+
+            self::getRabbitConnection()->publish( $wgArticleExporterExchange['routing'], $message );
+        }
 
         return true;
     }
