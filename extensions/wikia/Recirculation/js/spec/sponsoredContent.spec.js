@@ -112,7 +112,7 @@ describe('sponsoredContent', function () {
 					"url": "https://www.fandom.com/articles/lynx-john-wick",
 					"thumbnailUrl": "https://vignette.wikia.nocookie.net/9f6dfa75-5b5a-478e-bfc1-857187b7d8e2",
 					"weight": 1,
-					"geos": ["AU", "NZ", "SG"],
+					"geos": ["AU", "NZ"],
 					"wikiIds": [],
 					"title": "Work It Like John Wick – FANDOM Guide to (Not) Impress",
 					"attribution": "Lynx",
