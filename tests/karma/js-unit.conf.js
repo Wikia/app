@@ -158,6 +158,7 @@ module.exports = function (config) {
 
 			// Recirculation
 			'extensions/wikia/Recirculation/js/*.js',
+			'extensions/wikia/Recirculation/js/**/*.js',
 			'extensions/wikia/Recirculation/js/spec/**/*.spec.js',
 
 			//PortableInfoboxBuilder

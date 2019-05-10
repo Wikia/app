@@ -1,11 +1,12 @@
 define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	'jquery',
 	'wikia.window',
+	'wikia.geo',
 	'wikia.log'
-], function ($, w, log) {
+], function ($, w, geo, log) {
 	'use strict';
 
-	var userGeo = Geo.getCountryCode();
+	var userGeo = geo.getCountryCode();
 	var hasFetched = false;
 	var deferred = $.Deferred();
 
@@ -38,19 +39,28 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	}
 
 	function getApplicableContent(sponsoredContent) {
-		var applicableContent = sponsoredContent.filter(function (el) {
+		var geoSpecificContent = sponsoredContent.filter(function (el) {
 			return (!el.geos.length || el.geos.indexOf(userGeo) !== -1) && (!el.wikiIds.length || el.wikiIds.indexOf(w.wgCityId) !== -1);
 		});
-		var siteSpecificContent = applicableContent.filter(function (item) {
+		var siteSpecificContent = sponsoredContent.filter(function (item) {
 			return item.wikiIds.indexOf(w.wgCityId) !== -1;
 		});
 
-		// If there are any sponsored items targeted specifically for this community, they have to take precedence over others
-		if (siteSpecificContent) {
+		var geoAndSiteSpecificContent = siteSpecificContent.filter(function (item) {
+			return geoSpecificContent.some(function (geoItem) {
+				return geoItem.id === item.id;
+			});
+		});
+
+		if (geoAndSiteSpecificContent.length) {
+			return geoAndSiteSpecificContent;
+		}
+
+		if (siteSpecificContent.length) {
 			return siteSpecificContent;
 		}
 
-		return applicableContent;
+		return geoSpecificContent;
 	}
 
 	function getWeightsSum(applicableContent) {
