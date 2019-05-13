@@ -1,7 +1,7 @@
 <?php
 
 echo F::app()->renderView(
-	'AdEngine2',
+	'AdEngine3',
 	'Ad',
 	[
 		'slotName' => $slotName,
