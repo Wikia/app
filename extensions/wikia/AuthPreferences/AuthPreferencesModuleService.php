@@ -19,7 +19,7 @@ class AuthPreferencesModuleService extends WikiaService {
 	}
 
 	public function renderAuthPreferences() {
-		global $fbAppId;
+		global $fbAppId, $wgServer;
 
 		$context = $this->getContext();
 		$out = $context->getOutput();
@@ -27,7 +27,8 @@ class AuthPreferencesModuleService extends WikiaService {
 		$out->addJsConfigVars( 'fbAppId', $fbAppId );
 		$out->addModules( 'ext.wikia.authPreferences' );
 
-		$googleConnectUrl = WikiFactory::getLocalEnvURL( 'https://www.fandom.com/google-connect' );
+		$googleConnectDomain = wfGetBaseDomainForHost( $wgServer );
+		$googleConnectUrl = WikiFactory::getLocalEnvURL( "https://www.$googleConnectDomain/google-connect" );
 		$this->setVal( 'googleConnectAuthUrl', $googleConnectUrl );
 
 		try {
