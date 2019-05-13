@@ -131,6 +131,43 @@ describe('sponsoredContent', function () {
 			],
 			expectedId: 125
 		},
+		{
+			name: 'should return content without geo and wiki ID specification when there is no specific content',
+			items: [
+				{
+					"id": 125,
+					"url": "http://www.fandom.com/articles/brightburn-5-questions",
+					"thumbnailUrl": "https://vignette.wikia.nocookie.net/06b47442-1d9b-414b-b009-d47d85d464fe",
+					"weight": 1,
+					"geos": [],
+					"title": "5 Questions About 'Brightburn' We Want Answered",
+					"wikiIds": [],
+					"attribution": "Sony Pictures",
+					"attributionLabel": "Sponsored by"
+				}, {
+					"id": 123,
+					"url": "https://www.fandom.com/articles/lynx-john-wick",
+					"thumbnailUrl": "https://vignette.wikia.nocookie.net/9f6dfa75-5b5a-478e-bfc1-857187b7d8e2",
+					"weight": 1,
+					"geos": ["AU", "NZ"],
+					"wikiIds": [],
+					"title": "Work It Like John Wick – FANDOM Guide to (Not) Impress",
+					"attribution": "Lynx",
+					"attributionLabel": "Sponsored by"
+				}, {
+					"id": 119,
+					"url": "https://www.fandom.com/articles/why-glass-is-a-different-superhero-movie",
+					"thumbnailUrl": "https://vignette.wikia.nocookie.net/1044d8d1-da78-41b3-9991-8d458054b1e2",
+					"weight": 1,
+					"geos": [],
+					"wikiIds": [831],
+					"title": "Why M.Night Shyamalan’s 'Glass' is so Different From All Other Superhero Movies",
+					"attribution": "Glass",
+					"attributionLabel": "Sponsored by"
+				}
+			],
+			expectedId: 125
+		},
 	];
 
 	contentSelectionTestCases.forEach(function(testCase) {
