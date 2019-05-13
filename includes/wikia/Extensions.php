@@ -336,7 +336,6 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 }
 
 #--- 44. AdEngine
-include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdHostMirrors.setup.php" );
 
