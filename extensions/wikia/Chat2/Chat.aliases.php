@@ -29,6 +29,13 @@ $specialPageAliases['vi'] = array(
 	'Chat' => array( 'Tán_gẫu' ),
 );
 
+/**
+ * Polish (polski)
+ */
+$specialPageAliases['pl'] = array(
+	'Chat' => array( 'Czat' ),
+);
+
 /** Japanese (日本語) */
 $specialPageAliases['ja'] = array(
 	'Chat' => array( 'チャット' ),
