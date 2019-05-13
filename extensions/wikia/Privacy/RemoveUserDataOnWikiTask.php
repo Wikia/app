@@ -226,7 +226,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		}
 	}
 
-	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $oldUserId = null ) {
+	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $renameUserId = null ) {
 		global $wgUser, $wgCityId;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 
@@ -234,13 +234,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			'right_to_be_forgotten' => 1,
 			'rtbf_log_id' => $auditLogId,
 			'user_id' => $userId,
-			'old_user_id' => $oldUserId,
+			'old_user_id' => $renameUserId,
 		];
 
 		RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
 
 		$user = User::newFromId( $userId );
-		$oldUser = User::newFromId( $oldUserId );
+		$oldUser = User::newFromId( $renameUserId );
 
 		// gather results of all removal operations
 		// if something fails, we still want to continue the process
@@ -255,7 +255,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		$results[] = $this->removeUserPages( $userDbKey );
 		$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
 		$results[] = $this->removeActionLogs( $userDbKey );
-		if ( !empty( $oldUserId ) ) {
+		if ( !empty( $renameUserId ) ) {
 			$oldUserDbKey = Title::newFromText( $oldUser->getName() )->getDBkey();
 			$results[] = $this->removeUserPages( $oldUserDbKey );
 			$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
@@ -271,30 +271,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		// only after all wiki-specific data is removed, we can proceed with removing the user's global data
 		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId, DB_MASTER ) ) {
 			$dataRemover = new UserDataRemover();
-			if ( !empty( $oldUserId ) ) {
-				$dataRemover->removeGlobalUserData( $oldUser );
-				$this->connectUserToRenameRecord( $userId, $oldUserId );
-				$this->info( "Removed data connected to old username",
-					[ 'rename_user_id' => $oldUserId ] );
-			}
-
-			$dataRemover->removeGlobalUserData( $user );
+			$dataRemover->removeAllGlobalUserData( $userId, $renameUserId );
 			RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
 			$this->info( "All data removed for $userId" );
 		}
-	}
-
-	private function connectUserToRenameRecord( int $userId, int $fakeUserId ) {
-		global $wgExternalSharedDB;
-		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-
-		$dbMaster->insert( 'user_properties', [
-			[
-				'up_user' => $fakeUserId,
-				'up_property' => 'removedRenamedUser',
-				'up_value' => $userId,
-			],
-		] );
 	}
 
 	protected function getLoggerContext() {
