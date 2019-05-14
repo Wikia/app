@@ -1,11 +1,11 @@
 // todo use it when border settings for handling `-k8s` suffix will be prepared
 // def sandbox = params.sandbox.endsWith("-k8s") ?  params.sandbox : params.sandbox + '-k8s';
 
-def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.20"
 def mediawikiImageName = "mediawiki-servicesmw"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}"
 def nginxImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}-nginx"
-def phpDockerFile = "docker/servicesmw/Dockerfile-php"
+def phpDockerFile = "docker/base/Dockerfile-php"
 
 def rolloutStatus = 1
 
@@ -183,10 +183,6 @@ node("docker-daemon-big") {
       }
     }
   )
-
-  stage('Notify Slack Channel publish') {
-    sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
-  }
 
   stage("Apply new k8s descriptor s1") {
     deploy_servicesmw('sjc', 's1',mediawikiImage, imageTag, kubectlImage)
