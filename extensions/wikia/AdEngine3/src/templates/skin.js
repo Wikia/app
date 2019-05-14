@@ -1,4 +1,4 @@
-import { utils } from '@wikia/ad-engine';
+import { utils } from '@wikia/ad-engine/dist/ad-engine';
 import { backgroundChanger } from './background-changer';
 
 const logGroup = 'skin-template';

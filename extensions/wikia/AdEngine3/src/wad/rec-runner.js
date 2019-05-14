@@ -1,4 +1,4 @@
-import { context, utils } from '@wikia/ad-engine';
+import { context, utils } from '@wikia/ad-engine/dist/ad-engine';
 import { babDetection } from './bab-detection';
 import { btLoader } from './bt-loader';
 import { hmdLoader } from './hmd-loader';

@@ -1,4 +1,4 @@
-import { context, utils } from '@wikia/ad-engine';
+import { context, utils } from '@wikia/ad-engine/dist/ad-engine';
 import { recInjector } from './rec-injector';
 
 const isDebug = utils.queryString.isUrlParamSet('bt-rec-debug');

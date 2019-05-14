@@ -1,4 +1,4 @@
-import { context, eventService, utils } from '@wikia/ad-engine';
+import { context, eventService, utils } from '@wikia/ad-engine/dist/ad-engine';
 import { billTheLizard, billTheLizardEvents } from '@wikia/ad-engine/dist/ad-services';
 import { methods } from './executor';
 import { bucketizeViewportHeight } from './buicketizer';

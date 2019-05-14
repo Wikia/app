@@ -1,4 +1,4 @@
-import { utils, likhoService } from '@wikia/ad-engine';
+import { utils, likhoService } from '@wikia/ad-engine/dist/ad-engine';
 import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
