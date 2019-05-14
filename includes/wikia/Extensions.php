@@ -336,7 +336,6 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 }
 
 #--- 44. AdEngine
-include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdHostMirrors.setup.php" );
 
@@ -1847,3 +1846,9 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
+// LORE-519
+if ( !empty ( $wgEnableArticleExporterHooks ) ) {
+    include "$IP/extensions/wikia/ArticleExporter/ArticleExporterHooks.setup.php";
+}
+// LORE-519
+include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
