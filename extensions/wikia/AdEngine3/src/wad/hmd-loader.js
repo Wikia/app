@@ -1,4 +1,4 @@
-import { utils } from '@wikia/ad-engine/dist/ad-engine';
+import { utils } from '@wikia/ad-engine';
 import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
 import { recInjector } from './rec-injector';
 

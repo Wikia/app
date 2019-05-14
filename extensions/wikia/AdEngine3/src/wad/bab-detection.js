@@ -1,4 +1,4 @@
-import { context, utils } from '@wikia/ad-engine/dist/ad-engine';
+import { context, utils } from '@wikia/ad-engine';
 import { track } from '../tracking/tracker';
 
 const logGroup = 'bab-detection';

@@ -1,4 +1,4 @@
-import { slotService, slotTweaker } from '@wikia/ad-engine/dist/ad-engine';
+import { slotService, slotTweaker } from '@wikia/ad-engine';
 
 const invisibleHighImpactWrapperId = 'InvisibleHighImpactWrapper';
 

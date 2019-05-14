@@ -55,7 +55,7 @@ module.exports = function (env) {
 			'services': './src/vendors/ad-services.js',
 		},
 		externals: {
-			'@wikia/ad-engine/dist/ad-engine': {
+			'@wikia/ad-engine': {
 				amd: 'ext.wikia.adEngine3'
 			}
 		},
@@ -95,7 +95,7 @@ module.exports = function (env) {
 			'ads': './src/index.js',
 		},
 		externals: {
-			'@wikia/ad-engine/dist/ad-engine': {
+			'@wikia/ad-engine': {
 				amd: 'ext.wikia.adEngine3'
 			},
 			'@wikia/ad-engine/dist/ad-bidders': {

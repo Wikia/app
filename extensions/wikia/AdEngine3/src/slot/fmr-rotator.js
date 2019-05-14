@@ -1,4 +1,4 @@
-import { AdSlot, context, events, eventService, scrollListener, slotService, slotTweaker, utils } from '@wikia/ad-engine/dist/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotService, slotTweaker, utils } from '@wikia/ad-engine';
 import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
 import { getNavbarHeight } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';

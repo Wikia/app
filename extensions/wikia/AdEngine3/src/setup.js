@@ -1,4 +1,4 @@
-import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine/dist/ad-engine';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
 import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';

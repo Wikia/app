@@ -1,4 +1,4 @@
-import { eventService } from '@wikia/ad-engine/dist/ad-engine';
+import { eventService } from '@wikia/ad-engine';
 import { porvataTracker, playerEvents } from '@wikia/ad-engine/dist/ad-products';
 import { track } from './tracker';
 

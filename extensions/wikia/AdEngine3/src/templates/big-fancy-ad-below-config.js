@@ -1,4 +1,4 @@
-import { context } from '@wikia/ad-engine/dist/ad-engine';
+import { context } from '@wikia/ad-engine';
 import { getNavbarHeight } from './navbar-updater';
 import slots from '../slots';
 

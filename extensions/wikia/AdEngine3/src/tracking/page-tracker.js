@@ -1,4 +1,4 @@
-import { context } from '@wikia/ad-engine/dist/ad-engine';
+import { context } from '@wikia/ad-engine';
 import { track } from './tracker';
 
 /**
