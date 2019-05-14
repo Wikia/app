@@ -32,7 +32,8 @@ class UnifiedSearchIndexingController extends WikiaController {
 				->WHERE( 'page.page_namespace' )
 				->IN( array_keys( $namespaces ) )
 				->AND_( 'page.page_id' )
-				->GREATER_THAN_OR_EQUAL( $offset )// fetching one more than limit to get next offset
+				->GREATER_THAN_OR_EQUAL( $offset )
+				// fetching one more than limit to get next offset
 				->LIMIT( $limit + 1 )
 				->ORDER_BY( [ "page.page_id", 'asc' ] )
 				->runLoop( $db, function ( &$result, $row ) {
