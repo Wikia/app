@@ -90,6 +90,20 @@ require([
 		});
 	}
 
+	function insertTrackingPixel(pixelContent, pixelType) {
+		var documentFragment = document.createDocumentFragment();
+
+		if (pixelType === 'url') {
+			var tag = document.createElement('img');
+			tag.src = pixelContent;
+			documentFragment.appendChild(tag);
+		} else {
+			documentFragment.appendChild(pixelContent);
+		}
+
+		window.document.body.appendChild(documentFragment);
+	}
+
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
 			recommendedContent.getRecommendedArticles(),
@@ -101,13 +115,20 @@ require([
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
 			}
+
+			var sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					wikiItems: wikiItems,
 					discussions: discussions,
-					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredItem
 				});
+
+				if (sponsoredItem.pixelContent) {
+					insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+				}
 			});
 		})
 		.fail(function (err) {
