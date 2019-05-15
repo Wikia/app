@@ -22,7 +22,6 @@ def deploy_servicesmw(String datacenter, String suffix, String mediawikiImage, S
         'MEDIAWIKI_IMAGE': mediawikiImage,
         'IMAGE_TAG': imageTag,
         'SERVICESMW_NAME': 'servicesmw-' + suffix,
-        'SERVICES_INSTANCE': suffix,
         'ENVIRONMENT': 'dev',
         'DATACENTER': datacenter,
         'APP_VERSION': 'dev',
