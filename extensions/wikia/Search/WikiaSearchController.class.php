@@ -218,18 +218,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$request = new UnifiedSearchRequest( $searchConfig );
 
 			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
-		} else {
-			if ( $searchConfig->getQuery()->hasTerms() ) {
-				$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
-				/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
-				$search->getMatch();
-
-				$this->handleArticleMatchTracking( $searchConfig );
-				$search->search();
-
-				return SearchResult::fromConfig( $searchConfig );
-			}
 		}
+		if ( $searchConfig->getQuery()->hasTerms() ) {
+			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
+			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
+			$search->getMatch();
+
+			$this->handleArticleMatchTracking( $searchConfig );
+			$search->search();
+
+			return SearchResult::fromConfig( $searchConfig );
+		}
+
+		return SearchResult::empty();
 	}
 
 	private function isJsonRequest(): bool {
@@ -249,6 +250,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$queryForce = $this->getVal( 'useUnifiedSearch', null );
 		if ( !is_null( $queryForce ) ) {
 			return $queryForce;
+		}
+
+		if ( RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' ) ) {
+			return true;
 		}
 
 		return $wgUseUnifiedSearch;

@@ -77,7 +77,7 @@ class MercuryApiController extends WikiaController {
 	public function getSearchPageAdsContext() {
 		$title = Title::newFromText('Search', NS_SPECIAL);
 
-		$context = (new AdEngine2ContextService())->getContext($title, 'mercury');
+		$context = (new AdEngine3())->getContext($title, 'mercury');
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'adsContext', $context );
@@ -164,7 +164,7 @@ class MercuryApiController extends WikiaController {
 				$title = $this->handleRedirect( $title, $article, [] )[0];
 			}
 
-			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+			$adContext = ( new AdEngine3() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
 			$dimensions[14] = !empty( $adContext['opts']['showAds'] ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );

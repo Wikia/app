@@ -6,6 +6,7 @@ namespace Wikia\Search;
 
 use ArrayIterator;
 use F;
+use Wikia\Search\UnifiedSearch\SearchResultWrapper;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 
 class SearchResult {
@@ -21,28 +22,38 @@ class SearchResult {
 	/** @var SearchResultItems */
 	private $items;
 
-	public static function fromUnifiedSearchResult( UnifiedSearchResult $result
-	): SearchResult {
-		$view = new SearchResult();
+	public static function fromUnifiedSearchResult( UnifiedSearchResult $result ): SearchResult {
+		$searchResult = new SearchResult();
+		$searchResult->correctedQuery = null;
+		$searchResult->totalResults = $result->resultsFound;
+		$searchResult->currentPage = $result->currentPage + 1;
+		$searchResult->pageCount = $result->pagesCount;
+		$searchResult->items = $result->getResults();
 
-		$view->correctedQuery = null;
-		$view->totalResults = $result->resultsFound;
-		$view->currentPage = $result->currentPage + 1;
-		$view->pageCount = $result->pagesCount;
-		$view->items = $result->getResults();
-
-		return $view;
+		return $searchResult;
 
 	}
 
 	public static function fromConfig( Config $config ): SearchResult {
-		$view = new SearchResult();
-		$view->correctedQuery = $config->getQuery()->getQueryForHtml();
-		$view->totalResults = $config->getResultsFound();
-		$view->currentPage = $config->getPage();
-		$view->items = $config->getResults();
+		$searchResult = new SearchResult();
+		$searchResult->correctedQuery = $config->getQuery()->getQueryForHtml();
+		$searchResult->totalResults = $config->getResultsFound();
+		$searchResult->currentPage = $config->getPage();
+		$searchResult->pageCount = $config->getNumPages();
+		$searchResult->items = $config->getResults();
 
-		return $view;
+		return $searchResult;
+	}
+
+	public static function empty() {
+		$searchResult = new SearchResult();
+		$searchResult->correctedQuery = null;
+		$searchResult->totalResults = 0;
+		$searchResult->currentPage = 1;
+		$searchResult->pageCount = 0;
+		$searchResult->items = new SearchResultWrapper( [] );
+
+		return $searchResult;
 	}
 
 	public function hasResults(): bool {
