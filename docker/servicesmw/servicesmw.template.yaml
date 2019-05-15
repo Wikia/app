@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki-servicesmw-${SERVICES_INSTANCE}
+  name: mediawiki-servicesmw
   namespace: dev
   labels:
-    app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+    app: mediawiki-servicesmw
     type: mediawiki
 spec:
   strategy:
@@ -14,11 +14,11 @@ spec:
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
-      app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+      app: mediawiki-servicesmw
   template:
     metadata:
       labels:
-        app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+        app: mediawiki-servicesmw
         app_version: "${APP_VERSION}"
         config_version: "${CONFIG_VERSION}"
     spec:
@@ -74,7 +74,7 @@ spec:
           env:
             # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
             - name: KUBERNETES_DEPLOYMENT_NAME
-              value: mediawiki-servicesmw-${SERVICES_INSTANCE}
+              value: mediawiki-servicesmw
             - name: KUBERNETES_POD
               valueFrom:
                 fieldRef:
@@ -123,15 +123,15 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: mediawiki-servicesmw-${SERVICES_INSTANCE}
+  name: mediawiki-servicesmw
   labels:
-    app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+    app: mediawiki-servicesmw
   namespace: dev
 spec:
   jobLabel: app
   selector:
     matchLabels:
-      app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+      app: mediawiki-servicesmw
   namespaceSelector:
     matchNames:
     - dev
@@ -143,12 +143,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mediawiki-servicesmw-${SERVICES_INSTANCE}
+  name: mediawiki-servicesmw
   labels:
-    app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+    app: mediawiki-servicesmw
 spec:
   selector:
-    app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+    app: mediawiki-servicesmw
   ports:
     - protocol: TCP
       port: 80
@@ -162,9 +162,9 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: mediawiki-servicesmw-${SERVICES_INSTANCE}-ingress
+  name: mediawiki-servicesmw-ingress
   labels:
-    app: mediawiki-servicesmw-${SERVICES_INSTANCE}
+    app: mediawiki-servicesmw
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
@@ -174,5 +174,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: mediawiki-servicesmw-${SERVICES_INSTANCE}
+              serviceName: mediawiki-servicesmw
               servicePort: 80
