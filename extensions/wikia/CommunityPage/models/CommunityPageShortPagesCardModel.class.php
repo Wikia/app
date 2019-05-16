@@ -1,6 +1,6 @@
 <?php
 
-class CommunityPageShortPagesCardModel {
+class xCommunityPageShortPagesCardModel {
 	const SHORT_PAGES_LIMIT = 3;
 
 	/**

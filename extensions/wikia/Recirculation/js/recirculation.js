@@ -91,17 +91,16 @@ require([
 	}
 
 	function insertTrackingPixel(pixelContent, pixelType) {
-		var documentFragment = document.createDocumentFragment();
+		var tag;
 
 		if (pixelType === 'url') {
-			var tag = document.createElement('img');
+			tag = document.createElement('img');
 			tag.src = pixelContent;
-			documentFragment.appendChild(tag);
 		} else {
-			documentFragment.appendChild(pixelContent);
+			tag = pixelContent;
 		}
 
-		window.document.body.appendChild(documentFragment);
+		window.document.body.appendChild(tag);
 	}
 
 	function prepareInternationalRecirculation() {
