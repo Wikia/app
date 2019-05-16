@@ -47,19 +47,20 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	function getApplicableContent(sponsoredContent) {
 		var geoSpecificContent = applyContentCriteria(sponsoredContent, 'geos', userGeo);
 		var siteSpecificContent = applyContentCriteria(sponsoredContent, 'wikiIds', w.wgCityId);
-
 		var geoAndSiteSpecificContent = applyContentCriteria(geoSpecificContent, 'wikiIds', w.wgCityId);
+		var geoOnlySpecificContent = geoSpecificContent.filter(function(item) { !item.wikiIds.length });
+		var siteOnlySpecificContent = siteSpecificContent.filter(function(item) { !item.geos.length });
 
 		if (geoAndSiteSpecificContent.length) {
 			return geoAndSiteSpecificContent;
 		}
 
-		if (siteSpecificContent.length) {
-			return siteSpecificContent;
+		if (siteOnlySpecificContent.length) {
+			return siteOnlySpecificContent;
 		}
 
-		if (geoSpecificContent.length) {
-			return geoSpecificContent;
+		if (geoOnlySpecificContent.length) {
+			return geoOnlySpecificContent;
 		}
 
 		return sponsoredContent.filter(function (item) {
