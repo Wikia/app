@@ -91,7 +91,10 @@ require([
 	}
 
 	function insertTrackingPixel(pixelContent, pixelType) {
+		var wrapper = document.createElement('span');
 		var tag;
+
+		wrapper.className = 'wds-is-hidden';
 
 		if (pixelType === 'url') {
 			tag = document.createElement('img');
@@ -100,7 +103,8 @@ require([
 			tag = pixelContent;
 		}
 
-		window.document.body.appendChild(tag);
+		wrapper.appendChild(tag);
+		window.document.body.appendChild(wrapper);
 	}
 
 	function prepareInternationalRecirculation() {
@@ -199,6 +203,10 @@ require([
 					}
 
 					$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+
+					if (sponsoredItem.pixelContent) {
+						insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+					}
 				}
 
 				tracker.trackImpression('rail');
