@@ -8,7 +8,7 @@ class AnalyticsProviderKruxTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgEnableKruxTargeting', true);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', false);
 
-		$this->setupFile = "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php";
+		$this->setupFile = "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php";
 		$this->setupFile = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php";
 
 		parent::setUp();

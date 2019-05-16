@@ -42,6 +42,12 @@ if ( empty( $wgWikiaDatacenter ) ) {
  */
 $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
+/**
+ * Force override consul suffix
+ * @var string $wgForceConsulDatacenter
+ */
+$wgForceConsulDatacenter = getenv( 'WIKIA_FORCE_CONSUL_DATACENTER' );
+
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 if ( empty( $wgWikiaEnvironment ) ) {
     throw new RuntimeException( 'Environment not configured in WIKIA_ENVIRONMENT env variable.' );
@@ -211,6 +217,12 @@ $wgMemCachedDebug = ! $wgCommandLineMode; // true unless in command line mode
  * Elementary variables.
  */
 require_once "$IP/includes/wikia/VariablesBase.php";
+/**
+ * Override some of the consul url's.
+ */
+if ( $wgForceConsulDatacenter ) {
+	require_once "$IP/includes/wikia/VariablesDatacenterOverrides.php";
+}
 
 /**
  * Access credentials from private repository.
@@ -387,7 +399,7 @@ $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUser
 require_once "$IP/includes/wikia/Emergency.php";
 
 if ( $wgDevelEnvironment && empty( $wgRunningUnitTests ) ) {
-    $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, gethostname() );
+    $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, wfGetEffectiveHostname() );
     if ( file_exists( $wgDevBoxSettings ) ) {
         require_once( $wgDevBoxSettings );
     }

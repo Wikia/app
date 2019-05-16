@@ -1339,14 +1339,6 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
 $wgAdDriverScrollDepthTrackingCountries = null;
 
 /**
- * @name $wgAdDriverSrcPremiumCountries
- * Enables setting src=premium param for all ad slots on page, when premium video
- * is present on that page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSrcPremiumCountries = [];
-
-/**
  * @name $wgAdDriverStickySlotsLines
  * List of Google Ad Manager lines to apply Sticky Ad template
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

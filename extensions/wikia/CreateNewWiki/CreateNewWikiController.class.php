@@ -82,6 +82,8 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 		);
 
+		// TODO: Forced to `false` in CAKE-4823, to be removed in CAKE-4836
+		$wgAllowCommunityBuilderCNWPrompt = false;
 		$this->allowCommunityBuilderOptIn = !empty($wgAllowCommunityBuilderCNWPrompt) || !empty($_GET['forceShowCBOptIn']);
 		$this->communityBuilderPrompt = $this->allowCommunityBuilderOptIn ?
 			F::app()->renderView('CreateNewWiki', 'CommunityBuilderOptInPrompt') :

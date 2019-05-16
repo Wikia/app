@@ -1,14 +1,14 @@
 <?php
 /**
  * WikiaMobile Ads Service
- * 
+ *
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  */
 class WikiaMobileAdService extends WikiaService {
 
 
 	public function shouldShowAds() {
-		return AdEngine2Service::areAdsShowableOnPage();
+		return AdEngine3Service::areAdsShowableOnPage();
 	}
 
 	public function floating() {

@@ -17,8 +17,8 @@
 					<?php endif ?>
 				</p>
 
-				<? if ($results->getQuery() && $query != $results->getQuery()) : ?>
-					<p><?= wfMsg('wikiasearch2-spellcheck', $query, $results->getQuery()) ?></p>
+				<? if ($correctedQuery && $query != $correctedQuery) : ?>
+					<p><?= wfMsg('wikiasearch2-spellcheck', $query, $correctedQuery) ?></p>
 				<? endif; ?>
 
 				<ul class="Results inter-wiki">
