@@ -1,5 +1,4 @@
-import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
-import { scrollListener, slotService, slotTweaker } from '@wikia/ad-engine';
+import { scrollListener, slotService, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {

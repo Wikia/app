@@ -1,3 +1,4 @@
+const { getAdEngineLoader } = require('@wikia/ad-engine/configs/webpack-app.config');
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,102 +12,11 @@ module.exports = function (env) {
 	const mode = isDevelopment ? 'development' : 'production';
 	const buildDirectory = isDevelopment ? 'dist-dev' : 'dist';
 
-	const core = {
-		mode,
-		context: __dirname,
-		entry: {
-			'engine': './src/vendors/ad-engine.js',
-		},
-		output: {
-			path: path.resolve(__dirname, `${buildDirectory}/vendors`),
-			filename: '[name].js',
-			libraryTarget: 'amd',
-			library: 'ext.wikia.adEngine3'
-		},
-		module: {
-			rules: [
-				{
-					test: /\.jsx?$/,
-					include: path.resolve(__dirname, 'src'),
-					use: 'babel-loader',
-				}
-			]
-		},
-		resolve: {
-			modules: compact([
-				hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
-				'node_modules'
-			])
-		},
-		performance: {
-			maxEntrypointSize: 500000
-		},
-		plugins: [
-			new webpack.optimize.ModuleConcatenationPlugin()
-		]
-	};
-
-	const vendors = {
-		mode,
-		context: __dirname,
-		entry: {
-			'bidders': './src/vendors/ad-bidders.js',
-			'products': './src/vendors/ad-products.js',
-			'services': './src/vendors/ad-services.js',
-		},
-		externals: {
-			'@wikia/ad-engine': {
-				amd: 'ext.wikia.adEngine3'
-			}
-		},
-		output: {
-			path: path.resolve(__dirname, `${buildDirectory}/vendors`),
-			filename: '[name].js',
-			libraryTarget: 'amd',
-			library: 'ext.wikia.adEngine3.[name]'
-		},
-		module: {
-			rules: [
-				{
-					test: /\.jsx?$/,
-					include: path.resolve(__dirname, 'src'),
-					use: 'babel-loader',
-				}
-			]
-		},
-		resolve: {
-			modules: compact([
-				hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
-				'node_modules'
-			])
-		},
-		performance: {
-			maxEntrypointSize: 500000
-		},
-		plugins: [
-			new webpack.optimize.ModuleConcatenationPlugin()
-		]
-	};
-
 	const packages = {
 		mode,
 		context: __dirname,
 		entry: {
 			'ads': './src/index.js',
-		},
-		externals: {
-			'@wikia/ad-engine': {
-				amd: 'ext.wikia.adEngine3'
-			},
-			'@wikia/ad-engine/dist/ad-bidders': {
-				amd: 'ext.wikia.adEngine3.bidders'
-			},
-			'@wikia/ad-engine/dist/ad-products': {
-				amd: 'ext.wikia.adEngine3.products'
-			},
-			'@wikia/ad-engine/dist/ad-services': {
-				amd: 'ext.wikia.adEngine3.services'
-			}
 		},
 		output: {
 			path: path.resolve(__dirname, buildDirectory),
@@ -129,15 +39,16 @@ module.exports = function (env) {
 						'css-loader',
 						'sass-loader'
 					],
-				}
+				},
+				getAdEngineLoader()
 			]
 		},
-		resolve: {
-			modules: compact([
-				hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
-				'node_modules'
-			])
-		},
+		// resolve: {
+		// 	modules: compact([
+		// 		hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
+		// 		'node_modules'
+		// 	])
+		// },
 		performance: {
 			maxEntrypointSize: 500000
 		},
@@ -153,9 +64,5 @@ module.exports = function (env) {
 		]
 	};
 
-	return [
-		core,
-		vendors,
-		packages
-	]
+	return packages
 };

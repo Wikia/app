@@ -1,5 +1,4 @@
-import { eventService } from '@wikia/ad-engine';
-import { porvataTracker, playerEvents } from '@wikia/ad-engine/dist/ad-products';
+import { eventService, porvataTracker, playerEvents } from '@wikia/ad-engine';
 import { track } from './tracker';
 
 function trackEvent(eventData) {

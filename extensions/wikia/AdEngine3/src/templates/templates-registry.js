@@ -1,4 +1,5 @@
 import {
+	templateService,
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	FloorAdhesion,
@@ -6,8 +7,7 @@ import {
 	PorvataTemplate,
 	Roadblock,
 	StickyTLB
-} from '@wikia/ad-engine/dist/ad-products';
-import { templateService } from '@wikia/ad-engine';
+} from '@wikia/ad-engine';
 import { getConfig as getBfaaConfig } from './big-fancy-ad-above-config';
 import { getConfig as getBfabConfig } from './big-fancy-ad-below-config';
 import { getConfig as getOutOfPageConfig } from './out-of-page-config';

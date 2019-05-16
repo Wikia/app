@@ -1,9 +1,7 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import { context, events, eventService, utils } from '@wikia/ad-engine';
-import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { billTheLizard, krux, moatYi, moatYiEvents, nielsen } from '@wikia/ad-engine/dist/ad-services';
+import { context, events, eventService, utils, bidders, billTheLizard, krux, moatYi, moatYiEvents, nielsen, jwplayerAdsFactory } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -138,6 +136,8 @@ function hideAllAdSlots() {
 }
 
 export {
+	context,
+	jwplayerAdsFactory,
 	hmdLoader,
 	isAutoPlayDisabled,
 	run,

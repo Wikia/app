@@ -164,11 +164,7 @@ $config['adengine3_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist/ads.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/bidders.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/engine.js',
 		'//extensions/wikia/AdEngine3/dist/vendors/prebid.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/products.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/services.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
 ];
@@ -177,11 +173,7 @@ $config['adengine3_dev_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist-dev/ads.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/bidders.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/engine.js',
 		'//extensions/wikia/AdEngine3/dist-dev/vendors/prebid.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/products.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/services.js',
 		'//extensions/wikia/AdEngine3/alert.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
