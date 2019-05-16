@@ -58,7 +58,7 @@ describe('sponsoredContent', function () {
 			expectedId: 123
 		},
 		{
-			name: 'should prefer content with matching wiki ID if present',
+			name: 'should prefer content with matching wiki ID but without any geo if present',
 			items: [
 				{
 					"id": 125,
@@ -90,12 +90,22 @@ describe('sponsoredContent', function () {
 					"title": "Why M.Night Shyamalan’s 'Glass' is so Different From All Other Superhero Movies",
 					"attribution": "Glass",
 					"attributionLabel": "Sponsored by"
+				}, {
+					"id": 120,
+					"url": "https://www.fandom.com/articles/why-glass-is-a-different-superhero-movie",
+					"thumbnailUrl": "https://vignette.wikia.nocookie.net/1044d8d1-da78-41b3-9991-8d458054b1e2",
+					"weight": 1,
+					"geos": [],
+					"wikiIds": [147],
+					"title": "Why M.Night Shyamalan’s 'Glass' is so Different From All Other Superhero Movies",
+					"attribution": "Glass",
+					"attributionLabel": "Sponsored by"
 				}
 			],
-			expectedId: 119
+			expectedId: 120
 		},
 		{
-			name: 'should return content with matching geo if no wiki specific items exist',
+			name: 'should return content with matching geo but without any wikiId if no wiki specific items exist',
 			items: [
 				{
 					"id": 125,
