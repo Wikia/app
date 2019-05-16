@@ -428,6 +428,10 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 
+	if ( $wgServer === 'runescape' ) {
+		$wgScribuntoEngineConf['luasandbox']['cpuLimit'] = 15;
+	}
+
 	/**
 	 * Load Lua-based extensions
 	 */
