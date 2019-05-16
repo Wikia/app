@@ -96,7 +96,7 @@ describe('sponsoredContent', function () {
 					"thumbnailUrl": "https://vignette.wikia.nocookie.net/1044d8d1-da78-41b3-9991-8d458054b1e2",
 					"weight": 1,
 					"geos": [],
-					"wikiIds": [147],
+					"wikiIds": [147,3035],
 					"title": "Why M.Night Shyamalan’s 'Glass' is so Different From All Other Superhero Movies",
 					"attribution": "Glass",
 					"attributionLabel": "Sponsored by"
@@ -189,7 +189,6 @@ describe('sponsoredContent', function () {
 
 			sponsoredContent.fetch().done(function (content) {
 				var item = sponsoredContent.getSponsoredItem(content);
-
 				expect(item.id).toBe(testCase.expectedId);
 				done();
 			});
