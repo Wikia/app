@@ -22,7 +22,8 @@ export const getConfig = () => ({
 		this.adSlot.getElement().classList.add('gpt-ad');
 		wrapper.style.opacity = '0';
 		slotTweaker.onReady(adSlot).then(() => {
-			wrapper.style.opacity = '';
+			debugger;
+			wrapper.style.opacity = ''; // this does appear
 			this.updateNavbar();
 		});
 
