@@ -428,7 +428,8 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 
-	if ( $wgServer === 'runescape' ) {
+	// Change limit on Runescape temporarily (PLATFORM-4090)
+	if ( $wgCityId == 304 ) {
 		$wgScribuntoEngineConf['luasandbox']['cpuLimit'] = 15;
 	}
 
