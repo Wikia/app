@@ -1,7 +1,10 @@
 <?php
 
 echo F::app()->renderView(
-	'AdEngine2',
+	'AdEngine3',
 	'AdEmptyContainer',
-	[ 'slotName' => $slotName, 'pageTypes' => $pageTypes ]
+	[
+		'slotName' => $slotName,
+		'pageTypes' => $pageTypes
+	]
 );

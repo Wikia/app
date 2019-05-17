@@ -2198,7 +2198,7 @@ $wgEnableAdminDashboardExt = true;
 /**
  * Enable advertisement in content. Set to 0 to disable or 1+ to enable and
  * specify the number of advertisements.
- * @see extensions/wikia/AdEngine/AdEngine2ContextService.class.php
+ * @see extensions/wikia/AdEngine3/AdEngine3ContextService.class.php
  * @var int $wgEnableAdsInContent
  */
 $wgEnableAdsInContent = 1;
@@ -7312,7 +7312,7 @@ $wgShellLocale = 'en_US.utf8';
 /**
  * Despite the catchy name, it's not what you think it is.
  * @see AnalyticsEngine
- * @see AdEngine2Service::areAdsShowableOnPage()
+ * @see AdEngine3Service::areAdsShowableOnPage()
  * @var bool $wgShowAds
  */
 $wgShowAds = true;
@@ -7518,6 +7518,7 @@ $wgSMTP = [
  */
 $wgSolrHost = 'prod.search-fulltext.service.consul';
 
+
 /**
  * Solr host for key-value storage for ArticleService.
  * @see includes/wikia/services/ArticleService.class.php
@@ -7525,13 +7526,14 @@ $wgSolrHost = 'prod.search-fulltext.service.consul';
  */
 $wgSolrKvHost = 'prod.search-kv.service.consul';
 
+
 /**
  * Master Solr server used by multiple components.
  * @see includes/wikia/services/tests/ArticleServiceTest.php
  * @see extensions/3rdparty/LyricWiki
  * @see extensions/wikia/Search
  * @see extensions/wikia/VideoHandlers
- * @var strig $wgSolrMaster
+ * @var string $wgSolrMaster
  */
 $wgSolrMaster = 'prod.search-master.service.sjc.consul';
 
@@ -8873,7 +8875,7 @@ $wgYoukuConfig['playerColor'] = 0;
  * in the community builder (fandom creator)
  * @see CAKE-2151
  */
-$wgAllowCommunityBuilderCNWPrompt = true;
+$wgAllowCommunityBuilderCNWPrompt = false;
 
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
@@ -8978,3 +8980,21 @@ $wgEnableTriviaQuizzesExt = false;
  * @var string[] $wgTriviaQuizzesEnabledPages
  */
 $wgTriviaQuizzesEnabledPages = [];
+
+/**
+ * Enables the Article Exporter Hooks
+ * @see LORE-519
+ * @var bool
+ */
+$wgEnableArticleExporterHooks = false;
+
+/**
+ * ArticleExporter RabbitMQ configuration.
+ * @see extensions/wikia/ArticleExporter
+ * @var array $wgArticleExporterExchange
+ */
+$wgArticleExporterExchange = [
+    'vhost' => '/',
+    'exchange' => 'taxonomy-ex',
+    'routing' => 'taxonomy.article-edit'
+];

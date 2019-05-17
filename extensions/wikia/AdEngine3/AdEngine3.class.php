@@ -63,7 +63,7 @@ class AdEngine3
 		$title = $wg->Title;
 		$articleId = $title->getArticleId();
 
-		$adPageTypeService = new AdEngine2PageTypeService();
+		$adPageTypeService = new AdEngine3PageTypeService();
 		$hubService = new HubService();
 		$langCode = $title->getPageLanguage()->getCode();
 		$wikiaPageType = new WikiaPageType();

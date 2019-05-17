@@ -39,6 +39,7 @@ class SearchResult {
 		$searchResult->correctedQuery = $config->getQuery()->getQueryForHtml();
 		$searchResult->totalResults = $config->getResultsFound();
 		$searchResult->currentPage = $config->getPage();
+		$searchResult->pageCount = $config->getNumPages();
 		$searchResult->items = $config->getResults();
 
 		return $searchResult;
