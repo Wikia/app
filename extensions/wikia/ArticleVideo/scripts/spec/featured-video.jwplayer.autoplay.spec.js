@@ -74,7 +74,7 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				var caseName = 'should return ' + param[3].toString() +
 					' if FV A/B test is ' + param[0].toString() +
 					' and autoplay cookie is ' + param[1].toString() +
-                    ' and isAutoplayDisabledByBillTheLizard() returns ' + param[2].toString();
+					' and isAutoplayDisabledByBillTheLizard() returns ' + param[2].toString();
 				it(caseName, function () {
 					isInAbTestGroup = param[0];
 					autoplayCookie = param[1];
