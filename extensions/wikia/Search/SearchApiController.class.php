@@ -59,7 +59,23 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$this->setResponseFromConfig( $this->getConfigFromRequest() );
+		$config = $this->getConfigFromRequest();
+
+		if ( !$config->getQuery()->hasTerms() ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+
+		if ( $this->useUnifiedSearch() ) {
+			$service = new UnifiedSearchService();
+			$request = new UnifiedSearchRequest( $config );
+			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
+			if ( !$result->hasResults() ) {
+				throw new NotFoundApiException();
+			}
+			$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
+		} else {
+			$this->setResponseFromConfig( $config );
+		}
 	}
 
 	/**
@@ -128,19 +144,6 @@ class SearchApiController extends WikiaApiController {
 	 * @throws NotFoundApiException
 	 */
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
-		if ( !$searchConfig->getQuery()->hasTerms() ) {
-			throw new InvalidParameterApiException( 'query' );
-		}
-
-		if ( $this->useUnifiedSearch() ) {
-			$service = new UnifiedSearchService();
-			$request = new UnifiedSearchRequest( $searchConfig );
-			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
-			$this->setSearchResponse( $searchConfig, $result, WikiaResponse::CACHE_STANDARD );
-
-			return;
-		}
-
 		//Standard Wikia API response with pagination values
 		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [
 			'pageid' => 'id',
@@ -159,7 +162,8 @@ class SearchApiController extends WikiaApiController {
 			WikiaResponse::CACHE_STANDARD );
 	}
 
-	protected function setSearchResponse( Config $config, SearchResult $result, $cacheValidity = 0
+	protected function setUnifiedSearchResponse(
+		Config $config, SearchResult $result, $cacheValidity = 0
 	) {
 		$data = [
 			'batches' => $result->getNumPages(),
