@@ -36,7 +36,7 @@ class AdEngine3
 		self::$forceProductionAssets = $request->getBool( 'ae3_prod' );
 
 		$distDirectory = self::shouldUseProductionAssets() ? 'dist' : 'dist-dev';
-		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/styles.css';
+		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/styles.scss';
 
 		$output->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( $assetsPath ) );
 

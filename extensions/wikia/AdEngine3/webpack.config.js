@@ -143,7 +143,7 @@ module.exports = function (env) {
 			maxEntrypointSize: 500000
 		},
 		plugins: [
-			new MiniCssExtractPlugin({filename: '[name].css'}),
+			new MiniCssExtractPlugin({filename: '[name].scss'}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new CopyWebpackPlugin([
 				{
