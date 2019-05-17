@@ -18,11 +18,6 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				return autoplayCookie;
 			}
 		},
-		billTheLizardExecutor: {
-			isAutoPlayDisabled: function () {
-				return !!prediction;
-			}
-		}
 	};
 
 	beforeEach(function () {
@@ -36,7 +31,7 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 
 	function getAutoplay() {
 		return modules['wikia.articleVideo.featuredVideo.autoplay'](
-			mocks.abTest, mocks.featuredVideoCookieService, mocks.billTheLizardExecutor
+			mocks.abTest, mocks.featuredVideoCookieService
 		);
 	}
 
@@ -71,8 +66,7 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				var param = testParams[i];
 				var caseName = 'should return ' + param[3].toString() +
 					' if FV A/B test is ' + param[0].toString() +
-					' and autoplay cookie is ' + param[1].toString() +
-					' and isAutoplayDisabledByBillTheLizard() returns ' + param[2].toString();
+					' and autoplay cookie is ' + param[1].toString();
 				it(caseName, function () {
 					isInAbTestGroup = param[0];
 					autoplayCookie = param[1];

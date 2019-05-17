@@ -8,11 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.adContext'),
-	require.optional('ext.wikia.adEngine.lookup.bidders'),
-	require.optional('ext.wikia.adEngine.wad.hmdRecLoader'),
 	require.optional('ext.wikia.adEngine3.api'),
-	require.optional('wikia.articleVideo.featuredVideo.adsConfiguration'),
 ], function (
 	win,
 	cookies,
@@ -23,11 +19,7 @@ require([
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoCookieService,
-	adContext,
-	bidders,
-	hmdRecLoader,
 	adsApi,
-	featuredVideoAds,
 ) {
 	if (!videoDetails) {
 		return;
@@ -36,13 +28,11 @@ require([
 	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
-		featuredVideoSlotName = 'FEATURED',
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
-		videoAds,
-		bidParams;
+		videoAds;
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -59,9 +49,7 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		if (featuredVideoAds && !adsApi) {
-			featuredVideoAds.init(playerInstance, bidParams, slotTargeting);
-		} else if (videoAds) {
+		if (videoAds) {
 			videoAds.register(playerInstance, slotTargeting);
 		}
 
@@ -77,11 +65,6 @@ require([
 	function setupPlayer() {
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
-
-		if (featuredVideoAds && !adsApi) {
-			featuredVideoAds.trackSetup(videoDetails.playlist[0].mediaid, willAutoplay, willMute);
-			featuredVideoAds.loadMoatTrackingPlugin();
-		}
 
 		if (adsApi && adsApi.shouldShowAds()) {
 			videoAds = adsApi.jwplayerAdsFactory.create({
@@ -130,27 +113,6 @@ require([
 		}, onPlayerReady);
 	}
 
-	function prePlayerSetup(blocking) {
-		if (blocking && adContext.get('opts.wadHMD')) {
-			hmdRecLoader.setOnReady(function () {
-				setupPlayer();
-			});
-
-			return;
-		}
-
-		if (!blocking && bidders && bidders.isEnabled()) {
-			bidders.runOnBiddingReady(function () {
-				bidParams = bidders.updateSlotTargeting(featuredVideoSlotName);
-				setupPlayer();
-			});
-
-			return;
-		}
-
-		setupPlayer();
-	}
-
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
 			adsApi.waitForAdStackResolve().then(setupPlayer);
@@ -158,22 +120,6 @@ require([
 			return;
 		}
 
-		if (!adContext || !adContext.get('opts.showAds')) {
-			setupPlayer();
-
-			return;
-		}
-
-		if (!hmdRecLoader || !adContext.get('opts.babDetectionDesktop')) {
-			prePlayerSetup(false);
-		} else {
-			doc.addEventListener('bab.blocking', function () {
-				prePlayerSetup(true);
-			});
-
-			doc.addEventListener('bab.not_blocking', function () {
-				prePlayerSetup(false);
-			});
-		}
+        setupPlayer();
 	});
 });
