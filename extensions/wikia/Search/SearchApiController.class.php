@@ -61,11 +61,10 @@ class SearchApiController extends WikiaApiController {
 	public function getList() {
 		$config = $this->getConfigFromRequest();
 
-		if ( !$config->getQuery()->hasTerms() ) {
-			throw new InvalidParameterApiException( 'query' );
-		}
-
 		if ( $this->useUnifiedSearch() ) {
+			if ( !$config->getQuery()->hasTerms() ) {
+				throw new InvalidParameterApiException( 'query' );
+			}
 			$service = new UnifiedSearchService();
 			$request = new UnifiedSearchRequest( $config );
 			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
@@ -143,7 +142,11 @@ class SearchApiController extends WikiaApiController {
 	 * @throws InvalidParameterApiException if query field in request is missing
 	 * @throws NotFoundApiException
 	 */
-	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+	protected function setResponseFromConfig( Config $searchConfig ) {
+		if ( !$searchConfig->getQuery()->hasTerms() ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+
 		//Standard Wikia API response with pagination values
 		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [
 			'pageid' => 'id',
@@ -194,7 +197,7 @@ class SearchApiController extends WikiaApiController {
 	 * @throws InvalidParameterApiException
 	 * @return Wikia\Search\Config
 	 */
-	protected function validateNamespacesForConfig( Wikia\Search\Config $searchConfig ) {
+	protected function validateNamespacesForConfig( Config $searchConfig ) {
 		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
 		if ( !empty( $namespaces ) ) {
 			foreach ( $namespaces as &$n ) {
@@ -216,7 +219,7 @@ class SearchApiController extends WikiaApiController {
 	 */
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
+		$searchConfig = new Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
 			->setLimit(
 				$request->getInt( 'limit', self::ITEMS_PER_BATCH )
@@ -236,7 +239,7 @@ class SearchApiController extends WikiaApiController {
 	 */
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
+		$searchConfig = new Config;
 		$lang = $request->getArray( 'lang' );
 		if ( in_array( self::ALL_LANGUAGES_STR, $lang ) ) {
 			$lang = [ '*' ];
