@@ -93,6 +93,7 @@ module.exports = function (env) {
 		context: __dirname,
 		entry: {
 			'ads': './src/index.js',
+			'styles': './src/styles.js',
 		},
 		externals: {
 			'@wikia/ad-engine': {
@@ -142,7 +143,7 @@ module.exports = function (env) {
 			maxEntrypointSize: 500000
 		},
 		plugins: [
-			new MiniCssExtractPlugin({filename: '[name].scss'}),
+			new MiniCssExtractPlugin({filename: '[name].css'}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new CopyWebpackPlugin([
 				{
