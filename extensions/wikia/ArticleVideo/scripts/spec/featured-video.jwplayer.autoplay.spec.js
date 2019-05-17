@@ -18,11 +18,11 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				return autoplayCookie;
 			}
 		},
-        adsApi: {
-            isAutoPlayDisabled: function () {
-                return !!prediction;
-            }
-        }
+		adsApi: {
+			isAutoPlayDisabled: function () {
+				return !!prediction;
+			}
+		}
 	};
 
 	beforeEach(function () {
