@@ -280,7 +280,7 @@ class SearchApiController extends WikiaApiController {
 	private function useUnifiedSearch(): bool {
 		global $wgUseUnifiedSearch;
 
-		$queryParam = $this->getVal( 'useUnifiedSearch', null );
+		$queryParam = $this->getVal( 'useUnifiedSearch' );
 		if ( !is_null( $queryParam ) ) {
 			return $queryParam;
 		}
