@@ -171,7 +171,6 @@ class SearchApiController extends WikiaApiController {
 				'title',
 				'url',
 				'ns',
-				'article_quality_i' => 'quality',
 				'text' => 'snippet',
 			] ),
 		];
