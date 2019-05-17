@@ -93,6 +93,7 @@ module.exports = function (env) {
 		context: __dirname,
 		entry: {
 			'ads': './src/index.js',
+			'styles': './src/styles.js',
 		},
 		externals: {
 			'@wikia/ad-engine': {
