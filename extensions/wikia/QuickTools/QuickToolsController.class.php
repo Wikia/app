@@ -44,9 +44,9 @@ class QuickToolsController extends WikiaController  {
 			'HardBlock' => true,
 			'AutoBlock' => true,
 			'DisableEmail' => true,
-			'DisableUTEdit' => false,
+			'DisableUTEdit' => true,
 			'AlreadyBlocked' => true,
-			'Watch' => false,
+			'Watch' => true,
 			'Confirm' => true,
 		];
 
