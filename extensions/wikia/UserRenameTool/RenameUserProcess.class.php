@@ -155,7 +155,6 @@ class RenameUserProcess {
 	 */
 	public function setup() {
 		global $wgContLang, $wgCapitalLinks;
-
 		// Sanitize input data
 		$oldNamePar = trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) );
 		$oldTitle = Title::makeTitle( NS_USER, $oldNamePar );
@@ -610,21 +609,12 @@ class RenameUserProcess {
 		$phalanxMatchParams = PhalanxMatchParams::withGlobalDefaults()->content( $text );
 		$phalanxService = PhalanxServiceFactory::getServiceInstance();
 
-		$blockFound = false;
-
-		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
-			$phalanxMatchParams->type( $blockType );
-			$res = $phalanxService->doMatch( $phalanxMatchParams );
-
-			if ( !empty( $res ) ) {
-				$blockFound = true;
-				break;
-			}
-
-		}
+		$phalanxMatchParams->type( "user" );
+		$res = $phalanxService->doMatch( $phalanxMatchParams );
 
 		$warning = '';
-		if ( $blockFound ) {
+
+		if ( !empty( $res ) ) {
 			$phalanxTestTitle = SpecialPage::getTitleFor( 'Phalanx', 'test' );
 			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'userrenametool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
 			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
