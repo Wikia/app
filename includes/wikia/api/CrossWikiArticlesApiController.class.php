@@ -9,6 +9,8 @@
 
 class CrossWikiArticlesApiController extends WikiaApiController {
 
+	const CACHE_3_DAYS = 259200;
+
 	/**
 	 * Get details about one or more articles
 	 *
@@ -71,7 +73,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			[ 'items' => $items ],
 			null,
 			# cache for 3 days to avoid daily cache hit ratio drops - https://wikia-inc.atlassian.net/browse/DE-4346
-			3 * WikiaResponse::CACHE_STANDARD
+			static::CACHE_3_DAYS
 		);
 	}
 
