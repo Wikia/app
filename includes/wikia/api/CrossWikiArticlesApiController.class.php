@@ -9,6 +9,9 @@
 
 class CrossWikiArticlesApiController extends WikiaApiController {
 
+	// thumbnail width and height
+	const THUMBNAIL_SIZE = 200;
+
 	/**
 	 * Get details about one or more articles
 	 *
@@ -36,7 +39,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$items = [];
 
 		foreach( $wikiToArticleMap as $wikiId => $articles ) {
-			$items = array_merge($items, $this->getDetailsForWiki( $wikiId, $articles ));
+			$items += $this->getDetailsForWiki( $wikiId, $articles );
 		}
 
 		$this->setResponseData(
@@ -58,10 +61,14 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$dbr = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wikiId ) );
 
 		$res = $dbr->select(
-			'page',
-			'page.page_id, page_title, page_namespace',
-			['page.page_id' => $articles],
-			__METHOD__
+			['page', 'page_wikia_props'],
+			'page.page_id, page_title, page_namespace, props',
+			['page.page_id' => $articles, 'propname' => WPP_IMAGE_SERVING],
+			__METHOD__,
+			[],
+			[
+				'page_wikia_props' => ['JOIN', ['page.page_id=page_wikia_props.page_id']],
+			]
 		);
 
 		$videos = $this->getVideosIds( $wikiId );
@@ -69,13 +76,28 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 
 		$items = [];
 		foreach ($res as $row) {
+			// extract suggested image
+			$imageServingData = @unserialize($row->props);
+
+			if (is_array($imageServingData)) {
+				$image = $imageServingData[0];
+				$file = new GlobalFile(GlobalTitle::newFromText($image, NS_FILE, $wikiId));
+
+				$thumbnail = $file->getUrlGenerator()
+					->width(self::THUMBNAIL_SIZE)->height(self::THUMBNAIL_SIZE)->zoomCropDown()
+					->url();
+			}
+			else {
+				$thumbnail = null;
+			}
+
 			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $wikiId );
 
 			$items[ $wikiId . '_' . $row->page_id ] = array(
 				'url' => $title->getFullURL(),
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikiDetails['title'],
-				#'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null, # TODO
+				'thumbnail' => $thumbnail,
 				'hasVideo' => in_array( $row->page_id , $videos )
 			);
 		}
