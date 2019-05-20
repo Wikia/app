@@ -20,58 +20,67 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	 */
 	public function getDetails() {
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
-                $articles = explode( ',', $this->request->getVal( 'ids', null ) );
+        $articles = explode( ',', $this->request->getVal( 'ids', null ) );
 
-		// mapping parameters to wikiId => listOfArticles, and preparing cross-wiki sql
-		$wikiToArticleMap = array();
-		$sqlFilters = array();
+		// mapping parameters to wikiId => listOfArticles
+		$wikiToArticleMap = [];
 		foreach ( $articles as $article ) {
 			list( $wikiId, $articleId ) = explode('_', $article);
 			if ( ! isset($wikiToArticleMap[$wikiId]) ) {
-				$wikiToArticleMap[$wikiId] = array();
+				$wikiToArticleMap[$wikiId] = [];
 			}
-			$wikiToArticleMap[$wikiId][] = $articleId;
-			$sqlFilters[] = sprintf('(page_wikia_id=%s and page_id=%s)', intval($wikiId), intval($articleId));
-		}
-		$multiArticleSqlFilter = implode(' or ', $sqlFilters);
-		
-		// getting wikis details 
-		$wds = new WikiDetailsService();
-		$wikisData = array();
-		foreach (array_keys($wikiToArticleMap) as $wikiId) {
-			$wikiDetails = $wds->getWikiDetails($wikiId);
-			$dbname = WikiFactory::IDtoDB($wikiId);
-			$wikisData[$wikiId] = array(
-				'title' => $wikiDetails['title'],
-				'baseUrl' => rtrim($wikiDetails['url'], "/"),
-				'images' => $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] ),
-				'videos' => $this->getVideosIds( $wikiId )
-			);
+			$wikiToArticleMap[$wikiId][] = (int) $articleId;
 		}
 
-		// getting articles data
-		global $wgExternalDatawareDB;
-		$db = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-		$dbResult = $db->query( 'select page_wikia_id, page_id, page_title from pages where '. $multiArticleSqlFilter, __METHOD__ );
+		// now query each wiki
 		$items = [];
-		while ( $row = $db->fetchObject( $dbResult ) ) { 
-			$title = Title::newFromRow($row);
-			$articleApiDetails = $wikisData[$row->page_wikia_id]['images'];
-			$items[ $row->page_wikia_id . '_' . $row->page_id ] = array(
-				'url' => $wikisData[$row->page_wikia_id]['baseUrl'] . $title->getLocalUrl(),
-				'title' => $title->getPrefixedText(),
-				'wikiName' => $wikisData[$row->page_wikia_id]['title'],
-				'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null,
-				'hasVideo' => in_array( $row->page_id , $wikisData[ $row->page_wikia_id ]['videos'] )
-			);
+
+		foreach( $wikiToArticleMap as $wikiId => $articles ) {
+			$items = array_merge($items, $this->getDetailsForWiki( $wikiId, $articles ));
 		}
-		$db->freeResult( $dbResult );
 
 		$this->setResponseData(
 			[ 'items' => $items ],
 			null,
 			WikiaResponse::CACHE_STANDARD
 		);
+	}
+
+	/**
+	 * Returns details for articles from a given wiki. Performs cross-wiki database queries.
+	 *
+	 * @param int $wikiId
+	 * @param int[] $articles
+	 * @return array
+	 * @throws Exception
+	 */
+	protected function getDetailsForWiki( int $wikiId, array $articles ) {
+		$dbr = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wikiId ) );
+
+		$res = $dbr->select(
+			'page',
+			'page.page_id, page_title, page_namespace',
+			['page.page_id' => $articles],
+			__METHOD__
+		);
+
+		$videos = $this->getVideosIds( $wikiId );
+		$wikiDetails = (new WikiDetailsService)->getWikiDetails($wikiId);
+
+		$items = [];
+		foreach ($res as $row) {
+			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $wikiId );
+
+			$items[ $wikiId . '_' . $row->page_id ] = array(
+				'url' => $title->getFullURL(),
+				'title' => $title->getPrefixedText(),
+				'wikiName' => $wikiDetails['title'],
+				#'thumbnail' => $articleApiDetails[$row->page_id]['thumbnail'] ?? null, # TODO
+				'hasVideo' => in_array( $row->page_id , $videos )
+			);
+		}
+
+		return $items;
 	}
 
 	protected function getThumbnails( $dbname, $articleIds ) {
