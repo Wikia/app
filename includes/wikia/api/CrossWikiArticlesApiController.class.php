@@ -68,7 +68,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			__METHOD__,
 			[],
 			[
-				'page_wikia_props' => ['JOIN', ['page.page_id=page_wikia_props.page_id']],
+				'page_wikia_props' => ['LEFT JOIN', ['page.page_id=page_wikia_props.page_id']],
 			]
 		);
 
