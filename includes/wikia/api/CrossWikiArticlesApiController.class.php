@@ -72,7 +72,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		);
 
 		$videos = $this->getVideosIds( $wikiId );
-		$wikiDetails = (new WikiDetailsService)->getWikiDetails($wikiId);
+		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 
 		$items = [];
 		foreach ($res as $row) {
@@ -96,7 +96,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			$items[ $wikiId . '_' . $row->page_id ] = array(
 				'url' => $title->getFullURL(),
 				'title' => $title->getPrefixedText(),
-				'wikiName' => $wikiDetails['title'],
+				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
 				'hasVideo' => in_array( $row->page_id , $videos )
 			);
