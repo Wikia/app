@@ -609,7 +609,7 @@ class RenameUserProcess {
 		$phalanxMatchParams = PhalanxMatchParams::withGlobalDefaults()->content( $text );
 		$phalanxService = PhalanxServiceFactory::getServiceInstance();
 
-		$phalanxMatchParams->type( "user" );
+		$phalanxMatchParams->type( 'user' );
 		$res = $phalanxService->doMatch( $phalanxMatchParams );
 
 		$warning = '';
