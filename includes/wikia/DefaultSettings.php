@@ -1398,6 +1398,13 @@ $wgAdDriverEnableCheshireCat = true;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
+ * @name $wgAdDriverBrowsiCountries
+ * List of countries Browsi will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBrowsiCountries = null;
+
+/**
  * @name $wgAdDriverConfiantCountries
  * List of countries Confiant will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
