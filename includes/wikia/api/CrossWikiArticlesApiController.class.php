@@ -23,7 +23,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	 */
 	public function getDetails() {
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
-        $articles = explode( ',', $this->request->getVal( 'ids', null ) );
+		$articles = explode( ',', $this->request->getVal( 'ids', null ) );
 
 		// mapping parameters to wikiId => listOfArticles
 		$wikiToArticleMap = [];
