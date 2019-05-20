@@ -36,7 +36,7 @@ class AdEngine3
 		self::$forceProductionAssets = $request->getBool( 'ae3_prod' );
 
 		$distDirectory = self::shouldUseProductionAssets() ? 'dist' : 'dist-dev';
-		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/ads.scss';
+		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/styles.scss';
 
 		$output->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( $assetsPath ) );
 
@@ -63,7 +63,7 @@ class AdEngine3
 		$title = $wg->Title;
 		$articleId = $title->getArticleId();
 
-		$adPageTypeService = new AdEngine2PageTypeService();
+		$adPageTypeService = new AdEngine3PageTypeService();
 		$hubService = new HubService();
 		$langCode = $title->getPageLanguage()->getCode();
 		$wikiaPageType = new WikiaPageType();

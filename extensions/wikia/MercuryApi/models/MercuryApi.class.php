@@ -538,7 +538,7 @@ class MercuryApi {
 	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
+		$adContext = new AdEngine3();
 
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}

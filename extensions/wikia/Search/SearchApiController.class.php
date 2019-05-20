@@ -2,7 +2,11 @@
 /**
  * Class definition for SearchApiController
  */
-use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Config;
+use Wikia\Search\QueryService\Factory;
+use Wikia\Search\SearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
  * Controller to execute searches in the content of a wiki.
@@ -55,7 +59,22 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$this->setResponseFromConfig( $this->getConfigFromRequest() );
+		$config = $this->getConfigFromRequest();
+
+		if ( $this->useUnifiedSearch() ) {
+			if ( !$config->getQuery()->hasTerms() ) {
+				throw new InvalidParameterApiException( 'query' );
+			}
+			$service = new UnifiedSearchService();
+			$request = new UnifiedSearchRequest( $config );
+			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
+			if ( !$result->hasResults() ) {
+				throw new NotFoundApiException();
+			}
+			$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
+		} else {
+			$this->setResponseFromConfig( $config );
+		}
 	}
 
 	/**
@@ -123,26 +142,51 @@ class SearchApiController extends WikiaApiController {
 	 * @throws InvalidParameterApiException if query field in request is missing
 	 * @throws NotFoundApiException
 	 */
-	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+	protected function setResponseFromConfig( Config $searchConfig ) {
 		if ( !$searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
 
 		//Standard Wikia API response with pagination values
-		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-				[ 'pageid' => 'id', 'title', 'url', 'ns', 'article_quality_i' => 'quality', 'text' => 'snippet' ],
-				true
-			);
+		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [
+			'pageid' => 'id',
+			'title',
+			'url',
+			'ns',
+			'article_quality_i' => 'quality',
+			'text' => 'snippet',
+		], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
 		}
 
-		$this->setResponseData(
-			$responseValues,
-			[ 'urlFields' => 'url' ],
-			WikiaResponse::CACHE_STANDARD
-		);
+		$this->setResponseData( $responseValues, [ 'urlFields' => 'url' ],
+			WikiaResponse::CACHE_STANDARD );
+	}
+
+	protected function setUnifiedSearchResponse(
+		Config $config, SearchResult $result, $cacheValidity = 0
+	) {
+		$data = [
+			'batches' => $result->getNumPages(),
+			'currentBatch' => $result->getPage(),
+			'next' => $result->getPage() * $config->getLimit() + 1,
+			'total' => $result->getResultsFound(),
+			'items' => $result->toArray( [
+				'pageid' => 'id',
+				'title',
+				'url',
+				'ns',
+				'text' => 'snippet',
+			] ),
+		];
+
+		$response = $this->getResponse();
+		$response->setData( $data );
+		if ( $cacheValidity > 0 ) {
+			$response->setCacheValidity( $cacheValidity );
+		}
 	}
 
 	/**
@@ -153,7 +197,7 @@ class SearchApiController extends WikiaApiController {
 	 * @throws InvalidParameterApiException
 	 * @return Wikia\Search\Config
 	 */
-	protected function validateNamespacesForConfig( $searchConfig ) {
+	protected function validateNamespacesForConfig( Config $searchConfig ) {
 		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
 		if ( !empty( $namespaces ) ) {
 			foreach ( $namespaces as &$n ) {
@@ -175,7 +219,7 @@ class SearchApiController extends WikiaApiController {
 	 */
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
+		$searchConfig = new Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
 			->setLimit(
 				$request->getInt( 'limit', self::ITEMS_PER_BATCH )
@@ -195,7 +239,7 @@ class SearchApiController extends WikiaApiController {
 	 */
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
+		$searchConfig = new Config;
 		$lang = $request->getArray( 'lang' );
 		if ( in_array( self::ALL_LANGUAGES_STR, $lang ) ) {
 			$lang = [ '*' ];
@@ -232,5 +276,19 @@ class SearchApiController extends WikiaApiController {
 			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
 		];
 	}
-}
 
+	private function useUnifiedSearch(): bool {
+		global $wgUseUnifiedSearch;
+
+		$queryParam = $this->getVal( 'useUnifiedSearch' );
+		if ( !is_null( $queryParam ) ) {
+			return $queryParam;
+		}
+
+		if ( RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' ) ) {
+			return true;
+		}
+
+		return $wgUseUnifiedSearch;
+	}
+}

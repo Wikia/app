@@ -17,6 +17,7 @@ module.exports = function (env) {
 		context: __dirname,
 		entry: {
 			'ads': './src/index.js',
+			'styles': './src/styles.js',
 		},
 		output: {
 			path: path.resolve(__dirname, buildDirectory),

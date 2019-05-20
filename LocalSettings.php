@@ -399,7 +399,7 @@ $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUser
 require_once "$IP/includes/wikia/Emergency.php";
 
 if ( $wgDevelEnvironment && empty( $wgRunningUnitTests ) ) {
-    $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, gethostname() );
+    $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, wfGetEffectiveHostname() );
     if ( file_exists( $wgDevBoxSettings ) ) {
         require_once( $wgDevBoxSettings );
     }

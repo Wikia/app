@@ -6,7 +6,7 @@ class AnalyticsProviderBillTheLizard implements iAnalyticsProvider {
 	public static function isEnabled() {
 		global $wgShowAds;
 
-		return $wgShowAds && AdEngine2Service::areAdsShowableOnPage();
+		return $wgShowAds && AdEngine3Service::areAdsShowableOnPage();
 	}
 
 	public function getSetupHtml( $params = array() ) {
