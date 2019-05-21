@@ -56,7 +56,7 @@
 				if(this.config.errors){
 					errors = "";
 					this.config.errors.forEach(function(err) {
-						errors += "<p>" + err + "</p>";
+						errors += "<p style='color:red;'>" + err + "</p>";
 					});
 				}
 				$.confirm({

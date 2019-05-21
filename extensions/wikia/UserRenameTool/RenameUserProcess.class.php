@@ -200,7 +200,7 @@ class RenameUserProcess {
 		if( count( $errors ) > 0 && $stringErrors ){
 			$stringErr = [];
 			foreach( $errors as $err ){
-				$stringErr[] = $err->toString();
+				$stringErr[] = (string)$err;
 			}
 			return $stringErr;
 		}

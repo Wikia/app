@@ -161,7 +161,7 @@ class SpecialRenameuser extends SpecialPage {
 			}
 			$showConfirm = ( !$isConfirmed && empty( $errors ) && empty( $info ) );
 			if( !$selfRename ){
-				$spoofErrors = $process->testSpoofAndPhalanx();
+				$spoofErrors = $process->testSpoofAndPhalanx( true );
 			}
 		}
 
