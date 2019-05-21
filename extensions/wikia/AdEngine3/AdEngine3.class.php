@@ -58,6 +58,8 @@ class AdEngine3
 	}
 
 	public static function getContext() {
+		global $wgEnableKruxTargeting, $wgNoExternals;
+
 		$wg = F::app()->wg;
 
 		$title = $wg->Title;
@@ -99,7 +101,7 @@ class AdEngine3
 				'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 			]),
 			'targeting' => array_filter([
-				'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
+				'enableKruxTargeting' => !$wgNoExternals && $wgEnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
 				'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
 				'esrbRating' => AdTargeting::getEsrbRating(),
 				'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),
