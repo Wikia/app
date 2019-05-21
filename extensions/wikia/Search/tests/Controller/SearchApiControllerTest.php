@@ -32,12 +32,6 @@ class SearchApiControllerTest extends BaseTest
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockController
-			->expects( $this->once() )
-			->method ( 'getVal' )
-			->with   ( 'useUnifiedSearch' )
-			->willReturn( false )
-		;
-		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'setResponseFromConfig' )
 		    ->with   ( $mockConfig )

@@ -2,6 +2,7 @@
 /**
  * Class definition for SearchApiController
  */
+
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
@@ -60,12 +61,12 @@ class SearchApiController extends WikiaApiController {
 	 */
 	public function getList() {
 		$config = $this->getConfigFromRequest();
+		$service = new UnifiedSearchService();
 
-		if ( $this->useUnifiedSearch() ) {
+		if ( $service->useUnifiedSearch( false ) ) {
 			if ( !$config->getQuery()->hasTerms() ) {
 				throw new InvalidParameterApiException( 'query' );
 			}
-			$service = new UnifiedSearchService();
 			$request = new UnifiedSearchRequest( $config );
 			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
 			if ( !$result->hasResults() ) {
@@ -104,7 +105,10 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		$responseValues =
-			( new Factory )->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( [ 'id', 'lang_s' ], true );
+			( new Factory )->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( [
+				'id',
+				'lang_s',
+			], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
@@ -113,25 +117,21 @@ class SearchApiController extends WikiaApiController {
 		$items = [];
 		foreach ( $responseValues['items'] as $result ) {
 			if ( $expand ) {
-				$items[] = $this->getWikiDetailsService()->getWikiDetails(
-						$result['id'],
-						$params['imageWidth'],
-						$params['imageHeight'],
-						$params['length']
-					);
+				$items[] =
+					$this->getWikiDetailsService()
+						->getWikiDetails( $result['id'], $params['imageWidth'],
+							$params['imageHeight'], $params['length'] );
 			} else {
 				$items[] = [
-					'id' => (int) $result['id'],
+					'id' => (int)$result['id'],
 					'language' => $result['lang_s'],
 				];
 			}
 		}
 		$responseValues['items'] = $items;
 
-		$this->setResponseData(
-			$responseValues,
-			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ]
-		);
+		$this->setResponseData( $responseValues,
+			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ] );
 	}
 
 	/**
@@ -194,8 +194,8 @@ class SearchApiController extends WikiaApiController {
 	 *
 	 * @param Wikia\Search\Config $searchConfig
 	 *
-	 * @throws InvalidParameterApiException
 	 * @return Wikia\Search\Config
+	 * @throws InvalidParameterApiException
 	 */
 	protected function validateNamespacesForConfig( Config $searchConfig ) {
 		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
@@ -221,9 +221,7 @@ class SearchApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-			->setLimit(
-				$request->getInt( 'limit', self::ITEMS_PER_BATCH )
-			)
+			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setMinArticleQuality( $request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME ) )
@@ -244,11 +242,13 @@ class SearchApiController extends WikiaApiController {
 		if ( in_array( self::ALL_LANGUAGES_STR, $lang ) ) {
 			$lang = [ '*' ];
 		}
-		$searchConfig->setQuery( $request->getVal( 'query', null ) )->setLimit(
-				$request->getInt( 'limit', static::CROSS_WIKI_LIMIT )
-			)->setPage( $request->getVal( 'batch', 1 ) )->setRank( $request->getVal( 'rank', 'default' ) )->setHub(
-				$request->getArray( 'hub', null )
-			)->setInterWiki( true )->setCommercialUse( $this->hideNonCommercialContent() );
+		$searchConfig->setQuery( $request->getVal( 'query', null ) )
+			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setHub( $request->getArray( 'hub', null ) )
+			->setInterWiki( true )
+			->setCommercialUse( $this->hideNonCommercialContent() );
 		if ( !empty( $lang ) ) {
 			$searchConfig->setLanguageCode( $lang );
 		}
@@ -273,22 +273,7 @@ class SearchApiController extends WikiaApiController {
 		return [
 			'imageWidth' => $this->request->getVal( 'width', null ),
 			'imageHeight' => $this->request->getVal( 'height', null ),
-			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH ),
 		];
-	}
-
-	private function useUnifiedSearch(): bool {
-		global $wgUseUnifiedSearch;
-
-		$queryParam = $this->getVal( 'useUnifiedSearch' );
-		if ( !is_null( $queryParam ) ) {
-			return $queryParam;
-		}
-
-		if ( RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' ) ) {
-			return true;
-		}
-
-		return $wgUseUnifiedSearch;
 	}
 }

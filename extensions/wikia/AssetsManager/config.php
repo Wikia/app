@@ -624,7 +624,6 @@ $config['mercury_ads_js'] = [
 		// Advertisement libs
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
-		'//resources/wikia/modules/krux.js',
 		'#group_jwplayer_mobile_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
 	],
@@ -634,9 +633,6 @@ $config['wikiamobile_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => [
-		// Krux
-		'//resources/wikia/modules/krux.js',
-
 		'#group_mobile_base_ads_js',
 
 	],
@@ -2018,16 +2014,6 @@ $config['jwplayer_mobile_featured_video_ads_js'] = [
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
-	],
-];
-
-$config['jwplayer_tag_ads_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.ads.js',
 	],
 ];
 
