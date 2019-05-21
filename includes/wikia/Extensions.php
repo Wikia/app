@@ -430,7 +430,8 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 
 	// Change limit on Runescape temporarily (PLATFORM-4090)
 	if ( $wgCityId == 304 ) {
-		$wgScribuntoEngineConf['luasandbox']['cpuLimit'] = 20;
+		$wgScribuntoEngineConf['luasandbox']['cpuLimit'] = 25;
+		$wgScribuntoEngineConf['luasandbox']['memoryLimit'] = 350 * 1024 * 1024;
 	}
 
 	/**
