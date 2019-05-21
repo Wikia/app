@@ -153,7 +153,7 @@ class RenameUserProcess {
 	 *
 	 * @return mixed false if all prerequisites are met else list of errors
 	 */
-	public function testSpoofAndPhalanx() {
+	public function testSpoofAndPhalanx($stringErrors = false) {
 		global $wgContLang;
 		$errors = [];
 
@@ -196,6 +196,13 @@ class RenameUserProcess {
 		$err = self::testBlock( $nun );
 		if ( !empty( $err ) ) {
 			$errors[] = $err;
+		}
+		if( count( $errors ) > 0 && $stringErrors ){
+			$stringErr = [];
+			foreach( $errors as $err ){
+				$stringErr[] = $err->toString();
+			}
+			return $stringErr;
 		}
 		return count($errors) > 0 ? $errors : false;
 	}
