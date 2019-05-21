@@ -12,8 +12,6 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 
-import './styles.scss';
-
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
 function setupAdEngine(isOptedIn, geoRequiresConsent) {

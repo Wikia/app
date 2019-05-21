@@ -6,8 +6,8 @@
  * @group SeoIntegration
  */
 class RobotsIntegrationTest extends WikiaBaseTest {
-	const SHOWCASE_ADTEST_PAGE_LINK = 'http://adtest.showcase.wikia.com/wiki/Wikia_Ad_Testing';
-	const ADTEST_PAGE_LINK = 'http://adtest.wikia.com/wiki/Wikia_Ad_Testing';
+	const SHOWCASE_ADTEST_PAGE_LINK = 'http://adtest.showcase.fandom.com/wiki/Wikia_Ad_Testing';
+	const ADTEST_PAGE_LINK = 'https://adtest.fandom.com/wiki/Wikia_Ad_Testing';
 	const NO_INDEX_NO_FOLLOW = '<meta name="robots" content="noindex,nofollow" />';
 	const NO_INDEX_FOLLOW = '<meta name="robots" content="noindex,follow" />';
 	const HTTP_OK = 200;
@@ -38,7 +38,7 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 	}
 
 	public function getSpecialPagesUrlsDataProvider() {
-		$urlPattern = 'http://adtest.wikia.com/wiki/%s';
+		$urlPattern = 'http://adtest.fandom.com/wiki/%s';
 		$cb = time();
 		return [
 			[ sprintf($urlPattern, 'Skin?action=edit&cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
