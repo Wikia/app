@@ -92,18 +92,17 @@ require([
 
 	function insertTrackingPixel(pixelContent, pixelType) {
 		var wrapper = document.createElement('span');
-		var tag;
 
 		wrapper.className = 'wds-is-hidden';
 
 		if (pixelType === 'url') {
-			tag = document.createElement('img');
+			var tag = document.createElement('img');
 			tag.src = pixelContent;
+			wrapper.appendChild(tag);
 		} else {
-			tag = pixelContent;
+			wrapper.innerHTML = pixelContent;
 		}
 
-		wrapper.appendChild(tag);
 		window.document.body.appendChild(wrapper);
 	}
 
