@@ -20,10 +20,10 @@ define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
  * Keeping the traditional controller registry for now
  */
 $wgAutoloadClasses['WikiaSearchController'] = $dir . 'WikiaSearchController.class.php';
+$wgAutoloadClasses['UnifiedSearchIndexingController'] = $dir . 'UnifiedSearchIndexingController.class.php';
 $wgAutoloadClasses['WikiaSearchIndexerController'] = $dir . 'WikiaSearchIndexerController.class.php';
 $wgAutoloadClasses['WikiaSearchAjaxController'] = $dir . 'WikiaSearchAjaxController.class.php';
 $wgAutoloadClasses['WikiaSearchHelper'] = $dir . 'WikiaSearchHelper.class.php';
-
 
 /**
  * special pages

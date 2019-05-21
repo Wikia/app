@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngine3BTCode extends ResourceLoaderAdEngineBase
+class ResourceLoaderAdEngine3BTCode extends ResourceLoaderAdEngine3Base
 {
 	// 24h: cache for HTTP downloaded code
 	const TTL_SCRIPTS = WikiaResponse::CACHE_STANDARD;

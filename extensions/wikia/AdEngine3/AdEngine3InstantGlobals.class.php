@@ -36,6 +36,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverBillTheLizardConfig';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
+		$vars[] = 'wgAdDriverBrowsiCountries';
 		$vars[] = 'wgAdDriverCollapseTopLeaderboardMobileWikiCountries';
 		$vars[] = 'wgAdDriverConfiantCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
@@ -65,6 +66,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
 		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
 		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
+		$vars[] = 'wgAdDriverMobileTopBoxadCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3NativeSearchCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
@@ -90,7 +92,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverRubiconDfpCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
-		$vars[] = 'wgAdDriverSrcPremiumCountries'; // Remove me after release ADEN-7361
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVmgBidderCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
