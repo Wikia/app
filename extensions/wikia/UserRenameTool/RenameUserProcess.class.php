@@ -149,12 +149,13 @@ class RenameUserProcess {
 	}
 
 	/**
-	 * Checks if the request provided to the constructor is valid.
+	 * Makes spoof and phalanx tests.
 	 *
-	 * @return bool True if all prerequisites are met
+	 * @return mixed false if all prerequisites are met else list of errors
 	 */
-	public function setup() {
-		global $wgContLang, $wgCapitalLinks;
+	public function testSpoofAndPhalanx() {
+		global $wgContLang;
+		$errors = [];
 
 		// Sanitize input data
 		$oldNamePar = trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) );
@@ -174,32 +175,60 @@ class RenameUserProcess {
 			$oNewSpoofUser = new SpoofUser( $nun );
 			$conflicts = $oNewSpoofUser->getConflicts();
 			if ( !empty( $conflicts ) ) {
-				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
-				return false;
+				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun );
 			}
 
 			// SUS-4301 | check for emojis in user name
 			if ( $oNewSpoofUser->isLegal() === false ) {
-				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
-				return false;
+				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun );
 			}
 		} else {
-			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
-			return false;
+			$errors[] = wfMessage( 'userrenametool-error-antispoof-notinstalled' );
 		}
 
 		// Phalanx test
 
-		$error = self::testBlock( $oun );
-		if ( !empty( $error ) ) {
-			$this->addError( $error );
-			return false;
+		$err = self::testBlock( $oun );
+		if ( !empty( $err ) ) {
+			$errors[] = $err;
 		}
 
-		$error = self::testBlock( $nun );
-		if ( !empty( $error ) ) {
-			$this->addError( $error );
-			return false;
+		$err = self::testBlock( $nun );
+		if ( !empty( $err ) ) {
+			$errors[] = $err;
+		}
+		return count($errors) > 0 ? $errors : false;
+	}
+
+	/**
+	 * Checks if the request provided to the constructor is valid.
+	 *
+	 * @return bool True if all prerequisites are met
+	 */
+	public function setup( $selfRename = true ) {
+		global $wgContLang, $wgCapitalLinks;
+
+		// Sanitize input data
+		$oldNamePar = trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) );
+		$oldTitle = Title::makeTitle( NS_USER, $oldNamePar );
+
+		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
+		$newTitle = Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->mRequestData->newUsername ) );
+
+		$oun = is_object( $oldTitle ) ? $oldTitle->getText() : '';
+		$nun = is_object( $newTitle ) ? $newTitle->getText() : '';
+
+		$this->addInternalLog( "title: old={$oun} new={$nun}" );
+
+		if( $selfRename ){
+			$errors = $this->testSpoofAndPhalanx();
+			if( $errors ){
+				foreach( $errors as $err ){
+					$this->addError( $err );
+				}
+
+				return false;
+			}
 		}
 
 		// Invalid old user name entered
@@ -296,27 +325,27 @@ class RenameUserProcess {
 			if ( stripos( $renameData, self::RENAME_TAG ) !== false ) {
 				$tokens = explode( ';', $renameData, 3 );
 
-					if ( !empty( $tokens[0] ) ) {
-						$nameTokens = explode( '=', $tokens[0], 2 );
+				if ( !empty( $tokens[0] ) ) {
+					$nameTokens = explode( '=', $tokens[0], 2 );
 
-						$repeating = (
-							count( $nameTokens ) == 2 &&
-							$nameTokens[0] === self::RENAME_TAG &&
-							$nameTokens[1] === $newUser->getName()
-						);
+					$repeating = (
+						count( $nameTokens ) == 2 &&
+						$nameTokens[0] === self::RENAME_TAG &&
+						$nameTokens[1] === $newUser->getName()
+					);
+				}
+
+				if ( !empty( $tokens[2] ) ) {
+					$blockTokens = explode( '=', $tokens[2], 2 );
+
+					if (
+						count( $blockTokens ) == 2 &&
+						$blockTokens[0] === self::PHALANX_BLOCK_TAG &&
+						is_numeric( $blockTokens[1] )
+					) {
+						$this->mPhalanxBlockId = (int)$blockTokens[1];
 					}
-
-					if ( !empty( $tokens[2] ) ) {
-						$blockTokens = explode( '=', $tokens[2], 2 );
-
-						if (
-							count( $blockTokens ) == 2 &&
-							$blockTokens[0] === self::PHALANX_BLOCK_TAG &&
-							is_numeric( $blockTokens[1] )
-						) {
-							$this->mPhalanxBlockId = (int)$blockTokens[1];
-						}
-					}
+				}
 			}
 
 			if ( $repeating ) {
@@ -360,8 +389,8 @@ class RenameUserProcess {
 	 *
 	 * @return bool True if the process succeded
 	 */
-	public function run() {
-		if ( !$this->setup() ) {
+	public function run( $selfRename = true ) {
+		if ( !$this->setup($selfRename) ) {
 			return false;
 		}
 

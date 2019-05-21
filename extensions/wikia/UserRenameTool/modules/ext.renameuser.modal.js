@@ -37,19 +37,42 @@
 			if (this.isConfirmed()) {
 				return;
 			}
-
 			event.preventDefault();
-			$.confirm({
-				onOk: this.onOk,
-				title: mw.message('renameuser').escaped(),
-				content: mw.message(
-					'userrenametool-confirm-intro',
-					this.config.oldUsername,
-					this.config.newUsername
-				).plain(),
-				okMsg: mw.message('userrenametool-confirm').escaped(),
-				cancelMsg: mw.message('userrenametool-confirm-no').escaped()
-			});
+
+			if(this.config.selfRename) {
+				$.confirm({
+					onOk: this.onOk,
+					title: mw.message('renameuser').escaped(),
+					content: mw.message(
+						'userrenametool-confirm-intro',
+						this.config.oldUsername,
+						this.config.newUsername
+					).plain(),
+					okMsg: mw.message('userrenametool-confirm').escaped(),
+					cancelMsg: mw.message('userrenametool-confirm-no').escaped()
+				});
+			} else {
+				var errors = "No errors";
+				if(this.config.errors){
+					errors = "";
+					this.config.errors.forEach(function(err) {
+						errors += "<p>" + err + "</p>";
+					});
+				}
+				$.confirm({
+					onOk: this.onOk,
+					title: mw.message('renameuser').escaped(),
+					content: mw.message(
+						'userrenametool-confirm-intro-staff',
+						this.config.oldUsername,
+						this.config.newUsername,
+						errors
+					).plain(),
+					okMsg: mw.message('userrenametool-confirm').escaped(),
+					cancelMsg: mw.message('userrenametool-confirm-no').escaped()
+				});
+
+			}
 		}
 	};
 
