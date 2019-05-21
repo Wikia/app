@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "watch": "webpack -p -w",
+    "watch": "webpack -w",
     "dev": "npm run watch"
   },
   "dependencies": {
