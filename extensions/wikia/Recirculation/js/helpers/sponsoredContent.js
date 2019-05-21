@@ -1,11 +1,12 @@
 define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	'jquery',
 	'wikia.window',
+	'wikia.geo',
 	'wikia.log'
-], function ($, w, log) {
+], function ($, w, geo, log) {
 	'use strict';
 
-	var userGeo = Geo.getCountryCode();
+	var userGeo = geo.getCountryCode();
 	var hasFetched = false;
 	var deferred = $.Deferred();
 
@@ -37,9 +38,33 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 		return applicableContent[firstApplicableIndex];
 	}
 
+	function applyContentCriteria(sponsoredContent, propName, criteria) {
+		return sponsoredContent.filter(function (item) {
+			return item[propName].indexOf(criteria) !== -1;
+		});
+	}
+
 	function getApplicableContent(sponsoredContent) {
-		return sponsoredContent.filter(function (el) {
-			return !el.geos.length || el.geos.indexOf(userGeo) !== -1;
+		var geoSpecificContent = applyContentCriteria(sponsoredContent, 'geos', userGeo);
+		var siteSpecificContent = applyContentCriteria(sponsoredContent, 'wikiIds', w.wgCityId);
+		var geoAndSiteSpecificContent = applyContentCriteria(geoSpecificContent, 'wikiIds', w.wgCityId);
+		var geoOnlySpecificContent = geoSpecificContent.filter(function(item) { return !item.wikiIds.length });
+		var siteOnlySpecificContent = siteSpecificContent.filter(function(item) { return !item.geos.length });
+
+		if (geoAndSiteSpecificContent.length) {
+			return geoAndSiteSpecificContent;
+		}
+
+		if (siteOnlySpecificContent.length) {
+			return siteOnlySpecificContent;
+		}
+
+		if (geoOnlySpecificContent.length) {
+			return geoOnlySpecificContent;
+		}
+
+		return sponsoredContent.filter(function (item) {
+			return !item.wikiIds.length && !item.geos.length;
 		});
 	}
 

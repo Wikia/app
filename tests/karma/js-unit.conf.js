@@ -52,7 +52,6 @@ module.exports = function (config) {
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
-			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
@@ -139,6 +138,7 @@ module.exports = function (config) {
 
 			// Recirculation
 			'extensions/wikia/Recirculation/js/*.js',
+			'extensions/wikia/Recirculation/js/**/*.js',
 			'extensions/wikia/Recirculation/js/spec/**/*.spec.js',
 
 			//PortableInfoboxBuilder
