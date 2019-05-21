@@ -64,11 +64,16 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$res = $dbr->select(
 			['page', 'page_wikia_props'],
 			'page.page_id, page_title, page_namespace, props',
-			['page.page_id' => $articles, 'propname' => WPP_IMAGE_SERVING],
+			['page.page_id' => $articles],
 			__METHOD__,
 			[],
 			[
-				'page_wikia_props' => ['LEFT JOIN', ['page.page_id=page_wikia_props.page_id']],
+				'page_wikia_props' => [
+					'LEFT JOIN', [
+						'page.page_id=page_wikia_props.page_id',
+						'propname' => WPP_IMAGE_SERVING
+					]
+				],
 			]
 		);
 
