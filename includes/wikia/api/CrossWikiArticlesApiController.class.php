@@ -35,6 +35,9 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			$wikiToArticleMap[$wikiId][] = (int) $articleId;
 		}
 
+		// order by wiki id to be consistent with the previous version of this API end-point
+		ksort($wikiToArticleMap);
+
 		// now query each wiki
 		$items = [];
 
