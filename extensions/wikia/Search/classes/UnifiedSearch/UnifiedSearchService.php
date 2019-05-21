@@ -5,6 +5,7 @@ namespace Wikia\Search\UnifiedSearch;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
+use RequestContext;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use WikiaException;
@@ -19,6 +20,31 @@ class UnifiedSearchService {
 	public function __construct() {
 		$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
 		$this->baseUrl = 'http://' . $urlProvider->getUrl( 'unified-search' ) . '/';
+	}
+
+	public function useUnifiedSearch( bool $isCorporateWiki ): bool {
+		global $wgUseUnifiedSearch;
+
+		/** This is cross-wiki search - we don't support it yet. */
+		if ( $isCorporateWiki) {
+			return false;
+		}
+
+		/**
+		 * We allow to use unified-search only if it has been enabled on the wiki or the header is passed.
+		 * That's because due to AB tests the useUnifiedSearch query parameter may be passed on any wiki,
+		 * not only those that have been indexed.
+		 */
+		if (!$wgUseUnifiedSearch && !RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' )) {
+			return false;
+		}
+
+		$queryForce = RequestContext::getMain()->getRequest()->getVal('useUnifiedSearch', null);
+		if ( !is_null( $queryForce ) ) {
+			return $queryForce == 'true' || $queryForce == '1' || $queryForce == true;
+		}
+
+		return false;
 	}
 
 	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
