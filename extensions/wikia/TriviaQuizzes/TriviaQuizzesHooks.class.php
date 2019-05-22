@@ -16,7 +16,7 @@ class TriviaQuizzesHooks {
 	public static function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
 		wfProfileIn( __METHOD__ );
 		$td = (new ThemeSettings())->getSettings();
-		$vars[ 'wgTriviaQuizzesPrimaryColor' ] = $td['color-community-header'];
+		$vars['wgTriviaQuizzesPrimaryColor'] = $td['color-community-header'];
 
 		wfProfileOut( __METHOD__ );
 		return true;
