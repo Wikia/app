@@ -977,38 +977,6 @@ class ConfigTest extends BaseTest {
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.07962 ms
-	 * @covers \Wikia\Search\Config::getRank
-	 * @covers \Wikia\Search\Config::setRank
-	 */
-	public function testGetSetRank() {
-		$config = new Config;
-		$this->assertAttributeEquals(
-				$config::RANK_DEFAULT,
-				'rank',
-				$config,
-				'Default rank should be default on instantiation'
-		);
-		$this->assertEquals(
-				$config::RANK_DEFAULT,
-				$config->getRank(),
-				'getRank should return value of rank property'
-		);
-		$this->assertEquals(
-				$config,
-				$config->setRank( $config::RANK_NEWEST ),
-				'setrank should provide a fluent interface'
-		);
-		$this->assertAttributeEquals(
-				$config::RANK_NEWEST,
-				'rank',
-				$config,
-				'setrank should mutate the rank attribute'
-		);
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.07653 ms
 	 * @covers \Wikia\Search\Config
 	 */

@@ -658,9 +658,6 @@ class SearchControllerTest extends BaseTest {
 				'is_hd' =>              false,
 				'is_image' =>           false,
 				'is_video' =>           false,
-				'sort_default' =>       true,
-				'sort_longest' =>       false,
-				'sort_newest' =>        false,
 				'no_filter' =>          true,
 		);
 

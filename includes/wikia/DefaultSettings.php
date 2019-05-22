@@ -1821,12 +1821,6 @@ $wgUseGoogleCloudStorage = false;
 $wgUseUnifiedSearch = false;
 
 /**
- * https://wikia-inc.atlassian.net/browse/SER-3197
- * We're planning to remove these options, so we disable them with a feature flag first.
- */
-$wgFileSearchOptionsEnabled = false;
-
-/**
  * https://wikia-inc.atlassian.net/browse/SER-3033
  * If provided, a multi write will be used for storing files for all wikis with buckets matching the regex.
  */
