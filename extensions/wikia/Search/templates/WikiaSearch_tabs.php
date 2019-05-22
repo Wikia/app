@@ -13,8 +13,7 @@
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? // Image/Video tab options ?>
-			<? if( $activeTab == $profileId && $profile['namespaces'][0] == NS_FILE ): ?>
-
+			<? if( $fileSearchOptionsEnabled && $activeTab == $profileId && $profile['namespaces'][0] == NS_FILE ): ?>
 				<div class="search-filter-sort" id="file-search-filter-sort">
 					<div class="search-filter-sort-overlay"></div>
 					<p><?= wfMessage('wikiasearch2-filter-options-label') ?>:</p>
