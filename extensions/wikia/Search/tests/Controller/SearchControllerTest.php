@@ -611,7 +611,7 @@ class SearchControllerTest extends BaseTest {
 		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
 		$mockSearchConfig	=	$this->getMockBuilder( 'Wikia\Search\Config' )
 									->disableOriginalConstructor()
-									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getActiveTab', 'getFilterQueries', 'getRank' ) )
+									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getActiveTab', 'getFilterQueries' ) )
 									->getMock();
 
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
@@ -678,11 +678,6 @@ class SearchControllerTest extends BaseTest {
 		;
 		$mockSearchConfig
 			->expects	( $this->once() )
-			->method	( 'getRank' )
-			->will		( $this->returnValue( 'default' ) )
-		;
-		$mockSearchConfig
-			->expects	( $this->once() )
 			->method	( 'getQuery' )
 			->will		( $this->returnValue( $mockQuery ) )
 		;
@@ -717,7 +712,7 @@ class SearchControllerTest extends BaseTest {
 			->with		( 'activeTab', 'default' )
 		;
 		$mockController
-			->expects	( $this->at( $incr++ ) )
+			->expects	( $this->at( $incr ) )
 			->method	( 'setVal' )
 			->with		( 'form', $form )
 		;
