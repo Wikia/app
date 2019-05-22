@@ -153,7 +153,7 @@ class RenameUserProcess {
 	 *
 	 * @return mixed false if all prerequisites are met else list of errors
 	 */
-	public function testSpoofAndPhalanx($stringErrors = false) {
+	public function testSpoofAndPhalanx( $stringErrors = false ) {
 		global $wgContLang;
 		$errors = [];
 
@@ -175,15 +175,15 @@ class RenameUserProcess {
 			$oNewSpoofUser = new SpoofUser( $nun );
 			$conflicts = $oNewSpoofUser->getConflicts();
 			if ( !empty( $conflicts ) ) {
-				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun );
+				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun )->parse();
 			}
 
 			// SUS-4301 | check for emojis in user name
 			if ( $oNewSpoofUser->isLegal() === false ) {
-				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun );
+				$errors[] = wfMessage( 'userrenametool-error-antispoof-conflict', $nun )->parse();
 			}
 		} else {
-			$errors[] = wfMessage( 'userrenametool-error-antispoof-notinstalled' );
+			$errors[] = wfMessage( 'userrenametool-error-antispoof-notinstalled' )->parse();
 		}
 
 		// Phalanx test
@@ -197,14 +197,14 @@ class RenameUserProcess {
 		if ( !empty( $err ) ) {
 			$errors[] = $err;
 		}
-		if( count( $errors ) > 0 && $stringErrors ){
+		if ( count( $errors ) > 0 && $stringErrors ) {
 			$stringErr = [];
-			foreach( $errors as $err ){
-				$stringErr[] = (string)$err;
+			foreach ( $errors as $err ) {
+				$stringErr[] = $err;
 			}
 			return $stringErr;
 		}
-		return count($errors) > 0 ? $errors : false;
+		return count( $errors ) > 0 ? $errors : false;
 	}
 
 	/**
@@ -227,10 +227,10 @@ class RenameUserProcess {
 
 		$this->addInternalLog( "title: old={$oun} new={$nun}" );
 
-		if( $selfRename ){
+		if ( $selfRename ) {
 			$errors = $this->testSpoofAndPhalanx();
-			if( $errors ){
-				foreach( $errors as $err ){
+			if ( $errors ) {
+				foreach ( $errors as $err ) {
 					$this->addError( $err );
 				}
 
@@ -397,7 +397,7 @@ class RenameUserProcess {
 	 * @return bool True if the process succeded
 	 */
 	public function run( $selfRename = true ) {
-		if ( !$this->setup($selfRename) ) {
+		if ( !$this->setup( $selfRename ) ) {
 			return false;
 		}
 

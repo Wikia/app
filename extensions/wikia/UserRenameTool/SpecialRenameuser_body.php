@@ -148,7 +148,7 @@ class SpecialRenameuser extends SpecialPage {
 			$process = new RenameUserProcess( $oldUsername, $canonicalNewUsername, true );
 
 			if ( empty( $errors ) && $isConfirmed ) {
-				$status = $process->run($selfRename);
+				$status = $process->run( $selfRename );
 				$warnings = $process->getWarnings();
 				$errors = $process->getErrors();
 
@@ -160,7 +160,7 @@ class SpecialRenameuser extends SpecialPage {
 				}
 			}
 			$showConfirm = ( !$isConfirmed && empty( $errors ) && empty( $info ) );
-			if( !$selfRename ){
+			if ( !$selfRename ) {
 				$spoofErrors = $process->testSpoofAndPhalanx( true );
 			}
 		}

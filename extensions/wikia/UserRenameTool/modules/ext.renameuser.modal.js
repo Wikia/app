@@ -39,7 +39,7 @@
 			}
 			event.preventDefault();
 
-			if(this.config.selfRename) {
+			if (this.config.selfRename) {
 				$.confirm({
 					onOk: this.onOk,
 					title: mw.message('renameuser').escaped(),
@@ -52,9 +52,9 @@
 					cancelMsg: mw.message('userrenametool-confirm-no').escaped()
 				});
 			} else {
-				var errors = "No errors";
-				if(this.config.errors){
-					errors = "";
+				var errors = 'No errors';
+				if (this.config.errors) {
+					errors = '';
 					this.config.errors.forEach(function(err) {
 						errors += "<p style='color:red;'>" + err + "</p>";
 					});
