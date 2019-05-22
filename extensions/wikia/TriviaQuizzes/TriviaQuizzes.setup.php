@@ -1,5 +1,5 @@
 <?php
-$wgExtensionCredits['other'][] = [
+$wgExtensionCredits[ 'other' ][] = [
 	'name' => 'Trivia Quizzes',
 	'description' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TriviaQuizzes',
 ];
@@ -7,7 +7,7 @@ $wgExtensionCredits['other'][] = [
 /**
  * Resources Loader modules
  */
-$wgResourceModules['ext.wikia.TriviaQuizzes'] = [
+$wgResourceModules[ 'ext.wikia.TriviaQuizzes' ] = [
 	'remoteExtPath' => 'wikia/TriviaQuizzes',
 	'localBasePath' => __DIR__,
 	'scripts' => [
@@ -17,8 +17,9 @@ $wgResourceModules['ext.wikia.TriviaQuizzes'] = [
 ];
 
 // hooks
-$wgAutoloadClasses['TriviaQuizzesHooks'] = __DIR__ . '/TriviaQuizzesHooks.class.php';
-$wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesHooks::onBeforePageDisplay';
+$wgAutoloadClasses[ 'TriviaQuizzesHooks' ] = __DIR__ . '/TriviaQuizzesHooks.class.php';
+$wgHooks[ 'WikiaSkinTopScripts' ][] = 'TriviaQuizzesHooks::onWikiaSkinTopScripts';
+$wgHooks[ 'BeforePageDisplay' ][] = 'TriviaQuizzesHooks::onBeforePageDisplay';
 
 // i18n
-$wgExtensionMessagesFiles['TriviaQuizzes'] = __DIR__ . '/TriviaQuizzes.i18n.php';
+$wgExtensionMessagesFiles[ 'TriviaQuizzes' ] = __DIR__ . '/TriviaQuizzes.i18n.php';
