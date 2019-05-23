@@ -22,9 +22,11 @@ $wgGroupPermissions['staff']['forumoldedit'] = true;
 $wgGroupPermissions['helper']['forumoldedit'] = true;
 $wgGroupPermissions['sysop']['forumoldedit'] = true;
 $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
+$wgGroupPermissions['wiki-manager']['forumoldedit'] = true;
 
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
 $wgGroupPermissions['threadmoderator']['forumadmin'] = true;
+$wgGroupPermissions['wiki-manager']['forumadmin'] = true;
