@@ -45,6 +45,7 @@ class PermissionsConfiguration {
 		'fandom-editor',
 		'global-discussions-moderator',
 		'request-to-be-forgotten-admin',
+		'wiki-manager',
 	];
 
 	private $implicitGroups = [
@@ -408,6 +409,9 @@ class PermissionsConfiguration {
 
 		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator', 'content-volunteer' ];
 		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator', 'content-volunteer' ];
+
+		$this->groupsAddableByGroup['wiki-manager'] = [  'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'global-discussions-moderator' ];
+		$this->groupsRemovableByGroup['wiki-manager'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'global-discussions-moderator' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
