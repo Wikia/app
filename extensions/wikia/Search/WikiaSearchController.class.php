@@ -780,6 +780,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @see    SearchControllerTest::tabs
 	 */
 	public function tabs() {
+		global $wgFileSearchOptionsEnabled;
+
 		$config = $this->getVal( 'config', false );
 
 		if ( !$config || ( !$config instanceOf Wikia\Search\Config ) ) {
@@ -806,6 +808,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'searchProfiles', $config->getSearchProfiles() );
 		$this->setVal( 'activeTab', $config->getActiveTab() );
 		$this->setVal( 'form', $form );
+		$this->setVal( 'fileSearchOptionsEnabled', $wgFileSearchOptionsEnabled );
 	}
 
 	/**
