@@ -2,6 +2,6 @@
   "name": "wikia-search-tracking",
   "scripts": {},
   "dependencies": {
-    "@wikia/search-tracking": "github:Wikia/search-tracking#1.1.1"
+    "@wikia/search-tracking": "github:Wikia/search-tracking#b64763b96b43e502e10d88d66faed4108d3a63dc"
   }
 }
