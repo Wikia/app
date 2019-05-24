@@ -1620,7 +1620,9 @@ class ArticleComment {
 
 		// Only handle article and blog comments
 		if ( !in_array( MWNamespace::getSubject( $ns ), $commentsNS ) ||
-			!ArticleComment::isTitleComment( $title ) ) {
+			!ArticleComment::isTitleComment( $title ) ||
+			( defined( 'NS_BLOG_ARTICLE' ) && $title->inNamespace( NS_BLOG_ARTICLE ) )
+		) {
 			return true;
 		}
 
