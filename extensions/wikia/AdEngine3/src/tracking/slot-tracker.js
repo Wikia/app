@@ -77,7 +77,8 @@ function prepareData(slot, data) {
 		opt_in: checkOptIn(),
 		document_visibility: utils.getDocumentVisibilityStatus(),
 		// Missing:
-		// page_layout, rabbit, product_chosen
+		// rabbit, product_chosen
+		page_layout: `pos_top=${slot.getTopOffset()}`,
 		bidder_won: slot.winningBidderDetails ? slot.winningBidderDetails.name : '',
 		bidder_won_price: slot.winningBidderDetails ? slot.winningBidderDetails.price : '',
 		scroll_y: getCurrentScrollY(),
