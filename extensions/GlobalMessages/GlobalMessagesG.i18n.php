@@ -80,6 +80,9 @@ $messages['en'] = array(
 	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
 	'group-request-to-be-forgotten-admin' => 'Request To Be Forgotten Tool Admin',
 	'group-request-to-be-forgotten-admin-member' => 'Request To Be Forgotten Tool Admin',
+	'group-wiki-manager' => 'Wiki Managers',
+	'group-wiki-manager-member' => 'Wiki Manager',
+
 );
 
 $messages['qqq'] = array(
