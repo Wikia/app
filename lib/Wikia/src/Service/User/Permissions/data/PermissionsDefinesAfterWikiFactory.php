@@ -143,7 +143,6 @@ $wgGroupPermissions[ '*' ][ 'abusefilter-bypass' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 $wgGroupPermissions[ 'wiki-manager' ]['abusefilter-bypass'] = true;
 
-
 // RIGHTS
 $wgGroupPermissions['*']['platinum'] = false;
 $wgGroupPermissions['staff']['platinum'] = true;
@@ -215,7 +214,6 @@ $wgGroupPermissions['sysop'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['staff'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['helper'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['wiki-manager']['blog-articles-protect'] = true;
-
 
 /**
  * The 'skipcaptcha' permission key can be given out to
