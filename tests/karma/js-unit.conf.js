@@ -52,7 +52,6 @@ module.exports = function (config) {
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
-			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
@@ -88,25 +87,6 @@ module.exports = function (config) {
 
 			//UI components
 			'resources/wikia/ui_components/**/*.js',
-
-			//Advertisement
-			'extensions/wikia/AdEngine/js/*.js',
-			'extensions/wikia/AdEngine/js/config/*.js',
-			'extensions/wikia/AdEngine/js/context/*.js',
-			'extensions/wikia/AdEngine/js/lookup/**/*.js',
-			'extensions/wikia/AdEngine/js/ml/**/*.js',
-			'extensions/wikia/AdEngine/js/provider/*.js',
-			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
-			'extensions/wikia/AdEngine/js/slot/*.js',
-			'extensions/wikia/AdEngine/js/slot/**/*.js',
-			'extensions/wikia/AdEngine/js/template/*.js',
-			'extensions/wikia/AdEngine/js/tracking/*.js',
-			'extensions/wikia/AdEngine/js/utils/*.js',
-			'extensions/wikia/AdEngine/js/video/**/*.js',
-			'extensions/wikia/AdEngine/js/wad/*.js',
-			'extensions/wikia/AdEngine/js/wrappers/*.js',
-
-			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -158,6 +138,7 @@ module.exports = function (config) {
 
 			// Recirculation
 			'extensions/wikia/Recirculation/js/*.js',
+			'extensions/wikia/Recirculation/js/**/*.js',
 			'extensions/wikia/Recirculation/js/spec/**/*.spec.js',
 
 			//PortableInfoboxBuilder

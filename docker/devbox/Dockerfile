@@ -7,6 +7,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
 # yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
 #
 # these require autoconf package to be present
+
 RUN pecl install yaml-2.0.2 xdebug-2.6.0 \
     && docker-php-ext-enable yaml xdebug
 

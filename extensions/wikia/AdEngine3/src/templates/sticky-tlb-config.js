@@ -21,14 +21,15 @@ export const getConfig = () => ({
 
 		this.adSlot.getElement().classList.add('gpt-ad');
 		wrapper.style.opacity = '0';
-		slotTweaker.onReady(adSlot).then(() => {
-			wrapper.style.opacity = '';
-			this.updateNavbar();
-		});
 
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
 		slotService.disable('incontent_player', 'hivi-collapse');
+
+		return slotTweaker.onReady(adSlot).then(() => {
+			wrapper.style.opacity = '';
+			this.updateNavbar();
+		});
 	},
 
 	onAfterStickBfaaCallback() {

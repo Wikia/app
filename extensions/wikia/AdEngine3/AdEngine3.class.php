@@ -36,7 +36,7 @@ class AdEngine3
 		self::$forceProductionAssets = $request->getBool( 'ae3_prod' );
 
 		$distDirectory = self::shouldUseProductionAssets() ? 'dist' : 'dist-dev';
-		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/ads.scss';
+		$assetsPath = 'extensions/wikia/AdEngine3/' . $distDirectory . '/styles.scss';
 
 		$output->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( $assetsPath ) );
 
@@ -58,12 +58,14 @@ class AdEngine3
 	}
 
 	public static function getContext() {
+		global $wgEnableKruxTargeting, $wgNoExternals;
+
 		$wg = F::app()->wg;
 
 		$title = $wg->Title;
 		$articleId = $title->getArticleId();
 
-		$adPageTypeService = new AdEngine2PageTypeService();
+		$adPageTypeService = new AdEngine3PageTypeService();
 		$hubService = new HubService();
 		$langCode = $title->getPageLanguage()->getCode();
 		$wikiaPageType = new WikiaPageType();
@@ -89,9 +91,7 @@ class AdEngine3
 		}
 
 		return [
-			'bidders' => array_filter([
-				'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
-			]),
+			'bidders' => [],
 			'opts' => array_filter([
 				'adsInContent' => $wg->EnableAdsInContent,
 				'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
@@ -101,7 +101,7 @@ class AdEngine3
 				'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 			]),
 			'targeting' => array_filter([
-				'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
+				'enableKruxTargeting' => !$wgNoExternals && $wgEnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
 				'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
 				'esrbRating' => AdTargeting::getEsrbRating(),
 				'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),

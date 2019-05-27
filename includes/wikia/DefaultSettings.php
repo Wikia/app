@@ -330,6 +330,7 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
+$wgAutoloadClasses['UnifiedSearchService'] = $IP . '/includes/wikia/services/UnifiedSearchService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
 $wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
@@ -1122,19 +1123,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverUseAudienceNetworkBidder
- * Enables Facebook Audience Network bidding platform.
- */
-$wgAdDriverUseAudienceNetworkBidder = false;
-
-/**
- * @name $wgAdDriverAudienceNetworkBidderCountries
- * List of countries where Facebook Audience Network bidding platform is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAudienceNetworkBidderCountries = null;
-
-/**
  * @name $wgAdDriverBeachfrontBidderCountries
  * List of countries where Beachfront bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1351,14 +1339,6 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
 $wgAdDriverScrollDepthTrackingCountries = null;
 
 /**
- * @name $wgAdDriverSrcPremiumCountries
- * Enables setting src=premium param for all ad slots on page, when premium video
- * is present on that page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSrcPremiumCountries = [];
-
-/**
  * @name $wgAdDriverStickySlotsLines
  * List of Google Ad Manager lines to apply Sticky Ad template
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1416,6 +1396,13 @@ $wgAdDriverEnableCheshireCat = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
+
+/**
+ * @name $wgAdDriverBrowsiCountries
+ * List of countries Browsi will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBrowsiCountries = null;
 
 /**
  * @name $wgAdDriverConfiantCountries
@@ -1668,9 +1655,7 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
- * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
- * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
+ * Enables Mobile-Wiki floor_adhesion slot.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
@@ -1828,6 +1813,18 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3150
+ * If enabled, Unified Search will be used for Special:Search.
+ */
+$wgUseUnifiedSearch = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3197
+ * We're planning to remove these options, so we disable them with a feature flag first.
+ */
+$wgFileSearchOptionsEnabled = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033

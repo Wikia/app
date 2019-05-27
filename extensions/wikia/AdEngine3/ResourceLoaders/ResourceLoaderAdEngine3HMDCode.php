@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngine3HMDCode extends ResourceLoaderAdEngineBase
+class ResourceLoaderAdEngine3HMDCode extends ResourceLoaderAdEngine3Base
 {
 	// Cache version: increase on any local file change
 	const CACHE_BUSTER = 55;
