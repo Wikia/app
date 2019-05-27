@@ -82,7 +82,6 @@ $messages['en'] = array(
 	'group-request-to-be-forgotten-admin-member' => 'Request To Be Forgotten Tool Admin',
 	'group-wiki-manager' => 'Wiki Managers',
 	'group-wiki-manager-member' => 'Wiki Manager',
-
 );
 
 $messages['qqq'] = array(
