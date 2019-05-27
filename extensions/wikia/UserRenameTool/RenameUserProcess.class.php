@@ -153,21 +153,14 @@ class RenameUserProcess {
 	 *
 	 * @return mixed false if all prerequisites are met else list of errors
 	 */
-	public function testSpoofAndPhalanx( $stringErrors = false ) {
+	public function testSpoof( $stringErrors = false) {
 		global $wgContLang;
 		$errors = [];
-
-		// Sanitize input data
-		$oldNamePar = trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) );
-		$oldTitle = Title::makeTitle( NS_USER, $oldNamePar );
 
 		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
 		$newTitle = Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->mRequestData->newUsername ) );
 
-		$oun = is_object( $oldTitle ) ? $oldTitle->getText() : '';
 		$nun = is_object( $newTitle ) ? $newTitle->getText() : '';
-
-		$this->addInternalLog( "title: old={$oun} new={$nun}" );
 
 		// AntiSpoof test
 
@@ -186,17 +179,6 @@ class RenameUserProcess {
 			$errors[] = wfMessage( 'userrenametool-error-antispoof-notinstalled' )->parse();
 		}
 
-		// Phalanx test
-
-		$err = self::testBlock( $oun );
-		if ( !empty( $err ) ) {
-			$errors[] = $err;
-		}
-
-		$err = self::testBlock( $nun );
-		if ( !empty( $err ) ) {
-			$errors[] = $err;
-		}
 		if ( count( $errors ) > 0 && $stringErrors ) {
 			$stringErr = [];
 			foreach ( $errors as $err ) {
@@ -228,7 +210,7 @@ class RenameUserProcess {
 		$this->addInternalLog( "title: old={$oun} new={$nun}" );
 
 		if ( $selfRename ) {
-			$errors = $this->testSpoofAndPhalanx();
+			$errors = $this->testSpoof();
 			if ( $errors ) {
 				foreach ( $errors as $err ) {
 					$this->addError( $err );
@@ -236,6 +218,20 @@ class RenameUserProcess {
 
 				return false;
 			}
+		}
+
+		// Phalanx test
+
+		$err = self::testBlock( $oun );
+		if ( !empty( $err ) ) {
+			$this->addError( $err );
+			return false;
+		}
+
+		$err = self::testBlock( $nun );
+		if ( !empty( $err ) ) {
+			$this->addError( $err );
+			return false;
 		}
 
 		// Invalid old user name entered
