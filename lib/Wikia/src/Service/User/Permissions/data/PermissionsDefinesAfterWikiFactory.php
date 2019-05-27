@@ -561,6 +561,7 @@ $wgGroupPermissions['vstf']['walledit'] = true;
 $wgGroupPermissions['helper']['walledit'] = true;
 $wgGroupPermissions['sysop']['walledit'] = true;
 $wgGroupPermissions['threadmoderator']['walledit'] = true;
+$wgGroupPermissions['wiki-manager']['walledit'] = true;
 
 $wgGroupPermissions['*']['editwallarchivedpages'] = false;
 $wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
