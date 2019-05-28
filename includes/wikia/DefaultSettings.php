@@ -1216,7 +1216,7 @@ $wgAdDriverKargoBidderCountries = null;
 
 /**
  * @name $wgAdDriverGumGumBidderCountries
- * List of countries where GumGum prebid bidding platform is enabled
+ * List of countries where GumGum Prebid bidding partner is enabled
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverGumGumBidderCountries = null;
