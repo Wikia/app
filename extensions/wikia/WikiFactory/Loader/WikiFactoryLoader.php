@@ -180,7 +180,9 @@ class WikiFactoryLoader {
 				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
 				'HTTP_USER_AGENT' => 'userAgent',
 				'HTTP_X_TRACE_ID' => 'traceId',
-				'HTTP_X_CLIENT_IP' => 'clientIp'
+				'HTTP_X_CLIENT_IP' => 'clientIp',
+				'REQUEST_URI' => 'requestUri',
+				'REQUEST_METHOD' => 'requestMethod'
 					] as $header => $key) {
 				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
 			}
