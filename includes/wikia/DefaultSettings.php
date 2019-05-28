@@ -1215,6 +1215,13 @@ $wgAdDriverAdditionalVastSizeCountries = null;
 $wgAdDriverKargoBidderCountries = null;
 
 /**
+ * @name $wgAdDriverGumGumBidderCountries
+ * List of countries where GumGum prebid bidding platform is enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGumGumBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
