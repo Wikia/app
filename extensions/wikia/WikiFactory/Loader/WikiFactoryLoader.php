@@ -171,15 +171,20 @@ class WikiFactoryLoader {
 		$this->mAlwaysFromDB = $this->mCommandLine || $this->mAlwaysFromDB;
 
 		if ( empty( $wgKubernetesDeploymentName ) ) {
-			// PLATFORM-4104 on Apaches log request details
+			// PLATFORM-4104 on apaches log request details
 			$log = \Wikia\Logger\WikiaLogger::instance();
-			$log->info('apache request received', [
-				'parsedUrl' => $this->parsedUrl,
-				'wikiaInternalRequest' => $server['HTTP_X_WIKIA_INTERNAL_REQUEST'],
-				'userAgent' => $server['HTTP_USER_AGENT'],
-				'traceId' => $server['HTTP_X_TRACE_ID'],
-				'clientIp' => $server['HTTP_X_CLIENT_IP']
-			] );
+			$details = [
+				'parsedUrl' => $this->parsedUrl
+			];
+			foreach([
+				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
+				'HTTP_USER_AGENT' => 'userAgent',
+				'HTTP_X_TRACE_ID' => 'traceId',
+				'HTTP_X_CLIENT_IP' => 'clientIp'
+					] as $header => $key) {
+				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
+			}
+			$log->info('apache request received', $details );
 		}
 
 	}
