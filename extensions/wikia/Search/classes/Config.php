@@ -233,8 +233,6 @@ class Config {
 		self::RANK_MOST_VIEWED => [ 'views', Solarium_Query_Select::SORT_DESC ],
 		self::RANK_FRESHEST => [ 'indexed', Solarium_Query_Select::SORT_DESC ],
 		self::RANK_STALEST => [ 'indexed', Solarium_Query_Select::SORT_ASC ],
-		self::RANK_SHORTEST => [ 'video_duration_i', Solarium_Query_Select::SORT_ASC ],
-		self::RANK_LONGEST => [ 'video_duration_i', Solarium_Query_Select::SORT_DESC ],
 	];
 
 	/**
