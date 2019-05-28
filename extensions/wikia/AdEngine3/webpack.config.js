@@ -44,15 +44,11 @@ module.exports = function (env) {
 				getAdEngineLoader()
 			]
 		},
-		// resolve: {
-		// 	modules: compact([
-		// 		hoistDependencies ? path.resolve(__dirname, 'node_modules') : null,
-		// 		'node_modules'
-		// 	])
-		// },
 		performance: {
-			maxEntrypointSize: 500000
+			maxAssetSize: 310000,
+			maxEntrypointSize: 310000,
 		},
+		devtool: 'source-map',
 		plugins: [
 			new MiniCssExtractPlugin({filename: '[name].scss'}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
