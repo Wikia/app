@@ -14,10 +14,6 @@ class AdEngine3
 	}
 
 	public static function onWikiaSkinTopScripts(&$vars, &$scripts) {
-		if (!self::isEnabled()) {
-			return true;
-		}
-
 		$adContext = self::getContext();
 
 		$vars['ads'] = [
@@ -28,6 +24,7 @@ class AdEngine3
 		];
 
 		$vars['adslots2'] = [];
+		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
 		return true;
 	}
@@ -54,6 +51,21 @@ class AdEngine3
 			$jsAssets[] = static::AD_ENGINE_3_ASSET_DEV_GROUP;
 		}
 
+		return true;
+	}
+
+	public static function onWikiaSkinTopModules( &$scriptModules ) {
+		$scriptModules[] = 'wikia.abTest';
+		$scriptModules[] = 'wikia.cache';
+		$scriptModules[] = 'wikia.cookies';
+		$scriptModules[] = 'wikia.document';
+		$scriptModules[] = 'wikia.geo';
+		$scriptModules[] = 'wikia.instantGlobals';
+		$scriptModules[] = 'wikia.location';
+		$scriptModules[] = 'wikia.log';
+		$scriptModules[] = 'wikia.querystring';
+		$scriptModules[] = 'wikia.tracker.stub';
+		$scriptModules[] = 'wikia.window';
 		return true;
 	}
 
