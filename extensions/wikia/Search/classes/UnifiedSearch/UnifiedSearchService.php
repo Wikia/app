@@ -26,7 +26,7 @@ class UnifiedSearchService {
 		global $wgUseUnifiedSearch;
 
 		/** This is cross-wiki search - we don't support it yet. */
-		if ( $isCorporateWiki) {
+		if ( $isCorporateWiki ) {
 			return false;
 		}
 
@@ -35,13 +35,15 @@ class UnifiedSearchService {
 		 * That's because due to AB tests the useUnifiedSearch query parameter may be passed on any wiki,
 		 * not only those that have been indexed.
 		 */
-		if (!$wgUseUnifiedSearch && !RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' )) {
+		if ( !( $wgUseUnifiedSearch || RequestContext::getMain()
+				->getRequest()
+				->getHeader( 'X-Fandom-Unified-Search' ) ) ) {
 			return false;
 		}
 
-		$queryForce = RequestContext::getMain()->getRequest()->getVal('useUnifiedSearch', null);
+		$queryForce = RequestContext::getMain()->getRequest()->getVal( 'useUnifiedSearch', null );
 		if ( !is_null( $queryForce ) ) {
-			return $queryForce == 'true' || $queryForce == '1' || $queryForce == true;
+			return $queryForce === 'true' || $queryForce === '1' || $queryForce === true;
 		}
 
 		return false;

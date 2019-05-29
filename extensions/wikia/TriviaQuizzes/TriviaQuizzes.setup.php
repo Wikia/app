@@ -12,12 +12,13 @@ $wgResourceModules['ext.wikia.TriviaQuizzes'] = [
 	'localBasePath' => __DIR__,
 	'scripts' => [
 		'js/ext.TriviaQuizzes.js',
-		'node_modules/@wikia/content-types-consumption/dist/consumption.umd.js' // dist-only verison of consumption lib
+		'node_modules/@wikia/content-types/dist/consumption.browser.js' // dist-only verison of consumption lib
 	],
 ];
 
 // hooks
 $wgAutoloadClasses['TriviaQuizzesHooks'] = __DIR__ . '/TriviaQuizzesHooks.class.php';
+$wgHooks['WikiaSkinTopScripts'][] = 'TriviaQuizzesHooks::onWikiaSkinTopScripts';
 $wgHooks['BeforePageDisplay'][] = 'TriviaQuizzesHooks::onBeforePageDisplay';
 
 // i18n

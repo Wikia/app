@@ -8996,5 +8996,5 @@ $wgEnableArticleExporterHooks = false;
 $wgArticleExporterExchange = [
     'vhost' => '/',
     'exchange' => 'taxonomy-ex',
-    'routing' => 'taxonomy.article-edit'
+    'routing' => 'taxonomy.article-edits'
 ];

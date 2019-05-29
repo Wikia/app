@@ -71,7 +71,6 @@ export default {
 			},
 			top_leaderboard: {
 				aboveTheFold: true,
-				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -107,7 +106,6 @@ export default {
 			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
-				bidderAlias: 'TOP_RIGHT_BOXAD',
 				slotNameSuffix: '',
 				group: 'MR',
 				options: {},
@@ -142,7 +140,6 @@ export default {
 			},
 			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
-				bidderAlias: 'INCONTENT_BOXAD_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -169,7 +166,6 @@ export default {
 			},
 			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
-				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -195,7 +191,6 @@ export default {
 				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
-				bidderAlias: 'INCONTENT_PLAYER',
 				insertBeforeSelector: '#mw-content-text > h2',
 				insertBelowFirstViewport: true,
 				disabled: true,
@@ -222,7 +217,6 @@ export default {
 			},
 			featured: {
 				adProduct: 'featured',
-				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',

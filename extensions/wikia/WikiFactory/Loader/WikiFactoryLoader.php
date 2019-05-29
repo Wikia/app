@@ -50,7 +50,8 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgCommandLineMode;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain,
+			   $wgCommandLineMode, $wgKubernetesDeploymentName;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -168,6 +169,26 @@ class WikiFactoryLoader {
 		 * never from cache
 		 */
 		$this->mAlwaysFromDB = $this->mCommandLine || $this->mAlwaysFromDB;
+
+		if ( empty( $wgKubernetesDeploymentName ) ) {
+			// PLATFORM-4104 on apaches log request details
+			$log = \Wikia\Logger\WikiaLogger::instance();
+			$details = [
+				'parsedUrl' => $this->parsedUrl
+			];
+			foreach([
+				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
+				'HTTP_USER_AGENT' => 'userAgent',
+				'HTTP_X_TRACE_ID' => 'traceId',
+				'HTTP_X_CLIENT_IP' => 'clientIp',
+				'REQUEST_URI' => 'requestUri',
+				'REQUEST_METHOD' => 'requestMethod'
+					] as $header => $key) {
+				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
+			}
+			$log->info('apache request received', $details );
+		}
+
 	}
 
 	/**

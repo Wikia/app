@@ -787,7 +787,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$filters = $config->getFilterQueries();
-		$rank = $config->getRank();
 
 		$form = [
 			'cat_videogames' => isset( $filters['cat_videogames'] ),
@@ -796,9 +795,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'is_hd' => isset( $filters['is_hd'] ),
 			'is_image' => isset( $filters['is_image'] ),
 			'is_video' => isset( $filters['is_video'] ),
-			'sort_default' => $rank == 'default',
-			'sort_longest' => $rank == 'longest',
-			'sort_newest' => $rank == 'newest',
 			'no_filter' => !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
 		];
 
