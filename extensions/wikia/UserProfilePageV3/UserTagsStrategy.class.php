@@ -15,6 +15,7 @@ class UserTagsStrategy extends WikiaObject {
 	/** @var array GLOBAL_GROUPS_RANK Global groups that should be shown in masthead, in order of importance  */
 	const GLOBAL_GROUPS_RANK = [
 		'staff',
+		'wiki-manager',
 		'helper',
 		'vstf',
 		'global-discussions-moderator',
@@ -116,6 +117,9 @@ class UserTagsStrategy extends WikiaObject {
 			switch ( array_shift( $this->globalGroupsWithTags ) ) {
 				case 'staff':
 					$tags[] = wfMessage( 'user-identity-box-group-staff' )->escaped();
+					break;
+				case 'wiki-manager':
+					$tags[] = wfMessage( 'user-identity-box-group-wiki-manager' )->escaped();
 					break;
 				case 'helper':
 					$tags[] = wfMessage( 'user-identity-box-group-helper' )->escaped();
