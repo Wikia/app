@@ -295,7 +295,7 @@ class WikiFactoryLoader {
 		 * load balancer uses one method which demand wgContLang defined
 		 * See BugId: 12474
 		 */
-		$wgContLang = new StubObject('wgContLang');
+		$wgContLang = Language::factory( 'en' );
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
