@@ -14,9 +14,6 @@
 	var Wikia = window.Wikia,
 			trackerStub = Wikia.Tracker;
 
-	// in case of executing outside of oasis, mock the Wikia.log
-	Wikia.log = Wikia.log ? Wikia.log : console.log;
-
 	// Adds the info from the second hash into the first.
 	// If the same key is in both, the key in the second object overrides what's in the first object.
 	function extend( target, obj ) {
