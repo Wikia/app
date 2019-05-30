@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\GlobalStateWrapper;
+
 class AdEngine3
 {
 	const AD_ENGINE_3_ASSET_GROUP = 'adengine3_top_js';
@@ -57,74 +59,81 @@ class AdEngine3
 		return true;
 	}
 
-	public static function getContext() {
-		global $wgEnableKruxTargeting, $wgNoExternals;
-
+	public static function getContext( Title $title = null ) {
 		$wg = F::app()->wg;
 
-		$title = $wg->Title;
-		$articleId = $title->getArticleId();
-
-		$adPageTypeService = new AdEngine3PageTypeService();
-		$hubService = new HubService();
-		$langCode = $title->getPageLanguage()->getCode();
-		$wikiaPageType = new WikiaPageType();
-		$pageType = $wikiaPageType->getPageType();
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-
-		$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoAvailable( $articleId );
-		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
-
-		// 1 of 3 verticals
-		$oldWikiVertical = $hubService->getCategoryInfoForCity($wg->CityId)->cat_name;
-
-		// 1 of 7 verticals
-		$newWikiVertical = $wikiFactoryHub->getWikiVertical($wg->CityId);
-		$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
-
-		$featuredVideoDetails = null;
-		if (!empty($featuredVideoData)) {
-			$featuredVideoDetails = [
-				'mediaId' => $featuredVideoData['mediaId'] ?? null,
-				'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? '')
-			];
+		if ($title === null) {
+			$title = $wg->Title;
 		}
 
-		return [
-			'bidders' => [],
-			'opts' => array_filter([
-				'adsInContent' => $wg->EnableAdsInContent,
-				'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
-				'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
-				'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
-				'pageType' => $adPageTypeService->getPageType(),
-				'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-			]),
-			'targeting' => array_filter([
-				'enableKruxTargeting' => !$wgNoExternals && $wgEnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
-				'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
-				'esrbRating' => AdTargeting::getEsrbRating(),
-				'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),
-				'pageArticleId' => $articleId,
-				'pageIsArticle' => !!$articleId,
-				'pageIsHub' => $wikiaPageType->isWikiaHub(),
-				'pageName' => $title->getPrefixedDBKey(),
-				'pageType' => $pageType,
-				'wikiCategory' => $wikiFactoryHub->getCategoryShort($wg->CityId),
-				'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
-				'wikiDbName' => $wg->DBname,
-				'wikiId' => $wg->CityId,
-				'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
-				'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
-				'wikiLanguage' => $langCode,
-				'wikiVertical' => $newWikiVertical,
-				'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
-				'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
-				'hasFeaturedVideo' => $hasFeaturedVideo,
-				'featuredVideo' => $featuredVideoDetails,
-				'testSrc' => $wg->AdDriverAdTestWikiSrc
-			])
-		];
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
+		] );
+
+		return $wrapper->wrap( function () use ( $title, $wg ) {
+			$articleId = $title->getArticleId();
+
+			$adPageTypeService = new AdEngine3PageTypeService();
+			$hubService = new HubService();
+			$langCode = $title->getPageLanguage()->getCode();
+			$wikiaPageType = new WikiaPageType();
+			$pageType = $wikiaPageType->getPageType();
+			$wikiFactoryHub = WikiFactoryHub::getInstance();
+
+			$hasFeaturedVideo = ArticleVideoContext::isFeaturedVideoAvailable( $articleId );
+			$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
+
+			// 1 of 3 verticals
+			$oldWikiVertical = $hubService->getCategoryInfoForCity($wg->CityId)->cat_name;
+
+			// 1 of 7 verticals
+			$newWikiVertical = $wikiFactoryHub->getWikiVertical($wg->CityId);
+			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
+
+			$featuredVideoDetails = null;
+			if (!empty($featuredVideoData)) {
+				$featuredVideoDetails = [
+					'mediaId' => $featuredVideoData['mediaId'] ?? null,
+					'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? '')
+				];
+			}
+
+			return [
+				'bidders' => [],
+				'opts' => array_filter([
+					'adsInContent' => $wg->EnableAdsInContent,
+					'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
+					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
+					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
+					'pageType' => $adPageTypeService->getPageType(),
+					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
+				]),
+				'targeting' => array_filter([
+					'enableKruxTargeting' => !$wg->NoExternals && $wg->EnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
+					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
+					'esrbRating' => AdTargeting::getEsrbRating(),
+					'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),
+					'pageArticleId' => $articleId,
+					'pageIsArticle' => !!$articleId,
+					'pageIsHub' => $wikiaPageType->isWikiaHub(),
+					'pageName' => $title->getPrefixedDBKey(),
+					'pageType' => $pageType,
+					'wikiCategory' => $wikiFactoryHub->getCategoryShort($wg->CityId),
+					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
+					'wikiDbName' => $wg->DBname,
+					'wikiId' => $wg->CityId,
+					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
+					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
+					'wikiLanguage' => $langCode,
+					'wikiVertical' => $newWikiVertical,
+					'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
+					'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
+					'hasFeaturedVideo' => $hasFeaturedVideo,
+					'featuredVideo' => $featuredVideoDetails,
+					'testSrc' => $wg->AdDriverAdTestWikiSrc
+				])
+			];
+		} );
 	}
 
 	private static function shouldUseProductionAssets() {
