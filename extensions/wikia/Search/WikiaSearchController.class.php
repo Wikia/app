@@ -792,7 +792,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'cat_videogames' => isset( $filters['cat_videogames'] ),
 			'cat_entertainment' => isset( $filters['cat_entertainment'] ),
 			'cat_lifestyle' => isset( $filters['cat_lifestyle'] ),
-			'is_hd' => isset( $filters['is_hd'] ),
 			'is_image' => isset( $filters['is_image'] ),
 			'is_video' => isset( $filters['is_video'] ),
 			'no_filter' => !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
