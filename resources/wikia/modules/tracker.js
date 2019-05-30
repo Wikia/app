@@ -359,19 +359,15 @@
 			track.apply( null, args );
 		}
 
-		if (!M && !M.trackingQueue) {
-			// prevent executing this code on mobile-wiki, we don't have modil there so there is no require.optional
-			// also trackingOptIn is handled there in different way
-			require([require.optional('wikia.trackingOptIn')], function (trackingOptIn) {
-				if (trackingOptIn) {
-					trackingOptIn.pushToUserConsentQueue(flushInternalTrackingQueue);
-				} else {
-					// SUS-4895 trackingOptIn could not be loaded
-					// prevent tracking calls from hanging infinitely—treat user as opt-out
-					flushInternalTrackingQueue(false);
-				}
-			});
-		}
+		require([require.optional('wikia.trackingOptIn')], function (trackingOptIn) {
+			if (trackingOptIn) {
+				trackingOptIn.pushToUserConsentQueue(flushInternalTrackingQueue);
+			} else {
+				// SUS-4895 trackingOptIn could not be loaded
+				// prevent tracking calls from hanging infinitely—treat user as opt-out
+				flushInternalTrackingQueue(false);
+			}
+		});
 
 		/** @public **/
 		return {
