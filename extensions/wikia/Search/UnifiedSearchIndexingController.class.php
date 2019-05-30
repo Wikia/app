@@ -5,13 +5,13 @@ class UnifiedSearchIndexingController extends WikiaController {
 	/**
 	 * Allows to find all pages for searchable namespaces in this wiki.
 	 */
-	public function get() {
+	public function getPages() {
 		$namespaces = SearchEngine::searchableNamespaces();
 
 		$offset = $this->getVal( 'offset', 0 );
 		$limit = $this->getVal( 'limit', 1000 );
 
-		$result = $this->findResults( $namespaces, $offset, $limit );
+		$result = $this->findPages( $namespaces, $offset, $limit );
 
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $result );
@@ -24,7 +24,7 @@ class UnifiedSearchIndexingController extends WikiaController {
 		$offset = $this->getVal( 'offset', 0 );
 		$limit = $this->getVal( 'limit', 1000 );
 
-		$result = $this->findWikiResults( $offset, $limit );
+		$result = $this->findWikis( $offset, $limit );
 
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $result );
@@ -36,7 +36,7 @@ class UnifiedSearchIndexingController extends WikiaController {
 	 * @param $limit
 	 * @return array
 	 */
-	private function findResults( array $namespaces, $offset, $limit ) {
+	private function findPages( array $namespaces, $offset, $limit ) {
 		$db = wfGetDB( DB_SLAVE );
 
 		$results =
@@ -49,36 +49,41 @@ class UnifiedSearchIndexingController extends WikiaController {
 				->LIMIT( $limit + 1 )// fetching one more than limit to get next offset
 				->ORDER_BY( [ 'page.page_id', 'asc' ] )
 				->runLoop( $db, function ( &$result, $row ) {
-					$result[] = $row->page_id;
+					$result[] = [ 'pageId' => $row->page_id ];
 				} );
 
 		$splitByLimit = array_chunk( $results, $limit );
 
 		return [
 			'nextOffset' => isset( $splitByLimit[1][0] ) ? $splitByLimit[1][0] : null,
-			'pageIds' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
+			'items' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
 		];
 	}
 
-	private function findWikiResults( $offset, $limit ) {
+	private function findWikis( $offset, $limit ) {
 		$db = wfGetDB( DB_SLAVE, null, 'wikicities' );
 
 		$results =
-			( new WikiaSQL() )->SELECT( 'wikicities.city_list.city_id' )
+			( new WikiaSQL() )->SELECT( 'wikicities.city_list.city_id', 'wikicities.city_list.city_lang' )
 				->FROM( 'wikicities.city_list' )
 				->WHERE( 'wikicities.city_list.city_id' )
 				->GREATER_THAN_OR_EQUAL( $offset )
+				->AND_('wikicities.city_list.city_public')
+				->EQUAL_TO(1)
 				->LIMIT( $limit + 1 )// fetching one more than limit to get next offset
 				->ORDER_BY( [ 'wikicities.city_list.city_id', 'asc' ] )
 				->runLoop( $db, function ( &$result, $row ) {
-					$result[] = $row->city_id;
+					$result[] = [
+						'id' => $row->city_id,
+						'lang' => $row->city_lang
+					];
 				} );
 
 		$splitByLimit = array_chunk( $results, $limit );
 
 		return [
-			'nextOffset' => isset( $splitByLimit[1][0] ) ? $splitByLimit[1][0] : null,
-			'wikiIds' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
+			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
+			'items' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
 		];
 	}
 }
