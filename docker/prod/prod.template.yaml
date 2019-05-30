@@ -49,6 +49,9 @@ spec:
             periodSeconds: 10
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: /var/log/nginx
+              name: nginx-logs
           resources:
             limits:
               memory: 200Mi
@@ -121,6 +124,29 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
+        - name: exporter
+          image: artifactory.wikia-inc.com/platform/nginx-exporter-prod:${IMAGE_TAG}
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 4040
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 4040
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 4040
+          volumeMounts:
+            - mountPath: /var/log/nginx
+              name: nginx-logs
+          depends_on:
+            - web
+      volumes:
+        - name: nginx-logs
+          emptyDir: {}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -160,6 +186,10 @@ spec:
       port: 9253
       name: metrics
       targetPort: 9253
+    - protocol: TCP
+      port: 4040
+      name: nginxmetrics
+      targetPort: 4040
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -370,8 +400,29 @@ spec:
       type: mediawiki
   namespaceSelector:
     matchNames:
-    - prod
+      - prod
   endpoints:
-  - port: main
-    path: /metrics.php
-    interval: 10s
+    - port: main
+      path: /metrics.php
+      interval: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-nginx-exporter
+  labels:
+    app: mediawiki-nginx-exporter
+    type: mediawiki
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      type: mediawiki
+  namespaceSelector:
+    matchNames:
+      - prod
+  endpoints:
+    - port: nginxmetrics
+      path: /metrics
+      interval: 10s
