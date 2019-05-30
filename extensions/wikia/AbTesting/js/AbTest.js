@@ -354,8 +354,8 @@
 						'special/' + params.eventName,
 						params,
 						isOptedIn
-					);
-				});
+						);
+					});
 				}
 			}
 		}
