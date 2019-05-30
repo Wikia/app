@@ -294,6 +294,9 @@ class WikiFactoryLoader {
 		/**
 		 * load balancer uses one method which demand wgContLang defined
 		 * See BugId: 12474
+		 * temporarily set it to English as $wgContLang is required when reading query paramaters
+		 * in the WebRequest class. Later on this variable is overridden with the correct language
+		 * in Setup.php
 		 */
 		$wgContLang = Language::factory( 'en' );
 
