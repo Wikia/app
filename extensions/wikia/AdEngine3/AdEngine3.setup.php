@@ -25,6 +25,7 @@ $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/Resourc
 
 // Hooks
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine3::onOasisSkinAssetGroupsBlocking';
+$wgHooks['WikiaSkinTopModules'][] = 'AdEngine3::onWikiaSkinTopModules';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine3::onWikiaSkinTopScripts';
 $wgHooks['AfterInitialize'][] = 'AdEngine3::onAfterInitialize';
 
