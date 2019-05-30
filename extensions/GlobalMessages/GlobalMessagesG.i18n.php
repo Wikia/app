@@ -1540,6 +1540,10 @@ $messages['de'] = array(
 	'group-global-discussions-moderator-member' => 'Globaler Diskussions-Moderator',
 	'group-content-volunteer' => 'Content-Volunteers',
 	'group-content-volunteer-member' => 'Content-Volunteer',
+	'group-request-to-be-forgotten-admin-member' => 'Admin des Tools zum Antrag auf Löschung',
+	'group-request-to-be-forgotten-admin' => 'Admin des Tools zum Antrag auf Löschung',
+	'group-wiki-manager' => 'Wiki-Manager',
+	'group-wiki-manager-member' => 'Wiki-Manager',
 );
 
 $messages['de-formal'] = array(
@@ -1800,6 +1804,10 @@ $messages['es'] = array(
 	'group-global-discussions-moderator-member' => 'Moderador global de discusiones',
 	'group-content-volunteer' => 'Voluntario de contenido',
 	'group-content-volunteer-member' => 'Voluntario de contenido',
+	'group-request-to-be-forgotten-admin-member' => 'Herramienta de administración para pedido de olvido',
+	'group-request-to-be-forgotten-admin' => 'Herramienta de administración para pedido de olvido',
+	'group-wiki-manager' => 'Wiki Managers',
+	'group-wiki-manager-member' => 'Wiki Managers',
 );
 
 $messages['et'] = array(
@@ -2110,6 +2118,10 @@ $messages['fr'] = array(
 	'group-global-discussions-moderator-member' => 'Modérateur global de discussions',
 	'group-content-volunteer' => 'Créateurs de contenu bénévoles',
 	'group-content-volunteer-member' => 'Créateur de contenu bénévole',
+	'group-request-to-be-forgotten-admin-member' => "Administrateur d'outil de demande d'oubli",
+	'group-request-to-be-forgotten-admin' => "Administrateurs d'outil de demande d'oubli",
+	'group-wiki-manager' => 'Gestionnaires de wiki',
+	'group-wiki-manager-member' => 'Gestionnaire de wiki',
 );
 
 $messages['frc'] = array(
@@ -3156,6 +3168,10 @@ $messages['it'] = array(
 	'group-global-discussions-moderator-member' => 'Moderatore globale di Discussioni',
 	'group-content-volunteer' => 'Volontari per i contenuti',
 	'group-content-volunteer-member' => 'Volontario per i contenuti',
+	'group-request-to-be-forgotten-admin-member' => "Amministratore con accesso allo strumento per il diritto all'oblio",
+	'group-request-to-be-forgotten-admin' => "Amministratore con accesso allo strumento per il diritto all'oblio",
+	'group-wiki-manager' => 'Wiki Manager',
+	'group-wiki-manager-member' => 'Wiki Manager',
 );
 
 $messages['iu'] = array(
@@ -5280,6 +5296,10 @@ $messages['pl'] = array(
 	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
 	'group-content-volunteer' => 'Wolontariusze treści',
 	'group-content-volunteer-member' => 'wolontariusz treści',
+	'group-request-to-be-forgotten-admin-member' => 'Administrator narzędzia Wniosku o bycie zapomnianym',
+	'group-request-to-be-forgotten-admin' => 'Administrator narzędzia Wniosku o bycie zapomnianym',
+	'group-wiki-manager' => 'Menadżerowie Wiki',
+	'group-wiki-manager-member' => 'Menadżer Wiki',
 );
 
 $messages['pms'] = array(
@@ -5497,6 +5517,10 @@ $messages['pt'] = array(
 	'group-global-discussions-moderator-member' => 'Moderador global de discussões',
 	'group-content-volunteer' => 'Voluntários de conteúdo',
 	'group-content-volunteer-member' => 'Voluntário de conteúdo',
+	'group-request-to-be-forgotten-admin-member' => 'Requerer acesso administrativo à ferramenta Pedir para ser esquecido',
+	'group-request-to-be-forgotten-admin' => 'Requerer acesso administrativo à ferramenta Pedir para ser esquecido',
+	'group-wiki-manager' => 'Gerentes Wiki',
+	'group-wiki-manager-member' => 'Gerentes Wiki',
 );
 
 $messages['qu'] = array(
@@ -5748,6 +5772,10 @@ $messages['ru'] = array(
 	'group-global-discussions-moderator-member' => 'Модератор Обсуждений ФЭНДОМА',
 	'group-content-volunteer' => 'Content Volunteers',
 	'group-content-volunteer-member' => 'Content Volunteer',
+	'group-request-to-be-forgotten-admin-member' => 'Администратор инструмента запроса на удаление',
+	'group-request-to-be-forgotten-admin' => 'Администратор инструмента запроса на удаление',
+	'group-wiki-manager' => 'Руководители вики',
+	'group-wiki-manager-member' => 'Руководитель вики',
 );
 
 $messages['rue'] = array(
@@ -7518,6 +7546,10 @@ $messages['zh-hans'] = array(
 	'group-global-discussions-moderator-member' => '全站话题版主',
 	'group-content-volunteer' => '内容志愿者',
 	'group-content-volunteer-member' => '内容志愿者',
+	'group-request-to-be-forgotten-admin-member' => '被遗忘权工具管理员',
+	'group-request-to-be-forgotten-admin' => '被遗忘权工具管理员',
+	'group-wiki-manager' => 'Wiki主管',
+	'group-wiki-manager-member' => 'Wiki主管',
 );
 
 $messages['zh-hant'] = array(
@@ -7597,6 +7629,10 @@ $messages['zh-hant'] = array(
 	'group-global-discussions-moderator-member' => '全站話題版主',
 	'group-content-volunteer' => '內容志願者',
 	'group-content-volunteer-member' => '內容志願者',
+	'group-request-to-be-forgotten-admin-member' => '被遺忘權工具管理員',
+	'group-request-to-be-forgotten-admin' => '被遺忘權工具管理員',
+	'group-wiki-manager' => 'Wiki主管',
+	'group-wiki-manager-member' => 'Wiki主管',
 );
 
 $messages['zu'] = array(
