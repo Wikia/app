@@ -66,15 +66,6 @@ $wgResourceModules['wikia.ext.abt3sting'] = array(
 	'class' => 'ResourceLoaderAbTestingModule',
 );
 
-// IW-1965: wikia.tracker is not available in mobile-wiki, therefore we need to fetch it there
-// in order to make AbTest.js work
-$wgResourceModules['wikia.ext.abtesttracker'] = [
-	'scripts' => [
-		'resources/wikia/modules/tracker.stub.js',
-		'resources/wikia/modules/tracker.js',
-	]
-];
-
 $wgResourceModules['wikia.ext.abtest'] = array(
 	'scripts' => array(
 		'extensions/wikia/AbTesting/js/AbTest.js',
