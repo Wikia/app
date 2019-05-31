@@ -1,5 +1,4 @@
-import { context } from '@wikia/ad-engine';
-import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
+import { context, bidders } from '@wikia/ad-engine';
 
 const logGroup = 'bidders-delay';
 

@@ -320,6 +320,7 @@ $wgGroupPermissions['staff']['noratelimit'] = true;
 $wgGroupPermissions['helper']['noratelimit'] = true;
 $wgGroupPermissions['vstf']['noratelimit'] = true;
 $wgGroupPermissions['bot-global']['noratelimit'] = true;
+$wgGroupPermissions['wiki-manager']['noratelimit'] = true;
 
 /**
  * Limit the edit rights of wiki nav messages to staff members
@@ -368,6 +369,7 @@ $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
 $wgGroupPermissions['global-discussions-moderator']['block'] = true;
+$wgGroupPermissions['wiki-manager']['block'] = true;
 
 $wgGroupPermissions['staff']['protectsite'] = true;
 $wgGroupPermissions['helper']['protectsite'] = true;
@@ -377,6 +379,48 @@ $wgGroupPermissions['helper']['protectsite-exempt'] = true;
 $wgGroupPermissions['staff']['protectsite-exempt'] = true;
 $wgGroupPermissions['vstf']['protectsite-exempt'] = true;
 $wgGroupPermissions['sysop']['protectsite-exempt'] = true;
+$wgGroupPermissions['wiki-manager']['protectsite-exempt'] = true;
 
 $wgGroupPermissions['helper']['protectsite-nolimit'] = true;
 $wgGroupPermissions['staff']['protectsite-nolimit'] = true;
+
+$wgGroupPermissions['wiki-manager']['admindashboard'] = true;
+$wgGroupPermissions['wiki-manager']['autoconfirmed'] = true;
+$wgGroupPermissions['wiki-manager']['autopatrol'] = true;
+$wgGroupPermissions['wiki-manager']['bigdelete'] = true;
+$wgGroupPermissions['wiki-manager']['blog-articles-edit'] = true;
+$wgGroupPermissions['wiki-manager']['blog-articles-move'] = true;
+$wgGroupPermissions['wiki-manager']['blog-comments-toggle'] = true;
+$wgGroupPermissions['wiki-manager']['checkuser'] = true;
+$wgGroupPermissions['wiki-manager']['clearuserprofile'] = true;
+$wgGroupPermissions['wiki-manager']['commentdelete'] = true;
+$wgGroupPermissions['wiki-manager']['commentedit'] = true;
+$wgGroupPermissions['wiki-manager']['commentmove'] = true;
+$wgGroupPermissions['wiki-manager']['createpage'] = true;
+$wgGroupPermissions['wiki-manager']['createtalk'] = true;
+$wgGroupPermissions['wiki-manager']['delete'] = true;
+$wgGroupPermissions['wiki-manager']['edit'] = true;
+$wgGroupPermissions['wiki-manager']['editinterface'] = true;
+$wgGroupPermissions['wiki-manager']['editinterfacetrusted'] = true;
+$wgGroupPermissions['wiki-manager']['ipblock-exempt'] = true;
+$wgGroupPermissions['wiki-manager']['lookupcontribs'] = true;
+$wgGroupPermissions['wiki-manager']['move'] = true;
+$wgGroupPermissions['wiki-manager']['move-subpages'] = true;
+$wgGroupPermissions['wiki-manager']['movefile'] = true;
+$wgGroupPermissions['wiki-manager']['phalanxexempt'] = true;
+$wgGroupPermissions['wiki-manager']['protect'] = true;
+$wgGroupPermissions['wiki-manager']['proxyunbannable'] = true;
+$wgGroupPermissions['wiki-manager']['quicktools'] = true;
+$wgGroupPermissions['wiki-manager']['reupload'] = true;
+$wgGroupPermissions['wiki-manager']['rollback'] = true;
+$wgGroupPermissions['wiki-manager']['specialvideosdelete'] = true;
+$wgGroupPermissions['wiki-manager']['template-bulk-classification'] = true;
+$wgGroupPermissions['wiki-manager']['themedesigner'] = true;
+$wgGroupPermissions['wiki-manager']['unblockself'] = true;
+$wgGroupPermissions['wiki-manager']['undelete'] = true;
+$wgGroupPermissions['wiki-manager']['upload'] = true;
+$wgGroupPermissions['wiki-manager']['upload_by_url'] = true;
+$wgGroupPermissions['wiki-manager']['videoupload'] = true;
+$wgGroupPermissions['wiki-manager']['wallfastadmindelete'] = true;
+$wgGroupPermissions['wiki-manager']['welcomeexempt'] = true;
+$wgGroupPermissions['wiki-manager']['wikifeatures'] = true;

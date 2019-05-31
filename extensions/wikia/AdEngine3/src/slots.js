@@ -1,5 +1,4 @@
-import { AdSlot, context, events, slotInjector, slotService, utils } from '@wikia/ad-engine';
-import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
+import { AdSlot, context, events, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
@@ -141,6 +140,7 @@ export default {
 			},
 			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
+				bidderAlias: 'incontent_boxad_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
