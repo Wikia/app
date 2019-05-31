@@ -1,6 +1,12 @@
 listen 8080;
 root /usr/wikia/slot1/current/src;
 
+set $fastcgi_server_name $host;
+
+if ($http_x_original_host) {
+	set $fastcgi_server_name $http_x_original_host;
+}
+
 rewrite "^/health/check$" /health.php break;
 rewrite "^/proxy.php$" /extensions/wikia/Tasks/proxy/proxy.php break;
 

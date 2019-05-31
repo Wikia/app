@@ -542,13 +542,6 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
- * External alternative services domain.
- * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
- * @var string $wgServicesExternalAlternativeDomain
- */
-$wgServicesExternalAlternativeDomain = "https://services.$wgFandomBaseDomain/";
-
-/**
  * Whether to disable the background tasks broker for MediaWiki.
  * @see lib/Wikia/src/Factory/RabbitFactory.php
  * @see lib/Wikia/src/Rabbit/TasksRabbitPublisher.php

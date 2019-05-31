@@ -1515,34 +1515,21 @@ function wfGetStagingEnvForUrl( $url ) : string {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaDevDomain, $wgFandomDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
 	}
 
-	if ( $wgDevelEnvironment ) {
-		$server = str_replace( ".{$wgWikiaDevDomain}", '', $host );
-		$server = str_replace( ".{$wgFandomDevDomain}", '', $server );
-	} else {
-		$baseDomain = wfGetBaseDomainForHost( $host );
-
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-			$server = preg_replace(
-				'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $baseDomain ) . '$/',
-				'',
-				$host
-			);
-		} else {
-			// this is called from WFL, where $wgRequest is not available yet; use $_SERVER vars to check the header
-			if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
-				in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
-				// As those envs are not covered by our certificate, disable https there
-				return false;
-			}
-			$server = str_replace( ".{$baseDomain}", '', $host );
-		}
+	if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
+		 in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
+		// As those envs are not covered by our certificate, disable https there
+		return false;
 	}
+
+	$host = wfNormalizeHost( $host );
+	$baseDomain = wfGetBaseDomainForHost( $host );
+
+	$server = str_replace( ".$baseDomain", '', $host );
 
 	// Only allow single subdomain wikis through
 	return substr_count( $server, '.' ) === 0;
@@ -1628,18 +1615,12 @@ function wfGetBaseDomainForHost( $host ) {
  * @return string normalized host name
  */
 function wfNormalizeHost( $host ) {
-	global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
-	$baseDomain = wfGetBaseDomainForHost( $host );
+	global $wgEnvironmentDomainMappings;
 
-	// strip env-specific pre- and suffixes for staging environment
-	$host = preg_replace(
-		'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
-		".{$baseDomain}",
-		$host );
-	if ( !empty( $wgDevelEnvironment ) ) {
-		$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
-		$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
+	foreach ( $wgEnvironmentDomainMappings as $envSpecificDomain => $envAgnosticDomain ) {
+		$host = str_replace( ".$envSpecificDomain", ".$envAgnosticDomain", $host );
 	}
+
 	return $host;
 }
 

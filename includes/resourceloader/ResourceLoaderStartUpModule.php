@@ -39,7 +39,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
 			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain,
-			$wgWikiaBaseDomainRegex, $wgServicesExternalDomain, $wgServicesExternalAlternativeDomain,
+			$wgWikiaBaseDomainRegex, $wgServicesExternalDomain,
 			$wgRecommendedVideoABTestPlaylist;
 
 		$mainPage = Title::newMainPage();
@@ -104,7 +104,6 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgWikiaOrgBaseDomain' => $wgWikiaOrgBaseDomain,
 			'wgWikiaBaseDomainRegex' => $wgWikiaBaseDomainRegex,
 			'wgServicesExternalDomain' => $wgServicesExternalDomain,
-			'wgServicesExternalAlternativeDomain' => $wgServicesExternalAlternativeDomain,
 			'wgRecommendedVideoABTestPlaylist' => $wgRecommendedVideoABTestPlaylist,
 			// Wikia - change end
 		);

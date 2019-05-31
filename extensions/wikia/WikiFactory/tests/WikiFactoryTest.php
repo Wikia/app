@@ -23,9 +23,9 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getLocalEnvURLDataProvider
 	 */
-	public function testGetLocalEnvURL( $environment, $forcedEnv, $url, $expected ) {
+	public function testGetLocalEnvURL( $environment, $url, $expected ) {
 		$this->mockEnvironment( $environment );
-		$url = WikiFactory::getLocalEnvURL( $url, $forcedEnv );
+		$url = WikiFactory::getLocalEnvURL( $url );
 		$this->assertEquals( $expected, $url );
 	}
 
@@ -33,127 +33,96 @@ class WikiFactoryTest extends WikiaBaseTest {
 		return [
 			[
 				'env' => WIKIA_ENV_PREVIEW,
-				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com',
 				'expected' => 'http://muppet.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
-				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
 				'expected' => 'http://muppet.verify.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki',
 				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_SANDBOX,
-				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
 				'expected' => 'http://gta.sandbox-s1.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
-				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://gta.verify.wikia.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.us'
 			],
 			[
-				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => WIKIA_ENV_PREVIEW,
-				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.preview.wikia.com'
-			],
-			[
 				'env' => WIKIA_ENV_PREVIEW,
-				'forcedEnv' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'http://muupet.wikia.com/wiki/test/test/test',
 				'expected' => 'http://muupet.wikia.com/wiki/test/test/test'
 			],
 			[
-				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => WIKIA_ENV_PROD,
-				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.wikia.com'
-			],
-			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'https://www.wikia.com',
 				'expected' => 'https://www.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'https://www.wikia.com/wiki/test',
 				'expected' => 'https://www.wikia.com/wiki/test',
 			],
 			[
 				'env' => WIKIA_ENV_PREVIEW,
-				'forcedEnv' => null,
 				'url' => 'https://fallout.wikia.com/wiki/test',
 				'expected' => 'https://fallout.preview.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => null,
 				'url' => 'https://muppet.wikia.com/wiki',
 				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => null,
 				'url' => 'https://muppet.fandom.com/wiki',
 				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.fandom-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => '//www.wikia.com/wiki/test',
 				'expected' => '//www.wikia.com/wiki/test',
 			],
 			[
 				'env' => WIKIA_ENV_PREVIEW,
-				'forcedEnv' => null,
 				'url' => '//fallout.wikia.com/wiki/test',
 				'expected' => '//fallout.preview.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
-				'forcedEnv' => null,
 				'url' => '//muppet.wikia.com/wiki',
 				'expected' => '//muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'http://google.com',
 				'expected' => 'http://google.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
-				'forcedEnv' => null,
 				'url' => 'https://mysecureddomain.com',
 				'expected' => 'https://mysecureddomain.com'
 			]

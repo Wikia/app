@@ -480,7 +480,7 @@ class WikiFactory {
 
 		if ( isset( $parts[ "host" ] ) ) {
 			$host = static::getDomainHash( $parts[ "host" ] );
-			$host = \WikiFactory::getLocalEnvURL( $host, WIKIA_ENV_PROD );
+			$host = wfNormalizeHost( $host );
 			$city_id = static::DomainToId( $host );
 		}
 
@@ -1370,13 +1370,11 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string $url general URL pointing to any server
-	 * @param null $forcedEnv go get url for env we want to
 	 * @return string url pointing to local env
 	 * @throws \Exception
 	 */
-	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgFandomBaseDomain,
-			$wgDevDomain, $wgWikiaBaseDomainRegex, $wgWikiaDevDomain, $wgFandomDevDomain;
+	static public function getLocalEnvURL( $url ) {
+		global $wgWikiaBaseDomainRegex, $wgEnvironmentDomainMappings;
 
 		// first - normalize URL
 		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
@@ -1395,70 +1393,18 @@ class WikiFactory {
 			$address = '/' . $address;
 		}
 
-		$baseDomain = wfGetBaseDomainForHost( $server );
-
 		$server = wfNormalizeHost( $server );
 
-		$wikiaDomainUsed = $wikiaOrgDomainUsed = $fandomDomainUsed = false;
-		if ( endsWith( $server, ".{$wgWikiaBaseDomain}" ) ) {
-			$server = str_replace( ".{$wgWikiaBaseDomain}", '', $server );
-			$wikiaDomainUsed = true;
-		}
-		if ( endsWith($server, ".{$wgFandomBaseDomain}" ) ) {
-			$server = str_replace( ".{$wgFandomBaseDomain}", '', $server );
-			$fandomDomainUsed = true;
-		}
-		if ( endsWith( $server, ".{$wgWikiaOrgBaseDomain}" ) ) {
-			$server = str_replace( ".{$wgWikiaOrgBaseDomain}", '', $server );
+		$envSpecificDomainMap = array_flip( $wgEnvironmentDomainMappings );
+
+		foreach ( $envSpecificDomainMap as $envAgnosticDomain => $envSpecificDomain ) {
+			if ( endsWith( $server, ".$envAgnosticDomain" ) ) {
+				$server = str_replace( ".$envAgnosticDomain", ".$envSpecificDomain", $server );
+				break;
+			}
 		}
 
-		// determine the environment we want to get url for
-		$environment = (
-			$forcedEnv &&
-			$forcedEnv !== WIKIA_ENV_DEV &&
-			$forcedEnv !== WIKIA_ENV_SANDBOX
-		) ? $forcedEnv : $wgWikiaEnvironment;
-
-		// put the address back into shape and return
-		// we need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
-		// we do not have valid ssl certificate for these subdomains
-		switch ( $environment ) {
-			case WIKIA_ENV_PREVIEW:
-				return "$protocol//" . $server . '.preview.' . $baseDomain . $address;
-			case WIKIA_ENV_VERIFY:
-				return "$protocol//" . $server . '.verify.' . $baseDomain . $address;
-			case WIKIA_ENV_PROD:
-				return sprintf( '%s//%s.%s%s', $protocol, $server, $baseDomain, $address );
-			case WIKIA_ENV_SANDBOX:
-				return "$protocol//" . $server . '.' . static::getExternalHostName() . '.' .
-				       $baseDomain . $address;
-			case WIKIA_ENV_DEV:
-				if ( $fandomDomainUsed ) {
-					return "$protocol//" . $server . '.' . $wgFandomDevDomain . $address;
-				}
-				if ( $wikiaDomainUsed ) {
-					return "$protocol//" . $server . '.' . $wgWikiaDevDomain . $address;
-				}
-				// Best guess - default to the current dev domain
-				return "$protocol//" . $server . '.' . $wgDevDomain . $address;
-		}
-
-		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
-	}
-
-	/**
-	 * returns externally-facing hostname, i.e.
-	 * dev-devbox (as in devbox.wikia-dev.com ) => devbox
-	 */
-	public static function getExternalHostName() {
-		global $wgWikiaEnvironment;
-
-		$hostname = wfGetEffectiveHostname();
-		if ( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
-			return mb_ereg_replace( '^dev-', '', $hostname );
-		}
-
-		return $hostname;
+		return "$protocol//$server$address";
 	}
 
 	/**

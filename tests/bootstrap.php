@@ -33,6 +33,7 @@ $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMo
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
 $wgAutoloadClasses['MockGlobalVariableTrait'] = $IP . '/includes/wikia/tests/core/MockGlobalVariableTrait.php';
+$wgAutoloadClasses['MockEnvironmentTrait'] = $IP . '/includes/wikia/tests/core/MockEnvironmentTrait.php';
 
 // This is needed to properly support PHPUnit's process isolation feature
 // We are not using the official PHPUnit entry point, so we need to tell PHPUnit that it was installed via composer.
