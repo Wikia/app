@@ -33,6 +33,7 @@
 			<div class="close-button"></div>
 		</a>
 	</div>
-	<div id="<?php echo AdEngine3::isEnabled() ? 'invisible_high_impact_2' : 'INVISIBLE_HIGH_IMPACT_2'?>" class="wikia-ad noprint"></div>
+	<div id="floor_adhesion" class="wikia-ad noprint"></div>
+	<div id="invisible_high_impact_2" class="wikia-ad noprint"></div>
 </div>
 

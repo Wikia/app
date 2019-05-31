@@ -192,6 +192,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.push('slots.featured.videoSizes', [480, 360]);
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
+	context.set('slots.floor_adhesion.disabled', !isGeoEnabled('wgAdDriverOasisFloorAdhesionCountries'));
 
 	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
