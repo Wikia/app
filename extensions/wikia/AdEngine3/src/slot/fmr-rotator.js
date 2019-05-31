@@ -161,7 +161,7 @@ function rotateSlots() {
 			if (btRec) {
 				removeRecNode();
 			} else {
-				slotTweaker.hide(currentAdSlot);
+				currentAdSlot.hide();
 			}
 
 			updateAdRefreshInformation();
