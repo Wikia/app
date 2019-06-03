@@ -10,8 +10,8 @@ namespace "mediawiki_nginx_prod" {
     "/var/log/nginx/std.log"
   ]
   labels {
-    app = "mediawiki_nginx_prod"
-    environment = "dev"
+    app = "nginx_"
+    environment = "prod"
   }
 
   histogram_buckets = [.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10]

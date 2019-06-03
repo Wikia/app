@@ -400,29 +400,11 @@ spec:
       type: mediawiki
   namespaceSelector:
     matchNames:
-      - prod
+    - prod
   endpoints:
     - port: main
       path: /metrics.php
       interval: 10s
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: mediawiki-nginx-exporter
-  labels:
-    app: mediawiki-nginx-exporter
-    type: mediawiki
-  namespace: prod
-spec:
-  jobLabel: app
-  selector:
-    matchLabels:
-      type: mediawiki
-  namespaceSelector:
-    matchNames:
-      - prod
-  endpoints:
     - port: nginxmetrics
-      path: /metrics
-      interval: 10s
+        path: /metrics
+        interval: 10s

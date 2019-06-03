@@ -10,7 +10,7 @@ namespace "mediawiki_nginx_devbox" {
     "/var/log/nginx/std.log"
   ]
   labels {
-    app = "mediawiki_nginx_devbox"
+    app = "nginx_"
     environment = "dev"
   }
 
