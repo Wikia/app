@@ -1,4 +1,4 @@
-FROM nginx:1.15.6-alpine
+FROM xcgd/nginx-vts:stable
 
 RUN chown -R nginx:nginx /etc/nginx && \
     chown nginx:nginx /var/cache/nginx && \

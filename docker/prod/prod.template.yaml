@@ -141,6 +141,9 @@ spec:
   - port: metrics
     path: /metrics
     interval: 10s
+  - port: main
+    path: /metrics
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
