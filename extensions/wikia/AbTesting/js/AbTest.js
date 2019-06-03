@@ -334,16 +334,29 @@
 		var expName, exp;
 		for ( expName in experiments ) {
 			exp = experiments[expName];
-			if ( Wikia.Tracker && exp.flags && exp.flags.dw_tracking && exp.group ) {
-				Wikia.Tracker.track({
-					eventName: 'ab_treatment',
-					experiment: exp.name,
-					experimentId: exp.id,
-					time: serverTimeString,
-					trackingMethod: 'internal',
-					treatmentGroup: exp.group.name,
-					treatmentGroupId: exp.group.id
-				});
+			var params = {
+				eventName: 'ab_treatment',
+				experiment: exp.name,
+				experimentId: exp.id,
+				time: serverTimeString,
+				trackingMethod: 'internal',
+				treatmentGroup: exp.group.name,
+				treatmentGroupId: exp.group.id
+			};
+
+			if ( exp.flags && exp.flags.dw_tracking && exp.group ) {
+				if ( Wikia.Tracker ) {
+					Wikia.Tracker.track(params);
+				} else if (M && M.trackingQueue) {
+					// when executed on mobile-wiki
+					M.trackingQueue.push(function (isOptedIn) {
+						M.tracker.Internal.track(
+						'special/' + params.eventName,
+						params,
+						isOptedIn
+						);
+					});
+				}
 			}
 		}
 	})( AbTest.experiments );

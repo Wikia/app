@@ -1215,6 +1215,13 @@ $wgAdDriverAdditionalVastSizeCountries = null;
 $wgAdDriverKargoBidderCountries = null;
 
 /**
+ * @name $wgAdDriverGumGumBidderCountries
+ * List of countries where GumGum Prebid bidding partner is enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGumGumBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1819,12 +1826,6 @@ $wgUseGoogleCloudStorage = false;
  * If enabled, Unified Search will be used for Special:Search.
  */
 $wgUseUnifiedSearch = false;
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3197
- * We're planning to remove these options, so we disable them with a feature flag first.
- */
-$wgFileSearchOptionsEnabled = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033

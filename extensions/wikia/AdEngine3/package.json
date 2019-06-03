@@ -1,17 +1,18 @@
 {
-  "name": "@wikia/ad-engine",
+  "name": "@wikia/app-ad-engine",
   "version": "0.0.0",
   "private": true,
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-lodash": "^3.3.2",
-    "babel-plugin-syntax-dynamic-import": "6.18.0",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-decorators-legacy": "1.3.4",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-loader": "^8.0.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "copy-webpack-plugin": "4.5.1",
     "css-loader": "0.28.11",
     "mini-css-extract-plugin": "0.4.0",
@@ -23,11 +24,12 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "watch": "webpack -p -w",
+    "watch": "webpack -w",
     "dev": "npm run watch"
   },
   "dependencies": {
-    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v31.0.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v32.3.0",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "lodash": "4.17.10"

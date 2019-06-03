@@ -26,25 +26,9 @@
 						</li>
 						<li>
 							<label><input type="radio" name="filters[]" value="is_video" <? if($form['is_video']){ ?>checked<? } ?> id="filter-is-video" /><?= wfMessage('wikiasearch2-filter-videos') ?></label>
-							<ul class="video-filters <? if(!$form['is_video']){ ?>hidden <? } ?>">
-								<li>
-									<label><input type="checkbox" name="filters[]" value="is_hd" <? if($form['is_hd']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch2-filter-hd') ?></label>
-								</li>
-							</ul>
 						</li>
 					</ul>
-					<? if ( $fileSearchOptionsEnabled ): ?>
-						<p><?= wfMessage('wikiasearch2-sort-options-label') ?>:</p>
-						<select name="rank">
-							<option value="default" <? if($form['sort_default']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-relevancy') ?></option>
-							<option value="newest" <? if($form['sort_newest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-publish-date') ?></option>
-							<? if ( isset($form['is_video']) && $form['is_video']==true ) { ?>
-								<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
-							<? } ?>
-						</select>
-					<? endif; ?>
 				</div>
-
 			<? endif; ?>
 		</li>
 	<?php endforeach; ?>

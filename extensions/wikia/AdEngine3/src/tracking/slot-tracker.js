@@ -47,6 +47,7 @@ function prepareData(slot, data) {
 		tz_offset: now.getTimezoneOffset(),
 		device: context.get('state.deviceType'),
 		ad_load_time: data.timestamp - window.performance.timing.connectStart,
+		advertiser_id: data.advertiser_id || '',
 		product_lineitem_id: data.line_item_id || '',
 		order_id: data.order_id || '',
 		creative_id: data.creative_id || '',

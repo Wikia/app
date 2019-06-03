@@ -44,6 +44,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverDisableRecirculationCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
+		$vars[] = 'wgAdDriverGumGumBidderCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
 		$vars[] = 'wgAdDriverMobileFloorAdhesionCountries';
@@ -93,6 +94,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverStickySlotsLines';
+		$vars[] = 'wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries';
 		$vars[] = 'wgAdDriverVmgBidderCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadHMDCountries';

@@ -1,5 +1,4 @@
-import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
-import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils, setupNpaContext, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
 import slots from './slots';
@@ -104,6 +103,10 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('options.slotRepeater', true);
 
 	context.set('options.incontentNative', isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
+	context.set(
+		'options.unstickHiViLeaderboardAfterTimeout',
+		isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')
+	);
 
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& isGeoEnabled('wgAdDriverKruxCountries') && !instantGlobals.get('wgSitewideDisableKrux'));
@@ -224,7 +227,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 function configure(adsContext, isOptedIn) {
 	setupAdContext(adsContext, isOptedIn);
-	adProductsUtils.setupNpaContext();
+	setupNpaContext();
 
 	templateRegistry.registerTemplates();
 

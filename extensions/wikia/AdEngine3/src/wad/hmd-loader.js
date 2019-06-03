@@ -1,5 +1,4 @@
-import { utils } from '@wikia/ad-engine';
-import { jwplayerAdsFactory } from '@wikia/ad-engine/dist/ad-products';
+import { utils, jwplayerAdsFactory } from '@wikia/ad-engine';
 import { recInjector } from './rec-injector';
 
 const isDebug = utils.queryString.isUrlParamSet('hmd-rec-debug');
