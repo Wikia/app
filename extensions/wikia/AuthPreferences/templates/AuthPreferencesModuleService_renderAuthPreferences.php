@@ -12,4 +12,14 @@
 	<div id="googleConnectPreferences">
 		<iframe class="google-button" src="<?= $googleConnectAuthUrl; ?>"></iframe>
 	</div>
+	<div id="twitchConnectPreferences">
+		<span id="twitch-connect-button" class="wds-button twitch-button" role="button">
+			<?= wfMessage( 'prefs-twitchconnect-prefstext' )->escaped(); ?>
+		</span>
+	</div>
+	<div id="twitchDisconnectPreferences">
+		<span id="twitch-disconnect-button" class="wds-button twitch-button" role="button">
+			<?= wfMessage( 'prefs-twitchconnect-disconnect-prefstext' )->escaped(); ?>
+		</span>
+	</div>
 </div>

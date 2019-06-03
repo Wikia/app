@@ -23,3 +23,7 @@
     margin-top: 20px;
     width: 25%;
 }
+
+.wds-button.twitch-button {
+    background: #6441A4;
+}
