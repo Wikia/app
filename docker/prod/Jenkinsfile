@@ -1,6 +1,5 @@
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
-def nginxExporterImage = "artifactory.wikia-inc.com/platform/nginx-exporter-prod"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-php"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
@@ -333,33 +332,6 @@ node("docker-daemon-big") {
             }
           }
         }
-      },
-      "nginxexporter": {
-         stage("Build and push nginxexporter image") {
-           dir("app") {
-             def imageExists = false
-             def status = sh(script: """
-               curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
-               -w "%{http_code}" -s -I -o /dev/null \
-               -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/platform/nginx-exporter-prod/${imageTag}"
-             """, returnStdout: true).trim()
-
-             if (status == "200") {
-               imageExists = true
-             }
-
-             if (!imageExists) {
-               if (params.dry_run) {
-                  println("Dry run: docker build  docker/prod -f docker/prod/Dockerfile-nginxexporter -t $nginxExporterImage:$imageTag")
-               } else {
-                  sh("docker build docker/prod -f docker/prod/Dockerfile-nginxexporter -t $nginxExporterImage:$imageTag")
-                  sh("docker push $nginxExporterImage:$imageTag")
-               }
-             } else {
-               println("Nginxexporter image tag ($imageTag) already exists")
-             }
-           }
-         }
       }
     )
 
