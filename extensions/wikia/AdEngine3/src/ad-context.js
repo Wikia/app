@@ -9,31 +9,31 @@ export default {
 			videoEnabled: false,
 			amazonId: '3115',
 			slots: {
-				bottom_leaderboard: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[728, 90],
 						[970, 250]
 					]
 				},
-				incontent_boxad_1: {
+				INCONTENT_BOXAD_1: {
 					sizes: [
 						[300, 250],
 						[300, 600]
 					]
 				},
-				top_leaderboard: {
+				TOP_LEADERBOARD: {
 					sizes: [
 						[728, 90],
 						[970, 250]
 					]
 				},
-				top_boxad: {
+				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
 					]
 				},
-				featured: {
+				FEATURED: {
 					type: 'video'
 				}
 			}
@@ -49,7 +49,7 @@ export default {
 				enabled: false,
 				network: '9435.1',
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90]
 						],
@@ -57,7 +57,7 @@ export default {
 						alias: '4431497',
 						sizeId: '225'
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
@@ -71,28 +71,28 @@ export default {
 			appnexus: {
 				enabled: false,
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
 						],
 						position: 'atf'
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
 						],
 						position: 'atf'
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
 						],
 						position: 'btf'
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[160, 600],
 							[300, 600],
@@ -118,10 +118,10 @@ export default {
 				enabled: false,
 				debugPlacementId: '5768085',
 				slots: {
-					featured: {
+					FEATURED: {
 						placementId: '13684967'
 					},
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						placementId: '11543172'
 					}
 				}
@@ -134,7 +134,7 @@ export default {
 				enabled: false,
 				debugAppId: '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
 				slots: {
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						appId: 'd239e601-dd57-4163-fe5d-35012d77395f'
 					}
 				}
@@ -142,21 +142,21 @@ export default {
 			indexExchange: {
 				enabled: false,
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
 						],
 						siteId: '183423'
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
 						],
 						siteId: '183567'
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[160, 600],
 							[300, 600],
@@ -164,7 +164,7 @@ export default {
 						],
 						siteId: '185049'
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -173,10 +173,10 @@ export default {
 					}
 				},
 				recPlacements: {
-					top_leaderboard: '215807',
-					top_boxad: '215808',
-					incontent_boxad_1: '215809',
-					bottom_leaderboard: '215810'
+					TOP_LEADERBOARD: '215807',
+					TOP_RIGHT_BOXAD: '215808',
+					INCONTENT_BOXAD_1: '215809',
+					BOTTOM_LEADERBOARD: '215810'
 				}
 			},
 			kargo: {
@@ -186,11 +186,11 @@ export default {
 			lkqd: {
 				enabled: false,
 				slots: {
-					featured: {
+					FEATURED: {
 						placementId: '523',
 						siteId: '890798'
 					},
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						placementId: '523',
 						siteId: '892126'
 					}
@@ -204,21 +204,21 @@ export default {
 				enabled: false,
 				delDomain: 'wikia-d.openx.net',
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
 						],
 						unit: 538735690
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
 						],
 						unit: 538735691
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[300, 250],
 							[300, 600],
@@ -226,7 +226,7 @@ export default {
 						],
 						unit: 538735697
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -239,7 +239,7 @@ export default {
 				enabled: false,
 				publisherId: '156260',
 				slots: {
-					featured: {
+					FEATURED: {
 						sizes: [
 							[0, 0]
 						],
@@ -247,7 +247,7 @@ export default {
 							'1636185@0x0'
 						]
 					},
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						sizes: [
 							[0, 0]
 						],
@@ -255,7 +255,7 @@ export default {
 							'1636186@0x0'
 						]
 					},
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -265,7 +265,7 @@ export default {
 							'/5441/TOP_LEADERBOARD_970x250@970x250'
 						]
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
@@ -275,7 +275,7 @@ export default {
 							'/5441/TOP_RIGHT_BOXAD_300x600@300x600'
 						]
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -285,7 +285,7 @@ export default {
 							'/5441/BOTTOM_LEADERBOARD_970x250@970x250'
 						]
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[160, 600],
 							[300, 600],
@@ -303,13 +303,13 @@ export default {
 				enabled: false,
 				accountId: 7450,
 				slots: {
-					featured: {
+					FEATURED: {
 						siteId: '147980',
 						sizeId: '201',
 						zoneId: '699374',
 						position: 'btf'
 					},
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						siteId: '55412',
 						sizeId: '203',
 						zoneId: '260296',
@@ -321,7 +321,7 @@ export default {
 				enabled: false,
 				accountId: 7450,
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -333,7 +333,7 @@ export default {
 						siteId: '148804',
 						zoneId: '704672'
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250],
 							[300, 600]
@@ -345,7 +345,7 @@ export default {
 						siteId: '148804',
 						zoneId: '704672'
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[160, 600],
 							[300, 600],
@@ -358,7 +358,7 @@ export default {
 						siteId: '148804',
 						zoneId: '704676'
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90],
 							[970, 250]
@@ -375,7 +375,7 @@ export default {
 			vmg: {
 				enabled: false,
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[3, 3]
 						]
@@ -385,22 +385,22 @@ export default {
 			wikia: {
 				enabled: false,
 				slots: {
-					top_leaderboard: {
+					TOP_LEADERBOARD: {
 						sizes: [
 							[728, 90]
 						]
 					},
-					top_boxad: {
+					TOP_RIGHT_BOXAD: {
 						sizes: [
 							[300, 250]
 						]
 					},
-					incontent_boxad_1: {
+					INCONTENT_BOXAD_1: {
 						sizes: [
 							[300, 250]
 						]
 					},
-					bottom_leaderboard: {
+					BOTTOM_LEADERBOARD: {
 						sizes: [
 							[728, 90]
 						]
@@ -410,11 +410,11 @@ export default {
 			wikiaVideo: {
 				enabled: false,
 				slots: {
-					featured: {
+					FEATURED: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
 						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
 					},
-					incontent_player: {
+					INCONTENT_PLAYER: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
 						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
 					}

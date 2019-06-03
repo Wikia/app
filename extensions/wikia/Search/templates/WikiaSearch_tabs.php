@@ -26,11 +26,6 @@
 						</li>
 						<li>
 							<label><input type="radio" name="filters[]" value="is_video" <? if($form['is_video']){ ?>checked<? } ?> id="filter-is-video" /><?= wfMessage('wikiasearch2-filter-videos') ?></label>
-							<ul class="video-filters <? if(!$form['is_video']){ ?>hidden <? } ?>">
-								<li>
-									<label><input type="checkbox" name="filters[]" value="is_hd" <? if($form['is_hd']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch2-filter-hd') ?></label>
-								</li>
-							</ul>
 						</li>
 					</ul>
 				</div>
