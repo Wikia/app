@@ -1,6 +1,0 @@
-# This is a base nginx image with Wikia's directory structure
-FROM quay.io/martinhelmich/prometheus-nginxlog-exporter
-
-COPY ./prometheus-nginxlog-exporter.hcl /etc/prometheus-nginxlog-exporter.hcl
-CMD -config-file /etc/prometheus-nginxlog-exporter.hcl
-
