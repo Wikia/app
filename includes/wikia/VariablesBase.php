@@ -8987,7 +8987,7 @@ $wgTriviaQuizzesEnabledPages = [];
  * @see LORE-519
  * @var bool
  */
-$wgEnableArticleExporterHooks = false;
+$wgEnableArticleExporterHooks = true;
 
 /**
  * ArticleExporter RabbitMQ configuration.
