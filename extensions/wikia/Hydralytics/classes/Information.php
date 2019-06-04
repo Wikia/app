@@ -166,7 +166,7 @@ class Information {
 	 * @return	array	Geolocation by: [percentage => Country Code]
 	 */
 	static public function getGeolocation($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['Poland' => 100, 'USA' => 80], sessions => []];
+		return ['pageviews' => ['Poland' => 100, 'USA' => 80], 'sessions' => []];
 	}
 
 	/**
@@ -178,7 +178,7 @@ class Information {
 	 * @return	array	Top Viewed Pages
 	 */
 	static public function getTopViewedPages($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['Interesting article' => 100, 'Nice one' => 80], sessions => []];
+		return ['pageviews' => ['Interesting article' => 100, 'Nice one' => 80], 'sessions' => []];
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Information {
 	 * @return	array	Top Viewed Files
 	 */
 	static public function getTopViewedFiles($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['file1' => 100, 'file2' => 80], sessions => []];
+		return ['pageviews' => ['file1' => 100, 'file2' => 80], 'sessions' => []];
 	}
 
 	/**
