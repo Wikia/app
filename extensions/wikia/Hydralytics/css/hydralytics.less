@@ -1,0 +1,204 @@
+@font-bright: rgb(255, 255, 255);
+@font-medium: rgba(255,255,255,0.7);
+@accent-grey:#B3B3B3;
+@header-color: #272727;
+@content-box-color: #37393D;
+@link-color: #F58121;
+@alt-orange: #FFB67A;
+@hydra-green: #b0e03b;
+
+#analytics_wrapper {
+	padding: 10px;
+	background-color: #20191B;
+	border-radius: 5px;
+	font-family: 'Roboto', sans-serif;
+	color: @font-bright;
+}
+
+#analytics_grid {
+	align-items: stretch;
+	display: grid;
+	grid-gap: 30px;
+	font-family: sans-serif;
+	font-size: 14px;
+}
+// Lil Ole Baby Screens, also when the sidebar in hydra collapses.
+@media screen and (max-width: 800px) {
+	#analytics_grid { 
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto auto;
+		grid-template-areas:
+		"number_of_pageviews"
+		"number_of_visitors"
+		"geolocation"
+		"top_viewed_pages"
+		"most_visited_files"
+		"desktop_vs_mobile"
+		"browser_breakdown"
+		"edits_per_day"
+		"logged_in_out"
+		"top_editors"
+		"active_editors"
+		"top_search_terms"
+		"staff_contact";
+	}
+}
+// People with little windows
+@media screen and (max-width: 1499px) and (min-width: 801px) {
+	.skin-hydradark #analytics_grid, .skin-hydra #analytics_grid { 
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto auto auto auto auto auto;
+		grid-template-areas:
+		"number_of_pageviews number_of_pageviews"
+		"number_of_visitors  geolocation"
+		"top_viewed_pages	 most_visited_files"
+		"desktop_vs_mobile	 browser_breakdown	"
+		"edits_per_day		 logged_in_out"
+		"top_editors 		 active_editors"
+		"top_search_terms  	 staff_contact";
+	}
+}
+// One Whole Gucciboi Monitor
+@media screen and (min-width: 1500px) {
+	.skin-hydradark #analytics_grid, .skin-hydra #analytics_grid { 
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto auto auto auto;
+		grid-template-areas:
+			"top_viewed_pages   number_of_pageviews number_of_pageviews number_of_visitors"
+			"most_visited_files desktop_vs_mobile   browser_breakdown   geolocation       "
+			"edits_per_day      edits_per_day       logged_in_out       logged_in_out     "
+			"top_editors 		active_editors     	top_search_terms    staff_contact     ";
+	}
+}
+
+#analytics_grid.usage_grid { 
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto auto;
+	grid-template-areas:
+		"admin_count       active_admin_count admin_views"
+		"admin_count_graph admin_count_graph  admin_views"
+}
+
+#analytics_grid * ul, #analytics_grid * ol {
+	margin: 0;
+	padding: 0.3em 0 0 1.6em;
+}
+
+.grid_box_header {
+	background-color: @header-color;
+	border-bottom: 2px solid black;
+	border-radius: 4px 4px 0 0;
+	color: @font-bright;
+	display: block;
+	font-size: 1em;
+	line-height: 2.5em;
+	letter-spacing: 1px;
+	//margin: 0 auto;
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.last30 {
+	text-align: right;
+	font-size: 12px;
+	padding: 5px;
+	color: @font-medium;
+}
+
+.analytics_table {
+	width: 100%;
+	color: @font-bright !important;
+	background: transparent !important; // I was triggered by some wikis styling the "table" selector.
+}
+
+.analytics_table th {
+	text-align: left;
+	padding: 5px;
+}
+
+.analytics_table td {
+	padding: 0px 5px;
+}
+
+#analytics_header {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+#analytics_header > #analytics_usage {
+	display: flex;
+	flex: 1 1 auto;
+}
+
+#analytics_header > #analytics_report_time {
+	display: flex;
+	flex: 0 1 auto;
+}
+
+#analytics_confidential_header {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#analytics_confidential {
+	display: inline-block;
+	//text-transform: uppercase;
+	border: 2px solid @link-color;
+	background: @header-color;
+	color: @font-bright;
+	font-size: 1.3em;
+	letter-spacing: 1px;
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.grid_box {
+	background-color: @content-box-color;
+	border-radius: 5px;
+	color: @font-bright;
+	overflow: hidden; // make sure charts resize
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	//flex-wrap: wrap;
+	//min-height: 300px; // dont let the auto-grids be "too small"
+}
+
+.grid_box a, a.external {
+	color: @link-color !important;
+	text-decoration: underline;
+	&:active {
+		color: @link-color !important;
+	}
+	&:visited {
+		color: @link-color !important;
+	}
+}
+
+.grid_box_inner {
+	padding: 5px;
+	position: relative;
+}
+
+.grid_box_chart {
+	flex: 1 0 300px;
+	//height: calc(100% - 37px); // 100% - the height of the header.
+	//height: -moz-calc(100% - 37px);
+	//height: -webkit-calc(100% - 37px);
+	//min-height: 90%; // not the most elegant css...
+	//min-height: 300px;
+	padding: 5px;
+	position: relative;
+}
+
+.grid_box_largetext {
+	font-size: 3em;
+	text-align: center;
+	margin: 15px 0px;
+}

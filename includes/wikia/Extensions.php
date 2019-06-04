@@ -1852,3 +1852,6 @@ if ( !empty ( $wgEnableArticleExporterHooks ) ) {
 }
 // LORE-519
 include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
+
+// DE-4374
+include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
