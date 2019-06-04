@@ -38,3 +38,21 @@ $wgExtensionMessagesFiles['Hydralytics'] = "{$dir}/Hydralytics.i18n.php";
 
 $wgSpecialPages['Analytics'] = 'Hydralytics\\SpecialAnalytics';
 
+$wgResourceModules['ext.hydralytics.styles'] = array(
+        'styles' => array(
+                'extensions/wikia/Hydralytics/css/hydralytics.less'
+        ),
+);
+
+
+$wgResourceModules['ext.hydralytics.scripts'] = array(
+        'scripts' => array(
+                'extensions/wikia/Hydralytics/js/chart.bundle.min.js',
+                'extensions/wikia/Hydralytics/js/moment.min.js',
+                'extensions/wikia/Hydralytics/js/lodash.min.js',
+                'extensions/wikia/Hydralytics/js/hydralytics.js',
+        ),
+        'dependencies' => array(
+                "mediawiki.language"
+        )
+);
