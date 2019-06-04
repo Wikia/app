@@ -47,6 +47,7 @@ spec:
             periodSeconds: 10
           ports:
             - containerPort: 8080
+            - containerPort: 4040
           resources:
             limits:
               memory: 200Mi
@@ -139,6 +140,9 @@ spec:
   - port: main
     path: /metrics.php
     interval: 10s
+  - port: vtsmetrics
+    path: /metrics
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
@@ -158,6 +162,10 @@ spec:
       port: 9253
       name: metrics
       targetPort: 9253
+    - protocol: TCP
+      port: 4040
+      name: vtsmetrics
+      targetPort: 4040
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
