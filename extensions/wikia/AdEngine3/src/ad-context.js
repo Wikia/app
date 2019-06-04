@@ -43,7 +43,7 @@ export default {
 			lazyLoadingEnabled: false,
 			bidsRefreshing: {
 				enabled: false,
-				slots: ['incontent_boxad_1']
+				slots: ['INCONTENT_BOXAD_1']
 			},
 			aol: {
 				enabled: false,

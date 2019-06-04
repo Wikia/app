@@ -4,6 +4,7 @@ import {
 	BigFancyAdBelow,
 	FloorAdhesion,
 	Interstitial,
+	HideOnViewability,
 	PorvataTemplate,
 	Roadblock,
 	StickyTLB
@@ -22,6 +23,7 @@ export const templateRegistry = {
 		templateService.register(BigFancyAdBelow, getBfabConfig());
 		templateService.register(FloorAdhesion, getOutOfPageConfig());
 		templateService.register(Interstitial, getOutOfPageConfig());
+		templateService.register(HideOnViewability);
 		templateService.register(PorvataTemplate, getPorvataConfig());
 		templateService.register(Roadblock, getRoadblockConfig());
 		templateService.register(Skin);
