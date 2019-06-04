@@ -122,7 +122,7 @@ class HelperController extends \WikiaController {
 			return 'Email\Controller\GoogleDisconnect';
 		}
 		if ( $tokenContext === 'twitch' ) {
-			return 'Email\Controller\GoogleDisconnect';
+			return 'Email\Controller\TwitchDisconnect';
 		}
 		return 'Email\Controller\PasswordResetLink';
     }
