@@ -715,13 +715,6 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'oasis') {
-	//see RT#46116
-	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
-		addOnloadHook(function() { Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start();} );
-	}
-}
-
 // http://www.wikia.com/wiki/User:Dantman/global.js
 // RT#9031
 
