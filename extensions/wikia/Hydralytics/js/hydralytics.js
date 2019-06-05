@@ -593,4 +593,14 @@ $(function() {
 	}
 	header();
 	waitForData();
+
+	// Wikia change
+	// Wikia.Tracker:  trackingevent editor-ck/impression/draft-conflict/ [analytics track]
+	require(['wikia.tracker'], function(tracker) {
+		tracker.track({
+			trackingMethod: 'analytics',
+			action: tracker.ACTIONS.IMPRESSION,
+			category: 'wikia_analytics'
+		});
+	})
 });
