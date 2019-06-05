@@ -53,5 +53,18 @@ $wgResourceModules['ext.hydralytics.scripts'] = array(
 	),
 	'dependencies' => array(
 	    "mediawiki.language"
-)
+	),
+	'messages' => array(
+		"based_on_last_30",
+		"edits",
+		"engaged_admins",
+		"logged_in",
+		"logged_out",
+		"new_visitors",
+		"nonengaged_admins",
+		"page_views",
+		"returning_visitors",
+		"total_page_views",
+		"total_visitors",
+	),
 );
