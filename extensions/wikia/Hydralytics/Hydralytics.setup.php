@@ -5,24 +5,23 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$dir = dirname( __FILE__ );
+$dir = __DIR__;
 
 /**
  * info
  */
-$wgExtensionCredits['other'][] =
-	array(
-		'name' => 'Hydralytics',
-		'author' => array(
-			'Brent Copeland',
-			'Alexia E. Smith',
-			'Hydra Wiki Platform Team',
-			'Fandom Data Engineering Team'
-		),
-		'descriptionmsg' => 'wikianalytics_description',
-		'version' => '1.0',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiAnalytics',
-	);
+$wgExtensionCredits['other'][] = array(
+	'name' => 'Hydralytics',
+	'author' => array(
+		'Brent Copeland',
+		'Alexia E. Smith',
+		'Hydra Wiki Platform Team',
+		'Fandom Data Engineering Team'
+	),
+	'descriptionmsg' => 'hydralytics_description',
+	'version' => '1.0',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiAnalytics',
+);
 
 /**
  * classes
@@ -39,20 +38,20 @@ $wgExtensionMessagesFiles['Hydralytics'] = "{$dir}/Hydralytics.i18n.php";
 $wgSpecialPages['Analytics'] = 'Hydralytics\\SpecialAnalytics';
 
 $wgResourceModules['ext.hydralytics.styles'] = array(
-        'styles' => array(
-                'extensions/wikia/Hydralytics/css/hydralytics.scss'
-        ),
+	'styles' => array(
+	    'extensions/wikia/Hydralytics/css/hydralytics.scss'
+	),
 );
 
 
 $wgResourceModules['ext.hydralytics.scripts'] = array(
-        'scripts' => array(
-                'extensions/wikia/Hydralytics/js/chart.bundle.min.js',
-                'extensions/wikia/Hydralytics/js/moment.min.js',
-                'extensions/wikia/Hydralytics/js/lodash.min.js',
-                'extensions/wikia/Hydralytics/js/hydralytics.js',
-        ),
-        'dependencies' => array(
-                "mediawiki.language"
-        )
+	'scripts' => array(
+	    'extensions/wikia/Hydralytics/js/Chart.bundle.js',
+	    'extensions/wikia/Hydralytics/js/moment.js',
+	    'extensions/wikia/Hydralytics/js/lodash.min.js',
+	    'extensions/wikia/Hydralytics/js/hydralytics.js',
+	),
+	'dependencies' => array(
+	    "mediawiki.language"
+)
 );
