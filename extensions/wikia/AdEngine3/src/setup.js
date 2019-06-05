@@ -108,6 +108,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')
 	);
 
+	context.set('services.confiant.enabled', isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& isGeoEnabled('wgAdDriverKruxCountries') && !instantGlobals.get('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));

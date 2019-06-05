@@ -1419,6 +1419,20 @@ $wgAdDriverBrowsiCountries = null;
 $wgAdDriverConfiantCountries = null;
 
 /**
+ * @name $wgAdDriverConfiantDesktopCountries
+ * List of countries Confiant will be enabled on Oasis
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantMobileCountries
+ * List of countries Confiant will be enabled on Mobile-Wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantMobileCountries = null;
+
+/**
  * @name $wgAdDriverNielsenCountries
  * List of countries Nielsen DCR will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
