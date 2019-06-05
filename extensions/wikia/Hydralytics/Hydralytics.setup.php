@@ -40,7 +40,7 @@ $wgSpecialPages['Analytics'] = 'Hydralytics\\SpecialAnalytics';
 
 $wgResourceModules['ext.hydralytics.styles'] = array(
         'styles' => array(
-                'extensions/wikia/Hydralytics/css/hydralytics.less'
+                'extensions/wikia/Hydralytics/css/hydralytics.scss'
         ),
 );
 
