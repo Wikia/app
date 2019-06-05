@@ -1,21 +1,60 @@
-$messages = [ ];
-if ( !function_exists( 'wfJsonI18nShimWikiaDesignSystem' ) ) {
-	function wfJsonI18nShimWikiaDesignSystem( $cache, $code, &$cachedData ) {
-		$codeSequence = array_merge( [ $code ], $cachedData['fallbackSequence'] );
-		foreach ( $codeSequence as $csCode ) {
-			$fileName = __DIR__ . "/i18n/$csCode.json";
-			if ( is_readable( $fileName ) ) {
-				$data = FormatJson::decode( file_get_contents( $fileName ), true );
-				foreach ( array_keys( $data ) as $key ) {
-					if ( $key === '' || $key[0] === '@' ) {
-						unset( $data[$key] );
-					}
-				}
-				$cachedData['messages'] = array_merge( $data, $cachedData['messages'] );
-			}
-			$cachedData['deps'][] = new FileDependency( $fileName );
-		}
-		return true;
-	}
-	$GLOBALS['wgHooks']['LocalisationCacheRecache'][] = 'wfJsonI18nShimWikiaDesignSystem';
-}
+<?php
+$messages = array();
+
+$messages['en'] = array(
+	"hydralytics" => "Hydralytics",
+	"hydralytics_description" => "Hydra Wiki Platform Analytics",
+	"analytics_dashboard" => "Wiki Analytics Admin Dashboard",
+	"hlfaqurl-text" => "Policies, Procedures, and FAQ",
+	"hlfeedbackurl-text" => "Wiki Admin Dashboard Feedback",
+	"hlslackurl-text" => "Slack Information",
+	"analyticsdashboard" => "Analytics Dashboard",
+	"analyticsdashboardusage" => "Analytics Dashboard Usage",
+	"error_analytics_title" => "Error - Analytics Dashboard",
+	"error_analytics_text" => "There was an error attempting to generate the report.  The error is: \"$1\"",
+	"error_analytics_usage_master" => "The analytics usage page is only available on the master wiki.",
+	"analytics_usage" => "Dashboard Usage",
+	"action-analytics" => "view wiki analytics",
+	"top_viewed_pages" => "Top Viewed Pages",
+	"number_of_pageviews" => "# of Page Views",
+	"number_of_visitors" => "# of Visitors",
+	"top_editors" => "Top Editors",
+	"geolocation" => "Geolocation",
+	"most_visited_files" => "Most Visited Files",
+	"staff_contact" => "Staff Contact",
+	"desktop_vs_mobile" => "Desktop vs. Mobile Sessions",
+	"recent_changes" => "Recent Changes",
+	"help_links" => "Help",
+	"browser_breakdown" => "Browser Sessions Breakdown",
+	"active_editors" => "Active Editors",
+	"edits_per_day" => "# of Edits per Day",
+	"logged_in_out" => "Logged In vs. Out Edits",
+	"top_search_terms" => "Top Search Terms",
+	"analytics_report_generated" => "Report Generated $1",
+	"analytics_confidential" => "Information on this page is shared as a courtesy for our administrators and should not be re-shared without permission.",
+	"view_more" => "View more",
+	"wiki_manager" => "Wiki Managers",
+	"community_manager" => "Community Managers",
+	"total_page_views" => "Total Page Views",
+	"page_views" => "Page Views",
+	"total_visitors" => "Total Visitors",
+	"returning_visitors" => "Returning Visitors",
+	"new_visitors" => "New Visitors",
+	"based_on_last_30" => "data based on last 30 days",
+	"page" => "Page",
+	"location" => "Location",
+	"sessions" => "Sessions",
+	"file" => "File",
+	"logged_in" => "Logged In",
+	"logged_out" => "Logged Out",
+	"user" => "User",
+	"date" => "Date",
+	"admin_count" => "Total Admins",
+	"active_admin_count" => "Admins Using Dashboard",
+	"admin_count_graph" => "Total / Usage Graph",
+	"engaged_admins" => "Admins Using Dashboard",
+	"nonengaged_admins" => "Admins Not Using Dashboard",
+	"active_month" => "Month",
+	"admin_views" => "Views per admin",
+	"right-analytics" => "Access wiki analytics"
+);

@@ -390,7 +390,7 @@ class SpecialAnalytics extends \SpecialPage {
 			$generatedAt = $generatedAt . "<script type='text/javascript'>var GAPropID = '{$propID}';</script>";
 		}
 
-		$this->getOutput()->setPageTitle(wfMessage('analyticsdashboard')->escaped());
+		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);
 	}
 
