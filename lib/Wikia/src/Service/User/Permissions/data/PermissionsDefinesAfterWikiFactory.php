@@ -650,3 +650,8 @@ $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = t
 // SUS-5473 | allow staff members to request a run of updateSpecialPages
 $wgGroupPermissions['*']['schedule-update-special-pages'] = false;
 $wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
+
+// DE-4374 | allow staff members and wikis admins to access Special:Analytics
+$wgGroupPermissions['*']['analytics'] = false;
+$wgGroupPermissions['sysop']['analytics'] = true;
+$wgGroupPermissions['staff']['analytics'] = true;

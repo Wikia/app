@@ -40,9 +40,7 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @return	void	[Outputs to screen]
 	 */
 	public function execute($subpage) {
-		/*if (!$this->getUser()->isAllowed($this->getRestriction())) {
-			throw new \PermissionsError($this->getRestriction());
-		}*/
+		$this->checkPermissions();
 
 		$this->getOutput()->addModuleStyles(['ext.hydralytics.styles']);
 		$this->getOutput()->addModules(['ext.hydralytics.scripts']);
