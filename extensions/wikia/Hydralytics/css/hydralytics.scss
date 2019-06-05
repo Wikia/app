@@ -1,7 +1,9 @@
+@import 'skins/shared/color';
+
 $font-bright: rgb(255, 255, 255);
 $font-medium: rgba(255,255,255,0.7);
 $accent-grey:#B3B3B3;
-$header-color: #272727;
+$header-color: $color-community-header;
 $content-box-color: #37393D;
 $link-color: #F58121;
 $alt-orange: #FFB67A;
@@ -40,9 +42,9 @@ $hydra-green: #b0e03b;
 		"staff_contact";
 	}
 }
-// People with little windows
+
 @media screen and (max-width: 1499px) and (min-width: 801px) {
-	.skin-hydradark #analytics_grid, .skin-hydra #analytics_grid { 
+	#analytics_grid {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto auto auto auto auto auto auto;
 		grid-template-areas:
@@ -55,9 +57,9 @@ $hydra-green: #b0e03b;
 		"top_search_terms  	 staff_contact";
 	}
 }
-// One Whole Gucciboi Monitor
+
 @media screen and (min-width: 1500px) {
-	.skin-hydradark #analytics_grid, .skin-hydra #analytics_grid { 
+	#analytics_grid {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		grid-template-rows: auto auto auto auto;
 		grid-template-areas:
@@ -106,7 +108,7 @@ $hydra-green: #b0e03b;
 .analytics_table {
 	width: 100%;
 	color: $font-bright !important;
-	background: transparent !important; // I was triggered by some wikis styling the "table" selector.
+	background: transparent !important;
 }
 
 .analytics_table th {
@@ -143,7 +145,6 @@ $hydra-green: #b0e03b;
 
 #analytics_confidential {
 	display: inline-block;
-	//text-transform: uppercase;
 	border: 2px solid $link-color;
 	background: $header-color;
 	color: $font-bright;
