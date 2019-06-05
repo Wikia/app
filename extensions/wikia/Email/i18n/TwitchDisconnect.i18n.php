@@ -14,3 +14,4 @@ $messages['qqq'] = array(
 	'emailext-twitchdisconnect-intro' => 'Text shown just above the username and password',
 	'emailext-twitchdisconnect-instructions' => 'Instructions for using and resetting the given temporary password',
 );
+
