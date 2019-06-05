@@ -1412,13 +1412,6 @@ $wgAdDriverDelayTimeout = 2000;
 $wgAdDriverBrowsiCountries = null;
 
 /**
- * @name $wgAdDriverConfiantCountries
- * List of countries Confiant will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverConfiantCountries = null;
-
-/**
  * @name $wgAdDriverNielsenCountries
  * List of countries Nielsen DCR will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
