@@ -8999,3 +8999,8 @@ $wgArticleExporterExchange = [
     'exchange' => 'taxonomy-ex',
     'routing' => 'taxonomy.article-edits'
 ];
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = true;
