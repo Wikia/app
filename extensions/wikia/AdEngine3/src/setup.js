@@ -6,6 +6,7 @@ import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
+import pageTracker from "./tracking/page-tracker";
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -221,8 +222,11 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			slotName = slot.slotName;
 		}
 
-		context.push('state.adStack', { id: slotName })
+		context.push('state.adStack', { id: slotName });
 	});
+
+	trackAdEngineStatus();
+
 	window.adslots2.start();
 }
 
@@ -234,6 +238,26 @@ function configure(adsContext, isOptedIn) {
 
 	context.push('listeners.slot', slotTracker);
 	context.push('listeners.slot', viewabilityTracker);
+}
+
+/**
+ * Checks state.showAds and sends to DW information about AdEngine status
+ */
+function trackAdEngineStatus() {
+	if (context.get('state.showAds')) {
+		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
+	} else {
+		pageTracker.trackProp('adengine', 'off_' + getReasonForAdEngineOff());
+	}
+}
+
+/**
+ * Goes through context and checks why AdEngine is off
+ *
+ * @returns {string}
+ */
+function getReasonForAdEngineOff() {
+	return 'unknown_reason';
 }
 
 function init() {
