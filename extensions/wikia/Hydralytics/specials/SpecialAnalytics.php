@@ -14,8 +14,6 @@
 
 namespace Hydralytics;
 
-use DynamicSettings\Environment;
-
 class SpecialAnalytics extends \SpecialPage {
 	/**
 	 * Output HTML
@@ -50,11 +48,7 @@ class SpecialAnalytics extends \SpecialPage {
 		$this->getOutput()->addModules(['ext.hydralytics.scripts']);
 		$this->setHeaders();
 
-		if ($subpage == "usage") {
-			$this->usagePage();
-		} else {
-			$this->analyticsPage();
-		}
+		$this->analyticsPage();
 
 		$this->getOutput()->addHTML($this->content);
 	}
@@ -392,95 +386,6 @@ class SpecialAnalytics extends \SpecialPage {
 
 		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);
-	}
-
-	/**
-	 * Display the usage page.
-	 *
-	 * @access	private
-	 * @return	void	[Outputs to screen]
-	 */
-	private function usagePage() {
-		if (!Environment::isMasterWiki()) {
-			throw new \ErrorPageError(
-				'error_analytics_title',
-				'error_analytics_usage_master'
-			);
-		}
-		$this->getOutput()->setPageTitle(wfMessage('analyticsdashboardusage')->escaped());
-		if (!class_exists('AdminMinder\AdminList')) {
-			throw new \ErrorPageError(
-				'error_analytics_title',
-				'error_analytics_text',
-				["Please enable AdminMinder extension to use this page."]
-			);
-		}
-
-		$adminList =  new \AdminMinder\AdminList;
-		$adminCount = $adminList::getCachedAdminsCount();
-
-		$stats = \Cheevos\Cheevos::getStatProgress(
-			[
-				'stat' => 'analytics_dashboard_hit',
-				'global' => true,
-				'limit' => 0,
-				'start_time' => time() - 2592000,
-				'sort_direction' => 'desc'
-			]
-		);
-
-		$lookup = \CentralIdLookup::factory();
-		$uniques = 0;
-		foreach ($stats as $stat) {
-			if ($stat->getUser_Id() > 0) {
-				$uniques++;
-				$user = $lookup->localUserFromCentralId($stat->getUser_Id());
-				if ($user) {
-					$views[] = [
-						'views'	=> $stat->getCount(),
-						'user'	=> $user
-					];
-				}
-			}
-		}
-
-		if ($adminCount < $uniques) {
-			$adminCount = $uniques;
-			// Lets assume cheevos at least knows better than AdminMinder.
-			// (mainly for development purposes!)
-		}
-
-		$sections = [
-			"admin_count" => "<div class='grid_box_largetext'>{$adminCount}</div>",
-			"active_admin_count" => "<div class='grid_box_largetext'>{$uniques}</div>",
-			"admin_count_graph" => TemplateAnalytics::wrapSectionData(
-				'admin_count_graph',
-				[
-					"admin_count" => $adminCount,
-					"active_admin_count" => $uniques
-				]
-			)
-		];
-
-		if (count($views)) {
-			$sections['admin_views'] = "
-			<table class='analytics_table'>
-				<thead>
-					<tr>
-						<th>".wfMessage('views')->escaped()."</th>
-						<th>".wfMessage('user')->escaped()."</th>
-					</tr>
-				</thead>
-				<tbody>";
-			foreach ($views as $data) {
-				$sections['admin_views'] .= "<tr><td>".$this->getLanguage()->formatNum($data['views'])."</td><td>".\Linker::link($data['user']->getUserPage())."</td></tr>";
-			}
-			$sections['admin_views'] .= "
-				</tbody>
-			</table>";
-		}
-
-		$this->content = TemplateAnalytics::analyticsPage($sections, "", "usage_grid");
 	}
 
 	/**

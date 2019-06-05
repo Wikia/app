@@ -34,7 +34,6 @@ class TemplateAnalytics {
 				<div id='analytics_confidential'>".wfMessage("analytics_confidential")->escaped()."</div>
 			</div>
 			<div id='analytics_header'>
-				".($gridClass != 'usage_grid' /* TODO && Environment::isMasterWiki() */ ? "<div id='analytics_usage'>".\Linker::link(\Title::newFromText('Special:Analytics/usage'), wfMessage('analytics_usage')->escaped())."</div>" : '')."
 				<div id='analytics_report_time'>{$generatedAt}</div>
 			</div>
 			<div id='analytics_grid'".($gridClass ? 'class="'.$gridClass.'"' : '').">";
