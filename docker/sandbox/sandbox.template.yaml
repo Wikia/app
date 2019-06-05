@@ -22,6 +22,10 @@ spec:
         app_version: "${APP_VERSION}"
         config_version: "${CONFIG_VERSION}"
     spec:
+      dnsConfig:
+        options:
+        - name: timeout
+          value: 1
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:${IMAGE_TAG}
