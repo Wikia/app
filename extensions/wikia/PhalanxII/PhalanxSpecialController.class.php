@@ -119,10 +119,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'wiki-creation' => [
 				Phalanx::TYPE_WIKI_CREATION,
 			],
-			'questions' => [
-				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
-				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
-			]
 		];
 
 		if ( !$showEmailBlock ) {

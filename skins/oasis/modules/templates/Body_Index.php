@@ -41,10 +41,6 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<? if ( !empty( $wg->EnableAnswers ) ) : ?>
-			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
-		<? endif; ?>
-
 		<? if ( !empty( $wg->InterlangOnTop ) ) : ?>
 			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 		<? endif; ?>

@@ -10,11 +10,6 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled( User $admin, $wikiId = null ) {
-		// don't send if we're on an answersWiki
-		if ( self::isAnswersWiki() ) {
-			return false;
-		}
-
 		return true;
 	}
 

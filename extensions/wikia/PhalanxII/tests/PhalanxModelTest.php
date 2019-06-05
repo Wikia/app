@@ -116,24 +116,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 	}
 
 	/* PhalanxContentModel class */
-	/* match_question_title method */
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.04619 ms
-	 * @dataProvider phalanxTitleDataProvider
-	 */
-	public function testPhalanxContentModelQuestionTitle( $title, $block, $result ) {
-		$titleMock = $this->setUpTitle( $title );
-		$phalanxServiceMock = $this->setUpService( $block );
-
-		$model = new PhalanxContentModel( $titleMock );
-		$model->setService( $phalanxServiceMock );
-		$ret = ( int ) $model->match_question_title();
-
-		$this->assertEquals( $result, $ret );
-	}
-
-	/* PhalanxContentModel class */
 	/* match_summary method */
 	/**
 	 * @group Slow

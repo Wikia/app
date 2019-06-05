@@ -77,10 +77,6 @@ class WikiService extends WikiaModel {
 			$userIds[] = $wiki->city_founding_user;
 		}
 
-		if ( !empty( $this->wg->EnableAnswers ) ) {
-			return $userIds;
-		}
-
 		// Get admins and bureaucrats
 		$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
 		$adminIds = WikiaDataAccess::cache(

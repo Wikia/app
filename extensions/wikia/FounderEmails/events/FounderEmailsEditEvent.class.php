@@ -114,10 +114,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	public function enabled( User $admin, $wikiId = null ) {
 		$wikiId = empty( $wikiId ) ? F::app()->wg->CityId : $wikiId;
 
-		if ( self::isAnswersWiki( $wikiId ) ) {
-			return false;
-		}
-
 		// disable if all Wikia email disabled
 		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;

@@ -63,22 +63,6 @@ class CategorySelectHooksHelper {
 
 			// Concatenate categories to article wikitext (if there are any).
 			if ( !empty( $categories ) ) {
-				if ( !empty( $app->wg->EnableAnswers ) ) {
-					// don't add categories if the page is a redirect
-					$magicWords = $app->wg->ContLang->getMagicWords();
-					$redirects = $magicWords[ 'redirect' ];
-
-					// first element doesn't interest us
-					array_shift( $redirects );
-
-					// check for localized versions of #REDIRECT
-					foreach ( $redirects as $alias ) {
-						if ( stripos( $editPage->textbox1, $alias ) === 0 ) {
-							return true;
-						}
-					}
-				}
-
 				// Extract categories from the article, merge them with those passed in, weed out
 				// duplicates and finally append them back to the article (BugId:99348).
 				$data = CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1, true );

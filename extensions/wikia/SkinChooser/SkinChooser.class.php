@@ -30,67 +30,19 @@ class SkinChooser {
 	}
 
 	/**
-	 * Generate proper key for user option
-	 *
-	 * This allow us to use different user preferences for answers / recipes / other wikis
-	 */
-	private static function getUserOptionKey( $option ) {
-		global $wgEnableAnswers;
-		wfProfileIn( __METHOD__ );
-
-		if ( !empty( $wgEnableAnswers ) ) {
-			$key = "answers-{$option}";
-		}
-		else {
-			$key = $option;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $key;
-	}
-
-	/**
-	 * Get given option from user preferences
-	 */
-	private static function getUserOption( $option ) {
-		global $wgUser, $wgEnableAnswers;
-		wfProfileIn( __METHOD__ );
-
-		$val = $wgUser->getGlobalPreference( self::getUserOptionKey( $option ) );
-
-		// fallback to non-answers option (RT #54087)
-		if ( !empty( $wgEnableAnswers ) &&  $val == '' ) {
-			wfDebug( __METHOD__ . ": '{$option}' fallbacked\n" );
-
-			$val = $wgUser->getGlobalPreference( $option );
-		}
-
-		wfDebug( __METHOD__ . ": '{$option}' = {$val}\n" );
-
-		wfProfileOut( __METHOD__ );
-		return $val;
-	}
-
-	/**
 	 * Set given option in user preferences
 	 */
 	private static function setUserOption( $option, $value ) {
 		global $wgUser;
-		wfProfileIn( __METHOD__ );
-
-		$key = self::getUserOptionKey( $option );
-
-		$wgUser->setGlobalPreference( $key, $value );
-		self::log( __METHOD__, "{$key} = {$value}" );
+		$wgUser->setGlobalPreference( $option, $value );
+		self::log( __METHOD__, "{$option} = {$value}" );
 
 		/* debugging skin leak, -uber */
-		if ( $key == 'skin' ) { # yes, i do mean to check key and not option here
+		if ( $option == 'skin' ) { # yes, i do mean to check key and not option here
 			global $wgCityId;
 			$wgUser->setGlobalPreference( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
 		}
 		/* end debug */
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -102,11 +54,11 @@ class SkinChooser {
 	 */
 	private static function getToggle( $tname, $trailer = false, $disabled = false ) {
 		/* @var $wgLang Language */
-		global $wgLang;
+		global $wgLang, $wgUser;
 
 		$ttext = $wgLang->getUserToggle( $tname );
 
-		$checked = self::getUserOption( $tname ) == 1 ? ' checked="checked"' : '';
+		$checked = $wgUser->getGlobalPreference( $tname ) == 1 ? ' checked="checked"' : '';
 		$disabled = $disabled ? ' disabled="disabled"' : '';
 		$trailer = $trailer ? $trailer : '';
 		return "<div class='toggle'><input type='checkbox' value='1' id=\"$tname\" name=\"wpOp$tname\"$checked$disabled />" .
@@ -117,7 +69,7 @@ class SkinChooser {
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
 	public static function onGetSkin( RequestContext $context, &$skin ) {
-		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin, $wgEnableAnswers;
+		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin;
 
 		wfProfileIn( __METHOD__ );
 
@@ -184,8 +136,8 @@ class SkinChooser {
 				$userTheme = $wgDefaultTheme;
 			}
 		} else {
-			$userSkin = self::getUserOption( 'skin' );
-			$userTheme = self::getUserOption( 'theme' );
+			$userSkin = $user->getGlobalPreference( 'skin' );
+			$userTheme = $user->getGlobalPreference( 'theme' );
 
 			if ( empty( $userSkin ) ) {
 				if ( !empty( $wgAdminSkin ) ) {
@@ -210,7 +162,7 @@ class SkinChooser {
 
 		$elems = explode( '-', $chosenSkin );
 
-		$userSkin = ( array_key_exists( 0, $elems ) ) ? ( ( empty( $wgEnableAnswers ) && $elems[ 0 ] == 'answers' ) ? 'oasis' : $elems[ 0 ] ) : null;
+		$userSkin = ( array_key_exists( 0, $elems ) ) ? ( ( $elems[ 0 ] == 'answers' ) ? 'oasis' : $elems[ 0 ] ) : null;
 		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
 		$userTheme = $request->getVal( 'usetheme', $userTheme );
 

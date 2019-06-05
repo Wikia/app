@@ -42,7 +42,6 @@ $classes = [
 	'PhalanxUserBlock' => __DIR__ . '/hooks/PhalanxUserBlock.class.php',
 	'PhalanxContentBlock' => __DIR__ . '/hooks/PhalanxContentBlock.class.php',
 	'PhalanxTitleBlock' => __DIR__ . '/hooks/PhalanxTitleBlock.class.php',
-	'PhalanxAnswersBlock' => __DIR__ . '/hooks/PhalanxAnswersBlock.class.php',
 	'PhalanxWikiCreationBlock' => __DIR__ . '/hooks/PhalanxWikiCreationBlock.class.php',
 	'PhalanxHooks' => __DIR__ . '/hooks/PhalanxHooks.class.php',
 ];
@@ -69,13 +68,9 @@ $phalanxHooks = [
 	],
 	'PhalanxTitleBlock' => [
 		'EditFilter' => 'editFilter',
-		'CreateDefaultQuestionPageFilter' => 'checkTitle',
 		'CreatePageTitleCheck' => 'checkTitle',
 		'PageTitleFilter' => 'pageTitleFilter',
 		'UploadVerification' => 'checkFileTitle',
-	],
-	'PhalanxAnswersBlock' => [
-		'CreateDefaultQuestionPageFilter' => 'badWordsTest',
 	],
 	'PhalanxWikiCreationBlock' => [
 		'CreateWikiChecks::checkBadWords' => 'isAllowedText',
