@@ -514,7 +514,7 @@ $(function() {
 			/************************************/
 				break;
 			default:
-				log.error('Invalid option passed to Chart Config Helper: '+name);
+				log('Invalid option passed to Chart Config Helper: '+name);
 				break;
 		}
 
@@ -571,7 +571,7 @@ $(function() {
 		} else {
 			waitLoop++;
 			if (waitLoop > 10) {
-				log.error("Chart library doesn't seem to exist...");
+				log("Chart library doesn't seem to exist...");
 				return;
 			}
 			setTimeout(waitForChart, 250);
@@ -585,7 +585,7 @@ $(function() {
 		} else {
 			waitLoop++;
 			if (waitLoop > 10) {
-				log.error("Unable to load Section Data. Exiting.");
+				log("Unable to load Section Data. Exiting.");
 				return;
 			}
 			setTimeout(waitForData, 250);
