@@ -464,6 +464,10 @@ export default {
 			parameters: {},
 			timeout: 2000,
 		},
+		instantConfig: {
+			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
+			fallbackConfigKey: 'fallbackInstantConfig',
+		},
 		krux: {
 			enabled: false,
 			id: 'JU3_GW1b',

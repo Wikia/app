@@ -12,10 +12,10 @@ import videoTracker from './tracking/video-tracking';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
-function setupAdEngine(isOptedIn, geoRequiresConsent) {
+async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
-	ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
 	videoTracker.register();
 	recRunner.init();
 
