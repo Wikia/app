@@ -1,12 +1,12 @@
 import { AdEngine, context, events, eventService, slotInjector, templateService, utils, setupNpaContext, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
+import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
 import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
-import pageTracker from "./tracking/page-tracker";
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -247,17 +247,32 @@ function trackAdEngineStatus() {
 	if (context.get('state.showAds')) {
 		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
 	} else {
-		pageTracker.trackProp('adengine', 'off_' + getReasonForAdEngineOff());
+		pageTracker.trackProp('adengine', 'off_' + getReason());
 	}
 }
 
-/**
- * Goes through context and checks why AdEngine is off
- *
- * @returns {string}
- */
-function getReasonForAdEngineOff() {
-	return 'unknown_reason';
+function getReason() {
+	let reasons;
+	const possibleReasons = {
+		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L42
+		'noads_querystring': !!utils.queryString.get('noads'),
+		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L43
+		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/src/setup.js#L87
+		'steam_browser': context.get('state.isSteam') === true,
+		// it's more complicated:
+		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L86
+		'logged_in_user': !!window.wgUserName,
+		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L51
+		'noads_page': context.get('custom.pageType') === 'no_ads'
+	};
+
+	reasons = Object.keys(possibleReasons).filter(function (key) {
+		console.log(key, possibleReasons[key]);
+		return possibleReasons[key] === true;
+	});
+
+	return reasons.length > 0 ? reasons[0] : 'unknown_reason';
 }
 
 function init() {
