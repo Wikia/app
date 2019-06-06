@@ -83,22 +83,8 @@ class SpecialAnalytics extends \SpecialPage {
 			'top_search_terms' => ''
 		];
 
-		$sectionsData = [];
-
-		$redis = false; // TODO \RedisCache::getClient('cache');
+		// TODO: handle caching
 		$recache = true;
-		$ttl = 0;
-		if ($redis !== false && !$this->getRequest()->getBool('debug')) {
-			try {
-				$_sections = unserialize($redis->get($redisKey), ['allowed_classes' => false]);
-				if (is_array($_sections) && array_keys($_sections) === array_keys($sections)) {
-					$sections = $_sections;
-					$recache = false;
-				}
-			} catch (RedisException $e) {
-				wfDebug(__METHOD__.' Caught RedisException - '.$e->getMessage());
-			}
-		}
 
 		if ($recache) {
 			try {
@@ -361,17 +347,6 @@ class SpecialAnalytics extends \SpecialPage {
 				);
 			}
 
-			try {
-				// $redis->setEx($redisKey, 86400, serialize($sections)); TODO memcache
-			} catch (RedisException $e) {
-				wfDebug(__METHOD__.' Caught RedisException - '.$e->getMessage());
-			}
-		}
-
-		try {
-			// $ttl = $redis->ttl($redisKey); TODO memcache
-		} catch (RedisException $e) {
-			wfDebug(__METHOD__.' Caught RedisException - '.$e->getMessage());
 		}
 
 		$generatedAt = wfMessage('analytics_report_generated', 'one day ago TODO')->escaped();
