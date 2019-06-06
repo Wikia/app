@@ -24,16 +24,5 @@
 
 </div>
 
-<div id="InvisibleHighImpactWrapper" class="hidden">
-	<div class="background"></div>
-
-	<div class="top-bar">
-		<div class="label"><?= ucfirst(wfMessage( 'adengine-advertisement' )->escaped()) ?></div>
-		<a class="close">
-			<div class="close-button"></div>
-		</a>
-	</div>
-	<div id="floor_adhesion" class="wikia-ad noprint"></div>
-	<div id="invisible_high_impact_2" class="wikia-ad noprint"></div>
-</div>
-
+<div id="floor_adhesion" class="wikia-ad noprint"></div>
+<div id="invisible_high_impact_2" class="wikia-ad noprint"></div>

@@ -1194,11 +1194,11 @@ $wgAdDriverPubMaticOutstreamCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
- * @name $wgAdDriverDisableRecirculationCountries
- * Disables recirculation in these countries.
+ * @name $wgAdDriverFMRRotatorDelay
+ * Time defining FMR slot rotation cycle
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverDisableRecirculationCountries = null;
+$wgAdDriverFMRRotatorDelay = 10000;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries

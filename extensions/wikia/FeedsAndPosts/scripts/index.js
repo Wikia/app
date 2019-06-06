@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.tracker'], function ($, tracker) {
+require(['jquery', 'wikia.tracker', 'wikia.window'], function ($, tracker, window) {
 	// Use number of hours passed since Jan. 1, 1970. That way cache is busted at most every hour.
 	var version = Math.floor((new Date()).getTime() / (60 * 60 * 1000));
 	var fpLibrary = '/feeds-and-posts/public/dist/lib.min.js?' + version;
@@ -18,6 +18,8 @@ require(['jquery', 'wikia.tracker'], function ($, tracker) {
 			window.fandomEmbeddedFeeds.default(fpContainer, {
 				communityName: wikiName,
 				track: track,
+				communityId: window.wgCityId,
+				language: window.wgContentLanguage,
 			});
 		});
 	}
