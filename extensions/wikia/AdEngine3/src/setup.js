@@ -40,7 +40,8 @@ function setupPageLevelTargeting(adsContext) {
 
 async function updateWadContext() {
 	// BlockAdBlock detection
-	const { isGeoEnabled } = await getAppConfiguration();
+	const appConfig = await getAppConfiguration();
+	const { isGeoEnabled } = appConfig;
 
 	context.set('options.wad.enabled', isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
 
@@ -69,7 +70,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	// set
 	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
-	const { getInstantGlobal, isGeoEnabled } = await getAppConfiguration();
+	const appConfig =  await getAppConfiguration();
+	const { getInstantGlobal, isGeoEnabled } = appConfig;
 
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
