@@ -528,7 +528,7 @@ $(function() {
 				title: {
 					display: false,
 					text: '',
-					fontColor: 'rgba(255,255,255,0.7)'
+					fontColor: window.wgSassParams['color-header']
 				},
 				hover: {
 					mode: 'index',
@@ -537,7 +537,7 @@ $(function() {
 				legend: {
 					display: true,
 					labels: {
-						fontColor: 'rgba(255,255,255,0.7)'
+						fontColor: window.wgSassParams['color-header']
 					}
 				}
 			}

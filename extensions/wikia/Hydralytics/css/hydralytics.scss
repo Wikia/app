@@ -3,7 +3,6 @@
 $font-bright: rgb(255, 255, 255);
 $font-medium: rgba(255,255,255,0.7);
 $accent-grey:#B3B3B3;
-$header-color: $color-community-header;
 $content-box-color: #37393D;
 $link-color: #F58121;
 $alt-orange: #FFB67A;
@@ -12,7 +11,6 @@ $hydra-green: #b0e03b;
 #analytics_wrapper {
 	padding: 10px;
 	border-radius: 5px;
-	color: $font-bright;
 }
 
 #analytics_grid {
@@ -84,10 +82,9 @@ $hydra-green: #b0e03b;
 }
 
 .grid_box_header {
-	background-color: $header-color;
-	border-bottom: 2px solid black;
+	background-color: $color-community-header;
+	color: $color-button-text;
 	border-radius: 4px 4px 0 0;
-	color: $font-bright;
 	display: block;
 	font-size: 1em;
 	line-height: 2.5em;
@@ -107,8 +104,6 @@ $hydra-green: #b0e03b;
 
 .analytics_table {
 	width: 100%;
-	color: $font-bright !important;
-	background: transparent !important;
 }
 
 .analytics_table th {
@@ -146,8 +141,8 @@ $hydra-green: #b0e03b;
 #analytics_confidential {
 	display: inline-block;
 	border: 2px solid $link-color;
-	background: $header-color;
-	color: $font-bright;
+	background-color: $color-community-header;
+	color: $color-button-text;
 	font-size: 1.3em;
 	letter-spacing: 1px;
 	text-align: center;
@@ -156,24 +151,11 @@ $hydra-green: #b0e03b;
 }
 
 .grid_box {
-	background-color: $content-box-color;
 	border-radius: 5px;
-	color: $font-bright;
 	overflow: hidden;
 	position: relative;
 	display: flex;
 	flex-direction: column;
-}
-
-.grid_box a, a.external {
-	color: $link-color !important;
-	text-decoration: underline;
-	&:active {
-		color: $link-color !important;
-	}
-	&:visited {
-		color: $link-color !important;
-	}
 }
 
 .grid_box_inner {
