@@ -91,6 +91,13 @@ class ApiBlock extends ApiBase {
 			'Confirm' => true,
 		);
 
+		$status = SpecialBlock::validateTarget( $params['user'], $user );
+		if ( !$status->isOK() ) {
+			$errors = $status->getErrorsArray();
+			$error = array_shift( $errors[0] );
+			$this->dieUsage( 'Error validating block target', $error, 0, $errors[0] );
+		}
+
 		$retval = SpecialBlock::processForm( $data, $this->getContext() );
 		if ( $retval !== true ) {
 			// We don't care about multiple errors, just report one of them
