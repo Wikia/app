@@ -552,7 +552,7 @@ class SpecialBlock extends FormSpecialPage {
 		list( $target, $type ) = self::getTargetAndType( $value );
 		$status = Status::newGood( $target );
 
-		if ( $type == DatabaseBlock::TYPE_USER ) {
+		if ( $type == Block::TYPE_USER ) {
 			if ( $target->isAnon() ) {
 				$status->fatal(
 					'nosuchusershort',
@@ -564,7 +564,7 @@ class SpecialBlock extends FormSpecialPage {
 			if ( $unblockStatus !== true ) {
 				$status->fatal( 'badaccess', $unblockStatus );
 			}
-		} elseif ( $type == DatabaseBlock::TYPE_RANGE ) {
+		} elseif ( $type == Block::TYPE_RANGE ) {
 			list( $ip, $range ) = explode( '/', $target, 2 );
 
 			if (
@@ -590,7 +590,7 @@ class SpecialBlock extends FormSpecialPage {
 			if ( IP::isIPv6( $ip ) && $range < $wgBlockCIDRLimit['IPv6'] ) {
 				$status->fatal( 'ip_range_toolarge', $wgBlockCIDRLimit['IPv6'] );
 			}
-		} elseif ( $type == DatabaseBlock::TYPE_IP ) {
+		} elseif ( $type == Block::TYPE_IP ) {
 			# All is well
 		} else {
 			$status->fatal( 'badipaddress' );
