@@ -221,11 +221,11 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		);
 		context.set('custom.isCMPEnabled', true);
 
-		if (!(isGeoEnabled('wgAdDriverLkqdOutstreamCountries'))) {
+		if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
 			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
 		}
 
-		if (!(isGeoEnabled('wgAdDriverPubMaticOutstreamCountries'))) {
+		if (!isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
 	}
