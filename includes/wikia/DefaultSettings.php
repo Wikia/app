@@ -1405,6 +1405,13 @@ $wgAdDriverEnableCheshireCat = true;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
+ * @name $wgAdDriverOverscrolledCountries
+ * List of countries where "overscrolled" events are enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOverscrolledCountries = null;
+
+/**
  * @name $wgAdDriverBrowsiCountries
  * List of countries Browsi will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
