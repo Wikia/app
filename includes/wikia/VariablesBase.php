@@ -6658,6 +6658,10 @@ $wgRateLimits = [
 	'mailpassword' => [
 		'ip' => [ 1, 43200 ],
 	],
+	'changeemail' => [
+		'ip' => [ 10, 3600 ],
+		'user' => [ 4, 86400 ],
+	],
 ];
 
 /**
@@ -8977,7 +8981,7 @@ $wgTriviaQuizzesEnabledPages = [];
  * @see LORE-519
  * @var bool
  */
-$wgEnableArticleExporterHooks = false;
+$wgEnableArticleExporterHooks = true;
 
 /**
  * ArticleExporter RabbitMQ configuration.

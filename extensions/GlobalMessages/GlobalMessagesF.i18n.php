@@ -11921,27 +11921,27 @@ $messages['ja'] = array(
 	'filerenameerror' => 'ファイル名を「$1」から「$2」へ変更できませんでした。',
 	'filedeleteerror' => 'ファイル「$1」を削除できませんでした。',
 	'filenotfound' => 'ファイル「$1」が見つかりませんでした。',
-	'fileexistserror' => 'ファイル「$1」への書き込みができません：ファイルが存在します',
-	'formerror' => 'エラー：フォームを送信できませんでした',
+	'fileexistserror' => 'ファイル「$1」への書き込みができません：ファイルが存在します。',
+	'formerror' => 'エラー：フォームを送信できませんでした。',
 	'filename' => 'ファイル名',
 	'filedesc' => '概要',
 	'fileuploadsummary' => '概要：',
 	'filereuploadsummary' => 'ファイルの変更：',
 	'filestatus' => '著作権情報：',
 	'filesource' => '出典：',
-	'filename-toolong' => '240バイトを超えるファイル名は禁止されています。',
+	'filename-toolong' => 'ファイル名は240バイト以下にしてください。',
 	'filetype-mime-mismatch' => 'ファイルの拡張子「$1」がMIMEタイプ「$2」と一致しません。',
-	'filetype-badmime' => 'MIME タイプ "$1" のファイルのアップロードは許可されていません。',
+	'filetype-badmime' => 'MIME タイプ「$1」のファイルをアップロードすることはできません。',
 	'filetype-bad-ie-mime' => '許可されていない潜在的危険性のあるファイル形式「$1」としてInternet Explorerに認識されてしまうため、このファイルをアップロードできません。',
 	'filetype-unwanted-type' => "'''「.$1」'''は好ましくないファイル形式です。
 推奨される{{PLURAL:$3|ファイル形式}}は$2です。",
-	'filetype-banned-type' => "'''「.$1」''' は許可されていないファイル形式です{{PLURAL:$4|}}。
+	'filetype-banned-type' => "'''「.$1」''' は許可されていないファイル形式{{PLURAL:$4|}}です。
 許可されているファイル形式{{PLURAL:$3|}}は$2です。",
-	'filetype-missing' => 'ファイルに拡張子 (".jpg" など）がありません。',
+	'filetype-missing' => 'ファイルに拡張子 (".jpg" など）がありません。ファイルをもう一度確認してからアップロードしてください。',
 	'file-too-large' => '送信されたファイルは大きすぎます。',
 	'filename-tooshort' => 'ファイル名が短すぎます。',
-	'filetype-banned' => 'この形式のファイルは禁止されています。',
-	'fileexists' => "この名前のファイルは既に存在しています。置き換えるべきかどうか確信がもてない場合は、'''<tt>[[:$1]]</tt>'''を確認してください。
+	'filetype-banned' => 'この形式のファイルは利用できません。',
+	'fileexists' => "この名前のファイルは既に存在しています。置き換えるべきかどうか確信がもてない場合は、'''<tt>[[:$1]]</tt>'''を確認してください。アップロードした場合、反映されるまでに2分ほどかかります。
 [[$1|thumb]]",
 	'filepageexists' => "このファイルのための説明ページは既に'''<tt>[[:$1]]</tt>'''に作成されていますが、現在、ファイルが存在していません。
 入力した概要は説明ページに反映されません。
@@ -11955,8 +11955,8 @@ $messages['ja'] = array(
 [[$1|thumb]]
 ファイル'''<tt>[[:$1]]</tt>'''を確認してください。
 確認したファイルが同じ画像のもとのサイズの版である場合、サムネイルを個別にアップロードする必要はありません。",
-	'file-thumbnail-no' => 'ファイル名が <strong><tt>$1</tt></strong> から始まっており、サムネイル（縮小版画像）である可能性が高いです。
-より高精細な画像をお持ちの場合は、フルサイズ版をアップロードしてください。そうでない場合はファイル名を変更してください。',
+	'file-thumbnail-no' => "ファイル名が '''<tt>$1</tt>''' から始まっており、サムネイル（縮小版画像）である可能性が高いです。
+より高精細な画像をお持ちの場合は、フルサイズ版をアップロードしてください。そうでない場合はファイル名を変更してください。",
 	'fileexists-forbidden' => 'この名前のファイルは既に存在しており、上書きできません。
 アップロードを継続したい場合は、前のページに戻り、別のファイル名を使用してください。
 [[File:$1|thumb|center|$1]]',
@@ -11995,14 +11995,14 @@ PICT # その他
 	'filehist-thumb' => 'サムネイル',
 	'filehist-thumbtext' => '$1時点における版のサムネイル',
 	'filehist-nothumb' => 'サムネイルなし',
-	'filehist-user' => '利用者',
+	'filehist-user' => 'ユーザー',
 	'filehist-dimensions' => '解像度',
 	'filehist-filesize' => 'ファイルサイズ',
 	'filehist-comment' => 'コメント',
 	'filehist-missing' => 'ファイルがみつかりません',
 	'filepage-nofile' => 'この名前のファイルは存在しません。',
 	'filepage-nofile-link' => 'この名前のファイルは存在しませんが、[$1 アップロード]することができます。',
-	'filepage.css' => '/* ここに記述したCSSはファイル解説ページにて読み込まれます。また外部のクライアントウィキにも影響します */',
+	'filepage.css' => '/* ここに記述したCSSはファイル解説ページにて読み込まれます。また外部のクライアントウィキにも影響します。 */',
 	'filerevert' => '$1を差し戻す',
 	'filerevert-legend' => 'ファイルを差し戻す',
 	'filerevert-intro' => "ファイル'''[[Media:$1|$1]]'''を[$4 $2$3版]に差し戻そうとしています。",
@@ -12023,25 +12023,26 @@ PICT # その他
 	'filedelete-nofile-old' => "指定された属性を持つ'''$1'''の古い版は存在しません。",
 	'filedelete-otherreason' => '他の、または追加の理由：',
 	'filedelete-reason-otherlist' => 'その他の理由',
-	'filedelete-reason-dropdown' => '*よくある削除理由
+	'filedelete-reason-dropdown' => '*荒らしと問題
 ** 著作権侵害
-** 重複ファイル
-* ヴァンダリズムと問題
-** 著作権侵害
-** スパム／ヴァンダリズム
-* メンテナンス
-** 作者による依頼
+** スパム／荒らし
+*メンテナンス
+** [[w:c:ja.community:project:ユーザーページガイドライン|ユーザーページ画像ポリシー]]
+** 著作者によるリクエスト
 ** ハウスキーピング
 ** 重複／破棄されたファイル
-** 誤った名前のファイル',
+** 誤ったファイル名
+** 削除マーク - i
+** 削除マーク - 即時
+** 他のウィキへ置くべきファイル',
 	'filedelete-edit-reasonlist' => '削除理由を編集する',
 	'filedelete-maintenance' => 'メンテナンス中のため、ファイルの削除と復帰は一時的に無効化されています。',
 	'filedelete-maintenance-title' => 'ファイルを削除できません',
 	'fewestrevisions' => '編集履歴の少ないページ',
 	'fix-double-redirects' => '元のページ名への転送を更新',
-	'file-exists-sharedrepo' => '選ばれたファイル名は既に共有リポジトリー上で使われています。
+	'file-exists-sharedrepo' => '選ばれたファイル名は既に共有リポジトリ上で使われています。
 別の名前を選んでください。',
-	'filemissing' => 'ファイルがありません',
+	'filemissing' => 'ファイルがみつかりません',
 	'filedeleteerror-short' => 'ファイル削除エラー：$1',
 	'filedeleteerror-long' => 'ファイルの削除中にエラーが発生しました：
 
@@ -12049,12 +12050,12 @@ $1',
 	'filedelete-missing' => 'ファイル「$1」は存在しないため、削除することができません。',
 	'filedelete-old-unregistered' => '指定されたファイルの版「$1」はデータベースにありません。',
 	'filedelete-current-unregistered' => '指定されたファイル「$1」はデータベース内にはありません。',
-	'filedelete-archive-read-only' => '保存版ディレクトリ「$1」は、ウェブサーバーから書き込み不可になっています。',
-	'file-info' => 'ファイルサイズ: $1, MIME type: $2',
-	'file-info-size' => '$1 × $2 ピクセル、ファイルサイズ: $3、 MIMEタイプ: $4',
-	'file-info-size-pages' => '$1 × $2 ピクセル、ファイルサイズ: $3、MIMEタイプ: $4、$5ページ{{PLURAL:$5}}。',
-	'file-nohires' => '<small>高精細度の画像はありません。</small>',
-	'file-info-gif-looped' => 'ループします',
+	'filedelete-archive-read-only' => '保存版ディレクトリ「$1」には、ウェブサーバーから書き込めません。',
+	'file-info' => 'ファイルサイズ：$1、MIME type：$2',
+	'file-info-size' => '$1 × $2 ピクセル、ファイルサイズ：$3、 MIMEタイプ：$4',
+	'file-info-size-pages' => '$1 × $2 ピクセル、ファイルサイズ：$3、MIMEタイプ：$4、$5{{PLURAL:$5|ページ}}。',
+	'file-nohires' => '高解像度の画像はありません。',
+	'file-info-gif-looped' => '繰り返し',
 	'file-info-gif-frames' => '$1フレーム',
 	'file-info-png-looped' => '繰り返し',
 	'file-info-png-repeat' => '$1回再生しました',
@@ -12072,25 +12073,25 @@ $1',
 	'fileduplicatesearch-info' => '$1×$2ピクセル<br />ファイルサイズ：$3<br />MIMEタイプ：$4',
 	'fileduplicatesearch-result-1' => 'ファイル「$1」と重複するファイルはありません。',
 	'fileduplicatesearch-result-n' => 'ファイル「$1」は$2件のファイルと重複しています。',
-	'fileduplicatesearch-noresults' => '「$1」という名前のファイルがみつかりません。',
+	'fileduplicatesearch-noresults' => '「$1」という名前のファイルはみつかりません。',
 	'feedback-subject' => '件名：',
 	'feedback-message' => 'メッセージ：',
 	'feedback-cancel' => 'キャンセル',
 	'feedback-submit' => 'フィードバックを送信',
 	'feedback-adding' => 'ページへのフィードバックを追加する...',
-	'feedback-error1' => 'エラー：APIから認識されない結果が返ってきました',
-	'feedback-error2' => 'エラー：編集に失敗しました',
-	'feedback-error3' => 'エラー：APIからの応答がありません',
+	'feedback-error1' => 'エラー：APIから認識されない結果が返ってきました。',
+	'feedback-error2' => 'エラー：編集に失敗しました。',
+	'feedback-error3' => 'エラー：APIからの応答がありません。',
 	'feedback-close' => '完了',
 	'featured' => 'おすすめ',
 	'forum' => 'フォーラム',
-	'feed-watom' => 'FANDOMのAtom',
+	'feed-watom' => 'FandomのAtom',
 	'fast-adv' => '広告',
-	'footer_1.5' => '編集してみましょう',
+	'footer_1.5' => 'このページを編集する',
 	'footer_1' => '$1のこの記事を',
 	'footer_10' => 'ソーシャルブックマーク:',
 	'footer_2' => 'このページに関する議論ページ',
-	'footer_5' => '最終編集:$2 $1',
+	'footer_5' => '最終編集：$2 $1',
 	'footer_6' => 'おまかせ表示',
 	'footer_7' => 'このページをメールで知らせる',
 	'footer_8' => 'ソーシャルブックマーク:',

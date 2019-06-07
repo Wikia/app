@@ -134,6 +134,10 @@ $messages['de'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Nächste',
 	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
+	'wikiasearch2-sort-relevancy' => 'Relevanz',
+	'wikiasearch2-sort-duration' => 'Dauer',
+	'wikiasearch2-sort-publish-date' => 'Veröffentlichungsdatum',
+	'wikiasearch2-filter-hd' => 'Ausschließlich in HD',
 );
 
 $messages['de-formal'] = array(
@@ -221,6 +225,10 @@ $messages['es'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Siguiente',
 	'wikiamobile-wikiasearch2-prev' => 'Anterior',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
+	'wikiasearch2-sort-relevancy' => 'Relevancia',
+	'wikiasearch2-sort-duration' => 'Duración',
+	'wikiasearch2-sort-publish-date' => 'Fecha de publicación',
+	'wikiasearch2-filter-hd' => 'Sólo HD',
 );
 
 $messages['et'] = array(
@@ -285,6 +293,10 @@ $messages['fr'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Suivant',
 	'wikiamobile-wikiasearch2-prev' => 'Précédent',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
+	'wikiasearch2-sort-relevancy' => 'Pertinence',
+	'wikiasearch2-sort-duration' => 'Durée',
+	'wikiasearch2-sort-publish-date' => 'Date publication',
+	'wikiasearch2-filter-hd' => 'HD uniquement',
 );
 
 $messages['gd'] = array(
@@ -372,6 +384,10 @@ $messages['it'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Avanti',
 	'wikiamobile-wikiasearch2-prev' => 'Indietro',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
+	'wikiasearch2-sort-relevancy' => 'Rilevanza',
+	'wikiasearch2-sort-duration' => 'Durata',
+	'wikiasearch2-sort-publish-date' => 'Data di pubblicazione',
+	'wikiasearch2-filter-hd' => 'Solo HD',
 );
 
 $messages['ja'] = array(
@@ -419,6 +435,10 @@ $messages['ja'] = array(
 	'wikiamobile-wikiasearch2-next' => '次へ',
 	'wikiamobile-wikiasearch2-prev' => '戻る',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
+	'wikiasearch2-sort-relevancy' => '関連性',
+	'wikiasearch2-sort-duration' => 'Duration',
+	'wikiasearch2-sort-publish-date' => '公開日',
+	'wikiasearch2-filter-hd' => 'HD Only',
 );
 
 $messages['jam'] = array(
@@ -597,6 +617,10 @@ $messages['pl'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Dalej',
 	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
+	'wikiasearch2-sort-relevancy' => 'Zgodność z frazą',
+	'wikiasearch2-sort-duration' => 'Czas trwania',
+	'wikiasearch2-sort-publish-date' => 'Data publikacji',
+	'wikiasearch2-filter-hd' => 'Tylko HD',
 );
 
 $messages['pms'] = array(
@@ -617,7 +641,7 @@ $messages['pt'] = array(
 	'wikiasearch3-related-wiki' => 'Wiki relacionada',
 	'wikiasearch3-view-more-wikis' => 'Visualizar mais wikis',
 	'wikiasearch2-search-on-wiki' => 'Pesquisar nesta wiki',
-	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}] para $2 na {{SITENAME}}',
+	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para $2 na {{SITENAME}}',
 	'wikiasearch2-results-for' => 'Resultados para $1 na {{SITENAME}}',
 	'wikiasearch2-results-redirected-from' => 'redirecionado de',
 	'wikiasearch2-global-search-headline' => 'Encontrar comunidades no FANDOM',
@@ -650,6 +674,10 @@ $messages['pt'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Próximo',
 	'wikiamobile-wikiasearch2-prev' => 'Anterior',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
+	'wikiasearch2-sort-relevancy' => 'Relevância',
+	'wikiasearch2-sort-duration' => 'Duração',
+	'wikiasearch2-sort-publish-date' => 'Data de publicação',
+	'wikiasearch2-filter-hd' => 'Apenas HD',
 );
 
 $messages['ro'] = array(
@@ -700,6 +728,10 @@ $messages['ru'] = array(
 	'wikiamobile-wikiasearch2-next' => 'Следующая',
 	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
+	'wikiasearch2-sort-relevancy' => 'Релевантность',
+	'wikiasearch2-sort-duration' => 'Продолжительность',
+	'wikiasearch2-sort-publish-date' => 'Дата публикации',
+	'wikiasearch2-filter-hd' => 'Только HD',
 );
 
 $messages['sr-ec'] = array(
@@ -807,6 +839,10 @@ $messages['zh-hans'] = array(
 	'wikiamobile-wikiasearch2-next' => '下一页',
 	'wikiamobile-wikiasearch2-prev' => '上一页',
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
+	'wikiasearch2-sort-relevancy' => '相关内容',
+	'wikiasearch2-sort-duration' => '时长',
+	'wikiasearch2-sort-publish-date' => '上传时间',
+	'wikiasearch2-filter-hd' => '只搜寻高清视频',
 );
 
 $messages['zh-hant'] = array(
@@ -854,5 +890,9 @@ $messages['zh-hant'] = array(
 	'wikiamobile-wikiasearch2-next' => '下一頁',
 	'wikiamobile-wikiasearch2-prev' => '上一頁',
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
+	'wikiasearch2-sort-relevancy' => '相關度',
+	'wikiasearch2-sort-duration' => '影片長度',
+	'wikiasearch2-sort-publish-date' => '上傳時間',
+	'wikiasearch2-filter-hd' => '只搜尋高畫質影片',
 );
 
