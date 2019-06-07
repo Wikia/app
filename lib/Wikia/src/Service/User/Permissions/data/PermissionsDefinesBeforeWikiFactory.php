@@ -411,6 +411,7 @@ $wgGroupPermissions['wiki-manager']['lookupuser'] = true;
 $wgGroupPermissions['wiki-manager']['move'] = true;
 $wgGroupPermissions['wiki-manager']['move-subpages'] = true;
 $wgGroupPermissions['wiki-manager']['movefile'] = true;
+$wgGroupPermissions['wiki-manager']['multilookup'] = true;
 $wgGroupPermissions['wiki-manager']['phalanxexempt'] = true;
 $wgGroupPermissions['wiki-manager']['protect'] = true;
 $wgGroupPermissions['wiki-manager']['proxyunbannable'] = true;
