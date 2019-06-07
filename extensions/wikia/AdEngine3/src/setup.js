@@ -67,7 +67,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 
 	context.extend(basicContext);
 
-	// set
 	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
 	const appConfig =  await getAppConfiguration();
