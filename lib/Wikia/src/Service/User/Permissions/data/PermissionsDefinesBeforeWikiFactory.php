@@ -404,6 +404,7 @@ $wgGroupPermissions['wiki-manager']['editinterface'] = true;
 $wgGroupPermissions['wiki-manager']['editinterfacetrusted'] = true;
 $wgGroupPermissions['wiki-manager']['ipblock-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['lookupcontribs'] = true;
+$wgGroupPermissions['wiki-manager']['lookupuser'] = true;
 $wgGroupPermissions['wiki-manager']['move'] = true;
 $wgGroupPermissions['wiki-manager']['move-subpages'] = true;
 $wgGroupPermissions['wiki-manager']['movefile'] = true;
