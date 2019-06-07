@@ -41,7 +41,8 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverConfiantCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableAdStackCountries';
-		$vars[] = 'wgAdDriverDisableRecirculationCountries';
+		$vars[] = 'wgAdDriverFMRRotatorDelay';
+		$vars[] = 'wgAdDriverEagerlyLoadedIncontentBoxad1MobileWikiCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverGumGumBidderCountries';
@@ -72,6 +73,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverNielsenCountries';
+		$vars[] = 'wgAdDriverOasisFloorAdhesionCountries';
 		$vars[] = 'wgAdDriverOasisHiviLeaderboardCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
