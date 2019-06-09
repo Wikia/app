@@ -1,7 +1,7 @@
 /**
  * MediaWiki legacy wikibits
  */
-(function(){
+(function() {
 
 window.clientPC = navigator.userAgent.toLowerCase(); // Get client info
 window.is_gecko = /gecko/.test( clientPC ) &&
@@ -24,21 +24,16 @@ if (webkit_match) {
 
 // For accesskeys; note that FF3+ is included here!
 window.is_ff2 = /firefox\/[2-9]|minefield\/3/.test( clientPC );
-window.ff2_bugs = /firefox\/2/.test( clientPC );
 // These aren't used here, but some custom scripts rely on them
 window.is_ff2_win = is_ff2 && clientPC.indexOf('windows') != -1;
 window.is_ff2_x11 = is_ff2 && clientPC.indexOf('x11') != -1;
 
-window.is_opera = window.is_opera_preseven = window.is_opera_95 =
-	window.opera6_bugs = window.opera7_bugs = window.opera95_bugs = false;
+window.is_opera = window.is_opera_preseven = window.is_opera_95 = false;
 if (clientPC.indexOf('opera') != -1) {
 	window.is_opera = true;
 	window.is_opera_preseven = window.opera && !document.childNodes;
 	window.is_opera_seven = window.opera && document.childNodes;
 	window.is_opera_95 = /opera\/(9\.[5-9]|[1-9][0-9])/.test( clientPC );
-	window.opera6_bugs = is_opera_preseven;
-	window.opera7_bugs = is_opera_seven && !is_opera_95;
-	window.opera95_bugs = /opera\/(9\.5)/.test( clientPC );
 }
 // As recommended by <http://msdn.microsoft.com/en-us/library/ms537509.aspx>,
 // avoiding false positives from moronic extensions that append to the IE UA
@@ -87,41 +82,60 @@ function maybeMakeProtocolRelative(url) {
 	return url;
 }
 
-window.importScript = function( page ) {
-	var uri = mw.config.get( 'wgScript' ) + '?title=' +
-		mw.util.wikiUrlencode( page ) +
+function maybeRedirectDevWikiCodeSubpage(url) {
+	if (
+		url.indexOf(mw.config.get('wgScript')) !== -1 &&
+		(
+			(mw.config.get('wgCityId') === '7931' && url.indexOf(mw.config.get('wgScript')) === 0) ||
+			new RegExp('^(https?:)?\\/\\/dev\\.' + mw.config.get('wgWikiaBaseDomainRegex')).test(url)
+		) &&
+		/\/code\.(css|js)/.test(url)
+	) {
+		return url.replace(/\/code\.(js|css)/, '.$1')
+	}
+	return url;
+}
+
+window.importScript = function(page) {
+	var uri = mw.config.get('wgScript') + '?title=' +
+		mw.util.wikiUrlencode(page) +
 		'&action=raw&ctype=text/javascript';
-	return importScriptURI( uri );
+	uri = maybeRedirectDevWikiCodeSubpage(uri);
+	return importScriptURI(uri);
 };
 
 window.loadedScripts = {}; // included-scripts tracker
-window.importScriptURI = function( url ) {
+window.importScriptURI = function(url) {
 	url = maybeMakeProtocolRelative(forceReviewedContent(url));
 
-	if ( loadedScripts[url] ) {
+	if (loadedScripts[url]) {
 		return null;
 	}
 	loadedScripts[url] = true;
-	var s = document.createElement( 'script' );
-	s.setAttribute( 'src', url );
-	s.setAttribute( 'type', 'text/javascript' );
-	document.getElementsByTagName('head')[0].appendChild( s );
+	var s = document.createElement('script');
+	s.setAttribute('src', url);
+	s.setAttribute('type', 'text/javascript');
+	document.getElementsByTagName('head')[0].appendChild(s);
 	return s;
 };
 
-window.importStylesheet = function( page ) {
-	return importStylesheetURI( mw.config.get( 'wgScript' ) + '?action=raw&ctype=text/css&title=' + mw.util.wikiUrlencode( page ) );
+window.importStylesheet = function(page) {
+	var uri = mw.config.get('wgScript') + '?title=' +
+		mw.util.wikiUrlencode(page) +
+		'&action=raw&ctype=text/css';
+	uri = maybeRedirectDevWikiCodeSubpage(uri);
+	return importStylesheetURI(uri);
 };
 
-window.importStylesheetURI = function( url, media ) {
-	var l = document.createElement( 'link' );
+window.importStylesheetURI = function(url, media) {
+	var l = document.createElement('link');
 	l.type = 'text/css';
 	l.rel = 'stylesheet';
 	l.href = maybeMakeProtocolRelative(url);
-	if( media ) {
+	if (media) {
 		l.media = media;
 	}
-	document.getElementsByTagName('head')[0].appendChild( l );
+	document.getElementsByTagName('head')[0].appendChild(l);
 	return l;
 };
 
@@ -137,20 +151,6 @@ window.appendCSS = function( text ) {
 	document.getElementsByTagName('head')[0].appendChild( s );
 	return s;
 };
-
-// Special stylesheet links for Monobook only (see bug 14717)
-var skinpath = mw.config.get( 'stylepath' ) + '/' + mw.config.get( 'skin' );
-if ( mw.config.get( 'skin' ) === 'monobook' ) {
-	if ( opera6_bugs ) {
-		importStylesheetURI( skinpath + '/Opera6Fixes.css' );
-	} else if ( opera7_bugs ) {
-		importStylesheetURI( skinpath + '/Opera7Fixes.css' );
-	} else if ( opera95_bugs ) {
-		importStylesheetURI( skinpath + '/Opera9Fixes.css' );
-	} else if ( ff2_bugs ) {
-		importStylesheetURI( skinpath + '/FF2Fixes.css' );
-	}
-}
 
 if ( mw.config.get( 'wgBreakFrames' ) ) {
 	// Un-trap us from framesets
@@ -715,31 +715,32 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'oasis') {
-	//see RT#46116
-	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
-		addOnloadHook(function() { Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start();} );
-	}
-}
-
 // http://www.wikia.com/wiki/User:Dantman/global.js
 // RT#9031
 
-window.importScriptPage = function( page, server ) {
-	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
-	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
-		else url = server + url;
+window.importScriptPage = function(page, server) {
+	var url = mw.config.get('wgScript') + '?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/javascript';
+	if (typeof server === 'string') {
+		if (server.indexOf('://') === -1 && server.substring(0, 2) !== '//') {
+			url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		} else {
+			url = server + url;
+		}
 	}
+	url = maybeRedirectDevWikiCodeSubpage(url);
 	return importScriptURI(url);
 }
 
-window.importStylesheetPage= function( page, server ) {
-	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/css';
-	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
-		else url = server + url;
+window.importStylesheetPage = function(page, server) {
+	var url = mw.config.get('wgScript') + '?title=' + mw.util.wikiUrlencode(page) + '&action=raw&ctype=text/css';
+	if (typeof server === 'string') {
+		if (server.indexOf('://') === -1 && server.substring(0, 2) !== '//') {
+			url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		} else {
+			url = server + url;
+		}
 	}
+	url = maybeRedirectDevWikiCodeSubpage(url);
 	return importStylesheetURI(url);
 }
 
