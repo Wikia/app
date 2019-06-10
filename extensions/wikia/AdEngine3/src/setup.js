@@ -1,11 +1,17 @@
-import { AdEngine, context, events, eventService, slotInjector, templateService, utils, setupNpaContext, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine';
+import {
+	AdEngine,
+	context,
+	events,
+	eventService,
+	utils,
+	setupNpaContext,
+} from '@wikia/ad-engine';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
 import slots from './slots';
-import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
-import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
+import { registerSlotTracker, registerViewabilityTracker } from  './tracking/tracker';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -232,8 +238,8 @@ function configure(adsContext, isOptedIn) {
 
 	templateRegistry.registerTemplates();
 
-	context.push('listeners.slot', slotTracker);
-	context.push('listeners.slot', viewabilityTracker);
+	registerSlotTracker();
+	registerViewabilityTracker();
 }
 
 function init() {
