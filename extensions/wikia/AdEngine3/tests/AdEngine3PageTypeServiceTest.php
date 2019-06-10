@@ -2,6 +2,8 @@
 
 class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	public function testGetPageType_withDeciderRejectingAds() {
+		$this->mockGlobalWikiaPageType();
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -13,6 +15,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_corporatePageForAnon() {
+		$this->mockGlobalWikiaPageType(true );
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -23,8 +27,6 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->method( 'isLoggedIn' )
 			->will( $this->returnValue(false ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', true );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
@@ -32,6 +34,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_corporatePageForLoggedIn() {
+		$this->mockGlobalWikiaPageType(true );
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -45,8 +49,6 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->method( 'getGlobalPreference' )
 			->will( $this->returnValue(true ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', true );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
@@ -54,6 +56,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_regularPageForAnon() {
+		$this->mockGlobalWikiaPageType();
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -64,9 +68,6 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->method( 'isLoggedIn' )
 			->will( $this->returnValue(false ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
-		$this->mockStaticMethod( 'WikiaPageType', 'isSearch', false );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
@@ -74,6 +75,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_regularPageForLoggedInWithAds() {
+		$this->mockGlobalWikiaPageType();
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -87,9 +90,6 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->method( 'getGlobalPreference' )
 			->will( $this->returnValue(true ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
-		$this->mockStaticMethod( 'WikiaPageType', 'isSearch', false );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
@@ -97,6 +97,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_regularForLoggedInWithoutAds() {
+		$this->mockGlobalWikiaPageType();
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -110,9 +112,6 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->method( 'getGlobalPreference' )
 			->will( $this->returnValue(false ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
-		$this->mockStaticMethod( 'WikiaPageType', 'isMainPage', false );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
@@ -120,6 +119,8 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 	}
 
 	public function testGetPageType_mainPageForLoggedInWithoutAds() {
+		$this->mockGlobalWikiaPageType(false, true);
+
 		$adsDeciderMock = $this->getMock( 'AdEngine3DeciderService', [ 'getNoAdsReason' ] );
 		$adsDeciderMock->expects( $this->once() )
 			->method( 'getNoAdsReason' )
@@ -134,11 +135,23 @@ class AdEngine3PageTypeServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue(false ) );
 		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
 
+		$this->mockGlobalVariable( 'wgPagesWithNoAdsForLoggedInUsersOverriden', [] );
+
 		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
 		$this->mockStaticMethod( 'WikiaPageType', 'isMainPage', true );
 
 		$pageTypeService = new AdEngine3PageTypeService( $adsDeciderMock );
 
 		$this->assertEquals(AdEngine3PageTypeService::PAGE_TYPE_HOMEPAGE_LOGGED, $pageTypeService->getPageType());
+	}
+
+	private function mockGlobalWikiaPageType($isCorporate = false, $isMain = false) {
+		$this->mockStaticMethod( 'WikiaPageType', 'isFilePage', false );
+		$this->mockStaticMethod( 'WikiaPageType', 'isForum', false );
+		$this->mockStaticMethod( 'WikiaPageType', 'isSearch', false );
+		$this->mockStaticMethod( 'WikiaPageType', 'isWikiaHub', false );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', $isCorporate );
+		$this->mockStaticMethod( 'WikiaPageType', 'isMainPage', $isMain );
 	}
 }
