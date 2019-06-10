@@ -86,7 +86,7 @@ class AdEngine3
 		return $wrapper->wrap( function () use ( $title, $wg ) {
 			$articleId = $title->getArticleId();
 
-			$adPageTypeService = new AdEngine3PageTypeService();
+			$adPageTypeService = new AdEngine3PageTypeService(new AdEngine3DeciderService());
 			$hubService = new HubService();
 			$langCode = $title->getPageLanguage()->getCode();
 			$wikiaPageType = new WikiaPageType();

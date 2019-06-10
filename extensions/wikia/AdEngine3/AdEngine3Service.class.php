@@ -7,11 +7,11 @@ class AdEngine3Service {
 	 * @return bool
 	 */
 	public static function areAdsShowableOnPage() {
-		return ( new AdEngine3PageTypeService( new AdsDeciderService() ) )->areAdsShowableOnPage();
+		return ( new AdEngine3PageTypeService( new AdEngine3DeciderService() ) )->areAdsShowableOnPage();
 	}
 
 	public static function shouldShowAd( $pageTypes = null ) {
-		$adEnginePageTypeService = new AdEngine3PageTypeService( new AdsDeciderService() );
+		$adEnginePageTypeService = new AdEngine3PageTypeService( new AdEngine3DeciderService() );
 
 		$pageType = $adEnginePageTypeService->getPageType();
 
