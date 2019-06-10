@@ -125,5 +125,6 @@
   "hours-ago": "{hours}h",
   "minutes-ago": "{minutes}m",
   "now-label": "now",
-  "back": "Back"
+  "back": "Back",
+  "license-description": "Community content is available under {license} unless otherwise noted."
 }
