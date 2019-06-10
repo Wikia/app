@@ -2,12 +2,12 @@
 
 class LicenseController extends WikiaController {
 
-	public function executeIndex() {
+	public function index() {
 		global $wgRightsText, $wgRightsUrl;
 
-		$license = Html::element( 'a', [ 'href' => $wgRightsUrl ], $wgRightsText );
-		$description = wfMessage('license-description')->inContentLanguage()->rawParams($license)->escaped();
+		$licenseLink = F::app()->renderPartial('License', 'Link', [ 'licenseUrl' => $wgRightsUrl, 'licenseText' => $wgRightsText ] );
+		$description = wfMessage('license-description')->inContentLanguage()->rawParams( $licenseLink )->escaped();
 
-		$this->setVal('licenseDescription', $description);
+		$this->setVal( 'licenseDescription', $description );
 	}
 }
