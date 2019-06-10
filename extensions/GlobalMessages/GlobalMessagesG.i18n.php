@@ -42,6 +42,7 @@ $messages['en'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrators',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrats',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
+	'grouppage-wiki-manager' => 'Help:Wiki Managers',
 	'group-autoconfirmed.css' => '/* CSS placed here will affect autoconfirmed users only */',
 	'group-bot.css' => '/* CSS placed here will affect bots only */',
 	'group-sysop.css' => '/* CSS placed here will affect sysops only */',
