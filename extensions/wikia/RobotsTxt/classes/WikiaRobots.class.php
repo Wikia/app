@@ -218,41 +218,6 @@ class WikiaRobots {
 			}
 		}
 
-		// Paranoid check to make sure language wikis return only their rules without calling other
-		// wikis recursively.
-		// TODO - remove the code below once robots are served by the robots-txt service
-		if ( !$wgRequest->getBool( 'shallow' ) && !$shallow ) {
-			// fetch from foreign wikis...
-			$languageWikis = \WikiFactory::getLanguageWikis();
-			foreach ( $languageWikis as $wiki ) {
-				$params = [
-					'controller' => 'WikiaRobots',
-					'method' => 'getAllowedDisallowed',
-					'shallow' => 1
-				];
-				if ( $wgRequest->getBool( 'forcerobots' ) ) {
-					$params[ 'forcerobots' ] = '1';
-				}
-				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
-				if ( !empty( $response ) ) {
-					if ( isset( $response['allowed'] ) ) {
-						$robots->addAllowedPaths($response['allowed']);
-					}
-					if ( isset( $response['disallowed'] ) ) {
-						$robots->addDisallowedPaths( $response['disallowed'] );
-					}
-					if ( isset( $response['sitemaps'] ) ) {
-						$robots->addSitemaps( $response['sitemaps'] );
-					}
-				} else {
-					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
-						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]
-					] );
-					$this->degraded = true;
-				}
-			}
-		}
-
 		return $robots;
 	}
 
