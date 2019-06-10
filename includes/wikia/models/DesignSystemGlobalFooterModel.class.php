@@ -206,7 +206,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'params' => [
 						'sitename' => $this->getSitenameData(),
 						'vertical' => $this->getVerticalData(),
-						'license' => $this->getLicenseData()
 					]
 				],
 			],
@@ -305,18 +304,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
 		} else {
-			$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->productInstanceId );
+			global $wgSitenameForComscore, $wgSitename;
 
-			if ( $wgSitenameForComscoreForWikiId ) {
-				$sitename = $wgSitenameForComscoreForWikiId;
+			if ( !empty( $wgSitenameForComscore ) ) {
+				$sitename = $wgSitenameForComscore;
 			} else {
-				$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId );
-
-				if ( $wgSitenameForWikiId ) {
-					$sitename = $wgSitenameForWikiId;
-				} else {
-					$sitename = $this->wg->Sitename;
-				}
+				$sitename = $wgSitename;
 			}
 		}
 
@@ -360,28 +353,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return [
 			'type' => 'translatable-text',
 			'key' => $verticalMessageKey
-		];
-	}
-
-	private function getLicenseData() {
-		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-copyright-wikia',
-				],
-			];
-		}
-
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'text',
-				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
-			],
-			'href' => $this->getLicenseUrl(),
-			'tracking_label' => 'license',
 		];
 	}
 
@@ -596,9 +567,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getLocalSitemapUrl() {
 		if ( $this->product !== static::PRODUCT_FANDOMS ) {
 			$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-			$localSitemapAvailable = WikiFactory::getVarValueByName(
-				'wgEnableLocalSitemapPageExt', $this->productInstanceId, false, $default
-			);
+			$localSitemapAvailable = $this->wg->EnableLocalSitemapPageExt ?? $default;
 
 			if ( $localSitemapAvailable ) {
 				return $this->getLocalHref( 'local-sitemap' );
@@ -607,22 +576,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		// Fall back to fandom sitemap when the local one is unavailable
 		return $this->getHref( 'local-sitemap-fandom' );
-	}
-
-	private function getLicenseUrl() {
-		// no license URL for Fandom
-		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return '';
-		}
-
-		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->productInstanceId ) ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->productInstanceId ) ?: $this->wg->RightsPage;
-		if ( $licensePage ) {
-			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->productInstanceId );
-			$licenseUrl = wfProtocolUrlToRelative( $title->getFullURL() );
-		}
-
-		return $licenseUrl;
 	}
 
 	private function getLocalHref( $hrefKey ) {
