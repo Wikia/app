@@ -126,5 +126,5 @@
   "minutes-ago": "{minutes}m",
   "now-label": "now",
   "back": "Back",
-  "license-description": "Community content is available under {license} unless otherwise noted."
+  "license-description": "Community content is available under $1 unless otherwise noted."
 }
