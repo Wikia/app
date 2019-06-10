@@ -49,15 +49,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 								'type' => 'translatable-text',
 								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
 							],
-							'license' => [
-								'type' => 'link-text',
-								'title' => [
-									'type' => 'text',
-									'value' => 'CC-BY-SA'
-								],
-								'href' => 'https://www.wikia.com/Licensing',
-								'tracking_label' => 'license',
-							],
 						],
 					],
 				],
@@ -82,15 +73,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 							'vertical' => [
 								'type' => 'translatable-text',
 								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
-							],
-							'license' => [
-								'type' => 'link-text',
-								'title' => [
-									'type' => 'text',
-									'value' => 'CC-BY-NC-SA'
-								],
-								'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
-								'tracking_label' => 'license',
 							],
 						],
 					],
@@ -146,15 +128,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 							'vertical' => [
 								'type' => 'translatable-text',
 								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
-							],
-							'license' => [
-								'type' => 'link-text',
-								'title' => [
-									'type' => 'text',
-									'value' => 'CC-BY-SA'
-								],
-								'href' => '//test2.wikia.com/wiki/w:Wikia:Licensing',
-								'tracking_label' => 'license',
 							],
 						],
 					],

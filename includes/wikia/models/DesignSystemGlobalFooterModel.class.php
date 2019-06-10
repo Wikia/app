@@ -199,16 +199,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
-			'licensing_and_vertical' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-and-vertical-description',
-					'params' => [
-						'sitename' => $this->getSitenameData(),
-						'vertical' => $this->getVerticalData(),
-					]
-				],
-			],
+			'licensing_and_vertical' => $this->getLicensingAndVertical(),
 			'mobile_site_button' => [
 				'type' => 'link-text',
 				'title' => [
@@ -354,6 +345,31 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'type' => 'translatable-text',
 			'key' => $verticalMessageKey
 		];
+	}
+
+	private function getLicensingAndVertical() {
+		$data = [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-licensing-and-vertical-description',
+				'params' => [
+					'sitename' => $this->getSitenameData(),
+					'vertical' => $this->getVerticalData(),
+				]
+			],
+		];
+
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$data['description']['params']['license'] = [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-copyright-wikia',
+				]
+			];
+		}
+
+		return $data;
 	}
 
 	private function getFandomOverview() {
