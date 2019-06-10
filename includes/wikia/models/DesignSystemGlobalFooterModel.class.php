@@ -295,12 +295,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
 		} else {
-			global $wgSitenameForComscore, $wgSitename;
-
-			if ( !empty( $wgSitenameForComscore ) ) {
-				$sitename = $wgSitenameForComscore;
+			if ( !empty( $this->wg->SitenameForComscore ) ) {
+				$sitename = $this->wg->SitenameForComscore;
 			} else {
-				$sitename = $wgSitename;
+				$sitename = $this->wg->Sitename;
 			}
 		}
 

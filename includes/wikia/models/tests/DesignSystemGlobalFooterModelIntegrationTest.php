@@ -17,8 +17,10 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 	 * @param $rightsPage
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $productInstanceId, $product, $server, $sitename, $rightsText, $rightsUrl, $rightsPage, $expectedResult ) {
+	public function testGetLicensingAndVertical( $productInstanceId, $product, $server, $sitename, $expectedResult ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable('wgCityId', $product);
+		$this->mockGlobalVariable( 'wgSitename', $sitename);
 
 		$footerModel = new DesignSystemGlobalFooterModel( $product, $productInstanceId, false );
 		$result = $footerModel->getData();
@@ -33,9 +35,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'http://unittest.wikia.com',
 				'wikia',
-				'CC-BY-SA',
-				'https://www.wikia.com/Licensing',
-				'',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -58,9 +57,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'http://memory-alpha.wikia.com',
 				'memory-alpha',
-				'CC-BY-NC-SA',
-				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
-				'',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -83,9 +79,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
 				'https://www.fandom.com',
 				'Fandom',
-				'foo',
-				'',
-				'',
 				'licensing_and_vertical' => [
 					'description' => [
 						'type' => 'translatable-text',
@@ -113,9 +106,6 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'http://test2.wikia.com',
 				'wikia',
-				'CC-BY-SA',
-				'',
-				'w:Wikia:Licensing',
 				[
 					'description' => [
 						'type' => 'translatable-text',
