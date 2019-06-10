@@ -16,6 +16,11 @@ class AdEngine3PageTypeService {
 	 */
 	private $app;
 
+	/**
+	 * @var AdsDeciderService
+	 */
+	private $adsDecider;
+
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
@@ -23,9 +28,10 @@ class AdEngine3PageTypeService {
 	const PAGE_TYPE_SEARCH = 'search';                   // show some ads (anonymous on search pages)
 	const PAGE_TYPE_ALL_ADS = 'all_ads';                 // show all ads!
 
-	public function __construct() {
+	public function __construct(AdsDeciderService $adsDecider) {
 		$this->app = F::app();
 		$this->wg = F::app()->wg;
+		$this->adsDecider = $adsDecider;
 	}
 
 	/**
@@ -38,12 +44,7 @@ class AdEngine3PageTypeService {
 	public function getPageType() {
 		$title = null;
 
-		if ( WikiaPageType::isActionPage()
-			|| $this->wg->Request->getBool( 'noexternals', $this->wg->NoExternals )
-			|| $this->wg->Request->getBool( 'noads', false )
-			|| $this->wg->ShowAds === false
-			|| !$this->app->checkSkin( [ 'oasis', 'wikiamobile' ] )
-		) {
+		if ( $this->adsDecider->getNoAdsReason() !== null ) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
 		}

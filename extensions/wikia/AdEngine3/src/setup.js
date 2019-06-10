@@ -254,17 +254,9 @@ function trackAdEngineStatus() {
 function getReason() {
 	let reasons;
 	const possibleReasons = {
-		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L42
 		'noads_querystring': !!utils.queryString.get('noads'),
-		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L43
 		'noexternals_querystring': !!utils.queryString.get('noexternals'),
-		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/src/setup.js#L87
 		'steam_browser': context.get('state.isSteam') === true,
-		// it's more complicated:
-		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L86
-		'logged_in_user': !!window.wgUserName,
-		// https://github.com/Wikia/app/blob/0149c7ce923de9464fbf8a9d7657c4b8def4a30a/extensions/wikia/AdEngine3/AdEngine3PageTypeService.class.php#L51
-		'noads_page': context.get('custom.pageType') === 'no_ads'
 	};
 
 	reasons = Object.keys(possibleReasons).filter(function (key) {
