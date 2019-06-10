@@ -86,7 +86,8 @@ class AdEngine3
 		return $wrapper->wrap( function () use ( $title, $wg ) {
 			$articleId = $title->getArticleId();
 
-			$adPageTypeService = new AdEngine3PageTypeService(new AdEngine3DeciderService());
+			$adsDeciderService = new AdEngine3DeciderService();
+			$adPageTypeService = new AdEngine3PageTypeService($adsDeciderService);
 			$hubService = new HubService();
 			$langCode = $title->getPageLanguage()->getCode();
 			$wikiaPageType = new WikiaPageType();
@@ -120,6 +121,7 @@ class AdEngine3
 					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
+					'noAdsReason' => $adsDeciderService->getNoAdsReason(),
 				]),
 				'targeting' => array_filter([
 					'enableKruxTargeting' => !$wg->NoExternals && $wg->EnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
