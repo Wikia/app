@@ -39,7 +39,7 @@ function isGeoEnabled(key) {
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
-	const showAds = window.ads.context.opts.showAds;
+	const showAds = getReasonForNoAds() === null;
 
 	context.extend(basicContext);
 	context.set('wiki', wikiContext);
@@ -82,10 +82,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
-
-	if (context.get('state.isSteam')) {
-		context.set('state.showAds', false);
-	}
 
 	context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));
@@ -251,25 +247,30 @@ function trackAdEngineStatus() {
 	}
 }
 
-function getReason() {
-	let reasons;
-	let reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+function getReasonForNoAds() {
+	const reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+	const pageType = window.ads.context.opts.pageType || null;
+
+	if (reasonFromBackend === 'no_ads_user' && pageType === 'homepage_logged') {
+		return null;
+	}
 
 	if (reasonFromBackend !== null) {
-		return 'backend_' + reasonFromBackend;
+		return reasonFromBackend;
 	}
 
 	const possibleFrontendReasons = {
 		'noads_querystring': !!utils.queryString.get('noads'),
 		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// two above are probably not needed but data QA will confirm 3:-)
 		'steam_browser': context.get('state.isSteam') === true,
 	};
 
-	reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
 		return possibleFrontendReasons[key] === true;
 	});
 
-	return reasons.length > 0 ? reasons[0] : 'unknown_reason';
+	return reasons.length > 0 ? reasons[0] : null;
 }
 
 function init() {
