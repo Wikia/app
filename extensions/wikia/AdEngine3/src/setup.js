@@ -243,7 +243,7 @@ function trackAdEngineStatus() {
 	if (context.get('state.showAds')) {
 		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
 	} else {
-		pageTracker.trackProp('adengine', 'off_' + getReason());
+		pageTracker.trackProp('adengine', 'off_' + getReasonForNoAds());
 	}
 }
 
