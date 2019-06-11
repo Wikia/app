@@ -107,12 +107,7 @@ class Information {
 	 * @return	array	[day timestamp => points]
 	 */
 	static public function getEditsPerDay($days = 30) {
-		$edits = array();
-		for ($i = 0; $i < $days; $i++) {
-			$edits[strtotime('Today - '.$i.' days')] = 0;
-		}
-
-		return $edits;
+		return self::getMockedSine($days, 10, 200);
 	}
 
 	/**
@@ -227,5 +222,27 @@ class Information {
 	 */
 	static public function getDeviceBreakdown($startTimestamp = null, $endTimestamp = null) {
 		return ["browser" => ["Chrome" => 40, "Firefox" => 50], "deviceCategory" => ["desktop" => 10, "mobile" => 20]];
+	}
+
+	/**
+	 * Return mocked per-day data with sine wave
+	 *
+	 * @param int $days
+	 * @param int $amplitude
+	 * @param int $offset
+	 * @return array
+	 */
+	static private function getMockedSine(int $days = 30, int $amplitude = 10, int $offset = 25) : array {
+		$noise_level = 20;
+
+		$data = [];
+		for ($i = 0; $i < $days; $i++) {
+			$value = sin( $i ) * $amplitude + $offset;
+			$value += mt_rand( -$noise_level, $noise_level );
+
+			$data[strtotime('Today - '.$i.' days')] = $value;
+		}
+
+		return $data;
 	}
 }
