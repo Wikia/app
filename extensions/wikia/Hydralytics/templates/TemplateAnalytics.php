@@ -24,6 +24,10 @@ class TemplateAnalytics {
 	 * @return	string	Built HTML
 	 */
 	static public function analyticsPage($sections, $generatedAt, $gridClass = false) {
+		// TODO: "top editors" and "active editors" graphs are now removed
+		unset($sections['top_editors']);
+		unset($sections['active_editors']);
+
 		$html = "
 		<script type='text/javascript'>
 			/* Initialize empty array that will be populated by scripts dumped into sections and cached. */
