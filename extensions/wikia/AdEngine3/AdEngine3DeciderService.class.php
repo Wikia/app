@@ -1,6 +1,6 @@
 <?php
 /**
- * Class NoAdsDeciderService
+ * Class AdEngine3DeciderService
  *
  * Globals used: F::app()->checkSkin, F::app()->wg, WikiaPageType
  */
