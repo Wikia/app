@@ -66,9 +66,7 @@ class DefaultPhalanxServiceIntegrationTest extends TestCase {
 		$this->assertEquals( $expectedPhalanxBlocks, $phalanxBlocks );
 	}
 
-	public function testThrowsExceptionWhenValidateRequestFails() {
-		$this->expectException( PhalanxServiceException::class );
-
+	public function testReturns500WhenValidateRequestFails() {
 		$exp = Phiremock::on( A::postRequest()
 			->andUrl( Is::equalTo( "/validate" ) )
 			->andBody( Is::containing( static::REGEX ) ) )
@@ -79,9 +77,7 @@ class DefaultPhalanxServiceIntegrationTest extends TestCase {
 		$this->defaultPhalanxService->doRegexValidation( static::REGEX );
 	}
 
-	public function testThrowsExceptionWhenRegexIsNotValid() {
-		$this->expectException( RegexValidationException::class );
-
+	public function testReturns200AndErrorWhenRegexIsNotValid() {
 		$exp = Phiremock::on( A::postRequest()
 			->andUrl( Is::equalTo( "/validate" ) )
 			->andBody( Is::containing( static::REGEX ) ) )
@@ -96,7 +92,7 @@ class DefaultPhalanxServiceIntegrationTest extends TestCase {
 		$exp = Phiremock::on( A::postRequest()
 			->andUrl( Is::equalTo( "/validate" ) )
 			->andBody( Is::containing( static::REGEX ) ) )
-			->thenRespond( 200, 'ok' );
+			->thenRespond( 200, 'ok\n' );
 
 		$this->getMockServer()->createExpectation( $exp );
 
