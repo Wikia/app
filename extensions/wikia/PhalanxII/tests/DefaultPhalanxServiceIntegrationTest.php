@@ -81,7 +81,7 @@ class DefaultPhalanxServiceIntegrationTest extends TestCase {
 		$exp =
 			Phiremock::on( A::postRequest()
 				->andUrl( Is::equalTo( "/validate" ) )
-				->andBody( Is::containing( static::REGEX ) ) )->thenRespond( 200, 'ok\n' );
+				->andBody( Is::containing( static::REGEX ) ) )->thenRespond( 200, "ok\n" );
 
 		$this->getMockServer()->createExpectation( $exp );
 
