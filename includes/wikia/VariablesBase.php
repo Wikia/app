@@ -6668,6 +6668,10 @@ $wgRateLimits = [
 	'mailpassword' => [
 		'ip' => [ 1, 43200 ],
 	],
+	'changeemail' => [
+		'ip' => [ 10, 3600 ],
+		'user' => [ 4, 86400 ],
+	],
 ];
 
 /**

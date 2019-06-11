@@ -509,6 +509,7 @@ $wgGroupPermissions['sysop']['renameprofilev3'] = true;
 $wgGroupPermissions['vstf']['renameprofilev3'] = true;
 $wgGroupPermissions['staff']['renameprofilev3'] = true;
 $wgGroupPermissions['helper']['renameprofilev3'] = true;
+$wgGroupPermissions['wiki-manager']['renameprofilev3'] = true;
 
 $wgGroupPermissions['sysop']['deleteprofilev3'] = true;
 $wgGroupPermissions['vstf']['deleteprofilev3'] = true;
