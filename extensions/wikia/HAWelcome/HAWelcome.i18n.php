@@ -337,7 +337,7 @@ $3",
 
 Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community-Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
-Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:de.c:community:Spezial:Forum|Foren]] durchforsten.
+Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:community|Community Deutschland]] vorbei schauen und dort die [[w:c:de.community:Spezial:Forum|Foren]] durchforsten.
 
 Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei FANDOM so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|FANDOM-Universität]]! Dort findest du kurze Videos zu Nutzung von FANDOM.
 
@@ -1042,7 +1042,9 @@ $messages['ja'] = array(
 == お気に入りのページ ==
 * Wikiの、お気に入りのページの[[ヘルプ:リンク|リンク]]を追加してください！
 * お気に入りのページ #2
-* お気に入りのページ #3',
+* お気に入りのページ #3
+
+__NOINDEX__',
 	'welcome-message-user' => '==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます。

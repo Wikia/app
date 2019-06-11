@@ -54,6 +54,7 @@ function startAdEngine() {
 			babDetection.run();
 		});
 		slots.injectHighImpact();
+		slots.injectFloorAdhesion();
 
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {

@@ -19,6 +19,7 @@ export const getConfig = () => ({
 	slotsToDisable: [
 		'incontent_player',
 		'invisible_high_impact_2',
+		'floor_adhesion',
 	],
 	slotsToEnable: [
 		'bottom_leaderboard',

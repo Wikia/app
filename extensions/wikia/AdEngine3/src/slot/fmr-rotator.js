@@ -1,4 +1,4 @@
-import { AdSlot, context, events, eventService, scrollListener, slotService, slotTweaker, utils, universalAdPackage } from '@wikia/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotService, utils, universalAdPackage } from '@wikia/ad-engine';
 import { getNavbarHeight } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
@@ -6,12 +6,10 @@ import { recRunner } from '../wad/rec-runner';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
-	adVisible: false,
-	heightScrolledThreshold: 10,
-	lastRefreshTime: new Date(),
-	refreshAdPosition: 0,
+	recSlotViewed: 2000,
 	refreshDelay: 10000,
-	startPosition: 0
+	refreshLimit: 20,
+	startPosition: 0,
 };
 
 let btRec = false;
@@ -21,7 +19,6 @@ let currentRecNode = null;
 let currentAdSlot = null;
 let nextSlotName = null;
 let rotatorListener = null;
-let recirculationDisabled = false;
 let recirculationElement = null;
 
 /***********************
@@ -75,32 +72,12 @@ function removeRecNode() {
  ****************************************/
 
 /**
- * Checks if minimum refresh time counter is over
- *
- * @returns {boolean}
- */
-function enoughTimeSinceLastRefresh() {
-	return ((new Date()) - refreshInfo.lastRefreshTime) > refreshInfo.refreshDelay;
-}
-
-/**
  * Checks if slot can be refreshed or limit is reached
  *
  * @returns {boolean}
  */
 function isRefreshLimitAvailable() {
-	return btRec || (currentAdSlot && (currentAdSlot.getConfigProperty('repeat.index') < 20));
-}
-
-/**
- * Shows or hides recirculation element
- *
- * @param {boolean} visible
- * @returns {void}
- */
-function swapRecirculation(visible) {
-	recirculationElement.style.display = visible ? 'block' : 'none';
-	refreshInfo.adVisible = !visible;
+	return btRec || (currentAdSlot && (currentAdSlot.getConfigProperty('repeat.index') < refreshInfo.refreshLimit));
 }
 
 /**
@@ -117,16 +94,6 @@ function isInViewport() {
 }
 
 /**
- * Update module refresh information after rotation
- *
- * @returns {void}
- */
-function updateAdRefreshInformation() {
-	refreshInfo.lastRefreshTime = new Date();
-	refreshInfo.refreshAdPosition = window.scrollY;
-}
-
-/**
  * Checks if user reached certain scroll position to enable FMR logic
  *
  * @returns {boolean}
@@ -136,12 +103,29 @@ function isStartPositionReached() {
 }
 
 /**
- * Checks if user scrolled some distance before slot reload
+ * Execute some callback now or pin it to scroll and run once condition is met
  *
- * @returns {boolean}
+ * @param {function} condition
+ * @param {function} callback
+ * @returns {void}
  */
-function isScrolledEnoughToRotate() {
-	return Math.abs(window.scrollY - refreshInfo.refreshAdPosition) > refreshInfo.heightScrolledThreshold;
+function runNowOrOnScroll(condition, callback) {
+	if (condition()) {
+		removeScrollListener();
+		callback();
+	} else if (!rotatorListener) {
+		rotatorListener = scrollListener.addCallback(() => runNowOrOnScroll(condition, callback));
+	}
+}
+
+/**
+ * Shows or hides recirculation element
+ *
+ * @param {boolean} visible
+ * @returns {void}
+ */
+function swapRecirculation(visible) {
+	recirculationElement.style.display = visible ? 'block' : 'none';
 }
 
 /*********************************
@@ -149,34 +133,82 @@ function isScrolledEnoughToRotate() {
  *********************************/
 
 /**
- * Rotates floating medrec based on given conditions
+ * Hides currently loaded slot and shows recirculation
  *
  * @returns {void}
  */
-function rotateSlots() {
-	if (!isRefreshLimitAvailable()) {
+function hideSlot() {
+	if (btRec) {
+		removeRecNode();
+	} else {
+		currentAdSlot.hide();
+	}
+
+	swapRecirculation(true);
+	scheduleNextSlotPush();
+}
+
+/**
+ * Push next floating medrec to ads queue or applying rec
+ *
+ * @returns {void}
+ */
+function pushNextSlot() {
+	context.push('state.adStack', { id: nextSlotName });
+
+	applyRec(() => {
+		slotStatusChanged(AdSlot.STATUS_SUCCESS);
+		setTimeout(() => {
+			hideSlot();
+		}, refreshInfo.recSlotViewed + refreshInfo.refreshDelay);
+	});
+}
+
+/**
+ * If exists: remove current scroll listener
+ *
+ * @returns {void}
+ */
+function removeScrollListener() {
+	if (rotatorListener) {
 		scrollListener.removeCallback(rotatorListener);
-	} else if (enoughTimeSinceLastRefresh() && isScrolledEnoughToRotate() && isInViewport()) {
-		if (refreshInfo.adVisible) {
-			if (btRec) {
-				removeRecNode();
-			} else {
-				slotTweaker.hide(currentAdSlot);
-			}
+		rotatorListener = null;
+	}
+}
 
-			updateAdRefreshInformation();
-			swapRecirculation(true);
+/**
+ * Wait some time and inject next floating medrec
+ *
+ * @returns {void}
+ */
+function scheduleNextSlotPush() {
+	if (isRefreshLimitAvailable()) {
+		setTimeout(() => {
+			tryPushNextSlot();
+		}, refreshInfo.refreshDelay);
+	}
+}
 
-			if (!recirculationDisabled) {
-				return;
-			}
-		}
+/**
+ * Callback executed on ad slot or BT rec placement load
+ *
+ * @param {string} slotStatus
+ * @returns {void}
+ */
+function slotStatusChanged(slotStatus) {
+	if (universalAdPackage.isFanTakeoverLoaded()) {
+		swapRecirculation(false);
 
-		scrollListener.removeCallback(rotatorListener);
+		return;
+	}
 
-		context.push('state.adStack', { id: nextSlotName });
+	if (!btRec) {
+		currentAdSlot = slotService.get(nextSlotName);
+		nextSlotName = fmrPrefix + (currentAdSlot.getConfigProperty('repeat.index') + 1);
+	}
 
-		applyRec(slotStatusChanged);
+	if (slotStatus === AdSlot.STATUS_SUCCESS) {
+		swapRecirculation(false);
 	}
 }
 
@@ -185,46 +217,17 @@ function rotateSlots() {
  *
  * @returns {void}
  */
-function showSlotWhenPossible() {
-	const isViewportAndNoRecirculation = recirculationDisabled && isInViewport();
-	const isPositionAndTime = enoughTimeSinceLastRefresh() && isStartPositionReached();
-
-	if (isViewportAndNoRecirculation || isPositionAndTime) {
-		scrollListener.removeCallback(rotatorListener);
-
-		context.push('state.adStack', { id: nextSlotName });
-
-		applyRec(slotStatusChanged);
-	}
+function startFirstRotation() {
+	runNowOrOnScroll(() => isInViewport() && isStartPositionReached(), pushNextSlot);
 }
 
 /**
- * Callback executed on ad slot or BT rec placement load
+ * Postpone slot push until recirculation will be in viewport
  *
- * @param {string} slotName
- * @param {string} slotStatus
  * @returns {void}
  */
-function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCCESS) {
-	if (slotName.substring(0, 16) === fmrPrefix) {
-		if (universalAdPackage.isFanTakeoverLoaded()) {
-			swapRecirculation(false);
-
-			return;
-		}
-		if (!btRec) {
-			currentAdSlot = slotService.get(nextSlotName);
-			nextSlotName = fmrPrefix + (currentAdSlot.getConfigProperty('repeat.index') + 1);
-		}
-
-		updateAdRefreshInformation();
-
-		if (slotStatus === AdSlot.STATUS_SUCCESS) {
-			swapRecirculation(false);
-		}
-
-		rotatorListener = scrollListener.addCallback(() => rotateSlots());
-	}
+function tryPushNextSlot() {
+	runNowOrOnScroll(isInViewport, pushNextSlot);
 }
 
 /**
@@ -235,16 +238,31 @@ function slotStatusChanged(slotName = fmrPrefix, slotStatus = AdSlot.STATUS_SUCC
  */
 export function rotateIncontentBoxad(slotName) {
 	nextSlotName = slotName;
-	recirculationDisabled = context.get('custom.isRecirculationDisabled');
 	recirculationElement = document.getElementById('recirculation-rail');
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
+	refreshInfo.refreshDelay = context.get('custom.fmrRotatorDelay') || refreshInfo.refreshDelay;
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
-		slot.once(AdSlot.STATUS_SUCCESS, () => {
-			slotStatusChanged(slot.getSlotName(), AdSlot.STATUS_SUCCESS);
-		});
+		if (slot.getSlotName().substring(0, 16) === fmrPrefix) {
+			slot.once(AdSlot.STATUS_SUCCESS, () => {
+				slotStatusChanged(AdSlot.STATUS_SUCCESS);
+
+				slot.once(AdSlot.SLOT_VIEWED_EVENT, () => {
+					setTimeout(() => {
+						hideSlot();
+					}, refreshInfo.refreshDelay);
+				});
+			});
+
+			slot.once(AdSlot.STATUS_COLLAPSE, () => {
+				slotStatusChanged(AdSlot.STATUS_COLLAPSE);
+				scheduleNextSlotPush();
+			});
+		}
 	});
 
-	rotatorListener = scrollListener.addCallback(() => showSlotWhenPossible());
+	setTimeout(() => {
+		startFirstRotation();
+	}, refreshInfo.refreshDelay);
 }

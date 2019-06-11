@@ -1,4 +1,4 @@
-import { AdSlot, context, events, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
+import { AdSlot, context, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
@@ -20,7 +20,11 @@ function isIncontentBoxadApplicable() {
 }
 
 function isHighImpactApplicable() {
-	return !context.get('custom.hasFeaturedVideo');
+	return !context.get('custom.hasFeaturedVideo') && context.get('slots.floor_adhesion.disabled');
+}
+
+function isFloorAdhesionApplicable() {
+	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
 }
 
 /**
@@ -71,6 +75,7 @@ export default {
 			},
 			top_leaderboard: {
 				aboveTheFold: true,
+				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -106,6 +111,7 @@ export default {
 			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
+				bidderAlias: 'TOP_RIGHT_BOXAD',
 				slotNameSuffix: '',
 				group: 'MR',
 				options: {},
@@ -140,7 +146,7 @@ export default {
 			},
 			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
-				bidderAlias: 'incontent_boxad_1',
+				bidderAlias: 'INCONTENT_BOXAD_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -167,6 +173,7 @@ export default {
 			},
 			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
+				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -192,6 +199,7 @@ export default {
 				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
+				bidderAlias: 'INCONTENT_PLAYER',
 				insertBeforeSelector: '#mw-content-text > h2',
 				insertBelowFirstViewport: true,
 				disabled: true,
@@ -204,6 +212,23 @@ export default {
 					pos: ['incontent_player'],
 					rv: 1,
 				},
+			},
+			floor_adhesion: {
+				adProduct: 'floor_adhesion',
+				disabled: true,
+				forceSafeFrame: true,
+				slotNameSuffix: '',
+				group: 'PF',
+				options: {},
+				targeting: {
+					loc: 'footer',
+					rv: 1,
+				},
+				defaultTemplates: [
+					'floorAdhesion',
+					'hideOnViewability',
+				],
+				defaultSizes: [[728, 90]],
 			},
 			invisible_high_impact_2: {
 				adProduct: 'invisible_high_impact_2',
@@ -218,6 +243,7 @@ export default {
 			},
 			featured: {
 				adProduct: 'featured',
+				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',
@@ -272,6 +298,7 @@ export default {
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
+		slotService.setState('floor_adhesion', isFloorAdhesionApplicable());
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 		slotService.setState('incontent_native', isIncontentNativeApplicable());
 
@@ -389,5 +416,12 @@ export default {
 
 	injectHighImpact() {
 		context.push('state.adStack', { id: 'invisible_high_impact_2' });
+	},
+
+	injectFloorAdhesion() {
+		scrollListener.addSlot(
+				'floor_adhesion',
+				{ distanceFromTop: utils.getViewportHeight() },
+		);
 	},
 };

@@ -38,9 +38,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgVariantArticlePath, $wgActionPaths, $wgUseAjax, $wgVersion,
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
-			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain,
-			$wgWikiaBaseDomainRegex, $wgServicesExternalDomain,
-			$wgRecommendedVideoABTestPlaylist;
+			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgFandomBaseDomain, $wgWikiaOrgBaseDomain,
+			$wgWikiaBaseDomainRegex, $wgServicesExternalDomain,	$wgRecommendedVideoABTestPlaylist;
 
 		$mainPage = Title::newMainPage();
 
@@ -100,7 +99,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
-			'wgWikiaBaseDomain' => $wgWikiaBaseDomain,
+			'wgFandomBaseDomain' => $wgFandomBaseDomain,
 			'wgWikiaOrgBaseDomain' => $wgWikiaOrgBaseDomain,
 			'wgWikiaBaseDomainRegex' => $wgWikiaBaseDomainRegex,
 			'wgServicesExternalDomain' => $wgServicesExternalDomain,

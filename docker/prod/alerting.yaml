@@ -15,7 +15,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_UpdateSpecialPages_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="UpdateSpecialPages"}) > 86400
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: UpdateSpecialPages maintenance script did not run in the last 24 hours
         summary: UpdateSpecialPages last succeeded {{humanizeDuration $value}} ago
@@ -24,7 +24,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_CloseWikiMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseWikiMaintenance"}) > 86400 * 2
       labels:
-        team: core
+        team: cake
       annotations:
         description: CloseWikiMaintenance maintenance script did not run in the last 48 hours
         summary: CloseWikiMaintenance last succeeded {{humanizeDuration $value}} ago
@@ -32,7 +32,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_DumpStarters_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DumpStarters"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Starter wikis XML and SQL dumps were not updated in the last 24 hours
         summary: DumpStarters last succeeded {{humanizeDuration $value}} ago
@@ -40,7 +40,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_CleanupCityCreationLog_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanupCityCreationLog"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: CleanupCityCreationLog maintenance script did not run in the last 24 hours
         summary: CleanupCityCreationLog last succeeded {{humanizeDuration $value}} ago
@@ -48,7 +48,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_CleanUpWallNotifications_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanUpWallNotifications"}) > 3600 * 25
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: CleanUpWallNotifications maintenance script did not run in the last 24 hours
         summary: CleanUpWallNotifications last succeeded {{humanizeDuration $value}} ago
@@ -56,7 +56,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_CloseMyAccountMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseMyAccountMaintenance"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: CloseMyAccountMaintenance maintenance script did not run in the last 24 hours
         summary: CloseMyAccountMaintenance last succeeded {{humanizeDuration $value}} ago
@@ -64,7 +64,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_ContentReviewStatus_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ContentReviewStatus"}) > 3600 * 4
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: "ContentReviewStatus should post a message on #js-review-tool Slack channel every three hours"
         summary: ContentReviewStatus last succeeded {{humanizeDuration $value}} ago
@@ -72,7 +72,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_DeleteArticlesByPrefix_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DeleteArticlesByPrefix"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: DeleteArticlesByPrefix maintenance script did not run in the last 24 hours
         summary: DeleteArticlesByPrefix last succeeded {{humanizeDuration $value}} ago
@@ -80,7 +80,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_FounderEmailsMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="FounderEmailsMaintenance"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: FounderEmailsMaintenance maintenance script did not run in the last 24 hours
         summary: FounderEmailsMaintenance last succeeded {{humanizeDuration $value}} ago
@@ -88,7 +88,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_MigratePhalanxUserBlocks_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="MigratePhalanxUserBlocks"}) > 3600 * 25
       labels:
-        team: core
+        team: services
       annotations:
         description: MigratePhalanxUserBlocks maintenance script did not run in the last 24 hours
         summary: MigratePhalanxUserBlocks last succeeded {{humanizeDuration $value}} ago
@@ -96,7 +96,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_PhraseAlerts_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="PhraseAlerts"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Email with report about monitored phrases was not generated in the last 24 hours
         summary: PhraseAlerts last succeeded {{humanizeDuration $value}} ago
@@ -104,7 +104,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_RemoveQAWikis_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="RemoveQAWikis"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Script that closes old QA wikis was not run in the last 24 hours
         summary: RemoveQAWikis last succeeded {{humanizeDuration $value}} ago
@@ -112,7 +112,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_SendConfirmationReminder_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="SendConfirmationReminder"}) > 3600 * 25
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: Maintenance script to send email confirmation reminder to users was not run in the last 24 hours
         summary: SendConfirmationReminder last succeeded {{humanizeDuration $value}} ago
@@ -120,7 +120,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_UploadStashCleanup_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="UploadStashCleanup"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Maintenance script that cleanups stash uploads was not run in the last 24 hours
         summary: UploadStashCleanup last succeeded {{humanizeDuration $value}} ago
@@ -128,14 +128,14 @@ spec:
     - alert: mediawiki_maintenance_scripts_InitStats_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="InitStats"}) > 3600 * 25
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Maintenance script that re-initialises wikis statistics table was not run in the last 24 hours
     # CleanupPhalanxStats should be run every week
     - alert: mediawiki_maintenance_scripts_CleanupPhalanxStats_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanupPhalanxStats"}) > 86400 * 8
       labels:
-        team: core
+        team: services
       annotations:
         description: Maintenance script that removes old specials.phalanx_stats entries was not run in the last 7 days
         summary: CleanupPhalanxStats last succeeded {{humanizeDuration $value}} ago
@@ -143,7 +143,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_ResetWeeklyUserContributionsCount_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ResetWeeklyUserContributionsCount"}) > 86400 * 8
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: Maintenance script that resets users rank with most contributions was not run in the last 7 days
         summary: ResetWeeklyUserContributionsCount last succeeded {{humanizeDuration $value}} ago
@@ -151,7 +151,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_sendWeeklyDigest_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="sendWeeklyDigest"}) > 86400 * 8
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: Maintenance script that sends the weekly digest to the users found in the global_watchlist table was not run in the last 7 days
         summary: sendWeeklyDigest last succeeded {{humanizeDuration $value}} ago
@@ -159,7 +159,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="LyricsWikiCrawler"}) > 3600 * 25
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: Maintenance script that is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
         summary: LyricsWikiCrawler last succeeded {{humanizeDuration $value}} ago
@@ -167,7 +167,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_AutomatedDeadWikisDeletionMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="AutomatedDeadWikisDeletionMaintenance"}) > 86400 * 4
       labels:
-        team: core
+        team: i-wing
       annotations:
         description: Maintenance script that marks wikis as closed was not run in the last four days
         summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
@@ -177,7 +177,7 @@ spec:
     - alert: mediawiki_prod_fpm_workers_usage_percentage
       expr: avg(phpfpm_active_processes{service="mediawiki-prod"} / phpfpm_total_processes{service="mediawiki-prod"}) * 100 > 75
       labels:
-        team: core
+        team: core-platform
       annotations:
         description: Production php-fpm workers usage is above the threshold
         summary: fpm workers usage is at {{$value}} %

@@ -1,4 +1,4 @@
-import { scrollListener, slotService, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
+import { context, scrollListener, slotService, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
@@ -7,7 +7,21 @@ const {
 	SLIDE_OUT_TIME
 } = universalAdPackage;
 
+function getStickinessConfig() {
+	if (context.get('options.unstickHiViLeaderboardAfterTimeout')) {
+		return {
+			stickyDefaultTime: 1000,
+			stickyAdditionalTime: 0,
+			stickyUntilSlotViewed: false,
+		};
+	}
+
+	return {};
+}
+
 export const getConfig = () => ({
+	...getStickinessConfig(),
+
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,

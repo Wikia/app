@@ -7,7 +7,8 @@ export function getConfig() {
 			'invisible_skin',
 		],
 		slotsToDisable: [
-			'incontent_player'
+			'incontent_player',
+			'floor_adhesion',
 		],
 		onInit: () => {
 			context.push('state.adStack', { id: 'invisible_skin' });

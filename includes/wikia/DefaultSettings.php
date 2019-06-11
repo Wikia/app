@@ -386,6 +386,7 @@ $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
+$wgAutoloadClasses['LicenseController'] = $IP.'/skins/oasis/modules/LicenseController.class.php';
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
@@ -1194,11 +1195,11 @@ $wgAdDriverPubMaticOutstreamCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
- * @name $wgAdDriverDisableRecirculationCountries
- * Disables recirculation in these countries.
+ * @name $wgAdDriverFMRRotatorDelay
+ * Time defining FMR slot rotation cycle
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverDisableRecirculationCountries = null;
+$wgAdDriverFMRRotatorDelay = 10000;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1213,6 +1214,13 @@ $wgAdDriverAdditionalVastSizeCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKargoBidderCountries = null;
+
+/**
+ * @name $wgAdDriverGumGumBidderCountries
+ * List of countries where GumGum Prebid bidding partner is enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGumGumBidderCountries = null;
 
 /**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
