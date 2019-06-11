@@ -101,6 +101,7 @@
   "global-navigation-wikis-fandom-university": "팬덤 유니버시티",
   "global-navigation-wikis-header": "위키",
   "hours-ago": "{hours}h",
+  "license-description": "Community content is available under $1 unless otherwise noted.",
   "minutes-ago": "{minutes}m",
   "notifications-mark-all-as-read": "모두 읽은 상태로 표시",
   "notifications-no-notifications-message": "알림이 없습니다.",
