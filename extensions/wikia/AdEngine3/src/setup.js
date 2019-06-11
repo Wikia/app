@@ -253,15 +253,20 @@ function trackAdEngineStatus() {
 
 function getReason() {
 	let reasons;
-	const possibleReasons = {
+	let reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+
+	if (reasonFromBackend !== null) {
+		return 'backend_' + reasonFromBackend;
+	}
+
+	const possibleFrontendReasons = {
 		'noads_querystring': !!utils.queryString.get('noads'),
 		'noexternals_querystring': !!utils.queryString.get('noexternals'),
 		'steam_browser': context.get('state.isSteam') === true,
 	};
 
-	reasons = Object.keys(possibleReasons).filter(function (key) {
-		console.log(key, possibleReasons[key]);
-		return possibleReasons[key] === true;
+	reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+		return possibleFrontendReasons[key] === true;
 	});
 
 	return reasons.length > 0 ? reasons[0] : 'unknown_reason';
