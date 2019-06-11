@@ -29,7 +29,10 @@ $wgResourceModules['ext.wikia.authPreferences'] = [
 		'fbconnect-error-fb-account-in-use',
 		'google-connect-account-connected',
 		'google-connect-account-disconnected',
-		'google-connect-unknown-error'
+		'google-connect-unknown-error',
+		'twitch-connect-account-connected',
+		'twitch-connect-account-disconnected',
+		'twitch-connect-unknown-error'
 	],
 	
 	'localBasePath' => __DIR__,

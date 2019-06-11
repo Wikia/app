@@ -64,6 +64,18 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 		notify('error', 'google-connect-unknown-error');
 	}
 
+	function showTwitchConnectSuccess() {
+		notify('confirm', 'twitch-connect-account-connected');
+	}
+
+	function showTwitchDisconnectSuccess() {
+		notify('confirm', 'twitch-connect-account-disconnected');
+	}
+
+	function showTwitchConnectGenericError() {
+		notify('error', 'twitch-connect-unknown-error');
+	}
+
 	function linkFacebookAccount(fbAuthResponse) {
 		var accessToken = fbAuthResponse.accessToken,
 			editToken = mw.user.tokens.get('editToken');
@@ -164,6 +176,15 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 					break;
 				case externalAuthData.googleConnectStatus === 'error':
 					showGoogleConnectGenericError();
+					break;
+				case externalAuthData.twitchConnectStatus === 'connected':
+					showTwitchConnectSuccess();
+					break;
+				case externalAuthData.twitchConnectStatus === 'disconnected':
+					showTwitchDisconnectSuccess();
+					break;
+				case externalAuthData.twitchConnectStatus === 'error':
+					showTwitchConnectGenericError();
 					break;
 				default:
 			}

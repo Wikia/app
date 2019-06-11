@@ -30,6 +30,8 @@ class AuthPreferencesModuleService extends WikiaService {
 		$googleConnectDomain = wfGetBaseDomainForHost( $wgServer );
 		$googleConnectUrl = WikiFactory::getLocalEnvURL( "https://www.$googleConnectDomain/google-connect" );
 		$this->setVal( 'googleConnectAuthUrl', $googleConnectUrl );
+		$twitchConnectUrl = WikiFactory::getLocalEnvURL( "https://www.$googleConnectDomain/twitch-connect" );
+		$this->setVal( 'twitchConnectAuthUrl', $twitchConnectUrl );
 
 		try {
 			$user = $context->getUser();
