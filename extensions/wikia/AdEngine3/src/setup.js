@@ -133,7 +133,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantGlobals.get('wgAdDriverFMRRotatorDelay', 10000));
+	context.set('custom.fmrRotatorDelay', instantGlobals.get('wgAdDriverFMRRotatorDelay'));
+	context.set('custom.fmrDelayDisabled', instantGlobals.get('wgAdDriverDisableFMRDelayOasisCountries'));
 	context.set('custom.beachfrontDfp', isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
 	context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
