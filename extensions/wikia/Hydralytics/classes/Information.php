@@ -131,13 +131,10 @@ class Information {
 	 * @return	array	[day timestamp => points]
 	 */
 	static public function getEditsLoggedInOut($days = 30) {
-		$editsLoggedIn = [];
-		$editsLoggedOut = [];
-		for ($i = 0; $i < $days; $i++) {
-			$editsLoggedIn[strtotime('Today - '.$i.' days')] = 0;
-			$editsLoggedOut[strtotime('Today - '.$i.' days')] = 0;
-		}
-		return ['in' => $editsLoggedIn, 'out' => $editsLoggedOut];
+		return [
+			'in' => self::getMockedSine($days, 5, 20),
+			'out' => self::getMockedSine($days, 15, 50)
+		];
 	}
 
 	/**
@@ -197,7 +194,9 @@ class Information {
 	 * @return	array	Daily sessions and page views.
 	 */
 	static public function getDailyTotals($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['2019-05-01' => 40]]; // TODO add deltas
+		return [
+			'pageviews' => self::getMockedSine(30, 220, 500, true)
+		];
 	}
 
 	/**
@@ -230,17 +229,26 @@ class Information {
 	 * @param int $days
 	 * @param int $amplitude
 	 * @param int $offset
+	 * @param bool $formatDate Returns "Y-m-d" timestamp when set to true
 	 * @return array
 	 */
-	static private function getMockedSine(int $days = 30, int $amplitude = 10, int $offset = 25) : array {
-		$noise_level = 20;
+	static private function getMockedSine(
+		int $days = 30, int $amplitude = 10, int $offset = 25, $formatDate = false
+	) : array {
+		$noise_level = $amplitude / 2;
 
 		$data = [];
 		for ($i = 0; $i < $days; $i++) {
 			$value = sin( $i ) * $amplitude + $offset;
 			$value += mt_rand( -$noise_level, $noise_level );
 
-			$data[strtotime('Today - '.$i.' days')] = $value;
+			// getDailyTotals requires Y-m-d index
+			$index = strtotime('Today - '.$i.' days');
+			if ($formatDate) {
+				$index = date('Y-m-d', $index);
+			}
+
+			$data[$index] = intval($value);
 		}
 
 		return $data;
