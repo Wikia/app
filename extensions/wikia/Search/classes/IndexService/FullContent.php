@@ -63,11 +63,12 @@ class FullContent extends AbstractService {
 			'wid' => $service->getWikiId(),
 			'pageid' => $pageId,
 			'title' => $titleStr,
+			'redirect_titles' => $service->getRedirectTitlesForPageId( $pageId ),
 			'url' => $service->getUrlFromPageId( $pageId ),
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
-			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false'
 		] );
 	}
 
