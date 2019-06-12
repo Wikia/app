@@ -20,15 +20,12 @@ $wgExtensionCredits['specialpage'][] = [
 ];
 
 $wgAutoloadClasses['DMCARequest\DMCARequestHelper'] =  __DIR__ . '/DMCARequestHelper.class.php';
-$wgAutoloadClasses['DMCARequestSpecialController'] =  __DIR__ . '/DMCARequestSpecialController.class.php';
 $wgAutoloadClasses['DMCARequestManagementSpecialController'] =  __DIR__ . '/DMCARequestManagementSpecialController.class.php';
 $wgAutoloadClasses['DMCARequest\ChillingEffectsClient'] =  __DIR__ . '/ChillingEffectsClient.class.php';
 
 $wgExtensionMessagesFiles['DMCARequest'] = __DIR__ . '/DMCARequest.i18n.php' ;
 
-$wgSpecialPages['DMCARequest'] = 'DMCARequestSpecialController';
 $wgSpecialPages['DMCARequestManagement'] = 'DMCARequestManagementSpecialController';
-$wgSpecialPageGroups['DMCARequest'] = 'wikia';
 
 $wgResourceModules['ext.dmcaRequest'] = [
 	'localBasePath' => __DIR__ . '/styles',

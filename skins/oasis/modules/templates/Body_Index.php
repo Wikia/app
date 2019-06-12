@@ -117,6 +117,8 @@
 					<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 				<? endif; ?>
 
+				<?= $app->renderView('License', 'Index') ?>
+
 				<? if ( !empty( $afterContentHookText ) ) : ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>

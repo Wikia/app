@@ -19,6 +19,9 @@ class DesignSystemHelper {
 		'global-footer-site-overview-link-wikia-inc' => [
 			'year',
 		],
+		'license-description' => [
+			'license',
+		],
 	];
 
 	const MAX_RECURSION_DEPTH = 10;

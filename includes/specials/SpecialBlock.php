@@ -538,6 +538,68 @@ class SpecialBlock extends FormSpecialPage {
 	}
 
 	/**
+	 * Validate a block target.
+	 *
+	 * @since 1.21
+	 * @param string $value Block target to check
+	 * @param User $user Performer of the block
+	 * @return Status
+	 */
+	public static function validateTarget( $value, User $user ) {
+		global $wgBlockCIDRLimit;
+
+		/** @var User $target */
+		list( $target, $type ) = self::getTargetAndType( $value );
+		$status = Status::newGood( $target );
+
+		if ( $type == Block::TYPE_USER ) {
+			if ( $target->isAnon() ) {
+				$status->fatal(
+					'nosuchusershort',
+					wfEscapeWikiText( $target->getName() )
+				);
+			}
+
+			$unblockStatus = self::checkUnblockSelf( $target, $user );
+			if ( $unblockStatus !== true ) {
+				$status->fatal( 'badaccess', $unblockStatus );
+			}
+		} elseif ( $type == Block::TYPE_RANGE ) {
+			list( $ip, $range ) = explode( '/', $target, 2 );
+
+			if (
+				( IP::isIPv4( $ip ) && $wgBlockCIDRLimit['IPv4'] == 32 ) ||
+				( IP::isIPv6( $ip ) && $wgBlockCIDRLimit['IPv6'] == 128 )
+			) {
+				// Range block effectively disabled
+				$status->fatal( 'range_block_disabled' );
+			}
+
+			if (
+				( IP::isIPv4( $ip ) && $range > 32 ) ||
+				( IP::isIPv6( $ip ) && $range > 128 )
+			) {
+				// Dodgy range
+				$status->fatal( 'ip_range_invalid' );
+			}
+
+			if ( IP::isIPv4( $ip ) && $range < $wgBlockCIDRLimit['IPv4'] ) {
+				$status->fatal( 'ip_range_toolarge', $wgBlockCIDRLimit['IPv4'] );
+			}
+
+			if ( IP::isIPv6( $ip ) && $range < $wgBlockCIDRLimit['IPv6'] ) {
+				$status->fatal( 'ip_range_toolarge', $wgBlockCIDRLimit['IPv6'] );
+			}
+		} elseif ( $type == Block::TYPE_IP ) {
+			# All is well
+		} else {
+			$status->fatal( 'badipaddress' );
+		}
+
+		return $status;
+	}
+
+	/**
 	 * Submit callback for an HTMLForm object, will simply pass
 	 * @param $data array
 	 * @param $form HTMLForm
