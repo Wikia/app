@@ -159,7 +159,6 @@ class WikiaRobots {
 
 	/**
 	 * @param RobotsTxt $robots
-	 * @param bool $shallow when false, returns rules for other wikis on the same domain.
 	 * @return RobotsTxt
 	 */
 	public function configureRobotsBuilder( RobotsTxt $robots ) {

@@ -39,8 +39,7 @@ class WikiaRobotsController extends WikiaController {
 				} else {
 					$params = [
 						'controller' => 'WikiaRobots',
-						'method'     => 'getAllowedDisallowed',
-						'shallow'    => 1
+						'method'     => 'getAllowedDisallowed'
 					];
 					if ( $this->request->getBool( 'forcerobots' ) ) {
 						$params['forcerobots'] = '1';
