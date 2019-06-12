@@ -47,7 +47,6 @@ return array(
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'ParserHooks\\' => array($vendorDir . '/mediawiki/parser-hooks/src'),
     'ParamProcessor\\' => array($baseDir . '/extensions/Validator/src/ParamProcessor', $vendorDir . '/param-processor/param-processor/src'),
-    'Overtrue\\PHPLint\\' => array($vendorDir . '/overtrue/phplint/src'),
     'Onoi\\MessageReporter\\' => array($vendorDir . '/onoi/message-reporter/src'),
     'Onoi\\HttpRequest\\' => array($vendorDir . '/onoi/http-request/src'),
     'Onoi\\EventDispatcher\\' => array($vendorDir . '/onoi/event-dispatcher/src'),

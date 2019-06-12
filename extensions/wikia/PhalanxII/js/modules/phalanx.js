@@ -20,14 +20,14 @@ define('phalanx', ['jquery', 'wikia.nirvana'], function($, nirvana) {
 			token: TOKEN
 		}, function(resp) {
 			// possible values:
-			//  0 - not valid
-			//  1 - not valid
+			//  valid.true - valid
+			//  valid.false - not valid
 			//  false - service did not respond
 			if (resp === false) {
 				dfd.reject();
 			}
 			else {
-				dfd.resolve(resp && resp.valid === 1);
+				dfd.resolve(resp.valid === true);
 			}
 		}, function() {
 			dfd.reject();

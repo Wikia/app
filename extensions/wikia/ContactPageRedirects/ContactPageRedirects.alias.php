@@ -7,26 +7,26 @@
  */
 
 $specialPageAliases = array();
- 
+
 /**
  * English (English)
  */
 $specialPageAliases['en'] = array(
-    'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia' ),
+	'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia' ),
 );
- 
+
 /**
  * German (Deutsch)
  */
 $specialPageAliases['de'] = array(
-    'Contact' => array(  'Kontakt' ),
+	'Contact' => array(  'Kontakt' ),
 );
 
 /**
  * Spanish (Español)
  */
 $specialPageAliases['es'] = array(
-    'Contact' => array(  'Contactar' ),
+	'Contact' => array(  'Contactar' ),
 );
 
 /**

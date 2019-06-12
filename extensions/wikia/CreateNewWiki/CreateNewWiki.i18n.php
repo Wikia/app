@@ -1639,7 +1639,7 @@ $messages['ja'] = array(
 	'cnw-theme-instruction' => 'Wikiのデザインは、テーマデザイナーでいつでもカスタマイズできます。',
 	'cnw-welcome-headline' => '$1 が作成されました！',
 	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを追加できます。',
-	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、Fandomコミュニティ作成のヒントやアドバイスを見つけることができます。',
+	'cnw-welcome-help' => '<a href="https://community.fandom.com/ja/">コミュニティセントラル</a> では、Fandomコミュニティ作成のヒントやアドバイスを見つけることができます。',
 	'cnw-error-general' => 'Fandomコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
 	'cnw-error-general-heading' => '申し訳ありません',
 	'cnw-error-blocked-header' => 'アカウントがブロックされています',
@@ -1699,9 +1699,9 @@ Fandomをお楽しみいただく上で、これらの記事を役立ててい�
 今後ともFandomをよろしくお願いいたします。',
 	'autocreatewiki-welcomebody-HTML' => '<p>$2さん<br /><br />
 このたび作成されたWikiに、<a href="$1">$1</a>からアクセスしていただけるようになりました。さっそく、編集をお楽しみください。<br /><br />
-なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
+なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="https://community.fandom.com/ja/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
 今後ともFandomをよろしくお願いいたします。<br /><br />
-<a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
+<a href="https://community.fandom.com/ja/wiki/ユーザー:$4">$3</a><br />
 Fandomコミュニティ・チーム<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Fandomコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',

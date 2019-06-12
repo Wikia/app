@@ -10,7 +10,7 @@ const {
 function getStickinessConfig() {
 	if (context.get('options.unstickHiViLeaderboardAfterTimeout')) {
 		return {
-			stickyDefaultTime: 5000,
+			stickyDefaultTime: 1000,
 			stickyAdditionalTime: 0,
 			stickyUntilSlotViewed: false,
 		};
