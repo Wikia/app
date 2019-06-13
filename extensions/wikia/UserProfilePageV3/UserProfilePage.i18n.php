@@ -10,7 +10,6 @@ $messages['en'] = array(
 	'userprofilepage-interview-edit-update-summary' => 'User interview updated',
 	'userprofilepage-interview-save-error' => 'Saving interview failed',
 	'userprofilepage-interview-save-internal-error' => 'Saving interview failed - internal error occurred',
-	'userprofilepage-answers-stats-title' => 'Interview Statistics',
 	'userprofilepage-add-question' => 'Add new question',
 	'userprofilepage-question-save' => 'Save question',
 	'userprofilepage-question-list-title' => '$1/$2 Questions',
