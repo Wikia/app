@@ -12,15 +12,27 @@ import videoTracker from './tracking/video-tracking';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
+let contextConfiguredTrigger;
+/**
+ * Resolves with ad-engine context once it's been configured.
+ * @type {Promise}
+ */
+const contextConfigured = new Promise((resolve) => {
+	contextConfiguredTrigger = resolve;
+});
+
 async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
 	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+
 	videoTracker.register();
 	recRunner.init();
 
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
+
+	contextConfiguredTrigger(context);
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
@@ -136,6 +148,7 @@ function hideAllAdSlots() {
 
 export {
 	context,
+	contextConfigured,
 	jwplayerAdsFactory,
 	hmdLoader,
 	isAutoPlayDisabled,
