@@ -159,10 +159,9 @@ class WikiaRobots {
 
 	/**
 	 * @param RobotsTxt $robots
-	 * @param bool $shallow when false, returns rules for other wikis on the same domain.
 	 * @return RobotsTxt
 	 */
-	public function configureRobotsBuilder( RobotsTxt $robots, $shallow = false ) {
+	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
@@ -218,105 +217,6 @@ class WikiaRobots {
 			}
 		}
 
-		// Paranoid check to make sure language wikis return only their rules without calling other
-		// wikis recursively.
-		// TODO - remove the code below once robots are served by the robots-txt service
-		if ( !$wgRequest->getBool( 'shallow' ) && !$shallow ) {
-			// fetch from foreign wikis...
-			$languageWikis = \WikiFactory::getLanguageWikis();
-			foreach ( $languageWikis as $wiki ) {
-				$params = [
-					'controller' => 'WikiaRobots',
-					'method' => 'getAllowedDisallowed',
-					'shallow' => 1
-				];
-				if ( $wgRequest->getBool( 'forcerobots' ) ) {
-					$params[ 'forcerobots' ] = '1';
-				}
-				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
-				if ( !empty( $response ) ) {
-					if ( isset( $response['allowed'] ) ) {
-						$robots->addAllowedPaths($response['allowed']);
-					}
-					if ( isset( $response['disallowed'] ) ) {
-						$robots->addDisallowedPaths( $response['disallowed'] );
-					}
-					if ( isset( $response['sitemaps'] ) ) {
-						$robots->addSitemaps( $response['sitemaps'] );
-					}
-				} else {
-					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
-						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]
-					] );
-					$this->degraded = true;
-				}
-			}
-		}
-
 		return $robots;
-	}
-
-	/**
-	 * Get one of the possible robots policy to use in <meta> tags:
-	 *
-	 *  * index,follow (page is fully allowed to be crawled by robots)
-	 *  * noindex,follow (only read the links, but don't save the page to their index)
-	 *  * noindex,nofollow (don't read the page, don't put to index, don't follow any links)
-	 *
-	 * The title is checked to see if the namespace is blocked. For special pages the whitelist
-	 * is checked for the specific page. The request is checked for any forbidden params.
-	 *
-	 * Also if we're in non-production environment, the function is gonna return noindex,nofollow.
-	 *
-	 * @param \Title $title - the title to generate the tag for (normally pass $wg\Title)
-	 * @param \WebRequest $request - the request to generate the tag for (normally pas $wgRequest)
-	 * @return string
-	 */
-	public function getMetaRobotsPolicy( \Title $title, \WebRequest $request ) {
-		if ( !$this->accessAllowed ) {
-			return 'noindex,nofollow';
-		}
-
-		// Check for blocked params
-		if ( array_intersect( $this->blockedParams, $request->getValueNames() ) ) {
-			return 'noindex,nofollow';
-		}
-
-		// Check namespace
-		if ( !in_array( $title->getNamespace(), $this->blockedNamespaces ) ) {
-			return 'index,follow';
-		}
-
-		// The namespace is blocked, checking the specific page
-
-		if ( $title->isSpecialPage() ) {
-			foreach ( $this->allowedSpecialPages as $allowedPage => $policy ) {
-				if ( $title->isSpecial( $allowedPage ) ) {
-					if ( $policy === 'follow' ) {
-						return 'noindex,follow';
-					}
-					return 'index,follow';
-				}
-			}
-		}
-
-		// The namespace was blocked, the page was not specifically allowed
-
-		return 'noindex,nofollow';
-	}
-
-	/**
-	 * Get headers to set for robots.txt
-	 *
-	 * @return array
-	 */
-	public function getRobotsTxtCachePeriod() {
-		if ( $this->experiment ) {
-			return self::CACHE_PERIOD_EXPERIMENTAL;
-		}
-		if ( $this->degraded ) {
-			return self::CACHE_PERIOD_DEGRADED;
-		}
-		return self::CACHE_PERIOD_REGULAR;
 	}
 }
