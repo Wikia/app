@@ -536,7 +536,7 @@ if( !empty( $wgEnableForumIndexProtectorExt ) ) {
 }
 
 if( !empty( $wgEnableContactExt ) ) {
-	include_once( "$IP/extensions/wikia/SpecialContact2/SpecialContact.php" );
+	include_once "$IP/extensions/wikia/ContactPageRedirects/ContactPageRedirects.setup.php";
 }
 
 if( !empty( $wgEnableInputBoxExt ) ) {

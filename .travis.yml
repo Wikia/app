@@ -31,3 +31,6 @@ script:
 cache:
   directories:
     - /home/travis/.phpenv
+
+notifications:
+  email: false
