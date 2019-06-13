@@ -67,7 +67,7 @@ require([
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
 		if (adsApi) {
-			adsApi.shouldShowAds(function(shouldShowAds) {
+			adsApi.shouldShowAds().then(function(shouldShowAds) {
 				if (shouldShowAds) {
 					videoAds = adsApi.jwplayerAdsFactory.create({
 						adProduct: 'featured',
