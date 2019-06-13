@@ -1346,6 +1346,14 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
  */
 $wgAdDriverScrollDepthTrackingCountries = null;
 
+
+/**
+ * @name $wgAdDriverScrollSpeedTrackingCountries
+ * List of countries where scroll speed tracking is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollSpeedTrackingCountries = null;
+
 /**
  * @name $wgAdDriverStickySlotsLines
  * List of Google Ad Manager lines to apply Sticky Ad template
