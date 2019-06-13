@@ -67,20 +67,24 @@ require([
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
 		if (adsApi) {
-			adsApi.shouldShowAds(function() {
-				videoAds = adsApi.jwplayerAdsFactory.create({
-					adProduct: 'featured',
-					slotName: 'featured',
-					audio: !willMute,
-					autoplay: willAutoplay,
-					featured: true,
-					videoId: videoDetails.playlist[0].mediaid,
-				});
-				adsApi.jwplayerAdsFactory.loadMoatPlugin();
-			})
+			adsApi.shouldShowAds(function(shouldShowAds) {
+				if (shouldShowAds) {
+					videoAds = adsApi.jwplayerAdsFactory.create({
+						adProduct: 'featured',
+						slotName: 'featured',
+						audio: !willMute,
+						autoplay: willAutoplay,
+						featured: true,
+						videoId: videoDetails.playlist[0].mediaid,
+					});
+					adsApi.jwplayerAdsFactory.loadMoatPlugin();
+				}
+			});
+			configurePlayer(willAutoplay, willMute);
+		} else {
+			configurePlayer(willAutoplay, willMute);
 		}
 
-		configurePlayer(willAutoplay, willMute);
 	}
 
 	function configurePlayer(willAutoplay, willMute) {
