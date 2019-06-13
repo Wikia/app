@@ -2060,6 +2060,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-bureaucrat',
 	'User-identity-box-group-chatmoderator',
 	'User-identity-box-group-content-moderator',
+	'User-identity-box-group-content-team-member',
 	'User-identity-box-group-council',
 	'User-identity-box-group-founder',
 	'User-identity-box-group-helper',
