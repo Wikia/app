@@ -102,8 +102,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('options.maxDelayTimeout', instantGlobals.get('wgAdDriverDelayTimeout', 2000));
 	context.set('options.tracking.kikimora.player', isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
-	context.set('options.tracking.kikimora.slot', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
-	context.set('options.tracking.kikimora.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.tracking.slot.status', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
+	context.set('options.tracking.slot.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
