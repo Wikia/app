@@ -386,6 +386,7 @@ $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
+$wgAutoloadClasses['LicenseController'] = $IP.'/skins/oasis/modules/LicenseController.class.php';
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
@@ -1195,10 +1196,17 @@ $wgAdDriverPubMaticDfpCountries = null;
 
 /**
  * @name $wgAdDriverFMRRotatorDelay
- * Time defining FMR slot rotation cycle
+ * Time defining FMR slot rotation cycle.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFMRRotatorDelay = 10000;
+
+/**
+ * @name $wgAdDriverDisableFMRDelayOasisCountries
+ * List of countries where FMR rotation is based on scroll instead of time delay.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableFMRDelayOasisCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1403,6 +1411,13 @@ $wgAdDriverEnableCheshireCat = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
+
+/**
+ * @name $wgAdDriverOverscrolledCountries
+ * List of countries where "overscrolled" events are enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOverscrolledCountries = null;
 
 /**
  * @name $wgAdDriverBrowsiCountries

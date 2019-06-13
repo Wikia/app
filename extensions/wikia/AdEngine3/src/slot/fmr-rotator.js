@@ -6,6 +6,7 @@ import { recRunner } from '../wad/rec-runner';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
+	delayDisabled: false,
 	recSlotViewed: 2000,
 	refreshDelay: 10000,
 	refreshLimit: 20,
@@ -241,6 +242,7 @@ export function rotateIncontentBoxad(slotName) {
 	recirculationElement = document.getElementById('recirculation-rail');
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
 	refreshInfo.refreshDelay = context.get('custom.fmrRotatorDelay') || refreshInfo.refreshDelay;
+	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
@@ -249,6 +251,15 @@ export function rotateIncontentBoxad(slotName) {
 				slotStatusChanged(AdSlot.STATUS_SUCCESS);
 
 				slot.once(AdSlot.SLOT_VIEWED_EVENT, () => {
+					if (refreshInfo.delayDisabled) {
+						rotatorListener = scrollListener.addCallback(() => {
+							removeScrollListener();
+							hideSlot();
+						});
+
+						return;
+					}
+
 					setTimeout(() => {
 						hideSlot();
 					}, refreshInfo.refreshDelay);

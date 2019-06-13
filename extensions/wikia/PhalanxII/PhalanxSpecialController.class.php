@@ -356,6 +356,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->setVal( 'error', 'permission' );
 
 			wfProfileOut( __METHOD__ );
+
 			return;
 		}
 
@@ -363,10 +364,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			try {
 				$phalanxService = PhalanxServiceFactory::getServiceInstance();
 				$this->setVal( 'valid', $phalanxService->doRegexValidation( $regexp ) );
-			} catch ( PhalanxServiceException $phalanxServiceException ) {
-				$this->setVal( 'valid', true );
-			} catch ( RegexValidationException $regexValidationException ) {
-				$this->setVal( 'valid', $regexValidationException->getMessage() );
+			}
+			catch ( Exception $exception ) {
+				\Wikia\Logger\WikiaLogger::instance()
+					->error( 'Phalanx service failed', [ $exception ] );
 			}
 		}
 
