@@ -4497,9 +4497,9 @@ class User implements JsonSerializable {
 	 * @return bool
 	 */
 	public function isStaff() {
-		return self::permissionsService()->isInGroup( $this, 'staff' );
+		return self::permissionsService()->isInGroup( $this, 'staff' )
 			||
-			self::permissionsService()->isInGroup( $this, 'wiki-manager' );	
+			self::permissionsService()->isInGroup( $this, 'wiki-manager' )
 			||
 			self::permissionsService()->isInGroup( $this, 'content-team-member' );
 	}
