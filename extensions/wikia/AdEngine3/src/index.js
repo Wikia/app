@@ -1,20 +1,7 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import {
-	bidders,
-	billTheLizard,
-	confiant,
-	context,
-	events,
-	eventService,
-	jwplayerAdsFactory,
-	krux,
-	moatYi,
-	moatYiEvents,
-	nielsen,
-	utils
-} from '@wikia/ad-engine';
+import { context, events, eventService, utils, bidders, billTheLizard, krux, moatYi, moatYiEvents, nielsen, jwplayerAdsFactory } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -103,7 +90,6 @@ function callExternals() {
 		responseListener: biddersDelay.markAsReady,
 	});
 
-	confiant.call();
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
