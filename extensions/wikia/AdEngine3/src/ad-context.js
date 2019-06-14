@@ -464,6 +464,10 @@ export default {
 			parameters: {},
 			timeout: 2000,
 		},
+		confiant: {
+			enabled: false,
+			propertyId: 'd-aIf3ibf0cYxCLB1HTWfBQOFEA',
+		},
 		krux: {
 			enabled: false,
 			id: 'JU3_GW1b',
