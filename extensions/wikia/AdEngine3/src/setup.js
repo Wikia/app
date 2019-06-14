@@ -1,6 +1,7 @@
 import { AdEngine, context, events, eventService, slotInjector, templateService, utils, setupNpaContext, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
+import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
@@ -38,7 +39,7 @@ function isGeoEnabled(key) {
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
-	const showAds = window.ads.context.opts.showAds;
+	const showAds = getReasonForNoAds() === null;
 
 	context.extend(basicContext);
 	context.set('wiki', wikiContext);
@@ -81,10 +82,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
-
-	if (context.get('state.isSteam')) {
-		context.set('state.showAds', false);
-	}
 
 	context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));
@@ -223,8 +220,11 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			slotName = slot.slotName;
 		}
 
-		context.push('state.adStack', { id: slotName })
+		context.push('state.adStack', { id: slotName });
 	});
+
+	trackAdEngineStatus();
+
 	window.adslots2.start();
 }
 
@@ -236,6 +236,43 @@ function configure(adsContext, isOptedIn) {
 
 	context.push('listeners.slot', slotTracker);
 	context.push('listeners.slot', viewabilityTracker);
+}
+
+/**
+ * Checks state.showAds and sends to DW information about AdEngine status
+ */
+function trackAdEngineStatus() {
+	if (context.get('state.showAds')) {
+		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
+	} else {
+		pageTracker.trackProp('adengine', 'off_' + getReasonForNoAds());
+	}
+}
+
+function getReasonForNoAds() {
+	const reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+	const pageType = window.ads.context.opts.pageType || null;
+
+	if (reasonFromBackend === 'no_ads_user' && pageType === 'homepage_logged') {
+		return null;
+	}
+
+	if (reasonFromBackend !== null) {
+		return reasonFromBackend;
+	}
+
+	const possibleFrontendReasons = {
+		'noads_querystring': !!utils.queryString.get('noads'),
+		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// two above are probably not needed but data QA will confirm 3:-)
+		'steam_browser': context.get('state.isSteam') === true,
+	};
+
+	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+		return possibleFrontendReasons[key] === true;
+	});
+
+	return reasons.length > 0 ? reasons[0] : null;
 }
 
 function init() {
