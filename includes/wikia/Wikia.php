@@ -603,31 +603,6 @@ class Wikia {
 		return true;
 	}
 
-	/**
-	 * fixed answers domains
-	 */
-	public static function getAnswersDomains() {
-		global $wgAvailableAnswersLang, $wgContLang;
-		wfProfileIn(__METHOD__);
-		$msg = "autocreatewiki-subname-answers";
-		$default = wfMsgExt( $msg, array( "language" => "en" ) );
-		#--
-		$domains = array( 'default' => $wgContLang->lcfirst( $default ) );
-		if ( !empty($wgAvailableAnswersLang) ) {
-			foreach ( $wgAvailableAnswersLang as $lang ) {
-				$domain = wfMsgExt( $msg, array( "language" => $lang ) );
-				if ( !empty($domain) ) {
-					$domain = $wgContLang->lcfirst( $domain );
-					if ( !wfEmptyMsg( $msg, $domain ) &&  $domain != $domains['default'] ) {
-						$domains[$lang] = $domain;
-					}
-				}
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $domains;
-	}
-
 	/* TODO remove when cat_hidden is fixed */
 	public static function categoryCloudGetHiddenCategories() {
 		$data = array();
