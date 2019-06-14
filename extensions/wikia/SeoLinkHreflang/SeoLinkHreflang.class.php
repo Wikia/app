@@ -45,13 +45,6 @@ class SeoLinkHreflang {
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out/*, $text*/ ) {
-		global $wgServer;
-
-		// Add hreflang links only on domains where we have language wikis share the root domain
-		if ( !wfHttpsEnabledForURL( $wgServer ) ) {
-			return true;
-		}
-
 		$links = static::generateHreflangLinks( $out );
 
 		if ( count( $links ) > 0 ) {

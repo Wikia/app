@@ -94,13 +94,6 @@ if ( ! empty( $wgEnableWikisApi ) ) {
 	F::app()->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 }
 
-// During migration drop parser expiry on non-English wikis to 24 hours (PLATFORM-3765)
-if ( ( !wfHttpsAllowedForURL( $wgServer ) && !empty( $wgFandomComMigrationScheduled ) ) ||
-	 ( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
-) {
-	$wgParserCacheExpireTime = 24 * 3600;
-}
-
 /*
  * Code for http://lyrics.wikia.com/
  */

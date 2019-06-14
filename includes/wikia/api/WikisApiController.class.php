@@ -289,8 +289,7 @@ class WikisApiController extends WikiaApiController {
 			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
 				$this->response->setVal( 'primaryDomain', $primaryDomain );
-				$this->response->setVal( 'primaryProtocol',
-					wfHttpsEnabledForDomain( $primaryDomain ) ? 'https://' : 'http://' );
+				$this->response->setVal( 'primaryProtocol', 'https://' );
 				$this->response->setVal( 'wikis', [] );
 				return;
 			}
@@ -309,12 +308,10 @@ class WikisApiController extends WikiaApiController {
 				return $wiki;
 			}, $wikis );
 		}
-		if ( wfHttpsEnabledForDomain( $domain ) ) {
-			$wikis = array_map( function ( $wiki ) {
-				$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
-				return $wiki;
-			}, $wikis );
-		}
+		$wikis = array_map( function ( $wiki ) {
+			$wiki['city_url'] = wfHttpToHttps( $wiki['city_url'] );
+			return $wiki;
+		}, $wikis );
 
 		if ( empty( $cityId ) && empty( $wikis ) ) {
 			throw new NotFoundApiException();

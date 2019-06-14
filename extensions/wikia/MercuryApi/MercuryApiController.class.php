@@ -321,7 +321,7 @@ class MercuryApiController extends WikiaController {
 				// Set it before we remove the namespace from $displayTitle
 				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 
-				if ( $isMainPage && wfHttpsEnabledForURL( $wgServer ) ) {
+				if ( $isMainPage ) {
 					$data['hreflangLinks'] = SeoLinkHreflang::getMainPageLinks();
 				}
 
