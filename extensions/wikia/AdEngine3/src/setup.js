@@ -5,6 +5,7 @@ import {
 import { get, set } from 'lodash';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
+import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
@@ -63,7 +64,7 @@ async function updateWadContext() {
 }
 
 async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
-	const showAds = window.ads.context.opts.showAds;
+	const showAds = getReasonForNoAds() === null;
 
 	context.extend(basicContext);
 
@@ -113,10 +114,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
 
-	if (context.get('state.isSteam')) {
-		context.set('state.showAds', false);
-	}
-
 	context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', getInstantGlobal('wgAdDriverPorvataMoatTrackingSampling'));
 
@@ -147,6 +144,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		);
 	}
 
+	context.set('services.confiant.enabled', isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& isGeoEnabled('wgAdDriverKruxCountries') && !getInstantGlobal('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
@@ -173,6 +171,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
 	context.set('custom.fmrRotatorDelay', getInstantGlobal('wgAdDriverFMRRotatorDelay', 10000));
+	context.set('custom.fmrDelayDisabled', getInstantGlobal('wgAdDriverDisableFMRDelayOasisCountries'));
 	context.set('custom.beachfrontDfp', isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
 	context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
@@ -262,8 +261,11 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			slotName = slot.slotName;
 		}
 
-		context.push('state.adStack', { id: slotName })
+		context.push('state.adStack', { id: slotName });
 	});
+
+	trackAdEngineStatus();
+
 	window.adslots2.start();
 }
 
@@ -275,6 +277,43 @@ async function configure(adsContext, isOptedIn) {
 
 	context.push('listeners.slot', slotTracker);
 	context.push('listeners.slot', viewabilityTracker);
+}
+
+/**
+ * Checks state.showAds and sends to DW information about AdEngine status
+ */
+function trackAdEngineStatus() {
+	if (context.get('state.showAds')) {
+		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
+	} else {
+		pageTracker.trackProp('adengine', 'off_' + getReasonForNoAds());
+	}
+}
+
+function getReasonForNoAds() {
+	const reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+	const pageType = window.ads.context.opts.pageType || null;
+
+	if (reasonFromBackend === 'no_ads_user' && pageType === 'homepage_logged') {
+		return null;
+	}
+
+	if (reasonFromBackend !== null) {
+		return reasonFromBackend;
+	}
+
+	const possibleFrontendReasons = {
+		'noads_querystring': !!utils.queryString.get('noads'),
+		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// two above are probably not needed but data QA will confirm 3:-)
+		'steam_browser': context.get('state.isSteam') === true,
+	};
+
+	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+		return possibleFrontendReasons[key] === true;
+	});
+
+	return reasons.length > 0 ? reasons[0] : null;
 }
 
 function init() {

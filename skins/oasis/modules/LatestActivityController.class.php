@@ -65,7 +65,7 @@ class LatestActivityController extends WikiaController {
 		if ( $wgEnableTriviaQuizzesExt && !$wgUser->isLoggedIn() && in_array( $currentPageTitle, $wgTriviaQuizzesEnabledPages ) ) {
 			$this->setVal( 'renderTriviaQuizzes', $wgEnableTriviaQuizzesExt );
 			$this->setVal( 'moduleHeader', wfMessage('trivia-quizzes-featured-quizzes-header')->escaped() );
-			$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-checkbox-small', 'wds-icon wds-icon-small wds-checkbox-icon' ) );
+			$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-quiz-small', 'wds-icon wds-icon-small wds-quiz-icon' ) );
 		}
 
 		// Cache the response in CDN and browser
