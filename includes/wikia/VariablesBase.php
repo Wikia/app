@@ -8887,6 +8887,12 @@ $wgFandomComMigrationScheduled = false;
 $wgDomainMigrationDisabled = false;
 
 /**
+ * Environment-specific domain mappings to their normalized variants
+ * @var string[] $wgDomainOverrides
+ */
+$wgEnvironmentDomainMappings = [];
+
+/**
  * Whether the community is scheduled to be migrated to a wikia.org domain
  * @var bool $wgWikiaOrgMigrationScheduled
  */
