@@ -232,6 +232,11 @@ Please confirm that you really want to recreate this article.",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -239,6 +244,7 @@ Please confirm that you really want to recreate this article.",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -6256,6 +6262,11 @@ Bitte bestätige, dass du diese Seite tatsächlich neu anlegen möchtest.",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -6263,6 +6274,7 @@ Bitte bestätige, dass du diese Seite tatsächlich neu anlegen möchtest.",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -7601,6 +7613,11 @@ Este código de confirmación expirará el $4.',
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -7608,6 +7625,7 @@ Este código de confirmación expirará el $4.',
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'createwiki' => 'Crear un nuevo wiki',
 	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
 	'createwikititle' => 'Title for the wiki',
@@ -8985,6 +9003,11 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -8992,6 +9015,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -13201,6 +13225,11 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -13208,6 +13237,7 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -13724,6 +13754,11 @@ $5
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -13731,6 +13766,7 @@ $5
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -21030,6 +21066,11 @@ Bevestig dat u de pagina opnieuw wilt aanmaken.',
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -21037,6 +21078,7 @@ Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -22538,6 +22580,11 @@ Czy chcesz go ponownie utworzyć?",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -22545,6 +22592,7 @@ Czy chcesz go ponownie utworzyć?",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -23469,6 +23517,11 @@ Por favor, confirme que realmente deseja recriar esta página.",
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -23476,6 +23529,7 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -24602,6 +24656,11 @@ $5
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -24609,6 +24668,7 @@ $5
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -32012,6 +32072,11 @@ $5
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -32019,6 +32084,7 @@ $5
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
@@ -32314,6 +32380,11 @@ $5
 ** http://genealogy.wikia.com|Genealogy Wiki
 ** http://diy.wikia.com|Do it Yourself Wiki
 ** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
 * https://community.fandom.com|Community
 ** https://community.fandom.com/wiki/Forum:Index|Forum|no-icon
 ** http://help.wikia.com|Help|no-icon
@@ -32321,6 +32392,7 @@ $5
 	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * https://community.fandom.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
