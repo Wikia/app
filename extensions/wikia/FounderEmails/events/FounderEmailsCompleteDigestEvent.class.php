@@ -9,10 +9,6 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( User $user, $wikiId = null ) {
-		if ( self::isAnswersWiki() ) {
-			return false;
-		}
-
 		return true;
 	}
 

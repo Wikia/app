@@ -171,7 +171,7 @@ class MercuryApi {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
 		       $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
-		       $wgWatchShowURL, $wgRedirectFilePagesForAnons;
+		       $wgRightsText, $wgRightsUrl, $wgRedirectFilePagesForAnons;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -194,6 +194,8 @@ class MercuryApi {
 				'siteMessage' => $this->getSiteMessage(),
 				'smartBannerAdConfiguration' => $this->getSmartBannerAdConfig(),
 				'twitterAccount' => $wgTwitterAccount,
+				'licenseText' => $wgRightsText,
+				'licenseUrl' => $wgRightsUrl
 			]
 		);
 

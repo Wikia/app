@@ -7,8 +7,7 @@ var fs = require('fs'),
 	messageParamsMapping = {
 		'global-footer-licensing-and-vertical-description': {
 			sitename: '$1',
-			vertical: '$2',
-			license: '$3'
+			vertical: '$2'
 		},
 		'global-navigation-search-placeholder-in-wiki': {
 			sitename: '$1'
@@ -18,6 +17,9 @@ var fs = require('fs'),
 		},
 		'global-footer-site-overview-link-wikia-inc': {
 			year: '$1'
+		},
+		'license-description': {
+			license: '$1'
 		}
 	};
 

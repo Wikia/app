@@ -77,8 +77,4 @@ class PhalanxContentModel extends PhalanxModel {
 	public function match_title() {
 		return $this->match( "title" );
 	}
-
-	public function match_question_title() {
-		return $this->match( "question_title" );
-	}
 }

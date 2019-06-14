@@ -24,8 +24,8 @@ before_script:
   - sudo mysql_upgrade
   - phpenv config-add tests/travis/php.ini
 script:
+  - git diff $TRAVIS_BRANCH..HEAD --name-only --diff-filter ACMRT | grep \.php$ | grep -Ev '(lib/composer|lib/Swagger|/templates/)' | xargs -n 1 php -l
   - cd tests && ./php-tests.sh
-  - cd .. && composer run lint
 
 # cache compiled version of pecl extensions
 cache:

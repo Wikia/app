@@ -88,21 +88,6 @@ abstract class FounderEmailsEvent {
 		return false;
 	}
 
-	public static function isAnswersWiki( $wikiId = null ) {
-		// If the current wiki, just return the global where its already loaded
-		if ( empty( $wikiId ) || $wikiId == F::app()->wg->CityId ) {
-			return !empty( F::app()->wg->EnableAnswers );
-		}
-
-		// Otherwise, pull the value from the DB for the wiki given
-		$var = WikiFactory::getVarByName( 'wgEnableAnswers', $wikiId );
-		if ( empty( $var ) ) {
-			return false;
-		}
-
-		return unserialize( $var->cv_value );
-	}
-
 	abstract public function process( Array $events );
 
 	public static function register() {
