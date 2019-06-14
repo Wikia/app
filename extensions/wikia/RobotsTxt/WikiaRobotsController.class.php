@@ -7,7 +7,7 @@ use Wikia\RobotsTxt\WikiaRobots;
 class WikiaRobotsController extends WikiaController {
 	protected function getLocalRules() {
 		$wikiaRobots = new WikiaRobots( new PathBuilder() );
-		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt(), true );
+		$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
 		return [
 			'allowed' => $robots->getAllowedPaths(),
 			'disallowed' => $robots->getDisallowedPaths(),
@@ -39,8 +39,7 @@ class WikiaRobotsController extends WikiaController {
 				} else {
 					$params = [
 						'controller' => 'WikiaRobots',
-						'method'     => 'getAllowedDisallowed',
-						'shallow'    => 1
+						'method'     => 'getAllowedDisallowed'
 					];
 					if ( $this->request->getBool( 'forcerobots' ) ) {
 						$params['forcerobots'] = '1';

@@ -1196,10 +1196,17 @@ $wgAdDriverPubMaticDfpCountries = null;
 
 /**
  * @name $wgAdDriverFMRRotatorDelay
- * Time defining FMR slot rotation cycle
+ * Time defining FMR slot rotation cycle.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFMRRotatorDelay = 10000;
+
+/**
+ * @name $wgAdDriverDisableFMRDelayOasisCountries
+ * List of countries where FMR rotation is based on scroll instead of time delay.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableFMRDelayOasisCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1345,6 +1352,14 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverScrollDepthTrackingCountries = null;
+
+
+/**
+ * @name $wgAdDriverScrollSpeedTrackingCountries
+ * List of countries where scroll speed tracking is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollSpeedTrackingCountries = null;
 
 /**
  * @name $wgAdDriverStickySlotsLines
