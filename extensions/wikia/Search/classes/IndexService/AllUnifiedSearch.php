@@ -27,6 +27,7 @@ class AllUnifiedSearch extends AbstractService {
 		'Wikia\Search\IndexService\Redirects' => null,
 		'Wikia\Search\IndexService\WikiViews' => null,
 		'Wikia\Search\IndexService\VideoViews' => null, // note the order of operations -- AFTER metadata
+		'Wikia\Search\IndexService\ArticleQuality' => null,
 	];
 
 	/**
