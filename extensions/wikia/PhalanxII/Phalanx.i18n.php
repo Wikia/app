@@ -536,6 +536,15 @@ Después de ser borrado, el filtro y todas sus acciones no serán accesibles des
 	'phalanx-required-type' => '* Al menos una de las casillas de verificación es requerida',
 	'phalanx-type-device' => 'device',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => 'preguntas recientes',
+	'phalanx-help-type-question-title' => 'Este filtro bloquea una pregunta (página) de ser creada, si su título concuerda con cualquiera de las frases.
+
+Nota: solo trabaja en wikis tipo answers.',
+	'phalanx-section-type-questions' => 'Preguntas',
+	'phalanx-type-question-title' => 'título de pregunta',
+	'phalanx-help-type-recent-questions' => 'Este filtro previene que las preguntas sean mostradas en los widgets, listas, etiquetas, etc. No previene que esas páginas sean creadas.
+
+Nota: solo trabaja en wikis tipo answers.',
 );
 
 $messages['fi'] = array(
@@ -718,6 +727,12 @@ Après retrait, un filtre et toutes les actions associées ne seront plus access
 	'phalanx-required-type' => '*Au moins une case à cocher obligatoire',
 	'phalanx-type-device' => 'device',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => 'questions récentes',
+	'phalanx-help-type-question-title' => "Ce filtre bloque la création d'une question (page) si son titre correspond à une des expressions de la liste noire. Note : cela ne fonctionne que sur les wikis de type Réponses.",
+	'phalanx-section-type-questions' => 'Questions',
+	'phalanx-type-question-title' => 'titre de la question',
+	'phalanx-help-type-recent-questions' => "Ce filtre empêche l'affichage des questions (pages) dans un certain nombre de sorties (widgets, listes, énumérations générées par balise).
+Il n’empêche pas ces pages d’être créées. Note : cela ne fonctionne que sur les wikis de type Réponses.",
 );
 
 $messages['gl'] = array(
@@ -1198,6 +1213,15 @@ Nota: non impedisce la modifica di una pagina pre-esistente.',
 	'phalanx-label-lang' => 'Language:',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-stats-table-language' => 'Language',
+	'phalanx-type-recent-questions' => 'domande recenti',
+	'phalanx-help-type-question-title' => 'Questo filtro blocca la creazione di una domanda (pagina) se il suo titolo corrisponde ad una delle frasi nella black list.
+
+Nota: funziona solo su wiki-risposte.',
+	'phalanx-section-type-questions' => 'Domande',
+	'phalanx-type-question-title' => 'titolo della domanda',
+	'phalanx-help-type-recent-questions' => 'Questo filtro impedisce la visualizzazione delle domande (pagine) in diversi output (widget, elenchi, voci generate da tag). Non impedisce la creazione di quelle pagine.
+
+Nota: funziona solo su wiki-risposte.',
 );
 
 $messages['ja'] = array(
@@ -1331,6 +1355,14 @@ $messages['ja'] = array(
 	'phalanx-required-type' => '*1つ以上のチェックボックスを選択する必要があります',
 	'phalanx-type-device' => 'デバイス',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => '最近の質問',
+	'phalanx-help-type-question-title' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにタイトルが一致する質問（ページ）の作成をブロックします。',
+	'phalanx-section-type-questions' => '質問',
+	'phalanx-type-question-title' => '質問のタイトル',
+	'phalanx-help-type-recent-questions' => 'このフィルターは、さまざまな出力（ウィジェット、リスト、タグによって生成されるリスティング）への質問（ページ）の表示を禁止します。 
+これらのページの作成は禁止しません。
+
+注：回答型のWikiでのみ使用できます。',
 );
 
 $messages['km'] = array(
@@ -1984,6 +2016,16 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-required-type' => 'Musisz zaznaczyć przynajmniej jedno pole',
 	'phalanx-type-device' => 'device',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => 'ostatnie pytania',
+	'phalanx-help-type-question-title' => 'Ten filtr blokuje pytanie (stronę) przed utworzeniem, jeśli jego tytuł pasuje do dowolnego z wyrażeń zabronionych.
+
+Uwaga: działa tylko na wiki typu Odpowiedzi.',
+	'phalanx-section-type-questions' => 'Wiki Answers',
+	'phalanx-type-question-title' => 'tytuł pytania',
+	'phalanx-help-type-recent-questions' => 'Ten filtr uniemożliwia wyświetlenie pytań (stron) w pewnych miejscach (widżety, listy, wykazy generowane według znacznika).
+Nie uniemożliwia tworzenia takich stron.
+
+Uwaga: działa tylko na wiki typu Odpowiedzi.',
 );
 
 $messages['pms'] = array(
@@ -2240,6 +2282,8 @@ Depois de ser removido, um filtro e todas as ações ligadas a ele não estarão
 	'phalanx-section-type-wiki-creation' => 'Criação de wikis',
 	'phalanx-required-filter' => '*Este campo é obrigatório',
 	'phalanx-required-type' => '*Pelo menos uma das caixas de seleção é necessária',
+	'phalanx-type-recent-questions' => 'perguntas recentes',
+	'phalanx-type-question-title' => 'título da pergunta',
 );
 
 $messages['ru'] = array(
@@ -2296,18 +2340,18 @@ $messages['ru'] = array(
 	'phalanx-help-type-user' => 'Этот фильтр блокирует участника (также, как блокировка на самой вики), если его имя или IP-адрес соответствует имени или IP-адресу из чёрного списка.',
 	'phalanx-help-type-wiki-creation' => 'Если название или URL-адрес вики соответствует такому, какой находится в чёрном списке, то этот фильтр запрещает создание такой вики.',
 	'phalanx-help-type-email' => 'Этот фильтр предотвращает создание учётной записи с использованием заблокированного электронного адреса.',
-	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом.
+	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
-	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения.
+	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
-	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМАа из-за вандализма или другого нарушения.
+	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМАа из-за вандализма или другого нарушения. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
 	'phalanx-user-block-new-account' => 'Это имя пользователя не доступно для регистрации. Пожалуйста, выберите другое.',
-	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом.
+	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения.
+	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения.
+	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
 Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
 	'phalanx-title-move-summary' => 'Причина, по которой вы добавляете эту фразу для блокировки.',
 	'phalanx-content-spam-summary' => 'Текст, найденный в описании изменений.',
@@ -2375,6 +2419,16 @@ $messages['ru'] = array(
 	'phalanx-required-type' => '* Требуется по крайней мере одна галочка',
 	'phalanx-type-device' => 'device',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => 'свежие вопросы',
+	'phalanx-help-type-question-title' => 'Этот фильтр блокирует создание вопроса (страницы), если его название соответствует слову из чёрного списка фильтра.
+
+Примечание: работает только на вики для ответов.',
+	'phalanx-section-type-questions' => 'Вопросы',
+	'phalanx-type-question-title' => 'заголовок вопроса',
+	'phalanx-help-type-recent-questions' => 'Этот фильтр предотвращает отображение вопросов (страниц) на экране в ряде случаев (виджеты, списки, генерируемые тегами списки).
+Это не мешает созданию данных страниц.
+
+Примечание: работает только на вики для ответов.',
 );
 
 $messages['saz'] = array(
@@ -2955,6 +3009,16 @@ $messages['zh-hans'] = array(
 	'phalanx-required-type' => '*至少需要选择一个复选框',
 	'phalanx-type-device' => 'device',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-recent-questions' => '最新问题',
+	'phalanx-help-type-question-title' => '如果标题与被列入黑名单的任何短语匹配，此过滤器将阻止一个问题（页面）的创建。
+
+请注意：这个仅限于问答类型的wiki。',
+	'phalanx-section-type-questions' => '问题',
+	'phalanx-type-question-title' => '问题标题',
+	'phalanx-help-type-recent-questions' => '此过滤器将阻止问题（页面）通过一系列的输出（小工具，列表，标记生成列表）进行显示。
+它无法阻止页面的创建。
+
+请注意：这个仅限于问答类型的wiki。',
 );
 
 $messages['zh-hant'] = array(
@@ -3090,5 +3154,15 @@ $messages['zh-hant'] = array(
 	'phalanx-label-lang' => 'Language:',
 	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-stats-table-language' => 'Language',
+	'phalanx-type-recent-questions' => '最近的問題',
+	'phalanx-help-type-question-title' => '如果標題與被列入黑名單的任何詞語匹配，此過濾器將阻止一個問題（頁面）的創建。
+
+請注意：這個僅限於問答類型的wiki。',
+	'phalanx-section-type-questions' => '問題',
+	'phalanx-type-question-title' => '問題標題',
+	'phalanx-help-type-recent-questions' => '此過濾器將阻止問題（頁面）透過一系列的輸出（小工具，清單，標記產生清單）顯示。
+它無法阻止頁面的創建。
+
+請注意：這個僅限於問答類型的wiki。',
 );
 
