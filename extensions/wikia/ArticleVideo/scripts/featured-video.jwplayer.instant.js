@@ -67,7 +67,7 @@ require([
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
 		if (adsApi) {
-			let shouldShowAds = adsApi.shouldShowAds();
+			var shouldShowAds = adsApi.shouldShowAds();
 
 			// TODO: Remove the if clause after release of ADEN-8806 + 24h
 			if (typeof shouldShowAds === 'boolean') {
