@@ -1,20 +1,25 @@
 var fs = require('fs'),
 	path = require('path'),
-	rootDir = process.cwd() + '/node_modules/design-system-i18n/i18n',
+	rootDir = process.cwd() + '/node_modules/design-system/i18n',
 	filename = 'design-system.json',
 	destDir = './i18n',
 	// keep in sync with DesignSystem/DesignSystemHelper.class.php
 	messageParamsMapping = {
 		'global-footer-licensing-and-vertical-description': {
 			sitename: '$1',
-			vertical: '$2',
-			license: '$3'
+			vertical: '$2'
 		},
 		'global-navigation-search-placeholder-in-wiki': {
 			sitename: '$1'
 		},
 		'global-footer-copyright-wikia': {
 			date: '$1'
+		},
+		'global-footer-site-overview-link-wikia-inc': {
+			year: '$1'
+		},
+		'license-description': {
+			license: '$1'
 		}
 	};
 

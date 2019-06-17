@@ -120,6 +120,7 @@ class SpecialRenameuser extends SpecialPage {
 		global $wgMaxNameChars;
 
 		$errors = [];
+		$spoofErrors = [];
 		$infos = [];
 		$warnings = [];
 		$showConfirm = false;
@@ -144,10 +145,10 @@ class SpecialRenameuser extends SpecialPage {
 		if ( $request->wasPosted() ) {
 			$errors = $this->parseMessages( self::validateData( $requestData, $requestorUser, $selfRename ) );
 			$canonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
+			$process = new RenameUserProcess( $oldUsername, $canonicalNewUsername, true );
 
 			if ( empty( $errors ) && $isConfirmed ) {
-				$process = new RenameUserProcess( $oldUsername, $canonicalNewUsername, true );
-				$status = $process->run();
+				$status = $process->run( $selfRename );
 				$warnings = $process->getWarnings();
 				$errors = $process->getErrors();
 
@@ -158,8 +159,10 @@ class SpecialRenameuser extends SpecialPage {
 					$showForm = false;
 				}
 			}
-
 			$showConfirm = ( !$isConfirmed && empty( $errors ) && empty( $info ) );
+			if ( !$selfRename ) {
+				$spoofErrors = $process->testSpoof( true );
+			}
 		}
 
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
@@ -181,6 +184,8 @@ class SpecialRenameuser extends SpecialPage {
 		$out->addJsConfigVars( [
 			'renameUser' => [
 				'showConfirm' => $showConfirm,
+				'errors' => $spoofErrors,
+				'selfRename' => $selfRename,
 				'oldUsername' => $oldUsername,
 				'newUsername' => $canonicalNewUsername
 			]

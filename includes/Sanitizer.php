@@ -1018,6 +1018,7 @@ class Sanitizer {
 				| image\s*\(
 				| image-set\s*\(
 				| attr\s*\([^)]+[\s,]+url
+				| var\s*\(
 			!ix', $value ) ) {
 			return '/* insecure input */';
 		}
@@ -1117,7 +1118,7 @@ class Sanitizer {
 			if ( strpos( $text, "\x7f" ) !== false ) {
 				RTE::$edgeCases[] = 'COMPLEX.08';
 			}
-			
+
 			$attribs[] = RTEParser::encodeAttributesStr( $text );
 		}
 		# RTE - end

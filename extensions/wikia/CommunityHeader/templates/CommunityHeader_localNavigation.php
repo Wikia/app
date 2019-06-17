@@ -85,18 +85,13 @@
 				</div>
 			</div>
 		</li>
-		<? if ( !empty( $navigation->discussLink ) ): ?>
-			<li class="wds-tabs__tab">
-				<div class="wds-tabs__tab-label">
-					<a href="<?= $navigation->discussLink->href ?>"
-						<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
-						data-tracking="<?= $navigation->discussLink->tracking ?>"
-					>
-						<?= DesignSystemHelper::renderSvg( $navigation->discussLink->label->iconKey, 'wds-icon-tiny wds-icon' ); ?>
-						<span><?= $navigation->discussLink->label->renderInContentLang() ?></span>
-					</a>
-				</div>
-			</li>
+		<? if ( empty( $navigation->mainPageLink ) && !empty( $navigation->discussLink ) ): ?>
+			<?= $app->renderPartial( 'CommunityHeaderService', 'tab',
+				[ 'link' => $navigation->discussLink, 'isPreview' => $isPreview ] ) ?>
+		<? endif; ?>
+		<? if ( !empty( $navigation->mainPageLink ) ): ?>
+			<?= $app->renderPartial( 'CommunityHeaderService', 'tab',
+				[ 'link' => $navigation->mainPageLink, 'isPreview' => $isPreview ] ) ?>
 		<? endif; ?>
 	</ul>
 </nav>

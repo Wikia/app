@@ -4,7 +4,6 @@ root /usr/wikia/slot1/current/src;
 rewrite "^/health/check$" /health.php break;
 rewrite "^/proxy.php$" /extensions/wikia/Tasks/proxy/proxy.php break;
 
-rewrite ^/robots.txt /wikia-robots-txt.php break;
 rewrite "^/(sitemap.+\.xml(.gz)*)$" /index.php?title=Special:Sitemap/$1&uselang=en break;
 
 rewrite "^/(?:[a-z]{2,3}(?:-[a-z-]{2,12})?/)?__load/[^/]*/([^/]*)/([^$].+)" /load.php?modules=$2&$1 break;

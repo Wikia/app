@@ -1,18 +1,13 @@
 define('wikia.articleVideo.featuredVideo.autoplay', [
 	'wikia.abTest',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine.ml.billTheLizardExecutor'),
 	require.optional('ext.wikia.adEngine3.api')
-], function (abTest, featuredVideoCookieService, billTheLizardExecutor, adsApi) {
+], function (abTest, featuredVideoCookieService, adsApi) {
 	'use strict';
 	var inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY');
 
 	function isDisabledByQueenOfHearts() {
-		if (adsApi) {
-			return adsApi.isAutoPlayDisabled();
-		}
-
-		return billTheLizardExecutor && billTheLizardExecutor.isAutoPlayDisabled();
+		return adsApi && adsApi.isAutoPlayDisabled();
 	}
 
 	return {

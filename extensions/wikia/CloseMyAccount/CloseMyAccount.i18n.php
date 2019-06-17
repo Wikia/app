@@ -76,20 +76,20 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'closemyaccount' => 'Benutzerkonto schließen',
 	'closemyaccount-desc' => 'Ermöglicht Benutzern, ihre Benutzerkonten zu schließen.',
-	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. FANDOM bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das Richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
+	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. Fandom bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das Richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
 
 Wenn du dich dazu entschlossen hast, dein Benutzerkonto definitiv zu schließen, beachte die folgenden Hinweise:
-* FANDOM kann Benutzerkonten nicht komplett zu entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
-* Diese Entscheidung kann nach dem Ablauf von $1 {{PLURAL:$1|Tag|Tagen}} NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du FANDOM wieder beitreten möchtest.
-* Dieser Prozess entfernt keinen deiner Beiträge von FANDOM, da diese Bearbeitungen der gesamten Community gehören.
+* Fandom kann Benutzerkonten nicht komplett entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
+* Diese Entscheidung kann nach dem Ablauf von $1 {{PLURAL:$1|Tag|Tagen}} NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du Fandom wieder beitreten möchtest.
+* Dieser Prozess entfernt keinen deiner Beiträge von Fandom, da diese Bearbeitungen der gesamten Community gehören.
 
-Falls du genauer wissen möchtest, was bei der Deaktivierung eines Benutzerkontos passiert, schau dir unsere [[w:c:de:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zum Thema]] an. Wenn du dir sicher bist, dass du dein Benutzerkonto deaktivieren möchtest, klicke bitte auf den untenstehenden Knopf.
+Falls du genauer wissen möchtest, was bei der Deaktivierung eines Benutzerkontos passiert, schau dir unsere [[w:c:de.community:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zum Thema]] an. Wenn du dir sicher bist, dass du dein Benutzerkonto deaktivieren möchtest, klicke bitte auf den unten stehenden Knopf.
 
 Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, um dein Benutzerkonto wieder zu aktivieren. Melde dich dazu an und folge den Hinweisen. Nach dieser Übergangszeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
 	'closemyaccount-unconfirmed-email' => 'Achtung: Du hast keine bestätigte E-Mail-Adresse mit diesem Benutzerkonto verbunden. Ohne eine bestätigte E-Mail-Adresse kannst du dein Konto in der Wartezeit nicht wieder aktivieren. Bitte überlege dir, eine E-Mail-Adresse in deinen [[Special:Preferences|Benutzereinstellungen]] anzugeben und zu bestätigen, bevor du fortfährst.',
 	'closemyaccount-logged-in-as' => 'Du bist angemeldet als {{GENDER:$1|$1}}. [[Special:UserLogout|Das bist du nicht?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|Deine}} E-Mail-Adresse lautet $1. [[Special:Preferences|Möchtest du sie ändern?]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|Ich}} habe die [[w:c:de:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zur Stilllegung von Benutzerkonten]] gelesen und bestätige, dass ich mein FANDOM-Konto schließen möchte.',
+	'closemyaccount-confirm' => '{{GENDER:$1|Ich}} habe die [[w:c:de.community:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zur Stilllegung von Benutzerkonten]] gelesen und bestätige, dass ich mein Fandom-Konto schließen möchte.',
 	'closemyaccount-button-text' => 'Benutzerkonto schließen',
 	'closemyaccount-reactivate-button-text' => 'Benutzerkonto reaktivieren',
 	'closemyaccount-reactivate-page-title' => 'Benutzerkonto reaktivieren',
@@ -98,16 +98,16 @@ Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, 
 Möchtest du dein Benutzerkonto wieder aktivieren?',
 	'closemyaccount-reactivate-requested' => 'Eine E-Mail wurde an die in deinem Benutzerkonto angegebene Adresse geschickt. Bitte klicke auf den Link in der E-Mail, um dein Benutzerkonto zu reaktivieren.',
 	'closemyaccount-reactivate-error-id' => 'Bitte melde dich mit deinem Benutzerkonto an, um die Reaktivierung zu beantragen.',
-	'closemyaccount-reactivate-error-email' => 'Für das Benutzerkonto war vor der Beantragung der Schließung keine E-Mail-Adresse angegeben, so dass es nicht wieder aktiviert werden kann. Bitte [[Special:Contact|kontaktiere FANDOM]], falls du Fragen hast.',
+	'closemyaccount-reactivate-error-email' => 'Für das Benutzerkonto war vor der Beantragung der Schließung keine E-Mail-Adresse angegeben, so dass es nicht wieder aktiviert werden kann. Bitte [[Special:Contact|kontaktiere Fandom]], falls du Fragen hast.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Das Benutzerkonto ist nicht für eine Schließung vorgesehen.',
 	'closemyaccount-reactivate-error-invalid-code' => 'Du scheinst einen Bestätigungscode zu verwenden, der nicht mehr gültig ist. Bitte prüfe deine E-Mail auf einen neueren Code, den du beantragt hast oder fordere einen neuen Code an, indem du dich mit dem Benutzerkonto [[Special:UserLogin|anmeldest]], das du reaktivieren möchtest - und dann den Anweisungen folgst.',
 	'closemyaccount-reactivate-error-empty-code' => 'Zur Reaktivierung des Benutzerkontos ist ein Bestätigungscode notwendig, der aber nicht angegeben wurde. Wenn du dein Benutzerkonto reaktivieren möchtest, klicke bitte den Link in der E-Mail an, die dir gesendet wurde. Ansonsten [[Special:UserLogin|melde dich mit dem Benutzerkonto an]], das du reaktivieren möchtest, und fordere einen Bestätigungscode an.',
-	'closemyaccount-reactivate-error-disabled' => 'Dieses Benutzerkonto wurde bereits deaktiviert. Bitte [[Spezial:Kontakt|kontaktiere FANDOM]], falls du Fragen hast.',
-	'closemyaccount-reactivate-error-failed' => 'Beim Reaktivieren dieses Benutzerkontos ist ein Fehler aufgetreten. Bitte versuche es erneut oder [[Spezial:Kontakt|kontaktiere FANDOM]], falls das Problem bestehen bleibt.',
+	'closemyaccount-reactivate-error-disabled' => 'Dieses Benutzerkonto wurde bereits deaktiviert. Bitte [[Spezial:Kontakt|kontaktiere Fandom]], falls du Fragen hast.',
+	'closemyaccount-reactivate-error-failed' => 'Beim Reaktivieren dieses Benutzerkontos ist ein Fehler aufgetreten. Bitte versuche es erneut oder [[Spezial:Kontakt|kontaktiere Fandom]], falls das Problem bestehen bleibt.',
 	'closemyaccount-scheduled' => 'Dein Benutzerkonto wurde erfolgreich für eine Schließung vorgemerkt.
 
 Bitte beachte, dass du ab sofort $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, dein Benutzerkonto zu reaktivieren. Dazu musst du dich [[Special:UserLogin|anmelden]] und den Anweisungen folgen. Nach dieser Wartezeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
-	'closemyaccount-scheduled-failed' => 'Beim Reaktivieren dieses Benutzerkontos ist ein Fehler aufgetreten. Bitte [[Spezial:CloseMyAccount|probiere es nochmal]] oder [[Spezial:Kontakt|kontaktiere FANDOM]], falls das Problem bestehen bleibt.',
+	'closemyaccount-scheduled-failed' => 'Beim Reaktivieren dieses Benutzerkontos ist ein Fehler aufgetreten. Bitte [[Spezial:CloseMyAccount|probiere es nochmal]] oder [[Spezial:Kontakt|kontaktiere Fandom]], falls das Problem bestehen bleibt.',
 	'closemyaccount-reactivate-success' => 'Dein Benutzerkonto wurde wieder aktiviert.',
 	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Du}} hast die Schließung deines Benutzerkontos beantragt. Falls du Dein Konto wieder aktivieren möchtest, rufe bitte die [[Special:CloseMyAccount/reactivate|Reaktivierungsseite für dein Benutzerkonto]] auf und folge dort den Anweisungen.',
 );

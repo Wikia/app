@@ -7,8 +7,6 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_SUMMARY = 2;
 	const TYPE_TITLE = 4;
 	const TYPE_USER = 8;
-	const TYPE_ANSWERS_QUESTION_TITLE = 16;
-	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
 	const TYPE_COOKIE = 128;
 	const TYPE_EMAIL = 256;
@@ -37,8 +35,6 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		2   => 'summary',
 		4   => 'title',
 		8   => 'user',
-		16  => 'question_title',
-		32  => 'recent_questions',
 		64  => 'wiki_creation',
 		128 => 'cookie',
 		256 => 'email',

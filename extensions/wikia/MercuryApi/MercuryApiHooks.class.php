@@ -93,13 +93,11 @@ class MercuryApiHooks {
 		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Request from browser to MediaWiki
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
-			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL(), 'collapsibleSections' => '1' ] );
 			$urls[] = MercuryApiController::getUrl( 'getTrackingDimensions', [ 'title' => $title->getPartialURL() ] );
 		}
 		if ( $title->inNamespaces( NS_FILE ) ) {
 			// Request from MobileWiki to MediaWiki
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPrefixedURL() ] );
-			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPrefixedURL(), 'collapsibleSections' => '1' ] );
 		}
 		return true;
 	}
@@ -166,11 +164,7 @@ class MercuryApiHooks {
 	public static function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
 		global $wgArticleAsJson;
 
-		// this is pseudo-versioning query param for collapsible sections (XW-4393)
-		// should be removed after all App caches are invalidated
-		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
-		     $wgArticleAsJson && $level == 2
-		) {
+		if ( $wgArticleAsJson && $level == 2 ) {
 			if ( self::$mobileHiddenSectionOpened ) {
 				$ret = '</section>' . $ret;
 			} else {
@@ -190,11 +184,7 @@ class MercuryApiHooks {
 	public static function onParserBeforeTidy( Parser $parser, &$text ) {
 		global $wgArticleAsJson;
 
-		// this is pseudo-versioning query param for collapsible sections (XW-4393)
-		// should be removed after all App caches are invalidated
-		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
-		     $wgArticleAsJson && self::$mobileHiddenSectionOpened
-		) {
+		if ( $wgArticleAsJson && self::$mobileHiddenSectionOpened ) {
 			$text .= '</section>';
 		}
 	}

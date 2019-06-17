@@ -50,7 +50,8 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgCommandLineMode;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain,
+			   $wgCommandLineMode, $wgKubernetesDeploymentName;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -168,6 +169,26 @@ class WikiFactoryLoader {
 		 * never from cache
 		 */
 		$this->mAlwaysFromDB = $this->mCommandLine || $this->mAlwaysFromDB;
+
+		if ( empty( $wgKubernetesDeploymentName ) ) {
+			// PLATFORM-4104 on apaches log request details
+			$log = \Wikia\Logger\WikiaLogger::instance();
+			$details = [
+				'parsedUrl' => $this->parsedUrl
+			];
+			foreach([
+				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
+				'HTTP_USER_AGENT' => 'userAgent',
+				'HTTP_X_TRACE_ID' => 'traceId',
+				'HTTP_X_CLIENT_IP' => 'clientIp',
+				'REQUEST_URI' => 'requestUri',
+				'REQUEST_METHOD' => 'requestMethod'
+					] as $header => $key) {
+				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
+			}
+			$log->info('apache request received', $details );
+		}
+
 	}
 
 	/**
@@ -273,8 +294,11 @@ class WikiFactoryLoader {
 		/**
 		 * load balancer uses one method which demand wgContLang defined
 		 * See BugId: 12474
+		 * temporarily set it to English as $wgContLang is required when reading query paramaters
+		 * in the WebRequest class. Later on this variable is overridden with the correct language
+		 * in Setup.php
 		 */
-		$wgContLang = new StubObject('wgContLang');
+		$wgContLang = Language::factory( 'en' );
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -507,6 +531,17 @@ class WikiFactoryLoader {
 			}
 		}
 		// end of PLATFORM-3878 hack
+
+		// PLATFORM-4025 - needed to migrate slot1.wikia.com to fandom.com, to be removed afterwards.
+		// Allows everything but the article path (/wiki/) to work over every community domain configured
+		// in WikiFactory.
+		if ( $this->mWikiID == 470538
+			&& isset( $this->parsedUrl['path'] )
+			&& strpos( $this->parsedUrl['path'], '/wiki/' ) !== 0
+		) {
+			$this->mServerName = strtolower( $url['host'] );
+		}
+		// end of PLATFORM-4025 hack
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) && $this->mWikiIdForced === false &&

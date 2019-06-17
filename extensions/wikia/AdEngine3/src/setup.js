@@ -1,7 +1,7 @@
-import { AdEngine, context, events, eventService, slotInjector, templateService, utils } from '@wikia/ad-engine';
-import { utils as adProductsUtils, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine/dist/ad-products';
+import { AdEngine, context, events, eventService, slotInjector, templateService, utils, setupNpaContext, BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB } from '@wikia/ad-engine';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
+import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
@@ -39,7 +39,7 @@ function isGeoEnabled(key) {
 }
 
 function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
-	const showAds = window.ads.context.opts.showAds;
+	const showAds = getReasonForNoAds() === null;
 
 	context.extend(basicContext);
 	context.set('wiki', wikiContext);
@@ -83,10 +83,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
 
-	if (context.get('state.isSteam')) {
-		context.set('state.showAds', false);
-	}
-
 	context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));
 
@@ -104,8 +100,12 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('options.slotRepeater', true);
 
 	context.set('options.incontentNative', isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
+	context.set(
+		'options.unstickHiViLeaderboardAfterTimeout',
+		isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')
+	);
 
-	context.set('services.geoEdge.enabled', isGeoEnabled('wgAdDriverGeoEdgeCountries'));
+	context.set('services.confiant.enabled', isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& isGeoEnabled('wgAdDriverKruxCountries') && !instantGlobals.get('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
@@ -131,7 +131,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.isRecirculationDisabled', isGeoEnabled('wgAdDriverDisableRecirculationCountries'));
+	context.set('custom.fmrRotatorDelay', instantGlobals.get('wgAdDriverFMRRotatorDelay'));
+	context.set('custom.fmrDelayDisabled', instantGlobals.get('wgAdDriverDisableFMRDelayOasisCountries'));
 	context.set('custom.beachfrontDfp', isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
 	context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
@@ -149,7 +150,6 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.set('bidders.prebid.enabled', true);
 		context.set('bidders.prebid.aol.enabled', isGeoEnabled('wgAdDriverAolBidderCountries'));
 		context.set('bidders.prebid.appnexus.enabled', isGeoEnabled('wgAdDriverAppNexusBidderCountries'));
-		context.set('bidders.prebid.audienceNetwork.enabled', isGeoEnabled('wgAdDriverAudienceNetworkBidderCountries'));
 		context.set('bidders.prebid.beachfront.enabled', isGeoEnabled('wgAdDriverBeachfrontBidderCountries'));
 		context.set('bidders.prebid.indexExchange.enabled', isGeoEnabled('wgAdDriverIndexExchangeBidderCountries'));
 		context.set('bidders.prebid.kargo.enabled', isGeoEnabled('wgAdDriverKargoBidderCountries'));
@@ -166,7 +166,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		const s1 = context.get('wiki.targeting.wikiIsTop1000') ? context.get('targeting.s1') : 'not a top1k wiki';
 
 		context.set('bidders.prebid.targeting', {
-			src: ['mobile'],
+			src: ['gpt'],
 			s0: [context.get('targeting.s0') || ''],
 			s1: [s1],
 			s2: [context.get('targeting.s2') || ''],
@@ -191,6 +191,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		context.push('slots.featured.videoSizes', [480, 360]);
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
+	context.set('slots.floor_adhesion.disabled', !isGeoEnabled('wgAdDriverOasisFloorAdhesionCountries'));
 
 	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
@@ -219,19 +220,59 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			slotName = slot.slotName;
 		}
 
-		context.push('state.adStack', { id: slotName })
+		context.push('state.adStack', { id: slotName });
 	});
+
+	trackAdEngineStatus();
+
 	window.adslots2.start();
 }
 
 function configure(adsContext, isOptedIn) {
 	setupAdContext(adsContext, isOptedIn);
-	adProductsUtils.setupNpaContext();
+	setupNpaContext();
 
 	templateRegistry.registerTemplates();
 
 	context.push('listeners.slot', slotTracker);
 	context.push('listeners.slot', viewabilityTracker);
+}
+
+/**
+ * Checks state.showAds and sends to DW information about AdEngine status
+ */
+function trackAdEngineStatus() {
+	if (context.get('state.showAds')) {
+		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
+	} else {
+		pageTracker.trackProp('adengine', 'off_' + getReasonForNoAds());
+	}
+}
+
+function getReasonForNoAds() {
+	const reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+	const pageType = window.ads.context.opts.pageType || null;
+
+	if (reasonFromBackend === 'no_ads_user' && pageType === 'homepage_logged') {
+		return null;
+	}
+
+	if (reasonFromBackend !== null) {
+		return reasonFromBackend;
+	}
+
+	const possibleFrontendReasons = {
+		'noads_querystring': !!utils.queryString.get('noads'),
+		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// two above are probably not needed but data QA will confirm 3:-)
+		'steam_browser': context.get('state.isSteam') === true,
+	};
+
+	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+		return possibleFrontendReasons[key] === true;
+	});
+
+	return reasons.length > 0 ? reasons[0] : null;
 }
 
 function init() {

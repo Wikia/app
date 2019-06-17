@@ -166,11 +166,7 @@ class LinkSuggest {
 
 		self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
 		$sql1Measurement->stop();
-		if (count($namespaces) > 0) {
-			$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
-		}
 
-		$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 		if( count($results) < $limit ) {
 			/**
 			 * @var string $pageTitlePrefilter this condition is able to use name_title index. It's added only for performance reasons.
@@ -186,18 +182,18 @@ class LinkSuggest {
 			if( mb_strlen( $queryLower ) >= 2 ) {
 				if ( LinkSuggest::containsMultibyteCharacters( $firstChar . $secondChar ) ) {
 					$pageTitlePrefilter = "(
-						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtolower( $secondChar ) . "%' using utf8)) ) OR
-						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtoupper( $secondChar )  . "%' using utf8) ) AND ";
+						( convert(binary convert(page.page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtolower( $secondChar ) . "%' using utf8)) ) OR
+						( convert(binary convert(page.page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtoupper( $secondChar )  . "%' using utf8) ) AND ";
 				} else {
 					$pageTitlePrefilter = "(
-						( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtolower( $secondChar ) , $db->anyString() ) . " ) OR
-						( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtoupper( $secondChar ) , $db->anyString() ) . " ) ) AND ";
+						( convert(binary convert(page.page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtolower( $secondChar ) , $db->anyString() ) . " ) OR
+						( convert(binary convert(page.page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtoupper( $secondChar ) , $db->anyString() ) . " ) ) AND ";
 				}
 			} else if( mb_strlen($queryLower) >= 1 ) {
 				if ( LinkSuggest::containsMultibyteCharacters( $firstChar ) ) {
-					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . $firstChar . "%' using utf8) ) AND ";
+					$pageTitlePrefilter = "( convert(binary convert(page.page_title using latin1) using utf8) LIKE convert(binary '" . $firstChar . "%' using utf8) ) AND ";
 				} else {
-					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper( $firstChar ) , $db->anyString() ) . " ) AND ";
+					$pageTitlePrefilter = "( convert(binary convert(page.page_title using latin1) using utf8) " . $db->buildLike(strtoupper( $firstChar ) , $db->anyString() ) . " ) AND ";
 				}
 			}
 
@@ -207,20 +203,33 @@ class LinkSuggest {
 				$pageTitleLikeClause = "'{$queryLower}%'";
 			}
 
-			// TODO: use $db->select helper method
-			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, rd_namespace, page_is_redirect
-						FROM page
-						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
-						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )
-							AND qc_type IS NULL
-						LIMIT ".($limit * 3); // we fetch 3 times more results to leave out redirects to the same page
-
-			$sql2Measurement = T::start([ __FUNCTION__, "sql-2" ]);
-			$res = $db->query($sql, __METHOD__);
+			$res = $db->select(
+				[ 'page', 'redirect', 'redirect_target' => 'page' ],
+				[
+					'page.page_len AS page_len',
+					'page.page_id AS page_id',
+					'page.page_namespace AS page_namespace',
+					'page.page_title AS page_title',
+					'page.page_is_redirect AS page_is_redirect',
+					'rd_namespace',
+					'rd_title',
+					'redirect_target.page_id AS redirect_target_id'
+				],
+				[
+					'page.page_namespace' => $namespaces,
+					"{$pageTitlePrefilter} (convert(binary convert(page.page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )",
+					'page.page_is_redirect = 0 OR redirect_target.page_id IS NOT NULL',
+				],
+				__METHOD__,
+				// we fetch 3 times more results to leave out redirects to the same page
+				[ 'LIMIT' => $limit * 3 ],
+				[
+					'redirect' => [ 'LEFT JOIN', 'page.page_id = rd_from' ],
+					'redirect_target' => [ 'LEFT JOIN', 'rd_namespace = redirect_target.page_namespace AND rd_title = redirect_target.page_title' ],
+				]
+			);
 
 			self::formatResults($db, $res, $query, $redirects, $results, $exactMatchRow, $limit);
-			$sql2Measurement->stop();
 		}
 
 		if ($exactMatchRow !== null) {
@@ -244,12 +253,12 @@ class LinkSuggest {
 
 			} else {
 
-				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
+				$redirTitleFormatted = self::formatTitle( $row->rd_namespace, $row->rd_title );
 
 				// remove any instances of original array's value
 				unset( $results[$row->page_id] );
 
-				$results = [ $row->page_id => $redirTitleFormatted ] + $results;
+				$results = [ $row->redirect_target_id => $redirTitleFormatted ] + $results;
 
 				$redirects[$titleFormatted] = $redirTitleFormatted;
 			}
@@ -276,9 +285,6 @@ class LinkSuggest {
 				);
 			}
 		}
-
-		// Overwrite canonical title with redirect title for all formats
-		self::replaceResultIfRedirected($results, $redirects);
 
 		$format = $request->getText('format');
 
@@ -342,27 +348,6 @@ class LinkSuggest {
 	}
 
 	/**
-	 *
-	 * Helper function for replacing results if redirections are available
-	 *
-	 * @param Array $results
-	 * @param Array $redirects
-	 *
-	 * @return Array
-	 *
-	 * @author Artur Klajnerok <arturk@wikia-inc.com>
-	 *
-	 */
-
-	static private function replaceResultIfRedirected(&$results, &$redirects) {
-		foreach($results as &$val){
-			if (isset($redirects[$val])) {
-				$val = $redirects[$val];
-			}
-		}
-	}
-
-	/**
 	 * @param DatabaseBase $db
 	 * @param $res
 	 * @param $query
@@ -404,7 +389,7 @@ class LinkSuggest {
 
 				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
-					$results[] = $redirTitleFormatted;
+					$results[$row->redirect_target_id] = $redirTitleFormatted;
 					$redirects[$titleFormatted] = $redirTitleFormatted;
 
 				}

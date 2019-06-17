@@ -5,16 +5,14 @@ require(['ext.wikia.adEngine3.ads'], function (ads) {
 
 // AdEngine3 JS API that can be used outside extensions/Wikia/AdEngine3 directory
 define('ext.wikia.adEngine3.api', [
-	'ext.wikia.adEngine3',
-	'ext.wikia.adEngine3.ads',
-	'ext.wikia.adEngine3.products'
-], function (adEngine, ads, products) {
+	'ext.wikia.adEngine3.ads'
+], function (ads) {
 	function shouldShowAds() {
-		return adEngine.context.get('state.showAds');
+		return ads.context.get('state.showAds');
 	}
 
 	function isNetzathletenEnabled() {
-		return adEngine.context.get('services.netzathleten.enabled');
+		return ads.context.get('services.netzathleten.enabled');
 	}
 
 	return {
@@ -23,7 +21,7 @@ define('ext.wikia.adEngine3.api', [
 		isAutoPlayDisabled: ads.isAutoPlayDisabled,
 		isNetzathletenEnabled: isNetzathletenEnabled,
 		shouldShowAds: shouldShowAds,
-		jwplayerAdsFactory: products.jwplayerAdsFactory,
+		jwplayerAdsFactory: ads.jwplayerAdsFactory,
 		waitForAdStackResolve: ads.waitForAdStackResolve
 	}
 });

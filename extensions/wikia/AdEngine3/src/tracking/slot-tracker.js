@@ -47,6 +47,7 @@ function prepareData(slot, data) {
 		tz_offset: now.getTimezoneOffset(),
 		device: context.get('state.deviceType'),
 		ad_load_time: data.timestamp - window.performance.timing.connectStart,
+		advertiser_id: data.advertiser_id || '',
 		product_lineitem_id: data.line_item_id || '',
 		order_id: data.order_id || '',
 		creative_id: data.creative_id || '',
@@ -77,9 +78,10 @@ function prepareData(slot, data) {
 		opt_in: checkOptIn(),
 		document_visibility: utils.getDocumentVisibilityStatus(),
 		// Missing:
-		// page_layout, rabbit, product_chosen
-		bidder_won: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.name : '',
-		bidder_won_price: slot.winningPbBidderDetails ? slot.winningPbBidderDetails.price : '',
+		// rabbit, product_chosen
+		page_layout: `pos_top=${slot.getTopOffset()}`,
+		bidder_won: slot.winningBidderDetails ? slot.winningBidderDetails.name : '',
+		bidder_won_price: slot.winningBidderDetails ? slot.winningBidderDetails.price : '',
 		scroll_y: getCurrentScrollY(),
 	}, targeting.getBiddersPrices(slotName));
 }

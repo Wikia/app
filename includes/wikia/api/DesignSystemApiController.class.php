@@ -24,6 +24,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$footerModel = new DesignSystemGlobalFooterModel(
 			$params[static::PARAM_PRODUCT],
 			$params[static::PARAM_ID],
+			$this->isWikiaOrgCommunity(),
 			$params[static::PARAM_LANG]
 		);
 
@@ -44,11 +45,13 @@ class DesignSystemApiController extends WikiaApiController {
 			? new DesignSystemGlobalNavigationModelV2(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
 				$params[static::PARAM_LANG]
 			)
 			: new DesignSystemGlobalNavigationModel(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
 				$params[static::PARAM_LANG]
 			);
 
@@ -78,10 +81,12 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
+		$isWikiaOrgCommunity = $this->isWikiaOrgCommunity();
 
 		$footerModel = new DesignSystemGlobalFooterModel(
 			$params[static::PARAM_PRODUCT],
 			$params[static::PARAM_ID],
+			$isWikiaOrgCommunity,
 			$params[static::PARAM_LANG]
 		);
 
@@ -91,11 +96,13 @@ class DesignSystemApiController extends WikiaApiController {
 			? new DesignSystemGlobalNavigationModelV2(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
 				$params[static::PARAM_LANG]
 			)
 			: new DesignSystemGlobalNavigationModel(
 				$params[static::PARAM_PRODUCT],
 				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
 				$params[static::PARAM_LANG]
 			);
 
@@ -164,5 +171,11 @@ class DesignSystemApiController extends WikiaApiController {
 		} else {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		}
+	}
+
+	private function isWikiaOrgCommunity() {
+		global $wgServer, $wgWikiaOrgBaseDomain;
+
+		return wfGetBaseDomainForHost( parse_url( $wgServer, PHP_URL_HOST ) ) === $wgWikiaOrgBaseDomain;
 	}
 }

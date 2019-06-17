@@ -55,7 +55,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllGlobalUserData( self::REMOVED_USER_ID );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
 		$otherUser = User::newFromId( self::OTHER_USER_ID );
@@ -73,7 +73,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllGlobalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -81,7 +81,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			$wikicitiesSlave->selectField(
 				'user_email_log',
 				'count(*)',
-				[ 'user_id' => self::REMOVED_USER_ID ],
+				['user_id' => self::REMOVED_USER_ID],
 				__METHOD__
 			),
 			'user_email_log table contains data related to user who wants to be forgotten'
@@ -91,7 +91,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			$wikicitiesSlave->selectField(
 				'user_email_log',
 				'count(*)',
-				[ 'user_id' => self::OTHER_USER_ID ],
+				['user_id' => self::OTHER_USER_ID],
 				__METHOD__
 			),
 			'data was removed for wrong user'
@@ -99,7 +99,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllGlobalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
@@ -120,45 +120,33 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			$wikicitiesSlave->selectField(
 				'user_properties',
 				'count(*)',
-				[ 'up_user' => self::OTHER_USER_ID ],
+				['up_user' => self::OTHER_USER_ID],
 				__METHOD__
 			),
 			'data was removed for wrong user'
 		);
 	}
 
-	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::RENAMED_USER_ID );
-
-		$fakeUser = User::newFromId( self::FAKE_USER_ID );
-
-		$this->assertStringStartsWith( 'Anonymous', $fakeUser->getName(),
-			'User name does not start with \'Anonymous\'' );
-		$this->assertEquals( '', $fakeUser->getRealName(), 'User real name is not cleared' );
-		$this->assertEquals( '', $fakeUser->getEmail(), 'User email is not cleared' );
-		$this->assertEquals( '', $fakeUser->mBirthDate, 'User birth date is not cleared' );
-	}
-
 	public function testStaffLogsShouldBeRemoved() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllGlobalUserData( self::REMOVED_USER_ID );
 
 		$db = wfGetDB( DB_SLAVE, [] );
 
 		$this->assertEquals( 0,
-			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_user' => self::REMOVED_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', ['slog_user' => self::REMOVED_USER_ID],
 				__METHOD__ ), 'Staff logs for removed user are not removed' );
 
 		$this->assertEquals( 0,
-			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_userdst' => self::REMOVED_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', ['slog_userdst' => self::REMOVED_USER_ID],
 				__METHOD__ ), 'Staff logs for removed user are not removed' );
 
 		$this->assertEquals( 1,
-			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_user' => self::OTHER_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', ['slog_user' => self::OTHER_USER_ID],
 				__METHOD__ ), 'Staff logs were removed for wrong user' );
 	}
 
 	public function testShouldAnonymizeAnfispoof() {
-		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllGlobalUserData( self::REMOVED_USER_ID );
 
 		// check basic functionality
 		$spoof = new SpoofUser( self::REMOVED_USER_NAME );
@@ -167,7 +155,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		// check if username is in plaintext
 		$db = $db = wfGetDB( DB_SLAVE, [] );
 		$this->assertEquals( 0,
-			$db->selectField( 'spoofuser', 'count(*)', [ 'su_name' => self::REMOVED_USER_NAME ],
+			$db->selectField( 'spoofuser', 'count(*)', ['su_name' => self::REMOVED_USER_NAME],
 				__METHOD__ ), 'Username is stored in plaintext for removed user' );
 
 		// check if hash is correct

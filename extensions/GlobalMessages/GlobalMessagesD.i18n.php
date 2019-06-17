@@ -7677,7 +7677,7 @@ $messages['ja'] = array(
 	'delete' => '削除',
 	'deletethispage' => 'このページを削除',
 	'disclaimers' => '免責事項',
-	'disclaimerpage' => 'Project:免責事項',
+	'disclaimerpage' => '{{#ifexist:Project:免責事項|Project:免責事項| }}',
 	'databaseerror' => 'データベース・エラー',
 	'dberrortext' => 'データベースクエリの構文エラーが発生しました。
 ソフトウェアにバグがある可能性があります。
@@ -7706,12 +7706,12 @@ $messages['ja'] = array(
 	'disambiguations' => '曖昧さ回避ページにリンクしているページ',
 	'disambiguationspage' => 'Template:曖昧回避',
 	'disambiguations-text' => "以下のページは'''曖昧さ回避ページ'''へリンクしています。
-これらのページは、より適した主題のページへリンクされるべきです。<br />
-[[MediaWiki:Disambiguationspage]]からリンクされたテンプレートを使用しているページは、曖昧さ回避ページと見なされます。",
+これらのページでは、より適切なページにリンクする必要がある可能性があります。<br />
+[[MediaWiki:Disambiguationspage]]からリンクされたテンプレートを使用しているページを、曖昧さ回避ページと見なしています。",
 	'doubleredirects' => '二重転送',
-	'doubleredirectstext' => 'これは他のリダイレクトページへのリダイレクトの一覧です。
-各行には、最初のリダイレクトと、その転送先のリダイレクト、そのまた転送先へのリンクが表示されています。多くの場合、最終の転送先が正しい転送先であり、最初のリダイレクトは直接最後の転送先に向けるべきです。
-<del>打ち消し線</del>のはいった項目は既に修正されています。',
+	'doubleredirectstext' => 'これは他の転送ページへのリダイレクト（転送）の一覧です。
+各行には、最初のリダイレクトと、その転送先のリダイレクト、そのまた転送先へのリンクが表示されています。多くの場合、最終の転送先が正しい転送先であり、最初のリダイレクトは最後の転送先に直接向けるべきです。
+<del>打ち消し線</del>の引かれた項目は既に修正されています。',
 	'double-redirect-fixed-move' => '[[$1]]が移動されました。
 これからは[[$2]]に転送されます。',
 	'double-redirect-fixed-maintenance' => '[[$1]]から[[$2]]への二重転送を修正します。',
@@ -7719,10 +7719,10 @@ $messages['ja'] = array(
 	'deadendpages' => '行き止まりページ',
 	'deadendpagestext' => '以下のページは、{{SITENAME}}の他のページにリンクしていません。',
 	'deletedcontributions' => '削除された記事を含む投稿履歴',
-	'deletedcontributions-title' => '利用者の削除された投稿',
+	'deletedcontributions-title' => 'ユーザーの削除された投稿記録',
 	'defemailsubject' => '{{SITENAME}} のユーザーからの新着メール',
 	'deletepage' => 'ページを削除',
-	'delete-confirm' => '「$1」の削除',
+	'delete-confirm' => '$1の削除',
 	'delete-legend' => '削除',
 	'deletedtext' => '「$1」は削除されました。
 最近の削除に関しては、$2を参照してください。',
@@ -7736,10 +7736,10 @@ $messages['ja'] = array(
 ** 投稿者依頼
 ** 著作権侵害
 ** 荒らし
-* ヴァンダリズムと問題
+* 荒らし・問題点
 ** 著作権侵害
 ** スパム
-** ヴァンダリズム
+** 荒らし
 * メンテナンス
 ** 作者による依頼
 ** ハウスキーピング
@@ -7747,7 +7747,10 @@ $messages['ja'] = array(
 * リダイレクト
 ** 壊れたリダイレクト
 ** 未使用のリダイレクト
-** ページ移動によるリダイレクトの残骸',
+** ページ移動によるリダイレクトの残骸
+* メンテナンス
+** クリーンアップ
+** 古いMediaWikiページの除去',
 	'delete-edit-reasonlist' => '削除理由を編集する',
 	'delete-toobig' => 'このページには、$1版より多い編集履歴があります。
 このようなページの削除は、{{SITENAME}}の偶発的な問題を避けるため、制限されています。',
@@ -7764,7 +7767,7 @@ $messages['ja'] = array(
 	'djvu_page_error' => 'DjVuページが範囲外です',
 	'djvu_no_xml' => 'DjVuファイルのXMLデータを取得できません',
 	'deletedrevision' => '古い版$1を削除しました',
-	'days' => '{{PLURAL:$1|$1日}}',
+	'days' => '$1日',
 	'deletedwhileediting' => "'''警告：'''このページが、編集開始後に削除されました！",
 	'descending_abbrev' => '降順',
 	'duplicate-defaultsort' => "'''警告：'''既定の並び替えキー「$2」が、その前に書かれている既定の並び替えキー「$1」を上書きしています。",
@@ -7776,7 +7779,7 @@ $messages['ja'] = array(
 	'dberr-usegoogle' => '元に戻るまで、Googleを利用して検索することができます。',
 	'dberr-outofdate' => 'それらが収集した内容は古い可能性があることに注意してください。',
 	'dberr-cachederror' => 'これは要求されたページをキャッシュした複製であり、古くなっている可能性があります。',
-	'discuss' => 'このページについて話し合う',
+	'discuss' => 'このページに関する議論ページ',
 	'defaultskin1' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。',
 	'defaultskin2' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。<a href="$2">ここ</a>をクリックすると、スタイルシートのコードを見ることが出来ます。',
 	'defaultskin3' => 'このウィキの管理者は、デフォルトの外装を選択していません。デフォルトを使う場合は、<b>$1</b>になります。',
@@ -7784,7 +7787,7 @@ $messages['ja'] = array(
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
-	'days-abbrev' => '$1d',
+	'days-abbrev' => '$1日',
 	'deletedarticle' => 'deleted "[[$1]]"',
 );
 

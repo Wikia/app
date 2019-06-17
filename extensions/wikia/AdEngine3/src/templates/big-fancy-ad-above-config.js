@@ -1,5 +1,4 @@
-import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
-import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
+import { context, scrollListener, slotTweaker, utils, universalAdPackage } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 import slots from '../slots';
 
@@ -20,6 +19,7 @@ export const getConfig = () => ({
 	slotsToDisable: [
 		'incontent_player',
 		'invisible_high_impact_2',
+		'floor_adhesion',
 	],
 	slotsToEnable: [
 		'bottom_leaderboard',
@@ -33,6 +33,7 @@ export const getConfig = () => ({
 		context.set('slots.bottom_leaderboard.viewportConflicts', []);
 		context.set('slots.bottom_leaderboard.sizes', []);
 		context.set('slots.bottom_leaderboard.defaultSizes', [[3, 3]]);
+		slots.setupSlotVideoAdUnit(adSlot, params);
 
 		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 		const wrapper = document.getElementById('WikiaTopAds');

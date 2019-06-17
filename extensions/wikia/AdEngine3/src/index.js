@@ -1,9 +1,20 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import { context, events, eventService, utils } from '@wikia/ad-engine';
-import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { billTheLizard, krux, moatYi, moatYiEvents, nielsen } from '@wikia/ad-engine/dist/ad-services';
+import {
+	bidders,
+	billTheLizard,
+	confiant,
+	context,
+	events,
+	eventService,
+	jwplayerAdsFactory,
+	krux,
+	moatYi,
+	moatYiEvents,
+	nielsen,
+	utils
+} from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -11,8 +22,6 @@ import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
-
-import './styles.scss';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -58,6 +67,7 @@ function startAdEngine() {
 			babDetection.run();
 		});
 		slots.injectHighImpact();
+		slots.injectFloorAdhesion();
 
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {
@@ -93,6 +103,7 @@ function callExternals() {
 		responseListener: biddersDelay.markAsReady,
 	});
 
+	confiant.call();
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
@@ -138,6 +149,8 @@ function hideAllAdSlots() {
 }
 
 export {
+	context,
+	jwplayerAdsFactory,
 	hmdLoader,
 	isAutoPlayDisabled,
 	run,

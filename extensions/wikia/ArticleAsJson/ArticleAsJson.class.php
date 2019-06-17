@@ -580,15 +580,6 @@ class ArticleAsJson {
 
 		if ( $wgArticleAsJson ) {
 			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
-
-			// this is pseudo-versioning query param for collapsible sections (XW-4393)
-			// should be removed after all App caches are invalidated
-			if ( !empty( RequestContext::getMain()
-				->getRequest()
-				->getVal( 'collapsibleSections' ) )
-			) {
-				$confstr .= ':collapsibleSections';
-			}
 		}
 
 		return true;

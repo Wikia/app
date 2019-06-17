@@ -1,0 +1,40 @@
+page:
+  - page_id: 1
+    page_namespace: 0
+    page_title: Thrawn
+    page_is_redirect: 1
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+  - page_id: 2
+    page_namespace: 0
+    page_title: Mitth'raw'nuruodo
+    page_is_redirect: 0
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+  - page_id: 3
+    page_namespace: 0
+    page_title: Project_page
+    page_is_redirect: 1
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+  - page_id: 4
+    page_namespace: 4 # NS_PROJECT
+    page_title: Project_page_namespaced
+    page_is_redirect: 0
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+redirect:
+  - rd_from: 1
+    rd_namespace: 0
+    rd_title: Mitth'raw'nuruodo
+  - rd_from: 3
+    rd_namespace: 4 # NS_PROJECT
+    rd_title: Project_page_namespaced

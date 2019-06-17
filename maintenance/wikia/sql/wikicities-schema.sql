@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-sharedb-slave.query.consul    Database: wikicities
 -- ------------------------------------------------------
--- Server version	5.7.18-15-log
+-- Server version	5.7.25-28-log
 
 
 --
@@ -593,4 +593,4 @@ CREATE TABLE `user_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-10-17 13:13:09
+-- Dump completed on 2019-04-18 12:57:44

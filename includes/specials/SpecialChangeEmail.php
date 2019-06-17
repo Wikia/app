@@ -55,6 +55,10 @@ class SpecialChangeEmail extends UnlistedSpecialPage {
 		$user = $this->getUser();
 		$request = $this->getRequest();
 
+		if ( $user->isBlockedFromEmailuser() ) {
+			throw new UserBlockedError( $user->getBlock() );
+		}
+
 		if ( !$request->wasPosted() && !$user->isLoggedIn() ) {
 			$this->error( 'changeemail-no-info' );
 			return;
@@ -194,6 +198,13 @@ class SpecialChangeEmail extends UnlistedSpecialPage {
 
 		if ( $throttleCount ) {
 			LoginForm::clearLoginThrottle( $user->getName() );
+		}
+
+		// To prevent spam, rate limit adding a new address, but do
+		// not rate limit removing an address.
+		if ( $newaddr !== '' && $user->pingLimiter( 'changeemail' ) ) {
+			$this->error( 'actionthrottledtext' );
+			return false;
 		}
 
 		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newaddr );

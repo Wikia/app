@@ -7,7 +7,6 @@ $GLOBALS['wgResourceModules']['ext.wikia.resetTrackingSettingsManager'] = [
 	'scripts' => [ 'js/ext.wikia.resetTrackingSettingsManager.js' ],
 	'styles' => [ 'styles/ext.wikia.trackingSettingsManager.css' ],
 	'messages' => [
-		'privacy-settings-button-toggle',
 		'privacy-settings-button-toggle-fandom',
 		'privacy-settings-button-toggle-wikia-org'
 	],

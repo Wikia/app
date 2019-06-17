@@ -4,6 +4,7 @@ use Wikia\FeedsAndPosts\ArticleData;
 use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\ThemeSettings;
 use Wikia\FeedsAndPosts\TopArticles;
+use Wikia\FeedsAndPosts\WikiDetails;
 use Wikia\FeedsAndPosts\WikiVariables;
 
 class FeedsAndPostsController extends WikiaApiController {
@@ -23,6 +24,7 @@ class FeedsAndPostsController extends WikiaApiController {
 			'topArticles' => ( new TopArticles() )->get(),
 			'theme' => ( new ThemeSettings() )->get(),
 			'wikiVariables' => ( new WikiVariables() )->get(),
+			'wikiDetails' => ( new WikiDetails() )->get(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
