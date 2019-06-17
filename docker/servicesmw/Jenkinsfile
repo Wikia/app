@@ -83,7 +83,7 @@ node("docker-daemon-big") {
       "app": {
         dir("app") {
           git url: "git@github.com:Wikia/app.git",
-            branch: 'dev',
+            branch: 'check_post_data',
             credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
           appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
