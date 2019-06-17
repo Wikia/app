@@ -66,6 +66,10 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 
 		// POST overrides GET data
 		// We don't use $_REQUEST here to avoid interference from cookies...
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			"Got post",
+			$_POST
+		);
 		$this->data = $_POST + $_GET;
 	}
 
