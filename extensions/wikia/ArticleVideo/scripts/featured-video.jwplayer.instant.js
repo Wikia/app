@@ -67,7 +67,13 @@ require([
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
 		if (adsApi) {
-			adsApi.shouldShowAds().then(function(shouldShowAds) {
+			let shouldShowAds = adsApi.shouldShowAds();
+
+			// TODO: Remove the if clause after release of ADEN-8806 + 24h
+			if (typeof shouldShowAds === 'boolean') {
+				shouldShowAds = Promise.resolve(shouldShowAds);
+			}
+			shouldShowAds.then(function(shouldShowAds) {
 				if (shouldShowAds) {
 					videoAds = adsApi.jwplayerAdsFactory.create({
 						adProduct: 'featured',
