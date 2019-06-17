@@ -2,88 +2,7 @@
 
 class HTTPSSupportHooks {
 
-	// List of articles that shouldn't redirect to http versions.
-	// This array contains wgDBname mapped to array of article keys.
-	static $httpsArticles = [
-		/* www.wikia.com */
-		'wikiaglobal' => [ 'Licensing', 'Privacy_Policy', 'Terms_of_Use'  ],
-		/* ja.wikia.com */
-		'jacorporate' => [ 'Privacy_Policy', 'Terms_of_Use' ],
-		/* community.wikia.com */
-		'wikia' => [ 'Community_Central:Licensing' ]
-	];
-
 	const VIGNETTE_IMAGES_HTTP_UPGRADABLE = '#(images|img|static|vignette)(\d+)?\.wikia\.(nocookie\.)?(net|com)#i';
-
-	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		$basePath = $wikiVariables['basePath'];
-		if ( wfHttpsAllowedForURL( $basePath ) ) {
-			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
-		}
-		return true;
-	}
-
-	/**
-	 * Handle redirecting users to HTTPS when on wikis that support it,
-	 * as well as redirect those on wikis that don't support HTTPS back
-	 * to HTTP if necessary.
-	 *
-	 * @param  Title      $title
-	 * @param             $unused
-	 * @param  OutputPage $output
-	 * @param  User       $user
-	 * @param  WebRequest $request
-	 * @param  MediaWiki  $mediawiki
-	 * @return bool
-	 */
-	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
-		User $user, WebRequest $request, MediaWiki $mediawiki
-	): bool {
-		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&  // don't redirect internal clients
-			// Don't redirect externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
-			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
-		) {
-			$requestURL = $request->getFullRequestURL();
-			if ( WebRequest::detectProtocol() === 'http' &&
-				wfHttpsAllowedForURL( $requestURL )
-			) {
-				$output->redirectProtocol( PROTO_HTTPS, '301', 'HTTPS-Upgrade' );
-				if ( $user->isAnon() ) {
-					$output->enableClientCache( false );
-				}
-			} elseif ( WebRequest::detectProtocol() === 'https' &&
-				!wfHttpsAllowedForURL( $requestURL ) &&
-				self::shouldDowngradeRequest( $title, $request )
-			) {
-				$output->redirectProtocol( PROTO_HTTP, 302, 'HTTPS-Downgrade' );
-				$output->enableClientCache( false );
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Handle downgrading anonymous requests for our robots.txt.
-	 *
-	 * @param  WebRequest $request
-	 * @param  User       $user
-	 * @param OutputPage $output
-	 * @return boolean
-	 */
-	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
-		if ( WebRequest::detectProtocol() === 'http' &&
-			wfHttpsAllowedForURL( $request->getFullRequestURL() )
-		) {
-			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
-			$output->enableClientCache( false );
-		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!wfHttpsAllowedForURL( $request->getFullRequestURL() )
-		) {
-			$output->redirectProtocol( PROTO_HTTP, 302, 'Robots-HTTP-downgrade' );
-			$output->enableClientCache( false );
-		}
-		return true;
-	}
 
 	public static function parserUpgradeVignetteUrls( string &$url ) {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
@@ -204,23 +123,5 @@ class HTTPSSupportHooks {
 		);
 
 		return true;
-	}
-
-	private static function httpsEnabledTitle( Title $title ): bool {
-		global $wgDBname;
-		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
-			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
-	}
-
-	private static function shouldDowngradeRequest( Title $title, WebRequest $request ): bool {
-		return !$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-			!self::httpsEnabledTitle( $title ) &&
-			!self::isRawCSSorJS( $request );
-	}
-
-	private static function isRawCssOrJs( WebRequest $request ): bool {
-		global $wgJsMimeType;
-		return $request->getVal( 'action', 'view' ) === 'raw' &&
-			in_array( $request->getVal( 'ctype', '' ), [ $wgJsMimeType, 'text/css' ] );
 	}
 }

@@ -274,7 +274,6 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @responseParam bool $isPublic indicates if domain belongs to a public wiki or closed one
 	 * @responseParam string $primaryDomain primary domain for a wiki in case the $domain is an alias
-	 * @responseParam string $primaryProtocol primary protocol for the domain, either 'http://' or 'https://'
 	 * @responseParam bool $isBlocked true if robots.txt is blocked for a given domain
 	 * @responseParam array $wikis List of wikis hosted under $domain, empty if that is not a primary domain
 	 */
@@ -289,7 +288,6 @@ class WikisApiController extends WikiaApiController {
 			$primaryDomain = parse_url( WikiFactory::cityIDtoDomain( $cityId ), PHP_URL_HOST );
 			if ( wfNormalizeHost( $primaryDomain ) !== $normalizedDomain ) {
 				$this->response->setVal( 'primaryDomain', $primaryDomain );
-				$this->response->setVal( 'primaryProtocol', 'https://' );
 				$this->response->setVal( 'wikis', [] );
 				return;
 			}
@@ -327,7 +325,6 @@ class WikisApiController extends WikiaApiController {
 			$this->response->setVal( 'isBlocked', false );
 		}
 		$this->response->setVal( 'primaryDomain', '' );
-		$this->response->setVal( 'primaryProtocol', '' );
 		$this->response->setVal( 'wikis', $wikis );
 	}
 

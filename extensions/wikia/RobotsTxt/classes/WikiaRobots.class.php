@@ -180,9 +180,7 @@ class WikiaRobots {
 			// Sitemap
 			if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
 				$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';
-				if ( wfHttpsAllowedForURL( $sitemapUrl ) ) {
-					$sitemapUrl = wfHttpToHttps( $sitemapUrl );
-				}
+				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
 			}
 

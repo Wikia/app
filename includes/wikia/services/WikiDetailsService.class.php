@@ -166,9 +166,7 @@ class WikiDetailsService extends WikiService {
 
 			// convert city_url to https url for https-enabled wikis
 			$city_url = WikiFactory::getLocalEnvURL( $wikiObj->city_url );
-			if ( wfHttpsAllowedForURL( $city_url ) ) {
-				$city_url = wfHttpToHttps( $city_url );
-			}
+			$city_url = wfHttpToHttps( $city_url );
 
 			return [
 				'title' => $wikiObj->city_title,

@@ -8880,13 +8880,6 @@ $wgAllowCommunityBuilderCNWPrompt = false;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Whether the community is excluded from the fandom.com migration, disables the migration banner
- * @see SEO-669
- * @var bool $wgFandomComMigrationScheduled
- */
-$wgDomainMigrationDisabled = false;
-
-/**
  * Whether the community is scheduled to be migrated to a wikia.org domain
  * @var bool $wgWikiaOrgMigrationScheduled
  */

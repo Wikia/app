@@ -207,7 +207,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'wikis' => $wikis
 			]
 		];
@@ -235,7 +234,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => true,
 				'wikis' => [
@@ -271,7 +269,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.fandom.com',
-				'primaryProtocol' => 'https://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
@@ -304,7 +301,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.preview.fandom.com',
-				'primaryProtocol' => 'https://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
@@ -333,7 +329,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.wikia.com',
-				'primaryProtocol' => 'https://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
@@ -363,7 +358,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => true,
 				'isPublic' => true,
 				'wikis' => $wikis
@@ -394,7 +388,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis
@@ -431,7 +424,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $localizedWikis
@@ -491,7 +483,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis
@@ -524,7 +515,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis
