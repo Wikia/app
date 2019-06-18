@@ -10,33 +10,6 @@ class HTTPSSupportHooks {
 		}
 	}
 
-	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
-											   User $user, WebRequest $request, MediaWiki $mediawiki
-	): bool {
-		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&  // don't redirect internal clients
-			// Don't redirect externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
-			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
-		) {
-			$requestURL = $request->getFullRequestURL();
-			if ( WebRequest::detectProtocol() === 'http' &&
-				wfHttpsAllowedForURL( $requestURL )
-			) {
-				$output->redirectProtocol( PROTO_HTTPS, '301', 'HTTPS-Upgrade' );
-				if ( $user->isAnon() ) {
-					$output->enableClientCache( false );
-				}
-			}
-		}
-		return true;
-	}
-
-	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
-			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
-			$output->enableClientCache( false );
-
-		return true;
-	}
-
 	/**
 	 * Hacky support for some non-HTTPS Special:FilePath URLs.
 	 *
