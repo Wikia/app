@@ -2105,9 +2105,7 @@ class OutputPage extends ContextSource {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}
 
-			if ( $this->mRedirectProtocol === PROTO_HTTP ) {
-				$this->mRedirect = wfHttpsToHttp( $this->mRedirect );
-			} elseif ( $this->mRedirectProtocol === PROTO_HTTPS ) {
+			if( wfHttpsAllowedForURL( $this->mRedirect ) ) {
 				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
 			}
 
