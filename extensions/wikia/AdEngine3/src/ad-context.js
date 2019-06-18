@@ -468,6 +468,10 @@ export default {
 			enabled: false,
 			propertyId: 'd-aIf3ibf0cYxCLB1HTWfBQOFEA',
 		},
+		instantConfig: {
+			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
+			fallbackConfigKey: 'fallbackInstantConfig',
+		},
 		krux: {
 			enabled: false,
 			id: 'JU3_GW1b',
