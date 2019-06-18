@@ -27,7 +27,7 @@ class ArticleExporter {
 					'plaintextContent' => $this->getPlaintext( $article['parse']['text']['*'] ),
 					'categories' => $this->getCategories( $article['parse']['categories'] ),
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
-					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] )
+					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] ),
 				];
 			}
 		}
