@@ -86,6 +86,8 @@ class WikiaRobots {
 		// AdEngine recovery API
 		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=bt',
 		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=hmd',
+		'/wikia.php?controller=AdEngine3EndpointController&method=getRecCode&type=bt',
+		'/wikia.php?controller=AdEngine3EndpointController&method=getRecCode&type=hmd',
 	];
 
 	/**
