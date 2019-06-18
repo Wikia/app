@@ -2105,7 +2105,7 @@ class OutputPage extends ContextSource {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}
 
-			if( wfHttpsAllowedForURL( $this->mRedirect ) && !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {
+			if( wfHttpsAllowedForURL( $this->mRedirect ) ) {
 				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
 			}
 
