@@ -27,7 +27,7 @@ class ArticleExporter {
 					'categories' => $this->getCategories( $article['parse']['categories'] ),
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
 					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] ),
-					'isHomePage' => $title->isHomePage()
+					'isHomePage' => $title->isMainPage()
 				];
 			}
 		}
