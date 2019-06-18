@@ -18,6 +18,8 @@ $messages['en'] = array(
 	'emailext-discussion-100-upvote-subject' => 'Your post on $1 just reached 100 upvotes! Way to go!',
 	'emailext-discussion-100-upvote-summary-with-title' => 'Your post [$1 $2] on [$3 $4] just reached 100 upvotes!',
 	'emailext-discussion-100-upvote-summary' => 'Your post on [$1 $2] just reached 100 upvotes!',
+	'emailext-discussion-thread-at-mention' => '$1 mentioned you in $2 on $3',
+	'emailext-discussion-post-at-mention' => '$1 mentioned you in a reply to $2 on $3',
 );
 
 $messages['qqq'] = array(
