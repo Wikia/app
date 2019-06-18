@@ -128,7 +128,7 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 
 		$wikiService = ( new WikiService );
-		if ( !FounderEmailsEvent::isAnswersWiki() && in_array( $wgUser->getId(), $wikiService->getWikiAdminIds() ) ) {
+		if ( in_array( $wgUser->getId(), $wikiService->getWikiAdminIds() ) ) {
 
 			if ( empty( $wgEnableUserPreferencesV2Ext ) ) {
 				$section = 'personal/wikiemail';
