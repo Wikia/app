@@ -20,14 +20,14 @@ class ArticleExporter {
 					'lang' => $this->getContentLang(),
 					'pageId' => $id,
 					'namespace' => $title->getNamespace(),
+					'isMainPage' => $title->isMainPage(),
 					'revisionId' => strval( $article['parse']['revid'] ),
 					'title' => $article['parse']['title'],
 					'url' => $title->getFullURL(),
 					'plaintextContent' => $this->getPlaintext( $article['parse']['text']['*'] ),
 					'categories' => $this->getCategories( $article['parse']['categories'] ),
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
-					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] ),
-					'isHomePage' => $title->isMainPage()
+					'updatedUtc' => $this->getUpdated( $article['parse']['revid'] )
 				];
 			}
 		}
