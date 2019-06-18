@@ -20,7 +20,7 @@ class ArticleExporter {
 					'lang' => $this->getContentLang(),
 					'pageId' => $id,
 					'namespace' => $title->getNamespace(),
-					'isMainPage' => $title->isMainPage(),
+					'mainPage' => $title->isMainPage(),
 					'revisionId' => strval( $article['parse']['revid'] ),
 					'title' => $article['parse']['title'],
 					'url' => $title->getFullURL(),
