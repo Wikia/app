@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
+
 class MercuryApiArticleHandler {
 
 	const NUMBER_CONTRIBUTORS = 5;
@@ -121,29 +123,37 @@ class MercuryApiArticleHandler {
 	 * @return mixed
 	 */
 	public static function getTopContributorsDetails( Array $ids ) {
+		global $wgMemc;
+
 		if ( empty( $ids ) ) {
 			return [];
 		}
 
-		try {
-			return array_map(
-				function ( $userDetails ) {
-					if ( AvatarService::isEmptyOrFirstDefault( $userDetails['name'] ) ) {
-						$userDetails['avatar'] = null;
-					}
+		$cacheKey = wfMemcKey( __METHOD__, ...$ids );
+		$userInfo = $wgMemc->get( $cacheKey );
 
-					return $userDetails;
-				},
-				F::app()
-					->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ), 'size' => AvatarService::AVATAR_SIZE_SMALL_PLUS ] )
-					->getData()['items']
-			);
-
-		} catch ( NotFoundApiException $e ) {
-			// getDetails throws NotFoundApiException when no contributors are found
-			// and we want the article even if we don't have the contributors
-			return [];
+		if ( is_array( $userInfo ) ) {
+			return $userInfo;
 		}
+
+		$userAttributeGateway = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
+		$usersWithAttributes = $userAttributeGateway->getAllAttributesForMultipleUsers( $ids );
+
+		$userInfo = [];
+
+		foreach ( $ids as $userId ) {
+			$userPage = Title::makeTitle( NS_USER, $usersWithAttributes[$userId]['username'] );
+
+			$userInfo[] = [
+				'url' => $userPage->getFullURL(),
+				'name' =>  $usersWithAttributes[$userId]['username'],
+				'avatar' => $usersWithAttributes[$userId]['avatar'] ?? null,
+			];
+		}
+
+		$wgMemc->set( $cacheKey, $userInfo, 3600 * 4 /* 4 hours */ );
+
+		return $userInfo;
 	}
 
 	/**
