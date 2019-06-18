@@ -30,6 +30,13 @@ class HTTPSSupportHooks {
 		return true;
 	}
 
+	public static function onRobotsBeforeOutput( WebRequest $request, User $user, OutputPage $output ): bool {
+			$output->redirectProtocol( PROTO_HTTPS, 301, 'Robots-HTTPS-upgrade' );
+			$output->enableClientCache( false );
+
+		return true;
+	}
+
 	/**
 	 * Hacky support for some non-HTTPS Special:FilePath URLs.
 	 *
