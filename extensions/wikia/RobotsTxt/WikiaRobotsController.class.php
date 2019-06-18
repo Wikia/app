@@ -27,6 +27,8 @@ class WikiaRobotsController extends WikiaController {
 	public function getRulesForDomain() {
 		global $wgServer, $wgCityId;
 
+		var_dump("Different debug");
+
 		$wikis = \WikiFactory::getWikisUnderDomain( parse_url( $wgServer, PHP_URL_HOST ), true );
 		$degraded = false;
 		$allow = [];

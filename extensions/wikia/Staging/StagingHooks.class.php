@@ -29,8 +29,6 @@ class StagingHooks {
 			$stagingEnvName = $_SERVER['HTTP_X_STAGING'];
 			$parts = parse_url( $redirect );
 
-			var_dump($parts); die;
-
 			if ( strpos( $parts['host'], '.wikia.com' ) !== false
 				&& strpos( $parts['host'], $stagingEnvName . '.wikia.com' ) === false
 				&& $parts['host'] !== 'fandom.wikia.com'
