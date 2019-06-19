@@ -196,5 +196,5 @@ spec:
           team: core-platform
         annotations:
           description: Too many 5xx status codes
-          summary: 5xx to tola status code ratio is {{$value}}%
+          summary: 5xx to total status code ratio is {{$value}}%
         graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status
