@@ -19,8 +19,8 @@ class WikiDetails {
 		foreach ( $topUserInfo as $userId => $edits ) {
 			$topUsers[] = [
 				'id' => $userId,
-				'name' => $usersWithAttributes["$userId"]['username'],
-				'avatarUrl' => $usersWithAttributes["$userId"]['avatar'],
+				'name' => $usersWithAttributes[$userId]['username'],
+				'avatarUrl' => $usersWithAttributes[$userId]['avatar'],
 			];
 		}
 
@@ -43,6 +43,6 @@ class WikiDetails {
 	private function fetchUserAttributes( array $userIds ) {
 		$userAttributeGateway = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
 
-		return $userAttributeGateway->getAllAttributesForMultipleUsers( $userIds );
+		return $userAttributeGateway->getAllAttributesForMultipleUsers( $userIds )['users'] ?? [];
 	}
 }
