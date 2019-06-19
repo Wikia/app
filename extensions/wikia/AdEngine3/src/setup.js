@@ -3,15 +3,37 @@ import {
 	context,
 	events,
 	eventService,
+	instantConfig,
 	utils,
 	setupNpaContext,
 } from '@wikia/ad-engine';
+import { get, set } from 'lodash';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
+import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import { registerSlotTracker, registerViewabilityTracker } from  './tracking/tracker';
+
+const fallbackInstantConfig = {
+	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
+};
+
+async function getAppConfiguration() {
+	const config = await instantConfig.getConfig();
+
+	const appConfig = {
+		getInstantGlobal(key, defaultValue = null) {
+			return get(config, key, instantGlobals.get(key, defaultValue));
+		},
+		isGeoEnabled(key) {
+			return utils.geoService.isProperGeo(appConfig.getInstantGlobal(key), key);
+		}
+	};
+
+	return appConfig;
+}
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -21,8 +43,11 @@ function setupPageLevelTargeting(adsContext) {
 	});
 }
 
-function updateWadContext() {
+async function updateWadContext() {
 	// BlockAdBlock detection
+	const appConfig = await getAppConfiguration();
+	const { isGeoEnabled } = appConfig;
+
 	context.set('options.wad.enabled', isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
 
 	// showAds is undefined by default
@@ -35,18 +60,23 @@ function updateWadContext() {
 		context.set('options.wad.btRec.enabled', isGeoEnabled('wgAdDriverWadBTCountries'));
 
 		// HMD rec
-		context.set('options.wad.hmdRec.enabled', context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'));
+		context.set(
+			'options.wad.hmdRec.enabled',
+			context.get('custom.hasFeaturedVideo') && isGeoEnabled('wgAdDriverWadHMDCountries'),
+		);
 	}
 }
 
-function isGeoEnabled(key) {
-	return utils.geoService.isProperGeo(instantGlobals.get(key), key);
-}
-
-function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
-	const showAds = window.ads.context.opts.showAds;
+async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
+	const showAds = getReasonForNoAds() === null;
 
 	context.extend(basicContext);
+
+	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
+
+	const appConfig =  await getAppConfiguration();
+	const { getInstantGlobal, isGeoEnabled } = appConfig;
+
 	context.set('wiki', wikiContext);
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
@@ -78,7 +108,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		Original line:
 		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
 	*/
-	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? instantGlobals.get('wgAdDriverStickySlotsLines') : [];
+	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? getInstantGlobal('wgAdDriverStickySlotsLines') : [];
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
@@ -88,19 +118,15 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
 
-	if (context.get('state.isSteam')) {
-		context.set('state.showAds', false);
-	}
-
 	context.set('options.video.moatTracking.enabled', isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
-	context.set('options.video.moatTracking.sampling', instantGlobals.get('wgAdDriverPorvataMoatTrackingSampling'));
+	context.set('options.video.moatTracking.sampling', getInstantGlobal('wgAdDriverPorvataMoatTrackingSampling'));
 
 	context.set('options.video.playAdsOnNextVideo', isGeoEnabled('wgAdDriverPlayAdsOnNextFVCountries'));
-	context.set('options.video.adsOnNextVideoFrequency', instantGlobals.get('wgAdDriverPlayAdsOnNextFVFrequency') || 3);
+	context.set('options.video.adsOnNextVideoFrequency', getInstantGlobal('wgAdDriverPlayAdsOnNextFVFrequency') || 3);
 	context.set('options.video.isMidrollEnabled', isGeoEnabled('wgAdDriverFVMidrollCountries'));
 	context.set('options.video.isPostrollEnabled', isGeoEnabled('wgAdDriverFVPostrollCountries'));
 
-	context.set('options.maxDelayTimeout', instantGlobals.get('wgAdDriverDelayTimeout', 2000));
+	context.set('options.maxDelayTimeout', getInstantGlobal('wgAdDriverDelayTimeout', 2000));
 	context.set('options.tracking.kikimora.player', isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
 	context.set('options.tracking.slot.status', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
 	context.set('options.tracking.slot.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
@@ -109,17 +135,26 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('options.slotRepeater', true);
 
 	context.set('options.incontentNative', isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
-	context.set(
-		'options.unstickHiViLeaderboardAfterTimeout',
-		isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')
-	);
 
+	if (isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')) {
+		context.set(
+			'options.unstickHiViLeaderboardAfterTimeout',
+			true,
+		);
+		context.set(
+			'options.unstickHiViLeaderboardTimeout',
+			true,
+			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 5000),
+		);
+	}
+
+	context.set('services.confiant.enabled', isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
-		&& isGeoEnabled('wgAdDriverKruxCountries') && !instantGlobals.get('wgSitewideDisableKrux'));
+		&& isGeoEnabled('wgAdDriverKruxCountries') && !getInstantGlobal('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', isGeoEnabled('wgAdDriverNielsenCountries'));
 
-	const moatSampling = instantGlobals.get('wgAdDriverMoatTrackingForFeaturedVideoAdSampling');
+	const moatSampling = getInstantGlobal('wgAdDriverMoatTrackingForFeaturedVideoAdSampling');
 	const isMoatTrackingEnabledForVideo = isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdCountries')
 		&& utils.sampler.sample('moat_video_tracking', moatSampling);
 	context.set('options.video.moatTracking.enabledForArticleVideos', isMoatTrackingEnabledForVideo);
@@ -139,7 +174,8 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantGlobals.get('wgAdDriverFMRRotatorDelay', 10000));
+	context.set('custom.fmrRotatorDelay', getInstantGlobal('wgAdDriverFMRRotatorDelay', 10000));
+	context.set('custom.fmrDelayDisabled', getInstantGlobal('wgAdDriverDisableFMRDelayOasisCountries'));
 	context.set('custom.beachfrontDfp', isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', isGeoEnabled('wgAdDriverLkqdBidderCountries'));
 	context.set('custom.pubmaticDfp', isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
@@ -181,8 +217,10 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 		});
 
 		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
-		context.set('custom.rubiconInFV',
-			isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo);
+		context.set(
+			'custom.rubiconInFV',
+			isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo,
+		);
 		context.set('custom.isCMPEnabled', true);
 
 		if (!isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
@@ -208,7 +246,7 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 	context.set('services.netzathleten.enabled', isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', utils.geoService.mapSamplingResults(instantGlobals.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', utils.geoService.mapSamplingResults(getInstantGlobal('wgAdDriverLABradorDfpKeyvals')));
 
 	slots.setupIdentificators();
 	slots.setupStates();
@@ -227,19 +265,59 @@ function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = tru
 			slotName = slot.slotName;
 		}
 
-		context.push('state.adStack', { id: slotName })
+		context.push('state.adStack', { id: slotName });
 	});
+
+	trackAdEngineStatus();
+
 	window.adslots2.start();
 }
 
-function configure(adsContext, isOptedIn) {
-	setupAdContext(adsContext, isOptedIn);
+async function configure(adsContext, isOptedIn) {
+	await setupAdContext(adsContext, isOptedIn);
 	setupNpaContext();
 
 	templateRegistry.registerTemplates();
 
 	registerSlotTracker();
 	registerViewabilityTracker();
+}
+
+/**
+ * Checks state.showAds and sends to DW information about AdEngine status
+ */
+function trackAdEngineStatus() {
+	if (context.get('state.showAds')) {
+		pageTracker.trackProp('adengine', 'on_' + window.ads.adEngineVersion);
+	} else {
+		pageTracker.trackProp('adengine', 'off_' + getReasonForNoAds());
+	}
+}
+
+function getReasonForNoAds() {
+	const reasonFromBackend = window.ads.context.opts.noAdsReason || null;
+	const pageType = window.ads.context.opts.pageType || null;
+
+	if (reasonFromBackend === 'no_ads_user' && pageType === 'homepage_logged') {
+		return null;
+	}
+
+	if (reasonFromBackend !== null) {
+		return reasonFromBackend;
+	}
+
+	const possibleFrontendReasons = {
+		'noads_querystring': !!utils.queryString.get('noads'),
+		'noexternals_querystring': !!utils.queryString.get('noexternals'),
+		// two above are probably not needed but data QA will confirm 3:-)
+		'steam_browser': context.get('state.isSteam') === true,
+	};
+
+	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {
+		return possibleFrontendReasons[key] === true;
+	});
+
+	return reasons.length > 0 ? reasons[0] : null;
 }
 
 function init() {

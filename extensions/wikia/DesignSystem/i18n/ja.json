@@ -101,6 +101,7 @@
   "global-navigation-wikis-fandom-university": "FANDOM ユニバーシティ",
   "global-navigation-wikis-header": "Wiki",
   "hours-ago": "{hours}時間前",
+  "license-description": "特に記載のない限り、コミュニティのコンテンツは$1 ライセンスの下で利用可能です。",
   "minutes-ago": "{minutes}分前",
   "notifications-mark-all-as-read": "すべての通知を確認済みにする",
   "notifications-no-notifications-message": "新しい通知はありません。",

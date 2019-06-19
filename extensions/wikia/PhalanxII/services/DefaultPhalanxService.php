@@ -7,7 +7,7 @@ use Wikia\Service\Gateway\UrlProvider;
  * and immediately throws exception if the request fails.
  */
 class DefaultPhalanxService implements PhalanxService {
-	const REGEX_VALID_RESPONSE = 'ok';
+	const REGEX_VALID_RESPONSE = "ok\n";
 
 	/** @var UrlProvider $urlProvider */
 	private $urlProvider;
@@ -41,21 +41,11 @@ class DefaultPhalanxService implements PhalanxService {
 	/**
 	 * @param string $regex
 	 * @return bool
-	 * @throws PhalanxServiceException
-	 * @throws RegexValidationException
 	 */
 	public function doRegexValidation( string $regex ): bool {
 		$response = $this->doRequest( 'validate', http_build_query( [ 'regex' => $regex ] ) );
 
-		if ( $response === false ) {
-			throw new PhalanxServiceException();
-		}
-
-		if ( $response !== static::REGEX_VALID_RESPONSE ) {
-			throw new RegexValidationException( $response );
-		}
-
-		return true;
+		return $response === static::REGEX_VALID_RESPONSE;
 	}
 
 	private function doRequest( string $action, string $queryParams ) {
