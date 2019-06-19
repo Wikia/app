@@ -15,9 +15,11 @@ class ArticleExporterHooks {
         global $wgCityId;
         global $wgArticleExporterExchange;
 
-        $namespace = $page->getTitle()->getNamespace();
+        $title = $page->getTitle();
+        $namespace = $title->getNamespace();
+        $mainPage = $title->isMainPage();
 
-        if ( $namespace == NS_MAIN ) {
+        if ( $namespace == NS_MAIN || $mainPage ) {
             $message = [
                 'wikiId' => $wgCityId,
                 'pages' => [
