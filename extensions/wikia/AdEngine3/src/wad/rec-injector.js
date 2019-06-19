@@ -1,6 +1,6 @@
 import { utils } from '@wikia/ad-engine';
 
-const wikiaApiController = 'AdEngine3ApiController';
+const wikiaApiController = 'AdEngine3EndpointController';
 const wikiaApiMethod = 'getRecCode';
 
 /**
