@@ -47,7 +47,7 @@ class WikiVariables {
 	}
 
 	private function getGamepediaRedirect(): string {
-		$msg = wfMessage('Custom-GamepediaNotice')->inLanguage('en');
+		$msg = wfMessage( 'Custom-GamepediaNotice' )->inLanguage( 'en' );
 
 		return $msg->exists() ? "https://{$msg->escaped()}.gamepedia.com/?utm_source=Fandom&utm_medium=banner&utm_campaign={$msg->escaped()}" : '';
 	}
