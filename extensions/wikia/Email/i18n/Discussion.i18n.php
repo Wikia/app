@@ -39,6 +39,8 @@ $messages['qqq'] = array(
 	'emailext-discussion-100-upvote-subject' => 'Same as emailext-discussion-100-upvote-subject-with-title but without the name of the title. $1 is the name of the wiki',
 	'emailext-discussion-100-upvote-summary-with-title' => 'Same as emailext-discussion-100-upvote-subject-with-title but with links. $1 is URL of the post, $2 is title of the post, $3 is URL of the wiki, and $4 is name of the wiki',
 	'emailext-discussion-100-upvote-summary' => 'Same as emailext-discussion-100-upvote-subject but with links. $1 is URL of the title and $2 is the name of the wiki',
+    'emailext-discussion-thread-at-mention' => 'Message indicating a users was @mentioned by another user. $1 is the person who did the @ mention, $2 is the user who was @mentioned, and $3 is the title of the post they were @ mentioned in',
+    'emailext-discussion-post-at-mention' => 'Same as emailext-discussion-thread-at-mention, but for a reply in the thread',
 );
 
 $messages['de'] = array(
