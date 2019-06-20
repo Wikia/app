@@ -142,12 +142,12 @@ class MercuryApiArticleHandler {
 		$userInfo = [];
 
 		foreach ( $ids as $userId ) {
-			$userPage = Title::makeTitle( NS_USER, $usersWithAttributes[$userId]['username'] );
+			$userPage = Title::makeTitle( NS_USER, $usersWithAttributes['users'][$userId]['username'] );
 
 			$userInfo[] = [
 				'url' => $userPage->getFullURL(),
-				'name' =>  $usersWithAttributes[$userId]['username'],
-				'avatar' => $usersWithAttributes[$userId]['avatar'] ?? null,
+				'name' =>  $usersWithAttributes['users'][$userId]['username'],
+				'avatar' => $usersWithAttributes['users'][$userId]['avatar'] ?? null,
 			];
 		}
 
