@@ -3270,7 +3270,7 @@ $wgEnablePolldaddyTagExt = true;
  * @see extensions/PoolCounter
  * @var bool $wgEnablePoolCounter
  */
-$wgEnablePoolCounter = true;
+$wgEnablePoolCounter = false;
 
 /**
  * Enable query page to fetch data about popular pages.
