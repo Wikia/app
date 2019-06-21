@@ -1,7 +1,7 @@
 <?php
 
 class UserIdentityBox extends WikiaObject {
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 
 	/**
 	 * Prefixes to memc keys etc.
@@ -26,6 +26,21 @@ class UserIdentityBox extends WikiaObject {
 	private $title = null;
 	private $favWikisModel = null;
 
+	const CACHE_FIELDS = [
+		'location',
+		'occupation',
+		'gender',
+		'birthday',
+		'website',
+		'twitter',
+		'fbPage',
+		'discordHandle',
+		'realName',
+		'topWikis',
+		'hideEditsWikis',
+		'bio',
+	];
+
 	public $optionsArray = array(
 		'location',
 		'bio',
@@ -36,6 +51,7 @@ class UserIdentityBox extends WikiaObject {
 		'avatar',
 		'twitter',
 		'fbPage',
+		'discordHandle',
 		'name',
 		'hideEditsWikis',
 	);
@@ -104,7 +120,7 @@ class UserIdentityBox extends WikiaObject {
 			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 			$data['contributionsURL'] = Skin::makeSpecialUrlSubpage( 'Contributions', $userName );
-			
+
 			$data = call_user_func( array( $this, $dataType ), $data );
 
 			if ( !( $iEdits || $this->shouldDisplayFullMasthead() ) ) {
@@ -202,7 +218,18 @@ class UserIdentityBox extends WikiaObject {
 		$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 
 		if ( empty( $memcData ) ) {
-			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis', 'bio' ) as $key ) {
+			foreach ( [
+				'location',
+				'occupation',
+				'gender',
+				'birthday',
+				'website',
+				'twitter',
+				'fbPage',
+				'discordHandle',
+				'hideEditsWikis',
+				'bio',
+			] as $key ) {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference( $key );
@@ -413,7 +440,7 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData( $data ) {
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis', 'bio' ) as $property ) {
+		foreach ( self::CACHE_FIELDS as $property ) {
 			if ( is_object( $data ) && isset( $data->$property ) ) {
 				$memcData[$property] = $data->$property;
 			}
@@ -448,7 +475,7 @@ class UserIdentityBox extends WikiaObject {
 		}
 
 		// if any of properties isn't set then set it to null
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'hideEditsWikis' ) as $property ) {
+		foreach ( self::CACHE_FIELDS as $property ) {
 			if ( !isset( $memcData[$property] ) ) {
 				$memcData[$property] = null;
 			}

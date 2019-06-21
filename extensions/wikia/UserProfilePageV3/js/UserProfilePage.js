@@ -428,6 +428,7 @@ require(
 					website: null,
 					twitter: null,
 					fbPage: null,
+					discordHandle: null,
 					year: null,
 					month: null,
 					day: null

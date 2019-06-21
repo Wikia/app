@@ -250,6 +250,24 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				background-color: $color-alternate-text;
 			}
 		}
+
+		.discord {
+			.wds-dropdown {
+				&::after {
+					border-bottom-color: $color-alternate-text;
+				}
+			}
+			.wds-dropdown__toggle {
+				color: $color-links;
+			}
+
+			.wds-dropdown__content {
+				background: $color-alternate-text;
+				padding: 6px;
+				text-align: center;
+				width: 150px;
+			}
+		}
 	}
 
 	.wikis {

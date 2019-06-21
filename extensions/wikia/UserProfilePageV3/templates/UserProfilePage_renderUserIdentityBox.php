@@ -138,6 +138,25 @@
 							</li>
 						<? endif; ?>
 					<? endif; ?>
+
+					<? if ( !empty( $user['discordHandle'] ) ): ?>
+						<li class="discord">
+							<div class="wds-dropdown">
+								<div class="wds-dropdown__toggle">
+									<?= wfMessage( 'user-identity-box-my-discord-handle' )->escaped(); ?>
+								</div>
+								<div class="wds-dropdown__content">
+									<?= wfMessage( 'user-identity-box-discord-handle-content', $user['discordHandle'] )->escaped(); ?>
+								</div>
+							</div>
+						</li>
+					<? else: ?>
+						<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+							<li class="zero">
+								<?= wfMessage( 'user-identity-box-zero-state-discord-handle' )->escaped(); ?>
+							</li>
+						<? endif; ?>
+					<? endif; ?>
 				</ul>
 			<? endif; ?>
 
