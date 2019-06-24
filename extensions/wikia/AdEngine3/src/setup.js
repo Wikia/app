@@ -253,7 +253,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	slots.setupSizesAvailability();
 	slots.setupTopLeaderboard();
 
-	updateWadContext();
+	await updateWadContext();
 
 	// TODO: Remove wrapper of window.adslots2 when we unify our push method
 	utils.makeLazyQueue(window.adslots2, (slot) => {
