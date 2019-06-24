@@ -10,32 +10,6 @@ class WikiFeaturesHelper extends WikiaModel {
 
 	protected static $instance = NULL;
 
-	const FEEDBACK_FREQUENCY = 60;
-
-	/**
-	 * @var array with feedback categories and its title and priority
-	 */
-
-	public static $feedbackCategories = array(
-		0 => array('title' => null, 'msg' => 'wikifeatures-category-choose-one'),
-		1 => array('title' => 'Love', 'msg' => 'wikifeatures-love-this-project'),
-		2 => array('title' => 'Hate', 'msg' => 'wikifeatures-hate-this-project'),
-		3 => array('title' => 'Problem', 'msg' => 'wikifeatures-problem-with-project'),
-		4 => array('title' => 'Idea', 'msg' => 'wikifeatures-an-idea-for-project'),
-	);
-
-	// These numbers are totally arbitrary and not used for anything other than to exist in this array.  This mostly
-	// exists to verify that feedback from labs is for a known feature.
-	public static $feedbackAreaIDs = array (
-		'wgEnableAjaxPollExt' => 280,
-		'wgEnableBlogArticles' => 281,
-		'wgEnableArticleCommentsExt' => 200,
-		'wgEnableChat' => 258,
-		'wgEnableWallExt' => 258,
-		'wgEnableForumExt' => 259,
-		'wgEnableMediaGalleryExt' => 1
-	);
-
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',
@@ -166,60 +140,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @brief checks if this is not a spam attempt
-	 *
-	 * @param string $userName name retrived from user object
-	 * @param string $feature name of wikifeatures variable
-	 *
-	 * @return true | Array array when an error occurs
-	 */
-	public function isSpam($userName, $feature) {
-
-		// it didn't work without urlencode($userName) maybe because of multibyte signs
-		$memcKey = wfMemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
-		$result = $this->wg->Memc->get($memcKey);
-
-		if( empty($result) ) {
-			$this->wg->Memc->set($memcKey, true, self::FEEDBACK_FREQUENCY);
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-
-	/**
-	 * Helper that actually sends the feedback to a specified e-mail address
-	 *
-	 * @param string $feature name of the feature
-	 * @param string $message feedback message
-	 * @param User $user user object
-	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
-	 *
-	 * @return \Status
-	 */
-	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
-
-		$title = $feature .' - '.self::$feedbackCategories[$category]['title'];
-
-		$message = <<<MSG
-User name: {$user->getName()}
-Wiki name: {$this->app->getGlobal('wgSitename')}
-Wiki address: {$this->app->getGlobal('wgServer')}
-Feature: $feature
-
-$message
-MSG;
-
-		$message .= "\n\n---\nBrowser data: " . $_SERVER['HTTP_USER_AGENT'];
-
-		$mailUser = new MailAddress( $user->getEmail() );
-		$mailCommunity = new MailAddress( $this->wg->SpecialContactEmail, 'Wikia Support' );
-
-		return UserMailer::send( $mailCommunity, $mailUser, $title, $message, $mailUser, null, 'WikiFeatures' );
 	}
 
 }
