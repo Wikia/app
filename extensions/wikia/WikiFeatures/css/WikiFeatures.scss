@@ -147,13 +147,7 @@
 						}
 					}
 				}
-				.feedback {
-					margin: 4px 0 0 15px;
-					>img {
-						position: relative;
-						top: -1px;
-					}
-				}
+			
 			}
 			.active-on {
 				font-size: 13px;
@@ -163,75 +157,6 @@
 	}
 }
 
-.FeedbackDialog {
-	.feature-highlight {
-		float: right;
-		margin-left: 30px;
-		text-align: center;
-		width: 302px;
-		h2 {
-			font-size: 14px;
-			font-weight: bold;
-		}
-		img {
-			border: 1px solid black;
-			width: 300px;
-			height: 214px;
-		}
-	}
-
-	label {
-		font-weight: bold;
-	}
-
-	.input-group {
-		clear: both;
-		margin-top: 10px;
-	}
-
-	.comment-group {
-		text-align: right;
-		label {
-			clear: both;
-			float: left;
-			margin: 10px 0;
-		}
-	}
-
-	.comment-character-count {
-		margin-top: 2px;
-		text-align: right;
-	}
-
-	textarea {
-		height: 10em;
-		width: 100%;
-		&.invalid {
-			border: 1px solid #f00;
-			&:focus {
-				@include box-shadow(0px, 0px, 6px, #f00);
-			}
-		}
-	}
-
-	input[type=submit],
-	.status-msg {
-		float: right;
-		margin-left: 20px
-	}
-
-	.status-msg {
-		color: #090;
-	}
-
-	.invalid {
-		color: #f00;
-	}
-}
-
-.modalWrapper .FeedbackDialog {
-	display: block;
-}
 
 .DeactivateDialog {
 	display: none;
