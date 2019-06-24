@@ -104,5 +104,5 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 		$this->setVal( 'result', 'ok' );
 	}
-
+}
 
