@@ -273,12 +273,12 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 			.wds-dropdown {
 				&::after {
-					border-bottom-color: $color-alternate-text;
+					border-bottom-color: $color-page;
 				}
 			}
 
 			.wds-dropdown__content {
-				background: $color-alternate-text;
+				background: $color-page;
 				padding: 6px;
 				text-align: center;
 				width: 150px;
