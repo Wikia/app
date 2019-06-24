@@ -13,11 +13,14 @@ class ArticleData {
 			wfMemcKey('feeds', 'article-images', $articleId),
 			10800, // 3h
 			function () use ( $articleId, $limit ) {
-				$imageData = ( new ImageServing( [ $articleId ] ) )->getImages( $limit )[strval( $articleId )] ?? [];
+				$imageServing = new ImageServing( [ $articleId ] );
+				$images = $imageServing->getImages( $limit );
+
+				$imageInfo = $images[strval( $articleId )] ?? [];
 
 				$urls = array_map(function($imageData) {
 					return $imageData['url'];
-				}, $imageData);
+				}, $imageInfo);
 
 				return $urls;
 			}
