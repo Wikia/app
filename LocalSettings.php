@@ -279,7 +279,6 @@ $wgConf->localVHosts = array_merge(
         $wgWikiaBaseDomain,
         $wgFandomBaseDomain,
         $wgWikiaOrgBaseDomain,
-        'uncyclopedia.org',
         'memory-alpha.org',
         'wowwiki.com',
     ]
