@@ -633,14 +633,6 @@ $wgAutoloadClasses = [];
 $wgAutomatedTestsIPsList = [];
 
 /**
- * Languages supported by Answers.
- * @see extensions/wikia/Answers
- * @var Array $wgAvailableAnswersLang
- */
-$wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
-	'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
-
-/**
  * Languages supported by HAWelcome.
  * @see extensions/wikia/HAWelcome/
  * @var Array $wgEnableHAWelcomeExt
@@ -3397,9 +3389,7 @@ $wgEnableRecirculationExt = true;
 $wgEnableReferencesTemplateParsing = true;
 
 /**
- * Enable Related Pages extension and Oasis module. IMPORTANT: Disabled for
- * Answers wikis, as RelatedPages queries are killing their databases.
- * @see $wgEnableAnswers
+ * Enable Related Pages extension and Oasis module.
  * @see extensions/wikia/RelatedPages
  * @var bool $wgEnableRelatedPagesExt
  */

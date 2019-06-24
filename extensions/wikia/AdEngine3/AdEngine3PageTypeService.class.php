@@ -16,6 +16,11 @@ class AdEngine3PageTypeService {
 	 */
 	private $app;
 
+	/**
+	 * @var AdEngine3DeciderService
+	 */
+	private $adsDecider;
+
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
@@ -23,9 +28,10 @@ class AdEngine3PageTypeService {
 	const PAGE_TYPE_SEARCH = 'search';                   // show some ads (anonymous on search pages)
 	const PAGE_TYPE_ALL_ADS = 'all_ads';                 // show all ads!
 
-	public function __construct() {
+	public function __construct(AdEngine3DeciderService $adsDecider) {
 		$this->app = F::app();
 		$this->wg = F::app()->wg;
+		$this->adsDecider = $adsDecider;
 	}
 
 	/**
@@ -37,47 +43,10 @@ class AdEngine3PageTypeService {
 	 */
 	public function getPageType() {
 		$title = null;
+		$noAdsReason = $this->adsDecider->getNoAdsReason();
 
-		if ( WikiaPageType::isActionPage()
-			|| $this->wg->Request->getBool( 'noexternals', $this->wg->NoExternals )
-			|| $this->wg->Request->getBool( 'noads', false )
-			|| $this->wg->ShowAds === false
-			|| !$this->app->checkSkin( [ 'oasis', 'wikiamobile' ] )
-		) {
-			$pageLevel = self::PAGE_TYPE_NO_ADS;
-			return $pageLevel;
-		}
-
-		$runAds = WikiaPageType::isFilePage()
-			|| WikiaPageType::isForum()
-			|| WikiaPageType::isSearch()
-			|| WikiaPageType::isWikiaHub();
-
-		if ( !$runAds ) {
-			if ( $this->wg->Title ) {
-				$title = $this->wg->Title;
-				$namespace = $title->getNamespace();
-				$runAds = in_array( $namespace, $this->wg->ContentNamespaces )
-					|| isset( $this->wg->ExtraNamespaces[$namespace] )
-
-					// Blogs:
-					|| BodyController::isBlogListing()
-					|| BodyController::isBlogPost()
-
-					// Quiz, category and project pages:
-					|| ( defined( 'NS_WIKIA_PLAYQUIZ' ) && $title->inNamespace( NS_WIKIA_PLAYQUIZ ) )
-					|| ( defined( 'NS_CATEGORY' ) && $namespace == NS_CATEGORY )
-					|| ( defined( 'NS_PROJECT' ) && $namespace == NS_PROJECT )
-
-					// Chosen special pages:
-					|| $title->isSpecial( 'Leaderboard' )
-					|| $title->isSpecial( 'Maps' )
-					|| $title->isSpecial( 'Images' )
-					|| $title->isSpecial( 'Videos' );
-			}
-		}
-
-		if ( !$runAds ) {
+		if (  $noAdsReason !== null && $noAdsReason !== 'no_ads_user' ) {
+		// no_ads_users may still get ads on special pages - the logic is below
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
 		}

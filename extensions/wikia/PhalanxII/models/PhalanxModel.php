@@ -77,8 +77,6 @@ abstract class PhalanxModel extends WikiaObject {
 
 			case Phalanx:: TYPE_SUMMARY:
 			case Phalanx:: TYPE_CONTENT:
-			case Phalanx:: TYPE_ANSWERS_QUESTION_TITLE:
-			case Phalanx:: TYPE_ANSWERS_RECENT_QUESTIONS:
 			case Phalanx:: TYPE_WIKI_CREATION:
 			case Phalanx:: TYPE_EMAIL:
 				$instance = new PhalanxTextModel( $content );

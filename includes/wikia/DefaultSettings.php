@@ -1196,10 +1196,17 @@ $wgAdDriverPubMaticDfpCountries = null;
 
 /**
  * @name $wgAdDriverFMRRotatorDelay
- * Time defining FMR slot rotation cycle
+ * Time defining FMR slot rotation cycle.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverFMRRotatorDelay = 10000;
+
+/**
+ * @name $wgAdDriverDisableFMRDelayOasisCountries
+ * List of countries where FMR rotation is based on scroll instead of time delay.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableFMRDelayOasisCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1346,6 +1353,14 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
  */
 $wgAdDriverScrollDepthTrackingCountries = null;
 
+
+/**
+ * @name $wgAdDriverScrollSpeedTrackingCountries
+ * List of countries where scroll speed tracking is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollSpeedTrackingCountries = null;
+
 /**
  * @name $wgAdDriverStickySlotsLines
  * List of Google Ad Manager lines to apply Sticky Ad template
@@ -1425,6 +1440,20 @@ $wgAdDriverBrowsiCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverConfiantCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantDesktopCountries
+ * List of countries Confiant will be enabled on Oasis
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantMobileCountries
+ * List of countries Confiant will be enabled on Mobile-Wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantMobileCountries = null;
 
 /**
  * @name $wgAdDriverNielsenCountries
