@@ -38,9 +38,13 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBrowsiCountries';
 		$vars[] = 'wgAdDriverCollapseTopLeaderboardMobileWikiCountries';
+		$vars[] = 'wgAdDriverConfiantDesktopCountries';
+		$vars[] = 'wgAdDriverConfiantMobileCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableAdStackCountries';
+		$vars[] = 'wgAdDriverDisableFMRDelayOasisCountries';
 		$vars[] = 'wgAdDriverFMRRotatorDelay';
+		$vars[] = 'wgAdDriverEagerlyLoadedIncontentBoxad1MobileWikiCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverGumGumBidderCountries';
@@ -75,6 +79,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverOasisHiviLeaderboardCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
+		$vars[] = 'wgAdDriverOverscrolledCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
@@ -92,6 +97,7 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconDfpCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
+		$vars[] = 'wgAdDriverScrollSpeedTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries';

@@ -1,7 +1,20 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import { context, events, eventService, utils, bidders, billTheLizard, krux, moatYi, moatYiEvents, nielsen, jwplayerAdsFactory } from '@wikia/ad-engine';
+import {
+	bidders,
+	billTheLizard,
+	confiant,
+	context,
+	events,
+	eventService,
+	jwplayerAdsFactory,
+	krux,
+	moatYi,
+	moatYiEvents,
+	nielsen,
+	utils
+} from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -12,15 +25,27 @@ import videoTracker from './tracking/video-tracking';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
-function setupAdEngine(isOptedIn, geoRequiresConsent) {
+let contextConfiguredTrigger;
+/**
+ * Resolves with ad-engine context once it's been configured.
+ * @type {Promise}
+ */
+const contextConfigured = new Promise((resolve) => {
+	contextConfiguredTrigger = resolve;
+});
+
+async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
-	ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+
 	videoTracker.register();
 	recRunner.init();
 
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
+
+	contextConfiguredTrigger(context);
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
@@ -90,6 +115,7 @@ function callExternals() {
 		responseListener: biddersDelay.markAsReady,
 	});
 
+	confiant.call();
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
@@ -136,6 +162,7 @@ function hideAllAdSlots() {
 
 export {
 	context,
+	contextConfigured,
 	jwplayerAdsFactory,
 	hmdLoader,
 	isAutoPlayDisabled,

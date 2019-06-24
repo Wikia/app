@@ -420,7 +420,6 @@ export default {
 
 	injectFloorAdhesion() {
 		scrollListener.addSlot(
-				context.get('state.adStack'),
 				'floor_adhesion',
 				{ distanceFromTop: utils.getViewportHeight() },
 		);

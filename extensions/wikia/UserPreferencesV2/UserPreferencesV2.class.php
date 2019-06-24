@@ -401,6 +401,22 @@ class UserPreferencesV2 {
 	}
 
 	static public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
+		if ( $newEmail === $user->getEmail() ) {
+			return true;
+		}
+
+		if ( $user->isBlockedFromEmailuser() ) {
+			throw new UserBlockedError( $user->getBlock() );
+		}
+
+		// To prevent spam, rate limit adding a new address, but do
+		// not rate limit removing an address.
+		if ( $newEmail !== '' && $user->pingLimiter( 'changeemail' ) ) {
+			$status = Status::newFatal( 'actionthrottledtext' );
+			$result = $status->getWikiText();
+			return false;
+		}
+
 		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newEmail );
 
 		/* @var $status Status */
