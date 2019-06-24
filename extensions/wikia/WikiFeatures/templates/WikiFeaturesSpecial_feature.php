@@ -30,11 +30,5 @@
 				<span class="loading"></span>
 			</span>
 		<? endif; ?>
-		<? if (isset($feature['active'])): ?>
-			<button class="secondary feedback">
-				<img height="10" width="10" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/star-inactive.png">
-				<?php echo wfMsg('wikifeatures-feedback'); ?>
-			</button>
-		<? endif; ?>
 	</div>
 </li>
