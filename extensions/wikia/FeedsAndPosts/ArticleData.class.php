@@ -10,7 +10,7 @@ use WikiaDataAccess;
 class ArticleData {
 	public static function getImages( int $articleId, $limit = 11 ): array {
 		return WikiaDataAccess::cache(
-			wfMemcKey('feeds', 'article-images'),
+			wfMemcKey('feeds', 'article-images', $articleId),
 			10800, // 3h
 			function () use ( $articleId, $limit ) {
 				$imageData = ( new ImageServing( [ $articleId ] ) )->getImages( $limit )[strval( $articleId )] ?? [];
