@@ -256,6 +256,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				align-items: center;
 				color: $color-links;
 				display: flex;
+				padding-bottom: 5px;
 
 				&__icon {
 					background: $color-links;
