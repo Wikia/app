@@ -21,7 +21,7 @@ class GcsFileBackend extends FileBackendStore {
 		parent::__construct( $config );
 		$this->bucketName = $config['gcsBucket'];
 		$this->temporaryBucketName = $config['gcsTemporaryBucket'];
-		$this->storage = new StorageClient( [ 'keyFile' => $config['gcsCredentials'] ] );
+		$this->storage = new StorageClient( [ 'requestTimeout' => 180, 'keyFile' => $config['gcsCredentials'] ] );
 		$this->gcsPaths = new GcsPathFactory( $config['gcsObjectNamePrefix'] );
 	}
 
