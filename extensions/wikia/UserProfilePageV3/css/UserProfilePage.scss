@@ -251,14 +251,30 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 
-		.discord {
+		.user-profile__discord {
+			&__icon-with-label {
+				align-items: center;
+				color: $color-links;
+				display: flex;
+
+				&__icon {
+					background: $color-links;
+					border-radius: 50px;
+					display: inline-block;
+					margin-right: 3px;
+					padding: 2px 2px 2px 3px;
+
+					.wds-icon {
+						display: block;
+						fill: $color-text;
+					}
+				}
+			}
+
 			.wds-dropdown {
 				&::after {
 					border-bottom-color: $color-alternate-text;
 				}
-			}
-			.wds-dropdown__toggle {
-				color: $color-links;
 			}
 
 			.wds-dropdown__content {
@@ -266,6 +282,18 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				padding: 6px;
 				text-align: center;
 				width: 150px;
+			}
+		}
+
+		.zero {
+			.user-profile__discord {
+				&__icon-with-label {
+					color: $color-alternate-text;
+
+					&__icon {
+						background: $color-alternate-text;
+					}
+				}
 			}
 		}
 	}
