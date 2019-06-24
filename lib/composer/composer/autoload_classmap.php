@@ -3017,6 +3017,7 @@ return array(
     'Wikia\\Factory\\RabbitFactory' => $baseDir . '/lib/Wikia/src/Factory/RabbitFactory.php',
     'Wikia\\Factory\\ServiceFactory' => $baseDir . '/lib/Wikia/src/Factory/ServiceFactory.php',
     'Wikia\\Factory\\SwiftSyncFactory' => $baseDir . '/lib/Wikia/src/Factory/SwiftSyncFactory.php',
+    'Wikia\\Gateway\\UserAttributeGateway' => $baseDir . '/lib/Wikia/src/Gateway/UserAttributeGateway.php',
     'Wikia\\HTTP\\Response' => $baseDir . '/lib/Wikia/src/HTTP/Response.php',
     'Wikia\\Localisation\\CachedLCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/CachedLCStoreDB.php',
     'Wikia\\Localisation\\LCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/LCStoreDB.php',
