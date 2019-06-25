@@ -17,7 +17,9 @@ $color-user-profile-masthead-aka: #CCC;
 
 $y-user-profile-masthead-links-icon: -17px;
 $color-masthead: $color-page;
+$color-discord-icon: $wds-color-white;
 @if lightness($color-page) < 50 {
+	$color-discord-icon: #222;
 	$y-user-profile-masthead-links-icon: 0;
 	$color-masthead: mix($color-buttons, $color-page, 30%); // logic from Wall
 	@if lightness($color-masthead) < 30 {
@@ -286,7 +288,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 						.wds-icon {
 							display: block;
-							fill: $color-button-text;
+							fill: $color-discord-icon;
 						}
 					}
 				}
