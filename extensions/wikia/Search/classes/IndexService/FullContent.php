@@ -3,7 +3,6 @@
 namespace Wikia\Search\IndexService;
 
 use simple_html_dom;
-use Wikia\Search\Utilities;
 
 /**
  * This is intended to provide core article content.
@@ -63,26 +62,14 @@ class FullContent extends AbstractService {
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
 			'pageid' => $pageId,
-			$this->field( 'title' ) => $titleStr,
+			'title' => $titleStr,
+			'redirect_titles' => $service->getRedirectTitlesForPageId( $pageId ),
 			'url' => $service->getUrlFromPageId( $pageId ),
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
-			'host' => $service->getHostName(),
 			'lang' => $service->getSimpleLanguageCode(),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
-			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false'
 		] );
-	}
-
-	/**
-	 * Optionally sets language field for field. Old backend already does this.
-	 *
-	 * @param string $field
-	 *
-	 * @return string
-	 */
-	protected function field( $field ) {
-		return $this->getService()->getGlobal( 'AppStripsHtml' )
-			? ( new Utilities )->field( $field ) : $field;
 	}
 
 	/**
@@ -119,7 +106,7 @@ class FullContent extends AbstractService {
 			}
 		}
 
-		return [ $this->field( 'headings' ) => $headings ];
+		return [ 'headings' => $headings ];
 	}
 
 	/**
@@ -135,8 +122,6 @@ class FullContent extends AbstractService {
 
 	protected function prepValuesFromHtml( $html ) {
 		$result = [];
-		$paragraphs = [];
-
 		// workaround for bug in html_entity_decode that truncates the text
 		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
 
@@ -154,7 +139,7 @@ class FullContent extends AbstractService {
 
 		return array_merge( $result, [
 			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-			$this->field( 'html' ) => $plaintext,
+			'html' => $plaintext,
 		] );
 	}
 

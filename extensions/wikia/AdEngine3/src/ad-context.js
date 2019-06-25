@@ -43,7 +43,7 @@ export default {
 			lazyLoadingEnabled: false,
 			bidsRefreshing: {
 				enabled: false,
-				slots: []
+				slots: ['INCONTENT_BOXAD_1']
 			},
 			aol: {
 				enabled: false,
@@ -463,6 +463,14 @@ export default {
 			projects: {},
 			parameters: {},
 			timeout: 2000,
+		},
+		confiant: {
+			enabled: false,
+			propertyId: 'd-aIf3ibf0cYxCLB1HTWfBQOFEA',
+		},
+		instantConfig: {
+			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
+			fallbackConfigKey: 'fallbackInstantConfig',
 		},
 		krux: {
 			enabled: false,

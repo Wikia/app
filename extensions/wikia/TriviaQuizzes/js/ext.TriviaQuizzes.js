@@ -20,6 +20,9 @@ require(['jquery', 'content_types_consumption', 'wikia.trackingOptIn', 'mw'], fu
 							dbName: mw.config.get('wgDBname') || null,
 							id: mw.config.get('wgCityId') || '0',
 						},
+						theme: {
+							primaryColor: mw.config.get('wgTriviaQuizzesPrimaryColor'),
+						},
 					});
 				}
 			}

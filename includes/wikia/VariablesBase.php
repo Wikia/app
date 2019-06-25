@@ -633,14 +633,6 @@ $wgAutoloadClasses = [];
 $wgAutomatedTestsIPsList = [];
 
 /**
- * Languages supported by Answers.
- * @see extensions/wikia/Answers
- * @var Array $wgAvailableAnswersLang
- */
-$wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
-	'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
-
-/**
  * Languages supported by HAWelcome.
  * @see extensions/wikia/HAWelcome/
  * @var Array $wgEnableHAWelcomeExt
@@ -1282,9 +1274,8 @@ $wgCrossSiteAJAXdomainExceptions = [];
 $wgCrossWikiaSearchExcludedWikis = [
 	// Answers
 	11557,
-	// Uncyclopedias
-	425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
-	859, 2219, 1159, 2794, 2258, 1183, 1512,
+	// Spademanns wiki
+	1524,
 	// Community Central
 	177,
 	// Scratchpad
@@ -2077,6 +2068,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-threadmoderator',
 	'User-identity-box-group-voldev',
 	'User-identity-box-group-vstf',
+	'User-identity-box-group-wiki-manager',
 	'Userrights-groups-help',
 	'Welcome-bot-flag',
 	'Welcome-enabled',
@@ -3396,9 +3388,7 @@ $wgEnableRecirculationExt = true;
 $wgEnableReferencesTemplateParsing = true;
 
 /**
- * Enable Related Pages extension and Oasis module. IMPORTANT: Disabled for
- * Answers wikis, as RelatedPages queries are killing their databases.
- * @see $wgEnableAnswers
+ * Enable Related Pages extension and Oasis module.
  * @see extensions/wikia/RelatedPages
  * @var bool $wgEnableRelatedPagesExt
  */
@@ -6667,6 +6657,10 @@ $wgRateLimits = [
 	'mailpassword' => [
 		'ip' => [ 1, 43200 ],
 	],
+	'changeemail' => [
+		'ip' => [ 10, 3600 ],
+		'user' => [ 4, 86400 ],
+	],
 ];
 
 /**
@@ -8892,6 +8886,12 @@ $wgFandomComMigrationScheduled = false;
 $wgDomainMigrationDisabled = false;
 
 /**
+ * Environment-specific domain mappings to their normalized variants
+ * @var string[] $wgDomainOverrides
+ */
+$wgEnvironmentDomainMappings = [];
+
+/**
  * Whether the community is scheduled to be migrated to a wikia.org domain
  * @var bool $wgWikiaOrgMigrationScheduled
  */
@@ -8986,7 +8986,7 @@ $wgTriviaQuizzesEnabledPages = [];
  * @see LORE-519
  * @var bool
  */
-$wgEnableArticleExporterHooks = false;
+$wgEnableArticleExporterHooks = true;
 
 /**
  * ArticleExporter RabbitMQ configuration.
@@ -8996,5 +8996,5 @@ $wgEnableArticleExporterHooks = false;
 $wgArticleExporterExchange = [
     'vhost' => '/',
     'exchange' => 'taxonomy-ex',
-    'routing' => 'taxonomy.article-edit'
+    'routing' => 'taxonomy.article-edits'
 ];

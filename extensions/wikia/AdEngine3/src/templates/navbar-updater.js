@@ -1,4 +1,4 @@
-import { resolvedState } from '@wikia/ad-engine/dist/ad-products';
+import { resolvedState } from '@wikia/ad-engine';
 
 const lockedStateClass = 'theme-locked';
 export const navBarStickClass = 'bfaa-pinned';

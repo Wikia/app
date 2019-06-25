@@ -90,6 +90,22 @@ require([
 		});
 	}
 
+	function insertTrackingPixel(pixelContent, pixelType) {
+		var wrapper = document.createElement('span');
+
+		wrapper.className = 'wds-is-hidden';
+
+		if (pixelType === 'url') {
+			var tag = document.createElement('img');
+			tag.src = pixelContent;
+			wrapper.appendChild(tag);
+		} else {
+			wrapper.innerHTML = pixelContent;
+		}
+
+		window.document.body.appendChild(wrapper);
+	}
+
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
 			recommendedContent.getRecommendedArticles(),
@@ -101,13 +117,20 @@ require([
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
 			}
+
+			var sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					wikiItems: wikiItems,
 					discussions: discussions,
-					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredItem
 				});
+
+				if (sponsoredItem.pixelContent) {
+					insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+				}
 			});
 		})
 		.fail(function (err) {
@@ -179,6 +202,10 @@ require([
 					}
 
 					$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+
+					if (sponsoredItem.pixelContent) {
+						insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+					}
 				}
 
 				tracker.trackImpression('rail');

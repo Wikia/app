@@ -386,6 +386,7 @@ $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
+$wgAutoloadClasses['LicenseController'] = $IP.'/skins/oasis/modules/LicenseController.class.php';
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
@@ -1194,11 +1195,18 @@ $wgAdDriverPubMaticOutstreamCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
- * @name $wgAdDriverDisableRecirculationCountries
- * Disables recirculation in these countries.
+ * @name $wgAdDriverFMRRotatorDelay
+ * Time defining FMR slot rotation cycle.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverDisableRecirculationCountries = null;
+$wgAdDriverFMRRotatorDelay = 10000;
+
+/**
+ * @name $wgAdDriverDisableFMRDelayOasisCountries
+ * List of countries where FMR rotation is based on scroll instead of time delay.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableFMRDelayOasisCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1213,6 +1221,13 @@ $wgAdDriverAdditionalVastSizeCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKargoBidderCountries = null;
+
+/**
+ * @name $wgAdDriverGumGumBidderCountries
+ * List of countries where GumGum Prebid bidding partner is enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGumGumBidderCountries = null;
 
 /**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
@@ -1338,6 +1353,14 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
  */
 $wgAdDriverScrollDepthTrackingCountries = null;
 
+
+/**
+ * @name $wgAdDriverScrollSpeedTrackingCountries
+ * List of countries where scroll speed tracking is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollSpeedTrackingCountries = null;
+
 /**
  * @name $wgAdDriverStickySlotsLines
  * List of Google Ad Manager lines to apply Sticky Ad template
@@ -1398,11 +1421,32 @@ $wgAdDriverEnableCheshireCat = true;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
- * @name $wgAdDriverConfiantCountries
- * List of countries Confiant will be enabled on
+ * @name $wgAdDriverOverscrolledCountries
+ * List of countries where "overscrolled" events are enabled
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverConfiantCountries = null;
+$wgAdDriverOverscrolledCountries = null;
+
+/**
+ * @name $wgAdDriverBrowsiCountries
+ * List of countries Browsi will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBrowsiCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantDesktopCountries
+ * List of countries Confiant will be enabled on Oasis
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantMobileCountries
+ * List of countries Confiant will be enabled on Mobile-Wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantMobileCountries = null;
 
 /**
  * @name $wgAdDriverNielsenCountries

@@ -15,12 +15,8 @@ $wgAutoloadClasses['AnalyticsEngine'] = __DIR__ . '/AnalyticsEngine.php';
 $wgAutoloadClasses['AnalyticsProviderQuantServe'] = __DIR__ . '/AnalyticsProviderQuantServe.php';
 $wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderComscore.php';
 $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
-$wgAutoloadClasses['AnalyticsProviderBillTheLizard'] = __DIR__ . '/AnalyticsProviderBillTheLizard.php';
-$wgAutoloadClasses['AnalyticsProviderMoatYi'] = __DIR__ . '/AnalyticsProviderMoatYi.php';
-$wgAutoloadClasses['AnalyticsProviderNielsen'] = __DIR__ . '/AnalyticsProviderNielsen.php';
 $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
-$wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
 $wgAutoloadClasses['AnalyticsProviderNetzAthleten'] = __DIR__ . '/AnalyticsProviderNetzAthleten.php';
 $wgAutoloadClasses['AnalyticsProviderSamba'] = __DIR__ . '/AnalyticsProviderSamba.php';
 

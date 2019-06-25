@@ -50,7 +50,8 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgCommandLineMode;
+		global $wgDevelEnvironment, $wgExternalSharedDB, $wgWikiaBaseDomain, $wgEnvironmentDomainMappings,
+			   $wgCommandLineMode, $wgKubernetesDeploymentName;
 
 		// initializations
 		$this->mOldServerName = false;
@@ -124,40 +125,33 @@ class WikiFactoryLoader {
 			// nothing can be done at this point
 			throw new InvalidArgumentException( "Cannot tell which wiki it is (neither SERVER_NAME, SERVER_ID nor SERVER_DBNAME is defined)" );
 		}
-		if ( $wgDevelEnvironment ) {
-			global $wgWikiaDevDomain, $wgFandomDevDomain;
-			if ( endsWith( $this->mServerName, $wgWikiaDevDomain ) ) {
-				$this->mServerName = str_replace( $wgWikiaDevDomain , $wgWikiaBaseDomain, $this->mServerName );
-			} elseif ( endsWith( $this->mServerName, $wgFandomDevDomain ) ) {
-				$this->mServerName = str_replace( $wgFandomDevDomain , $wgFandomBaseDomain, $this->mServerName );
-			}
-		} else {
 
-			/**
-			 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
-			 *
-			 * handle additional domains, we have plenty of domains which should
-			 * redirect to <wikia>.wikia.com. They should be added to
-			 * $wgWikiFactoryDomains variable (which is simple list). When
-			 * additional domain is detected we do simple replace:
-			 *
-			 * muppets.wikia.org => muppets.wikia.com
-			 *
-			 * additionally we remove www. prefix
-			 */
-			foreach ( $wikiFactoryDomains as $domain ) {
-				$tldLength = strlen( $this->mServerName ) - strlen( $domain );
+		$this->mServerName = wfNormalizeHost( $this->mServerName );
 
-				if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
-					$this->mOldServerName = $this->mServerName;
-					$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
-					// remove extra www. prefix from domain
-					if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {  // skip canonical wikia global host
-						$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
-					}
-					$this->mAlternativeDomainUsed = true;
-					break;
+		/**
+		 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+		 *
+		 * handle additional domains, we have plenty of domains which should
+		 * redirect to <wikia>.wikia.com. They should be added to
+		 * $wgWikiFactoryDomains variable (which is simple list). When
+		 * additional domain is detected we do simple replace:
+		 *
+		 * muppets.wikia.org => muppets.wikia.com
+		 *
+		 * additionally we remove www. prefix
+		 */
+		foreach ( $wikiFactoryDomains as $domain ) {
+			$tldLength = strlen( $this->mServerName ) - strlen( $domain );
+
+			if ( $domain !== $wgWikiaBaseDomain && strpos( $this->mServerName, $domain ) === $tldLength ) {
+				$this->mOldServerName = $this->mServerName;
+				$this->mServerName = str_replace( $domain, $wgWikiaBaseDomain, $this->mServerName );
+				// remove extra www. prefix from domain
+				if ( $this->mServerName !== ( 'www.' . $wgWikiaBaseDomain ) ) {  // skip canonical wikia global host
+					$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
 				}
+				$this->mAlternativeDomainUsed = true;
+				break;
 			}
 		}
 
@@ -168,6 +162,26 @@ class WikiFactoryLoader {
 		 * never from cache
 		 */
 		$this->mAlwaysFromDB = $this->mCommandLine || $this->mAlwaysFromDB;
+
+		if ( empty( $wgKubernetesDeploymentName ) ) {
+			// PLATFORM-4104 on apaches log request details
+			$log = \Wikia\Logger\WikiaLogger::instance();
+			$details = [
+				'parsedUrl' => $this->parsedUrl
+			];
+			foreach([
+				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
+				'HTTP_USER_AGENT' => 'userAgent',
+				'HTTP_X_TRACE_ID' => 'traceId',
+				'HTTP_X_CLIENT_IP' => 'clientIp',
+				'REQUEST_URI' => 'requestUri',
+				'REQUEST_METHOD' => 'requestMethod'
+					] as $header => $key) {
+				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
+			}
+			$log->info('apache request received', $details );
+		}
+
 	}
 
 	/**
@@ -259,22 +273,23 @@ class WikiFactoryLoader {
 		// Override wikia.com related config early when requesting a fandom.com wiki
 		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgFandomBaseDomain ) !== false ) {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgFandomBaseDomain}/";
-			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgWikiaBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgFandomBaseDomain}";
 		}
 
 		// Override wikia.org related config
 		if ( !$wgDevelEnvironment && strpos( $this->mServerName, '.' . $wgWikiaOrgBaseDomain ) !== false ) {
 			$GLOBALS['wgServicesExternalDomain'] = "https://services.{$wgWikiaOrgBaseDomain}/";
-			$GLOBALS['wgServicesExternalAlternativeDomain'] = "https://services.{$wgFandomBaseDomain}/";
 			$GLOBALS['wgCookieDomain'] = ".{$wgWikiaOrgBaseDomain}";
 		}
 
 		/**
 		 * load balancer uses one method which demand wgContLang defined
 		 * See BugId: 12474
+		 * temporarily set it to English as $wgContLang is required when reading query paramaters
+		 * in the WebRequest class. Later on this variable is overridden with the correct language
+		 * in Setup.php
 		 */
-		$wgContLang = new StubObject('wgContLang');
+		$wgContLang = Language::factory( 'en' );
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local

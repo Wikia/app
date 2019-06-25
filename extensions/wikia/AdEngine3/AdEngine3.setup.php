@@ -11,6 +11,7 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['AdEngine3'] =  __DIR__ . '/AdEngine3.class.php';
 $wgAutoloadClasses['AdEngine3ApiController'] = __DIR__ . '/AdEngine3ApiController.class.php';
 $wgAutoloadClasses['AdEngine3Controller'] =  __DIR__ . '/AdEngine3Controller.class.php';
+$wgAutoloadClasses['AdEngine3DeciderService'] = __DIR__ . '/AdEngine3DeciderService.class.php';
 $wgAutoloadClasses['AdEngine3InstantGlobals'] =  __DIR__ . '/AdEngine3InstantGlobals.class.php';
 $wgAutoloadClasses['AdEngine3PageTypeService'] = __DIR__ . '/AdEngine3PageTypeService.class.php';
 $wgAutoloadClasses['AdEngine3Service'] =  __DIR__ . '/AdEngine3Service.class.php';
@@ -25,6 +26,7 @@ $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/Resourc
 
 // Hooks
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine3::onOasisSkinAssetGroupsBlocking';
+$wgHooks['WikiaSkinTopModules'][] = 'AdEngine3::onWikiaSkinTopModules';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine3::onWikiaSkinTopScripts';
 $wgHooks['AfterInitialize'][] = 'AdEngine3::onAfterInitialize';
 

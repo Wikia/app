@@ -101,6 +101,7 @@
   "global-navigation-wikis-fandom-university": "Университет ФЭНДОМА",
   "global-navigation-wikis-header": "Вики",
   "hours-ago": "{hours} ч.",
+  "license-description": "Материалы сообщества доступны в соответствии с условиями лицензии $1 , если не указано иное.",
   "minutes-ago": "{minutes} мин.",
   "notifications-mark-all-as-read": "Отметить всё как прочитанное",
   "notifications-no-notifications-message": "Уведомлений нет.",

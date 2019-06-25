@@ -213,8 +213,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
-		if ( $this->useUnifiedSearch() ) {
-			$service = new UnifiedSearchService();
+		$service = new UnifiedSearchService();
+		if ( $service->useUnifiedSearch( $this->isCorporateWiki() ) ) {
 			$request = new UnifiedSearchRequest( $searchConfig );
 
 			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
@@ -238,25 +238,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$format = $response->getFormat();
 
 		return $format == 'json' || $format == 'jsonp';
-	}
-
-	private function useUnifiedSearch(): bool {
-		global $wgUseUnifiedSearch;
-
-		if ( $this->isCorporateWiki() ) {
-			return false;
-		}
-
-		$queryForce = $this->getVal( 'useUnifiedSearch', null );
-		if ( !is_null( $queryForce ) ) {
-			return $queryForce;
-		}
-
-		if ( RequestContext::getMain()->getRequest()->getHeader( 'X-Fandom-Unified-Search' ) ) {
-			return true;
-		}
-
-		return $wgUseUnifiedSearch;
 	}
 
 	/**
@@ -806,18 +787,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$filters = $config->getFilterQueries();
-		$rank = $config->getRank();
 
 		$form = [
 			'cat_videogames' => isset( $filters['cat_videogames'] ),
 			'cat_entertainment' => isset( $filters['cat_entertainment'] ),
 			'cat_lifestyle' => isset( $filters['cat_lifestyle'] ),
-			'is_hd' => isset( $filters['is_hd'] ),
 			'is_image' => isset( $filters['is_image'] ),
 			'is_video' => isset( $filters['is_video'] ),
-			'sort_default' => $rank == 'default',
-			'sort_longest' => $rank == 'longest',
-			'sort_newest' => $rank == 'newest',
 			'no_filter' => !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
 		];
 

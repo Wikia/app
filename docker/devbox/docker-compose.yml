@@ -5,9 +5,11 @@ services:
     image: artifactory.wikia-inc.com/platform/nginx-wikia-devbox:latest
     ports:
       - "80:8080"
+      - "4040:4040"
     volumes:
       - ../base/base.inc:/etc/nginx/conf.d/base.inc:ro
       - ./site.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../base/metrics.conf:/etc/nginx/conf.d/metrics.conf:ro
       - ../base/nginx.conf:/etc/nginx/nginx.conf:ro
       - ../../../app/skins:/usr/wikia/slot1/current/src/skins:ro
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro

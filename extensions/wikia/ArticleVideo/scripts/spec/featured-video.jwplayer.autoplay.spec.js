@@ -18,7 +18,7 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				return autoplayCookie;
 			}
 		},
-		billTheLizardExecutor: {
+		adsApi: {
 			isAutoPlayDisabled: function () {
 				return !!prediction;
 			}
@@ -36,7 +36,9 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 
 	function getAutoplay() {
 		return modules['wikia.articleVideo.featuredVideo.autoplay'](
-			mocks.abTest, mocks.featuredVideoCookieService, mocks.billTheLizardExecutor
+			mocks.abTest,
+			mocks.featuredVideoCookieService,
+			mocks.adsApi,
 		);
 	}
 

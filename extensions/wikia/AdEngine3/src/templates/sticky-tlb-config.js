@@ -1,5 +1,4 @@
-import { universalAdPackage } from '@wikia/ad-engine/dist/ad-products';
-import { scrollListener, slotService, slotTweaker } from '@wikia/ad-engine';
+import { context, scrollListener, slotService, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
@@ -8,7 +7,21 @@ const {
 	SLIDE_OUT_TIME
 } = universalAdPackage;
 
+function getStickinessConfig() {
+	if (context.get('options.unstickHiViLeaderboardAfterTimeout')) {
+		return {
+			stickyDefaultTime: 2000,
+			stickyAdditionalTime: 0,
+			stickyUntilSlotViewed: false,
+		};
+	}
+
+	return {};
+}
+
 export const getConfig = () => ({
+	...getStickinessConfig(),
+
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
@@ -21,14 +34,15 @@ export const getConfig = () => ({
 
 		this.adSlot.getElement().classList.add('gpt-ad');
 		wrapper.style.opacity = '0';
-		slotTweaker.onReady(adSlot).then(() => {
-			wrapper.style.opacity = '';
-			this.updateNavbar();
-		});
 
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
 		slotService.disable('incontent_player', 'hivi-collapse');
+
+		return slotTweaker.onReady(adSlot).then(() => {
+			wrapper.style.opacity = '';
+			this.updateNavbar();
+		});
 	},
 
 	onAfterStickBfaaCallback() {

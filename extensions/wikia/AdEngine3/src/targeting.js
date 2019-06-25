@@ -1,5 +1,4 @@
-import { utils, likhoService } from '@wikia/ad-engine';
-import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
+import { utils, likhoService, bidders } from '@wikia/ad-engine';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
 
@@ -111,8 +110,8 @@ function getRefParam() {
 	const searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/;
 	const wikiDomains = [
 		'wikia.com', 'fandom.com', 'wikia.org', 'ffxiclopedia.org',
-		'jedipedia.de', 'memory-alpha.org', 'uncyclopedia.org',
-		'websitewiki.de', 'wowwiki.com', 'yoyowiki.org',
+		'jedipedia.de', 'memory-alpha.org', 'websitewiki.de',
+		'wowwiki.com', 'yoyowiki.org',
 	];
 	const wikiDomainsRegex = new RegExp(`(^|\\.)(${wikiDomains.join('|').replace(/\./g, '\\.')})$`);
 
