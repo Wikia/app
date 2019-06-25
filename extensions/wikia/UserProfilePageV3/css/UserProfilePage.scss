@@ -228,16 +228,21 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		@include align-items(center);
 
 		li {
-			@include flexbox();
-			@include align-items(center);
 			margin-right: 1em;
 			padding-top: 12px;
+
+			a {
+				@include flexbox();
+				@include align-items(center);
+			}
 		}
 		.icon {
 			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgResourceBasePath */
 			height: 17px;
+			margin-right: 3px;
 			width: 17px;
+
 			&.twitter {
 				background-position: 0 $y-user-profile-masthead-links-icon;
 			}
@@ -249,47 +254,56 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		.zero {
+			@include flexbox();
+			@include align-items(center);
 			color: $color-alternate-text;
+
 			.icon {
 				background-color: $color-alternate-text;
 			}
 		}
 
-		.user-profile__discord {
-			&__icon-with-label {
+		.user-profile {
+			&__discord {
 				@include flexbox();
 				@include align-items(center);
 
-				color: $color-links;
-				padding-bottom: 5px;
+				&__icon-with-label {
+					@include flexbox();
+					@include align-items(center);
 
-				&__icon {
-					background: $color-links;
-					border-radius: 50px;
-					display: inline-block;
-					margin-right: 3px;
-					padding: 2px 2px 2px 3px;
+					color: $color-links;
 
-					.wds-icon {
-						display: block;
-						fill: $color-alternate-text;
+					&__icon {
+						background: $color-links;
+						border-radius: 50px;
+						display: inline-block;
+						margin-right: 3px;
+						padding: 2px 3px;
+
+						.wds-icon {
+							display: block;
+							fill: $color-button-text;
+						}
 					}
 				}
-			}
 
-			.wds-dropdown {
-				&::after {
-					border-bottom-color: $color-page;
+				.wds-dropdown {
+					&::after {
+						border-bottom-color: $color-page;
+					}
+				}
+
+				.wds-dropdown__content {
+					background: $color-page;
+					padding: 6px;
+					text-align: center;
+					width: 150px;
 				}
 			}
-
-			.wds-dropdown__content {
-				background: $color-page;
-				padding: 6px;
-				text-align: center;
-				width: 150px;
-			}
 		}
+
+
 
 		.zero {
 			.user-profile__discord {
