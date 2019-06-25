@@ -518,11 +518,20 @@ class UserIdentityBox extends WikiaObject {
 	 * @return boolean
 	 */
 	public function checkIfDisplayZeroStates( $data ) {
-		wfProfileIn( __METHOD__ );
-
 		$result = true;
 
-		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis', 'bio' ];
+		$fieldsToCheck = [
+			'location',
+			'occupation',
+			'birthday',
+			'gender',
+			'website',
+			'twitter',
+			'fbPage',
+			'topWikis',
+			'bio',
+			'discordHandle',
+		];
 
 		foreach ( $data as $property => $value ) {
 			if ( in_array( $property, $fieldsToCheck ) && !empty( $value ) ) {
@@ -531,7 +540,6 @@ class UserIdentityBox extends WikiaObject {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
