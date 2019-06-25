@@ -5,6 +5,8 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/flexbox";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 $radius-user-profile-masthead: 5px;
 
@@ -265,6 +267,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 		.user-profile {
 			&__discord {
+				@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 				@include flexbox();
 				@include align-items(center);
 
@@ -288,14 +291,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 					}
 				}
 
-				.wds-dropdown {
-					&::after {
-						border-bottom-color: $color-page;
-					}
-				}
-
 				.wds-dropdown__content {
-					background: $color-page;
 					padding: 6px;
 					text-align: center;
 					width: 150px;
