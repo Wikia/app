@@ -4,6 +4,7 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/flexbox";
 
 $radius-user-profile-masthead: 5px;
 
@@ -194,7 +195,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 
 		&:last-of-type {
-			margin-bottom: 25px;
+			margin-bottom: 13px;
 		}
 	}
 
@@ -222,17 +223,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	.links {
-		@include clearfix;
+		@include flexbox();
+		@include flex-wrap(wrap);
+		@include align-items(center);
+
 		li {
-			float: left;
+			@include flexbox();
+			@include align-items(center);
 			margin-right: 1em;
+			padding-top: 12px;
 		}
 		.icon {
 			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgResourceBasePath */
 			height: 17px;
-			position: relative;
-			top: .3em;
 			width: 17px;
 			&.twitter {
 				background-position: 0 $y-user-profile-masthead-links-icon;
@@ -253,9 +257,10 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 		.user-profile__discord {
 			&__icon-with-label {
-				align-items: center;
+				@include flexbox();
+				@include align-items(center);
+
 				color: $color-links;
-				display: flex;
 				padding-bottom: 5px;
 
 				&__icon {
@@ -267,7 +272,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 					.wds-icon {
 						display: block;
-						fill: $color-text;
+						fill: $color-alternate-text;
 					}
 				}
 			}
