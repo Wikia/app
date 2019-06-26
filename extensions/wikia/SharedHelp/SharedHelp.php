@@ -249,19 +249,8 @@ function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array 
 
 		// PLATFORM-4119: Shared Help 'homepage:w:' links no longer point to CC as expected
 		if ( strpos($target, 'homepage:w:') !== false ) {
-
 			$url = $attribs['href'];
-			$communitySubdomain = 'community.';
-
-			if ( startsWith( $url, 'https://' ) ) {
-				$position = 12;
-			} elseif ( startsWith( $url, 'http://' ) ) {
-				$position = 11;
-			} elseif ( startsWith( $url, '//' ) ) {
-				$position = 6;
-			}
-
-			$newUrl = substr_replace($attribs['href'], $communitySubdomain, $position, 0);
+			$newUrl = http_build_url( $url, [ 'scheme' => 'https', 'host' => 'community.fandom.com'] );
 			$attribs['href'] = $newUrl;
 		}
 
