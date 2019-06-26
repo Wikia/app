@@ -191,7 +191,7 @@ spec:
           summary: Average request time is over {{$value}} s
         graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status
     - alert: mediawiki_prod_nginx_5xx
-        expr: (sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="5xx", host="*"}[5m])) / sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="total", host="*"}[5m]))) * 100 > 20
+        expr: (sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="5xx", host="*"}[15m])) / sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="total", host="*"}[15m]))) * 100 > 5
         labels:
           team: core-platform
         annotations:
