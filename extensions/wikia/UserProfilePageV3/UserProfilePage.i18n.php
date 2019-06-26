@@ -742,6 +742,10 @@ $messages['de'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-content-volunteer' => 'Content-Volunteer',
+	'user-identity-box-about-discord-handle' => 'Wie lautet dein Benutzername bei Discord?',
+	'user-identity-box-discord-handle-content' => 'Benutzername: $1',
+	'user-identity-box-my-discord-handle' => 'Mein Discord',
+	'user-identity-box-discord-handle-hint' => 'Hinweis: Name#1234',
 );
 
 $messages['de-ch'] = array(
@@ -925,6 +929,10 @@ $messages['es'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discusiones',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-content-volunteer' => 'Voluntario de contenido',
+	'user-identity-box-about-discord-handle' => '¿Cuál es tu nombre de usuario en Discord?',
+	'user-identity-box-discord-handle-content' => 'Nombre de usuario: $1',
+	'user-identity-box-my-discord-handle' => 'Mi Discord',
+	'user-identity-box-discord-handle-hint' => 'Indicio: Nombre#1234',
 );
 
 $messages['fa'] = array(
@@ -1174,6 +1182,10 @@ $messages['fr'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Modérateur global de discussions',
 	'user-identity-box-group-bot' => 'Robot',
 	'user-identity-box-group-content-volunteer' => 'Créateur de contenu bénévole',
+	'user-identity-box-about-discord-handle' => "Quel est votre nom d'utilisateur Discord ?",
+	'user-identity-box-discord-handle-content' => "Nom d'utilisateur : $1",
+	'user-identity-box-my-discord-handle' => 'Mon Discord',
+	'user-identity-box-discord-handle-hint' => 'Indice : Nom#1234',
 );
 
 $messages['gl'] = array(
@@ -1913,6 +1925,10 @@ $messages['ja'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
 	'user-identity-box-group-bot' => 'ボット',
 	'user-identity-box-group-content-volunteer' => 'コンテンツ・ボランティア',
+	'user-identity-box-about-discord-handle' => 'Discordユーザー名は？',
+	'user-identity-box-discord-handle-content' => 'ユーザー名: $1',
+	'user-identity-box-my-discord-handle' => 'Discord',
+	'user-identity-box-discord-handle-hint' => 'ヒント：名前#1234',
 );
 
 $messages['ko'] = array(
@@ -2685,6 +2701,10 @@ $messages['pl'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-content-volunteer' => 'Wolontariusz treści',
+	'user-identity-box-about-discord-handle' => 'Jaka jest twoja nazwa użytkownika na Discord?',
+	'user-identity-box-discord-handle-content' => 'Nazwa użytkownika: $1',
+	'user-identity-box-my-discord-handle' => 'Mój Discord',
+	'user-identity-box-discord-handle-hint' => 'Podpowiedź: Imię#1234',
 );
 
 $messages['pms'] = array(
@@ -2876,6 +2896,10 @@ $messages['pt'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discussões',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-content-volunteer' => 'Voluntário de conteúdo',
+	'user-identity-box-about-discord-handle' => 'Qual é seu nome de usuário Discord?',
+	'user-identity-box-discord-handle-content' => 'Nome de usuário: $1',
+	'user-identity-box-my-discord-handle' => 'Meu Discord',
+	'user-identity-box-discord-handle-hint' => 'Dica: Nome#1234',
 );
 
 $messages['roa-tara'] = array(
@@ -3024,6 +3048,10 @@ $messages['ru'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
 	'user-identity-box-group-bot' => 'Бот',
 	'user-identity-box-group-content-volunteer' => 'Content Volunteer',
+	'user-identity-box-about-discord-handle' => 'Укажите ваше имя пользователя в Discord',
+	'user-identity-box-discord-handle-content' => 'Имя пользователя: $1',
+	'user-identity-box-my-discord-handle' => 'Мой Discord',
+	'user-identity-box-discord-handle-hint' => 'Пример: Имя#1234',
 );
 
 $messages['sr-ec'] = array(
@@ -3670,6 +3698,10 @@ $messages['zh-hans'] = array(
 	'user-identity-box-group-global-discussions-moderator' => '全网话题版主',
 	'user-identity-box-group-bot' => '机器人',
 	'user-identity-box-group-content-volunteer' => '内容志愿者',
+	'user-identity-box-about-discord-handle' => '你的Discord用户名是什么？',
+	'user-identity-box-discord-handle-content' => '用户名: $1',
+	'user-identity-box-my-discord-handle' => '我的Discord',
+	'user-identity-box-discord-handle-hint' => '提示：名称#1234',
 );
 
 $messages['zh-hant'] = array(
@@ -3807,5 +3839,9 @@ $messages['zh-hant'] = array(
 	'user-identity-box-group-global-discussions-moderator' => '全站話題版主',
 	'user-identity-box-group-bot' => '機器人',
 	'user-identity-box-group-content-volunteer' => '內容志願者',
+	'user-identity-box-about-discord-handle' => '你的Discord用戶名是什麼？',
+	'user-identity-box-discord-handle-content' => '用戶名: $1',
+	'user-identity-box-my-discord-handle' => '我的Discord',
+	'user-identity-box-discord-handle-hint' => '提示：名字#1234',
 );
 
