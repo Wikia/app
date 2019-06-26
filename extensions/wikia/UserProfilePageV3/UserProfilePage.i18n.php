@@ -82,7 +82,7 @@ $messages['en'] = array(
 	'user-identity-box-about-website' => "What's your personal website?",
 	'user-identity-box-about-tweet' => "What's your Twitter name?",
 	'user-identity-box-about-fb-page' => "What's your Facebook profile link?",
-	'user-identity-box-about-discord-handle' => "What is your Discord username?",
+	'user-identity-box-about-discord-handle' => 'What is your Discord username?',
 	'user-identity-box-discord-handle-hint' => 'Hint: Name#1234',
 	'user-identity-box-about-fav-wikis' => "Wikis you've contributed to:",
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
@@ -1772,6 +1772,10 @@ $messages['it'] = array(
 	'user-identity-box-group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-content-volunteer' => 'Volontario per i contenuti',
+	'user-identity-box-about-discord-handle' => 'Qual è il tuo nome utente su Discord?',
+	'user-identity-box-discord-handle-content' => 'Nome utente: $1',
+	'user-identity-box-my-discord-handle' => 'Il mio Discord',
+	'user-identity-box-discord-handle-hint' => 'Suggerimento: Nome#1234',
 );
 
 $messages['ja'] = array(
