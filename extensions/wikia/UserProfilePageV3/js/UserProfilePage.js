@@ -62,6 +62,17 @@ require(
 				);
 			});
 
+			// IW-2082 | Track interactions with the Discord name item
+			$('.user-profile__discord__icon-with-label').mouseover(function (event) {
+				tracker.track({
+					action: tracker.ACTIONS.HOVER,
+					category: 'user-profile',
+					browserEvent: event,
+					label: 'discord-icon-toggled',
+					trackingMethod: 'analytics',
+				});
+			});
+
 			// for touch devices (without hover state) make sure that Edit is always
 			// visible
 			if (window.Wikia.isTouchScreen()) {
