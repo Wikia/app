@@ -66,7 +66,6 @@ class SearchControllerTest extends BaseTest {
 		$mockController->expects( $this->once() )
 			->method	( 'unifiedSearchShadowMode' )
 			->with		(  $mockConfig )
-			->willReturn( null )
 		;
 
 		$mockController->expects( $this->once() )
