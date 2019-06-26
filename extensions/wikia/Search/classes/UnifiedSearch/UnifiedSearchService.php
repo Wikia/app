@@ -77,7 +77,7 @@ class UnifiedSearchService {
 				// Base URI is used with relative requests
 				'base_uri' => $this->baseUrl,
 				// connect timeout is sufficient enough to make the request
-				// short read timeout will cause the request to be interrupted immediately
+				// short read timeout will cause the request to be interrupted immediately after being started
 				// https://github.com/guzzle/guzzle/issues/1429#issuecomment-304449743
 				'read_timeout' => 0.0000001,
 				'connect_timeout' => 2.0,
