@@ -61,9 +61,13 @@ class SearchApiController extends WikiaApiController {
 	 */
 	public function getList() {
 		$config = $this->getConfigFromRequest();
-		$service = new UnifiedSearchService();
-		$service->shadowModeSearch( new UnifiedSearchRequest( $config ) );
+		$this->unifiedSearchShadowMode( $config );
 		$this->setResponseFromConfig( $config );
+	}
+
+	private function unifiedSearchShadowMode( Config $searchConfig ): void {
+		$service = new UnifiedSearchService();
+		$service->shadowModeSearch( new UnifiedSearchRequest( $searchConfig ) );
 	}
 
 	/**

@@ -26,6 +26,11 @@ class SearchApiControllerTest extends BaseTest
 		                       ->setMethods( [ 'setResponseFromConfig', 'getVal', 'getConfigFromRequest' ] )
 		                       ->getMock();
 
+		$mockController->expects( $this->once() )
+			->method	( 'unifiedSearchShadowMode' )
+			->with		(  $mockConfig )
+		;
+
 		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'getConfigFromRequest' )
