@@ -888,7 +888,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'extraParams', $extraParams );
 	}
 
-	protected function unifiedSearchShadowMode( \Wikia\Search\Config $searchConfig ): void {
+	public function unifiedSearchShadowMode( \Wikia\Search\Config $searchConfig ): void {
 		$service = new UnifiedSearchService();
 		$service->shadowModeSearch( new UnifiedSearchRequest( $searchConfig ) );
 	}
