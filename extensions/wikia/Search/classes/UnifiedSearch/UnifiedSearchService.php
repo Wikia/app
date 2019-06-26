@@ -40,7 +40,7 @@ class UnifiedSearchService {
 
 	/**
 	 * SER-3306 - Fire and forget call to unified-search to test if unified-search is able to sustain our load.
-	 * Will be
+	 * Will be replaced with real calls in https://wikia-inc.atlassian.net/browse/SER-3313
 	 * @param UnifiedSearchRequest $request
 	 */
 	public function shadowModeSearch( UnifiedSearchRequest $request ) {
