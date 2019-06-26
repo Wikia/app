@@ -248,7 +248,7 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
 function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
 
 		// PLATFORM-4119: Shared Help 'homepage:w:' links no longer point to CC as expected
-		if ( strpos($target, 'homepage:w:') !== false || strpos($target, 'homepage:w:c:') !== false ) {
+		if ( strpos($target, 'homepage:w:') !== false ) {
 
 			$url = $attribs['href'];
 			$communitySubdomain = 'community.';
