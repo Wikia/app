@@ -42,7 +42,7 @@ class SearchControllerTest extends BaseTest {
 	public function testIndex() {
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 'getResponse',
 				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValues', 'setJsonResponse',
-				'getVal', 'handleLayoutAbTest' );
+				'getVal', 'handleLayoutAbTest', 'unifiedSearchShadowMode' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
