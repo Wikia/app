@@ -30,23 +30,12 @@ class UnifiedSearchService {
 			return false;
 		}
 
-		/**
-		 * We allow to use unified-search only if it has been enabled on the wiki or the header is passed.
-		 * That's because due to AB tests the useUnifiedSearch query parameter may be passed on any wiki,
-		 * not only those that have been indexed.
-		 */
-		if ( !( $wgUseUnifiedSearch || RequestContext::getMain()
-				->getRequest()
-				->getHeader( 'X-Fandom-Unified-Search' ) ) ) {
-			return false;
-		}
-
 		$queryForce = RequestContext::getMain()->getRequest()->getVal( 'useUnifiedSearch', null );
 		if ( !is_null( $queryForce ) ) {
 			return $queryForce === 'true' || $queryForce === '1' || $queryForce === true;
 		}
 
-		return false;
+		return $wgUseUnifiedSearch;
 	}
 
 	/**
