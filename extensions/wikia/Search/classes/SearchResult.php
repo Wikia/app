@@ -31,7 +31,6 @@ class SearchResult {
 		$searchResult->items = $result->getResults();
 
 		return $searchResult;
-
 	}
 
 	public static function fromConfig( Config $config ): SearchResult {
