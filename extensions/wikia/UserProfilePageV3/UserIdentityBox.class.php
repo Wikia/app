@@ -523,8 +523,10 @@ class UserIdentityBox extends WikiaObject {
 	public function checkIfDisplayZeroStates( $data ) {
 		$result = true;
 
+		$fields = array_merge(self::OPTIONALLY_HIDDEN_PROFILE_FIELDS, [ 'topWikis' ] );
+
 		foreach ( $data as $property => $value ) {
-			if ( in_array( $property, self::OPTIONALLY_HIDDEN_PROFILE_FIELDS ) && !empty( $value ) ) {
+			if ( in_array( $property, $fields ) && !empty( $value ) ) {
 				$result = false;
 				break;
 			}
