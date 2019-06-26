@@ -41,6 +41,20 @@ class UserIdentityBox extends WikiaObject {
 		'bio',
 	];
 
+	/** @var string[] Fields that may be hidden if the user is not active on the wiki */
+	const OPTIONALLY_HIDDEN_PROFILE_FIELDS = [
+		'location',
+		'occupation',
+		'gender',
+		'birthday',
+		'website',
+		'twitter',
+		'fbPage',
+		'discordHandle',
+		'hideEditsWikis',
+		'bio',
+	];
+
 	public $optionsArray = array(
 		'location',
 		'bio',
@@ -218,18 +232,7 @@ class UserIdentityBox extends WikiaObject {
 		$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 
 		if ( empty( $memcData ) ) {
-			foreach ( [
-				'location',
-				'occupation',
-				'gender',
-				'birthday',
-				'website',
-				'twitter',
-				'fbPage',
-				'discordHandle',
-				'hideEditsWikis',
-				'bio',
-			] as $key ) {
+			foreach ( self::OPTIONALLY_HIDDEN_PROFILE_FIELDS as $key ) {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference( $key );
@@ -272,7 +275,7 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array $data array object
 	 */
 	private function getEmptyData( $data ) {
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis' ) as $key ) {
+		foreach ( self::OPTIONALLY_HIDDEN_PROFILE_FIELDS as $key ) {
 			$data[$key] = "";
 		}
 
@@ -520,21 +523,8 @@ class UserIdentityBox extends WikiaObject {
 	public function checkIfDisplayZeroStates( $data ) {
 		$result = true;
 
-		$fieldsToCheck = [
-			'location',
-			'occupation',
-			'birthday',
-			'gender',
-			'website',
-			'twitter',
-			'fbPage',
-			'topWikis',
-			'bio',
-			'discordHandle',
-		];
-
 		foreach ( $data as $property => $value ) {
-			if ( in_array( $property, $fieldsToCheck ) && !empty( $value ) ) {
+			if ( in_array( $property, self::OPTIONALLY_HIDDEN_PROFILE_FIELDS ) && !empty( $value ) ) {
 				$result = false;
 				break;
 			}
