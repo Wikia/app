@@ -214,11 +214,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
 		$service = new UnifiedSearchService();
-		if ( $service->useUnifiedSearch( $this->isCorporateWiki() ) ) {
-			$request = new UnifiedSearchRequest( $searchConfig );
+		$service->shadowModeSearch( new UnifiedSearchRequest( $searchConfig ) );
 
-			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
-		}
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */

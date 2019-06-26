@@ -49,6 +49,56 @@ class UnifiedSearchService {
 		return false;
 	}
 
+	/**
+	 * SER-3306 - Fire and forget call to unified-search to test if unified-search is able to sustain our load.
+	 * Will be
+	 * @param UnifiedSearchRequest $request
+	 */
+	public function shadowModeSearch( UnifiedSearchRequest $request ) {
+		try {
+			$params = [
+				'wikiId' => $request->getWikiId(),
+				'lang' => $request->getLanguageCode(),
+				'query' => $request->getQuery()->getSanitizedQuery(),
+				'namespace' => $request->getNamespaces(),
+				'page' => $request->getPage(),
+				'limit' => $request->getLimit(),
+			];
+
+			if ( $request->isImageOnly() ) {
+				$params['imagesOnly'] = 'true';
+			}
+
+			if ( $request->isVideoOnly() ) {
+				$params['videoOnly'] = 'true';
+			}
+
+			$client = new Client( [
+				// Base URI is used with relative requests
+				'base_uri' => $this->baseUrl,
+				// connect timeout is sufficient enough to make the request
+				// short read timeout will cause the request to be interrupted immediately
+				// https://github.com/guzzle/guzzle/issues/1429#issuecomment-304449743
+				'read_timeout' => 0.0000001,
+				'connect_timeout' => 2.0,
+				'query_with_duplicates' => true,
+			] );
+
+			$client->get( 'page-search', [
+				// we want namespace to be passed multiple times
+				// for example ?namespace=1&namespace=0
+				// normally, it would have been converted to ?namespace[]=1&namespace[]=0
+				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+			] );
+		}
+		catch ( \Exception $e ) {
+			WikiaLogger::instance()->info( self::FAILED_TO_CALL_UNIFIED_SEARCH, [
+				'error_message' => $e->getMessage(),
+				'status_code' => $e->getCode(),
+			] );
+		}
+	}
+
 	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
 		$result = $this->callSpecialSearch( $request );
 
