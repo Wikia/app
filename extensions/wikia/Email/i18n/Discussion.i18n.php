@@ -56,8 +56,8 @@ $messages['de'] = array(
 	'emailext-discussion-100-upvote-subject' => 'Dein Beitrag auf $1 hat 100 Zustimmungen erhalten! Weiter so!',
 	'emailext-discussion-100-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] auf [$3 $4] hat 100 Zustimmungen erhalten!',
 	'emailext-discussion-100-upvote-summary' => 'Dein Beitrag auf [$1 $2] hat 100 Zustimmungen erhalten!',
-	'emailext-discussion-thread-at-mention' => '$1 hat dich im Beitrag $2 in $3 erwähnt',
-	'emailext-discussion-post-at-mention' => '$1 hat dich in einer Antwort auf den Beitrag $2 in $3 erwähnt',
+	'emailext-discussion-thread-at-mention' => '$1 hat dich erwähnt im Beitrag $2 auf $3',
+	'emailext-discussion-post-at-mention' => '$1 hat dich erwähnt in einer Antwort auf den Beitrag $2 auf $3',
 );
 
 $messages['es'] = array(
@@ -225,8 +225,8 @@ $messages['ru'] = array(
 	'emailext-discussion-100-upvote-subject' => 'Ваше сообщение на $1 оценили 100 участников! Так держать!',
 	'emailext-discussion-100-upvote-summary-with-title' => 'Ваше сообщение «[$1 $2]» на [$3 $4] оценили 100 участников!',
 	'emailext-discussion-100-upvote-summary' => 'Ваше сообщение на [$1 $2] оценили 100 участников!',
-	'emailext-discussion-thread-at-mention' => '$1 упомянул(а) вас в сообщении $2 в сообществе $3',
-	'emailext-discussion-post-at-mention' => '$1 упомянул(а) вас в ответе на сообщение $2 в сообществе $3',
+	'emailext-discussion-thread-at-mention' => '$1 упомянул(а) вас в $2 на $3',
+	'emailext-discussion-post-at-mention' => '$1 упомянул(а) вас в ответе на $2 в $3',
 );
 
 $messages['zh-hans'] = array(

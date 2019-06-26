@@ -38,7 +38,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBrowsiCountries';
 		$vars[] = 'wgAdDriverCollapseTopLeaderboardMobileWikiCountries';
-		$vars[] = 'wgAdDriverConfiantCountries';
 		$vars[] = 'wgAdDriverConfiantDesktopCountries';
 		$vars[] = 'wgAdDriverConfiantMobileCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';

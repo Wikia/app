@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\FeedsAndPosts;
 
+use Wikia\Factory\ServiceFactory;
+
 class WikiDetails {
 	const TOP_EDITORS_COUNT = 6;
 	const AVATAR_SIZE = 52;
@@ -9,17 +11,16 @@ class WikiDetails {
 		global $wgCityId;
 
 		$wikiDetailsService = new \WikiDetailsService();
-		$topUserInfo = $wikiDetailsService->getTopEditors( $wgCityId, self::TOP_EDITORS_COUNT);
+		$topUserInfo = $wikiDetailsService->getTopEditors( $wgCityId, self::TOP_EDITORS_COUNT );
+		$usersWithAttributes = $this->fetchUserAttributes( array_keys( $topUserInfo ) );
 
 		$topUsers = [];
 
 		foreach ( $topUserInfo as $userId => $edits ) {
-			$user = \User::newFromId( $userId );
-
 			$topUsers[] = [
 				'id' => $userId,
-				'name' => $user->getName(),
-				'avatarUrl' => \AvatarService::getAvatarUrl( $user, static::AVATAR_SIZE ),
+				'name' => $usersWithAttributes[$userId]['username'],
+				'avatarUrl' => $usersWithAttributes[$userId]['avatar'],
 			];
 		}
 
@@ -37,5 +38,11 @@ class WikiDetails {
 			'wordmark' => $wordmark,
 			'favicon' => $favicon,
 		];
+	}
+
+	private function fetchUserAttributes( array $userIds ) {
+		$userAttributeGateway = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
+
+		return $userAttributeGateway->getAllAttributesForMultipleUsers( $userIds )['users'] ?? [];
 	}
 }
