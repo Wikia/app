@@ -23,6 +23,7 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
+$wgHooks['LinkEnd'][] = 'SharedHelpLinkEnd';
 $wgHooks['WikiaCanonicalHref'][] = 'SharedHelpCanonicalHook';
 $wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 
@@ -244,6 +245,28 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
 		return true;
 }
 
+function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
+
+		// PLATFORM-4119: Shared Help 'homepage:w:' links no longer point to CC as expected
+		if ( strpos($target, 'homepage:w:') !== false || strpos($target, 'homepage:w:c:') !== false ) {
+
+			$url = $attribs['href'];
+			$communitySubdomain = 'community.';
+
+			if ( startsWith( $url, 'https://' ) ) {
+				$position = 12;
+			} elseif ( startsWith( $url, 'http://' ) ) {
+				$position = 11;
+			} elseif ( startsWith( $url, '//' ) ) {
+				$position = 6;
+			}
+
+			$newUrl = substr_replace($attribs['href'], $communitySubdomain, $position, 0);
+			$attribs['href'] = $newUrl;
+		}
+
+	return true;
+}
 
 /**
  * does $title article exist @help.wikia?
