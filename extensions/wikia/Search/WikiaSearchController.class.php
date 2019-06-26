@@ -213,9 +213,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
-		$service = new UnifiedSearchService();
-		$service->shadowModeSearch( new UnifiedSearchRequest( $searchConfig ) );
-
+		$this->unifiedSearchShadowMode( $searchConfig );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -888,6 +886,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowLastPage', $windowLastPage );
 		$this->setVal( 'pageTitle', $pageTitle );
 		$this->setVal( 'extraParams', $extraParams );
+	}
+
+	private function unifiedSearchShadowMode( \Wikia\Search\Config $searchConfig ): void {
+		$service = new UnifiedSearchService();
+		$service->shadowModeSearch( new UnifiedSearchRequest( $searchConfig ) );
 	}
 }
 
