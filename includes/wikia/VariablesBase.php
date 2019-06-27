@@ -6552,6 +6552,7 @@ $wgPublicUserAttributes = [
 	'coverPhoto',
 	'fancysig',
 	'fbPage',
+	'discordHandle',
 	'location',
 	'name',
 	'nickname',

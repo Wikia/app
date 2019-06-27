@@ -183,8 +183,8 @@ $messages['pl'] = array(
 	'emailext-discussion-100-upvote-subject' => 'Twój post na {{GRAMMAR:MS.lp|$1}} ma już 100 głosów! Tak trzymaj!',
 	'emailext-discussion-100-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 {{GRAMMAR:MS.lp|$4}}] ma już 100 głosów!',
 	'emailext-discussion-100-upvote-summary' => 'Twój post na [$1 {{GRAMMAR:MS.lp|$2}}] ma już 100 głosów!',
-	'emailext-discussion-thread-at-mention' => '$1 wspomniał o tobie w poście $2 na $3',
-	'emailext-discussion-post-at-mention' => '$1 wspomniał/a o tobie w odpowiedzi na post $2 na $3',
+	'emailext-discussion-thread-at-mention' => '$1 {{GENDER:$1|wspomniał|wspomniała|wspomniał(a)}} o Tobie w poście $2 na {{GRAMMAR:MS.lp|$3}}',
+	'emailext-discussion-post-at-mention' => '$1 {{GENDER:$1|wspomniał|wspomniała|wspomniał(a)}} o Tobie w odpowiedzi na post $2 na {{GRAMMAR:MS.lp|$3}}',
 );
 
 $messages['pt'] = array(

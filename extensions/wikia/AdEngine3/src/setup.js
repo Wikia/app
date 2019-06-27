@@ -161,8 +161,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		);
 		context.set(
 			'options.unstickHiViLeaderboardTimeout',
-			true,
-			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 5000),
+			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
 		);
 	}
 
