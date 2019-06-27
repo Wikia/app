@@ -52,10 +52,18 @@ define('wikia.scrollToLink',
 				if (!!target) {
 					scrollToElement(target, offsetToScroll);
 
+					var queryString;
+					if (win.location.search !== undefined) {
+						queryString = win.location.search;
+					} else {
+						queryString = '';
+					}
+
+
 					return hist.pushState(
 						{},
 						doc.title,
-						win.location.pathname + win.location.search + '#' + sanitizedHref
+						win.location.pathname + queryString + '#' + sanitizedHref
 					);
 				}
 			}
