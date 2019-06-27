@@ -29,6 +29,7 @@ You can safely purge this folder to reclaim the disk space if needed.
     ``` 
 3. Setup environment variables
 	```bash
+		cd app/docker/devbox
 		echo "HOSTNAME_OVERRIDE=`hostname`" >> .env
 	```
 4. Starting mediawiki
