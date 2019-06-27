@@ -52,6 +52,8 @@ define('wikia.scrollToLink',
 				if (!!target) {
 					scrollToElement(target, offsetToScroll);
 
+					//Hack for tests. It appears that when queryString is empty window.location.search returns
+					// undefined in headless chrome and an empty string in regular browser
 					var queryString;
 					if (win.location.search !== undefined) {
 						queryString = win.location.search;
