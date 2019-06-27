@@ -141,9 +141,10 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			'options.unstickHiViLeaderboardAfterTimeout',
 			true,
 		);
-		const timeout = getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 2000);
-
-		context.set('options.unstickHiViLeaderboardTimeout', timeout);
+		context.set(
+			'options.unstickHiViLeaderboardTimeout',
+			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
+		);
 	}
 
 	context.set('services.confiant.enabled', isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
