@@ -245,13 +245,13 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
 		return true;
 }
 
-function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
+function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ): bool {
 
-		// PLATFORM-4119: Shared Help 'homepage:w:' links no longer point to CC as expected
-		if ( strpos($target, 'homepage:w:') !== false ) {
-			$url = $attribs['href'];
-			$attribs['href'] = http_build_url( $url, [ 'scheme' => 'https', 'host' => 'community.fandom.com'] );
-		}
+	// PLATFORM-4119: Shared Help 'homepage:w:' should point to CC
+	if ( strpos($target, 'homepage:w:') !== false ) {
+		$url = $attribs['href'];
+		$attribs['href'] = http_build_url( $url, [ 'scheme' => 'https', 'host' => 'community.fandom.com'] );
+	}
 
 	return true;
 }
