@@ -12,7 +12,7 @@ class MigrateInterwikiLinksToFandom extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgMemc, $wgFandomBaseDomain;
+		global $wgMemc, $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
 
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
@@ -34,11 +34,14 @@ class MigrateInterwikiLinksToFandom extends Maintenance {
 			}
 
 			$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
-			if ( strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) === false ) {
+			if (
+				strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) !== false ||
+				strpos( $currentUrl, ".{$wgWikiaOrgBaseDomain}" ) !== false
+			) {
+				$newInterwikiUrl = rtrim( wfHttpToHttps( $currentUrl ), '/' ) . '/wiki/$1';
+			} else {
 				continue;
 			}
-
-			$newInterwikiUrl = rtrim( wfHttpToHttps( $currentUrl ), '/' ) . '/wiki/$1';
 
 			$this->output( "Updating interwiki with prefix {$row->iw_prefix} from {$row->iw_url} to {$newInterwikiUrl}!\n" );
 			if ( $saveChanges ) {
