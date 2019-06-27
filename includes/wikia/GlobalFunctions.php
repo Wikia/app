@@ -1517,17 +1517,14 @@ function wfGetStagingEnvForUrl( $url ) : string {
 function wfHttpsAllowedForURL( $url ): bool {
 	global $wgWikiaEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
-
 	if ( $host === false ) {
 		return false;
 	}
-
 	if ( $wgWikiaEnvironment === WIKIA_ENV_PROD &&
 		isset( $_SERVER['HTTP_X_STAGING'] ) &&
 		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
 		return false;
 	}
-
 	return true;
 }
 
@@ -1571,18 +1568,12 @@ function wfGetBaseDomainForHost( $host ) {
  * @return string normalized host name
  */
 function wfNormalizeHost( $host ) {
-	global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
-	$baseDomain = wfGetBaseDomainForHost( $host );
+	global $wgEnvironmentDomainMappings;
 
-	// strip env-specific pre- and suffixes for staging environment
-	$host = preg_replace(
-		'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
-		".{$baseDomain}",
-		$host );
-	if ( !empty( $wgDevelEnvironment ) ) {
-		$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
-		$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
+	foreach ( $wgEnvironmentDomainMappings as $envSpecificDomain => $envAgnosticDomain ) {
+		$host = str_replace( ".$envSpecificDomain", ".$envAgnosticDomain", $host );
 	}
+
 	return $host;
 }
 

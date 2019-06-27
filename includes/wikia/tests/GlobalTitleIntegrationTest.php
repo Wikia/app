@@ -5,14 +5,7 @@
  * @group Integration
  */
 class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
-
-	private function mockEnvironment( string $theEnv ){
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', $theEnv );
-	}
-
-	private function mockProdEnv() {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
-	}
+	use MockEnvironmentTrait;
 
 	function testNewFromText1() {
 		$this->mockProdEnv();
