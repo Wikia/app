@@ -52,7 +52,11 @@ define('wikia.scrollToLink',
 				if (!!target) {
 					scrollToElement(target, offsetToScroll);
 
-					return hist.pushState({}, doc.title, win.location.pathname + '#' + sanitizedHref);
+					return hist.pushState(
+						{},
+						doc.title,
+						win.location.pathname + win.location.search + '#' + sanitizedHref
+					);
 				}
 			}
 			return false;
