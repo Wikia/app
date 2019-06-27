@@ -22,6 +22,7 @@ class WikiVariables {
 				'content' => $wgLanguageCode,
 			],
 			'enableDiscussions' => $wgEnableDiscussions,
+			'gamepediaRedirectUrl' => $this->getGamepediaRedirect(),
 		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
@@ -43,5 +44,11 @@ class WikiVariables {
 				return wfProtocolUrlToRelative($getStartedUrl);
 			}
 		);
+	}
+
+	private function getGamepediaRedirect(): string {
+		$msg = wfMessage( 'Custom-GamepediaNotice' )->inLanguage( 'en' );
+
+		return $msg->exists() ? "https://{$msg->escaped()}.gamepedia.com/?utm_source=Fandom&utm_medium=banner&utm_campaign={$msg->escaped()}" : '';
 	}
 }
