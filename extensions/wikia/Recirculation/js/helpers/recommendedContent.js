@@ -55,10 +55,10 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
             });
     }
 
-	/**
+    /**
      * Fetch recommendations from service built by Data Engineering Team
-	 */
-	function getExperimentalRecommendedData() {
+     */
+    function getExperimentalRecommendedData() {
         var deferred = $.Deferred();
         var itemId = w.wgCityId + '_' + w.wgArticleId;
 
@@ -82,9 +82,9 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
         return deferred.promise();
     }
 
-	/**
-	 * A fallback for recommendations service
-	 */
+    /**
+     * A fallback for recommendations service
+     */
     function getPopularPages() {
         return nirvana.sendRequest({
             controller: 'RecirculationApi',
