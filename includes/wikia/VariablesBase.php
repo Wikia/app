@@ -1274,9 +1274,8 @@ $wgCrossSiteAJAXdomainExceptions = [];
 $wgCrossWikiaSearchExcludedWikis = [
 	// Answers
 	11557,
-	// Uncyclopedias
-	425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
-	859, 2219, 1159, 2794, 2258, 1183, 1512,
+	// Spademanns wiki
+	1524,
 	// Community Central
 	177,
 	// Scratchpad
@@ -6553,6 +6552,7 @@ $wgPublicUserAttributes = [
 	'coverPhoto',
 	'fancysig',
 	'fbPage',
+	'discordHandle',
 	'location',
 	'name',
 	'nickname',
@@ -8885,6 +8885,12 @@ $wgFandomComMigrationScheduled = false;
  * @var bool $wgFandomComMigrationScheduled
  */
 $wgDomainMigrationDisabled = false;
+
+/**
+ * Environment-specific domain mappings to their normalized variants
+ * @var string[] $wgDomainOverrides
+ */
+$wgEnvironmentDomainMappings = [];
 
 /**
  * Whether the community is scheduled to be migrated to a wikia.org domain

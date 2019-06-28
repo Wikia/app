@@ -3553,6 +3553,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Factory\\RabbitFactory' => __DIR__ . '/../../..' . '/lib/Wikia/src/Factory/RabbitFactory.php',
         'Wikia\\Factory\\ServiceFactory' => __DIR__ . '/../../..' . '/lib/Wikia/src/Factory/ServiceFactory.php',
         'Wikia\\Factory\\SwiftSyncFactory' => __DIR__ . '/../../..' . '/lib/Wikia/src/Factory/SwiftSyncFactory.php',
+        'Wikia\\Gateway\\UserAttributeGateway' => __DIR__ . '/../../..' . '/lib/Wikia/src/Gateway/UserAttributeGateway.php',
         'Wikia\\HTTP\\Response' => __DIR__ . '/../../..' . '/lib/Wikia/src/HTTP/Response.php',
         'Wikia\\Localisation\\CachedLCStoreDB' => __DIR__ . '/../../..' . '/lib/Wikia/src/Localisation/CachedLCStoreDB.php',
         'Wikia\\Localisation\\LCStoreDB' => __DIR__ . '/../../..' . '/lib/Wikia/src/Localisation/LCStoreDB.php',

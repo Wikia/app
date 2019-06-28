@@ -1435,11 +1435,18 @@ $wgAdDriverOverscrolledCountries = null;
 $wgAdDriverBrowsiCountries = null;
 
 /**
- * @name $wgAdDriverConfiantCountries
- * List of countries Confiant will be enabled on
+ * @name $wgAdDriverConfiantDesktopCountries
+ * List of countries Confiant will be enabled on Oasis
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverConfiantCountries = null;
+$wgAdDriverConfiantDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantMobileCountries
+ * List of countries Confiant will be enabled on Mobile-Wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantMobileCountries = null;
 
 /**
  * @name $wgAdDriverNielsenCountries

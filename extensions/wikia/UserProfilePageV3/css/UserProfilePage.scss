@@ -4,6 +4,9 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/flexbox";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 $radius-user-profile-masthead: 5px;
 
@@ -14,7 +17,9 @@ $color-user-profile-masthead-aka: #CCC;
 
 $y-user-profile-masthead-links-icon: -17px;
 $color-masthead: $color-page;
+$color-discord-icon: $wds-color-white;
 @if lightness($color-page) < 50 {
+	$color-discord-icon: #222;
 	$y-user-profile-masthead-links-icon: 0;
 	$color-masthead: mix($color-buttons, $color-page, 30%); // logic from Wall
 	@if lightness($color-masthead) < 30 {
@@ -194,7 +199,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 
 		&:last-of-type {
-			margin-bottom: 25px;
+			margin-bottom: 13px;
 		}
 	}
 
@@ -222,18 +227,26 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	.links {
-		@include clearfix;
+		@include flexbox();
+		@include flex-wrap(wrap);
+		@include align-items(center);
+
 		li {
-			float: left;
 			margin-right: 1em;
+			padding-top: 12px;
+
+			a {
+				@include flexbox();
+				@include align-items(center);
+			}
 		}
 		.icon {
 			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgResourceBasePath */
 			height: 17px;
-			position: relative;
-			top: .3em;
+			margin-right: 3px;
 			width: 17px;
+
 			&.twitter {
 				background-position: 0 $y-user-profile-masthead-links-icon;
 			}
@@ -245,9 +258,60 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		.zero {
+			@include flexbox();
+			@include align-items(center);
 			color: $color-alternate-text;
+
 			.icon {
 				background-color: $color-alternate-text;
+			}
+		}
+
+		.user-profile {
+			&__discord {
+				@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+				@include flexbox();
+				@include align-items(center);
+
+				&__icon-with-label {
+					@include flexbox();
+					@include align-items(center);
+
+					color: $color-links;
+
+					&__icon {
+						background: $color-links;
+						border-radius: 50px;
+						display: inline-block;
+						margin-right: 3px;
+						padding: 2px 3px;
+
+						.wds-icon {
+							display: block;
+							fill: $color-discord-icon;
+						}
+					}
+				}
+
+				.wds-dropdown__content {
+					padding: 6px;
+					text-align: center;
+					width: 150px;
+				}
+			}
+		}
+
+
+
+		.zero {
+			.user-profile__discord {
+				&__icon-with-label {
+					color: $color-alternate-text;
+
+					&__icon {
+						background: $color-alternate-text;
+					}
+				}
 			}
 		}
 	}
