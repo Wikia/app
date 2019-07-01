@@ -23,6 +23,7 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
+$wgHooks['LinkEnd'][] = 'SharedHelpLinkEnd';
 $wgHooks['WikiaCanonicalHref'][] = 'SharedHelpCanonicalHook';
 $wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 
@@ -244,6 +245,16 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
 		return true;
 }
 
+function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ): bool {
+	// PLATFORM-4119: Shared Help 'homepage:w:' should point to CC
+	if ( strpos( $target, 'homepage:w:' ) !== false ) {
+		$url = $attribs['href'];
+		$attribs['href'] = http_build_url(
+			$url, [ 'scheme' => 'https', 'host' => 'community.fandom.com' ] );
+	}
+
+	return true;
+}
 
 /**
  * does $title article exist @help.wikia?
