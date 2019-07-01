@@ -246,11 +246,11 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
 }
 
 function SharedHelpLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ): bool {
-
 	// PLATFORM-4119: Shared Help 'homepage:w:' should point to CC
-	if ( strpos($target, 'homepage:w:') !== false ) {
+	if ( strpos( $target, 'homepage:w:' ) !== false ) {
 		$url = $attribs['href'];
-		$attribs['href'] = http_build_url( $url, [ 'scheme' => 'https', 'host' => 'community.fandom.com'] );
+		$attribs['href'] = http_build_url(
+			$url, [ 'scheme' => 'https', 'host' => 'community.fandom.com' ] );
 	}
 
 	return true;
