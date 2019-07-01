@@ -128,7 +128,6 @@ require([
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
 			adsApi.waitForAdStackResolve().then(setupPlayer);
-
 			return;
 		}
 
