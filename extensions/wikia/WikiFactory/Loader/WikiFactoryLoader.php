@@ -465,6 +465,9 @@ class WikiFactoryLoader {
 				global $wgNotAValidWikia;
 				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				if (  wfHttpsAllowedForURL( $redirect ) && wfHttpsEnabledForURL( $redirect ) && !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {
+					$redirect = wfHttpToHttps( $redirect );
+				}
 				if ( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				} else {
