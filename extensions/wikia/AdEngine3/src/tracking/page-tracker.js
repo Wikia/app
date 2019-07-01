@@ -10,7 +10,7 @@ export default {
 	 * @returns {boolean}
 	 */
 	isEnabled() {
-		return context.get('options.tracking.kikimora.slot');
+		return context.get('options.tracking.slot.status');
 	},
 
 	/**

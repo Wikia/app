@@ -1,16 +1,21 @@
+import * as Cookies from 'js-cookie';
 import {
-	AdEngine, context, events, eventService, instantConfig, slotInjector, templateService, utils, setupNpaContext,
-	BigFancyAdAbove, BigFancyAdBelow, PorvataTemplate, Roadblock, StickyTLB,
+	AdEngine,
+	context,
+	events,
+	eventService,
+	instantConfig,
+	utils,
+	setupNpaContext,
 } from '@wikia/ad-engine';
 import { get, set } from 'lodash';
 import basicContext from './ad-context';
 import instantGlobals from './instant-globals';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
-import slotTracker from './tracking/slot-tracker';
 import targeting from './targeting';
-import viewabilityTracker from './tracking/viewability-tracker';
 import { templateRegistry } from './templates/templates-registry';
+import { registerSlotTracker, registerViewabilityTracker } from  './tracking/tracker';
 
 const fallbackInstantConfig = {
 	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
@@ -63,8 +68,25 @@ async function updateWadContext() {
 	}
 }
 
+function setUpGeoData() {
+  const jsonData = decodeURIComponent(Cookies.get('Geo'));
+  let geoData = {};
+
+  try {
+    geoData = JSON.parse(jsonData) || {};
+  } catch (e) {
+    // Stay with {} value
+  }
+
+  context.set('geo.region', geoData.region);
+  context.set('geo.country', geoData.country);
+  context.set('geo.continent', geoData.continent);
+}
+
 async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
 	const showAds = getReasonForNoAds() === null;
+
+	setUpGeoData();
 
 	context.extend(basicContext);
 
@@ -124,8 +146,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 
 	context.set('options.maxDelayTimeout', getInstantGlobal('wgAdDriverDelayTimeout', 2000));
 	context.set('options.tracking.kikimora.player', isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
-	context.set('options.tracking.kikimora.slot', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
-	context.set('options.tracking.kikimora.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.tracking.slot.status', isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
+	context.set('options.tracking.slot.viewability', isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
@@ -139,8 +161,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		);
 		context.set(
 			'options.unstickHiViLeaderboardTimeout',
-			true,
-			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 5000),
+			getInstantGlobal('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
 		);
 	}
 
@@ -249,7 +270,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	slots.setupSizesAvailability();
 	slots.setupTopLeaderboard();
 
-	updateWadContext();
+	await updateWadContext();
 
 	// TODO: Remove wrapper of window.adslots2 when we unify our push method
 	utils.makeLazyQueue(window.adslots2, (slot) => {
@@ -275,8 +296,8 @@ async function configure(adsContext, isOptedIn) {
 
 	templateRegistry.registerTemplates();
 
-	context.push('listeners.slot', slotTracker);
-	context.push('listeners.slot', viewabilityTracker);
+	registerSlotTracker();
+	registerViewabilityTracker();
 }
 
 /**
