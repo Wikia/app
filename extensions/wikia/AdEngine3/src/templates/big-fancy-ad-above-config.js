@@ -9,7 +9,7 @@ const {
 } = universalAdPackage;
 
 export const getConfig = () => ({
-    isResolved: false,
+	isResolved: false,
 	autoPlayAllowed: true,
 	defaultStateAllowed: true,
 	fullscreenAllowed: true,
@@ -83,6 +83,10 @@ export const getConfig = () => ({
 		this.isResolved = true;
 		this.updateNavbar();
 		requestAnimationFrame(() => this.updateNavbar());
+	},
+
+	onResolvedStateResetCallback() {
+		this.isResolved = false;
 	},
 
 	updateNavbar() {
