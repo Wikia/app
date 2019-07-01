@@ -53,7 +53,7 @@ async function updateWadContext() {
 
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
-		context.get('opts.showAds') !== false &&
+		context.get('state.showAds') !== false &&
 		!window.wgUserName;
 
 	if (serviceCanBeEnabled) {

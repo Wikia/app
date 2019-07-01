@@ -69,7 +69,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 }
 
 function startAdEngine() {
-	if (context.get('wiki.opts.showAds')) {
+	if (context.get('state.showAds')) {
 		utils.scriptLoader.loadScript(GPT_LIBRARY_URL);
 
 		ads.init();
@@ -128,7 +128,6 @@ function callExternals() {
 
 function run() {
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
-
 	window.Wikia.consentQueue.push(setupAdEngine);
 }
 
@@ -145,9 +144,7 @@ function waitForBiddersResolve() {
 }
 
 function waitForAdStackResolve() {
-	return Promise.all([
-		waitForBiddersResolve()
-	]);
+	return contextConfigured.then(waitForBiddersResolve);
 }
 
 function hideAllAdSlots() {
