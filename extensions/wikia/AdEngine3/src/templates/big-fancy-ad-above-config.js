@@ -9,6 +9,7 @@ const {
 } = universalAdPackage;
 
 export const getConfig = () => ({
+    isResolved: false,
 	autoPlayAllowed: true,
 	defaultStateAllowed: true,
 	fullscreenAllowed: true,
@@ -79,15 +80,36 @@ export const getConfig = () => ({
 	},
 
 	updateNavbar() {
-		const container = this.adSlot.getElement();
-		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
-
-		pinNavbar(isInViewport && !isSticky);
-		this.moveNavbar(isSticky ? container.offsetHeight : 0);
+        if (this.isResolved) {
+            this.updateNavbarResolved();
+        } else {
+            this.updateNavbarUnresolved();
+        }
 	},
 
+    onResolvedStateSetCallback() {
+        this.isResolved = true;
+        requestAnimationFrame(() => this.updateNavbar());
+        // this.updateNavbar();
+    },
+
+    updateNavbarResolved() {
+        const container = this.adSlot.getElement();
+        const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA) || this.isResolved;
+        const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+
+        console.log({isInViewport, isSticky});
+        pinNavbar(isInViewport && !isSticky);
+        this.moveNavbar(isSticky ? container.offsetHeight : 0);
+    },
+
+    updateNavbarUnresolved() {
+        pinNavbar(true);
+        // this.moveNavbar(0);
+    },
+
 	moveNavbar(offset) {
+        console.log(offset);
 		if (navBarElement) {
 			navBarElement.style.top = offset ? `${offset}px` : '';
 		}
