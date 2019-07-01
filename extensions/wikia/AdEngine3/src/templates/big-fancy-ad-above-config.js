@@ -79,37 +79,22 @@ export const getConfig = () => ({
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 	},
 
-	updateNavbar() {
-        if (this.isResolved) {
-            this.updateNavbarResolved();
-        } else {
-            this.updateNavbarUnresolved();
-        }
+	onResolvedStateSetCallback() {
+		this.isResolved = true;
+		this.updateNavbar();
+		requestAnimationFrame(() => this.updateNavbar());
 	},
 
-    onResolvedStateSetCallback() {
-        this.isResolved = true;
-        requestAnimationFrame(() => this.updateNavbar());
-        // this.updateNavbar();
-    },
+	updateNavbar() {
+		const container = this.adSlot.getElement();
+		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
 
-    updateNavbarResolved() {
-        const container = this.adSlot.getElement();
-        const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA) || this.isResolved;
-        const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
-
-        console.log({isInViewport, isSticky});
-        pinNavbar(isInViewport && !isSticky);
-        this.moveNavbar(isSticky ? container.offsetHeight : 0);
-    },
-
-    updateNavbarUnresolved() {
-        pinNavbar(true);
-        // this.moveNavbar(0);
-    },
+		pinNavbar((isInViewport && !isSticky) || !this.isResolved);
+		this.moveNavbar((isSticky && this.isResolved) ? container.offsetHeight : 0);
+	},
 
 	moveNavbar(offset) {
-        console.log(offset);
 		if (navBarElement) {
 			navBarElement.style.top = offset ? `${offset}px` : '';
 		}
