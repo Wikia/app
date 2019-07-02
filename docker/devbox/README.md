@@ -112,3 +112,11 @@ php-tests images:
  ```bash
 docker build -f Dockerfile-tests -t artifactory.wikia-inc.com/platform/php-wikia-tests:latest .
  ```
+ 
+### Using composer
+The composer is not installed in the application container, so in order to install/update additional dependencies 
+you're going to want to use a different image, stored in `composer` directory. Example usage:
+
+```bash
+docker build -f composer/Dockerfile -t c ../../../app/ && docker run -it c php composer.phar require some/stuff
+```
