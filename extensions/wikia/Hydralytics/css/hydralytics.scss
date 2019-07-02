@@ -7,6 +7,11 @@ $content-box-color: #37393D;
 $link-color: #F58121;
 $alt-orange: #FFB67A;
 $hydra-green: #b0e03b;
+$chart-background: #f7faff;
+
+// FANDOM color pallette
+$lead-aqua: #00D6D6;
+$green-navy: #002A32;
 
 #analytics_wrapper {
 	padding: 10px;
@@ -84,6 +89,7 @@ $hydra-green: #b0e03b;
 .grid_box_header {
 	background-color: $color-community-header;
 	color: $color-button-text;
+	font-weight: bolder;
 	border-radius: 4px 4px 0 0;
 	display: block;
 	font-size: 1em;
@@ -104,6 +110,15 @@ $hydra-green: #b0e03b;
 
 .analytics_table {
 	width: 100%;
+	border-collapse: collapse;
+}
+
+.analytics_table thead {
+	color: $green-navy;
+}
+
+.analytics_table thead tr {
+	border-bottom: 1px solid black;
 }
 
 .analytics_table th {
@@ -112,7 +127,20 @@ $hydra-green: #b0e03b;
 }
 
 .analytics_table td {
-	padding: 0 5px;
+	padding: 3px 5px;
+}
+
+.analytics_table tbody tr {
+	border-bottom: 1px solid $accent-grey;
+	padding-bottom: 5px;
+}
+
+.analytics_table td:nth-child(1) {
+	color: $lead-aqua;
+}
+
+.analytics_table td:nth-child(2) {
+	color: black;
 }
 
 #analytics_header {
@@ -140,7 +168,7 @@ $hydra-green: #b0e03b;
 
 #analytics_confidential {
 	display: inline-block;
-	border: 2px solid $link-color;
+	border: 2px solid $content-box-color;
 	background-color: $color-community-header;
 	color: $color-button-text;
 	font-size: 1.3em;
@@ -159,11 +187,13 @@ $hydra-green: #b0e03b;
 }
 
 .grid_box_inner {
+	background-color: #f7faff;
 	padding: 5px;
 	position: relative;
 }
 
 .grid_box_chart {
+	background-color: $chart-background;
 	flex: 1 0 300px;
 	padding: 5px;
 	position: relative;
@@ -173,4 +203,9 @@ $hydra-green: #b0e03b;
 	font-size: 3em;
 	text-align: center;
 	margin: 15px 0;
+}
+
+.chart-footer {
+	background-color: $chart-background;
+	color: black;
 }
