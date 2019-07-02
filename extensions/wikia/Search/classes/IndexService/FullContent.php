@@ -2,6 +2,7 @@
 
 namespace Wikia\Search\IndexService;
 
+use ImageServing;
 use simple_html_dom;
 
 /**
@@ -59,6 +60,10 @@ class FullContent extends AbstractService {
 		$response = empty( $response ) ? [] : $response;
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 
+
+		$imageServing = new ImageServing( [ $pageId ] );
+		$images = $imageServing->getImages( 2 )[$pageId];
+
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
 			'pageid' => $pageId,
@@ -68,7 +73,8 @@ class FullContent extends AbstractService {
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
-			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false'
+			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+			'image' => isset( $images[0] ) ? $images[0]['url'] : null,
 		] );
 	}
 
