@@ -46,7 +46,7 @@ $green-navy: #002A32;
 	}
 }
 
-@media screen and (max-width: 1499px) and (min-width: 801px) {
+@media screen and (min-width: 801px) {
 	#analytics_grid {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto auto auto auto auto auto auto;
@@ -58,18 +58,6 @@ $green-navy: #002A32;
 		"edits_per_day		 logged_in_out"
 		"top_editors 		 active_editors"
 		"top_search_terms  	 staff_contact";
-	}
-}
-
-@media screen and (min-width: 1500px) {
-	#analytics_grid {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: auto auto auto auto;
-		grid-template-areas:
-			"top_viewed_pages   number_of_pageviews number_of_pageviews number_of_visitors"
-			"most_visited_files desktop_vs_mobile   browser_breakdown   geolocation       "
-			"edits_per_day      edits_per_day       logged_in_out       logged_in_out     "
-			"top_editors 		active_editors     	top_search_terms    staff_contact     ";
 	}
 }
 
