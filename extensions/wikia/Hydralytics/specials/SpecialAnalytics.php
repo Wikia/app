@@ -334,8 +334,8 @@ class SpecialAnalytics extends \SpecialPage {
 							</tr>
 						</thead>
 						<tbody>";
-				foreach ($terms as $term) {
-					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($term[0])."</td><td>".$term[1]."</td></tr>";
+				foreach ($terms as $term => $count) {
+					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td><td>".$term."</td></tr>";
 				}
 				$sections['top_search_terms'] .= "
 					</tbody>

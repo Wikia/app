@@ -144,12 +144,26 @@ class Information {
 	 * Return the top searchs by rank for the given time period.
 	 *
 	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 * @param	int $limit
 	 * @return	array	Top search terms by rank in descending order.  [[rank, term], [rank, term]]
 	 */
-	static public function getTopSearchTerms($startTimestamp = null, $endTimestamp = null) {
-		return ['phrase1' => 110];
+	static public function getTopSearchTerms($limit = 10) {
+		global $wgCityId;
+
+		$res = Redshift::query(
+			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
+			'WHERE wiki_id = :wiki_id GROUP BY search_phrase  ' .
+			'ORDER BY search_count DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$phrases = [];
+		foreach($res as $row) {
+			// e.g. foo -> 5765
+			$phrases[ $row->search_phrase ] = $row->search_count;
+		}
+
+		return $phrases;
 	}
 
 	/**
