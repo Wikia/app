@@ -171,7 +171,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Top Viewed Pages
 				 */
-				$topPages = Information::getTopViewedPages($startTimestamp, $endTimestamp);
+				$topPages = Information::getTopViewedPages();
 				if (isset($topPages['pageviews'])) {
 					$sections['top_viewed_pages'] = "
 					<table class=\"analytics_table\">
@@ -245,7 +245,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 * Top Files
 				 */
-				$topFiles = Information::getTopViewedFiles($startTimestamp, $endTimestamp);
+				$topFiles = Information::getTopViewedFiles();
 				if (isset($topFiles['pageviews'])) {
 					$sections['most_visited_files'] = "
 					<table class=\"analytics_table\">
@@ -259,7 +259,8 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topFiles['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
-						$uriText = explode("%3A", $newUri);
+						// remove NS_FILE namespace prefix
+						$uriText = explode(":", $newUri);
 						array_shift($uriText);
 						$uriText = implode(":", $uriText);
 						$sections['most_visited_files'] .= "
@@ -368,20 +369,14 @@ class SpecialAnalytics extends \SpecialPage {
 	}
 
 	/**
-	 * Normalize URIs coming from Google Analytics.
+	 * Normalize URIs coming from Redshift.
 	 *
 	 * @param string $uri
 	 * @return string
 	 */
 	private function normalizeUri($uri) {
-		$parts = explode('/', $uri);
-		array_shift($parts);
-
-		foreach ($parts as $i => $part) {
-			$parts[$i] = urlencode($part);
-		}
-
-		return '/'.implode('/', $parts);
+		// e.g. /wiki/Elmo%27s_World_episodes
+		return urldecode($uri);
 	}
 
 	/**

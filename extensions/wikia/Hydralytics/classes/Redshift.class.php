@@ -99,6 +99,9 @@ class Redshift {
 		while($row = $sth->fetchObject()) {
 			yield $row;
 		}
+
+		// release the results
+		$sth = null;
 	}
 
 }

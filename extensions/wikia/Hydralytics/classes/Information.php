@@ -168,24 +168,52 @@ class Information {
 	 * Return the top view pages for this wiki.
 	 *
 	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 * @param int $limit
 	 * @return	array	Top Viewed Pages
 	 */
-	static public function getTopViewedPages($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['Interesting article' => 100, 'Nice one' => 80], 'sessions' => []];
+	static public function getTopViewedPages($limit = 10) {
+		global $wgCityId;
+
+		$res = Redshift::query(
+			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
+			'WHERE wiki_id = :wiki_id GROUP BY url ' .
+			'ORDER BY views DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$pageviews = [];
+		foreach($res as $row) {
+			// e.g. /wiki/Elmo%27s_World_episodes -> 5765
+			$pageviews[ $row->url ] = $row->views;
+		}
+
+		return ['pageviews' => $pageviews];
 	}
 
 	/**
 	 * Return the top view file for this wiki.
 	 *
 	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 ** @param int $limit
 	 * @return	array	Top Viewed Files
 	 */
-	static public function getTopViewedFiles($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['file1' => 100, 'file2' => 80], 'sessions' => []];
+	static public function getTopViewedFiles($limit = 10) {
+		global $wgCityId;
+
+		$res = Redshift::query(
+			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
+			'WHERE wiki_id = :wiki_id AND is_file=True GROUP BY url ' .
+			'ORDER BY views DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$pageviews = [];
+		foreach($res as $row) {
+			// e.g. /wiki/Elmo%27s_World_episodes -> 5765
+			$pageviews[ $row->url ] = $row->views;
+		}
+
+		return ['pageviews' => $pageviews];
 	}
 
 	/**
