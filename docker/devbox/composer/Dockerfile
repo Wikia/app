@@ -5,7 +5,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && apt-get update \
-    && apt-get install -y git \
+    && apt-get install -y git zip unzip\
     && pecl install yaml-2.0.2 xdebug-2.6.0 \
     && docker-php-ext-enable yaml xdebug
 
