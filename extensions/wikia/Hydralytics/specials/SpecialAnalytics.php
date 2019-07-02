@@ -109,7 +109,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Number Of Pageviews
 				 */
-				$dailyTotals = Information::getDailyTotals($startTimestamp, $endTimestamp);
+				$dailyTotals = Information::getDailyTotals();
 				$totalViews = 0;
 				$numberOfPageviews = [];
 				if (isset($dailyTotals['pageviews'])) {
@@ -345,8 +345,14 @@ class SpecialAnalytics extends \SpecialPage {
 					'error_analytics_text',
 					[$e->getMessage()]
 				);
+			} catch ( \PDOException $e ) {
+				// Redshift database connection / query issue
+				throw new \ErrorPageError(
+					'error_analytics_title',
+					'error_analytics_text',
+					[$e->getMessage()]
+				);
 			}
-
 		}
 
 		$generatedAt = wfMessage('analytics_report_generated', 'one day ago TODO')->escaped();

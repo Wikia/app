@@ -15,6 +15,9 @@
 namespace Hydralytics;
 
 class Information {
+	// by default plot last X days of data
+	const LAST_DAYS = 30;
+
 	/**
 	 * Property Being Used for GA
 	 *
@@ -188,14 +191,30 @@ class Information {
 	/**
 	 * Return daily sessions and page views.
 	 *
-	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 * @param int $days
 	 * @return	array	Daily sessions and page views.
 	 */
-	static public function getDailyTotals($startTimestamp = null, $endTimestamp = null) {
+	static public function getDailyTotals($days = self::LAST_DAYS) {
+		global $wgCityId;
+
+		$res = Redshift::query(
+			'SELECT dt, COUNT(*) AS views FROM wikianalytics.pageviews ' .
+			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
+			'ORDER BY dt DESC LIMIT :days',
+			[ ':wiki_id' => $wgCityId, ':days' => $days ]
+		);
+
+		$pageviews = [];
+		foreach($res as $row) {
+			// e.g. 2019-06-28 -> 166107
+			$pageviews[ $row->dt ] = $row->views;
+		}
+
+		// sort dates ascending
+		ksort($pageviews);
+
 		return [
-			'pageviews' => self::getMockedSine(30, 220, 500, true)
+			'pageviews' => $pageviews
 		];
 	}
 
