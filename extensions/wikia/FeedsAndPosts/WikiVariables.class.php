@@ -12,7 +12,7 @@ class WikiVariables {
 
 		$wikiVariables = [
 			'wikiId' => $wgCityId,
-			'basePath' => wfHttpsAllowedForURL( $wgServer ) ? wfHttpToHttps( $wgServer ) : $wgServer . $wgScriptPath,
+			'basePath' => $wgServer . $wgScriptPath,
 			'dbName' => $wgDBname,
 			'name' => $wgSitename,
 			'getStartedUrl' =>  $this->getStartedUrl(),
