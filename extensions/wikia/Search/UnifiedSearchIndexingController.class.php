@@ -49,14 +49,14 @@ class UnifiedSearchIndexingController extends WikiaController {
 				->LIMIT( $limit + 1 )// fetching one more than limit to get next offset
 				->ORDER_BY( [ 'page.page_id', 'asc' ] )
 				->runLoop( $db, function ( &$result, $row ) {
-					$result[] = $row->page_id;
+					$result[] = [ 'id' => $row->page_id ];
 				} );
 
 		$splitByLimit = array_chunk( $results, $limit );
 
 		return [
-			'nextOffset' => isset( $splitByLimit[1][0] ) ? $splitByLimit[1][0] : null,
-			'pageIds' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
+			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
+			'items' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
 		];
 	}
 
@@ -64,7 +64,8 @@ class UnifiedSearchIndexingController extends WikiaController {
 		$db = wfGetDB( DB_SLAVE, null, 'wikicities' );
 
 		$results =
-			( new WikiaSQL() )->SELECT( 'wikicities.city_list.city_id', 'wikicities.city_list.city_lang' )
+			( new WikiaSQL() )->SELECT( 'wikicities.city_list.city_id',
+				'wikicities.city_list.city_lang' )
 				->FROM( 'wikicities.city_list' )
 				->WHERE( 'wikicities.city_list.city_id' )
 				->GREATER_THAN_OR_EQUAL( $offset )
@@ -74,7 +75,7 @@ class UnifiedSearchIndexingController extends WikiaController {
 				->ORDER_BY( [ 'wikicities.city_list.city_id', 'asc' ] )
 				->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
-						'wikiId' => $row->city_id,
+						'id' => $row->city_id,
 						'language' => $row->city_lang,
 					];
 				} );
@@ -82,8 +83,8 @@ class UnifiedSearchIndexingController extends WikiaController {
 		$splitByLimit = array_chunk( $results, $limit );
 
 		return [
-			'nextOffset' => isset( $splitByLimit[1][0]['wikiId'] ) ? $splitByLimit[1][0]['wikiId'] : null,
-			'wikiIds' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
+			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
+			'items' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
 		];
 	}
 }
