@@ -12,7 +12,7 @@ class MigrateInterwikiLinksToFandom extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgMemc, $wgFandomBaseDomain;
+		global $wgMemc, $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
 
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
@@ -34,7 +34,10 @@ class MigrateInterwikiLinksToFandom extends Maintenance {
 			}
 
 			$currentUrl = WikiFactory::cityIDtoUrl( $cityId );
-			if ( strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) === false ) {
+			if (
+				strpos( $currentUrl, ".{$wgFandomBaseDomain}" ) === false &&
+				strpos( $currentUrl, ".{$wgWikiaOrgBaseDomain}" ) === false
+			) {
 				continue;
 			}
 
