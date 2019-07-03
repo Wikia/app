@@ -19,40 +19,6 @@ class Information {
 	const LAST_DAYS = 30;
 
 	/**
-	 * Property Being Used for GA
-	 *
-	 * @var 	string
-	 */
-	static private $property = null;
-
-	/**
-	 * Extract a single Google Analytics property that should be the one for this wiki from a list.
-	 *
-	 * @access	public
-	 * @param	string	Newline separated property IDs.
-	 * @return	string	Google Analytics Property ID
-	 */
-	static public function extractGAProperty($properties) {
-		$config = \ConfigFactory::getDefaultInstance()->makeConfig('main');
-		$stripGAProperties = $config->get('StripGAProperties');
-		foreach ($stripGAProperties as $property) {
-			$properties = str_replace($property, '', $properties);
-		}
-		$properties = trim($properties);
-		list($property) = explode("\n", $properties);
-		return $property;
-	}
-
-	/**
-	 * Return the property we have set
-	 *
-	 * @return string
-	 */
-	static public function getProperty() {
-		return self::$property;
-	}
-
-	/**
 	 * Get the wiki managers on this wiki.
 	 *
 	 * @access	public

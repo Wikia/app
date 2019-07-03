@@ -38,6 +38,7 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @access	public
 	 * @param	string	Sub page passed in the URL.
 	 * @return	void	[Outputs to screen]
+	 * @throws \ErrorPageError
 	 */
 	public function execute($subpage) {
 		$this->checkPermissions();
@@ -56,17 +57,9 @@ class SpecialAnalytics extends \SpecialPage {
 	 *
 	 * @access	private
 	 * @return	void	[Outputs to screen]
+	 * @throws \ErrorPageError
 	 */
 	private function analyticsPage() {
-		global $dsSiteKey;
-
-		$wgCommunityManager = 'TODO Community Manager';
-
-		$redisKey = $dsSiteKey.':analytics:output';
-
-		$startTimestamp = time() - 2592000;
-		$endTimestamp = time();
-
 		$sections = [
 			'top_viewed_pages' => '',
 			'number_of_pageviews' => '',
@@ -345,13 +338,7 @@ class SpecialAnalytics extends \SpecialPage {
 			}
 		}
 
-		$generatedAt = wfMessage('analytics_report_generated', 'one day ago TODO')->escaped();
-
-		if ($this->getRequest()->getBool('debug')) {
-			// append property ID inside HTML during debug
-			$propID = Information::getProperty();
-			$generatedAt = $generatedAt . "<script type='text/javascript'>var GAPropID = '{$propID}';</script>";
-		}
+		$generatedAt = wfMessage('analytics_report_generated', 'one day ago')->escaped();
 
 		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);
