@@ -340,7 +340,7 @@ class SpecialAnalytics extends \SpecialPage {
 				throw new \ErrorPageError(
 					'error_analytics_title',
 					'error_analytics_text',
-					[$e->getMessage()]
+					['Redshift backend error']
 				);
 			}
 		}
