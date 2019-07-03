@@ -75,8 +75,8 @@ $green-navy: #002A32;
 }
 
 .grid_box_header {
-	background-color: $color-community-header;
-	color: $color-button-text;
+	background-color: $content-box-color;
+	color: $font-bright;
 	font-weight: bolder;
 	border-radius: 4px 4px 0 0;
 	display: block;
@@ -157,8 +157,8 @@ $green-navy: #002A32;
 #analytics_confidential {
 	display: inline-block;
 	border: 2px solid $content-box-color;
-	background-color: $color-community-header;
-	color: $color-button-text;
+	background-color: $content-box-color;
+	color: $font-bright;
 	font-size: 1.3em;
 	letter-spacing: 1px;
 	text-align: center;
