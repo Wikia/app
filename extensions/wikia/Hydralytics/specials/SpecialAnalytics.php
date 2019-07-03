@@ -70,7 +70,6 @@ class SpecialAnalytics extends \SpecialPage {
 		$sections = [
 			'top_viewed_pages' => '',
 			'number_of_pageviews' => '',
-			'number_of_visitors' => '',
 			'top_editors' => '',
 			'geolocation' => '',
 			'most_visited_files' => '',
@@ -94,17 +93,6 @@ class SpecialAnalytics extends \SpecialPage {
 				$deviceBreakdown = Information::getDeviceBreakdown();
 				$sections['browser_breakdown'] = TemplateAnalytics::wrapSectionData('browser_breakdown', $deviceBreakdown['browser']);
 				$sections['desktop_vs_mobile'] = TemplateAnalytics::wrapSectionData('desktop_vs_mobile', $deviceBreakdown['deviceCategory']);
-
-				$monthlyTotals = Information::getMonthlyTotals($startTimestamp, $endTimestamp);
-				$sections['number_of_visitors'] = TemplateAnalytics::wrapSectionData(
-					'number_of_visitors',
-					[
-						'users' => $monthlyTotals['users'],
-						'newUsers' => $monthlyTotals['newUsers'],
-						'returningUsers' => ($monthlyTotals['users'] - $monthlyTotals['newUsers']),
-						'total'	=> $this->getLanguage()->formatNum($monthlyTotals['users'])
-					]
-				);
 
 				/**
 				 *  Number Of Pageviews

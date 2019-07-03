@@ -275,18 +275,6 @@ class Information {
 	}
 
 	/**
-	 * Return cumulative thirty day sessions and page views.
-	 *
-	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
-	 * @return	array	Cumulative thirty day sessions and page views.
-	 */
-	static public function getMonthlyTotals($startTimestamp = null, $endTimestamp = null) {
-		return ['sessions' => 100, 'pageviews' => 1000, 'users' => 30, 'newUsers' => 5];
-	}
-
-	/**
 	 * Return device break down information.
 	 *
 	 * Pageviews are grouped by browser type (Chrome, Safari, Firefox, Internet Explorer, ...)
