@@ -3,9 +3,9 @@
 require_once __DIR__ . '/../Maintenance.php';
 
 /**
- * PLATFORM-4161: uploads XML dumps for public wikis to S3 bucket
+ * PLATFORM-4161: uploads XML dumps for public wikis to S3 bucket.
  *
- * Script need to be executed with 2 arguments: AWSAccessKey and AWSSecretKey
+ * Script need to be executed with 2 arguments: AWSAccessKey, AWSSecretKey and bucket name.
  *
  * use --saveChanges to actually prepare and save XML dumps
  */
