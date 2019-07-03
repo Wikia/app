@@ -131,12 +131,32 @@ class Information {
 	 *
 	 * @access	public
 	 * @param	integer	[Optional] Number of days in the past to retrieve.
-	 * @return	array	[day timestamp => points]
+	 * @return	array	[day timestamp => edits]
 	 */
-	static public function getEditsLoggedInOut($days = 30) {
+	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
+		global $wgCityId;
+
+		// edits
+		$res = Redshift::query(
+			'SELECT dt, COUNT(*) AS edits, SUM(logged_in::int) as edits_logged_in FROM wikianalytics.edits ' .
+			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
+			'ORDER BY dt DESC LIMIT :days',
+			[ ':wiki_id' => $wgCityId, ':days' => $days ]
+		);
+
+		$edits_in = self::initResultsArray();
+		$edits_out = self::initResultsArray();
+		foreach($res as $row) {
+			$index = strtotime( $row->dt );
+
+			// e.g. 2019-06-03 -> 128, 2
+			$edits_in[ $index ] = $row->edits_logged_in;
+			$edits_out[ $index ] = $row->edits - $row->edits_logged_in;
+		}
+
 		return [
-			'in' => self::getMockedSine($days, 5, 20),
-			'out' => self::getMockedSine($days, 15, 50)
+			'in' => $edits_in,
+			'out' => $edits_out,
 		];
 	}
 
@@ -325,6 +345,8 @@ class Information {
 	 * @param int $offset
 	 * @param bool $formatDate Returns "Y-m-d" timestamp when set to true
 	 * @return array
+	 *
+	 * @deprecated
 	 */
 	static private function getMockedSine(
 		int $days = 30, int $amplitude = 10, int $offset = 25, $formatDate = false
@@ -343,6 +365,28 @@ class Information {
 			}
 
 			$data[$index] = intval($value);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * This helper pre-fills response array with entries for each day
+	 *
+	 * @param int $days
+	 * @param bool $formatDate
+	 * @return array
+	 */
+	static private function initResultsArray(int $days = self::LAST_DAYS, bool $formatDate = false) : array {
+		$data = [];
+
+		for ($i = $days; $i > 0; $i--) {
+			$index = strtotime('Today - '.$i.' days');
+			if ($formatDate) {
+				$index = date('Y-m-d', $index);
+			}
+
+			$data[$index] = 0;
 		}
 
 		return $data;
