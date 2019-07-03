@@ -12,6 +12,4 @@ export HOME=/app
 
 set -Eeo pipefail
 
-gosu docker_user git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf ssh://git@github.com/
-
 exec gosu docker_user "$@"
