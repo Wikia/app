@@ -2,19 +2,19 @@ $(function() {
 
 	// Line Charts
 	var chartColor = {
-		background: '#f37f20', 
-		border: '#f37f20',// '#212121',
-		background2: '#FFB67A', 
-		border2: '#FFB67A'
+		background: '#00D6D6', 
+		border: '#00D6D6',// '#212121',
+		background2: '#002A32', 
+		border2: '#002A32'
 	};
 	// Pie Charts
     var chartColors = [
-		'#1abc9c',
-		'#2ecc71',
-		'#3498db',
-		'#9b59b6',
-		'#f1c40f',
-		'#f39c12',
+		'#00D6D6',
+		'#002A32',
+		'#FF776D',
+		'#DFEC24',
+		'#EE1A41',
+		'#5A2E4A',
 		'#e74c3c',
 		'#95a5a6'
 	]
@@ -326,7 +326,7 @@ $(function() {
 		];
 		for (var x in last30) {
 			if ($("#"+last30[x]).length) {
-				$("#"+last30[x]).append("<div class=\"last30\">*"+ message("based_on_last_30") +"</div>");
+				$("#"+last30[x]).append("<div class=\"last30 chart-footer\">*"+ message("based_on_last_30") +"</div>");
 			}
 		}
 	}
@@ -528,7 +528,7 @@ $(function() {
 				title: {
 					display: false,
 					text: '',
-					fontColor: window.wgSassParams['color-header']
+					fontColor: 'black'
 				},
 				hover: {
 					mode: 'index',
@@ -537,7 +537,7 @@ $(function() {
 				legend: {
 					display: true,
 					labels: {
-						fontColor: window.wgSassParams['color-header']
+						fontColor: 'black'
 					}
 				}
 			}
