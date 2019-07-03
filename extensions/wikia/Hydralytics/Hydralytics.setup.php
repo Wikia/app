@@ -28,6 +28,7 @@ $wgExtensionCredits['other'][] = array(
  */
 $wgAutoloadClasses['Hydralytics\\SpecialAnalytics'] = "{$dir}/specials/SpecialAnalytics.php";
 $wgAutoloadClasses['Hydralytics\\Information'] = "{$dir}/classes/Information.php";
+$wgAutoloadClasses['Hydralytics\\Redshift'] = "{$dir}/classes/Redshift.class.php";
 $wgAutoloadClasses['Hydralytics\\TemplateAnalytics'] = "{$dir}/templates/TemplateAnalytics.php";
 
 /**

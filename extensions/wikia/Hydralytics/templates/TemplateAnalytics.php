@@ -70,7 +70,7 @@ class TemplateAnalytics {
 		return $html;
 	}
 
-		/**
+	/**
 	 * Wrap section data in a Javascript tag.
 	 *
 	 * @access	public
@@ -78,7 +78,7 @@ class TemplateAnalytics {
 	 * @param	array	Section data to be JSON encoded.
 	 * @return	string	HTML
 	 */
-	static public function wrapSectionData($name, $data) {
+	static public function wrapSectionData(string $name, array $data) {
 		return "
 			<script type='text/javascript'>
 				(function(){

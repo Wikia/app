@@ -70,7 +70,6 @@ class SpecialAnalytics extends \SpecialPage {
 		$sections = [
 			'top_viewed_pages' => '',
 			'number_of_pageviews' => '',
-			'number_of_visitors' => '',
 			'top_editors' => '',
 			'geolocation' => '',
 			'most_visited_files' => '',
@@ -91,25 +90,14 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Browser Breakdown + Desktop vs Mobile
 				 */
-				$deviceBreakdown = Information::getDeviceBreakdown($startTimestamp, $endTimestamp);
+				$deviceBreakdown = Information::getDeviceBreakdown(4);
 				$sections['browser_breakdown'] = TemplateAnalytics::wrapSectionData('browser_breakdown', $deviceBreakdown['browser']);
 				$sections['desktop_vs_mobile'] = TemplateAnalytics::wrapSectionData('desktop_vs_mobile', $deviceBreakdown['deviceCategory']);
-
-				$monthlyTotals = Information::getMonthlyTotals($startTimestamp, $endTimestamp);
-				$sections['number_of_visitors'] = TemplateAnalytics::wrapSectionData(
-					'number_of_visitors',
-					[
-						'users' => $monthlyTotals['users'],
-						'newUsers' => $monthlyTotals['newUsers'],
-						'returningUsers' => ($monthlyTotals['users'] - $monthlyTotals['newUsers']),
-						'total'	=> $this->getLanguage()->formatNum($monthlyTotals['users'])
-					]
-				);
 
 				/**
 				 *  Number Of Pageviews
 				 */
-				$dailyTotals = Information::getDailyTotals($startTimestamp, $endTimestamp);
+				$dailyTotals = Information::getDailyTotals();
 				$totalViews = 0;
 				$numberOfPageviews = [];
 				if (isset($dailyTotals['pageviews'])) {
@@ -128,35 +116,35 @@ class SpecialAnalytics extends \SpecialPage {
 				);
 
 				/**
-				 *  Edit Per Day
-				 */
-				$dailyEdits = Information::getEditsPerDay();
-				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
-
-				/**
 				 *  Logged in vs Logged out Edits
 				 */
 				$loggedInOutEdits = Information::getEditsLoggedInOut();
 				$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $loggedInOutEdits);
 
 				/**
+				 *  Edit Per Day
+				 */
+				$dailyEdits = $loggedInOutEdits['all'];
+				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
+
+				/**
 				 * Geolocation
 				 */
-				$geolocation = Information::getGeolocation($startTimestamp, $endTimestamp);
+				$geolocation = Information::getGeolocation();
 				$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation',$geolocation);
-				arsort($geolocation['sessions']);
-				if (isset($geolocation['sessions'])) {
+				//arsort($geolocation['sessions']);
+				if (isset($geolocation['pageviews'])) {
 					$sections['geolocation'] = "
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
 								<th>".wfMessage('location')->escaped()."</th>
-								<th>".wfMessage('sessions')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
 						";
-					foreach ($geolocation['sessions'] as $location => $sessions) {
+					foreach ($geolocation['pageviews'] as $location => $sessions) {
 						$sections['geolocation'] .= "
 							<tr>
 								<td>".$location."</td>
@@ -171,7 +159,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Top Viewed Pages
 				 */
-				$topPages = Information::getTopViewedPages($startTimestamp, $endTimestamp);
+				$topPages = Information::getTopViewedPages();
 				if (isset($topPages['pageviews'])) {
 					$sections['top_viewed_pages'] = "
 					<table class=\"analytics_table\">
@@ -245,7 +233,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 * Top Files
 				 */
-				$topFiles = Information::getTopViewedFiles($startTimestamp, $endTimestamp);
+				$topFiles = Information::getTopViewedFiles();
 				if (isset($topFiles['pageviews'])) {
 					$sections['most_visited_files'] = "
 					<table class=\"analytics_table\">
@@ -259,7 +247,8 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topFiles['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
-						$uriText = explode("%3A", $newUri);
+						// remove NS_FILE namespace prefix
+						$uriText = explode(":", $newUri);
 						array_shift($uriText);
 						$uriText = implode(":", $uriText);
 						$sections['most_visited_files'] .= "
@@ -275,7 +264,7 @@ class SpecialAnalytics extends \SpecialPage {
 
 				/**
 				 *  Staff Contact / Help Links
-				 */
+				 *
 				$managers = Information::getWikiManagers();
 				$sections['staff_contact'] = "
 				<table class=\"analytics_table\">
@@ -305,7 +294,8 @@ class SpecialAnalytics extends \SpecialPage {
 						</tbody>
 					</table>";
 				}
-				$sections['staff_contact'] .= "
+				**/
+				$sections['staff_contact'] = "
 				<table class=\"analytics_table\">
 					<thead>
 						<tr>
@@ -333,8 +323,8 @@ class SpecialAnalytics extends \SpecialPage {
 							</tr>
 						</thead>
 						<tbody>";
-				foreach ($terms as $term) {
-					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($term[0])."</td><td>".$term[1]."</td></tr>";
+				foreach ($terms as $term => $count) {
+					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td><td>".$term."</td></tr>";
 				}
 				$sections['top_search_terms'] .= "
 					</tbody>
@@ -345,8 +335,14 @@ class SpecialAnalytics extends \SpecialPage {
 					'error_analytics_text',
 					[$e->getMessage()]
 				);
+			} catch ( \PDOException $e ) {
+				// Redshift database connection / query issue
+				throw new \ErrorPageError(
+					'error_analytics_title',
+					'error_analytics_text',
+					['Redshift backend error']
+				);
 			}
-
 		}
 
 		$generatedAt = wfMessage('analytics_report_generated', 'one day ago TODO')->escaped();
@@ -362,20 +358,14 @@ class SpecialAnalytics extends \SpecialPage {
 	}
 
 	/**
-	 * Normalize URIs coming from Google Analytics.
+	 * Normalize URIs coming from Redshift.
 	 *
 	 * @param string $uri
 	 * @return string
 	 */
 	private function normalizeUri($uri) {
-		$parts = explode('/', $uri);
-		array_shift($parts);
-
-		foreach ($parts as $i => $part) {
-			$parts[$i] = urlencode($part);
-		}
-
-		return '/'.implode('/', $parts);
+		// e.g. /wiki/Elmo%27s_World_episodes
+		return urldecode($uri);
 	}
 
 	/**
