@@ -60,26 +60,28 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @throws \ErrorPageError
 	 */
 	private function analyticsPage() {
-		$sections = [
-			'top_viewed_pages' => '',
-			'number_of_pageviews' => '',
-			'top_editors' => '',
-			'geolocation' => '',
-			'most_visited_files' => '',
-			'staff_contact' => '',
-			'desktop_vs_mobile' => '',
-			'browser_breakdown' => '',
-			'active_editors' => '',
-			'edits_per_day' => '',
-			'logged_in_out' => '',
-			'top_search_terms' => ''
-		];
+		global $wgMemc;
 
-		// TODO: handle caching
-		$recache = true;
+		$memcKey = wfMemcKey( __CLASS__, '1' );
+		$sections = $wgMemc->get( $memcKey );
 
-		if ($recache) {
+		if ( !is_array( $sections ) ) {
 			try {
+				$sections = [
+					'top_viewed_pages' => '',
+					'number_of_pageviews' => '',
+					'top_editors' => '',
+					'geolocation' => '',
+					'most_visited_files' => '',
+					'staff_contact' => '',
+					'desktop_vs_mobile' => '',
+					'browser_breakdown' => '',
+					'active_editors' => '',
+					'edits_per_day' => '',
+					'logged_in_out' => '',
+					'top_search_terms' => ''
+				];
+
 				/**
 				 *  Browser Breakdown + Desktop vs Mobile
 				 */
@@ -336,6 +338,9 @@ class SpecialAnalytics extends \SpecialPage {
 					['Redshift backend error']
 				);
 			}
+
+			// cache the statistics for three hours, new data in Redshift arrive every 24h
+			$wgMemc->set( $memcKey, $sections,  \WikiaResponse::CACHE_SHORT );
 		}
 
 		$generatedAt = wfMessage('analytics_report_generated', 'one day ago')->escaped();
