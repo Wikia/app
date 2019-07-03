@@ -142,21 +142,21 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 * Geolocation
 				 */
-				$geolocation = Information::getGeolocation($startTimestamp, $endTimestamp);
+				$geolocation = Information::getGeolocation();
 				$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation',$geolocation);
-				arsort($geolocation['sessions']);
-				if (isset($geolocation['sessions'])) {
+				//arsort($geolocation['sessions']);
+				if (isset($geolocation['pageviews'])) {
 					$sections['geolocation'] = "
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
 								<th>".wfMessage('location')->escaped()."</th>
-								<th>".wfMessage('sessions')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
 						";
-					foreach ($geolocation['sessions'] as $location => $sessions) {
+					foreach ($geolocation['pageviews'] as $location => $sessions) {
 						$sections['geolocation'] .= "
 							<tr>
 								<td>".$location."</td>

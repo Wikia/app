@@ -170,12 +170,26 @@ class Information {
 	 * Return geolocation data.
 	 *
 	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 * @param	int $limit
 	 * @return	array	Geolocation by: [percentage => Country Code]
 	 */
-	static public function getGeolocation($startTimestamp = null, $endTimestamp = null) {
-		return ['pageviews' => ['Poland' => 100, 'USA' => 80], 'sessions' => []];
+	static public function getGeolocation($limit = 10) {
+		global $wgCityId;
+
+		$res = Redshift::query(
+			'SELECT country, COUNT(*) as views FROM wikianalytics.sessions ' .
+			'WHERE wiki_id = :wiki_id GROUP BY country ' .
+			'ORDER BY views DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$pageviews = [];
+		foreach($res as $row) {
+			// e.g. United States of America -> 558336
+			$pageviews[ $row->country ] = $row->views;
+		}
+
+		return ['pageviews' => $pageviews];
 	}
 
 	/**
