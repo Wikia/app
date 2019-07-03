@@ -91,7 +91,7 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Browser Breakdown + Desktop vs Mobile
 				 */
-				$deviceBreakdown = Information::getDeviceBreakdown($startTimestamp, $endTimestamp);
+				$deviceBreakdown = Information::getDeviceBreakdown();
 				$sections['browser_breakdown'] = TemplateAnalytics::wrapSectionData('browser_breakdown', $deviceBreakdown['browser']);
 				$sections['desktop_vs_mobile'] = TemplateAnalytics::wrapSectionData('desktop_vs_mobile', $deviceBreakdown['deviceCategory']);
 

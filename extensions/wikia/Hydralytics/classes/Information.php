@@ -289,13 +289,44 @@ class Information {
 	/**
 	 * Return device break down information.
 	 *
-	 * @access	public
-	 * @param	integer	[Optional] Start Timestamp, Unix Style
-	 * @param	integer	[Optional] End Timestamp, Unix Style
+	 * Pageviews are grouped by browser type (Chrome, Safari, Firefox, Internet Explorer, ...)
+	 * and device category (other, desktop, mobile, tablet, bot).
+	 *
+	 * @param	int $limit
 	 * @return	array	Device Breakdown
 	 */
-	static public function getDeviceBreakdown($startTimestamp = null, $endTimestamp = null) {
-		return ["browser" => ["Chrome" => 40, "Firefox" => 50], "deviceCategory" => ["desktop" => 10, "mobile" => 20]];
+	static public function getDeviceBreakdown($limit = 10) {
+		global $wgCityId;
+
+		// by browser
+		$res = Redshift::query(
+			'SELECT browser, COUNT(*) AS views FROM wikianalytics.sessions ' .
+			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
+			'ORDER BY views DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$browsers = [];
+		foreach($res as $row) {
+			// e.g. Chrome -> 434927
+			$browsers[ $row->browser ] = $row->views;
+		}
+
+		// by device type
+		$res = Redshift::query(
+			'SELECT device_type, COUNT(*) AS views FROM wikianalytics.sessions ' .
+			'WHERE wiki_id = :wiki_id GROUP BY device_type ' .
+			'ORDER BY views DESC LIMIT :limit',
+			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		);
+
+		$devices = [];
+		foreach($res as $row) {
+			// e.g. desktop -> 295008
+			$devices[ $row->device_type ] = $row->views;
+		}
+
+		return ["browser" => $browsers, "deviceCategory" => $devices];
 	}
 
 	/**
