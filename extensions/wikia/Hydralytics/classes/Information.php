@@ -103,17 +103,6 @@ class Information {
 	}
 
 	/**
-	 * Get the number of edit per day for this wiki over the past X days.
-	 *
-	 * @access	public
-	 * @param	integer	[Optional] Number of days in the past to retrieve.
-	 * @return	array	[day timestamp => points]
-	 */
-	static public function getEditsPerDay($days = 30) {
-		return self::getMockedSine($days, 10, 200);
-	}
-
-	/**
 	 * Get the top editors for the wiki over all time or optionally with monthly counts.
 	 *
 	 * @access	public
@@ -136,7 +125,6 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		// edits
 		$res = Redshift::query(
 			'SELECT dt, COUNT(*) AS edits, SUM(logged_in::int) as edits_logged_in FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
@@ -146,17 +134,21 @@ class Information {
 
 		$edits_in = self::initResultsArray();
 		$edits_out = self::initResultsArray();
+		$edits_all = self::initResultsArray();
+
 		foreach($res as $row) {
 			$index = strtotime( $row->dt );
 
 			// e.g. 2019-06-03 -> 128, 2
 			$edits_in[ $index ] = $row->edits_logged_in;
 			$edits_out[ $index ] = $row->edits - $row->edits_logged_in;
+			$edits_all[ $index ] = $row->edits;
 		}
 
 		return [
-			'in' => $edits_in,
-			'out' => $edits_out,
+			'in' => $edits_in,    # edits made by users
+			'out' => $edits_out,  # edits made by anons
+			'all' => $edits_all,  # all edits combined
 		];
 	}
 
@@ -335,39 +327,6 @@ class Information {
 		}
 
 		return ["browser" => $browsers, "deviceCategory" => $devices];
-	}
-
-	/**
-	 * Return mocked per-day data with sine wave
-	 *
-	 * @param int $days
-	 * @param int $amplitude
-	 * @param int $offset
-	 * @param bool $formatDate Returns "Y-m-d" timestamp when set to true
-	 * @return array
-	 *
-	 * @deprecated
-	 */
-	static private function getMockedSine(
-		int $days = 30, int $amplitude = 10, int $offset = 25, $formatDate = false
-	) : array {
-		$noise_level = $amplitude / 2;
-
-		$data = [];
-		for ($i = 0; $i < $days; $i++) {
-			$value = sin( $i ) * $amplitude + $offset;
-			$value += mt_rand( -$noise_level, $noise_level );
-
-			// getDailyTotals requires Y-m-d index
-			$index = strtotime('Today - '.$i.' days');
-			if ($formatDate) {
-				$index = date('Y-m-d', $index);
-			}
-
-			$data[$index] = intval($value);
-		}
-
-		return $data;
 	}
 
 	/**

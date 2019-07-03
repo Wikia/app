@@ -116,16 +116,16 @@ class SpecialAnalytics extends \SpecialPage {
 				);
 
 				/**
-				 *  Edit Per Day
-				 */
-				$dailyEdits = Information::getEditsPerDay();
-				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
-
-				/**
 				 *  Logged in vs Logged out Edits
 				 */
 				$loggedInOutEdits = Information::getEditsLoggedInOut();
 				$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $loggedInOutEdits);
+
+				/**
+				 *  Edit Per Day
+				 */
+				$dailyEdits = $loggedInOutEdits['all'];
+				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
 
 				/**
 				 * Geolocation
