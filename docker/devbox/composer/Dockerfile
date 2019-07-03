@@ -7,8 +7,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && apt-get update \
     && apt-get install -y git zip unzip\
     && pecl install yaml-2.0.2 xdebug-2.6.0 \
-    && docker-php-ext-enable yaml xdebug
+    && docker-php-ext-enable yaml xdebug \
+    && apt-get install gosu
 
-ADD . /usr/wikia/slot1/current/src
+VOLUME /usr/wikia/slot1/current/src
+VOLUME /usr/wikia/slot1/current/config
 
+ENTRYPOINT ["docker/devbox/composer/wrapper.sh"]
 CMD ["php composer.phar"]
