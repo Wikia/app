@@ -264,7 +264,7 @@ class SpecialAnalytics extends \SpecialPage {
 
 				/**
 				 *  Staff Contact / Help Links
-				 */
+				 *
 				$managers = Information::getWikiManagers();
 				$sections['staff_contact'] = "
 				<table class=\"analytics_table\">
@@ -294,7 +294,8 @@ class SpecialAnalytics extends \SpecialPage {
 						</tbody>
 					</table>";
 				}
-				$sections['staff_contact'] .= "
+				**/
+				$sections['staff_contact'] = "
 				<table class=\"analytics_table\">
 					<thead>
 						<tr>
