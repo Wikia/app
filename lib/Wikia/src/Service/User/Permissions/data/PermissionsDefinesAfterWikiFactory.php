@@ -653,6 +653,6 @@ $wgGroupPermissions['*']['schedule-update-special-pages'] = false;
 $wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
 
 // DE-4374 | allow staff members and wikis admins to access Special:Analytics
-$wgGroupPermissions['*']['analytics'] = true;
+$wgGroupPermissions['*']['analytics'] = false;
 $wgGroupPermissions['sysop']['analytics'] = true;
 $wgGroupPermissions['staff']['analytics'] = true;
