@@ -2,11 +2,12 @@
 
 namespace Wikia\Search\IndexService;
 
+use ImageServing;
 use simple_html_dom;
 
 /**
  * This is intended to provide core article content.
- * It has been copy pasted from DefaultContent.php but allso includes full_html, so that it can be parsed by
+ * It has been copy pasted from DefaultContent.php but also includes full_html, so that it can be parsed by
  * an article snippet parser.
  *
  * @subpackage IndexService
@@ -59,6 +60,10 @@ class FullContent extends AbstractService {
 		$response = empty( $response ) ? [] : $response;
 		$titleStr = $service->getTitleStringFromPageId( $pageId );
 
+
+		$imageServing = new ImageServing( [ $pageId ] );
+		$images = $imageServing->getImages( 2 )[$pageId];
+
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
 			'pageid' => $pageId,
@@ -68,7 +73,8 @@ class FullContent extends AbstractService {
 			'ns' => $service->getNamespaceFromPageId( $pageId ),
 			'lang' => $service->getSimpleLanguageCode(),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
-			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false'
+			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+			'image' => isset( $images[0] ) ? $images[0]['url'] : null,
 		] );
 	}
 
@@ -82,31 +88,7 @@ class FullContent extends AbstractService {
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-			return $this->prepValuesFromHtml( $html );
-		}
-
-		return [
-			'html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-		];
-	}
-
-	/**
-	 * Returns an array with section headings for the page.
-	 *
-	 * @param array $response
-	 *
-	 * @return array
-	 */
-	protected function getHeadingsFromParseResponse( array $response ) {
-		$headings = [];
-		if ( !empty( $response['parse']['sections'] ) ) {
-			foreach ( $response['parse']['sections'] as $section ) {
-				$headings[] = $section['line'];
-			}
-		}
-
-		return [ 'headings' => $headings ];
+		return $this->prepValuesFromHtml( $html );
 	}
 
 	/**
@@ -119,7 +101,6 @@ class FullContent extends AbstractService {
 	 *
 	 * @return array
 	 */
-
 	protected function prepValuesFromHtml( $html ) {
 		$result = [];
 		// workaround for bug in html_entity_decode that truncates the text
@@ -127,67 +108,12 @@ class FullContent extends AbstractService {
 
 		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
 		if ( $dom->root ) {
-			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
-				$result = array_merge( $result, $this->extractInfoboxes( $dom ) );
-			}
 			$this->removeGarbageFromDom( $dom );
-			$plaintext = $this->getPlaintextFromDom( $dom );
-		} else {
-			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
-		$plaintext = trim( preg_replace( static::SPACE_SEQUENCE_REGEXP, ' ', $plaintext ) );
 
 		return array_merge( $result, [
 			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-			'html' => $plaintext,
 		] );
-	}
-
-	/**
-	 * Assigns infobox-based values to result (passed by reference), when found.
-	 *
-	 * @param simple_html_dom $dom
-	 *
-	 * @return array
-	 */
-	protected function extractInfoboxes( simple_html_dom $dom ) {
-		$result = [];
-		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
-		if ( count( $infoboxes ) > 0 ) {
-			$result['infoboxes_txt'] = [];
-			$counter = 1;
-			foreach ( $infoboxes as $infobox ) {
-				$outerText = $infobox->outertext();
-				$infobox = new simple_html_dom( $outerText );
-				$this->removeGarbageFromDom( $infobox );
-				$infobox->load( $infobox->save() );
-				$infoboxRows = $infobox->find( 'tr' );
-				if ( $infoboxRows ) {
-					foreach ( $infoboxRows as $row ) {
-						$infoboxCells = $row->find( 'td' );
-						$headerCells = $row->find( 'th' );
-						$infoBoxCellCount = count( $infoboxCells );
-						$headerCellCount = count( $headerCells );
-						if ( $infoBoxCellCount == 2 && $headerCellCount == 0 ) {
-							$result['infoboxes_txt'][] =
-								"infobox_{$counter} | " . preg_replace( '/\s+/', ' ',
-									$infoboxCells[0]->plaintext . ' | ' .
-									$infoboxCells[1]->plaintext );
-						} else {
-							if ( $infoBoxCellCount == 1 && $headerCellCount == 1 ) {
-								$result['infoboxes_txt'][] =
-									"infobox_{$counter} | " . preg_replace( '/\s+/', ' ',
-										$headerCells[0]->plaintext . ' | ' .
-										$infoboxCells[0]->plaintext );
-							}
-						}
-					}
-				}
-				$counter ++;
-			}
-		}
-
-		return $result;
 	}
 
 	/**
@@ -203,54 +129,4 @@ class FullContent extends AbstractService {
 			}
 		}
 	}
-
-	/**
-	 * Returns all text from tables as plaintext, and then removes them.
-	 *
-	 * @param simple_html_dom $dom
-	 *
-	 * @return string
-	 */
-	protected function extractAsidesFromDom( simple_html_dom $dom ) {
-		$plaintext = '';
-		foreach ( $this->asideSelectors as $aside ) {
-			foreach ( $dom->find( $aside ) as $a ) {
-				$plaintext .= $a->plaintext;
-				$a->outertext = ' ';
-			}
-		}
-		$dom->load( $dom->save() );
-
-		return $plaintext;
-	}
-
-	/**
-	 * Returns an array of paragraph text as plaintext
-	 *
-	 * @param simple_html_dom $dom
-	 *
-	 * @return array
-	 */
-	protected function getParagraphsFromDom( simple_html_dom $dom ) {
-		$paragraphs = [];
-		foreach ( $dom->find( 'p' ) as $pNode ) {
-			$paragraphs[] = $pNode->plaintext;
-		}
-
-		return $paragraphs;
-	}
-
-	/**
-	 * Returns HTML-free article text. Appends any tables to the bottom of the dom.
-	 *
-	 * @param simple_html_dom $dom
-	 *
-	 * @return string
-	 */
-	protected function getPlaintextFromDom( simple_html_dom $dom ) {
-		$tables = $this->extractAsidesFromDom( $dom );
-
-		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
-	}
-
 }

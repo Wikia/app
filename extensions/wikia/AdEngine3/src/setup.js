@@ -1,3 +1,4 @@
+import * as Cookies from 'js-cookie';
 import {
 	AdEngine,
 	context,
@@ -52,7 +53,7 @@ async function updateWadContext() {
 
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
-		context.get('opts.showAds') !== false &&
+		context.get('state.showAds') !== false &&
 		!window.wgUserName;
 
 	if (serviceCanBeEnabled) {
@@ -67,8 +68,25 @@ async function updateWadContext() {
 	}
 }
 
+function setUpGeoData() {
+  const jsonData = decodeURIComponent(Cookies.get('Geo'));
+  let geoData = {};
+
+  try {
+    geoData = JSON.parse(jsonData) || {};
+  } catch (e) {
+    // Stay with {} value
+  }
+
+  context.set('geo.region', geoData.region);
+  context.set('geo.country', geoData.country);
+  context.set('geo.continent', geoData.continent);
+}
+
 async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
 	const showAds = getReasonForNoAds() === null;
+
+	setUpGeoData();
 
 	context.extend(basicContext);
 

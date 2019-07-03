@@ -183,18 +183,18 @@ spec:
         summary: fpm workers usage is at {{$value}} %
         graphs: https://metrics.wikia-inc.com/d/znlnjNxik/kubernetes-production-traffic
     - alert: mediawiki_prod_nginx_timing
-        expr: sum(rate(nginx_vts_server_request_seconds_total{job="mediawiki-prod", host="*"}[5m]))/sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", host="*"}[5m])) > 0.3
-        labels:
-          team: core-platform
-        annotations:
-          description: Average k8s request time is high
-          summary: Average request time is over {{$value}} s
+      expr: sum(rate(nginx_vts_server_request_seconds_total{job="mediawiki-prod", host="*"}[5m]))/sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", host="*"}[5m])) > 0.3
+      labels:
+        team: core-platform
+      annotations:
+        description: Average k8s request time is high
+        summary: Average request time is over {{$value}} s
         graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status
     - alert: mediawiki_prod_nginx_5xx
-        expr: (sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="5xx", host="*"}[15m])) / sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="total", host="*"}[15m]))) * 100 > 5
-        labels:
-          team: core-platform
-        annotations:
-          description: Too many 5xx status codes
-          summary: 5xx to total status code ratio is {{$value}}%
+      expr: (sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="5xx", host="*"}[15m])) / sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="total", host="*"}[15m]))) * 100 > 5
+      labels:
+        team: core-platform
+      annotations:
+        description: Too many 5xx status codes
+        summary: 5xx to total status code ratio is {{$value}}%
         graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status

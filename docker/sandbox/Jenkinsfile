@@ -6,7 +6,7 @@ def tokens = params.sandbox.tokenize('-')
 def sandbox = tokens[tokens.size() - 1]
 def datacenter = params.datacenter
 
-def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.22"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
 def mediawikiImageName = params.debug ? "mediawiki-sandbox-php" : "mediawiki-php"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/${mediawikiImageName}"
