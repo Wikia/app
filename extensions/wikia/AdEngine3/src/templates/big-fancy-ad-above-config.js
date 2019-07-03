@@ -5,11 +5,11 @@ import slots from '../slots';
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
 	CSS_TIMING_EASE_IN_CUBIC,
-	SLIDE_OUT_TIME
+	SLIDE_OUT_TIME,
+	CSS_CLASSNAME_THEME_RESOLVED
 } = universalAdPackage;
 
 export const getConfig = () => ({
-	isResolved: false,
 	autoPlayAllowed: true,
 	defaultStateAllowed: true,
 	fullscreenAllowed: true,
@@ -80,22 +80,18 @@ export const getConfig = () => ({
 	},
 
 	onResolvedStateSetCallback() {
-		this.isResolved = true;
-		this.updateNavbar();
-		requestAnimationFrame(() => this.updateNavbar());
-	},
-
-	onResolvedStateResetCallback() {
-		this.isResolved = false;
+		this.updateNavbar(); // when scrolling prevents jumping UAP
+		requestAnimationFrame(() => this.updateNavbar()); // when idle, moves navbar to resolved UAP
 	},
 
 	updateNavbar() {
 		const container = this.adSlot.getElement();
 		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
 		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+		const isResolved = container.classList.contains(CSS_CLASSNAME_THEME_RESOLVED);
 
-		pinNavbar((isInViewport && !isSticky) || !this.isResolved);
-		this.moveNavbar((isSticky && this.isResolved) ? container.offsetHeight : 0);
+		pinNavbar((isInViewport && !isSticky) || !isResolved);
+		this.moveNavbar((isSticky && isResolved) ? container.offsetHeight : 0);
 	},
 
 	moveNavbar(offset) {
