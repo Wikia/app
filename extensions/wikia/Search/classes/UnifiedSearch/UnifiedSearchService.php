@@ -46,7 +46,6 @@ class UnifiedSearchService {
 	public function shadowModeSearch( UnifiedSearchRequest $request ) {
 		try {
 			$params = [
-				'wikiId' => $request->getWikiId(),
 				'lang' => $request->getLanguageCode(),
 				'query' => $request->getQuery()->getSanitizedQuery(),
 				'namespace' => $request->getNamespaces(),
