@@ -17,7 +17,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 		$this->mDescription = 'Downloads XML dump for given wiki and uploads it to Spectrum S3 bucket';
 		$this->addOption( 'AWSAccessKey', 'Spectrum AWS access key', true, true, 'a' );
 		$this->addOption( 'AWSSecretKey', 'Spectrum AWS secret key', true, true, 's' );
-		$this->addOption( 'bucketName', 'GS3 bucket name', true, true, 'b' );
+		$this->addOption( 'bucketName', 'S3 bucket name', true, true, 'b' );
 		$this->addOption( 'saveChanges', 'Get XML dump and save it in s3 bucket', false, false, 'd' );
 	}
 
