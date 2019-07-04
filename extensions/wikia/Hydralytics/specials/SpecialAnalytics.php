@@ -17,7 +17,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.1;
+	const CACHE_VERSION = 3.3;
 
 	/**
 	 * Output HTML
@@ -316,7 +316,7 @@ class SpecialAnalytics extends \SpecialPage {
 				<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('rank')->escaped()."</th>
+								<th>".wfMessage('search_rank')->escaped()."</th>
 								<th>".wfMessage('search_term')->escaped()."</th>
 							</tr>
 						</thead>
@@ -326,7 +326,9 @@ class SpecialAnalytics extends \SpecialPage {
 				}
 				$sections['top_search_terms'] .= "
 					</tbody>
-				</table>".\Linker::link($this->getTitleFor('SearchLog'), wfMessage('view_more')->escaped());
+				</table>";
+
+				// $sections['top_search_terms'] .= \Linker::link($this->getTitleFor('SearchLog'), wfMessage('view_more')->escaped());
 			} catch (\MWException $e) {
 				throw new \ErrorPageError(
 					'error_analytics_title',
