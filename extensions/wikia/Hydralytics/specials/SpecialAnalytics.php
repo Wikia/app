@@ -17,7 +17,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3.1;
 
 	/**
 	 * Output HTML
@@ -77,7 +77,6 @@ class SpecialAnalytics extends \SpecialPage {
 					'top_editors' => '',
 					'geolocation' => '',
 					'most_visited_files' => '',
-					'staff_contact' => '',
 					'desktop_vs_mobile' => '',
 					'browser_breakdown' => '',
 					'active_editors' => '',
@@ -293,7 +292,7 @@ class SpecialAnalytics extends \SpecialPage {
 						</tbody>
 					</table>";
 				}
-				**/
+
 				$sections['staff_contact'] = "
 				<table class=\"analytics_table\">
 					<thead>
@@ -307,7 +306,7 @@ class SpecialAnalytics extends \SpecialPage {
 						<tr><td>".Information::getSlackLink()."</td></tr>
 					</tbody>
 				</table>";
-
+				 **/
 				/**
 				 * Top Search Terms
 				 */
