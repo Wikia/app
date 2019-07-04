@@ -43,6 +43,7 @@ $messages['en'] = array(
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrats',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
 	'grouppage-wiki-manager' => 'Help:Wiki Managers',
+	'grouppage-content-team-member' => 'Help:Content Team Members',
 	'group-autoconfirmed.css' => '/* CSS placed here will affect autoconfirmed users only */',
 	'group-bot.css' => '/* CSS placed here will affect bots only */',
 	'group-sysop.css' => '/* CSS placed here will affect sysops only */',
@@ -83,6 +84,8 @@ $messages['en'] = array(
 	'group-request-to-be-forgotten-admin-member' => 'Request To Be Forgotten Tool Admin',
 	'group-wiki-manager' => 'Wiki Managers',
 	'group-wiki-manager-member' => 'Wiki Manager',
+	'group-content-team-member' => 'Content Team Members',
+	'group-content-team-member-member' => 'Content Team Member',
 );
 
 $messages['qqq'] = array(
