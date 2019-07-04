@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	"hydralytics" => "Hydralytics",
-	"hydralytics_description" => "Hydra Wiki Platform Analytics",
+	"hydralytics_description" => "Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]",
 	"analytics_dashboard" => "Wiki Analytics Admin Dashboard",
 	"hlfaqurl-text" => "Policies, Procedures, and FAQ",
 	"hlfeedbackurl-text" => "Wiki Admin Dashboard Feedback",

@@ -7,6 +7,8 @@ use Wikia\Logger\WikiaLogger;
 /**
  * This class provides access to Redshift analytics data storage on Amazon
  *
+ * @author macbre
+ *
  * @see https://wikia-inc.atlassian.net/browse/DE-4421
  */
 class Redshift {

@@ -1,14 +1,12 @@
 <?php
 /**
- * Curse Inc.
- * Hydralytics
  * Analytics Special Page Template
  *
- * @author		Alexia E. Smith
+ * @author		Alexia E. Smith and Wikia's Data Eng Team
  * @copyright	(c) 2018 Curse Inc.
+ * @copyright	(c) 2019 Wikia Inc..
  * @license		GNU General Public License v2.0 or later
  * @package		Hydralytics
- * @link		https://gitlab.com/hydrawiki
  *
  **/
 

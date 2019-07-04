@@ -1,16 +1,4 @@
 <?php
-/**
- * Curse Inc.
- * Hydralytics
- * Information Class
- *
- * @author		Alexia E. Smith
- * @copyright	(c) 2018 Curse Inc.
- * @license		GNU General Public License v2.0 or later
- * @package		Hydralytics
- * @link		https://gitlab.com/hydrawiki
- *
- **/
 
 namespace Hydralytics;
 
