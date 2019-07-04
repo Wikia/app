@@ -1,4 +1,4 @@
-import { context, scrollListener, slotTweaker, utils, universalAdPackage } from '@wikia/ad-engine';
+import { context, scrollListener, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
 import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 import slots from '../slots';
 
