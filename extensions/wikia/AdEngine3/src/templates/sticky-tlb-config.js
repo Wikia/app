@@ -1,5 +1,5 @@
-import { context, scrollListener, slotService, slotTweaker, universalAdPackage } from '@wikia/ad-engine';
-import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
+import {context, scrollListener, slotService, slotTweaker, universalAdPackage, utils} from '@wikia/ad-engine';
+import { pinNavbar, navBarElement } from './navbar-updater';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -71,7 +71,7 @@ export const getConfig = () => ({
 	updateNavbar() {
 		const container = this.adSlot.getElement();
 		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+		const isInViewport = utils.isInViewport(container, { areaThreshold: 1 });
 
 		pinNavbar(isInViewport && !isSticky);
 		this.moveNavbar(isSticky ? container.offsetHeight : 0);
