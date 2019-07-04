@@ -18,6 +18,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 		$this->addOption( 'AWSAccessKey', 'Spectrum AWS access key', true, true, 'a' );
 		$this->addOption( 'AWSSecretKey', 'Spectrum AWS secret key', true, true, 's' );
 		$this->addOption( 'bucketName', 'S3 bucket name', true, true, 'b' );
+		$this->addOption( 'fromWikiId', 'start running script from specific wiki ID', false, true, 'i' );
 		$this->addOption( 'saveChanges', 'Get XML dump and save it in s3 bucket', false, false, 'd' );
 	}
 
@@ -28,6 +29,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 		$AWSAccessKey = $this->getOption( 'AWSAccessKey' );
 		$AWSSecretKey = $this->getOption( 'AWSSecretKey' );
 		$bucketName =  $this->getOption( 'bucketName' );
+		$fromWikiId =  $this->getOption( 'fromWikiId' );
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
 		$range = array();
@@ -35,6 +37,10 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 
 		if( !empty( $wgDumpsDisabledWikis ) && is_array( $wgDumpsDisabledWikis ) ) {
 			$range[] = 'city_id NOT IN (' . implode( ',', $wgDumpsDisabledWikis ) . ')';
+		}
+
+		if ( $fromWikiId !== false ) {
+			$range[] = sprintf( "city_id >= %d", $fromWikiId );
 		}
 
 		$wgMaxShellTime = 0;
