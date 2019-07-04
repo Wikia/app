@@ -2105,12 +2105,11 @@ class OutputPage extends ContextSource {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}
 
-			if( wfHttpsAllowedForURL( $this->mRedirect ) ) {
+			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
+
+			if ( $this->mRedirectProtocol === PROTO_HTTPS ) {
 				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
 			}
-
-			# Standards require redirect URLs to be absolute
-			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
 
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
