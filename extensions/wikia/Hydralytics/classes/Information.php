@@ -92,29 +92,31 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT dt, COUNT(*) AS edits, SUM(logged_in::int) as edits_logged_in FROM wikianalytics.edits ' .
+			'SELECT dt, COUNT(*) AS total_edits, ' .
+			 'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
+			 FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
 		);
 
-		$edits_in = self::initResultsArray();
-		$edits_out = self::initResultsArray();
-		$edits_all = self::initResultsArray();
+		$edits_logged_in = self::initResultsArray();
+		$edits_anons = self::initResultsArray();
+		$edits_total = self::initResultsArray();
 
 		foreach($res as $row) {
 			$index = strtotime( $row->dt );
 
 			// e.g. 2019-06-03 -> 128, 2
-			$edits_in[ $index ] = $row->edits_logged_in;
-			$edits_out[ $index ] = $row->edits - $row->edits_logged_in;
-			$edits_all[ $index ] = $row->edits;
+			$edits_logged_in[ $index ] = $row->total_edits -  $row->edits_anons;
+			$edits_anons[ $index ]     = $row->edits_anons;
+			$edits_total[ $index ]     = $row->total_edits;
 		}
 
 		return [
-			'in' => $edits_in,    # edits made by users
-			'out' => $edits_out,  # edits made by anons
-			'all' => $edits_all,  # all edits combined
+			'in' => $edits_logged_in,
+			'out' => $edits_anons,
+			'all' => $edits_total,
 		];
 	}
 

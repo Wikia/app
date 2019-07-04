@@ -15,6 +15,10 @@
 namespace Hydralytics;
 
 class SpecialAnalytics extends \SpecialPage {
+
+	// bump this one to invalidate the Redshift results cache
+	const CACHE_VERSION = 2;
+
 	/**
 	 * Output HTML
 	 *
@@ -62,7 +66,7 @@ class SpecialAnalytics extends \SpecialPage {
 	private function analyticsPage() {
 		global $wgMemc;
 
-		$memcKey = wfMemcKey( __CLASS__, '1' );
+		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION );
 		$sections = $wgMemc->get( $memcKey );
 
 		if ( !is_array( $sections ) ) {
