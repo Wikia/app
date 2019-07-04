@@ -101,6 +101,12 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 	function setupTracking() {
 		var shouldSendAdditionalData = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
+		var $sponsoredItem = $mixedContentFooter.find("[data-tracking*='sponsored-item']");
+
+		if ($sponsoredItem.length) {
+			console.log($sponsoredItem);
+			tracker.trackImpression($sponsoredItem.attr('href'));
+		}
 
 		tracker.trackImpression('footer');
 
