@@ -17,7 +17,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.3;
+	const CACHE_VERSION = 3.5;
 
 	/**
 	 * Output HTML
@@ -321,9 +321,16 @@ class SpecialAnalytics extends \SpecialPage {
 							</tr>
 						</thead>
 						<tbody>";
+
+				// generate URLs like this one: https://elderscrolls.fandom.com/wiki/Special:Search?query=Marriage
+				$specialSearch = \SpecialPage::getTitleFor('Search');
+
 				foreach ($terms as $term => $count) {
-					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td><td>".$term."</td></tr>";
+					$url = $specialSearch->getLocalURL( [ 'query' => $term ] );
+					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td>" .
+                         '<td><a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($term)."</a></td></tr>";
 				}
+
 				$sections['top_search_terms'] .= "
 					</tbody>
 				</table>";
