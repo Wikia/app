@@ -7,8 +7,8 @@
 USER_ID=${LOCAL_USER_ID:-9001}
 
 echo "Starting with UID : $USER_ID"
-adduser --home /app --shell /bin/bash --disabled-login --uid $USER_ID --system docker_user
-export HOME=/app
+adduser --home /usr/wikia/slot1/current/src --shell /bin/bash --disabled-login --uid $USER_ID --system docker_user
+export HOME=/usr/wikia/slot1/current/src
 
 set -Eeo pipefail
 

@@ -118,7 +118,7 @@ The composer is not installed in the application container, so in order to insta
 you're going to want to use a different image, stored in `composer` directory. Example usage:
 
 ```bash
-docker run -it -v "$HOME/app":/usr/wikia/slot1/current/src -e LOCAL_USER_ID=`id -u $USER` artifactory.wikia-inc.com/platform/composer-wikia-devbox:latest php composer.phar require some/stuff
+docker run -it -v "$HOME/app":/usr/wikia/slot1/current/src -e LOCAL_USER_ID=`id -u $USER` artifactory.wikia-inc.com/platform/composer-wikia-devbox:latest composer require some/stuff
 ```
 
 Should you need to rebuild the composer image, please use the following command:
