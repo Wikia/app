@@ -9003,4 +9003,4 @@ $wgArticleExporterExchange = [
 /**
  * @var $wgEnableHydralyticsExt
  */
-$wgEnableHydralyticsExt = true;
+$wgEnableHydralyticsExt = false;
