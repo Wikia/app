@@ -104,7 +104,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		var $sponsoredItem = $mixedContentFooter.find("[data-tracking*='sponsored-item']");
 
 		if ($sponsoredItem.length) {
-			console.log($sponsoredItem);
 			tracker.trackImpression($sponsoredItem.attr('href'));
 		}
 
