@@ -15,9 +15,9 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Downloads XML dump for given wiki and uploads it to Spectrum S3 bucket';
-		$this->addArg( 'AWSAccessKey', 'Spectrum AWS access key', true );
-		$this->addArg( 'AWSSecretKey', 'Spectrum AWS secret key', true );
-		$this->addArg( 'bucketName', 'S3 bucket name', true );
+		$this->addOption( 'AWSAccessKey', 'Spectrum AWS access key', true, true, 'a' );
+		$this->addOption( 'AWSSecretKey', 'Spectrum AWS secret key', true, true, 's' );
+		$this->addOption( 'bucketName', 'GS3 bucket name', true, true, 'b' );
 		$this->addOption( 'saveChanges', 'Get XML dump and save it in s3 bucket', false, false, 'd' );
 	}
 
@@ -25,9 +25,9 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 
 		global $wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
 
-		$AWSAccessKey = $this->getArg( 0 );
-		$AWSSecretKey = $this->getArg( 1 );
-		$bucketName =  $this->getArg( 2 );
+		$AWSAccessKey = $this->getOption( 'AWSAccessKey' );
+		$AWSSecretKey = $this->getOption( 'AWSSecretKey' );
+		$bucketName =  $this->getOption( 'bucketName' );
 		$saveChanges = $this->hasOption( 'saveChanges' );
 
 		$range = array();
@@ -49,10 +49,12 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 			array( "ORDER BY" => "city_id" )
 		);
 
+		$s3 = new S3( $AWSAccessKey, $AWSSecretKey );
+
 		while( $row = $dbw->fetchObject( $sth ) ) {
 			$this->output( "Preparing XML dump for {$row->city_id} - {$row->city_dbname}\n" );
 			if ( $saveChanges ) {
-				$this->runBackup( $AWSAccessKey, $AWSSecretKey, $bucketName, $row,
+				$this->runBackup( $bucketName, $s3, $row,
 					sprintf( "%s/%s_pages_current.xml.7z", sys_get_temp_dir(), $row->city_dbname ),
 					[ '--current' ] );
 				$this->output( "Done, XML dump saved in S3 bucket\n" );
@@ -62,12 +64,10 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 
 	}
 
-	private function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType, string $AWSAccessKey, string
-	$AWSSecretKey, string $bucketName )  {
+	private function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType, string $bucketName, $s3 )  {
 
 		$size = filesize( $sPath );
 
-		$s3 = new S3( $AWSAccessKey, $AWSSecretKey );
 		S3::setExceptions( true );
 
 		$file = fopen( $sPath, 'rb' );
@@ -87,7 +87,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 		);
 	}
 
-	private function runBackup( $AWSAccessKey, $AWSSecretKey, $bucketName, $row, $path, array $args = [] ) {
+	private function runBackup( $bucketName, $s3, $row, $path, array $args = [] ) {
 		global $IP, $wgWikiaLocalSettingsPath, $options;
 
 		$server = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
@@ -109,16 +109,16 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 			try {
 				$this->putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType(
 					$path
-				), $AWSAccessKey, $AWSSecretKey, $bucketName );
+				), $bucketName, $s3 );
 				$this->output("XML dump was successful\n");
 			} catch( S3Exception $ex ) {
-				$this->output( "Failed to put XML dump to bucket {$ex}\n" );
+				$this->output( "Failed to put XML dump for {$row->city_id} ({$row->city_dbname}) to bucket {$ex}\n" );
 				exit( 1 );
 			}
 			unlink( $path );
 		}
 		else {
-			$this->output( "Skipped XML dump creation\n" );
+			$this->output( "Skipped XML dump creation for {$row->city_id} ({$row->city_dbname})\n" );
 			exit( 2 );
 		}
 	}
