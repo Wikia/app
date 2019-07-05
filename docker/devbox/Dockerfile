@@ -9,7 +9,9 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:06b60d8
 # these require autoconf package to be present
 
 RUN pecl install yaml-2.0.2 xdebug-2.6.0 \
-    && docker-php-ext-enable yaml xdebug
+    && docker-php-ext-enable yaml xdebug \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu
 
 # Configure dev opcache
 ADD ./opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
