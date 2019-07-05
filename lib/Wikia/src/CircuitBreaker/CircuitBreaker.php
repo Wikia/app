@@ -2,10 +2,10 @@
 
 namespace Wikia\CircuitBreaker;
 
+use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\Exception;
-use WikiaException;
 
-class CircuitBreakerOpen extends WikiaException {
+class CircuitBreakerOpen extends ClientException {
 	/** @var string */
 	private $serviceName;
 
@@ -14,11 +14,12 @@ class CircuitBreakerOpen extends WikiaException {
 	 * @param string $serviceName
 	 * @param int $code
 	 * @param Exception|null $previous
+	 * @param null $data
 	 */
-	public function __construct(string $serviceName, int $code = 0, Exception $previous = null) {
+	public function __construct(string $serviceName, int $code = 0, Exception $previous = null, $data = null) {
 		$this->serviceName = $serviceName;
 
-		parent::__construct("circuit breaker open for service $serviceName", $code, $previous);
+		parent::__construct("circuit breaker open for service $serviceName", $code, $previous, $data);
 	}
 }
 
