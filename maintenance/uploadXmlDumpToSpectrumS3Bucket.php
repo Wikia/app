@@ -14,7 +14,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Downloads XML dump for given wiki and uploads it to Spectrum S3 bucket';
+		$this->mDescription = 'Downloads XML dump for all wiki and uploads it to Spectrum S3 bucket';
 		$this->addOption( 'AWSAccessKey', 'Spectrum AWS access key', true, true, 'a' );
 		$this->addOption( 'AWSSecretKey', 'Spectrum AWS secret key', true, true, 's' );
 		$this->addOption( 'bucketName', 'S3 bucket name', true, true, 'b' );
@@ -46,7 +46,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 		$wgMaxShellTime = 0;
 		$wgMaxShellFileSize = 0;
 
-		$dbw = Wikifactory::db( DB_MASTER );
+		$dbw = Wikifactory::db( DB_SLAVE );
 		$sth = $dbw->select(
 			array( "city_list" ),
 			array( "city_id", "city_dbname" ),
