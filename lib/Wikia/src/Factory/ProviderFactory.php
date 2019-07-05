@@ -40,7 +40,7 @@ class ProviderFactory {
 	public function apiProvider(): ApiProvider {
 		if ( $this->apiProvider === null ) {
 			$sampler =  new BernoulliTrial( static::API_PROVIDER_SAMPLE_RATE );
-			$circuitBreaker = new ExternalCircuitBreaker();
+			$circuitBreaker = new ExternalCircuitBreaker( $sampler );
 
 			$this->apiProvider = new ApiProvider( $this->urlProvider(), $sampler, $circuitBreaker );
 		}

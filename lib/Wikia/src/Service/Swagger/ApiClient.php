@@ -52,13 +52,6 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$code = 200;
 
 		if ( !$this->circuitBreaker->OperationAllowed( $this->serviceName ) ) {
-			if ( $this->logSampler->shouldSample() ) {
-				$this->warning("[circuit breaker] open", [
-					'reqMethod' => $method,
-					'reqUrl' => "http://".$this->getConfig()->getHost().$resourcePath,
-					'caller' => $this->serviceName,
-				]);
-			}
 			throw new CircuitBreakerOpen( $this->serviceName );
 		}
 
