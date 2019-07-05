@@ -127,10 +127,9 @@ class CreateWikiChecks {
 			$domain = static::getDomain( $sName, $sLang );
 			if ( !empty( $domain ) ) {
 				#--- domain exists
-				$protocol = wfHttpsEnabledForDomain( $domain ) ? 'https' : 'http';
 				$message = wfMessage( 'autocreatewiki-name-taken' )
 					->rawParams(
-						Html::element( 'a', [ 'href' => "{$protocol}://{$domain}" ], $domain )
+						Html::element( 'a', [ 'href' => PROTO_HTTPS . $domain ], $domain )
 					);
 			}
 		}

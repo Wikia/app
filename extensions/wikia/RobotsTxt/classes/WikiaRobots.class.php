@@ -168,8 +168,7 @@ class WikiaRobots {
 		       $wgServer,
 		       $wgScriptPath,
 		       $wgRequest,
-		       $wgCityId,
-		       $wgEnableHTTPSForAnons;
+		       $wgCityId;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -181,15 +180,7 @@ class WikiaRobots {
 			// Sitemap
 			if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
 				$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';
-				// Enforce HTTPS on wikis where it is enabled by default
-				if ( wfHttpsAllowedForURL( $sitemapUrl ) &&
-					(
-						wfHttpsEnabledForURL( $sitemapUrl ) ||
-						!empty( $wgEnableHTTPSForAnons )
-					)
-				) {
-					$sitemapUrl = wfHttpToHttps( $sitemapUrl );
-				}
+				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
 			}
 

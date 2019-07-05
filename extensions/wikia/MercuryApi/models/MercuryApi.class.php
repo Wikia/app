@@ -112,7 +112,7 @@ class MercuryApi {
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'articlePath' => $articlePath,
-			'basePath' => $wgServer,
+			'basePath' =>  wfHttpsAllowedForURL( $wgServer ) ? wfHttpToHttps( $wgServer ) : $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'id' => (int) $wgCityId,
