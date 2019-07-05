@@ -4,6 +4,7 @@ namespace Wikia\CircuitBreaker;
 
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\Exception;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 class CircuitBreakerOpen extends ClientException {
 	/** @var string */
@@ -40,4 +41,19 @@ interface CircuitBreaker {
 	 * @return bool
 	 */
 	public function SetOperationStatus( string $name, bool $status );
+}
+
+/**
+ * @param BernoulliTrial $logSampler
+ * @return ExternalCircuitBreaker|NoopCircuitBreaker
+ */
+function CircuitBreakerFactory( BernoulliTrial $logSampler ) {
+	global $wgCircuitBreakerType;
+
+	switch ($wgCircuitBreakerType) {
+		case 'external':
+			return new ExternalCircuitBreaker( $logSampler );
+		default:
+			return new NoopCircuitBreaker();
+	}
 }

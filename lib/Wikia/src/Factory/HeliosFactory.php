@@ -1,8 +1,7 @@
 <?php
 namespace Wikia\Factory;
 
-use Wikia\CircuitBreaker\CircuitBreaker;
-use Wikia\CircuitBreaker\ExternalCircuitBreaker;
+use function Wikia\CircuitBreaker\CircuitBreakerFactory;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\User\Auth\AuthService;
 use Wikia\Service\User\Auth\CookieHelper;
@@ -36,7 +35,7 @@ class HeliosFactory extends AbstractFactory {
 			$urlProvider = $urlProviderFactory->urlProvider();
 
 			$heliosUrl = $wgAuthServiceInternalUrl ?: "http://{$urlProvider->getUrl( self::AUTH_SERVICE_NAME )}/";
-			$circuitBreaker = new ExternalCircuitBreaker( new BernoulliTrial( 0.01 ) );
+			$circuitBreaker = CircuitBreakerFactory( new BernoulliTrial( 0.01 ) );
 
 			$this->heliosClient = new HeliosClient( $heliosUrl, $wgTheSchwartzSecretToken, $circuitBreaker );
 		}
