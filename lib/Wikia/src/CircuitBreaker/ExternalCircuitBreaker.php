@@ -23,7 +23,8 @@ class ExternalCircuitBreaker implements CircuitBreaker {
 	 */
 	public function __construct( BernoulliTrial $logSampler) {
 		$this->logSampler = $logSampler;
-		$this->apiClient = new GuzzleHttp\Client( [ 'base_uri' => self::CIRCUIT_BREAKER_SERVICE_URL ] );
+		$circuitBreakerUrl = $_ENV['CIRCUIT_BREAKER_SERVICE_URL'] || self::CIRCUIT_BREAKER_SERVICE_URL;
+		$this->apiClient = new GuzzleHttp\Client( [ 'base_uri' => $circuitBreakerUrl ] );
 	}
 
 	/**
