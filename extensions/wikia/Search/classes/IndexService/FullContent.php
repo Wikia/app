@@ -62,7 +62,8 @@ class FullContent extends AbstractService {
 
 
 		$imageServing = new ImageServing( [ $pageId ] );
-		$images = $imageServing->getImages( 2 )[$pageId];
+		$images = $imageServing->getImages( 1 );
+		$image = isset( $images[$pageId][0]['url'] ) ? $images[$pageId][0]['url'] : null;
 
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
@@ -74,7 +75,7 @@ class FullContent extends AbstractService {
 			'lang' => $service->getSimpleLanguageCode(),
 			'iscontent' => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 			'is_main_page' => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
-			'image' => isset( $images[0] ) ? $images[0]['url'] : null,
+			'image' => $image,
 		] );
 	}
 
@@ -88,6 +89,7 @@ class FullContent extends AbstractService {
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+
 		return $this->prepValuesFromHtml( $html );
 	}
 
