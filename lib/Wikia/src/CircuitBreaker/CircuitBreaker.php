@@ -21,6 +21,10 @@ class CircuitBreakerOpen extends ClientException {
 
 		parent::__construct("circuit breaker open for service $serviceName", $code, $previous, $data);
 	}
+
+	protected function logMe() {
+		$this->error( 'circuit breaker open', ['service' => $this->serviceName ] );
+	}
 }
 
 interface CircuitBreaker {
