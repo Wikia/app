@@ -23,7 +23,7 @@ class ExternalCircuitBreaker implements CircuitBreaker {
 	 */
 	public function __construct( BernoulliTrial $logSampler) {
 		$this->logSampler = $logSampler;
-		if ( $_ENV['CIRCUIT_BREAKER_SERVICE_URL'] !== "" ) {
+		if ( key_exists('CIRCUIT_BREAKER_SERVICE_URL',$_ENV ) ) {
 			$circuitBreakerUrl = $_ENV['CIRCUIT_BREAKER_SERVICE_URL'];
 		} else {
 			self::CIRCUIT_BREAKER_SERVICE_URL;
