@@ -43,17 +43,19 @@ interface CircuitBreaker {
 	public function SetOperationStatus( string $name, bool $status );
 }
 
-/**
- * @param BernoulliTrial $logSampler
- * @return ExternalCircuitBreaker|NoopCircuitBreaker
- */
-function CircuitBreakerFactory( BernoulliTrial $logSampler ) {
-	global $wgCircuitBreakerType;
+class CircuitBreakerFactory {
+	/**
+	 * @param BernoulliTrial $logSampler
+	 * @return ExternalCircuitBreaker|NoopCircuitBreaker
+	 */
+	public static function GetCircuitBreaker( BernoulliTrial $logSampler ) {
+		global $wgCircuitBreakerType;
 
-	switch ($wgCircuitBreakerType) {
-		case 'external':
-			return new ExternalCircuitBreaker( $logSampler );
-		default:
-			return new NoopCircuitBreaker();
+		switch ( $wgCircuitBreakerType ) {
+			case 'external':
+				return new ExternalCircuitBreaker( $logSampler );
+			default:
+				return new NoopCircuitBreaker();
+		}
 	}
 }
