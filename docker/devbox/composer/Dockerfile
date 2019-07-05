@@ -16,4 +16,4 @@ VOLUME /usr/wikia/slot1/current/src
 VOLUME /usr/wikia/slot1/current/config
 
 ENTRYPOINT ["docker/devbox/composer/wrapper.sh"]
-CMD ["php composer.phar"]
+CMD ["composer"]
