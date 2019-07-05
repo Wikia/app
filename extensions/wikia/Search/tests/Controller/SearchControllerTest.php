@@ -42,7 +42,7 @@ class SearchControllerTest extends BaseTest {
 	public function testIndex() {
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 'getResponse',
 				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValues', 'setJsonResponse',
-				'getVal', 'handleLayoutAbTest', 'unifiedSearchShadowMode' );
+				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
@@ -62,11 +62,6 @@ class SearchControllerTest extends BaseTest {
 			->disableOriginalConstructor()
 			->setMethods( [ 'getFormat' ] )
 			->getMock();
-
-		$mockController->expects( $this->once() )
-			->method	( 'unifiedSearchShadowMode' )
-			->with		(  $mockConfig )
-		;
 
 		$mockController->expects( $this->once() )
 			->method	( 'getResponse' )

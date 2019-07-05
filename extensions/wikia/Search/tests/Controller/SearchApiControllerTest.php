@@ -23,13 +23,8 @@ class SearchApiControllerTest extends BaseTest
 
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( [ 'setResponseFromConfig', 'getVal', 'getConfigFromRequest', 'unifiedSearchShadowMode' ] )
+		                       ->setMethods( [ 'setResponseFromConfig', 'getVal', 'getConfigFromRequest' ] )
 		                       ->getMock();
-
-		$mockController->expects( $this->once() )
-			->method	( 'unifiedSearchShadowMode' )
-			->with		(  $mockConfig )
-		;
 
 		$mockController
 		    ->expects( $this->once() )
