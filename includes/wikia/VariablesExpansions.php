@@ -481,7 +481,7 @@ $wgNamespacesWithSubpages = [
  * @see extensions/wikia/InterwikiDispatcher
  * @var string $wgNotAValidWikia
  */
-$wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:Not_a_valid_community";
+$wgNotAValidWikia = "http://community.$wgFandomBaseDomain/wiki/Community_Central:Not_a_valid_community";
 
 /**
  * The cache type for storing article HTML. This is used to store data which
