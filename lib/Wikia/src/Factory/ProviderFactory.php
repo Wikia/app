@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\Factory;
 
-use function Wikia\CircuitBreaker\CircuitBreakerFactory;
+use Wikia\CircuitBreaker;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Gateway\InternalIngressUrlProvider;
 use Wikia\Service\Gateway\KubernetesUrlProvider;
@@ -40,7 +40,7 @@ class ProviderFactory {
 	public function apiProvider(): ApiProvider {
 		if ( $this->apiProvider === null ) {
 			$sampler =  new BernoulliTrial( static::API_PROVIDER_SAMPLE_RATE );
-			$circuitBreaker = CircuitBreakerFactory( $sampler );
+			$circuitBreaker = CircuitBreaker\CircuitBreakerFactory( $sampler );
 
 			$this->apiProvider = new ApiProvider( $this->urlProvider(), $sampler, $circuitBreaker );
 		}
