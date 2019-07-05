@@ -23,7 +23,11 @@ class ExternalCircuitBreaker implements CircuitBreaker {
 	 */
 	public function __construct( BernoulliTrial $logSampler) {
 		$this->logSampler = $logSampler;
-		$circuitBreakerUrl = $_ENV['CIRCUIT_BREAKER_SERVICE_URL'] || self::CIRCUIT_BREAKER_SERVICE_URL;
+		if ( $_ENV['CIRCUIT_BREAKER_SERVICE_URL'] !== "" ) {
+			$circuitBreakerUrl = $_ENV['CIRCUIT_BREAKER_SERVICE_URL'];
+		} else {
+			self::CIRCUIT_BREAKER_SERVICE_URL;
+		}
 		$this->apiClient = new GuzzleHttp\Client( [ 'base_uri' => $circuitBreakerUrl ] );
 	}
 
@@ -39,11 +43,11 @@ class ExternalCircuitBreaker implements CircuitBreaker {
 
 		$allowed = GuzzleHttp\json_decode($resp->getBody());
 
-		if ( !$allowed['Allowed'] && $this->logSampler->shouldSample() ) {
+		if ( !$allowed->allowed && $this->logSampler->shouldSample() ) {
 		   $this->warning("[circuit breaker] open", [ 'service_name' => $name, ]);
 		}
 
-		return $allowed['Allowed'];
+		return $allowed->allowed;
 	}
 
 	/**
