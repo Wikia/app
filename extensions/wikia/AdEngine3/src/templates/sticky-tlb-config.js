@@ -1,5 +1,5 @@
 import {context, scrollListener, slotService, slotTweaker, universalAdPackage, utils} from '@wikia/ad-engine';
-import { pinNavbar, navBarElement } from './navbar-updater';
+import {navBarElement, navbarManager} from './navbar-updater';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -46,7 +46,7 @@ export const getConfig = () => ({
 	},
 
 	onAfterStickBfaaCallback() {
-		pinNavbar(false);
+		navbarManager.setPinned(false);
 	},
 
 	onBeforeUnstickBfaaCallback() {
@@ -73,7 +73,7 @@ export const getConfig = () => ({
 		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
 		const isInViewport = utils.isInViewport(container, { areaThreshold: 1 });
 
-		pinNavbar(isInViewport && !isSticky);
+		navbarManager.setPinned(isInViewport && !isSticky);
 		this.moveNavbar(isSticky ? container.offsetHeight : 0);
 	},
 

@@ -1,5 +1,5 @@
-import { context, scrollListener, slotTweaker, universalAdPackage, utils } from '@wikia/ad-engine';
-import { pinNavbar, navBarElement } from './navbar-updater';
+import {context, scrollListener, slotTweaker, universalAdPackage, utils} from '@wikia/ad-engine';
+import {navBarElement, navbarManager} from './navbar-updater';
 import slots from '../slots';
 
 const {
@@ -57,7 +57,7 @@ export const getConfig = () => ({
 	},
 
 	onAfterStickBfaaCallback() {
-		pinNavbar(false);
+		navbarManager.setPinned(false);
 	},
 
 	onBeforeUnstickBfaaCallback() {
@@ -90,7 +90,7 @@ export const getConfig = () => ({
 		const isInViewport = utils.isInViewport(container, { areaThreshold: 1 });
         const isResolved = container.classList.contains(CSS_CLASSNAME_THEME_RESOLVED);
 
-		pinNavbar((isInViewport && !isSticky) || !isResolved);
+		navbarManager.setPinned((isInViewport && !isSticky) || !isResolved);
 		this.moveNavbar((isSticky && isResolved) ? container.offsetHeight : 0);
 	},
 
