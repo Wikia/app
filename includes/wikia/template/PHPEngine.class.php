@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\Template;
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * PHP FileSystem-based engine for Wikia Templating System.
  *
@@ -54,6 +56,11 @@ class PHPEngine extends Engine {
 		wfProfileOut( __METHOD__ . " - template: {$this->path}" );
 
 		$contents = ob_get_clean();
+		if( $contents == '' ){
+			WikiaLogger::instance()->warning( "Template parse returned empty string: \"{$template}\"" , [
+				'template' => $template,
+			]);
+		}
 		$this->path = null;
 
 		wfProfileOut( __METHOD__ );
