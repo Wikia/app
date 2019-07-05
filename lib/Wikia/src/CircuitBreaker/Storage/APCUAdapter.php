@@ -4,11 +4,18 @@
 namespace Wikia\CircuitBreaker\Storage;
 
 
+use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Configuration;
 use Ackintosh\Ganesha\Storage\AdapterInterface;
+use Ackintosh\Ganesha\Storage\Adapter\TumblingTimeWindowInterface;
 
-class APCUAdapter implements AdapterInterface
+class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 {
+
+	/**
+	 * @var Configuration
+	 */
+	private $configuration;
 
 	/**
 	 * @param Configuration $configuration
@@ -16,7 +23,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function setConfiguration(Configuration $configuration)
 	{
-		// TODO: Implement setConfiguration() method.
+		$this->configuration = $configuration;
 	}
 
 	/**
@@ -25,7 +32,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function load($service)
 	{
-		// TODO: Implement load() method.
+		return apcu_fetch($service);
 	}
 
 	/**
@@ -35,7 +42,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function save($service, $count)
 	{
-		// TODO: Implement save() method.
+		apcu_store($service, $count);
 	}
 
 	/**
@@ -44,7 +51,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function increment($service)
 	{
-		// TODO: Implement increment() method.
+		apcu_inc($service, 1);
 	}
 
 	/**
@@ -57,7 +64,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function decrement($service)
 	{
-		// TODO: Implement decrement() method.
+		apcu_dec($service, 1);
 	}
 
 	/**
@@ -69,7 +76,9 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function saveLastFailureTime($service, $lastFailureTime)
 	{
-		// TODO: Implement saveLastFailureTime() method.
+		//Interestingly, Ganesha seems to be using the same key for everything, or it is $service meaning different
+		//things depending on context https://github.com/ackintosh/ganesha/blob/master/src/Ganesha/Storage/Adapter/Memcached.php
+		apcu_store($service, $lastFailureTime);
 	}
 
 	/**
@@ -79,7 +88,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function loadLastFailureTime($service)
 	{
-		// TODO: Implement loadLastFailureTime() method.
+		return apcu_fetch($service);
 	}
 
 	/**
@@ -91,7 +100,7 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function saveStatus($service, $status)
 	{
-		// TODO: Implement saveStatus() method.
+		apcu_store($service, $status);
 	}
 
 	/**
@@ -102,7 +111,13 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function loadStatus($service)
 	{
-		// TODO: Implement loadStatus() method.
+		$status = apcu_fetch($service);
+		if ($status === false && !apcU_exists($service)) {
+			$this->saveStatus($service, Ganesha::STATUS_CALMED_DOWN);
+			return Ganesha::STATUS_CALMED_DOWN;
+		}
+
+		return $status;
 	}
 
 	/**
@@ -112,6 +127,6 @@ class APCUAdapter implements AdapterInterface
 	 */
 	public function reset()
 	{
-		// TODO: Implement reset() method.
+		apcu_clear_cache();
 	}
 }
