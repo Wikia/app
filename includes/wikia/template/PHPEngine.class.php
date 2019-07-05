@@ -57,8 +57,8 @@ class PHPEngine extends Engine {
 
 		$contents = ob_get_clean();
 		if( $contents == '' ){
-			WikiaLogger::instance()->warning( "Template parse returned empty string: \"{$template}\"" , [
-				'template' => $template,
+			WikiaLogger::instance()->warning( "Template parse returned empty string: \"{$this->path}\"" , [
+				'path' => $this->path,
 			]);
 		}
 		$this->path = null;
