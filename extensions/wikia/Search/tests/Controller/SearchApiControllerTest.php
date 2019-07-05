@@ -9,12 +9,17 @@ use Wikia\Search\Test\BaseTest;
  */
 class SearchApiControllerTest extends BaseTest
 {
+	protected function setUp() {
+		global $wgUseUnifiedSearch;
+		$wgUseUnifiedSearch = false;
+		parent::setUp();
+	}
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07828 ms
 	 * @covers SearchApiController::getList
 	 */
-
 	public function testGetListWithTerms() {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
