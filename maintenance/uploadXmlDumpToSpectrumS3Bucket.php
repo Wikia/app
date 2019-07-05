@@ -14,7 +14,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Downloads XML dump for all wiki and uploads it to Spectrum S3 bucket';
+		$this->mDescription = 'Downloads XML dump for all public wikis and uploads it to Spectrum S3 bucket';
 		$this->addOption( 'AWSAccessKey', 'Spectrum AWS access key', true, true, 'a' );
 		$this->addOption( 'AWSSecretKey', 'Spectrum AWS secret key', true, true, 's' );
 		$this->addOption( 'bucketName', 'S3 bucket name', true, true, 'b' );
