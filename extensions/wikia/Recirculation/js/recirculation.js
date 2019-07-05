@@ -206,6 +206,8 @@ require([
 					if (sponsoredItem.pixelContent) {
 						insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
 					}
+
+					tracker.trackImpression(sponsoredItem.url);
 				}
 
 				tracker.trackImpression('rail');
