@@ -26,7 +26,7 @@ class ExternalCircuitBreaker implements CircuitBreaker {
 		if ( key_exists('CIRCUIT_BREAKER_SERVICE_URL',$_ENV ) ) {
 			$circuitBreakerUrl = $_ENV['CIRCUIT_BREAKER_SERVICE_URL'];
 		} else {
-			self::CIRCUIT_BREAKER_SERVICE_URL;
+			$circuitBreakerUrl = self::CIRCUIT_BREAKER_SERVICE_URL;
 		}
 		$this->apiClient = new GuzzleHttp\Client( [ 'base_uri' => $circuitBreakerUrl ] );
 	}
