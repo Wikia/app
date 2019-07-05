@@ -1,5 +1,5 @@
 import {context, scrollListener, slotTweaker, universalAdPackage, utils} from '@wikia/ad-engine';
-import {navBarElement, navbarManager} from './navbar-updater';
+import {navbarElement, navbarManager} from './navbar-updater';
 import slots from '../slots';
 
 const {
@@ -63,14 +63,14 @@ export const getConfig = () => ({
 	onBeforeUnstickBfaaCallback() {
 		scrollListener.removeCallback(this.updateNavbarOnScroll);
 		this.updateNavbarOnScroll = null;
-		Object.assign(navBarElement.style, {
+		Object.assign(navbarElement.style, {
 			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
 			top: '0'
 		});
 	},
 
 	onAfterUnstickBfaaCallback() {
-		Object.assign(navBarElement.style, {
+		Object.assign(navbarElement.style, {
 			transition: '',
 			top: ''
 		});
@@ -95,8 +95,8 @@ export const getConfig = () => ({
 	},
 
 	moveNavbar(offset) {
-		if (navBarElement) {
-			navBarElement.style.top = offset ? `${offset}px` : '';
+		if (navbarElement) {
+			navbarElement.style.top = offset ? `${offset}px` : '';
 		}
 	}
 });
