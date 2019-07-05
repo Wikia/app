@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05ce899572ae16061d0ca44ea99909a1",
+    "content-hash": "21987c3621965c6d99bd60eb74472086",
     "packages": [
+        {
+            "name": "ackintosh/ganesha",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ackintosh/ganesha.git",
+                "reference": "343353934fbdd50d0a8714695cf97c982fd4dce6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ackintosh/ganesha/zipball/343353934fbdd50d0a8714695cf97c982fd4dce6",
+                "reference": "343353934fbdd50d0a8714695cf97c982fd4dce6",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.3",
+                "php": ">=5.6.0",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "~2.0",
+                "php-vcr/php-vcr": "~1.0",
+                "php-vcr/phpunit-testlistener-vcr": "~2.0",
+                "phpunit/phpunit": "^5.7.27",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ackintosh\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "akihito.nakano",
+                    "email": "sora.akatsuki@gmail.com"
+                }
+            ],
+            "description": "PHP implementation of Circuit Breaker pattern",
+            "keywords": [
+                "circuit breaker",
+                "error handling",
+                "fault tolerance",
+                "guzzle middleware",
+                "microservices"
+            ],
+            "time": "2019-06-09T06:40:46+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.5.0",

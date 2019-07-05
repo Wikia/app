@@ -13,8 +13,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '90559502573a0d473dc66fde5c0ff7e2' => __DIR__ . '/..' . '/data-values/common/Common.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        '0dd9431cbbfa9ed9cb9d565d7129dbaf' => __DIR__ . '/..' . '/data-values/validators/Validators.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '0dd9431cbbfa9ed9cb9d565d7129dbaf' => __DIR__ . '/..' . '/data-values/validators/Validators.php',
         'af3cc937b8a54e5b4209c82d6cfe8889' => __DIR__ . '/..' . '/param-processor/param-processor/DefaultConfig.php',
         '6b06ce8ccf69c43a60a1e48495a034c9' => __DIR__ . '/..' . '/react/promise-timer/src/functions.php',
         '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
@@ -145,6 +145,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'C' => 
         array (
             'Composer\\Installers\\' => 20,
+        ),
+        'A' => 
+        array (
+            'Ackintosh\\' => 10,
         ),
     );
 
@@ -443,6 +447,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
+        'Ackintosh\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ackintosh/ganesha/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -542,6 +550,25 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
     );
 
     public static $classMap = array (
+        'Ackintosh\\Ganesha' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha.php',
+        'Ackintosh\\Ganesha\\Builder' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Builder.php',
+        'Ackintosh\\Ganesha\\Configuration' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Configuration.php',
+        'Ackintosh\\Ganesha\\Exception\\RejectedException' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Exception/RejectedException.php',
+        'Ackintosh\\Ganesha\\Exception\\StorageException' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Exception/StorageException.php',
+        'Ackintosh\\Ganesha\\GuzzleMiddleware' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/GuzzleMiddleware.php',
+        'Ackintosh\\Ganesha\\GuzzleMiddleware\\ServiceNameExtractor' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/GuzzleMiddleware/ServiceNameExtractor.php',
+        'Ackintosh\\Ganesha\\GuzzleMiddleware\\ServiceNameExtractorInterface' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/GuzzleMiddleware/ServiceNameExtractorInterface.php',
+        'Ackintosh\\Ganesha\\Storage' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage.php',
+        'Ackintosh\\Ganesha\\Storage\\AdapterInterface' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/AdapterInterface.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\Memcached' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/Memcached.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\MongoDB' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/MongoDB.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\Redis' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/Redis.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\RedisStore' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/RedisStore.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\SlidingTimeWindowInterface' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/SlidingTimeWindowInterface.php',
+        'Ackintosh\\Ganesha\\Storage\\Adapter\\TumblingTimeWindowInterface' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Storage/Adapter/TumblingTimeWindowInterface.php',
+        'Ackintosh\\Ganesha\\StrategyInterface' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/StrategyInterface.php',
+        'Ackintosh\\Ganesha\\Strategy\\Count' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Strategy/Count.php',
+        'Ackintosh\\Ganesha\\Strategy\\Rate' => __DIR__ . '/..' . '/ackintosh/ganesha/src/Ganesha/Strategy/Rate.php',
         'Archive_Tar' => __DIR__ . '/..' . '/pear/archive_tar/Archive/Tar.php',
         'CSSJanus' => __DIR__ . '/..' . '/cssjanus/cssjanus/src/CSSJanus.php',
         'CSSJanusTokenizer' => __DIR__ . '/..' . '/cssjanus/cssjanus/src/CSSJanus.php',
@@ -3536,6 +3563,9 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'ValueValidators\\ValueValidator' => __DIR__ . '/..' . '/data-values/interfaces/src/ValueValidators/ValueValidator.php',
         'ValueValidators\\ValueValidatorObject' => __DIR__ . '/..' . '/data-values/interfaces/src/ValueValidators/ValueValidatorObject.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
+        'Wikia\\CircuitBreaker\\CircuitBreaker' => __DIR__ . '/../../..' . '/lib/Wikia/src/CircuitBreaker/CircuitBreaker.php',
+        'Wikia\\CircuitBreaker\\CircuitBreakerOpen' => __DIR__ . '/../../..' . '/lib/Wikia/src/CircuitBreaker/CircuitBreaker.php',
+        'Wikia\\CircuitBreaker\\ExternalCircuitBreaker' => __DIR__ . '/../../..' . '/lib/Wikia/src/CircuitBreaker/ExternalCircuitBreaker.php',
         'Wikia\\Consul\\Client' => __DIR__ . '/../../..' . '/lib/Wikia/src/Consul/Client.php',
         'Wikia\\Domain\\User\\Attribute' => __DIR__ . '/../../..' . '/lib/Wikia/src/Domain/User/Attribute.php',
         'Wikia\\Domain\\User\\Preferences\\GlobalPreference' => __DIR__ . '/../../..' . '/lib/Wikia/src/Domain/User/Preferences/GlobalPreference.php',
