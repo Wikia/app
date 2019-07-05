@@ -2,6 +2,7 @@
 
 namespace Wikia\Helios;
 
+use Wikia\CircuitBreaker\NoopCircuitBreaker;
 use Wikia\Service\Helios\HeliosClient;
 
 
@@ -18,7 +19,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 	public function testCannotMakeRequests() {
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
 
-		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', new NoopCircuitBreaker(), 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
@@ -38,7 +39,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
-		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', new NoopCircuitBreaker(), 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
@@ -58,7 +59,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'request' )
 			->willReturn( $requestMock );
 
-		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', new NoopCircuitBreaker(), 'secret' );
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );
 	}
 
@@ -81,7 +82,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'request' )
 			->willReturn( $requestMock );
 
-		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', new NoopCircuitBreaker(), 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
