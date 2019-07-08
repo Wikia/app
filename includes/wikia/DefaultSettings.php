@@ -1853,9 +1853,10 @@ $wgUseGoogleCloudStorage = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3150
+ * https://wikia-inc.atlassian.net/browse/SER-3316
  * If enabled, Unified Search will be used for Special:Search.
  */
-$wgUseUnifiedSearch = false;
+$wgUseUnifiedSearch = true;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033
