@@ -9,8 +9,11 @@ use Ackintosh\Ganesha\Configuration;
 use Ackintosh\Ganesha\Storage\AdapterInterface;
 use Ackintosh\Ganesha\Storage\Adapter\TumblingTimeWindowInterface;
 
-class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
-{
+/**
+ * Class APCUAdapter
+ * @package Wikia\CircuitBreaker\Storage
+ */
+class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 
 	/**
 	 * @var Configuration
@@ -21,8 +24,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param Configuration $configuration
 	 * @return void
 	 */
-	public function setConfiguration(Configuration $configuration)
-	{
+	public function setConfiguration( Configuration $configuration ) {
 		$this->configuration = $configuration;
 	}
 
@@ -30,9 +32,8 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param string $service
 	 * @return int
 	 */
-	public function load($service)
-	{
-		return apcu_fetch($service);
+	public function load( $service ) {
+		return apcu_fetch( $service );
 	}
 
 	/**
@@ -40,18 +41,16 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param int $count
 	 * @return void
 	 */
-	public function save($service, $count)
-	{
-		apcu_store($service, $count);
+	public function save( $service, $count ) {
+		apcu_store( $service, $count );
 	}
 
 	/**
 	 * @param string $service
 	 * @return void
 	 */
-	public function increment($service)
-	{
-		apcu_inc($service, 1);
+	public function increment( $service ) {
+		apcu_inc( $service, 1 );
 	}
 
 	/**
@@ -62,9 +61,8 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param string $service
 	 * @return void
 	 */
-	public function decrement($service)
-	{
-		apcu_dec($service, 1);
+	public function decrement( $service ) {
+		apcu_dec( $service, 1 );
 	}
 
 	/**
@@ -74,11 +72,10 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param int $lastFailureTime
 	 * @return void
 	 */
-	public function saveLastFailureTime($service, $lastFailureTime)
-	{
+	public function saveLastFailureTime( $service, $lastFailureTime ) {
 		//Interestingly, Ganesha seems to be using the same key for everything, or it is $service meaning different
 		//things depending on context https://github.com/ackintosh/ganesha/blob/master/src/Ganesha/Storage/Adapter/Memcached.php
-		apcu_store($service, $lastFailureTime);
+		apcu_store( $service, $lastFailureTime );
 	}
 
 	/**
@@ -86,9 +83,8 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 *
 	 * @return int | null
 	 */
-	public function loadLastFailureTime($service)
-	{
-		return apcu_fetch($service);
+	public function loadLastFailureTime( $service ) {
+		return apcu_fetch( $service );
 	}
 
 	/**
@@ -98,9 +94,8 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param int $status
 	 * @return void
 	 */
-	public function saveStatus($service, $status)
-	{
-		apcu_store($service, $status);
+	public function saveStatus( $service, $status ) {
+		apcu_store( $service, $status );
 	}
 
 	/**
@@ -109,11 +104,11 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 * @param string $service
 	 * @return int
 	 */
-	public function loadStatus($service)
-	{
-		$status = apcu_fetch($service);
-		if ($status === false && !apcU_exists($service)) {
-			$this->saveStatus($service, Ganesha::STATUS_CALMED_DOWN);
+	public function loadStatus( $service ) {
+		$status = apcu_fetch( $service );
+		if ( $status === false && !apcU_exists( $service ) ) {
+			$this->saveStatus( $service, Ganesha::STATUS_CALMED_DOWN );
+
 			return Ganesha::STATUS_CALMED_DOWN;
 		}
 
@@ -125,8 +120,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface
 	 *
 	 * @return void
 	 */
-	public function reset()
-	{
+	public function reset() {
 		apcu_clear_cache();
 	}
 }
