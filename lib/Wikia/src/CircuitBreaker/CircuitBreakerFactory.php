@@ -7,7 +7,7 @@ use Wikia\Util\Statistics\BernoulliTrial;
 class CircuitBreakerFactory {
 	/**
 	 * @param BernoulliTrial $logSampler
-	 * @return ExternalCircuitBreaker|NoopCircuitBreaker
+	 * @return ExternalCircuitBreaker|LocalCircuitBreaker|NoopCircuitBreaker
 	 */
 	public static function GetCircuitBreaker( BernoulliTrial $logSampler ) {
 		global $wgCircuitBreakerType;
@@ -15,6 +15,8 @@ class CircuitBreakerFactory {
 		switch ( $wgCircuitBreakerType ) {
 			case 'external':
 				return new ExternalCircuitBreaker( $logSampler );
+			case 'local':
+				return new LocalCircuitBreaker();
 			default:
 				return new NoopCircuitBreaker();
 		}
