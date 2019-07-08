@@ -9005,3 +9005,8 @@ $wgArticleExporterExchange = [
  * @var string $wgCircuitBreakerType
  */
 $wgCircuitBreakerType = 'noop';
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = false;
