@@ -19,7 +19,7 @@ class LocalCircuitBreaker implements CircuitBreaker {
 			'failureRateThreshold' => 50,
 			'adapter' => new APCUAdapter(),
 			'intervalToHalfOpen' => 5,
-			'minimumRequests' => 10,
+			'minimumRequests' => 4,
 			'timeWindow' => 30,
 		] );
 
