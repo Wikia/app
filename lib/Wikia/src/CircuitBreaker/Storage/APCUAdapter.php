@@ -98,8 +98,6 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function saveLastFailureTime( $service, $lastFailureTime ) {
-		//Interestingly, Ganesha seems to be using the same key for everything, or it is $service meaning different
-		//things depending on context https://github.com/ackintosh/ganesha/blob/master/src/Ganesha/Storage/Adapter/Memcached.php
 		if (apcu_store( $service, $lastFailureTime ) === false) {
 			$this->throwException( $this->storeFailure( $service ) );
 		}

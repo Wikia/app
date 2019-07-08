@@ -7,9 +7,11 @@ namespace Wikia\CircuitBreaker;
 use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Builder;
 use Wikia\CircuitBreaker\Storage\APCUAdapter;
-use Wikia\Logger\WikiaLogger;
+use Wikia\Logger\Loggable;
 
 class LocalCircuitBreaker implements CircuitBreaker {
+
+	use Loggable;
 
 	/** @var Ganesha */
 	private $ganesha;
@@ -26,15 +28,19 @@ class LocalCircuitBreaker implements CircuitBreaker {
 		$this->ganesha->subscribe( function ( $event, $service, $message ) {
 			switch ( $event ) {
 				case Ganesha::EVENT_TRIPPED:
-					WikiaLogger::instance()
-						->error( "Circuit open! It seems that a failure has occurred in {$service}. {$message}." );
+					$this->error( 'Circuit open! It seems that a failure has occurred in', [
+						'service' => $service,
+						'message' => $message
+					] );
 					break;
 				case Ganesha::EVENT_CALMED_DOWN:
-					WikiaLogger::instance()
-						->info( "The failure in {$service} seems to have calmed down. {$message}." );
+					$this->info( 'The ganesha failure seems to have calmed down.'. [
+						'service' => $service,
+						'message' => $message
+					] );
 					break;
 				case Ganesha::EVENT_STORAGE_ERROR:
-					WikiaLogger::instance()->error( "APCU failure: {$message}" );
+					$this->error( 'APCU failure:', [ 'message' => $message ] );
 					break;
 				default:
 					break;
