@@ -8,6 +8,7 @@ use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Configuration;
 use Ackintosh\Ganesha\Storage\AdapterInterface;
 use Ackintosh\Ganesha\Storage\Adapter\TumblingTimeWindowInterface;
+use Ackintosh\Ganesha\Exception\StorageException;
 
 /**
  * Class APCUAdapter
@@ -19,6 +20,14 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @var Configuration
 	 */
 	private $configuration;
+
+	private function readFailure( $key ) {
+		return "APCu fetch failed for key: {$key}";
+	}
+
+	private function storeFailure( $key ) {
+		return "APCu failed storing value for key: {$key}";
+	}
 
 	/**
 	 * @param Configuration $configuration
@@ -33,7 +42,13 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return int
 	 */
 	public function load( $service ) {
-		return apcu_fetch( $service );
+		$status = false;
+		$value = (int)apcu_fetch( $service, $status );
+		if ( $status ) {
+			return $value;
+		}
+
+		$this->throwException($this->readFailure( $service ));
 	}
 
 	/**
@@ -42,7 +57,9 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function save( $service, $count ) {
-		apcu_store( $service, $count );
+		if (apcu_store( $service, $count ) === false) {
+			$this->throwException( $this->storeFailure( $service ) );
+		}
 	}
 
 	/**
@@ -50,7 +67,11 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function increment( $service ) {
-		apcu_inc( $service, 1 );
+		$status = false;
+		apcu_inc( $service, 1, $status );
+		if ( $status === false ) {
+			$this->throwException( $this->storeFailure( $service ) );
+		}
 	}
 
 	/**
@@ -62,7 +83,11 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function decrement( $service ) {
-		apcu_dec( $service, 1 );
+		$status = false;
+		apcu_dec( $service, 1, $status );
+		if ( $status === false ) {
+			$this->throwException( $this->storeFailure( $service ) );
+		}
 	}
 
 	/**
@@ -75,16 +100,25 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	public function saveLastFailureTime( $service, $lastFailureTime ) {
 		//Interestingly, Ganesha seems to be using the same key for everything, or it is $service meaning different
 		//things depending on context https://github.com/ackintosh/ganesha/blob/master/src/Ganesha/Storage/Adapter/Memcached.php
-		apcu_store( $service, $lastFailureTime );
+		if (apcu_store( $service, $lastFailureTime ) === false) {
+			$this->throwException( $this->storeFailure( $service ) );
+		}
 	}
 
 	/**
 	 * returns last failure time
 	 *
+	 * @param $service
 	 * @return int | null
 	 */
 	public function loadLastFailureTime( $service ) {
-		return apcu_fetch( $service );
+		$status = false;
+		$value = (int)apcu_fetch( $service, $status );
+		if ( $status ) {
+			return $value;
+		}
+
+		$this->throwException( $this->readFailure( $service ) );
 	}
 
 	/**
@@ -95,7 +129,9 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function saveStatus( $service, $status ) {
-		apcu_store( $service, $status );
+		if (apcu_store( $service, $status ) === false) {
+			$this->throwException( $this->storeFailure( $service ) );
+		}
 	}
 
 	/**
@@ -106,7 +142,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 */
 	public function loadStatus( $service ) {
 		$status = apcu_fetch( $service );
-		if ( $status === false && !apcU_exists( $service ) ) {
+		if ( $status === false && !apcu_exists( $service ) ) {
 			$this->saveStatus( $service, Ganesha::STATUS_CALMED_DOWN );
 
 			return Ganesha::STATUS_CALMED_DOWN;
@@ -121,6 +157,18 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function reset() {
+		// according to documentation apcu_clear_cache "Returns TRUE always", so I don't think we
+		// can do much more in terms of handling errors in this case
 		apcu_clear_cache();
+	}
+
+	/**
+	 * Used for throwing exceptions from APCu
+	 *
+	 * @throws StorageException
+	 * @param $message
+	 */
+	private function throwException( $message ) {
+		throw new StorageException( $message );
 	}
 }
