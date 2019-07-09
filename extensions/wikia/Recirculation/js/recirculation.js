@@ -207,7 +207,7 @@ require([
 						insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
 					}
 
-					tracker.trackImpression(sponsoredItem.url);
+					tracker.trackImpression('rail::' + sponsoredItem.url);
 				}
 
 				tracker.trackImpression('rail');
@@ -220,7 +220,7 @@ require([
 					labels.forEach(function (label) {
 						tracker.trackClick(label);
 					});
-					tracker.trackSelect(href);
+					tracker.trackSelect('rail::' + href);
 				});
 			})
 			.fail(function (err) {
