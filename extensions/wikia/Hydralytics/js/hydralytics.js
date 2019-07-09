@@ -317,7 +317,7 @@ $(function() {
 			'number_of_pageviews',
 			'logged_in_out',
 			'edits_per_day',
-			'number_of_visitors',
+			'top_search_terms',
 			'top_viewed_pages',
 			'most_visited_files',
 			'desktop_vs_mobile',
