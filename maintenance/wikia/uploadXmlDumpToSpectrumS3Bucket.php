@@ -84,7 +84,7 @@ class UploadXmlDumpToSpectrumS3Bucket extends Maintenance {
 			$resource,
 			$bucketName,
 			$remotePath,
-			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
+			'bucket-owner-full-control', //Required by spectrum, but does not exist as a constant in AWS SDK
 			[],
 			[
 				'Content-Disposition' => 'attachment',
