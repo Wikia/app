@@ -42,7 +42,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return int
 	 */
 	public function load( $service ) {
-		return (int)apcu_fetch( $service, $status );
+		return (int)apcu_fetch( $service );
 	}
 
 	/**
