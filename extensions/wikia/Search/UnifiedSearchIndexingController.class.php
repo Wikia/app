@@ -82,9 +82,14 @@ class UnifiedSearchIndexingController extends WikiaController {
 
 		$splitByLimit = array_chunk( $results, $limit );
 
+		$items = isset($splitByLimit[0]) ? $splitByLimit[0] : [];
+
 		return [
 			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
-			'items' => isset( $splitByLimit[0] ) ? $splitByLimit[0] : [],
+			'wikiIds' => array_map(function (array $item) {
+				return $item['id'];
+			}, $items),
+			'items' => $items,
 		];
 	}
 }
