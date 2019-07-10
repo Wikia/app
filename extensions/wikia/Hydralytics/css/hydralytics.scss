@@ -28,10 +28,9 @@ $green-navy: #002A32;
 @media screen and (max-width: 800px) {
 	#analytics_grid { 
 		grid-template-columns: 1fr;
-		grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto;
 		grid-template-areas:
 		"number_of_pageviews"
-		"number_of_visitors"
 		"geolocation"
 		"top_viewed_pages"
 		"most_visited_files"
@@ -41,23 +40,21 @@ $green-navy: #002A32;
 		"logged_in_out"
 		"top_editors"
 		"active_editors"
-		"top_search_terms"
-		"staff_contact";
+		"top_search_terms";
 	}
 }
 
 @media screen and (min-width: 801px) {
 	#analytics_grid {
 		grid-template-columns: 1fr 1fr;
-		grid-template-rows: auto auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto auto auto auto;
 		grid-template-areas:
 		"number_of_pageviews number_of_pageviews"
-		"number_of_visitors  geolocation"
+		"top_search_terms  geolocation"
 		"top_viewed_pages	 most_visited_files"
 		"desktop_vs_mobile	 browser_breakdown	"
 		"edits_per_day		 logged_in_out"
-		"top_editors 		 active_editors"
-		"top_search_terms  	 staff_contact";
+		"top_editors 		 active_editors";
 	}
 }
 

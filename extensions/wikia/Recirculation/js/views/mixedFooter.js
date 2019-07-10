@@ -104,7 +104,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		var $sponsoredItem = $mixedContentFooter.find("[data-tracking*='sponsored-item']");
 
 		if ($sponsoredItem.length) {
-			tracker.trackImpression($sponsoredItem.attr('href'));
+			tracker.trackImpression('footer::' + $sponsoredItem.attr('href'));
 		}
 
 		tracker.trackImpression('footer');
@@ -126,7 +126,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			labels.forEach(function (label) {
 				tracker.trackClick(label, additionalParams);
 			});
-			tracker.trackSelect(href, additionalParams);
+			tracker.trackSelect('footer::' + href, additionalParams);
 		});
 	}
 

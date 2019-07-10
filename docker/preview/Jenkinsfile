@@ -68,7 +68,7 @@ def createReleaseBranch(String releaseBranch) {
 // if hotfix - create new tag for current relaese branch if any commit were made to it
 def createTag(String nextTag) {
   // e.g. 219.001
-  def currentVersion = get_current_version()
+  def currentVersion = get_latest_version()
   println("Current version: ${currentVersion}")
 
   def hasUnreleasedCommits = true
@@ -249,15 +249,6 @@ node("docker-daemon") {
         script: "echo \"${deploymentInfo}\" | sed 's/.*config_version:\\([^] ]*\\).*/\\1/'",
         returnStdout: true
       )
-
-      if (params.force != true) {
-        timeout(time: 120, unit: 'SECONDS') {
-          userInput = input(
-            id: 'version_check',
-            message: "Updating preview\napp - ${currentAppTag} ==> ${nextAppReleaseTag} \nconfig - ${currentConfigTag} ==> ${nextConfigReleaseTag}"
-          )
-        }
-      }
     }
 
     sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {

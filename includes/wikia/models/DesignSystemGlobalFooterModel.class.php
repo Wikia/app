@@ -502,18 +502,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			];
 		}
 
-		if ( $this->getHref( 'fan-contributor' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-fan-contributor-program'
-				],
-				'href' => $this->getHref( 'fan-contributor' ),
-				'tracking_label' => 'community.fan-contributor',
-			];
-		}
-
 		if ( $this->getHref( 'wam' ) ) {
 			$data['links'][] = [
 				'type' => 'link-text',
