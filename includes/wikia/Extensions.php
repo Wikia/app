@@ -806,6 +806,8 @@ if ( !empty( $wgArchiveWikiForums ) ) {
 	include "$IP/extensions/wikia/ArchiveWikiForum/ArchiveWikiForum.setup.php";
 }
 
+include "$IP/lib/Wikia/tests/CircuitBreaker/CircuitBreakerTests.setup.php";
+
 //If Discussions are enabled, the forum disabled and the Discussions should be in the navigation
 if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 	 && empty( $wgEnableForumExt )
