@@ -8999,3 +8999,14 @@ $wgArticleExporterExchange = [
     'exchange' => 'taxonomy-ex',
     'routing' => 'taxonomy.article-edits'
 ];
+
+/**
+ * @see lib/Wikia/src/CircuitBreaker/CircuitBreaker.php
+ * @var string $wgCircuitBreakerType
+ */
+$wgCircuitBreakerType = 'noop';
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = false;
