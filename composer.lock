@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05ce899572ae16061d0ca44ea99909a1",
+    "content-hash": "b16cf23876e38a7227a4151c4fe0fd99",
     "packages": [
         {
             "name": "composer/installers",
@@ -5004,16 +5004,16 @@
         },
         {
             "name": "tpyo/amazon-s3-php-class",
-            "version": "v0.5.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tpyo/amazon-s3-php-class.git",
-                "reference": "121318e65e857a994b22ffe0aa04a0c55e832bea"
+                "reference": "62ae202afaac4cc01feffe6ce54f1b7d36a8d79e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/121318e65e857a994b22ffe0aa04a0c55e832bea",
-                "reference": "121318e65e857a994b22ffe0aa04a0c55e832bea",
+                "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/62ae202afaac4cc01feffe6ce54f1b7d36a8d79e",
+                "reference": "62ae202afaac4cc01feffe6ce54f1b7d36a8d79e",
                 "shasum": ""
             },
             "require": {
@@ -5037,7 +5037,7 @@
             ],
             "description": "A standalone Amazon S3 (REST) client for PHP 5.2.x using CURL that does not require PEAR.",
             "homepage": "https://github.com/tpyo/amazon-s3-php-class",
-            "time": "2015-04-27T06:12:39+00:00"
+            "time": "2019-05-05T19:32:17+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -6000,7 +6000,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "tpyo/amazon-s3-php-class": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -5475,25 +5475,25 @@
     },
     {
         "name": "tpyo/amazon-s3-php-class",
-        "version": "v0.5.1",
-        "version_normalized": "0.5.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/tpyo/amazon-s3-php-class.git",
-            "reference": "121318e65e857a994b22ffe0aa04a0c55e832bea"
+            "reference": "62ae202afaac4cc01feffe6ce54f1b7d36a8d79e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/121318e65e857a994b22ffe0aa04a0c55e832bea",
-            "reference": "121318e65e857a994b22ffe0aa04a0c55e832bea",
+            "url": "https://api.github.com/repos/tpyo/amazon-s3-php-class/zipball/62ae202afaac4cc01feffe6ce54f1b7d36a8d79e",
+            "reference": "62ae202afaac4cc01feffe6ce54f1b7d36a8d79e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.0"
         },
-        "time": "2015-04-27T06:12:39+00:00",
+        "time": "2019-05-05T19:32:17+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "classmap": [
                 "S3.php"
