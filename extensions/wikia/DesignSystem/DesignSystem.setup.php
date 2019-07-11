@@ -65,6 +65,8 @@ $wgResourceModules['ext.designSystem'] = [
 		'notifications-reply-upvote-single-user-no-title',
 		'notifications-reply-upvote-multiple-users-with-title',
 		'notifications-reply-upvote-multiple-users-no-title',
-		'notifications-notifications'
+		'notifications-notifications',
+		'notifications-post-at-mention',
+		'notifications-reply-at-mention'
 	]
 ];
