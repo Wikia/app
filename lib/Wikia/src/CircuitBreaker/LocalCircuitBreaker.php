@@ -22,7 +22,7 @@ class LocalCircuitBreaker implements CircuitBreaker {
 			'adapter' => new APCUAdapter(),
 			'intervalToHalfOpen' => 5,
 			'minimumRequests' => 4,
-			'timeWindow' => 30,
+			'timeWindow' => 10,
 		] );
 
 		$this->ganesha->subscribe( function ( $event, $service, $message ) {

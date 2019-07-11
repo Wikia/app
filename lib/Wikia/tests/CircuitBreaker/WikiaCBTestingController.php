@@ -56,6 +56,15 @@ class WikiaCBTestingController extends WikiaController {
 	/** @var CircuitBreaker*/
 	private $circuitBreakerExternal;
 
+	/**
+	 * Is supposed to simulate a service going down for 12 seconds every minute
+	 *
+	 * @return bool
+	 */
+	private function getOperationStatus() {
+		return (time() % 60) > 12;
+	}
+
 	public function __construct() {
 		parent::__construct();
 
@@ -65,7 +74,7 @@ class WikiaCBTestingController extends WikiaController {
 	}
 
 	public function mockSuccessfulServiceCallNoop() {
-		$this->response->setCode(201);
+		$this->response->setCode(200);
 		if ($this->circuitBreakerNoop->OperationAllowed( 'testOperation' )) {
 			// Do nothing
 			$this->circuitBreakerNoop->SetOperationStatus( 'testOperation', true ); // set status to success
@@ -76,7 +85,7 @@ class WikiaCBTestingController extends WikiaController {
 	}
 
 	public function mockSuccessfulServiceCallLocal() {
-		$this->response->setCode(202);
+		$this->response->setCode(200);
 		if ($this->circuitBreakerLocal->OperationAllowed( 'testOperation' )) {
 			// Do nothing
 			$this->circuitBreakerLocal->SetOperationStatus( 'testOperation', true ); // set status to success
@@ -87,12 +96,72 @@ class WikiaCBTestingController extends WikiaController {
 	}
 
 	public function mockSuccessfulServiceCallExternal() {
-		$this->response->setCode(203);
+		$this->response->setCode(200);
 		if ($this->circuitBreakerExternal->OperationAllowed( 'testOperation' )) {
 			// Do nothing
 			$this->circuitBreakerExternal->SetOperationStatus( 'testOperation', true ); // set status to success
 			$this->response->setBody('Closed');
 		} else {
+			$this->response->setBody('Open');
+		}
+	}
+
+	public function mockFlappingServiceCallNoop() {
+		if ($this->circuitBreakerNoop->OperationAllowed( 'testOperation' )) {
+			// Do nothing
+			$this->circuitBreakerNoop->SetOperationStatus( 'testOperation', $this->getOperationStatus() );
+			$this->response->setCode(200);
+			$this->response->setBody('Closed');
+		} else {
+			$this->response->setCode(500);
+			$this->response->setBody('Open');
+		}
+	}
+
+	public function mockFlappingServiceCallLocal() {
+		if ($this->circuitBreakerLocal->OperationAllowed( 'testOperation' )) {
+			// Do nothing
+			$this->circuitBreakerLocal->SetOperationStatus( 'testOperation', $this->getOperationStatus() );
+			$this->response->setCode(200);
+			$this->response->setBody('Closed');
+		} else {
+			$this->response->setCode(500);
+			$this->response->setBody('Open');
+		}
+	}
+
+	public function mockFlappingServiceCallExternal() {
+		if ($this->circuitBreakerExternal->OperationAllowed( 'testOperation' )) {
+			// Do nothing
+			$this->circuitBreakerExternal->SetOperationStatus( 'testOperation', $this->getOperationStatus() );
+			$this->response->setCode(200);
+			$this->response->setBody('Closed');
+		} else {
+			$this->response->setCode(500);
+			$this->response->setBody('Open');
+		}
+	}
+
+	public function mockDownServiceCallLocal() {
+		if ($this->circuitBreakerLocal->OperationAllowed( 'different' )) {
+			// Do nothing
+			$this->circuitBreakerLocal->SetOperationStatus( 'different', false );
+			$this->response->setCode(200);
+			$this->response->setBody('Closed');
+		} else {
+			$this->response->setCode(500);
+			$this->response->setBody('Open');
+		}
+	}
+
+	public function mockDownServiceCallExternal() {
+		if ($this->circuitBreakerExternal->OperationAllowed( 'different' )) {
+			// Do nothing
+			$this->circuitBreakerExternal->SetOperationStatus( 'different', false );
+			$this->response->setCode(200);
+			$this->response->setBody('Closed');
+		} else {
+			$this->response->setCode(500);
 			$this->response->setBody('Open');
 		}
 	}
