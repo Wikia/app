@@ -184,11 +184,11 @@ class WikisApiControllerTest extends WikiaBaseTest {
 	 */
 	public function provideGetWikisUnderDomain() {
 		// --------- Test case ------------
-		// 1. Make sure api works for a single wiki accessed through the primary wikia domain
+		// 0. Make sure api works for a single wiki accessed through the primary fandom domain
 		$wikis = [
 			[
 				'city_id' => 123,
-				'city_url' => 'http://test.wikia.com/',
+				'city_url' => 'https://test.fandom.com/',
 				'city_dbname' => 'test'
 			]
 		];
@@ -207,12 +207,11 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'wikis' => $wikis
 			]
 		];
 		// --------- Test case ------------
-		// 2. Also a simple test case, but for a fandom.com domain (so the url should be a https)
+		// 1. Also a simple test case, but for a fandom.com domain (so the url should be a https)
 		yield [
 			'test.fandom.com',	// request domain parameter
 			true,				// localizeUrls param
@@ -235,7 +234,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => true,
 				'wikis' => [
@@ -248,7 +246,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			]
 		];
 		// --------- Test case ------------
-		// 3. Use secondary fandom domain, expect a redirect to primary domain over https
+		// 2. Use secondary fandom domain, expect a redirect to primary domain over https
 		yield [
 			'secondary.fandom.com',	// request domain parameter
 			false,					// localizeUrls param
@@ -271,13 +269,12 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.fandom.com',
-				'primaryProtocol' => 'https://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
 		];
 		// --------- Test case ------------
-		// 4. Use secondary fandom domain, expect a localized redirect to primary domain over https
+		// 3. Use secondary fandom domain, expect a localized redirect to primary domain over https
 		yield [
 			'secondary.fandom.com',	// request domain parameter
 			true,					// localizeUrls param
@@ -304,13 +301,12 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.preview.fandom.com',
-				'primaryProtocol' => 'https://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
 		];
 		// --------- Test case ------------
-		// 5. Use secondary wikia domain, expect a redirect to primary domain over http
+		// 4. Use secondary wikia domain, expect a redirect to primary domain over https
 		yield [
 			'secondary.wikia.com',	// request domain parameter
 			true,					// localizeUrls param
@@ -333,17 +329,16 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => 'primary.wikia.com',
-				'primaryProtocol' => 'http://',
 				'isBlocked' => false,
 				'wikis' => []
 			]
 		];
 		// --------- Test case ------------
-		// 6. Check blocked robots flag
+		// 5. Check blocked robots flag
 		$wikis = [
 			[
 				'city_id' => 123,
-				'city_url' => 'http://blocked.wikia.com/',
+				'city_url' => 'https://blocked.wikia.com/',
 				'city_dbname' => 'test'
 			]
 		];
@@ -363,18 +358,17 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => true,
 				'isPublic' => true,
 				'wikis' => $wikis
 			]
 		];
 		// --------- Test case ------------
-		// 7. Check public flag flag
+		// 6. Check public flag flag
 		$wikis = [
 			[
 				'city_id' => 123,
-				'city_url' => 'http://closed.wikia.com/',
+				'city_url' => 'https://closed.wikia.com/',
 				'city_dbname' => 'test'
 			]
 		];
@@ -394,14 +388,13 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis
 			]
 		];
 		// --------- Test case ------------
-		// 8. Empty domain root with language wikis underneath
+		// 7. Empty domain root with language wikis underneath
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -412,7 +405,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		$localizedWikis = [
 			[
 				'city_id' => 123,
-				'city_url' => 'http://empty.preview.wikia.com/de/',
+				'city_url' => 'https://empty.preview.wikia.com/de/',
 				'city_dbname' => 'test'
 			]
 		];
@@ -431,14 +424,13 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $localizedWikis
 			]
 		];
 		// --------- Test case ------------
-		// 9. Corrupted domain parameter
+		// 8. Corrupted domain parameter
 		yield [
 			'wiki.fake.hacked',
 			false,				// localizeUrls param
@@ -448,7 +440,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			NotFoundApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// 10. Unknown domain
+		// 9. Unknown domain
 		yield [
 			'empty.fandom.com',	// request domain parameter
 			false,					// localizeUrls param
@@ -465,7 +457,7 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			NotFoundApiException::class	// expected exception
 		];
 		// --------- Test case ------------
-		// 11. Wiki with city_public set to -1 (marked for closing)
+		// 10. Wiki with city_public set to -1 (marked for closing)
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -491,14 +483,13 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis
 			]
 		];
 		// --------- Test case ------------
-		// 12. wiki with city_public set to -2 (marked as spam)
+		// 11. wiki with city_public set to -2 (marked as spam)
 		$wikis = [
 			[
 				'city_id' => 123,
@@ -524,7 +515,6 @@ class WikisApiControllerTest extends WikiaBaseTest {
 			// expected response
 			[
 				'primaryDomain' => '',
-				'primaryProtocol' => '',
 				'isBlocked' => false,
 				'isPublic' => false,
 				'wikis' => $wikis

@@ -1515,66 +1515,19 @@ function wfGetStagingEnvForUrl( $url ) : string {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
+	global $wgWikiaEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
 	}
-
-	if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
-		 in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
-		// As those envs are not covered by our certificate, disable https there
+	if ( $wgWikiaEnvironment === WIKIA_ENV_PROD &&
+		isset( $_SERVER['HTTP_X_STAGING'] ) &&
+		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
 		return false;
 	}
-
-	$host = wfNormalizeHost( $host );
-	$baseDomain = wfGetBaseDomainForHost( $host );
-
-	$server = str_replace( ".$baseDomain", '', $host );
-
-	// Only allow single subdomain wikis through
-	return substr_count( $server, '.' ) === 0;
+	return true;
 }
 
-/**
- * Returns true for URLs with fandom domain, some examples:
- * - https://starwars.fandom.com/wiki/Yoda
- * - http://starwars.fandom.com/wiki/Yoda
- * - http://starwars.fandom-dev.pl/
- * - http://starwars.fandom-dev.us
- *
- * In the future, it can be used to force HTTPS on other domains
- *
- * @param $url
- * @return bool
- */
-function wfHttpsEnabledForURL( $url ): bool {
-	$host = parse_url( $url, PHP_URL_HOST );
-
-	// e.g. not existing wikis
-	if ( empty( $host ) ) {
-		return false;
-	}
-	return wfHttpsEnabledForDomain( $host );
-}
-
-/**
- * Returns true for dhosts with fandom domain, some examples:
- * - starwars.fandom.com
- * - starwars.fandom.com
- * - starwars.fandom-dev.pl
- * - starwars.fandom-dev.us
- *
- * In the future, it can be used to force HTTPS on other domains
- *
- * @param $url
- * @return bool
- */
-function wfHttpsEnabledForDomain( $domain ) : bool {
-	global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
-	$domain = wfNormalizeHost( $domain );
-
-	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain || wfGetBaseDomainForHost( $domain ) === $wgWikiaOrgBaseDomain;
-}
 /**
  * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
  *

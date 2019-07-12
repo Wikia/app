@@ -251,10 +251,8 @@ class WikiFactoryLoader {
 	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
-		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgEnableHTTPSForAnons, $wgFandomBaseDomain, $wgWikiaBaseDomain,
-			   $wgWikiaOrgBaseDomain, $wgDevelEnvironment,
-			   $wgIncludeClosedWikiHandler;
+		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgFandomBaseDomain,
+			   $wgWikiaBaseDomain, $wgWikiaOrgBaseDomain, $wgDevelEnvironment, $wgIncludeClosedWikiHandler;
 
 		wfProfileIn(__METHOD__);
 
@@ -464,6 +462,9 @@ class WikiFactoryLoader {
 			if ( !$this->mCommandLine ) {
 				global $wgNotAValidWikia;
 				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				if (  wfHttpsAllowedForURL( $redirect ) && !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {
+					$redirect = wfHttpToHttps( $redirect );
+				}
 				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if ( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
@@ -476,10 +477,6 @@ class WikiFactoryLoader {
 				return false;
 			}
 		}
-
-		// Important note: we have to call getVarValueByName before setting $wgCityId global
-		// otherwise getVarValueByName just uses locally set globals and returns empty value here
-		$wgEnableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $this->mWikiID );
 
 		/**
 		 * save default var values for Special:WikiFactory
@@ -546,11 +543,6 @@ class WikiFactoryLoader {
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = wfHttpsAllowedForURL( $redirectUrl ) &&
-			(
-				wfHttpsEnabledForURL( $redirectUrl ) ||
-				$wgEnableHTTPSForAnons ||
-				!empty( $_SERVER['HTTP_FASTLY_SSL'] )
-			) &&
 			// don't redirect internal clients
 			!empty( $_SERVER['HTTP_FASTLY_FF'] );
 
