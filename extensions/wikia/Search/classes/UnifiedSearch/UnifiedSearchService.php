@@ -64,7 +64,7 @@ class UnifiedSearchService {
 		];
 
 		if ( $request->isImageOnly() ) {
-			$params['imagesOnly'] = 'true';
+			$params['imageOnly'] = 'true';
 		}
 
 		if ( $request->isVideoOnly() ) {
