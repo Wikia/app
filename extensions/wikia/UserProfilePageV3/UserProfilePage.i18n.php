@@ -748,6 +748,7 @@ $messages['de'] = array(
 	'user-identity-box-discord-handle-content' => 'Benutzername: $1',
 	'user-identity-box-my-discord-handle' => 'Mein Discord',
 	'user-identity-box-discord-handle-hint' => 'Hinweis: Name#1234',
+	'user-identity-box-group-content-team-member' => 'Redaktionsmitglied',
 );
 
 $messages['de-ch'] = array(
@@ -935,6 +936,7 @@ $messages['es'] = array(
 	'user-identity-box-discord-handle-content' => 'Nombre de usuario: $1',
 	'user-identity-box-my-discord-handle' => 'Mi Discord',
 	'user-identity-box-discord-handle-hint' => 'Indicio: Nombre#1234',
+	'user-identity-box-group-content-team-member' => 'Content Team Member',
 );
 
 $messages['fa'] = array(
@@ -1095,7 +1097,7 @@ $messages['fr'] = array(
 	'user-identity-box-group-bureaucrat' => 'Bureaucrate',
 	'user-identity-box-group-founder' => 'Fondateur',
 	'user-identity-box-group-staff' => 'Staff',
-	'user-identity-box-group-wiki-manager' => 'Gestionnaires de wiki',
+	'user-identity-box-group-wiki-manager' => 'Gestionnaire de wiki',
 	'user-identity-box-group-helper' => 'Assistant',
 	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Vérifié',
@@ -1188,6 +1190,7 @@ $messages['fr'] = array(
 	'user-identity-box-discord-handle-content' => "Nom d'utilisateur : $1",
 	'user-identity-box-my-discord-handle' => 'Mon Discord',
 	'user-identity-box-discord-handle-hint' => 'Indice : Nom#1234',
+	'user-identity-box-group-content-team-member' => "Membre de l'équipe Contenu",
 );
 
 $messages['gl'] = array(
@@ -1790,6 +1793,7 @@ $messages['it'] = array(
 	'user-identity-box-discord-handle-content' => 'Nome utente: $1',
 	'user-identity-box-my-discord-handle' => 'Il mio Discord',
 	'user-identity-box-discord-handle-hint' => 'Suggerimento: Nome#1234',
+	'user-identity-box-group-content-team-member' => 'Membro del team per i contenuti',
 );
 
 $messages['ja'] = array(
@@ -1931,6 +1935,8 @@ $messages['ja'] = array(
 	'user-identity-box-discord-handle-content' => 'ユーザー名: $1',
 	'user-identity-box-my-discord-handle' => 'Discord',
 	'user-identity-box-discord-handle-hint' => 'ヒント：名前#1234',
+	'user-identity-box-group-content-team-member' => 'コンテンツ・チーム・メンバー',
+	'user-identity-box-group-wiki-manager' => 'Wikiマネージャー',
 );
 
 $messages['ko'] = array(
@@ -2614,7 +2620,7 @@ $messages['pl'] = array(
 	'user-identity-box-group-bureaucrat' => 'Biurokrata',
 	'user-identity-box-group-founder' => 'Założyciel',
 	'user-identity-box-group-staff' => 'Staff',
-	'user-identity-box-group-wiki-manager' => 'Menadżerowie Wiki',
+	'user-identity-box-group-wiki-manager' => 'Menadżer Wiki',
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Autoryzowany',
@@ -2707,6 +2713,7 @@ $messages['pl'] = array(
 	'user-identity-box-discord-handle-content' => 'Nazwa użytkownika: $1',
 	'user-identity-box-my-discord-handle' => 'Mój Discord',
 	'user-identity-box-discord-handle-hint' => 'Podpowiedź: Imię#1234',
+	'user-identity-box-group-content-team-member' => 'Członek Zespołu Treści',
 );
 
 $messages['pms'] = array(
@@ -2902,6 +2909,7 @@ $messages['pt'] = array(
 	'user-identity-box-discord-handle-content' => 'Nome de usuário: $1',
 	'user-identity-box-my-discord-handle' => 'Meu Discord',
 	'user-identity-box-discord-handle-hint' => 'Dica: Nome#1234',
+	'user-identity-box-group-content-team-member' => 'Membro da equipe de conteúdo',
 );
 
 $messages['roa-tara'] = array(
@@ -2961,7 +2969,7 @@ $messages['ru'] = array(
 	'user-identity-box-group-bureaucrat' => 'Бюрократ',
 	'user-identity-box-group-founder' => 'Основатель',
 	'user-identity-box-group-staff' => 'Сотрудник',
-	'user-identity-box-group-wiki-manager' => 'Руководители вики',
+	'user-identity-box-group-wiki-manager' => 'Руководитель вики',
 	'user-identity-box-group-helper' => 'Помощник',
 	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Аутентификация',
@@ -3054,6 +3062,7 @@ $messages['ru'] = array(
 	'user-identity-box-discord-handle-content' => 'Имя пользователя: $1',
 	'user-identity-box-my-discord-handle' => 'Мой Discord',
 	'user-identity-box-discord-handle-hint' => 'Пример: Имя#1234',
+	'user-identity-box-group-content-team-member' => 'Участник редакции',
 );
 
 $messages['sr-ec'] = array(
@@ -3704,6 +3713,7 @@ $messages['zh-hans'] = array(
 	'user-identity-box-discord-handle-content' => '用户名: $1',
 	'user-identity-box-my-discord-handle' => '我的Discord',
 	'user-identity-box-discord-handle-hint' => '提示：名称#1234',
+	'user-identity-box-group-content-team-member' => '内容团队人员',
 );
 
 $messages['zh-hant'] = array(
@@ -3845,5 +3855,6 @@ $messages['zh-hant'] = array(
 	'user-identity-box-discord-handle-content' => '用戶名: $1',
 	'user-identity-box-my-discord-handle' => '我的Discord',
 	'user-identity-box-discord-handle-hint' => '提示：名字#1234',
+	'user-identity-box-group-content-team-member' => '內容團隊人員',
 );
 
