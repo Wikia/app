@@ -170,8 +170,6 @@ class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 			[ 177, 'https', 'https://community.fandom.com/wiki/Test' ],
 			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
 			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
-			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
-			[ 5931, 'https', 'http://ja.starwars.wikia.com/wiki/Test' ],
 		];
 	}
 

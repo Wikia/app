@@ -1935,8 +1935,8 @@ $messages['ja'] = array(
 	'user-identity-box-discord-handle-content' => 'ユーザー名: $1',
 	'user-identity-box-my-discord-handle' => 'Discord',
 	'user-identity-box-discord-handle-hint' => 'ヒント：名前#1234',
-	'user-identity-box-group-content-team-member' => 'コンテンツ・チーム・メンバー',
 	'user-identity-box-group-wiki-manager' => 'Wikiマネージャー',
+ 	'user-identity-box-group-content-team-member' => 'コンテンツ・チーム・メンバー',
 );
 
 $messages['ko'] = array(

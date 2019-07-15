@@ -8881,13 +8881,6 @@ $wgAllowCommunityBuilderCNWPrompt = false;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Whether the community is excluded from the fandom.com migration, disables the migration banner
- * @see SEO-669
- * @var bool $wgFandomComMigrationScheduled
- */
-$wgDomainMigrationDisabled = false;
-
-/**
  * Environment-specific domain mappings to their normalized variants
  * @var string[] $wgDomainOverrides
  */
@@ -9000,3 +8993,8 @@ $wgArticleExporterExchange = [
     'exchange' => 'taxonomy-ex',
     'routing' => 'taxonomy.article-edits'
 ];
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = false;

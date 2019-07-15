@@ -101,6 +101,11 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 	function setupTracking() {
 		var shouldSendAdditionalData = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
+		var $sponsoredItem = $mixedContentFooter.find("[data-tracking*='sponsored-item']");
+
+		if ($sponsoredItem.length) {
+			tracker.trackImpression('footer::' + $sponsoredItem.attr('href'));
+		}
 
 		tracker.trackImpression('footer');
 
@@ -121,7 +126,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			labels.forEach(function (label) {
 				tracker.trackClick(label, additionalParams);
 			});
-			tracker.trackSelect(href, additionalParams);
+			tracker.trackSelect('footer::' + href, additionalParams);
 		});
 	}
 

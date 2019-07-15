@@ -90,14 +90,8 @@ class FandomComMigrationHooks {
 	 * @return boolean
 	 */
 	private static function isMigrationScheduled(): bool {
-		global $wgFandomComMigrationScheduled, $wgWikiaOrgMigrationScheduled, $wgServer,
-			   $wgDomainMigrationDisabled;
+		global $wgFandomComMigrationScheduled;
 
-		return empty( $wgDomainMigrationDisabled ) &&
-			empty( $wgWikiaOrgMigrationScheduled ) &&
-			(
-				!empty( $wgFandomComMigrationScheduled )
-				|| !wfHttpsEnabledForURL( $wgServer )
-			);
+		return !empty( $wgFandomComMigrationScheduled );
 	}
 }

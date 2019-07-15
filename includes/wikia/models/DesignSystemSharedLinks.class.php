@@ -89,7 +89,6 @@ class DesignSystemSharedLinks {
 			'community-central' => '//community.fandom.com/wiki/Community_Central',
 			'support' => 'https://fandom.zendesk.com/',
 			'create-new-wiki' => '//community.fandom.com/wiki/Special:CreateNewWiki',
-			'fan-contributor' => null,
 			'wam' => '//community.fandom.com/wiki/WAM',
 			'help' => '//community.fandom.com/wiki/Help:Contents',
 			'media-kit' => 'https://www.fandom.com/mediakit',
@@ -130,7 +129,6 @@ class DesignSystemSharedLinks {
 			'tv' => 'https://www.fandom.com/explore-de?uselang=de#TV',
 		],
 		'en' => [
-			'fan-contributor' => 'https://www.fandom.com/fan-contributor',
 			'media-kit-contact' => 'https://www.fandom.com/mediakit#contact',
 		],
 		'es' => [
