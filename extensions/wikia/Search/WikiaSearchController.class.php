@@ -11,7 +11,8 @@ use Wikia\Search\SearchResult;
 use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
-use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
@@ -213,10 +214,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
 		$service = new UnifiedSearchService();
-		if ( $service->useUnifiedSearch( $this->isCorporateWiki() ) ) {
-			$request = new UnifiedSearchRequest( $searchConfig );
+		$isCorporateWiki = $this->isCorporateWiki();
+		if ( $service->useUnifiedSearch( $isCorporateWiki ) ) {
+			$type = $service->determineSearchType( $isCorporateWiki );
 
-			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
+			switch ($type) {
+				case UnifiedSearchService::SEARCH_TYPE_PAGE:
+					$request = new UnifiedSearchPageRequest( $searchConfig );
+					$result = $service->pageSearch( $request );
+					break;
+				case UnifiedSearchService::SEARCH_TYPE_COMMUNITY:
+					$request = new UnifiedSearchCommunityRequest( $searchConfig );
+					$result = $service->communitySearch( $request );
+					break;
+				default:
+					throw new InvalidArgumentException("Unknow search type: " . $type);
+			}
+
+			return SearchResult::fromUnifiedSearchResult( $result );
 		}
 
 		if ( $searchConfig->getQuery()->hasTerms() ) {
@@ -614,8 +629,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			] );
 
 			$fandomStories =
-				\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
-					\WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
+				WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
+					WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
 						return ( new ESFandomSearchService() )->query( $query );
 					} );
 

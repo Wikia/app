@@ -6,7 +6,7 @@
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
-use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
@@ -67,8 +67,8 @@ class SearchApiController extends WikiaApiController {
 			if ( !$config->getQuery()->hasTerms() ) {
 				throw new InvalidParameterApiException( 'query' );
 			}
-			$request = new UnifiedSearchRequest( $config );
-			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
+			$request = new UnifiedSearchPageRequest( $config );
+			$result = SearchResult::fromUnifiedSearchResult( $service->pageSearch( $request ) );
 			if ( !$result->hasResults() ) {
 				throw new NotFoundApiException();
 			}
