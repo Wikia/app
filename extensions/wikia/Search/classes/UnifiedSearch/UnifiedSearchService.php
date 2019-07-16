@@ -15,6 +15,19 @@ class UnifiedSearchService {
 	const SEARCH_TYPE_PAGE = 'page';
 	const SEARCH_TYPE_COMMUNITY = 'community';
 
+	const COMMUNITY_FIELDS = [
+		'id',
+		'title',
+		'description',
+		'language',
+		'url',
+		'image',
+		'hub_s',
+		'articles_i',
+		'images_i',
+		'videos_i',
+	];
+
 	/** @var string */
 	private $baseUrl;
 
@@ -69,7 +82,7 @@ class UnifiedSearchService {
 		$items = [];
 		foreach ( $result['results'] as $item ) {
 			$items[] = [
-				'wid' => $item['id'],
+				'id' => $item['id'],
 				'title' => $item['name'],
 				'description' => $item['description'],
 				'language' => $item['language'],
@@ -79,7 +92,6 @@ class UnifiedSearchService {
 				'articles_i' => $item['pageCount'],
 				'images_i' => $item['imageCount'],
 				'videos_i' => $item['videoCount'],
-				'exactWikiMatch' => false
 			];
 		}
 
