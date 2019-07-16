@@ -46,6 +46,7 @@ class PermissionsConfiguration {
 		'global-discussions-moderator',
 		'request-to-be-forgotten-admin',
 		'wiki-manager',
+		'content-team-member',
 	];
 
 	private $implicitGroups = [
