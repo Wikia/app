@@ -24,7 +24,7 @@ class ResultHelper {
 
 		$imageURL = $result['image'] ?? null;
 
-		if ( !isset($imageURL) ) {
+		if ( null === $imageURL ) {
 			$imageURL = ImagesService::getImageSrc(
 				$result['id'],
 				$commData->getCommunityImageId(),
@@ -36,7 +36,7 @@ class ResultHelper {
 		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
 		//TODO: Remove after DAT-3642 is done
-		if ( empty( $imageURL ) ) {
+		if ( null === $imageURL ) {
 			$imageFileName =
 				PromoImage::fromPathname( $result['image_s'] )->ensureCityIdIsSet( $result['id'] )->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle(
@@ -76,7 +76,7 @@ class ResultHelper {
 
 		return [
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],
-			'exactWikiMatch' => $result['exactWikiMatch'] ?? false,
+			'exactWikiMatch' => $result['exactWikiMatch'] ?? true,
 			'imageURL' => $imageURL,
 			'description' => $description,
 			'descriptionWordLimit' => $descWordLimit,

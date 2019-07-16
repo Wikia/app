@@ -11,9 +11,11 @@ use Wikia\Search\SearchResult;
 use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityMapper;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
+use Wikia\Search\UnifiedSearch\UnifiedSearchWikiMatch;
 
 /**
  * Responsible for handling search requests.
@@ -215,6 +217,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
 		$service = new UnifiedSearchService();
 		$isCorporateWiki = $this->isCorporateWiki();
+
 		if ( $service->useUnifiedSearch( $isCorporateWiki ) ) {
 			$type = $service->determineSearchType( $isCorporateWiki );
 
@@ -222,6 +225,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				case UnifiedSearchService::SEARCH_TYPE_PAGE:
 					$request = new UnifiedSearchPageRequest( $searchConfig );
 					$result = $service->pageSearch( $request );
+
+					$limit = $searchConfig->getLimit();
+					$searchConfig->setLimit(1);
+					$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
+					$communityResult = $service->communitySearch( $communityRequest );
+					$searchConfig->setLimit($limit);
+
+					if ($communityResult->resultsFound) {
+						$wikiResult = $communityResult->getResults()->toArray(UnifiedSearchService::COMMUNITY_FIELDS)[0];
+						$searchConfig->setUnifiedWikiMatch(new UnifiedSearchWikiMatch(
+							$wikiResult,
+							$searchConfig->getQuery()->getSanitizedQuery()
+						));
+					}
 					break;
 				case UnifiedSearchService::SEARCH_TYPE_COMMUNITY:
 					$request = new UnifiedSearchCommunityRequest( $searchConfig );
@@ -666,7 +683,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		$matchResult = $searchConfig->getWikiMatch()->getResult();
+		global $wgUseCommunityUnifiedSearch;
+
+		if ($wgUseCommunityUnifiedSearch && $searchConfig->getUnifiedWikiMatch()) {
+			$matchResult = $searchConfig->getUnifiedWikiMatch()->getResult();
+		} else {
+			$matchResult = $searchConfig->getWikiMatch()->getResult();
+		}
 		if ( $matchResult !== null ) {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal( 'wikiMatch', $this->getApp()
