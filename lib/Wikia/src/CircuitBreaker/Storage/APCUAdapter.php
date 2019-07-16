@@ -9,6 +9,7 @@ use Ackintosh\Ganesha\Configuration;
 use Ackintosh\Ganesha\Storage\AdapterInterface;
 use Ackintosh\Ganesha\Storage\Adapter\TumblingTimeWindowInterface;
 use Ackintosh\Ganesha\Exception\StorageException;
+use APCUIterator;
 
 /**
  * Class APCUAdapter
@@ -149,9 +150,12 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function reset() {
-		// according to documentation apcu_clear_cache "Returns TRUE always", so I don't think we
-		// can do much more in terms of handling errors in this case
-		apcu_clear_cache();
+		$prefix = Ganesha\Storage::KEY_PREFIX;
+		$status = apcu_delete(new APCUIterator("^{$prefix}"));
+
+		if ( !$status ) {
+			$this->throwException( "Failed clearing circuit breaker cache" );
+		}
 	}
 
 	/**
