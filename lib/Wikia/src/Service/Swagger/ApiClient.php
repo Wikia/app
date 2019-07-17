@@ -23,7 +23,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	/** @var ServiceCircuitBreaker */
 	private $circuitBreaker;
 
-	public function __construct( Configuration $config, BernoulliTrial $logSampler, $serviceName) {
+	public function __construct( Configuration $config, BernoulliTrial $logSampler, string $serviceName) {
 		parent::__construct($config);
 		$this->logSampler = $logSampler;
 		$this->serviceName = $serviceName;
