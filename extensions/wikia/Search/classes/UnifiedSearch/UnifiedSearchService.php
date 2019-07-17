@@ -5,7 +5,6 @@ namespace Wikia\Search\UnifiedSearch;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
-use RequestContext;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use WikiaException;
@@ -30,23 +29,7 @@ class UnifiedSearchService {
 			return false;
 		}
 
-		/**
-		 * We allow to use unified-search only if it has been enabled on the wiki or the header is passed.
-		 * That's because due to AB tests the useUnifiedSearch query parameter may be passed on any wiki,
-		 * not only those that have been indexed.
-		 */
-		if ( !( $wgUseUnifiedSearch || RequestContext::getMain()
-				->getRequest()
-				->getHeader( 'X-Fandom-Unified-Search' ) ) ) {
-			return false;
-		}
-
-		$queryForce = RequestContext::getMain()->getRequest()->getVal( 'useUnifiedSearch', null );
-		if ( !is_null( $queryForce ) ) {
-			return $queryForce === 'true' || $queryForce === '1' || $queryForce === true;
-		}
-
-		return false;
+		return $wgUseUnifiedSearch;
 	}
 
 	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
@@ -81,7 +64,7 @@ class UnifiedSearchService {
 		];
 
 		if ( $request->isImageOnly() ) {
-			$params['imagesOnly'] = 'true';
+			$params['imageOnly'] = 'true';
 		}
 
 		if ( $request->isVideoOnly() ) {

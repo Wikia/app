@@ -76,7 +76,7 @@ $messages['pl'] = array(
 	'articlevideo-feedback-question' => 'Czy podoba ci się ten film?',
 	'articlevideo-attribution-from' => 'dodany przez',
 	'right-showfeaturedvideo' => 'Zawsze pokazuj polecane filmy',
-	'articlevideo-preference-label' => 'Polecany film',
+	'articlevideo-preference-label' => 'Polecany film:',
 	'articlevideo-preference-option-show-featured-video' => 'Pokaż wszystkie filmy',
 	'articlevideo-preference-option-disable-featured-video' => 'Nie pokazuj wszystkich filmów',
 );

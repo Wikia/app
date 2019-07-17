@@ -106,6 +106,11 @@
 					<input type="text" id="fbPage" name="fbPage" value="<?= Sanitizer::encodeAttribute( $user['fbPage'] ); ?>">
 				</div>
 				<div class="input-group">
+					<label for="discordHandle"><?= wfMessage( 'user-identity-box-about-discord-handle' )->escaped(); ?></label>
+					<label for="discordHandle"><?= wfMessage( 'user-identity-box-discord-handle-hint' )->escaped(); ?></label>
+					<input type="text" id="discordHandle" name="discordHandle" value="<?= Sanitizer::encodeAttribute( $user['discordHandle'] ); ?>">
+				</div>
+				<div class="input-group">
 					<label><?= wfMessage( 'user-identity-box-about-fav-wikis' )->escaped(); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#">
 						<img src="<?= $wgBlankImgUrl ?>">

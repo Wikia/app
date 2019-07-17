@@ -21,12 +21,9 @@ class AllUnifiedSearch extends AbstractService {
 	 */
 	protected $services = [
 		'Wikia\Search\IndexService\FullContent' => null,
-		'Wikia\Search\IndexService\BacklinkCount' => null,
 		'Wikia\Search\IndexService\MediaData' => null,
 		'Wikia\Search\IndexService\Metadata' => null,
-		'Wikia\Search\IndexService\Redirects' => null,
-		'Wikia\Search\IndexService\WikiViews' => null,
-		'Wikia\Search\IndexService\VideoViews' => null, // note the order of operations -- AFTER metadata
+		'Wikia\Search\IndexService\ArticleQuality' => null,
 	];
 
 	/**

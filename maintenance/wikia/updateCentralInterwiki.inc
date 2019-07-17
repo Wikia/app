@@ -92,7 +92,7 @@ function getRebuildInterwikiSQL() : string {
 		list ($matches_1, $matches_2) = $line;
 			$prefix = strtolower( $matches_1 );
 			$url = $matches_2;
-			if ( preg_match( '/(wowwiki.com|wikia.com|uncyclopedia.org|falloutvault.com)/', $url ) ) {
+			if ( preg_match( '/(wowwiki.com|wikia.com|falloutvault.com)/', $url ) ) {
 				$local = 1;
 			} else {
 				$local = 0;

@@ -1,11 +1,12 @@
-import { context, scrollListener, slotTweaker, utils, universalAdPackage } from '@wikia/ad-engine';
-import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
+import {context, scrollListener, slotTweaker, universalAdPackage, utils} from '@wikia/ad-engine';
+import {navbarElement, navbarManager} from './navbar-updater';
 import slots from '../slots';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
 	CSS_TIMING_EASE_IN_CUBIC,
-	SLIDE_OUT_TIME
+	SLIDE_OUT_TIME,
+	CSS_CLASSNAME_THEME_RESOLVED
 } = universalAdPackage;
 
 export const getConfig = () => ({
@@ -19,6 +20,7 @@ export const getConfig = () => ({
 	slotsToDisable: [
 		'incontent_player',
 		'invisible_high_impact_2',
+		'floor_adhesion',
 	],
 	slotsToEnable: [
 		'bottom_leaderboard',
@@ -55,20 +57,20 @@ export const getConfig = () => ({
 	},
 
 	onAfterStickBfaaCallback() {
-		pinNavbar(false);
+		navbarManager.setPinned(false);
 	},
 
 	onBeforeUnstickBfaaCallback() {
 		scrollListener.removeCallback(this.updateNavbarOnScroll);
 		this.updateNavbarOnScroll = null;
-		Object.assign(navBarElement.style, {
+		Object.assign(navbarElement.style, {
 			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
 			top: '0'
 		});
 	},
 
 	onAfterUnstickBfaaCallback() {
-		Object.assign(navBarElement.style, {
+		Object.assign(navbarElement.style, {
 			transition: '',
 			top: ''
 		});
@@ -77,18 +79,24 @@ export const getConfig = () => ({
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 	},
 
+	onResolvedStateSetCallback() {
+		this.updateNavbar(); // when scrolling prevents jumping UAP
+		requestAnimationFrame(() => this.updateNavbar()); // when idle, moves navbar to resolved UAP
+	},
+
 	updateNavbar() {
 		const container = this.adSlot.getElement();
 		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+		const isInViewport = utils.isInViewport(container, { areaThreshold: 1 });
+        const isResolved = container.classList.contains(CSS_CLASSNAME_THEME_RESOLVED);
 
-		pinNavbar(isInViewport && !isSticky);
-		this.moveNavbar(isSticky ? container.offsetHeight : 0);
+		navbarManager.setPinned((isInViewport && !isSticky) || !isResolved);
+		this.moveNavbar((isSticky && isResolved) ? container.offsetHeight : 0);
 	},
 
 	moveNavbar(offset) {
-		if (navBarElement) {
-			navBarElement.style.top = offset ? `${offset}px` : '';
+		if (navbarElement) {
+			navbarElement.style.top = offset ? `${offset}px` : '';
 		}
 	}
 });

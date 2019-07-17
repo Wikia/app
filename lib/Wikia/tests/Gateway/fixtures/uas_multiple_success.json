@@ -1,0 +1,34 @@
+{
+	"users": {
+		"5": {
+			"avatar_rev": "1395606444",
+			"website": "",
+			"occupation": "",
+			"avatar": "https://static.wikia.nocookie.net/80e07c90-bac4-470c-b24f-61f12bd0658e",
+			"UserProfilePagesV3_gender": "",
+			"fbPage": "",
+			"twitter": "",
+			"name": "",
+			"nickname": "",
+			"location": "",
+			"UserProfilePagesV3_birthday": "10-20",
+			"fancysig": "1",
+			"username": "Test user"
+		},
+		"10": {
+			"avatar_rev": "10000",
+			"website": "",
+			"occupation": "",
+			"avatar": "https://static.wikia.nocookie.net/80e07c90-bac4-470c-b24f-61f12bd0658e",
+			"UserProfilePagesV3_gender": "",
+			"fbPage": "",
+			"twitter": "",
+			"name": "Teszt Béla",
+			"nickname": "Béla király",
+			"location": "",
+			"UserProfilePagesV3_birthday": "10-20",
+			"fancysig": "1",
+			"username": "Test user 2"
+		}
+	}
+}

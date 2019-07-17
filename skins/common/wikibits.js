@@ -715,20 +715,13 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'oasis') {
-	//see RT#46116
-	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
-		addOnloadHook(function() { Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start();} );
-	}
-}
-
 // http://www.wikia.com/wiki/User:Dantman/global.js
 // RT#9031
 
 window.importScriptPage = function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'https://' + server + '.' + mw.config.get('wgFandomBaseDomain') + url;
 		else url = server + url;
 	}
 	return importScriptURI(url);
@@ -737,7 +730,7 @@ window.importScriptPage = function( page, server ) {
 window.importStylesheetPage= function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/css';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
+		if( server.indexOf( '://' ) == -1 && server.substring( 0, 2 ) !== '//' ) url = 'https://' + server + '.' + mw.config.get('wgFandomBaseDomain') + url;
 		else url = server + url;
 	}
 	return importStylesheetURI(url);

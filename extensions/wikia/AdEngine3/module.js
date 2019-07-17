@@ -8,11 +8,15 @@ define('ext.wikia.adEngine3.api', [
 	'ext.wikia.adEngine3.ads'
 ], function (ads) {
 	function shouldShowAds() {
-		return ads.context.get('state.showAds');
+		return ads.contextConfigured.then(function(context) {
+			return context.get('state.showAds')
+		});
 	}
 
 	function isNetzathletenEnabled() {
-		return ads.context.get('services.netzathleten.enabled');
+		return ads.contextConfigured.then(function(context) {
+			return context.get('services.netzathleten.enabled')
+		});
 	}
 
 	return {

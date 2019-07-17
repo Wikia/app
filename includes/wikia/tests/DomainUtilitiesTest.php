@@ -23,13 +23,15 @@ class DomainUtilitiesTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @param string $envName
 	 * @param string $url
 	 * @param string|null $expected
 	 *
 	 * @dataProvider getHeaderListOriginalHostDataProvider
-	 * @covers MWHttpRequest::getHeaderList
+	 * @covers       MWHttpRequest::getHeaderList
 	 */
-	public function testGetHeaderListOriginalHost( string $url, $expected ) {
+	public function testGetHeaderListOriginalHost( string $envName, string $url, $expected ) {
+		$this->mockEnvironment( $envName );
 		$this->mockGlobalVariable( 'wgKubernetesNamespace', 'foo' );
 
 		$http = new MWHttpRequest( $url );
@@ -44,35 +46,37 @@ class DomainUtilitiesTest extends WikiaBaseTest {
 	}
 
 	public function getHeaderListOriginalHostDataProvider() {
-		yield [ 'http://futurama.sandbox-s6.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
-		yield [ 'http://futurama.sandbox-s6.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
-		yield [ 'http://futurama.preview.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
-		yield [ 'http://futurama.preview.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
-		yield [ 'http://futurama.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
-		yield [ 'http://futurama.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
+		yield [ WIKIA_ENV_SANDBOX, 'http://futurama.sandbox-s1.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
+		yield [ WIKIA_ENV_SANDBOX, 'http://futurama.sandbox-s1.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
+		yield [ WIKIA_ENV_PREVIEW, 'http://futurama.preview.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
+		yield [ WIKIA_ENV_PREVIEW, 'http://futurama.preview.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
+		yield [ WIKIA_ENV_PROD, 'http://futurama.fandom.com/fr/wikia.php', 'futurama.fandom.com'] ;
+		yield [ WIKIA_ENV_PROD, 'http://futurama.wikia.com/fr/wikia.php', 'futurama.wikia.com'] ;
 
-		yield [ 'http://example.com/fr/wikia.php', null ] ;
-		yield [ 'http://futurama.wikia.org/fr/wikia.php', null] ;
+		yield [ WIKIA_ENV_PROD, 'http://example.com/fr/wikia.php', null ] ;
+		yield [ WIKIA_ENV_PROD, 'http://futurama.wikia.org/fr/wikia.php', null] ;
 	}
 
 	/**
+	 * @param string $envName
 	 * @param string $host
 	 * @param string $expected
 	 *
 	 * @dataProvider wfNormalizeHostDataProvider
 	 */
-	public function testWfNormalizeHost( string $host, string $expected ) {
+	public function testWfNormalizeHost( string $envName, string $host, string $expected ) {
+		$this->mockEnvironment( $envName );
 		$this->assertEquals( $expected, wfNormalizeHost( $host ) );
 	}
 
 	public function wfNormalizeHostDataProvider() {
-		yield [ 'futurama.sandbox-s6.wikia.com', 'futurama.wikia.com' ];
-		yield [ 'muppet.sandbox-qa06.wikia.com', 'muppet.wikia.com' ];
-		yield [ 'futurama.verify.wikia.com', 'futurama.wikia.com' ];
-		yield [ 'futurama.preview.wikia.com', 'futurama.wikia.com' ];
-		yield [ 'futurama.preview.fandom.com', 'futurama.fandom.com' ];
-		yield [ 'muppet.wikia.com', 'muppet.wikia.com' ];
-		yield [ 'muppet.fandom.com', 'muppet.fandom.com' ];
-		yield [ 'example.com', 'example.com' ];
+		yield [ WIKIA_ENV_SANDBOX, 'futurama.sandbox-s1.wikia.com', 'futurama.wikia.com' ];
+		yield [ WIKIA_ENV_SANDBOX, 'muppet.sandbox-s1.wikia.com', 'muppet.wikia.com' ];
+		yield [ WIKIA_ENV_VERIFY, 'futurama.verify.wikia.com', 'futurama.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'futurama.preview.wikia.com', 'futurama.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'futurama.preview.fandom.com', 'futurama.fandom.com' ];
+		yield [ WIKIA_ENV_PROD, 'muppet.wikia.com', 'muppet.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'muppet.fandom.com', 'muppet.fandom.com' ];
+		yield [ WIKIA_ENV_PROD, 'example.com', 'example.com' ];
 	}
 }

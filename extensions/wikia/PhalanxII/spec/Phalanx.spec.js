@@ -49,7 +49,7 @@ describe('Phalanx', function () {
 	});
 
 	it('RegExp is validated', function (done) {
-		var nirvanaMock = mockNirvanaValidate({valid: 1}),
+		var nirvanaMock = mockNirvanaValidate({valid: true}),
 			phalanx = modules.phalanx(jQuery, nirvanaMock);
 
 		phalanx.init(TOKEN);
@@ -61,7 +61,7 @@ describe('Phalanx', function () {
 	});
 
 	it('RegExp is not validated', function (done) {
-		var nirvanaMock = mockNirvanaValidate({valid: 0}),
+		var nirvanaMock = mockNirvanaValidate({valid: false}),
 			phalanx = modules.phalanx(jQuery, nirvanaMock);
 
 		phalanx.init(TOKEN);

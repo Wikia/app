@@ -23,12 +23,13 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
-		var isEnabled = adsApi && adsApi.isNetzathletenEnabled();
-
-		// user opt-ins for NetzAthleten
-		if (optIn && isEnabled) {
-			loadNetzAthletenScript();
-		}
+		adsApi.isNetzathletenEnabled()
+			.then(function(isServiceEnabled) {
+				// user opt-ins for NetzAthleten
+				if (optIn && isServiceEnabled) {
+					loadNetzAthletenScript();
+				}
+			});
 	});
 });
 </script>

@@ -119,10 +119,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'wiki-creation' => [
 				Phalanx::TYPE_WIKI_CREATION,
 			],
-			'questions' => [
-				Phalanx::TYPE_ANSWERS_QUESTION_TITLE,
-				Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS,
-			]
 		];
 
 		if ( !$showEmailBlock ) {
@@ -360,6 +356,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->setVal( 'error', 'permission' );
 
 			wfProfileOut( __METHOD__ );
+
 			return;
 		}
 
@@ -367,10 +364,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			try {
 				$phalanxService = PhalanxServiceFactory::getServiceInstance();
 				$this->setVal( 'valid', $phalanxService->doRegexValidation( $regexp ) );
-			} catch ( PhalanxServiceException $phalanxServiceException ) {
-				$this->setVal( 'valid', true );
-			} catch ( RegexValidationException $regexValidationException ) {
-				$this->setVal( 'valid', $regexValidationException->getMessage() );
+			}
+			catch ( Exception $exception ) {
+				\Wikia\Logger\WikiaLogger::instance()
+					->error( 'Phalanx service failed', [ $exception ] );
 			}
 		}
 

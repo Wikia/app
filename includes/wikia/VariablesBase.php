@@ -633,14 +633,6 @@ $wgAutoloadClasses = [];
 $wgAutomatedTestsIPsList = [];
 
 /**
- * Languages supported by Answers.
- * @see extensions/wikia/Answers
- * @var Array $wgAvailableAnswersLang
- */
-$wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
-	'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
-
-/**
  * Languages supported by HAWelcome.
  * @see extensions/wikia/HAWelcome/
  * @var Array $wgEnableHAWelcomeExt
@@ -1282,9 +1274,8 @@ $wgCrossSiteAJAXdomainExceptions = [];
 $wgCrossWikiaSearchExcludedWikis = [
 	// Answers
 	11557,
-	// Uncyclopedias
-	425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
-	859, 2219, 1159, 2794, 2258, 1183, 1512,
+	// Spademanns wiki
+	1524,
 	// Community Central
 	177,
 	// Scratchpad
@@ -2068,6 +2059,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-bureaucrat',
 	'User-identity-box-group-chatmoderator',
 	'User-identity-box-group-content-moderator',
+	'User-identity-box-group-content-team-member',
 	'User-identity-box-group-council',
 	'User-identity-box-group-founder',
 	'User-identity-box-group-helper',
@@ -3397,9 +3389,7 @@ $wgEnableRecirculationExt = true;
 $wgEnableReferencesTemplateParsing = true;
 
 /**
- * Enable Related Pages extension and Oasis module. IMPORTANT: Disabled for
- * Answers wikis, as RelatedPages queries are killing their databases.
- * @see $wgEnableAnswers
+ * Enable Related Pages extension and Oasis module.
  * @see extensions/wikia/RelatedPages
  * @var bool $wgEnableRelatedPagesExt
  */
@@ -6563,6 +6553,7 @@ $wgPublicUserAttributes = [
 	'coverPhoto',
 	'fancysig',
 	'fbPage',
+	'discordHandle',
 	'location',
 	'name',
 	'nickname',
@@ -6667,6 +6658,10 @@ $wgRateLimits = [
 	],
 	'mailpassword' => [
 		'ip' => [ 1, 43200 ],
+	],
+	'changeemail' => [
+		'ip' => [ 10, 3600 ],
+		'user' => [ 4, 86400 ],
 	],
 ];
 
@@ -8886,11 +8881,10 @@ $wgAllowCommunityBuilderCNWPrompt = false;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Whether the community is excluded from the fandom.com migration, disables the migration banner
- * @see SEO-669
- * @var bool $wgFandomComMigrationScheduled
+ * Environment-specific domain mappings to their normalized variants
+ * @var string[] $wgDomainOverrides
  */
-$wgDomainMigrationDisabled = false;
+$wgEnvironmentDomainMappings = [];
 
 /**
  * Whether the community is scheduled to be migrated to a wikia.org domain
@@ -8987,7 +8981,7 @@ $wgTriviaQuizzesEnabledPages = [];
  * @see LORE-519
  * @var bool
  */
-$wgEnableArticleExporterHooks = false;
+$wgEnableArticleExporterHooks = true;
 
 /**
  * ArticleExporter RabbitMQ configuration.
@@ -8999,3 +8993,8 @@ $wgArticleExporterExchange = [
     'exchange' => 'taxonomy-ex',
     'routing' => 'taxonomy.article-edits'
 ];
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = false;

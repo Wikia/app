@@ -61,6 +61,12 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			throw new Error('No tracking label provided');
 		}
 
+		/**
+		 * We need that fallback for videos on "next" page when any video on previous pages was closed,
+		 * because 'getPlaylistItem()' is undefined when first event fires
+		 * @see IW-1488
+		 */
+		var currentItem = playerInstance.getPlaylistItem() || playerInstance.getPlaylistItem(0);
 		var trackingData = {
 			action: gaData.action || 'click',
 			category: gaCategory,
@@ -70,7 +76,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 
 			// Internal tracking data
 			eventName: eventName,
-			videoId: playerInstance.getPlaylistItem().mediaid,
+			videoId: currentItem.mediaid,
 			player: 'jwplayer',
 			onScroll: onScroll,
 			trackingMethod: 'analytics'

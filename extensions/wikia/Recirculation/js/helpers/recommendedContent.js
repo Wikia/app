@@ -55,6 +55,9 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
             });
     }
 
+    /**
+     * Fetch recommendations from service built by Data Engineering Team
+     */
     function getExperimentalRecommendedData() {
         var deferred = $.Deferred();
         var itemId = w.wgCityId + '_' + w.wgArticleId;
@@ -66,35 +69,33 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
             data: {
                 wikiId: w.wgCityId,
                 articleId: w.wgArticleId,
-                beacon: w.beacon_id,
+                beacon: w.beacon_id
             }
         }).done(function (result) {
             deferred.resolve(mapExperimentalDataResponse(result));
         }).fail(function (err) {
-            log('Failed to fetch experimental recommended data, using getPopularPages as backup' + err, log.levels.error);
+            log('Failed to fetch experimental recommended data, using getPopularPages as a fallback' + err, log.levels.error);
 
+            getPopularPages().then(deferred.resolve);
         });
 
         return deferred.promise();
     }
 
+    /**
+     * A fallback for recommendations service
+     */
     function getPopularPages() {
         return nirvana.sendRequest({
             controller: 'RecirculationApi',
             method: 'getPopularPages',
             type: 'get',
             data: {
-                limit: numberOfArticleFooterSlots,
+                limit: numberOfArticleFooterSlots
             }
         }).then(function (data) {
             return data;
         });
-    }
-
-    function getRecommendedArticles() {
-        var shouldUseExperimentalService = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
-
-        return shouldUseExperimentalService ? getExperimentalRecommendedData() : getPopularPages();
     }
 
     function getRequestId() {
@@ -102,7 +103,7 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
     }
 
     return {
-        getRecommendedArticles: getRecommendedArticles,
+        getRecommendedArticles: getExperimentalRecommendedData,
         getRequestId: getRequestId
     };
 });

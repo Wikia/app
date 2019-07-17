@@ -655,7 +655,6 @@ class SearchControllerTest extends BaseTest {
 				'cat_videogames' =>     false,
 				'cat_entertainment' =>  false,
 				'cat_lifestyle' =>      false,
-				'is_hd' =>              false,
 				'is_image' =>           false,
 				'is_video' =>           false,
 				'no_filter' =>          true,

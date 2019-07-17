@@ -205,7 +205,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->addRightRailModules( $searchConfig );
 	}
 
-
 	/**
 	 * @param \Wikia\Search\Config $searchConfig
 	 * @return SearchResult
@@ -219,6 +218,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			return SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
 		}
+
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -792,7 +792,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'cat_videogames' => isset( $filters['cat_videogames'] ),
 			'cat_entertainment' => isset( $filters['cat_entertainment'] ),
 			'cat_lifestyle' => isset( $filters['cat_lifestyle'] ),
-			'is_hd' => isset( $filters['is_hd'] ),
 			'is_image' => isset( $filters['is_image'] ),
 			'is_video' => isset( $filters['is_video'] ),
 			'no_filter' => !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
@@ -894,4 +893,3 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'extraParams', $extraParams );
 	}
 }
-

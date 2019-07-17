@@ -66,18 +66,30 @@ require([
 		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		if (adsApi && adsApi.shouldShowAds()) {
-			videoAds = adsApi.jwplayerAdsFactory.create({
-				adProduct: 'featured',
-				slotName: 'featured',
-				audio: !willMute,
-				autoplay: willAutoplay,
-				featured: true,
-				videoId: videoDetails.playlist[0].mediaid,
+		if (adsApi) {
+			var shouldShowAds = adsApi.shouldShowAds();
+
+			shouldShowAds.then(function(shouldShowAds) {
+				if (shouldShowAds) {
+					videoAds = adsApi.jwplayerAdsFactory.create({
+						adProduct: 'featured',
+						slotName: 'featured',
+						audio: !willMute,
+						autoplay: willAutoplay,
+						featured: true,
+						videoId: videoDetails.playlist[0].mediaid,
+					});
+					adsApi.jwplayerAdsFactory.loadMoatPlugin();
+				}
 			});
-			adsApi.jwplayerAdsFactory.loadMoatPlugin();
+			configurePlayer(willAutoplay, willMute);
+		} else {
+			configurePlayer(willAutoplay, willMute);
 		}
 
+	}
+
+	function configurePlayer(willAutoplay, willMute) {
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -116,7 +128,6 @@ require([
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
 			adsApi.waitForAdStackResolve().then(setupPlayer);
-
 			return;
 		}
 
