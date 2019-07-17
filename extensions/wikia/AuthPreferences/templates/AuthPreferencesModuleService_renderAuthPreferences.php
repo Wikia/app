@@ -16,7 +16,11 @@
 	<div id="googleConnectPreferences">
 		<iframe class="google-button" src="<?= $googleConnectAuthUrl; ?>"></iframe>
 	</div>
+	<?php
+	/** Uncomment after Twitch auth is released on Mobile Apps (PLATFORM-4203)
 	<div id="twitchConnectPreferences">
 		<iframe class="twitch-button" src="<?= $twitchConnectAuthUrl; ?>"></iframe>
 	</div>
+	**/
+	?>
 </div>
