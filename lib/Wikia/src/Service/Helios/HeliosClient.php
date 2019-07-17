@@ -32,6 +32,9 @@ class HeliosClient {
 	// Delay for Helios HTTP connection retries.
 	const HELIOS_REQUEST_RETRY_DELAY_SEC = 1;
 
+	// Name of the circuit breaker for Helios
+	const HELIOS_CIRCUIT_BREAKER_NAME = 'helios';
+
 	protected $baseUri;
 	protected $status;
 	protected $schwartzToken;
@@ -72,8 +75,8 @@ class HeliosClient {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		if ( !$this->circuitBreaker->OperationAllowed( "helios" ) ) {
-			throw new CircuitBreakerOpen( "helios" );
+		if ( !$this->circuitBreaker->OperationAllowed( self::HELIOS_CIRCUIT_BREAKER_NAME ) ) {
+			throw new CircuitBreakerOpen( self::HELIOS_CIRCUIT_BREAKER_NAME );
 		}
 
 		// Request URI pre-processing.
@@ -153,7 +156,7 @@ class HeliosClient {
 		}
 
 		$this->status = $request->getStatus();
-		$this->circuitBreaker->SetOperationStatus( "helios", $request->getStatus() < 500 );
+		$this->circuitBreaker->SetOperationStatus( self::HELIOS_CIRCUIT_BREAKER_NAME, $request->getStatus() < 500 );
 
 		return $this->processResponseOutput( $request );
 	}

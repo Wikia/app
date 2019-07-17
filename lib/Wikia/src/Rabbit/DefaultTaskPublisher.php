@@ -4,9 +4,12 @@ namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Wikia\CircuitBreaker\CircuitBreaker;
+use Wikia\CircuitBreaker\CircuitBreakerFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tracer\WikiaTracer;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * A default task publisher implementation that publishes tasks to RabbitMQ.
@@ -14,6 +17,8 @@ use Wikia\Tracer\WikiaTracer;
 class DefaultTaskPublisher implements TaskPublisher {
 
 	use Loggable;
+
+	const TASK_PUBLISHER_CIRCUIT_BREAKER_NAME = 'task_publisher';
 
 	/** @var ConnectionManager $rabbitConnectionManager */
 	private $rabbitConnectionManager;
@@ -24,8 +29,12 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
+	/** @var CircuitBreaker */
+	private $circuitBreaker;
+
 	public function __construct( ConnectionManager $rabbitConnectionManager ) {
 		$this->rabbitConnectionManager = $rabbitConnectionManager;
+		$this->circuitBreaker = CircuitBreakerFactory::GetCircuitBreaker(new BernoulliTrial( 0.01 ) );
 
 		// Schedule doUpdate() to be executed at the end of the request
 		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
@@ -62,6 +71,10 @@ class DefaultTaskPublisher implements TaskPublisher {
 			return;
 		}
 
+		if ( !$this->circuitBreaker->OperationAllowed( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME ) ) {
+			return;
+		}
+
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
 
@@ -85,6 +98,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 			$channel->publish_batch();
 			$channel->wait_for_pending_acks( AsyncTaskList::ACK_WAIT_TIMEOUT_SECONDS );
+			$this->circuitBreaker->SetOperationStatus( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME, true );
 		} catch ( AMQPExceptionInterface $e ) {
 			$this->logError( $e );
 		} catch ( \ErrorException $e ) {
@@ -93,6 +107,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function logError( \Exception $e ) {
+		$this->circuitBreaker->SetOperationStatus( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME, false );
 		$this->error( 'Failed to publish background task', [
 			'exception' => $e,
 		] );
