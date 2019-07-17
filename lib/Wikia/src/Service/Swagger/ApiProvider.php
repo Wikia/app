@@ -3,7 +3,7 @@
 namespace Wikia\Service\Swagger;
 
 use Swagger\Client\Configuration;
-use Wikia\CircuitBreaker\CircuitBreaker;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\Gateway\UrlProvider;
 use Wikia\Service\Constants;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -16,9 +16,6 @@ class ApiProvider {
 	/** @var BernoulliTrial */
 	private $clientLogSampler;
 
-	/** @var CircuitBreaker */
-	private $circuitBreaker;
-
 	/**
 	 * @Inject({
 	 *   Wikia\Service\Gateway\UrlProvider::class,
@@ -27,10 +24,9 @@ class ApiProvider {
 	 * @param UrlProvider $urlProvider
 	 * @param BernoulliTrial $clientLogSampler
 	 */
-	public function __construct(UrlProvider $urlProvider, BernoulliTrial $clientLogSampler, CircuitBreaker $circuitBreaker) {
+	public function __construct( UrlProvider $urlProvider, BernoulliTrial $clientLogSampler ) {
 		$this->urlProvider = $urlProvider;
 		$this->clientLogSampler = $clientLogSampler;
-		$this->circuitBreaker = $circuitBreaker;
 	}
 
 	public function getApi($serviceName, $apiClass) {
@@ -53,6 +49,7 @@ class ApiProvider {
 		$config = (new Configuration())
 			->setHost($this->urlProvider->getUrl($serviceName));
 
-		return new ApiClient($config, $this->clientLogSampler, $this->circuitBreaker, $serviceName);
+		$circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( $serviceName );
+		return new ApiClient($config, $this->clientLogSampler, $circuitBreaker, $serviceName);
 	}
 }

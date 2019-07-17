@@ -1,8 +1,7 @@
 <?php
 namespace Wikia\Service\Helios;
 
-use Wikia\CircuitBreaker\CircuitBreaker;
-use Wikia\CircuitBreaker\CircuitBreakerOpen;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
@@ -32,23 +31,20 @@ class HeliosClient {
 	// Delay for Helios HTTP connection retries.
 	const HELIOS_REQUEST_RETRY_DELAY_SEC = 1;
 
-	// Name of the circuit breaker for Helios
-	const HELIOS_CIRCUIT_BREAKER_NAME = 'helios';
-
 	protected $baseUri;
 	protected $status;
 	protected $schwartzToken;
 
-	/** @var CircuitBreaker */
+	/** @var ServiceCircuitBreaker */
 	protected $circuitBreaker;
 
 	/**
 	 *
 	 * @param string $baseUri
 	 * @param string $schwartzToken
-	 * @param CircuitBreaker $circuitBreaker
+	 * @param ServiceCircuitBreaker $circuitBreaker
 	 */
-	public function __construct( string $baseUri, string $schwartzToken, CircuitBreaker $circuitBreaker ) {
+	public function __construct( string $baseUri, string $schwartzToken, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->baseUri = $baseUri;
 		$this->schwartzToken = $schwartzToken;
 		$this->circuitBreaker = $circuitBreaker;
@@ -70,14 +66,13 @@ class HeliosClient {
 	 * @param array $extraRequestOptions
 	 *
 	 * @return mixed|null
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
 	 */
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		if ( !$this->circuitBreaker->OperationAllowed( self::HELIOS_CIRCUIT_BREAKER_NAME ) ) {
-			throw new CircuitBreakerOpen( self::HELIOS_CIRCUIT_BREAKER_NAME );
-		}
+		$this->circuitBreaker->AssertOperationAllowed();
 
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
@@ -156,7 +151,7 @@ class HeliosClient {
 		}
 
 		$this->status = $request->getStatus();
-		$this->circuitBreaker->SetOperationStatus( self::HELIOS_CIRCUIT_BREAKER_NAME, $request->getStatus() < 500 );
+		$this->circuitBreaker->SetOperationStatus( $this->status < 500 );
 
 		return $this->processResponseOutput( $request );
 	}

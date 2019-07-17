@@ -9,7 +9,7 @@ use Ackintosh\Ganesha\Builder;
 use Wikia\CircuitBreaker\Storage\APCUAdapter;
 use Wikia\Logger\Loggable;
 
-class LocalCircuitBreaker implements CircuitBreaker {
+class LocalCircuitBreakerStorage implements CircuitBreakerStorage {
 
 	use Loggable;
 

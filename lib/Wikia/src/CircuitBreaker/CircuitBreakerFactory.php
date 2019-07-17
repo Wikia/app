@@ -5,20 +5,29 @@ namespace Wikia\CircuitBreaker;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 class CircuitBreakerFactory {
-	/**
-	 * @param BernoulliTrial $logSampler
-	 * @return ExternalCircuitBreaker|LocalCircuitBreaker|NoopCircuitBreaker
-	 */
-	public static function GetCircuitBreaker( BernoulliTrial $logSampler ) {
-		global $wgCircuitBreakerType;
+	private $circuitBreakerInstance;
 
-		switch ( $wgCircuitBreakerType ) {
-			case 'external':
-				return new ExternalCircuitBreaker( $logSampler );
-			case 'local':
-				return new LocalCircuitBreaker();
-			default:
-				return new NoopCircuitBreaker();
+	/**
+	 * @param string $serviceName
+	 * @return ServiceCircuitBreaker
+	 */
+	public function GetCircuitBreaker( string $serviceName ) {
+		if ( $this->circuitBreakerInstance === null ) {
+			global $wgCircuitBreakerType;
+
+			switch ( $wgCircuitBreakerType ) {
+				case 'external':
+					$this->circuitBreakerInstance = new ExternalCircuitBreakerStorage( new BernoulliTrial( 0.01 ) );
+					break;
+				case 'local':
+					$this->circuitBreakerInstance = new LocalCircuitBreakerStorage();
+					break;
+				default:
+					$this->circuitBreakerInstance = new NoopCircuitBreakerStorage();
+					break;
+			}
 		}
+
+		return new ServiceCircuitBreaker( $serviceName, $this->circuitBreakerInstance );
 	}
 }

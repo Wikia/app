@@ -2,7 +2,7 @@
 
 namespace Wikia\CircuitBreaker;
 
-class NoopCircuitBreaker implements CircuitBreaker {
+class NoopCircuitBreakerStorage implements CircuitBreakerStorage {
 
 	/**
 	 * @param string $name

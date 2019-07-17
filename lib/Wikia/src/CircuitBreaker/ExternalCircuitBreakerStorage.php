@@ -6,7 +6,7 @@ use GuzzleHttp;
 use Wikia\Logger\Loggable;
 use Wikia\Util\Statistics\BernoulliTrial;
 
-class ExternalCircuitBreaker implements CircuitBreaker {
+class ExternalCircuitBreakerStorage implements CircuitBreakerStorage {
 	use Loggable;
 
 	/** @var BernoulliTrial */

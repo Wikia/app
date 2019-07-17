@@ -4,7 +4,7 @@ namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
-use Wikia\CircuitBreaker\CircuitBreaker;
+use Wikia\CircuitBreaker\CircuitBreakerStorage;
 use Wikia\CircuitBreaker\CircuitBreakerFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
@@ -29,7 +29,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
-	/** @var CircuitBreaker */
+	/** @var CircuitBreakerStorage */
 	private $circuitBreaker;
 
 	public function __construct( ConnectionManager $rabbitConnectionManager ) {

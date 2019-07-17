@@ -23,11 +23,11 @@ class CircuitBreakerOpen extends ClientException {
 	}
 
 	protected function logMe() {
-		$this->warning( 'circuit breaker open', ['service' => $this->serviceName ] );
+		$this->warning( 'circuit breaker open', [ 'service' => $this->serviceName ] );
 	}
 }
 
-interface CircuitBreaker {
+interface CircuitBreakerStorage {
 	/**
 	 * @param string $name
 	 * @return bool

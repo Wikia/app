@@ -4,9 +4,8 @@ namespace Wikia\Service\Swagger;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
-use Wikia\CircuitBreaker\CircuitBreaker;
-use Wikia\CircuitBreaker\CircuitBreakerOpen;
-use Wikia\CircuitBreaker\ExternalCircuitBreaker;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -21,15 +20,14 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	/** @var string */
 	private $serviceName;
 
-	/** @var CircuitBreaker */
+	/** @var ServiceCircuitBreaker */
 	private $circuitBreaker;
 
-	public function __construct(Configuration $config, BernoulliTrial $logSampler,
-								CircuitBreaker $circuitBreaker, $serviceName) {
+	public function __construct( Configuration $config, BernoulliTrial $logSampler, $serviceName) {
 		parent::__construct($config);
 		$this->logSampler = $logSampler;
 		$this->serviceName = $serviceName;
-		$this->circuitBreaker = $circuitBreaker;
+		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( $serviceName );
 	}
 
 	/**
@@ -45,15 +43,14 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	 * @throws CircuitBreakerOpen
 	 * @throws \FatalError
 	 * @throws \MWException
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
 	 */
 	public function callApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
 
-		if ( !$this->circuitBreaker->OperationAllowed( $this->serviceName ) ) {
-			throw new CircuitBreakerOpen( $this->serviceName );
-		}
+		$this->circuitBreaker->AssertOperationAllowed();
 
 		// adding internal headers
 		WikiaTracer::instance()->setRequestHeaders( $headerParams, true );
@@ -88,7 +85,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			$level = 'debug';
 		}
 
-		$this->circuitBreaker->SetOperationStatus( $this->serviceName, $code < 500 && !$exception );
+		$this->circuitBreaker->SetOperationStatus( $code < 500 && !$exception );
 
 		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
 		if ( $this->logSampler->shouldSample() || ( $code >= 500 ) ) {

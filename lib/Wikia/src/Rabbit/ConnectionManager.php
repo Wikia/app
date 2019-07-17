@@ -6,6 +6,8 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
+use Wikia\CircuitBreaker\CircuitBreakerOpen;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Logger\Loggable;
 
 /**
@@ -29,11 +31,15 @@ class ConnectionManager {
 	/** @var AMQPChannel[] $channels */
 	private $channels = [];
 
-	public function __construct( string $host, int $port, string $user, string $pass ) {
+	/** @var ServiceCircuitBreaker */
+	private $circuitBreaker;
+
+	public function __construct( string $host, int $port, string $user, string $pass, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
 		$this->pass = $pass;
+		$this->circuitBreaker = $circuitBreaker;
 
 		// free resources on request shutdown
 		register_shutdown_function( [ $this, 'close' ] );
@@ -48,8 +54,11 @@ class ConnectionManager {
 	 *
 	 * @param string $vHost
 	 * @return AMQPChannel
+	 * @throws CircuitBreakerOpen
 	 */
 	public function getChannel( string $vHost ): AMQPChannel {
+		$this->circuitBreaker->AssertOperationAllowed();
+
 		if ( !isset( $this->channels[$vHost] ) ) {
 			$this->channels[$vHost] = $this->getConnection( $vHost )->channel();
 
@@ -61,7 +70,14 @@ class ConnectionManager {
 		return $this->channels[$vHost];
 	}
 
+	/**
+	 * @param string $vHost
+	 * @return AbstractConnection
+	 * @throws CircuitBreakerOpen
+	 */
 	private function getConnection( string $vHost ): AbstractConnection {
+		$this->circuitBreaker->AssertOperationAllowed();
+
 		if ( !isset( $this->connections[$vHost] ) ) {
 			$this->connections[$vHost] = new AMQPStreamConnection(
 				$this->host,
