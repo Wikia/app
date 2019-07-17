@@ -49,7 +49,6 @@ class ApiProvider {
 		$config = (new Configuration())
 			->setHost($this->urlProvider->getUrl($serviceName));
 
-		$circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( $serviceName );
-		return new ApiClient($config, $this->clientLogSampler, $circuitBreaker, $serviceName);
+		return new ApiClient($config, $this->clientLogSampler, $serviceName);
 	}
 }
