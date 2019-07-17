@@ -4,12 +4,10 @@ namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
-use Wikia\CircuitBreaker\CircuitBreakerStorage;
-use Wikia\CircuitBreaker\CircuitBreakerFactory;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tracer\WikiaTracer;
-use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * A default task publisher implementation that publishes tasks to RabbitMQ.
@@ -29,12 +27,12 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
-	/** @var CircuitBreakerStorage */
+	/** @var ServiceCircuitBreaker */
 	private $circuitBreaker;
 
-	public function __construct( ConnectionManager $rabbitConnectionManager ) {
+	public function __construct( ConnectionManager $rabbitConnectionManager, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->rabbitConnectionManager = $rabbitConnectionManager;
-		$this->circuitBreaker = CircuitBreakerFactory::GetCircuitBreaker(new BernoulliTrial( 0.01 ) );
+		$this->circuitBreaker = $circuitBreaker;
 
 		// Schedule doUpdate() to be executed at the end of the request
 		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
@@ -58,6 +56,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/**
 	 * Publish queued tasks to RabbitMQ.
 	 * Called at the end of the request lifecycle.
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
 	 */
 	function doUpdate() {
 		foreach ( $this->producers as $producer ) {
@@ -71,9 +70,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 			return;
 		}
 
-		if ( !$this->circuitBreaker->OperationAllowed( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME ) ) {
-			return;
-		}
+		$this->circuitBreaker->AssertOperationAllowed();
 
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
@@ -98,7 +95,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 			$channel->publish_batch();
 			$channel->wait_for_pending_acks( AsyncTaskList::ACK_WAIT_TIMEOUT_SECONDS );
-			$this->circuitBreaker->SetOperationStatus( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME, true );
+			$this->circuitBreaker->SetOperationStatus( true );
 		} catch ( AMQPExceptionInterface $e ) {
 			$this->logError( $e );
 		} catch ( \ErrorException $e ) {
@@ -107,7 +104,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function logError( \Exception $e ) {
-		$this->circuitBreaker->SetOperationStatus( self::TASK_PUBLISHER_CIRCUIT_BREAKER_NAME, false );
+		$this->circuitBreaker->SetOperationStatus( false );
 		$this->error( 'Failed to publish background task', [
 			'exception' => $e,
 		] );

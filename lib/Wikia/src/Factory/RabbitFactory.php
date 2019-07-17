@@ -75,7 +75,7 @@ class RabbitFactory extends AbstractFactory {
 			return new NullTaskPublisher();
 		}
 
-		return new DefaultTaskPublisher( $this->connectionManager() );
+		return new DefaultTaskPublisher( $this->connectionManager(), $this->circuitBreaker );
 	}
 
 	/**
