@@ -3,7 +3,6 @@
 namespace Wikia\Service\Swagger;
 
 use Swagger\Client\Configuration;
-use Wikia\Factory\ServiceFactory;
 use Wikia\Service\Gateway\UrlProvider;
 use Wikia\Service\Constants;
 use Wikia\Util\Statistics\BernoulliTrial;
