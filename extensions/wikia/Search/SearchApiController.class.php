@@ -6,6 +6,7 @@
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
@@ -99,13 +100,50 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
+
+		$configCrossWiki = $this->getConfigCrossWiki();
+		$service = new UnifiedSearchService();
+
+		if ( $service->useUnifiedSearch( true ) ) {
+			$result = $service->communitySearch(new UnifiedSearchCommunityRequest($configCrossWiki));
+
+			$offset = ( $result->currentPage + 1 ) * $configCrossWiki->getLimit() + 1;
+			$responseValues = [
+				"total" => $result->resultsFound,
+				"batches" => $result->pagesCount,
+				"currentBatch" => $result->currentPage,
+				"next" => $offset > $result->resultsFound ? null : $offset,
+				"items" => array_map(function (array $item) {
+					return [
+						'id' => $item['id'],
+						'title' => $item['title'],
+						'url' => $item['url'],
+						'topic' => $item['hub_s'],
+						'desc' => $item['description'],
+						'stats' => [
+							'articles' => $item['articles_i'],
+							'images' => $item['images_i'],
+							'videos' => $item['videos_i'],
+						],
+						'image' => $item['image'],
+						'language' => $item['language'],
+					];
+
+				}, $result->getResults()->toArray(UnifiedSearchService::COMMUNITY_FIELDS))
+			];
+
+			$this->setResponseData( $responseValues );
+
+			return;
+		}
+
 		$expand = $this->request->getBool( 'expand', false );
 		if ( $expand ) {
 			$params = $this->getDetailsParams();
 		}
 
 		$responseValues =
-			( new Factory )->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( [
+			( new Factory )->getFromConfig( $configCrossWiki )->searchAsApi( [
 				'id',
 				'lang_s',
 			], true );
