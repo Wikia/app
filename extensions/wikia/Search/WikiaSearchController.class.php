@@ -201,10 +201,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal( 'mediaData', [] );
 		}
 
-		if ( $searchConfig->hasWikiMatch() ) {
-			$this->registerWikiMatch( $searchConfig );
-		}
-
+		$this->registerWikiMatch( $searchConfig );
 		$this->addRightRailModules( $searchConfig );
 	}
 
@@ -685,9 +682,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
 		global $wgUseCommunityUnifiedSearch;
 
+		$matchResult = null;
 		if ($wgUseCommunityUnifiedSearch && $searchConfig->getUnifiedWikiMatch()) {
 			$matchResult = $searchConfig->getUnifiedWikiMatch()->getResult();
-		} else {
+		} else if ($searchConfig->getUnifiedWikiMatch()) {
 			$matchResult = $searchConfig->getWikiMatch()->getResult();
 		}
 		if ( $matchResult !== null ) {
