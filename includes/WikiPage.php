@@ -2774,102 +2774,14 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * @param $deleted array The names of categories that were deleted
 	 */
 	public function updateCategoryCounts( $added, $deleted ) {
-		/* Wikia change begin - @author: wladek */
-		global $wgSkipCountForCategories;
+
+		$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+		$task->setQueue( \Wikia\Tasks\Queues\CategoryCountsQueue::NAME );
+		$task->call( 'updateCounts',  $this->mTitle->getNamespace(), $added, $deleted );
+		$task->queue();
 
 		/* Used by CategoryService */
 		Hooks::run( 'ArticleUpdateCategoryCounts', [ $this, $added, $deleted ] );
-
-		if( is_array( $wgSkipCountForCategories ) ) {
-			$added = array_diff( $added, $wgSkipCountForCategories );
-			$deleted = array_diff( $deleted, $wgSkipCountForCategories );
-		}
-		/* Wikia change end */
-
-		$ns = $this->mTitle->getNamespace();
-		$dbw = wfGetDB( DB_MASTER );
-
-		# First make sure the rows exist.  If one of the "deleted" ones didn't
-		# exist, we might legitimately not create it, but it's simpler to just
-		# create it and then give it a negative value, since the value is bogus
-		# anyway.
-		#
-		# Sometimes I wish we had INSERT ... ON DUPLICATE KEY UPDATE.
-		$insertCats = array_merge( $added, $deleted );
-		if ( !$insertCats ) {
-			# Okay, nothing to do
-			return;
-		}
-
-		// Wikia change - begin - @author: wladek
-		// PLATFORM-410: Attempt to lower the chance of deadlocks
-		sort( $insertCats );
-		$missingCats = [];
-		foreach ( $insertCats as $cat ) {
-			if ( !$dbw->selectRow( 'category', 'cat_id', [ 'cat_title' => $cat ], __METHOD__, [ 'FOR UPDATE' ] ) ) {
-				$missingCats[] = $cat;
-			}
-		}
-
-		$insertRows = array();
-		foreach ( $missingCats as $cat ) {
-			$insertRows[] = array(
-				'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
-				'cat_title' => $cat
-			);
-		}
-
-		if ( !empty( $insertRows ) ) {
-			$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
-		}
-		// Wikia change - end
-
-		$addFields    = array( 'cat_pages = cat_pages + 1' );
-		$removeFields = array( 'cat_pages = cat_pages - 1' );
-
-		if ( $ns == NS_CATEGORY ) {
-			$addFields[]    = 'cat_subcats = cat_subcats + 1';
-			$removeFields[] = 'cat_subcats = cat_subcats - 1';
-		} elseif ( $ns == NS_FILE ) {
-			$addFields[]    = 'cat_files = cat_files + 1';
-			$removeFields[] = 'cat_files = cat_files - 1';
-		}
-
-		if ( $added ) {
-			$dbw->update(
-				'category',
-				$addFields,
-				array( 'cat_title' => $added ),
-				__METHOD__
-			);
-		}
-
-		if ( $deleted ) {
-			$dbw->update(
-				'category',
-				$removeFields,
-				array( 'cat_title' => $deleted ),
-				__METHOD__
-			);
-
-			// SUS-1782: Get those removed categories which seem to be empty now...
-			$emptyCats = $dbw->selectFieldValues(
-				'category',
-				'cat_title',
-				[
-					'cat_pages <= 0',
-					'cat_title' => $deleted
-				],
-				__METHOD__
-			);
-
-			// ...and schedule a background task to delete them if needed.
-			if ( !empty( $emptyCats ) ) {
-				$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
-				$task->call( 'refreshCounts', $emptyCats );
-				$task->queue();
-			}
-		}
 	}
 
 	/**
