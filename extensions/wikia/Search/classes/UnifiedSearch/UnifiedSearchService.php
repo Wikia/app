@@ -12,6 +12,21 @@ use function GuzzleHttp\Psr7\build_query;
 
 class UnifiedSearchService {
 	const FAILED_TO_CALL_UNIFIED_SEARCH = "Failed to call unified-search";
+	const SEARCH_TYPE_PAGE = 'page';
+	const SEARCH_TYPE_COMMUNITY = 'community';
+
+	const COMMUNITY_FIELDS = [
+		'id',
+		'title',
+		'description',
+		'language',
+		'url',
+		'image',
+		'hub_s',
+		'articles_i',
+		'images_i',
+		'videos_i',
+	];
 
 	/** @var string */
 	private $baseUrl;
@@ -23,17 +38,26 @@ class UnifiedSearchService {
 
 	public function useUnifiedSearch( bool $isCorporateWiki ): bool {
 		global $wgUseUnifiedSearch;
+		global $wgUseCommunityUnifiedSearch;
 
-		/** This is cross-wiki search - we don't support it yet. */
 		if ( $isCorporateWiki ) {
-			return false;
+			return $wgUseCommunityUnifiedSearch;
 		}
 
 		return $wgUseUnifiedSearch;
 	}
 
-	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
-		$result = $this->callSpecialSearch( $request );
+	public function determineSearchType( bool $isCorporateWiki ): string {
+
+		if ( $isCorporateWiki ) {
+			return self::SEARCH_TYPE_COMMUNITY;
+		}
+
+		return self::SEARCH_TYPE_PAGE;
+	}
+
+	public function pageSearch( UnifiedSearchPageRequest $request ): UnifiedSearchResult {
+		$result = $this->callPageSearch( $request );
 
 		$items = [];
 		foreach ( $result['results'] as $item ) {
@@ -52,8 +76,30 @@ class UnifiedSearchService {
 			$result['paging']['current'], $items );
 	}
 
+	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
+		$result = $this->callCommunitySearch( $request );
 
-	private function callSpecialSearch( UnifiedSearchRequest $request ) {
+		$items = [];
+		foreach ( $result['results'] as $item ) {
+			$items[] = [
+				'id' => $item['id'],
+				'title' => $item['name'],
+				'description' => $item['description'],
+				'language' => $item['language'],
+				'url' => $item['url'],
+				'image' => $item['thumbnail'],
+				'hub_s' => $item['hub'],
+				'articles_i' => $item['pageCount'],
+				'images_i' => $item['imageCount'],
+				'videos_i' => $item['videoCount'],
+			];
+		}
+
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'], $items );
+	}
+
+	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
 			'wikiId' => $request->getWikiId(),
 			'lang' => $request->getLanguageCode(),
@@ -72,6 +118,18 @@ class UnifiedSearchService {
 		}
 
 		$response = $this->doApiRequest( 'page-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
+	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+		];
+
+		$response = $this->doApiRequest( 'community-search', $params );
 
 		return json_decode( $response->getBody(), true );
 	}
