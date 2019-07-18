@@ -218,23 +218,25 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $service->useUnifiedSearch( $isCorporateWiki ) ) {
 			$type = $service->determineSearchType( $isCorporateWiki );
 
-			switch ($type) {
+			switch ( $type ) {
 				case UnifiedSearchService::SEARCH_TYPE_PAGE:
 					$request = new UnifiedSearchPageRequest( $searchConfig );
 					$result = $service->pageSearch( $request );
 
-					$limit = $searchConfig->getLimit();
-					$searchConfig->setLimit(1);
-					$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
-					$communityResult = $service->communitySearch( $communityRequest );
-					$searchConfig->setLimit($limit);
+					if ( $service->useUnifiedSearch( true ) ) {
+						$limit = $searchConfig->getLimit();
+						$searchConfig->setLimit( 1 );
+						$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
+						$communityResult = $service->communitySearch( $communityRequest );
+						$searchConfig->setLimit( $limit );
 
-					if ($communityResult->resultsFound) {
-						$wikiResult = $communityResult->getResults()->toArray(UnifiedSearchService::COMMUNITY_FIELDS)[0];
-						$searchConfig->setUnifiedWikiMatch(new UnifiedSearchWikiMatch(
-							$wikiResult,
-							$searchConfig->getQuery()->getSanitizedQuery()
-						));
+						if ( $communityResult->resultsFound ) {
+							$wikiResult =
+								$communityResult->getResults()
+									->toArray( UnifiedSearchService::COMMUNITY_FIELDS )[0];
+							$searchConfig->setUnifiedWikiMatch( new UnifiedSearchWikiMatch( $wikiResult,
+								$searchConfig->getQuery()->getSanitizedQuery() ) );
+						}
 					}
 					break;
 				case UnifiedSearchService::SEARCH_TYPE_COMMUNITY:
@@ -242,7 +244,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					$result = $service->communitySearch( $request );
 					break;
 				default:
-					throw new InvalidArgumentException("Unknow search type: " . $type);
+					throw new InvalidArgumentException( "Unknown search type: " . $type );
 			}
 
 			return SearchResult::fromUnifiedSearchResult( $result );
@@ -683,10 +685,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		global $wgUseCommunityUnifiedSearch;
 
 		$matchResult = null;
-		if ($wgUseCommunityUnifiedSearch && $searchConfig->getUnifiedWikiMatch()) {
+		if ( $wgUseCommunityUnifiedSearch && $searchConfig->getUnifiedWikiMatch() ) {
 			$matchResult = $searchConfig->getUnifiedWikiMatch()->getResult();
-		} else if ($searchConfig->getUnifiedWikiMatch()) {
-			$matchResult = $searchConfig->getWikiMatch()->getResult();
+		} else {
+			if ( $searchConfig->getUnifiedWikiMatch() ) {
+				$matchResult = $searchConfig->getWikiMatch()->getResult();
+			}
 		}
 		if ( $matchResult !== null ) {
 			$matchResult['onWikiMatch'] = true;

@@ -48,7 +48,6 @@ class UnifiedSearchService {
 	}
 
 	public function determineSearchType( bool $isCorporateWiki ): string {
-
 		if ( $isCorporateWiki ) {
 			return self::SEARCH_TYPE_COMMUNITY;
 		}
