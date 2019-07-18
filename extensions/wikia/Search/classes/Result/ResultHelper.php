@@ -21,12 +21,17 @@ class ResultHelper {
 	public static function extendResult( $result, $pos, $descWordLimit, $imageSizes, $query = null ) {
 
 		$commData = new CommunityDataService( $result['id'] );
-		$imageURL = ImagesService::getImageSrc(
-			$result['id'],
-			$commData->getCommunityImageId(),
-			$imageSizes['width'],
-			$imageSizes['height']
-		)['src'];
+
+		$imageURL = $result['image'] ?? null;
+
+		if ( !isset($imageURL) ) {
+			$imageURL = ImagesService::getImageSrc(
+				$result['id'],
+				$commData->getCommunityImageId(),
+				$imageSizes['width'],
+				$imageSizes['height']
+			)['src'];
+		}
 
 		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
@@ -48,8 +53,12 @@ class ResultHelper {
 			$thumbTracking = "no-thumb";
 		}
 
-		$description = $commData->getCommunityDescription();
-		$description = !empty( $description ) ? $description : $result->getText( Utilities::field( 'description' ) );
+		$description = $result['description'] ?? null;
+
+		if (!isset($description)) {
+			$description = $commData->getCommunityDescription();
+			$description = !empty( $description ) ? $description : $result->getText( Utilities::field( 'description' ) );
+		}
 
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
@@ -67,18 +76,24 @@ class ResultHelper {
 
 		return [
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],
+			'exactWikiMatch' => $result['exactWikiMatch'] ?? false,
 			'imageURL' => $imageURL,
 			'description' => $description,
 			'descriptionWordLimit' => $descWordLimit,
 			'pagesCount' => $result['articles_i'] ?: 0,
 			'imagesCount' => $result['images_i'] ?: 0,
 			'videosCount' => $result['videos_i'] ?: 0,
-			'title' => ( $sn = $result->getText( 'sitename_txt' ) ) ? $sn : $result->getText( 'headline_txt' ),
+			'title' => $result['title'] ?? self::getTitle( $result ),
 			'url' => $result->getText( 'url' ),
 			'hub' => $result->getHub(),
 			'pos' => $pos,
 			'thumbTracking' => $thumbTracking,
 			'viewMoreWikisLink' => $globalSearchUrl
 		];
+	}
+
+	private static function getTitle( $result ) {
+		$sn = $result->getText( 'sitename_txt' );
+		return $sn ?? $result->getText( 'headline_txt' );
 	}
 }

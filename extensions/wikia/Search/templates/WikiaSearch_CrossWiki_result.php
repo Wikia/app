@@ -4,7 +4,7 @@
 	</a>
 	<div class=" result-description">
 		<h1>
-			<a href="<?= $url ?>" class="result-link" data-pos="<?=$pos?>" data-event="search_click_<?=$result['exactWikiMatch'] ? "match" : "wiki"?>"><?= $title ?></a>
+			<a href="<?= $url ?>" class="result-link" data-pos="<?=$pos?>" data-event="search_click_<?=$exactWikiMatch ? "match" : "wiki"?>"><?= $title ?></a>
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper($hub); ?></p>
