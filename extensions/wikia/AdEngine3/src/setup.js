@@ -15,7 +15,7 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
-import { registerSlotTracker, registerViewabilityTracker } from './tracking/tracker';
+import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 
 const fallbackInstantConfig = {
 	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
@@ -111,6 +111,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.kikimora.player', instantConfig.isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
 	context.set('options.tracking.slot.status', instantConfig.isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.tracking.postmessage', true);  // TODO: ADEN-8839 Add Instant Config variable
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
@@ -262,6 +263,7 @@ async function configure(adsContext, isOptedIn) {
 
 	registerSlotTracker();
 	registerViewabilityTracker();
+	registerPostmessageTrackingTracker();
 }
 
 /**
