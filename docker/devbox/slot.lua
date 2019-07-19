@@ -15,16 +15,16 @@ local params = ''
 
 local wiki_id = ngx.req.get_headers()["x-mw-wiki-id"]
 if wiki_id then
-	params = '?wiki_id=' .. url.escape(wiki_id) -- or ngx.escape_uri
+  params = '?wiki_id=' .. url.escape(wiki_id) -- or ngx.escape_uri
 else
   local path = url.parse(ngx.var.request_uri).path
   params = '?domain=' .. url.escape(ngx.var.host) .. '&path=' .. url.escape(path)
 end
 
 local res, err = httpc:request_uri(service_url .. params, {
-    method = "GET",
-    keepalive = true
-  })
+  method = "GET",
+  keepalive = true
+})
 
 
 if err == nil then
