@@ -126,6 +126,7 @@ class UnifiedSearchService {
 			'query' => $request->getQuery()->getSanitizedQuery(),
 			'page' => $request->getPage(),
 			'limit' => $request->getLimit(),
+			'language' => $request->getLanguage(),
 		];
 
 		$response = $this->doApiRequest( 'community-search', $params );
