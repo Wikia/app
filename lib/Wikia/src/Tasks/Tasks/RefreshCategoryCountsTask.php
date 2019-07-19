@@ -108,7 +108,7 @@ class RefreshCategoryCountsTask extends BaseTask {
 
 			// ...and schedule a background task to delete them if needed.
 			if ( !empty( $emptyCats ) ) {
-				refreshCounts( $emptyCats );
+				$this->refreshCounts( $emptyCats );
 			}
 		}
 	}
