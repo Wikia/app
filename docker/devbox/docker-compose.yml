@@ -19,8 +19,6 @@ services:
       - php-wikia
   logger:
     image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
-  circuit-breaker:
-    image: artifactory.wikia-inc.com/platform/circuit-breaker-sidecar:9b962d2
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
@@ -35,6 +33,5 @@ services:
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
       - WIKIA_FORCE_DEV_ONLY=yes
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
-      - CIRCUIT_BREAKER_SERVICE_URL=http://circuit-breaker:8080
     depends_on:
       - logger
