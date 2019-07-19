@@ -27,9 +27,10 @@ class ServiceCircuitBreaker {
 
 	/**
 	 * @param $status bool status of the operation
+	 * @return bool
 	 */
 	public function SetOperationStatus( $status ) {
-		$this->circuitBreaker->SetOperationStatus( $this->serviceName, $status );
+		return $this->circuitBreaker->SetOperationStatus( $this->serviceName, $status );
 	}
 
 	/**
