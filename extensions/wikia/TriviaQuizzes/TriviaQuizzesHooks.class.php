@@ -17,6 +17,7 @@ class TriviaQuizzesHooks {
 		wfProfileIn( __METHOD__ );
 		$td = (new ThemeSettings())->getSettings();
 		$vars['wgTriviaQuizzesPrimaryColor'] = $td['color-community-header'];
+		$vars['wgTriviaQuizzesLinkColor'] = $td['color-links'];
 
 		wfProfileOut( __METHOD__ );
 		return true;

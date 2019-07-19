@@ -21,6 +21,7 @@ require(['jquery', 'content_types_consumption', 'wikia.trackingOptIn', 'mw'], fu
 							id: mw.config.get('wgCityId') || '0',
 						},
 						theme: {
+							linkColor: mw.config.get('wgTriviaQuizzesLinkColor'),
 							primaryColor: mw.config.get('wgTriviaQuizzesPrimaryColor'),
 						},
 					});
