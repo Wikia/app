@@ -1106,6 +1106,34 @@ class Wikia {
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
+		$request = $skinTemplate->getRequest();
+		$setNofollow = false;
+		if( $title->inNamespaces( NS_SPECIAL, NS_USER, NS_USER_TALK, NS_HELP) ) {
+			$setNofollow = true;
+		} else {
+			$noindexParams = [
+				'action',
+				'feed',
+				'from',
+				'oldid',
+				'printable',
+				'redirect',
+				'useskin',
+				'uselang',
+				'veaction'
+			];
+			foreach($noindexParams as $paramName ){
+				if( array_key_exists( $paramName, $request->getQueryValues() ) ) {
+					$setNofollow = true;
+					break;
+				}
+			}
+		}
+
+		if( $setNofollow ){
+			$out->setRobotPolicy( "noindex, nofollow" );
+			return true;
+		}
 		if ( !empty( $robotPolicy ) ) {
 			$out->setRobotPolicy( $robotPolicy );
 		}
