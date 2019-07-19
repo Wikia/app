@@ -1,5 +1,5 @@
-local http = require "resty.http"
-local url = require "socket.url"
+local http = require('resty.http')
+local url = require('socket.url')
 local json = require('cjson')
 
 local httpc = http.new()
@@ -13,7 +13,7 @@ local slot_mapping = {
 
 local params = ''
 
-local wiki_id = ngx.req.get_headers()["x-mw-wiki-id"]
+local wiki_id = ngx.req.get_headers()['x-mw-wiki-id']
 if wiki_id then
   params = '?wiki_id=' .. url.escape(wiki_id) -- or ngx.escape_uri
 else
@@ -22,7 +22,7 @@ else
 end
 
 local res, err = httpc:request_uri(service_url .. params, {
-  method = "GET",
+  method = 'GET',
   keepalive = true
 })
 
