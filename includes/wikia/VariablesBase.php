@@ -9001,7 +9001,7 @@ $wgArticleExporterExchange = [
 ];
 
 /**
- * @see lib/Wikia/src/CircuitBreaker/CircuitBreaker.php
+ * @see lib/Wikia/src/CircuitBreaker/CircuitBreakerFactory.php
  * @var string $wgCircuitBreakerType
  */
 $wgCircuitBreakerType = 'noop';
