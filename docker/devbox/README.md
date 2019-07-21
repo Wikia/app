@@ -81,6 +81,15 @@ nobody@2d25d207a7a7:/usr/wikia/slot1/current/src$ cd tests
 nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation
 nobody@2d25d207a7a7:/usr/wikia/slot1/current/src/tests$ SERVER_DBNAME=firefly php run-test.php --stderr --configuration=phpunit.xml --group Integration
 ```
+
+### Lua module tests
+
+Nginx runs Lua code that select correct fastcgi server based
+on mediawiki slot info. Lua tests for the module can be run with:
+```bash
+docker run -it --rm -v $(pwd):/src artifactory.wikia-inc.com/platform/nginx-wikia-devbox:latest busted src/
+``` 
+
 ### Xdebug
 
 The Xdebug extension is enabled and configured to connect to port 9000 of the docker host. In order to use xdebug follow

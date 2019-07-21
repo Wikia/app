@@ -4,6 +4,7 @@ ARG RESTY_LUAROCKS_VERSION="3.1.3"
 ARG LUASOCKET_VERSION="3.0rc1-2"
 ARG LUA_CJSON_VERSION="2.1.0.6-1"
 ARG LUA_RESTY_HTTP_VERSION="0.13"
+ARG BUSTED_VERSION="2.0.0-1"
 
 RUN mkdir /var/log/nginx
 
@@ -38,6 +39,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ \
     && luarocks install luasocket ${LUASOCKET_VERSION} \
     && luarocks install lua-cjson ${LUA_CJSON_VERSION} \
+    && luarocks install busted ${BUSTED_VERSION} \
     && apt-get remove -y gcc g++ \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
