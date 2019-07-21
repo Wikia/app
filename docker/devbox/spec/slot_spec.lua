@@ -3,7 +3,7 @@ describe('slot server_from_request tests', function()
   local httpc, slot
 
   setup(function()
-    -- as resty.http requires ngx, it is the easiesl to fake the whole module
+    -- as resty.http requires ngx, it is the easiest to fake the whole module
     package.loaded['resty.http'] = require 'spec.fake_http'
 
     slot = require('slot_server')
