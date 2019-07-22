@@ -165,7 +165,7 @@ class CrossWikiCore extends AbstractWikiService {
 		if ( !empty( $service->getCommunityImageId() ) ) {
 			$url = CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500 );
 
-			return [ 'image_s' => $url ];
+			return [ 'thumbnail' => $url ];
 		}
 
 		return [];
