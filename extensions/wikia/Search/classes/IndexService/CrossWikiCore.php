@@ -4,6 +4,11 @@
  */
 namespace Wikia\Search\IndexService;
 
+use CommunityDataService;
+use CuratedContentHelper;
+use ImagesService;
+use PromoImage;
+use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 use Wikia\Search\Utilities, WikiFactory, WikiService;
 
 /**
@@ -35,6 +40,7 @@ class CrossWikiCore extends AbstractWikiService {
 			$this->getWam(),
 			$this->getCategories(),
 			$this->getVisualizationInfo(),
+			$this->getCommunityData(),
 			$this->getTopArticles(),
 			$this->getLicenseInformation(),
 			$this->getIsPromotedWiki(),
@@ -141,6 +147,7 @@ class CrossWikiCore extends AbstractWikiService {
 		$vizInfo = $service->getVisualizationInfoForWikiId( $this->getWikiId() );
 		if ( !empty( $vizInfo ) ) {
 			$response['image_s'] = $vizInfo['image'];
+
 			if ( isset( $vizInfo['desc'] ) ) {
 				$response[$ds] = $vizInfo['desc'];
 				$response['description_txt'] = $vizInfo['desc'];
@@ -152,6 +159,23 @@ class CrossWikiCore extends AbstractWikiService {
 		}
 
 		return $response;
+	}
+
+	protected function getCommunityData() {
+		$useUnifiedSearch = ( new UnifiedSearchService() )->useUnifiedSearch( true );
+		if ( $useUnifiedSearch ) {
+			$communityData = ( new CommunityDataService( $this->wikiId ) )->getCommunityData();
+
+			if ( !empty( $communityData['image_id'] ) ) {
+				$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], 500 );
+			}
+
+			return [
+				"image_s" => $url,
+			];
+		}
+
+		return [];
 	}
 
 	/**
