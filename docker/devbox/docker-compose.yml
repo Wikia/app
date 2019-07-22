@@ -35,3 +35,11 @@ services:
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
     depends_on:
       - logger
+  php-unified-platform:
+    image: artifactory.wikia-inc.com/platform/unified-platform/php/1.33.0:v0.0.1-2-g93eff9f
+    volumes:
+      - ../../../app:/usr/wikia/slot1/current/src:ro
+      - ../../../config:/usr/wikia/slot1/current/config:ro
+      - ../../../cache:/usr/wikia/slot1/current/cache/messages:ro
+    depends_on:
+      - logger
