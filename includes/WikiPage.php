@@ -2774,6 +2774,19 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * @param $deleted array The names of categories that were deleted
 	 */
 	public function updateCategoryCounts( $added, $deleted ) {
+		global $wgSkipCountForCategories;
+
+
+		if( is_array( $wgSkipCountForCategories ) ) {
+			$added = array_diff( $added, $wgSkipCountForCategories );
+			$deleted = array_diff( $deleted, $wgSkipCountForCategories );
+		}
+
+		$insertCats = array_merge( $added, $deleted );
+		if ( !$insertCats ) {
+			# Okay, nothing to do
+			return;
+		}
 
 		$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
 		$task->setQueue( \Wikia\Tasks\Queues\CategoryCountsQueue::NAME );
