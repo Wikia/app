@@ -34607,15 +34607,15 @@ Przywrócono ostatnią wersję autorstwa $2.',
 	'reconfirmemail_subject' => 'Witamy w FANDOMIE!',
 	'reconfirmemail_body' => 'Hej, $2.
 
-Dziękujemy za zaktualizowanie adresu e-mail połączonego z Twoim kontem na FANDOMIE. Kliknij poniższy link, aby potwierdzić adres:
+Dziękujemy za zaktualizowanie adresu e-mail połączonego z Twoim kontem na Fandomie. Kliknij poniższy link, aby potwierdzić adres:
 
 $3
 
-– Wsparcie Społeczności FANDOMU
+– Wsparcie Społeczności Fandomu
 
 ___________________________________________
-* Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź http://spolecznosc.wikia.com
-* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+* Aby uzyskać dodatkową pomoc od społeczności Fandomu, odwiedź http://spolecznosc.fandom.com
+* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.fandom.com/wiki/Special:Preferences',
 	'rcshowhideenhanced' => '$1 zaawansowane ostatnie zmiany',
 	'requestcreatewiki' => 'Prześlij prośbę',
 	'right_now' => 'Teraz<br />ludzie są...',
