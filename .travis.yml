@@ -5,17 +5,20 @@ sudo: required
 addons:
   apt:
     sources:
+      - sourceline: "deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main"
       # same as mysql-5.7-trusty travis alias, but you can't mix & match different source declaration types
       - sourceline: "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7"
         key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8C718D3B5072E1F5"
       - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu trusty main"
         key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x7DAD64617A3EC228D368C50F9A90195D619F9E2B"
-    packages:
-      - mysql-server
-      - mysql-client
-      - libmustache-dev
 services:
   - rabbitmq
+before_install:
+  - sudo rm /etc/apt/sources.list.d/github_git-lfs.list
+  - sudo apt-key remove 6B05F25D762E3157
+  - curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
+  - sudo apt-get update -qq
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install mysql-server mysql-client libmustache-dev
 install:
   - pecl channel-update pecl.php.net
   - pecl install uopz-5.0.2 mustache-0.7.4
