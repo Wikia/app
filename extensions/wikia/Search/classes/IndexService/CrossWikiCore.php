@@ -6,10 +6,9 @@ namespace Wikia\Search\IndexService;
 
 use CommunityDataService;
 use CuratedContentHelper;
-use ImagesService;
-use PromoImage;
-use Wikia\Search\UnifiedSearch\UnifiedSearchService;
-use Wikia\Search\Utilities, WikiFactory, WikiService;
+use Wikia\Search\Utilities;
+use WikiFactory;
+use WikiService;
 
 /**
  * This monolithic class is responsible for creating a cross-wiki document.
@@ -162,17 +161,11 @@ class CrossWikiCore extends AbstractWikiService {
 	}
 
 	protected function getCommunityData() {
-		$useUnifiedSearch = ( new UnifiedSearchService() )->useUnifiedSearch( true );
-		if ( $useUnifiedSearch ) {
-			$communityData = ( new CommunityDataService( $this->wikiId ) )->getCommunityData();
+		$service = new CommunityDataService( $this->wikiId );
+		if ( !empty( $service->getCommunityImageId() ) ) {
+			$url = CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500 );
 
-			if ( !empty( $communityData['image_id'] ) ) {
-				$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], 500 );
-
-				return [
-					"image_s" => $url,
-				];
-			}
+			return [ 'thumbnail' => $url ];
 		}
 
 		return [];
