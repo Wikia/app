@@ -160,8 +160,8 @@ class CuratedContentHelper {
 		}
 	}
 
-	public static function getImageUrl( $id, $imageSize = 50 ) {
-		$thumbnail = ( new ImageServing( [ $id ], $imageSize, $imageSize ) )->getImages( 1 );
+	public static function getImageUrl( $id, $imageSize = 50, array $proportions =[] ) {
+		$thumbnail = ( new ImageServing( [ $id ], $imageSize, $proportions ?? $imageSize ) )->getImages( 1 );
 		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 

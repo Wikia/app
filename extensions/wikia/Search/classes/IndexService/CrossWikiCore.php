@@ -163,7 +163,9 @@ class CrossWikiCore extends AbstractWikiService {
 	protected function getCommunityData() {
 		$service = new CommunityDataService( $this->wikiId );
 		if ( !empty( $service->getCommunityImageId() ) ) {
-			$url = CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500 );
+			$url =
+				CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500,
+					[ "w" => 3, h => "2" ] );
 
 			return [ 'thumbnail' => $url ];
 		}
