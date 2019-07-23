@@ -35,13 +35,11 @@ class RefreshCategoryCountsTask extends BaseTask {
 		global $wgSkipCountForCategories;
 
 
-		if( is_array( $wgSkipCountForCategories ) ) {
+		if ( is_array( $wgSkipCountForCategories ) ) {
 			$added = array_diff( $added, $wgSkipCountForCategories );
 			$deleted = array_diff( $deleted, $wgSkipCountForCategories );
 		}
 		$dbw = wfGetDB( DB_MASTER );
-
-
 
 		# First make sure the rows exist.  If one of the "deleted" ones didn't
 		# exist, we might legitimately not create it, but it's simpler to just
@@ -55,20 +53,20 @@ class RefreshCategoryCountsTask extends BaseTask {
 			return;
 		}
 
-		$insertRows = array();
+		$insertRows = [];
 		foreach ( $insertCats as $cat ) {
-			$insertRows[] = array(
+			$insertRows[] = [
 				'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
 				'cat_title' => $cat
-			);
+			];
 		}
 
 		if ( !empty( $insertRows ) ) {
 			$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
 		}
 
-		$addFields    = array( 'cat_pages = cat_pages + 1' );
-		$removeFields = array( 'cat_pages = cat_pages - 1' );
+		$addFields    = [ 'cat_pages = cat_pages + 1' ];
+		$removeFields = [ 'cat_pages = cat_pages - 1' ];
 
 		if ( $ns == NS_CATEGORY ) {
 			$addFields[]    = 'cat_subcats = cat_subcats + 1';
@@ -82,7 +80,7 @@ class RefreshCategoryCountsTask extends BaseTask {
 			$dbw->update(
 				'category',
 				$addFields,
-				array( 'cat_title' => $added ),
+				[ 'cat_title' => $added ],
 				__METHOD__
 			);
 		}
@@ -91,7 +89,7 @@ class RefreshCategoryCountsTask extends BaseTask {
 			$dbw->update(
 				'category',
 				$removeFields,
-				array( 'cat_title' => $deleted ),
+				[ 'cat_title' => $deleted ],
 				__METHOD__
 			);
 

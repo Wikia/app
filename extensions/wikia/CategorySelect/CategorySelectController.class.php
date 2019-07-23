@@ -85,7 +85,7 @@ class CategorySelectController extends WikiaController {
 				}
 				$text = $this->wg->ContLang->convertHtml( $title->getText() );
 				$data[ $name ] = array(
-					'link' => Linker::link( $title, $text , array(), array(), array('known') ),
+					'link' => Linker::link( $title, $text , [], [], [ 'known' ] ),
 					'name' => $text,
 					'type' => CategoryHelper::getCategoryType( $originalName ),
 				);
