@@ -874,8 +874,8 @@ $messages['ja'] = array(
 	'admindashboard-control-group-rights-label' => 'グループ権限',
 	'admindashboard-control-group-rights-tooltip' => 'Overview of rights for the different user groups.',
 	'admindashboard-control-invite-label' => '招待',
-	'admindashboard-control-invite-tooltip' => 'Invite other people to use this wiki.',
-	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-invite-tooltip' => '他のユーザーをこのWikiに誘う',
+	'right-admindashboard' => 'Special:AdminDashboard から管理者ツールを利用することを許可する',
 	'admindashboard-control-announcements-label' => 'お知らせ',
 	'admindashboard-control-announcements-tooltip' => 'コミュニティへのお知らせを作成',
 );

@@ -16,6 +16,7 @@ class UserTagsStrategy extends WikiaObject {
 	const GLOBAL_GROUPS_RANK = [
 		'staff',
 		'wiki-manager',
+		'content-team-member',
 		'helper',
 		'vstf',
 		'global-discussions-moderator',
@@ -120,6 +121,9 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 				case 'wiki-manager':
 					$tags[] = wfMessage( 'user-identity-box-group-wiki-manager' )->escaped();
+					break;
+				case 'content-team-member':
+					$tags[] = wfMessage( 'user-identity-box-group-content-team-member' )->escaped();
 					break;
 				case 'helper':
 					$tags[] = wfMessage( 'user-identity-box-group-helper' )->escaped();

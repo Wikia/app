@@ -80,7 +80,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	}
 
 	logger.info('before ready');
-	playerInstance.once('ready', function () {
+	playerInstance.once('relatedReady', function () {
 		logger.info('player ready');
 		var relatedPlugin = playerInstance.getPlugin('related');
 

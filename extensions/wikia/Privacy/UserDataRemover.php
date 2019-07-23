@@ -123,6 +123,17 @@ class UserDataRemover {
 					'up_value' => '1',
 				],
 			] );
+			$dbMaster->update(
+				'city_list',
+				[
+					'city_founding_email' => null,
+					'city_founding_ip_bin' => null,
+				],
+				[
+					'city_founding_user' => $userId,
+				],
+				__METHOD__
+			);
 
 			// commit early so that cache is properly invalidated
 			$dbMaster->commit( __METHOD__ );

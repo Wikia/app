@@ -3,9 +3,7 @@
 class CoppaToolController extends WikiaController {
 
 	public function disableUserAccount() {
-		wfProfileIn( __METHOD__ );
 		if ( !$this->checkRequest() ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -14,7 +12,6 @@ class CoppaToolController extends WikiaController {
 		if ( empty( $user ) ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -23,7 +20,6 @@ class CoppaToolController extends WikiaController {
 		if ( !( $userObj instanceof User ) || $userObj->getId() === 0 ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -33,7 +29,6 @@ class CoppaToolController extends WikiaController {
 		if ( $res === false ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', $errorMessage );
-			wfProfileOut( __METHOD__ );
 			return;
 		} else {
 			$this->response->setVal( 'success', true );
@@ -43,28 +38,23 @@ class CoppaToolController extends WikiaController {
 		}
 
 		try {
-			self::removeEmailChangeLog( $userObj );
+			$this->removeEmailChangeLog( $userObj );
+			$this->removeFounderEmail( $userObj );
 		} catch(Exception $ex) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg',$ex->getMessage() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function resetUserProfile() {
-		wfProfileIn( __METHOD__ );
 		if ( !$this->checkRequest() ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$user = $this->request->getVal( 'user' );
 		if ( empty( $user ) ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -73,7 +63,6 @@ class CoppaToolController extends WikiaController {
 		if ( !( $userObj instanceof User ) || $userObj->getId() === 0 ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$userIdentityBox = new UserIdentityBox( $userObj );
@@ -81,21 +70,16 @@ class CoppaToolController extends WikiaController {
 		$userIdentityBox->resetUserProfile();
 
 		$this->response->setVal( 'success', true );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function deleteUserPages() {
-		wfProfileIn( __METHOD__ );
 		if ( !$this->checkRequest() ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$user = $this->request->getVal( 'user' );
 		if ( empty( $user ) ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -104,7 +88,6 @@ class CoppaToolController extends WikiaController {
 		if ( !( $userObj instanceof User ) || $userObj->getId() === 0 ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-user' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -129,14 +112,10 @@ class CoppaToolController extends WikiaController {
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-delete-user-pages-success', $batchDeleteTaskId )->plain() );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function renameIPAddress() {
-		wfProfileIn( __METHOD__ );
 		if ( !$this->checkRequest() ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -145,7 +124,6 @@ class CoppaToolController extends WikiaController {
 		if ( !IP::isIPAddress( $ipAddr ) ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', wfMessage( 'coppatool-invalid-ip' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -168,8 +146,6 @@ class CoppaToolController extends WikiaController {
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-rename-ip-success', $taskID )->plain() );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function checkRequest() {
@@ -201,10 +177,27 @@ class CoppaToolController extends WikiaController {
 	 * @param User $user
 	 * @throws Exception
 	 */
-	static private function removeEmailChangeLog( User $user) {
+	private function removeEmailChangeLog( User $user) {
 		global $wgExternalSharedDB;
 		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-		$dbMaster->delete( 'user_email_log', [ 'user_id' => $user->getId()], __METHOD__ );
-		$dbMaster->commit(__METHOD__);
+		$dbMaster->delete( 'user_email_log', [ 'user_id' => $user->getId() ], __METHOD__ );
+		$dbMaster->commit( __METHOD__ );
+	}
+
+	private function removeFounderEmail( User $user ) {
+		global $wgExternalSharedDB;
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$dbMaster->update(
+			'city_list',
+			[
+				'city_founding_email' => null,
+				'city_founding_ip_bin' => null,
+			],
+			[
+				'city_founding_user' => $user->getId(),
+			],
+			__METHOD__
+		);
+		$dbMaster->commit( __METHOD__ );
 	}
 }
