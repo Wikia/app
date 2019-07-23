@@ -532,7 +532,7 @@ $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/C
  * @see string extensions/wikia/RobotsTxt/classes/WikiaRobots.class.php
  * @var Array $wgRobotsTxtCustomRules
  */
-$wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
+$wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ ] ];
 
 /**
  * External services domain.

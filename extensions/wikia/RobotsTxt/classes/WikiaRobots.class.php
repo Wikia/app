@@ -62,10 +62,7 @@ class WikiaRobots {
 	 * @var int[]
 	 */
 	private $blockedNamespaces = [
-		NS_SPECIAL,
-		NS_TEMPLATE,
-		NS_TEMPLATE_TALK,
-		NS_USER_TALK,
+
 	];
 
 	/**
@@ -74,18 +71,7 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		// Discussions user pages
-		'/d/u/',
-		// Discussions guidelines
-		'/d/g',
-		// Fandom old URLs
-		'/fandom?p=',
-		//Mobile Wiki search URL
-		'/search',
 
-		// AdEngine recovery API
-		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=bt',
-		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=hmd',
 	];
 
 	/**
@@ -94,15 +80,7 @@ class WikiaRobots {
 	 * @var string[]
 	 */
 	private $blockedParams = [
-		'action',
-		'feed',
-		'from', // user-supplied legacy MW pagination
-		'oldid',
-		'printable',
-		'redirect',
-		'useskin',
-		'uselang',
-		'veaction',
+
 	];
 
 	/**
