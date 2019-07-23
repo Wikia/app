@@ -5,7 +5,6 @@ namespace Wikia\Search\UnifiedSearch;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
-use RequestContext;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use WikiaException;
@@ -13,6 +12,21 @@ use function GuzzleHttp\Psr7\build_query;
 
 class UnifiedSearchService {
 	const FAILED_TO_CALL_UNIFIED_SEARCH = "Failed to call unified-search";
+	const SEARCH_TYPE_PAGE = 'page';
+	const SEARCH_TYPE_COMMUNITY = 'community';
+
+	const COMMUNITY_FIELDS = [
+		'id',
+		'title',
+		'description',
+		'language',
+		'url',
+		'image',
+		'hub_s',
+		'articles_i',
+		'images_i',
+		'videos_i',
+	];
 
 	/** @var string */
 	private $baseUrl;
@@ -24,71 +38,25 @@ class UnifiedSearchService {
 
 	public function useUnifiedSearch( bool $isCorporateWiki ): bool {
 		global $wgUseUnifiedSearch;
+		global $wgUseCommunityUnifiedSearch;
 
-		/** This is cross-wiki search - we don't support it yet. */
 		if ( $isCorporateWiki ) {
-			return false;
-		}
-
-		$queryForce = RequestContext::getMain()->getRequest()->getVal( 'useUnifiedSearch', null );
-		if ( !is_null( $queryForce ) ) {
-			return $queryForce === 'true' || $queryForce === '1' || $queryForce === true;
+			return $wgUseCommunityUnifiedSearch;
 		}
 
 		return $wgUseUnifiedSearch;
 	}
 
-	/**
-	 * SER-3306 - Fire and forget call to unified-search to test if unified-search is able to sustain our load.
-	 * Will be replaced with real calls in https://wikia-inc.atlassian.net/browse/SER-3313
-	 * @param UnifiedSearchRequest $request
-	 */
-	public function shadowModeSearch( UnifiedSearchRequest $request ) {
-		try {
-			$params = [
-				'lang' => $request->getLanguageCode(),
-				'query' => $request->getQuery()->getSanitizedQuery(),
-				'namespace' => $request->getNamespaces(),
-				'page' => $request->getPage(),
-				'limit' => $request->getLimit(),
-			];
-
-			if ( $request->isImageOnly() ) {
-				$params['imagesOnly'] = 'true';
-			}
-
-			if ( $request->isVideoOnly() ) {
-				$params['videoOnly'] = 'true';
-			}
-
-			$client = new Client( [
-				// Base URI is used with relative requests
-				'base_uri' => $this->baseUrl,
-				// connect timeout is sufficient enough to make the request
-				// short read timeout will cause the request to be interrupted immediately after being started
-				// https://github.com/guzzle/guzzle/issues/1429#issuecomment-304449743
-				'read_timeout' => 0.0000001,
-				'connect_timeout' => 2.0,
-				'query_with_duplicates' => true,
-			] );
-
-			$client->get( 'page-search', [
-				// we want namespace to be passed multiple times
-				// for example ?namespace=1&namespace=0
-				// normally, it would have been converted to ?namespace[]=1&namespace[]=0
-				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
-			] );
+	public function determineSearchType( bool $isCorporateWiki ): string {
+		if ( $isCorporateWiki ) {
+			return self::SEARCH_TYPE_COMMUNITY;
 		}
-		catch ( \Exception $e ) {
-			WikiaLogger::instance()->info( self::FAILED_TO_CALL_UNIFIED_SEARCH, [
-				'error_message' => $e->getMessage(),
-				'status_code' => $e->getCode(),
-			] );
-		}
+
+		return self::SEARCH_TYPE_PAGE;
 	}
 
-	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
-		$result = $this->callSpecialSearch( $request );
+	public function pageSearch( UnifiedSearchPageRequest $request ): UnifiedSearchResult {
+		$result = $this->callPageSearch( $request );
 
 		$items = [];
 		foreach ( $result['results'] as $item ) {
@@ -107,8 +75,30 @@ class UnifiedSearchService {
 			$result['paging']['current'], $items );
 	}
 
+	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
+		$result = $this->callCommunitySearch( $request );
 
-	private function callSpecialSearch( UnifiedSearchRequest $request ) {
+		$items = [];
+		foreach ( $result['results'] as $item ) {
+			$items[] = [
+				'id' => $item['id'],
+				'title' => $item['name'],
+				'description' => $item['description'],
+				'language' => $item['language'],
+				'url' => $item['url'],
+				'image' => $item['thumbnail'],
+				'hub_s' => $item['hub'],
+				'articles_i' => $item['pageCount'],
+				'images_i' => $item['imageCount'],
+				'videos_i' => $item['videoCount'],
+			];
+		}
+
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'], $items );
+	}
+
+	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
 			'wikiId' => $request->getWikiId(),
 			'lang' => $request->getLanguageCode(),
@@ -119,7 +109,7 @@ class UnifiedSearchService {
 		];
 
 		if ( $request->isImageOnly() ) {
-			$params['imagesOnly'] = 'true';
+			$params['imageOnly'] = 'true';
 		}
 
 		if ( $request->isVideoOnly() ) {
@@ -127,6 +117,19 @@ class UnifiedSearchService {
 		}
 
 		$response = $this->doApiRequest( 'page-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
+	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+			'lang' => $request->getLanguage(),
+		];
+
+		$response = $this->doApiRequest( 'community-search', $params );
 
 		return json_decode( $response->getBody(), true );
 	}

@@ -2059,6 +2059,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-bureaucrat',
 	'User-identity-box-group-chatmoderator',
 	'User-identity-box-group-content-moderator',
+	'User-identity-box-group-content-team-member',
 	'User-identity-box-group-council',
 	'User-identity-box-group-founder',
 	'User-identity-box-group-helper',
@@ -8878,13 +8879,6 @@ $wgAllowCommunityBuilderCNWPrompt = false;
  * @var bool $wgFandomComMigrationScheduled
  */
 $wgFandomComMigrationScheduled = false;
-
-/**
- * Whether the community is excluded from the fandom.com migration, disables the migration banner
- * @see SEO-669
- * @var bool $wgFandomComMigrationScheduled
- */
-$wgDomainMigrationDisabled = false;
 
 /**
  * Environment-specific domain mappings to their normalized variants

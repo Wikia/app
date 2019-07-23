@@ -77,7 +77,7 @@ abstract class DiscussionController extends EmailController {
 	}
 
 	private function getDiscussionsLink() {
-		return $this->wiki->city_url . 'd';
+		return $this->wiki->city_url . 'f';
 	}
 
 	/**
@@ -290,5 +290,69 @@ class DiscussionUpvoteController extends DiscussionController {
 			throw new Check( 'User is not subscribed to Discussions Upvote emails.' );
 		}
 	}
+}
 
+class DiscussionAtMentionController extends DiscussionController {
+
+    private $contentType;
+    private $threadTitle;
+
+    const THREAD_AT_MENTION = 'thread-at-mention';
+    const POST_AT_MENTION = 'post-at-mention';
+
+    const TYPE_TO_I18N_KEY = [
+        self::THREAD_AT_MENTION => 'emailext-discussion-thread-at-mention',
+        self::POST_AT_MENTION => 'emailext-discussion-post-at-mention',
+    ];
+
+    public function initEmail() {
+        $this->contentType = $this->request->getVal( 'contentType' );
+        $this->threadTitle = $this->request->getVal( 'threadTitle' );
+
+        parent::initEmail();
+    }
+
+    protected function assertValidParams() {
+        parent::assertValidParams();
+
+        if ( !array_key_exists( $this->contentType, self::TYPE_TO_I18N_KEY ) ) {
+            throw new Check( 'Invalid value passed for required param content, must be "thread-at-mention" or "post-at-mention"' );
+        }
+
+        if ( empty( $this->threadTitle ) ) {
+            throw new Check( 'Empty value passed for required param threadTitle' );
+        }
+    }
+
+    public function getSubject() {
+        return $this->getSummary();
+    }
+
+    public function getSummary() {
+        return $this->getMessage(
+            self::TYPE_TO_I18N_KEY[$this->contentType],
+            $this->getCurrentUserName(),
+            $this->threadTitle,
+            $this->wiki->city_title
+        );
+    }
+
+    protected static function getEmailSpecificFormFields() {
+        $formFields = [
+            'inputs' => [
+                [
+                    'type' => 'text',
+                    'name' => 'contentType',
+                    'label' => 'contentType of at-mention. One of: ' . self::POST_AT_MENTION . ' ' . self::THREAD_AT_MENTION
+                ],
+                [
+                    'type' => 'text',
+                    'name' => 'threadTitle',
+                    'label' => 'Title of the thread containing the at-mention',
+                ],
+            ],
+        ];
+
+        return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
+    }
 }

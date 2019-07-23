@@ -5,7 +5,7 @@ namespace Wikia\Search\UnifiedSearch;
 use Wikia\Search\Config;
 use Wikia\Search\Query\Select;
 
-class UnifiedSearchRequest {
+class UnifiedSearchPageRequest {
 
 	/** @var Select */
 	private $query;

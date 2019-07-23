@@ -110,9 +110,10 @@ class MercuryApi {
 		}
 
 		return [
+			'vertical' => WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'],
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'articlePath' => $articlePath,
-			'basePath' => $wgServer,
+			'basePath' =>  wfHttpsAllowedForURL( $wgServer ) ? wfHttpToHttps( $wgServer ) : $wgServer,
 			'dbName' => $wgDBname,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'id' => (int) $wgCityId,
