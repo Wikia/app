@@ -27,7 +27,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		parent::__construct($config);
 		$this->logSampler = $logSampler;
 		$this->serviceName = $serviceName;
-		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( $serviceName );
+		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( $serviceName );
 	}
 
 	/**

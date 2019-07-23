@@ -8,7 +8,7 @@ class NoopCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @param string $name
 	 * @return bool
 	 */
-	public function OperationAllowed( string $name ) {
+	public function operationAllowed( string $name ) {
 		return true;
 	}
 
@@ -17,7 +17,7 @@ class NoopCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @param bool $status
 	 * @return bool
 	 */
-	public function SetOperationStatus( string $name, bool $status ) {
+	public function setOperationStatus( string $name, bool $status ) {
 		return true;
 	}
 }

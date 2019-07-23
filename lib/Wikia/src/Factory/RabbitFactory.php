@@ -20,7 +20,7 @@ class RabbitFactory extends AbstractFactory {
 
 	public function __construct( ServiceFactory $factory ) {
 		parent::__construct( $factory );
-		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( 'rabbitmq' );
+		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( 'rabbitmq' );
 	}
 
 	/**

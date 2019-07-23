@@ -9,7 +9,7 @@ class CircuitBreakerFactory {
 	 * @param string $serviceName
 	 * @return ServiceCircuitBreaker
 	 */
-	public function GetCircuitBreaker( string $serviceName ) {
+	public function getCircuitBreaker( string $serviceName ) {
 		if ( $this->circuitBreakerInstance === null ) {
 			global $wgCircuitBreakerType;
 

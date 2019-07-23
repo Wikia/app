@@ -19,18 +19,11 @@ class ServiceCircuitBreaker {
 	}
 
 	/**
-	 * @return bool returns true if operation can be performed on a given service
-	 */
-	public function OperationAllowed() {
-		return $this->circuitBreaker->OperationAllowed( $this->serviceName );
-	}
-
-	/**
 	 * @param $status bool status of the operation
 	 * @return bool
 	 */
 	public function SetOperationStatus( $status ) {
-		return $this->circuitBreaker->SetOperationStatus( $this->serviceName, $status );
+		return $this->circuitBreaker->setOperationStatus( $this->serviceName, $status );
 	}
 
 	/**
@@ -40,5 +33,12 @@ class ServiceCircuitBreaker {
 		if ( !$this->OperationAllowed() ) {
 			throw new CircuitBreakerOpen( $this->serviceName );
 		}
+	}
+
+	/**
+	 * @return bool returns true if operation can be performed on a given service
+	 */
+	public function OperationAllowed() {
+		return $this->circuitBreaker->operationAllowed( $this->serviceName );
 	}
 }

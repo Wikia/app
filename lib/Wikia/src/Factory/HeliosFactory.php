@@ -33,7 +33,7 @@ class HeliosFactory extends AbstractFactory {
 			$urlProvider = $urlProviderFactory->urlProvider();
 
 			$heliosUrl = $wgAuthServiceInternalUrl ?: "http://{$urlProvider->getUrl( self::AUTH_SERVICE_NAME )}/";
-			$circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->GetCircuitBreaker( self::AUTH_SERVICE_NAME );
+			$circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( self::AUTH_SERVICE_NAME );
 
 			$this->heliosClient = new HeliosClient( $heliosUrl, $wgTheSchwartzSecretToken, $circuitBreaker );
 		}

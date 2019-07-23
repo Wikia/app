@@ -28,14 +28,14 @@ class LocalCircuitBreakerStorage implements CircuitBreakerStorage {
 				case Ganesha::EVENT_TRIPPED:
 					$this->error( 'Circuit open! It seems that a failure has occurred in', [
 						'service' => $service,
-						'message' => $message
+						'message' => $message,
 					] );
 					break;
 				case Ganesha::EVENT_CALMED_DOWN:
-					$this->info( 'The ganesha failure seems to have calmed down.'. [
-						'service' => $service,
-						'message' => $message
-					] );
+					$this->info( 'The ganesha failure seems to have calmed down.' . [
+							'service' => $service,
+							'message' => $message,
+						] );
 					break;
 				case Ganesha::EVENT_STORAGE_ERROR:
 					$this->error( 'APCU failure:', [ 'message' => $message ] );
@@ -50,7 +50,7 @@ class LocalCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @param string $name
 	 * @return bool
 	 */
-	public function OperationAllowed( string $name ) {
+	public function operationAllowed( string $name ) {
 		return $this->ganesha->isAvailable( $name );
 	}
 
@@ -59,7 +59,7 @@ class LocalCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @param bool $status
 	 * @return bool
 	 */
-	public function SetOperationStatus( string $name, bool $status ) {
+	public function setOperationStatus( string $name, bool $status ) {
 		if ( $status ) {
 			$this->ganesha->success( $name );
 		} else {
