@@ -1495,6 +1495,13 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverGAMLazyLoadingCountries
+ * List of countries GAM lazy loading will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY.
+ */
+$wgAdDriverGAMLazyLoadingCountries = null;
+
+/**
  * @name $wgAdDriverWadBTCountries
  * List of countries to enable Blockthrough recovery
  */
@@ -1857,6 +1864,12 @@ $wgUseGoogleCloudStorage = false;
  * If enabled, Unified Search will be used for Special:Search.
  */
 $wgUseUnifiedSearch = true;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3338
+ * If enabled, Unified Search will be used for Special:Search in corporate wikis.
+ */
+$wgUseCommunityUnifiedSearch = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033

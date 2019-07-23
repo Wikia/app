@@ -539,10 +539,10 @@ Niedawno przesłana edycja tej strony JavaScript (wersja [$2 $3]) została odrzu
 	'content-review-module-header-actions' => 'Działania',
 	'content-review-module-jspages' => 'Wszystkie strony JS',
 	'content-review-special-js-description' => 'Ta strona przedstawia aktualny [[w:pl:Pomoc:Proces przeglądu kodu JavaScript|status przeglądu]] skryptów w przestrzeni nazw MediaWiki na tej społeczności.',
-	'content-review-special-js-importjs-description' => 'Uwaga: istnieje możliwość dodawania i usuwania skryptów importowanych lokalnie i z dev.wikia.com bez procesu przeglądu poprzez [[MediaWiki:ImportJS]].',
+	'content-review-special-js-importjs-description' => 'Uwaga: istnieje możliwość dodawania i usuwania skryptów importowanych lokalnie i z dev.fandom.com bez procesu przeglądu poprzez [[MediaWiki:ImportJS]].',
 	'content-review-importjs-description' => 'Tutaj z łatwością zaimportujesz skrypty:
-* z tej wiki, podając nazwę artykułu (np. <tt>MójSkrypt.js</tt>);
-* z [[w:c:dev|dev.wikia.com]], dodając „dev:” na początku nazwy artykułu (np. <tt>dev:Code.js</tt>).
+* z tej wiki, podając nazwę artykułu (np. <code>MójSkrypt.js</code>);
+* z [[w:c:dev|dev.fandom.com]], dodając „dev:” na początku nazwy artykułu (np. <code>dev:Code.js</code>).
 Nazwy nie powinny zawierać przedrostka przestrzeni nazw MediaWiki. Każdy skrypt należy zapisywać w nowej linii. Zobacz [[w:pl:Pomoc:Importowanie CSS i JS|stronę pomocy]], aby uzyskać więcej informacji.
 ----
 ',
@@ -550,7 +550,7 @@ Nazwy nie powinny zawierać przedrostka przestrzeni nazw MediaWiki. Każdy skryp
 	'right-content-review-test-mode' => 'Udostępnia środowisko testowe przeglądu treści',
 	'group-content-reviewer' => 'Sprawdzający treść',
 	'content-review-status-escalated' => 'Przekazana',
-	'content-review-profile-tags-description' => 'Aby móc używać tej funkcji, musisz zaimportować [[w:c:dev:ProfileTags/pl|ProfileTags.js]] z dev.wikia.com. [[w:c:dev:ProfileTags/pl|Tutaj znajdziesz więcej informacji]].
+	'content-review-profile-tags-description' => 'Aby móc używać tej funkcji, musisz zaimportować [[w:c:dev:ProfileTags/pl|ProfileTags.js]] z dev.fandom.com. [[w:c:dev:ProfileTags/pl|Tutaj znajdziesz więcej informacji]].
 
 Użyj tej strony, aby dostosować plakietki widoczne w profilach użytkowników. Oddziel nazwę użytkownika od plakietek za pomocą pionowej kreski („|”). Aby wyświetlić kilka plakietek, oddziel je przecinkami. Dodaj jednego użytkownika na linię.
 

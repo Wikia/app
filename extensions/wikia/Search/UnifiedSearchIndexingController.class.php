@@ -58,9 +58,6 @@ class UnifiedSearchIndexingController extends WikiaController {
 
 		return [
 			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
-			'pageIds' => array_map( function ( array $item ) {
-				return $item['id'];
-			}, $items ),
 			'items' => $items,
 		];
 	}
@@ -91,9 +88,6 @@ class UnifiedSearchIndexingController extends WikiaController {
 
 		return [
 			'nextOffset' => isset( $splitByLimit[1][0]['id'] ) ? $splitByLimit[1][0]['id'] : null,
-			'wikiIds' => array_map( function ( array $item) {
-				return $item['id'];
-			}, $items ),
 			'items' => $items,
 		];
 	}

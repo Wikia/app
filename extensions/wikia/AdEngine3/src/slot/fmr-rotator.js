@@ -1,5 +1,14 @@
-import { AdSlot, context, events, eventService, scrollListener, slotService, utils, universalAdPackage } from '@wikia/ad-engine';
-import { getNavbarHeight } from '../templates/navbar-updater';
+import {
+	AdSlot,
+	context,
+	events,
+	eventService,
+	scrollListener,
+	slotService,
+	utils,
+	universalAdPackage,
+} from '@wikia/ad-engine';
+import { navbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
 import { recRunner } from '../wad/rec-runner';
@@ -240,7 +249,7 @@ function tryPushNextSlot() {
 export function rotateIncontentBoxad(slotName) {
 	nextSlotName = slotName;
 	recirculationElement = document.getElementById('recirculation-rail');
-	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarHeight();
+	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - navbarManager.getHeight();
 	refreshInfo.refreshDelay = context.get('custom.fmrRotatorDelay') || refreshInfo.refreshDelay;
 	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');

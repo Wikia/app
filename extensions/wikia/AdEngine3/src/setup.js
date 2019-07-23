@@ -253,6 +253,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		context.push('slots.featured.videoSizes', [480, 360]);
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
+	context.set('slots.incontent_player.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 	context.set('slots.floor_adhesion.disabled', !isGeoEnabled('wgAdDriverOasisFloorAdhesionCountries'));
 
 	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
