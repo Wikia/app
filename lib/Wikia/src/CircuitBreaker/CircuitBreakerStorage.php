@@ -2,8 +2,8 @@
 
 namespace Wikia\CircuitBreaker;
 
-use Wikia\Service\Helios\ClientException;
-use Wikia\Service\Helios\Exception;
+use Exception;
+use Wikia\Logger\Loggable;
 
 interface CircuitBreakerStorage {
 	/**
@@ -20,27 +20,30 @@ interface CircuitBreakerStorage {
 	public function setOperationStatus( string $name, bool $status );
 }
 
-class CircuitBreakerOpen extends ClientException {
+class CircuitBreakerOpen extends Exception {
+	use Loggable;
+
 	/** @var string */
 	private $serviceName;
+
+	/** @var int */
+	private $code;
 
 	/**
 	 * CircuitBreakerOpen constructor.
 	 * @param string $serviceName
 	 * @param int $code
 	 * @param Exception|null $previous
-	 * @param null $data
 	 */
-	public function __construct(
-		string $serviceName, int $code = 0, Exception $previous = null, $data = null
-	) {
+	public function __construct( string $serviceName, int $code = 0, Exception $previous = null ) {
 		$this->serviceName = $serviceName;
+		$this->code = $code;
 
-		parent::__construct( "circuit breaker open for service $serviceName", $code, $previous,
-			$data );
+		parent::__construct( "circuit breaker open for service $serviceName", $code, $previous );
 	}
 
 	protected function logMe() {
-		$this->warning( 'circuit breaker open', [ 'service' => $this->serviceName ] );
+		$this->warning( 'circuit breaker open',
+			[ 'service' => $this->serviceName, 'code' => $this->code ] );
 	}
 }

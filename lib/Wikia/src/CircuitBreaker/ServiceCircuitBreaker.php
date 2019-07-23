@@ -12,6 +12,7 @@ class ServiceCircuitBreaker {
 	/**
 	 * ServiceCircuitBreaker constructor.
 	 * @param $serviceName string name of the service
+	 * @param CircuitBreakerStorage $circuitBreaker
 	 */
 	public function __construct( string $serviceName, CircuitBreakerStorage $circuitBreaker ) {
 		$this->serviceName = $serviceName;
