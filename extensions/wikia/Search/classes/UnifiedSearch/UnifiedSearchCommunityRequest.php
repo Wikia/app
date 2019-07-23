@@ -9,17 +9,18 @@ class UnifiedSearchCommunityRequest {
 
 	/** @var Select */
 	private $query;
-
 	/** @var integer */
 	private $page;
 	/** @var integer */
 	private $limit;
-
+	/** @var string */
+	private $language;
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
+		$this->language = $config->getLanguageCode();
 	}
 
 	/**
@@ -41,5 +42,9 @@ class UnifiedSearchCommunityRequest {
 	 */
 	public function getLimit(): int {
 		return $this->limit;
+	}
+
+	public function getLanguage(): string {
+		return $this->language;
 	}
 }
