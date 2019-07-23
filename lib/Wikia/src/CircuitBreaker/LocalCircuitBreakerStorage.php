@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Wikia\CircuitBreaker;
-
 
 use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Builder;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Wikia\CircuitBreaker\Storage;
-
 
 use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Configuration;
@@ -52,7 +50,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function save( $service, $count ) {
-		if (apcu_store( $service, $count ) === false) {
+		if ( apcu_store( $service, $count ) === false ) {
 			$this->throwException( $this->storeFailure( $service ) );
 		}
 	}
@@ -122,7 +120,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 * @return void
 	 */
 	public function saveStatus( $service, $status ) {
-		if (apcu_store( $service, $status ) === false) {
+		if ( apcu_store( $service, $status ) === false ) {
 			$this->throwException( $this->storeFailure( $service ) );
 		}
 	}
@@ -151,7 +149,7 @@ class APCUAdapter implements AdapterInterface, TumblingTimeWindowInterface {
 	 */
 	public function reset() {
 		$prefix = Ganesha\Storage::KEY_PREFIX;
-		$status = apcu_delete(new APCUIterator("^{$prefix}"));
+		$status = apcu_delete( new APCUIterator( "^{$prefix}" ) );
 
 		if ( !$status ) {
 			$this->throwException( "Failed clearing circuit breaker cache" );

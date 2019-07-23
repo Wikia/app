@@ -16,10 +16,10 @@ class CircuitBreakerOpen extends ClientException {
 	 * @param Exception|null $previous
 	 * @param null $data
 	 */
-	public function __construct(string $serviceName, int $code = 0, Exception $previous = null, $data = null) {
+	public function __construct( string $serviceName, int $code = 0, Exception $previous = null, $data = null ) {
 		$this->serviceName = $serviceName;
 
-		parent::__construct("circuit breaker open for service $serviceName", $code, $previous, $data);
+		parent::__construct( "circuit breaker open for service $serviceName", $code, $previous, $data );
 	}
 
 	protected function logMe() {

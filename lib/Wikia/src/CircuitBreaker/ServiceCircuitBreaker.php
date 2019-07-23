@@ -38,7 +38,7 @@ class ServiceCircuitBreaker {
 	 */
 	public function AssertOperationAllowed() {
 		if ( !$this->OperationAllowed() ) {
-			throw new CircuitBreakerOpen( $this->serviceName);
+			throw new CircuitBreakerOpen( $this->serviceName );
 		}
 	}
 }

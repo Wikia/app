@@ -36,7 +36,7 @@ class ExternalCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @return bool
 	 */
 	public function OperationAllowed( string $name ) {
-		$resp = $this->apiClient->get('/allowed', ['query' => ['name' => $name ]] );
+		$resp = $this->apiClient->get( '/allowed', [ 'query' => [ 'name' => $name ] ] );
 		if ( $resp->getStatusCode() != 200 ) {
 			return false;
 		}
@@ -44,7 +44,7 @@ class ExternalCircuitBreakerStorage implements CircuitBreakerStorage {
 		$allowed = GuzzleHttp\json_decode($resp->getBody());
 
 		if ( !$allowed->allowed && $this->logSampler->shouldSample() ) {
-		   $this->warning("[circuit breaker] open", [ 'service_name' => $name, ]);
+			$this->warning( "[circuit breaker] open", [ 'service_name' => $name, ] );
 		}
 
 		return $allowed->allowed;
@@ -56,7 +56,7 @@ class ExternalCircuitBreakerStorage implements CircuitBreakerStorage {
 	 * @return bool
 	 */
 	public function SetOperationStatus( string $name, bool $status ) {
-		$resp = $this->apiClient->post( '/update', ['query' => [ 'name' => $name, 'success' => $status ]]);
+		$resp = $this->apiClient->post( '/update', ['query' => [ 'name' => $name, 'success' => $status ] ] );
 		return $resp->getStatusCode() == 204;
 	}
 }
