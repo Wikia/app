@@ -19,7 +19,7 @@ class CrossWikiCoreTest extends BaseTest
 	public function testExecute() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation', 'getIsPromotedWiki', 'getIsHiddenWiki'] )
+		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation', 'getIsPromotedWiki', 'getIsHiddenWiki', 'getThumbnail'] )
 		                ->getMock();
 
 
@@ -34,6 +34,7 @@ class CrossWikiCoreTest extends BaseTest
 		$licence  = ['commercial_use_allowed_b'=>true];
 		$isPromoted  = ['promoted_wiki_b'=>false];
 		$isHidden  = [ 'hidden_wiki_b' => false ];
+		$thumbnail = ['thumbnail' => 'https://vignette.wikia.nocookie.net/bootleggames/images/9/90/PM4-1.gif/revision/latest'];
 
 		$service
 		    ->expects( $this->once() )
@@ -88,10 +89,15 @@ class CrossWikiCoreTest extends BaseTest
 			->method ( 'getIsHiddenWiki' )
 			->will   ( $this->returnValue( $isHidden ) )
 		;
+		$service
+			->expects( $this->once() )
+			->method ( 'getThumbnail' )
+			->will   ( $this->returnValue( $thumbnail ) )
+		;
 
 		$this->assertEquals(
 				array_merge( $basics, $stats, $views, $wam, $cats, $viz,
-					$articles, $licence, $isPromoted, $isHidden ),
+					$articles, $licence, $isPromoted, $isHidden, $thumbnail ),
 				$service->execute()
 		);
 	}
