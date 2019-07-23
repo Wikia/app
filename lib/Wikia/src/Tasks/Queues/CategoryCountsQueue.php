@@ -14,6 +14,6 @@ class CategoryCountsQueue extends Queue {
 	const NAME = 'CategoryCounts';
 
 	public function __construct() {
-		parent::__construct('category_counts');
+		parent::__construct( 'category_counts' );
 	}
 }
