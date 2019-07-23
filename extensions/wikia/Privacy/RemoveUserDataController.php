@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\Loggable;
+use Wikia\Logger\WikiaLogger;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
@@ -103,6 +104,12 @@ class RemoveUserDataController extends WikiaController {
 				$this->okResponse( $userId, $logEntry->id, $logEntry->created, true );
 				return;
 			}
+		}
+
+		if (!isset($logEntries[ 0 ])) {
+			WikiaLogger::instance()->info( __METHOD__ . ' logEntries has no first element when it should', [
+				'logEntries' => json_encode( $logEntries ),
+			] );
 		}
 
 		// if all log entries are unsuccessful, return the latest fail
