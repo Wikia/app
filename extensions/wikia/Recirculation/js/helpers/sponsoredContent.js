@@ -48,8 +48,11 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 		var geoSpecificContent = applyContentCriteria(sponsoredContent, 'geos', userGeo);
 		var siteSpecificContent = applyContentCriteria(sponsoredContent, 'wikiIds', w.wgCityId);
 		var geoAndSiteSpecificContent = applyContentCriteria(geoSpecificContent, 'wikiIds', w.wgCityId);
-		var geoOnlySpecificContent = geoSpecificContent.filter(function(item) { return !item.wikiIds.length });
-		var siteOnlySpecificContent = siteSpecificContent.filter(function(item) { return !item.geos.length });
+		var verticalSpecificContent = applyContentCriteria(sponsoredContent, 'verticals', w.wgWikiVertical);
+		var geoAndVerticalSpecificContent = applyContentCriteria(geoSpecificContent, 'verticals', w.wgWikiVertical);
+		var geoOnlySpecificContent = geoSpecificContent.filter(function(item) { return !item.wikiIds.length && !item.verticals.length });
+		var siteOnlySpecificContent = siteSpecificContent.filter(function(item) { return !item.geos.length && !item.verticals.length });
+		var verticalOnlySpecificContent = verticalSpecificContent.filter(function(item) { return !item.geos.length && !item.wikiIds.length });
 
 		if (geoAndSiteSpecificContent.length) {
 			return geoAndSiteSpecificContent;
@@ -59,12 +62,20 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 			return siteOnlySpecificContent;
 		}
 
+		if (geoAndVerticalSpecificContent.length) {
+			return geoAndVerticalSpecificContent;
+		}
+
+		if (verticalOnlySpecificContent.length) {
+			return verticalOnlySpecificContent;
+		}
+
 		if (geoOnlySpecificContent.length) {
 			return geoOnlySpecificContent;
 		}
 
 		return sponsoredContent.filter(function (item) {
-			return !item.wikiIds.length && !item.geos.length;
+			return !item.wikiIds.length && !item.geos.length && !item.verticals.length;
 		});
 	}
 
