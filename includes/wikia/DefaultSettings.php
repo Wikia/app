@@ -1869,7 +1869,7 @@ $wgUseUnifiedSearch = true;
  * https://wikia-inc.atlassian.net/browse/SER-3338
  * If enabled, Unified Search will be used for Special:Search in corporate wikis.
  */
-$wgUseCommunityUnifiedSearch = false;
+$wgUseCommunityUnifiedSearch = true;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033
