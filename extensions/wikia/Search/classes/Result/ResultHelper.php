@@ -62,17 +62,14 @@ class ResultHelper {
 
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
-		$globalSearchUrl = '';
-		if ( $query ) {
-			$lang = $wikiaSearchHelper->getLangForSearchResults();
-			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query(
-					[
-						'search' => $query,
-						'resultsLang' => $lang,
-					]
-				);
-		}
+		$lang = $wikiaSearchHelper->getLangForSearchResults();
+		$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query(
+				[
+					'search' => $query,
+					'resultsLang' => $lang,
+				]
+			);
 
 		return [
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],

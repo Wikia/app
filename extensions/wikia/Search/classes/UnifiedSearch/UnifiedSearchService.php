@@ -86,7 +86,7 @@ class UnifiedSearchService {
 				'description' => $item['description'],
 				'language' => $item['language'],
 				'url' => $item['url'],
-				'image' => $item['thumbnail'],
+				'image' => $item['thumbnail'] ?? null,
 				'hub_s' => $item['hub'],
 				'articles_i' => $item['pageCount'],
 				'images_i' => $item['imageCount'],
