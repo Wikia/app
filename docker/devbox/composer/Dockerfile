@@ -8,7 +8,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && chmod +x /usr/bin/composer \
     && apt-get update \
     && apt-get install -y git zip unzip\
-    && pecl install yaml-2.0.2 xdebug-2.7.2 \
+    && pecl install yaml-2.0.4 xdebug-2.7.2 \
     && docker-php-ext-enable yaml xdebug \
     && apt-get install gosu
 
