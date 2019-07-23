@@ -17,8 +17,6 @@ services:
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
     depends_on:
       - php-wikia
-  logger:
-    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
@@ -29,7 +27,7 @@ services:
       - WIKIA_DATACENTER=$WIKIA_DATACENTER
       - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
       - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
-      - LOG_SOCKET_ONLY=yes
+      - LOG_STDOUT_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
       - WIKIA_FORCE_DEV_ONLY=yes
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
