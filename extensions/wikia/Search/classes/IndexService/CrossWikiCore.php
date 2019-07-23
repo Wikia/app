@@ -2,10 +2,11 @@
 /**
  * Class definition for Wikia\Search\IndexService\CrossWikiCore
  */
+
 namespace Wikia\Search\IndexService;
 
 use CommunityDataService;
-use CuratedContentHelper;
+use ImageServing;
 use Wikia\Search\Utilities;
 use WikiFactory;
 use WikiService;
@@ -32,19 +33,10 @@ class CrossWikiCore extends AbstractWikiService {
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 */
 	public function execute() {
-		return array_merge(
-			$this->getWikiBasics(),
-			$this->getWikiStats(),
-			$this->getWikiViews(),
-			$this->getWam(),
-			$this->getCategories(),
-			$this->getVisualizationInfo(),
-			$this->getCommunityData(),
-			$this->getTopArticles(),
-			$this->getLicenseInformation(),
-			$this->getIsPromotedWiki(),
-			$this->getIsHiddenWiki()
-		);
+		return array_merge( $this->getWikiBasics(), $this->getWikiStats(), $this->getWikiViews(),
+			$this->getWam(), $this->getCategories(), $this->getVisualizationInfo(),
+			$this->getThumbnail(), $this->getTopArticles(), $this->getLicenseInformation(),
+			$this->getIsPromotedWiki(), $this->getIsHiddenWiki() );
 	}
 
 	/**
@@ -73,7 +65,8 @@ class CrossWikiCore extends AbstractWikiService {
 		$response['domains_txt'] = $service->getDomainsForWikiId( $this->wikiId );
 		$response['all_domains_mv_wd'] = $response['domains_txt'];
 
-		$response['wiki_pagetitle_txt'] = str_replace( '$1 - ', '', ( \wfMessage( 'Pagetitle' )->text() ) );
+		$response['wiki_pagetitle_txt'] =
+			str_replace( '$1 - ', '', ( \wfMessage( 'Pagetitle' )->text() ) );
 
 		return $response;
 	}
@@ -88,7 +81,7 @@ class CrossWikiCore extends AbstractWikiService {
 		if ( $wvResponse = ( new WikiViews )->getStubbedWikiResponse() ) {
 			$result = [
 				'views_weekly_i' => $wvResponse['contents']['wikiviews_weekly']['set'],
-				'views_monthly_i' => $wvResponse['contents']['wikiviews_monthly']['set']
+				'views_monthly_i' => $wvResponse['contents']['wikiviews_monthly']['set'],
 			];
 		}
 
@@ -138,7 +131,8 @@ class CrossWikiCore extends AbstractWikiService {
 		$service = $this->getService();
 
 		$message =
-			$service->getSimpleMessage( 'wikiasearch2-crosswiki-description', [ $service->getGlobal( 'Sitename' ) ] );
+			$service->getSimpleMessage( 'wikiasearch2-crosswiki-description',
+				[ $service->getGlobal( 'Sitename' ) ] );
 		$ds = Utilities::field( 'description' );
 		$ds = $ds == 'description' ? 'description_txt' : $ds;
 		$response[$ds] = $message;
@@ -160,17 +154,17 @@ class CrossWikiCore extends AbstractWikiService {
 		return $response;
 	}
 
-	protected function getCommunityData() {
+	protected function getThumbnail() {
 		$service = new CommunityDataService( $this->wikiId );
-		if ( !empty( $service->getCommunityImageId() ) ) {
-			$url =
-				CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500,
-					[ "w" => 3, h => "2" ] );
-
-			return [ 'thumbnail' => $url ];
+		if ( empty( $service->getCommunityImageId() ) ) {
+			return [ 'thumbnail' => null ];
 		}
+		$imageServing =
+			new ImageServing( [ $service->getCommunityImageId() ], 500, [ 'w' => 3, 'h' => 2 ] );
+		$images = $imageServing->getImages( 1 );
+		$image = $images[$service->getCommunityImageId()][0]['url'] ?? null;
 
-		return [];
+		return [ 'thumbnail' => $image ];
 	}
 
 	/**
@@ -187,7 +181,8 @@ class CrossWikiCore extends AbstractWikiService {
 					$response['top_articles_txt'][] = $item['title'];
 				}
 			}
-		} catch ( \Exception $e ) {
+		}
+		catch ( \Exception $e ) {
 		}
 		$ta = Utilities::field( 'top_articles' );
 		$ta = $ta == 'top_articles' ? 'top_articles_txt' : $ta;
@@ -204,13 +199,9 @@ class CrossWikiCore extends AbstractWikiService {
 	protected function getCategories() {
 		$categories = [];
 		$dbr = wfGetDB( DB_SLAVE );
-		$query = $dbr->select(
-			'category',
-			'cat_title',
-			'cat_hidden = 0',
-			__METHOD__,
-			[ 'LIMIT' => 50, 'ORDER BY' => 'cat_pages DESC' ]
-		);
+		$query =
+			$dbr->select( 'category', 'cat_title', 'cat_hidden = 0', __METHOD__,
+				[ 'LIMIT' => 50, 'ORDER BY' => 'cat_pages DESC' ] );
 		while ( $result = $dbr->fetchObject( $query ) ) {
 			$categories[] = str_replace( '_', ' ', $result->cat_title );
 		}
@@ -224,7 +215,7 @@ class CrossWikiCore extends AbstractWikiService {
 			$cats => $categories,
 			'categories_txt' => $categories,
 			'top_categories_txt' => $topCategories,
-			$topsCats => $topCategories
+			$topsCats => $topCategories,
 		];
 	}
 
@@ -248,35 +239,35 @@ class CrossWikiCore extends AbstractWikiService {
 
 		return [
 			"commercial_use_allowed_b" => $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ===
-				true
+										  true,
 		];
 	}
 
 	/**
 	 * Get a flag that forces a wiki to show up in wiki search results despite low number of articles
 	 *
-	 * @see SUS-5681
 	 * @return array
+	 * @see SUS-5681
 	 */
 	protected function getIsPromotedWiki() {
 		global $wgForceWikiIncludeInSearch;
 
 		return [
-			"promoted_wiki_b" => !empty( $wgForceWikiIncludeInSearch )
+			"promoted_wiki_b" => !empty( $wgForceWikiIncludeInSearch ),
 		];
 	}
 
 	/**
 	 * Get a flag that prevents a wiki from showing up in wiki search results.
 	 *
-	 * @see PLATFORM-3659
 	 * @return array
+	 * @see PLATFORM-3659
 	 */
 	protected function getIsHiddenWiki() {
 		global $wgExcludeWikiFromSearch;
 
 		return [
-			'hidden_wiki_b' => !empty( $wgExcludeWikiFromSearch )
+			'hidden_wiki_b' => !empty( $wgExcludeWikiFromSearch ),
 		];
 	}
 
