@@ -23,11 +23,11 @@ interface CircuitBreakerStorage {
 class CircuitBreakerOpen extends Exception {
 	use Loggable;
 
+	/** @var int */
+	protected $code;
+
 	/** @var string */
 	private $serviceName;
-
-	/** @var int */
-	private $code;
 
 	/**
 	 * CircuitBreakerOpen constructor.
