@@ -240,20 +240,17 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetIterable() {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getResults' ) )
-		                  ->getMockForAbstractClass();
+				->disableOriginalConstructor()
+				->setMethods( [ 'getResults' ] )
+				->getMockForAbstractClass();
 
-		$whoCares = 'This result type does not matter';
-		$resultSet
-		    ->expects( $this->once() )
-		    ->method ( 'getResults' )
-		    ->will   ( $this->returnValue( $whoCares ) )
-		;
-		$this->assertEquals(
-				$whoCares,
-				$resultSet->getIterable()
-		);
+		$result = new ArrayIterator( [ 'anything' ] );
+
+		$resultSet->expects( $this->once() )
+			->method( 'getResults' )
+			->will( $this->returnValue( $result ) );
+		
+		$this->assertEquals( $result, $resultSet->getIterable() );
 	}
 
 	/**

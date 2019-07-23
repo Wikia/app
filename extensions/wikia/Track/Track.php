@@ -50,7 +50,7 @@ class Track {
 		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
-		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
+		$adContext = ( new AdEngine3() )->getContext( $wgTitle, $skinName );
 		$hubFactory = WikiFactoryHub::getInstance();
 
 		$params = [

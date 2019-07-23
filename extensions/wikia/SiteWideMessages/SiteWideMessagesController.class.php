@@ -6,12 +6,10 @@ class SiteWideMessagesController extends WikiaController {
 	const CACHE_VALIDITY_BROWSER = 3600; // 1 hour
 
 	private function shouldSkipSiteWideMessages() {
-		global $wgEnableArticleFeaturedVideo;
-
 		$title = Title::newFromID( $this->getVal( 'articleId' ) );
+
 		if ( !is_null( $title ) ) {
-			$isFeaturedVideoEmbedded = !empty( $wgEnableArticleFeaturedVideo ) &&
-				ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() );
+			$isFeaturedVideoEmbedded = ArticleVideoContext::isFeaturedVideoAvailable( $title->getArticleID() );
 		} else {
 			$isFeaturedVideoEmbedded = false;
 		}

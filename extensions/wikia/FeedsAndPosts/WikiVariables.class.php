@@ -8,11 +8,13 @@ use WikiaDataAccess;
 
 class WikiVariables {
 	public function get() {
-		global $wgServer, $wgDBname, $wgCityId, $wgLanguageCode, $wgEnableDiscussions;
+		global $wgServer, $wgDBname, $wgScriptPath, $wgCityId, $wgLanguageCode, $wgEnableDiscussions, $wgSitename;
 
 		$wikiVariables = [
-			'basePath' => $wgServer,
+			'wikiId' => $wgCityId,
+			'basePath' => (wfHttpsAllowedForURL($wgServer) ? wfHttpToHttps($wgServer) : $wgServer) . $wgScriptPath,
 			'dbName' => $wgDBname,
+			'name' => $wgSitename,
 			'getStartedUrl' =>  $this->getStartedUrl(),
 			'wikiDescription' => ( new CommunityDataService( $wgCityId ) )->getCommunityDescription(),
 			'openGraphImageUrl' => \OpenGraphImageHelper::getUrl(),
@@ -20,6 +22,7 @@ class WikiVariables {
 				'content' => $wgLanguageCode,
 			],
 			'enableDiscussions' => $wgEnableDiscussions,
+			'gamepediaRedirectUrl' => $this->getGamepediaRedirect(),
 		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
@@ -41,5 +44,11 @@ class WikiVariables {
 				return wfProtocolUrlToRelative($getStartedUrl);
 			}
 		);
+	}
+
+	private function getGamepediaRedirect(): string {
+		$msg = wfMessage( 'Custom-GamepediaNotice' )->inLanguage( 'en' );
+
+		return $msg->exists() ? "https://{$msg->escaped()}.gamepedia.com/?utm_source=Fandom&utm_medium=banner&utm_campaign={$msg->escaped()}" : '';
 	}
 }

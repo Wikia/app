@@ -5,6 +5,9 @@ class ArticleVideoContext {
 	const ARTICLE_VIDEO_ERROR_MESSAGE = 'JWPlayer: Could not find mediaId in article-video service';
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
+	const SHOW_FEATURED_VIDEO_RIGHT = 'showfeaturedvideo';
+	const DISABLE_FEATURED_VIDEO_PREFERENCE = 'disablefeaturedvideo';
+
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
@@ -13,14 +16,19 @@ class ArticleVideoContext {
 	 * @return bool
 	 *
 	 */
-	public static function isFeaturedVideoEmbedded( string $pageId ) {
-		$wg = F::app()->wg;
+	public static function isFeaturedVideoAvailable( string $pageId ): bool {
+		global $wgEnableArticleFeaturedVideo, $wgCityId, $wgUser;
 
-		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
+		if ( !$wgEnableArticleFeaturedVideo || WikiaPageType::isActionPage() ) {
 			return false;
 		}
 
-		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+		if ( $wgUser->isLoggedIn() && !$wgUser->isAllowed( self::SHOW_FEATURED_VIDEO_RIGHT ) &&
+			 $wgUser->getGlobalPreference( self::DISABLE_FEATURED_VIDEO_PREFERENCE, 1 ) ) {
+			return false;
+		}
+
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
 
 		return !empty( $mediaId );
 	}
@@ -36,7 +44,7 @@ class ArticleVideoContext {
 	public static function getFeaturedVideoData( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
+		if ( self::isFeaturedVideoAvailable( $pageId ) ) {
 			$videoData = [];
 			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 			$logger = Wikia\Logger\WikiaLogger::instance();
@@ -144,7 +152,7 @@ class ArticleVideoContext {
 			$wg->Title->isContentPage() &&
 			!empty( $wg->RecommendedVideoABTestPlaylist ) &&
 			!WikiaPageType::isActionPage() &&
-			empty( self::isFeaturedVideoEmbedded( $pageId ) );
+			empty( self::isFeaturedVideoAvailable( $pageId ) );
 	}
 
 	public static function getRelatedMediaIdForRecommendedVideo(): string {

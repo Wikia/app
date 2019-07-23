@@ -31,6 +31,7 @@
   "global-footer-company-overview-link-careers": "Careers",
   "global-footer-company-overview-link-contact": "Contact",
   "global-footer-company-overview-link-press": "Press",
+  "global-footer-site-overview-link-wikia-inc": "Copyright $1 Wikia, Inc.",
   "global-footer-site-overview-link-global-sitemap": "Global Sitemap",
   "global-footer-site-overview-link-local-sitemap": "Local Sitemap",
   "global-footer-site-overview-link-terms-of-use": "Terms of Use",
@@ -92,6 +93,8 @@
   "notifications-reply-upvote-single-user-no-title": "1 user <b>upvoted</b> your reply",
   "notifications-reply-upvote-multiple-users-with-title": "{number} users <b>upvoted</b> your reply to {postTitle}",
   "notifications-reply-upvote-multiple-users-no-title": "{number} users <b>upvoted</b> your reply",
+  "notifications-post-at-mention": "{mentioner} <b>mentioned</b> you in {postTitle}.",
+  "notifications-reply-at-mention": "{mentioner} <b>mentioned</b> you in a reply to {postTitle}.",
   "notifications-notifications": "Notifications",
   "community-header-page": "Page",
   "community-header-pages": "Pages",
@@ -112,6 +115,7 @@
   "community-header-add-new-video": "Add New Video",
   "community-header-recent-changes": "Recent Changes",
   "community-header-all-shortcuts": "All Shortcuts",
+  "community-header-main-page": "Main Page",
   "wds-avatar-badges-admin-tooltip": "Community Admin",
   "wds-avatar-badges-content-moderator-tooltip": "Content Moderator",
   "wds-avatar-badges-helper-tooltip": "FANDOM Helper",
@@ -123,5 +127,6 @@
   "hours-ago": "{hours}h",
   "minutes-ago": "{minutes}m",
   "now-label": "now",
-  "back": "Back"
+  "back": "Back",
+  "license-description": "Community content is available under $1 unless otherwise noted."
 }

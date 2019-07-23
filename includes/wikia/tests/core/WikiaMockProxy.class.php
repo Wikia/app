@@ -1,7 +1,8 @@
 <?php
 
 /**
- * MockProxy class to encapsulate the runkit functionality that allows us to override static constructors
+ * MockProxy class to encapsulate the uopz functionality that allows us to override static
+ * constructors
  *
  * It manages the construction of objects and function mapping from a generic MockProxy wrapper to the specific Mock object we are using
  *

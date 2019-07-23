@@ -330,6 +330,7 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
+$wgAutoloadClasses['UnifiedSearchService'] = $IP . '/includes/wikia/services/UnifiedSearchService.class.php';
 $wgAutoloadClasses['ArticleVideoService'] = $IP . '/includes/wikia/services/ArticleVideoService.class.php';
 $wgAutoloadClasses['WikiRecommendationsService'] = $IP . '/includes/wikia/services/WikiRecommendationsService.class.php';
 $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
@@ -385,6 +386,7 @@ $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
+$wgAutoloadClasses['LicenseController'] = $IP.'/skins/oasis/modules/LicenseController.class.php';
 
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
@@ -970,28 +972,16 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverIsAdTestWiki = false;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnFeaturedVideoPages
- * Enables AdEngine3 extension on articles with Featured Video
+ * @name $wgAdDriverAdEngine3Enabled
+ * Enables AdEngine3 extension on all pages on oasis
  */
-$wgAdDriverAdEngine3EnabledOnFeaturedVideoPages = true;
+$wgAdDriverAdEngine3Enabled = true;
 
 /**
- * @name $wgAdDriverAdEngine3EnabledOnOasisSearchPages
- * Enables AdEngine3 extension on search pages
+ * @name $wgAdDriverAdEngine3DevAssets
+ * Enables AdEngine3 dev assets (from AdEngine3/dist-dev)
  */
-$wgAdDriverAdEngine3EnabledOnOasisSearchPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisMainPages
- * Enables AdEngine3 extension on search pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisMainPages = true;
-
-/**
- * @name $wgAdDriverAdEngine3EnabledOnOasisArticlePages
- * Enables AdEngine3 extension on article pages
- */
-$wgAdDriverAdEngine3EnabledOnOasisArticlePages = true;
+$wgAdDriverAdEngine3DevAssets = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries
@@ -1134,19 +1124,6 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
- * @name $wgAdDriverUseAudienceNetworkBidder
- * Enables Facebook Audience Network bidding platform.
- */
-$wgAdDriverUseAudienceNetworkBidder = false;
-
-/**
- * @name $wgAdDriverAudienceNetworkBidderCountries
- * List of countries where Facebook Audience Network bidding platform is enabled.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAudienceNetworkBidderCountries = null;
-
-/**
  * @name $wgAdDriverBeachfrontBidderCountries
  * List of countries where Beachfront bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1218,11 +1195,18 @@ $wgAdDriverPubMaticOutstreamCountries = null;
 $wgAdDriverPubMaticDfpCountries = null;
 
 /**
- * @name $wgAdDriverDisableRecirculationCountries
- * Disables recirculation in these countries.
+ * @name $wgAdDriverFMRRotatorDelay
+ * Time defining FMR slot rotation cycle.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverDisableRecirculationCountries = null;
+$wgAdDriverFMRRotatorDelay = 10000;
+
+/**
+ * @name $wgAdDriverDisableFMRDelayOasisCountries
+ * List of countries where FMR rotation is based on scroll instead of time delay.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableFMRDelayOasisCountries = null;
 
 /**
  * @name $wgAdDriverAdditionalVastSizeCountries
@@ -1237,6 +1221,13 @@ $wgAdDriverAdditionalVastSizeCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKargoBidderCountries = null;
+
+/**
+ * @name $wgAdDriverGumGumBidderCountries
+ * List of countries where GumGum Prebid bidding partner is enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGumGumBidderCountries = null;
 
 /**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
@@ -1362,13 +1353,13 @@ $wgAdDriverOasisHiviLeaderboardCountries = null;
  */
 $wgAdDriverScrollDepthTrackingCountries = null;
 
+
 /**
- * @name $wgAdDriverSrcPremiumCountries
- * Enables setting src=premium param for all ad slots on page, when premium video
- * is present on that page.
+ * @name $wgAdDriverScrollSpeedTrackingCountries
+ * List of countries where scroll speed tracking is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverSrcPremiumCountries = [];
+$wgAdDriverScrollSpeedTrackingCountries = null;
 
 /**
  * @name $wgAdDriverStickySlotsLines
@@ -1430,18 +1421,32 @@ $wgAdDriverEnableCheshireCat = true;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
- * @name $wgAdDriverGeoEdgeCountries
- * List of countries Geo Edge will be enabled on
+ * @name $wgAdDriverOverscrolledCountries
+ * List of countries where "overscrolled" events are enabled
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverGeoEdgeCountries = null;
+$wgAdDriverOverscrolledCountries = null;
 
 /**
- * @name $wgAdDriverConfiantCountries
- * List of countries Confiant will be enabled on
+ * @name $wgAdDriverBrowsiCountries
+ * List of countries Browsi will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverConfiantCountries = null;
+$wgAdDriverBrowsiCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantDesktopCountries
+ * List of countries Confiant will be enabled on Oasis
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverConfiantMobileCountries
+ * List of countries Confiant will be enabled on Mobile-Wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverConfiantMobileCountries = null;
 
 /**
  * @name $wgAdDriverNielsenCountries
@@ -1490,10 +1495,11 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
- * @name $wgAdDriverF2DisableSraCountries
- * List of countries where Single Request Architecture is disabled on news&stories
+ * @name $wgAdDriverGAMLazyLoadingCountries
+ * List of countries GAM lazy loading will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY.
  */
-$wgAdDriverF2DisableSraCountries = null;
+$wgAdDriverGAMLazyLoadingCountries = null;
 
 /**
  * @name $wgAdDriverWadBTCountries
@@ -1693,9 +1699,7 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
- * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
- * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
+ * Enables Mobile-Wiki floor_adhesion slot.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
@@ -1853,6 +1857,19 @@ $wgLogFileStorageOperations = false;
  * If enabled, Google Cloud Storage will be used for storing files.
  */
 $wgUseGoogleCloudStorage = false;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3150
+ * https://wikia-inc.atlassian.net/browse/SER-3316
+ * If enabled, Unified Search will be used for Special:Search.
+ */
+$wgUseUnifiedSearch = true;
+
+/**
+ * https://wikia-inc.atlassian.net/browse/SER-3338
+ * If enabled, Unified Search will be used for Special:Search in corporate wikis.
+ */
+$wgUseCommunityUnifiedSearch = false;
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3033

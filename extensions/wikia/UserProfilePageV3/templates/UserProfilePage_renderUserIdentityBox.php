@@ -138,6 +138,33 @@
 							</li>
 						<? endif; ?>
 					<? endif; ?>
+
+					<? if ( !empty( $user['discordHandle'] ) ): ?>
+						<li class="user-profile__discord">
+							<div class="wds-dropdown">
+								<div class="wds-dropdown__toggle user-profile__discord__icon-with-label">
+									<div class="user-profile__discord__icon-with-label__icon">
+										<?= DesignSystemHelper::renderSvg( 'wds-icons-discord', 'wds-icon wds-icon-tiny' ); ?>
+									</div>
+									<?= wfMessage( 'user-identity-box-my-discord-handle' )->escaped(); ?>
+								</div>
+								<div class="wds-dropdown__content">
+									<?= wfMessage( 'user-identity-box-discord-handle-content', $user['discordHandle'] )->escaped(); ?>
+								</div>
+							</div>
+						</li>
+					<? else: ?>
+						<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+							<li class="zero">
+								<div class="user-profile__discord__icon-with-label">
+									<div class="user-profile__discord__icon-with-label__icon">
+										<?= DesignSystemHelper::renderSvg( 'wds-icons-discord', 'wds-icon wds-icon-tiny' ); ?>
+									</div>
+									<?= wfMessage( 'user-identity-box-my-discord-handle' )->escaped(); ?>
+								</div>
+							</li>
+						<? endif; ?>
+					<? endif; ?>
 				</ul>
 			<? endif; ?>
 

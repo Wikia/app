@@ -35,6 +35,8 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     # SUS-5807 | required by DumpsOnDemandTask
     p7zip-full \
+    # DE-4421 | required by pdo_pqsql
+    libpq-dev \
     # needed by sass, this installs libsass-3.4.3, matches with https://github.com/absalomedia/sassphp/releases/tag/0.5.10
     && apt-get install -y libsass-dev \
     # cleanup
@@ -116,6 +118,8 @@ RUN apt-get update && apt-get install -y \
     intl \
     # required by Exif.php class to render file's metdata
     exif \
+    # DE-4421 | pgsql client is needed to connect to Amazon's Redshift
+    pdo pdo_pgsql \
     # remove no longer needed dependencies
     && apt-get remove -y \
         automake \
@@ -135,6 +139,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=959312e
+ENV WIKIA_BASE_IMAGE_HASH=e2baf3e
 
 WORKDIR /usr/wikia/slot1/current/src

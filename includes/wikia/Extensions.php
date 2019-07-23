@@ -94,13 +94,6 @@ if ( ! empty( $wgEnableWikisApi ) ) {
 	F::app()->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 }
 
-// During migration drop parser expiry on non-English wikis to 24 hours (PLATFORM-3765)
-if ( ( !wfHttpsAllowedForURL( $wgServer ) && !empty( $wgFandomComMigrationScheduled ) ) ||
-	 ( wfHttpsEnabledForURL( $wgServer ) && $wgLanguageCode !== 'en' )
-) {
-	$wgParserCacheExpireTime = 24 * 3600;
-}
-
 /*
  * Code for http://lyrics.wikia.com/
  */
@@ -336,7 +329,6 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 }
 
 #--- 44. AdEngine
-include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdEngine3.setup.php" );
 include ( "$IP/extensions/wikia/AdEngine3/AdHostMirrors.setup.php" );
 
@@ -537,7 +529,7 @@ if( !empty( $wgEnableForumIndexProtectorExt ) ) {
 }
 
 if( !empty( $wgEnableContactExt ) ) {
-	include_once( "$IP/extensions/wikia/SpecialContact2/SpecialContact.php" );
+	include_once "$IP/extensions/wikia/ContactPageRedirects/ContactPageRedirects.setup.php";
 }
 
 if( !empty( $wgEnableInputBoxExt ) ) {
@@ -648,20 +640,6 @@ include("$IP/extensions/wikia/Listusers/SpecialListusers.php");
 
 if (!empty($wgEnableSearchNearMatchExt)) {
 	include("$IP/extensions/wikia/SearchNearMatch/SearchNearMatch.php");
-}
-
-if (!empty($wgEnableAnswers)) {
-	$wgArticleRobotPolicies['Special:WhatLinksHere'] = 'index,follow';
-	// To get this, check out from https://svn.wikia-inc.com/svn/answers
-	include("$IP/extensions/wikia/Answers/Answers.php");
-
-	# disable AutoPageCreate extension (RT #48292)
-	$wgWikiaEnableAutoPageCreateExt = false;
-
-	include( "$IP/extensions/wikia/WikiAnswers/WikiAnswers.php" );
-
-	// macbre: RelatedPages queries on answers wikis are killing the database
-	$wgEnableRelatedPagesExt = false;
 }
 
 if( !empty( $wgEnableWikiaPhotoGalleryExt ) ) {
@@ -1502,7 +1480,7 @@ if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD && $wgWikiaEnvironment !== WIKIA_ENV
 	include "$IP/extensions/wikia/Staging/Staging.setup.php";
 }
 
-if ( !empty( $wgEnableRelatedPagesExt ) && empty( $wgEnableAnswers ) ) {
+if ( !empty( $wgEnableRelatedPagesExt ) ) {
 	include "$IP/extensions/wikia/RelatedPages/RelatedPages.php";
 }
 
@@ -1842,3 +1820,19 @@ if ( !empty( $wgEnableQualtricsSiteInterceptExt ) ) {
 	include "$IP/extensions/wikia/QualtricsSiteIntercept/QualtricsSiteIntercept.setup.php";
 }
 
+// CAKE-4585
+if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
+    include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
+}
+
+// LORE-519
+if ( !empty ( $wgEnableArticleExporterHooks ) ) {
+    include "$IP/extensions/wikia/ArticleExporter/ArticleExporterHooks.setup.php";
+}
+// LORE-519
+include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
+
+// DE-4374
+if ( !empty ( $wgEnableHydralyticsExt ) ) {
+	include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
+}

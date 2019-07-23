@@ -56,6 +56,7 @@
 <? endif ?>
 
 <?= $headItems ?>
+<?= $samba ?>
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
@@ -69,10 +70,6 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $billTheLizard ?>
-<?= $moatYi ?>
-<?= $nielsen ?>
-<?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
 

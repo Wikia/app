@@ -1,9 +1,20 @@
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
-import { context, events, eventService, utils } from '@wikia/ad-engine';
-import { bidders } from '@wikia/ad-engine/dist/ad-bidders';
-import { billTheLizard, krux, moatYi, moatYiEvents, nielsen } from '@wikia/ad-engine/dist/ad-services';
+import {
+	bidders,
+	billTheLizard,
+	confiant,
+	context,
+	events,
+	eventService,
+	jwplayerAdsFactory,
+	krux,
+	moatYi,
+	moatYiEvents,
+	nielsen,
+	utils
+} from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { hmdLoader } from './wad/hmd-loader';
@@ -12,19 +23,29 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 
-import './styles.scss';
-
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
-function setupAdEngine(isOptedIn, geoRequiresConsent) {
+let contextConfiguredTrigger;
+/**
+ * Resolves with ad-engine context once it's been configured.
+ * @type {Promise}
+ */
+const contextConfigured = new Promise((resolve) => {
+	contextConfiguredTrigger = resolve;
+});
+
+async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
-	ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+
 	videoTracker.register();
 	recRunner.init();
 
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
+
+	contextConfiguredTrigger(context);
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
@@ -48,7 +69,7 @@ function setupAdEngine(isOptedIn, geoRequiresConsent) {
 }
 
 function startAdEngine() {
-	if (context.get('wiki.opts.showAds')) {
+	if (context.get('state.showAds')) {
 		utils.scriptLoader.loadScript(GPT_LIBRARY_URL);
 
 		ads.init();
@@ -58,6 +79,7 @@ function startAdEngine() {
 			babDetection.run();
 		});
 		slots.injectHighImpact();
+		slots.injectFloorAdhesion();
 
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {
@@ -93,6 +115,7 @@ function callExternals() {
 		responseListener: biddersDelay.markAsReady,
 	});
 
+	confiant.call();
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
@@ -105,7 +128,6 @@ function callExternals() {
 
 function run() {
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
-
 	window.Wikia.consentQueue.push(setupAdEngine);
 }
 
@@ -122,9 +144,7 @@ function waitForBiddersResolve() {
 }
 
 function waitForAdStackResolve() {
-	return Promise.all([
-		waitForBiddersResolve()
-	]);
+	return contextConfigured.then(waitForBiddersResolve);
 }
 
 function hideAllAdSlots() {
@@ -138,6 +158,9 @@ function hideAllAdSlots() {
 }
 
 export {
+	context,
+	contextConfigured,
+	jwplayerAdsFactory,
 	hmdLoader,
 	isAutoPlayDisabled,
 	run,

@@ -8,6 +8,7 @@ use Solarium_Query_Select;
 use Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
 use Wikia\Search\Traits\ArrayConfigurableTrait;
+use Wikia\Search\UnifiedSearch\UnifiedSearchWikiMatch;
 
 /**
  * A config class intended to handle variable flags for search
@@ -233,8 +234,6 @@ class Config {
 		self::RANK_MOST_VIEWED => [ 'views', Solarium_Query_Select::SORT_DESC ],
 		self::RANK_FRESHEST => [ 'indexed', Solarium_Query_Select::SORT_DESC ],
 		self::RANK_STALEST => [ 'indexed', Solarium_Query_Select::SORT_ASC ],
-		self::RANK_SHORTEST => [ 'video_duration_i', Solarium_Query_Select::SORT_ASC ],
-		self::RANK_LONGEST => [ 'video_duration_i', Solarium_Query_Select::SORT_DESC ],
 	];
 
 	/**
@@ -340,6 +339,11 @@ class Config {
 	 * @var int
 	 */
 	protected $xwikiArticleThreshold = 50;
+
+	/**
+	 * @var UnifiedSearchWikiMatch|null
+	 */
+	private $unifiedWikiMatch;
 
 	/**
 	 * Constructor method
@@ -580,7 +584,7 @@ class Config {
 	 * @return boolean
 	 */
 	public function hasWikiMatch() {
-		return $this->wikiMatch !== null;
+		return $this->wikiMatch !== null || $this->unifiedWikiMatch !== null;
 	}
 
 	/**
@@ -626,6 +630,14 @@ class Config {
 				!$isVideoFile ) );
 	}
 
+	public function isImageOnly(): bool {
+		return in_array( Config::FILTER_IMAGE, $this->getPublicFilterKeys() );
+	}
+
+	public function isVideoOnly(): bool {
+		return in_array( Config::FILTER_VIDEO, $this->getPublicFilterKeys() );
+	}
+
 	/**
 	 * Overloading __set to type hint
 	 *
@@ -635,6 +647,12 @@ class Config {
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
 		$this->wikiMatch = $wikiMatch;
+
+		return $this;
+	}
+
+	public function setUnifiedWikiMatch( UnifiedSearchWikiMatch $wikiMatch ) {
+		$this->unifiedWikiMatch = $wikiMatch;
 
 		return $this;
 	}
@@ -657,6 +675,12 @@ class Config {
 		return $this->wikiMatch;
 	}
 
+	/**
+	 * @return UnifiedSearchWikiMatch|null
+	 */
+	public function getUnifiedWikiMatch() {
+		return $this->unifiedWikiMatch;
+	}
 
 	/**
 	 * Agnostic match verifier
@@ -954,31 +978,6 @@ class Config {
 	 */
 	public function setCrossWikiLuceneQuery( $apply ) {
 		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $apply );
-	}
-
-	/**
-	 * Returns results number based on a truncated heuristic
-	 *
-	 * @param boolean $formatted whether we should also format the number
-	 *
-	 * @return integer
-	 */
-	public function getTruncatedResultsNum( $formatted = false ) {
-		$resultsNum = $this->getResultsFound();
-
-		$result = $resultsNum;
-
-		$digits = strlen( $resultsNum );
-		if ( $digits > 1 ) {
-			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
-			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
-		}
-
-		if ( $formatted ) {
-			$result = $this->getService()->formatNumber( $result );
-		}
-
-		return $result;
 	}
 
 	/**
@@ -1418,7 +1417,7 @@ class Config {
 	 *
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	protected function getService(): MediaWikiService {
+	public function getService(): MediaWikiService {
 		if ( $this->service === null ) {
 			$this->service = new MediaWikiService();
 		}

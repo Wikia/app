@@ -1,5 +1,4 @@
-import { AdSlot, context, events, slotInjector, slotService, utils } from '@wikia/ad-engine';
-import { getAdProductInfo } from '@wikia/ad-engine/dist/ad-products';
+import { AdSlot, context, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
@@ -21,7 +20,11 @@ function isIncontentBoxadApplicable() {
 }
 
 function isHighImpactApplicable() {
-	return !context.get('custom.hasFeaturedVideo');
+	return !context.get('custom.hasFeaturedVideo') && context.get('slots.floor_adhesion.disabled');
+}
+
+function isFloorAdhesionApplicable() {
+	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
 }
 
 /**
@@ -38,7 +41,7 @@ function isIncontentNativeApplicable() {
  *
  * @returns {boolean}
  */
-function isTopBoxadApplicable() {
+function isRightRailApplicable() {
 	return utils.getViewportWidth() >= 1024;
 }
 
@@ -210,6 +213,23 @@ export default {
 					rv: 1,
 				},
 			},
+			floor_adhesion: {
+				adProduct: 'floor_adhesion',
+				disabled: true,
+				forceSafeFrame: true,
+				slotNameSuffix: '',
+				group: 'PF',
+				options: {},
+				targeting: {
+					loc: 'footer',
+					rv: 1,
+				},
+				defaultTemplates: [
+					'floorAdhesion',
+					'hideOnViewability',
+				],
+				defaultSizes: [[728, 90]],
+			},
 			invisible_high_impact_2: {
 				adProduct: 'invisible_high_impact_2',
 				slotNameSuffix: '',
@@ -272,12 +292,13 @@ export default {
 
 	setupStates() {
 		slotService.setState('hivi_leaderboard', false);
-		slotService.setState('top_leaderboard', false);
-		slotService.setState('top_boxad', isTopBoxadApplicable());
-		slotService.setState('incontent_boxad_1', true);
+		slotService.setState('top_leaderboard', true);
+		slotService.setState('top_boxad', isRightRailApplicable());
+		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
+		slotService.setState('floor_adhesion', isFloorAdhesionApplicable());
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 		slotService.setState('incontent_native', isIncontentNativeApplicable());
 
@@ -301,26 +322,50 @@ export default {
 		});
 	},
 
+	setupSlotVideoAdUnit(adSlot, params) {
+		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
+		const adUnit = utils.stringBuilder.build(
+				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+				{
+					slotConfig: {
+						group: adProductInfo.adGroup,
+						adProduct: adProductInfo.adProduct,
+					},
+				},
+		);
+
+		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
+	},
+
 	setupSizesAvailability() {
 		if (window.innerWidth >= 1024) {
 			context.set('slots.hivi_leaderboard.targeting.xna', '0');
 			context.set('slots.top_leaderboard.targeting.xna', '0');
 			context.set('slots.bottom_leaderboard.targeting.xna', '0');
 		}
+		context.set(`slots.incontent_boxad_1.targeting.xna`, context.get('custom.hasFeaturedVideo') ? '1' : '0');
 	},
 
 	setupTopLeaderboard() {
 		if (context.get('custom.hiviLeaderboard')) {
 			slotService.setState('hivi_leaderboard', true);
+			context.set('slots.top_leaderboard.firstCall', false);
 			context.push('state.adStack', { id: 'hivi_leaderboard' });
 
+			slotService.on('hivi_leaderboard', AdSlot.STATUS_SUCCESS, () => {
+				slotService.setState('top_leaderboard', false);
+				context.push('state.adStack', { id: 'top_leaderboard' });
+			});
+
 			slotService.on('hivi_leaderboard', AdSlot.STATUS_COLLAPSE, () => {
-				slotService.setState('top_leaderboard', true);
-				context.set('slots.top_leaderboard.firstCall', false);
+				const adSlot = slotService.get('hivi_leaderboard');
+
+				if (!adSlot.isEmpty) {
+					slotService.setState('top_leaderboard', false);
+				}
 				context.push('state.adStack', { id: 'top_leaderboard' });
 			});
 		} else {
-			slotService.setState('top_leaderboard', true);
 			context.push('state.adStack', { id: 'top_leaderboard' });
 		}
 	},
@@ -371,5 +416,12 @@ export default {
 
 	injectHighImpact() {
 		context.push('state.adStack', { id: 'invisible_high_impact_2' });
+	},
+
+	injectFloorAdhesion() {
+		scrollListener.addSlot(
+				'floor_adhesion',
+				{ distanceFromTop: utils.getViewportHeight() },
+		);
 	},
 };

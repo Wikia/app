@@ -56,7 +56,7 @@ REPLACE INTO /*$wgDBprefix*/interwiki (iw_prefix,iw_url,iw_local) VALUES
 ('pythoninfo','http://wiki.python.org/moin/$1',0),
 ('rfc','http://www.rfc-editor.org/rfc/rfc$1.txt',0),
 ('s23wiki','http://is-root.de/wiki/index.php/$1',0),
-('seattlewiki','http://seattle.wikia.com/wiki/$1',0),
+('seattlewiki','https://seattle.fandom.com/wiki/$1',0),
 ('seattlewireless','http://seattlewireless.net/?$1',0),
 ('senseislibrary','http://senseis.xmp.net/?$1',0),
 ('slashdot','http://slashdot.org/article.pl?sid=$1',0), # 2008-02-27: update me
@@ -78,9 +78,7 @@ REPLACE INTO /*$wgDBprefix*/interwiki (iw_prefix,iw_url,iw_local) VALUES
 ('webseitzwiki','http://webseitz.fluxent.com/wiki/$1',0),
 ('why','http://clublet.com/c/c/why?$1',0),
 ('wiki','http://c2.com/cgi/wiki?$1',0),
-('wikia','http://www.wikia.com/wiki/$1',0),
 ('wikibooks','http://en.wikibooks.org/wiki/$1',1),
-('wikicities','http://www.wikia.com/wiki/$1',0),
 ('wikif1','http://www.wikif1.org/$1',0),
 ('wikihow','http://www.wikihow.com/$1',0),
 ('wikinfo','http://www.wikinfo.org/index.php/$1',0),

@@ -1,5 +1,23 @@
-# This is a base Docker image used in prod/sandbox/preview Jenkinsfile
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:959312e
+# AdEngine3 assets
+FROM node:8.15.0-alpine AS AdEngine3Assets
+
+RUN apk update && apk upgrade && \
+  apk add --no-cache git openssh && \
+  npm install -g npm@6.1.0
+
+ADD app/extensions/wikia/AdEngine3 /AdEngine3
+
+WORKDIR /AdEngine3
+
+RUN npm --version
+
+RUN npm set unsafe-perm=true
+RUN npm install
+
+RUN npm run build --production
+
+# This is a base Docker image used in sandbox Jenkinsfile
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:06b60d8
 
 # disable the opcache
 RUN sed -i 's/zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
@@ -8,6 +26,7 @@ RUN apt update && apt install -q -y vim procps less
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
+COPY --from=AdEngine3Assets /AdEngine3/dist /usr/wikia/slot1/current/src/extensions/wikia/AdEngine3/dist-dev
 
 # WIKIA_ENVIRONMENT and WIKIA_DATACENTER - needed for maintenance scripts to run, but they are not used by rebuildLocalisationCache.php
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \

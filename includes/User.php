@@ -3887,7 +3887,7 @@ class User implements JsonSerializable {
 		global $wgEnableNewAuthModal;
 
 		if ( $wgEnableNewAuthModal ) {
-			return WikiFactory::getLocalEnvURL( "https://www.wikia.com/confirm-email?token=$token" );
+			return WikiFactory::getLocalEnvURL( "https://www.fandom.com/confirm-email?token=$token" );
 		}
 
 		// Hack to bypass localization of 'Special:'
@@ -4497,7 +4497,11 @@ class User implements JsonSerializable {
 	 * @return bool
 	 */
 	public function isStaff() {
-		return self::permissionsService()->isInGroup( $this, 'staff' );
+		return self::permissionsService()->isInGroup( $this, 'staff' )
+			||
+			self::permissionsService()->isInGroup( $this, 'wiki-manager' )
+			||
+			self::permissionsService()->isInGroup( $this, 'content-team-member' );
 	}
 
 	/**

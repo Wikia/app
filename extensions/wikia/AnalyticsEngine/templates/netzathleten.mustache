@@ -2,9 +2,8 @@
 <script type="text/javascript">
 require([
 	'wikia.trackingOptIn',
-	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine3.api')
-], function(trackingOptIn, adContext, adsApi) {
+], function(trackingOptIn, adsApi) {
 	var url = '{{ url }}';
 
 	function loadNetzAthletenScript() {
@@ -24,13 +23,13 @@ require([
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
-		var isEnabled = (adContext && adContext.get('opts.netzathleten')) ||
-			(adsApi && adsApi.isNetzathletenEnabled());
-
-		// user opt-ins for NetzAthleten
-		if (optIn && isEnabled) {
-			loadNetzAthletenScript();
-		}
+		adsApi.isNetzathletenEnabled()
+			.then(function(isServiceEnabled) {
+				// user opt-ins for NetzAthleten
+				if (optIn && isServiceEnabled) {
+					loadNetzAthletenScript();
+				}
+			});
 	});
 });
 </script>

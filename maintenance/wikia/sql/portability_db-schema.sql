@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-archive-slave.query.consul    Database: portability_db
 -- ------------------------------------------------------
--- Server version	5.7.18-15-log
+-- Server version	5.7.25-28-log
 
 
 --
@@ -23,4 +23,4 @@ CREATE TABLE `portability_dashboard` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-07-06 12:59:34
+-- Dump completed on 2019-04-18 12:56:14

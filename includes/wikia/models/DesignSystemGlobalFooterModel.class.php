@@ -8,6 +8,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $product;
 	private $productInstanceId;
 	private $lang;
+	private $isWikiaOrgCommunity;
 
 	/**
 	 * DesignSystemGlobalFooterModel constructor.
@@ -16,18 +17,24 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	 * @param int $productInstanceId Identifier for given product, ex: wiki id
 	 * @param string $lang
 	 */
-	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $product, $productInstanceId, $isWikiaOrgCommunity, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->product = $product;
 		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
+		$this->isWikiaOrgCommunity = $isWikiaOrgCommunity;
 	}
 
 	public function getData() {
 		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
 
+		if ( $this->isWikiaOrgCommunity ) {
+			return $this->getWikiaOrgModel();
+		}
+
 		$data = [
+			'is-wikia-org' => false,
 			'header' => [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
@@ -192,17 +199,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
-			'licensing_and_vertical' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-and-vertical-description',
-					'params' => [
-						'sitename' => $this->getSitenameData(),
-						'vertical' => $this->getVerticalData(),
-						'license' => $this->getLicenseData()
-					]
-				],
-			],
+			'licensing_and_vertical' => $this->getLicensingAndVertical(),
 			'mobile_site_button' => [
 				'type' => 'link-text',
 				'title' => [
@@ -220,22 +217,88 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
+	private function getWikiaOrgModel() {
+		$data = [
+			'header' => [
+				'type' => 'link-image',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org',
+				],
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'title' => [
+					'type' => 'text',
+					'value' => 'Wikia.org'
+				],
+				'tracking_label' => 'logo',
+			],
+			'site_overview' => [
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-terms-of-use'
+						],
+						'href' => $this->getHref( 'terms-of-use' ),
+						'tracking_label' => 'site-overview.terms-of-use',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-privacy-policy'
+						],
+						'href' => $this->getHref( 'privacy-policy' ),
+						'tracking_label' => 'site-overview.privacy-policy',
+					],
+				]
+			],
+			'mobile_site_button' => [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-mobile-site-link'
+				]
+			],
+			'is-wikia-org' => true,
+		];
+
+		if ( $this->getHref( 'support' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-support'
+				],
+				'href' => $this->getHref( 'support' ),
+				'tracking_label' => 'community.support',
+			];
+		}
+
+		if ( $this->getHref( 'help' ) ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-link-help'
+				],
+				'href' => $this->getHref( 'help' ),
+				'tracking_label' => 'community.help',
+			];
+		}
+
+		return $data;
+	}
+
 	private function getSitenameData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
 		} else {
-			$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->productInstanceId );
-
-			if ( $wgSitenameForComscoreForWikiId ) {
-				$sitename = $wgSitenameForComscoreForWikiId;
+			if ( !empty( $this->wg->SitenameForComscore ) ) {
+				$sitename = $this->wg->SitenameForComscore;
 			} else {
-				$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId );
-
-				if ( $wgSitenameForWikiId ) {
-					$sitename = $wgSitenameForWikiId;
-				} else {
-					$sitename = $this->wg->Sitename;
-				}
+				$sitename = $this->wg->Sitename;
 			}
 		}
 
@@ -282,26 +345,29 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
-	private function getLicenseData() {
+	private function getLicensingAndVertical() {
+		$data = [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-licensing-and-vertical-description',
+				'params' => [
+					'sitename' => $this->getSitenameData(),
+					'vertical' => $this->getVerticalData(),
+				]
+			],
+		];
+
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return [
+			$data['description']['params']['license'] = [
 				'type' => 'line-text',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-copyright-wikia',
-				],
+				]
 			];
 		}
 
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'text',
-				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
-			],
-			'href' => $this->getLicenseUrl(),
-			'tracking_label' => 'license',
-		];
+		return $data;
 	}
 
 	private function getFandomOverview() {
@@ -436,18 +502,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			];
 		}
 
-		if ( $this->getHref( 'fan-contributor' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-fan-contributor-program'
-				],
-				'href' => $this->getHref( 'fan-contributor' ),
-				'tracking_label' => 'community.fan-contributor',
-			];
-		}
-
 		if ( $this->getHref( 'wam' ) ) {
 			$data['links'][] = [
 				'type' => 'link-text',
@@ -515,9 +569,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getLocalSitemapUrl() {
 		if ( $this->product !== static::PRODUCT_FANDOMS ) {
 			$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-			$localSitemapAvailable = WikiFactory::getVarValueByName(
-				'wgEnableLocalSitemapPageExt', $this->productInstanceId, false, $default
-			);
+			$localSitemapAvailable = $this->wg->EnableLocalSitemapPageExt ?? $default;
 
 			if ( $localSitemapAvailable ) {
 				return $this->getLocalHref( 'local-sitemap' );
@@ -526,22 +578,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		// Fall back to fandom sitemap when the local one is unavailable
 		return $this->getHref( 'local-sitemap-fandom' );
-	}
-
-	private function getLicenseUrl() {
-		// no license URL for Fandom
-		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return '';
-		}
-
-		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->productInstanceId ) ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->productInstanceId ) ?: $this->wg->RightsPage;
-		if ( $licensePage ) {
-			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->productInstanceId );
-			$licenseUrl = wfProtocolUrlToRelative( $title->getFullURL() );
-		}
-
-		return $licenseUrl;
 	}
 
 	private function getLocalHref( $hrefKey ) {

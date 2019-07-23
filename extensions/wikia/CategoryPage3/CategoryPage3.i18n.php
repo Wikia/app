@@ -126,7 +126,7 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'category-page3-layout-selector-information' => 'Wybierz jedną z następujących opcji, aby zmienić układ tej strony. Możesz wprowadzić tą zmianę na stałe w ustawieniach użytkownika.',
+	'category-page3-layout-selector-information' => 'Wybierz jedną z następujących opcji, aby zmienić układ tej strony. Możesz wprowadzić zmianę na stałe w preferencjach użytkownika.',
 	'category-page3-pagination-next' => 'Dalej',
 	'category-page3-pagination-previous' => 'Wstecz',
 	'category-page3-shortcut-to-other' => 'Inne',
@@ -135,7 +135,7 @@ $messages['pl'] = array(
 	'category-page3-total-number' => 'Wszystkie elementy ($1)',
 	'category-page3-pagination-last' => 'Koniec',
 	'category-page3-trending-pages' => 'Popularne strony',
-	'category-page3-layout-selector-label' => 'Układ strony kategorii',
+	'category-page3-layout-selector-label' => 'Układ strony kategorii:',
 	'category-page3-layout-selector-category-exhibition' => 'Galeria kategorii',
 	'category-page3-layout-selector-category-page3' => 'Dynamiczne kategorie',
 );

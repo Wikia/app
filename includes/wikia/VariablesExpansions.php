@@ -173,7 +173,10 @@ $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
  * @see wfHandleCrossSiteAJAXdomain()
  * @var string $wgCrossSiteAJAXdomains
  */
-$wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
+$wgCrossSiteAJAXdomains = [
+	"internal-vstf.$wgWikiaBaseDomain",
+	"internal-vstf.$wgFandomBaseDomain",
+];
 
 /**
  * The datacenter that hosts the starter dumps for CreateNewWiki
@@ -478,7 +481,7 @@ $wgNamespacesWithSubpages = [
  * @see extensions/wikia/InterwikiDispatcher
  * @var string $wgNotAValidWikia
  */
-$wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:Not_a_valid_community";
+$wgNotAValidWikia = "http://community.$wgFandomBaseDomain/wiki/Community_Central:Not_a_valid_community";
 
 /**
  * The cache type for storing article HTML. This is used to store data which
@@ -537,13 +540,6 @@ $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
  * @var string $wgServicesExternalDomain
  */
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
-
-/**
- * External alternative services domain.
- * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
- * @var string $wgServicesExternalAlternativeDomain
- */
-$wgServicesExternalAlternativeDomain = "https://services.$wgFandomBaseDomain/";
 
 /**
  * Whether to disable the background tasks broker for MediaWiki.

@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\Logger\Loggable;
-use Wikia\Tasks\Queues\Queue;
+use Wikia\Logger\WikiaLogger;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
@@ -16,13 +16,13 @@ class RemoveUserDataController extends WikiaController {
 	public function removeUserData() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->request->wasPosted() ) {
+		if( !$this->request->wasPosted() ) {
 			$this->response->setCode( self::METHOD_NOT_ALLOWED );
 			return;
 		}
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -30,8 +30,8 @@ class RemoveUserDataController extends WikiaController {
 		$this->info( "Right to be forgotten request for user $userId", ['userId' => $userId] );
 
 		$dataRemover = new UserDataRemover();
-		$auditLogId = $dataRemover->removeAllPersonalUserData( $userId );
-		
+		$auditLogId = $dataRemover->startRemovalProcess( $userId );
+
 
 		$this->response->setCode( self::ACCEPTED );
 		$this->response->setValues( ['auditLogId' => $auditLogId] );
@@ -44,7 +44,7 @@ class RemoveUserDataController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -65,15 +65,15 @@ class RemoveUserDataController extends WikiaController {
 	public function getRemoveStatus() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$userId = (int) $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		$userId = (int)$this->getVal( 'userId' );
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
 
 		$specialsDbr = self::getSpecialsDB();
 
-		$logEntry = $specialsDbr->selectRow(
+		$rows = $specialsDbr->select(
 			RemovalAuditLog::LOG_TABLE,
 			[
 				'id',
@@ -83,31 +83,46 @@ class RemoveUserDataController extends WikiaController {
 			[
 				'user_id' => $userId
 			],
-			__METHOD__
+			__METHOD__,
+			[
+				// we only want the last log related to the user
+				'ORDER BY' => 'created DESC'
+			]
 		);
 
+		$logEntries = iterator_to_array( $rows );
+
 		// there's no entry for a given user ID
-		if ( empty( $logEntry ) ) {
+		if( empty( $logEntries ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 			return;
 		}
 
-		// count all completed per-wiki tasks
-		$wikisCompleted = (int) $specialsDbr->selectField(
-			RemovalAuditLog::DETAILS_TABLE,
-			'count(*)',
-			[
-				'log_id' => $logEntry->id
-			]
-		);
+		foreach( $logEntries as $logEntry ) {
+			// if there is a successful log entry, return it
+			if( RemovalAuditLog::allDataWasRemoved( $logEntry->id ) ) {
+				$this->okResponse( $userId, $logEntry->id, $logEntry->created, true );
+				return;
+			}
+		}
 
-		// we assume that the process is completed when all per-wiki tasks are done
+		if (!isset($logEntries[ 0 ])) {
+			WikiaLogger::instance()->info( __METHOD__ . ' logEntries has no first element when it should', [
+				'logEntries' => json_encode( $logEntries ),
+			] );
+		}
+
+		// if all log entries are unsuccessful, return the latest fail
+		$this->okResponse( $userId, $logEntries[ 0 ]->id, $logEntries[ 0 ]->created, false );
+	}
+
+	private function okResponse( $userId, $logId, $created, $dataWasRemoved ) {
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 		$this->response->setValues( [
 			'userId' => $userId,
-			'logId' => $logEntry->id,
-			'created' => $logEntry->created,
-			'is_completed' => $wikisCompleted === (int) $logEntry->number_of_wikis,
+			'logId' => $logId,
+			'created' => $created,
+			'is_completed' => $dataWasRemoved
 		] );
 	}
 
@@ -118,13 +133,13 @@ class RemoveUserDataController extends WikiaController {
 	public function removeEmailFromCache() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->request->wasPosted() ) {
+		if( !$this->request->wasPosted() ) {
 			$this->response->setCode( self::METHOD_NOT_ALLOWED );
 			return;
 		}
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -132,7 +147,7 @@ class RemoveUserDataController extends WikiaController {
 		$user = User::newFromId( $userId );
 		$user->invalidateEmail();
 		// setting a blank email will prevent db reloads
-		$user->setEmail('');
+		$user->setEmail( '' );
 		$user->invalidateCache();
 	}
 

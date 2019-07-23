@@ -158,11 +158,6 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
-	public static function onCloseWikiPurgeSharedData( $wikiId ) {
-		self::actionPurge( $wikiId );
-		return true;
-	}
-
 	/**
 	 * Push given image upload to the queue. This method is used by the re-queueing script.
 	 *
@@ -303,14 +298,6 @@ class ImageReviewEventsHooks {
 			$data['revisionId'] = $revisionId;
 		}
 
-		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
-	}
-
-	private static function actionPurge( $wikiId, $action = 'purged' ) {
-		$data = [
-			'wikiId' => $wikiId,
-			'action' => $action
-		];
 		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
 

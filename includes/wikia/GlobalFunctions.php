@@ -1515,79 +1515,19 @@ function wfGetStagingEnvForUrl( $url ) : string {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaDevDomain, $wgFandomDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	global $wgWikiaEnvironment;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
 	}
-
-	if ( $wgDevelEnvironment ) {
-		$server = str_replace( ".{$wgWikiaDevDomain}", '', $host );
-		$server = str_replace( ".{$wgFandomDevDomain}", '', $server );
-	} else {
-		$baseDomain = wfGetBaseDomainForHost( $host );
-
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-			$server = preg_replace(
-				'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $baseDomain ) . '$/',
-				'',
-				$host
-			);
-		} else {
-			// this is called from WFL, where $wgRequest is not available yet; use $_SERVER vars to check the header
-			if ( isset( $_SERVER['HTTP_X_STAGING'] ) &&
-				in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
-				// As those envs are not covered by our certificate, disable https there
-				return false;
-			}
-			$server = str_replace( ".{$baseDomain}", '', $host );
-		}
-	}
-
-	// Only allow single subdomain wikis through
-	return substr_count( $server, '.' ) === 0;
-}
-
-/**
- * Returns true for URLs with fandom domain, some examples:
- * - https://starwars.fandom.com/wiki/Yoda
- * - http://starwars.fandom.com/wiki/Yoda
- * - http://starwars.fandom-dev.pl/
- * - http://starwars.fandom-dev.us
- *
- * In the future, it can be used to force HTTPS on other domains
- *
- * @param $url
- * @return bool
- */
-function wfHttpsEnabledForURL( $url ): bool {
-	$host = parse_url( $url, PHP_URL_HOST );
-
-	// e.g. not existing wikis
-	if ( empty( $host ) ) {
+	if ( $wgWikiaEnvironment === WIKIA_ENV_PROD &&
+		isset( $_SERVER['HTTP_X_STAGING'] ) &&
+		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
 		return false;
 	}
-	return wfHttpsEnabledForDomain( $host );
+	return true;
 }
 
-/**
- * Returns true for dhosts with fandom domain, some examples:
- * - starwars.fandom.com
- * - starwars.fandom.com
- * - starwars.fandom-dev.pl
- * - starwars.fandom-dev.us
- *
- * In the future, it can be used to force HTTPS on other domains
- *
- * @param $url
- * @return bool
- */
-function wfHttpsEnabledForDomain( $domain ) : bool {
-	global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain;
-	$domain = wfNormalizeHost( $domain );
-
-	return wfGetBaseDomainForHost( $domain ) === $wgFandomBaseDomain || wfGetBaseDomainForHost( $domain ) === $wgWikiaOrgBaseDomain;
-}
 /**
  * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
  *
@@ -1628,18 +1568,12 @@ function wfGetBaseDomainForHost( $host ) {
  * @return string normalized host name
  */
 function wfNormalizeHost( $host ) {
-	global $wgDevelEnvironment, $wgWikiaBaseDomain, $wgFandomBaseDomain, $wgWikiaDevDomain, $wgFandomDevDomain;
-	$baseDomain = wfGetBaseDomainForHost( $host );
+	global $wgEnvironmentDomainMappings;
 
-	// strip env-specific pre- and suffixes for staging environment
-	$host = preg_replace(
-		'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $baseDomain ) . '/',
-		".{$baseDomain}",
-		$host );
-	if ( !empty( $wgDevelEnvironment ) ) {
-		$host = str_replace( ".{$wgWikiaDevDomain}", ".{$wgWikiaBaseDomain}", $host );
-		$host = str_replace( ".{$wgFandomDevDomain}", ".{$wgFandomBaseDomain}", $host );
+	foreach ( $wgEnvironmentDomainMappings as $envSpecificDomain => $envAgnosticDomain ) {
+		$host = str_replace( ".$envSpecificDomain", ".$envAgnosticDomain", $host );
 	}
+
 	return $host;
 }
 

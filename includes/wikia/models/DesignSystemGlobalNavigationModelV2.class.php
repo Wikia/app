@@ -13,20 +13,23 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	private $product;
 	private $productInstanceId;
 	private $lang;
+	private $isWikiaOrgCommunity;
 
 	/**
 	 * constructor
 	 *
 	 * @param string $product Name of product, ex: fandoms, wikis
 	 * @param int $productInstanceId Identifier for given product, ex: wiki id
+	 * @param boolean $isWikiaOrgCommunity
 	 * @param string $lang
 	 */
-	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $product, $productInstanceId, $isWikiaOrgCommunity, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->product = $product;
 		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
+		$this->isWikiaOrgCommunity = $isWikiaOrgCommunity;
 	}
 
 	public function getData() {
@@ -38,6 +41,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
 			'main-navigation' => $this->getMainNavigation(),
 			'content-recommendations' => $this->getContentRecommendations(),
+			'is-wikia-org' => $this->isWikiaOrgCommunity,
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -61,7 +65,13 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getMainNavigation() {
-		return array_merge(
+		return $this->isWikiaOrgCommunity ? [
+			$this->getLink(
+				self::COMMUNITY_CENTRAL_LABEL,
+				$this->getHref('community-central'),
+				self::COMMUNITY_CENTRAL_TRACKING_LABEL
+			)
+		] : array_merge(
 			$this->getFandomLinks(),
 			[ $this->getWikisMenu() ]
 		);
@@ -318,6 +328,11 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
+	private function isWikiaOrgCommunity() {
+		return $this->product === self::PRODUCT_WIKIS &&
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+	}
+
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
@@ -350,6 +365,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getLogo() {
+		if ( $this->isWikiaOrgCommunity === true ) {
+			return [
+				'type' => 'link-image',
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org',
+				],
+				'tracking-label' => 'logo',
+			];
+		}
+
 		return [
 			'type' => 'link-image',
 			'href' => $this->getHref( 'fandom-logo' ),

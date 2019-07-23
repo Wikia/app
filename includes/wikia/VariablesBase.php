@@ -633,14 +633,6 @@ $wgAutoloadClasses = [];
 $wgAutomatedTestsIPsList = [];
 
 /**
- * Languages supported by Answers.
- * @see extensions/wikia/Answers
- * @var Array $wgAvailableAnswersLang
- */
-$wgAvailableAnswersLang = [ 'en', 'de', 'es', 'fr', 'it', 'ja', 'no', 'nn',
-	'nb', 'nl', 'pl', 'pt', 'pt-br', 'zh' ];
-
-/**
  * Languages supported by HAWelcome.
  * @see extensions/wikia/HAWelcome/
  * @var Array $wgEnableHAWelcomeExt
@@ -1282,9 +1274,8 @@ $wgCrossSiteAJAXdomainExceptions = [];
 $wgCrossWikiaSearchExcludedWikis = [
 	// Answers
 	11557,
-	// Uncyclopedias
-	425, 667, 766, 1049, 483, 1238, 1183, 857, 2113, 2526, 5003, 4876, 1416, 1524,
-	859, 2219, 1159, 2794, 2258, 1183, 1512,
+	// Spademanns wiki
+	1524,
 	// Community Central
 	177,
 	// Scratchpad
@@ -1604,6 +1595,7 @@ $wgDefaultUserOptions = [
 	'cols' => 80,
 	'date' => 'default',
 	'diffonly' => 0,
+	'disablefeaturedvideo' => 1,
 	'disablemail' => 0,
 	'disablesuggest' => 0,
 	'editfont' => 'default',
@@ -2067,6 +2059,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-bureaucrat',
 	'User-identity-box-group-chatmoderator',
 	'User-identity-box-group-content-moderator',
+	'User-identity-box-group-content-team-member',
 	'User-identity-box-group-council',
 	'User-identity-box-group-founder',
 	'User-identity-box-group-helper',
@@ -2076,6 +2069,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-threadmoderator',
 	'User-identity-box-group-voldev',
 	'User-identity-box-group-vstf',
+	'User-identity-box-group-wiki-manager',
 	'Userrights-groups-help',
 	'Welcome-bot-flag',
 	'Welcome-enabled',
@@ -2197,7 +2191,7 @@ $wgEnableAdminDashboardExt = true;
 /**
  * Enable advertisement in content. Set to 0 to disable or 1+ to enable and
  * specify the number of advertisements.
- * @see extensions/wikia/AdEngine/AdEngine2ContextService.class.php
+ * @see extensions/wikia/AdEngine3/AdEngine3ContextService.class.php
  * @var int $wgEnableAdsInContent
  */
 $wgEnableAdsInContent = 1;
@@ -3395,9 +3389,7 @@ $wgEnableRecirculationExt = true;
 $wgEnableReferencesTemplateParsing = true;
 
 /**
- * Enable Related Pages extension and Oasis module. IMPORTANT: Disabled for
- * Answers wikis, as RelatedPages queries are killing their databases.
- * @see $wgEnableAnswers
+ * Enable Related Pages extension and Oasis module.
  * @see extensions/wikia/RelatedPages
  * @var bool $wgEnableRelatedPagesExt
  */
@@ -4622,6 +4614,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'date',
 		'diffonly',
 		'disablecategoryselect',
+		'disablefeaturedvideo',
 		'disablelinksuggest',
 		'disablemail',
 		'disablesuggest',
@@ -6560,6 +6553,7 @@ $wgPublicUserAttributes = [
 	'coverPhoto',
 	'fancysig',
 	'fbPage',
+	'discordHandle',
 	'location',
 	'name',
 	'nickname',
@@ -6664,6 +6658,10 @@ $wgRateLimits = [
 	],
 	'mailpassword' => [
 		'ip' => [ 1, 43200 ],
+	],
+	'changeemail' => [
+		'ip' => [ 10, 3600 ],
+		'user' => [ 4, 86400 ],
 	],
 ];
 
@@ -7310,7 +7308,7 @@ $wgShellLocale = 'en_US.utf8';
 /**
  * Despite the catchy name, it's not what you think it is.
  * @see AnalyticsEngine
- * @see AdEngine2Service::areAdsShowableOnPage()
+ * @see AdEngine3Service::areAdsShowableOnPage()
  * @var bool $wgShowAds
  */
 $wgShowAds = true;
@@ -7516,6 +7514,7 @@ $wgSMTP = [
  */
 $wgSolrHost = 'prod.search-fulltext.service.consul';
 
+
 /**
  * Solr host for key-value storage for ArticleService.
  * @see includes/wikia/services/ArticleService.class.php
@@ -7523,13 +7522,14 @@ $wgSolrHost = 'prod.search-fulltext.service.consul';
  */
 $wgSolrKvHost = 'prod.search-kv.service.consul';
 
+
 /**
  * Master Solr server used by multiple components.
  * @see includes/wikia/services/tests/ArticleServiceTest.php
  * @see extensions/3rdparty/LyricWiki
  * @see extensions/wikia/Search
  * @see extensions/wikia/VideoHandlers
- * @var strig $wgSolrMaster
+ * @var string $wgSolrMaster
  */
 $wgSolrMaster = 'prod.search-master.service.sjc.consul';
 
@@ -8871,7 +8871,7 @@ $wgYoukuConfig['playerColor'] = 0;
  * in the community builder (fandom creator)
  * @see CAKE-2151
  */
-$wgAllowCommunityBuilderCNWPrompt = true;
+$wgAllowCommunityBuilderCNWPrompt = false;
 
 /**
  * Whether the community is scheduled to be migrated to a fandom.com domain, triggers a banner notification
@@ -8881,11 +8881,10 @@ $wgAllowCommunityBuilderCNWPrompt = true;
 $wgFandomComMigrationScheduled = false;
 
 /**
- * Whether the community is excluded from the fandom.com migration, disables the migration banner
- * @see SEO-669
- * @var bool $wgFandomComMigrationScheduled
+ * Environment-specific domain mappings to their normalized variants
+ * @var string[] $wgDomainOverrides
  */
-$wgDomainMigrationDisabled = false;
+$wgEnvironmentDomainMappings = [];
 
 /**
  * Whether the community is scheduled to be migrated to a wikia.org domain
@@ -8941,10 +8940,10 @@ $wgWatchShowURL = '';
 
 /**
  * Enables EditDraftSaving extension
- * @see CORE-79 CORE-241
+ * @see SUS-79
  * @var bool
  */
-$wgEnableEditDraftSavingExt = true;
+$wgEnableEditDraftSavingExt = false;
 
 /**
  * ArticleTags RabbitMQ configuration.
@@ -8962,3 +8961,40 @@ $wgArticleTagExchangeConfig = [
  * @var bool
  */
 $wgEnableQualtricsSiteInterceptExt = false;
+
+/**
+ * Enables Quizzes extension on select communities
+ * @see CAKE-4585
+ * @var bool
+ */
+$wgEnableTriviaQuizzesExt = false;
+
+/**
+ * Enables Quizzes extension on select pages
+ * @see CAKE-4585
+ * @var string[] $wgTriviaQuizzesEnabledPages
+ */
+$wgTriviaQuizzesEnabledPages = [];
+
+/**
+ * Enables the Article Exporter Hooks
+ * @see LORE-519
+ * @var bool
+ */
+$wgEnableArticleExporterHooks = true;
+
+/**
+ * ArticleExporter RabbitMQ configuration.
+ * @see extensions/wikia/ArticleExporter
+ * @var array $wgArticleExporterExchange
+ */
+$wgArticleExporterExchange = [
+    'vhost' => '/',
+    'exchange' => 'taxonomy-ex',
+    'routing' => 'taxonomy.article-edits'
+];
+
+/**
+ * @var $wgEnableHydralyticsExt
+ */
+$wgEnableHydralyticsExt = false;

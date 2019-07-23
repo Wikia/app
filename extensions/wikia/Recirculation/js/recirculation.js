@@ -9,6 +9,7 @@ require([
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.discussions',
 	'ext.wikia.recirculation.helpers.sponsoredContent',
+	'ext.wikia.recirculation.helpers.recommendedContent',
 	'ext.wikia.recirculation.discussions',
 	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
@@ -22,6 +23,7 @@ require([
              mixedFooter,
              discussions,
              sponsoredContentHelper,
+             recommendedContent,
              oldDiscussions,
              tracker,
              videosModule) {
@@ -32,11 +34,6 @@ require([
 		numberOfArticleFooterSlots = $mixedContentFooter.data('number-of-wiki-articles'),
 		numberOfFandomPostFooterSlots = $mixedContentFooter.data('number-of-ns-articles');
 
-	/** Discard redundant data returned by jQuery */
-	function mapAjaxCall(data /*, code, jqXHR */) {
-		return data;
-	}
-
 	function getTrendingFandomArticles() {
 		return nirvana.sendRequest({
 			controller: 'RecirculationApi',
@@ -45,7 +42,9 @@ require([
 			data: {
 				limit: numberOfFandomPostFooterSlots,
 			}
-		}).then(mapAjaxCall);
+		}).then(function (data) {
+			return data;
+		});
 	}
 
 	function waitForRail() {
@@ -63,22 +62,11 @@ require([
 		return deferred.promise();
 	}
 
-	function getPopularPages() {
-		return nirvana.sendRequest({
-			controller: 'RecirculationApi',
-			method: 'getPopularPages',
-			type: 'get',
-			data: {
-				limit: numberOfArticleFooterSlots,
-			}
-		}).then(mapAjaxCall);
-	}
-
 	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
 			getTrendingFandomArticles(),
-			getPopularPages(),
+			recommendedContent.getRecommendedArticles(),
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
@@ -102,9 +90,25 @@ require([
 		});
 	}
 
+	function insertTrackingPixel(pixelContent, pixelType) {
+		var wrapper = document.createElement('span');
+
+		wrapper.className = 'wds-is-hidden';
+
+		if (pixelType === 'url') {
+			var tag = document.createElement('img');
+			tag.src = pixelContent;
+			wrapper.appendChild(tag);
+		} else {
+			wrapper.innerHTML = pixelContent;
+		}
+
+		window.document.body.appendChild(wrapper);
+	}
+
 	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
-			getPopularPages(),
+			recommendedContent.getRecommendedArticles(),
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
@@ -113,13 +117,20 @@ require([
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
 			}
+
+			var sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 				viewFactory().render({
 					wikiItems: wikiItems,
 					discussions: discussions,
-					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredItem
 				});
+
+				if (sponsoredItem.pixelContent) {
+					insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+				}
 			});
 		})
 		.fail(function (err) {
@@ -191,6 +202,12 @@ require([
 					}
 
 					$firstItem.replaceWith(utils.renderTemplate(template[0], sponsoredItem));
+
+					if (sponsoredItem.pixelContent) {
+						insertTrackingPixel(sponsoredItem.pixelContent, sponsoredItem.pixelType);
+					}
+
+					tracker.trackImpression('rail::' + sponsoredItem.url);
 				}
 
 				tracker.trackImpression('rail');
@@ -203,7 +220,7 @@ require([
 					labels.forEach(function (label) {
 						tracker.trackClick(label);
 					});
-					tracker.trackSelect(href);
+					tracker.trackSelect('rail::' + href);
 				});
 			})
 			.fail(function (err) {
