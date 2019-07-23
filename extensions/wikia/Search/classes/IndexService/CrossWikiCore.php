@@ -4,7 +4,11 @@
  */
 namespace Wikia\Search\IndexService;
 
-use Wikia\Search\Utilities, WikiFactory, WikiService;
+use CommunityDataService;
+use CuratedContentHelper;
+use Wikia\Search\Utilities;
+use WikiFactory;
+use WikiService;
 
 /**
  * This monolithic class is responsible for creating a cross-wiki document.
@@ -35,6 +39,7 @@ class CrossWikiCore extends AbstractWikiService {
 			$this->getWam(),
 			$this->getCategories(),
 			$this->getVisualizationInfo(),
+			$this->getCommunityData(),
 			$this->getTopArticles(),
 			$this->getLicenseInformation(),
 			$this->getIsPromotedWiki(),
@@ -141,6 +146,7 @@ class CrossWikiCore extends AbstractWikiService {
 		$vizInfo = $service->getVisualizationInfoForWikiId( $this->getWikiId() );
 		if ( !empty( $vizInfo ) ) {
 			$response['image_s'] = $vizInfo['image'];
+
 			if ( isset( $vizInfo['desc'] ) ) {
 				$response[$ds] = $vizInfo['desc'];
 				$response['description_txt'] = $vizInfo['desc'];
@@ -152,6 +158,17 @@ class CrossWikiCore extends AbstractWikiService {
 		}
 
 		return $response;
+	}
+
+	protected function getCommunityData() {
+		$service = new CommunityDataService( $this->wikiId );
+		if ( !empty( $service->getCommunityImageId() ) ) {
+			$url = CuratedContentHelper::getImageUrl( $service->getCommunityImageId(), 500 );
+
+			return [ 'thumbnail' => $url ];
+		}
+
+		return [];
 	}
 
 	/**

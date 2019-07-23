@@ -65,9 +65,10 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @throws \ErrorPageError
 	 */
 	private function analyticsPage() {
-		global $wgMemc;
+		global $wgMemc, $wgLang;
 
-		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION );
+		// use $wgLang to differ the cache based on user language
+		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
 		$sections = $wgMemc->get( $memcKey );
 
 		if ( !is_array( $sections ) ) {
