@@ -9,7 +9,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:e2baf3e
 # yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
 #
 # these require autoconf package to be present
-RUN pecl install uopz-6.0.1 xdebug-2.7.0 yaml-2.0.4 \
+RUN pecl install uopz-6.0.1 xdebug-2.7.2 yaml-2.0.4 \
     && docker-php-ext-enable uopz xdebug yaml
 
 # Disable php extensions not needed on dev

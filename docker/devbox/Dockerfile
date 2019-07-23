@@ -8,7 +8,7 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:e2baf3e
 #
 # these require autoconf package to be present
 
-RUN pecl install yaml-2.0.2 xdebug-2.6.0 \
+RUN pecl install yaml-2.0.2 xdebug-2.7.2 \
     && docker-php-ext-enable yaml xdebug
 
 # Configure dev opcache
