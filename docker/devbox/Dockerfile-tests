@@ -1,6 +1,6 @@
 # This is a Docker image for  Wikia's MediaWiki app that can be used on devboxes.
 # Simply mount your app and config repositories clone (refer to README.md)
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:06b60d8
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:88fd14bf2e0
 
 # install dev dependencies
 
