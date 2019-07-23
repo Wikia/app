@@ -2,8 +2,6 @@
 
 namespace Wikia\CircuitBreaker;
 
-use Wikia\Util\Statistics\BernoulliTrial;
-
 class CircuitBreakerFactory {
 	private $circuitBreakerInstance;
 
@@ -16,9 +14,6 @@ class CircuitBreakerFactory {
 			global $wgCircuitBreakerType;
 
 			switch ( $wgCircuitBreakerType ) {
-				case 'external':
-					$this->circuitBreakerInstance = new ExternalCircuitBreakerStorage( new BernoulliTrial( 0.01 ) );
-					break;
 				case 'local':
 					$this->circuitBreakerInstance = new LocalCircuitBreakerStorage();
 					break;
