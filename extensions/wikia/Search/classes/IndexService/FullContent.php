@@ -47,12 +47,7 @@ class FullContent extends AbstractService {
 	 */
 	public function execute() {
 		$service = $this->getService();
-		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
-			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
-		}
-		$service->setGlobal( 'EnableParserCache', false );
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
-
 		// we still assume the response is the same format as MediaWiki's
 		$response = $service->getParseResponseFromPageId( $pageId );
 
