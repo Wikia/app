@@ -94,8 +94,10 @@ spec:
               value: "${SANDBOX_ENVIRONMENT}"
             - name: HOSTNAME_OVERRIDE
               value: "${SANDBOX_NAME}"
-            - name: LOG_STDOUT_ONLY
+            - name: LOG_SOCKET_ONLY
               value: "yes"
+            - name: LOG_SOCKET_ADDRESS
+              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5
@@ -103,6 +105,15 @@ spec:
             requests:
               cpu: 2.5
               memory: 3Gi
+        # MW log output, see K8s_LOGGING.md
+        - name: logger
+          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
