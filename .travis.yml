@@ -1,13 +1,13 @@
 language: php
 php: 7.3
-dist: bionic
+dist: xenial
 sudo: required
 
 addons:
   apt:
     sources:
       # https://launchpad.net/~jbboehr/+archive/ubuntu/mustache
-      - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu bionic main"
+      - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu xenial main"
         key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x7DAD64617A3EC228D368C50F9A90195D619F9E2B"
     packages:
       - libmustache-dev
