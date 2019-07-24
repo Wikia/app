@@ -92,29 +92,41 @@ class UserDataRemover {
 		try {
 			global $wgExternalSharedDB;
 
+			$this->mergeLoggerContext([
+				'user_id' => $user->getId()
+			]);
+
+			$this->info( "Removing user's global data" );
+
 			$userId = $user->getId();
 			$newUserName = uniqid( 'Anonymous ' );
 
+			$this->info( 'Anonimizing antispoof record' );
 			// anonimize antispoof record
 			$spoofRecord = new SpoofUser( $user->getName() );
 			$spoofRecord->makeRecordPrivate();
 
+			$this->info( 'Clearing Masthead contents' );
 			$userIdentityBox = new UserIdentityBox( $user );
 			$userIdentityBox->clearMastheadContents();
+			$this->info( "Invalidating user" );
 			Wikia::invalidateUser( $user, true, false );
 
 			$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
+			$this->info( 'Commiting changes' );
 			// commit changes performed by Wikia::invalidateUser
 			$dbMaster->commit( __METHOD__ );
 			wfWaitForSlaves( $dbMaster->getDBname() );
 
+			$this->info( 'Anonymizing user' );
 			$dbMaster->update( 'user', [
 				'user_name' => $newUserName,
 				'user_birthdate' => null,
 			], ['user_id' => $userId], __METHOD__ );
 
 			$dbMaster->delete( 'user_email_log', ['user_id' => $userId] );
+			$this->info( 'Deleting user properties' );
 			$dbMaster->delete( 'user_properties', ['up_user' => $userId] );
 			$dbMaster->insert( 'user_properties', [
 				[
@@ -123,6 +135,7 @@ class UserDataRemover {
 					'up_value' => '1',
 				],
 			] );
+			$this->info( 'Anonymizing city founder data' );
 			$dbMaster->update(
 				'city_list',
 				[
@@ -135,11 +148,13 @@ class UserDataRemover {
 				__METHOD__
 			);
 
+			$this->info( 'Commiting changes' );
 			// commit early so that cache is properly invalidated
 			$dbMaster->commit( __METHOD__ );
 			wfWaitForSlaves( $dbMaster->getDBname() );
 
 			$user->deleteCache();
+			$this->info( 'Removing from staff log' );
 			$this->removeUserDataFromStaffLog( $userId );
 
 			$this->info( "Removed user's global data", ['new_user_name' => $newUserName] );
