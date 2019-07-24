@@ -4718,7 +4718,7 @@ sub DateFrom1800 {
     my $days = shift;
     if (! defined $days) {
     	&Error2("days ($days) is not defined, Returning default to prevent infinite loop");
-    	return  sprintf("%02d/%02d/%04d", 1, 1, 1800);
+    	return  "01/01/1800";
     }
 
     my @mmm = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
