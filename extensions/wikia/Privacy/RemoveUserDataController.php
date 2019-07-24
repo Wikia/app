@@ -106,14 +106,10 @@ class RemoveUserDataController extends WikiaController {
 			}
 		}
 
-		if (!isset($logEntries[ 0 ])) {
-			WikiaLogger::instance()->info( __METHOD__ . ' logEntries has no first element when it should', [
-				'logEntries' => json_encode( $logEntries ),
-			] );
-		}
+		$firstEntry = reset($logEntries);
 
 		// if all log entries are unsuccessful, return the latest fail
-		$this->okResponse( $userId, $logEntries[ 0 ]->id, $logEntries[ 0 ]->created, false );
+		$this->okResponse( $userId, $firstEntry->id, $firstEntry->created, false );
 	}
 
 	private function okResponse( $userId, $logId, $created, $dataWasRemoved ) {
