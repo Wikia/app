@@ -3,7 +3,6 @@
 namespace Wikia\Search\IndexService;
 
 use ImageServing;
-use simple_html_dom;
 
 /**
  * This is intended to provide core article content.
@@ -83,47 +82,22 @@ class FullContent extends AbstractService {
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
-		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$html = $response['parse']['text']['*'] ?? '';
+		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
+		$encoded = html_entity_decode( $html, ENT_COMPAT, 'UTF-8' );
 
-		return $this->prepValuesFromHtml( $html );
+		return [
+			'full_html' => $encoded,
+		];
 	}
 
 	/**
-	 * Allows us to strip and parse HTML
-	 * By the way, if every document on the site was as big as the Jim Henson page,
-	 * then it would take under two minutes to parse them all using this function.
-	 * So this scales on the application side. I promise. I mathed it.
-	 *
 	 * @param string $html
 	 *
 	 * @return array
 	 */
 	protected function prepValuesFromHtml( $html ) {
-		$result = [];
 		// workaround for bug in html_entity_decode that truncates the text
-		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
 
-		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
-		if ( $dom->root ) {
-			$this->removeGarbageFromDom( $dom );
-		}
-
-		return array_merge( $result, [
-			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-		] );
-	}
-
-	/**
-	 * Iterates through UI remnants and removes them from the dom.
-	 * Removed type hinting due to testing requirements and WikiaMockProxy
-	 *
-	 * @param simple_html_dom $dom
-	 */
-	protected function removeGarbageFromDom( $dom ) {
-		foreach ( $this->garbageSelectors as $selector ) {
-			foreach ( $dom->find( $selector ) as $node ) {
-				$node->outertext = ' ';
-			}
-		}
 	}
 }
