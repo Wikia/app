@@ -4654,6 +4654,9 @@ sub ValidDateRange {
 sub DateMedium {
     my $from = shift;
     my $till = shift;
+    if (! defined $from || ! defined $till ) {
+    	return  sprintf("%02d/%02d/%04d", 1, 1, 1800);
+    }
 
     if (($DateFormat eq "yyyy") || ($DateFormat eq "x.y")) {
         return (sprintf("%.3f", ($from + $till) / 2));
@@ -4712,6 +4715,9 @@ sub DateToFloat {
 
 sub DateFrom1800 {
     my $days = shift;
+    if (! defined $days) {
+    	return  sprintf("%02d/%02d/%04d", 1, 1, 1800);
+    }
 
     my @mmm = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
