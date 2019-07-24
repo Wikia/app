@@ -61,10 +61,13 @@ if ( !empty( getenv( 'WIKIA_FORCE_DEV_ONLY' ) ) &&
 }
 
 /**
- * If LOG_STDOUT_ONLY {@code true}, then logs will be sent to stdout formatted as JSON, instead of
- * using syslog.
+ * Temporary variable for Kubernetes migration
+ * If {@code true}, then logs will be sent to the configured socket address formatted as JSON, instead of using syslog.
  */
-/* if {@code true}, then logs will be sent to STDOUT */
+$wgLoggerLogToSocketOnly = $_ENV['LOG_SOCKET_ONLY'] ?? false;
+$wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
+
+/* if {@code true}, then logs will be sent to STDOUT, overrides LOG_SOCKET_ONLY */
 $wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
 
 /**
