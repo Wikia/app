@@ -96,8 +96,6 @@ spec:
               value: "${SERVICESMW_NAME}"
             - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5
