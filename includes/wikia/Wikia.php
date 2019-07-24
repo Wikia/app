@@ -1107,6 +1107,23 @@ class Wikia {
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
 		$request = $skinTemplate->getRequest();
+
+		if( self::addMetaRobotsNoindex( $request, $title, $out ) ){
+			return true;
+		}
+
+		if ( !empty( $robotPolicy ) ) {
+			$out->setRobotPolicy( $robotPolicy );
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add variables to SkinTemplate
+	 */
+	static public function addMetaRobotsNoindex(WebRequest $request, Title $title, OutputPage $out) {
 		$setNofollow = false;
 		if( $title->inNamespaces( NS_SPECIAL, NS_USER, NS_USER_TALK, NS_HELP) ) {
 			$setNofollow = true;
@@ -1132,14 +1149,9 @@ class Wikia {
 
 		if( $setNofollow ){
 			$out->setRobotPolicy( "noindex, nofollow" );
-			return true;
-		}
-		if ( !empty( $robotPolicy ) ) {
-			$out->setRobotPolicy( $robotPolicy );
 		}
 
-		wfProfileOut(__METHOD__);
-		return true;
+		return $setNofollow;
 	}
 
 	/**

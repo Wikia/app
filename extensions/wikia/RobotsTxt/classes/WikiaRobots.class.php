@@ -57,33 +57,6 @@ class WikiaRobots {
 	];
 
 	/**
-	 * Namespaces to disallow
-	 *
-	 * @var int[]
-	 */
-	private $blockedNamespaces = [
-
-	];
-
-	/**
-	 * List of additional paths to block
-	 *
-	 * @var array
-	 */
-	private $blockedPaths = [
-
-	];
-
-	/**
-	 * List of params to disallow
-	 *
-	 * @var string[]
-	 */
-	private $blockedParams = [
-
-	];
-
-	/**
 	 * Whether the current robots setup is experimental or not
 	 * This switches the cache time from 24 hours to 1 hour
 	 * @var bool
@@ -123,16 +96,6 @@ class WikiaRobots {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
 		}
-
-		// TODO: reverse the logic
-		// Have $wgRobotsTxtCustomRules['allowNamespaces'] which removes them from
-		// $this->namespacesToBlock
-		if ( isset( $wgRobotsTxtCustomRules['disallowNamespace'] ) ) {
-			$this->blockedNamespaces = array_merge(
-				$this->blockedNamespaces,
-				(array) $wgRobotsTxtCustomRules['disallowNamespace']
-			);
-		}
 	}
 
 	/**
@@ -160,21 +123,6 @@ class WikiaRobots {
 				$sitemapUrl = $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml';
 				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
-			}
-
-			// Block namespaces
-			foreach ( $this->blockedNamespaces as $ns ) {
-				$robots->addDisallowedPaths(
-					$this->pathBuilder->buildPathsForNamespace( $ns )
-				);
-			}
-
-			// Block additional paths
-			$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
-
-			// Block params
-			foreach ( $this->blockedParams as $param ) {
-				$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
 			}
 
 			// Allow specific paths
