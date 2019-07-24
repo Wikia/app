@@ -4656,7 +4656,7 @@ sub DateMedium {
     my $till = shift;
     if (! defined $from || ! defined $till ) {
     	&Error2("from ($from) or till ($till) is not defined, Returning default to prevent infinite loop");
-    	return  sprintf("%02d/%02d/%04d", 1, 1, 1800);
+    	return  "01/01/1800";
     }
 
     if (($DateFormat eq "yyyy") || ($DateFormat eq "x.y")) {
