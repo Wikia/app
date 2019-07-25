@@ -17,10 +17,11 @@
 		<iframe class="google-button" src="<?= $googleConnectAuthUrl; ?>"></iframe>
 	</div>
 	<?php
-	/** Uncomment after Twitch auth is released on Mobile Apps (PLATFORM-4203)
+	// Remove flag after Twitch auth is released on Mobile Apps (PLATFORM-4203)
+	if ( $showTwitchButton ):
+	?>
 	<div id="twitchConnectPreferences">
 		<iframe class="twitch-button" src="<?= $twitchConnectAuthUrl; ?>"></iframe>
 	</div>
-	**/
-	?>
+	<?php endif; ?>
 </div>

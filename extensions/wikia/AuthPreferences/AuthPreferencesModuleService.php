@@ -19,7 +19,7 @@ class AuthPreferencesModuleService extends WikiaService {
 	}
 
 	public function renderAuthPreferences() {
-		global $fbAppId, $wgServer;
+		global $fbAppId, $wgServer, $wgShowTwitchAuthButton;
 
 		$context = $this->getContext();
 		$out = $context->getOutput();
@@ -32,6 +32,7 @@ class AuthPreferencesModuleService extends WikiaService {
 		$this->setVal( 'googleConnectAuthUrl', $googleConnectUrl );
 		$twitchConnectUrl = WikiFactory::getLocalEnvURL( "https://www.$baseDomain/twitch-connect" );
 		$this->setVal( 'twitchConnectAuthUrl', $twitchConnectUrl );
+		$this->setVal( 'showTwitchButton', $wgShowTwitchAuthButton );
 
 		try {
 			$user = $context->getUser();
