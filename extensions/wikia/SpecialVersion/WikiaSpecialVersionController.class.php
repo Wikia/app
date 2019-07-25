@@ -40,6 +40,7 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController {
 		$this->setVal( 'ip', str_replace( '--', ' - ', htmlspecialchars( $this->getContext()->getRequest()->getIP() ) ) );
 		$this->setVal( 'wikiaCodeMessage', wfMessage( 'wikia-version-code' )->escaped() );
 		$this->setVal( 'wikiaCodeVersion', WikiaSpecialVersion::getWikiaCodeVersion() );
+		$this->setVal( 'wikiaSlot', getenv( 'IS_UCP' ) ? 'slot2' : 'slot1' );
 		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->escaped() );
 		$this->setVal( 'wikiaConfigVersion', WikiaSpecialVersion::getWikiaConfigVersion() );
 		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->escaped() );
