@@ -346,14 +346,14 @@ class EmailNotification {
 			foreach ( $userArray as $watchingUser ) {
 				if ( $this->canSendEmailToWatcher( $watchingUser, $talkUserId ) ) {
 					$this->logStep( "Sending email to watcher", [
-						"targetUserId" => $watchingUser->getId(),
+						"targetUserId" => strval( $watchingUser->getId() ),
 						"targetUser" => $watchingUser->getName(),
 						"targetUserEmail" => $watchingUser->getEmail(),
 					] );
 					$this->compose( $watchingUser );
 				} else {
 					$this->logIgnore( "Watcher does not want or cannot receive this email", [
-						"targetUserId" => $watchingUser->getId(),
+						"targetUserId" => strval( $watchingUser->getId() ),
 						"targetUser" => $watchingUser->getName(),
 						"targetUserEmail" => $watchingUser->getEmail(),
 						"targetUserEmailConfirmed" => ( $watchingUser->isEmailConfirmed()
