@@ -12,6 +12,10 @@ final class UnifiedSearchResultItems implements \IteratorAggregate {
 		$this->items = $items;
 	}
 
+	/**
+	 * @param array $selectedFieldsMap array of keys to return. If map element has key, it will change item key to
+	 * map value. Example: ['foo' => 'bar'], will rename item key 'foo' to 'bar'.
+	 */
 	public function toArray($selectedFieldsMap = []): array
 	{
 		if (empty($selectedFieldsMap)) {
