@@ -167,13 +167,13 @@ class WikiFactoryLoader {
 			// PLATFORM-4104 on apaches log request details
 			$log = \Wikia\Logger\WikiaLogger::instance();
 			$details = [
-				'parsedUrl' => $this->parsedUrl
+				'parsedUrl' => json_encode( $this->parsedUrl )
 			];
 			foreach([
 				'HTTP_X_WIKIA_INTERNAL_REQUEST' => 'wikiaInternalRequest',
 				'HTTP_USER_AGENT' => 'userAgent',
 				'HTTP_X_TRACE_ID' => 'traceId',
-				'HTTP_X_CLIENT_IP' => 'clientIp',
+				'HTTP_X_CLIENT_IP' => 'client_ip',
 				'REQUEST_URI' => 'requestUri',
 				'REQUEST_METHOD' => 'requestMethod'
 					] as $header => $key) {
