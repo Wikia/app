@@ -28,9 +28,9 @@ class AuthPreferencesModuleService extends WikiaService {
 		$out->addModules( 'ext.wikia.authPreferences' );
 
 		$baseDomain = wfGetBaseDomainForHost( $wgServer );
-		$googleConnectUrl = WikiFactory::getLocalEnvURL( "https://www.fandom.com/google-connect" );
+		$googleConnectUrl = "https://www.fandom.com/google-connect";
 		$this->setVal( 'googleConnectAuthUrl', $googleConnectUrl );
-		$twitchConnectUrl = WikiFactory::getLocalEnvURL( "https://www.fandom.com/twitch-connect" );
+		$twitchConnectUrl = "https://www.fandom.com/twitch-connect";
 		$this->setVal( 'twitchConnectAuthUrl', $twitchConnectUrl );
 		$this->setVal( 'showTwitchButton', $wgShowTwitchAuthButton );
 
