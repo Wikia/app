@@ -18,8 +18,11 @@ final class UnifiedCommunitySearchResultItem implements UnifiedSearchResultItem 
 	private $pos;
 	private $thumbTracking;
 	private $viewMoreWikisLink;
+	private $id;
+	private $language;
 
 	public function __construct(array $value) {
+		$this->id = $value['id'];
 		$this->url = $value['url'];
 		$this->hub = $value['hub'];
 		$this->name = $value['name'];
@@ -27,6 +30,7 @@ final class UnifiedCommunitySearchResultItem implements UnifiedSearchResultItem 
 		$this->pageCount = $value['pageCount'];
 		$this->imageCount = $value['imageCount'];
 		$this->videoCount = $value['videoCount'];
+		$this->language = $value['language'];
 		$this->thumbnail = $value['thumbnail'] ?? null;
 
 		// Added during extension

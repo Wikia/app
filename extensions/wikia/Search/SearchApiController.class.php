@@ -6,7 +6,9 @@
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedCommunitySearchResultItem;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
@@ -105,28 +107,40 @@ class SearchApiController extends WikiaApiController {
 		$result = $service->communitySearch(new UnifiedSearchCommunityRequest($configCrossWiki));
 
 		$offset = ( $result->currentPage + 1 ) * $configCrossWiki->getLimit() + 1;
+
+		$items = $result->getResults()->getIterator()->getArrayCopy();
+
+		$items = array_map(function (UnifiedCommunitySearchResultItem $item) {
+			return UnifiedSearchCommunityResultItemExtender::extendCommunityResult(
+				$item,
+				null,
+				'',
+				null
+			);
+		}, $items);
+
 		$responseValues = [
 			"total" => $result->resultsFound,
 			"batches" => $result->pagesCount,
 			"currentBatch" => $result->currentPage,
 			"next" => $offset > $result->resultsFound ? null : $offset,
-			"items" => array_map(function (array $item) {
+			"items" => array_map(function (UnifiedCommunitySearchResultItem $item) {
 				return [
 					'id' => $item['id'],
-					'title' => $item['title'],
+					'title' => $item['name'],
 					'url' => $item['url'],
-					'topic' => $item['hub_s'],
+					'topic' => $item['hub'],
 					'desc' => $item['description'],
 					'stats' => [
-						'articles' => $item['articles_i'],
-						'images' => $item['images_i'],
-						'videos' => $item['videos_i'],
+						'articles' => $item['pageCount'],
+						'images' => $item['imageCount'],
+						'videos' => $item['videoCount'],
 					],
-					'image' => $item['image'],
+					'image' => $item['thumbnail'],
 					'language' => $item['language'],
 				];
 
-			}, $result->getResults()->toArray(UnifiedSearchService::COMMUNITY_FIELDS))
+			}, $items )
 		];
 
 		$this->setResponseData( $responseValues );
