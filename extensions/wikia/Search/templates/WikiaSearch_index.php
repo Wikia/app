@@ -7,7 +7,33 @@
 
 				<p class="grid-1 alpha"><?= wfMsg( 'wikiasearch2-wiki-search-headline' ) ?></p>
 
-				<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?=$query; ?>" />
+			<p>
+				Scope:
+				<?php
+				if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ) {
+					$internalStyle = "normal";
+					$crossStyle = "bolder";
+				} else {
+					$internalStyle = "bolder";
+					$crossStyle = "normal";
+				}
+				?>
+
+				<input id="scope-internal"
+					   value="internal"
+					   name="scope"
+					   type="radio"
+					<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL ? 'checked' : '' ?>>
+				<label for="scope-internal" style="font-weight: <?= $internalStyle ?>">This wiki</label> |
+				<input id="scope-cross"
+					   value="cross"
+					   name="scope"
+					   type="radio"
+					<?= $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? 'checked' : '' ?>>
+				<label for="scope-cross" style="font-weight: <?= $crossStyle ?>">All wikis</label>
+			</p>
+
+			<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?=$query; ?>" />
 			<input type="hidden" name="fulltext" value="Search" />
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 

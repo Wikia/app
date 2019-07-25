@@ -181,6 +181,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setHub( $request->getBool( 'hub', false ) )
 			->setInterWiki( $this->isCorporateWiki() )
+			->setScope($request->getVal( 'scope', \Wikia\Search\Config::SCOPE_INTERNAL))
 			->setVideoSearch( $request->getBool( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes( $request->getArray( 'filters', [] ) )
 			->setBoostGroup( $request->getVal( 'ab' ) );
@@ -315,6 +316,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'result' => $results,
 		];
 
+		$this->setVal( 'scope', $searchConfig->getScope() );
 		$this->setVal( 'results', $results->getResults() );
 		$this->setVal( 'resultsFound', $results->resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $results->getTruncatedResultsNum( true ) );
