@@ -67,6 +67,10 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		// Wikia change - begin
 		$ex = new Scribunto_LuaError( $message, $this->getDefaultExceptionParams() + $params );
 
+		// PLATFORM-4216 - try to limit ES index cardinality
+		if ( isset( $params['trace'] ) ) {
+			$params['trace'] = json_encode( $params['trace'] );
+		}
 		Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 			'exception' => $ex,
 			'lua_message' => $ex->getLuaMessage(),
