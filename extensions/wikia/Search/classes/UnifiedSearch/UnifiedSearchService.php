@@ -47,21 +47,10 @@ class UnifiedSearchService {
 	public function pageSearch( UnifiedSearchPageRequest $request ): UnifiedSearchResult {
 		$result = $this->callPageSearch( $request );
 
-		$items = [];
-		foreach ( $result['results'] as $i => $item ) {
-			$items[] = [
-				'id' => $item['wikiId'],
-				'pageid' => $item['pageId'],
-				'title' => $item['title'],
-				'text' => $item['content'],
-				'url' => $item['url'],
-				'ns' => $item['namespace'],
-				'hub_s' => $item['hub'],
-			];
-		}
-
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], $items );
+			$result['paging']['current'], array_map(function ($item) {
+				return new UnifiedPageSearchResultItem($item);
+			}, $result['results']) );
 	}
 
 	private function callPageSearch( UnifiedSearchPageRequest $request ) {
@@ -124,7 +113,9 @@ class UnifiedSearchService {
 		$result = $this->callCommunitySearch( $request );
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], $result['results'] );
+			$result['paging']['current'], array_map(function ($item) {
+				return new UnifiedCommunitySearchResultItem($item);
+			}, $result['results']) );
 	}
 
 	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {

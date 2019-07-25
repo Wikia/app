@@ -9,12 +9,7 @@ final class UnifiedSearchResultItems implements \IteratorAggregate {
 	private $items;
 
 	public function __construct( array $items) {
-		$this->items = array_map(
-			static function ($item) {
-				return new UnifiedSearchResultItem($item);
-			},
-			$items
-		);
+		$this->items = $items;
 	}
 
 	public function toArray($selectedFieldsMap = []): array

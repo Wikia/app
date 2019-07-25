@@ -1,22 +1,28 @@
+<?php
+use Wikia\Search\UnifiedSearch\UnifiedCommunitySearchResultItem;
+/** @var UnifiedCommunitySearchResultItem $result */
+?>
+
 <li class="result">
-	<a href="<?= $url ?>" title="<?= $name ?>" class="wiki-thumb-tracking" data-pos="<?=$pos?>"
-	   data-event="search_click_wiki-<?=$thumbTracking?>">
-		<img src="<?= $imageURL; ?>" alt="<?= $name ?>" class="wikiPromoteThumbnail"/>
+	<a href="<?= $result->getUrl() ?>" title="<?= $result['name'] ?>" class="wiki-thumb-tracking"
+	   data-pos="<?=$result['pos']?>"
+	   data-event="search_click_wiki-<?=$result['thumbTracking']?>">
+		<img src="<?= $result['thumbnail'] ?>" alt="<?= $result['name'] ?>" class="wikiPromoteThumbnail"/>
 	</a>
 	<div class=" result-description">
 		<h1>
-			<a href="<?= $url ?>" class="result-link" data-pos="<?=$pos?>" data-event="search_click_match""><?= $name
-			?></a>
+			<a href="<?= $result->getUrl() ?>" class="result-link" data-pos="<?=$result['pos']?>"
+			   data-event="search_click_match""><?= $result['name'] ?></a>
 		</h1>
 
-		<p class="hub subtle"><?= strtoupper($hub); ?></p>
-		<p class="description"><?= \Wikia\Search\Result::limitTextLength( htmlspecialchars( $description ), $descriptionWordLimit ); ?></p>
+		<p class="hub subtle"><?= strtoupper($result['hub']); ?></p>
+		<p class="description"><?= $result->getDescription() ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<?
-				$shortenedPageCount = $wg->Lang->shortenNumberDecorator( $pageCount);
-				$shortenedImageCount = $wg->Lang->shortenNumberDecorator( $imageCount);
-				$shortenedVideoCount = $wg->Lang->shortenNumberDecorator( $videoCount);
+				$shortenedPageCount = $wg->Lang->shortenNumberDecorator( $result['pageCount']);
+				$shortenedImageCount = $wg->Lang->shortenNumberDecorator( $result['imageCount']);
+				$shortenedVideoCount = $wg->Lang->shortenNumberDecorator( $result['videoCount']);
 			?>
 			<li><?= wfMessage( 'wikiasearch2-pages' )->params( $shortenedPageCount->decorated, $shortenedPageCount->rounded )->escaped(); ?></li>
 			<li><?= wfMessage( 'wikiasearch2-images' )->params( $shortenedImageCount->decorated, $shortenedImageCount->rounded )->escaped(); ?></li>

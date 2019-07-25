@@ -9,7 +9,7 @@ class UnifiedSearchCommunityResultItemExtender {
 	public static function extendCommunityResult(
 		UnifiedSearchResultItem $result, $pos, string $query, $descWordLimit = self::MAX_WORD_COUNT_EXACT_MATCH
 	): UnifiedSearchResultItem {
-		$imageURL = $result['image'] ?? null;
+		$imageURL = $result['thumbnail'] ?? null;
 
 		if ( empty( $imageURL ) ) {
 			// display placeholder image if no thumbnail
@@ -27,7 +27,7 @@ class UnifiedSearchCommunityResultItemExtender {
 			] );
 
 		return $result->extended( [
-			'imageURL' => $imageURL,
+			'thumbnail' => $imageURL,
 			'descriptionWordLimit' => $descWordLimit,
 			'pos' => $pos,
 			'viewMoreWikisLink' => $globalSearchUrl,

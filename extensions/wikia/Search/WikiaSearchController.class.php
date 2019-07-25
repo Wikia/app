@@ -400,7 +400,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				UnifiedSearchCommunityResultItemExtender::extendCommunityResult( $matchResult, 'wiki',
 					$relatedCommunity->getSearchQuery() );
 			$this->setVal( 'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', $extendedResult->toArray() ) );
+				$this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', [
+					'community' => $extendedResult
+				] ) );
 		}
 	}
 
