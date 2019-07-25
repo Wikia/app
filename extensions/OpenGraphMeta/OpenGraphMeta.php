@@ -94,7 +94,7 @@ function efOpenGraphMetaPageHook( OutputPage $out, Skin $skin ): bool {
 			// In some edge-cases we won't have defined an object but rather a full URL.
 			$meta["og:image"] = $out->mMainImage;
 		}
-	} elseif ( $isMainpage ) {
+	} else {
 		$meta["og:image"] = wfExpandUrl($wgLogo);
 	}
 	if ( isset($out->mDescription) ) { // set by Description2 extension, install it if you want proper og:description support
