@@ -56,10 +56,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.3.tgz#6310a047f12d21a1036fb031317219892440416f"
   integrity sha512-4zAPlpDEh2VwXswwr/t8xGNDGg8RQiPxtxZ3qQEXyQsBV39ptTdESCjuBvGze1nLMVrxmTIKmnO/nAV8Tqjjzg==
 
-"@wikia/content-types@94.0.0":
-  version "94.0.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@wikia/content-types/-/@wikia/content-types-94.0.0.tgz#4f7942cc720a8e79636d7cf11de4cd29f90b92b2"
-  integrity sha1-T3lCzHIKjnljbXzxHeTNKfkLkrI=
+"@wikia/content-types@96.0.0":
+  version "96.0.0"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@wikia/content-types/-/@wikia/content-types-96.0.0.tgz#385fd6711b40a56251aad542dfbdb49cc064a731"
+  integrity sha1-OF/WcRtApWJRqtVC3720nMBkpzE=
   dependencies:
     color "^3.1.1"
     immer "^3.0.0"
