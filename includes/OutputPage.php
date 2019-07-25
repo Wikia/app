@@ -3260,11 +3260,9 @@ $templates
 			}
 		}
 
-
-		$isUCP = getenv( 'IS_UCP' );
 		$tags[] = Html::element( 'meta', array(
 			'name' => 'generator',
-			'content' => "MediaWiki $wgVersion" . ( $isUCP ? '(slot2)' : '(slot1)' ),
+			'content' => "MediaWiki $wgVersion",
 		) );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";

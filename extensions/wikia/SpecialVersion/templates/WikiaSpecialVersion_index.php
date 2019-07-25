@@ -10,10 +10,6 @@
 		<th><?= $versionSoftwareVersionMessage ?></th>
 	</tr>
 	<tr>
-		<td>FANDOM slot</td>
-		<td><?= $wikiaSlot ?></td>
-	</tr>
-	<tr>
 		<td><?= $wikiaCodeMessage ?></td>
 		<td><?= $wikiaCodeVersion ?></td>
 	</tr>
