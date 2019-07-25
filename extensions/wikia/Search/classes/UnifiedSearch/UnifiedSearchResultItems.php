@@ -18,8 +18,10 @@ final class UnifiedSearchResultItems implements \IteratorAggregate {
 			return $this->items;
 		}
 
-		return array_map(function ($item) use ($selectedFieldsMap) {
+		return array_map(function (UnifiedPageSearchResultItem $item) use ($selectedFieldsMap) {
 			$mappedItem = [];
+
+			$item = $item->toArray();
 
 			foreach ($item as $k => $v) {
 				if (isset($selectedFieldsMap[$k]) || in_array($k, $selectedFieldsMap, true)) {

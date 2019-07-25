@@ -180,18 +180,21 @@ class SearchApiController extends WikiaApiController {
 	protected function setUnifiedSearchResponse(
 		Config $config, UnifiedSearchResult $result, $cacheValidity = 0
 	) {
+
+		$items = $result->getResults()->toArray( [
+			'pageid' => 'id',
+			'title',
+			'url',
+			'ns',
+			'text' => 'snippet',
+		] );
+
 		$data = [
 			'batches' => $result->pagesCount,
 			'currentBatch' => $result->currentPage,
 			'next' => $result->currentPage * $config->getLimit() + 1,
 			'total' => $result->resultsFound,
-			'items' => $result->getResults()->toArray( [
-				'id' => 'pageid',
-				'title',
-				'url',
-				'ns',
-				'snippet' => 'text',
-			] ),
+			'items' => $items,
 		];
 
 		$response = $this->getResponse();
