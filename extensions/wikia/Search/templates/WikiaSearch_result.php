@@ -1,6 +1,7 @@
 <li class="result">
 	<article>
 	<?php
+		/** @var \Wikia\Search\UnifiedSearch\UnifiedSearchResultItem $result */
 		if ( $result['ns'] == NS_FILE ) {
 			$thumbnailHtml = $result->getThumbnailHtml();
 		}
@@ -10,28 +11,25 @@
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 	<h1>
-		<?php $title = $result->getTitle(); ?>
+		<?php $title = $result['title']; ?>
 
 		<?php
 			$trackingData = 'class="result-link"'
 				. 'data-pos="'.$pos.'"'
-				. 'data-page-id="' . $result->pageid . '"'
-				. ' data-thumbnail="' . !empty($thumbnailHtml) . '"'
-				. ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+				. 'data-page-id="' . $result['pageid'] . '"'
+				. ' data-thumbnail="' . !empty($thumbnailHtml) . '"';
+//				. ( $result['isArticleMatch'] ? ' data-event="search_click_match"' : '' );
 		?>
 
 		<a href="<?= $result->getEscapedUrl() ?>" <?=$trackingData;?>><?= $title ?></a>
 	</h1>
-	<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
-		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>
-	<? endif; ?>
 	
-	<? if ($result->getVar('ns') == NS_FILE): ?>
+	<? if ($result['ns'] == NS_FILE): ?>
 		<p class="subtle">
-			<? if (!$result->getVar('created_30daysago')) : ?>
-			<span class="timeago abstimeago " title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
+			<? if (!$result['created_30daysago']) : ?>
+			<span class="timeago abstimeago " title="<?= $result['fmt_timestamp'] ?>" alt="<?= $result['fmt_timestamp'] ?>">&nbsp;</span>
 			<? else : ?>
-			<span class="timeago-fmt"><?= $result->getVar('fmt_timestamp') ?></span>
+			<span class="timeago-fmt"><?= $result['fmt_timestamp'] ?></span>
 			<? endif; ?>
 			<?php
 				if ( $videoViews = $result->getVideoViews() ) {

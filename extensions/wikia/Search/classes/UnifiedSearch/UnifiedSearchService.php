@@ -36,17 +36,6 @@ class UnifiedSearchService {
 		$this->baseUrl = 'http://' . $urlProvider->getUrl( 'unified-search' ) . '/';
 	}
 
-	public function useUnifiedSearch( bool $isCorporateWiki ): bool {
-		global $wgUseUnifiedSearch;
-		global $wgUseCommunityUnifiedSearch;
-
-		if ( $isCorporateWiki ) {
-			return $wgUseCommunityUnifiedSearch;
-		}
-
-		return $wgUseUnifiedSearch;
-	}
-
 	public function determineSearchType( bool $isCorporateWiki ): string {
 		if ( $isCorporateWiki ) {
 			return self::SEARCH_TYPE_COMMUNITY;
@@ -59,9 +48,9 @@ class UnifiedSearchService {
 		$result = $this->callPageSearch( $request );
 
 		$items = [];
-		foreach ( $result['results'] as $item ) {
+		foreach ( $result['results'] as $i => $item ) {
 			$items[] = [
-				'wid' => $item['wikiId'],
+				'id' => $item['wikiId'],
 				'pageid' => $item['pageId'],
 				'title' => $item['title'],
 				'text' => $item['content'],
@@ -87,7 +76,7 @@ class UnifiedSearchService {
 				'language' => $item['language'],
 				'url' => $item['url'],
 				'image' => $item['thumbnail'] ?? null,
-				'hub_s' => $item['hub'],
+				'hub' => $item['hub'],
 				'articles_i' => $item['pageCount'],
 				'images_i' => $item['imageCount'],
 				'videos_i' => $item['videoCount'],

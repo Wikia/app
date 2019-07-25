@@ -11,9 +11,11 @@ use Wikia\Search\SearchResult;
 use Wikia\Search\Services\ESFandomSearchService;
 use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
-use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityMapper;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResultItems;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 use Wikia\Search\UnifiedSearch\UnifiedSearchWikiMatch;
 
@@ -119,15 +121,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$searchResult = $this->performSearch( $searchConfig );
 		if ( $this->isJsonRequest() ) {
-			$this->setJsonResponse( $searchResult );
+			$this->setJsonResponse( $searchResult->getResults() );
 		} else {
 			$this->setResponseValues( $searchConfig, $searchResult );
 		}
 	}
 
-	private function setJsonResponse( SearchResult $searchResult ) {
+	private function setJsonResponse( UnifiedSearchResultItems $searchResult ) {
 		$response = $this->getResponse();
-		if ( $searchResult->hasResults() ) {
+		if ( empty($searchResult) ) {
 			$fields = explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) );
 			$response->setData( $searchResult->toArray( $fields ) );
 		} else {
@@ -137,12 +139,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Sets values for the view to work with during index method.
-	 *
-	 * @param Wikia\Search\Config $searchConfig
-	 * @param SearchResult $results
 	 */
 	protected function setResponseValues(
-		Wikia\Search\Config $searchConfig, SearchResult $results
+		Wikia\Search\Config $searchConfig, UnifiedSearchResult $results
 	) {
 		if ( !$searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox',
@@ -156,14 +155,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		];
 
 		$this->setVal( 'results', $results->getResults() );
-		$this->setVal( 'resultsFound', $results->getResultsFound() );
+		$this->setVal( 'resultsFound', $results->resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $results->getTruncatedResultsNum( true ) );
-		$this->setVal( 'isOneResultsPageOnly', $results->isOneResultsPageOnly() );
-		$this->setVal( 'pagesCount', $results->getNumPages() );
-		$this->setVal( 'currentPage', $results->getPage() );
+		$this->setVal( 'isOneResultsPageOnly', $results->pagesCount === 1 );
+		$this->setVal( 'pagesCount', $results->pagesCount );
+		$this->setVal( 'currentPage', $results->currentPage );
 		$this->setVal( 'paginationLinks', $this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'correctedQuery', $results->getCorrectedQuery() );
 		$this->setVal( 'query', $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage', $searchConfig->getLimit() );
 		$this->setVal( 'specialSearchUrl', $this->wg->Title->getFullUrl() );
@@ -182,10 +180,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
-		if ( $results->getPage() == $results->getNumPages() ) {
-			$this->setVal( 'shownResultsEnd', $results->getResultsFound() );
+		if ( $results->currentPage == $results->pagesCount ) {
+			$this->setVal( 'shownResultsEnd', $results->resultsFound );
 		} else {
-			$this->setVal( 'shownResultsEnd', $searchConfig->getLimit() * $results->getPage() );
+			$this->setVal( 'shownResultsEnd', $searchConfig->getLimit() * $results->currentPage );
 		}
 
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
@@ -211,57 +209,39 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function performSearch( \Wikia\Search\Config $searchConfig ): SearchResult {
+	private function performSearch( \Wikia\Search\Config $searchConfig ): UnifiedSearchResult {
 		$service = new UnifiedSearchService();
 		$isCorporateWiki = $this->isCorporateWiki();
 
-		if ( $service->useUnifiedSearch( $isCorporateWiki ) ) {
-			$type = $service->determineSearchType( $isCorporateWiki );
+		$type = $service->determineSearchType( $isCorporateWiki );
 
-			switch ( $type ) {
-				case UnifiedSearchService::SEARCH_TYPE_PAGE:
-					$request = new UnifiedSearchPageRequest( $searchConfig );
-					$result = $service->pageSearch( $request );
+		switch ( $type ) {
+			case UnifiedSearchService::SEARCH_TYPE_PAGE:
+				$request = new UnifiedSearchPageRequest( $searchConfig );
+				$result = $service->pageSearch( $request );
 
-					if ( $service->useUnifiedSearch( true ) ) {
-						$limit = $searchConfig->getLimit();
-						$searchConfig->setLimit( 1 );
-						$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
-						$communityResult = $service->communitySearch( $communityRequest );
-						$searchConfig->setLimit( $limit );
+				$limit = $searchConfig->getLimit();
+				$searchConfig->setLimit( 1 );
+				$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
+				$communityResult = $service->communitySearch( $communityRequest );
+				$searchConfig->setLimit( $limit );
 
-						if ( $communityResult->resultsFound ) {
-							$wikiResult =
-								$communityResult->getResults()
-									->toArray( UnifiedSearchService::COMMUNITY_FIELDS )[0];
-							$searchConfig->setUnifiedWikiMatch( new UnifiedSearchWikiMatch( $wikiResult,
-								$searchConfig->getQuery()->getSanitizedQuery() ) );
-						}
-					}
-					break;
-				case UnifiedSearchService::SEARCH_TYPE_COMMUNITY:
-					$request = new UnifiedSearchCommunityRequest( $searchConfig );
-					$result = $service->communitySearch( $request );
-					break;
-				default:
-					throw new InvalidArgumentException( "Unknown search type: " . $type );
-			}
+				if ( $communityResult->resultsFound ) {
+					$wikiResult =
+						$communityResult->getResults()
+							->toArray()[0];
+					$searchConfig->setUnifiedWikiMatch( new UnifiedSearchWikiMatch( $wikiResult,
+						$searchConfig->getQuery()->getSanitizedQuery() ) );
+				}
 
-			return SearchResult::fromUnifiedSearchResult( $result );
+				return $result;
+			case UnifiedSearchService::SEARCH_TYPE_COMMUNITY:
+				$request = new UnifiedSearchCommunityRequest( $searchConfig );
+				$result = $service->communitySearch( $request );
+				return $result;
+			default:
+				throw new InvalidArgumentException( "Unknown search type: " . $type );
 		}
-
-		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$search = $this->queryServiceFactory->getFromConfig( $searchConfig );
-			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
-			$search->getMatch();
-
-			$this->handleArticleMatchTracking( $searchConfig );
-			$search->search();
-
-			return SearchResult::fromConfig( $searchConfig );
-		}
-
-		return SearchResult::empty();
 	}
 
 	private function isJsonRequest(): bool {
@@ -682,25 +662,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		global $wgUseCommunityUnifiedSearch;
-
-		$matchResult = null;
-		if ( $wgUseCommunityUnifiedSearch && $searchConfig->getUnifiedWikiMatch() ) {
+		if ( $searchConfig->getUnifiedWikiMatch() ) {
 			$matchResult = $searchConfig->getUnifiedWikiMatch()->getResult();
-		} else {
-			if ( $searchConfig->getUnifiedWikiMatch() ) {
-				$matchResult = $searchConfig->getWikiMatch()->getResult();
-			}
-		}
-		if ( $matchResult !== null ) {
+
 			$matchResult['onWikiMatch'] = true;
-			$this->setVal( 'wikiMatch', $this->getApp()
-				->getView( 'WikiaSearch', 'exactWikiMatch',
-					ResultHelper::extendResult( $matchResult, 'wiki',
-						ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, [
-							'width' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_WIDTH,
-							'height' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT,
-						], $searchConfig->getQuery()->getSanitizedQuery() ) ) );
+			$extendedResult =
+				UnifiedSearchCommunityResultItemExtender::extendCommunityResult( $matchResult, 'wiki',
+					ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, [
+					'width' => self::EXACT_WIKI_MATCH_THUMBNAIL_WIDTH,
+					'height' => self::EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT,
+				], $searchConfig->getQuery()->getSanitizedQuery() );
+			$this->setVal( 'wikiMatch', $this->getApp()->getView( 'WikiaSearch', 'exactWikiMatch', $extendedResult ) );
 		}
 	}
 

@@ -34,10 +34,6 @@
 						<?php endif ?>
 					</p>
 
-					<? if ( $correctedQuery && $query != $correctedQuery ) : ?>
-					<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $correctedQuery ) ?></p>
-					<? endif; ?>
-
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?= $app->renderView('Ad', 'Index', [
