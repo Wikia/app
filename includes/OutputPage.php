@@ -797,6 +797,7 @@ class OutputPage extends ContextSource {
 	 * @return null
 	 */
 	public function setRobotPolicy( $policy ) {
+		var_dump($policy, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]);
 		$policy = Article::formatRobotPolicy( $policy );
 
 		if( isset( $policy['index'] ) ) {
