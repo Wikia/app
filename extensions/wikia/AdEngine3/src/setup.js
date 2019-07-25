@@ -4,7 +4,7 @@ import {
 	context,
 	events,
 	eventService,
-	instantConfig,
+	instantConfigLoader,
 	utils,
 	setupNpaContext,
 } from '@wikia/ad-engine';
@@ -22,7 +22,7 @@ const fallbackInstantConfig = {
 };
 
 async function getAppConfiguration() {
-	const config = await instantConfig.getConfig();
+	const config = await instantConfigLoader.getConfig();
 
 	const appConfig = {
 		getInstantGlobal(key, defaultValue = null) {
