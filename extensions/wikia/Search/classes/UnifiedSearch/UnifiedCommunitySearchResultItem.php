@@ -64,6 +64,39 @@ final class UnifiedCommunitySearchResultItem implements UnifiedSearchResultItem 
 		return $textAsString;
 	}
 
+	private static function fixSnippeting( $text, $addEllipses = false ) {
+		$text = preg_replace(
+			'/^(span class="searchmatch">)/',
+			'<$1',
+			preg_replace(
+				"/^[[:punct:]]+ ?/",
+				'',
+				preg_replace(
+					"/(<\\/span>)('s)/i",
+					'$2$1',
+					preg_replace(
+						'/ +$/',
+						'',
+						preg_replace(
+							'/ ?\.{2,3}$/',
+							'',
+							preg_replace(
+								'/ ?&hellip;$/',
+								'',
+								str_replace( '�', '', $text )
+							)
+						)
+					)
+				)
+			)
+		);
+		$text = strlen( $text ) > 0 && $addEllipses ?
+			preg_replace( '/(<\/span)$/', '$1>', preg_replace( '/[[:punct:]]+$/', '', $text ) ) . '&hellip;' : $text;
+		$text = strip_tags( $text, '<span>' );
+
+		return $text;
+	}
+
 	public function extended(array $data): self
 	{
 		return new self(array_merge($this->toArray(), $data));

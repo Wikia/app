@@ -4,6 +4,8 @@ declare( strict_types=1 );
 
 namespace Wikia\Search\UnifiedSearch;
 
+use Wikia\Search\MediaWikiService;
+
 final class UnifiedPageSearchResultItem implements UnifiedSearchResultItem {
 
 	private $pageid;
@@ -33,6 +35,14 @@ final class UnifiedPageSearchResultItem implements UnifiedSearchResultItem {
 			$textAsString );
 
 		return $textAsString;
+	}
+
+	public function getThumbnailHtml() {
+		try {
+			return (new MediaWikiService())->getThumbnailHtml( $this['pageid'] );
+		} catch ( \Exception $e ) {
+			return '';
+		}
 	}
 
 	public function findFilePrefix( $title, $namespace ) {
