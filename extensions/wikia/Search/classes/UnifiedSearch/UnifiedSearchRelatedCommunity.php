@@ -4,9 +4,7 @@ declare( strict_types=1 );
 
 namespace Wikia\Search\UnifiedSearch;
 
-use Wikia\Search\Result;
-
-final class UnifiedSearchWikiMatch {
+final class UnifiedSearchRelatedCommunity {
 
 	/** @var string */
 	private $searchQuery;

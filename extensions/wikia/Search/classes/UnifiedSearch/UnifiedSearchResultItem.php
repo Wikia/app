@@ -4,6 +4,8 @@ declare( strict_types=1 );
 
 namespace Wikia\Search\UnifiedSearch;
 
+use phpDocumentor\Reflection\Types\Void_;
+
 final class UnifiedSearchResultItem implements \ArrayAccess {
 	/** @var array */
 	private $value;
@@ -75,6 +77,16 @@ final class UnifiedSearchResultItem implements \ArrayAccess {
 		}
 
 		return $textAsString;
+	}
+
+	public function extended( array $data): self
+	{
+		return new self(array_merge($this->value, $data));
+	}
+
+	public function toArray(): array
+	{
+		return $this->value;
 	}
 
 	public function getTextUrl() {

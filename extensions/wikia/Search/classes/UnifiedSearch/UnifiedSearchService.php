@@ -64,29 +64,6 @@ class UnifiedSearchService {
 			$result['paging']['current'], $items );
 	}
 
-	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
-		$result = $this->callCommunitySearch( $request );
-
-		$items = [];
-		foreach ( $result['results'] as $item ) {
-			$items[] = [
-				'id' => $item['id'],
-				'title' => $item['name'],
-				'description' => $item['description'],
-				'language' => $item['language'],
-				'url' => $item['url'],
-				'image' => $item['thumbnail'] ?? null,
-				'hub' => $item['hub'],
-				'articles_i' => $item['pageCount'],
-				'images_i' => $item['imageCount'],
-				'videos_i' => $item['videoCount'],
-			];
-		}
-
-		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], $items );
-	}
-
 	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
 			'wikiId' => $request->getWikiId(),
@@ -106,19 +83,6 @@ class UnifiedSearchService {
 		}
 
 		$response = $this->doApiRequest( 'page-search', $params );
-
-		return json_decode( $response->getBody(), true );
-	}
-
-	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {
-		$params = [
-			'query' => $request->getQuery()->getSanitizedQuery(),
-			'page' => $request->getPage(),
-			'limit' => $request->getLimit(),
-			'lang' => $request->getLanguage(),
-		];
-
-		$response = $this->doApiRequest( 'community-search', $params );
 
 		return json_decode( $response->getBody(), true );
 	}
@@ -154,6 +118,26 @@ class UnifiedSearchService {
 
 			throw new WikiaException( self::FAILED_TO_CALL_UNIFIED_SEARCH, 500, $e );
 		}
+	}
+
+	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
+		$result = $this->callCommunitySearch( $request );
+
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'], $result['results'] );
+	}
+
+	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+			'lang' => $request->getLanguage(),
+		];
+
+		$response = $this->doApiRequest( 'community-search', $params );
+
+		return json_decode( $response->getBody(), true );
 	}
 
 }

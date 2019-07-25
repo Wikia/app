@@ -1,6 +1,9 @@
 <section class="Search all-wikia WikiaGrid clearfix search-tracking">
 	<div class="results-wrapper">
-		<?php if (!empty($results)): ?>
+		<?php use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
+		use Wikia\Search\UnifiedSearch\UnifiedSearchResultItem;
+
+		if (!empty($results)): ?>
 			<?php if ($resultsFound > 0): ?>
 
 				<p class="result-count subtle">
@@ -17,25 +20,19 @@
 					<?php endif ?>
 				</p>
 
-				<? if ($correctedQuery && $query != $correctedQuery) : ?>
-					<p><?= wfMsg('wikiasearch2-spellcheck', $query, $correctedQuery) ?></p>
-				<? endif; ?>
-
 				<ul class="Results inter-wiki">
 					<?
 					$pos = 0;
+					/** @var UnifiedSearchResultItem $result */
 					foreach ($results as $result) {
 						$pos++;
-						echo $app->getView('WikiaSearch', 'CrossWiki_result',
-							\Wikia\Search\Result\ResultHelper::extendResult(
+						echo $app->getView('WikiaSearch', 'Community_result',
+							UnifiedSearchCommunityResultItemExtender::extendCommunityResult(
 								$result,
 								$pos + (($currentPage - 1) * $resultsPerPage),
-								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT,
-								[
-									'width' => WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
-									'height' => WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT
-								]
-							)
+								$query,
+								UnifiedSearchCommunityResultItemExtender::MAX_WORD_COUNT_XWIKI_RESULT
+							)->toArray()
 						);
 					}
 					?>

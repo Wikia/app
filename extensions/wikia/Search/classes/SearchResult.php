@@ -1,13 +1,8 @@
 <?php
 
-
 namespace Wikia\Search;
 
-
 use ArrayIterator;
-use F;
-use Wikia\Search\UnifiedSearch\SearchResultWrapper;
-use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 
 class SearchResult {
 
@@ -21,17 +16,6 @@ class SearchResult {
 	private $currentPage;
 	/** @var SearchResultItems */
 	private $items;
-
-	public static function empty() {
-		$searchResult = new SearchResult();
-		$searchResult->correctedQuery = null;
-		$searchResult->totalResults = 0;
-		$searchResult->currentPage = 1;
-		$searchResult->pageCount = 0;
-		$searchResult->items = new SearchResultWrapper( [] );
-
-		return $searchResult;
-	}
 
 	public function hasResults(): bool {
 		return $this->getResults() ? true : false;

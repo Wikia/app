@@ -6,11 +6,11 @@ use F;
 
 class UnifiedSearchResult {
 
-	/** @var array */
-	private $results;
 	public $resultsFound;
 	public $pagesCount;
 	public $currentPage;
+	/** @var array */
+	private $results;
 
 	public function __construct(
 		$resultsFound, $pagesCount, $currentPage, $results
@@ -43,7 +43,7 @@ class UnifiedSearchResult {
 		return $result;
 	}
 
-	protected function formatNumber( $number ) {
+	protected function formatNumber( $number ): string {
 		return F::app()->wg->Lang->formatNum( $number );
 	}
 }
