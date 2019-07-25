@@ -535,6 +535,20 @@ $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/C
 $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ ] ];
 
 /**
+ * Custom rules for meta robots tags. Index User: pages.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgRobotsIndexUserNS
+ */
+$wgRobotsIndexUserNS  = false;
+
+/**
+ * Custom rules for meta robots tags. Index Help: pages.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgRobotsIndexHelpNS
+ */
+$wgRobotsIndexHelpNS  = false;
+
+/**
  * External services domain.
  * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
  * @var string $wgServicesExternalDomain
