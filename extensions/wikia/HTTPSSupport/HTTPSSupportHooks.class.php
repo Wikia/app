@@ -70,6 +70,13 @@ class HTTPSSupportHooks {
 	 * @return boolean
 	 */
 	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
+		global $wgFandomBaseDomain;
+
+		$host = parse_url( $url, PHP_URL_HOST );
+		$hostRegex = '/^([a-zA-Z0-9]+\.)?'. $wgFandomBaseDomain .'/';
+		if ( preg_match( $hostRegex, $host ) == false ) {
+			return true;
+		}
 		if ( wfHttpsAllowedForURL( $url ) ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
