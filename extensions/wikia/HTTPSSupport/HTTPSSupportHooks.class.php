@@ -73,7 +73,7 @@ class HTTPSSupportHooks {
 		global $wgFandomBaseDomain;
 
 		$host = parse_url( $url, PHP_URL_HOST );
-		$hostRegex = '/^([a-zA-Z0-9]+\.)?'. $wgFandomBaseDomain .'/';
+		$hostRegex = '/^([a-zA-Z0-9]+\.){0,1}'. $wgFandomBaseDomain .'/';
 		if ( preg_match( $hostRegex, $host ) == false ) {
 			return true;
 		}
