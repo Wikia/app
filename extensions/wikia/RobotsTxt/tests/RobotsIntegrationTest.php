@@ -47,7 +47,7 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 			[
 				'noProxy' => true,
 				'returnInstance' => true,
-				'followRedirects' => true,
+				'followRedirects' => false,
 				'maxRedirects' => 10,
 				'timeout' => 30
 			]
