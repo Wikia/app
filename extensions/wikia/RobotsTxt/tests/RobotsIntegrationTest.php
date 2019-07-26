@@ -108,7 +108,6 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 			'action',
 			'feed',
 			'from',
-			'oldid',
 			'printable',
 			'redirect',
 			'useskin',
