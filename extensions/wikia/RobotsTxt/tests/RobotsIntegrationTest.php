@@ -37,31 +37,83 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 		$this->assertContains( $expected, $response->getContent() );
 	}
 
+	/**
+	 * @dataProvider getPagesWithParamsUrlsDataProvider
+	 */
+	public function testRobotsDeniedOnParams( $url, $expected ) {
+		$response = \Http::get(
+			$url,
+			'default',
+			[
+				'noProxy' => true,
+				'returnInstance' => true,
+				'followRedirects' => true,
+				'maxRedirects' => 10,
+				'timeout' => 30
+			]
+		);
+		$this->assertNotEmpty( $response->getStatus() );
+		$this->assertEquals( self::HTTP_OK, $response->getStatus() );
+		$this->assertContains( $expected, $response->getContent() );
+	}
+
+	public function testRobotsDeniedOnUserPages() {
+		$urlPattern = 'http://adtest.fandom.com/wiki/%s';
+		$cb = time();
+		$response = \Http::get(
+			sprintf($urlPattern, 'User:Abador?cb=' . $cb),
+			'default',
+			[
+				'noProxy' => true,
+				'returnInstance' => true,
+				'followRedirects' => true,
+				'maxRedirects' => 10,
+				'timeout' => 30
+			]
+		);
+		$this->assertEquals( self::HTTP_OK, $response->getStatus() );
+		$this->assertContains( self::NO_INDEX_NO_FOLLOW, $response->getContent() );
+		$response = \Http::get(
+			'https://creepypasta.fandom.com/wiki/User_talk:Abador?cb=' . $cb,
+			'default',
+			[
+				'noProxy' => true,
+				'returnInstance' => true,
+				'followRedirects' => true,
+				'maxRedirects' => 10,
+				'timeout' => 30
+			]
+		);
+		$this->assertEquals( self::HTTP_OK, $response->getStatus() );
+		$this->assertContains( self::NO_INDEX_NO_FOLLOW, $response->getContent() );
+	}
+
 	public function getSpecialPagesUrlsDataProvider() {
 		$urlPattern = 'http://adtest.fandom.com/wiki/%s';
 		$cb = time();
-		$tests = [
+		return [
 			[ sprintf($urlPattern, 'Skin?action=edit&cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:RecentChanges?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:SpecialPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:BrokenRedirects?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:ProtectedPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:AllPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
-			[ sprintf($urlPattern, 'User:Abador?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
-			[ 'https://creepypasta.fandom.com/wiki/User_talk:Abador?cb=' . $cb, self::NO_INDEX_NO_FOLLOW ],
-			[ 'https://community.fandom.com/wiki/Help:Contents?cb=' . $cb,
-			  self::NO_INDEX_NO_FOLLOW ],
 		];
+	}
+
+	public function getPagesWithParamsUrlsDataProvider() {
+		$cb = time();
+		$tests = [];
 		$noindexParams = [
 			'action',
-//			'feed',
-			//			'from',
+			'feed',
+			'from',
 			'oldid',
-			//			'printable',
-			//			'redirect',
-			//			'useskin',
-			//			'uselang',
-//			'veaction'
+			'printable',
+			'redirect',
+			'useskin',
+			'uselang',
+			'veaction'
 		];
 		foreach( $noindexParams as $paramName){
 			$tests[] = [self::ADTEST_PAGE_LINK . "?$paramName=1&cb=" . $cb,
