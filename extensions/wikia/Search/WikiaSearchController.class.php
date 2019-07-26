@@ -875,9 +875,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				Hooks::run( 'SpecialSearchIsgomatch', [ $title, $query ] );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
-			}
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;
