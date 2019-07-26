@@ -151,7 +151,7 @@ class SEOTweaksHooksHelper {
 			if ( !empty( $imageUrl ) ) {
 				$meta['og:image'] = $imageUrl;
 			} else {
-				$meta['og:image'] = wfExpandUrl($wgLogo);
+				$meta['og:image'] = wfExpandUrl( $wgLogo );
 			}
 		}
 
