@@ -10,11 +10,12 @@ services:
       - ../base/base.inc:/etc/nginx/conf.d/base.inc:ro
       - ./site.conf:/etc/nginx/conf.d/default.conf:ro
       - ../base/metrics.conf:/etc/nginx/conf.d/metrics.conf:ro
-      - ../base/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../base/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
       - ../../../app/skins:/usr/wikia/slot1/current/src/skins:ro
       - ../../../app/resources:/usr/wikia/slot1/current/src/resources:ro
       - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions:ro
       - ../../../app/apple-touch-icon.png:/usr/wikia/slot1/current/src/apple-touch-icon.png:ro
+      - ../base/lua/slot_server.lua:/usr/local/openresty/site/wikia/slot_server.lua:ro
     depends_on:
       - php-wikia
   logger:
@@ -29,6 +30,23 @@ services:
       - WIKIA_DATACENTER=$WIKIA_DATACENTER
       - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
       - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
+      - LOG_SOCKET_ONLY=yes
+      - LOG_SOCKET_ADDRESS=tcp://logger:9999
+      - WIKIA_FORCE_DEV_ONLY=yes
+      - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
+    depends_on:
+      - logger
+  php-ucp:
+    image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
+    volumes:
+      - ../../../app:/usr/wikia/slot1/current/src:ro
+      - ../../../config:/usr/wikia/slot1/current/config:ro
+      - ../../../cache:/usr/wikia/slot1/current/cache/messages:ro
+    environment:
+      - WIKIA_DATACENTER=$WIKIA_DATACENTER
+      - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
+      - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
+      - IS_UCP=yes
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
       - WIKIA_FORCE_DEV_ONLY=yes

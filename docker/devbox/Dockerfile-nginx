@@ -1,10 +1,27 @@
-# This is a base nginx image with Wikia's directory structure
-FROM xcgd/nginx-vts:stable
+FROM openresty/openresty:1.15.8.1-3-alpine-fat-nosse42
 
-RUN chown -R nginx:nginx /etc/nginx && \
-    chown nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx && \
+ARG LUASOCKET_VERSION="3.0rc1-2"
+ARG LUA_CJSON_VERSION="2.1.0.6-1"
+ARG LUA_RESTY_HTTP_VERSION="0.13"
+ARG BUSTED_VERSION="2.0.0-1"
+
+RUN opm get knyar/nginx-lua-prometheus
+
+RUN luarocks install luasocket ${LUASOCKET_VERSION} && \
+ 	luarocks install lua-cjson ${LUA_CJSON_VERSION} && \
+    luarocks install busted ${BUSTED_VERSION} && \
+    luarocks install lua-resty-http ${LUA_RESTY_HTTP_VERSION}
+
+ADD ./base/lua/slot_server.lua /usr/local/openresty/site/wikia/slot_server.lua
+
+RUN adduser -S -D -h /nonexistent -H nginx && addgroup nginx
+
+RUN chown -R nginx:nginx /usr/local/openresty && \
+    mkdir /var/log/nginx/ && \
+    chown nginx:nginx /var/log/nginx/ && \
     mkdir /var/run/nginx && \
-    chown nginx:nginx /var/run/nginx
+    chown nginx:nginx /var/run/nginx && \
+    mkdir /var/cache/nginx && \
+    chown nginx:nginx /var/cache/nginx
 
 USER nginx
