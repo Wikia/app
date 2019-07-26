@@ -61,7 +61,7 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 			//			'redirect',
 			//			'useskin',
 			//			'uselang',
-			'veaction'
+//			'veaction'
 		];
 		foreach( $noindexParams as $paramName){
 			$tests[] = [self::ADTEST_PAGE_LINK . "?$paramName=1&cb=" . $cb,
