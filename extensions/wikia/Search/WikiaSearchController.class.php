@@ -111,6 +111,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		//will change template depending on passed ab group
 		$searchConfig = $this->getSearchConfigFromRequest();
 
+		// Stop processing and follow redirect if article was matched
+		if ( $this->handleArticleMatchTracking( $searchConfig ) ) {
+			return;
+		}
+
 		if ( !empty( $wgEnableSpecialSearchCaching ) ) {
 			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
 		}
@@ -856,23 +861,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->getPage() != 1 ) {
 			return false;
 		}
+		$service = new MediaWikiService();
+
+		$match =
+			$service->getArticleMatchForTermAndNamespaces( $searchConfig->getQuery()->getSanitizedQuery(),
+				$searchConfig->getNamespaces() );
+
 		$query = $searchConfig->getQuery()->getSanitizedQuery();
-		if ( $searchConfig->hasArticleMatch() ) {
-			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
+		if ( $match ) {
+			$article = Article::newFromID( $match->getId() );
 			$title = $article->getTitle();
 			if ( $this->useGoSearch() ) {
 				Hooks::run( 'SpecialSearchIsgomatch', [ $title, $query ] );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
 			}
-		} else {
-			$title = Title::newFromText( $query );
-			if ( $title !== null ) {
-				Hooks::run( 'SpecialSearchNogomatch', [ &$title ] );
-			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
