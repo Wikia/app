@@ -49,23 +49,23 @@ class RobotsIntegrationTest extends WikiaBaseTest {
 			[ sprintf($urlPattern, 'Special:AllPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'User:Abador?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ 'https://creepypasta.fandom.com/wiki/User_talk:Abador?cb=' . $cb, self::NO_INDEX_NO_FOLLOW ],
-			[ 'https://community.fandom.com/wiki/Help:Contents?cb=' . $cb,
-			  self::NO_INDEX_NO_FOLLOW ],
+			//			[ 'https://community.fandom.com/wiki/Help:Contents?cb=' . $cb,
+			//			  self::NO_INDEX_NO_FOLLOW ],
 		];
 		$noindexParams = [
 			'action',
-			'feed',
-			'from',
+			//			'feed',
+			//			'from',
 			'oldid',
-			'printable',
-			'redirect',
-			'useskin',
-			'uselang',
+			//			'printable',
+			//			'redirect',
+			//			'useskin',
+			//			'uselang',
 			'veaction'
 		];
 		foreach( $noindexParams as $paramName){
 			$tests[] = [self::ADTEST_PAGE_LINK . "?$paramName=1&cb=" . $cb,
-			self::NO_INDEX_NO_FOLLOW];
+						self::NO_INDEX_NO_FOLLOW];
 		}
 		return $tests;
 	}
