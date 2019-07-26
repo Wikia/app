@@ -111,6 +111,8 @@ class SEOTweaksHooksHelper {
 	 * @return bool
 	 */
 	static public function onOpenGraphMetaHeaders( &$meta, $title ): bool {
+		global $wgLogo;
+
 		if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
 			$namespace = $title->getNamespace();
 
@@ -148,6 +150,8 @@ class SEOTweaksHooksHelper {
 			// only when there is a thumbnail url add it to metatags
 			if ( !empty( $imageUrl ) ) {
 				$meta['og:image'] = $imageUrl;
+			} else {
+				$meta['og:image'] = wfExpandUrl($wgLogo);
 			}
 		}
 
