@@ -3,22 +3,42 @@
 		<div class="SearchInput">
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a></p>
-				<?php endif ?>
+			<?php endif ?>
 
-				<p class="grid-1 alpha"><?= wfMsg( 'wikiasearch2-wiki-search-headline' ) ?></p>
+				<p class="grid-1 alpha">
+					<select name="scope">
+						<option
+							value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>"
+							<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL ? 'selected="selected"' : '' ?>
+						>This wiki</option>
+						<option
+							value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>"
+							<?= $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? 'selected="selected"' : '' ?>
+						>All wikis</option>
+					</select>
+				</p>
 
-				Scope:
-
-				<select name="scope">
-					<option
-						value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>"
-						<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL ? 'selected="selected"' : '' ?>
-					>This wiki</option>
-					<option
-						value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>"
-						<?= $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? 'selected="selected"' : '' ?>
-					>All wikis</option>
-				</select>
+<!--			<div class="wds-dropdown">-->
+<!--				<div class="wds-tabs__tab-label wds-dropdown__toggle">-->
+<!--					<span>Scope</span>-->
+<!--					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 12 12" class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron" id="wds-icons-dropdown-tiny"><defs><path id="dropdown-tiny-a" d="M6.0001895,8.80004571 C5.79538755,8.80004571 5.5905856,8.72164496 5.43458411,8.56564348 L2.23455364,5.365613 C2.00575146,5.13681083 1.93695081,4.79280755 2.06095199,4.4936047 C2.18415316,4.19440185 2.47695595,4 2.80015903,4 L9.20021997,4 C9.52342305,4 9.81542583,4.19440185 9.93942701,4.4936047 C10.0634282,4.79280755 9.99462754,5.13681083 9.76582536,5.365613 L6.56579489,8.56564348 C6.4097934,8.72164496 6.20499145,8.80004571 6.0001895,8.80004571 Z"></path></defs><use fill-rule="evenodd" xlink:href="#dropdown-tiny-a"></use></svg>						</div>-->
+<!--				<div class="wds-is-not-scrollable wds-dropdown__content" style="z-index: 9999999">-->
+<!--					<ul class="wds-list wds-is-linked wds-has-bolded-items">-->
+<!--						<li>-->
+<!--							<a href="/wiki/Special:RandomInCategory/The_Muppets_Characters" data-tracking="custom-level-2">-->
+<!--								Random Muppets Character											</a>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<a href="/wiki/Special:RandomInCategory/Sesame_Street_Characters" data-tracking="custom-level-2">-->
+<!--								Random Sesame Street Character											</a>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<a href="/wiki/Special:RandomInCategory/Fraggle_Rock_Characters" data-tracking="custom-level-2">-->
+<!--								Random Fraggle Rock Character											</a>-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--				</div>-->
+<!--			</div>-->
 
 
 			<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?=$query; ?>" />
@@ -37,9 +57,16 @@
 				<?php if ( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
 						<?php if ( empty( $isOneResultsPageOnly ) ): ?>
-							<?= wfMsg( 'wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>' ); ?>
+							<?= wfMsg( 
+								'wikiasearch2-results' . ($scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? '-crosswiki' : '') . '-count',
+								$resultsFoundTruncated, 
+								'<strong>' . $query . '</strong>' 
+							); ?>
 						<?php else : ?>
-							<?= wfMsg( 'wikiasearch2-results-for', '<strong>' . $query . '</strong>' ); ?>
+							<?= wfMsg(
+									'wikiasearch2-results' . ($scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? '-crosswiki' : '') . '-for',
+								 	'<strong>' . $query . '</strong>'
+							); ?>
 						<?php endif; ?>
 						<?php if ( isset( $hub ) && $hub ) : ?>
 							<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->escaped(); ?>
