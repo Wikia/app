@@ -1126,7 +1126,7 @@ class Wikia {
 	static public function addMetaRobotsNoindex(WebRequest $request, Title $title, OutputPage $out) {
 		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS;
 		$setNofollow = false;
-		$disabledNamespaces = [NS_SPECIAL, NS_USER_TALK];
+		$disabledNamespaces = [NS_SPECIAL, NS_USER_TALK, NS_TEMPLATE, NS_TEMPLATE_TALK];
 		if( !$wgRobotsIndexHelpNS ){
 			$disabledNamespaces[] = NS_HELP;
 		}
