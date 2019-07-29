@@ -278,6 +278,9 @@ class Information {
 
 		$devices = [];
 		foreach($res as $row) {
+			// filter our bots
+			if ($row->device_type == 'bot') continue;
+
 			// e.g. desktop -> 295008
 			$devices[ $row->device_type ] = $row->views;
 		}

@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.52;
+	const CACHE_VERSION = 3.58;
 
 	/**
 	 * Output HTML
@@ -252,10 +252,13 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topFiles['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
 						// remove NS_FILE namespace prefix
 						$uriText = explode(":", $newUri);
 						array_shift($uriText);
 						$uriText = implode(":", $uriText);
+						$uriText = str_replace('_', ' ', $uriText);
+
 						$sections['most_visited_files'] .= "
 							<tr>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
