@@ -5,7 +5,7 @@ class HTTPSSupportHooksTest extends TestCase {
 	use MockGlobalVariableTrait;
 	use MockEnvironmentTrait;
 
-	const MOCK_DEV_NAME = 'devname';
+	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected function setUp() {
 		parent::setUp();
