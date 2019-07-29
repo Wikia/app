@@ -195,8 +195,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
-		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
-		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	public function testCustomRobotsRulesSingleSpecialPage() {
@@ -208,8 +206,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
-		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
-		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	public function testCustomRobotsRulesMultipleSpecialPages() {
@@ -221,8 +217,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
-		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
-		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	/**
