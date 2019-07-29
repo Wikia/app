@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group PortableInfobox
+ */
 class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 
 	protected function setUp() {
@@ -39,7 +42,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 			return '';
 		}
 
+		# http://tidy.sourceforge.net/docs/quickref.html
 		$config = [
+			'doctype'        => 'omit',
 			'indent'         => true,
 			'output-xhtml'   => false
 		];
