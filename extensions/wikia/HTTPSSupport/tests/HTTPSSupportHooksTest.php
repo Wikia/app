@@ -167,19 +167,19 @@ class HTTPSSupportHooksTest extends TestCase {
 				'$expectedResult' => 'https://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value',
 			],
 			[
-				'$url' => 'http://starwars.devname.fandom-dev.com/wiki/Yoda?key=value',
+				'$url' => 'http://starwars.mockdevname.fandom-dev.com/wiki/Yoda?key=value',
 				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://starwars.devname.fandom-dev.com/wiki/Yoda?key=value',
+				'$expectedResult' => 'https://starwars.mockdevname.fandom-dev.com/wiki/Yoda?key=value',
 			],
 			[
-				'$url' => 'http://starwars.devname.wikia-dev.com/wiki/Yoda?key=value',
+				'$url' => 'http://starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
 				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://starwars.devname.wikia-dev.com/wiki/Yoda?key=value',
+				'$expectedResult' => 'https://starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
 			],
 			[
-				'$url' => 'http://ja.starwars.devname.wikia-dev.com/wiki/Yoda?key=value',
+				'$url' => 'http://ja.starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
 				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://ja.starwars.devname.wikia-dev.com/wiki/Yoda?key=value',
+				'$expectedResult' => 'https://ja.starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
 			],
 		];
 	}
