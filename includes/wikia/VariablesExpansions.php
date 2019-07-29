@@ -526,13 +526,6 @@ $wgRedisHost = "geo-redisshared-prod-master.query.{$wgWikiaDatacenter}.consul";
  */
 $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/CC-BY-SA.png?1";
 
-/**
- * Custom rules for robots.txt. Supported rules: allowSpecialPage and
- * disallowNamespace.
- * @see string extensions/wikia/RobotsTxt/classes/WikiaRobots.class.php
- * @var Array $wgRobotsTxtCustomRules
- */
-$wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ ] ];
 
 /**
  * Custom rules for meta robots tags. Index User: pages.

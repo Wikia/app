@@ -84,18 +84,11 @@ class WikiaRobots {
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgRequest,
-			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' );
 		$this->experiment = false;
-
-		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {
-			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
-				$this->allowedSpecialPages[$page] = 'allow';
-			}
-		}
 	}
 
 	/**
