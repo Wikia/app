@@ -168,6 +168,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function getSearchConfigFromRequest() {
 		global $wgRequest;
 
+
 		// Use WebRequest instead of Nirvana request
 		// Nirvana request does not process certain Unicode stuff correctly which causes HTTP 500
 		$request = $wgRequest;

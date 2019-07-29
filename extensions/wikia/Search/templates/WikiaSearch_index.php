@@ -1,43 +1,44 @@
 <section class="Search this-wiki WikiaGrid clearfix search-tracking">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl; ?>#">
+	<form class="WikiaSearch" id="search-v2-form" action="<?= $specialSearchUrl; ?>#">
 		<div class="SearchInput">
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
-				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a></p>
+				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a>
+				</p>
 			<?php endif ?>
 
 			<div class="grid-1 alpha">
 				<div class="wds-dropdown">
 					<div class="wds-dropdown__toggle">
-					<span>
-						<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
-							? wfMsg( 'wikiasearch2-search-scope-internal' )
-							: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
-					</span>
+						<button class="wds-button wds-is-text" style="padding: 0 18px;">
+							<span>
+								<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
+									? wfMsg( 'wikiasearch2-search-scope-internal' )
+									: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
+							</span>
+							<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
+								<use xlink:href="#wds-icons-dropdown-tiny"></use>
+							</svg>
+						</button>
 					</div>
-					<div class="wds-dropdown__content">
-						<ul>
-							<?php
-							$scopeChanger = function ( $scope ) {
-								return preg_replace( '/&hub=[^&]+/', '&hub=' . $scope, $_SERVER['REQUEST_URI'] );
-							}
-							?>
+					<div class="wds-dropdown__content" style="padding: 0">
+						<ul class="wds-list">
 							<li>
-								<a href="<?= $scopeChanger( \Wikia\Search\Config::SCOPE_INTERNAL ) ?>">
+								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
 									<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></a>
 							</li>
 							<li>
-								<a href="<?= $scopeChanger( \Wikia\Search\Config::SCOPE_CROSS_WIKI ) ?>">
+								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
 									<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?></a>
 							</li>
 						</ul>
 					</div>
 				</div>
-
 			</div>
-
-			<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?=$query; ?>" />
-			<input type="hidden" name="fulltext" value="Search" />
-			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+			<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?= $query; ?>"/>
+			<input type="hidden" name="fulltext" value="Search"/>
+			<input type="hidden" id="search-v2-scope" name="scope" value="<?= $scope ?>"/>
+			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>">
+				<img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
 				<?php echo $advancedSearchBox; ?>
