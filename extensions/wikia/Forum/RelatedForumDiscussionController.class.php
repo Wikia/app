@@ -39,8 +39,8 @@ class RelatedForumDiscussionController extends WikiaService {
 			$wikiaPage = WikiPage::newFromID( $id );
 			if ( $wikiaPage ) {
 				$wikiaPage->doPurge();
-				self::logError( "Found a null related wikipage on thread purge", [ "articleId" => $id, "threadId" => $threadId ] );
 			} else {
+				self::logError( "Found a null related wikipage on thread purge", [ "articleId" => $id, "threadId" => $threadId ] );
 			}
 		}
 	}
