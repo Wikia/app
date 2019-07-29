@@ -72,10 +72,15 @@ class HTTPSSupportHooks {
 	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
 		global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain, $wgWikiaBaseDomain;
 
-		$host = explode('.', parse_url( $url, PHP_URL_HOST ));
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		$normalizedHost = wfNormalizeHost($host);
+		$explodedHost = explode('.', $normalizedHost);
+
 		$pattern = '/('. $wgFandomBaseDomain .'|'. $wgWikiaOrgBaseDomain .'|(?:wikia|fandom)-dev.(?:com|pl|us))/';
 
-		if ( preg_match( $pattern, $url ) || ( preg_match('/'. $wgWikiaBaseDomain .'/', $url ) && sizeof( $host ) <= 3 ) ) {
+		if ( preg_match( $pattern, $host ) || ( preg_match('/'. $wgWikiaBaseDomain .'/', $normalizedHost ) && sizeof( $explodedHost ) <= 3 ) )
+		{
 			$url = wfHttpToHttps( $url );
 		}
 		return true;
