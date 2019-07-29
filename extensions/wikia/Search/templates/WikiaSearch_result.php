@@ -1,9 +1,9 @@
 <li class="result">
 	<article>
 	<?php
-	use Wikia\Search\UnifiedSearch\UnifiedPageSearchResultItem;
+	use Wikia\Search\UnifiedSearch\UnifiedSearchPageResultItem;
 
-	/** @var UnifiedPageSearchResultItem $result */
+	/** @var UnifiedSearchPageResultItem $result */
 		if ( $result['ns'] == NS_FILE ) {
 			$thumbnailHtml = $result->getThumbnailHtml();
 		}

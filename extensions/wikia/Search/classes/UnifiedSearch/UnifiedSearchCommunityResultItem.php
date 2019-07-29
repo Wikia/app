@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace Wikia\Search\UnifiedSearch;
 
-final class UnifiedCommunitySearchResultItem implements UnifiedSearchResultItem {
+final class UnifiedSearchCommunityResultItem implements UnifiedSearchResultItem {
 	private $description;
 	private $name;
 	private $descriptionWordLimit;

@@ -4,7 +4,7 @@ namespace Wikia\Search\UnifiedSearch;
 
 class UnifiedSearchCommunityResultItemExtender {
 	const MAX_WORD_COUNT_EXACT_MATCH = 40;
-	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
+	const MAX_WORD_COUNT_COMMUNITY_RESULT = 60;
 
 	public static function extendCommunityResult(
 		UnifiedSearchResultItem $result, $pos, string $query, $descWordLimit = self::MAX_WORD_COUNT_EXACT_MATCH

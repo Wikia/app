@@ -1,6 +1,6 @@
 <section class="Search all-wikia WikiaGrid clearfix search-tracking">
 	<div class="results-wrapper">
-		<?php use Wikia\Search\UnifiedSearch\UnifiedCommunitySearchResultItem;
+		<?php use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItem;
 		use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
 		use Wikia\Search\UnifiedSearch\UnifiedSearchResultItem;
 
@@ -24,7 +24,7 @@
 				<ul class="Results inter-wiki">
 					<?
 					$pos = 0;
-					/** @var UnifiedCommunitySearchResultItem $result */
+					/** @var UnifiedSearchCommunityResultItem $result */
 					foreach ($results as $result) {
 						$pos++;
 						echo $app->getView('WikiaSearch', 'Community_result',
@@ -33,7 +33,7 @@
 									$result,
 									$pos + (($currentPage - 1) * $resultsPerPage),
 									$query,
-									UnifiedSearchCommunityResultItemExtender::MAX_WORD_COUNT_XWIKI_RESULT
+									UnifiedSearchCommunityResultItemExtender::MAX_WORD_COUNT_COMMUNITY_RESULT
 								)
 							]
 						);

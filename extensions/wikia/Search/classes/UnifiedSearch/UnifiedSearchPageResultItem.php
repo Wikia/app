@@ -6,7 +6,7 @@ namespace Wikia\Search\UnifiedSearch;
 
 use Wikia\Search\MediaWikiService;
 
-final class UnifiedPageSearchResultItem implements UnifiedSearchResultItem {
+final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 
 	private $pageid;
 	private $title;

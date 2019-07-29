@@ -22,7 +22,7 @@ final class UnifiedSearchResultItems implements \IteratorAggregate {
 			return $this->items;
 		}
 
-		return array_map(function (UnifiedPageSearchResultItem $item) use ($selectedFieldsMap) {
+		return array_map(function ( UnifiedSearchPageResultItem $item) use ($selectedFieldsMap) {
 			$mappedItem = [];
 
 			$item = $item->toArray();

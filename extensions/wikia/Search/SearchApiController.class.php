@@ -6,7 +6,7 @@
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
-use Wikia\Search\UnifiedSearch\UnifiedCommunitySearchResultItem;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItem;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
@@ -107,10 +107,9 @@ class SearchApiController extends WikiaApiController {
 		$result = $service->communitySearch(new UnifiedSearchCommunityRequest($configCrossWiki));
 
 		$offset = ( $result->currentPage + 1 ) * $configCrossWiki->getLimit() + 1;
-
 		$items = $result->getResults()->getIterator()->getArrayCopy();
 
-		$items = array_map(function (UnifiedCommunitySearchResultItem $item) {
+		$items = array_map(function ( UnifiedSearchCommunityResultItem $item) {
 			return UnifiedSearchCommunityResultItemExtender::extendCommunityResult(
 				$item,
 				null,
@@ -124,7 +123,7 @@ class SearchApiController extends WikiaApiController {
 			"batches" => $result->pagesCount,
 			"currentBatch" => $result->currentPage,
 			"next" => $offset > $result->resultsFound ? null : $offset,
-			"items" => array_map(function (UnifiedCommunitySearchResultItem $item) {
+			"items" => array_map(function ( UnifiedSearchCommunityResultItem $item) {
 				return [
 					'id' => $item['id'],
 					'title' => $item['name'],

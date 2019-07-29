@@ -1,6 +1,6 @@
 <?php
-use Wikia\Search\UnifiedSearch\UnifiedCommunitySearchResultItem;
-/** @var UnifiedCommunitySearchResultItem $result */
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItem;
+/** @var UnifiedSearchCommunityResultItem $result */
 ?>
 
 <li class="result">

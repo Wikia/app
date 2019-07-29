@@ -49,7 +49,7 @@ class UnifiedSearchService {
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
 			$result['paging']['current'], array_map(function ($item) {
-				return new UnifiedPageSearchResultItem($item);
+				return new UnifiedSearchPageResultItem($item);
 			}, $result['results']) );
 	}
 
@@ -114,7 +114,7 @@ class UnifiedSearchService {
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
 			$result['paging']['current'], array_map(function ($item) {
-				return new UnifiedCommunitySearchResultItem($item);
+				return new UnifiedSearchCommunityResultItem($item);
 			}, $result['results']) );
 	}
 
