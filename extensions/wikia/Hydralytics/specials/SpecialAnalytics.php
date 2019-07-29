@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.5;
+	const CACHE_VERSION = 3.52;
 
 	/**
 	 * Output HTML
@@ -173,10 +173,15 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topPages['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
+						// remove "/wiki/" and underscores from page names
+						$title = str_replace('/wiki/', '', $newUri);
+						$title = str_replace('_', ' ', $title);
+
 						$sections['top_viewed_pages'] .= "
 							<tr>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
-								<td><a href='".wfExpandUrl($newUri)."'>".substr(urldecode($newUri), 1)."</a></td>
+								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
 							</tr>";
 					}
 					$sections['top_viewed_pages'] .= "
