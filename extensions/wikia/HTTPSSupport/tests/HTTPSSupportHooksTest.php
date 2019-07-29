@@ -86,4 +86,78 @@ class HTTPSSupportHooksTest extends TestCase {
 			]
 		];
 	}
+
+	public function testOnLinkerMakeExternalLink() {
+
+		$exampleString = '';
+		$exampleBool = false;
+		$exampleArray = [];
+
+		#Should not be upgraded to HTTPS
+
+		#external URL
+		$url = 'http://www.example.com';
+		$expectedResult = 'http://www.example.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#multiple subdomain wikia.com
+		$url = 'http://ja.starwars.wikia.com';
+		$expectedResult = 'http://ja.starwars.wikia.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+
+		#Should be upgraded to HTTPS
+
+		#single subdomain wikia.com
+		$url = 'http://starwars.wikia.com';
+		$expectedResult = 'https://starwars.wikia.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#wikia.org
+		$url = 'http://starwars.wikia.com';
+		$expectedResult = 'https://starwars.wikia.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#fandom.com
+		$url = 'http://starwars.fandom.com';
+		$expectedResult = 'https://starwars.fandom.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#verify.fandom.com
+		$url = 'http://starwars.verify.fandom.com';
+		$expectedResult = 'https://starwars.verify.fandom.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#preview.fandom.com
+		$url = 'http://starwars.preview.fandom.com';
+		$expectedResult = 'https://starwars.preview.fandom.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#sandbox-s2.fandom.com
+		$url = 'http://starwars.sandbox-s2.fandom.com';
+		$expectedResult = 'https://starwars.sandbox-s2.fandom.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#fandom-dev.com
+		$url = 'http://starwars.devname.fandom-dev.com';
+		$expectedResult = 'https://starwars.devname.fandom-dev.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+		#wikia-dev.com
+		$url = 'http://starwars.devname.fandom-dev.com';
+		$expectedResult = 'https://starwars.devname.fandom-dev.com';
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		$this->assertEquals( $expectedResult, $url );
+
+	}
+
 }
