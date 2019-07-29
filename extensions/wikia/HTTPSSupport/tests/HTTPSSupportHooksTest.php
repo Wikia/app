@@ -153,8 +153,8 @@ class HTTPSSupportHooksTest extends TestCase {
 		$this->assertEquals( $expectedResult, $url );
 
 		#wikia-dev.com
-		$url = 'http://starwars.devname.fandom-dev.com';
-		$expectedResult = 'https://starwars.devname.fandom-dev.com';
+		$url = 'http://starwars.devname.wikia-dev.com';
+		$expectedResult = 'https://starwars.devname.wikia-dev.com';
 		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
 		$this->assertEquals( $expectedResult, $url );
 
