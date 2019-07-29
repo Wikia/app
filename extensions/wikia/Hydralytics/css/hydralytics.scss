@@ -194,3 +194,8 @@ $green-navy: #002A32;
 	background-color: $chart-background;
 	color: black;
 }
+
+/* Remove license footer when on Special:Analytics */
+body.mw-special-Analytics .license-description {
+	display:  none;
+}
