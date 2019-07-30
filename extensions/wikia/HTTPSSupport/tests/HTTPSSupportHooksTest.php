@@ -104,84 +104,102 @@ class HTTPSSupportHooksTest extends TestCase {
 		$exampleArray = [];
 
 		$this->mockEnvironment( $environment );
-		HTTPSSupportHooks::onLinkerMakeExternalLink($url, $exampleString, $exampleBool, $exampleArray);
+		HTTPSSupportHooks::onLinkerMakeExternalLink( $url, $exampleString, $exampleBool, $exampleArray );
 		$this->unsetGlobals();
 		$this->assertEquals( $expectedResult, $url );
 
 	}
 
 	public function onLinkerMakeExternalLinkDataProvider() {
-		return [
-			[
-				'$url' => 'http://www.example.com',
-				'$environment' => WIKIA_ENV_PROD,
-				'$expectedResult' => 'http://www.example.com',
-			],
-			[
-				'$url' => 'https://www.example.com' ,
-				'$environment' => WIKIA_ENV_PROD,
-				'$expectedResult' => 'https://www.example.com',
-			],
-			[
-				'$url' => 'http://ja.starwars.wikia.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PROD,
-				'$expectedResult' => 'http://ja.starwars.wikia.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.wikia.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PROD,
-				'$expectedResult' => 'https://starwars.wikia.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.fandom.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PROD,
-				'$expectedResult' => 'https://starwars.fandom.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.verify.fandom.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_VERIFY,
-				'$expectedResult' => 'https://starwars.verify.fandom.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.preview.fandom.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PREVIEW,
-				'$expectedResult' => 'https://starwars.preview.fandom.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.preview.wikia.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PREVIEW,
-				'$expectedResult' => 'https://starwars.preview.wikia.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PREVIEW,
-				'$expectedResult' => 'https://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_PREVIEW,
-				'$expectedResult' => 'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value' ,
-				'$environment' => WIKIA_ENV_SANDBOX,
-				'$expectedResult' => 'https://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.mockdevname.fandom-dev.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://starwars.mockdevname.fandom-dev.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
-			],
-			[
-				'$url' => 'http://ja.starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
-				'$environment' => WIKIA_ENV_DEV,
-				'$expectedResult' => 'https://ja.starwars.mockdevname.wikia-dev.com/wiki/Yoda?key=value',
-			],
+		yield [
+			'http://www.example.com',
+			WIKIA_ENV_PROD,
+			'http://www.example.com',
+		];
+		yield [
+			'https://www.example.com' ,
+			WIKIA_ENV_PROD,
+			'https://www.example.com',
+		];
+		yield [
+			'http://www.example.com/www.fandom.com/abc' ,
+			WIKIA_ENV_PROD,
+			'http://www.example.com/www.fandom.com/abc',
+		];
+		yield [
+			'https://www.example.com/www.fandom.com/abc' ,
+			WIKIA_ENV_PROD,
+			'https://www.example.com/www.fandom.com/abc',
+		];
+		yield [
+			'http://ja.starwars.wikia.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PROD,
+			'http://ja.starwars.wikia.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.wikia.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PROD,
+			'https://starwars.wikia.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.fandom.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PROD,
+			'https://starwars.fandom.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.verify.fandom.com/wiki/Yoda?key=value',
+			WIKIA_ENV_VERIFY,
+			'https://starwars.verify.fandom.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.preview.fandom.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PREVIEW,
+			'https://starwars.preview.fandom.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.preview.wikia.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PREVIEW,
+			'https://starwars.preview.wikia.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PREVIEW,
+			'https://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
+			WIKIA_ENV_PREVIEW,
+			'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value' ,
+			WIKIA_ENV_SANDBOX,
+			'https://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.mockdevname.fandom-dev.pl/wiki/Yoda?key=value',
+			WIKIA_ENV_DEV,
+			'https://starwars.mockdevname.fandom-dev.pl/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.mockdevname.fandom-dev.us/wiki/Yoda?key=value',
+			WIKIA_ENV_DEV,
+			'https://starwars.mockdevname.fandom-dev.us/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.mockdevname.wikia-dev.pl/wiki/Yoda?key=value',
+			WIKIA_ENV_DEV,
+			'https://starwars.mockdevname.wikia-dev.pl/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://starwars.mockdevname.wikia-dev.us/wiki/Yoda?key=value',
+			WIKIA_ENV_DEV,
+			'https://starwars.mockdevname.wikia-dev.us/wiki/Yoda?key=value',
+		];
+		yield [
+			'http://ja.starwars.mockdevname.wikia-dev.us/wiki/Yoda?key=value',
+			WIKIA_ENV_DEV,
+			'http://ja.starwars.mockdevname.wikia-dev.us/wiki/Yoda?key=value',
 		];
 	}
 }
