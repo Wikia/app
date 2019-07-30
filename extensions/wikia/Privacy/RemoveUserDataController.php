@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\Loggable;
+use Wikia\Logger\WikiaLogger;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
@@ -105,8 +106,10 @@ class RemoveUserDataController extends WikiaController {
 			}
 		}
 
+		$firstEntry = reset($logEntries);
+
 		// if all log entries are unsuccessful, return the latest fail
-		$this->okResponse( $userId, $logEntries[ 0 ]->id, $logEntries[ 0 ]->created, false );
+		$this->okResponse( $userId, $firstEntry->id, $firstEntry->created, false );
 	}
 
 	private function okResponse( $userId, $logId, $created, $dataWasRemoved ) {

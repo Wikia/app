@@ -106,12 +106,12 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 		}
 
 		// Page protection filtering
-		if ( count( $params['prtype'] ) || $params['prexpiry'] != 'all' ) {
+		if ( $params['prtype'] || $params['prexpiry'] != 'all' ) {
 			$this->addTables( 'page_restrictions' );
 			$this->addWhere( 'page_id=pr_page' );
 			$this->addWhere( 'pr_expiry>' . $db->addQuotes( $db->timestamp() ) );
 
-			if ( count( $params['prtype'] ) ) {
+			if ( $params['prtype'] ) {
 				$this->addWhereFld( 'pr_type', $params['prtype'] );
 
 				if ( isset( $params['prlevel'] ) ) {

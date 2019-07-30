@@ -21,6 +21,7 @@ use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Tasks\Queues\CategoryCountsQueue;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
@@ -121,6 +122,9 @@ class AsyncTaskList {
 				break;
 			case DeferredInsertsQueue::NAME:
 				$queue = new DeferredInsertsQueue();
+				break;
+			case CategoryCountsQueue::NAME:
+				$queue = new CategoryCountsQueue();
 				break;
 			default:
 				$queue = new Queue( $queue );

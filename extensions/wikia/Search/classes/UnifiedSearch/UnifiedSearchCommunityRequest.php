@@ -9,17 +9,22 @@ class UnifiedSearchCommunityRequest {
 
 	/** @var Select */
 	private $query;
-
 	/** @var integer */
 	private $page;
 	/** @var integer */
 	private $limit;
-
+	/** @var string */
+	private $language;
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
+		if ( is_array( $config->getLanguageCode() ) ) {
+			$this->language = $config->getLanguageCode()[0] ?? null;
+		} else {
+			$this->language = $config->getLanguageCode();
+		}
 	}
 
 	/**
@@ -41,5 +46,9 @@ class UnifiedSearchCommunityRequest {
 	 */
 	public function getLimit(): int {
 		return $this->limit;
+	}
+
+	public function getLanguage(): string {
+		return $this->language;
 	}
 }

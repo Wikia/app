@@ -237,43 +237,53 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			'old_user_id' => $renameUserId,
 		];
 
-		RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
+		try {
 
-		$user = User::newFromId( $userId );
-		$oldUser = User::newFromId( $renameUserId );
+			RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
 
-		// gather results of all removal operations
-		// if something fails, we still want to continue the process
-		$results = [];
+			$user = User::newFromId( $userId );
+			$oldUser = User::newFromId( $renameUserId );
 
-		$results[] = $this->removeCheckUserData( $userId );
-		$results[] = $this->removeAbuseFilterData( $userId );
-		$results[] = $this->removeIpFromRecentChanges( $userId );
-		$results[] = $this->removeWatchlist( $userId );
+			// gather results of all removal operations
+			// if something fails, we still want to continue the process
+			$results = [];
 
-		$userDbKey = Title::newFromText( $user->getName() )->getDBkey();
-		$results[] = $this->removeUserPages( $userDbKey );
-		$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
-		$results[] = $this->removeActionLogs( $userDbKey );
-		if ( !empty( $renameUserId ) ) {
-			$oldUserDbKey = Title::newFromText( $oldUser->getName() )->getDBkey();
-			$results[] = $this->removeUserPages( $oldUserDbKey );
-			$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
-			$results[] = $this->removeActionLogs( $oldUserDbKey );
+			$results[] = $this->removeCheckUserData( $userId );
+			$results[] = $this->removeAbuseFilterData( $userId );
+			$results[] = $this->removeIpFromRecentChanges( $userId );
+			$results[] = $this->removeWatchlist( $userId );
+
+			$userDbKey = Title::newFromText( $user->getName() )->getDBkey();
+			$results[] = $this->removeUserPages( $userDbKey );
+			$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
+			$results[] = $this->removeActionLogs( $userDbKey );
+			if ( !empty( $renameUserId ) ) {
+				$oldUserDbKey = Title::newFromText( $oldUser->getName() )->getDBkey();
+				$results[] = $this->removeUserPages( $oldUserDbKey );
+				$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
+				$results[] = $this->removeActionLogs( $oldUserDbKey );
+			}
+
+			RemovalAuditLog::markTaskAsFinished( $auditLogId, $wgCityId,
+				array_reduce( $results, function ( $acc, $res ) { return $acc && $res; }, true ) );
+
+			$this->info( "Removed user data from wiki" );
+
+			// after removing data from a wiki, we must check if all the user's wikis (all wikis that the user edited) were cleared of their data
+			// only after all wiki-specific data is removed, we can proceed with removing the user's global data
+			if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId, DB_MASTER ) ) {
+				$dataRemover = new UserDataRemover();
+				$dataRemover->removeAllGlobalUserData( $userId, $renameUserId );
+				RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
+				$this->info( "All data removed for $userId" );
+			}
 		}
-
-		RemovalAuditLog::markTaskAsFinished( $auditLogId, $wgCityId,
-			array_reduce( $results, function ( $acc, $res ) { return $acc && $res; }, true ) );
-
-		$this->info( "Removed user data from wiki" );
-
-		// after removing data from a wiki, we must check if all the user's wikis (all wikis that the user edited) were cleared of their data
-		// only after all wiki-specific data is removed, we can proceed with removing the user's global data
-		if ( RemovalAuditLog::allWikiDataWasRemoved( $auditLogId, DB_MASTER ) ) {
-			$dataRemover = new UserDataRemover();
-			$dataRemover->removeAllGlobalUserData( $userId, $renameUserId );
-			RemovalAuditLog::markGlobalDataRemoved( $auditLogId );
-			$this->info( "All data removed for $userId" );
+		catch ( \Exception $e ) {
+			$this->error( 'Cannot removeUserDataOnCurrentWiki', [
+				'reason' => $e->getMessage(),
+			] );
+			
+			throw $e;
 		}
 	}
 

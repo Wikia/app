@@ -105,7 +105,7 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function normalizeWhitespace( $text ) {
-		return mbereg_replace( "\s+", " ", $text );
+		return mb_ereg_replace( "\s+", " ", $text );
 	}
 
 	/**
