@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.61;
+	const CACHE_VERSION = 3.62;
 
 	/**
 	 * Output HTML
@@ -118,13 +118,21 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Logged in vs Logged out Edits
 				 */
-				$loggedInOutEdits = Information::getEditsLoggedInOut();
-				$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $loggedInOutEdits);
+				$edits = Information::getEditsLoggedInOut();
+
+				global $wgDisableAnonymousEditing;
+				// hide this section when the wiki does not allow logged out edits
+				if ( !empty( $wgDisableAnonymousEditing ) ) {
+					$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData( 'logged_in_out', $edits );
+				}
+				else {
+					unset( $sections['logged_in_out'] );
+				}
 
 				/**
 				 *  Edit Per Day
 				 */
-				$dailyEdits = $loggedInOutEdits['all'];
+				$dailyEdits = $edits['all'];
 				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
 
 				/**
