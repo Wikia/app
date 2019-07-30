@@ -79,7 +79,7 @@ class HTTPSSupportHooks {
 
 		$pattern = '/('. $wgFandomBaseDomain .'|'. $wgWikiaOrgBaseDomain .'|(?:wikia|fandom)-dev.(?:com|pl|us))/';
 
-		if ( preg_match( $pattern, $host ) || ( preg_match('/'. $wgWikiaBaseDomain .'/', $normalizedHost ) && sizeof( $explodedHost ) <= 3 ) )
+		if ( preg_match( $pattern, $host ) || ( preg_match( '/' . $wgWikiaBaseDomain . '/', $normalizedHost ) && sizeof( $explodedHost ) <= 3 ) )
 		{
 			$url = wfHttpToHttps( $url );
 		}
