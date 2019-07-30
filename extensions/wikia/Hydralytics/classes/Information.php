@@ -198,7 +198,7 @@ class Information {
 
 		$res = Redshift::query(
 			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  GROUP BY url ' .
+			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
