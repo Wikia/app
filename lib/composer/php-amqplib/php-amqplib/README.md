@@ -12,10 +12,9 @@ It's been tested against [RabbitMQ](http://www.rabbitmq.com/).
 
 **Requirements: PHP 5.3** due to the use of `namespaces`.
 
-**Requirements: bcmath and mbstring extensions** This library utilizes the bcmath and mbstring PHP extensions.  The installation steps vary per PHP version and the underlying OS.  The following example shows how to add to an existing PHP installation on Ubuntu 15.10:
+**Requirements: bcmath extension** This library utilizes the bcmath PHP extension. The installation steps vary per PHP version and the underlying OS. The following example shows how to add to an existing PHP installation on Ubuntu 15.10:
 
 ```bash
-sudo apt-get install php7.0-mbstring
 sudo apt-get install php7.0-bcmath
 ```
 
@@ -119,6 +118,28 @@ please refer to the [official RabbitMQ tutorials](http://www.rabbitmq.com/tutori
 - `amqp_consumer_fanout_{1,2}.php` and `amqp_publisher_fanout.php`: demos fanout exchanges with named queues.
 - `basic_get.php`: demos obtaining messages from the queues by using the _basic get_ AMQP call.
 
+## Multiple hosts connections ##
+
+If you have a cluster of multiple nodes to which your application can connect,
+you can start a connection with an array of hosts. To do that you should use
+the `create_connection` static method.
+
+For example:
+```
+$connection = AMQPStreamConnection::create_connection([
+    ['host' => HOST1, 'port' => PORT, 'user' => USER, 'password' => PASS, 'vhost' => VHOST],
+    ['host' => HOST2, 'port' => PORT, 'user' => USER, 'password' => PASS, 'vhost' => VHOST]
+],
+$options);
+```
+
+This code will try to connect to `HOST1` first, and connect to `HOST2` if the
+first connection fails. The method returns a connection object for the first
+successful connection. Should all connections fail it will throw the exception
+from the last connection attempt.
+
+See `demo/amqp_connect_multiple_hosts.php` for more examples.
+
 ## Batch Publishing ##
 
 Let's say you have a process that generates a bunch of messages that are going to be published to the same `exchange` using the same `routing_key` and options like `mandatory`.
@@ -174,6 +195,68 @@ callback. If you have another consumer which can handle messages with larger pay
 the server (which still has a complete copy) to forward it to a Dead Letter Exchange.
 
 By default, no truncation will occur. To disable truncation on a Channel that has had it enabled, pass `0` (or `null`) to `AMQPChannel::setBodySizeLimit()`.
+
+## Connection recovery ##
+
+Some RabbitMQ clients using automated connection recovery mechanisms to reconnect
+and recover channels and consumers in case of network errors.
+
+Since this client is using a single-thread, you can set up connection recovery
+using exception handling mechanism.
+
+Exceptions which might be thrown in case of connection errors:
+
+```
+PhpAmqpLib\Exception\AMQPConnectionClosedException
+PhpAmqpLib\Exception\AMQPIOException
+\RuntimeException
+\ErrorException
+```
+
+Some other exceptions might be thrown, but connection can still be there. It's
+always a good idea to clean up an old connection when handling an exception
+before reconnecting.
+
+For example, if you want to set up a recovering connection:
+
+```
+$connection = null;
+$channel = null;
+while(true){
+    try {
+        $connection = new AMQPStreamConnection(HOST, PORT, USER, PASS, VHOST);
+        // Your application code goes here.
+        do_something_with_connection($connection);
+    } catch(AMQPRuntimeException $e) {
+        echo $e->getMessage();
+        cleanup_connection($connection);
+        usleep(WAIT_BEFORE_RECONNECT_uS);
+    } catch(\RuntimeException $e) {
+        cleanup_connection($connection);
+        usleep(WAIT_BEFORE_RECONNECT_uS);
+    } catch(\ErrorException $e) {
+        cleanup_connection($connection);
+        usleep(WAIT_BEFORE_RECONNECT_uS);
+    }
+}
+
+```
+
+A full example is in `demo/connection_recovery_consume.php`.
+
+This code will reconnect and retry the application code every time the
+exception occurs. Some exceptions can still be thrown and should not be handled
+as a part of reconnection process, because they might be application errors.
+
+This approach makes sense mostly for consumer applications, producers will
+require some additional application code to avoid publishing the same message
+multiple times.
+
+This was a simplest example, in a real-life application you might want to
+control retr count and maybe gracefully degrade wait time to reconnection.
+
+You can find a more excessive example in #444
+
 
 ## UNIX Signals ##
 
@@ -235,17 +318,7 @@ $ make benchmark
 
 ## Tests ##
 
-To successfully run the tests you need to first setup the test `user` and test `virtual host`.
-
-You can do that by running the following commands after starting RabbitMQ:
-
-```bash
-$ rabbitmqctl add_vhost phpamqplib_testbed
-$ rabbitmqctl add_user phpamqplib phpamqplib_password
-$ rabbitmqctl set_permissions -p phpamqplib_testbed phpamqplib ".*" ".*" ".*"
-```
-
-Once your environment is set up you can run your tests like this:
+To successfully run the tests you need to first have a stock RabbitMQ broker running locally.Then, run tests like this:
 
 ```bash
 $ make test
