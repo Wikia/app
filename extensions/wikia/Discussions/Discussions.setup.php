@@ -65,6 +65,7 @@ $wgGroupPermissions['user']['specialdiscussions'] = false;
 $wgGroupPermissions['vstf']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
+$wgGroupPermissions['wiki-manager']['specialdiscussions'] = true;
 
 $wgHooks['WikiaSkinTopScripts'][] = 'DiscussionsHooksHelper::addDiscussionJsVariable';
 
