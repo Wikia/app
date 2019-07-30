@@ -1124,7 +1124,10 @@ class Wikia {
 	 * Add variables to SkinTemplate
 	 */
 	static public function addMetaRobotsNoindex(WebRequest $request, Title $title, OutputPage $out) {
-		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS;
+		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS, $wgForcedNoindexEnabled;
+		if( !$wgForcedNoindexEnabled ){
+			return false;
+		}
 		$setNofollow = false;
 		$disabledNamespaces = [NS_SPECIAL, NS_USER_TALK, NS_TEMPLATE, NS_TEMPLATE_TALK];
 		if( !$wgRobotsIndexHelpNS ){

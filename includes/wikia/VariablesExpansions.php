@@ -542,6 +542,13 @@ $wgRobotsIndexUserNS  = false;
 $wgRobotsIndexHelpNS  = false;
 
 /**
+ * Force noindex mechanism.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgForcedNoindexEnabled
+ */
+$wgForcedNoindexEnabled  = false;
+
+/**
  * External services domain.
  * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
  * @var string $wgServicesExternalDomain
