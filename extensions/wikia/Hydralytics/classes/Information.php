@@ -268,19 +268,16 @@ class Information {
 			$browsers[ $row->browser ] = $row->views;
 		}
 
-		// by device type
+		// by device type (filter out bots)
 		$res = Redshift::query(
 			'SELECT device_type, COUNT(*) AS views FROM wikianalytics.sessions ' .
-			'WHERE wiki_id = :wiki_id GROUP BY device_type ' .
+			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
 
 		$devices = [];
 		foreach($res as $row) {
-			// filter our bots
-			if ($row->device_type == 'bot') continue;
-
 			// e.g. desktop -> 295008
 			$devices[ $row->device_type ] = $row->views;
 		}
