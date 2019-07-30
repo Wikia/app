@@ -111,7 +111,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.kikimora.player', instantConfig.isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
 	context.set('options.tracking.slot.status', instantConfig.isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
-	context.set('options.tracking.postmessage', true);  // TODO: ADEN-8839 Add Instant Config variable
+	context.set('options.tracking.postmessage', true);
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
