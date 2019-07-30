@@ -53,13 +53,13 @@
 					<p class="result-count subtle">
 						<?php if ( empty( $isOneResultsPageOnly ) ): ?>
 							<?= wfMsg( 
-								'wikiasearch2-results' . ($scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? '-crosswiki' : '') . '-count',
+								'wikiasearch2-results-count',
 								$resultsFoundTruncated, 
 								'<strong>' . $query . '</strong>' 
 							); ?>
 						<?php else : ?>
 							<?= wfMsg(
-									'wikiasearch2-results' . ($scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ? '-crosswiki' : '') . '-for',
+									'wikiasearch2-results-for',
 								 	'<strong>' . $query . '</strong>'
 							); ?>
 						<?php endif; ?>
