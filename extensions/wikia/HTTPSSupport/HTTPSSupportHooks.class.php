@@ -74,7 +74,7 @@ class HTTPSSupportHooks {
 
 		$host = parse_url( $url, PHP_URL_HOST );
 
-		$normalizedHost = wfNormalizeHost($host);
+		$normalizedHost = wfNormalizeHost( $host );
 		$explodedHost = explode('.', $normalizedHost);
 
 		$pattern = '/('. $wgFandomBaseDomain .'|'. $wgWikiaOrgBaseDomain .'|(?:wikia|fandom)-dev.(?:com|pl|us))/';
