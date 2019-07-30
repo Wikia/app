@@ -2,7 +2,7 @@
 
 namespace Wikia\CircuitBreaker;
 
-use Exception;
+use ErrorException;
 use Wikia\Logger\Loggable;
 
 interface CircuitBreakerStorage {
@@ -20,7 +20,7 @@ interface CircuitBreakerStorage {
 	public function setOperationStatus( string $name, bool $status );
 }
 
-class CircuitBreakerOpen extends Exception {
+class CircuitBreakerOpen extends ErrorException {
 	use Loggable;
 
 	/** @var int */
@@ -35,11 +35,11 @@ class CircuitBreakerOpen extends Exception {
 	 * @param int $code
 	 * @param Exception|null $previous
 	 */
-	public function __construct( string $serviceName, int $code = 0, Exception $previous = null ) {
+	public function __construct( string $serviceName, int $code = 0 ) {
 		$this->serviceName = $serviceName;
 		$this->code = $code;
 
-		parent::__construct( "circuit breaker open for service $serviceName", $code, $previous );
+		parent::__construct( "circuit breaker open for service $serviceName", $code );
 	}
 
 	protected function logMe() {
