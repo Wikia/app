@@ -104,7 +104,7 @@ class HTTPSSupportHooksTest extends TestCase {
 		$exampleArray = [];
 
 		$this->mockEnvironment( $environment );
-		HTTPSSupportHooks::onLinkerMakeExternalLink($url,$exampleString , $exampleBool, $exampleArray);
+		HTTPSSupportHooks::onLinkerMakeExternalLink($url, $exampleString, $exampleBool, $exampleArray);
 		$this->unsetGlobals();
 		$this->assertEquals( $expectedResult, $url );
 
