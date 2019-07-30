@@ -55,7 +55,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 		pageTracker.trackProp('moat_yi', data);
 	});
 
-	billTheLizardConfigurator.configure();
+	await billTheLizardConfigurator.configure();
 
 	if (context.get('state.showAds')) {
 		callExternals();
