@@ -120,7 +120,7 @@ class Information {
 
 		$res = Redshift::query(
 			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
-			'WHERE wiki_id = :wiki_id GROUP BY search_phrase  ' .
+			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
