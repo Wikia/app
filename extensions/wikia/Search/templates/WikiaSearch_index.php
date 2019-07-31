@@ -14,9 +14,7 @@
 								? wfMsg( 'wikiasearch2-search-scope-internal' )
 								: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
 						</span>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 					</div>
 					<div class="wds-dropdown__content">
 						<ul class="wds-list">
