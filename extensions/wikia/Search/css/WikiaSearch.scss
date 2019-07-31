@@ -16,7 +16,7 @@ $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
 	$color-search-form-background: mix($color-page, #fff, 90%);
 }
-$color-search-grid-border: mix($color-page-border, #fff, 50%);
+$color-search-grid-border: mix($color-page-border, #000, 30%);
 @if $is-dark-wiki {
 	$color-search-grid-border: mix($color-page-border, #000, 95%);
 }
@@ -58,8 +58,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 			border-right: 2px solid $color-search-form-separator;
 
 			height: 24px;
-			padding: 3px 10px;
+			padding: 3px 12px;
 			float: left;
+
+			.wds-dropdown__toggle {
+				font-weight: bold;
+			}
 
 			.wds-dropdown__content {
 				padding: 0;
