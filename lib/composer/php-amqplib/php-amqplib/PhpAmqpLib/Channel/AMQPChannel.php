@@ -1436,7 +1436,8 @@ class AMQPChannel extends AbstractChannel
 
         while (count($this->published_messages) !== 0) {
             if ($timeout > 0) {
-                $this->wait($functions, true, $timeout);
+                // PLATFORM-4192: quick dirty fix until this is resolve in the upstream
+                $this->wait($functions, false, $timeout);
             } else {
                 $this->wait($functions);
             }
@@ -1458,7 +1459,8 @@ class AMQPChannel extends AbstractChannel
 
         while (count($this->published_messages) !== 0) {
             if ($timeout > 0) {
-                $this->wait($functions, true, $timeout);
+                // PLATFORM-4192: quick dirty fix until this is resolve in the upstream
+                $this->wait($functions, false, $timeout);
             } else {
                 $this->wait($functions);
             }
