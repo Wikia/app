@@ -16,6 +16,9 @@ use Wikia\Logger\Loggable;
 class ConnectionManager {
 
 	use Loggable;
+	const CONNECTIOU_TIMEOUT = 3.0;
+	const READ_WRITE_TIMEOUT = 130.0;
+	const CHANNEL_RPC_TIMEOUT = 0.3;
 
 	/** @var string $host */
 	private $host;
@@ -84,7 +87,17 @@ class ConnectionManager {
 				$this->port,
 				$this->user,
 				$this->pass,
-				$vHost
+				$vHost,
+				false,
+				'AMQPLAIN',
+				null,
+				'en_US',
+				self::CONNECTIOU_TIMEOUT,
+				self::READ_WRITE_TIMEOUT,
+				null,
+				false,
+				60,
+				self::CHANNEL_RPC_TIMEOUT
 			);
 		}
 

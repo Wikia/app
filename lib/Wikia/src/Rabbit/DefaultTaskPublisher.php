@@ -81,9 +81,9 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 				$message = new AMQPMessage( json_encode( $payload ), [
 					'content_type' => 'application/json',
-					'content-encoding' => 'UTF-8',
+					'content_encoding' => 'UTF-8',
 					'immediate' => false,
-					'delivery_mode' => 2, // persistent
+					'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
 					'app_id' => 'mediawiki',
 					'correlation_id' => WikiaTracer::instance()->getTraceId(),
 				] );
