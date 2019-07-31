@@ -8,6 +8,10 @@
 @import "skins/shared/mixins/gradient";
 
 
+$color-search-form-separator: mix($color-page, #000, 70%);
+@if $is-dark-wiki {
+	$color-search-form-separator: mix($color-page, #fff, 70%);
+}
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
 	$color-search-form-background: mix($color-page, #fff, 90%);
@@ -46,6 +50,29 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.inter-wiki-search & {
 			margin-top: 10px;
 			padding-bottom: 29px;
+		}
+
+		.wds-dropdown {
+			background-color: $color-page;
+			border: 1px solid $color-search-grid-border;
+			border-right: 2px solid $color-search-form-separator;
+
+			height: 24px;
+			padding: 3px 10px;
+			float: left;
+
+			.wds-dropdown__content {
+				padding: 0;
+			}
+
+			.wds-list {
+				margin: 3px 11px 3px 0 !important;
+				padding: 0;
+
+				li {
+					padding: 7px 9px;
+				}
+			}
 		}
 
 		input[type="search"],

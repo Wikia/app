@@ -6,21 +6,19 @@
 				</p>
 			<?php endif ?>
 
-			<div class="grid-1 alpha">
+			<div>
 				<div class="wds-dropdown">
-					<div class="wds-dropdown__toggle">
-						<button class="wds-button wds-is-text" style="padding: 0 18px;">
-							<span>
-								<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
-									? wfMsg( 'wikiasearch2-search-scope-internal' )
-									: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
-							</span>
-							<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-								<use xlink:href="#wds-icons-dropdown-tiny"></use>
-							</svg>
-						</button>
+					<div class="wds-dropdown__toggle" style="border-right: 2px black">
+						<span>
+							<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
+								? wfMsg( 'wikiasearch2-search-scope-internal' )
+								: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
+						</span>
+						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
+							<use xlink:href="#wds-icons-dropdown-tiny"></use>
+						</svg>
 					</div>
-					<div class="wds-dropdown__content" style="padding: 0">
+					<div class="wds-dropdown__content">
 						<ul class="wds-list">
 							<li>
 								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
@@ -33,8 +31,8 @@
 						</ul>
 					</div>
 				</div>
+				<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?= $query; ?>"/>
 			</div>
-			<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?= $query; ?>"/>
 			<input type="hidden" name="fulltext" value="Search"/>
 			<input type="hidden" id="search-v2-scope" name="scope" value="<?= $scope ?>"/>
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>">
