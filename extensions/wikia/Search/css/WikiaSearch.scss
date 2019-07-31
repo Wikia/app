@@ -77,6 +77,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 				margin: 2px 0;
 				font-weight: bold;
 				line-height: 28px;
+
+				.wds-dropdown__toggle-chevron {
+					vertical-align: middle;
+				}
 			}
 
 			.wds-dropdown__content {
@@ -113,7 +117,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 		button {
 			float: none;
-			height: 32px;
+			height: 34px;
 			width: 64px;
 		}
 
