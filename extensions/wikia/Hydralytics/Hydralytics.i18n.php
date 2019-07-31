@@ -72,7 +72,7 @@ $messages['de'] = array(
 	'staff_contact' => 'Mitarbeiterkontakt',
 	'analytics_confidential' => 'Die Informationen auf dieser Seite werden unseren Administratoren freundlicherweise zur Verfügung gestellt und sollten nicht ohne Genehmigung weitergegeben werden.',
 	'logged_out' => 'Nicht angemeldet',
-	'based_on_last_30' => 'die Daten basieren auf den letzten 30 Tagen',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Community-Manager',
 	'file' => 'Datei',
 	'analytics_usage' => 'Verwendung der Übersicht',
@@ -124,6 +124,7 @@ $messages['de'] = array(
 	'page' => 'Seite',
 	'help_links' => 'Hilfe',
 	'total_page_views' => 'Seitenaufrufe (insgesamt)',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['es'] = array(
@@ -133,7 +134,7 @@ $messages['es'] = array(
 	'staff_contact' => 'Contactar con el equipo',
 	'analytics_confidential' => 'La información de esta página se comparte con nuestros administradores como muestra de cortesía, pero no debe ser compartida con otros sin permiso.',
 	'logged_out' => 'Usuarios anónimos',
-	'based_on_last_30' => 'información basada en los últimos 30 días',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Community Managers',
 	'file' => 'Archivo',
 	'analytics_usage' => 'Uso del panel',
@@ -185,6 +186,7 @@ $messages['es'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ayuda',
 	'total_page_views' => 'páginas vistas en total',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['fr'] = array(
@@ -194,7 +196,7 @@ $messages['fr'] = array(
 	'staff_contact' => 'Contacter le Staff',
 	'analytics_confidential' => 'Les informations de cette page sont partagées avec nos administrateurs par courtoisie et ne doivent pas être re-partagées sans autorisation.',
 	'logged_out' => 'Déconnectés',
-	'based_on_last_30' => 'données basées sur les 30 derniers jours',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Community Managers',
 	'file' => 'Fichier',
 	'analytics_usage' => 'Utilisation du tableau de bord',
@@ -246,6 +248,7 @@ $messages['fr'] = array(
 	'page' => 'Page',
 	'help_links' => 'Aide',
 	'total_page_views' => 'Total de pages vues',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['it'] = array(
@@ -255,7 +258,7 @@ $messages['it'] = array(
 	'staff_contact' => 'Contatta lo Staff',
 	'analytics_confidential' => 'Le informazioni su questa pagina sono condivise come cortesia verso i nostri amministratori e non dovrebbero essere ricondivise senza permesso.',
 	'logged_out' => 'Anonimi',
-	'based_on_last_30' => 'dati basati sugli ultimi 30 giorni',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Manager della comunità',
 	'file' => 'File',
 	'analytics_usage' => 'Uso del pannello',
@@ -307,6 +310,7 @@ $messages['it'] = array(
 	'page' => 'Pagina',
 	'help_links' => 'Aiuto',
 	'total_page_views' => 'Visualizzazioni di pagina totali',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['ja'] = array(
@@ -316,7 +320,7 @@ $messages['ja'] = array(
 	'staff_contact' => 'スタッフ問い合わせ',
 	'analytics_confidential' => '本ページの情報はアドミンのためのものであり、許可なく転載することを禁じます。',
 	'logged_out' => 'ログアウト',
-	'based_on_last_30' => '過去30日間のデータ',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'コミュニティ・マネージャー',
 	'file' => 'ファイル',
 	'analytics_usage' => 'ダッシュボードの使用',
@@ -368,6 +372,7 @@ $messages['ja'] = array(
 	'page' => 'ページ',
 	'help_links' => 'ヘルプ',
 	'total_page_views' => '合計ページ閲覧数',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['pl'] = array(
@@ -377,7 +382,7 @@ $messages['pl'] = array(
 	'staff_contact' => 'Kontakt do pracowników',
 	'analytics_confidential' => 'Informacje na tej stronie są udostępnione jako ukłon w stronę administratorów i nie powinny być dalej przekazywane dalej bez uzyskania zgody.',
 	'logged_out' => 'Niezalogowani',
-	'based_on_last_30' => 'dane na podstawie ostatnich 30 dni',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Menadżerowie Społeczności',
 	'file' => 'Plik',
 	'analytics_usage' => 'Wykorzystanie panelu',
@@ -396,7 +401,7 @@ $messages['pl'] = array(
 	'analyticsdashboard' => 'Panel Analytics',
 	'top_viewed_pages' => 'Najczęściej odwiedzane strony',
 	'logged_in' => 'Zalogowani',
-	'top_search_terms' => 'Internal Top Search Terms',
+	'top_search_terms' => 'Najczęściej wyszukiwane frazy',
 	'search_rank' => 'Ranking',
 	'hydralytics' => 'Hydralytics',
 	'engaged_admins' => 'Administratorzy korzystający z panelu',
@@ -418,7 +423,7 @@ $messages['pl'] = array(
 	'returning_visitors' => 'Powracających odwiedzających',
 	'top_editors' => 'Najbardziej aktywni edytorzy',
 	'hlfaqurl-text' => 'Regulaminy, procedury i FAQ',
-	'analytics_report_generated' => 'Report generated $1',
+	'analytics_report_generated' => 'Raport wygenerowany wczoraj',
 	'number_of_pageviews' => '# odsłon',
 	'right-analytics' => 'Ma dostęp do panelu analitycznego',
 	'desktop_vs_mobile' => 'Sesje desktop vs mobilne',
@@ -429,6 +434,7 @@ $messages['pl'] = array(
 	'page' => 'Strona',
 	'help_links' => 'Pomoc',
 	'total_page_views' => 'całkowita liczba odsłon',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['pt'] = array(
@@ -438,7 +444,7 @@ $messages['pt'] = array(
 	'staff_contact' => 'Contato do Staff',
 	'analytics_confidential' => 'A informação nessa página é compartilhada como cortesia de nossos administradores e não deve ser novamente compartilhada sem permissão.',
 	'logged_out' => 'Não-logados',
-	'based_on_last_30' => 'dados baseados nos últimos 30 dias',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Gerentes da Comunidade',
 	'file' => 'Arquivo',
 	'analytics_usage' => 'Uso do Painel',
@@ -490,6 +496,7 @@ $messages['pt'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ajuda',
 	'total_page_views' => 'Total de Visualizações de Página',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['ru'] = array(
@@ -499,7 +506,7 @@ $messages['ru'] = array(
 	'staff_contact' => 'Служба поддержки',
 	'analytics_confidential' => 'Информация на этой странице предоставляется только администраторам и не должна передаваться другим лицам без разрешения.',
 	'logged_out' => 'Анонимы',
-	'based_on_last_30' => 'данные за последние 30 дней',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => 'Администраторы',
 	'file' => 'Файл',
 	'analytics_usage' => 'Использование панели',
@@ -551,6 +558,7 @@ $messages['ru'] = array(
 	'page' => 'Страница',
 	'help_links' => 'Справка',
 	'total_page_views' => '- всего просмотров за 30 дней',
+	'analytics_description' => 'Доступ к [[Special:Analytics|аналитике вики для администраторов]]',
 );
 
 $messages['zh-hans'] = array(
@@ -560,7 +568,7 @@ $messages['zh-hans'] = array(
 	'staff_contact' => '员工联络',
 	'analytics_confidential' => '此页面信息仅限管理员使用，未得到许可所有信息不可与他人分享。',
 	'logged_out' => '登出',
-	'based_on_last_30' => '基于过去30天的数据',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => '社区经理',
 	'file' => '文件',
 	'analytics_usage' => '面板使用',
@@ -612,6 +620,7 @@ $messages['zh-hans'] = array(
 	'page' => '页面',
 	'help_links' => '帮助',
 	'total_page_views' => '页面浏览总量',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
 $messages['zh-hant'] = array(
@@ -621,7 +630,7 @@ $messages['zh-hant'] = array(
 	'staff_contact' => '員工聯絡',
 	'analytics_confidential' => '此頁面訊息僅限管理員使用，未得到許可所有訊息不可與他人分享。',
 	'logged_out' => '登出',
-	'based_on_last_30' => '基於過去30天的數據',
+	'based_on_last_30' => 'Data is based on the last 30 days',
 	'community_manager' => '社區經理',
 	'file' => '檔案',
 	'analytics_usage' => '面板使用',
@@ -673,5 +682,6 @@ $messages['zh-hant'] = array(
 	'page' => '頁面',
 	'help_links' => '幫助',
 	'total_page_views' => '全部頁面訪問次數',
+	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 );
 
