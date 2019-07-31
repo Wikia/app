@@ -90,7 +90,6 @@ $fandom-link-hover-color: #005252;
 }
 
 .last30 {
-	text-align: left;
 	font-style: italic;
 	display: block;
 	font-size: 12px;
@@ -123,7 +122,7 @@ $fandom-link-hover-color: #005252;
 
 .analytics_table td:nth-child(1) {
 	color: black;
-	// make links fit fandom branding instead of being wikia-specific
+	// make links fit fandom branding instead of being wiki-specific
 	a:any-link {
 		text-decoration: none;
 		color: $fandom-link-color;
@@ -153,15 +152,12 @@ $fandom-link-hover-color: #005252;
 }
 
 #analytics_confidential_header {
-	display: flex;
 	justify-content: center;
 	width: 100%;
 	margin-bottom: 10px;
 }
 
 #analytics_confidential {
-	display: inline-block;
-	width: 100%;
 	border: 2px solid $color-community;
 	background-color: $color-community;
 	color: $font-bright;
