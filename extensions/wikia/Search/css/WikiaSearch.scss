@@ -17,7 +17,7 @@ $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
 	$color-search-form-background: mix($color-page, #fff, 90%);
 }
-$color-search-grid-border: mix($color-page-border, #000, 30%);
+$color-search-grid-border: mix($color-page-border, #fff, 50%);
 @if $is-dark-wiki {
 	$color-search-grid-border: mix($color-page-border, #000, 95%);
 }
