@@ -189,7 +189,8 @@ class SpecialAnalytics extends \SpecialPage {
 						$sections['top_viewed_pages'] .= "
 							<tr>
 
-								<td><a href='".wfExpandUrl($newUri)."'>".substr(urldecode($newUri), 1)."</a></td>
+								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a>
+								</td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
