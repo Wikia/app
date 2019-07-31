@@ -199,3 +199,9 @@ $fandom-link-hover-color: #005252;
 	background-color: $color-card-background;
 	color: black;
 }
+
+/* Remove license footer when on Special:Analytics */
+body.mw-special-Analytics .license-description {
+	display:  none;
+}
+

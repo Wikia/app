@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.7;
+	const CACHE_VERSION = 3.8;
 
 	/**
 	 * Output HTML
@@ -118,13 +118,21 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Logged in vs Logged out Edits
 				 */
-				$loggedInOutEdits = Information::getEditsLoggedInOut();
-				$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $loggedInOutEdits);
+				$edits = Information::getEditsLoggedInOut();
+
+				global $wgDisableAnonymousEditing;
+				// hide this section when the wiki does not allow logged out edits
+				if ( !empty( $wgDisableAnonymousEditing ) ) {
+					$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData( 'logged_in_out', $edits );
+				}
+				else {
+					unset( $sections['logged_in_out'] );
+				}
 
 				/**
 				 *  Edit Per Day
 				 */
-				$dailyEdits = $loggedInOutEdits['all'];
+				$dailyEdits = $edits['all'];
 				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
 
 				/**
@@ -173,8 +181,14 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topPages['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
+						// remove "/wiki/" and underscores from page names
+						$title = str_replace('/wiki/', '', $newUri);
+						$title = str_replace('_', ' ', $title);
+
 						$sections['top_viewed_pages'] .= "
 							<tr>
+
 								<td><a href='".wfExpandUrl($newUri)."'>".substr(urldecode($newUri), 1)."</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
@@ -247,10 +261,13 @@ class SpecialAnalytics extends \SpecialPage {
 						";
 					foreach ($topFiles['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
 						// remove NS_FILE namespace prefix
 						$uriText = explode(":", $newUri);
 						array_shift($uriText);
 						$uriText = implode(":", $uriText);
+						$uriText = str_replace('_', ' ', $uriText);
+
 						$sections['most_visited_files'] .= "
 							<tr>
 								<td> <a href='".wfExpandUrl($newUri)."'>".urldecode($uriText)."</a></td>
