@@ -121,12 +121,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
-	/*
-		ToDo: remove temporary stickyTLB prevention hack
-		Original line:
-		const stickySlotsLines = instantGlobals.get('wgAdDriverStickySlotsLines');
-	*/
-	const stickySlotsLines = utils.geoService.isProperGeo(['US', 'UK', 'GB', 'DE', 'PL']) ? getInstantGlobal('wgAdDriverStickySlotsLines') : [];
+	const stickySlotsLines = getInstantGlobal('wgAdDriverStickySlotsLines');
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
