@@ -57,6 +57,55 @@ class WikiaRobots {
 	];
 
 	/**
+	 * Namespaces to disallow
+	 *
+	 * @var int[]
+	 */
+	private $blockedNamespaces = [
+		NS_SPECIAL,
+		NS_TEMPLATE,
+		NS_TEMPLATE_TALK,
+		NS_USER_TALK,
+	];
+
+	/**
+	 * List of additional paths to block
+	 *
+	 * @var array
+	 */
+	private $blockedPaths = [
+		// Discussions user pages
+		'/d/u/',
+		// Discussions guidelines
+		'/d/g',
+		// Fandom old URLs
+		'/fandom?p=',
+		//Mobile Wiki search URL
+		'/search',
+
+		// AdEngine recovery API
+		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=bt',
+		'/wikia.php?controller=AdEngine3ApiController&method=getRecCode&type=hmd',
+	];
+
+	/**
+	 * List of params to disallow
+	 *
+	 * @var string[]
+	 */
+	private $blockedParams = [
+		'action',
+		'feed',
+		'from', // user-supplied legacy MW pagination
+		'oldid',
+		'printable',
+		'redirect',
+		'useskin',
+		'uselang',
+		'veaction',
+	];
+
+	/**
 	 * Whether the current robots setup is experimental or not
 	 * This switches the cache time from 24 hours to 1 hour
 	 * @var bool
@@ -84,11 +133,29 @@ class WikiaRobots {
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgRequest,
-			   $wgWikiaEnvironment;
+			   $wgRobotsTxtCustomRules,
+			   $wgWikiaEnvironment,
+			   $wgForcedNoindexEnabled;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' );
 		$this->experiment = false;
+
+		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {
+			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
+				$this->allowedSpecialPages[$page] = 'allow';
+			}
+		}
+
+		// TODO: reverse the logic
+		// Have $wgRobotsTxtCustomRules['allowNamespaces'] which removes them from
+		// $this->namespacesToBlock
+		if ( !$wgForcedNoindexEnabled && isset( $wgRobotsTxtCustomRules['disallowNamespace'] ) ) {
+			$this->blockedNamespaces = array_merge(
+				$this->blockedNamespaces,
+				(array) $wgRobotsTxtCustomRules['disallowNamespace']
+			);
+		}
 	}
 
 	/**
@@ -97,12 +164,13 @@ class WikiaRobots {
 	 */
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
-		       $wgRobotsTxtBlockedWiki,
-		       $wgSitemapXmlExposeInRobots,
-		       $wgServer,
-		       $wgScriptPath,
-		       $wgRequest,
-		       $wgCityId;
+			   $wgRobotsTxtBlockedWiki,
+			   $wgSitemapXmlExposeInRobots,
+			   $wgServer,
+			   $wgScriptPath,
+			   $wgRequest,
+			   $wgCityId,
+			   $wgForcedNoindexEnabled;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -117,6 +185,23 @@ class WikiaRobots {
 				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
 			}
+			if( !$wgForcedNoindexEnabled ){
+				// Block namespaces
+				foreach ( $this->blockedNamespaces as $ns ) {
+					$robots->addDisallowedPaths(
+						$this->pathBuilder->buildPathsForNamespace( $ns )
+					);
+				}
+
+				// Block additional paths
+				$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
+
+				// Block params
+				foreach ( $this->blockedParams as $param ) {
+					$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
+				}
+			}
+
 
 			// Allow specific paths
 			$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ) );
