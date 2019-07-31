@@ -7,56 +7,6 @@ class Information {
 	const LAST_DAYS = 30;
 
 	/**
-	 * Get the wiki managers on this wiki.
-	 *
-	 * @access	public
-	 * @return	array	Wiki Managers
-	 */
-	static public function getWikiManagers() {
-		global $wgWikiManagers;
-		return (array) $wgWikiManagers;
-	}
-
-	/**
-	 * Get a link to the FAQ page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getFaqLink() {
-		return \Linker::makeExternalLink(
-			'link to faq TODO',
-			wfMessage('hlfaqurl-text')
-		);
-	}
-
-	/**
-	 * Get a link to the Feedback page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getFeedbackLink() {
-		return \Linker::makeExternalLink(
-			'feedback link TODO',
-			wfMessage('hlfeedbackurl-text')
-		);
-	}
-
-	/**
-	 * Get a link to the Slack page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getSlackLink() {
-		return \Linker::makeExternalLink(
-			'slack link todo',
-			wfMessage('hlslackurl-text')
-		);
-	}
-
-	/**
 	 * Get the top editors for the wiki over all time or optionally with monthly counts.
 	 *
 	 * @access	public
