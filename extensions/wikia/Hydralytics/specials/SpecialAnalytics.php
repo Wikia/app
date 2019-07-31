@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.63;
+	const CACHE_VERSION = 3.8;
 
 	/**
 	 * Output HTML
@@ -173,8 +173,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('views')->escaped()."</th>
 								<th>".wfMessage('page')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -188,8 +188,9 @@ class SpecialAnalytics extends \SpecialPage {
 
 						$sections['top_viewed_pages'] .= "
 							<tr>
+
+								<td><a href='".wfExpandUrl($newUri)."'>".substr(urldecode($newUri), 1)."</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
-								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
 							</tr>";
 					}
 					$sections['top_viewed_pages'] .= "
@@ -206,8 +207,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('user')->escaped()."</th>
+								<th>".wfMessage('points')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -227,8 +228,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('user')->escaped()."</th>
+								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('active_month')->escaped()."</th>
 							</tr>
 						</thead>
@@ -252,8 +253,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('views')->escaped()."</th>
 								<th>".wfMessage('file')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -269,8 +270,8 @@ class SpecialAnalytics extends \SpecialPage {
 
 						$sections['most_visited_files'] .= "
 							<tr>
-								<td>".$this->getLanguage()->formatNum($views)."</td>
 								<td> <a href='".wfExpandUrl($newUri)."'>".urldecode($uriText)."</a></td>
+								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
 					$sections['most_visited_files'] .= "
@@ -334,8 +335,8 @@ class SpecialAnalytics extends \SpecialPage {
 				<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('search_rank')->escaped()."</th>
 								<th>".wfMessage('search_term')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>";
@@ -345,8 +346,16 @@ class SpecialAnalytics extends \SpecialPage {
 
 				foreach ($terms as $term => $count) {
 					$url = $specialSearch->getLocalURL( [ 'query' => $term ] );
-					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td>" .
-                         '<td><a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($term)."</a></td></tr>";
+					$sections['top_search_terms'] .="
+					<tr>
+						<td>
+							<a href='".htmlspecialchars($url)."'>".htmlspecialchars($term)."</a>
+						</td>
+						<td>
+							".$this->getLanguage()->formatNum($count).
+						"</td>
+					</tr>
+					";
 				}
 
 				$sections['top_search_terms'] .= "

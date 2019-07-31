@@ -1,17 +1,20 @@
 @import 'skins/shared/color';
 
-$font-bright: rgb(255, 255, 255);
-$font-medium: rgba(255,255,255,0.7);
-$accent-grey:#B3B3B3;
-$content-box-color: #37393D;
-$link-color: #F58121;
-$alt-orange: #FFB67A;
-$hydra-green: #b0e03b;
-$chart-background: #f7faff;
+// style according to Proposition 1
+// https://wikia-inc.atlassian.net/wiki/spaces/DE/pages/553156730/Design+-+Admin+Analytics+Dashboard
+// white background, black fonts, Fandom-style links, community/wiki's color only table headers
+// use set Fandom colors from here: https://fandomdesignsystem.com/base-styles/colors
+$font-bright: #fff;
+$font-medium: #5f7a7b;
+$color-card-background: $color-white;
+$color-community: $color-community-header;
 
-// FANDOM color pallette
+// FANDOM color palette
 $lead-aqua: #00D6D6;
 $green-navy: #002A32;
+$accent-grey: #bed1cf;
+$fandom-link-color: #088488;
+$fandom-link-hover-color: #005252;
 
 #analytics_wrapper {
 	padding: 10px;
@@ -72,7 +75,7 @@ $green-navy: #002A32;
 }
 
 .grid_box_header {
-	background-color: $content-box-color;
+	background-color: $color-community;
 	color: $font-bright;
 	font-weight: bolder;
 	border-radius: 4px 4px 0 0;
@@ -87,7 +90,8 @@ $green-navy: #002A32;
 }
 
 .last30 {
-	text-align: right;
+	font-style: italic;
+	display: block;
 	font-size: 12px;
 	padding: 5px;
 	color: $font-medium;
@@ -96,10 +100,6 @@ $green-navy: #002A32;
 .analytics_table {
 	width: 100%;
 	border-collapse: collapse;
-}
-
-.analytics_table thead {
-	color: $green-navy;
 }
 
 .analytics_table thead tr {
@@ -121,13 +121,20 @@ $green-navy: #002A32;
 }
 
 .analytics_table td:nth-child(1) {
-	color: $lead-aqua;
+	color: black;
+	// make links fit fandom branding instead of being wiki-specific
+	a:any-link {
+		text-decoration: none;
+		color: $fandom-link-color;
+	}
+	a:hover {
+		color: $fandom-link-hover-color;
+	}
 }
 
 .analytics_table td:nth-child(2) {
 	color: black;
 }
-
 #analytics_header {
 	display: flex;
 	justify-content: flex-end;
@@ -145,18 +152,16 @@ $green-navy: #002A32;
 }
 
 #analytics_confidential_header {
-	display: flex;
 	justify-content: center;
 	width: 100%;
 	margin-bottom: 10px;
 }
 
 #analytics_confidential {
-	display: inline-block;
-	border: 2px solid $content-box-color;
-	background-color: $content-box-color;
+	border: 2px solid $color-community;
+	background-color: $color-community;
 	color: $font-bright;
-	font-size: 1.3em;
+	font-size: 1.0em;
 	letter-spacing: 1px;
 	text-align: center;
 	padding: 5px 10px;
@@ -172,13 +177,13 @@ $green-navy: #002A32;
 }
 
 .grid_box_inner {
-	background-color: #f7faff;
+	background-color: $color-card-background;
 	padding: 5px;
 	position: relative;
 }
 
 .grid_box_chart {
-	background-color: $chart-background;
+	background-color: $color-card-background;
 	flex: 1 0 300px;
 	padding: 5px;
 	position: relative;
@@ -191,7 +196,7 @@ $green-navy: #002A32;
 }
 
 .chart-footer {
-	background-color: $chart-background;
+	background-color: $color-card-background;
 	color: black;
 }
 
@@ -199,3 +204,4 @@ $green-navy: #002A32;
 body.mw-special-Analytics .license-description {
 	display:  none;
 }
+
