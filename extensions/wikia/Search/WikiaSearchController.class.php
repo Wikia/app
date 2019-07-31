@@ -231,14 +231,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$title = wfMsg( 'wikiasearch2-page-title-with-query', [
 				ucwords( $searchConfig->getQuery()->getSanitizedQuery() ),
-				$this->wg->Sitename,
 			] );
-
-			if (!$searchConfig->isInternalScope()) {
-				$title = wfMsg( 'wikiasearch2-page-title-with-query-crosswiki', [
-					ucwords( $searchConfig->getQuery()->getSanitizedQuery() )
-				] );
-			}
 
 			$this->wg->Out->setPageTitle( $title );
 		} else {

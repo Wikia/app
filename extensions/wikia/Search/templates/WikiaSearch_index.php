@@ -8,7 +8,7 @@
 
 			<div>
 				<div class="wds-dropdown">
-					<div class="wds-dropdown__toggle" style="border-right: 2px black">
+					<div class="wds-dropdown__toggle">
 						<span>
 							<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
 								? wfMsg( 'wikiasearch2-search-scope-internal' )
