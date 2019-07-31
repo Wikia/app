@@ -167,6 +167,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testDisallowedNamespaces() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', null );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
@@ -175,6 +176,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testCustomRobotsRulesSingleNamespace() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => NS_HELP ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 	}
@@ -182,6 +184,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testCustomRobotsRulesMultipleNamespaces() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => [ NS_USER, NS_HELP ] ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 	}
@@ -189,34 +192,43 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testAllowedSpecialPages() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', null );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
+		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
+		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	public function testCustomRobotsRulesSingleSpecialPage() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'allowSpecialPage' => 'MyPage1' ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
+		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
+		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	public function testCustomRobotsRulesMultipleSpecialPages() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'allowSpecialPage' => [ 'MyPage1', 'MyPage2' ] ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
+		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
+		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
 	/**
