@@ -196,7 +196,7 @@ class FSFile {
 		else {
 			\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - sha1_file failed',
 				[
-					'local_path' => $this->path,
+					'local_path' => strval( $this->path ),
 					'file_exists_bool' => file_exists( $this->path )
 				]
 			);
