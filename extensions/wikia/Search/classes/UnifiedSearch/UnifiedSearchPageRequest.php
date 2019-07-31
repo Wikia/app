@@ -35,7 +35,7 @@ class UnifiedSearchPageRequest {
 		if ($config->isInternalScope()) {
 			$this->isInternal = true;
 		}
-		$this->page = $config->getPage();
+		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
 		$this->imageOnly = $config->isImageOnly();
