@@ -32,7 +32,10 @@ class UnifiedSearchPageRequest {
 		$this->query = $config->getQuery();
 		$this->languageCode = $config->getLanguageCode();
 		$this->wikiId = $config->getWikiId();
-		$this->page = $config->getPage() - 1;
+		if ($config->isInternalScope()) {
+			$this->isInternal = true;
+		}
+		$this->page = $config->getPage();
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
 		$this->imageOnly = $config->isImageOnly();
