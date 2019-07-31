@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.8;
+	const CACHE_VERSION = 3.9;
 
 	/**
 	 * Output HTML
@@ -189,8 +189,7 @@ class SpecialAnalytics extends \SpecialPage {
 						$sections['top_viewed_pages'] .= "
 							<tr>
 
-								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a>
-								</td>
+								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
