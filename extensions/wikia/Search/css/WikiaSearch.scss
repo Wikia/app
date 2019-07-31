@@ -8,6 +8,7 @@
 @import "skins/shared/mixins/gradient";
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-functions/index';
 
 $color-search-form-separator: mix($color-page, #000, 70%);
 @if $is-dark-wiki {
@@ -65,8 +66,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 			}
 		}
 
+		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
 		.wds-dropdown {
-			@include dropdown-theming($color-page, $color-text, $color-links, $color-search-grid-border);
 
 			padding: 0;
 			float: left;
@@ -88,12 +90,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 			}
 
 			.wds-list {
-				margin: 3px 11px 3px 0;
+				margin: 3px 0;
 				padding: 0;
-
-				li {
-					padding: 7px 9px;
-				}
 			}
 		}
 

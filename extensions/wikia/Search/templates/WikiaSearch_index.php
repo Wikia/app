@@ -17,7 +17,7 @@
 						<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 					</div>
 					<div class="wds-dropdown__content">
-						<ul class="wds-list">
+						<ul class="wds-list wds-is-linked">
 							<li>
 								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
 									<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></a>
