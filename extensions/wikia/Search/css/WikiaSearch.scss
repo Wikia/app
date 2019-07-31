@@ -53,18 +53,30 @@ $form-negative-side-padding: $form-side-padding*-1;
 			padding-bottom: 29px;
 		}
 
-		.wds-dropdown {
+		.WikiaSearchInputWrapper {
 			border: 1px solid $color-search-grid-border;
-			border-right: 2px solid $color-search-form-separator;
+			display: inline-flex;
+			margin-right: 10px;
 
+			.search-v2-input {
+				margin-right: 0;
+				border:none;
+				height: 26px
+			}
+		}
+
+		.wds-dropdown {
 			@include dropdown-theming($color-page, $color-text, $color-links, $color-search-grid-border);
 
-			height: 24px;
-			padding: 3px 12px;
+			padding: 0;
 			float: left;
 
 			.wds-dropdown__toggle {
+				border-right: 1px solid $color-search-form-separator;
+				padding: 0 12px;
+				margin: 2px 0;
 				font-weight: bold;
+				line-height: 28px;
 			}
 
 			.wds-dropdown__content {
@@ -72,7 +84,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			}
 
 			.wds-list {
-				margin: 3px 11px 3px 0 !important;
+				margin: 3px 11px 3px 0;
 				padding: 0;
 
 				li {

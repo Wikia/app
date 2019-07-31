@@ -6,7 +6,7 @@
 				</p>
 			<?php endif ?>
 
-			<div>
+			<div class="WikiaSearchInputWrapper">
 				<div class="wds-dropdown">
 					<div class="wds-dropdown__toggle">
 						<span>
