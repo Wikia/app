@@ -104,6 +104,12 @@ class FullContent extends AbstractService {
 		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
 
 		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
+
+		foreach ($dom->find('div[class="main-page-tag-rcs"]') as $node) {
+			$node->outertext = '';
+		}
+		$dom->load($dom->save());
+
 		if ( $dom->root ) {
 			$this->removeGarbageFromDom( $dom );
 		}
