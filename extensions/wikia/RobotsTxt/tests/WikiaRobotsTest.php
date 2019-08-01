@@ -171,12 +171,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
-		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
-		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
 
 	public function testCustomRobotsRulesSingleNamespace() {
@@ -185,13 +179,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => NS_HELP ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
-
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
-		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
 
 	public function testCustomRobotsRulesMultipleNamespaces() {
@@ -200,13 +187,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => [ NS_USER, NS_HELP ] ] );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
-
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
-		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
 
 	public function testAllowedSpecialPages() {
