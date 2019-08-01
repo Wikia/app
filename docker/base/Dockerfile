@@ -142,7 +142,7 @@ RUN php-fpm --test
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-# run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=88fd14bf2e0
+# update this value to a commit hash whenever this file (or any other in this directory) changes
+ENV WIKIA_BASE_IMAGE_HASH=0f85961ff26
 
 WORKDIR /usr/wikia/slot1/current/src
