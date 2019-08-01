@@ -440,6 +440,7 @@ $wgGroupPermissions['staff']['edithub'] = true;
 $wgGroupPermissions['helper']['edithub'] = true;
 
 $wgGroupPermissions ['staff']['InterwikiEdit'] = true;
+$wgGroupPermissions ['wiki-manager']['InterwikiEdit'] = true;
 
 //add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['managewikiahome'] = false;
@@ -669,8 +670,13 @@ $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = t
 // SUS-5473 | allow staff members to request a run of updateSpecialPages
 $wgGroupPermissions['*']['schedule-update-special-pages'] = false;
 $wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['wiki-manager']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['content-team-member']['schedule-update-special-pages'] = true;
+
 // DE-4374 | allow staff members, helpers and wikis admins to access Special:Analytics
 $wgGroupPermissions['*']['analytics'] = false;
 $wgGroupPermissions['sysop']['analytics'] = true;
 $wgGroupPermissions['helper']['analytics'] = true;
 $wgGroupPermissions['staff']['analytics'] = true;
+$wgGroupPermissions['wiki-manager']['analytics'] = true;
+$wgGroupPermissions['content-team-member']['analytics'] = true;

@@ -40,7 +40,7 @@ class RelatedForumDiscussionController extends WikiaService {
 			if ( $wikiaPage ) {
 				$wikiaPage->doPurge();
 			} else {
-				self::logError( "Found a null related wikipage on thread purge", [ "articleID" => $id, "threadID" => $threadId ] );
+				self::logError( "Found a null related wikipage on thread purge", [ "articleId" => $id, "threadId" => $threadId ] );
 			}
 		}
 	}

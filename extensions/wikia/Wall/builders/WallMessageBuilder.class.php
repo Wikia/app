@@ -262,7 +262,7 @@ class WallMessageBuilder extends WallBuilder {
 				'parentPageTitle' => $this->parentPageTitle->getPrefixedText(),
 				'parentPageId' => $this->parentPageTitle->getArticleID(),
 				'parentMessageTitle' => $this->parentMessage ? $this->parentMessage->getTitle()->getPrefixedText() : '',
-				'parentMessageId' => $this->parentMessage ? $this->parentMessage->getId() : '',
+				'parentMessageId' => $this->parentMessage ? strval( $this->parentMessage->getId() ) : '',
 			]);
 
 		throw new $class( $message, $context );

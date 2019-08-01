@@ -16,6 +16,7 @@ class HeliosClient {
 	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
 	const USERNAME = 'username';
 	const PASSWORD = 'password'; //NOSONAR
+	const EMAIL = 'email';
 	const METHOD = 'method';
 	const HEADERS = 'headers';
 	const METHOD_POST = 'POST';
@@ -322,10 +323,11 @@ class HeliosClient {
 		);
 	}
 
-	public function validatePassword( $password, $name ) {
+	public function validatePassword( $password, $name, $email ) {
 		$postData = [
 			self::PASSWORD => $password,
 			self::USERNAME => $name,
+			self::EMAIL => $email,
 		];
 
 		return $this->request(

@@ -876,7 +876,7 @@ class User implements JsonSerializable {
 	 * @return mixed: true on success, string or array of error message on failure
 	 */
 	public function getPasswordValidity( $password ) {
-		$result = self::heliosClient()->validatePassword( $password, $this->getName() );
+		$result = self::heliosClient()->validatePassword( $password, $this->getName(), $this->getEmail() );
 
 		if ( !empty( $result->success ) && $result->success ) {
 			return true;

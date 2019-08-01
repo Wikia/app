@@ -754,7 +754,7 @@ class ArticleAsJson {
 				\Wikia\Logger\WikiaLogger::instance()->notice(
 					'ArticleAsJson - Media width was empty - fallback to fallbackSize',
 					[
-						'media_details' => $mediaDetail,
+						'media_details' => json_encode( $mediaDetail ),
 						'fallback_size' => $fallbackSize
 					]
 				);
@@ -766,7 +766,7 @@ class ArticleAsJson {
 				\Wikia\Logger\WikiaLogger::instance()->notice(
 					'ArticleAsJson - Media height was empty - fallback to fallbackSize',
 					[
-						'media_details' => $mediaDetail,
+						'media_details' => json_encode( $mediaDetail ),
 						'fallback_size' => $fallbackSize
 					]
 				);

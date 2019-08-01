@@ -20,7 +20,11 @@ class UnifiedSearchCommunityRequest {
 		$this->query = $config->getQuery();
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
-		$this->language = $config->getLanguageCode();
+		if ( is_array( $config->getLanguageCode() ) ) {
+			$this->language = $config->getLanguageCode()[0] ?? null;
+		} else {
+			$this->language = $config->getLanguageCode();
+		}
 	}
 
 	/**

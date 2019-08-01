@@ -33,6 +33,10 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 					return this._getReplyUpvoteText(notification);
 				} else if (notification.type === c.notificationTypes.announcement) {
 					return escape(notification.snippet);
+				} else if (notification.type === c.notificationTypes.threadAtMention) {
+					return this._getThreadAtMentionText(notification)
+				} else if (notification.type === c.notificationTypes.postAtMention) {
+					return this._getPostAtMentionText(notification)
 				} else {
 					return notification.title;
 				}
@@ -57,14 +61,23 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			};
 
 			this._getReplyKey = function (title, totalUniqueActors) {
-				var user = totalUniqueActors <= 1 ? '' :
-					totalUniqueActors === 2 ? 'two-users-' : 'multiple-users-';
-				return 'notifications-replied-by-' + user + (title ? 'with-title' : 'no-title');
+				if (totalUniqueActors <= 1) {
+					return title ? 'notifications-replied-by-with-title' : 'notifications-replied-by-no-title';
+				}
+
+				if (totalUniqueActors === 2) {
+					return title ?
+						'notifications-replied-by-two-users-with-title' :
+						'notifications-replied-two-users-by-no-title';
+				}
+
+				return title ?
+					'notifications-replied-by-multiple-users-with-title' :
+					'notifications-replied-by-multiple-users-no-title';
 			};
 
 			this._getPostUpvoteText = function (notification) {
-				var key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				var message = getMessage(key);
+				var message = getMessage(this._getPostUpvoteKey(notification.title, notification.totalUniqueActors));
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors)
@@ -72,17 +85,51 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			};
 
 			this._getReplyUpvoteText = function (notification) {
-				var key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				var message = getMessage(key);
+				var message = getMessage(this._getReplyUpvoteKey(notification.title, notification.totalUniqueActors));
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors)
 				});
 			};
 
-			this._getUpvoteKey = function (title, totalUniqueActors) {
-				return '-' + (totalUniqueActors <= 1 ? 'single-user' : 'multiple-users')
-					+ '-' + (title ? 'with-title' : 'no-title');
+			this._getThreadAtMentionText = function (notification) {
+				var message = getMessage('notifications-post-at-mention');
+				return fillArgs(message, {
+					mentioner: escape(notification.latestActors[0].name),
+					postTitle: bold(escape(notification.title))
+				});
+			};
+
+			this._getPostAtMentionText = function (notification) {
+				var message = getMessage('notifications-reply-at-mention');
+				return fillArgs(message, {
+					mentioner: escape(notification.latestActors[0].name),
+					postTitle: bold(escape(notification.title))
+				});
+			};
+
+			this._getPostUpvoteKey = function (title, totalUniqueActors) {
+				if (totalUniqueActors <= 1) {
+					return title ?
+						'notifications-post-upvote-single-user-with-title' :
+						'notifications-post-upvote-single-user-no-title';
+				}
+
+				return title ?
+					'notifications-post-upvote-multiple-users-with-title' :
+					'notifications-post-upvote-multiple-users-no-title';
+			};
+
+			this._getReplyUpvoteKey = function (title, totalUniqueActors) {
+				if (totalUniqueActors <= 1) {
+					return title ?
+						'notifications-reply-upvote-single-user-with-title' :
+						'notifications-reply-upvote-single-user-no-title';
+				}
+
+				return title ?
+					'notifications-reply-upvote-multiple-users-with-title' :
+					'notifications-reply-upvote-multiple-users-no-title';
 			};
 		}
 
