@@ -110,7 +110,7 @@ container.
 
 nginx image:
 ```bash
-docker build -f Dockerfile-nginx -t artifactory.wikia-inc.com/platform/nginx-wikia-devbox:latest .
+docker build -f Dockerfile-nginx -t artifactory.wikia-inc.com/platform/nginx-wikia-devbox:latest ..
  ```
  
 php-fpm image:
