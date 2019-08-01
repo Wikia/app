@@ -75,9 +75,6 @@ class SearchApiController extends WikiaApiController {
 		}
 		$request = new UnifiedSearchPageRequest( $config );
 		$result = $service->pageSearch( $request );
-		if ( $result->resultsFound === 0 ) {
-			throw new NotFoundApiException();
-		}
 		$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
 
 	}
