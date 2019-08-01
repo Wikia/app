@@ -3,6 +3,7 @@
  * Class definition for SearchApiController
  */
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
@@ -64,6 +65,8 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
+		WikiaLogger::instance()->info("Calling mediawiki search api");
+
 		$config = $this->getConfigFromRequest();
 		$service = new UnifiedSearchService();
 
@@ -72,9 +75,6 @@ class SearchApiController extends WikiaApiController {
 		}
 		$request = new UnifiedSearchPageRequest( $config );
 		$result = $service->pageSearch( $request );
-		if ( $result->resultsFound === 0 ) {
-			throw new NotFoundApiException();
-		}
 		$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
 
 	}
