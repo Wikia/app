@@ -1,12 +1,9 @@
 <?php
 namespace Wikia\Search\Result;
 
-use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, PromoImage;
+use Wikia\Search\Utilities, CommunityDataService, ImagesService, PromoImage;
 
 class ResultHelper {
-	const MAX_WORD_COUNT_EXACT_MATCH = 40;
-	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
-
 	/**
 	 * Extends search result with additional data from outside search index, like description and image
 	 *

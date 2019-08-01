@@ -361,7 +361,7 @@ class WikiaView {
 
 		if ( json_last_error() !== JSON_ERROR_NONE ) {
 			WikiaLogger::instance()->error( 'Partial JSON output rendered because of json_encode error', [
-				'error_msg' => json_last_error_msg()
+				'error_message' => json_last_error_msg()
 			] );
 		}
 

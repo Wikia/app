@@ -18,8 +18,6 @@ services:
       - ../base/lua/slot_server.lua:/usr/local/openresty/site/wikia/slot_server.lua:ro
     depends_on:
       - php-wikia
-  logger:
-    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
   php-wikia:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
@@ -30,8 +28,7 @@ services:
       - WIKIA_DATACENTER=$WIKIA_DATACENTER
       - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
       - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
-      - LOG_SOCKET_ONLY=yes
-      - LOG_SOCKET_ADDRESS=tcp://logger:9999
+      - LOG_STDOUT_ONLY=yes
       - WIKIA_FORCE_DEV_ONLY=yes
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
     depends_on:

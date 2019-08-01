@@ -4,22 +4,20 @@ declare( strict_types=1 );
 
 namespace Wikia\Search\UnifiedSearch;
 
-use Wikia\Search\Result;
-
-final class UnifiedSearchWikiMatch {
+final class UnifiedSearchRelatedCommunity {
 
 	/** @var string */
 	private $searchQuery;
-	/** @var Result */
+	/** @var UnifiedSearchResultItem */
 	private $result;
 
-	public function __construct( array $result, string $searchQuery) {
+	public function __construct( UnifiedSearchResultItem $result, string $searchQuery) {
 
 		$this->searchQuery = $searchQuery;
-		$this->result = new Result($result);
+		$this->result = $result;
 	}
 
-	public function getResult(): Result {
+	public function getResult(): UnifiedSearchResultItem {
 		return $this->result;
 	}
 

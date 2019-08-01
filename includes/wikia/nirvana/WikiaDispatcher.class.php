@@ -265,8 +265,8 @@ class WikiaDispatcher {
 					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
 					[
 						'exception' => $e,
-						'controller_name' => $controllerClassName,
-						'method_name' => isset( $method ) ? $method : ''
+						'controller' => $controllerClassName,
+						'method' => isset( $method ) ? $method : ''
 					]
 				);
 

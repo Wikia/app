@@ -8,7 +8,7 @@ use Solarium_Query_Select;
 use Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
 use Wikia\Search\Traits\ArrayConfigurableTrait;
-use Wikia\Search\UnifiedSearch\UnifiedSearchWikiMatch;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRelatedCommunity;
 
 /**
  * A config class intended to handle variable flags for search
@@ -341,9 +341,9 @@ class Config {
 	protected $xwikiArticleThreshold = 50;
 
 	/**
-	 * @var UnifiedSearchWikiMatch|null
+	 * @var UnifiedSearchRelatedCommunity|null
 	 */
-	private $unifiedWikiMatch;
+	private $relatedCommunity;
 
 	/**
 	 * Constructor method
@@ -584,7 +584,7 @@ class Config {
 	 * @return boolean
 	 */
 	public function hasWikiMatch() {
-		return $this->wikiMatch !== null || $this->unifiedWikiMatch !== null;
+		return $this->wikiMatch !== null || $this->relatedCommunity !== null;
 	}
 
 	/**
@@ -651,8 +651,8 @@ class Config {
 		return $this;
 	}
 
-	public function setUnifiedWikiMatch( UnifiedSearchWikiMatch $wikiMatch ) {
-		$this->unifiedWikiMatch = $wikiMatch;
+	public function setRelatedCommunity( UnifiedSearchRelatedCommunity $wikiMatch ) {
+		$this->relatedCommunity = $wikiMatch;
 
 		return $this;
 	}
@@ -676,10 +676,10 @@ class Config {
 	}
 
 	/**
-	 * @return UnifiedSearchWikiMatch|null
+	 * @return UnifiedSearchRelatedCommunity|null
 	 */
-	public function getUnifiedWikiMatch() {
-		return $this->unifiedWikiMatch;
+	public function getRelatedCommunity() {
+		return $this->relatedCommunity;
 	}
 
 	/**

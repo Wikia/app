@@ -1022,6 +1022,13 @@ function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
 	$db->commit( __METHOD__ );
 }
 
+// PLATFORM-4222 - to be removed once we switch to PHP 7.3+ everywhere
+if ( !function_exists( 'is_countable' ) ) {
+	function is_countable( $value ) {
+		return is_array( $value ) || $value instanceof Countable;
+	}
+}
+
 if ( !function_exists( 'http_build_url' ) ) {
 	define( 'HTTP_URL_REPLACE', 1 );				// Replace every part of the first URL when there's one of the second URL
 	define( 'HTTP_URL_JOIN_PATH', 2 );			// Join relative paths

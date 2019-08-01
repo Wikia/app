@@ -41,13 +41,13 @@ class CreateNewWikiTask extends BaseTask {
 		$wgErrorLog = false;
 
 		if ( $params['founderId'] ) {
-			$this->info('loading founding user', ['founder_id' => $params['founderId']]);
+			$this->info('loading founding user', ['founderId' => $params['founderId']]);
 			$this->founder = \User::newFromId( $params['founderId'] );
 			$this->founder->load();
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
-			$this->warning('cannot load founding user', ['founder_id' => $params['founderId']]);
+			$this->warning('cannot load founding user', ['founderId' => $params['founderId']]);
 			if ( !empty( $params['founderName'] ) ) {
 				$this->founder = \User::newFromName( $params['founderName'] );
 				$this->founder->load();
@@ -83,19 +83,19 @@ class CreateNewWikiTask extends BaseTask {
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge" );
 		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run update.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+		$this->info( 'run update.php', ['exit_status' => $exitStatus, 'output' => $output] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/initStats.php --server={$server}" );
 		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run initStats.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+		$this->info( 'run initStats.php', ['exit_status' => $exitStatus, 'output' => $output] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only" );
 		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run refreshLinks.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+		$this->info( 'run refreshLinks.php', ['exit_status' => $exitStatus, 'output' => $output] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/updateSpecialPages.php --server={$server}" );
 		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run updateSpecialPages.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+		$this->info( 'run updateSpecialPages.php', ['exit_status' => $exitStatus, 'output' => $output] );
 
 		// SUS-3264 | set up events_local_users entries directly, instead of calling backend script
 		$this->info( "Setting up events_local_users table entries" );
@@ -325,7 +325,7 @@ class CreateNewWikiTask extends BaseTask {
 				$this->warning( 'talkpage already exists', ['url' => $talkPage->getFullURL()] );
 			}
 		} else {
-			$this->error( "Can't take talk page for user", ['founder_id' => $this->founder->getId()] );
+			$this->error( "Can't take talk page for user", ['founderId' => $this->founder->getId()] );
 		}
 		$wgUser = $saveUser; // Restore user object after creating talk message
 		return true;
