@@ -73,19 +73,19 @@ $form-negative-side-padding: $form-side-padding*-1;
 			padding: 0;
 			float: left;
 
-			.wds-dropdown__toggle {
+			&__toggle {
 				border-right: 1px solid $color-search-form-separator;
-				padding: 0 12px;
-				margin: 2px 0;
 				font-weight: bold;
 				line-height: 28px;
+				margin: 2px 0;
+				padding: 0 12px;
 
-				.wds-dropdown__toggle-chevron {
+				&-chevron {
 					vertical-align: middle;
 				}
 			}
 
-			.wds-dropdown__content {
+			&__content {
 				padding: 0;
 			}
 

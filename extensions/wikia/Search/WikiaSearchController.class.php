@@ -181,8 +181,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setPage( $request->getInt( 'page', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setHub( $request->getBool( 'hub', false ) )
-			->setInterWiki( $this->isCorporateWiki() )
-			->setScope($request->getVal( 'scope', \Wikia\Search\Config::SCOPE_INTERNAL))
+			->setInterWiki( $this->isCorporateWiki() )->setScope( $request->getVal( 'scope',
+				\Wikia\Search\Config::SCOPE_INTERNAL ) )
 			->setVideoSearch( $request->getBool( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes( $request->getArray( 'filters', [] ) )
 			->setBoostGroup( $request->getVal( 'ab' ) );
@@ -382,10 +382,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$extendedResult =
 				UnifiedSearchCommunityResultItemExtender::extendCommunityResult( $matchResult, 'wiki',
 					$relatedCommunity->getSearchQuery() );
-			$this->setVal( 'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', [
-					'community' => $extendedResult
-				] ) );
+			$this->setVal( 'wikiMatch', $this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', [
+				'community' => $extendedResult,
+			] ) );
 		}
 	}
 

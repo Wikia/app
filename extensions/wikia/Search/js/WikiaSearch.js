@@ -185,11 +185,10 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			var searchForm = $('#search-v2-form'),
 				scopes = $('.SearchInput .wds-list a');
 
-			// Show and hide video filter options when radio buttons change.
 			scopes.on('click', function(e) {
 				var value = $(e.target).attr('data-value');
 
-				searchForm.find('input[name=scope]').first().val(value);
+				searchForm.find('#search-v2-scope').val(value);
 				searchForm.submit();
 			});
 		}
