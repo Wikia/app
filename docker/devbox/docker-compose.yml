@@ -31,8 +31,6 @@ services:
       - LOG_STDOUT_ONLY=yes
       - WIKIA_FORCE_DEV_ONLY=yes
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
-    depends_on:
-      - logger
   php-ucp:
     image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
     volumes:
@@ -43,10 +41,7 @@ services:
       - WIKIA_DATACENTER=$WIKIA_DATACENTER
       - WIKIA_ENVIRONMENT=$WIKIA_ENVIRONMENT
       - WIKIA_DEV_DOMAIN=$WIKIA_DEV_DOMAIN
-      - IS_UCP=yes
-      - LOG_SOCKET_ONLY=yes
-      - LOG_SOCKET_ADDRESS=tcp://logger:9999
+      - LOG_STDOUT_ONLY=yes
       - WIKIA_FORCE_DEV_ONLY=yes
       - HOSTNAME_OVERRIDE=$HOSTNAME_OVERRIDE
-    depends_on:
-      - logger
+      - IS_UCP=yes
