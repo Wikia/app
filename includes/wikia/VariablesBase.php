@@ -8997,4 +8997,4 @@ $wgArticleExporterExchange = [
 /**
  * @var $wgEnableHydralyticsExt
  */
-$wgEnableHydralyticsExt = false;
+$wgEnableHydralyticsExt = true;

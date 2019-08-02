@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 		'Hydra Wiki Platform Team',
 		'Fandom Data Engineering Team'
 	),
-	'descriptionmsg' => 'hydralytics_description',
+	'descriptionmsg' => 'analytics_description',
 	'version' => '1.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiAnalytics',
 );
