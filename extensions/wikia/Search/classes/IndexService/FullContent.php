@@ -22,7 +22,7 @@ class FullContent extends AbstractService {
 	 */
 	protected $garbageSelectors = [
 		'span[class~="DiscordIntegrator"]',
-		'section[class~="embeddable-discussions-module"]',
+		'div[class~="embeddable-discussions-module"]',
 		'span.editsection',
 		'img',
 		'noscript',
