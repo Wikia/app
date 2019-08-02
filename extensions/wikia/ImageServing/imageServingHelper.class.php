@@ -168,7 +168,7 @@ class ImageServingHelper {
 		self::hookSwitch(false);
 
 		$out = array();
-		$pattern = '/((?<=(image mw=\')).*(?=\')|(?<=(data-image-name=")).*(?="))/U';
+		$pattern = '/((?<=(image mw=\')).*(?=\')|(?<=(data-image-key=")).*(?="))/U';
 		preg_match_all($pattern, $editInfo->output->getText(), $out );
 		$imageList = $out[0];
 		Hooks::run( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
