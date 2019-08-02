@@ -1,6 +1,6 @@
 <?php
 // Mirrors logic
-if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) && !empty($_SERVER[ 'HTTP_X_STAGING' ]) ) {
+if ( !empty($_SERVER[ 'HTTP_X_STAGING' ]) ) {
 	if ( $_SERVER[ 'HTTP_X_STAGING' ] == 'externaltest' ) {
 		// externaltest is a mirror to our production communities where AdOperations test ads campaigns
 		include "$IP/../config/externaltest.php";
