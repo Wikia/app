@@ -6,9 +6,9 @@ class reindexImagesForWiki extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Run ImageServingHelper::buildAndGetIndex() and clear memory cache for wiki to reindex images in page_wikia_props table";
-		$this->addOption( 'wikiId', 'Correlation id used for this process', true, true, 'w' );
-		$this->addOption( 'pageID', 'Correlation id used for this process', false, true, 'p' );
+		$this->mDescription = "Run ImageServingHelper::buildAndGetIndex() and clear memory cache for wiki to index images and update page_wikia_props table";
+		$this->addOption( 'wikiId', 'ID of wiki', true, true, 'w' );
+		$this->addOption( 'pageID', 'Id of article', false, true, 'p' );
 	}
 
 	public function execute() {
