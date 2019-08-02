@@ -113,7 +113,7 @@ class UnifiedSearchService {
 		$result = $this->callCommunitySearch( $request );
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], array_map(function ($item) {
+			$result['paging']['current'] + 1, array_map(function ($item) {
 				return new UnifiedSearchCommunityResultItem($item);
 			}, $result['results']) );
 	}
