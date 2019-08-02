@@ -744,7 +744,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function pagination() {
 		$config = $this->getVal( 'config', false );
 		$result = $this->getVal( 'result' );
-		if ( !( $config instanceof Wikia\Search\Config ) || !( $result instanceof SearchResult ) ||
+		if ( !( $config instanceof Wikia\Search\Config ) || !( $result instanceof UnifiedSearchResult ) ||
 			 !$this->request->isInternal() ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			$this->skipRendering();
@@ -752,14 +752,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		if ( !$result->hasResults() ) {
+		if ( $result->resultsFound === 0 ) {
 			$this->skipRendering();
 
 			return false;
 		}
 
-		$page = $result->getPage();
-		$pageNumber = $result->getNumPages();
+		$page = $result->currentPage;
+		$pageNumber = $result->pagesCount;
 
 		if ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) {
 			$windowFirstPage = $page - self::PAGES_PER_WINDOW;
