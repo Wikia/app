@@ -29,16 +29,7 @@ class SiteStats {
 		}
 
 		self::$row = self::loadAndLazyInit();
-
-		# This code is somewhat schema-agnostic, because I'm changing it in a minor release -- TS
-		if ( !isset( self::$row->ss_total_pages ) && self::$row->ss_total_pages == -1 ) {
-			# Update schema
-			$u = new SiteStatsUpdate( 0, 0, 0 );
-			$u->doUpdate();
-			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			self::$row = self::doLoad( $dbr );
-		}
-
+		
 		self::$loaded = true;
 	}
 
@@ -90,6 +81,11 @@ class SiteStats {
 	 */
 	static function edits() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_total_edits')) {
+			return 0;
+		}
+
 		return self::$row->ss_total_edits;
 	}
 
@@ -98,6 +94,11 @@ class SiteStats {
 	 */
 	static function articles() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_good_articles')) {
+			return 0;
+		}
+
 		return self::$row->ss_good_articles;
 	}
 
@@ -106,6 +107,11 @@ class SiteStats {
 	 */
 	static function pages() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_total_pages')) {
+			return 0;
+		}
+
 		return self::$row->ss_total_pages;
 	}
 
@@ -114,6 +120,11 @@ class SiteStats {
 	 */
 	static function users() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_users')) {
+			return 0;
+		}
+
 		return self::$row->ss_users;
 	}
 
@@ -122,6 +133,11 @@ class SiteStats {
 	 */
 	static function activeUsers() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_active_users')) {
+			return 0;
+		}
+
 		return self::$row->ss_active_users;
 	}
 
@@ -130,6 +146,11 @@ class SiteStats {
 	 */
 	static function images() {
 		self::load();
+
+		if (!property_exists(self::$row, 'ss_images')) {
+			return 0;
+		}
+
 		return self::$row->ss_images;
 	}
 
