@@ -21,6 +21,8 @@ class FullContent extends AbstractService {
 	 * @var array
 	 */
 	protected $garbageSelectors = [
+		'span[class~="DiscordIntegrator"]',
+		'div[class~="embeddable-discussions-module"]',
 		'span.editsection',
 		'img',
 		'noscript',
@@ -99,18 +101,16 @@ class FullContent extends AbstractService {
 	 * @return array
 	 */
 	protected function prepValuesFromHtml( $html ) {
-		$result = [];
 		// workaround for bug in html_entity_decode that truncates the text
 		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
 
 		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
+
 		if ( $dom->root ) {
 			$this->removeGarbageFromDom( $dom );
+			$html = $dom->save();
 		}
-
-		return array_merge( $result, [
-			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-		] );
+		return ['full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' )];
 	}
 
 	/**
