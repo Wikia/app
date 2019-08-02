@@ -21,7 +21,7 @@ class FullContent extends AbstractService {
 	 * @var array
 	 */
 	protected $garbageSelectors = [
-		'div[class="main-page-tag-rcs"]',
+		'div[class="DiscordIntegrator"]',
 		'span.editsection',
 		'img',
 		'noscript',
