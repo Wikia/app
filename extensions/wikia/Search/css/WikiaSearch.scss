@@ -6,8 +6,14 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/gradient";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-functions/index';
 
-
+$color-search-form-separator: mix($color-page, #000, 70%);
+@if $is-dark-wiki {
+	$color-search-form-separator: mix($color-page, #fff, 70%);
+}
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
 	$color-search-form-background: mix($color-page, #fff, 90%);
@@ -41,12 +47,52 @@ $form-negative-side-padding: $form-side-padding*-1;
 		background: $color-search-form-background;
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
-		overflow: hidden;
 		padding: 9px 10px;
 
 		.inter-wiki-search & {
 			margin-top: 10px;
 			padding-bottom: 29px;
+		}
+
+		.WikiaSearchInputWrapper {
+			border: 1px solid $color-search-grid-border;
+			display: inline-flex;
+			margin-right: 10px;
+
+			.search-v2-input {
+				margin-right: 0;
+				border:none;
+				height: 26px
+			}
+		}
+
+		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
+		.wds-dropdown {
+
+			padding: 0;
+			float: left;
+
+			&__toggle {
+				border-right: 1px solid $color-search-form-separator;
+				font-weight: bold;
+				line-height: 28px;
+				margin: 2px 0;
+				padding: 0 12px;
+
+				&-chevron {
+					vertical-align: middle;
+				}
+			}
+
+			&__content {
+				padding: 0;
+			}
+
+			.wds-list {
+				margin: 3px 0;
+				padding: 0;
+			}
 		}
 
 		input[type="search"],
@@ -69,7 +115,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 		button {
 			float: none;
-			height: 32px;
+			height: 34px;
 			width: 64px;
 		}
 
