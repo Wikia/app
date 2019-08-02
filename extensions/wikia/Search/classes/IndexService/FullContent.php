@@ -21,7 +21,8 @@ class FullContent extends AbstractService {
 	 * @var array
 	 */
 	protected $garbageSelectors = [
-		'div[class="DiscordIntegrator"]',
+		'span[class="DiscordIntegrator"]',
+		'section[class="embeddable-discussions-module"]',
 		'span.editsection',
 		'img',
 		'noscript',
