@@ -122,7 +122,7 @@ class SpecialAnalytics extends \SpecialPage {
 
 				global $wgDisableAnonymousEditing;
 				// hide this section when the wiki does not allow logged out edits
-				if ( !empty( $wgDisableAnonymousEditing ) ) {
+				if (  empty( $wgDisableAnonymousEditing ) ) {
 					$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData( 'logged_in_out', $edits );
 				}
 				else {
