@@ -260,7 +260,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 				$limit = $searchConfig->getLimit();
 				$searchConfig->setLimit( 1 );
-				$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
+				$communityRequest = UnifiedSearchCommunityRequest::topResults( $searchConfig );
 				$communityResult = $service->communitySearch( $communityRequest );
 				$searchConfig->setLimit( $limit );
 
