@@ -29,7 +29,7 @@ class SiteStats {
 		}
 
 		self::$row = self::loadAndLazyInit();
-		
+
 		self::$loaded = true;
 	}
 
@@ -82,7 +82,7 @@ class SiteStats {
 	static function edits() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_total_edits')) {
+		if ( !property_exists( self::$row, 'ss_total_edits' ) ) {
 			return 0;
 		}
 
@@ -95,7 +95,7 @@ class SiteStats {
 	static function articles() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_good_articles')) {
+		if ( !property_exists( self::$row, 'ss_good_articles' ) ) {
 			return 0;
 		}
 
@@ -108,7 +108,7 @@ class SiteStats {
 	static function pages() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_total_pages')) {
+		if ( !property_exists( self::$row, 'ss_total_pages' ) ) {
 			return 0;
 		}
 
@@ -121,7 +121,7 @@ class SiteStats {
 	static function users() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_users')) {
+		if ( !property_exists( self::$row, 'ss_users' ) ) {
 			return 0;
 		}
 
@@ -134,7 +134,7 @@ class SiteStats {
 	static function activeUsers() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_active_users')) {
+		if ( !property_exists( self::$row, 'ss_active_users' ) ) {
 			return 0;
 		}
 
@@ -147,7 +147,7 @@ class SiteStats {
 	static function images() {
 		self::load();
 
-		if (!property_exists(self::$row, 'ss_images')) {
+		if ( !property_exists( self::$row, 'ss_images' ) ) {
 			return 0;
 		}
 
@@ -194,7 +194,7 @@ class SiteStats {
 	 */
 	static function pagesInNs( $ns ) {
 		wfProfileIn( __METHOD__ );
-		if( !isset( self::$pageCount[$ns] ) ) {
+		if ( !isset( self::$pageCount[$ns] ) ) {
 			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 			self::$pageCount[$ns] = (int)$dbr->selectField(
 				'page',
@@ -215,7 +215,7 @@ class SiteStats {
 	 * @return bool
 	 */
 	private static function isSane( $row ) {
-		if(
+		if (
 			$row === false
 			|| $row->ss_total_pages < $row->ss_good_articles
 			|| $row->ss_total_edits < $row->ss_total_pages
@@ -223,11 +223,11 @@ class SiteStats {
 			return false;
 		}
 		// Now check for underflow/overflow
-		foreach( array( 'total_views', 'total_edits', 'good_articles',
+		foreach ( array( 'total_views', 'total_edits', 'good_articles',
 		'total_pages', 'users', 'images' ) as $member ) {
-			if(
-				$row->{"ss_$member"} > 2000000000
-				|| $row->{"ss_$member"} < 0
+			if (
+				$row-> { "ss_$member" } > 2000000000
+				|| $row-> { "ss_$member" } < 0
 			) {
 				return false;
 			}
@@ -323,7 +323,7 @@ class SiteStatsInit {
 		return $this->mUsers = WikiaDataAccess::cache(
 			wfSharedMemcKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
-			function() use ($fname) {
+			function() use ( $fname ) {
 				return $this->dbshared->estimateRowCount( '`user`', '*', '', $fname );
 			}
 		);
@@ -362,14 +362,14 @@ class SiteStatsInit {
 		$counter->files();
 
 		// Update/refresh
-		if( $options['update'] ) {
+		if ( $options['update'] ) {
 			$counter->update();
 		} else {
 			$counter->refresh();
 		}
 
 		// Count active users if need be
-		if( $options['activeUsers'] ) {
+		if ( $options['activeUsers'] ) {
 			SiteStatsUpdate::cacheUpdate( wfGetDB( DB_MASTER ) );
 		}
 	}
