@@ -2,10 +2,12 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiasearch2-page-title-with-query' => "Search results for '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Search results for '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Search FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Search $1',
 	'wikiasearch2-search-all-wikia' => 'Search all of FANDOM',
+	'wikiasearch2-search-scope-internal' => 'This wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'All wikis',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|result|results}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|page|pages}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|image|images}}',
@@ -13,8 +15,8 @@ $messages['en'] = array(
 	'wikiasearch3-related-wiki' => 'Related Wiki',
 	'wikiasearch3-view-more-wikis' => 'View More Wikis',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
-	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
-	'wikiasearch2-results-for' => 'Results for $1 from {{SITENAME}}',
+	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2',
+	'wikiasearch2-results-for' => 'Results for $1',
 	'wikiasearch2-results-redirected-from' => 'redirected from',
 	'wikiasearch2-global-search-headline' => 'Find communities on FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',

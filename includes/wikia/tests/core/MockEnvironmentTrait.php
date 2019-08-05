@@ -42,6 +42,8 @@ trait MockEnvironmentTrait {
 		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
 		$this->mockGlobalVariable( 'wgDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
 		$this->mockGlobalVariable( 'wgEnvironmentDomainMappings', [
+			self::MOCK_DEV_NAME . '.wikia-dev.pl' => 'wikia.com',
+			self::MOCK_DEV_NAME . '.fandom-dev.pl' => 'fandom.com',
 			self::MOCK_DEV_NAME . '.wikia-dev.us' => 'wikia.com',
 			self::MOCK_DEV_NAME . '.fandom-dev.us' => 'fandom.com',
 		] );

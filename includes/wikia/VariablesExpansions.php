@@ -526,6 +526,28 @@ $wgRedisHost = "geo-redisshared-prod-master.query.{$wgWikiaDatacenter}.consul";
  */
 $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/CC-BY-SA.png?1";
 
+
+/**
+ * Custom rules for meta robots tags. Index User: pages.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgRobotsIndexUserNS
+ */
+$wgRobotsIndexUserNS  = false;
+
+/**
+ * Custom rules for meta robots tags. Index Help: pages.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgRobotsIndexHelpNS
+ */
+$wgRobotsIndexHelpNS  = false;
+
+/**
+ * Force noindex mechanism.
+ * @see string includes/wikia/Wikia.php
+ * @var bool $wgForcedNoindexEnabled
+ */
+$wgForcedNoindexEnabled  = false;
+
 /**
  * Custom rules for robots.txt. Supported rules: allowSpecialPage and
  * disallowNamespace.

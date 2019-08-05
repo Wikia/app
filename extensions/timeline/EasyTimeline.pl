@@ -4654,6 +4654,10 @@ sub ValidDateRange {
 sub DateMedium {
     my $from = shift;
     my $till = shift;
+    if (! defined $from || ! defined $till ) {
+    	&Error2("from ($from) or till ($till) is not defined, Returning default to prevent infinite loop");
+    	return  "01/01/1800";
+    }
 
     if (($DateFormat eq "yyyy") || ($DateFormat eq "x.y")) {
         return (sprintf("%.3f", ($from + $till) / 2));
@@ -4712,6 +4716,10 @@ sub DateToFloat {
 
 sub DateFrom1800 {
     my $days = shift;
+    if (! defined $days) {
+    	&Error2("days ($days) is not defined, Returning default to prevent infinite loop");
+    	return  "01/01/1800";
+    }
 
     my @mmm = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 

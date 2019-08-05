@@ -12,7 +12,7 @@ class UnifiedSearchPageRequest {
 
 	/** @var string */
 	private $languageCode;
-	/** @var integer */
+	/** @var integer|null */
 	private $wikiId;
 	/** @var array */
 	private $namespaces = [];
@@ -27,11 +27,16 @@ class UnifiedSearchPageRequest {
 	/** @var integer */
 	private $limit;
 
+	/** @var bool */
+	private $isInternal = false;
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->languageCode = $config->getLanguageCode();
 		$this->wikiId = $config->getWikiId();
+		if ($config->isInternalScope()) {
+			$this->isInternal = true;
+		}
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
@@ -39,59 +44,40 @@ class UnifiedSearchPageRequest {
 		$this->videoOnly = $config->isVideoOnly();
 	}
 
-	/**
-	 * @return Select
-	 */
 	public function getQuery(): Select {
 		return $this->query;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getLanguageCode(): string {
 		return $this->languageCode;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getWikiId(): int {
+	/** @return null|int */
+	public function getWikiId() {
 		return $this->wikiId;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNamespaces(): array {
 		return $this->namespaces;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isImageOnly(): bool {
 		return $this->imageOnly;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isVideoOnly(): bool {
 		return $this->videoOnly;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getPage(): int {
 		return $this->page;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getLimit(): int {
 		return $this->limit;
+	}
+
+	public function isInternal(): bool {
+		return $this->isInternal;
 	}
 }

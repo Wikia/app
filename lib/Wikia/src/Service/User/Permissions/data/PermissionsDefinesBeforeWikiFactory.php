@@ -387,6 +387,7 @@ $wgGroupPermissions['helper']['protectsite-nolimit'] = true;
 $wgGroupPermissions['staff']['protectsite-nolimit'] = true;
 
 $wgGroupPermissions['wiki-manager']['admindashboard'] = true;
+$wgGroupPermissions['wiki-manager']['apihighlimits']    = true;
 $wgGroupPermissions['wiki-manager']['autoconfirmed'] = true;
 $wgGroupPermissions['wiki-manager']['autopatrol'] = true;
 $wgGroupPermissions['wiki-manager']['bigdelete'] = true;

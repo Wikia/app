@@ -300,19 +300,6 @@ class Result extends ReadWrite {
 		return $this['thumbnail'];
 	}
 
-	public function getThumbnailHtml() {
-
-		if ( !isset( $this['thumbnail'] ) ) {
-			try {
-				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'] );
-			} catch ( \Exception $e ) {
-				$this['thumbnail'] = '';
-			}
-		}
-
-		return $this['thumbnail'];
-	}
-
 	/**
 	 * get video views
 	 *

@@ -382,7 +382,7 @@ class CategoryHelper {
 							case 'ext':
 								$tmpOuterTag = $node->getElementsByTagName('name')->item(0)->textContent;
 								if (in_array($tmpOuterTag, self::$tagsWhiteList)) {
-									continue;
+									break;
 								}
 								$inner = $node->getElementsByTagName('inner')->item(0);
 								if (!is_null($inner)) {
@@ -514,7 +514,7 @@ class CategoryHelper {
 		$text = preg_replace_callback('/\[\[(' . self::$namespaces . '):([^]]+)]]\n?/i', array('self', 'replaceCallback'), $text);
 		$result = array('text' => $text, 'categories' => self::$categories);
 
-		$maybeIndex = count(self::$maybeCategory);
+		$maybeIndex = count((array)self::$maybeCategory);
 		if ($maybeIndex) {
 			//look for category ending
 			//TODO: this will not catch [[Category:Abc<noinclude>]]</noinclude>

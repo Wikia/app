@@ -98,7 +98,7 @@ class Http {
 				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
-				$params[ 'responseHeaders' ] = $req->getResponseHeaders();
+				$params[ 'responseHeaders' ] = json_encode( $req->getResponseHeaders() );
 				$params[ 'reqStatus' ] = $status;
 				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
 				$level = 'error';

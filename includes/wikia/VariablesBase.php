@@ -8997,9 +8997,10 @@ $wgArticleExporterExchange = [
 /**
  * @var $wgEnableHydralyticsExt
  */
-$wgEnableHydralyticsExt = false;
+$wgEnableHydralyticsExt = true;
 
 /**
  * @var $wgShowTwitchAuthButton
  */
 $wgShowTwitchAuthButton = false;
+
