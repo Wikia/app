@@ -326,7 +326,7 @@ $(function() {
 		];
 		for (var x in last30) {
 			if ($("#"+last30[x]).length) {
-				$("#"+last30[x]).append("<div class=\"last30 chart-footer\">*"+ message("based_on_last_30") +"</div>");
+				$("#"+last30[x]).append("<div class=\"last30 chart-footer\">"+ message("based_on_last_30") +"</div>");
 			}
 		}
 	}

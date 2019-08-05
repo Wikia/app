@@ -168,6 +168,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function getSearchConfigFromRequest() {
 		global $wgRequest;
 
+
 		// Use WebRequest instead of Nirvana request
 		// Nirvana request does not process certain Unicode stuff correctly which causes HTTP 500
 		$request = $wgRequest;
@@ -180,7 +181,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setPage( $request->getInt( 'page', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setHub( $request->getBool( 'hub', false ) )
-			->setInterWiki( $this->isCorporateWiki() )
+			->setInterWiki( $this->isCorporateWiki() )->setScope( $request->getVal( 'scope',
+				\Wikia\Search\Config::SCOPE_INTERNAL ) )
 			->setVideoSearch( $request->getBool( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes( $request->getArray( 'filters', [] ) )
 			->setBoostGroup( $request->getVal( 'ab' ) );
@@ -227,10 +229,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-with-query', [
+			$title = wfMsg( 'wikiasearch2-page-title-with-query', [
 				ucwords( $searchConfig->getQuery()->getSanitizedQuery() ),
-				$this->wg->Sitename,
-			] ) );
+			] );
+
+			$this->wg->Out->setPageTitle( $title );
 		} else {
 			if ( $searchConfig->getInterWiki() ) {
 				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-interwiki' ) );
@@ -260,7 +263,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 				$limit = $searchConfig->getLimit();
 				$searchConfig->setLimit( 1 );
-				$communityRequest = new UnifiedSearchCommunityRequest( $searchConfig );
+				$communityRequest = UnifiedSearchCommunityRequest::topResults( $searchConfig );
 				$communityResult = $service->communitySearch( $communityRequest );
 				$searchConfig->setLimit( $limit );
 
@@ -315,6 +318,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'result' => $results,
 		];
 
+		$this->setVal( 'scope', $searchConfig->getScope() );
 		$this->setVal( 'results', $results->getResults() );
 		$this->setVal( 'resultsFound', $results->resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $results->getTruncatedResultsNum( true ) );
@@ -378,10 +382,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$extendedResult =
 				UnifiedSearchCommunityResultItemExtender::extendCommunityResult( $matchResult, 'wiki',
 					$relatedCommunity->getSearchQuery() );
-			$this->setVal( 'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', [
-					'community' => $extendedResult
-				] ) );
+			$this->setVal( 'wikiMatch', $this->getApp()->getView( 'WikiaSearch', 'relatedCommunity', [
+				'community' => $extendedResult,
+			] ) );
 		}
 	}
 
@@ -741,7 +744,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function pagination() {
 		$config = $this->getVal( 'config', false );
 		$result = $this->getVal( 'result' );
-		if ( !( $config instanceof Wikia\Search\Config ) || !( $result instanceof SearchResult ) ||
+		if ( !( $config instanceof Wikia\Search\Config ) || !( $result instanceof UnifiedSearchResult ) ||
 			 !$this->request->isInternal() ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			$this->skipRendering();
@@ -749,14 +752,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		if ( !$result->hasResults() ) {
+		if ( $result->resultsFound === 0 ) {
 			$this->skipRendering();
 
 			return false;
 		}
 
-		$page = $result->getPage();
-		$pageNumber = $result->getNumPages();
+		$page = $result->currentPage;
+		$pageNumber = $result->pagesCount;
 
 		if ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) {
 			$windowFirstPage = $page - self::PAGES_PER_WINDOW;

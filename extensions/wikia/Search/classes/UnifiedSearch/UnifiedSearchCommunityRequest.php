@@ -27,6 +27,14 @@ class UnifiedSearchCommunityRequest {
 		}
 	}
 
+	public static function topResults( Config $config ): self {
+		$instance = new self($config);
+
+		$instance->page = 0;
+
+		return $instance;
+	}
+
 	/**
 	 * @return Select
 	 */

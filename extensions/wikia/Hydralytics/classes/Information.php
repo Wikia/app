@@ -7,56 +7,6 @@ class Information {
 	const LAST_DAYS = 30;
 
 	/**
-	 * Get the wiki managers on this wiki.
-	 *
-	 * @access	public
-	 * @return	array	Wiki Managers
-	 */
-	static public function getWikiManagers() {
-		global $wgWikiManagers;
-		return (array) $wgWikiManagers;
-	}
-
-	/**
-	 * Get a link to the FAQ page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getFaqLink() {
-		return \Linker::makeExternalLink(
-			'link to faq TODO',
-			wfMessage('hlfaqurl-text')
-		);
-	}
-
-	/**
-	 * Get a link to the Feedback page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getFeedbackLink() {
-		return \Linker::makeExternalLink(
-			'feedback link TODO',
-			wfMessage('hlfeedbackurl-text')
-		);
-	}
-
-	/**
-	 * Get a link to the Slack page.
-	 *
-	 * @access	public
-	 * @return	string	HTML Link
-	 */
-	static public function getSlackLink() {
-		return \Linker::makeExternalLink(
-			'slack link todo',
-			wfMessage('hlslackurl-text')
-		);
-	}
-
-	/**
 	 * Get the top editors for the wiki over all time or optionally with monthly counts.
 	 *
 	 * @access	public
@@ -120,7 +70,7 @@ class Information {
 
 		$res = Redshift::query(
 			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
-			'WHERE wiki_id = :wiki_id GROUP BY search_phrase  ' .
+			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -198,7 +148,7 @@ class Information {
 
 		$res = Redshift::query(
 			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  GROUP BY url ' .
+			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -268,10 +218,10 @@ class Information {
 			$browsers[ $row->browser ] = $row->views;
 		}
 
-		// by device type
+		// by device type (filter out bots)
 		$res = Redshift::query(
 			'SELECT device_type, COUNT(*) AS views FROM wikianalytics.sessions ' .
-			'WHERE wiki_id = :wiki_id GROUP BY device_type ' .
+			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
