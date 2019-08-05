@@ -52,25 +52,10 @@ async function updateWadContext() {
 	}
 }
 
-function setUpGeoData() {
-  const jsonData = decodeURIComponent(Cookies.get('Geo'));
-  let geoData = {};
-
-  try {
-    geoData = JSON.parse(jsonData) || {};
-  } catch (e) {
-    // Stay with {} value
-  }
-
-  context.set('geo.region', geoData.region);
-  context.set('geo.country', geoData.country);
-  context.set('geo.continent', geoData.continent);
-}
-
 async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
 	const showAds = getReasonForNoAds() === null;
 
-	setUpGeoData();
+	utils.geoService.setUpGeoData();
 
 	context.extend(basicContext);
 
