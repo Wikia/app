@@ -225,7 +225,7 @@ class ExprParser {
 				// constant
 				case EXPR_EXPONENT:
 					if ( $expecting != 'expression' ) {
-						continue;
+						break;
 					}
 					$operands[] = exp( 1 );
 					$expecting = 'operator';

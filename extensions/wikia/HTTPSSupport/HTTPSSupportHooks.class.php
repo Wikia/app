@@ -61,7 +61,7 @@ class HTTPSSupportHooks {
 
 	/**
 	 * Make sure any "external" links to our own wikis that support HTTPS
-	 * are protocol-relative on output.
+	 * are using HTTPS instead of HTTP.
 	 *
 	 * @param  string  &$url
 	 * @param  string  &$text
@@ -70,8 +70,18 @@ class HTTPSSupportHooks {
 	 * @return boolean
 	 */
 	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
-		if ( wfHttpsAllowedForURL( $url ) ) {
-			$url = wfProtocolUrlToRelative( $url );
+		global $wgFandomBaseDomain, $wgWikiaOrgBaseDomain, $wgWikiaBaseDomain;
+
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		$normalizedHost = wfNormalizeHost( $host );
+		$explodedHost = explode( '.', $normalizedHost );
+
+		$pattern = '/(' . $wgFandomBaseDomain . '|' . $wgWikiaOrgBaseDomain . ')/';
+
+		if ( preg_match( $pattern, $normalizedHost ) || ( preg_match( '/' . $wgWikiaBaseDomain . '/', $normalizedHost ) && sizeof( $explodedHost ) <= 3 ) )
+		{
+			$url = wfHttpToHttps( $url );
 		}
 		return true;
 	}

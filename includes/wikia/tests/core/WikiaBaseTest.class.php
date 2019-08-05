@@ -148,7 +148,7 @@ abstract class WikiaBaseTest extends TestCase {
 				trigger_error( sprintf( '%s: mock of class %s cannot be empty', __METHOD__, $className ), E_USER_WARNING );
 				return;
 			}
-			if ( empty($functionName) ) { // regular constructorg
+			if ( empty($functionName) ) { // regular constructor
 				$action = $this->getMockProxy()->getClassConstructor($className);
 			} else {
 				$action = $this->getMockProxy()->getStaticMethod($className,$functionName);

@@ -34,10 +34,6 @@
 						<?php endif ?>
 					</p>
 
-					<? if ( $correctedQuery && $query != $correctedQuery ) : ?>
-					<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $correctedQuery ) ?></p>
-					<? endif; ?>
-
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?= $app->renderView('Ad', 'Index', [
@@ -53,25 +49,13 @@
 								echo '<li class="result video-addon-results video-addon-results-before-' . $pos . '">' . $app->getView( 'WikiaSearch', 'mediadata', array( 'mediaData' => $mediaData, 'query' => $query ) ) . '</li>';
 							endif;
 							if ( $result['ns'] === 0 ) {
-								echo $app->getView( 'WikiaSearch', $resultView, array(
+								echo $app->getView( 'WikiaSearch', 'result', array(
 									  'result' => $result,
 									  'gpos' => 0,
 									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
 									  'query' => $query
 									) );
 								continue;
-							} else if ( $result['ns'] === 14 && empty( $categorySeen ) && !empty( $categoryModule ) ) {
-								$categorySeen = true;
-								$topArticles = $app->sendRequest( 'WikiaSearch', 'categoryTopArticles', array(
-									  'result' => $result,
-									  'gpos' => 0,
-									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
-									  'query' => $query,
-									), true );
-								if ( count( $topArticles->getVal( 'pages' ) ) > 0 ) {
-									echo $topArticles->toString();
-									continue;
-								}
 							}
 							// display standard view instead
 							echo $app->getView( 'WikiaSearch', WikiaSearchController::WIKIA_DEFAULT_RESULT, array(

@@ -2743,6 +2743,8 @@ $templates
 	public function makeResourceLoaderLink( $modules, $only, $useESI = false, array $extraQuery = array(), $loadCall = false ) {
 		global $wgResourceLoaderUseESI;
 
+		$modules = (array) $modules; // Wikia change - PHP 7.3
+
 		if ( !count( $modules ) ) {
 			return '';
 		}
@@ -3260,11 +3262,9 @@ $templates
 			}
 		}
 
-
-		$isUCP = getenv( 'IS_UCP' );
 		$tags[] = Html::element( 'meta', array(
 			'name' => 'generator',
-			'content' => "MediaWiki $wgVersion" . ( $isUCP ? '(slot2)' : '(slot1)' ),
+			'content' => "MediaWiki $wgVersion",
 		) );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";

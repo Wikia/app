@@ -59,7 +59,8 @@ class WikiaSendgridMailer {
 
 		wfProfileIn( __METHOD__ );
 
-		$logContext = array_merge( $headers, [
+		$logContext = array_merge( [
+			'headers' => json_encode( $headers ),
 			'issue' => 'SOC-910',
 			'method' => __METHOD__,
 			'to' => $to,

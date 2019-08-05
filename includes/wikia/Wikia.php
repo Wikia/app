@@ -1106,12 +1106,63 @@ class Wikia {
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
+		$request = $skinTemplate->getRequest();
+
+		if( self::addMetaRobotsNoindex( $request, $title, $out ) ){
+			return true;
+		}
+
 		if ( !empty( $robotPolicy ) ) {
 			$out->setRobotPolicy( $robotPolicy );
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	/**
+	 * Add variables to SkinTemplate
+	 */
+	static public function addMetaRobotsNoindex(WebRequest $request, Title $title, OutputPage $out) {
+		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS, $wgForcedNoindexEnabled;
+		if( !$wgForcedNoindexEnabled ){
+			return false;
+		}
+		$setNofollow = false;
+		$disabledNamespaces = [NS_SPECIAL, NS_USER_TALK, NS_TEMPLATE, NS_TEMPLATE_TALK];
+		if( !$wgRobotsIndexHelpNS ){
+			$disabledNamespaces[] = NS_HELP;
+		}
+		if( !$wgRobotsIndexUserNS ){
+			$disabledNamespaces[] = NS_USER;
+		}
+		if( $title->inNamespaces( $disabledNamespaces ) ) {
+			$setNofollow = true;
+		} else {
+			$noindexParams = [
+				'action',
+				'feed',
+				'from',
+				'oldid',
+				'printable',
+				'redirect',
+				'useskin',
+				'uselang',
+				'veaction'
+			];
+			foreach($noindexParams as $paramName ){
+				if( array_key_exists( $paramName, $request->getQueryValues() ) ) {
+					$setNofollow = true;
+					break;
+				}
+			}
+		}
+
+		if( $setNofollow ){
+			$out->setRobotPolicy( "noindex, nofollow" );
+		}
+
+		return $setNofollow;
 	}
 
 	/**

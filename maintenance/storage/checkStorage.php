@@ -237,12 +237,12 @@ class CheckStorage {
 						case 'historyblobcurstub':
 							if ( strlen( $row->header ) == $headerLength ) {
 								$this->error( 'unfixable', "Error: overlong stub header", $oldId );
-								continue;
+								break;
 							}
 							$stubObj = unserialize( $row->header );
 							if ( !is_object( $stubObj ) ) {
 								$this->error( 'restore text', "Error: unable to unserialize stub object", $oldId );
-								continue;
+								break;
 							}
 							if ( $className == 'historyblobstub' ) {
 								$concatBlobs[$stubObj->mOldId][] = $oldId;

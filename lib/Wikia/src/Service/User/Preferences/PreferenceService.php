@@ -129,7 +129,7 @@ class PreferenceService {
 
 			return $deleted;
 		} catch (\Exception $e) {
-			$this->error( $e->getMessage(), ['user' => $userId] );
+			$this->error( $e->getMessage(), ['userId' => $userId ] );
 			throw $e;
 		}
 	}
@@ -195,7 +195,7 @@ class PreferenceService {
 			try {
 				return $this->persistence->save( $userId, $prefsToSave );
 			} catch ( \Exception $e ) {
-				$this->error( $e->getMessage(), ['user' => $userId] );
+				$this->error( $e->getMessage(), ['userId' => $userId ] );
 				throw $e;
 			}
 		}
@@ -238,7 +238,7 @@ class PreferenceService {
 				$preferences = ( new UserPreferences() )
 					->setReadOnly( true );
 			} catch ( \Exception $e ) {
-				$this->error( $e->getMessage(), ['user' => $userId] );
+				$this->error( $e->getMessage(), ['userId' => $userId] );
 				throw $e;
 			}
 

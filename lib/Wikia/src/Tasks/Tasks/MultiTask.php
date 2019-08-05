@@ -326,7 +326,7 @@ class MultiTask extends BaseTask {
 			$this->error( 'Multi task error!', [
 				'action' => $action,
 				'server' => $row->city_server,
-				'exitStatus' => $result,
+				'exit_status' => $result,
 				'error' => $response,
 			] );
 		}
