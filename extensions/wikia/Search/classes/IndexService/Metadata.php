@@ -41,6 +41,8 @@ class Metadata extends AbstractService {
 			$result['touched'] = $pageData['touched'];
 		}
 
+		$result['sitename'] = $sitename = $this->getService()->getGlobal( 'Sitename' );
+
 		$result['hub'] = isset( $data['query']['category']['catname'] ) ? $data['query']['category']['catname'] : '';
 
 		return $result;
