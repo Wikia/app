@@ -129,13 +129,19 @@ class IndexServicesTest extends BaseTest
 		;
 		$mwservice
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'Sitename' )
+		    ->will   ( $this->returnValue( 'Fallout' ) )
+		;
+		$mwservice
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getApiStatsForPageId' )
 		    ->with   ( $this->pageId )
 		    ->will   ( $this->returnValue( $apiResult ) )
 		;
 		$service->setPageId( $this->pageId );
 		$this->injectService( $service, $mwservice );
-		$expected = array_merge( $pageData, array( 'hub' => 'stuff' ) );
+		$expected = array_merge( $pageData, array( 'hub' => 'stuff', 'sitename' => 'Fallout' ) );
 		$this->assertEquals(
 				$expected,
 				$service->execute()
