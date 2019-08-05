@@ -64,6 +64,7 @@ class FullContent extends AbstractService {
 
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
+			'sitename' => $service->getGlobal( 'Sitename' ),
 			'pageid' => $pageId,
 			'title' => $titleStr,
 			'redirect_titles' => $service->getRedirectTitlesForPageId( $pageId ),
