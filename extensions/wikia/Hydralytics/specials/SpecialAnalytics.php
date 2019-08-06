@@ -382,7 +382,7 @@ class SpecialAnalytics extends \SpecialPage {
 			$wgMemc->set( $memcKey, $sections,  \WikiaResponse::CACHE_SHORT );
 		}
 
-		$generatedAt = wfMessage('analytics_report_generated', 'one day ago')->escaped();
+		$generatedAt = wfMessage('analytics_report_generated', wfMsgExt('timeago-day', array(), 1))->escaped();
 
 		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);
