@@ -1532,7 +1532,14 @@ function wfHttpsAllowedForURL( $url ): bool {
 		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
 		return false;
 	}
-	return true;
+
+	$host = wfNormalizeHost( $host );
+	$baseDomain = wfGetBaseDomainForHost( $host );
+
+	$server = str_replace( ".$baseDomain", '', $host );
+
+	// Only allow single subdomain wikis through
+	return substr_count( $server, '.' ) === 0;
 }
 
 /**
