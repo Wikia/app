@@ -28,15 +28,13 @@ class UnifiedSearchPageRequest {
 	private $limit;
 
 	/** @var bool */
-	private $isInternal = false;
+	private $isInternalScope = false;
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->languageCode = $config->getLanguageCode();
 		$this->wikiId = $config->getWikiId();
-		if ($config->isInternalScope()) {
-			$this->isInternal = true;
-		}
+		$this->isInternalScope = $config->isInternalScope();
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
@@ -77,7 +75,7 @@ class UnifiedSearchPageRequest {
 		return $this->limit;
 	}
 
-	public function isInternal(): bool {
-		return $this->isInternal;
+	public function isInternalScope(): bool {
+		return $this->isInternalScope;
 	}
 }

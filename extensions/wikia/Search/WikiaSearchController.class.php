@@ -788,6 +788,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$extraParams['crossWikia'] = 1;
 		}
 
+		if ( !$config->isInternalScope() ) {
+			$extraParams['scope'] = 'cross-wiki';
+		}
+
 		foreach ( $config->getPublicFilterKeys() as $filter ) {
 			$extraParams['filters'][] = $filter;
 		}
