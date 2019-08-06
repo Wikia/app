@@ -16,7 +16,7 @@
 		?>
 		<?php if ( !empty( $thumbnail ) ): ?>
 		<div class="grid-1 alpha">
-			<a href="<?= $result->getEscapedUrl() ?>" <?= $trackingData; ?>><img src="<?= $thumbnail ?>"/></a>
+			<a href="<?= $result->getEscapedUrl() ?>" class="image"><img src="<?= $thumbnail ?>" class="thumbimage"/></a>
 		</div>
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 			<?php endif; ?>
