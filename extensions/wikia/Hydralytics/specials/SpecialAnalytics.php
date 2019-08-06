@@ -182,8 +182,8 @@ class SpecialAnalytics extends \SpecialPage {
 					foreach ($topPages['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
 
-						// remove "/wiki/" and underscores from page names
-						$title = str_replace('/wiki/', '', $newUri);
+						// remove language url part and "/wiki/" and underscores from page names
+						$title = preg_replace('|/\w+/wiki/|', '', $newUri);
 						$title = str_replace('_', ' ', $title);
 
 						$sections['top_viewed_pages'] .= "
