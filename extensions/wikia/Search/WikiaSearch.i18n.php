@@ -92,7 +92,7 @@ $messages['cs'] = array(
 );
 
 $messages['de'] = array(
-	'wikiasearch2-page-title-with-query' => "Suchergebnisse für '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Suchergebnisse für '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'FANDOM durchsuchen',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Durchsuche $1',
 	'wikiasearch2-search-all-wikia' => 'Alle FANDOM-Communitys durchsuchen',
@@ -101,8 +101,8 @@ $messages['de'] = array(
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|Bild|Bilder}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|Video|Videos}}',
 	'wikiasearch2-search-on-wiki' => 'Durchsuche dieses Wiki',
-	'wikiasearch2-results-count' => 'Etwa $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für $2 {{SITENAME}}',
-	'wikiasearch2-results-for' => 'Ergebnisse für $1 von {{SITENAME}}',
+	'wikiasearch2-results-count' => 'Etwa $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für $2',
+	'wikiasearch2-results-for' => 'Ergebnisse für $1',
 	'wikiasearch2-results-redirected-from' => 'weitergeleitet von',
 	'wikiasearch2-global-search-headline' => 'Communitys bei FANDOM finden',
 	'wikiasearch2-wiki-search-headline' => 'Dieses Wiki durchsuchen',
@@ -140,6 +140,8 @@ $messages['de'] = array(
 	'wikiasearch2-sort-duration' => 'Dauer',
 	'wikiasearch2-sort-publish-date' => 'Veröffentlichungsdatum',
 	'wikiasearch2-filter-hd' => 'Ausschließlich in HD',
+	'wikiasearch2-search-scope-internal' => 'Dieses Wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'Alle Wikis',
 );
 
 $messages['de-formal'] = array(
@@ -183,7 +185,7 @@ $messages['el'] = array(
 );
 
 $messages['es'] = array(
-	'wikiasearch2-page-title-with-query' => "Resultados de la búsqueda de '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Resultados de la búsqueda de '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Buscar en FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Buscar $1',
 	'wikiasearch2-search-all-wikia' => 'Buscar en todo FANDOM',
@@ -231,6 +233,8 @@ $messages['es'] = array(
 	'wikiasearch2-sort-duration' => 'Duración',
 	'wikiasearch2-sort-publish-date' => 'Fecha de publicación',
 	'wikiasearch2-filter-hd' => 'Sólo HD',
+	'wikiasearch2-search-scope-internal' => 'Este wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'Todos los wikis',
 );
 
 $messages['et'] = array(
@@ -251,7 +255,7 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'wikiasearch2-page-title-with-query' => 'Résultats de recherche pour « $1 » - $2',
+	'wikiasearch2-page-title-with-query' => 'Résultats de recherche pour « $1 »',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Rechercher sur FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Rechercher $1',
 	'wikiasearch2-search-all-wikia' => "Rechercher sur l'ensemble de FANDOM",
@@ -299,6 +303,8 @@ $messages['fr'] = array(
 	'wikiasearch2-sort-duration' => 'Durée',
 	'wikiasearch2-sort-publish-date' => 'Date publication',
 	'wikiasearch2-filter-hd' => 'HD uniquement',
+	'wikiasearch2-search-scope-internal' => 'Ce wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'Tous les wikis',
 );
 
 $messages['gd'] = array(
@@ -347,13 +353,13 @@ $messages['it'] = array(
 	'wikiasearch2-search-all-wikia' => 'Cerca su tutto FANDOM',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|pagina|pagine}}',
 	'wikiasearch2-search-on-wiki' => "Cerca all'interno di questa wiki",
-	'wikiasearch2-results-count' => "{{PLURAL:$1|$1 risultato|All'incirca $1 risultati}} per $2 da {{SITENAME}}",
-	'wikiasearch2-results-for' => 'Risultati per $1 da {{SITENAME}}',
+	'wikiasearch2-results-count' => 'Circa $1 {{PLURAL:$1|risultato|risultati}} per "$2"',
+	'wikiasearch2-results-for' => 'Risultati per "$1"',
 	'wikiasearch2-global-search-headline' => 'Trova community su FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Cerca su questa wiki',
 	'wikiasearch2-advanced-search' => 'Opzioni di ricerca avanzate',
 	'wikiasearch2-onhub' => " nell'Hub $1",
-	'wikiasearch2-page-title-with-query' => 'Risultati di ricerca per "$1" - $2',
+	'wikiasearch2-page-title-with-query' => 'Risultati della ricerca per "$1"',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|risultato|risultati}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|immagine|immagini}}',
 	'wikiasearch2-videos' => '$1 video',
@@ -390,10 +396,12 @@ $messages['it'] = array(
 	'wikiasearch2-sort-duration' => 'Durata',
 	'wikiasearch2-sort-publish-date' => 'Data di pubblicazione',
 	'wikiasearch2-filter-hd' => 'Solo HD',
+	'wikiasearch2-search-scope-internal' => 'Questa wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'Tutte le wiki',
 );
 
 $messages['ja'] = array(
-	'wikiasearch2-page-title-with-query' => '「$1」の検索結果 - $2',
+	'wikiasearch2-page-title-with-query' => '「$1」の検索結果',
 	'wikiasearch2-page-title-no-query-interwiki' => 'FANDOMを検索',
 	'wikiasearch2-page-title-no-query-intrawiki' => '$1内を検索',
 	'wikiasearch2-search-all-wikia' => 'すべてのFANDOMから検索',
@@ -404,8 +412,8 @@ $messages['ja'] = array(
 	'wikiasearch3-related-wiki' => '関連するWiki',
 	'wikiasearch3-view-more-wikis' => 'Wikiをもっと見る',
 	'wikiasearch2-search-on-wiki' => 'このWiki内を検索',
-	'wikiasearch2-results-count' => '{{SITENAME}}内の$2の検索結果：約$1{{PLURAL:$1|件|件}}',
-	'wikiasearch2-results-for' => '{{SITENAME}} から $1 の結果',
+	'wikiasearch2-results-count' => '$2の検索結果：約$1{{PLURAL:$1|result|results}}',
+	'wikiasearch2-results-for' => '「$1」の結果',
 	'wikiasearch2-results-redirected-from' => 'リダイレクト元:',
 	'wikiasearch2-global-search-headline' => 'FANDOMでコミュニティを探す',
 	'wikiasearch2-wiki-search-headline' => 'このWiki内を検索',
@@ -441,6 +449,8 @@ $messages['ja'] = array(
 	'wikiasearch2-sort-duration' => 'Duration',
 	'wikiasearch2-sort-publish-date' => '公開日',
 	'wikiasearch2-filter-hd' => 'HD Only',
+	'wikiasearch2-search-scope-internal' => 'このコミュニティ',
+	'wikiasearch2-search-scope-crosswiki' => 'すべてのページ',
 );
 
 $messages['jam'] = array(
@@ -575,15 +585,15 @@ $messages['or'] = array(
 );
 
 $messages['pl'] = array(
-	'wikiasearch2-page-title-with-query' => 'Wyniki dla frazy „$1” – $2',
+	'wikiasearch2-page-title-with-query' => "Wyniki wyszukiwania '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Przeszukaj FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Szukaj na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
 	'wikiasearch2-search-all-wikia' => 'Przeszukaj cały FANDOM',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|wynik|wyniki|wyników}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|strona|strony|stron}}',
 	'wikiasearch2-search-on-wiki' => 'Szukaj na tej wiki',
-	'wikiasearch2-results-count' => 'Około $1 {{PLURAL:$1|wynik|wyniki|wyników}} dla „$2” na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-	'wikiasearch2-results-for' => 'Wyniki dla „$1” na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
+	'wikiasearch2-results-count' => 'Około $1 {{PLURAL:$1|wynik|wyniki|wyników}} dla „$2”',
+	'wikiasearch2-results-for' => 'Wyniki dla $1',
 	'wikiasearch2-results-redirected-from' => 'przekierowanie z',
 	'wikiasearch2-global-search-headline' => 'Szukaj społeczności na portalu FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Szukaj na tej wiki',
@@ -623,6 +633,8 @@ $messages['pl'] = array(
 	'wikiasearch2-sort-duration' => 'Czas trwania',
 	'wikiasearch2-sort-publish-date' => 'Data publikacji',
 	'wikiasearch2-filter-hd' => 'Tylko HD',
+	'wikiasearch2-search-scope-internal' => 'Ta wiki',
+	'wikiasearch2-search-scope-crosswiki' => 'Wszystkie wiki',
 );
 
 $messages['pms'] = array(
@@ -632,7 +644,7 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'wikiasearch2-page-title-with-query' => "Resultados da pesquisa por '$1' - $2'",
+	'wikiasearch2-page-title-with-query' => "Resultados da pesquisa por '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Pesquisar no FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Pesquisar na $1',
 	'wikiasearch2-search-all-wikia' => 'Pesquisar por todo o FANDOM',
@@ -643,8 +655,8 @@ $messages['pt'] = array(
 	'wikiasearch3-related-wiki' => 'Wiki relacionada',
 	'wikiasearch3-view-more-wikis' => 'Visualizar mais wikis',
 	'wikiasearch2-search-on-wiki' => 'Pesquisar nesta wiki',
-	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para $2 na {{SITENAME}}',
-	'wikiasearch2-results-for' => 'Resultados para $1 na {{SITENAME}}',
+	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|result|results}} para $2',
+	'wikiasearch2-results-for' => 'Resultados para $1',
 	'wikiasearch2-results-redirected-from' => 'redirecionado de',
 	'wikiasearch2-global-search-headline' => 'Encontrar comunidades no FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Pesquisar nesta wiki',
@@ -680,21 +692,23 @@ $messages['pt'] = array(
 	'wikiasearch2-sort-duration' => 'Duração',
 	'wikiasearch2-sort-publish-date' => 'Data de publicação',
 	'wikiasearch2-filter-hd' => 'Apenas HD',
+	'wikiasearch2-search-scope-internal' => 'Esta wikia',
+	'wikiasearch2-search-scope-crosswiki' => 'Todas as wikias',
 );
 
 $messages['ro'] = array(
 );
 
 $messages['ru'] = array(
-	'wikiasearch2-page-title-with-query' => 'Результаты поиска для «$1» — $2',
+	'wikiasearch2-page-title-with-query' => 'Результаты по запросу «$1»',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Поиск по Фэндому',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Поиск в «$1»',
 	'wikiasearch2-search-all-wikia' => 'Поиск в Фэндоме',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|результат|результата|результатов}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|страница|страницы|страниц}}',
 	'wikiasearch2-search-on-wiki' => 'Поиск на этой вики',
-	'wikiasearch2-results-count' => 'Примерно $1 {{PLURAL:$1|результат|результата|результатов}} для «$2» на {{SITENAME}}',
-	'wikiasearch2-results-for' => 'Результаты для «$1» на {{SITENAME}}',
+	'wikiasearch2-results-count' => 'Примерно $1 {{PLURAL:$1|результат|результата|результатов}} по запросу «$2»',
+	'wikiasearch2-results-for' => 'Результаты по запросу «$1»',
 	'wikiasearch2-global-search-headline' => 'Поиск сообществ Фэндома',
 	'wikiasearch2-wiki-search-headline' => 'Поиск по вики',
 	'wikiasearch2-advanced-search' => 'Расширенные параметры поиска',
@@ -734,6 +748,8 @@ $messages['ru'] = array(
 	'wikiasearch2-sort-duration' => 'Продолжительность',
 	'wikiasearch2-sort-publish-date' => 'Дата публикации',
 	'wikiasearch2-filter-hd' => 'Только HD',
+	'wikiasearch2-search-scope-internal' => 'Эта вики',
+	'wikiasearch2-search-scope-crosswiki' => 'Все вики',
 );
 
 $messages['sr-ec'] = array(
@@ -797,7 +813,7 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'wikiasearch2-page-title-with-query' => '对“$1”的搜索结果 - $2',
+	'wikiasearch2-page-title-with-query' => '对’$1’的搜索结果',
 	'wikiasearch2-page-title-no-query-interwiki' => '搜索FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => '搜索$1',
 	'wikiasearch2-search-all-wikia' => '搜索所有FANDOM社区',
@@ -808,8 +824,8 @@ $messages['zh-hans'] = array(
 	'wikiasearch3-related-wiki' => '其他维基',
 	'wikiasearch3-view-more-wikis' => '查看更多维基',
 	'wikiasearch2-search-on-wiki' => '在此Wiki中搜索',
-	'wikiasearch2-results-count' => '在{{SITENAME}}搜寻$2得到大约$1{{PLURAL:$1|项结果|项结果}}',
-	'wikiasearch2-results-for' => '在{{SITENAME}}搜寻$1的所有结果',
+	'wikiasearch2-results-count' => '搜寻$2得到大约$1{{PLURAL:$1|项结果|项结果}}',
+	'wikiasearch2-results-for' => '搜索$1的结果',
 	'wikiasearch2-results-redirected-from' => '重定向自',
 	'wikiasearch2-global-search-headline' => '在FANDOM上查找社区',
 	'wikiasearch2-wiki-search-headline' => '搜寻这个wiki',
@@ -845,10 +861,12 @@ $messages['zh-hans'] = array(
 	'wikiasearch2-sort-duration' => '时长',
 	'wikiasearch2-sort-publish-date' => '上传时间',
 	'wikiasearch2-filter-hd' => '只搜寻高清视频',
+	'wikiasearch2-search-scope-internal' => '本维基',
+	'wikiasearch2-search-scope-crosswiki' => '全部维基',
 );
 
 $messages['zh-hant'] = array(
-	'wikiasearch2-page-title-with-query' => '對「$1」的搜尋結果 - $2',
+	'wikiasearch2-page-title-with-query' => '對’$1’的搜尋結果',
 	'wikiasearch2-page-title-no-query-interwiki' => '搜索FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => '搜尋$1',
 	'wikiasearch2-search-all-wikia' => '搜尋所有FANDOM社區',
@@ -859,8 +877,8 @@ $messages['zh-hant'] = array(
 	'wikiasearch3-related-wiki' => '相關的wiki',
 	'wikiasearch3-view-more-wikis' => '查看更多wiki',
 	'wikiasearch2-search-on-wiki' => '在此Wiki中搜尋',
-	'wikiasearch2-results-count' => '在{{SITENAME}}搜尋$2得到大約$1個結果',
-	'wikiasearch2-results-for' => '在{{SITENAME}}搜尋 $1 的所有結果',
+	'wikiasearch2-results-count' => '搜尋$2得到大約$1個結果',
+	'wikiasearch2-results-for' => '搜索$1的結果',
 	'wikiasearch2-results-redirected-from' => '重定向自',
 	'wikiasearch2-global-search-headline' => '在FANDOM上查找社區',
 	'wikiasearch2-wiki-search-headline' => '搜尋這個wiki',
@@ -896,5 +914,7 @@ $messages['zh-hant'] = array(
 	'wikiasearch2-sort-duration' => '影片長度',
 	'wikiasearch2-sort-publish-date' => '上傳時間',
 	'wikiasearch2-filter-hd' => '只搜尋高畫質影片',
+	'wikiasearch2-search-scope-internal' => '本 Wiki',
+	'wikiasearch2-search-scope-crosswiki' => '所有Wiki',
 );
 
