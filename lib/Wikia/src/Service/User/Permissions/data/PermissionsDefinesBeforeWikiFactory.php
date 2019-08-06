@@ -469,6 +469,7 @@ $wgGroupPermissions['content-team-member']['quicktools'] = true;
 $wgGroupPermissions['content-team-member']['reupload'] = true;
 $wgGroupPermissions['content-team-member']['rollback'] = true;
 $wgGroupPermissions['content-team-member']['specialvideosdelete'] = true;
+$wgGroupPermissions['content-team-member']['suppressredirect'] = true;
 $wgGroupPermissions['content-team-member']['template-bulk-classification'] = true;
 $wgGroupPermissions['content-team-member']['themedesigner'] = true;
 $wgGroupPermissions['content-team-member']['unblockself'] = true;
