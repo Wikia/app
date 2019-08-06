@@ -62,7 +62,7 @@ class UnifiedSearchService {
 			'limit' => $request->getLimit(),
 		];
 
-		if ($request->isInternal()) {
+		if ($request->isInternalScope()) {
 			$params['wikiId'] = $request->getWikiId();
 		}
 
