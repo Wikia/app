@@ -1,15 +1,40 @@
 <section class="Search this-wiki WikiaGrid clearfix search-tracking">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl; ?>#">
+	<form class="WikiaSearch" id="search-v2-form" action="<?= $specialSearchUrl; ?>#">
 		<div class="SearchInput">
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
-				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a></p>
-				<?php endif ?>
+				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a>
+				</p>
+			<?php endif ?>
 
-				<p class="grid-1 alpha"><?= wfMsg( 'wikiasearch2-wiki-search-headline' ) ?></p>
-
-				<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?=$query; ?>" />
-			<input type="hidden" name="fulltext" value="Search" />
-			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+			<div class="WikiaSearchInputWrapper">
+				<div class="wds-dropdown">
+					<div class="wds-dropdown__toggle">
+						<span>
+							<?= $scope === \Wikia\Search\Config::SCOPE_INTERNAL
+								? wfMsg( 'wikiasearch2-search-scope-internal' )
+								: wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
+						</span>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
+					</div>
+					<div class="wds-dropdown__content">
+						<ul class="wds-list wds-is-linked">
+							<li>
+								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
+									<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></a>
+							</li>
+							<li>
+								<a href="#" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
+									<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?= $query; ?>"/>
+			</div>
+			<input type="hidden" name="fulltext" value="Search"/>
+			<input type="hidden" id="search-v2-scope" name="scope" value="<?= $scope ?>"/>
+			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>">
+				<img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
 				<?php echo $advancedSearchBox; ?>
@@ -23,9 +48,16 @@
 				<?php if ( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
 						<?php if ( empty( $isOneResultsPageOnly ) ): ?>
-							<?= wfMsg( 'wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>' ); ?>
+							<?= wfMsg( 
+								'wikiasearch2-results-count',
+								$resultsFoundTruncated, 
+								'<strong>' . $query . '</strong>' 
+							); ?>
 						<?php else : ?>
-							<?= wfMsg( 'wikiasearch2-results-for', '<strong>' . $query . '</strong>' ); ?>
+							<?= wfMsg(
+									'wikiasearch2-results-for',
+								 	'<strong>' . $query . '</strong>'
+							); ?>
 						<?php endif; ?>
 						<?php if ( isset( $hub ) && $hub ) : ?>
 							<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->escaped(); ?>
