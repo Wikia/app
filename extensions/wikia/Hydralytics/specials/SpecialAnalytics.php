@@ -69,7 +69,7 @@ class SpecialAnalytics extends \SpecialPage {
 
 		// use $wgLang to differ the cache based on user language
 		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
-		$sections = $wgMemc->get( $memcKey );
+		$sections = false; // $wgMemc->get( $memcKey );
 
 		if ( !is_array( $sections ) ) {
 			try {
