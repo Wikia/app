@@ -1522,7 +1522,7 @@ function wfGetStagingEnvForUrl( $url ) : string {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaEnvironment;
+	global $wgWikiaEnvironment, $wgWikiaBaseDomainRegex;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
@@ -1530,6 +1530,9 @@ function wfHttpsAllowedForURL( $url ): bool {
 	if ( $wgWikiaEnvironment === WIKIA_ENV_PROD &&
 		isset( $_SERVER['HTTP_X_STAGING'] ) &&
 		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
+		return false;
+	}
+	if ( !preg_match( '/' . $wgWikiaBaseDomainRegex . '$/', $host ) ) {
 		return false;
 	}
 
