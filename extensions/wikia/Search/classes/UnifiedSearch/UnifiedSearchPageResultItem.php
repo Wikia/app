@@ -22,8 +22,8 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 		$this->text = $value['content'];
 		$this->url = $value['url'];
 		$this->ns = $value['namespace'];
-		$this->hub_s = $value['hub'];
-		$this->thumbnail = $value['thumbnail'];
+		$this->hub_s = $value['hub'] ?? null;
+		$this->thumbnail = $value['thumbnail'] ?? null;
 	}
 
 	public function getText( $field = 'text', $wordLimit = null ) {
