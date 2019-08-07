@@ -22,12 +22,10 @@ class Redshift {
 	 * @throws \PDOException
 	 */
 	private static function getConnection() : \PDO {
-		global $wgRedshiftUser, $wgRedshiftPass;
-
-		$redshiftHost = 'loadtesting.cc5bp3zsf3ha.us-east-1.redshift.amazonaws.com:5439';
+		global $wgRedshiftUser, $wgRedshiftPass, $wgRedshiftHost;
 
 		if ( is_null( self::$connection ) ) {
-			$dsn = "pgsql:host={$redshiftHost};dbname=wikianalytics;port=5439";
+			$dsn = "pgsql:host={$wgRedshiftHost};dbname=wikianalytics;port=5439";
 
 			// https://www.php.net/manual/en/pdo.connections.php
 			// https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
@@ -38,14 +36,14 @@ class Redshift {
 			}
 			catch ( \PDOException $e ) {
 				WikiaLogger::instance()->error( __METHOD__, [
-					'host' => $redshiftHost,
+					'host' => $wgRedshiftHost,
 					'exception' => $e,
 				] );
 				throw $e;
 			}
 
 			WikiaLogger::instance()->info( __METHOD__, [
-				'host' => $redshiftHost,
+				'host' => $wgRedshiftHost,
 				'took_sec' => $took,
 			] );
 		}
