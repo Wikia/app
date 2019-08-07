@@ -119,7 +119,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					} else if (type === common.notificationTypes.announcement) {
 						return 'wds-icons-flag-small';
 					} else {
-						return 'wds-icons-upvote-small';
+						return 'wds-icons-heart-small';
 					}
 				}
 
