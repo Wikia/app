@@ -31,10 +31,9 @@ class SpecialAnalytics extends \SpecialPage {
 	 * Main Constructor
 	 *
 	 * @access	public
-	 * @return	void
 	 */
 	public function __construct() {
-		parent::__construct('Analytics', 'analytics');
+		parent::__construct('Analytics');
 	}
 
 	/**
