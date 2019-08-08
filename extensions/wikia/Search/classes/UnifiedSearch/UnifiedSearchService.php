@@ -127,6 +127,7 @@ class UnifiedSearchService {
 			'page' => $request->getPage(),
 			'limit' => $request->getLimit(),
 			'lang' => $request->getLanguage(),
+			'platform' => ['fandom', 'gamepedia']
 		];
 
 		$response = $this->doApiRequest( 'community-search', $params );
