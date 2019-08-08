@@ -32,7 +32,7 @@ class Information {
 		$res = Redshift::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
 			 'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
-			 FROM wikianalytics.edits ' .
+			 FROM wiki_analytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
@@ -69,7 +69,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
+			'SELECT search_phrase, COUNT(*) as search_count FROM wiki_analytics.searches ' .
 			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -95,7 +95,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
+			'SELECT country, SUM(cnt) as views FROM wiki_analytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -121,7 +121,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
+			'SELECT url, SUM(cnt) as views FROM wiki_analytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id AND url <> \'/\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -147,7 +147,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
+			'SELECT url, SUM(cnt) as views FROM wiki_analytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -172,7 +172,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
+			'SELECT dt, SUM(cnt) AS views FROM wiki_analytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
@@ -206,7 +206,7 @@ class Information {
 
 		// by browser
 		$res = Redshift::query(
-			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
+			'SELECT browser, SUM(cnt) AS views FROM wiki_analytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -220,7 +220,7 @@ class Information {
 
 		// by device type (filter out bots)
 		$res = Redshift::query(
-			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
+			'SELECT device_type, SUM(cnt) AS views FROM wiki_analytics.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
