@@ -283,7 +283,7 @@ class SpecialVersion extends SpecialPage {
 	 * @return String: Wikitext
 	 */
 	function getExtensionCredits() {
-		global $wgExtensionCredits, $wgExtensionFunctions, $wgParser, $wgFileExtensions, $wgSkinExtensionFunctions;
+		global $wgExtensionCredits, $wgExtensionFunctions, $wgParser, $wgFileExtensions;
 
 		if ( !count( $wgExtensionCredits ) && !count( $wgExtensionFunctions ) ) {
 			return '';
@@ -346,13 +346,6 @@ class SpecialVersion extends SpecialPage {
 		if ( count( $wgFileExtensions ) ) {
 			$out .= $this->openExtType( wfMessage( 'version-file-extensions-allowed' )->plain() );
 			$out .= '<tr><td colspan="4">' . $this->listToText( $wgFileExtensions ) . "</td></tr>\n";
-		}
-
-		if ( count( $wgSkinExtensionFunctions ) ) {
-			$out .= $this->openExtType( wfMessage( 'version-skin-extension-functions' )->plain(), 'skin-extension-functions' );
-			// wikia change start
-			$out .= '<tr><td colspan="4">' . $this->listToText( $wgSkinExtensionFunctions ) . "</td></tr>\n";
-			// wikia change end
 		}
 
 		$out .= Xml::closeElement( 'table' );

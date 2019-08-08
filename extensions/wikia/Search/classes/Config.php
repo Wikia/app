@@ -8,7 +8,7 @@ use Solarium_Query_Select;
 use Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
 use Wikia\Search\Traits\ArrayConfigurableTrait;
-use Wikia\Search\UnifiedSearch\UnifiedSearchWikiMatch;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRelatedCommunity;
 
 /**
  * A config class intended to handle variable flags for search
@@ -59,6 +59,9 @@ class Config {
 	const RANK_STALEST = 'stalest';
 	const RANK_SHORTEST = 'shortest';
 	const RANK_LONGEST = 'longest';
+
+	const SCOPE_INTERNAL = 'internal';
+	const SCOPE_CROSS_WIKI = 'cross-wiki';
 
 	/**
 	 * The value we use for pagination
@@ -219,6 +222,8 @@ class Config {
 	 */
 	protected $minArticleQuality = 0;
 
+	protected $scope = self::SCOPE_INTERNAL;
+
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
 	 *
@@ -341,9 +346,9 @@ class Config {
 	protected $xwikiArticleThreshold = 50;
 
 	/**
-	 * @var UnifiedSearchWikiMatch|null
+	 * @var UnifiedSearchRelatedCommunity|null
 	 */
-	private $unifiedWikiMatch;
+	private $relatedCommunity;
 
 	/**
 	 * Constructor method
@@ -584,7 +589,7 @@ class Config {
 	 * @return boolean
 	 */
 	public function hasWikiMatch() {
-		return $this->wikiMatch !== null || $this->unifiedWikiMatch !== null;
+		return $this->wikiMatch !== null || $this->relatedCommunity !== null;
 	}
 
 	/**
@@ -651,8 +656,8 @@ class Config {
 		return $this;
 	}
 
-	public function setUnifiedWikiMatch( UnifiedSearchWikiMatch $wikiMatch ) {
-		$this->unifiedWikiMatch = $wikiMatch;
+	public function setRelatedCommunity( UnifiedSearchRelatedCommunity $wikiMatch ) {
+		$this->relatedCommunity = $wikiMatch;
 
 		return $this;
 	}
@@ -676,10 +681,10 @@ class Config {
 	}
 
 	/**
-	 * @return UnifiedSearchWikiMatch|null
+	 * @return UnifiedSearchRelatedCommunity|null
 	 */
-	public function getUnifiedWikiMatch() {
-		return $this->unifiedWikiMatch;
+	public function getRelatedCommunity() {
+		return $this->relatedCommunity;
 	}
 
 	/**
@@ -1527,6 +1532,21 @@ class Config {
 	 */
 	public function setXwikiArticleThreshold( $xwikiArticleThreshold ) {
 		$this->xwikiArticleThreshold = $xwikiArticleThreshold;
+	}
+
+	public function getScope(): string {
+		return $this->scope;
+	}
+
+	public function setScope( string $scope ): self {
+		$this->scope = $scope;
+
+		return $this;
+	}
+
+	public function isInternalScope(): bool
+	{
+		return $this->scope === self::SCOPE_INTERNAL;
 	}
 
 	/**

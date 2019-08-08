@@ -387,6 +387,7 @@ $wgGroupPermissions['helper']['protectsite-nolimit'] = true;
 $wgGroupPermissions['staff']['protectsite-nolimit'] = true;
 
 $wgGroupPermissions['wiki-manager']['admindashboard'] = true;
+$wgGroupPermissions['wiki-manager']['apihighlimits']    = true;
 $wgGroupPermissions['wiki-manager']['autoconfirmed'] = true;
 $wgGroupPermissions['wiki-manager']['autopatrol'] = true;
 $wgGroupPermissions['wiki-manager']['bigdelete'] = true;
@@ -468,6 +469,7 @@ $wgGroupPermissions['content-team-member']['quicktools'] = true;
 $wgGroupPermissions['content-team-member']['reupload'] = true;
 $wgGroupPermissions['content-team-member']['rollback'] = true;
 $wgGroupPermissions['content-team-member']['specialvideosdelete'] = true;
+$wgGroupPermissions['content-team-member']['suppressredirect'] = true;
 $wgGroupPermissions['content-team-member']['template-bulk-classification'] = true;
 $wgGroupPermissions['content-team-member']['themedesigner'] = true;
 $wgGroupPermissions['content-team-member']['unblockself'] = true;

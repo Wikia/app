@@ -167,7 +167,7 @@ class XMPValidate {
 			wfDebugLog( 'XMP', __METHOD__ . " Flash structure did not have all the required components" );
 			$val = null;
 		} else {
-			$val = ( "\0" | ( $val['Fired'] === 'True' )
+			$val = ( 0 | ( $val['Fired'] === 'True' )
 				| ( intval( $val['Return'] ) << 1 )
 				| ( intval( $val['Mode'] ) << 3 )
 				| ( ( $val['Function'] === 'True' ) << 5 )

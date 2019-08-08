@@ -1,7 +1,7 @@
 <section class="HotSpotsModule module">
 
 <?php
-if(count($data) == 5) {
+if(is_countable($data) && count($data) == 5) {
 	echo "<h2>" .wfMsg('myhome-hot-spots-newest') ."</h2>";
 ?>
 <ul>
@@ -11,7 +11,7 @@ if(count($data) == 5) {
 	</li>
 <?php } ?>
 </ul>
-<?php } else if(count($data) == 2) {
+<?php } else if(is_countable($data) && count($data) == 2) {
 	echo "<h2>" .wfMsg('myhome-hot-spots-feed') ."</h2>";
 
 	echo '<p>'.wfMsg('myhome-hot-spots-definition', $data['interval']).'</p>';

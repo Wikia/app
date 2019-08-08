@@ -11,6 +11,10 @@
     cursor: pointer;
 }
 
+#fbConnectPreferences {
+    padding-bottom: 6px;
+}
+
 .facebook-state-linked #fbConnectPreferences {
     display: none;
 }
