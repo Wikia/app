@@ -45,7 +45,7 @@ class reindexImagesForWiki extends Maintenance {
 		$article = Article::newFromID( $pageId );
 		ImageServingHelper::buildAndGetIndex( $article, true );
 
-		$this->output( "\nTable updated, memory cache keys cleaned for article with id {$pageId}\n\n" );
+		$this->output( "\nTable updated for article with id {$pageId}\n\n" );
 
 	}
 
