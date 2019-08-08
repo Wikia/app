@@ -7,20 +7,20 @@ class reindexImagesForWiki extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Run ImageServingHelper::buildAndGetIndex() and clear memory cache for wiki to index images and update page_wikia_props table";
-		$this->addOption( 'pageID', 'Id of article', false, true, 'p' );
+		$this->addOption( 'articleID', 'Id of article', false, true, 'a' );
 	}
 
 	public function execute() {
 
 		global $wgServer, $wgCityId;
 
-		$pageID = $this->getOption( 'pageID', 0 );
+		$articleID = $this->getOption( 'articleID', 0 );
 		$dbName = WikiFactory::IDtoDB( $wgCityId );
 		$db = wfGetDB( DB_SLAVE, $dbName );
 
 		$this->output( "\nTable page_wikia_props will be updated for {$wgServer} wiki \n\n" );
 
-		if ( !$pageID ) {
+		if ( !$articleID ) {
 
 			$articles = $db->select(
 				[ 'page_wikia_props' ],
@@ -33,7 +33,7 @@ class reindexImagesForWiki extends Maintenance {
 			}
 
 		} else {
-			$this->rebuildIndex( $pageID );
+			$this->rebuildIndex( $articleID );
 		}
 
 		$this->output( "\nTable page_wikia_props updated\n\n" );
