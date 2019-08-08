@@ -25,7 +25,7 @@ class Redshift {
 		global $wgRedshiftUser, $wgRedshiftPass, $wgRedshiftHost;
 
 		if ( is_null( self::$connection ) ) {
-			$dsn = "pgsql:host={$wgRedshiftHost};dbname=wikianalytics;port=5439";
+			$dsn = "pgsql:host={$wgRedshiftHost};dbname=dev;port=5439";
 
 			// https://www.php.net/manual/en/pdo.connections.php
 			// https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
