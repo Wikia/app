@@ -12,11 +12,11 @@ class reindexImagesForWiki extends Maintenance {
 
 	public function execute() {
 
-		global $wgServer;
+		global $wgServer, $wgCityId;
 
 		$pageID = $this->getOption( 'pageID', 0 );
-
-		$db = Wikifactory::db( DB_SLAVE );
+		$dbName = WikiFactory::IDtoDB( $wgCityId );
+		$db = wfGetDB( DB_SLAVE, $dbName );
 
 		$this->output( "\nTable page_wikia_props will be updated for {$wgServer} wiki \n\n" );
 
