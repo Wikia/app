@@ -134,7 +134,7 @@ class ImageServingHelper {
 		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
 
 		if( count($images) < 1 ) {
-			if( $ignoreEmpty) {
+			if( $ignoreEmpty ) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
