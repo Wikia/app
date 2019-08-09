@@ -26,7 +26,7 @@ final class UnifiedSearchCommunityResultItem implements UnifiedSearchResultItem 
 		$this->url = $value['url'];
 		$this->hub = $value['hub'];
 		$this->name = $value['name'];
-		$this->description = $value['description'];
+		$this->description = $value['description'] ?? "";
 		$this->pageCount = $value['pageCount'];
 		$this->imageCount = $value['imageCount'];
 		$this->videoCount = $value['videoCount'];
