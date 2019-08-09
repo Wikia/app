@@ -261,7 +261,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'geolocation' => '地理位置',
+	'geolocation' => '位置情報',
 	'staff_contact' => 'スタッフ問い合わせ',
 	'analytics_confidential' => '本ページの情報はアドミンのためのものであり、許可なく転載することを禁じます。',
 	'logged_out' => 'ログアウト',
@@ -295,7 +295,7 @@ $messages['ja'] = array(
 	'admin_views' => '1アドミンあたりの閲覧回数',
 	'page_views' => 'ページ閲覧数',
 	'analytics_dashboard' => 'Wikiアナリティクスアドミン・ダッシュボード',
-	'location' => '場所',
+	'location' => 'アクセス元',
 	'returning_visitors' => '再訪問者',
 	'top_editors' => 'トップ編集者',
 	'hlfaqurl-text' => 'ポリシー、手順、よくある質問',
