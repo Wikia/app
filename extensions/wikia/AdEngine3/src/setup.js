@@ -42,7 +42,7 @@ async function updateWadContext() {
 
 	if (serviceCanBeEnabled) {
 		// BT rec
-		context.set('options.wad.btRec.enabled', instantConfig.isGeoEnabled('wgAdDriverWadBTCountries'));
+		context.set('options.wad.btRec.enabled', instantConfig.get('icBTRec'));
 
 		// HMD rec
 		context.set(
