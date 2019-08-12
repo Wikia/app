@@ -134,7 +134,7 @@ class ImageServingHelper {
 		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
 
 		if( count($images) < 1 ) {
-			if( $ignoreEmpty) {
+			if( $ignoreEmpty ) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
@@ -168,7 +168,8 @@ class ImageServingHelper {
 		self::hookSwitch(false);
 
 		$out = array();
-		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
+		$pattern = '/((?<=(image mw=\')).*(?=\')|(?<=(data-image-key=")).*(?="))/U';
+		preg_match_all($pattern, $editInfo->output->getText(), $out );
 		$imageList = $out[0];
 		Hooks::run( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
 		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
