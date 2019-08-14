@@ -8998,3 +8998,9 @@ $wgArticleExporterExchange = [
  * @var $wgEnableHydralyticsExt
  */
 $wgEnableHydralyticsExt = true;
+
+/**
+ * @var $wgShowTwitchAuthButton
+ */
+$wgShowTwitchAuthButton = false;
+

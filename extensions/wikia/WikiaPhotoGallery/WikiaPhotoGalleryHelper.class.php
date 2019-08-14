@@ -214,7 +214,15 @@ class WikiaPhotoGalleryHelper {
 					$parser->mOutput->addLink( $linkTitle );
 
 					$linkAttribs['class'] = 'image link-internal';
-					$linkAttribs['href'] = $linkTitle->getLocalUrl();
+
+					// PLATFORM-42417, create correct url for w:c: interwiki links
+					// by executing InterwikiDispatcher::getInterWikiaURLHook()
+					if ( InterwikiDispatcher::isSupportedPrefix( $linkTitle->mInterwiki ) ) {
+						$linkAttribs['href'] = $linkTitle->getFullURL();
+					} else {
+						$linkAttribs['href'] = $linkTitle->getLocalUrl();
+					}
+
 					$linkAttribs['title'] = $link;
 				}
 			}

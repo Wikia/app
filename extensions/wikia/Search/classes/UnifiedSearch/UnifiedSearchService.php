@@ -55,13 +55,16 @@ class UnifiedSearchService {
 
 	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
-			'wikiId' => $request->getWikiId(),
 			'lang' => $request->getLanguageCode(),
 			'query' => $request->getQuery()->getSanitizedQuery(),
 			'namespace' => $request->getNamespaces(),
 			'page' => $request->getPage(),
 			'limit' => $request->getLimit(),
 		];
+
+		if ($request->isInternalScope()) {
+			$params['wikiId'] = $request->getWikiId();
+		}
 
 		if ( $request->isImageOnly() ) {
 			$params['imageOnly'] = 'true';

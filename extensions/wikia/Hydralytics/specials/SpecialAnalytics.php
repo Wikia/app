@@ -65,13 +65,12 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @throws \ErrorPageError
 	 */
 	private function analyticsPage() {
-		global $wgMemc, $wgLang;
+		global $wgLang;
 
 		// use $wgLang to differ the cache based on user language
 		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
-		$sections = $wgMemc->get( $memcKey );
 
-		if ( !is_array( $sections ) ) {
+		$sections = \WikiaDataAccess::cacheWithLock( $memcKey, \WikiaResponse::CACHE_SHORT, function() {
 			try {
 				$sections = [
 					'top_viewed_pages' => '',
@@ -182,8 +181,8 @@ class SpecialAnalytics extends \SpecialPage {
 					foreach ($topPages['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
 
-						// remove "/wiki/" and underscores from page names
-						$title = str_replace('/wiki/', '', $newUri);
+						// remove language url part and "/wiki/" and underscores from page names
+						$title = preg_replace('|^(/\w+)?/wiki/|', '', $newUri);
 						$title = str_replace('_', ' ', $title);
 
 						$sections['top_viewed_pages'] .= "
@@ -378,11 +377,10 @@ class SpecialAnalytics extends \SpecialPage {
 				);
 			}
 
-			// cache the statistics for three hours, new data in Redshift arrive every 24h
-			$wgMemc->set( $memcKey, $sections,  \WikiaResponse::CACHE_SHORT );
-		}
+			return $sections;
+		});
 
-		$generatedAt = wfMessage('analytics_report_generated', 'one day ago')->escaped();
+		$generatedAt = wfMessage('analytics_report_generated', wfMsgExt('timeago-day', array(), 1))->escaped();
 
 		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);

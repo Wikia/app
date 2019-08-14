@@ -8,6 +8,7 @@ import {
 	context,
 	events,
 	eventService,
+	geoCacheStorage,
 	jwplayerAdsFactory,
 	krux,
 	moatYi,
@@ -55,7 +56,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 		pageTracker.trackProp('moat_yi', data);
 	});
 
-	billTheLizardConfigurator.configure();
+	await billTheLizardConfigurator.configure();
 
 	if (context.get('state.showAds')) {
 		callExternals();
@@ -90,7 +91,7 @@ function startAdEngine() {
 }
 
 function trackLabradorValues() {
-	const labradorPropValue = utils.geoService.getSamplingResults().join(';');
+	const labradorPropValue = geoCacheStorage.getSamplingResults().join(';');
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);

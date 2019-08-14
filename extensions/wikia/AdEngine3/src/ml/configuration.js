@@ -1,7 +1,13 @@
-import { context, eventService, utils, billTheLizard, billTheLizardEvents } from '@wikia/ad-engine';
+import {
+	context,
+	eventService,
+	utils,
+	billTheLizard,
+	billTheLizardEvents,
+	InstantConfigService
+} from '@wikia/ad-engine';
 import { methods } from './executor';
 import { bucketizeViewportHeight } from './buicketizer';
-import instantGlobals from '../instant-globals';
 import pageTracker from '../tracking/page-tracker';
 
 function setupProjects() {
@@ -18,8 +24,9 @@ function setupExecutor() {
 }
 
 export const billTheLizardConfigurator = {
-	configure() {
-		const config = instantGlobals.get('wgAdDriverBillTheLizardConfig', {});
+	async configure() {
+		const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
+		const config = instantConfig.get('wgAdDriverBillTheLizardConfig', {});
 		const { mediaId, videoTags } = context.get('wiki.targeting.featuredVideo') || {};
 		const now = new Date();
 		const [browserName] = utils.client.getBrowser().split(' ');
