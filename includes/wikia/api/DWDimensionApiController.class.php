@@ -269,6 +269,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki ) {
+			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
+				continue;
+			}
+			
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {
