@@ -15,6 +15,8 @@
 
 namespace Hydralytics;
 
+use \CountryNames;
+
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
