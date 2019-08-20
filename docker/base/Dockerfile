@@ -139,6 +139,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=9a31092
+ENV WIKIA_BASE_IMAGE_HASH=3f60947
 
 WORKDIR /usr/wikia/slot1/current/src
