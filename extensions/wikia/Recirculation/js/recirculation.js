@@ -70,7 +70,7 @@ require([
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredContent) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredItem) {
 			// do not show footer at all if there is not enough elements to display
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
@@ -81,7 +81,7 @@ require([
 					nsItems: nsItems,
 					wikiItems: wikiItems,
 					discussions: discussions,
-					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredItem
 				});
 			});
 		})
@@ -112,13 +112,11 @@ require([
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions, sponsoredContent) {
+		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions, sponsoredContent, sponsoredItem) {
 			// do not show footer at all if there is not enough elements to display
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
-			}
-
-			var sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+			};
 
 			$mixedContentFooterContent.show();
 			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
@@ -143,7 +141,7 @@ require([
 			$mixedContentFooter.hide();
 			return;
 		}
-
+debugger;
 		if (window.wgContentLanguage === 'en') {
 			prepareEnglishRecirculation();
 		} else {
@@ -176,10 +174,9 @@ require([
 				utils.loadTemplates(['client/premiumRail_sponsoredContent.mustache']),
 				waitForRail()
 			])
-			.done(function (sponsoredContent, template) {
+			.done(function (sponsoredItem, template) {
 				var $rail = $('#WikiaRail'),
-					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first(),
-					sponsoredItem = sponsoredContentHelper.getSponsoredItem(sponsoredContent);
+					$firstItem = $rail.find('.premium-recirculation-rail .thumbnails li').first();
 
 				if (!$firstItem) {
 					return;
