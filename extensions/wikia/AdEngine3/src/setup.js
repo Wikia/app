@@ -116,8 +116,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
 
-	context.set('options.incontentNative', instantConfig.isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
-
 	if (instantConfig.isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',

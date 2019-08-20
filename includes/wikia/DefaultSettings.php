@@ -1319,20 +1319,6 @@ $wgAdDriverRepeatMobileIncontentCountries = null;
 $wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
- * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
- * List of countries where incontent native is displayed on mobile wiki search page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileWikiAE3NativeSearchCountries = null;
-
-/**
- * @name $wgAdDriverNativeSearchDesktopCountries
- * List of countries where incontent native is displayed on app search page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverNativeSearchDesktopCountries = null;
-
-/**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
  * List of countries where sections TLB is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
