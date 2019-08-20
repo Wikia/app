@@ -936,7 +936,7 @@ $messages['zh-hans'] = array(
 	'video-page-add-description-link-text' => '添加说明。',
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
-	'video-page-file-list-pagination' => '$2的$1',
+	'video-page-file-list-pagination' => '第$1页 共$2页',
 	'file-page-replace-button' => '替换',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',
