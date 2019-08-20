@@ -70,7 +70,7 @@ require([
 			discussions.prepare(),
 			sponsoredContentHelper.fetch()
 		];
-		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredContent) {
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions, sponsoredItem) {
 			// do not show footer at all if there is not enough elements to display
 			if (wikiItems.length < numberOfArticleFooterSlots) {
 				return;
@@ -81,7 +81,7 @@ require([
 					nsItems: nsItems,
 					wikiItems: wikiItems,
 					discussions: discussions,
-					sponsoredItem: sponsoredContentHelper.getSponsoredItem(sponsoredContent)
+					sponsoredItem: sponsoredItem
 				});
 			});
 		})
