@@ -1,6 +1,6 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.3.7-fpm-stretch
+FROM php:7.3.8-fpm-stretch
 
 # set locale as required by MediaWiki / Perl
 ENV LANG C.UTF-8
@@ -139,6 +139,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=0ab78b3
+ENV WIKIA_BASE_IMAGE_HASH=9a31092
 
 WORKDIR /usr/wikia/slot1/current/src
