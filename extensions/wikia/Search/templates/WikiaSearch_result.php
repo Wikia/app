@@ -11,7 +11,9 @@
 		?>
 		<?php
 		$trackingData =
-			'class="result-link"' . ' data-pos="' . $pos . '"' . ' data-page-id="' . $result['pageid'] . '"' .
+			'class="result-link"' . ' data-pos="' . $pos . '"' .
+			' data-page-id="' . $result['pageid'] . '"' .
+			' data-wiki-id="' . $result['wikiId'] . '"' .
 			' data-thumbnail="' . !empty( $thumbnail ) . '"';
 		?>
 		<?php if ( !empty( $thumbnail ) ): ?>

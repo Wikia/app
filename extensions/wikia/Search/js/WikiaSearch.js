@@ -109,11 +109,15 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
 				},
 				target: 'redirect',
-				app: 'mw-desktop',
+				app: this.getSearchAppIdentifier(),
 				siteId: parseInt(window.wgCityId),
 				searchId: this.getUniqueSearchId(),
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
 			};
+
+			if (this.getCurrentScope() === 'cross-wiki') {
+				payload.clicked.wikiId = parseInt(clickedElement.getAttribute('data-wiki-id'));
+			}
 
 			trackingOptIn.pushToUserConsentQueue(function () {
 				window.searchTracking.trackSearchClicked(payload);
@@ -138,7 +142,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				page: parseInt(queryparams.get('page')) || 1,
 				limit: results.length,
 				sortOrder: 'default',
-				app: 'mw-desktop',
+				app: this.getSearchAppIdentifier(),
 				siteId: parseInt(window.wgCityId),
 				searchId: searchUID,
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
@@ -157,7 +161,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 					title: item.text,
 					position: parseInt(item.getAttribute('data-pos')),
 					thumbnail: !!item.getAttribute('data-thumbnail'),
-				}
+				};
 			}).toArray();
 		},
 		getUniqueSearchId: function() {
@@ -191,7 +195,13 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				searchForm.find('#search-v2-scope').val(value);
 				searchForm.submit();
 			});
-		}
+		},
+		getCurrentScope: function () {
+			return $('#search-v2-scope').val();
+		},
+		getSearchAppIdentifier: function () {
+			return this.getCurrentScope() === 'cross-wiki' ? 'mw-desktop-crosswiki' : 'mw-desktop';
+		},
 	};
 
 
