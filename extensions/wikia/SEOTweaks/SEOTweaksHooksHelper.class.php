@@ -362,17 +362,37 @@ class SEOTweaksHooksHelper {
 		return true;
 	}
 
+	protected static function findLanguagePath(array $parsedUrl): string {
+		if ( !array_key_exists( 'path', $parsedUrl )) {
+			return '';
+		}
+
+		$path = $parsedUrl['path'];
+		if ( strlen($path) === 0 ) {
+			return '';
+		}
+
+		$langCode = explode( '/', $path )[1];
+		$languages = Language::getLanguageNames();
+		if ( isset( $languages[$langCode] ) ) {
+			return '/' . $langCode;
+		}
+
+		return '';
+	}
+
 	public static function onLinkerMakeExternalLink(string &$url, string &$text, bool &$link, array &$attribs): bool {
 		$parsed = parse_url( $url );
+
 		if ( $parsed !== false ) {
-			$city_id = WikiFactory::DomainToID(wfNormalizeHost( $parsed['host'] ));
+			$host = $parsed['host'];
+			$path = self::findLanguagePath($parsed);
+			$city_id = WikiFactory::DomainToID(wfNormalizeHost( $host . $path ));
 			if ( $city_id ) {
-				$parsed['host'] = parse_url(
-					WikiFactory::cityIDtoDomain( $city_id ),
-					PHP_URL_HOST
-				);
+				$primaryCityUrl = parse_url( WikiFactory::cityIDtoDomain( $city_id ) );
+				$parsed['host'] = $primaryCityUrl['host'];
+				$url = http_build_url( $url, $parsed );
 			}
-			$url = http_build_url( $url, $parsed );
 		}
 
 		return true;
