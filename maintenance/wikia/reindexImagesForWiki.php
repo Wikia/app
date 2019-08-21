@@ -23,8 +23,12 @@ class reindexImagesForWiki extends Maintenance {
 		if ( !$articleID ) {
 
 			$articles = $db->select(
-				[ 'page_wikia_props' ],
-				[ 'page_id' ]
+				[ "page" ],
+				[ "page_id" ],
+				[
+					"page_namespace = 0 OR page_namespace = 1",
+					"page_title NOT LIKE '%@comment%'"
+				]
 			);
 
 			while ( $row = $db->fetchRow( $articles ) ) {
