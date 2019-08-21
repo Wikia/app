@@ -14,19 +14,19 @@ namespace Email\Controller;
 class AppleDisconnectController extends PasswordResetLinkController {
 
 	public function getSubject() {
-		return $this->getMessage( 'emailext-appledisconnect-subject' )->text();
+		return $this->getMessage( 'emailext-apple-disconnect-subject' )->text();
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-appledisconnect-summary' )->text();
+		return $this->getMessage( 'emailext-apple-disconnect-summary' )->text();
 	}
 
 	protected function getIntro() {
-		return $this->getMessage( 'emailext-appledisconnect-intro' )->text();
+		return $this->getMessage( 'emailext-apple-disconnect-intro' )->text();
 	}
 
 	protected function getInstructions() {
-		return $this->getMessage( 'emailext-appledisconnect-instructions' )->text();
+		return $this->getMessage( 'emailext-apple-disconnect-instructions' )->text();
 	}
 }
 
