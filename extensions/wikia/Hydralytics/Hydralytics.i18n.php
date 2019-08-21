@@ -4,6 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 	'analytics_dashboard' => 'Wiki Analytics Admin Dashboard',
+	'action-analytics' => 'access the Wiki Analytics',
 	'hlfaqurl-text' => 'Policies, Procedures, and FAQ',
 	'hlslackurl-text' => 'Slack Information',
 	'error_analytics_title' => 'Error - Analytics Dashboard',
