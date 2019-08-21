@@ -26,7 +26,7 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 			}).fail(function (err) {
 				log('Failed to fetch Sponsored content data' + err, log.levels.error);
 				// don't block rendering of rail/MCF
-				deferred.resolve({});
+				deferred.resolve(null);
 			});
 		}
 
