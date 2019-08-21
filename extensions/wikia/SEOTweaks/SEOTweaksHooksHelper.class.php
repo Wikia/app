@@ -362,13 +362,13 @@ class SEOTweaksHooksHelper {
 		return true;
 	}
 
-	protected static function findLanguagePath(array $parsedUrl): string {
-		if ( !array_key_exists( 'path', $parsedUrl )) {
+	protected static function findLanguagePath( array $parsedUrl ): string {
+		if ( !array_key_exists( 'path', $parsedUrl ) ) {
 			return '';
 		}
 
 		$path = $parsedUrl['path'];
-		if ( strlen($path) === 0 ) {
+		if ( strlen( $path ) === 0 ) {
 			return '';
 		}
 
@@ -381,13 +381,13 @@ class SEOTweaksHooksHelper {
 		return '';
 	}
 
-	public static function onLinkerMakeExternalLink(string &$url, string &$text, bool &$link, array &$attribs): bool {
+	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
 		$parsed = parse_url( $url );
 
 		if ( $parsed !== false ) {
 			$host = $parsed['host'];
-			$path = self::findLanguagePath($parsed);
-			$city_id = WikiFactory::DomainToID(wfNormalizeHost( $host . $path ));
+			$path = self::findLanguagePath( $parsed );
+			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host . $path ) );
 			if ( $city_id ) {
 				$primaryCityUrl = parse_url( WikiFactory::cityIDtoDomain( $city_id ) );
 				$parsed['host'] = $primaryCityUrl['host'];
