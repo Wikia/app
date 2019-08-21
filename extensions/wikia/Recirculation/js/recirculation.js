@@ -141,7 +141,7 @@ require([
 			$mixedContentFooter.hide();
 			return;
 		}
-debugger;
+
 		if (window.wgContentLanguage === 'en') {
 			prepareEnglishRecirculation();
 		} else {
