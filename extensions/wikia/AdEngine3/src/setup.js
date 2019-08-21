@@ -4,8 +4,10 @@ import {
 	context,
 	events,
 	eventService,
+	fillerService,
 	geoCacheStorage,
 	InstantConfigService,
+	PorvataFiller,
 	setupNpaContext,
 	utils
 } from '@wikia/ad-engine';
@@ -127,6 +129,11 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			'options.unstickHiViLeaderboardTimeout',
 			instantConfig.get('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
 		);
+	}
+
+	if (instantConfig.get('icPorvataDirect')) {
+		context.set('slots.incontent_player.customFiller', 'porvata');
+		fillerService.register(new PorvataFiller());
 	}
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
