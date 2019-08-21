@@ -105,6 +105,7 @@ $messages['de'] = array(
 	'page' => 'Seite',
 	'help_links' => 'Hilfe',
 	'total_page_views' => 'Seitenaufrufe (insgesamt)',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['es'] = array(
@@ -156,6 +157,7 @@ $messages['es'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ayuda',
 	'total_page_views' => 'páginas vistas en total',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['fr'] = array(
@@ -208,6 +210,7 @@ $messages['fr'] = array(
 	'page' => 'Page',
 	'help_links' => 'Aide',
 	'total_page_views' => 'Total de pages vues',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['it'] = array(
@@ -259,6 +262,7 @@ $messages['it'] = array(
 	'page' => 'Pagina',
 	'help_links' => 'Aiuto',
 	'total_page_views' => 'Visualizzazioni di pagina totali',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['ja'] = array(
@@ -310,6 +314,7 @@ $messages['ja'] = array(
 	'page' => 'ページ',
 	'help_links' => 'ヘルプ',
 	'total_page_views' => '合計ページ閲覧数',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['pl'] = array(
@@ -361,6 +366,7 @@ $messages['pl'] = array(
 	'page' => 'Strona',
 	'help_links' => 'Pomoc',
 	'total_page_views' => 'całkowita liczba odsłon',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['pt'] = array(
@@ -412,6 +418,7 @@ $messages['pt'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ajuda',
 	'total_page_views' => 'Total de Visualizações de Página',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['ru'] = array(
@@ -463,6 +470,7 @@ $messages['ru'] = array(
 	'page' => 'Страница',
 	'help_links' => 'Справка',
 	'total_page_views' => '- всего просмотров за 30 дней',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['zh-hans'] = array(
@@ -514,6 +522,7 @@ $messages['zh-hans'] = array(
 	'page' => '页面',
 	'help_links' => '帮助',
 	'total_page_views' => '页面浏览总量',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
 $messages['zh-hant'] = array(
@@ -565,5 +574,6 @@ $messages['zh-hant'] = array(
 	'page' => '頁面',
 	'help_links' => '幫助',
 	'total_page_views' => '全部頁面訪問次數',
+	'action-analytics' => 'access the Wiki Analytics',
 );
 
