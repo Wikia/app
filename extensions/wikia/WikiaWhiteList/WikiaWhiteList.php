@@ -17,7 +17,6 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 // defines
 define ('REGEX_PARSE_WHITELIST', '#%s\s*?=\s*?([\'"]?)((?(1)[^\'>"]*|[^\'>" ]*))(\b)%s(\b)((?(1)[^\'>"]*|[^\'>" ]*))[\'"]?#i');
 define ('CLASS_PARSE_WHITELIST', '/class\s*?=\s*?"%s\s*?(%s)"/');
-define ('HREF_PARSE_WHITELIST', '#href\s*?=\s*?[\'"]?([^\'" ]*)[\'"]?#i');
 
 // Register hooks
 $wgHooks['ParserAfterTidy'][] = 'wfParserWhiteList' ;
@@ -53,7 +52,7 @@ function wfWhiteListParse($text) {
 	//---
 	if (preg_match(sprintf(REGEX_PARSE_WHITELIST,'rel','nofollow'), $text)) {
 		//---
-		preg_match(HREF_PARSE_WHITELIST, $text, $captures);
+		preg_match('#href\s*?=\s*?[\'"]?([^\'" ]*)[\'"]?#i', $text, $captures);
 		if ( is_array($captures) && isset($captures[1]) ) {
 			$lhref = $captures[1];
 			if (preg_match('#^\s*(https?:)?//#', $lhref)) {
@@ -94,19 +93,6 @@ function wfWhiteListParse($text) {
 							if (count($m) > 0) {
 								$text = preg_replace(sprintf(REGEX_PARSE_WHITELIST,"rel","nofollow"), "", $text);
 								$text = preg_replace(sprintf(CLASS_PARSE_WHITELIST,"external","(text|free|autonumber)"), "class=\"$1\"", $text);
-
-								$parsed = @parse_url( $lhref );
-								if (!empty( $parsed ) && is_array( $parsed )) {
-									$city_id = WikiFactory::DomainToID(wfNormalizeHost( $parsed['host'] ));
-									if ($city_id) {
-										$parsed['host'] = parse_url(
-											WikiFactory::cityIDtoDomain( $city_id ),
-											PHP_URL_HOST
-										);
-									}
-									$parsed['scheme'] = wfHttpsAllowedForURL( $lhref ) ? 'https' : 'http';
-									$text = str_replace( $lhref, http_build_url( $lhref, $parsed ), $text );
-								}
 							}
 						}
 					}

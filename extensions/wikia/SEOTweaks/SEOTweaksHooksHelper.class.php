@@ -361,4 +361,20 @@ class SEOTweaksHooksHelper {
 
 		return true;
 	}
+
+	public static function onLinkerMakeExternalLink(string &$url, string &$text, bool &$link, array &$attribs): bool {
+		$parsed = parse_url( $url );
+		if ( $parsed !== false ) {
+			$city_id = WikiFactory::DomainToID(wfNormalizeHost( $parsed['host'] ));
+			if ( $city_id ) {
+				$parsed['host'] = parse_url(
+					WikiFactory::cityIDtoDomain( $city_id ),
+					PHP_URL_HOST
+				);
+			}
+			$url = http_build_url( $url, $parsed );
+		}
+
+		return true;
+	}
 }
