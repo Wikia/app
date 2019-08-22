@@ -388,7 +388,7 @@ class SEOTweaksHooksHelper {
 		if ( $parsed !== false ) {
 			$host = $parsed['host'];
 			$path = self::findLanguagePath( $parsed );
-			if ($path !== '') {
+			if ( $path !== '' ) {
 				$parsed['path'] = substr($parsed['path'], strlen($path));
 			}
 			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host) . $path );
@@ -396,7 +396,7 @@ class SEOTweaksHooksHelper {
 				$primaryCityUrl = parse_url( WikiFactory::cityIDtoUrl( $city_id ) );
 				$parsed['host'] = $primaryCityUrl['host'];
 				if ( isset( $primaryCityUrl['path'] ) ) {
-					$parsed['path'] = $primaryCityUrl['path'] . ( isset( $parsed['path'] ) ? $parsed['path'] : '' );
+					$parsed['path'] = $primaryCityUrl['path'] . ( $parsed['path'] ?? '' );
 				}
 				$url = http_build_url( '', $parsed );
 			}
