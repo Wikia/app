@@ -389,9 +389,9 @@ class SEOTweaksHooksHelper {
 			$host = $parsed['host'];
 			$path = self::findLanguagePath( $parsed );
 			if ( $path !== '' ) {
-				$parsed['path'] = substr($parsed['path'], strlen($path));
+				$parsed['path'] = substr( $parsed['path'], strlen( $path ) );
 			}
-			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host) . $path );
+			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host ) . $path );
 			if ( $city_id ) {
 				$primaryCityUrl = parse_url( WikiFactory::cityIDtoUrl( $city_id ) );
 				$parsed['host'] = $primaryCityUrl['host'];
