@@ -15,7 +15,7 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
-import { registerSlotTracker, registerViewabilityTracker } from './tracking/tracker';
+import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 
 const fallbackInstantConfig = {
 	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
@@ -42,7 +42,7 @@ async function updateWadContext() {
 
 	if (serviceCanBeEnabled) {
 		// BT rec
-		context.set('options.wad.btRec.enabled', instantConfig.isGeoEnabled('wgAdDriverWadBTCountries'));
+		context.set('options.wad.btRec.enabled', instantConfig.get('icBTRec'));
 
 		// HMD rec
 		context.set(
@@ -111,11 +111,10 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.kikimora.player', instantConfig.isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
 	context.set('options.tracking.slot.status', instantConfig.isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.tracking.postmessage', true);
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
-
-	context.set('options.incontentNative', instantConfig.isGeoEnabled('wgAdDriverNativeSearchDesktopCountries'));
 
 	if (instantConfig.isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')) {
 		context.set(
@@ -128,7 +127,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		);
 	}
 
-	context.set('services.confiant.enabled', instantConfig.isGeoEnabled('wgAdDriverConfiantDesktopCountries'));
+	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& instantConfig.isGeoEnabled('wgAdDriverKruxCountries') && !instantConfig.get('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
@@ -262,6 +261,7 @@ async function configure(adsContext, isOptedIn) {
 
 	registerSlotTracker();
 	registerViewabilityTracker();
+	registerPostmessageTrackingTracker();
 }
 
 /**

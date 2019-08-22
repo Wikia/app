@@ -104,7 +104,7 @@ abstract class ImageServingDriverBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	protected function makeKey( $articleId, $revId ) {
-		return wfMemcKey( "imageserving-images-data", $articleId, $revId, $this->minWidth, $this->minHeight );
+		return wfMemcKey( "image-serving-images-data", $articleId, $revId, $this->minWidth, $this->minHeight );
 	}
 
 	protected function loadFromDb( $articleIds ) {

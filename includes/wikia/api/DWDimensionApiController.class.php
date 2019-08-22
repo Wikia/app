@@ -269,6 +269,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki ) {
+			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
+				continue;
+			}
+			
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {
@@ -447,6 +451,11 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki ) {
+			// DE-4475 | skip wikis that do not have supported city_cluster value (i.e. outside the "c1...c7" range)
+			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
+				continue;
+			}
+
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {
