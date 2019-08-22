@@ -384,14 +384,21 @@ class SEOTweaksHooksHelper {
 	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
 		$parsed = parse_url( $url );
 
+
 		if ( $parsed !== false ) {
 			$host = $parsed['host'];
 			$path = self::findLanguagePath( $parsed );
-			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host ) . $path );
+			if ($path !== '') {
+				$parsed['path'] = substr($parsed['path'], strlen($path));
+			}
+			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host) . $path );
 			if ( $city_id ) {
-				$primaryCityUrl = parse_url( WikiFactory::cityIDtoDomain( $city_id ) );
+				$primaryCityUrl = parse_url( WikiFactory::cityIDtoUrl( $city_id ) );
 				$parsed['host'] = $primaryCityUrl['host'];
-				$url = http_build_url( $url, $parsed );
+				if ( isset( $primaryCityUrl['path'] ) ) {
+					$parsed['path'] = $primaryCityUrl['path'] . ( isset( $parsed['path'] ) ? $parsed['path'] : '' );
+				}
+				$url = http_build_url( '', $parsed );
 			}
 		}
 

@@ -307,4 +307,72 @@ class SEOTweaksTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $expected
+	 * @param string $message
+	 *
+	 * @param $primaryDomain
+	 * @param $cityId
+	 * @dataProvider onLinkerMakeExternalLinkDataProvider
+	 */
+	public function testOnLinkerMakeExternalLink($url, $expected, $primaryDomain, $cityId, $message) {
+
+		$dummyString = '';
+		$dummyBool = false;
+		$dummyArray = [];
+
+		$this->mockStaticMethod('WikiFactory', 'DomainToID', $cityId);
+		$this->mockStaticMethod('WikiFactory', 'cityIDtoUrl', $primaryDomain);
+
+		$res = $url;
+		$this->assertTrue(SEOTweaksHooksHelper::onLinkerMakeExternalLink( $res, $dummyString, $dummyBool, $dummyArray
+		), 'Should always return true');
+		$this->assertEquals($expected, $res, $message);
+	}
+
+	public function onLinkerMakeExternalLinkDataProvider() {
+		yield [
+			'http://muppet.wikia.com',
+			'http://muppet.fandom.com',
+			'http://muppet.fandom.com',
+			1,
+			'Should handle domain change'
+		];
+		yield [
+			'https://wikipedia.org',
+			'https://wikipedia.org',
+			null,
+			null,
+			'Should leave truly external links alone'
+		];
+		yield [
+			'http://de.starwars.wikia.com',
+			'http://starwars.fandom.com/de',
+			'http://starwars.fandom.com/de',
+			1,
+			'Should append language path in case original request uses language prefix'
+		];
+		yield [
+			'http://de.starwars.wikia.com/path_to/article',
+			'http://starwars.fandom.com/de/path_to/article',
+			'http://starwars.fandom.com/de',
+			1,
+			'Should preserve article path when handling language path'
+		];
+		yield [
+			'http://starwars.wikia.com/en',
+			'http://starwars.fandom.com',
+			'http://starwars.fandom.com',
+			1,
+			'Should remove language path for english alias'
+		];
+		yield [
+			'http://starwars.wikia.com/en/path_to/article',
+			'http://starwars.fandom.com/path_to/article',
+			'http://starwars.fandom.com',
+			1,
+			'Should preserve article path when removing redundant language path'
+		];
+	}
 }
