@@ -316,19 +316,19 @@ class SEOTweaksTest extends WikiaBaseTest {
 	 * @param $cityId
 	 * @dataProvider onLinkerMakeExternalLinkDataProvider
 	 */
-	public function testOnLinkerMakeExternalLink($url, $expected, $primaryDomain, $cityId, $message) {
+	public function testOnLinkerMakeExternalLink( $url, $expected, $primaryDomain, $cityId, $message ) {
 
 		$dummyString = '';
 		$dummyBool = false;
 		$dummyArray = [];
 
-		$this->mockStaticMethod('WikiFactory', 'DomainToID', $cityId);
-		$this->mockStaticMethod('WikiFactory', 'cityIDtoUrl', $primaryDomain);
+		$this->mockStaticMethod( 'WikiFactory', 'DomainToID', $cityId );
+		$this->mockStaticMethod( 'WikiFactory', 'cityIDtoUrl', $primaryDomain );
 
 		$res = $url;
 		$this->assertTrue(SEOTweaksHooksHelper::onLinkerMakeExternalLink( $res, $dummyString, $dummyBool, $dummyArray
-		), 'Should always return true');
-		$this->assertEquals($expected, $res, $message);
+		), 'Should always return true' );
+		$this->assertEquals( $expected, $res, $message );
 	}
 
 	public function onLinkerMakeExternalLinkDataProvider() {
