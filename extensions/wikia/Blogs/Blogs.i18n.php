@@ -2295,7 +2295,10 @@ $messages['ja'] = array(
 	'blog-file-page' => "<a href='$3'>$4のブログ</a>の記事「<a href='$1'>$2</a>」",
 	'createblogpage' => 'ブログ記事を作成',
 	'createbloglistingpage' => 'ブログリストを作成',
-	'create-blog-spam' => 'スパムの可能性があると判定されました',
+	'create-blog-spam' => '申し訳ありません。編集が保存できませんでした。<br/>以下の理由が考えられます：
+<ul>
+<li>このWikiで、ユーザー名 (またはIPアドレス) がブロックされている</li>
+<li>スパムの可能性があると判定された</li></ul>',
 	'create-blog-cant-edit' => '編集を実行できませんでした',
 	'create-blog-post-category' => 'ブログ記事',
 	'create-blog-post-category-body' => 'これは自動的に生成されるブログ記事の一覧です',
@@ -2351,8 +2354,8 @@ $messages['ja'] = array(
 	'blog-defaulttitle' => 'ブログ',
 	'blog-continuereading' => '全文を読む &raquo;',
 	'blog-readfullpost' => '全文を読む',
-	'blog-olderposts' => '先の記事',
-	'blog-newerposts' => '後の記事',
+	'blog-olderposts' => '以前の記事',
+	'blog-newerposts' => '新しい記事',
 	'blog-nbrcomments' => '$1{{PLURAL:$1|件}}のコメント',
 	'blog-nopostfound' => '投稿が見つかりませんでした。',
 	'blog-writeone' => '記事を投稿する',
@@ -2389,7 +2392,7 @@ $messages['ja'] = array(
 	'blog-by' => '$1（$2さん）',
 	'blogs-searchprofile' => 'ブログ',
 	'blogs-searchprofile-tooltip' => 'ブログ記事とブログリストを検索',
-	'user-blog-url-link' => 'User blog:$1',
+	'user-blog-url-link' => 'ユーザーブログ:$1',
 	'blogs-recent-url' => 'Blog:最近の投稿',
 	'blug-cut-sign' => ' ……',
 	'create-blog-empty-article' => '
