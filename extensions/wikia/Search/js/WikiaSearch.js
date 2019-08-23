@@ -112,7 +112,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
 				},
 				target: 'redirect',
-				app: this.getSearchAppIdentifier(),
+				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				searchId: this.getUniqueSearchId(),
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
@@ -143,7 +143,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				page: parseInt(queryparams.get('page')) || 1,
 				limit: results.length,
 				sortOrder: 'default',
-				app: this.getSearchAppIdentifier(),
+				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				searchId: searchUID,
 				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
@@ -199,9 +199,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 		},
 		getCurrentScope: function () {
 			return $('#search-v2-scope').val();
-		},
-		getSearchAppIdentifier: function () {
-			return this.getCurrentScope() === 'cross-wiki' ? 'mw-desktop-crosswiki' : 'mw-desktop';
 		},
 	};
 
