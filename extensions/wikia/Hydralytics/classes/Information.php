@@ -228,8 +228,13 @@ class Information {
 
 		$devices = [];
 		foreach($res as $row) {
+			// DE-4477 | Make translatable all the legends in the diagrams on WikiAnalytics
+			$typeLabel = $row->device_type === 'other'
+				? wfMessage('device_other')->text()
+				: $row->device_type;
+
 			// e.g. desktop -> 295008
-			$devices[ $row->device_type ] = $row->views;
+			$devices[ $typeLabel ] = $row->views;
 		}
 
 		return ["browser" => $browsers, "deviceCategory" => $devices];

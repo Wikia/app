@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'most_visited_files' => 'Most Visited Files',
 	'staff_contact' => 'Staff Contact',
 	'desktop_vs_mobile' => 'Desktop vs. Mobile Sessions',
+	'device_other' => 'Other',
 	'recent_changes' => 'Recent Changes',
 	'help_links' => 'Help',
 	'browser_breakdown' => 'Browser Sessions Breakdown',
@@ -54,6 +55,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'device_other' => 'A label for "Other" item on the devices list',
 );
 
 $messages['de'] = array(
@@ -328,6 +330,7 @@ $messages['pl'] = array(
 	'view_more' => 'Zobacz więcej',
 	'search_term' => 'Fraza',
 	'browser_breakdown' => 'Sesje według przeglądarki',
+	'device_other' => 'Pozostałe',
 	'active_editors' => 'Aktywni edytorzy',
 	'logged_in_out' => 'Edycje zalogowanych vs niezalogowanych',
 	'recent_changes' => 'Ostatnie zmiany',
