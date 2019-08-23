@@ -68,5 +68,6 @@ $wgResourceModules['ext.hydralytics.scripts'] = array(
 		"returning_visitors",
 		"total_page_views",
 		"total_visitors",
+		"device_other",
 	),
 );
