@@ -20,7 +20,7 @@ use \CountryNames;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 4.001;
+	const CACHE_VERSION = 4.2;
 
 	/**
 	 * Output HTML
