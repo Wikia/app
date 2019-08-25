@@ -22,6 +22,54 @@ def bump_minor(String currentVersion) {
   return currentMajorVersion + "." + nextMinorVersion
 }
 
+// prevVersion - e.g. 220.002
+// example from 220.002 to 221.001
+def bump_major(String currentVersion) {
+  def currentVersionTokens = currentVersion.tokenize('.')
+  def nextMajorVersion = (currentVersionTokens[0].toInteger() + 1).toString()
+
+  return nextMajorVersion + ".001"
+}
+
+// Creates new tag if some commits were made to a release branch
+def createNewRelease(String currentTag) {
+  // e.g. 220.001
+  def currentVersion = currentTag.tokenize('-')[1]
+  println("Current version: ${currentVersion}")
+
+  def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
+  println(unreleasedCommits)
+
+  if (unreleasedCommits.isEmpty()) {
+    // no new commits
+    println("No new commits - redeploy: ${currentTag}")
+
+    return currentTag
+  } else {
+    //e.g. release-220.002
+    def nextTag = "release-" + bump_minor(currentVersion)
+
+    tagExists = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
+
+    if (tagExists) {
+      println("Tag already exists: ${nextTag}")
+    } else {
+      println("Creating tag: ${nextTag}")
+      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+        if (!params.dry_run) {
+          sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
+          sh(script: "git push origin ${nextTag}")
+        } else {
+          println("Dry run: git tag --annotate --message ${nextTag} ${nextTag}")
+          println("Dry run: git push origin ${nextTag}")
+        }
+      }
+    }
+
+    return nextTag
+  }
+}
+
 // Creates new tag if some commits were made to a release branch
 def createTag(String currentTag) {
   // e.g. 220.001
@@ -207,6 +255,8 @@ node("docker-daemon-big") {
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextAppTag}")
               println("Source: ${params.source}; skip creating a tag")
+            } else if ( params.source == 'bump' ){
+              //tag from dev version
             } else {
               sh(script: "git checkout ${currentAppBranch}")
               nextAppTag = createTag(currentAppTag)
@@ -226,6 +276,8 @@ node("docker-daemon-big") {
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
+            } else if ( params.source == 'bump' ){
+              //tag from dev version
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag)
