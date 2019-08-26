@@ -34,7 +34,11 @@ def bump_major(String currentVersion) {
 // Creates new tag if some commits were made to a release branch
 def createTag(String currentTag, String latestRelease, boolean major) {
   // e.g. 220.001
-  def currentVersion = currentTag.tokenize('-')[1]
+  def currentVersion = ""
+  currentVersion = currentTag.tokenize('-')[1]
+  if(major) {
+    currentVersion = latestRelease.tokenize('-')[1]
+  }
   println("Current version: ${currentVersion}")
 
   def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
@@ -221,7 +225,6 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextAppTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
-              sh(script: "git checkout ${currentAppBranch}")
               nextAppTag = createTag(currentAppTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentAppBranch}")
@@ -243,7 +246,6 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
-              sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
