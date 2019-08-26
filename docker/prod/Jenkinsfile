@@ -32,7 +32,7 @@ def bump_major(String currentVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createTag(String currentTag, boolean major) {
+def createTag(String currentTag, String latestRelease, boolean major) {
   // e.g. 220.001
   def currentVersion = currentTag.tokenize('-')[1]
   println("Current version: ${currentVersion}")
@@ -49,7 +49,7 @@ def createTag(String currentTag, boolean major) {
     //e.g. release-220.002
     def ver = bump_minor(currentVersion)
     if(major) {
-    ver = bump_major(currentVersion);
+      ver = bump_major(currentVersion);
     }
     def nextTag = "release-" + ver
 
@@ -222,10 +222,11 @@ node("docker-daemon-big") {
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
               sh(script: "git checkout ${currentAppBranch}")
-              nextAppTag = createTag(currentAppTag, true)
+              sh(script: 'git fetch')
+              nextAppTag = createTag(currentAppTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentAppBranch}")
-              nextAppTag = createTag(currentAppTag, false)
+              nextAppTag = createTag(currentAppTag, "", false)
             }
 
             appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
@@ -244,10 +245,11 @@ node("docker-daemon-big") {
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
               sh(script: "git checkout ${currentConfigBranch}")
-              nextConfigTag = createTag(currentConfigTag, true)
+              sh(script: 'git fetch')
+              nextConfigTag = createTag(currentConfigTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
-              nextConfigTag = createTag(currentConfigTag, false)
+              nextConfigTag = createTag(currentConfigTag, "", false)
             }
 
             configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
