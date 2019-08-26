@@ -8983,6 +8983,13 @@ $wgTriviaQuizzesEnabledPages = [];
 $wgEnableArticleExporterHooks = true;
 
 /**
+ * Enabled the Taxonomy Category Listing API
+ * @see LORE-813
+ * @var bool
+ */
+$wgEnableTaxonomyCategoryListing = true;
+
+/**
  * ArticleExporter RabbitMQ configuration.
  * @see extensions/wikia/ArticleExporter
  * @var array $wgArticleExporterExchange
