@@ -2,10 +2,10 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-googledisconnect-subject' => 'Your FANDOM account is now disconnected from Google!',
-	'emailext-googledisconnect-summary' => "It looks like you've just disconnected your FANDOM account from Google. We've kept all of your history, messages and profile details intact since you're an important part of the FANDOM community.",
-	'emailext-googledisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on FANDOM:',
-	'emailext-googledisconnect-instructions' => 'If you previously set a password on FANDOM, no action is needed. You can ignore this message and continue signing in to FANDOM with your old password. Otherwise, please click the link above to set your new password on FANDOM.',
+	'emailext-googledisconnect-subject' => 'Your Fandom account is now disconnected from Google!',
+	'emailext-googledisconnect-summary' => "It looks like you've just disconnected your Fandom account from Google. We've kept all of your history, messages and profile details intact since you're an important part of the Fandom community.",
+	'emailext-googledisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on Fandom:',
+	'emailext-googledisconnect-instructions' => 'If you previously set a password on Fandom, no action is needed. You can ignore this message and continue signing in to Fandom with your old password. Otherwise, please click the link above to set your new password on Fandom.',
 );
 
 $messages['qqq'] = array(
@@ -16,10 +16,10 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-googledisconnect-subject' => 'Die Verknüpfung zwischen deinem FANDOM-Konto und Google wurde gelöst!',
-	'emailext-googledisconnect-summary' => 'Wie es aussieht, hast du die Verknüpfung zwischen deinem FANDOM-Konto und Google aufgelöst. Da du ein wichtiger Teil der FANDOM-Community bist, haben wir deinen Verlauf, deine Nachrichten und Profileinstellungen beibehalten.',
-	'emailext-googledisconnect-intro' => 'Du kannst deinen Benutzernamen weiterverwenden, musst aber möglicherweise auf den nachfolgenden Link klicken, um auf FANDOM dein neues Passwort einzurichten:',
-	'emailext-googledisconnect-instructions' => 'Falls du schon ein Passwort bei FANDOM festgelegt hast, ist keine weitere Aktion erforderlich. Du kannst diese Nachricht ignorieren und dich weiterhin mit deinem alten Passwort bei FANDOM anmelden. Andernfalls klicke bitte auf den oben stehenden Link, um dein neues Passwort bei FANDOM einzurichten.',
+	'emailext-googledisconnect-subject' => 'Die Verknüpfung zwischen deinem Fandom-Konto und Google wurde gelöst!',
+	'emailext-googledisconnect-summary' => 'Wie es aussieht, hast du die Verknüpfung zwischen deinem Fandom-Konto und Google aufgelöst. Da du ein wichtiger Teil der Fandom-Community bist, haben wir deinen Verlauf, deine Nachrichten und Profileinstellungen beibehalten.',
+	'emailext-googledisconnect-intro' => 'Du kannst deinen Benutzernamen weiterverwenden, musst aber möglicherweise auf den nachfolgenden Link klicken, um auf Fandom dein neues Passwort einzurichten:',
+	'emailext-googledisconnect-instructions' => 'Falls du schon ein Passwort bei Fandom festgelegt hast, ist keine weitere Aktion erforderlich. Du kannst diese Nachricht ignorieren und dich weiterhin mit deinem alten Passwort bei Fandom anmelden. Andernfalls klicke bitte auf den oben stehenden Link, um dein neues Passwort bei Fandom einzurichten.',
 );
 
 $messages['es'] = array(
@@ -37,10 +37,10 @@ $messages['fr'] = array(
 );
 
 $messages['it'] = array(
-	'emailext-googledisconnect-subject' => 'Il tuo account FANDOM adesso non è più collegato a Google!',
-	'emailext-googledisconnect-summary' => 'Sembra che tu abbia appena scollegato il tuo account FANDOM da Google. Abbiamo mantenuto tutti i tuoi contributi, messaggi e il tuo profilo dal momento che sei una parte importante della comunità di FANDOM.',
-	'emailext-googledisconnect-intro' => 'È possibile usare lo stesso nome utente, ma potrebbe essere necessario fare clic sul link qui di seguito per impostare la tua nuova password su FANDOM:',
-	'emailext-googledisconnect-instructions' => "Se hai già impostato una password su FANDOM, non occorre fare altro. Puoi ignorare questo messaggio e continuare l'accesso a FANDOM con la vecchia password. In caso contrario, fai clic sul link qui sopra per impostare la tua nuova password su FANDOM.",
+	'emailext-googledisconnect-subject' => 'Il tuo account Fandom adesso non è più collegato a Google!',
+	'emailext-googledisconnect-summary' => 'Sembra che tu abbia appena disconnesso il tuo Fandom account da Google. Abbiamo mantenuto tutti i tuoi contributi, messaggi e profilo intatti dal momento che sei una parte importante della community di Fandom.',
+	'emailext-googledisconnect-intro' => 'È possibile usare lo stesso nome utente, ma potrebbe essere necessario fare clic sul link qui di seguito per impostare la tua nuova password su Fandom:',
+	'emailext-googledisconnect-instructions' => "Se hai già impostato una password su Fandom, non occorre fare altro. Puoi ignorare questo messaggio e continuare l'accesso a Fandom con la vecchia password. In caso contrario, fai clic sul link qui sopra per impostare la tua nuova password su Fandom.",
 );
 
 $messages['ja'] = array(
