@@ -15,3 +15,5 @@ $wgPoolCounterServers = [ $wgWikiaEnvironment . '.kubernetes-lb-l4.service.' . $
 $wgRabbitHost = $wgWikiaEnvironment . '.rabbit.service.' . $wgWikiaDatacenter . '.consul';
 
 $wgSMTP['host'] = $wgWikiaEnvironment . '.smtp.service.' . $wgWikiaDatacenter . '.consul';
+
+$wgHTTPProxy = 'prod.border.service.' . $wgWikiaDatacenter . '.consul:80';

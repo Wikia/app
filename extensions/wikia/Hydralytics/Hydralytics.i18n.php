@@ -4,6 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
 	'analytics_dashboard' => 'Wiki Analytics Admin Dashboard',
+	'action-analytics' => 'access the Wiki Analytics',
 	'hlfaqurl-text' => 'Policies, Procedures, and FAQ',
 	'hlslackurl-text' => 'Slack Information',
 	'error_analytics_title' => 'Error - Analytics Dashboard',
@@ -104,6 +105,11 @@ $messages['de'] = array(
 	'page' => 'Seite',
 	'help_links' => 'Hilfe',
 	'total_page_views' => 'Seitenaufrufe (insgesamt)',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['es'] = array(
@@ -155,6 +161,11 @@ $messages['es'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ayuda',
 	'total_page_views' => 'páginas vistas en total',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['fr'] = array(
@@ -207,6 +218,11 @@ $messages['fr'] = array(
 	'page' => 'Page',
 	'help_links' => 'Aide',
 	'total_page_views' => 'Total de pages vues',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['it'] = array(
@@ -258,6 +274,11 @@ $messages['it'] = array(
 	'page' => 'Pagina',
 	'help_links' => 'Aiuto',
 	'total_page_views' => 'Visualizzazioni di pagina totali',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['ja'] = array(
@@ -299,7 +320,7 @@ $messages['ja'] = array(
 	'returning_visitors' => '再訪問者',
 	'top_editors' => 'トップ編集者',
 	'hlfaqurl-text' => 'ポリシー、手順、よくある質問',
-	'analytics_report_generated' => '最終報告: $1',
+	'analytics_report_generated' => '最終報告: $1 (UTC)',
 	'number_of_pageviews' => '# ページ閲覧数',
 	'right-analytics' => 'Wikiアナリティクスにアクセス',
 	'desktop_vs_mobile' => 'デスクトップ / モバイルセッション',
@@ -309,6 +330,11 @@ $messages['ja'] = array(
 	'page' => 'ページ',
 	'help_links' => 'ヘルプ',
 	'total_page_views' => '合計ページ閲覧数',
+	'action-analytics' => 'Wikiアナリティクスにアクセス',
+	'device_mobile' => 'モバイル',
+	'device_other' => 'その他',
+	'device_tablet' => 'タブレット',
+	'device_desktop' => 'デスクトップ',
 );
 
 $messages['pl'] = array(
@@ -360,6 +386,11 @@ $messages['pl'] = array(
 	'page' => 'Strona',
 	'help_links' => 'Pomoc',
 	'total_page_views' => 'całkowita liczba odsłon',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Pozostałe',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['pt'] = array(
@@ -411,6 +442,11 @@ $messages['pt'] = array(
 	'page' => 'Página',
 	'help_links' => 'Ajuda',
 	'total_page_views' => 'Total de Visualizações de Página',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['ru'] = array(
@@ -462,6 +498,11 @@ $messages['ru'] = array(
 	'page' => 'Страница',
 	'help_links' => 'Справка',
 	'total_page_views' => '- всего просмотров за 30 дней',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['zh-hans'] = array(
@@ -473,8 +514,8 @@ $messages['zh-hans'] = array(
 	'community_manager' => '社区经理',
 	'file' => '文件',
 	'view_more' => '查看更多',
-	'search_term' => '搜索条目',
-	'browser_breakdown' => '电脑访问数据',
+	'search_term' => '关键词',
+	'browser_breakdown' => '电脑访问者浏览器数据',
 	'active_editors' => '活跃的编辑者',
 	'logged_in_out' => '登入编辑 vs 匿名编辑',
 	'recent_changes' => '最近更改',
@@ -505,7 +546,7 @@ $messages['zh-hans'] = array(
 	'hlfaqurl-text' => '政策，规程以及问与答',
 	'analytics_report_generated' => '数据更新于$1',
 	'number_of_pageviews' => '页面访问次数',
-	'right-analytics' => '访问维基数据分析',
+	'right-analytics' => '可以访问[[Special:Analytics|维基数据分析管理员面板]]',
 	'desktop_vs_mobile' => '桌面版 vs 手机版',
 	'hlslackurl-text' => 'Slack信息',
 	'error_analytics_text' => '产生报告时出错。错误： "$1"',
@@ -513,10 +554,15 @@ $messages['zh-hans'] = array(
 	'page' => '页面',
 	'help_links' => '帮助',
 	'total_page_views' => '页面浏览总量',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['zh-hant'] = array(
-	'geolocation' => '地理位置',
+	'geolocation' => '訪客所在地',
 	'staff_contact' => '員工聯絡',
 	'analytics_confidential' => '此頁面訊息僅限管理員使用，未得到許可所有訊息不可與他人分享。',
 	'logged_out' => '匿名用戶',
@@ -530,7 +576,7 @@ $messages['zh-hant'] = array(
 	'logged_in_out' => '登入 vs 匿名編輯',
 	'recent_changes' => '近期變動',
 	'total_visitors' => '全部訪問用戶量',
-	'error_analytics_title' => '錯誤 - 數據分析面板',
+	'error_analytics_title' => '錯誤 - 維基數據分析面板',
 	'number_of_visitors' => '訪問用戶量',
 	'edits' => '編輯次數',
 	'nonengaged_admins' => '未使用面板的管理員',
@@ -554,7 +600,7 @@ $messages['zh-hant'] = array(
 	'returning_visitors' => '回訪用戶量',
 	'top_editors' => '最多編輯用戶',
 	'hlfaqurl-text' => '政策，規程以及問與答',
-	'analytics_report_generated' => 'Report generated $1',
+	'analytics_report_generated' => '報告產生於$1',
 	'number_of_pageviews' => '頁面訪問次數',
 	'right-analytics' => '訪問維基數據',
 	'desktop_vs_mobile' => '電腦版 vs 手機版',
@@ -564,5 +610,10 @@ $messages['zh-hant'] = array(
 	'page' => '頁面',
 	'help_links' => '幫助',
 	'total_page_views' => '全部頁面訪問次數',
+	'action-analytics' => 'access the Wiki Analytics',
+	'device_mobile' => 'Mobile',
+	'device_other' => 'Other',
+	'device_tablet' => 'Tablet',
+	'device_desktop' => 'Desktop',
 );
 
