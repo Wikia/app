@@ -222,7 +222,6 @@ node("docker-daemon-big") {
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
               sh(script: "git checkout ${currentAppBranch}")
-              sh(script: 'git fetch')
               nextAppTag = createTag(currentAppTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentAppBranch}")
@@ -245,7 +244,6 @@ node("docker-daemon-big") {
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
               sh(script: "git checkout ${currentConfigBranch}")
-              sh(script: 'git fetch')
               nextConfigTag = createTag(currentConfigTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
