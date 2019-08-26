@@ -32,7 +32,7 @@ def bump_major(String currentVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createTag(String currentTag, bool major) {
+def createTag(String currentTag, boolean major) {
   // e.g. 220.001
   def currentVersion = currentTag.tokenize('-')[1]
   println("Current version: ${currentVersion}")
