@@ -5,6 +5,11 @@ def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
 def rolloutStatusSjc = 1
 def rolloutStatusRes = 1
+def job = 'mirror deploy'
+if (params.source == 'new_release') {
+    job = 'daily-release-cut'
+}
+
 
 def render(String template, java.util.LinkedHashMap binding) {
   def engine = new groovy.text.SimpleTemplateEngine()
@@ -78,14 +83,14 @@ def createTag(String currentTag, String latestRelease, boolean major) {
   }
 }
 
-def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag, String buildUser) {
+def notifyBuild(String buildStatus = 'STARTED', String appTag, String configTag, String buildUser, String job) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def summary = "K8S (mirror deploy): *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}> by ${buildUser}"
+  def summary = "K8S (${job}): *${buildStatus}*: <${env.BUILD_URL}|${env.JOB_NAME}. Build #${env.BUILD_NUMBER}> by ${buildUser}"
 
   if (appTag && configTag) {
     summary = summary + " - app tag <https://github.com/Wikia/app/releases/tag/${appTag}|${appTag}> and config tag <https://github.com/Wikia/config/releases/tag/${configTag}|${configTag}>"
@@ -138,7 +143,7 @@ node("docker-daemon-big") {
   }
 
   stage('Slack notify start') {
-    notifyBuild('STARTED', '', '', buildUser)
+    notifyBuild('STARTED', '', '', buildUser, job)
   }
 
   try {
@@ -224,7 +229,7 @@ node("docker-daemon-big") {
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextAppTag}")
               println("Source: ${params.source}; skip creating a tag")
-            } else if ( params.source == 'bump' ){
+            } else if (params.source == 'new_release') {
               nextAppTag = createTag(currentAppTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentAppBranch}")
@@ -245,7 +250,7 @@ node("docker-daemon-big") {
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
-            } else if ( params.source == 'bump' ){
+            } else if (params.source == 'new_release') {
               nextConfigTag = createTag(currentConfigTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
@@ -379,7 +384,7 @@ EOL""")
               if (!params.dry_run) {
                 sh "kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml"
                 rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
-              } else if ( params.source == 'bump') {
+              } else if ( params.source == 'new_release') {
                 println("Only version bump!")
                 rolloutStatus = 0
               } else {
@@ -406,7 +411,7 @@ EOL""")
               if (!params.dry_run) {
                 sh "kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml"
                 rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
-              } else if ( params.source == 'bump') {
+              } else if ( params.source == 'new_release') {
                 println("Only version bump!")
                 rolloutStatus = 0
               } else {
@@ -470,6 +475,20 @@ EOL""")
       }
     }
 
+    stage('Deploy preview') {
+      if (!params.dry_run && params.source == 'new_release') {
+        build job: 'mediawiki-deploy-preview',
+          parameters: [
+             string(name: 'source', value: 'latest'),
+             string(name: 'datacenter', value: 'sjc'),
+             booleanParam(name: 'force', value: true)
+          ],
+          wait: false
+      } else {
+        println('Dry run: mediawiki-deploy-preview')
+      }
+    }
+
   } catch (e) {
     // If there was an exception thrown, the build failed
     currentBuild.result = "FAILED"
@@ -480,7 +499,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result, nextAppTag, nextConfigTag, buildUser)
+      notifyBuild(currentBuild.result, nextAppTag, nextConfigTag, buildUser, job)
     }
   }
 }
