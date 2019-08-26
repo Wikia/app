@@ -672,6 +672,8 @@ $wgGroupPermissions['*']['schedule-update-special-pages'] = false;
 $wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
 $wgGroupPermissions['wiki-manager']['schedule-update-special-pages'] = true;
 $wgGroupPermissions['content-team-member']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['vanguard']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['helper']['schedule-update-special-pages'] = true;
 
 // DE-4374 | allow staff members, helpers and wikis admins to access Special:Analytics
 $wgGroupPermissions['*']['analytics'] = false;

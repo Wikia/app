@@ -1515,8 +1515,8 @@ $messages['de'] = array(
 	'group-reviewer' => 'Bilder-Prüfer',
 	'grouppage-helper' => 'w:de:Hilfe:Helfer',
 	'grouppage-staff' => 'w:c:de.community:Fandom-Mitarbeiter',
-	'grouppage-util' => 'w:c:de.community:Fandom-Mitarbeiter',
-	'grouppage-vstf' => 'w:de:SpamTaskForce',
+	'grouppage-util' => 'w:c:de.community:Hilfe:Mitarbeiter',
+	'grouppage-vstf' => 'w:c:de.community:Hilfe:VSTF',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -1532,12 +1532,12 @@ $messages['de'] = array(
 </form>',
 	'group-vstf' => 'VSTF',
 	'group-vstf-member' => 'VSTF',
-	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'grouppage-reviewer' => 'w:c:de.community:Hilfe:Benutzer#Andere_Gruppen',
 	'group-vanguard' => 'Vanguard-Mitglieder',
 	'group-vanguard-member' => 'Vanguard-Mitglied',
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'Volunteer Developer',
-	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'grouppage-voldev' => 'w:c:dev:Help:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
