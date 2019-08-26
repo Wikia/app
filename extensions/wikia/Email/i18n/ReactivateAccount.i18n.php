@@ -66,9 +66,9 @@ $messages['nl'] = array(
 
 $messages['pl'] = array(
 	'emailext-reactivate-account-subject' => 'Reaktywuj swoje konto na portalu Fandom',
-	'emailext-reactivate-account-summary' => 'Jesteś o krok od ponownego aktywowania konta na Fandom. Kliknij poniższy link, aby potwierdzić swoje prośbę i wrócić do akcji.',
+	'emailext-reactivate-account-summary' => 'Jesteś o krok od ponownego aktywowania konta na portalu Fandom. Kliknij poniższy link, aby potwierdzić swoją prośbę i wrócić do akcji.',
 	'emailext-reactivate-account-button-text' => 'Ponownie uaktywnij konto',
-	'emailext-reactivate-account-welcome-back' => 'Witaj z powrotem w Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Witaj z powrotem w Fandomie!',
 );
 
 $messages['pt'] = array(

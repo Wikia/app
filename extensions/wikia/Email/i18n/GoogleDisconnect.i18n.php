@@ -37,10 +37,10 @@ $messages['fr'] = array(
 );
 
 $messages['it'] = array(
-	'emailext-googledisconnect-subject' => 'Il tuo account FANDOM adesso non è più collegato a Google!',
-	'emailext-googledisconnect-summary' => 'Sembra che tu abbia appena scollegato il tuo account FANDOM da Google. Abbiamo mantenuto tutti i tuoi contributi, messaggi e il tuo profilo dal momento che sei una parte importante della comunità di FANDOM.',
-	'emailext-googledisconnect-intro' => 'È possibile usare lo stesso nome utente, ma potrebbe essere necessario fare clic sul link qui di seguito per impostare la tua nuova password su FANDOM:',
-	'emailext-googledisconnect-instructions' => "Se hai già impostato una password su FANDOM, non occorre fare altro. Puoi ignorare questo messaggio e continuare l'accesso a FANDOM con la vecchia password. In caso contrario, fai clic sul link qui sopra per impostare la tua nuova password su FANDOM.",
+	'emailext-googledisconnect-subject' => 'Il tuo account Fandom adesso non è più collegato a Google!',
+	'emailext-googledisconnect-summary' => 'Sembra che tu abbia appena disconnesso il tuo Fandom account da Google. Abbiamo mantenuto tutti i tuoi contributi, messaggi e profilo intatti dal momento che sei una parte importante della community di Fandom.',
+	'emailext-googledisconnect-intro' => 'È possibile usare lo stesso nome utente, ma potrebbe essere necessario fare clic sul link qui di seguito per impostare la tua nuova password su Fandom:',
+	'emailext-googledisconnect-instructions' => "Se hai già impostato una password su Fandom, non occorre fare altro. Puoi ignorare questo messaggio e continuare l'accesso a Fandom con la vecchia password. In caso contrario, fai clic sul link qui sopra per impostare la tua nuova password su Fandom.",
 );
 
 $messages['ja'] = array(

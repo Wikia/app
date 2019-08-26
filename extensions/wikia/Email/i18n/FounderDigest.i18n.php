@@ -227,7 +227,7 @@ $messages['zh-hant'] = array(
 	'emailext-founder-digest-views-description-2' => '繼續添加有趣的文章、討論、圖片和影片供大家欣賞。',
 	'emailext-founder-digest-edits-header' => '已編輯$1次',
 	'emailext-founder-digest-edits-description' => '請記得一定要感謝那些為社群做出貢獻的人，讓他們的成果得到讚賞！',
-	'emailext-founder-digest-signature' => 'Fandom社區團隊',
+	'emailext-founder-digest-signature' => 'Fandon社區團隊',
 	'emailext-founder-digest-users-header' => '$1個新的社區用戶',
 	'emailext-founder-digest-users-description' => '歡迎新用戶訪問你的社區！讓他們也參與你創建的精彩粉絲社區。',
 );

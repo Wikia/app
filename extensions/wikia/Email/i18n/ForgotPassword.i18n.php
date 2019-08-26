@@ -29,7 +29,7 @@ $messages['de'] = array(
 	'emailext-password-subject' => 'Fandom-Passwort zurücksetzen',
 	'emailext-password-summary' => 'Du scheinst Probleme bei der Anmeldung zu haben. Das tut uns leid! Wir würden dir gerne einfach dein Passwort zuschicken, aber aus Sicherheitsgründen musst du dich erst mit einem temporären Passwort anmelden.',
 	'emailext-password-intro' => 'Hier ist dein temporäres Passwort:',
-	'emailext-password-unrequested' => 'Keine Sorge, falls du kein neues Passwort angefordert hast! Dein Konto ist absolut sicher. In diesem Fall kannst du diese E-Mail ignorieren und dich weiterhin mit deinem alten Passwort bei Fandom anmelden.',
+	'emailext-password-unrequested' => 'Keine Sorge, falls du kein neues Passwort angefordert hast! Dein Konto ist absolut sicher! In diesem Fall kannst du diese E-Mail ignorieren und dich weiterhin mit deinem alten Passwort bei Fandom anmelden.',
 	'emailext-password-questions' => 'Hast du Fragen oder Anmerkungen? Du kannst jederzeit [http://de.community.wikia.com/wiki/Spezial:Kontakt/account-issue Kontakt zu uns aufnehmen].',
 	'emailext-password-signature' => 'Das Fandom Community-Team',
 	'emailext-password-reset-link-intro' => 'Bitte klicke unten auf den Link, um dein neues Passwort festzulegen:',
@@ -74,7 +74,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-password-subject' => 'Fandomのパスワードリセットのお知らせ',
+	'emailext-password-subject' => 'Fandomパスワードのリセット',
 	'emailext-password-summary' => 'ログインで問題が発生しているようです。申し訳ございませんが、セキュリティの関係上あなたのパスワードをお送りすることはできません。仮パスワードを使用してログインしてください。',
 	'emailext-password-intro' => '下記がお使いいただける仮パスワードです：',
 	'emailext-password-unrequested' => '新しいパスワードをリクエストしなかった場合でも、あなたのアカウントは安全に保護されています。その場合は、このメールを無視していただいて構いません。Fandomへのログインには、引続きこれまでと同じパスワードをご使用ください。',
@@ -110,7 +110,7 @@ $messages['pl'] = array(
 	'emailext-password-subject' => 'Zresetuj swoje hasło na portalu Fandom',
 	'emailext-password-summary' => 'Wygląda na to, że masz problem z zalogowaniem się. Bardzo przepraszamy! Chcielibyśmy po prostu przesłać Ci twoje hasło, ale ze względów bezpieczeństwa musisz zalogować się korzystając z hasła tymczasowego.',
 	'emailext-password-intro' => 'Poniżej znajduje się Twoje tymczasowe hasło:',
-	'emailext-password-unrequested' => 'Jeśli nie prosiłeś o przesłanie nowego hasła, nie przejmuj się! Twoje konto jest bezpieczne. Zignoruj ten e-mail i loguj się do portalu Fandom używając starego hasła.',
+	'emailext-password-unrequested' => 'Jeśli prośba o nowe hasło nie pochodzi od Ciebie, nie przejmuj się! Twoje konto jest bezpieczne. Zignoruj ten e-mail i loguj się do portalu Fandom używając starego hasła.',
 	'emailext-password-questions' => 'Masz pytania lub wątpliwości? Skontaktuj się z [http://spolecznosc.wikia.com/wiki/Specjalna:Kontakt/account-issue nami].',
 	'emailext-password-signature' => 'Zespół Społeczności portalu Fandom',
 	'emailext-password-reset-link-intro' => 'Kliknij poniższy link, aby ustawić nowe hasło:',
