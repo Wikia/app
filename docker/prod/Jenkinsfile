@@ -32,7 +32,7 @@ def bump_major(String currentVersion) {
 }
 
 // Creates new tag if some commits were made to a release branch
-def createNewRelease(String currentTag) {
+def createTag(String currentTag, bool major) {
   // e.g. 220.001
   def currentVersion = currentTag.tokenize('-')[1]
   println("Current version: ${currentVersion}")
@@ -47,46 +47,11 @@ def createNewRelease(String currentTag) {
     return currentTag
   } else {
     //e.g. release-220.002
-    def nextTag = "release-" + bump_minor(currentVersion)
-
-    tagExists = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
-
-    if (tagExists) {
-      println("Tag already exists: ${nextTag}")
-    } else {
-      println("Creating tag: ${nextTag}")
-      sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
-        if (!params.dry_run) {
-          sh(script: "git tag --annotate --message ${nextTag} ${nextTag}")
-          sh(script: "git push origin ${nextTag}")
-        } else {
-          println("Dry run: git tag --annotate --message ${nextTag} ${nextTag}")
-          println("Dry run: git push origin ${nextTag}")
-        }
-      }
+    def ver = bump_minor(currentVersion)
+    if(major) {
+    ver = bump_major(currentVersion);
     }
-
-    return nextTag
-  }
-}
-
-// Creates new tag if some commits were made to a release branch
-def createTag(String currentTag) {
-  // e.g. 220.001
-  def currentVersion = currentTag.tokenize('-')[1]
-  println("Current version: ${currentVersion}")
-
-  def unreleasedCommits = sh(script: "git log HEAD...${currentTag}", returnStdout: true).trim()
-  println(unreleasedCommits)
-
-  if (unreleasedCommits.isEmpty()) {
-    // no new commits
-    println("No new commits - redeploy: ${currentTag}")
-
-    return currentTag
-  } else {
-    //e.g. release-220.002
-    def nextTag = "release-" + bump_minor(currentVersion)
+    def nextTag = "release-" + ver
 
     tagExists = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
@@ -256,10 +221,11 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextAppTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
-              //tag from dev version
+              sh(script: "git checkout ${currentAppBranch}")
+              nextAppTag = createTag(currentAppTag, true)
             } else {
               sh(script: "git checkout ${currentAppBranch}")
-              nextAppTag = createTag(currentAppTag)
+              nextAppTag = createTag(currentAppTag, false)
             }
 
             appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
@@ -277,10 +243,11 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if ( params.source == 'bump' ){
-              //tag from dev version
+              sh(script: "git checkout ${currentConfigBranch}")
+              nextConfigTag = createTag(currentConfigTag, true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
-              nextConfigTag = createTag(currentConfigTag)
+              nextConfigTag = createTag(currentConfigTag, false)
             }
 
             configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
@@ -410,6 +377,9 @@ EOL""")
               if (!params.dry_run) {
                 sh "kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml"
                 rolloutStatusSjc = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-prod")
+              } else if ( params.source == 'bump') {
+                println("Only version bump!")
+                rolloutStatus = 0
               } else {
                 println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f docker/prod/sjc.yaml")
                 rolloutStatus = 0
@@ -434,6 +404,9 @@ EOL""")
               if (!params.dry_run) {
                 sh "kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml"
                 rolloutStatusRes = sh(returnStatus: true, script: "kubectl --context kube-res-prod -n prod rollout status deployment/mediawiki-prod")
+              } else if ( params.source == 'bump') {
+                println("Only version bump!")
+                rolloutStatus = 0
               } else {
                 println("Dry run: kubectl --context kube-res-prod -n prod apply -f docker/prod/res.yaml")
                 rolloutStatus = 0
