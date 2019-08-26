@@ -8,7 +8,7 @@ import {
 	context,
 	events,
 	eventService,
-	geoCacheStorage,
+	InstantConfigCacheStorage,
 	jwplayerAdsFactory,
 	krux,
 	moatYi,
@@ -91,7 +91,8 @@ function startAdEngine() {
 }
 
 function trackLabradorValues() {
-	const labradorPropValue = geoCacheStorage.getSamplingResults().join(';');
+	const cacheStorage = InstantConfigCacheStorage.make();
+	const labradorPropValue = cacheStorage.getSamplingResults().join(';');
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
