@@ -95,9 +95,9 @@ RUN apt-get update && apt-get install -y \
     && pecl install --onlyreqdeps --force redis \
     && docker-php-ext-enable redis \
     #
-    # Install APCU
-    && pecl install apcu \
-    && docker-php-ext-enable apcu \
+    # Install Memcached
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
     #
     # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \

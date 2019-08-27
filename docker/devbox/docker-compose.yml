@@ -18,7 +18,7 @@ services:
     depends_on:
       - php-wikia
   php-wikia:
-    image: artifactory.wikia-inc.com/platform/php-wikia-devbox:latest
+    image: artifactory.wikia-inc.com/platform/php-wikia-devbox:test
     volumes:
       - ../../../app:/usr/wikia/slot1/current/src:ro
       - ../../../config:/usr/wikia/slot1/current/config:ro

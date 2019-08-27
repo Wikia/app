@@ -17,6 +17,9 @@ class CircuitBreakerFactory {
 				case 'local':
 					$this->circuitBreakerInstance = new LocalCircuitBreakerStorage();
 					break;
+				case 'memcached':
+					$this->circuitBreakerInstance = new MemcachedCircuitBreakerStorage();
+					break;
 				default:
 					$this->circuitBreakerInstance = new NoopCircuitBreakerStorage();
 					break;
