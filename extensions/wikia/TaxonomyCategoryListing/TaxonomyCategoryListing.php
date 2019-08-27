@@ -2,14 +2,31 @@
 
 class TaxonomyCategoryListing {
 
-	public function getCategoryListing() {
+	const NO_MIN_PAGES = 0;
+	const NO_LIMIT = 0;
+
+	public function getCategoryListing($minRequiredPages = self::NO_MIN_PAGES, $maxResult = self::NO_LIMIT) {
 		global $wgCityId;
-		$memcacheKey = wfMemcKey(__METHOD__, $wgCityId);
+
+		$minRequiredPages = intval($minRequiredPages);
+		$maxResult = intval($maxResult);
+		$memcacheKey = wfMemcKey(__METHOD__, $wgCityId, $minRequiredPages, $maxResult);
+
+		$options = [
+			'ORDER BY' => 'num_pages desc',
+			'GROUP BY' => 'category'
+		];
+		if ($maxResult !== self::NO_LIMIT && $maxResult > 0) {
+			$options['LIMIT'] = $maxResult;
+		}
+		if ($minRequiredPages !== self::NO_MIN_PAGES && $minRequiredPages > 0) {
+			$options['HAVING'] = "num_pages >= ${minRequiredPages}";
+		}
 
 		return WikiaDataAccess::cache(
 			$memcacheKey,
 			WikiaResponse::CACHE_STANDARD,
-			function() {
+			function() use ($options) {
 				$db = wfGetDB(DB_SLAVE);
 				$res = $db->select(
 					['categorylinks', 'page'],
@@ -19,10 +36,7 @@ class TaxonomyCategoryListing {
 						'page_is_redirect' => 0,
 					],
 					__METHOD__,
-					[
-						'ORDER BY' => 'num_pages desc',
-						'GROUP BY' => 'category'
-					],
+					$options,
 					['page' => ['join', ['cl_from=page_id']]]
 				);
 
@@ -32,7 +46,8 @@ class TaxonomyCategoryListing {
 				}
 
 				return $categories;
-			}
+			},
+			WikiaDataAccess::REFRESH_CACHE
 		);
 	}
 }
