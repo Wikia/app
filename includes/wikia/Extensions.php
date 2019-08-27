@@ -1385,39 +1385,9 @@ $wgFileBackends['gcs-backend'] = [
 	'gcsObjectNamePrefix' => 'mediawiki/',
 ];
 
-$wgFileBackends['gcs-migration-backend'] = [
-	'name' => 'gcs-migration-backend',
-	'class' => 'FileBackendMultiWrite',
-	'syncChecks' => 0,
-	'lockManager' => 'nullLockManager',
-	'backends' => [
-		[
-			'name' => 'swift-backend',
-			'class' => 'SwiftFileBackend',
-			'lockManager' => 'nullLockManager',
-			'swiftAuthUrl' => $wgFSSwiftConfig['swiftAuthUrl'],  # defined in CommonSettings.php
-			'swiftUser' => $wgFSSwiftConfig['swiftUser'],
-			'swiftKey' => $wgFSSwiftConfig['swiftKey'],
-			'swiftAuthTTL' => 120,
-			'swiftTimeout' => 30,
-			'cacheAuthInfo' => true,
-			'wikiId' => '',
-			'isMultiMaster' => true,
-			'debug' => false,
-			'url' => "http://{$wgFSSwiftServer}/swift/v1",
-		],
-		[
-			'name' => 'gcs-ignore-source-backend',
-			'class' => 'GcsIgnoreSourceFileBackend',
-			'lockManager' => 'nullLockManager',
-			'wikiId'	=> '',
-			'gcsCredentials' => $wgGcsConfig['gcsCredentials'],
-			'gcsBucket' => $wgGcsConfig['gcsBucket'],
-			'gcsTemporaryBucket' => $wgGcsConfig['gcsTemporaryBucket'],
-			'gcsObjectNamePrefix' => 'mediawiki/',
-		]
-	],
-];
+// SER-3444 always use GCS
+$wgEnabledFileBackend = 'gcs-backend';
+
 
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
