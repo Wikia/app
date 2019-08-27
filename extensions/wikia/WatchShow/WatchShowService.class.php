@@ -9,7 +9,7 @@ class WatchShowService extends WikiaService {
 			[
 				'url' => $wgWatchShowURL,
 				'callToAction' => $wgWatchShowCTA ?? 'Watch This Show',
-				'buttonLabel' => $wgWatchShowButtonLabel ?? 'Watch Now'
+				'buttonLabel' => $wgWatchShowButtonLabel ?? 'Watch Now',
 			]
 
 		);
