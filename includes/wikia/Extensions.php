@@ -1803,7 +1803,7 @@ if ( !empty( $wgEnableCategoryPage3Ext ) ) {
 // If you want to delete this extension remember to update CategoryPage3
 include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
 
-if ( !empty( $wgWatchShowURL ) ) {
+if ( !empty( $wgWatchShowURL || $wgWatchShowURLMobile ) ) {
 	include "$IP/extensions/wikia/WatchShow/WatchShow.setup.php";
 }
 

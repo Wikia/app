@@ -9,9 +9,10 @@ class WatchShowHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgWatchShowURL;
+		global $wgWatchShowURLMobile, $wgWatchShowButtonLabelMobile;
 
-		$wikiVariables['watchShowURL'] = $wgWatchShowURL;
+		$wikiVariables['watchShowURL'] = $wgWatchShowURLMobile;
+		$wikiVariables['watchShowButtonLabelMobile'] = $wgWatchShowButtonLabelMobile;
 
 		return true;
 	}
