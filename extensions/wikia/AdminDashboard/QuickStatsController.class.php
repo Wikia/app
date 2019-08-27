@@ -34,20 +34,13 @@ class QuickStatsController extends WikiaController {
 		$this->stats = $stats;
 	}
 
-	// This should probably be Unique Users but we don't have that stat
 	protected function getDailyPageViews( Array &$stats ) {
-		wfProfileIn( __METHOD__ );
-
-		$week = date( 'Y-m-d', strtotime('-7 day') );
-
-		$pageviews = DataMartService::getPageviewsDaily( $week );
+		$pageviews = Redshift::getDailyTotals(7);
 		$stats['totals']['pageviews'] = 0;
 		foreach( $pageviews as $date => $value) {
 			$stats[$date]['pageviews'] = $value;
 			$stats['totals']['pageviews'] += $value;
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 
