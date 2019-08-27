@@ -1803,9 +1803,7 @@ if ( !empty ( $wgEnableArticleExporterHooks ) ) {
 include "$IP/extensions/wikia/ArticleExporter/ArticleExporter.setup.php";
 
 // LORE-823
-if ( !empty( $wgEnableTaxonomyCategoryListing ) ) {
-	include "${IP}/extensions/wikia/TaxonomyCategoryListing/TaxonomyCategoryListing.setup.php";
-}
+include "${IP}/extensions/wikia/TaxonomyCategoryListing/TaxonomyCategoryListing.setup.php";
 
 // DE-4374
 if ( !empty ( $wgEnableHydralyticsExt ) ) {
