@@ -438,7 +438,15 @@ class NavigationModel extends WikiaModel {
 					$title = Title::newFromText( urldecode( $link ) );
 
 					if ( $title instanceof Title ) {
-						$href = $title->fixSpecialName()->getLocalURL();
+
+						// PLATFORM-4241, create correct url for w:c: interwiki links
+						// by executing InterwikiDispatcher::getInterWikiaURLHook()
+						if ( InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
+							$href = $title->fixSpecialName()->getFullURL();
+						} else {
+							$href = $title->fixSpecialName()->getLocalURL();
+						}
+
 						$pos = strpos( $link, '#' );
 						if ( $pos !== false ) {
 							$sectionUrl = substr( $link, $pos + 1 );

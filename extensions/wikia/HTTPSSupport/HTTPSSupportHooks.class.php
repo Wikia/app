@@ -61,7 +61,7 @@ class HTTPSSupportHooks {
 
 	/**
 	 * Make sure any "external" links to our own wikis that support HTTPS
-	 * are protocol-relative on output.
+	 * are using HTTPS instead of HTTP.
 	 *
 	 * @param  string  &$url
 	 * @param  string  &$text
@@ -71,7 +71,7 @@ class HTTPSSupportHooks {
 	 */
 	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
 		if ( wfHttpsAllowedForURL( $url ) ) {
-			$url = wfProtocolUrlToRelative( $url );
+			$url = wfHttpToHttps( $url );
 		}
 		return true;
 	}

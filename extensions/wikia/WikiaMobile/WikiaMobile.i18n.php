@@ -980,9 +980,9 @@ you should definitely check this out:
 
 $messages['ja'] = array(
 	'wikiamobile-search' => '検索',
-	'wikiamobile-search-this-wiki' => 'このウィキを検索',
-	'wikiamobile-search-wiki' => 'このウィキ',
-	'wikiamobile-search-wikia' => 'ウィキア全体',
+	'wikiamobile-search-this-wiki' => 'このWikiを検索',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Fandom',
 	'wikiamobile-login' => 'ログイン',
 	'wikiamobile-password' => 'パスワード',
 	'wikiamobile-login-submit' => 'ログイン',
@@ -992,14 +992,14 @@ $messages['ja'] = array(
 	'wikiamobile-back' => '戻る',
 	'wikiamobile-hide-section' => '非表示',
 	'wikiamobile-profile' => 'プロフィール',
-	'wikiamobile-last-edited-on' => '最後の編集: $1',
-	'wikiamobile-last-edited-by' => 'by $1',
-	'wikiamobile-anonymous-edited-by' => '匿名利用者',
+	'wikiamobile-last-edited-on' => '最後の編集：$1',
+	'wikiamobile-last-edited-by' => '$1 による',
+	'wikiamobile-anonymous-edited-by' => '未登録ユーザー',
 	'mobile-full-site' => 'PC版サイト',
 	'wikiamobile-categories-tagline' => 'カテゴリページ',
 	'wikiamobile-categories-items-total' => '$1件のページ',
-	'wikiamobile-category-items-more' => '続きを読み込む',
-	'wikiamobile-category-items-prev' => 'これより前を読み込む',
+	'wikiamobile-category-items-more' => 'さらに表示',
+	'wikiamobile-category-items-prev' => '前のページ',
 	'wikiamobile-categories-expand' => 'すべて表示',
 	'wikiamobile-categories-collapse' => 'すべて非表示',
 	'wikiamobile-sharing-media-image' => '画像',
@@ -1007,12 +1007,12 @@ $messages['ja'] = array(
 	'wikiamobile-sharing-modal-text' => '$2の$1 - $3',
 	'wikiamobile-sharing-email-text' => 'こんにちは。
 
-あなたにお勧めのコンテンツがあります。ぜひ以下をチェックしてください:
+あなたにお勧めのコンテンツがあります。ぜひ以下をチェックしてください：
 
  $1',
 	'wikiamobile-media-group-footer' => '$1件中の1件',
 	'wikiamobile-unsupported-video-download' => 'お使いのブラウザではこの動画形式をサポートしていません。<a href="$1">こちらをクリックして別の再生方法をお試しください</a>。',
-	'wikiamobile-video-views-counter' => '閲覧数: $1',
+	'wikiamobile-video-views-counter' => '閲覧数：$1',
 	'wikiamobile-video-not-friendly-header' => 'この動画は表示できません。',
 	'wikiamobile-video-not-friendly' => '申し訳ございません。この動画はモバイルでは表示できません。',
 	'wikiamobile-toc-header' => '目次',
@@ -1022,17 +1022,17 @@ $messages['ja'] = array(
 	'wikiamobile-page-not-found-tap' => '亀裂のむこうにある画像をクリックすると、画像の正体を確認できます。',
 	'wikiasmartbanner-price' => '無料',
 	'wikiasmartbanner-view' => '見てみる',
-	'wikiamobile-footer-link-licencing' => '[[w:c:ja.community:Wikia:ライセンス|ライセンス]]',
-	'wikiamobile-desc' => 'Mobile Skin for Wikia',
-	'wikiamobile-trending-articles-heading' => 'Trending Articles',
+	'wikiamobile-footer-link-licencing' => '[[w:c:ja:ライセンス|ライセンス]]',
+	'wikiamobile-desc' => 'Wikiaのモバイルスキン',
+	'wikiamobile-trending-articles-heading' => '人気のページ',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:lifestylehub|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:movieshub:User_blog:Brian_Linder/New_Hub_Wikias|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:gameshub|Video Games]]',
 	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|Privacy Policy]]',
-	'wikiamobile-categories-blogs' => 'Blog posts',
-	'wikiamobile-videos' => 'Videos',
-	'wikiasmartbanner-appstore' => 'On the App Store',
-	'wikiasmartbanner-googleplay' => 'In Google Play',
+	'wikiamobile-categories-blogs' => 'ブログ記事',
+	'wikiamobile-videos' => '動画',
+	'wikiasmartbanner-appstore' => 'App Store',
+	'wikiasmartbanner-googleplay' => 'Google Play',
 );
 
 $messages['kn'] = array(

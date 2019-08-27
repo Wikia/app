@@ -105,13 +105,21 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._mapToView = function (notifications) {
+				function isCommentNotificationType(type) {
+					return [
+						common.notificationTypes.discussionReply,
+						common.notificationTypes.postAtMention,
+						common.notificationTypes.threadAtMention
+					].indexOf(type) > -1;
+				}
+
 				function getIcon(type) {
-					if (type === common.notificationTypes.discussionReply) {
+					if (isCommentNotificationType(type)) {
 						return 'wds-icons-comment-small';
 					} else if (type === common.notificationTypes.announcement) {
 						return 'wds-icons-flag-small';
 					} else {
-						return 'wds-icons-upvote-small';
+						return 'wds-icons-heart-small';
 					}
 				}
 

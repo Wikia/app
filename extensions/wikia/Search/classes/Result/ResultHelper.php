@@ -1,12 +1,9 @@
 <?php
 namespace Wikia\Search\Result;
 
-use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, PromoImage;
+use Wikia\Search\Utilities, CommunityDataService, ImagesService, PromoImage;
 
 class ResultHelper {
-	const MAX_WORD_COUNT_EXACT_MATCH = 40;
-	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
-
 	/**
 	 * Extends search result with additional data from outside search index, like description and image
 	 *
@@ -21,17 +18,22 @@ class ResultHelper {
 	public static function extendResult( $result, $pos, $descWordLimit, $imageSizes, $query = null ) {
 
 		$commData = new CommunityDataService( $result['id'] );
-		$imageURL = ImagesService::getImageSrc(
-			$result['id'],
-			$commData->getCommunityImageId(),
-			$imageSizes['width'],
-			$imageSizes['height']
-		)['src'];
+
+		$imageURL = $result['image'] ?? null;
+
+		if ( null === $imageURL ) {
+			$imageURL = ImagesService::getImageSrc(
+				$result['id'],
+				$commData->getCommunityImageId(),
+				$imageSizes['width'],
+				$imageSizes['height']
+			)['src'];
+		}
 
 		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
 		//TODO: Remove after DAT-3642 is done
-		if ( empty( $imageURL ) ) {
+		if ( null === $imageURL ) {
 			$imageFileName =
 				PromoImage::fromPathname( $result['image_s'] )->ensureCityIdIsSet( $result['id'] )->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle(
@@ -48,37 +50,44 @@ class ResultHelper {
 			$thumbTracking = "no-thumb";
 		}
 
-		$description = $commData->getCommunityDescription();
-		$description = !empty( $description ) ? $description : $result->getText( Utilities::field( 'description' ) );
+		$description = $result['description'] ?? null;
+
+		if (!isset($description)) {
+			$description = $commData->getCommunityDescription();
+			$description = !empty( $description ) ? $description : $result->getText( Utilities::field( 'description' ) );
+		}
 
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
-		$globalSearchUrl = '';
-		if ( $query ) {
-			$lang = $wikiaSearchHelper->getLangForSearchResults();
-			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query(
-					[
-						'search' => $query,
-						'resultsLang' => $lang,
-					]
-				);
-		}
+		$lang = $wikiaSearchHelper->getLangForSearchResults();
+		$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query(
+				[
+					'search' => $query,
+					'resultsLang' => $lang,
+				]
+			);
 
 		return [
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],
+			'exactWikiMatch' => $result['exactWikiMatch'] ?? true,
 			'imageURL' => $imageURL,
 			'description' => $description,
 			'descriptionWordLimit' => $descWordLimit,
 			'pagesCount' => $result['articles_i'] ?: 0,
 			'imagesCount' => $result['images_i'] ?: 0,
 			'videosCount' => $result['videos_i'] ?: 0,
-			'title' => ( $sn = $result->getText( 'sitename_txt' ) ) ? $sn : $result->getText( 'headline_txt' ),
+			'title' => $result['title'] ?? self::getTitle( $result ),
 			'url' => $result->getText( 'url' ),
 			'hub' => $result->getHub(),
 			'pos' => $pos,
 			'thumbTracking' => $thumbTracking,
 			'viewMoreWikisLink' => $globalSearchUrl
 		];
+	}
+
+	private static function getTitle( $result ) {
+		$sn = $result->getText( 'sitename_txt' );
+		return $sn ?? $result->getText( 'headline_txt' );
 	}
 }

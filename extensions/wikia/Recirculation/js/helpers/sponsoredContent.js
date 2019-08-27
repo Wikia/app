@@ -15,81 +15,25 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 			hasFetched = true;
 
 			$.ajax({
-				url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/',
+				url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/article',
+                data: {
+                    geo: userGeo,
+                    wikiId: w.wgCityId,
+                    vertical: w.wgWikiVertical
+                }
 			}).done(function (result) {
 				deferred.resolve(result);
 			}).fail(function (err) {
 				log('Failed to fetch Sponsored content data' + err, log.levels.error);
 				// don't block rendering of rail/MCF
-				deferred.resolve([]);
+				deferred.resolve(null);
 			});
 		}
 
 		return deferred.promise();
 	}
 
-	function getSponsoredItem(sponsoredContent) {
-		var applicableContent = getApplicableContent(sponsoredContent);
-		var sumOfWeights = getWeightsSum(applicableContent);
-		var ranges = getMaxRanges(applicableContent, sumOfWeights);
-		var applicableRanges = getApplicableRanges(ranges, Math.random());
-		var firstApplicableIndex = applicableContent.length - applicableRanges.length;
-
-		return applicableContent[firstApplicableIndex];
-	}
-
-	function applyContentCriteria(sponsoredContent, propName, criteria) {
-		return sponsoredContent.filter(function (item) {
-			return item[propName].indexOf(criteria) !== -1;
-		});
-	}
-
-	function getApplicableContent(sponsoredContent) {
-		var geoSpecificContent = applyContentCriteria(sponsoredContent, 'geos', userGeo);
-		var siteSpecificContent = applyContentCriteria(sponsoredContent, 'wikiIds', w.wgCityId);
-		var geoAndSiteSpecificContent = applyContentCriteria(geoSpecificContent, 'wikiIds', w.wgCityId);
-		var geoOnlySpecificContent = geoSpecificContent.filter(function(item) { return !item.wikiIds.length });
-		var siteOnlySpecificContent = siteSpecificContent.filter(function(item) { return !item.geos.length });
-
-		if (geoAndSiteSpecificContent.length) {
-			return geoAndSiteSpecificContent;
-		}
-
-		if (siteOnlySpecificContent.length) {
-			return siteOnlySpecificContent;
-		}
-
-		if (geoOnlySpecificContent.length) {
-			return geoOnlySpecificContent;
-		}
-
-		return sponsoredContent.filter(function (item) {
-			return !item.wikiIds.length && !item.geos.length;
-		});
-	}
-
-	function getWeightsSum(applicableContent) {
-		return applicableContent.reduce(function (sum, el) {
-			return sum + el.weight;
-		}, 0);
-	}
-
-	function getMaxRanges(applicableContent, totalSum) {
-		return applicableContent.map(function (el, index, arr) {
-			var currentSum = getWeightsSum(arr.slice(0, index + 1));
-
-			return currentSum / totalSum;
-		});
-	}
-
-	function getApplicableRanges(maxRanges, number) {
-		return maxRanges.filter(function (el) {
-			return el >= number;
-		});
-	}
-
 	return {
-		fetch: fetch,
-		getSponsoredItem: getSponsoredItem
+		fetch: fetch
 	};
 });

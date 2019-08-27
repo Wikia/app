@@ -21,6 +21,8 @@ class FullContent extends AbstractService {
 	 * @var array
 	 */
 	protected $garbageSelectors = [
+		'span[class~="DiscordIntegrator"]',
+		'div[class~="embeddable-discussions-module"]',
 		'span.editsection',
 		'img',
 		'noscript',
@@ -47,12 +49,7 @@ class FullContent extends AbstractService {
 	 */
 	public function execute() {
 		$service = $this->getService();
-		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
-			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
-		}
-		$service->setGlobal( 'EnableParserCache', false );
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
-
 		// we still assume the response is the same format as MediaWiki's
 		$response = $service->getParseResponseFromPageId( $pageId );
 
@@ -67,6 +64,7 @@ class FullContent extends AbstractService {
 
 		return array_merge( $this->getPageContentFromParseResponse( $response ), [
 			'wid' => $service->getWikiId(),
+			'sitename' => $service->getGlobal( 'Sitename' ),
 			'pageid' => $pageId,
 			'title' => $titleStr,
 			'redirect_titles' => $service->getRedirectTitlesForPageId( $pageId ),
@@ -104,18 +102,16 @@ class FullContent extends AbstractService {
 	 * @return array
 	 */
 	protected function prepValuesFromHtml( $html ) {
-		$result = [];
 		// workaround for bug in html_entity_decode that truncates the text
 		$html = str_replace( [ "&lt;", "&gt;" ], "", $html );
 
 		$dom = new \simple_html_dom( html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ) );
+
 		if ( $dom->root ) {
 			$this->removeGarbageFromDom( $dom );
+			$html = $dom->save();
 		}
-
-		return array_merge( $result, [
-			'full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' ),
-		] );
+		return ['full_html' => html_entity_decode( $html, ENT_COMPAT, 'UTF-8' )];
 	}
 
 	/**

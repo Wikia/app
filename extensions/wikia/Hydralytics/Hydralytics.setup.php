@@ -4,6 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
 	exit( 1 );
 }
+require_once "$IP/extensions/cldr/cldr.php";
 
 $dir = __DIR__;
 
@@ -18,7 +19,7 @@ $wgExtensionCredits['other'][] = array(
 		'Hydra Wiki Platform Team',
 		'Fandom Data Engineering Team'
 	),
-	'descriptionmsg' => 'hydralytics_description',
+	'descriptionmsg' => 'analytics_description',
 	'version' => '1.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiAnalytics',
 );

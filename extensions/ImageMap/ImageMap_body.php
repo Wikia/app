@@ -224,7 +224,13 @@ class ImageMap {
 					# in Title.php to return an empty string in this case
 					$attribs['href'] = $title->getFragmentForURL();
 				} else {
-					$attribs['href'] = $title->escapeLocalURL() . $title->getFragmentForURL();
+					# PLATFORM-4241, create correct url for w:c: interwiki links
+					# by executing InterwikiDispatcher::getInterWikiaURLHook()
+					if ( InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
+						$attribs['href'] = $title->escapeFullURL() . $title->getFragmentForURL();
+					} else {
+						$attribs['href'] = $title->escapeLocalURL() . $title->getFragmentForURL();
+					}
 				}
 			} else {
 				$attribs['href'] = '#';

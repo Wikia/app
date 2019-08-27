@@ -1,6 +1,6 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.0.30-fpm-stretch
+FROM php:7.3.8-fpm-stretch
 
 # set locale as required by MediaWiki / Perl
 ENV LANG C.UTF-8
@@ -52,7 +52,7 @@ RUN apt-get update && apt-get install -y \
     #
     # libmustache / @see https://github.com/jbboehr/libmustache
     && cd /tmp \
-    && wget https://github.com/Wikia/libmustache/archive/v0.4.4.tar.gz -O libmustache.tar.gz \
+    && wget https://github.com/Wikia/libmustache/archive/v0.5.0.tar.gz -O libmustache.tar.gz \
     && mkdir -p /tmp/libmustache \
     && tar -xf libmustache.tar.gz -C /tmp/libmustache --strip-components=1 \
     && cd /tmp/libmustache \
@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y \
     #
     # mustache extension / @see https://github.com/jbboehr/php-mustache
     && cd /tmp \
-    && wget https://github.com/Wikia/php-mustache/archive/v0.7.3.tar.gz -O mustache.tar.gz \
+    && wget https://github.com/Wikia/php-mustache/archive/v0.8.1.tar.gz -O mustache.tar.gz \
     && mkdir -p /tmp/mustache \
     && tar -xf mustache.tar.gz -C /tmp/mustache --strip-components=1 \
     && docker-php-ext-configure /tmp/mustache \
@@ -77,7 +77,7 @@ RUN apt-get update && apt-get install -y \
     #
     # tideways extension / @see https://tideways.com/
     && cd /tmp \
-    && wget https://github.com/Wikia/php-xhprof-extension/archive/v4.1.6.tar.gz -O php-xhprof-extension.tar.gz \
+    && wget https://github.com/Wikia/php-xhprof-extension/archive/v4.1.7.tar.gz -O php-xhprof-extension.tar.gz \
     && mkdir -p /tmp/php-xhprof-extension \
     && tar -xf php-xhprof-extension.tar.gz -C /tmp/php-xhprof-extension --strip-components=1 \
     && docker-php-ext-configure /tmp/php-xhprof-extension \
@@ -139,6 +139,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=06b60d8
+ENV WIKIA_BASE_IMAGE_HASH=3f60947
 
 WORKDIR /usr/wikia/slot1/current/src

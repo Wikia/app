@@ -1022,6 +1022,13 @@ function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
 	$db->commit( __METHOD__ );
 }
 
+// PLATFORM-4222 - to be removed once we switch to PHP 7.3+ everywhere
+if ( !function_exists( 'is_countable' ) ) {
+	function is_countable( $value ) {
+		return is_array( $value ) || $value instanceof Countable;
+	}
+}
+
 if ( !function_exists( 'http_build_url' ) ) {
 	define( 'HTTP_URL_REPLACE', 1 );				// Replace every part of the first URL when there's one of the second URL
 	define( 'HTTP_URL_JOIN_PATH', 2 );			// Join relative paths
@@ -1515,7 +1522,7 @@ function wfGetStagingEnvForUrl( $url ) : string {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaEnvironment;
+	global $wgWikiaEnvironment, $wgWikiaBaseDomainRegex;
 	$host = parse_url( $url, PHP_URL_HOST );
 	if ( $host === false ) {
 		return false;
@@ -1525,7 +1532,17 @@ function wfHttpsAllowedForURL( $url ): bool {
 		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
 		return false;
 	}
-	return true;
+	if ( !preg_match( '/' . $wgWikiaBaseDomainRegex . '$/', $host ) ) {
+		return false;
+	}
+
+	$host = wfNormalizeHost( $host );
+	$baseDomain = wfGetBaseDomainForHost( $host );
+
+	$server = str_replace( ".$baseDomain", '', $host );
+
+	// Only allow single subdomain wikis through
+	return substr_count( $server, '.' ) === 0;
 }
 
 /**

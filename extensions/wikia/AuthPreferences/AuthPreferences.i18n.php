@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'fbconnect-convert' => 'Connect this account with Facebook',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your FANDOM account.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'prefs-fbconnect-prefstext' => 'Connect with Facebook',
 	'prefs-auth-prefstext' => 'Connected Accounts',
 	'prefs-auth-connections-prefstext' => 'Connections',
 	'fbconnect-disconnect-account-link' => 'Your FANDOM account is currently connected to Facebook. You can [[#|disconnect]] your FANDOM account from Facebook. You will be able to continue using your FANDOM account as usual, with your history (edits, points, achievements) intact.',
@@ -16,6 +16,9 @@ $messages['en'] = array(
 	'google-connect-account-connected' => 'Congratulations! Your FANDOM and Google accounts are now connected.',
 	'google-connect-account-disconnected' => 'Your Google account has been successfully disconnected from your FANDOM account.',
 	'google-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Google.",
+	'twitch-connect-account-connected' => 'Congratulations! Your FANDOM and Twitch accounts are now connected.',
+	'twitch-connect-account-disconnected' => 'Your Twitch account has been successfully disconnected from your FANDOM account.',
+	'twitch-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Twitch.",
 );
 
 $messages['qqq'] = array(

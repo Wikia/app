@@ -59,6 +59,12 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 		$wgGroupPermissions['wiki-manager']['abusefilter-log-detail'] = true;
 		$wgGroupPermissions['wiki-manager']['abusefilter-private'] = true;
 
+		$wgGroupPermissions['content-team-member']['abusefilter-modify'] = true;
+		$wgGroupPermissions['content-team-member']['abusefilter-modify-restricted'] = true;
+		$wgGroupPermissions['content-team-member']['abusefilter-revert'] = true;
+		$wgGroupPermissions['content-team-member']['abusefilter-log-detail'] = true;
+		$wgGroupPermissions['content-team-member']['abusefilter-private'] = true;
+
 	}
 }
 
@@ -142,6 +148,7 @@ $wgGroupPermissions['staff']['abtestpanel'] = true;
 $wgGroupPermissions[ '*' ][ 'abusefilter-bypass' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 $wgGroupPermissions[ 'wiki-manager' ]['abusefilter-bypass'] = true;
+$wgGroupPermissions[ 'content-team-member' ]['abusefilter-bypass'] = true;
 
 // RIGHTS
 $wgGroupPermissions['*']['platinum'] = false;
@@ -156,6 +163,7 @@ $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
 $wgGroupPermissions['vstf']['achievements-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['achievements-exempt'] = true;
+$wgGroupPermissions['content-team-member']['achievements-exempt'] = true;
 
 // overrides acievements-exempt
 $wgGroupPermissions['*']['achievements-explicit'] = false;
@@ -191,6 +199,7 @@ $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['wiki-manager']['blog-comments-toggle'] = true;
+$wgGroupPermissions['content-team-member']['blog-comments-toggle'] = true;
 
 $wgGroupPermissions['*'][ 'blog-comments-delete' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
@@ -198,6 +207,7 @@ $wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['threadmoderator'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['wiki-manager'][ 'blog-comments-delete' ] = true;
+$wgGroupPermissions['content-team-member'][ 'blog-comments-delete' ] = true;
 
 $wgGroupPermissions['*'][ 'blog-articles-edit' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-articles-edit' ] = true;
@@ -214,6 +224,7 @@ $wgGroupPermissions['sysop'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['staff'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['helper'][ 'blog-articles-protect' ] = true;
 $wgGroupPermissions['wiki-manager']['blog-articles-protect'] = true;
+$wgGroupPermissions['content-team-member']['blog-articles-protect'] = true;
 
 /**
  * The 'skipcaptcha' permission key can be given out to
@@ -315,6 +326,7 @@ $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
 $wgGroupPermissions['threadmoderator']['forumadmin'] = true;
 $wgGroupPermissions['wiki-manager']['forumadmin'] = true;
+$wgGroupPermissions['content-team-member']['forumadmin'] = true;
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
@@ -428,6 +440,7 @@ $wgGroupPermissions['staff']['edithub'] = true;
 $wgGroupPermissions['helper']['edithub'] = true;
 
 $wgGroupPermissions ['staff']['InterwikiEdit'] = true;
+$wgGroupPermissions ['wiki-manager']['InterwikiEdit'] = true;
 
 //add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['managewikiahome'] = false;
@@ -458,6 +471,7 @@ $wgGroupPermissions['staff']['unblockable'] = true;
 $wgGroupPermissions['helper']['unblockable'] = true;
 $wgGroupPermissions['vstf']['unblockable'] = true;
 $wgGroupPermissions['wiki-manager']['unblockable'] = true;
+$wgGroupPermissions['content-team-member']['unblockable'] = true;
 
 $wgGroupPermissions['*']['tagsreport'] = true;
 
@@ -538,6 +552,7 @@ $wgGroupPermissions['vstf']['walladmindelete'] = true;
 $wgGroupPermissions['helper']['walladmindelete'] = true;
 $wgGroupPermissions['sysop']['walladmindelete'] = true;
 $wgGroupPermissions['wiki-manager']['walladmindelete'] = true;
+$wgGroupPermissions['content-team-member']['walladmindelete'] = true;
 
 $wgGroupPermissions['*']['wallarchive'] = false;
 $wgGroupPermissions['staff']['wallarchive'] = true;
@@ -553,6 +568,7 @@ $wgGroupPermissions['helper']['wallremove'] = true;
 $wgGroupPermissions['sysop']['wallremove'] = true;
 $wgGroupPermissions['threadmoderator']['wallremove'] = true;
 $wgGroupPermissions['wiki-manager']['wallremove'] = true;
+$wgGroupPermissions['content-team-member']['wallremove'] = true;
 
 $wgGroupPermissions['*']['walledit'] = false;
 $wgGroupPermissions['staff']['walledit'] = true;
@@ -561,6 +577,7 @@ $wgGroupPermissions['helper']['walledit'] = true;
 $wgGroupPermissions['sysop']['walledit'] = true;
 $wgGroupPermissions['threadmoderator']['walledit'] = true;
 $wgGroupPermissions['wiki-manager']['walledit'] = true;
+$wgGroupPermissions['content-team-member']['walledit'] = true;
 
 $wgGroupPermissions['*']['editwallarchivedpages'] = false;
 $wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
@@ -568,6 +585,7 @@ $wgGroupPermissions['vstf']['editwallarchivedpages'] = true;
 $wgGroupPermissions['staff']['editwallarchivedpages'] = true;
 $wgGroupPermissions['helper']['editwallarchivedpages'] = true;
 $wgGroupPermissions['wiki-manager']['editwallarchivedpages'] = true;
+$wgGroupPermissions['content-team-member']['editwallarchivedpages'] = true;
 
 $wgGroupPermissions['*']['wallshowwikiaemblem'] = false;
 $wgGroupPermissions['staff']['wallshowwikiaemblem'] = true;
@@ -584,6 +602,7 @@ $wgGroupPermissions['vstf']['wallmessagemove'] = true;
 $wgGroupPermissions['helper']['wallmessagemove'] = true;
 $wgGroupPermissions['staff']['wallmessagemove'] = true;
 $wgGroupPermissions['wiki-manager']['wallmessagemove'] = true;
+$wgGroupPermissions['content-team-member']['wallmessagemove'] = true;
 
 $wgGroupPermissions['util']['wdacreview'] = true;
 
@@ -651,8 +670,15 @@ $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = t
 // SUS-5473 | allow staff members to request a run of updateSpecialPages
 $wgGroupPermissions['*']['schedule-update-special-pages'] = false;
 $wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['wiki-manager']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['content-team-member']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['vanguard']['schedule-update-special-pages'] = true;
+$wgGroupPermissions['helper']['schedule-update-special-pages'] = true;
+
 // DE-4374 | allow staff members, helpers and wikis admins to access Special:Analytics
 $wgGroupPermissions['*']['analytics'] = false;
 $wgGroupPermissions['sysop']['analytics'] = true;
 $wgGroupPermissions['helper']['analytics'] = true;
 $wgGroupPermissions['staff']['analytics'] = true;
+$wgGroupPermissions['wiki-manager']['analytics'] = true;
+$wgGroupPermissions['content-team-member']['analytics'] = true;

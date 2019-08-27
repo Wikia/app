@@ -124,6 +124,10 @@ class HelperController extends \WikiaController {
 		if ( $tokenContext === 'twitch' ) {
 			return 'Email\Controller\TwitchDisconnect';
 		}
+		if ( $tokenContext === 'apple' ) {
+			return 'Email\Controller\AppleDisconnect';
+		}
+
 		return 'Email\Controller\PasswordResetLink';
     }
 

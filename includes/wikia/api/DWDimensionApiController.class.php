@@ -1,6 +1,8 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+use Wikia\Service\User\Preferences\PreferenceService;
 use FandomCreator\CommunitySetup;
 
 class DWDimensionApiController extends WikiaApiController {
@@ -34,6 +36,10 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
 		return $this->getDbSlave( $wgExternalSharedDB );
+	}
+
+	private function userPreferencesService(): PreferenceService {
+		return ServiceFactory::instance()->preferencesFactory()->preferenceService();
 	}
 
 	public function getWikiDartTags() {
@@ -207,6 +213,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$botUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_USER_GROUP ] );
 		$botGlobalUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_GLOBAL_USER_GROUP ] );
 		while ( $row = $db->fetchObject( $dbResult ) ) {
+			$marketingPreferenceResult = $this->userPreferencesService()->getGlobalPreference($row->user_id, 'marketingallowed');
 			$result[] = [
 				'user_id' => $row->user_id,
 				'user_name' => $row->user_name,
@@ -215,7 +222,9 @@ class DWDimensionApiController extends WikiaApiController {
 				'user_editcount' => $row->user_editcount,
 				'user_registration' => $row->user_registration,
 				'is_bot' => isset( $botUsers[ $row->user_id ] ),
-				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] )
+				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] ),
+				# DE-4442 unknown marketingallowed should be treated as false (disallowed)
+				'user_marketingallowed' => isset($marketingPreferenceResult) && boolval($marketingPreferenceResult)
 			];
 		}
 		$db->freeResult( $dbResult );
@@ -269,6 +278,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki ) {
+			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
+				continue;
+			}
+
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {
@@ -447,6 +460,11 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki ) {
+			// DE-4475 | skip wikis that do not have supported city_cluster value (i.e. outside the "c1...c7" range)
+			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
+				continue;
+			}
+
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {

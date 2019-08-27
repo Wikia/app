@@ -3,10 +3,15 @@
  * Class definition for SearchApiController
  */
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\SearchResult;
-use Wikia\Search\UnifiedSearch\UnifiedSearchRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItem;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
+use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
 /**
@@ -60,22 +65,18 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
+		WikiaLogger::instance()->info("Calling mediawiki search api");
+
 		$config = $this->getConfigFromRequest();
 		$service = new UnifiedSearchService();
 
-		if ( $service->useUnifiedSearch( false ) ) {
-			if ( !$config->getQuery()->hasTerms() ) {
-				throw new InvalidParameterApiException( 'query' );
-			}
-			$request = new UnifiedSearchRequest( $config );
-			$result = SearchResult::fromUnifiedSearchResult( $service->search( $request ) );
-			if ( !$result->hasResults() ) {
-				throw new NotFoundApiException();
-			}
-			$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
-		} else {
-			$this->setResponseFromConfig( $config );
+		if ( !$config->getQuery()->hasTerms() ) {
+			throw new InvalidParameterApiException( 'query' );
 		}
+		$request = new UnifiedSearchPageRequest( $config );
+		$result = $service->pageSearch( $request );
+		$this->setUnifiedSearchResponse( $config, $result, WikiaResponse::CACHE_STANDARD );
+
 	}
 
 	/**
@@ -99,39 +100,49 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
-		$expand = $this->request->getBool( 'expand', false );
-		if ( $expand ) {
-			$params = $this->getDetailsParams();
-		}
 
-		$responseValues =
-			( new Factory )->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( [
-				'id',
-				'lang_s',
-			], true );
+		$configCrossWiki = $this->getConfigCrossWiki();
+		$service = new UnifiedSearchService();
 
-		if ( empty( $responseValues['items'] ) ) {
-			throw new NotFoundApiException();
-		}
+		$result = $service->communitySearch(new UnifiedSearchCommunityRequest($configCrossWiki));
 
-		$items = [];
-		foreach ( $responseValues['items'] as $result ) {
-			if ( $expand ) {
-				$items[] =
-					$this->getWikiDetailsService()
-						->getWikiDetails( $result['id'], $params['imageWidth'],
-							$params['imageHeight'], $params['length'] );
-			} else {
-				$items[] = [
-					'id' => (int)$result['id'],
-					'language' => $result['lang_s'],
+		$offset = ( $result->currentPage + 1 ) * $configCrossWiki->getLimit() + 1;
+		$items = $result->getResults()->getIterator()->getArrayCopy();
+
+		$items = array_map(function ( UnifiedSearchCommunityResultItem $item) {
+			return UnifiedSearchCommunityResultItemExtender::extendCommunityResult(
+				$item,
+				null,
+				'',
+				null
+			);
+		}, $items);
+
+		$responseValues = [
+			"total" => $result->resultsFound,
+			"batches" => $result->pagesCount,
+			"currentBatch" => $result->currentPage,
+			"next" => $offset > $result->resultsFound ? null : $offset,
+			"items" => array_map(function ( UnifiedSearchCommunityResultItem $item) {
+				return [
+					'id' => $item['id'],
+					'title' => $item['name'],
+					'url' => $item['url'],
+					'topic' => $item['hub'],
+					'desc' => $item['description'],
+					'stats' => [
+						'articles' => $item['pageCount'],
+						'images' => $item['imageCount'],
+						'videos' => $item['videoCount'],
+					],
+					'image' => $item['thumbnail'],
+					'language' => $item['language'],
 				];
-			}
-		}
-		$responseValues['items'] = $items;
 
-		$this->setResponseData( $responseValues,
-			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ] );
+			}, $items )
+		];
+
+		$this->setResponseData( $responseValues );
 	}
 
 	/**
@@ -166,20 +177,23 @@ class SearchApiController extends WikiaApiController {
 	}
 
 	protected function setUnifiedSearchResponse(
-		Config $config, SearchResult $result, $cacheValidity = 0
+		Config $config, UnifiedSearchResult $result, $cacheValidity = 0
 	) {
+
+		$items = $result->getResults()->toArray( [
+			'pageid' => 'id',
+			'title',
+			'url',
+			'ns',
+			'text' => 'snippet',
+		] );
+
 		$data = [
-			'batches' => $result->getNumPages(),
-			'currentBatch' => $result->getPage(),
-			'next' => $result->getPage() * $config->getLimit() + 1,
-			'total' => $result->getResultsFound(),
-			'items' => $result->toArray( [
-				'pageid' => 'id',
-				'title',
-				'url',
-				'ns',
-				'text' => 'snippet',
-			] ),
+			'batches' => $result->pagesCount,
+			'currentBatch' => $result->currentPage,
+			'next' => $result->currentPage * $config->getLimit() + 1,
+			'total' => $result->resultsFound,
+			'items' => $items,
 		];
 
 		$response = $this->getResponse();

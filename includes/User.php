@@ -876,7 +876,7 @@ class User implements JsonSerializable {
 	 * @return mixed: true on success, string or array of error message on failure
 	 */
 	public function getPasswordValidity( $password ) {
-		$result = self::heliosClient()->validatePassword( $password, $this->getName() );
+		$result = self::heliosClient()->validatePassword( $password, $this->getName(), $this->getEmail() );
 
 		if ( !empty( $result->success ) && $result->success ) {
 			return true;
@@ -4497,7 +4497,11 @@ class User implements JsonSerializable {
 	 * @return bool
 	 */
 	public function isStaff() {
-		return self::permissionsService()->isInGroup( $this, 'staff' );
+		return self::permissionsService()->isInGroup( $this, 'staff' )
+			||
+			self::permissionsService()->isInGroup( $this, 'wiki-manager' )
+			||
+			self::permissionsService()->isInGroup( $this, 'content-team-member' );
 	}
 
 	/**

@@ -5,14 +5,14 @@ namespace Wikia\Search\UnifiedSearch;
 use Wikia\Search\Config;
 use Wikia\Search\Query\Select;
 
-class UnifiedSearchRequest {
+class UnifiedSearchPageRequest {
 
 	/** @var Select */
 	private $query;
 
 	/** @var string */
 	private $languageCode;
-	/** @var integer */
+	/** @var integer|null */
 	private $wikiId;
 	/** @var array */
 	private $namespaces = [];
@@ -27,11 +27,14 @@ class UnifiedSearchRequest {
 	/** @var integer */
 	private $limit;
 
+	/** @var bool */
+	private $isInternalScope = false;
 
 	public function __construct( Config $config ) {
 		$this->query = $config->getQuery();
 		$this->languageCode = $config->getLanguageCode();
 		$this->wikiId = $config->getWikiId();
+		$this->isInternalScope = $config->isInternalScope();
 		$this->page = $config->getPage() - 1;
 		$this->limit = $config->getLimit();
 		$this->namespaces = $config->getNamespaces();
@@ -39,59 +42,40 @@ class UnifiedSearchRequest {
 		$this->videoOnly = $config->isVideoOnly();
 	}
 
-	/**
-	 * @return Select
-	 */
 	public function getQuery(): Select {
 		return $this->query;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getLanguageCode(): string {
 		return $this->languageCode;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getWikiId(): int {
+	/** @return null|int */
+	public function getWikiId() {
 		return $this->wikiId;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNamespaces(): array {
 		return $this->namespaces;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isImageOnly(): bool {
 		return $this->imageOnly;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isVideoOnly(): bool {
 		return $this->videoOnly;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getPage(): int {
 		return $this->page;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getLimit(): int {
 		return $this->limit;
+	}
+
+	public function isInternalScope(): bool {
+		return $this->isInternalScope;
 	}
 }

@@ -15,10 +15,12 @@
 
 namespace Hydralytics;
 
+use \CountryNames;
+
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.5;
+	const CACHE_VERSION = 4.0;
 
 	/**
 	 * Output HTML
@@ -65,13 +67,14 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @throws \ErrorPageError
 	 */
 	private function analyticsPage() {
-		global $wgMemc;
+		global $wgLang;
 
-		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION );
-		$sections = $wgMemc->get( $memcKey );
+		// use $wgLang to differ the cache based on user language
+		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
 
-		if ( !is_array( $sections ) ) {
+		$sections = \WikiaDataAccess::cacheWithLock( $memcKey, \WikiaResponse::CACHE_SHORT, function() {
 			try {
+				global $wgLang;
 				$sections = [
 					'top_viewed_pages' => '',
 					'number_of_pageviews' => '',
@@ -117,13 +120,21 @@ class SpecialAnalytics extends \SpecialPage {
 				/**
 				 *  Logged in vs Logged out Edits
 				 */
-				$loggedInOutEdits = Information::getEditsLoggedInOut();
-				$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $loggedInOutEdits);
+				$edits = Information::getEditsLoggedInOut();
+
+				global $wgDisableAnonymousEditing;
+				// hide this section when the wiki does not allow logged out edits
+				if (  empty( $wgDisableAnonymousEditing ) ) {
+					$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData( 'logged_in_out', $edits );
+				}
+				else {
+					unset( $sections['logged_in_out'] );
+				}
 
 				/**
 				 *  Edit Per Day
 				 */
-				$dailyEdits = $loggedInOutEdits['all'];
+				$dailyEdits = $edits['all'];
 				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
 
 				/**
@@ -131,6 +142,7 @@ class SpecialAnalytics extends \SpecialPage {
 				 */
 				$geolocation = Information::getGeolocation();
 				$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation',$geolocation);
+				$countries = \CountryNames::getNames($wgLang->getCode());
 				//arsort($geolocation['sessions']);
 				if (isset($geolocation['pageviews'])) {
 					$sections['geolocation'] = "
@@ -146,8 +158,8 @@ class SpecialAnalytics extends \SpecialPage {
 					foreach ($geolocation['pageviews'] as $location => $sessions) {
 						$sections['geolocation'] .= "
 							<tr>
-								<td>".$location."</td>
-								<td>".$this->getLanguage()->formatNum($sessions)."</a></td>
+								<td>".$countries[$location]."</td>
+								<td>".$this->getLanguage()->formatNum($sessions)."</td>
 							</tr>";
 					}
 					$sections['geolocation'] .= "
@@ -164,18 +176,24 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('views')->escaped()."</th>
 								<th>".wfMessage('page')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
 						";
 					foreach ($topPages['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
+						// remove language url part and "/wiki/" and underscores from page names
+						$title = preg_replace('|^(/\w+)?/wiki/|', '', $newUri);
+						$title = str_replace('_', ' ', $title);
+
 						$sections['top_viewed_pages'] .= "
 							<tr>
+
+								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
-								<td><a href='".wfExpandUrl($newUri)."'>".substr(urldecode($newUri), 1)."</a></td>
 							</tr>";
 					}
 					$sections['top_viewed_pages'] .= "
@@ -192,8 +210,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('user')->escaped()."</th>
+								<th>".wfMessage('points')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -213,8 +231,8 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('user')->escaped()."</th>
+								<th>".wfMessage('points')->escaped()."</th>
 								<th>".wfMessage('active_month')->escaped()."</th>
 							</tr>
 						</thead>
@@ -238,22 +256,25 @@ class SpecialAnalytics extends \SpecialPage {
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('views')->escaped()."</th>
 								<th>".wfMessage('file')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>
 						";
 					foreach ($topFiles['pageviews'] as $uri => $views) {
 						$newUri = $this->normalizeUri($uri);
+
 						// remove NS_FILE namespace prefix
 						$uriText = explode(":", $newUri);
 						array_shift($uriText);
 						$uriText = implode(":", $uriText);
+						$uriText = str_replace('_', ' ', $uriText);
+
 						$sections['most_visited_files'] .= "
 							<tr>
-								<td>".$this->getLanguage()->formatNum($views)."</td>
 								<td> <a href='".wfExpandUrl($newUri)."'>".urldecode($uriText)."</a></td>
+								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
 					$sections['most_visited_files'] .= "
@@ -317,8 +338,8 @@ class SpecialAnalytics extends \SpecialPage {
 				<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('search_rank')->escaped()."</th>
 								<th>".wfMessage('search_term')->escaped()."</th>
+								<th>".wfMessage('views')->escaped()."</th>
 							</tr>
 						</thead>
 						<tbody>";
@@ -328,8 +349,16 @@ class SpecialAnalytics extends \SpecialPage {
 
 				foreach ($terms as $term => $count) {
 					$url = $specialSearch->getLocalURL( [ 'query' => $term ] );
-					$sections['top_search_terms'] .= "<tr><td>".$this->getLanguage()->formatNum($count)."</td>" .
-                         '<td><a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($term)."</a></td></tr>";
+					$sections['top_search_terms'] .="
+					<tr>
+						<td>
+							<a href='".htmlspecialchars($url)."'>".htmlspecialchars($term)."</a>
+						</td>
+						<td>
+							".$this->getLanguage()->formatNum($count).
+						"</td>
+					</tr>
+					";
 				}
 
 				$sections['top_search_terms'] .= "
@@ -352,11 +381,10 @@ class SpecialAnalytics extends \SpecialPage {
 				);
 			}
 
-			// cache the statistics for three hours, new data in Redshift arrive every 24h
-			$wgMemc->set( $memcKey, $sections,  \WikiaResponse::CACHE_SHORT );
-		}
+			return $sections;
+		});
 
-		$generatedAt = wfMessage('analytics_report_generated', 'one day ago')->escaped();
+		$generatedAt = wfMessage('analytics_report_generated', wfMsgExt('timeago-day', array(), 1))->escaped();
 
 		$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 		$this->content = TemplateAnalytics::analyticsPage($sections, $generatedAt);

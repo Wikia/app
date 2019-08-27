@@ -1092,7 +1092,7 @@ $messages['ja'] = array(
 	'founderprogressbar-credits' => '新しいWiki設立者のためのタスクハブとガイド',
 	'founderprogressbar-completion-message' => 'タスクのすべてが完了しました。あなたのWikiの成功はもう目の前です。その調子でがんばってください！',
 	'founderprogressbar-photo-add10-description' => '画像はこのWikiの内容を説明するのに役立ちます。また、研究により、人々はビジュアルに魅力を感じることがわかっています。どのページにも1枚以上の画像を追加することをおすすめします。',
-	'founderprogressbar-category-add3-description' => 'カテゴリは、Wikiを整理して、ユーザーが探しているページを見つけやすくするのに大変おすすめです。ただし、カテゴリが多くなりすぎると混乱を招くことがあるので、カテゴリの数にはご注意ください。',
+	'founderprogressbar-category-add3-description' => '<a href="https://community.fandom.com/ja/wiki/ヘルプ:カテゴリ">カテゴリ</a>は、Wikiを整理して、ユーザーが探しているページを見つけやすくするのに大変おすすめです。ただし、カテゴリが多くなりすぎると混乱を招くことがあるので、カテゴリの数にはご注意ください。',
 	'founderprogressbar-commcentral-visit-description' => '「<a href="https://community.fandom.com/ja/">コミュニティセントラル</a>」は、Fandomのユーザーの皆さんが集まってアドバイスやヒントを共有し合う場です。ぜひ参加してみてください。ここでは、ヘルプページやガイド、Fandomスタッフへの連絡方法なども見つかります。',
 	'founderprogressbar-commcentral-visit-url' => 'https://community.fandom.com/ja/wiki/メインページ',
 	'founderprogressbar-wikiactivity-visit-description' => '「<a href="https://community.fandom.com/ja/wiki/ヘルプ:ウィキアクティビティ">ウィキアクティビティ</a>」では、Wikiで行われたあらゆる操作の履歴を見ることができます。たとえば、編集を行ったユーザーを確認したり、変更されたページに簡単にアクセスしたりできます。',

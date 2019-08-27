@@ -79,6 +79,7 @@ $wgAutoloadClasses['Email\Controller\UserNameChangeController'] = $dir . 'Contro
 $wgAutoloadClasses['Email\Controller\FacebookDisconnectController'] = $dir . 'Controller/FacebookDisconnectController.class.php';
 $wgAutoloadClasses['Email\Controller\GoogleDisconnectController'] = $dir . 'Controller/GoogleDisconnectController.class.php';
 $wgAutoloadClasses['Email\Controller\TwitchDisconnectController'] = $dir . 'Controller/TwitchDisconnectController.class.php';
+$wgAutoloadClasses['Email\Controller\AppleDisconnectController'] = $dir . 'Controller/AppleDisconnectController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionAtMentionController'] = $dir . 'Controller/DiscussionController.class.php';

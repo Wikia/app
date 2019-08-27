@@ -22,6 +22,7 @@ $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfter
 $wgHooks['LinkEnd'][] = 'SEOTweaksHooksHelper::onLinkEnd';
 $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeaders';
 $wgHooks['ShowMissingArticle'][] = 'SEOTweaksHooksHelper::onShowMissingArticle';
+$wgHooks['LinkerMakeExternalLink'][] = 'SEOTweaksHooksHelper::onLinkerMakeExternalLink';
 
 // messages
 $wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

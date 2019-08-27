@@ -12,6 +12,21 @@ use function GuzzleHttp\Psr7\build_query;
 
 class UnifiedSearchService {
 	const FAILED_TO_CALL_UNIFIED_SEARCH = "Failed to call unified-search";
+	const SEARCH_TYPE_PAGE = 'page';
+	const SEARCH_TYPE_COMMUNITY = 'community';
+
+	const COMMUNITY_FIELDS = [
+		'id',
+		'title',
+		'description',
+		'language',
+		'url',
+		'image',
+		'hub_s',
+		'articles_i',
+		'images_i',
+		'videos_i',
+	];
 
 	/** @var string */
 	private $baseUrl;
@@ -21,41 +36,25 @@ class UnifiedSearchService {
 		$this->baseUrl = 'http://' . $urlProvider->getUrl( 'unified-search' ) . '/';
 	}
 
-	public function useUnifiedSearch( bool $isCorporateWiki ): bool {
-		global $wgUseUnifiedSearch;
-
-		/** This is cross-wiki search - we don't support it yet. */
+	public function determineSearchType( bool $isCorporateWiki ): string {
 		if ( $isCorporateWiki ) {
-			return false;
+			return self::SEARCH_TYPE_COMMUNITY;
 		}
 
-		return $wgUseUnifiedSearch;
+		return self::SEARCH_TYPE_PAGE;
 	}
 
-	public function search( UnifiedSearchRequest $request ): UnifiedSearchResult {
-		$result = $this->callSpecialSearch( $request );
-
-		$items = [];
-		foreach ( $result['results'] as $item ) {
-			$items[] = [
-				'wid' => $item['wikiId'],
-				'pageid' => $item['pageId'],
-				'title' => $item['title'],
-				'text' => $item['content'],
-				'url' => $item['url'],
-				'ns' => $item['namespace'],
-				'hub_s' => $item['hub'],
-			];
-		}
+	public function pageSearch( UnifiedSearchPageRequest $request ): UnifiedSearchResult {
+		$result = $this->callPageSearch( $request );
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], $items );
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchPageResultItem($item);
+			}, $result['results']) );
 	}
 
-
-	private function callSpecialSearch( UnifiedSearchRequest $request ) {
+	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
-			'wikiId' => $request->getWikiId(),
 			'lang' => $request->getLanguageCode(),
 			'query' => $request->getQuery()->getSanitizedQuery(),
 			'namespace' => $request->getNamespaces(),
@@ -63,8 +62,12 @@ class UnifiedSearchService {
 			'limit' => $request->getLimit(),
 		];
 
+		if ($request->isInternalScope()) {
+			$params['wikiId'] = $request->getWikiId();
+		}
+
 		if ( $request->isImageOnly() ) {
-			$params['imagesOnly'] = 'true';
+			$params['imageOnly'] = 'true';
 		}
 
 		if ( $request->isVideoOnly() ) {
@@ -107,6 +110,48 @@ class UnifiedSearchService {
 
 			throw new WikiaException( self::FAILED_TO_CALL_UNIFIED_SEARCH, 500, $e );
 		}
+	}
+
+	public function newsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ): UnifiedSearchResult {
+		$result = $this->callNewsAndStoriesSearch( $request );
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchNewsAndStoriesResultItem($item);
+			}, $result['results']) );
+	}
+
+	private function callNewsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+		];
+
+		$response = $this->doApiRequest( 'news-and-stories-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
+	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
+		$result = $this->callCommunitySearch( $request );
+
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchCommunityResultItem($item);
+			}, $result['results']) );
+	}
+
+	private function callCommunitySearch( UnifiedSearchCommunityRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+			'lang' => $request->getLanguage(),
+		];
+
+		$response = $this->doApiRequest( 'community-search', $params );
+
+		return json_decode( $response->getBody(), true );
 	}
 
 }

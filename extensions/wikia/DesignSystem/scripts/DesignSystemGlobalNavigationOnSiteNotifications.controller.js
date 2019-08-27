@@ -45,6 +45,10 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				return common.notificationTypes.discussionReply;
 			} else if (notification.type === 'announcement-notification') {
 				return common.notificationTypes.announcement;
+			} else if (notification.type === 'post-at-mention-notification') {
+				return common.notificationTypes.postAtMention;
+			} else if (notification.type === 'thread-at-mention-notification') {
+				return common.notificationTypes.threadAtMention;
 			}
 		}
 
@@ -83,6 +87,14 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 
 		Controller.prototype = {
 
+			supportedContentTypes: [
+				'discussion-upvote',
+				'discussion-post',
+				'announcement-target',
+				'post-at-mention',
+				'thread-at-mention'
+			],
+
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
 				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
@@ -103,9 +115,13 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				return this._model.isLoading() !== true && this.nextPage && this.allPagesLoaded !== true;
 			},
 
+			getContentTypesQueryParams: function () {
+				return 'contentType=' + this.supportedContentTypes.join('&contentType=')
+			},
+
 			updateUnreadCount: function () {
 				$.ajax({
-					url: this.getBaseUrl() + '/notifications/unread-count?contentType=discussion-upvote&contentType=discussion-post&contentType=announcement-target',
+					url: this.getBaseUrl() + '/notifications/unread-count?' + this.getContentTypesQueryParams(),
 					xhrFields: {
 						withCredentials: true
 					}
@@ -203,7 +219,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}
 				this._model.loadingStarted();
 				$.ajax({
-					url: this.getBaseUrl() + '/notifications?contentType=discussion-upvote&contentType=discussion-post&contentType=announcement-target',
+					url: this.getBaseUrl() + '/notifications?' + this.getContentTypesQueryParams(),
 					xhrFields: {
 						withCredentials: true
 					}

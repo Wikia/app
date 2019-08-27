@@ -112,7 +112,7 @@ class AttributeService {
 	 * @param $msg
 	 */
 	private function logException( $userId, \Exception $e, $msg ) {
-		$context = [ 'user' => $userId, 'exception' => $e ];
+		$context = [ 'userId' => $userId, 'exception' => $e ];
 		if ( $e instanceof PersistenceException ) {
 			$this->error( $msg, $context );
 		} else {

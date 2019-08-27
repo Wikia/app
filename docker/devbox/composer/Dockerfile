@@ -1,5 +1,5 @@
 #We want to use the same base as the application image in order to make dependencies consistent across them
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:da4390f
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:3f60947
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
@@ -8,7 +8,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && chmod +x /usr/bin/composer \
     && apt-get update \
     && apt-get install -y git zip unzip\
-    && pecl install yaml-2.0.2 xdebug-2.6.0 \
+    && pecl install yaml-2.0.4 xdebug-2.7.2 \
     && docker-php-ext-enable yaml xdebug \
     && apt-get install gosu
 
