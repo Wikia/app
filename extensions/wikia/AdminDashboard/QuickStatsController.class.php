@@ -11,7 +11,7 @@ class QuickStatsController extends WikiaController {
 			$cityID = $this->wg->CityId;
 			$stats = array();
 			$this->getDailyPageViews( $stats );
-			$this->getDailyEdits( $stats, $cityID );
+			$this->getDailyEdits( $stats);
 			$this->getDailyPhotos( $stats );
 
 			// totals come in from MySQL as the last element with a null date, so just pop it off and give it a keyval
@@ -44,34 +44,25 @@ class QuickStatsController extends WikiaController {
 	}
 
 
-	public function getDailyEdits (Array &$stats, $cityID) {
-		wfProfileIn( __METHOD__ );
+	public function getDailyEdits (Array &$stats ) {
+		global $wgCityId;
 
-		$today = date( 'Y-m-d', strtotime('-1 day') );
 		$week = date( 'Y-m-d', strtotime('-7 day') );
+		$res = \Redshift::query(
+			'SELECT dt, COUNT(*) AS total_edits '.
+			'FROM wikianalytics.edits ' .
+			'WHERE wiki_id = :wiki_id AND dt >= :week GROUP BY dt ' .
+			'ORDER BY dt DESC LIMIT :days',
+			[ ':wiki_id' => $wgCityId, ':days' => 7, ':week' => $week ]
+		);
 
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->DWStatsDB);
-		(new WikiaSQL())
-			->SELECT("date_format(time_id, '%Y-%m-%d')")->AS_('date')
-			->SUM('edits')->AS_('cnt')
-			->FROM('rollup_wiki_user_events')
-			->WHERE('time_id')->BETWEEN("{$week} 00:00:00", "{$today} 00:00:00")
-			->AND_('wiki_id')->EQUAL_TO($cityID)
-			->AND_('period_id')->EQUAL_TO(DataMartService::PERIOD_ID_DAILY)
-			->GROUP_BY('date WITH ROLLUP')
-			->run($db, function($result) use (&$stats) {
-				while ($row = $result->fetchObject()) {
-					if (!$row->date) {
-						$stats['totals']['edits'] = $row->cnt;
-					} else {
-						$stats[$row->date]['edits'] = $row->cnt;
-					}
-				}
-			});
-
-		wfProfileOut( __METHOD__ );
+		$stats['totals']['edits'] = 0;
+		foreach($res as $row) {
+			// e.g. 2019-06-03 -> 128, 2
+			$stats[$row->dt]['edits'] = $row->total_edits;
+			$stats['totals']['edits'] += $row->total_edits;
+		}
 	}
-
 
 	protected function getDailyPhotos(Array &$stats) {
 		wfProfileIn( __METHOD__ );
