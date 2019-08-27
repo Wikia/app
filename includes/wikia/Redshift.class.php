@@ -1,7 +1,5 @@
 <?php
 
-namespace Hydralytics;
-
 use Wikia\Logger\WikiaLogger;
 
 /**
