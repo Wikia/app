@@ -1549,9 +1549,9 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
-		global $wgFSSwiftServer;
+		global $wgFSSwiftServer, $wgEnabledFileBackend;
 		$bucket = Wikia::getBucket();
-		$repo['backend'] = Wikia::getBackend($bucket);
+		$repo['backend'] = $wgEnabledFileBackend;
 		$repo['zones'] = array (
 			'public' => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
 			'temp'   => array( 'container' => $bucket, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
@@ -1573,12 +1573,12 @@ class Wikia {
 	 * @throws MWException
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+		global $wgEnabledFileBackend;
 		$bucket = Wikia::getBucket();
-		$backendName = Wikia::getBackend( $bucket );
 
 		// modify input parameters
-		$backend = FileBackendGroup::singleton()->get( $backendName );
-		$fname = "mwstore://$backendName/$bucket/images/timeline/$hash";
+		$backend = FileBackendGroup::singleton()->get( $wgEnabledFileBackend );
+		$fname = "mwstore://$wgEnabledFileBackend/$bucket/images/timeline/$hash";
 
 		return true;
 	}
@@ -1593,25 +1593,6 @@ class Wikia {
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		return substr( $path, 0, - 7 );
-	}
-
-	private static function getBackend( $bucket ) {
-		global $wgUseGoogleCloudStorage;
-		$wgUseGcsMigrationBucketRegex =
-			\WikiFactory::getVarValueByName( "wgUseGcsMigrationBucketRegex",
-				static::DEFAULT_WIKI_ID );
-		$wgUseGcsBucketRegex =
-			\WikiFactory::getVarValueByName( "wgUseGcsBucketRegex", static::DEFAULT_WIKI_ID );
-
-		if ( $wgUseGoogleCloudStorage ) {
-			return 'gcs-backend';
-		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsBucketRegex ) ) {
-			return 'gcs-backend';
-		} elseif ( Wikia::textMatchesRegex( $bucket, $wgUseGcsMigrationBucketRegex ) ) {
-			return 'gcs-migration-backend';
-		} else {
-			return 'swift-backend';
-		}
 	}
 
 	private static function textMatchesRegex( $text, $regex ) {
