@@ -12,7 +12,7 @@ class WatchShowHooks {
 		global $wgWatchShowURLMobile, $wgWatchShowButtonLabelMobile, $wgWatchShowURL, $wgWatchShowButtonLabel;
 
 		$wikiVariables['watchShowURL'] = $wgWatchShowURLMobile ?? $wgWatchShowURL ?? 'Watch This Show';
-		$wikiVariables['watchShowButtonLabelMobile'] = $wgWatchShowButtonLabelMobile ?? 'Watch Now';
+		$wikiVariables['watchShowButtonLabelMobile'] = $wgWatchShowButtonLabelMobile ?? $wgWatchShowButtonLabel ?? 'Watch Now';
 
 		return true;
 	}
