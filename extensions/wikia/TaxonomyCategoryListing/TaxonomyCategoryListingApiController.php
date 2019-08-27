@@ -11,6 +11,10 @@ class TaxonomyCategoryListingApiController extends WikiaApiController {
 		$this->categoryListing = $categoryListing ?: new TaxonomyCategoryListing();
 	}
 
+	public function allowsExternalRequests() {
+		return false;
+	}
+
 	public function listCategories() {
 		$categories = $this->categoryListing->getCategoryListing(
 			$this->request->getInt(self::PARAM_MIN_REQ_PAGES),
