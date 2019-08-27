@@ -163,32 +163,13 @@ class Information {
 	}
 
 	/**
-	 * Return daily sessions and page views.
+	 * Return daily page views.
 	 *
-	 * @param int $days
-	 * @return	array	Daily sessions and page views.
+	 * @return	array	Daily page views.
 	 */
-	static public function getDailyTotals($days = self::LAST_DAYS) {
-		global $wgCityId;
-
-		$res = \Redshift::query(
-			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
-			'ORDER BY dt DESC LIMIT :days',
-			[ ':wiki_id' => $wgCityId, ':days' => $days ]
-		);
-
-		$pageviews = [];
-		foreach($res as $row) {
-			// e.g. 2019-06-28 -> 166107
-			$pageviews[ $row->dt ] = $row->views;
-		}
-
-		// sort dates ascending
-		ksort($pageviews);
-
+	static public function getDailyTotals() {
 		return [
-			'pageviews' => $pageviews
+			'pageviews' => \Redshift::getDailyTotals(self::LAST_DAYS)
 		];
 	}
 

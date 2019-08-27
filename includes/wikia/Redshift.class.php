@@ -104,4 +104,32 @@ class Redshift {
 		$sth = null;
 	}
 
+	/**
+	 * Return daily page views.
+	 *
+	 * @param int $days
+	 * @return	array	Daily page views.
+	 */
+	public static function getDailyTotals(int $days) : array {
+		global $wgCityId;
+
+		$res = self::query(
+			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
+			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
+			'ORDER BY dt DESC LIMIT :days',
+			[ ':wiki_id' => $wgCityId, ':days' => $days ]
+		);
+
+		$pageviews = [];
+		foreach($res as $row) {
+			// e.g. 2019-06-28 -> 166107
+			$pageviews[ $row->dt ] = $row->views;
+		}
+
+		// sort dates ascending
+		ksort($pageviews);
+
+		return $pageviews;
+	}
+
 }
