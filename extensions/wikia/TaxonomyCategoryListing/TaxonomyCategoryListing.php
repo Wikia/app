@@ -42,7 +42,7 @@ class TaxonomyCategoryListing {
 
 				$categories = [];
 				foreach ($res as $row) {
-					$categories[$row->category] = $row->num_pages;
+					$categories[$row->category] = intval($row->num_pages);
 				}
 
 				return $categories;
