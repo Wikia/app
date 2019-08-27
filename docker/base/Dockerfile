@@ -143,6 +143,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # update this value to a commit hash whenever this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=0f85961ff26
+ENV WIKIA_BASE_IMAGE_HASH=579dbf189ea
 
 WORKDIR /usr/wikia/slot1/current/src
