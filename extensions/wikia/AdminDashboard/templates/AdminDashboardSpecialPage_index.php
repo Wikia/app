@@ -50,6 +50,17 @@
 							</a>
 						</li>
 					<? } ?>
+					<? if ( $displayAnalytics ) { ?>
+						<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-analytics-tooltip" )
+							->escaped(); ?>">
+							<a href="<?= $urlSpecialAnalytics ?>" class="set" data-tracking="announcements">
+						<span class="representation">
+							<?= DesignSystemHelper::renderSvg('wds-icons-poll', 'wds-icon'); ?>
+						</span>
+								<?= wfMessage("admindashboard-control-analytics-label")->escaped(); ?>
+							</a>
+						</li>
+					<? } ?>
 				</ul>
 			</section>
 			<section class="control-section community">
