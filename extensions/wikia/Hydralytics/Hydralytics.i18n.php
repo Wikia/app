@@ -394,7 +394,6 @@ $messages['pl'] = array(
 	'total_page_views' => 'całkowita liczba odsłon',
 	'action-analytics' => 'access the Wiki Analytics',
 	'device_mobile' => 'Mobile',
-	'device_other' => 'Pozostałe',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Desktop',
 );
