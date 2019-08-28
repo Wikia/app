@@ -94,7 +94,7 @@ class UserPreferencesV2 {
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMessage( 'preferences-v2-redirect-explanation', parse_url( $wgServer, PHP_URL_HOST ) )->plain();
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMessage( 'preferences-v2-redirect-explanation', wfStripProtocol( $wgServer . $wgScriptPath ) )->plain();
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, self::LANDING_PAGE_PROP_NAME );
 		}
 		if ( isset( $defaultPreferences['showAds'] ) ) {

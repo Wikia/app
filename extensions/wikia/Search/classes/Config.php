@@ -60,6 +60,9 @@ class Config {
 	const RANK_SHORTEST = 'shortest';
 	const RANK_LONGEST = 'longest';
 
+	const SCOPE_INTERNAL = 'internal';
+	const SCOPE_CROSS_WIKI = 'cross-wiki';
+
 	/**
 	 * The value we use for pagination
 	 *
@@ -218,6 +221,8 @@ class Config {
 	 * @var int
 	 */
 	protected $minArticleQuality = 0;
+
+	protected $scope = self::SCOPE_INTERNAL;
 
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -1527,6 +1532,21 @@ class Config {
 	 */
 	public function setXwikiArticleThreshold( $xwikiArticleThreshold ) {
 		$this->xwikiArticleThreshold = $xwikiArticleThreshold;
+	}
+
+	public function getScope(): string {
+		return $this->scope;
+	}
+
+	public function setScope( string $scope ): self {
+		$this->scope = $scope;
+
+		return $this;
+	}
+
+	public function isInternalScope(): bool
+	{
+		return $this->scope === self::SCOPE_INTERNAL;
 	}
 
 	/**

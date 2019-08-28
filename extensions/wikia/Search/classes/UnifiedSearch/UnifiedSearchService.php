@@ -55,13 +55,16 @@ class UnifiedSearchService {
 
 	private function callPageSearch( UnifiedSearchPageRequest $request ) {
 		$params = [
-			'wikiId' => $request->getWikiId(),
 			'lang' => $request->getLanguageCode(),
 			'query' => $request->getQuery()->getSanitizedQuery(),
 			'namespace' => $request->getNamespaces(),
 			'page' => $request->getPage(),
 			'limit' => $request->getLimit(),
 		];
+
+		if ($request->isInternalScope()) {
+			$params['wikiId'] = $request->getWikiId();
+		}
 
 		if ( $request->isImageOnly() ) {
 			$params['imageOnly'] = 'true';
@@ -109,11 +112,31 @@ class UnifiedSearchService {
 		}
 	}
 
+	public function newsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ): UnifiedSearchResult {
+		$result = $this->callNewsAndStoriesSearch( $request );
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchNewsAndStoriesResultItem($item);
+			}, $result['results']) );
+	}
+
+	private function callNewsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+		];
+
+		$response = $this->doApiRequest( 'news-and-stories-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
 	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
 		$result = $this->callCommunitySearch( $request );
 
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'], array_map(function ($item) {
+			$result['paging']['current'] + 1, array_map(function ($item) {
 				return new UnifiedSearchCommunityResultItem($item);
 			}, $result['results']) );
 	}

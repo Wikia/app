@@ -42,6 +42,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			this.initVideoTabEvents();
 			this.trackSearchResultsImpression();
+			this.searchScopeEvents();
 
 			$('#search-v2-form').submit( function() {
 				if ( advancedOptions && this.action.indexOf( '#advanced' ) < 0 ) {
@@ -180,6 +181,17 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				$elem.attr('href', modifiedUrl);
 			});
 		},
+		searchScopeEvents: function() {
+			var searchForm = $('#search-v2-form'),
+				scopes = $('.SearchInput .wds-list a');
+
+			scopes.on('click', function(e) {
+				var value = $(e.target).attr('data-value');
+
+				searchForm.find('#search-v2-scope').val(value);
+				searchForm.submit();
+			});
+		}
 	};
 
 

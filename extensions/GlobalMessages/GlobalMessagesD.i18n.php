@@ -7690,7 +7690,9 @@ $messages['ja'] = array(
 関数 "$2" 内
 "$1"
 データベースの返したエラー "$3: $4"',
-	'directorycreateerror' => 'ディレクトリー「$1」を作成できませんでした。',
+	'directorycreateerror' => 'ディレクトリー「$1」を作成できませんでした。
+<br/>
+ [[Special:Contact/bug|バグ報告]]へのご協力をお願いいたします。',
 	'deletedhist' => '削除された履歴',
 	'difference' => '（版間での差分）',
 	'difference-multipage' => '（ページ間の差分）',
@@ -7768,7 +7770,8 @@ $messages['ja'] = array(
 	'djvu_no_xml' => 'DjVuファイルのXMLデータを取得できません',
 	'deletedrevision' => '古い版$1を削除しました',
 	'days' => '$1日',
-	'deletedwhileediting' => "'''警告：'''このページが、編集開始後に削除されました！",
+	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">\'\'\'警告：\'\'\'</span>このページが、編集開始後に削除されました！ 削除理由については[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 削除ログ]をご覧ください。
+</div>',
 	'descending_abbrev' => '降順',
 	'duplicate-defaultsort' => "'''警告：'''既定の並び替えキー「$2」が、その前に書かれている既定の並び替えキー「$1」を上書きしています。",
 	'dberr-header' => '問題発生中です',
@@ -7777,7 +7780,7 @@ $messages['ja'] = array(
 	'dberr-again' => '数分間待った後、もう一度読み込んでください。',
 	'dberr-info' => '（データベースサーバー：$1に接続できませんでした。）',
 	'dberr-usegoogle' => '元に戻るまで、Googleを利用して検索することができます。',
-	'dberr-outofdate' => 'それらが収集した内容は古い可能性があることに注意してください。',
+	'dberr-outofdate' => 'Googleが収集した内容は古い可能性があることに注意してください。',
 	'dberr-cachederror' => 'これは要求されたページをキャッシュした複製であり、古くなっている可能性があります。',
 	'discuss' => 'このページに関する議論ページ',
 	'defaultskin1' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。',

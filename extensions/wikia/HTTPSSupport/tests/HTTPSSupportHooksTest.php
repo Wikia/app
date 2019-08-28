@@ -164,7 +164,7 @@ class HTTPSSupportHooksTest extends TestCase {
 		yield [
 			'http://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
 			WIKIA_ENV_PREVIEW,
-			'https://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
+			'http://ja.starwars.preview.fandom.com/wiki/Yoda?key=value',
 		];
 		yield [
 			'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
@@ -172,9 +172,9 @@ class HTTPSSupportHooksTest extends TestCase {
 			'http://ja.starwars.preview.wikia.com/wiki/Yoda?key=value',
 		];
 		yield [
-			'http://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value' ,
+			'http://starwars.sandbox-s1.fandom.com/wiki/Yoda?key=value' ,
 			WIKIA_ENV_SANDBOX,
-			'https://starwars.sandbox-s2.fandom.com/wiki/Yoda?key=value',
+			'https://starwars.sandbox-s1.fandom.com/wiki/Yoda?key=value',
 		];
 		yield [
 			'http://starwars.mockdevname.fandom-dev.pl/wiki/Yoda?key=value',

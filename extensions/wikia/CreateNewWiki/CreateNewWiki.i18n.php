@@ -691,25 +691,31 @@ $messages['de'] = array(
 	'autocreatewiki-regex-error-comment' => 'im Wiki $1 benutzt (kompletter Text: $2)',
 	'autocreatewiki-protect-reason' => 'Bestandteil der offiziellen Oberfläche',
 	'autocreatewiki-welcometalk-wall-title' => 'Willkommen!',
-	'autocreatewiki-welcometalk-wall' => 'Hallo, ich bin ein Mitglied des Community-Support-Teams von FANDOM. Wir freuen uns sehr, dass {{subst:SITENAME}} jetzt ein Teil der FANDOM-Community ist!
+	'autocreatewiki-welcometalk-wall' => 'Hallo! Es ist super, dass du das {{subst:SITENAME}} erstellt hast! Jetzt, da du und dein neues Wiki Teil der Fandom-Gemeinschaft sind, möchte ich dir einige hilfreiche Tipps und Links geben, damit du mit deinem Wiki gleich durchstarten kannst.
 
-Anfangs scheint es wahnsinnig viel zu tun zu geben, aber wir helfen dir gerne dabei, schnell und problemlos den Einstieg zu finden. Wir haben hier ein paar Tipps und hilfreiche Links zusammengestellt, damit du gleich mit deiner Community durchstarten kannst:
+* Auf unseren [[Hilfe:Übersicht|Hilfeseiten]] kannst du alles über Fandom lernen, zum Beispiel wie man [[Hilfe:Neue_Seite|neue Seiten anlegt]] und man sie anschließend [[Hilfe:VisualEditor|erneut bearbeiten kann]].
+* Besuche die [[w:c:de.community|Community Deutschland]], um über den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] informiert zu bleiben sowie Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen.
+* Benutzt du Discord? Dann würden wir dich gerne auf unseren Fandom/Gamepedia Server einladen! Unter [[Hilfe:Discord]] erfährst du, wie du Teil unserer deutschsprachigen Community auf dem Server werden kannst.
+* Schau dir unter [[Special:WikiFeatures|Spezial:WikiFunktionen]] an, welche Funktionen du in deinem Wiki aktivieren kannst.
+* Im [[Spezial:ThemeDesigner|Theme-Designer]] kannst du das Farbschema und das Design deiner Community anpassen.
+* Wenn du wissen möchtest, wie dein Wiki sich entwickelt, schau dir die Statistiken auf [[Spezial:Analytics]] an.
 
-*Unter [[Spezial:WikiFunktionen|Wiki-Funktionen]] kannst du Spezialfunktionen einschalten, wie zum Beispiel den allseits beliebten Community-Chat.
-*Im [[Spezial:ThemeDesigner|Theme-Designer]] kannst du das Farbschema und das Design deiner Community anpassen.
-*Schau auch mal in der [[w:c:de.community|Community Deutschland]] vorbei! Hier findest du den [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] und kannst in unserem [[w:c:de.community:Spezial:Forum|Community-Forum]] Fragen stellen.
-*Außerdem kannst du unsere [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] durchstöbern, um zu sehen, was du auf FANDOM alles machen kannst oder kurz in der [[w:c:de.community:FANDOM-Universität|FANDOM-Universität]] Halt machen und dir ein paar hilfreiche Videotutorials ansehen.
+All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden! Solltest du weitere Hilfe benötigen, schau im Community-Wiki oder auf Discord vorbei und wir helfen dir gerne weiter.
 
-Viel Spaß!',
+Viele Grüße
+
+[[User:$2|$3]]',
 	'autocreatewiki-welcometalk' => '==Willkommen!==
 
-Hallo! Wir freuen uns, dass {{subst:SITENAME}} jetzt auch Teil der FANDOM-Gemeinschaft ist! Es gibt noch einiges zu tun, deshalb sind hier ein paar hilfreiche Tipps und Links, damit du mit deinem Wiki gleich durchstarten kannst. 
+Hallo! Es ist super, dass du das {{subst:SITENAME}} erstellt hast! Jetzt, da du und dein neues Wiki Teil der Fandom-Gemeinschaft sind, möchte ich dir einige hilfreiche Tipps und Links geben, damit du mit deinem Wiki gleich durchstarten kannst.
 
-* Schau dir unter [[Special:WikiFeatures|Spezial:WikiFunktionen]] an, welche Funktionen, wie zum Beispiel den Chat oder die Herausforderungen, du in deinem Wiki aktivieren kannst.
-* Besuche die [[w:c:de.community|Community Deutschland]], um über den [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] informiert zu bleiben, Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen, in der [[w:c:de.community:FANDOM-Universität|FANDOM-Universität]] Videos anzusehen oder mit anderen Mitgliedern der FANDOM-Community zu chatten.
-* Außerdem kannst du alles zur Nutzung von FANDOM auf unseren [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] lernen.
+* Auf unseren [[Hilfe:Übersicht|Hilfeseiten]] kannst du alles über Fandom lernen, zum Beispiel wie man [[Hilfe:Neue_Seite|neue Seiten anlegt]] und man sie anschließend [[Hilfe:VisualEditor|erneut bearbeiten kann]].
+* Besuche die [[w:c:de.community|Community Deutschland]], um über den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] informiert zu bleiben sowie Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen.
+* Benutzt du Discord? Dann würden wir dich gerne auf unseren Fandom/Gamepedia Server einladen! Unter [[Hilfe:Discord]] erfährst du, wie du Teil unserer deutschsprachigen Community auf dem Server werden kannst.
+* Schau dir unter [[Special:WikiFeatures|Spezial:WikiFunktionen]] an, welche Funktionen du in deinem Wiki aktivieren kannst.
+* Wenn du wissen möchtest, wie dein Wiki sich entwickelt, schau dir die Statistiken auf [[Special:Analytics]] an.
 
-All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden!
+All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden! Solltest du weitere Hilfe benötigen, schau im Community-Wiki oder auf Discord vorbei und wir helfen dir gerne weiter.
 
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />

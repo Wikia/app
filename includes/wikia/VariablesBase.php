@@ -9003,4 +9003,4 @@ $wgCircuitBreakerType = 'noop';
 /**
  * @var $wgEnableHydralyticsExt
  */
-$wgEnableHydralyticsExt = false;
+$wgEnableHydralyticsExt = true;

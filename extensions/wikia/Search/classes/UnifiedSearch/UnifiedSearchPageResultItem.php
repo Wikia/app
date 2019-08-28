@@ -14,6 +14,7 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 	private $url;
 	private $ns;
 	private $hub_s;
+	private $thumbnail;
 
 	public function __construct(array $value) {
 		$this->pageid = $value['pageId'];
@@ -21,7 +22,8 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 		$this->text = $value['content'];
 		$this->url = $value['url'];
 		$this->ns = $value['namespace'];
-		$this->hub_s = $value['hub'];
+		$this->hub_s = $value['hub'] ?? null;
+		$this->thumbnail = $value['thumbnail'] ?? null;
 	}
 
 	public function getText( $field = 'text', $wordLimit = null ) {
@@ -35,14 +37,6 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 			$textAsString );
 
 		return $textAsString;
-	}
-
-	public function getThumbnailHtml() {
-		try {
-			return (new MediaWikiService())->getThumbnailHtml( $this['pageid'] );
-		} catch ( \Exception $e ) {
-			return '';
-		}
 	}
 
 	public function findFilePrefix( $title, $namespace ) {

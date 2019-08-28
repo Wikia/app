@@ -121,22 +121,22 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'emailext-desc' => 'メール配信に関する拡張機能',
-	'emailext-anonymous-editor' => 'FANDOMユーザー',
+	'emailext-anonymous-editor' => 'Fandomユーザー',
 	'emailext-no-reply-name' => '送信専用',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
-	'emailext-recipient-notice' => 'このメールはFANDOMから $1 さん宛に送信されました。',
+	'emailext-recipient-notice' => 'Fandomから$1さん宛にメールを送信しました',
 	'emailext-update-frequency' => '配信メールの種類や頻度は、[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 個人設定] で変更できます。',
-	'emailext-unsubscribe' => 'FANDOMからすべての配信メールを停止するには [$1 こちら] をクリックしてください。',
+	'emailext-unsubscribe' => 'Fandomからのメール配信をすべて停止するには、[$1 こちら]をクリックしてください。',
 	'emailext-unfollow-text' => 'このような更新情報に関するメールを受け取りたくない場合は、[$1 こちら]をクリックして{{SITENAME}}のページ「$2」のフォローを解除してください。',
 	'emailext-salutation' => '$1さん',
-	'group-translator-member' => 'FANDOM翻訳者',
-	'group-translator' => 'FANDOM翻訳者',
+	'group-translator-member' => 'Fandom翻訳者',
+	'group-translator' => 'Fandom翻訳者',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/explore-ja',
 	'emailext-forumreply-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、[$1 こちら]をクリックして[{{SERVERCANONICAL}} {{SITENAME}}]の[$2 このスレッド]のフォローを解除してください。',
 	'right-access-sendemail' => 'Special:SendEmailへのアクセスを許可する',
 	'emailext-mobile-application-footer-1' => 'アプリをダウンロードすれば、いつでもどこでもお気に入りのコミュニティに簡単にアクセスできます。',
-	'emailext-mobile-application-footer-2' => 'このコミュニティはアプリ版も公開されています！',
+	'emailext-mobile-application-footer-2' => 'Fandomコミュニティアプリも公開されています！',
 );
 
 $messages['ko'] = array(

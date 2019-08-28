@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'google-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Google.",
 	'twitch-connect-account-connected' => 'Congratulations! Your FANDOM and Twitch accounts are now connected.',
 	'twitch-connect-account-disconnected' => 'Your Twitch account has been successfully disconnected from your FANDOM account.',
-	'twitch-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Google.",
+	'twitch-connect-unknown-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your FANDOM account and have given FANDOM permission to connect with Twitch.",
 );
 
 $messages['qqq'] = array(

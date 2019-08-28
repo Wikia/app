@@ -47,7 +47,7 @@
 							<?= wfMessage( 'recirculation-discussions-in' )->inContentLanguage()->escaped() ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['forumName'] ) ?></div>
 						<div class="mcf-card-discussions__counters">
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote', 'wds-icon wds-icon-tiny' ) ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-heart', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['upvoteCount'] ) ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-comment', 'wds-icon wds-icon-tiny' ) ?>
 							<?= Sanitizer::escapeHtmlAllowEntities( $post->meta['postCount'] ) ?>

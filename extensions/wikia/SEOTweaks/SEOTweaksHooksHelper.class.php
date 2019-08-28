@@ -361,4 +361,47 @@ class SEOTweaksHooksHelper {
 
 		return true;
 	}
+
+	protected static function findLanguagePath( array $parsedUrl ): string {
+		if ( !array_key_exists( 'path', $parsedUrl ) ) {
+			return '';
+		}
+
+		$path = $parsedUrl['path'];
+		if ( strlen( $path ) === 0 ) {
+			return '';
+		}
+
+		$langCode = explode( '/', $path )[1];
+		$languages = Language::getLanguageNames();
+		if ( isset( $languages[$langCode] ) ) {
+			return '/' . $langCode;
+		}
+
+		return '';
+	}
+
+	public static function onLinkerMakeExternalLink( string &$url, string &$text, bool &$link, array &$attribs ): bool {
+		$parsed = parse_url( $url );
+
+
+		if ( $parsed !== false ) {
+			$host = $parsed['host'];
+			$path = self::findLanguagePath( $parsed );
+			if ( $path !== '' ) {
+				$parsed['path'] = substr( $parsed['path'], strlen( $path ) );
+			}
+			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host ) . $path );
+			if ( $city_id ) {
+				$primaryCityUrl = parse_url( WikiFactory::cityIDtoUrl( $city_id ) );
+				$parsed['host'] = $primaryCityUrl['host'];
+				if ( isset( $primaryCityUrl['path'] ) ) {
+					$parsed['path'] = $primaryCityUrl['path'] . ( $parsed['path'] ?? '' );
+				}
+				$url = http_build_url( '', $parsed );
+			}
+		}
+
+		return true;
+	}
 }

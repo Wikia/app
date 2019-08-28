@@ -134,7 +134,8 @@ class WikiaRobots {
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgRequest,
 			   $wgRobotsTxtCustomRules,
-			   $wgWikiaEnvironment;
+			   $wgWikiaEnvironment,
+			   $wgForcedNoindexEnabled;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' );
@@ -149,7 +150,7 @@ class WikiaRobots {
 		// TODO: reverse the logic
 		// Have $wgRobotsTxtCustomRules['allowNamespaces'] which removes them from
 		// $this->namespacesToBlock
-		if ( isset( $wgRobotsTxtCustomRules['disallowNamespace'] ) ) {
+		if ( !$wgForcedNoindexEnabled && isset( $wgRobotsTxtCustomRules['disallowNamespace'] ) ) {
 			$this->blockedNamespaces = array_merge(
 				$this->blockedNamespaces,
 				(array) $wgRobotsTxtCustomRules['disallowNamespace']
@@ -163,12 +164,13 @@ class WikiaRobots {
 	 */
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSitemapXmlExt,
-		       $wgRobotsTxtBlockedWiki,
-		       $wgSitemapXmlExposeInRobots,
-		       $wgServer,
-		       $wgScriptPath,
-		       $wgRequest,
-		       $wgCityId;
+			   $wgRobotsTxtBlockedWiki,
+			   $wgSitemapXmlExposeInRobots,
+			   $wgServer,
+			   $wgScriptPath,
+			   $wgRequest,
+			   $wgCityId,
+			   $wgForcedNoindexEnabled;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -183,21 +185,23 @@ class WikiaRobots {
 				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
 			}
+			if( !$wgForcedNoindexEnabled ){
+				// Block namespaces
+				foreach ( $this->blockedNamespaces as $ns ) {
+					$robots->addDisallowedPaths(
+						$this->pathBuilder->buildPathsForNamespace( $ns )
+					);
+				}
 
-			// Block namespaces
-			foreach ( $this->blockedNamespaces as $ns ) {
-				$robots->addDisallowedPaths(
-					$this->pathBuilder->buildPathsForNamespace( $ns )
-				);
+				// Block additional paths
+				$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
+
+				// Block params
+				foreach ( $this->blockedParams as $param ) {
+					$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
+				}
 			}
 
-			// Block additional paths
-			$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
-
-			// Block params
-			foreach ( $this->blockedParams as $param ) {
-				$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
-			}
 
 			// Allow specific paths
 			$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ) );
