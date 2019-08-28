@@ -99,7 +99,7 @@ class UserApiController extends WikiaApiController {
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 		// We use Latin-1 encoding to connect to our databases, but the column we're querying here uses the utf8mb4 charset.
-// Override the client character set to avoid encoding issues
+		// Override the client character set to avoid encoding issues
 		$dbr->query( 'SET NAMES utf8mb4' );
 
 		$res = $dbr->select(
