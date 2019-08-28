@@ -484,13 +484,6 @@ EOL""")
              booleanParam(name: 'force', value: true)
           ],
           wait: false
-        build job: 'mediawiki-deploy-preview',
-          parameters: [
-             string(name: 'source', value: 'latest'),
-             string(name: 'datacenter', value: 'res'),
-             booleanParam(name: 'force', value: true)
-          ],
-          wait: false
       } else {
         println('Dry run: mediawiki-deploy-preview')
       }
@@ -502,13 +495,6 @@ EOL""")
           parameters: [
              string(name: 'source', value: 'latest'),
              string(name: 'datacenter', value: 'sjc'),
-             booleanParam(name: 'force', value: true)
-          ],
-          wait: false
-        build job: 'mediawiki-deploy-verify',
-          parameters: [
-             string(name: 'source', value: 'latest'),
-             string(name: 'datacenter', value: 'res'),
              booleanParam(name: 'force', value: true)
           ],
           wait: false
