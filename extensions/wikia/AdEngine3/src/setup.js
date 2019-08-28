@@ -1,4 +1,3 @@
-import * as Cookies from 'js-cookie';
 import {
 	AdEngine,
 	context,
@@ -17,9 +16,7 @@ import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 
-const fallbackInstantConfig = {
-	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
-};
+const fallbackInstantConfig = {};
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
