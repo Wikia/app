@@ -251,7 +251,7 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if (params.source == 'new_release') {
-              nextConfigTag = createTag(currentConfigTag, sh(script: 'git describe --abbrev=0 --always, returnStdout: true).trim(), true)
+              nextConfigTag = createTag(currentConfigTag, sh(script: 'git describe --abbrev=0 --always', returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag, "", false)
