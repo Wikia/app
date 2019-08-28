@@ -8937,6 +8937,7 @@ $wgIncludeClosedWikiHandler = false;
  * @var string
  */
 $wgWatchShowURL = '';
+$wgWatchShowURLMobile = '';
 
 /**
  * Enables EditDraftSaving extension
