@@ -11,7 +11,7 @@ class WatchShowHooks {
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgWatchShowURLMobile, $wgWatchShowButtonLabelMobile, $wgWatchShowURL, $wgWatchShowButtonLabel;
 
-		$wikiVariables['watchShowURL'] = $wgWatchShowURLMobile ?? $wgWatchShowURL ?? 'Watch This Show';
+		$wikiVariables['watchShowURL'] = !empty($wgWatchShowURLMobile) ? $wgWatchShowURLMobile : $wgWatchShowURL;
 		$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabelMobile ?? $wgWatchShowButtonLabel ?? 'Watch Now';
 
 		return true;
