@@ -17,6 +17,10 @@ $messages['en'] = array(
 	'most_visited_files' => 'Most Visited Files',
 	'staff_contact' => 'Staff Contact',
 	'desktop_vs_mobile' => 'Desktop vs. Mobile Sessions',
+	'device_mobile' => 'Mobile',
+	'device_desktop' => 'Desktop',
+	'device_tablet' => 'Tablet',
+	'device_other' => 'Other',
 	'recent_changes' => 'Recent Changes',
 	'help_links' => 'Help',
 	'browser_breakdown' => 'Browser Sessions Breakdown',
@@ -27,7 +31,7 @@ $messages['en'] = array(
 	'top_search_terms' => 'Internal Top Search Terms',
 	'search_rank' => 'Search rank',
 	'search_term' => 'Search term',
-	'analytics_report_generated' => 'Report generated $1',
+	'analytics_report_generated' => 'Report generated $1, all data are aggregated according to UTC timezone',
 	'analytics_confidential' => 'Information on this page is shared as a courtesy for our administrators and should not be re-shared without permission.',
 	'view_more' => 'View more',
 	'wiki_manager' => 'Wiki Managers',
@@ -54,6 +58,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'device_other' => 'A label for "Other" item on the devices list',
 );
 
 $messages['de'] = array(
@@ -348,6 +353,7 @@ $messages['pl'] = array(
 	'view_more' => 'Zobacz więcej',
 	'search_term' => 'Fraza',
 	'browser_breakdown' => 'Sesje według przeglądarki',
+	'device_other' => 'Pozostałe',
 	'active_editors' => 'Aktywni edytorzy',
 	'logged_in_out' => 'Edycje zalogowanych vs niezalogowanych',
 	'recent_changes' => 'Ostatnie zmiany',
