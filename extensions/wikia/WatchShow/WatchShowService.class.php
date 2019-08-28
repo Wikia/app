@@ -8,8 +8,8 @@ class WatchShowService extends WikiaService {
 		$this->response->setValues(
 			[
 				'url' => $wgWatchShowURL,
-				'callToAction' => $wgWatchShowCTA ?? 'Watch This Show',
-				'buttonLabel' => $wgWatchShowButtonLabel ?? 'Watch Now',
+				'callToAction' => !empty( $wgWatchShowCTA ) ? $wgWatchShowCTA : 'Watch This Show',
+				'buttonLabel' => !empty( $wgWatchShowButtonLabel ) ? $wgWatchShowButtonLabel : 'Watch Now',
 			]
 
 		);
