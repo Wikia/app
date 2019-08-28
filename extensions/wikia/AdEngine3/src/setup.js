@@ -1,3 +1,4 @@
+import * as Cookies from 'js-cookie';
 import {
 	AdEngine,
 	context,
