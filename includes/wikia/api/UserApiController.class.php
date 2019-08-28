@@ -10,7 +10,6 @@ class UserApiController extends WikiaApiController {
 	const AVATAR_DEFAULT_SIZE = 100;
 	const USER_LIMIT = 100;
 
-	const USER_QUERY_BY_NAME_MIN_LENGTH = 3;
 	const USER_QUERY_BY_NAME_MAX_LENGTH = 255;
 	const USER_QUERY_BY_NAME_DEFAULT_LIMIT = 6;
 	const USER_QUERY_BY_NAME_MAX_LIMIT = 20;
@@ -95,11 +94,6 @@ class UserApiController extends WikiaApiController {
 
 		if ( empty( $query ) || mb_strlen( $query ) > self::USER_QUERY_BY_NAME_MAX_LENGTH ) {
 			throw new InvalidParameterApiException( 'query' );
-		}
-
-		if ( mb_strlen( $query ) < self::USER_QUERY_BY_NAME_MIN_LENGTH ) {
-			$this->response->setData( [] );
-			return;
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
