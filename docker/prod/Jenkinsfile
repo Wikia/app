@@ -33,7 +33,7 @@ def bump_major(String currentVersion) {
   def currentVersionTokens = currentVersion.tokenize('.')
   def nextMajorVersion = (currentVersionTokens[0].toInteger() + 1).toString()
 
-  return nextMajorVersion + ".001"
+  return nextMajorVersion
 }
 
 // Creates new tag if some commits were made to a release branch
@@ -251,7 +251,7 @@ node("docker-daemon-big") {
               sh(script: "git checkout ${nextConfigTag}")
               println("Source: ${params.source}; skip creating a tag")
             } else if (params.source == 'new_release') {
-              nextConfigTag = createTag(currentConfigTag, sh(script: 'git tag | egrep *release* | tail -n1', returnStdout: true).trim(), true)
+              nextConfigTag = createTag(currentConfigTag, sh(script: 'git describe --abbrev=0 --always, returnStdout: true).trim(), true)
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
               nextConfigTag = createTag(currentConfigTag, "", false)
@@ -475,33 +475,6 @@ EOL""")
       }
     }
 
-    stage('Deploy preview') {
-      if (!params.dry_run && params.source == 'new_release') {
-        build job: 'mediawiki-deploy-preview',
-          parameters: [
-             string(name: 'source', value: 'latest'),
-             string(name: 'datacenter', value: 'sjc'),
-             booleanParam(name: 'force', value: true)
-          ],
-          wait: false
-      } else {
-        println('Dry run: mediawiki-deploy-preview')
-      }
-    }
-
-    stage('Deploy verify') {
-      if (!params.dry_run && params.source == 'new_release') {
-        build job: 'mediawiki-deploy-verify',
-          parameters: [
-             string(name: 'source', value: 'latest'),
-             string(name: 'datacenter', value: 'sjc'),
-             booleanParam(name: 'force', value: true)
-          ],
-          wait: false
-      } else {
-        println('Dry run: mediawiki-deploy-verify')
-      }
-    }
 
   } catch (e) {
     // If there was an exception thrown, the build failed
