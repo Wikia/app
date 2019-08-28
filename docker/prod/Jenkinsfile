@@ -499,7 +499,7 @@ EOL""")
           ],
           wait: false
       } else {
-        println('Dry run: mediawiki-deploy-preview')
+        println('Dry run: mediawiki-deploy-verify')
       }
     }
 
