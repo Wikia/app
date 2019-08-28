@@ -33,7 +33,7 @@ async function updateWadContext() {
 	// BlockAdBlock detection
 	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
 
-	context.set('options.wad.enabled', instantConfig.isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
+	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
