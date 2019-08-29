@@ -16,7 +16,7 @@ import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
-import { fallbackInstantConfig } from './fallback-config';
+import * as fallbackInstantConfig from './fallback-config.json';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
