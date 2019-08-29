@@ -8,7 +8,7 @@ import {
 	utils,
 	universalAdPackage,
 } from '@wikia/ad-engine';
-import { navbarManager } from '../templates/navbar-updater';
+import { getNavbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
 import { recRunner } from '../wad/rec-runner';
@@ -249,7 +249,7 @@ function tryPushNextSlot() {
 export function rotateIncontentBoxad(slotName) {
 	nextSlotName = slotName;
 	recirculationElement = document.getElementById('recirculation-rail');
-	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - navbarManager.getHeight();
+	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarManager().getHeight();
 	refreshInfo.refreshDelay = context.get('custom.fmrRotatorDelay') || refreshInfo.refreshDelay;
 	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
