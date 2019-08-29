@@ -1,4 +1,15 @@
-import {NavbarManager} from "@wikia/ad-engine";
+import { NavbarManager } from "@wikia/ad-engine";
 
-export const navbarElement = document.getElementById('globalNavigation');
-export const navbarManager = new NavbarManager(navbarElement);
+let navbarManager = null;
+
+export function getNavbarElement() {
+	return document.getElementById('globalNavigation');
+}
+
+export function getNavbarManager() {
+	if (!navbarManager) {
+		navbarManager = new NavbarManager(getNavbarElement());
+	}
+
+	return navbarManager;
+}
