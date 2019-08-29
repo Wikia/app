@@ -112,6 +112,26 @@ class UnifiedSearchService {
 		}
 	}
 
+	public function newsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ): UnifiedSearchResult {
+		$result = $this->callNewsAndStoriesSearch( $request );
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchNewsAndStoriesResultItem($item);
+			}, $result['results']) );
+	}
+
+	private function callNewsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+		];
+
+		$response = $this->doApiRequest( 'news-and-stories-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
 	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
 		$result = $this->callCommunitySearch( $request );
 

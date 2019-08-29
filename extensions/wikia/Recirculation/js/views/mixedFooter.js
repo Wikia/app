@@ -100,7 +100,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function setupTracking() {
-		var shouldSendAdditionalData = window.Wikia.AbTest.inGroup('RECOMMENDATION_SERVICE', 'EXPERIMENTAL');
 		var $sponsoredItem = $mixedContentFooter.find("[data-tracking*='sponsored-item']");
 
 		if ($sponsoredItem.length) {
@@ -115,7 +114,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				href = $this.attr('href'),
 				additionalParams;
 
-			if (shouldSendAdditionalData && labels.indexOf('wiki-article') !== -1) {
+			if (labels.indexOf('wiki-article') !== -1) {
 				additionalParams = {
 					recommendation_request_id: recommendedContent.getRequestId(),
 					item_id: $this.attr('data-item-id'),

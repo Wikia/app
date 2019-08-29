@@ -8937,6 +8937,7 @@ $wgIncludeClosedWikiHandler = false;
  * @var string
  */
 $wgWatchShowURL = '';
+$wgWatchShowURLMobile = '';
 
 /**
  * Enables EditDraftSaving extension
@@ -8998,9 +8999,3 @@ $wgArticleExporterExchange = [
  * @var $wgEnableHydralyticsExt
  */
 $wgEnableHydralyticsExt = true;
-
-/**
- * @var $wgShowTwitchAuthButton
- */
-$wgShowTwitchAuthButton = false;
-

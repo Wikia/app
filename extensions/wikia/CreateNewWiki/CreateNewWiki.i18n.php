@@ -703,6 +703,7 @@ $messages['de'] = array(
 All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden! Solltest du weitere Hilfe benötigen, schau im Community-Wiki oder auf Discord vorbei und wir helfen dir gerne weiter.
 
 Viele Grüße
+
 [[User:$2|$3]]',
 	'autocreatewiki-welcometalk' => '==Willkommen!==
 

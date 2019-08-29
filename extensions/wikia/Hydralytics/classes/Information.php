@@ -95,7 +95,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT country, COUNT(*) as views FROM wikianalytics.sessions ' .
+			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -121,7 +121,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id AND url <> \'/\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -147,7 +147,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -172,7 +172,7 @@ class Information {
 		global $wgCityId;
 
 		$res = Redshift::query(
-			'SELECT dt, COUNT(*) AS views FROM wikianalytics.pageviews ' .
+			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
@@ -206,7 +206,7 @@ class Information {
 
 		// by browser
 		$res = Redshift::query(
-			'SELECT browser, COUNT(*) AS views FROM wikianalytics.sessions ' .
+			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -220,7 +220,7 @@ class Information {
 
 		// by device type (filter out bots)
 		$res = Redshift::query(
-			'SELECT device_type, COUNT(*) AS views FROM wikianalytics.sessions ' .
+			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -228,8 +228,12 @@ class Information {
 
 		$devices = [];
 		foreach($res as $row) {
+			// DE-4477 | Make translatable all the legends in the diagrams on WikiAnalytics
+			// {"mobile":293653,"desktop":292903,"tablet":120593,"other":1486}
+			$typeLabel = wfMessage('device_' . $row->device_type )->text();
+
 			// e.g. desktop -> 295008
-			$devices[ $row->device_type ] = $row->views;
+			$devices[ $typeLabel ] = $row->views;
 		}
 
 		return ["browser" => $browsers, "deviceCategory" => $devices];

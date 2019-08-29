@@ -1319,20 +1319,6 @@ $wgAdDriverRepeatMobileIncontentCountries = null;
 $wgAdDriverRepeatMobileIncontentExtendedCountries = null;
 
 /**
- * @name $wgAdDriverMobileWikiAE3NativeSearchCountries
- * List of countries where incontent native is displayed on mobile wiki search page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverMobileWikiAE3NativeSearchCountries = null;
-
-/**
- * @name $wgAdDriverNativeSearchDesktopCountries
- * List of countries where incontent native is displayed on app search page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverNativeSearchDesktopCountries = null;
-
-/**
  * @name $wgAdDriverMobileWikiAE3SearchCountries
  * List of countries where sections TLB is displayed on mobile wiki search page.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1851,24 +1837,6 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * If enabled, file storage operations will be logged.
  */
 $wgLogFileStorageOperations = false;
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3008
- * If enabled, Google Cloud Storage will be used for storing files.
- */
-$wgUseGoogleCloudStorage = false;
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3033
- * If provided, a multi write will be used for storing files for all wikis with buckets matching the regex.
- */
-$wgUseGcsMigrationBucketRegex = '';
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3033
- * If provided, Google Cloud Storage will be used for storing files for all wikis with buckets matching the regex.
- */
-$wgUseGcsBucketRegex = '';
 
 /**
  * Google Cloud Storage settings. The default settings are for production.
