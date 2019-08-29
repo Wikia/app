@@ -16,10 +16,7 @@ import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
-
-const fallbackInstantConfig = {
-	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
-};
+import { fallbackInstantConfig } from './fallback-config';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
