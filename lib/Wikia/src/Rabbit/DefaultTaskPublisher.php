@@ -70,7 +70,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 			return;
 		}
 
-		$this->circuitBreaker->AssertOperationAllowed();
+		$this->circuitBreaker->assertOperationAllowed();
 
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
@@ -95,7 +95,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 			$channel->publish_batch();
 			$channel->wait_for_pending_acks( AsyncTaskList::ACK_WAIT_TIMEOUT_SECONDS );
-			$this->circuitBreaker->SetOperationStatus( true );
+			$this->circuitBreaker->setOperationStatus( true );
 		} catch ( AMQPExceptionInterface $e ) {
 			$this->logError( $e );
 		} catch ( \ErrorException $e ) {
@@ -104,7 +104,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function logError( \Exception $e ) {
-		$this->circuitBreaker->SetOperationStatus( false );
+		$this->circuitBreaker->setOperationStatus( false );
 		$this->error( 'Failed to publish background task', [
 			'exception' => $e,
 		] );

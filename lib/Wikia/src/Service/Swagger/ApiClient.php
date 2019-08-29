@@ -50,7 +50,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$response = $exception = null;
 		$code = 200;
 
-		$this->circuitBreaker->AssertOperationAllowed();
+		$this->circuitBreaker->assertOperationAllowed();
 
 		// adding internal headers
 		WikiaTracer::instance()->setRequestHeaders( $headerParams, true );
@@ -85,7 +85,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			$level = 'debug';
 		}
 
-		$this->circuitBreaker->SetOperationStatus( $code < 500 && !$exception );
+		$this->circuitBreaker->setOperationStatus( $code < 500 && !$exception );
 
 		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
 		if ( $this->logSampler->shouldSample() || ( $code >= 500 ) ) {

@@ -33,7 +33,6 @@ class CircuitBreakerOpen extends ErrorException {
 	 * CircuitBreakerOpen constructor.
 	 * @param string $serviceName
 	 * @param int $code
-	 * @param Exception|null $previous
 	 */
 	public function __construct( string $serviceName, int $code = 0 ) {
 		$this->serviceName = $serviceName;

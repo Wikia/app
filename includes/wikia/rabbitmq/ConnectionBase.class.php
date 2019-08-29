@@ -45,12 +45,12 @@ class ConnectionBase {
 			);
 
 			$channel->wait_for_pending_acks( self::ACK_WAIT_TIMEOUT_SECONDS );
-			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->SetOperationStatus( true );
+			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->setOperationStatus( true );
 		} catch ( AMQPExceptionInterface $e ) {
 			ServiceFactory::instance()
 				->rabbitFactory()
 				->getCircuitBreaker()
-				->SetOperationStatus( false );
+				->setOperationStatus( false );
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
 				'routing_key' => $routingKey,
@@ -61,7 +61,7 @@ class ConnectionBase {
 				'routing_key' => $routingKey,
 			] );
 		} catch ( \ErrorException $e ) {
-			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->SetOperationStatus( false );
+			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->setOperationStatus( false );
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
 				'routing_key' => $routingKey,

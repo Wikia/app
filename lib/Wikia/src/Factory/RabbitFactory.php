@@ -71,7 +71,7 @@ class RabbitFactory extends AbstractFactory {
 		global $wgTaskBrokerDisabled;
 
 		// PLATFORM-1740: Do not publish tasks if the broker is disabled
-		if ( $wgTaskBrokerDisabled || !$this->circuitBreaker->OperationAllowed() ) {
+		if ( $wgTaskBrokerDisabled || !$this->circuitBreaker->operationAllowed() ) {
 			return new NullTaskPublisher();
 		}
 

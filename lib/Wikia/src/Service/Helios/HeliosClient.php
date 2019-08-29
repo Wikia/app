@@ -73,7 +73,7 @@ class HeliosClient {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		$this->circuitBreaker->AssertOperationAllowed();
+		$this->circuitBreaker->assertOperationAllowed();
 
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
@@ -152,7 +152,7 @@ class HeliosClient {
 		}
 
 		$this->status = $request->getStatus();
-		$this->circuitBreaker->SetOperationStatus( $this->status < 500 );
+		$this->circuitBreaker->setOperationStatus( $this->status < 500 );
 
 		return $this->processResponseOutput( $request );
 	}

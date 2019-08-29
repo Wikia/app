@@ -60,7 +60,7 @@ class ConnectionManager {
 	 * @throws CircuitBreakerOpen
 	 */
 	public function getChannel( string $vHost ): AMQPChannel {
-		$this->circuitBreaker->AssertOperationAllowed();
+		$this->circuitBreaker->assertOperationAllowed();
 
 		if ( !isset( $this->channels[$vHost] ) ) {
 			$this->channels[$vHost] = $this->getConnection( $vHost )->channel();
@@ -79,7 +79,7 @@ class ConnectionManager {
 	 * @throws CircuitBreakerOpen
 	 */
 	private function getConnection( string $vHost ): AbstractConnection {
-		$this->circuitBreaker->AssertOperationAllowed();
+		$this->circuitBreaker->assertOperationAllowed();
 
 		if ( !isset( $this->connections[$vHost] ) ) {
 			$this->connections[$vHost] = new AMQPStreamConnection(
