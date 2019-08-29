@@ -1072,24 +1072,7 @@ class Wikia {
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
 		global $wgDefaultRobotPolicy;
 
-		$policy = '';
-
-		if ( !Wikia::isProductionEnv() ) {
-			$policy = $wgDefaultRobotPolicy;
-		}
-
-		$stagingHeader = $request->getHeader('X-Staging');
-
-		if( !empty($stagingHeader) ) {
-			// we've got special cases like *.externaltest.wikia.com and *.showcase.wikia.com aliases:
-			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
-			// those cases for backend look like production,
-			// therefore we don't want to base only on environment variables
-			// but on HTML headers as well, see:
-			// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
-			$policy = 'noindex,nofollow';
-		}
-		return $policy;
+		return $wgDefaultRobotPolicy;
 	}
 
 	/**
