@@ -31,7 +31,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 		$memCached->setOptions( $this->configure() );
 
 		foreach ( $wgMemCachedServers as $weight => $memCachedServer ) {
-			$parts = preg_split('/:/', $memCachedServer, 2);
+			$parts = preg_split( '/:/', $memCachedServer, 2 );
 			$memCached->addServer( $parts[0], $parts[1] );
 		}
 
