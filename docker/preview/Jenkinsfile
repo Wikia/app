@@ -440,25 +440,39 @@ EOL""")
     }
 
     stage('Create selenium-tests preview branch') {
-      build 'create-preview-test-run'
+        if (!params.dry_run) {
+            build job: 'tag-jira-tickets', parameters: [
+                      string(name: 'app_name', value: 'app'),
+                      string(name: 'env', value: 'preview'),
+                      string(name: 'previous_release', value: currentAppTag),
+                      string(name: 'current_release', value: nextAppReleaseTag),
+                      [$class: 'LabelParameterValue', name: 'node', label: 'linux']
+                  ],
+                  wait: false
+        } else {
+            println("Dry run: build job: 'tag-jira-tickets'")
+        }
     }
 
     stage('Tag Jira tickets') {
-      build job: 'tag-jira-tickets', parameters: [
-          string(name: 'app_name', value: 'app'),
-          string(name: 'env', value: 'preview'),
-          string(name: 'previous_release', value: currentAppTag),
-          string(name: 'current_release', value: nextAppReleaseTag),
-          [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-      ],
-      wait: false
+        if (!params.dry_run) {
+            build 'create-preview-test-run'
+        } else {
+            println("Dry run: build 'create-preview-test-run'")
+        }
+
     }
 
     stage('Trigger tests') {
-      build job: 'app-preview-push-event', parameters: [
-         string(name: 'release', value: nextAppReleaseTag),
-         string(name: 'datacenter', value: 'sjc')],
-         wait: false
+        if (!params.dry_run) {
+            build job: 'app-preview-push-event', parameters: [
+                     string(name: 'release', value: nextAppReleaseTag),
+                     string(name: 'datacenter', value: 'sjc')],
+                     wait: false
+        } else {
+            println("Dry run: build job: 'app-preview-push-event'")
+        }
+
     }
 
   } catch (e) {
