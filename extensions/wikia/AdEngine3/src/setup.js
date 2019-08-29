@@ -114,14 +114,14 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
 
-	if (instantConfig.get('icUnstickHiViLeaderboardTimeout')) {
+	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',
 			true,
 		);
 		context.set(
 			'options.unstickHiViLeaderboardTimeout',
-			instantConfig.get('icUnstickHiViLeaderboardTimeout'),
+			instantConfig.get('icHiViLeaderboardUnstickTimeout'),
 		);
 	}
 
