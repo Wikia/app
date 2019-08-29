@@ -439,28 +439,6 @@ EOL""")
 
     }
 
-    stage('Create selenium-tests verify branch') {
-      build 'create-verify-test-run'
-    }
-
-    stage('Tag Jira tickets') {
-      build job: 'tag-jira-tickets', parameters: [
-          string(name: 'app_name', value: 'app'),
-          string(name: 'env', value: 'verify'),
-          string(name: 'previous_release', value: currentAppTag),
-          string(name: 'current_release', value: nextAppReleaseTag),
-          [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-      ],
-      wait: false
-    }
-
-    stage('Trigger tests') {
-      build job: 'app-verify-push-event', parameters: [
-         string(name: 'release', value: nextAppReleaseTag),
-         string(name: 'datacenter', value: 'sjc')],
-         wait: false
-    }
-
   } catch (e) {
     // If there was an exception thrown, the build failed
     currentBuild.result = "FAILED"
