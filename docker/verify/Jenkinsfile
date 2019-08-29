@@ -235,7 +235,7 @@ node("docker-daemon") {
 
       withDockerContainer(kubectlImage) {
         deploymentInfo = sh(
-          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-verify -o jsonpath='{.items[0].spec.template.metadata.labels}'",
           returnStdout: true
         )
       }
@@ -406,13 +406,13 @@ node("docker-daemon") {
 
     stage("Apply new k8s descriptor") {
       dir("app") {
-        // Preview is essentially the same env as a sandbox
+        // verify is essentially the same env as a sandbox
         def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
         def k8s = render(template, [
           'MEDIAWIKI_IMAGE': mediawikiImage,
           'IMAGE_TAG': imageTag,
-          'SANDBOX_NAME': 'preview',
-          'SANDBOX_ENVIRONMENT': 'preview',
+          'SANDBOX_NAME': 'verify',
+          'SANDBOX_ENVIRONMENT': 'verify',
           'SANDBOX_DATACENTER': datacenter,
           'APP_VERSION': nextAppReleaseTag,
           'CONFIG_VERSION': nextConfigReleaseTag,
@@ -430,7 +430,7 @@ EOL""")
       if (!params.dry_run) {
         withDockerContainer(kubectlImage) {
           sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-preview")
+          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-verify")
         }
       } else {
         println("Dry run: kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml")
@@ -439,14 +439,14 @@ EOL""")
 
     }
 
-    stage('Create selenium-tests preview branch') {
-      build 'create-preview-test-run'
+    stage('Create selenium-tests verify branch') {
+      build 'create-verify-test-run'
     }
 
     stage('Tag Jira tickets') {
       build job: 'tag-jira-tickets', parameters: [
           string(name: 'app_name', value: 'app'),
-          string(name: 'env', value: 'preview'),
+          string(name: 'env', value: 'verify'),
           string(name: 'previous_release', value: currentAppTag),
           string(name: 'current_release', value: nextAppReleaseTag),
           [$class: 'LabelParameterValue', name: 'node', label: 'linux']
@@ -455,7 +455,7 @@ EOL""")
     }
 
     stage('Trigger tests') {
-      build job: 'app-preview-push-event', parameters: [
+      build job: 'app-verify-push-event', parameters: [
          string(name: 'release', value: nextAppReleaseTag),
          string(name: 'datacenter', value: 'sjc')],
          wait: false
