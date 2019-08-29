@@ -59,8 +59,13 @@ def bump_minor() {
 }
 
 def createReleaseBranch(String releaseBranch) {
-  sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
-  sh(script: "git push --set-upstream origin ${releaseBranch}")
+    sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
+    if (!params.dry_run) {
+        sh(script: "git push --set-upstream origin ${releaseBranch}")
+    } else {
+        println("Dry run: git push --set-upstream origin ${releaseBranch}")
+    }
+
 }
 
 // If new release - create a tag e.g. release-230.001
