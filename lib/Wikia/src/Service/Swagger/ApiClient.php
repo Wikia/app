@@ -45,7 +45,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	 * @throws \MWException
 	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
 	 */
-	public function callApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
+	public function callApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType = null, $endpointPath = null ) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
