@@ -135,7 +135,8 @@ table.mw-abusefilter-diff th {
     display: none;
 }
 
-/* Make AbuseFilter readible on dark themed wikis */
+/** From DarkAbuseFilter on dev.fandom.com **/
+/* Make AbuseFilter and AbuseLog readible on dark themed wikis */
 .oasis-dark-theme .mw-abusefilter-diff-context,
 .oasis-dark-theme table.mw-abuselog-details {
     background-color: transparent;
