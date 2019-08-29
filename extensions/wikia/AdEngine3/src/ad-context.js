@@ -439,10 +439,6 @@ export default {
 			threshold: 100,
 		},
 	},
-	listeners: {
-		porvata: [],
-		slot: [],
-	},
 	slots: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/{custom.serverPrefix}.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
