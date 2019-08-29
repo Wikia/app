@@ -46,7 +46,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 		$this->ganesha->subscribe( function ( $event, $service, $message ) {
 			switch ( $event ) {
 				case Ganesha::EVENT_TRIPPED:
-					$this->error( 'Circuit open! It seems that a failure has occurred in', [
+					$this->error( 'Circuit open! It seems that a failure has occurred', [
 						'service' => $service,
 						'message' => $message,
 					] );
@@ -58,7 +58,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 						] );
 					break;
 				case Ganesha::EVENT_STORAGE_ERROR:
-					$this->error( 'APCU failure:', [ 'message' => $message ] );
+					$this->error( 'Memcached circuit breaker failure', [ 'message' => $message ] );
 					break;
 				default:
 					break;
