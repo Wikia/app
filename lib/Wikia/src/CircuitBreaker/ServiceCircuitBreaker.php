@@ -39,7 +39,7 @@ class ServiceCircuitBreaker {
 	/**
 	 * @return bool returns true if operation can be performed on a given service
 	 */
-	public function OperationAllowed() {
+	public function operationAllowed() {
 		return $this->circuitBreaker->operationAllowed( $this->serviceName );
 	}
 }
