@@ -134,3 +134,35 @@ table.mw-abusefilter-diff th {
 .client-js #mw-abusefilter-export {
     display: none;
 }
+
+/* Make AbuseFilter readible on dark themed wikis */
+.oasis-dark-theme .mw-abusefilter-diff-context,
+.oasis-dark-theme table.mw-abuselog-details {
+    background-color: transparent;
+    color: #D5D4D4;
+}
+.oasis-dark-theme .mw-abusefilter-history-changed,
+.oasis-dark-theme table.mw-abuselog-details th {
+    background-color: #5F2C60;
+}
+.oasis-dark-theme .mw-abusefilter-diff-removed,
+.oasis-dark-theme .mw-abusefilter-diff-multiline .diff-deletedline {
+    background: #622;
+}
+.oasis-dark-theme .mw-abusefilter-diff-added,
+.oasis-dark-theme .mw-abusefilter-diff-multiline .diff-addedline {
+    background: #252;
+}
+
+/* Make things full width */
+#wpTestFilter,
+#wpFilterRules,
+#wpFilterNotes {
+    width: 100%;
+}
+ 
+/* AbuseFilter layout fix by Kirkburn */
+.ns-special.mw-special-AbuseLog .mw-abuselog-details {
+    table-layout: fixed;
+    width: 100%;
+}
