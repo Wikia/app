@@ -1,6 +1,7 @@
 <?php
 
 use FandomCreator\CommunitySetup;
+use Wikia\IndexingPipeline\PipelineEventProducer;
 use Wikia\Logger\Loggable;
 
 class MarkWikiAsClosedController extends WikiaController {
@@ -82,6 +83,8 @@ class MarkWikiAsClosedController extends WikiaController {
 			$user
 		);
 
+		$correlationId = uniqid($wikiId, true);
+		PipelineEventProducer::reindexDeletedWiki( $wikiId, $correlationId );
 		WikiFactory::clearCache( $wikiId );
 		$this->response->setCode( 200 );
 

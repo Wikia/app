@@ -10,9 +10,43 @@ use Wikia\Rabbit\ConnectionBase;
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
+	const UNIFIED_SEARCH_WIKI_INDEXER_PRODUCER = "unified-search.wiki-indexing";
 	protected static $pipe;
 
 	const ARTICLECOMMENT_PREFIX = '@comment-'; // as defined in ArticleComments_setup.php
+
+	/**
+	 *  delete wiki in unified-search index
+	 *
+	 * @param string $wikiId
+	 */
+	public static function reindexDeletedWiki( $wikiId, $correlationId ) {
+		self::reindexWiki( $wikiId, PipelineRoutingBuilder::ACTION_DELETE, $correlationId );
+	}
+
+	/**
+	 *  reindex wiki in unified-search pipeline
+	 *
+	 * @param string $wikiId
+	 * @param string $action
+	 */
+	private static function reindexWiki( $wikiId, $action, $correlationId ) {
+		WikiaLogger::instance()->info(__METHOD__, [
+			'wikiId' => $wikiId,
+			'correlationId' => $correlationId
+		]);
+		self::getPipeline()->publish(
+			PipelineRoutingBuilder::create()
+				->addName(self::UNIFIED_SEARCH_INDEXER_PRODUCER)
+				->addAction( $action )
+				->build(),
+			PipelineMessageBuilder::create()
+				->addParam("correlationId", $correlationId )
+				->addParam("wikiId", $wikiId )
+				->addParam("offset", 0 )
+				->build()
+		);
+	}
 
 	/**
 	 * Check if a given title should be indexed in solr
