@@ -17,7 +17,7 @@ class RailContentService extends WikiaService {
 			try {
 				$articles[$pageId]['thumbnail'] =
 					VignetteRequest::fromUrl( $article['thumbnail'] )
-						->zoomCrop()
+						->smart()
 						->width( static::RAIL_THUMBNAIL_WIDTH )
 						->height( static::RAIL_THUMBNAIL_HEIGHT )
 						->url();
