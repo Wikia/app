@@ -398,6 +398,9 @@ class SEOTweaksHooksHelper {
 				if ( isset( $primaryCityUrl['path'] ) ) {
 					$parsed['path'] = $primaryCityUrl['path'] . ( $parsed['path'] ?? '' );
 				}
+				if ( !isset( $parsed['scheme'] ) ) {
+					$parsed['scheme'] = wfHttpsAllowedForURL($url) ? 'https' : 'http';
+				}
 				$url = http_build_url( '', $parsed );
 			}
 		}
