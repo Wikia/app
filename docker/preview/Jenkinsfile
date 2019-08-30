@@ -444,7 +444,7 @@ EOL""")
 
     }
 
-    stage('Create selenium-tests preview branch') {
+    stage('Tag Jira tickets') {
         if (!params.dry_run) {
             build job: 'tag-jira-tickets', parameters: [
                       string(name: 'app_name', value: 'app'),
@@ -459,7 +459,7 @@ EOL""")
         }
     }
 
-    stage('Tag Jira tickets') {
+    stage('Create selenium-tests preview branch') {
         if (!params.dry_run) {
             build 'create-preview-test-run'
         } else {
