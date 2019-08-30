@@ -83,7 +83,7 @@ class MarkWikiAsClosedController extends WikiaController {
 			$user
 		);
 
-		$correlationId = uniqid($wikiId, true);
+		$correlationId = \Wikia\Tracer\WikiaTracer::generateId();
 		PipelineEventProducer::reindexDeletedWiki( $wikiId, $correlationId );
 		WikiFactory::clearCache( $wikiId );
 		$this->response->setCode( 200 );
