@@ -291,6 +291,7 @@ var Vignette = (function () {
 		fixedAspectRatio: 'fixed-aspect-ratio',
 		fixedAspectRatioDown: 'fixed-aspect-ratio-down',
 		scaleToWidth: 'scale-to-width',
+		smart: 'smart',
 		thumbnail: 'thumbnail',
 		thumbnailDown: 'thumbnail-down',
 		topCrop: 'top-crop',

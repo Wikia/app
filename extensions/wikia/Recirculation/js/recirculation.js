@@ -192,7 +192,7 @@ require([
 
 					if (sponsoredItem.thumbnailUrl && window.Vignette) {
 						sponsoredItem.thumbnailUrl = window.Vignette.getThumbURL(sponsoredItem.thumbnailUrl, {
-							mode: window.Vignette.mode.zoomCrop,
+							mode: window.Vignette.mode.smart,
 							height: 53,
 							width: 53
 						});

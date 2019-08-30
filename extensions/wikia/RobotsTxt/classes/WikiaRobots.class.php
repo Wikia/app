@@ -134,8 +134,7 @@ class WikiaRobots {
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgRequest,
 			   $wgRobotsTxtCustomRules,
-			   $wgWikiaEnvironment,
-			   $wgForcedNoindexEnabled;
+			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' );
@@ -145,16 +144,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		// TODO: reverse the logic
-		// Have $wgRobotsTxtCustomRules['allowNamespaces'] which removes them from
-		// $this->namespacesToBlock
-		if ( !$wgForcedNoindexEnabled && isset( $wgRobotsTxtCustomRules['disallowNamespace'] ) ) {
-			$this->blockedNamespaces = array_merge(
-				$this->blockedNamespaces,
-				(array) $wgRobotsTxtCustomRules['disallowNamespace']
-			);
 		}
 	}
 
@@ -169,8 +158,7 @@ class WikiaRobots {
 			   $wgServer,
 			   $wgScriptPath,
 			   $wgRequest,
-			   $wgCityId,
-			   $wgForcedNoindexEnabled;
+			   $wgCityId;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -185,23 +173,6 @@ class WikiaRobots {
 				$sitemapUrl = wfHttpToHttps( $sitemapUrl );
 				$robots->addSitemap( $sitemapUrl );
 			}
-			if( !$wgForcedNoindexEnabled ){
-				// Block namespaces
-				foreach ( $this->blockedNamespaces as $ns ) {
-					$robots->addDisallowedPaths(
-						$this->pathBuilder->buildPathsForNamespace( $ns )
-					);
-				}
-
-				// Block additional paths
-				$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
-
-				// Block params
-				foreach ( $this->blockedParams as $param ) {
-					$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
-				}
-			}
-
 
 			// Allow specific paths
 			$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ) );

@@ -9,9 +9,17 @@ class WatchShowHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgWatchShowURL;
+		global $wgWatchShowURLMobile, $wgWatchShowButtonLabelMobile, $wgWatchShowURL, $wgWatchShowButtonLabel;
 
-		$wikiVariables['watchShowURL'] = $wgWatchShowURL;
+		if ( !empty( $wgWatchShowButtonLabelMobile ) ) {
+			$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabelMobile;
+		} else if ( !empty( $wgWatchShowButtonLabel ) ) {
+			$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabel;
+		} else {
+			$wikiVariables['watchShowButtonLabel'] = 'Watch Now';
+		}
+
+		$wikiVariables['watchShowURL'] = !empty($wgWatchShowURLMobile) ? $wgWatchShowURLMobile : $wgWatchShowURL;
 
 		return true;
 	}

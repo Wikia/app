@@ -1,8 +1,8 @@
-import {navbarManager} from './navbar-updater';
+import { getNavbarManager } from './navbar-updater';
 import slots from '../slots';
 
 export const getConfig = () => ({
-		inViewportOffsetTop: navbarManager.getHeight(),
+		inViewportOffsetTop: getNavbarManager().getHeight(),
 		isFloatingEnabled: true,
 		onInit: (adSlot, params) => {
 			slots.setupSlotVideoAdUnit(adSlot, params);
