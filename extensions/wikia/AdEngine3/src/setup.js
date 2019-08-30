@@ -19,9 +19,7 @@ import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 
-const fallbackInstantConfig = {
-	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
-};
+const fallbackInstantConfig = {};
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -118,14 +116,14 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
 
-	if (instantConfig.isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')) {
+	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',
 			true,
 		);
 		context.set(
 			'options.unstickHiViLeaderboardTimeout',
-			instantConfig.get('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
+			instantConfig.get('icHiViLeaderboardUnstickTimeout'),
 		);
 	}
 
