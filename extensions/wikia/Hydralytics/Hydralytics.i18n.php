@@ -111,10 +111,10 @@ $messages['de'] = array(
 	'help_links' => 'Hilfe',
 	'total_page_views' => 'Seitenaufrufe (insgesamt)',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
+	'device_mobile' => 'Mobile Geräte',
+	'device_other' => 'Andere',
 	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_desktop' => 'Desktop-Ansicht',
 );
 
 $messages['es'] = array(
@@ -167,10 +167,10 @@ $messages['es'] = array(
 	'help_links' => 'Ayuda',
 	'total_page_views' => 'páginas vistas en total',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
-	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_mobile' => 'Resolución de móvil',
+	'device_other' => 'Otro',
+	'device_tablet' => 'Tabla',
+	'device_desktop' => 'Resolución del escritorio',
 );
 
 $messages['fr'] = array(
@@ -225,9 +225,9 @@ $messages['fr'] = array(
 	'total_page_views' => 'Total de pages vues',
 	'action-analytics' => 'access the Wiki Analytics',
 	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
-	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_other' => 'Autre',
+	'device_tablet' => 'Tablette',
+	'device_desktop' => 'Bureau',
 );
 
 $messages['it'] = array(
@@ -235,7 +235,7 @@ $messages['it'] = array(
 	'staff_contact' => 'Contatta lo Staff',
 	'analytics_confidential' => 'Le informazioni su questa pagina sono condivise come cortesia verso i nostri amministratori e non dovrebbero essere ricondivise senza permesso.',
 	'logged_out' => 'Anonimi',
-	'based_on_last_30' => 'Data is based on the last 30 days',
+	'based_on_last_30' => 'I dati si basano sugli ultimi 30 giorni',
 	'community_manager' => 'Manager della comunità',
 	'file' => 'File',
 	'view_more' => 'Mostra di più',
@@ -251,7 +251,7 @@ $messages['it'] = array(
 	'nonengaged_admins' => 'Amministratori che non usano il pannello',
 	'top_viewed_pages' => 'Pagine più visitate',
 	'logged_in' => 'Registrati',
-	'top_search_terms' => 'Internal Top Search Terms',
+	'top_search_terms' => 'Termini più ricercati internamente',
 	'search_rank' => 'Rank di ricerca',
 	'engaged_admins' => 'Amministratori che usano il pannello',
 	'sessions' => 'Sessioni',
@@ -261,7 +261,7 @@ $messages['it'] = array(
 	'date' => 'Data',
 	'most_visited_files' => 'File più visitati',
 	'active_month' => 'Mese',
-	'analytics_description' => 'Provides [[Special:Analytics|Wiki Analytics Admin Dashboard]]',
+	'analytics_description' => 'Fornisce il [[Special:Analytics|Pannello di amministrazione Wiki Analytics]]',
 	'admin_views' => 'Visualizzazioni per amministratore',
 	'page_views' => 'Visualizzazioni pagina',
 	'analytics_dashboard' => 'Pannello di amministrazione Wiki Analytics',
@@ -269,7 +269,7 @@ $messages['it'] = array(
 	'returning_visitors' => 'Visitatori di ritorno',
 	'top_editors' => 'Classifica degli editori',
 	'hlfaqurl-text' => 'Politiche, Procedure e FAQ',
-	'analytics_report_generated' => 'Report generated $1',
+	'analytics_report_generated' => 'Rapporto generato $1, tutti i dati sono assemblati secondo il fuso orario UTC',
 	'number_of_pageviews' => '# di visualizzazioni di pagina',
 	'right-analytics' => 'Accesso a wiki analytics',
 	'desktop_vs_mobile' => 'Sessioni da Desktop vs. da Mobile',
@@ -279,9 +279,9 @@ $messages['it'] = array(
 	'page' => 'Pagina',
 	'help_links' => 'Aiuto',
 	'total_page_views' => 'Visualizzazioni di pagina totali',
-	'action-analytics' => 'access the Wiki Analytics',
+	'action-analytics' => 'accedi a Wiki Analytics',
 	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
+	'device_other' => 'Altro',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Desktop',
 );
@@ -393,9 +393,9 @@ $messages['pl'] = array(
 	'help_links' => 'Pomoc',
 	'total_page_views' => 'całkowita liczba odsłon',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
+	'device_mobile' => 'Skórka mobilna',
 	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_desktop' => 'Monitor',
 );
 
 $messages['pt'] = array(
@@ -448,10 +448,10 @@ $messages['pt'] = array(
 	'help_links' => 'Ajuda',
 	'total_page_views' => 'Total de Visualizações de Página',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
+	'device_mobile' => 'Dispositivo Móvel',
+	'device_other' => 'Outros',
 	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_desktop' => 'Área de Trabalho',
 );
 
 $messages['ru'] = array(
@@ -504,10 +504,10 @@ $messages['ru'] = array(
 	'help_links' => 'Справка',
 	'total_page_views' => '- всего просмотров за 30 дней',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
-	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_mobile' => 'Мобильный',
+	'device_other' => 'Другое',
+	'device_tablet' => 'Планшеты',
+	'device_desktop' => 'Монитор ПК',
 );
 
 $messages['zh-hans'] = array(
@@ -560,10 +560,10 @@ $messages['zh-hans'] = array(
 	'help_links' => '帮助',
 	'total_page_views' => '页面浏览总量',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
-	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_mobile' => '移动设备',
+	'device_other' => '其他',
+	'device_tablet' => '平板电脑',
+	'device_desktop' => '桌面',
 );
 
 $messages['zh-hant'] = array(
@@ -616,9 +616,9 @@ $messages['zh-hant'] = array(
 	'help_links' => '幫助',
 	'total_page_views' => '全部頁面訪問次數',
 	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Mobile',
-	'device_other' => 'Other',
-	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Desktop',
+	'device_mobile' => '行動裝置',
+	'device_other' => '其他',
+	'device_tablet' => '平板電腦',
+	'device_desktop' => '桌上電腦',
 );
 

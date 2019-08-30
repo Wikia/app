@@ -1033,7 +1033,7 @@ $messages['fi'] = array(
 	'createwiki' => 'Luo uusi wiki',
 	'autocreatewiki-language-top' => 'Top$1 kieltä',
 	'autocreatewiki-language-all' => 'Kaikki kielet',
-	'autocreatewiki-title-template' => '$1 Wikia',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-empty-field' => 'Täytä tämä kenttä.',
 	'autocreatewiki-bad-name' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja sen täytyy olla pienillä kirjaimilla ilman välilyöntejä.',
 	'autocreatewiki-invalid-wikiname' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja se ei voi olla tyhjä',
@@ -1127,7 +1127,7 @@ $messages['fr'] = array(
 	'createwiki' => 'Créer un nouveau wiki',
 	'autocreatewiki-language-top' => 'Langues prises en charge',
 	'autocreatewiki-language-all' => 'Toutes les langues',
-	'autocreatewiki-title-template' => 'Communauté $1',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-empty-field' => 'Merci de compléter ce champ.',
 	'autocreatewiki-bad-name' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @), doit être un mot unique, en minuscules et sans espaces.',
 	'autocreatewiki-invalid-wikiname' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @) et ne doit pas être vide.',
@@ -1149,6 +1149,7 @@ Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gér
 *Personnalisez l'apparence de votre communauté en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, choisissez un style, etc.
 *Accédez au [[w:fr:Accueil|Centre des communautés]] pour y lire l'[[w:fr:Blog:Actualité FANDOM|actualité]] et poser des questions sur notre [[w:fr:Special:Forum|forum]].
 *Parcourez les [[Aide:Contenu|pages d'aide]] pour savoir comment utiliser FANDOM ou visitez l'[[w:c:communaute:Université_Fandom|Université FANDOM]] pour regarder de courtes vidéos de présentation.
+*Rejoignez notre [https://discord.gg/Fandom serveur Discord] pour discuter avec les autres membres francophones dans nos salons dédiés. Consultez notre [[Aide:Discord|page d'aide à ce sujet]] pour de plus amples informations.
 
 C'est parti !",
 	'autocreatewiki-welcometalk' => "==Bienvenue !==
@@ -2732,7 +2733,7 @@ $messages['pt'] = array(
 	'createwiki' => 'Crie uma nova wiki',
 	'autocreatewiki-language-top' => 'Idiomas Suportados',
 	'autocreatewiki-language-all' => 'Todos os idiomas',
-	'autocreatewiki-title-template' => 'Comunidade $1',
+	'autocreatewiki-title-template' => 'Wiki $1',
 	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
 	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
 	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
@@ -2865,7 +2866,7 @@ $messages['ru'] = array(
 	'createwiki' => 'Создать новую вики',
 	'autocreatewiki-language-top' => 'Поддерживаемые языки',
 	'autocreatewiki-language-all' => 'Все языки',
-	'autocreatewiki-title-template' => 'Сообщество $1',
+	'autocreatewiki-title-template' => '$1 Вики',
 	'autocreatewiki-empty-field' => 'Пожалуйста, заполните это поле.',
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и является обязательным для заполнения.',
@@ -3461,7 +3462,7 @@ $messages['vi'] = array(
 	'cnw-error-anon-user' => 'Tạo wiki cho người dùng vô danh bị vô hiệu hóa. Xin vui lòng [[Special:UserLogin|đăng nhập]] và thử lại.',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor không được cho phép.',
 	'autocreatewiki' => 'Tạo wiki mới',
-	'autocreatewiki-title-template' => 'Wikia $1',
+	'autocreatewiki-title-template' => 'Wiki $1',
 );
 
 $messages['zh-hans'] = array(
