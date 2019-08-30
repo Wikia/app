@@ -1108,7 +1108,7 @@ class Wikia {
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
 		$request = $skinTemplate->getRequest();
 
-		if( self::addMetaRobotsNoindex( $request, $title, $out ) ){
+		if ( self::addMetaRobotsNoindex( $request, $title, $out ) ) {
 			return true;
 		}
 
@@ -1123,21 +1123,18 @@ class Wikia {
 	/**
 	 * Add variables to SkinTemplate
 	 */
-	static public function addMetaRobotsNoindex(WebRequest $request, Title $title, OutputPage $out) {
-		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS, $wgForcedNoindexEnabled;
-		if( !$wgForcedNoindexEnabled ){
-			return false;
-		}
-		$setNofollow = false;
+	static public function addMetaRobotsNoindex( WebRequest $request, Title $title, OutputPage $out ) {
+		global $wgRobotsIndexHelpNS, $wgRobotsIndexUserNS;
+		$setNoindex = false;
 		$disabledNamespaces = [NS_SPECIAL, NS_USER_TALK, NS_TEMPLATE, NS_TEMPLATE_TALK];
-		if( !$wgRobotsIndexHelpNS ){
+		if ( !$wgRobotsIndexHelpNS ) {
 			$disabledNamespaces[] = NS_HELP;
 		}
-		if( !$wgRobotsIndexUserNS ){
+		if ( !$wgRobotsIndexUserNS ) {
 			$disabledNamespaces[] = NS_USER;
 		}
-		if( $title->inNamespaces( $disabledNamespaces ) ) {
-			$setNofollow = true;
+		if ( $title->inNamespaces( $disabledNamespaces ) ) {
+			$setNoindex = true;
 		} else {
 			$noindexParams = [
 				'action',
@@ -1152,17 +1149,17 @@ class Wikia {
 			];
 			foreach($noindexParams as $paramName ){
 				if( array_key_exists( $paramName, $request->getQueryValues() ) ) {
-					$setNofollow = true;
+					$setNoindex = true;
 					break;
 				}
 			}
 		}
 
-		if( $setNofollow ){
+		if ( $setNoindex ) {
 			$out->setRobotPolicy( "noindex, nofollow" );
 		}
 
-		return $setNofollow;
+		return $setNoindex;
 	}
 
 	/**
