@@ -4,7 +4,7 @@ namespace Wikia\CircuitBreaker;
 
 use Ackintosh\Ganesha;
 use Ackintosh\Ganesha\Builder;
-use Ackintosh\Ganesha\Storage\Adapter\Memcached;
+use Wikia\CircuitBreaker\Storage\WikiaMemcachedAdapter;
 use Wikia\Logger\Loggable;
 
 class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
@@ -20,7 +20,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 		return [
 			\Memcached::OPT_SEND_TIMEOUT => $wgMemCachedTimeout,
 			\Memcached::OPT_RECV_TIMEOUT => $wgMemCachedTimeout,
-			\Memcached::OPT_CONNECT_TIMEOUT => $wgMemCachedConnectionTimeout ?: 0.5
+			\Memcached::OPT_CONNECT_TIMEOUT => $wgMemCachedConnectionTimeout ?: 1.0
 		];
 	}
 
@@ -37,7 +37,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 
 		$this->ganesha = Builder::build( [
 			'failureRateThreshold' => 50,
-			'adapter' => new Memcached( $memCached ),
+			'adapter' => new WikiaMemcachedAdapter( $memCached ),
 			'intervalToHalfOpen' => 5,
 			'minimumRequests' => 4,
 			'timeWindow' => 30,

@@ -5867,7 +5867,7 @@ $wgMemCachedServers = [
  * Read/write timeout for MemCached server communication, in microseconds.
  * @var int $wgMemCachedTimeout
  */
-$wgMemCachedTimeout = 0.5 * 1000000; // half a second
+$wgMemCachedTimeout = 1 * 1000000; // half a second
 
 /**
  * The minimum amount of memory that MediaWiki "needs"; MediaWiki will try to
