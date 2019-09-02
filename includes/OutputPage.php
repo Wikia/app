@@ -797,8 +797,10 @@ class OutputPage extends ContextSource {
 	 * @return null
 	 */
 	public function setRobotPolicy( $policy ) {
-		$policy = Article::formatRobotPolicy( $policy );
 
+		header("X-Robots-tag: $policy");
+
+		$policy = Article::formatRobotPolicy( $policy );
 		if( isset( $policy['index'] ) ) {
 			$this->setIndexPolicy( $policy['index'] );
 		}
