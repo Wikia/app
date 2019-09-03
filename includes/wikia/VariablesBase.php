@@ -9011,7 +9011,7 @@ $wgCircuitBreakerRedisHost = 'geo-redisshared-prod-master.query.consul';
  * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
  * @var int $wgCircuitBreakerRedisDb
  */
-$wgCircuitBreakerRedisDb = 3;
+$wgCircuitBreakerRedisDb = 4;
 
 /**
  * @var $wgEnableHydralyticsExt
