@@ -52,7 +52,7 @@ class MemcachedCircuitBreakerStorage implements CircuitBreakerStorage {
 					] );
 					break;
 				case Ganesha::EVENT_CALMED_DOWN:
-					$this->info( 'The ganesha failure seems to have calmed down.', [
+					$this->info( 'The ganesha failure seems to have calmed down', [
 							'service' => $service,
 							'message' => $message,
 						] );

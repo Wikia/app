@@ -4,6 +4,7 @@ namespace Wikia\Service\Swagger;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
+use Wikia\CircuitBreaker\CircuitBreakerOpen;
 use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
@@ -40,10 +41,9 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	 * @param string|null $endpointPath
 	 * @return mixed|null
 	 * @throws ApiException
-	 * @throws CircuitBreakerOpen
 	 * @throws \FatalError
 	 * @throws \MWException
-	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 * @throws CircuitBreakerOpen
 	 */
 	public function callApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType = null, $endpointPath = null ) {
 		$start = microtime(true);

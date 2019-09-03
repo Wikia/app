@@ -67,13 +67,16 @@ class HeliosClient {
 	 * @param array $extraRequestOptions
 	 *
 	 * @return mixed|null
-	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 * @throws ClientException
+	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		$this->circuitBreaker->assertOperationAllowed();
+		if ( !$this->circuitBreaker->operationAllowed() ) {
+			throw new ClientException( "circuit breaker open" );
+		}
 
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
