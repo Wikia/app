@@ -219,7 +219,8 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 				/**
 				 * drop database, get db handler for proper cluster
-				 */ global $wgDBadminuser, $wgDBadminpassword;
+				 */
+				global $wgDBadminuser, $wgDBadminpassword;
 				$centralDB = empty( $cluster ) ? "wikicities" : "wikicities_{$cluster}";
 
 				/**
@@ -336,12 +337,6 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 
-		$this->info( "Extracted path", [
-			'path' => $path,
-		] );
-
-		$this->info( sprintf( 'Rsyncing images from "%s" to "%s"...', $path, $directory ) );
-
 		wfMkdirParents( $directory );
 		$time = wfTime();
 
@@ -355,8 +350,10 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			return false;
 		}
 
+		$this->info( sprintf( 'Copying images from "%s" to "%s"...', $path, $directory ) );
+
 		foreach ( $objects as $object ) {
-			$this->output( sprintf( "Processing file %s", $object ) );
+			$this->output( sprintf( "Copying file %s", $object ) );
 			// do not backup thumbnails and temporary files
 			// --exclude "/thumb/*" --exclude "/temp/*"
 			if ( strpos( $object, 'images/thumb/' ) !== false || strpos( $object, 'images/temp/' ) !== false ) {
@@ -374,7 +371,7 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		}
 
 		$time = Wikia::timeDuration( wfTime() - $time );
-		$this->debug( "Copying from {$path} to {$directory}: status: time: {$time}" );
+		$this->debug( "Copyied from {$path} to {$directory} in time: {$time}" );
 
 		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
 		if ( file_exists( $tarfile ) ) {

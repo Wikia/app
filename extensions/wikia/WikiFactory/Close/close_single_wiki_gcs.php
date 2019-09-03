@@ -104,7 +104,8 @@ class CloseSingleWikiGcs extends Maintenance {
 
 		/**
 		 * drop database, get db handler for proper cluster
-		 */ global $wgDBadminuser, $wgDBadminpassword;
+		 */
+		global $wgDBadminuser, $wgDBadminpassword;
 		$centralDB = empty( $cluster ) ? 'wikicities' : "wikicities_{$cluster}";
 
 		/**
