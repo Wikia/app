@@ -1,4 +1,4 @@
--- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.27, for osx10.14 (x86_64)
 --
 -- Host: geo-db-sharedb-slave.query.consul    Database: wikicities
 -- ------------------------------------------------------
@@ -182,6 +182,7 @@ CREATE TABLE `city_variables` (
   `cv_city_id` int(9) NOT NULL,
   `cv_variable_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `cv_value` text NOT NULL,
+  `cv_variable_value` json DEFAULT NULL,
   PRIMARY KEY (`cv_variable_id`,`cv_city_id`),
   KEY `cv_city_id_archive` (`cv_city_id`),
   KEY `cv_variable_id` (`cv_variable_id`,`cv_value`(300)),
@@ -515,10 +516,12 @@ CREATE TABLE `user` (
   `user_editcount` int(11) DEFAULT NULL,
   `user_birthdate` date DEFAULT NULL,
   `user_options` blob NOT NULL,
+  `user_name_normalized` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (convert(cast(convert(`user_name` using latin1) as char charset binary) using utf8mb4)) STORED,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_name` (`user_name`),
   KEY `user_email_token` (`user_email_token`),
-  KEY `user_email` (`user_email`(40))
+  KEY `user_email` (`user_email`(40)),
+  KEY `user_name_normalized_idx` (`user_name_normalized`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -593,4 +596,4 @@ CREATE TABLE `user_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2019-04-18 12:57:44
+-- Dump completed on 2019-09-03 14:07:38
