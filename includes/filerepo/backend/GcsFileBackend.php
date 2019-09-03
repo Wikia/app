@@ -311,20 +311,20 @@ class GcsFileBackend extends FileBackendStore {
 	 * @return Traversable|array|null
 	 */
 	public function getFileListInternal( $container, $dir, array $params ) {
+		$prefix = $this->gcsPaths->objectsPrefix( $container, $dir );
 		WikiaLogger::instance()->info( __METHOD__, [
 			'call_stack' => ( new Exception() )->getTraceAsString(),
 			'container' => $container,
 			'dir' => $dir,
+			'prefix' => $prefix,
 			'params' => json_encode( $params ),
 		] );
 
 		try {
-			$prefix = $this->gcsPaths->objectsPrefix( $container, $dir );
 			$objects = $this->bucket()->objects( [ 'prefix' => $prefix ] );
 
 			return new GoogleCloudFileList( $objects );
-		}
-		catch ( Exception $e ) {
+		} catch ( Exception $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e, ] );
 
 			return [];
