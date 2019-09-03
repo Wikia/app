@@ -382,7 +382,7 @@ $messages['pl'] = array(
 	'returning_visitors' => 'Powracających odwiedzających',
 	'top_editors' => 'Najbardziej aktywni edytorzy',
 	'hlfaqurl-text' => 'Regulaminy, procedury i FAQ',
-	'analytics_report_generated' => 'Raport wygenerowany wczoraj',
+	'analytics_report_generated' => 'Raport wygenerowany $1, dane zebrane według czasu UTC',
 	'number_of_pageviews' => '# odsłon',
 	'right-analytics' => 'Ma dostęp do panelu analitycznego',
 	'desktop_vs_mobile' => 'Sesje desktop vs mobilne',
@@ -392,10 +392,10 @@ $messages['pl'] = array(
 	'page' => 'Strona',
 	'help_links' => 'Pomoc',
 	'total_page_views' => 'całkowita liczba odsłon',
-	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Skórka mobilna',
+	'action-analytics' => 'przeglądania panelu analitycznego',
+	'device_mobile' => 'Mobilne',
 	'device_tablet' => 'Tablet',
-	'device_desktop' => 'Monitor',
+	'device_desktop' => 'Desktop',
 );
 
 $messages['pt'] = array(
