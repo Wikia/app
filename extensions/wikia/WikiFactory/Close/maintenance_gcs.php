@@ -15,8 +15,8 @@ use Wikia\Factory\ServiceFactory;
 
 // make Wikia\Logger\Loggable trait available at a run-time
 require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
-
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
+require_once __DIR__ . '/gcs_bucket_remover.php';
 
 class CloseWikiMaintenanceGcs extends Maintenance {
 
@@ -25,6 +25,9 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
+	/** @var GcsBucketRemover */
+	private $bucketRemover;
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'first', 'Run only once for first wiki in queue' );
@@ -32,11 +35,13 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
 		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
 		$this->addOption( 'cluster', 'Run for a given cluster only', false, true );
+
+		$this->bucketRemover = new GcsBucketRemover();
 	}
 
 	/**
 	 * 1. go through all wikis which are marked for closing and check which one
-	 * 	want to have images packed.
+	 *    want to have images packed.
 	 *
 	 * 2. pack images, send them via rsync to  target server,
 	 *
@@ -50,71 +55,75 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		global $IP;
 
 		// process script command line arguments
-		$first     = $this->hasOption( 'first' );
-		$sleep     = $this->getOption( 'sleep', 15 );
-		$limit     = $this->getOption( 'limit', false );
-		$cluster   = $this->getOption( 'cluster', false ); // eg. c6
+		$first = $this->hasOption( 'first' );
+		$sleep = $this->getOption( 'sleep', 15 );
+		$limit = $this->getOption( 'limit', false );
+		$cluster = $this->getOption( 'cluster', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
-			'first'   => $first,
-			'limit'   => $limit,
+			'first' => $first,
+			'limit' => $limit,
 		] );
 
 		// build database query
 		$opts = [
-			"ORDER BY" => "city_id"
+			"ORDER BY" => "city_id",
 		];
 
 		/**
 		 * if $first is set skip limit checking
 		 */
-		if( !$first ) {
-			if( is_numeric( $limit ) )  {
-				$opts[ "LIMIT" ] = $limit;
+		if ( !$first ) {
+			if ( is_numeric( $limit ) ) {
+				$opts["LIMIT"] = $limit;
 			}
 		}
 
-		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
-		$where = array(
-			"city_public" => array( WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ),
+		$timestamp = wfTimestamp( TS_DB, strtotime( sprintf( "-%d days", self::CLOSE_WIKI_DELAY ) ) );
+		$where = [
+			"city_public" => [ WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ],
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 			"city_last_timestamp < '{$timestamp}'",
-		);
+		];
 
-		if ($cluster !== false) {
-			$where[ "city_cluster" ] = $cluster;
+		if ( $cluster !== false ) {
+			$where["city_cluster"] = $cluster;
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$sth = $dbr->select(
-			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp", "city_additional" ),
-			$where,
-			__METHOD__,
-			$opts
-		);
+		$sth =
+			$dbr->select( [ "city_list" ], [
+					"city_id",
+					"city_flags",
+					"city_dbname",
+					"city_cluster",
+					"city_url",
+					"city_public",
+					"city_last_timestamp",
+					"city_additional",
+				], $where, __METHOD__, $opts );
 
 		$this->info( 'wikis to remove', [
 			'wikis' => $sth->numRows(),
-			'query' => $dbr->lastQuery()
+			'query' => $dbr->lastQuery(),
 		] );
 
-		while( $row = $dbr->fetchObject( $sth ) ) {
+		while ( $row = $dbr->fetchObject( $sth ) ) {
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
-			$hide     = false;
+			$hide = false;
 			$newFlags = 0;
-			$dbname   = $row->city_dbname;
-			$cityid   = intval( $row->city_id );
-			$cluster  = $row->city_cluster;
-			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
+			$dbname = $row->city_dbname;
+			$cityid = intval( $row->city_id );
+			$cluster = $row->city_cluster;
+			$folder = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
 			if ( $this->hasOption( 'dry-run' ) ) {
-				$this->output( sprintf("DRY-RUN: Wiki #%d (%s) is marked to be removed - %s\n",
-					$cityid, $dbname, $row->city_additional ?: 'n/a' ) );
+				$this->output( sprintf( "DRY-RUN: Wiki #%d (%s) is marked to be removed - %s\n", $cityid, $dbname,
+					$row->city_additional ?: 'n/a' ) );
 				continue;
 			}
 
@@ -123,39 +132,42 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
-			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
+			if ( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES ) {
 				// "Hide Database and Image Dump
 				$this->info( "Images and DB dump should be hidden" );
 				$hide = true;
 			}
-			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
-				$script = ( $hide )
-					? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --s3"
-					: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --s3";
+			if ( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
+				$script =
+					( $hide ) ? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --s3"
+						: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --s3";
 
 				$this->info( "Dumping database on remote host", [
-					'script' => $script
-				]);
+					'script' => $script,
+				] );
 				wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
 				/**
 				 * reset flag
 				 */
 				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_HIDE_DB_IMAGES;
 			}
-			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
-				if( $dbname && $folder ) {
+			if ( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+				if ( $dbname && $folder ) {
 					$this->info( "Dumping images on remote host" );
 					try {
 						$source = $this->tarFiles( $dbname, $cityid );
 
-						if( is_string( $source ) ) {
+						if ( is_string( $source ) ) {
 							try {
-								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
-							} catch ( S3Exception $ex ) {
-								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun", [
-									'exception' => $ex->getMessage(),
-									'dump_size_bytes' => filesize( $source ),
-								]);
+								DumpsOnDemand::putToAmazonS3( $source, !$hide,
+									MimeMagic::singleton()->guessMimeType( $source ) );
+							}
+							catch ( S3Exception $ex ) {
+								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun",
+									[
+										'exception' => $ex->getMessage(),
+										'dump_size_bytes' => filesize( $source ),
+									] );
 								unlink( $source );
 
 								// SUS-6077 | move to a next wiki instead of failing the entire process
@@ -166,23 +178,24 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 							unlink( $source );
 						}
 
-						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
-					} catch( Exception $e ) {
-						$this->error( "Can't create tar archive with images",
-							[
+						$newFlags =
+							$newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
+					}
+					catch ( Exception $e ) {
+						$this->error( "Can't create tar archive with images", [
 								'exception' => $e->getMessage(),
 								'city_id' => $cityid,
-							]
-						);
+							] );
 
 						// SUS-6077 | move to a next wiki instead of failing the entire process
 						continue;
 					}
 				}
 			}
-			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES || $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
+				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				$this->removeBucket( $cityid );
+				$this->bucketRemover->remove( $cityid );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
@@ -192,56 +205,47 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 				WikiFactory::copyToArchive( $row->city_id );
 				$dbw = WikiFactory::db( DB_MASTER );
-				$dbw->delete(
-					"city_list",
-					array(
-						"city_public" => array( 0, -1 ),
-						"city_id" => $row->city_id
-					),
-					__METHOD__
-				);
+				$dbw->delete( "city_list", [
+						"city_public" => [ 0, - 1 ],
+						"city_id" => $row->city_id,
+					], __METHOD__ );
 				// SUS-2374
-				$dbw->delete(
-					"city_variables",
-					array(
-						"cv_city_id" => $row->city_id
-					),
-					__METHOD__
-				);
+				$dbw->delete( "city_variables", [
+						"cv_city_id" => $row->city_id,
+					], __METHOD__ );
 				$this->info( "{$row->city_id} removed from WikiFactory tables" );
 
 				$this->cleanupSharedData( intval( $row->city_id ) );
 
 				/**
 				 * drop database, get db handler for proper cluster
-				 */
-				global $wgDBadminuser, $wgDBadminpassword;
-				$centralDB = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
+				 */ global $wgDBadminuser, $wgDBadminpassword;
+				$centralDB = empty( $cluster ) ? "wikicities" : "wikicities_{$cluster}";
 
 				/**
 				 * get connection but actually we only need info about host
 				 */
-				$local = wfGetDB( DB_MASTER, array(), $centralDB );
+				$local = wfGetDB( DB_MASTER, [], $centralDB );
 				$server = $local->getLBInfo( 'host' );
 
 				try {
-					$dbw = new DatabaseMysqli([
+					$dbw = new DatabaseMysqli( [
 						'host' => $server,
 						'user' => $wgDBadminuser,
 						'password' => $wgDBadminpassword,
 						'dbname' => $centralDB,
-					]);
+					] );
 					$dbw->begin( __METHOD__ );
-					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
+					$dbw->query( "DROP DATABASE `{$row->city_dbname}`" );
 					$dbw->commit( __METHOD__ );
-					$this->info("{$row->city_dbname} dropped from cluster {$cluster}");
+					$this->info( "{$row->city_dbname} dropped from cluster {$cluster}" );
 				}
-				catch (Exception $e) {
+				catch ( Exception $e ) {
 					$this->error( 'drop database failed', [
-						'cluster'   => $cluster,
-						'dbname'    => $row->city_dbname,
+						'cluster' => $cluster,
+						'dbname' => $row->city_dbname,
 						'exception' => $e,
-						'server'    => $server
+						'server' => $server,
 					] );
 				}
 
@@ -257,11 +261,12 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 				 */
 				try {
 					Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
-				} catch ( Exception $ex ) {
+				}
+				catch ( Exception $ex ) {
 					// SUS-4606 | catch exceptions instead of stopping the script
 					$this->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
 						'exception' => $ex,
-						'wiki_id' => (int) $row->city_id
+						'wiki_id' => (int)$row->city_id,
 					] );
 				}
 
@@ -275,24 +280,24 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			 * reset flags, if database was dropped and data were removed from
 			 * WikiFactory tables it will return false anyway
 			 */
-			if(  $newFlags ) {
+			if ( $newFlags ) {
 				WikiFactory::resetFlags( $row->city_id, $newFlags );
 			}
 
 			$this->info( 'closed', [
 				'cluster' => $cluster,
-				'city_id' => (int) $cityid,
-				'dbname'  => $dbname,
+				'city_id' => (int)$cityid,
+				'dbname' => $dbname,
 			] );
 
 			$this->info( "$dbname: completed" );
 
-			$this->removeDiscussions($cityid);
+			$this->removeDiscussions( $cityid );
 
 			/**
 			 * just one?
 			 */
-			if( $first ) {
+			if ( $first ) {
 				break;
 			}
 			sleep( $sleep );
@@ -315,24 +320,25 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	private function tarFiles( $dbname, $cityId ) {
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
 
-		if (empty($wgUploadPath)) {
-			$this->info( sprintf("Upload path is empty for city %s, leave early", $cityId));
+		if ( empty( $wgUploadPath ) ) {
+			$this->info( sprintf( "Upload path is empty for city %s, leave early", $cityId ) );
+
 			return false;
 		}
 
 		/** @var GcsFileBackend $backend */
-		$backend = FileBackendGroup::singleton()->get('gcs-backend');
+		$backend = FileBackendGroup::singleton()->get( 'gcs-backend' );
 
-		$this->info( sprintf("Preparing image backup using upload path %s", $wgUploadPath));
+		$this->info( sprintf( "Preparing image backup using upload path %s", $wgUploadPath ) );
 
 		// local backup path
 		$directory = sprintf( "/tmp/images/{$dbname}/" );
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 
-		$this->info("Extracted path", [
-			'path' => $path
-		]);
+		$this->info( "Extracted path", [
+			'path' => $path,
+		] );
 
 		$this->info( sprintf( 'Rsyncing images from "%s" to "%s"...', $path, $directory ) );
 
@@ -341,18 +347,19 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 		$path = StringUtils::escapeRegexReplacement( "mwstore://{$backend->getName()}/" . $path );
 
-		$objects = iterator_to_array($backend->getFileList([ 'dir' => $path ]));
+		$objects = iterator_to_array( $backend->getFileList( [ 'dir' => $path ] ) );
 
-		if ( count($objects) === 0 ) {
+		if ( count( $objects ) === 0 ) {
 			$this->info( sprintf( "'%s' path is empty, leave early\n", $path ) );
+
 			return false;
 		}
 
-		foreach( $objects as $object ) {
-			$this->output(sprintf("Processing file %s", $object));
+		foreach ( $objects as $object ) {
+			$this->output( sprintf( "Processing file %s", $object ) );
 			// do not backup thumbnails and temporary files
 			// --exclude "/thumb/*" --exclude "/temp/*"
-			if ( strpos($object, 'images/thumb/') !== false || strpos($object, 'images/temp/') !== false ) {
+			if ( strpos( $object, 'images/thumb/' ) !== false || strpos( $object, 'images/temp/' ) !== false ) {
 				continue;
 			}
 
@@ -361,34 +368,30 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 			$targetPath = $directory . basename( $object );
 
-			$backend->bucket()->object($object)->downloadToFile($targetPath);
+			$backend->bucket()->object( $object )->downloadToFile( $targetPath );
 
-			$this->output(sprintf("Copied %s to %s", $object, $targetPath));
+			$this->output( sprintf( "Copied %s to %s", $object, $targetPath ) );
 		}
 
 		$time = Wikia::timeDuration( wfTime() - $time );
 		$this->debug( "Copying from {$path} to {$directory}: status: time: {$time}" );
 
 		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
-		if( file_exists( $tarfile ) ) {
+		if ( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
 		}
 
 		$tar = new Archive_Tar( $tarfile );
 
-		if( ! $tar ) {
+		if ( !$tar ) {
 			$this->error( "Cannot open {$tarfile}" );
 			echo "Cannot open {$tarfile}";
 			die( 1 );
 		}
 		$files = $this->getDirTree( $directory );
 
-		if( is_array( $files ) && count( $files ) ) {
-			$this->info( sprintf(
-					"Packing %d files from {$directory} to {$tarfile}",
-					count( $files )
-				)
-			);
+		if ( is_array( $files ) && count( $files ) ) {
+			$this->info( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
 			$res = $tar->create( $files );
 
 			if ( $res !== true ) {
@@ -396,8 +399,7 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			}
 
 			$result = $tarfile;
-		}
-		else {
+		} else {
 			$this->info( "List of files in {$directory} is empty" );
 
 			// SUS-6077 | sub-bucket is empty, e.g. foo bucket is not empty,
@@ -420,21 +422,18 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	 */
 	private function getDirTree( $dir ) {
 
-		$files = array();
+		$files = [];
 
-		if( is_dir( $dir ) ) {
-			$dirs = array_diff( scandir( $dir ), array( ".", ".." ) );
-		    foreach( $dirs as $d ) {
+		if ( is_dir( $dir ) ) {
+			$dirs = array_diff( scandir( $dir ), [ ".", ".." ] );
+			foreach ( $dirs as $d ) {
 				$path = $dir . "/" . $d;
-				if( is_dir( $path ) ) {
+				if ( is_dir( $path ) ) {
 					$files = array_merge( $files, $this->getDirTree( $path ) );
-				}
-				else {
+				} else {
 					$include =
-						strpos( $path, "/images/thumb/") === false &&
-						strpos( $path, "/images/temp/") === false
-						;
-					if( $include ) {
+						strpos( $path, "/images/thumb/" ) === false && strpos( $path, "/images/temp/" ) === false;
+					if ( $include ) {
 						$files[] = $path;
 					}
 				}
@@ -445,66 +444,15 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	}
 
 	/**
-	 * Remove DFS bucket of a given wiki
-	 *
-	 * @see PLATFORM-1700
-	 * @see SUS-4536
-	 * @param int $cityId
-	 */
-	private function removeBucket( int $cityId ) {
-		try {
-			$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
-
-			/** @var GcsFileBackend $backend */
-			$backend = FileBackendGroup::singleton()->get('gcs-backend');
-
-			if (empty($wgUploadPath)) {
-				$this->info( sprintf("Upload path is empty for city %s, leave early", $cityId));
-				return;
-			}
-
-			$this->output( sprintf( 'Removing images from upload path %s', $wgUploadPath ) );
-			$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-
-			$this->output( sprintf( 'Getting file list for %s', $path ) );
-
-			$path = StringUtils::escapeRegexReplacement( "mwstore://{$backend->getName()}/" . $path );
-
-			$objects = iterator_to_array($backend->getFileList([ 'dir' => $path ]));
-
-			if ( count($objects) === 0 ) {
-				$this->info( sprintf( "'%s' path is empty, leave early\n", $path ) );
-				return false;
-			}
-
-			$this->output(sprintf("Removing %d files", count($objects)));
-
-			// now delete them all
-			foreach( $objects as $object ) {
-				$this->output(sprintf("Removing file %s", $object));
-
-				$backend->bucket()->object($object)->delete();
-			}
-		} catch ( Exception $ex ) {
-			$this->output( __METHOD__ . ' - ' . $ex->getMessage() );
-
-			Wikia\Logger\WikiaLogger::instance()->error( 'Removing files failed', [
-				'exception' => $ex,
-				'city_id' => $cityId
-			] );
-		}
-	}
-
-	/**
 	 * Clean up the shared data for a given wiki ID
 	 *
-	 * @see PLATFORM-1173
+	 * @param int $city_id
 	 * @see PLATFORM-1204
 	 * @see PLATFORM-1849
 	 *
 	 * @author Macbre
 	 *
-	 * @param int $city_id
+	 * @see PLATFORM-1173
 	 */
 	private function cleanupSharedData( $city_id ) {
 		global $wgExternalDatawareDB, $wgSpecialsDB;
@@ -514,7 +462,7 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		/**
 		 * remove records from stats-related tables
 		 */
-		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
+		$this->doTableCleanup( $dataware, 'pages', $city_id, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
 	}
 
@@ -534,7 +482,8 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
 		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
 
-		$this->info( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+		$this->info( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(),
+			$table ) );
 
 		// throttle delete queries
 		if ( $db->affectedRows() > 0 ) {
