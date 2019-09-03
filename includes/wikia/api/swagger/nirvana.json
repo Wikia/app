@@ -1449,7 +1449,7 @@
         "parameters": [
           {
             "in": "query",
-            "description": "User name prefix to query for (min 3, max 255 characters)",
+            "description": "User name prefix to query for (max 255 characters)",
             "name": "query",
             "required": true,
             "type": "string",
