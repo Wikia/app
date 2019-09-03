@@ -357,7 +357,7 @@ class WikiaView {
 			$output = $this->response->getData();
 		}
 
-		$json = json_encode( $output, JSON_PARTIAL_OUTPUT_ON_ERROR );
+		$json = json_encode( $output, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE );
 
 		if ( json_last_error() !== JSON_ERROR_NONE ) {
 			WikiaLogger::instance()->error( 'Partial JSON output rendered because of json_encode error', [
