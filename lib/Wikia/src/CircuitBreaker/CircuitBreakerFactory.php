@@ -20,6 +20,9 @@ class CircuitBreakerFactory {
 				case 'memcached':
 					$this->circuitBreakerInstance = new MemcachedCircuitBreakerStorage();
 					break;
+				case 'redis':
+					$this->circuitBreakerInstance = new RedisCircuitBreakerStorage();
+					break;
 				default:
 					$this->circuitBreakerInstance = new NoopCircuitBreakerStorage();
 					break;

@@ -9001,6 +9001,19 @@ $wgArticleExporterExchange = [
 $wgCircuitBreakerType = 'noop';
 
 /**
+ * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
+ * @var string $wgCircuitBreakerRedisHost
+ */
+$wgCircuitBreakerRedisHost = 'geo-redisshared-prod-master.query.consul';
+
+
+/**
+ * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
+ * @var int $wgCircuitBreakerRedisDb
+ */
+$wgCircuitBreakerRedisDb = 3;
+
+/**
  * @var $wgEnableHydralyticsExt
  */
 $wgEnableHydralyticsExt = true;
