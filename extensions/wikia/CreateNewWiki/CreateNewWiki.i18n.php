@@ -899,11 +899,13 @@ $messages['es'] = array(
 	'autocreatewiki-welcometalk-wall-title' => '¡Uno más en la familia!',
 	'autocreatewiki-welcometalk-wall' => 'Hola, soy miembro del equipo de soporte comunitario de Fandom. ¡Estamos muy contentos de que {{subst:SITENAME}} forme parte de Fandom!
 
-Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
-
+Puede parecer que haya muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 *Revisa las [[{{#Special:WikiFeatures}}|Funcionalidades Wiki]] para habilitar algunas funcionalidades especiales, como el popular chat.
+
 *Personaliza el color y estilo de tu comunidad a través del [[{{#Special:ThemeDesigner}}|Diseñador de Temas]].
-*Visita [[w:c:comunidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].',
+*Visita [[w:c:comunidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].
+*¿Utilizas Discord? ¡Nos encantaría que formes parte de nuestro servidor de Fandom/Gamepedia! En [[Ayuda:Discord]] aprenderás como participar con nuestra comunidad de habla hispana en el servidor.
+*Si estás interesado en saber como se va desarrollando tú comunidad, puedes ver las estadísticas en [[Especial:Analytics]].',
 	'autocreatewiki-welcometalk' => "== ¡Recibe nuestra bienvenida! ==
 ¡Hola!
 
