@@ -1,6 +1,6 @@
 #!/bin/bash
 SANDBOX=$1
-CONTAINER=`kubectl --context kube-sjc-prod -n prod get pods --selector=app=mediawiki-$1  -o jsonpath='{.items[0].metadata.name}'`
+CONTAINER=`kubectl --context kube-sjc-prod -n prod get pods --selector=app=mediawiki-sandbox-$1  -o jsonpath='{.items[0].metadata.name}'`
 
 echo
 echo "Entering bash shell on ${CONTAINER} ..."
