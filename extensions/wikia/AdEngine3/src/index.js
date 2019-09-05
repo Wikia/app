@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
@@ -67,6 +69,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 
 	trackLabradorValues();
 	trackLikhoToDW();
+	trackTabId();
 }
 
 function startAdEngine() {
@@ -107,6 +110,19 @@ function trackLikhoToDW() {
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
+}
+
+/**
+ * @private
+ */
+function trackTabId() {
+	if (!context.get('options.tracking.tabId')) {
+		return;
+  }
+
+  window.tabId = sessionStorage.tab_id ? sessionStorage.tab_id : sessionStorage.tab_id = uuid();
+
+  pageTracker.trackProp('tab_id', window.tabId);
 }
 
 function callExternals() {
