@@ -10,6 +10,8 @@ $messages['en'] = array(
 	'admindashboard-tab-advanced' => 'Advanced',
 	'admindashboard-tab-general' => 'General',
 	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-analytics-label' => 'Analytics',
+	'admindashboard-control-analytics-tooltip' => 'See how fans are interacting with your wiki.',
 	'admindashboard-control-theme-designer-label' => 'Theme Designer',
 	'admindashboard-control-theme-designer-tooltip' => 'Theme Designer allows you to customize your wiki colors, background, and more.',
 	'admindashboard-control-recent-changes-label' => 'Recent Changes',
@@ -63,6 +65,8 @@ $messages['qqq'] = array(
 	'admindashboard-tab-advanced' => 'label for advanced tab',
 	'admindashboard-tab-general' => 'label for general tab',
 	'admindashboard-controls-wiki-header' => 'label for the group of "wiki" tools on admin dashboard general page',
+	'admindashboard-control-analytics-label' => 'Label for link to Special:Analytics',
+	'admindashboard-control-analytics-tooltip' => 'tooltip for link to Special:Analytics describing that tool',
 	'admindashboard-control-theme-designer-label' => 'label for link to Theme Designer',
 	'admindashboard-control-theme-designer-tooltip' => 'tooltip for link to theme designer describing that tool',
 	'admindashboard-control-recent-changes-label' => 'label for link to Recent Changes',
@@ -327,6 +331,8 @@ $messages['de'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Mitteilungen',
 	'admindashboard-control-announcements-tooltip' => 'Eine neue Mitteilung für deine Community erstellen',
+	'admindashboard-control-analytics-tooltip' => 'So interagieren Fans mit deinem Wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['diq'] = array(
@@ -416,6 +422,8 @@ $messages['es'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Anuncios',
 	'admindashboard-control-announcements-tooltip' => 'Crea un anuncio para tu comunidad',
+	'admindashboard-control-analytics-tooltip' => 'Revisa cómo los fans interactúan en tu wiki.',
+	'admindashboard-control-analytics-label' => 'Analítica',
 );
 
 $messages['fa'] = array(
@@ -550,6 +558,8 @@ $messages['fr'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Annonces',
 	'admindashboard-control-announcements-tooltip' => 'Créer une annonce pour votre communauté',
+	'admindashboard-control-analytics-tooltip' => 'Découvrez comment les fans interagissent avec votre wiki.',
+	'admindashboard-control-analytics-label' => 'Analyse de données',
 );
 
 $messages['gl'] = array(
@@ -824,6 +834,8 @@ $messages['it'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Annunci',
 	'admindashboard-control-announcements-tooltip' => 'Crea un annuncio per la tua community',
+	'admindashboard-control-analytics-tooltip' => 'Vedi come i fan interagiscono con la tua wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['ja'] = array(
@@ -878,6 +890,8 @@ $messages['ja'] = array(
 	'right-admindashboard' => 'Special:AdminDashboard から管理者ツールを利用することを許可する',
 	'admindashboard-control-announcements-label' => 'お知らせ',
 	'admindashboard-control-announcements-tooltip' => 'コミュニティへのお知らせを作成',
+	'admindashboard-control-analytics-tooltip' => 'このWikiでのファンの動きを確認できます。',
+	'admindashboard-control-analytics-label' => '統計情報',
 );
 
 $messages['ko'] = array(
@@ -1223,6 +1237,8 @@ $messages['pl'] = array(
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-announcements-label' => 'Ogłoszenia',
 	'admindashboard-control-announcements-tooltip' => 'Utwórz ogłoszenie dla swojej społeczności',
+	'admindashboard-control-analytics-tooltip' => 'Dowiedz się co robią fani odwiedzający twoją wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['ps'] = array(
@@ -1299,6 +1315,8 @@ $messages['pt'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Anúncios',
 	'admindashboard-control-announcements-tooltip' => 'Criar um anúncio para sua comunidade',
+	'admindashboard-control-analytics-tooltip' => 'Veja como os fãs estão interagindo com sua wiki.',
+	'admindashboard-control-analytics-label' => 'Análises',
 );
 
 $messages['roa-tara'] = array(
@@ -1360,6 +1378,8 @@ $messages['ru'] = array(
 	'right-admindashboard' => 'Доступ к инструментам администратора через Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Объявления',
 	'admindashboard-control-announcements-tooltip' => 'Создайте объявление для вашего сообщества',
+	'admindashboard-control-analytics-tooltip' => 'Узнайте, как фанаты используют вашу вики.',
+	'admindashboard-control-analytics-label' => 'Аналитика',
 );
 
 $messages['si'] = array(
@@ -1744,6 +1764,8 @@ $messages['zh-hans'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => '通知',
 	'admindashboard-control-announcements-tooltip' => '为您的社区创建通知',
+	'admindashboard-control-analytics-tooltip' => '查看粉丝如何和你的wiki互动',
+	'admindashboard-control-analytics-label' => '数据分析',
 );
 
 $messages['zh-hant'] = array(
@@ -1798,5 +1820,7 @@ $messages['zh-hant'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => '公告',
 	'admindashboard-control-announcements-tooltip' => '為您的社區創建公告',
+	'admindashboard-control-analytics-tooltip' => '查看粉絲如何和你的wiki互動。',
+	'admindashboard-control-analytics-label' => '數據分析',
 );
 
