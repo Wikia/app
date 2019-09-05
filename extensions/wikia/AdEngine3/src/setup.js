@@ -3,8 +3,9 @@ import {
 	context,
 	events,
 	eventService,
-	InstantConfigCacheStorage,
+	fillerService,
 	InstantConfigService,
+	PorvataFiller,
 	setupNpaContext,
 	utils
 } from '@wikia/ad-engine';
@@ -15,10 +16,7 @@ import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
-
-const fallbackInstantConfig = {
-	wgAdDriverUnstickHiViLeaderboardTimeout: 3000,
-};
+import * as fallbackInstantConfig from './fallback-config.json';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -32,7 +30,7 @@ async function updateWadContext() {
 	// BlockAdBlock detection
 	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
 
-	context.set('options.wad.enabled', instantConfig.isGeoEnabled('wgAdDriverBabDetectionDesktopCountries'));
+	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
 	// showAds is undefined by default
 	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
@@ -115,15 +113,20 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
 	context.set('options.slotRepeater', true);
 
-	if (instantConfig.isGeoEnabled('wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries')) {
+	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',
 			true,
 		);
 		context.set(
 			'options.unstickHiViLeaderboardTimeout',
-			instantConfig.get('wgAdDriverUnstickHiViLeaderboardTimeout', 2000),
+			instantConfig.get('icHiViLeaderboardUnstickTimeout'),
 		);
+	}
+
+	if (instantConfig.get('icPorvataDirect')) {
+		context.set('slots.incontent_player.customFiller', 'porvata');
+		fillerService.register(new PorvataFiller());
 	}
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));

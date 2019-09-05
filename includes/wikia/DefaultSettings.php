@@ -267,6 +267,7 @@ $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 $wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
+$wgAutoloadClasses['Redshift'] = "$IP/includes/wikia/Redshift.class.php";
 
 /**
  * Resource Loader enhancements
@@ -1837,24 +1838,6 @@ $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
  * If enabled, file storage operations will be logged.
  */
 $wgLogFileStorageOperations = false;
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3008
- * If enabled, Google Cloud Storage will be used for storing files.
- */
-$wgUseGoogleCloudStorage = false;
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3033
- * If provided, a multi write will be used for storing files for all wikis with buckets matching the regex.
- */
-$wgUseGcsMigrationBucketRegex = '';
-
-/**
- * https://wikia-inc.atlassian.net/browse/SER-3033
- * If provided, Google Cloud Storage will be used for storing files for all wikis with buckets matching the regex.
- */
-$wgUseGcsBucketRegex = '';
 
 /**
  * Google Cloud Storage settings. The default settings are for production.

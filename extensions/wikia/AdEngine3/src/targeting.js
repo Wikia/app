@@ -217,9 +217,9 @@ export default {
 		return targeting;
 	},
 
-	getBiddersPrices(slotName, markNotRequestedPrices = true) {
+	async getBiddersPrices(slotName, markNotRequestedPrices = true) {
 		const realSlotPrices = bidders.getDfpSlotPrices(slotName);
-		const currentSlotPrices = bidders.getCurrentSlotPrices(slotName);
+		const currentSlotPrices = await bidders.getCurrentSlotPrices(slotName);
 
 		function transformBidderPrice(bidderName) {
 			if (!markNotRequestedPrices) {

@@ -94,10 +94,8 @@ spec:
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
               value: prod
-            - name: LOG_SOCKET_ONLY
+            - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5
@@ -105,16 +103,6 @@ spec:
             requests:
               cpu: 2.5
               memory: 3Gi
-        # MW log output, see K8s_LOGGING.md
-        - name: logger
-          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
-          resources:
-            limits:
-              cpu: 100m
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
@@ -279,10 +267,8 @@ spec:
               value: "${DATACENTER}"
             - name: WIKIA_ENVIRONMENT
               value: prod
-            - name: LOG_SOCKET_ONLY
+            - name: LOG_STDOUT_ONLY
               value: "yes"
-            - name: LOG_SOCKET_ADDRESS
-              value: "tcp://localhost:9999"
           resources:
             limits:
               cpu: 5
@@ -290,16 +276,6 @@ spec:
             requests:
               cpu: 2.5
               memory: 3Gi
-        # MW log output, see K8s_LOGGING.md
-        - name: logger
-          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
-          resources:
-            limits:
-              cpu: 1
-              memory: 200Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:

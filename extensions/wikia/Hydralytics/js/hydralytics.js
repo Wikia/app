@@ -193,7 +193,7 @@ $(function() {
 			}
 		}
 
-		labels.push('Other');
+		labels.push(message("device_other"));
 		series.push(otherTotal);
 
 		var config = {
