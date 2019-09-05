@@ -59,13 +59,8 @@ def bump_minor() {
 }
 
 def createReleaseBranch(String releaseBranch) {
-    sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
-    if (!params.dry_run) {
-        sh(script: "git push --set-upstream origin ${releaseBranch}")
-    } else {
-        println("Dry run: git push --set-upstream origin ${releaseBranch}")
-    }
-
+  sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
+  sh(script: "git push --set-upstream origin ${releaseBranch}")
 }
 
 // If new release - create a tag e.g. release-230.001
@@ -240,7 +235,7 @@ node("docker-daemon") {
 
       withDockerContainer(kubectlImage) {
         deploymentInfo = sh(
-          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-preview -o jsonpath='{.items[0].spec.template.metadata.labels}'",
+          script: "kubectl --context kube-${datacenter}-prod -n prod get deployments -l app=mediawiki-verify -o jsonpath='{.items[0].spec.template.metadata.labels}'",
           returnStdout: true
         )
       }
@@ -411,13 +406,13 @@ node("docker-daemon") {
 
     stage("Apply new k8s descriptor") {
       dir("app") {
-        // Preview is essentially the same env as a sandbox
+        // verify is essentially the same env as a sandbox
         def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
         def k8s = render(template, [
           'MEDIAWIKI_IMAGE': mediawikiImage,
           'IMAGE_TAG': imageTag,
-          'SANDBOX_NAME': 'preview',
-          'SANDBOX_ENVIRONMENT': 'preview',
+          'SANDBOX_NAME': 'verify',
+          'SANDBOX_ENVIRONMENT': 'verify',
           'SANDBOX_DATACENTER': datacenter,
           'APP_VERSION': nextAppReleaseTag,
           'CONFIG_VERSION': nextConfigReleaseTag,
@@ -435,48 +430,12 @@ EOL""")
       if (!params.dry_run) {
         withDockerContainer(kubectlImage) {
           sh "kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
-          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-preview")
+          rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-prod -n prod rollout status deployment/mediawiki-verify")
         }
       } else {
         println("Dry run: kubectl --context kube-${datacenter}-prod -n prod apply -f app/docker/sandbox/k8s.yaml")
         rolloutStatus = 0
       }
-
-    }
-
-    stage('Tag Jira tickets') {
-        if (!params.dry_run) {
-            build job: 'tag-jira-tickets', parameters: [
-                      string(name: 'app_name', value: 'app'),
-                      string(name: 'env', value: 'preview'),
-                      string(name: 'previous_release', value: currentAppTag),
-                      string(name: 'current_release', value: nextAppReleaseTag),
-                      [$class: 'LabelParameterValue', name: 'node', label: 'linux']
-                  ],
-                  wait: false
-        } else {
-            println("Dry run: build job: 'tag-jira-tickets'")
-        }
-    }
-
-    stage('Create selenium-tests preview branch') {
-        if (!params.dry_run) {
-            build 'create-preview-test-run'
-        } else {
-            println("Dry run: build 'create-preview-test-run'")
-        }
-
-    }
-
-    stage('Trigger tests') {
-        if (!params.dry_run) {
-            build job: 'app-preview-push-event', parameters: [
-                     string(name: 'release', value: nextAppReleaseTag),
-                     string(name: 'datacenter', value: 'sjc')],
-                     wait: false
-        } else {
-            println("Dry run: build job: 'app-preview-push-event'")
-        }
 
     }
 
