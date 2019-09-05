@@ -331,6 +331,8 @@ $messages['de'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Mitteilungen',
 	'admindashboard-control-announcements-tooltip' => 'Eine neue Mitteilung für deine Community erstellen',
+	'admindashboard-control-analytics-tooltip' => 'So interagieren Fans mit deinem Wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['diq'] = array(
@@ -397,7 +399,7 @@ $messages['es'] = array(
 	'admindashboard-control-invite-tooltip' => 'Invitar necesita una descripción. Añadirla.',
 	'admindashboard-control-help-label' => 'Ayuda',
 	'admindashboard-control-help-tooltip' => 'Encontrar Ayuda',
-	'admindashboard-control-help-url' => 'http://comunidad.wikia.com/wiki/Ayuda:Contenidos',
+	'admindashboard-control-help-url' => 'https://comunidad.fandom.com/wiki/Ayuda:Contenidos',
 	'admindashboard-control-community-corner-label' => 'Rincón de la comunidad',
 	'admindashboard-control-community-corner-tooltip' => 'Edita el Rincón de la Comunidad de tu wiki y avisa a los usuarios del cambio.',
 	'admindashboard-controls-content-header' => 'Contenido',
@@ -420,6 +422,8 @@ $messages['es'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Anuncios',
 	'admindashboard-control-announcements-tooltip' => 'Crea un anuncio para tu comunidad',
+	'admindashboard-control-analytics-tooltip' => 'Revisa cómo los fans interactúan en tu wiki.',
+	'admindashboard-control-analytics-label' => 'Analítica',
 );
 
 $messages['fa'] = array(
@@ -547,13 +551,15 @@ $messages['fr'] = array(
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
 	'admindashboard-control-add-video-label' => 'Ajouter une vidéo',
 	'admindashboard-control-add-video-tooltip' => 'Ajoutez de nouvelles vidéos sur votre wiki.',
-	'admindashboard-control-help-url' => 'http://communaute.wikia.com/wiki/Aide:Contenu',
+	'admindashboard-control-help-url' => 'https://communaute.fandom.com/wiki/Aide:Contenu',
 	'admindashboard-desc' => "Un tableau de bord à destination des administrateurs pour qu'ils aient un accès rapide à leurs outils",
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Annonces',
 	'admindashboard-control-announcements-tooltip' => 'Créer une annonce pour votre communauté',
+	'admindashboard-control-analytics-tooltip' => 'Découvrez comment les fans interagissent avec votre wiki.',
+	'admindashboard-control-analytics-label' => 'Analyse de données',
 );
 
 $messages['gl'] = array(
@@ -821,13 +827,15 @@ $messages['it'] = array(
 	'admindashboard-back-to-dashboard' => 'Torna al Pannello di controllo',
 	'admindashboard-control-add-video-label' => 'Carica un video',
 	'admindashboard-control-add-video-tooltip' => 'Carica un nuovo video nella tua wiki.',
-	'admindashboard-control-help-url' => 'http://it.community.wikia.com/wiki/Aiuto:Contenuti',
+	'admindashboard-control-help-url' => 'https://community.fandom.com/it/wiki/Aiuto:Contenuti',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Personalizza la tua wiki con il CSS locale.',
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Annunci',
 	'admindashboard-control-announcements-tooltip' => 'Crea un annuncio per la tua community',
+	'admindashboard-control-analytics-tooltip' => 'Vedi come i fan interagiscono con la tua wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['ja'] = array(
@@ -873,15 +881,17 @@ $messages['ja'] = array(
 	'admindashboard-control-help-url' => 'https://community.fandom.com/ja/wiki/ヘルプ:コンテンツ',
 	'admindashboard-control-special-css-tooltip' => 'ローカルのCSSでWikiをカスタマイズします。',
 	'admindashboard-loading' => '読み込み中...',
-	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-desc' => 'アドミンツールに簡単にアクセスするためのダッシュボード',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-group-rights-label' => 'グループ権限',
-	'admindashboard-control-group-rights-tooltip' => 'Overview of rights for the different user groups.',
+	'admindashboard-control-group-rights-tooltip' => '各ユーザー権限の概要',
 	'admindashboard-control-invite-label' => '招待',
 	'admindashboard-control-invite-tooltip' => '他のユーザーをこのWikiに誘う',
 	'right-admindashboard' => 'Special:AdminDashboard から管理者ツールを利用することを許可する',
 	'admindashboard-control-announcements-label' => 'お知らせ',
 	'admindashboard-control-announcements-tooltip' => 'コミュニティへのお知らせを作成',
+	'admindashboard-control-analytics-tooltip' => 'このWikiでのファンの動きを確認できます。',
+	'admindashboard-control-analytics-label' => '統計情報',
 );
 
 $messages['ko'] = array(
@@ -1204,7 +1214,7 @@ $messages['pl'] = array(
 	'admindashboard-control-invite-tooltip' => 'Zaproś innych do korzystania z tej wiki.',
 	'admindashboard-control-help-label' => 'Pomoc',
 	'admindashboard-control-help-tooltip' => 'Uzyskaj pomoc.',
-	'admindashboard-control-help-url' => 'http://spolecznosc.wikia.com/wiki/Help:Zawartość',
+	'admindashboard-control-help-url' => 'https://spolecznosc.fandom.com/wiki/Pomoc:Zawartość',
 	'admindashboard-control-community-corner-label' => 'Zakątek społeczności',
 	'admindashboard-control-community-corner-tooltip' => 'Edytuj Zakątek społeczności Twojej wiki i powiadom użytkowników o nowościach.',
 	'admindashboard-controls-content-header' => 'Zawartość',
@@ -1227,6 +1237,8 @@ $messages['pl'] = array(
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-announcements-label' => 'Ogłoszenia',
 	'admindashboard-control-announcements-tooltip' => 'Utwórz ogłoszenie dla swojej społeczności',
+	'admindashboard-control-analytics-tooltip' => 'Dowiedz się co robią fani odwiedzający twoją wiki.',
+	'admindashboard-control-analytics-label' => 'Analytics',
 );
 
 $messages['ps'] = array(
@@ -1295,7 +1307,7 @@ $messages['pt'] = array(
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
-	'admindashboard-control-help-url' => 'https://community.fandom.com/wiki/Help:Contents',
+	'admindashboard-control-help-url' => 'https://comunidade.fandom.com/wiki/Ajuda:Conteúdos',
 	'admindashboard-control-add-video-label' => 'Add a Video',
 	'admindashboard-control-add-video-tooltip' => 'Add new videos to your wiki.',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
@@ -1303,6 +1315,8 @@ $messages['pt'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Anúncios',
 	'admindashboard-control-announcements-tooltip' => 'Criar um anúncio para sua comunidade',
+	'admindashboard-control-analytics-tooltip' => 'Veja como os fãs estão interagindo com sua wiki.',
+	'admindashboard-control-analytics-label' => 'Análises',
 );
 
 $messages['roa-tara'] = array(
@@ -1357,13 +1371,15 @@ $messages['ru'] = array(
 	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
 	'admindashboard-control-add-video-label' => 'Добавить видео',
 	'admindashboard-control-add-video-tooltip' => 'Добавить новое видео на вики.',
-	'admindashboard-control-help-url' => 'http://ru.community.wikia.com/wiki/Справка:Содержание',
+	'admindashboard-control-help-url' => 'https://community.fandom.com/ru/wiki/Справка:Содержание',
 	'admindashboard-control-special-css-tooltip' => 'Измените свою вики с помощью локального CSS.',
 	'admindashboard-desc' => 'Панель для администраторов с быстрым доступом к инструментам',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'right-admindashboard' => 'Доступ к инструментам администратора через Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => 'Объявления',
 	'admindashboard-control-announcements-tooltip' => 'Создайте объявление для вашего сообщества',
+	'admindashboard-control-analytics-tooltip' => 'Узнайте, как фанаты используют вашу вики.',
+	'admindashboard-control-analytics-label' => 'Аналитика',
 );
 
 $messages['si'] = array(
@@ -1735,7 +1751,7 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-add-video-tooltip' => '在你的wiki上添加新视频',
 	'admindashboard-control-community-corner-label' => '社区讯息',
 	'admindashboard-control-community-corner-tooltip' => '编辑 wiki 的社区讯息来通知用户。',
-	'admindashboard-control-help-url' => 'http://zh.community.wikia.com/wiki/Help:内容',
+	'admindashboard-control-help-url' => 'https://community.fandom.com/zh/wiki/Help:内容',
 	'admindashboard-control-invite-tooltip' => '邀请其他人使用此 wiki。',
 	'admindashboard-control-multiple-upload-tooltip' => '利用多图上传工具，一次上传多张图片。',
 	'admindashboard-control-page-layout-builder-tooltip' => '页面布局生成器让你创建页面的轮廓给创建新页面的用户选择。',
@@ -1748,6 +1764,8 @@ $messages['zh-hans'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => '通知',
 	'admindashboard-control-announcements-tooltip' => '为您的社区创建通知',
+	'admindashboard-control-analytics-tooltip' => '查看粉丝如何和你的wiki互动',
+	'admindashboard-control-analytics-label' => '数据分析',
 );
 
 $messages['zh-hant'] = array(
@@ -1791,7 +1809,7 @@ $messages['zh-hant'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => '利用多圖上傳工具，一次上傳多張圖片。',
 	'admindashboard-control-add-video-label' => '增加影片',
 	'admindashboard-control-add-video-tooltip' => '在你的wiki上增加新影片。',
-	'admindashboard-control-help-url' => 'http://zh.community.wikia.com/wiki/Help:内容',
+	'admindashboard-control-help-url' => 'https://community.fandom.com/zh/wiki/Help:内容',
 	'admindashboard-control-page-layout-builder-label' => '頁面布局生成器',
 	'admindashboard-control-page-layout-builder-tooltip' => '頁面布局生成器讓你創建頁面的輪廓給創建新頁面的用戶選擇。',
 	'admindashboard-control-special-css-tooltip' => '用CSS自訂你的wiki。',
@@ -1802,5 +1820,7 @@ $messages['zh-hant'] = array(
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 	'admindashboard-control-announcements-label' => '公告',
 	'admindashboard-control-announcements-tooltip' => '為您的社區創建公告',
+	'admindashboard-control-analytics-tooltip' => '查看粉絲如何和你的wiki互動。',
+	'admindashboard-control-analytics-label' => '數據分析',
 );
 
