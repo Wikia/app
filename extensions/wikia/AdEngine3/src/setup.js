@@ -4,6 +4,7 @@ import {
 	events,
 	eventService,
 	fillerService,
+  InstantConfigCacheStorage,
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
