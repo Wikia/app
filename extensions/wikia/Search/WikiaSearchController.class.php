@@ -7,8 +7,6 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Language\LanguageService;
 use Wikia\Search\MediaWikiService;
 use Wikia\Search\SearchResult;
-use Wikia\Search\Services\ESFandomSearchService;
-use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
