@@ -161,9 +161,11 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 10000));
 	context.set('custom.fmrDelayDisabled', instantConfig.get('wgAdDriverDisableFMRDelayOasisCountries'));
 
+	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
+
 	setupBidders(context, instantConfig);
 
-	if (context.get('custom.isIncontentPlayerDisabled')) {
+	if (context.get('bidders.prebid.enabled')) {
 		const s1 = context.get('wiki.targeting.wikiIsTop1000') ? context.get('targeting.s1') : 'not a top1k wiki';
 
 		context.set('bidders.prebid.targeting', {
