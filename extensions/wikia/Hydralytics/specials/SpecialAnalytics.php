@@ -15,12 +15,10 @@
 
 namespace Hydralytics;
 
-use \CountryNames;
-
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 4.2;
+	const CACHE_VERSION = 4.4;
 
 	/**
 	 * Output HTML
@@ -64,7 +62,7 @@ class SpecialAnalytics extends \SpecialPage {
 	 *
 	 * @access	private
 	 * @return	void	[Outputs to screen]
-	 * @throws \ErrorPageError
+	 * @throws \MWException
 	 */
 	private function analyticsPage() {
 		global $wgLang;
@@ -192,7 +190,7 @@ class SpecialAnalytics extends \SpecialPage {
 						$sections['top_viewed_pages'] .= "
 							<tr>
 
-								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
+								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>". htmlspecialchars($title) . "</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
@@ -273,7 +271,8 @@ class SpecialAnalytics extends \SpecialPage {
 
 						$sections['most_visited_files'] .= "
 							<tr>
-								<td> <a href='".wfExpandUrl($newUri)."'>".urldecode($uriText)."</a></td>
+								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>".
+								htmlspecialchars($uriText)."</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
