@@ -12,6 +12,7 @@ import { getNavbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
 import { recRunner } from '../wad/rec-runner';
+import billTheLizardWrapper  from '../bill-the-lizard-wrap';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
@@ -28,6 +29,7 @@ let currentRecNode = null;
 
 let currentAdSlot = null;
 let nextSlotName = null;
+let nextSlot = null;
 let rotatorListener = null;
 let recirculationElement = null;
 
@@ -254,9 +256,13 @@ export function rotateIncontentBoxad(slotName) {
 	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
 
+
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		if (slot.getSlotName().substring(0, 16) === fmrPrefix) {
 			slot.once(AdSlot.STATUS_SUCCESS, () => {
+				// nextSlot = `${fmrPrefix}${slot.config.repeat.index + 1}`;
+				nextSlot = fmrPrefix + (slot.getConfigProperty('repeat.index') + 1);
+				billTheLizardWrapper.callCheshireCat(nextSlot);
 				slotStatusChanged(AdSlot.STATUS_SUCCESS);
 
 				slot.once(AdSlot.SLOT_VIEWED_EVENT, () => {

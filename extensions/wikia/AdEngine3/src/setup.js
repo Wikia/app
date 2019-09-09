@@ -4,7 +4,7 @@ import {
 	events,
 	eventService,
 	fillerService,
-  InstantConfigCacheStorage,
+    InstantConfigCacheStorage,
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
@@ -18,6 +18,7 @@ import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 import * as fallbackInstantConfig from './fallback-config.json';
+import { billTheLizardWrapper } from './bill-the-lizard-wrap';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -97,6 +98,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
 
+	context.set('options.billTheLizard.cheshireCat', true); //skad to?
+
 	context.set('options.video.moatTracking.enabled', instantConfig.isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', instantConfig.get('wgAdDriverPorvataMoatTrackingSampling'));
 
@@ -156,7 +159,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 10000));
+	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 1000)); // HUE HUE HUE 10k gold pls
 	context.set('custom.fmrDelayDisabled', instantConfig.get('wgAdDriverDisableFMRDelayOasisCountries'));
 	context.set('custom.beachfrontDfp', instantConfig.isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
 	context.set('custom.lkqdDfp', instantConfig.isGeoEnabled('wgAdDriverLkqdBidderCountries'));
@@ -266,6 +269,10 @@ async function configure(adsContext, isOptedIn) {
 	registerSlotTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
+
+	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+
+	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }
 
 /**
