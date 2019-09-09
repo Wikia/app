@@ -9,7 +9,8 @@ import {
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
-	utils
+	utils,
+	setupBidders
 } from '@wikia/ad-engine';
 import { set } from 'lodash';
 import basicContext from './ad-context';
@@ -159,36 +160,10 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
 	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 10000));
 	context.set('custom.fmrDelayDisabled', instantConfig.get('wgAdDriverDisableFMRDelayOasisCountries'));
-	context.set('custom.beachfrontDfp', instantConfig.isGeoEnabled('wgAdDriverBeachfrontDfpCountries'));
-	context.set('custom.lkqdDfp', instantConfig.isGeoEnabled('wgAdDriverLkqdBidderCountries'));
-	context.set('custom.pubmaticDfp', instantConfig.isGeoEnabled('wgAdDriverPubMaticDfpCountries'));
 
-	const hasFeaturedVideo = context.get('custom.hasFeaturedVideo');
-	context.set('bidders.a9.enabled', instantConfig.isGeoEnabled('wgAdDriverA9BidderCountries'));
-	context.set('bidders.a9.dealsEnabled', instantConfig.isGeoEnabled('wgAdDriverA9DealsCountries'));
-	context.set('bidders.a9.videoEnabled', instantConfig.isGeoEnabled('wgAdDriverA9VideoBidderCountries') && hasFeaturedVideo);
+	setupBidders(context, instantConfig);
 
-	if (hasFeaturedVideo) {
-		context.set('templates.stickyTLB.enabled', false);
-	}
-
-	if (instantConfig.isGeoEnabled('wgAdDriverPrebidBidderCountries')) {
-		context.set('bidders.prebid.enabled', true);
-		context.set('bidders.prebid.aol.enabled', instantConfig.isGeoEnabled('wgAdDriverAolBidderCountries'));
-		context.set('bidders.prebid.appnexus.enabled', instantConfig.isGeoEnabled('wgAdDriverAppNexusBidderCountries'));
-		context.set('bidders.prebid.beachfront.enabled', instantConfig.isGeoEnabled('wgAdDriverBeachfrontBidderCountries'));
-		context.set('bidders.prebid.indexExchange.enabled', instantConfig.isGeoEnabled('wgAdDriverIndexExchangeBidderCountries'));
-		context.set('bidders.prebid.kargo.enabled', instantConfig.isGeoEnabled('wgAdDriverKargoBidderCountries'));
-		context.set('bidders.prebid.lkqd.enabled', instantConfig.isGeoEnabled('wgAdDriverLkqdBidderCountries'));
-		context.set('bidders.prebid.onemobile.enabled', instantConfig.isGeoEnabled('wgAdDriverAolOneMobileBidderCountries'));
-		context.set('bidders.prebid.openx.enabled', instantConfig.isGeoEnabled('wgAdDriverOpenXPrebidBidderCountries'));
-		context.set('bidders.prebid.pubmatic.enabled', instantConfig.isGeoEnabled('wgAdDriverPubMaticBidderCountries'));
-		context.set('bidders.prebid.rubicon_display.enabled', instantConfig.isGeoEnabled('wgAdDriverRubiconDisplayPrebidCountries'));
-		context.set('bidders.prebid.vmg.enabled', instantConfig.isGeoEnabled('wgAdDriverVmgBidderCountries'));
-
-		context.set('bidders.prebid.appnexusAst.enabled', instantConfig.isGeoEnabled('wgAdDriverAppNexusAstBidderCountries'));
-		context.set('bidders.prebid.rubicon.enabled', instantConfig.isGeoEnabled('wgAdDriverRubiconPrebidCountries'));
-
+	if (context.get('custom.isIncontentPlayerDisabled')) {
 		const s1 = context.get('wiki.targeting.wikiIsTop1000') ? context.get('targeting.s1') : 'not a top1k wiki';
 
 		context.set('bidders.prebid.targeting', {
@@ -198,21 +173,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			s2: [context.get('targeting.s2') || ''],
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
-
-		context.set('bidders.prebid.bidsRefreshing.enabled', context.get('options.slotRepeater'));
-		context.set(
-			'custom.rubiconInFV',
-			instantConfig.isGeoEnabled('wgAdDriverRubiconPrebidCountries') && hasFeaturedVideo,
-		);
 		context.set('custom.isCMPEnabled', true);
-
-		if (!instantConfig.isGeoEnabled('wgAdDriverLkqdOutstreamCountries')) {
-			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
-		}
-
-		if (!instantConfig.isGeoEnabled('wgAdDriverPubMaticOutstreamCountries')) {
-			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
-		}
 	}
 
 	if (instantConfig.isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
@@ -226,7 +187,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		context.set('custom.serverPrefix', 'vm1b');
 	}
 
-	context.set('bidders.enabled', context.get('bidders.prebid.enabled') || context.get('bidders.a9.enabled'));
 	context.set('services.netzathleten.enabled', instantConfig.isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	// Need to be placed always after all lABrador wgVars checks
