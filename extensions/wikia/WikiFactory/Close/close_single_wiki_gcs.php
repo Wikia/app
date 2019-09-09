@@ -15,13 +15,10 @@ use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 
-
 class CloseSingleWikiGcs extends Maintenance {
 
 	protected $delay = 5;
 	protected $dropIndex = false;
-	/** @var GcsBucketRemover */
-	private $bucketRemover;
 
 	/**
 	 * constructor
@@ -34,8 +31,6 @@ class CloseSingleWikiGcs extends Maintenance {
 		$this->addOption( 'delay', 'Set time before deletion starts (in seconds)', false, true, 'd' );
 		$this->addOption( 'drop-search-index', 'Should we delete search results from Solr', false, false, 's' );
 		$this->addOption( 'cluster', 'Which cluster to operate on', false, true, 'c' );
-
-		$this->bucketRemover = new GcsBucketRemover();
 	}
 
 	public function execute() {
@@ -79,7 +74,7 @@ class CloseSingleWikiGcs extends Maintenance {
 			return;
 		}
 
-		$this->bucketRemover->remove( $wgCityId );
+		(new GcsBucketRemover())->remove( $wgCityId );
 
 		$this->output( 'Removed bucket' );
 

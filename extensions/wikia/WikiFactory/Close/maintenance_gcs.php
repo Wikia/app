@@ -25,9 +25,6 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
-	/** @var GcsBucketRemover */
-	private $bucketRemover;
-
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'first', 'Run only once for first wiki in queue' );
@@ -35,8 +32,6 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
 		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
 		$this->addOption( 'cluster', 'Run for a given cluster only', false, true );
-
-		$this->bucketRemover = new GcsBucketRemover();
 	}
 
 	/**
@@ -195,7 +190,7 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				$this->bucketRemover->remove( $cityid );
+				(new GcsBucketRemover())->remove( $cityid );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
