@@ -5,15 +5,11 @@ import {
     context,
     events,
     eventService,
-    slotService,
-    utils
 } from '@wikia/ad-engine';
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
 
-const AD_SLOT_CATLAPSED_STATUS = 'catlapsed';
 const NOT_USED_STATUS = 'not_used';
-// const logGroup = 'bill-the-lizard-wrapper';
 
 const bidPosKeyVal = 'INCONTENT_BOXAD_1';
 let config = null;
@@ -21,7 +17,6 @@ let cheshirecatCalled = false;
 let initialValueOfIncontentsCounter = 1;
 let incontentsCounter = initialValueOfIncontentsCounter;
 let defaultStatus = NOT_USED_STATUS;
-let refreshedSlotNumber = null;
 
 function getCallId(counter = null) {
     if (context.get('options.useTopBoxad') && (counter || incontentsCounter) === 0) {
@@ -35,7 +30,8 @@ function serializeBids(slotName) {
     return targeting.getBiddersPrices(slotName, false).then(bidderPrices => [
         bidderPrices.bidder_0 || 0, // wikia adapter
         bidderPrices.bidder_1 || 0,
-        bidderPrices.bidder_2 || 0,
+        // bidderPrices.bidder_2 || 0,
+        20,
         bidderPrices.bidder_4 || 0,
         bidderPrices.bidder_5 || 0,
         bidderPrices.bidder_6 || 0,
@@ -86,19 +82,10 @@ function getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
 
 export const billTheLizardWrapper = {
     configureBillTheLizard(billTheLizardConfig) {
-        let baseSlotName = 'incontent_boxad_1';
+
         defaultStatus = NOT_USED_STATUS;
 
-        if (!context.get('bidders.prebid.bidsRefreshing.enabled')) {                                         // czy to jest true na oasis?
-            return;
-        }
         config = billTheLizardConfig;
-
-        if (!this.hasAvailableModels(config, 'cheshirecat')) {
-            return;
-        }
-        context.set('services.billTheLizard.projects', config.projects);
-        context.set('services.billTheLizard.timeout', config.timeout || 0);
 
         const enableCheshireCat = context.get('options.billTheLizard.cheshireCat');                       // Don't believe his lies
 
@@ -107,33 +94,8 @@ export const billTheLizardWrapper = {
         }
 
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
-            console.log('catlapse');
-            // const slotNameToCatlapse = getCallId();
-            //
-            // slotService.on(slotNameToCatlapse, AD_SLOT_CATLAPSED_STATUS, () => {
-            //     utils.logger(logGroup, `Catlapsing ${slotNameToCatlapse}`);
-            //     // eslint-disable-next-line no-console
-            //     console.log(`Catlapsing ${slotNameToCatlapse}`);
-            // });
-            // slotService.disable(getCallId(), AD_SLOT_CATLAPSED_STATUS);
+            console.log('catlapsed!');
         });
-
-        // context.set(
-        //     'bidders.prebid.bidsRefreshing.bidsBackHandler',
-        //     () => {
-        //             const callId = getCallId(refreshedSlotNumber);
-        //             // to je tez wazne 3.
-        //             this.callCheshireCat(callId);
-        //     },
-        // );
-
-        // context.push('listeners.slot', {
-        //     onRenderEnded: (adSlot) => {
-        //         if (adSlot.getSlotName() === baseSlotName && !cheshirecatCalled) {
-        //             this.callCheshireCat(adSlot.config.adProduct);
-        //         }
-        //     },
-        // });         - very wazne, na pozniej, zeby kot sie nei wyjebal na starcie
 
         eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
             if (adSlot.getConfigProperty('cheshireCatSlot')) {
@@ -145,10 +107,6 @@ export const billTheLizardWrapper = {
                     defaultStatus,
                 ));
             }
-        });
-
-        eventService.on(events.BIDS_REFRESH, () => {
-            cheshirecatCalled = true;
         });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
@@ -180,28 +138,6 @@ export const billTheLizardWrapper = {
             cheshirecatCalled = true;
             billTheLizard.call(['cheshirecat'], callId);
         });
-    },
-
-    getBtlSlotStatus,
-
-    hasAvailableModels(btlConfig, projectName) {
-        const projects = btlConfig.projects || config.projects;
-
-        return projects && projects[projectName]
-            && projects[projectName].some(
-                model => utils.geoService.isProperGeo(model.countries, model.name),
-            );
-    },
-
-    reset() {
-        cheshirecatCalled = false;
-        defaultStatus = NOT_USED_STATUS;
-
-        // Recheck available models for Labrador decisions
-        this.hasAvailableModels(config, 'cheshirecat');
-
-        // Reset predictions from previous page views
-        billTheLizard.reset();
     },
 }
 

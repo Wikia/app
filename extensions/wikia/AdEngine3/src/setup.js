@@ -18,7 +18,7 @@ import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 import * as fallbackInstantConfig from './fallback-config.json';
-import { billTheLizardWrapper } from './bill-the-lizard-wrap';
+import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
