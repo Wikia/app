@@ -176,6 +176,14 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
 		context.set('custom.isCMPEnabled', true);
+
+		if (!instantConfig.get('icPrebidLkqdOutstream')) {
+			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
+		}
+
+		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
+			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
 	}
 
 	if (instantConfig.isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
