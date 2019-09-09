@@ -1,11 +1,10 @@
-import * as Cookies from 'js-cookie';
 import {
 	AdEngine,
 	context,
 	events,
 	eventService,
 	fillerService,
-	geoCacheStorage,
+  InstantConfigCacheStorage,
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
@@ -199,8 +198,9 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 
 	context.set('services.netzathleten.enabled', instantConfig.isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
+	const cacheStorage = InstantConfigCacheStorage.make();
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', geoCacheStorage.mapSamplingResults(instantConfig.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', cacheStorage.mapSamplingResults(instantConfig.get('wgAdDriverLABradorDfpKeyvals')));
 
 	slots.setupIdentificators();
 	slots.setupStates();

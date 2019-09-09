@@ -54,6 +54,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$this->urlMultipleUpload = SpecialPage::getTitleFor( 'MultipleUpload' )->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor( 'CSS' )->getFullURL();
+		$this->urlSpecialAnalytics = SpecialPage::getTitleFor('Analytics')->getFullURL();
 
 		// special:specialpages
 		$this->advancedSection = (string)$this->sendSelfRequest( 'getAdvancedSection', [ ] );
@@ -61,6 +62,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayWikiFeatures = !empty( $this->wg->EnableWikiFeatures );
 		$this->displaySpecialCss = !empty( $this->wg->EnableSpecialCssExt );
+		$this->displayAnalytics = !empty( $this->wg->EnableHydralyticsExt );
 
 		// Add Upload Photos Dialog
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );

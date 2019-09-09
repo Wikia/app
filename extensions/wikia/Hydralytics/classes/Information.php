@@ -122,7 +122,7 @@ class Information {
 
 		$res = \Redshift::query(
 			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND url <> \'/\'  GROUP BY url ' .
+			'WHERE wiki_id = :wiki_id AND url <> \'/\' AND url LIKE \'%/wiki/%\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
