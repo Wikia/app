@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 4.4;
+	const CACHE_VERSION = 4.5;
 
 	/**
 	 * Output HTML
