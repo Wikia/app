@@ -56,7 +56,6 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/**
 	 * Publish queued tasks to RabbitMQ.
 	 * Called at the end of the request lifecycle.
-	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
 	 */
 	function doUpdate() {
 		foreach ( $this->producers as $producer ) {
@@ -70,7 +69,10 @@ class DefaultTaskPublisher implements TaskPublisher {
 			return;
 		}
 
-		$this->circuitBreaker->assertOperationAllowed();
+		if ( !$this->circuitBreaker->operationAllowed() ) {
+			$this->info( 'circuit breaker open for task publisher' );
+			return;
+		}
 
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
