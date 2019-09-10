@@ -25,13 +25,7 @@ class GcsBucketRemover {
 
 			$path = StringUtils::escapeRegexReplacement( "mwstore://{$backend->getName()}/" . $path );
 
-			$objects = iterator_to_array( $backend->getFileList( [ 'dir' => $path ] ) );
-
-			if ( count( $objects ) === 0 ) {
-				$this->info( sprintf( "'%s' path is empty, leave early\n", $path ) );
-
-				return false;
-			}
+			$objects = $backend->getFileList( [ 'dir' => $path ] );
 
 			// now delete them all
 			foreach ( $objects as $object ) {

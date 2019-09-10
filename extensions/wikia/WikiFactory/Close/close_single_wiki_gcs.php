@@ -76,8 +76,6 @@ class CloseSingleWikiGcs extends Maintenance {
 
 		(new GcsBucketRemover())->remove( $wgCityId );
 
-		$this->output( 'Removed bucket' );
-
 		$this->output( 'Cleaning the shared database' );
 
 		if ( !WikiFactory::isInArchive( $wgCityId ) ) {
