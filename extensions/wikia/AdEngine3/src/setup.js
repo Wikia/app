@@ -63,7 +63,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
 
 	context.set('wiki', wikiContext);
-	context.set('state.showAds', showAds);
+	context.set('state.isSteam', utils.client.isSteamPlatform());
+	context.set('state.showAds', showAds && !context.get('state.isSteam'));
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
 	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
 	context.set('custom.hiviLeaderboard', instantConfig.isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
@@ -95,7 +96,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
-	context.set('state.isSteam', false);
 	context.set('state.deviceType', utils.client.getDeviceType());
 
 	context.set('options.video.moatTracking.enabled', instantConfig.isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
