@@ -13,7 +13,7 @@ const NOT_USED_STATUS = 'not_used';
 
 const bidPosKeyVal = 'INCONTENT_BOXAD_1';
 let config = null;
-let cheshirecatCalled = false;
+let garfieldCalled = false;
 let initialValueOfIncontentsCounter = 1;
 let incontentsCounter = initialValueOfIncontentsCounter;
 let defaultStatus = NOT_USED_STATUS;
@@ -31,7 +31,7 @@ function serializeBids(slotName) {
         bidderPrices.bidder_0 || 0, // wikia adapter
         bidderPrices.bidder_1 || 0,
         // bidderPrices.bidder_2 || 0,
-        20,
+        0,
         bidderPrices.bidder_4 || 0,
         bidderPrices.bidder_5 || 0,
         bidderPrices.bidder_6 || 0,
@@ -55,7 +55,7 @@ function getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
 
     switch (btlStatus) {
         case BillTheLizard.ON_TIME: {
-            const prediction = billTheLizard.getPrediction('cheshirecat', callId);
+            const prediction = billTheLizard.getPrediction('garfield', callId);
             const result = prediction ? prediction.result : undefined;
             slotStatus = `${BillTheLizard.ON_TIME};res=${result};${callId}`;
             break;
@@ -66,7 +66,7 @@ function getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
                 return NOT_USED_STATUS;
             }
 
-            const prevPrediction = billTheLizard.getPreviousPrediction(incontentsCounter, getCallId, 'cheshirecat');
+            const prevPrediction = billTheLizard.getPreviousPrediction(incontentsCounter, getCallId, 'garfield');
 
             if (prevPrediction === undefined) {
                 // probably impossible but set in debugging purposes
@@ -87,10 +87,10 @@ export const billTheLizardWrapper = {
 
         config = billTheLizardConfig;
 
-        const enableCheshireCat = context.get('options.billTheLizard.cheshireCat');                       // Don't believe his lies
+        const enableGarfield = context.get('options.billTheLizard.garfield');
 
-        if (enableCheshireCat === true) {
-            billTheLizard.projectsHandler.enable('cheshirecat');
+        if (enableGarfield === true) {
+            billTheLizard.projectsHandler.enable('garfield');
         }
 
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
@@ -130,13 +130,13 @@ export const billTheLizardWrapper = {
         });
     },
 
-    callCheshireCat(callId) {
+    callGarfield(callId) {
         serializeBids(bidPosKeyVal).then((bids) => {
-            context.set('services.billTheLizard.parameters.cheshirecat', {
+            context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
-            cheshirecatCalled = true;
-            billTheLizard.call(['cheshirecat'], callId);
+            garfieldCalled = true;
+            billTheLizard.call(['garfield'], callId);
         });
     },
 }

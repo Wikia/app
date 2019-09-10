@@ -260,9 +260,8 @@ export function rotateIncontentBoxad(slotName) {
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		if (slot.getSlotName().substring(0, 16) === fmrPrefix) {
 			slot.once(AdSlot.STATUS_SUCCESS, () => {
-				// nextSlot = `${fmrPrefix}${slot.config.repeat.index + 1}`;
 				nextSlot = fmrPrefix + (slot.getConfigProperty('repeat.index') + 1);
-				billTheLizardWrapper.callCheshireCat(nextSlot);
+				billTheLizardWrapper.callGarfield(nextSlot);
 				slotStatusChanged(AdSlot.STATUS_SUCCESS);
 
 				slot.once(AdSlot.SLOT_VIEWED_EVENT, () => {
