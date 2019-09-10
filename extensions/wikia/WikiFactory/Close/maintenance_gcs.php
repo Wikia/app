@@ -88,17 +88,16 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$sth =
-			$dbr->select( [ "city_list" ], [
-					"city_id",
-					"city_flags",
-					"city_dbname",
-					"city_cluster",
-					"city_url",
-					"city_public",
-					"city_last_timestamp",
-					"city_additional",
-				], $where, __METHOD__, $opts );
+		$sth = $dbr->select( [ "city_list" ], [
+			"city_id",
+			"city_flags",
+			"city_dbname",
+			"city_cluster",
+			"city_url",
+			"city_public",
+			"city_last_timestamp",
+			"city_additional",
+		], $where, __METHOD__, $opts );
 
 		$this->info( 'wikis to remove', [
 			'wikis' => $sth->numRows(),
@@ -178,9 +177,9 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 					}
 					catch ( Exception $e ) {
 						$this->error( "Can't create tar archive with images", [
-								'exception' => $e->getMessage(),
-								'city_id' => $cityid,
-							] );
+							'exception' => $e->getMessage(),
+							'city_id' => $cityid,
+						] );
 
 						// SUS-6077 | move to a next wiki instead of failing the entire process
 						continue;
@@ -190,7 +189,7 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				(new GcsBucketRemover())->remove( $cityid );
+				( new GcsBucketRemover() )->remove( $cityid );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
@@ -201,21 +200,20 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 				WikiFactory::copyToArchive( $row->city_id );
 				$dbw = WikiFactory::db( DB_MASTER );
 				$dbw->delete( "city_list", [
-						"city_public" => [ 0, - 1 ],
-						"city_id" => $row->city_id,
-					], __METHOD__ );
+					"city_public" => [ 0, - 1 ],
+					"city_id" => $row->city_id,
+				], __METHOD__ );
 				// SUS-2374
 				$dbw->delete( "city_variables", [
-						"cv_city_id" => $row->city_id,
-					], __METHOD__ );
+					"cv_city_id" => $row->city_id,
+				], __METHOD__ );
 				$this->info( "{$row->city_id} removed from WikiFactory tables" );
 
 				$this->cleanupSharedData( intval( $row->city_id ) );
 
 				/**
 				 * drop database, get db handler for proper cluster
-				 */
-				global $wgDBadminuser, $wgDBadminpassword;
+				 */ global $wgDBadminuser, $wgDBadminpassword;
 				$centralDB = empty( $cluster ) ? "wikicities" : "wikicities_{$cluster}";
 
 				/**

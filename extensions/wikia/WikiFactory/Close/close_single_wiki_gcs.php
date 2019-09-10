@@ -57,16 +57,15 @@ class CloseSingleWikiGcs extends Maintenance {
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$row =
-			$dbr->selectRow( [ 'city_list' ], [
-					'city_id',
-					'city_flags',
-					'city_dbname',
-					'city_cluster',
-					'city_url',
-					'city_public',
-					'city_last_timestamp',
-				], $where, __METHOD__, [ 'LIMIT' => 1 ] );
+		$row = $dbr->selectRow( [ 'city_list' ], [
+			'city_id',
+			'city_flags',
+			'city_dbname',
+			'city_cluster',
+			'city_url',
+			'city_public',
+			'city_last_timestamp',
+		], $where, __METHOD__, [ 'LIMIT' => 1 ] );
 
 		if ( $row == false ) {
 			$this->output( sprintf( 'Could not fetch data from `city_list`' ) );
@@ -74,7 +73,7 @@ class CloseSingleWikiGcs extends Maintenance {
 			return;
 		}
 
-		(new GcsBucketRemover())->remove( $wgCityId );
+		( new GcsBucketRemover() )->remove( $wgCityId );
 
 		$this->output( 'Cleaning the shared database' );
 
@@ -85,20 +84,19 @@ class CloseSingleWikiGcs extends Maintenance {
 
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->delete( 'city_list', [
-				'city_id' => $wgCityId,
-			], __METHOD__ );
+			'city_id' => $wgCityId,
+		], __METHOD__ );
 
 		$dbw->delete( 'city_variables', [
-				'cv_city_id' => $wgCityId,
-			], __METHOD__ );
+			'cv_city_id' => $wgCityId,
+		], __METHOD__ );
 		$this->output( sprintf( '%d removed from WikiFactory tables', $wgCityId ) );
 
 		$this->cleanupSharedData( intval( $wgCityId ) );
 
 		/**
 		 * drop database, get db handler for proper cluster
-		 */
-		global $wgDBadminuser, $wgDBadminpassword;
+		 */ global $wgDBadminuser, $wgDBadminpassword;
 		$centralDB = empty( $cluster ) ? 'wikicities' : "wikicities_{$cluster}";
 
 		/**
