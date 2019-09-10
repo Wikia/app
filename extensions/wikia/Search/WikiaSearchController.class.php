@@ -228,7 +228,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$title = wfMsg( 'wikiasearch2-page-title-with-query', [
-				ucwords( $searchConfig->getQuery()->getSanitizedQuery() ),
+				$searchConfig->getQuery()->getSanitizedQuery(),
 			] );
 
 			$this->wg->Out->setPageTitle( $title );
