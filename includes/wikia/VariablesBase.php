@@ -8936,8 +8936,8 @@ $wgIncludeClosedWikiHandler = false;
  * @see IW-1470
  * @var string
  */
-$wgWatchShowURL = '';
-$wgWatchShowURLMobile = '';
+$wgWatchShowCTA = 'Watch This Show';
+$wgWatchShowButtonLabel = 'Watch Now';
 
 /**
  * Enables EditDraftSaving extension

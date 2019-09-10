@@ -1,22 +1,19 @@
 <?php
 
-
 class WatchShowService extends WikiaService {
 	public function index() {
 		global $wgWatchShowURL,
 		       $wgWatchShowCTA,
 		       $wgWatchShowButtonLabel,
-		       $wgWatchShowImageUrl,
-		       $wgScriptPath;
+		       $wgWatchShowImageURL,
+		       $wgWatchShowTrackingPixelURL;
 
-		$this->response->setValues(
-			[
+		$this->response->setValues( [
 				'url' => $wgWatchShowURL,
-				'callToAction' => !empty( $wgWatchShowCTA ) ? $wgWatchShowCTA : 'Watch This Show',
-				'buttonLabel' => !empty( $wgWatchShowButtonLabel ) ? $wgWatchShowButtonLabel : 'Watch Now',
-				'imageUrl' => !empty( $wgWatchShowImageUrl ) ? $wgWatchShowImageUrl : "$wgScriptPath/extensions/wikia/WatchShow/images/moviesanywhere.svg",
-			]
-
-		);
+				'callToAction' => $wgWatchShowCTA,
+				'buttonLabel' => $wgWatchShowButtonLabel,
+				'imageURL' => $wgWatchShowImageURL,
+				'trackingPixelURL' => $wgWatchShowTrackingPixelURL,
+			] );
 	}
 }
