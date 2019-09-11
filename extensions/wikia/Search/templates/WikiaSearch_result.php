@@ -29,7 +29,7 @@
 			<?= $result->getText(); ?>
 
 			<?php if ( empty( $inGroup ) ): ?>
-				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
+				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI && isset($wikiUrls[$result['wikiId']]) ): ?>
 					<ul>
 						<li class="WikiaSearchResultItemSitename">
 							<a href="<?= $wikiUrls[$result['wikiId']]; ?>"<?= $trackingData; ?>>

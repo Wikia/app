@@ -120,28 +120,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
 		}
 
-
 		$this->setPageTitle( $searchConfig );
 
 		$searchResult = $this->performSearch( $searchConfig );
 
-		$wikiUrls = [];
-
-		if ($searchConfig->getScope() === \Wikia\Search\Config::SCOPE_CROSS_WIKI) {
-			$wikiIds = [];
-
-			/** @var UnifiedSearchPageResultItem $result */
-			foreach ($searchResult->getResults() as $result) {
-				$wikiIds = $result['wikiId'];
-			}
-
-			$wikiIds = array_unique($wikiIds);
-
-
-			foreach ($wikiIds as $wikiId) {
-				$wikiUrls[$wikiId] = WikiFactory::cityIDtoUrl($wikiId);
-			}
-		}
+		$wikiUrls = $this->determineWikiUrls( $searchConfig->getScope(), $searchResult );
 
 		if ( $this->isJsonRequest() ) {
 			$this->setJsonResponse( $searchResult->getResults() );
@@ -905,5 +888,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		// user is trying to manually go to search and override their preference
 		return $fulltext === '0' || $this->getVal( 'go' ) !== null ||
 			   ( $fulltext === null && $this->getUser()->getGlobalPreference( 'enableGoSearch' ) );
+	}
+
+	private function determineWikiUrls( string $scope, $searchResult ): array {
+		$wikiUrls = [];
+
+		if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ) {
+			$wikiIds = [];
+
+			/** @var UnifiedSearchPageResultItem $result */
+			foreach ( $searchResult->getResults() as $result ) {
+				$wikiIds[] = $result['wikiId'];
+			}
+
+			$wikiIds = array_unique( $wikiIds );
+
+			foreach ( $wikiIds as $wikiId ) {
+				$wikiUrls[$wikiId] = WikiFactory::cityIDtoUrl( $wikiId );
+			}
+		}
+
+		return $wikiUrls;
 	}
 }
