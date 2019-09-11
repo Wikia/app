@@ -12,8 +12,10 @@ use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
 use Wikia\Search\UnifiedSearch\UnifiedSearchNewsAndStoriesRequest;
 use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchPageResultItem;
 use Wikia\Search\UnifiedSearch\UnifiedSearchRelatedCommunity;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResultItem;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResultItems;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
 
@@ -122,10 +124,29 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setPageTitle( $searchConfig );
 
 		$searchResult = $this->performSearch( $searchConfig );
+
+		$wikiUrls = [];
+
+		if ($searchConfig->getScope() === \Wikia\Search\Config::SCOPE_CROSS_WIKI) {
+			$wikiIds = [];
+
+			/** @var UnifiedSearchPageResultItem $result */
+			foreach ($searchResult->getResults() as $result) {
+				$wikiIds = $result['wikiId'];
+			}
+
+			$wikiIds = array_unique($wikiIds);
+
+
+			foreach ($wikiIds as $wikiId) {
+				$wikiUrls[$wikiId] = WikiFactory::cityIDtoUrl($wikiId);
+			}
+		}
+
 		if ( $this->isJsonRequest() ) {
 			$this->setJsonResponse( $searchResult->getResults() );
 		} else {
-			$this->setResponseValues( $searchConfig, $searchResult );
+			$this->setResponseValues( $searchConfig, $searchResult, $wikiUrls );
 		}
 	}
 
@@ -303,7 +324,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Sets values for the view to work with during index method.
 	 */
 	protected function setResponseValues(
-		Wikia\Search\Config $searchConfig, UnifiedSearchResult $results
+		Wikia\Search\Config $searchConfig, UnifiedSearchResult $results, array $wikiUrls = []
 	) {
 		if ( !$searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox',
@@ -318,6 +339,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'scope', $searchConfig->getScope() );
 		$this->setVal( 'results', $results->getResults() );
+		$this->setVal( 'wikiUrls', $wikiUrls );
 		$this->setVal( 'resultsFound', $results->resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $results->getTruncatedResultsNum( true ) );
 		$this->setVal( 'isOneResultsPageOnly', $results->pagesCount === 1 );

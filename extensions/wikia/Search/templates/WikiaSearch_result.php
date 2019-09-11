@@ -32,7 +32,7 @@
 				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
 					<ul>
 						<li class="WikiaSearchResultItemSitename">
-							<a href="<?= $result->getEscapedUrl(); ?>"<?= $trackingData; ?>>
+							<a href="<?= $wikiUrls[$result['wikiId']]; ?>"<?= $trackingData; ?>>
 								<?= Language::factory( $wg->ContentLanguage )->truncate( $result['sitename'], 90 ); ?>
 							</a>
 						</li>

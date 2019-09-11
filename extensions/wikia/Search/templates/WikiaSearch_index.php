@@ -81,7 +81,8 @@
 									  'gpos' => 0,
 									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
 									  'query' => $query,
-									  'scope' => $scope
+									  'scope' => $scope,
+									  'wikiUrls' => $wikiUrls
 									) );
 								continue;
 							}
@@ -90,7 +91,8 @@
 									'result' => $result,
 									'gpos' => 0,
 									'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
-									'query' => $query
+									'query' => $query,
+									'wikiUrls' => $wikiUrls
 								) );
 						?>
 					<?php endforeach; ?>
