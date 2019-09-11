@@ -9,17 +9,29 @@ class WatchShowHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgWatchShowURLMobile, $wgWatchShowButtonLabelMobile, $wgWatchShowURL, $wgWatchShowButtonLabel;
+		global $wgWatchShowURLMobile,
+		       $wgWatchShowButtonLabelMobile,
+		       $wgWatchShowURLMobileAndroid,
+		       $wgWatchShowURL,
+		       $wgWatchShowButtonLabel,
+		       $wgWatchShowImageURL,
+		       $wgWatchShowImageURLMobile,
+		       $wgWatchShowCTA,
+		       $wgWatchShowCTAMobile,
+		       $wgWatchShowTrackingPixelURL;
 
-		if ( !empty( $wgWatchShowButtonLabelMobile ) ) {
-			$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabelMobile;
-		} else if ( !empty( $wgWatchShowButtonLabel ) ) {
-			$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabel;
+		if ( !empty( $wgWatchShowURLMobileAndroid ) ) {
+			$wikiVariables['watchShowURLAndroid'] = $wgWatchShowURLMobileAndroid;
+			$wikiVariables['watchShowURLIOS'] = $wgWatchShowURLMobile;
 		} else {
-			$wikiVariables['watchShowButtonLabel'] = 'Watch Now';
+			$wikiVariables['watchShowURL'] = !empty( $wgWatchShowURLMobile ) ? $wgWatchShowURLMobile : $wgWatchShowURL;
 		}
-
-		$wikiVariables['watchShowURL'] = !empty($wgWatchShowURLMobile) ? $wgWatchShowURLMobile : $wgWatchShowURL;
+		$wikiVariables['watchShowCTA'] = !empty( $wgWatchShowCTAMobile ) ? $wgWatchShowCTAMobile : $wgWatchShowCTA;
+		$wikiVariables['watchShowButtonLabel'] =
+			!empty( $wgWatchShowButtonLabelMobile ) ? $wgWatchShowButtonLabelMobile : $wgWatchShowButtonLabel;
+		$wikiVariables['watchShowImageURL'] =
+			!empty( $wgWatchShowImageURLMobile ) ? $wgWatchShowImageURLMobile : $wgWatchShowImageURL;
+		$wikiVariables['watchShowTrackingPixelURL'] = $wgWatchShowTrackingPixelURL;
 
 		return true;
 	}
