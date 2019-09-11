@@ -8932,12 +8932,12 @@ $wgEnableFastlyInsights = false;
 $wgIncludeClosedWikiHandler = false;
 
 /**
- * If set, the "Watch now" button is visible and leads to the url from this variable
+ * Watch Show extension default labels
  * @see IW-1470
  * @var string
  */
-$wgWatchShowURL = '';
-$wgWatchShowURLMobile = '';
+$wgWatchShowCTA = 'Watch This Show';
+$wgWatchShowButtonLabel = 'Watch Now';
 
 /**
  * Enables EditDraftSaving extension
