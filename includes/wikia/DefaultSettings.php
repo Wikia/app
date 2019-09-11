@@ -821,7 +821,7 @@ $wgABTests = array();
 /**
  * Memcached client timeouts
  */
-$wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
+$wgMemCachedConnectionTimeout = 1; // connection timeout in seconds
 
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';

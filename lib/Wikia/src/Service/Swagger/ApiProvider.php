@@ -23,7 +23,7 @@ class ApiProvider {
 	 * @param UrlProvider $urlProvider
 	 * @param BernoulliTrial $clientLogSampler
 	 */
-	public function __construct(UrlProvider $urlProvider, BernoulliTrial $clientLogSampler) {
+	public function __construct( UrlProvider $urlProvider, BernoulliTrial $clientLogSampler ) {
 		$this->urlProvider = $urlProvider;
 		$this->clientLogSampler = $clientLogSampler;
 	}

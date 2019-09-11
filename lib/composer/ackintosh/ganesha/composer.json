@@ -1,0 +1,35 @@
+{
+  "name": "ackintosh/ganesha",
+  "description": "PHP implementation of Circuit Breaker pattern",
+  "keywords": ["circuit breaker", "microservices", "fault tolerance", "error handling", "guzzle middleware"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "akihito.nakano",
+      "email": "sora.akatsuki@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "~6.3",
+    "php": ">=5.6.0",
+    "psr/http-message": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7.27",
+    "php-vcr/php-vcr": "~1.0",
+    "php-vcr/phpunit-testlistener-vcr": "~2.0",
+    "php-coveralls/php-coveralls": "~2.0",
+    "predis/predis": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ackintosh\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ackintosh\\": "tests/Ackintosh/"
+    }
+  }
+}
