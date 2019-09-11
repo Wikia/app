@@ -92,6 +92,7 @@
 									'gpos' => 0,
 									'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
 									'query' => $query,
+									'scope' => $scope,
 									'wikiUrls' => $wikiUrls
 								) );
 						?>
