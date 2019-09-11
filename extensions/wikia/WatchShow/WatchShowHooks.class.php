@@ -28,7 +28,8 @@ class WatchShowHooks {
 		$wikiVariables['watchShowCTA'] = !empty( $wgWatchShowCTAMobile ) ? $wgWatchShowCTAMobile : $wgWatchShowCTA;
 		$wikiVariables['watchShowButtonLabel'] =
 			!empty( $wgWatchShowButtonLabelMobile ) ? $wgWatchShowButtonLabelMobile : $wgWatchShowButtonLabel;
-		$wikiVariables['watchShowImageURL'] = $wgWatchShowImageURL;
+		$wikiVariables['watchShowImageURL'] =
+			!empty( $wgWatchShowImageURLMobile ) ? $wgWatchShowImageURLMobile : $wgWatchShowImageURL;
 		$wikiVariables['watchShowTrackingPixelURL'] = $wgWatchShowTrackingPixelURL;
 
 		return true;
