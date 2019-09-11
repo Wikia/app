@@ -29,11 +29,23 @@
 			<?= $result->getText(); ?>
 
 			<?php if ( empty( $inGroup ) ): ?>
-				<ul>
-					<li>
-						<a href="<?= $result->getEscapedUrl(); ?>" <?= $trackingData; ?> ><?= Language::factory( $wg->ContentLanguage )
-								->truncate( $result->getTextUrl(), 90 ); ?></a></li>
-				</ul>
+				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
+					<ul>
+						<li class="WikiaSearchResultItemSitename">
+							<a href="<?= $result->getEscapedUrl(); ?>"<?= $trackingData; ?>>
+								<?= Language::factory( $wg->ContentLanguage )->truncate( $result['sitename'], 90 ); ?>
+							</a>
+						</li>
+					</ul>
+				<?php else: ?>
+					<ul>
+						<li>
+							<a href="<?= $result->getEscapedUrl(); ?>" <?= $trackingData; ?> >
+								<?= Language::factory( $wg->ContentLanguage )->truncate( $result->getTextUrl(), 90 ); ?>
+							</a>
+						</li>
+					</ul>
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( !empty( $thumbnail ) ): ?>

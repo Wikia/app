@@ -80,7 +80,8 @@
 									  'result' => $result,
 									  'gpos' => 0,
 									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
-									  'query' => $query
+									  'query' => $query,
+									  'scope' => $scope
 									) );
 								continue;
 							}
