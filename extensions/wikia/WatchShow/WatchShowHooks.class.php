@@ -15,6 +15,7 @@ class WatchShowHooks {
 		       $wgWatchShowURL,
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowImageURL,
+		       $wgWatchShowImageURLMobile,
 		       $wgWatchShowCTA,
 		       $wgWatchShowCTAMobile,
 		       $wgWatchShowTrackingPixelURL;
