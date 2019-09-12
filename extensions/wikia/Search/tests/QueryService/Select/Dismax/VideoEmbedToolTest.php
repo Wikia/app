@@ -221,7 +221,7 @@ class VideoEmbedToolTest extends BaseTest
 		                ->setMethods( [ 'getConfig', 'getTopicsAsQuery', 'getService' ] )
 		                ->getMock();
 		
-		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getHubForWikiId', 'getWikiId' ] ); 
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getCanonicalCategoryForWikiId', 'getWikiId' ] );
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
 		$query = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
 		
