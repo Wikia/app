@@ -16,6 +16,7 @@ class WatchShowHooks {
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowImageURL,
 		       $wgWatchShowImageURLMobile,
+		       $wgWatchShowImageURLMobileDarkTheme,
 		       $wgWatchShowCTA,
 		       $wgWatchShowCTAMobile,
 		       $wgWatchShowTrackingPixelURL;
@@ -26,12 +27,20 @@ class WatchShowHooks {
 		} else {
 			$wikiVariables['watchShowURL'] = !empty( $wgWatchShowURLMobile ) ? $wgWatchShowURLMobile : $wgWatchShowURL;
 		}
+
 		$wikiVariables['watchShowCTA'] = !empty( $wgWatchShowCTAMobile ) ? $wgWatchShowCTAMobile : $wgWatchShowCTA;
 		$wikiVariables['watchShowButtonLabel'] =
 			!empty( $wgWatchShowButtonLabelMobile ) ? $wgWatchShowButtonLabelMobile : $wgWatchShowButtonLabel;
 		$wikiVariables['watchShowImageURL'] =
 			!empty( $wgWatchShowImageURLMobile ) ? $wgWatchShowImageURLMobile : $wgWatchShowImageURL;
-		$wikiVariables['watchShowTrackingPixelURL'] = $wgWatchShowTrackingPixelURL;
+
+		if ( !empty( $wgWatchShowTrackingPixelURL ) ) {
+			$wikiVariables['watchShowTrackingPixelURL'] = $wgWatchShowTrackingPixelURL;
+		}
+
+		if ( !empty( $wgWatchShowImageURLMobileDarkTheme ) ) {
+			$wikiVariables['watchShowImageURLDarkTheme'] = $wgWatchShowImageURLMobileDarkTheme;
+		}
 
 		return true;
 	}
