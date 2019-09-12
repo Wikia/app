@@ -718,8 +718,7 @@ class MediaWikiService {
 	 * @return string
 	 */
 	public function getHubForWikiId( $wikiId ) {
-		$hub = ( new \HubService() )->getVerticalNameForWiki( $wikiId );
-		return $hub;
+		return ( new \HubService() )->getVerticalNameForWiki( $wikiId );
 	}
 
 	/**

@@ -93,9 +93,7 @@ class HubService {
 	 * @return string
 	 */
 	public static function getVerticalNameForWiki( $wikiId ) {
-
 		$vertical = WikiFactoryHub::getInstance()->getWikiVertical( $wikiId )['name'];
-
 		if ( $vertical == "Other" ) {
 			return "Lifestyle";
 		} else {
