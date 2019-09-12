@@ -237,7 +237,7 @@ class VideoEmbedToolTest extends BaseTest
 		;
 		$mwService
 		    ->expects( $this->once() )
-		    ->method ( 'getHubForWikiId' )
+		    ->method ( 'getCanonicalCategoryForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
