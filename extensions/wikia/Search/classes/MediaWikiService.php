@@ -718,6 +718,18 @@ class MediaWikiService {
 	 * @return string
 	 */
 	public function getHubForWikiId( $wikiId ) {
+		$hub = ( new \HubService() )->getVerticalNameForWiki( $wikiId );
+		return $hub;
+	}
+
+	/**
+	 * Returns the string name of the top-level category for the provided wiki ID
+	 *
+	 * @param $wikiId
+	 *
+	 * @return string
+	 */
+	public function getCanonicalCategoryForWikiId( $wikiId ) {
 		return ( new \HubService() )->getCategoryInfoForCity( $wikiId )->cat_name;
 	}
 

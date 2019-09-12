@@ -65,7 +65,7 @@ class HubService {
 
 	/**
 	 * Get comscore vertical name for given cityId.
-	 * For Lifestyle and Gaming and etc return their names.
+	 * For Lifestyle and Gaming and etc return their lowercase names.
 	 * For Other return 'lifestyle'.
 	 *
 	 * @param integer $cityId
@@ -78,6 +78,26 @@ class HubService {
 
 		if ( $vertical == "other" ) {
 			return "lifestyle";
+		} else {
+			return $vertical;
+		}
+	}
+
+	/**
+	 * Get vertical name for given cityId.
+	 * For Lifestyle and Gaming and etc return their names.
+	 * For Other return 'Lifestyle'.
+	 *
+	 * @param integer $wikiId
+	 *
+	 * @return string
+	 */
+	public static function getVerticalNameForWiki( $wikiId ) {
+
+		$vertical = WikiFactoryHub::getInstance()->getWikiVertical( $wikiId )['name'];
+
+		if ( $vertical == "Other" ) {
+			return "Lifestyle";
 		} else {
 			return $vertical;
 		}
