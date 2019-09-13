@@ -2730,11 +2730,11 @@ class MediaWikiServiceTest extends BaseTest
 	public function testGetHubForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
 
-		$this->getStaticMethodMock( \HubService::class, 'getCategoryInfoForCity' )
+		$this->getStaticMethodMock( \HubService::class, 'getVerticalNameForWiki' )
 			->expects( $this->once() )
-			->method( 'getCategoryInfoForCity' )
+			->method( 'getVerticalNameForWiki' )
 			->with( 123 )
-			->will( $this->returnValue( (object)[ 'cat_name' => 'Entertainment' ] ) );
+			->will( $this->returnValue( 'Entertainment' ) );
 
 		$this->assertEquals(
 				'Entertainment',
