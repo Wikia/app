@@ -49,7 +49,26 @@ class AllUnifiedSearch extends AbstractService {
 			}
 		}
 
-		return $result;
+		return array_merge( $result, $this->getWikiGlobalSearchInclusionStats() );
 	}
 
+	/**
+	 * Retrieves stats for deciding to include page in global search.
+	 * Return number of articles on wiki, promoted wiki and hidden wiki flags
+	 *
+	 * @return array
+	 */
+	protected function getWikiGlobalSearchInclusionStats() {
+		global $wgExcludeWikiFromSearch;
+		global $wgForceWikiIncludeInSearch;
+
+		$result = [];
+		$result['hidden_wiki_b'] = !empty( $wgExcludeWikiFromSearch );
+		$result['promoted_wiki_b'] = !empty( $wgForceWikiIncludeInSearch );
+
+		$service = $this->getService();
+		$wikiData = $service->getApiStatsForWiki();
+		$result['wiki_articles_i'] = $wikiData['query']['statistics']['articles'];
+		return $result;
+	}
 }
