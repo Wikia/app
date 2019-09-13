@@ -118,10 +118,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
 		}
 
-
 		$this->setPageTitle( $searchConfig );
 
 		$searchResult = $this->performSearch( $searchConfig );
+
 		if ( $this->isJsonRequest() ) {
 			$this->setJsonResponse( $searchResult->getResults() );
 		} else {
