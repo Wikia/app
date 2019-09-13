@@ -129,9 +129,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 
 	if (instantConfig.get('icPorvataDirect')) {
 		context.set('slots.incontent_player.customFiller', 'porvata');
-		fillerService.register(new PorvataFiller({
-			enableInContentFloating: true
-		}));
+		fillerService.register(new PorvataFiller());
 	}
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
