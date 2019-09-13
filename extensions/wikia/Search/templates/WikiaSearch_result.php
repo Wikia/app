@@ -29,10 +29,10 @@
 			<?= $result->getText(); ?>
 
 			<?php if ( empty( $inGroup ) ): ?>
-				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI && isset($wikiUrls[$result['wikiId']]) ): ?>
+				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
 					<ul>
 						<li class="WikiaSearchResultItemSitename">
-							<a href="<?= $wikiUrls[$result['wikiId']]; ?>"<?= $trackingData; ?>>
+							<a href="<?= $result['wikiUrl']; ?>"<?= $trackingData; ?>>
 								<?= Language::factory( $wg->ContentLanguage )->truncate( $result['sitename'], 90 ); ?>
 							</a>
 						</li>

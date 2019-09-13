@@ -82,7 +82,6 @@
 									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
 									  'query' => $query,
 									  'scope' => $scope,
-									  'wikiUrls' => $wikiUrls
 									) );
 								continue;
 							}
@@ -93,7 +92,6 @@
 									'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
 									'query' => $query,
 									'scope' => $scope,
-									'wikiUrls' => $wikiUrls
 								) );
 						?>
 					<?php endforeach; ?>

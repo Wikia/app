@@ -14,6 +14,7 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 	private $hub_s;
 	private $thumbnail;
 	private $wikiId;
+	private $wikiUrl;
 	private $sitename;
 
 	public function __construct(array $value) {
@@ -25,6 +26,7 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 		$this->hub_s = $value['hub'] ?? null;
 		$this->thumbnail = $value['thumbnail'] ?? null;
 		$this->wikiId = $value['wikiId'];
+		$this->wikiUrl = $value['wikiUrl'];
 		$this->sitename = $value['sitename'];
 	}
 
