@@ -49,7 +49,7 @@ class AllUnifiedSearch extends AbstractService {
 			}
 		}
 
-		$result['is_disabled_in_global_search'] = $this->getWikiGlobalSearchInclusionStats();
+		$result['is_disabled_in_global_search'] = $this->isDiabledInGlobalSearch();
 		return $result;
 	}
 
@@ -58,14 +58,14 @@ class AllUnifiedSearch extends AbstractService {
 	 *
 	 * @return array
 	 */
-	protected function getWikiGlobalSearchInclusionStats() {
+	protected function isDiabledInGlobalSearch() {
 		global $wgExcludeWikiFromSearch;
 		global $wgForceWikiIncludeInSearch;
 
-		if (!empty( $wgExcludeWikiFromSearch )) {
+		if ( !empty( $wgExcludeWikiFromSearch ) ) {
 			return true;
 		}
-		if (!empty( $wgForceWikiIncludeInSearch )) {
+		if ( !empty( $wgForceWikiIncludeInSearch ) ) {
 			return false;
 		}
 
