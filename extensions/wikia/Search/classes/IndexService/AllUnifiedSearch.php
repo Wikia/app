@@ -69,10 +69,7 @@ class AllUnifiedSearch extends AbstractService {
 			return false;
 		}
 
-		$service = $this->getService();
-		$wikiData = $service->getApiStatsForWiki();
-		$wikiArticles = $wikiData['query']['statistics']['articles'];
-
+		$wikiArticles = \SiteStats::articles();
 		return $wikiArticles < 50;
 	}
 }
