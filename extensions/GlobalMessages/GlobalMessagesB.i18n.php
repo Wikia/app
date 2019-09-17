@@ -29,7 +29,7 @@ The block was made by $1.
 * Current IP address: $3
 </div>
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
+You can contact [[Special:Contact|Fandom Support]] or an [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
 Please include all details in the above box in any queries you make.',
 	'blockednoreason' => 'no reason given',
 	'blocked-notice-logextract' => 'This user is currently blocked.
