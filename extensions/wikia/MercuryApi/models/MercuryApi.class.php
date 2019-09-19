@@ -184,6 +184,7 @@ class MercuryApi {
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
 				'defaultSkin' => $wgDefaultSkin,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
 				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
 				'enableFilePageRedirectsForAnons' => $wgRedirectFilePagesForAnons,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
