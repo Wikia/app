@@ -172,7 +172,7 @@ class MercuryApi {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
 		       $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
-		       $wgRightsText, $wgRightsUrl, $wgRedirectFilePagesForAnons;
+		       $wgRightsText, $wgRightsUrl, $wgRedirectFilePagesForAnons, $wgEnableDiscussions;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -184,7 +184,7 @@ class MercuryApi {
 				'contentNamespaces' => array_values( $wgContentNamespaces ),
 				'defaultSkin' => $wgDefaultSkin,
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
-				'enableFeedsAndPosts' => $wgEnableFeedsAndPostsExt,
+				'enableDiscussions' => $wgEnableDiscussions,
 				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
 				'enableFilePageRedirectsForAnons' => $wgRedirectFilePagesForAnons,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
