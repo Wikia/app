@@ -40,6 +40,10 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				this.trackSearchResultClick(event.target);
 			}.bind(this));
 
+			$('.exact-wiki-match__result a').on('click', function(event) {
+				this.trackSearchResultClick(event.target);
+			}.bind(this));
+
 			this.initVideoTabEvents();
 			this.trackSearchResultsImpression();
 			this.searchScopeEvents();
