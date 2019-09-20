@@ -6,9 +6,9 @@ use Wikia\Service\User\Auth\AuthService;
 use Wikia\Service\User\Auth\CookieHelper;
 
 class HeliosFactory extends AbstractFactory {
-    
-        const AUTH_SERVICE_NAME = 'helios';
-    
+
+	const AUTH_SERVICE_NAME = 'helios';
+
 	/** @var HeliosClient $heliosClient */
 	private $heliosClient;
 
@@ -33,8 +33,9 @@ class HeliosFactory extends AbstractFactory {
 			$urlProvider = $urlProviderFactory->urlProvider();
 
 			$heliosUrl = $wgAuthServiceInternalUrl ?: "http://{$urlProvider->getUrl( self::AUTH_SERVICE_NAME )}/";
+			$circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( self::AUTH_SERVICE_NAME );
 
-			$this->heliosClient = new HeliosClient( $heliosUrl, $wgTheSchwartzSecretToken );
+			$this->heliosClient = new HeliosClient( $heliosUrl, $wgTheSchwartzSecretToken, $circuitBreaker );
 		}
 
 		return $this->heliosClient;

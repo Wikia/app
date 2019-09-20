@@ -1429,6 +1429,44 @@
         ]
       }
     },
+    "/User/UsersByName": {
+      "get": {
+        "tags": ["user"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UserQueryResultSet"
+            }
+          },
+          "400": {
+            "description": "Query is missing or too long"
+          }
+        },
+        "description": "",
+        "summary": "Query for users whose name matches the given prefix",
+        "operationId": "getDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "User name prefix to query for (max 255 characters)",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Maximum number of results to return",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "6"
+          }
+        ]
+      }
+    },
     "/WAM/MinMaxWamIndexDate": {
       "get": {
         "tags": ["wam"],
@@ -3656,6 +3694,40 @@
         "basepath": {
           "type": "string",
           "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "UserQueryResultSet": {
+      "id": "UserQueryResultSet",
+      "name": "",
+      "required": [
+        "users"
+      ],
+      "properties": {
+        "users": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UserQueryResultItem"
+          }
+        }
+      }
+    },
+    "UserQueryResultItem": {
+      "id": "UserQueryResultItem",
+      "name": "",
+      "required": [
+        "id", "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Wikia user ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Wikia user name (it can contain space characters)"
         }
       }
     },

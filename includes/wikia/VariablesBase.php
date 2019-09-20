@@ -5867,7 +5867,7 @@ $wgMemCachedServers = [
  * Read/write timeout for MemCached server communication, in microseconds.
  * @var int $wgMemCachedTimeout
  */
-$wgMemCachedTimeout = 0.5 * 1000000; // half a second
+$wgMemCachedTimeout = 1 * 1000000; // half a second
 
 /**
  * The minimum amount of memory that MediaWiki "needs"; MediaWiki will try to
@@ -8932,12 +8932,12 @@ $wgEnableFastlyInsights = false;
 $wgIncludeClosedWikiHandler = false;
 
 /**
- * If set, the "Watch now" button is visible and leads to the url from this variable
+ * Watch Show extension default labels
  * @see IW-1470
  * @var string
  */
-$wgWatchShowURL = '';
-$wgWatchShowURLMobile = '';
+$wgWatchShowCTA = 'Watch This Show';
+$wgWatchShowButtonLabel = 'Watch Now';
 
 /**
  * Enables EditDraftSaving extension
@@ -8994,6 +8994,25 @@ $wgArticleExporterExchange = [
     'exchange' => 'taxonomy-ex',
     'routing' => 'taxonomy.article-edits'
 ];
+
+/**
+ * @see lib/Wikia/src/CircuitBreaker/CircuitBreakerFactory.php
+ * @var string $wgCircuitBreakerType
+ */
+$wgCircuitBreakerType = 'noop';
+
+/**
+ * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
+ * @var string $wgCircuitBreakerRedisHost
+ */
+$wgCircuitBreakerRedisHost = 'geo-redisshared-prod-master.query.consul';
+
+
+/**
+ * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
+ * @var int $wgCircuitBreakerRedisDb
+ */
+$wgCircuitBreakerRedisDb = 4;
 
 /**
  * @var $wgEnableHydralyticsExt

@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Service\Helios;
 
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
@@ -35,14 +36,19 @@ class HeliosClient {
 	protected $status;
 	protected $schwartzToken;
 
+	/** @var ServiceCircuitBreaker */
+	protected $circuitBreaker;
+
 	/**
 	 *
 	 * @param string $baseUri
 	 * @param string $schwartzToken
+	 * @param ServiceCircuitBreaker $circuitBreaker
 	 */
-	public function __construct( string $baseUri, string $schwartzToken ) {
+	public function __construct( string $baseUri, string $schwartzToken, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->baseUri = $baseUri;
 		$this->schwartzToken = $schwartzToken;
+		$this->circuitBreaker = $circuitBreaker;
 	}
 
 	/**
@@ -61,10 +67,16 @@ class HeliosClient {
 	 * @param array $extraRequestOptions
 	 *
 	 * @return mixed|null
+	 * @throws ClientException
+	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
+
+		if ( !$this->circuitBreaker->operationAllowed() ) {
+			throw new ClientException( "circuit breaker open" );
+		}
 
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
@@ -143,6 +155,7 @@ class HeliosClient {
 		}
 
 		$this->status = $request->getStatus();
+		$this->circuitBreaker->setOperationStatus( $this->status < 500 );
 
 		return $this->processResponseOutput( $request );
 	}
