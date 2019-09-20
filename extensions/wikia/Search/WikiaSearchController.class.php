@@ -6,18 +6,16 @@
 use Wikia\Logger\WikiaLogger;
 use Wikia\Search\Language\LanguageService;
 use Wikia\Search\MediaWikiService;
-use Wikia\Search\Result\ResultHelper;
 use Wikia\Search\SearchResult;
-use Wikia\Search\Services\ESFandomSearchService;
-use Wikia\Search\Services\FandomSearchService;
 use Wikia\Search\TopWikiArticles;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityRequest;
-use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
-use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 use Wikia\Search\UnifiedSearch\UnifiedSearchCommunityResultItemExtender;
+use Wikia\Search\UnifiedSearch\UnifiedSearchNewsAndStoriesRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchPageRequest;
+use Wikia\Search\UnifiedSearch\UnifiedSearchRelatedCommunity;
+use Wikia\Search\UnifiedSearch\UnifiedSearchResult;
 use Wikia\Search\UnifiedSearch\UnifiedSearchResultItems;
 use Wikia\Search\UnifiedSearch\UnifiedSearchService;
-use Wikia\Search\UnifiedSearch\UnifiedSearchRelatedCommunity;
 
 /**
  * Responsible for handling search requests.
@@ -120,10 +118,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
 		}
 
-
 		$this->setPageTitle( $searchConfig );
 
 		$searchResult = $this->performSearch( $searchConfig );
+
 		if ( $this->isJsonRequest() ) {
 			$this->setJsonResponse( $searchResult->getResults() );
 		} else {
@@ -230,7 +228,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$title = wfMsg( 'wikiasearch2-page-title-with-query', [
-				ucwords( $searchConfig->getQuery()->getSanitizedQuery() ),
+				$searchConfig->getQuery()->getSanitizedQuery(),
 			] );
 
 			$this->wg->Out->setPageTitle( $title );
@@ -409,25 +407,31 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'query' => $query,
 			] );
 
-			$fandomStories =
-				WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
-					WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
-						return ( new ESFandomSearchService() )->query( $query );
-					} );
+			$config = new \Wikia\Search\Config([
+				'query' => $query,
+				'limit' => static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE,
+				'page' => 1]
+			);
+			$request = new UnifiedSearchNewsAndStoriesRequest($config);
 
-			if ( !empty( $fandomStories ) ) {
-				if ( count( $fandomStories ) === FandomSearchService::RESULTS_COUNT ) {
+			$fandomStories = WikiaDataAccess::cache(wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
+				WikiaResponse::CACHE_STANDARD, function () use ( $request ) {
+					$result = (new UnifiedSearchService())->newsAndStoriesSearch( $request );
+					return ['resultsFound' => $result->resultsFound,
+						'results' => $result->getResults()->toArray()];
+				} );
+
+			if ( $fandomStories['resultsFound'] > 0 ) {
+				if ( $fandomStories['resultsFound'] > static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE) {
 					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
 				} else {
 					$viewMoreFandomStoriesLink = null;
 				}
 
 				$this->response->setValues( [
-					'fandomStories' => array_slice( $fandomStories, 0,
-						static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE ),
+					'fandomStories' => $fandomStories['results'],
 					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
 				] );
-
 				return;
 			}
 		}

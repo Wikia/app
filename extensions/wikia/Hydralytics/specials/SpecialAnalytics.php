@@ -18,7 +18,7 @@ namespace Hydralytics;
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
-	const CACHE_VERSION = 3.9;
+	const CACHE_VERSION = 4.5;
 
 	/**
 	 * Output HTML
@@ -62,7 +62,7 @@ class SpecialAnalytics extends \SpecialPage {
 	 *
 	 * @access	private
 	 * @return	void	[Outputs to screen]
-	 * @throws \ErrorPageError
+	 * @throws \MWException
 	 */
 	private function analyticsPage() {
 		global $wgLang;
@@ -72,6 +72,7 @@ class SpecialAnalytics extends \SpecialPage {
 
 		$sections = \WikiaDataAccess::cacheWithLock( $memcKey, \WikiaResponse::CACHE_SHORT, function() {
 			try {
+				global $wgLang;
 				$sections = [
 					'top_viewed_pages' => '',
 					'number_of_pageviews' => '',
@@ -139,6 +140,7 @@ class SpecialAnalytics extends \SpecialPage {
 				 */
 				$geolocation = Information::getGeolocation();
 				$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation',$geolocation);
+				$countries = \CountryNames::getNames($wgLang->getCode());
 				//arsort($geolocation['sessions']);
 				if (isset($geolocation['pageviews'])) {
 					$sections['geolocation'] = "
@@ -154,8 +156,8 @@ class SpecialAnalytics extends \SpecialPage {
 					foreach ($geolocation['pageviews'] as $location => $sessions) {
 						$sections['geolocation'] .= "
 							<tr>
-								<td>".$location."</td>
-								<td>".$this->getLanguage()->formatNum($sessions)."</a></td>
+								<td>".$countries[$location]."</td>
+								<td>".$this->getLanguage()->formatNum($sessions)."</td>
 							</tr>";
 					}
 					$sections['geolocation'] .= "
@@ -188,7 +190,7 @@ class SpecialAnalytics extends \SpecialPage {
 						$sections['top_viewed_pages'] .= "
 							<tr>
 
-								<td><a href='".wfExpandUrl($newUri)."'>". htmlspecialchars($title) . "</a></td>
+								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>". htmlspecialchars($title) . "</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}
@@ -269,7 +271,8 @@ class SpecialAnalytics extends \SpecialPage {
 
 						$sections['most_visited_files'] .= "
 							<tr>
-								<td> <a href='".wfExpandUrl($newUri)."'>".urldecode($uriText)."</a></td>
+								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>".
+								htmlspecialchars($uriText)."</a></td>
 								<td>".$this->getLanguage()->formatNum($views)."</td>
 							</tr>";
 					}

@@ -542,19 +542,12 @@ $wgRobotsIndexUserNS  = false;
 $wgRobotsIndexHelpNS  = false;
 
 /**
- * Force noindex mechanism.
- * @see string includes/wikia/Wikia.php
- * @var bool $wgForcedNoindexEnabled
- */
-$wgForcedNoindexEnabled  = false;
-
-/**
  * Custom rules for robots.txt. Supported rules: allowSpecialPage and
  * disallowNamespace.
  * @see string extensions/wikia/RobotsTxt/classes/WikiaRobots.class.php
  * @var Array $wgRobotsTxtCustomRules
  */
-$wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
+$wgRobotsTxtCustomRules = [];
 
 /**
  * External services domain.

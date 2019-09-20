@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use WikiaException;
+use WikiFactory;
 use function GuzzleHttp\Psr7\build_query;
 
 class UnifiedSearchService {
@@ -47,10 +48,33 @@ class UnifiedSearchService {
 	public function pageSearch( UnifiedSearchPageRequest $request ): UnifiedSearchResult {
 		$result = $this->callPageSearch( $request );
 
+		$wikiUrls = $this->determineWikiUrls($request->isCrosswikiScope(), $result['results']);
+
 		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
-			$result['paging']['current'] + 1, array_map(function ($item) {
+			$result['paging']['current'] + 1, array_map(function ($item) use ($wikiUrls) {
+				$item['wikiUrl'] = $wikiUrls[$item['wikiId']] ?? null;
 				return new UnifiedSearchPageResultItem($item);
 			}, $result['results']) );
+	}
+
+	private function determineWikiUrls( bool $isCrosswiki, array $results): array {
+		if ( !$isCrosswiki ) {
+			return [];
+		}
+
+		$wikiIds = array_map(function ($item) {
+			return $item['wikiId'];
+		}, $results);
+
+		$wikiIds = array_unique( $wikiIds );
+
+		$wikiUrls = [];
+
+		foreach ( $wikiIds as $wikiId ) {
+			$wikiUrls[$wikiId] = WikiFactory::cityIDtoUrl( $wikiId );
+		}
+
+		return $wikiUrls;
 	}
 
 	private function callPageSearch( UnifiedSearchPageRequest $request ) {
@@ -112,6 +136,26 @@ class UnifiedSearchService {
 		}
 	}
 
+	public function newsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ): UnifiedSearchResult {
+		$result = $this->callNewsAndStoriesSearch( $request );
+		return new UnifiedSearchResult( $result['totalResultsFound'], $result['paging']['total'],
+			$result['paging']['current'] + 1, array_map(function ($item) {
+				return new UnifiedSearchNewsAndStoriesResultItem($item);
+			}, $result['results']) );
+	}
+
+	private function callNewsAndStoriesSearch( UnifiedSearchNewsAndStoriesRequest $request ) {
+		$params = [
+			'query' => $request->getQuery()->getSanitizedQuery(),
+			'page' => $request->getPage(),
+			'limit' => $request->getLimit(),
+		];
+
+		$response = $this->doApiRequest( 'news-and-stories-search', $params );
+
+		return json_decode( $response->getBody(), true );
+	}
+
 	public function communitySearch( UnifiedSearchCommunityRequest $request ): UnifiedSearchResult {
 		$result = $this->callCommunitySearch( $request );
 
@@ -127,6 +171,7 @@ class UnifiedSearchService {
 			'page' => $request->getPage(),
 			'limit' => $request->getLimit(),
 			'lang' => $request->getLanguage(),
+			'platform' => ['fandom', 'gamepedia']
 		];
 
 		$response = $this->doApiRequest( 'community-search', $params );

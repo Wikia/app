@@ -14,6 +14,9 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 	private $ns;
 	private $hub_s;
 	private $thumbnail;
+	private $wikiId;
+	private $wikiUrl;
+	private $sitename;
 
 	public function __construct(array $value) {
 		$this->pageid = $value['pageId'];
@@ -24,6 +27,9 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 		$this->ns = $value['namespace'];
 		$this->hub_s = $value['hub'] ?? null;
 		$this->thumbnail = $value['thumbnail'] ?? null;
+		$this->wikiId = $value['wikiId'];
+		$this->wikiUrl = $value['wikiUrl'];
+		$this->sitename = $value['sitename'];
 	}
 
 	public function getText( $field = 'text', $wordLimit = null ) {

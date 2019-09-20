@@ -29,7 +29,7 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = Redshift::query(
+		$res = \Redshift::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
 			 'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
 			 FROM wikianalytics.edits ' .
@@ -68,7 +68,7 @@ class Information {
 	static public function getTopSearchTerms($limit = 10) {
 		global $wgCityId;
 
-		$res = Redshift::query(
+		$res = \Redshift::query(
 			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
 			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
 			'ORDER BY search_count DESC LIMIT :limit',
@@ -94,8 +94,8 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = Redshift::query(
-			'SELECT country, COUNT(*) as views FROM wikianalytics.sessions ' .
+		$res = \Redshift::query(
+			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -120,9 +120,9 @@ class Information {
 	static public function getTopViewedPages($limit = 10) {
 		global $wgCityId;
 
-		$res = Redshift::query(
-			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND url <> \'/\'  GROUP BY url ' .
+		$res = \Redshift::query(
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
+			'WHERE wiki_id = :wiki_id AND url <> \'/\' AND url LIKE \'%/wiki/%\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -146,8 +146,8 @@ class Information {
 	static public function getTopViewedFiles($limit = 10) {
 		global $wgCityId;
 
-		$res = Redshift::query(
-			'SELECT url, COUNT(*) as views FROM wikianalytics.pageviews ' .
+		$res = \Redshift::query(
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -163,32 +163,13 @@ class Information {
 	}
 
 	/**
-	 * Return daily sessions and page views.
+	 * Return daily page views.
 	 *
-	 * @param int $days
-	 * @return	array	Daily sessions and page views.
+	 * @return	array	Daily page views.
 	 */
-	static public function getDailyTotals($days = self::LAST_DAYS) {
-		global $wgCityId;
-
-		$res = Redshift::query(
-			'SELECT dt, COUNT(*) AS views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
-			'ORDER BY dt DESC LIMIT :days',
-			[ ':wiki_id' => $wgCityId, ':days' => $days ]
-		);
-
-		$pageviews = [];
-		foreach($res as $row) {
-			// e.g. 2019-06-28 -> 166107
-			$pageviews[ $row->dt ] = $row->views;
-		}
-
-		// sort dates ascending
-		ksort($pageviews);
-
+	static public function getDailyTotals() {
 		return [
-			'pageviews' => $pageviews
+			'pageviews' => \Redshift::getDailyTotals(self::LAST_DAYS)
 		];
 	}
 
@@ -205,8 +186,8 @@ class Information {
 		global $wgCityId;
 
 		// by browser
-		$res = Redshift::query(
-			'SELECT browser, COUNT(*) AS views FROM wikianalytics.sessions ' .
+		$res = \Redshift::query(
+			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -219,8 +200,8 @@ class Information {
 		}
 
 		// by device type (filter out bots)
-		$res = Redshift::query(
-			'SELECT device_type, COUNT(*) AS views FROM wikianalytics.sessions ' .
+		$res = \Redshift::query(
+			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -228,8 +209,12 @@ class Information {
 
 		$devices = [];
 		foreach($res as $row) {
+			// DE-4477 | Make translatable all the legends in the diagrams on WikiAnalytics
+			// {"mobile":293653,"desktop":292903,"tablet":120593,"other":1486}
+			$typeLabel = wfMessage('device_' . $row->device_type )->text();
+
 			// e.g. desktop -> 295008
-			$devices[ $row->device_type ] = $row->views;
+			$devices[ $typeLabel ] = $row->views;
 		}
 
 		return ["browser" => $browsers, "deviceCategory" => $devices];

@@ -436,6 +436,9 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
 	'content-review-status-link-text' => '審査状況',
 );
 
+$messages['ko'] = array(
+);
+
 $messages['nl'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',

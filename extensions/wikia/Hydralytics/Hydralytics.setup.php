@@ -4,6 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
 	exit( 1 );
 }
+require_once "$IP/extensions/cldr/cldr.php";
 
 $dir = __DIR__;
 
@@ -28,7 +29,6 @@ $wgExtensionCredits['other'][] = array(
  */
 $wgAutoloadClasses['Hydralytics\\SpecialAnalytics'] = "{$dir}/specials/SpecialAnalytics.php";
 $wgAutoloadClasses['Hydralytics\\Information'] = "{$dir}/classes/Information.php";
-$wgAutoloadClasses['Hydralytics\\Redshift'] = "{$dir}/classes/Redshift.class.php";
 $wgAutoloadClasses['Hydralytics\\TemplateAnalytics'] = "{$dir}/templates/TemplateAnalytics.php";
 
 /**
@@ -67,5 +67,6 @@ $wgResourceModules['ext.hydralytics.scripts'] = array(
 		"returning_visitors",
 		"total_page_views",
 		"total_visitors",
+		"device_other",
 	),
 );

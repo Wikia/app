@@ -48,10 +48,10 @@
 				<?php if ( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
 						<?php if ( empty( $isOneResultsPageOnly ) ): ?>
-							<?= wfMsg( 
+							<?= wfMsg(
 								'wikiasearch2-results-count',
-								$resultsFoundTruncated, 
-								'<strong>' . $query . '</strong>' 
+								$resultsFoundTruncated,
+								'<strong>' . $query . '</strong>'
 							); ?>
 						<?php else : ?>
 							<?= wfMsg(
@@ -68,11 +68,6 @@
 
 					<ul class="Results">
 					<?php $pos = 0; ?>
-					<?= $app->renderView('Ad', 'Index', [
-						'slotName' => 'incontent_native',
-						'pageTypes' => ['search'],
-						'addToAdQueue' => AdEngine3::isEnabled()
-					]); ?>
 
 					<?php foreach ( $results as $result ): ?>
 						<?php
@@ -85,7 +80,8 @@
 									  'result' => $result,
 									  'gpos' => 0,
 									  'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
-									  'query' => $query
+									  'query' => $query,
+									  'scope' => $scope,
 									) );
 								continue;
 							}
@@ -94,7 +90,8 @@
 									'result' => $result,
 									'gpos' => 0,
 									'pos' => $pos + ( ( $currentPage - 1 ) * $resultsPerPage ),
-									'query' => $query
+									'query' => $query,
+									'scope' => $scope,
 								) );
 						?>
 					<?php endforeach; ?>

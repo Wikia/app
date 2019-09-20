@@ -227,6 +227,7 @@ class ChannelFeed extends FeedItem {
 		$wgOut->disable();
 		$mimetype = $this->contentType();
 		header( "Content-type: $mimetype; charset=UTF-8" );
+		header( 'X-Robots-Tag: noindex,nofollow' );
 
 		// Set a sane filename
 		$exts = MimeMagic::singleton()->getExtensionsForType( $mimetype );

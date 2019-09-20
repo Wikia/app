@@ -1,6 +1,6 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.3.7-fpm-stretch
+FROM php:7.3.8-fpm-stretch
 
 # set locale as required by MediaWiki / Perl
 ENV LANG C.UTF-8
@@ -95,6 +95,10 @@ RUN apt-get update && apt-get install -y \
     && pecl install --onlyreqdeps --force redis \
     && docker-php-ext-enable redis \
     #
+    # Install Memcached
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
+    #
     # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \
@@ -139,6 +143,6 @@ ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 # run "sha1sum * | sha1sum" to update this value when this file (or any other in this directory) changes
-ENV WIKIA_BASE_IMAGE_HASH=0ab78b3
+ENV WIKIA_BASE_IMAGE_HASH=9f609d20e87
 
 WORKDIR /usr/wikia/slot1/current/src

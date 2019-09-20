@@ -24,7 +24,7 @@ class ListusersData {
 	private $mDBh;
 
 	const TABLE = 'events_local_users';
-	const CACHE_VERSION = 'v5';
+	const CACHE_VERSION = 'v6';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
@@ -188,6 +188,10 @@ class ListusersData {
 				$data['data'] = array();
 				while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 					$oUser = User::newFromId( $oRow->user_id );
+					$oUser->load();
+					if ( $oUser->isAnon() ) {
+						continue;
+					}
 
 					/* groups */
 					$groups = explode(";", $oRow->all_groups);
@@ -488,6 +492,10 @@ class ListusersData {
 
 		foreach( array_unique( $ids ) as $id ) {
 			$user = \User::newFromId( $id );
+			$user->load();
+			if ( $user->isAnon() ) {
+				continue;
+			}
 			$listUsers->updateUserGroups( $user, $user->getGroups() );
 		}
 	}
