@@ -7,7 +7,6 @@ namespace Wikia\Search\UnifiedSearch;
 final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 
 	private $pageid;
-	private $wikiId;
 	private $title;
 	private $text;
 	private $url;
@@ -20,7 +19,6 @@ final class UnifiedSearchPageResultItem implements UnifiedSearchResultItem {
 
 	public function __construct(array $value) {
 		$this->pageid = $value['pageId'];
-		$this->wikiId = $value['wikiId'];
 		$this->title = $value['title'];
 		$this->text = $value['content'];
 		$this->url = $value['url'];
