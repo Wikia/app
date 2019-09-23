@@ -101,9 +101,12 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			var payload = {
 				searchPhrase: query,
+				filters: {
+					searchType: this.getCurrentScope()
+				},
 				clicked: {
 					type: 'article', // we don't show wikis results right now
-					id: parseInt(clickedElement.getAttribute('data-page-id')),
+					id: clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id'),
 					title: clickedElement.text,
 					position: parseInt(clickedElement.getAttribute('data-pos')),
 					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
@@ -133,7 +136,9 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			var payload = {
 				searchPhrase: query,
-				filters: {},
+				filters: {
+					searchType: this.getCurrentScope()
+				},
 				results: results,
 				page: parseInt(queryparams.get('page')) || 1,
 				limit: results.length,
@@ -153,11 +158,11 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			return $results.map(function(index, item) {
 				return {
-					id: parseInt(item.getAttribute('data-page-id')),
+					id: item.getAttribute('data-wiki-id') + '_' + item.getAttribute('data-page-id'),
 					title: item.text,
 					position: parseInt(item.getAttribute('data-pos')),
 					thumbnail: !!item.getAttribute('data-thumbnail'),
-				}
+				};
 			}).toArray();
 		},
 		getUniqueSearchId: function() {
@@ -191,7 +196,10 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				searchForm.find('#search-v2-scope').val(value);
 				searchForm.submit();
 			});
-		}
+		},
+		getCurrentScope: function () {
+			return $('#search-v2-scope').val();
+		},
 	};
 
 

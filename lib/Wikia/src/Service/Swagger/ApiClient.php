@@ -4,6 +4,9 @@ namespace Wikia\Service\Swagger;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
+use Wikia\CircuitBreaker\CircuitBreakerOpen;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -18,16 +21,36 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	/** @var string */
 	private $serviceName;
 
-	public function __construct(Configuration $config, BernoulliTrial $logSampler, $serviceName) {
+	/** @var ServiceCircuitBreaker */
+	private $circuitBreaker;
+
+	public function __construct( Configuration $config, BernoulliTrial $logSampler, string $serviceName) {
 		parent::__construct($config);
 		$this->logSampler = $logSampler;
 		$this->serviceName = $serviceName;
+		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( $serviceName );
 	}
 
-	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
+	/**
+	 * @param string $resourcePath
+	 * @param string $method
+	 * @param array $queryParams
+	 * @param array $postData
+	 * @param array $headerParams
+	 * @param string|null $responseType
+	 * @param string|null $endpointPath
+	 * @return mixed|null
+	 * @throws ApiException
+	 * @throws \FatalError
+	 * @throws \MWException
+	 * @throws CircuitBreakerOpen
+	 */
+	public function callApi( $resourcePath, $method, $queryParams, $postData, $headerParams, $responseType = null, $endpointPath = null ) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
+
+		$this->circuitBreaker->assertOperationAllowed();
 
 		// adding internal headers
 		WikiaTracer::instance()->setRequestHeaders( $headerParams, true );
@@ -62,8 +85,10 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			$level = 'debug';
 		}
 
+		$this->circuitBreaker->setOperationStatus( $code < 500 && !$exception );
+
 		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
-		if ( $this->logSampler->shouldSample() ||  ( $code >= 500 ) ) {
+		if ( $this->logSampler->shouldSample() || ( $code >= 500 ) ) {
 			$this->$level( $message, $params );
 		}
 

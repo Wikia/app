@@ -5,6 +5,7 @@ namespace Wikia\Rabbit;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Wikia\CircuitBreaker\CircuitBreakerOpen;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tracer\WikiaTracer;
@@ -15,6 +16,7 @@ class ConnectionBase {
 	const ACK_WAIT_TIMEOUT_SECONDS = 0.3;
 
 	protected $vhost;
+
 	protected $exchange;
 
 	public function __construct( $wgConnectionCredentials ) {
@@ -43,12 +45,23 @@ class ConnectionBase {
 			);
 
 			$channel->wait_for_pending_acks( self::ACK_WAIT_TIMEOUT_SECONDS );
+			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->setOperationStatus( true );
 		} catch ( AMQPExceptionInterface $e ) {
+			ServiceFactory::instance()
+				->rabbitFactory()
+				->getCircuitBreaker()
+				->setOperationStatus( false );
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'routing_key' => $routingKey,
+			] );
+		} catch ( CircuitBreakerOpen $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
 				'routing_key' => $routingKey,
 			] );
 		} catch ( \ErrorException $e ) {
+			ServiceFactory::instance()->rabbitFactory()->getCircuitBreaker()->setOperationStatus( false );
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
 				'routing_key' => $routingKey,
@@ -56,6 +69,10 @@ class ConnectionBase {
 		}
 	}
 
+	/**
+	 * @return AMQPChannel
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 */
 	protected function getChannel(): AMQPChannel {
 		return ServiceFactory::instance()->rabbitFactory()->connectionManager()->getChannel( $this->vhost );
 	}

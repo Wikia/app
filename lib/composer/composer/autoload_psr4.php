@@ -78,4 +78,5 @@ return array(
     'DataValues\\Geo\\' => array($vendorDir . '/data-values/geo/src'),
     'DataValues\\' => array($vendorDir . '/data-values/common/src/DataValues'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
+    'Ackintosh\\' => array($vendorDir . '/ackintosh/ganesha/src'),
 );

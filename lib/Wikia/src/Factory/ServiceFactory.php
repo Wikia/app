@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\Factory;
 
+use Wikia\CircuitBreaker\CircuitBreakerFactory;
+
 class ServiceFactory {
 	/** @var ServiceFactory $instance */
 	private static $instance;
@@ -28,12 +30,15 @@ class ServiceFactory {
 
 	/** @var PurgerFactory $purgerFactory */
 	private $purgerFactory;
-	
+
 	/** @var RabbitFactory $rabbitFactory */
 	private $rabbitFactory;
 
 	/** @var SwiftSyncFactory $swiftSyncFactory */
 	private $swiftSyncFactory;
+
+	/** @var CircuitBreakerFactory $circuitBreakerFactory */
+	private $circuitBreakerFactory;
 
 	public function heliosFactory(): HeliosFactory {
 		if ( $this->heliosFactory === null ) {
@@ -98,7 +103,7 @@ class ServiceFactory {
 
 		return $this->purgerFactory;
 	}
-	
+
 	public function rabbitFactory(): RabbitFactory {
 		if ( $this->rabbitFactory === null ) {
 			$this->rabbitFactory = new RabbitFactory( $this );
@@ -113,6 +118,14 @@ class ServiceFactory {
 		}
 
 		return $this->swiftSyncFactory;
+	}
+
+	public function circuitBreakerFactory(): CircuitBreakerFactory {
+		if ( $this->circuitBreakerFactory == null ) {
+			$this->circuitBreakerFactory = new CircuitBreakerFactory();
+		}
+
+		return $this->circuitBreakerFactory;
 	}
 
 	public static function clearState() {

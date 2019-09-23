@@ -1,5 +1,59 @@
 [
     {
+        "name": "ackintosh/ganesha",
+        "version": "0.4.0",
+        "version_normalized": "0.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ackintosh/ganesha.git",
+            "reference": "343353934fbdd50d0a8714695cf97c982fd4dce6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ackintosh/ganesha/zipball/343353934fbdd50d0a8714695cf97c982fd4dce6",
+            "reference": "343353934fbdd50d0a8714695cf97c982fd4dce6",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "~6.3",
+            "php": ">=5.6.0",
+            "psr/http-message": "~1.0"
+        },
+        "require-dev": {
+            "php-coveralls/php-coveralls": "~2.0",
+            "php-vcr/php-vcr": "~1.0",
+            "php-vcr/phpunit-testlistener-vcr": "~2.0",
+            "phpunit/phpunit": "^5.7.27",
+            "predis/predis": "^1.1"
+        },
+        "time": "2019-06-09T06:40:46+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ackintosh\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "akihito.nakano",
+                "email": "sora.akatsuki@gmail.com"
+            }
+        ],
+        "description": "PHP implementation of Circuit Breaker pattern",
+        "keywords": [
+            "circuit breaker",
+            "error handling",
+            "fault tolerance",
+            "guzzle middleware",
+            "microservices"
+        ]
+    },
+    {
         "name": "composer/installers",
         "version": "v1.5.0",
         "version_normalized": "1.5.0.0",
@@ -2717,41 +2771,39 @@
     },
     {
         "name": "php-amqplib/php-amqplib",
-        "version": "v2.7.2",
-        "version_normalized": "2.7.2.0",
+        "version": "v2.9.2",
+        "version_normalized": "2.9.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-amqplib/php-amqplib.git",
-            "reference": "dfd3694a86f1a7394d3693485259d4074a6ec79b"
+            "reference": "76faddcd668dabb8d4f7c00e86b8a9decd781a59"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/dfd3694a86f1a7394d3693485259d4074a6ec79b",
-            "reference": "dfd3694a86f1a7394d3693485259d4074a6ec79b",
+            "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/76faddcd668dabb8d4f7c00e86b8a9decd781a59",
+            "reference": "76faddcd668dabb8d4f7c00e86b8a9decd781a59",
             "shasum": ""
         },
         "require": {
             "ext-bcmath": "*",
-            "ext-mbstring": "*",
-            "php": ">=5.3.0"
+            "ext-sockets": "*",
+            "php": ">=5.4.0"
         },
         "replace": {
             "videlalvaro/php-amqplib": "self.version"
         },
         "require-dev": {
+            "ext-curl": "*",
+            "nategood/httpful": "^0.2.20",
             "phpdocumentor/phpdocumentor": "^2.9",
             "phpunit/phpunit": "^4.8",
-            "scrutinizer/ocular": "^1.1",
             "squizlabs/php_codesniffer": "^2.5"
         },
-        "suggest": {
-            "ext-sockets": "Use AMQPSocketConnection"
-        },
-        "time": "2018-02-11T19:28:00+00:00",
+        "time": "2019-04-24T15:36:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.7-dev"
+                "dev-master": "2.8-dev"
             }
         },
         "installation-source": "dist",
@@ -2771,13 +2823,18 @@
             },
             {
                 "name": "John Kelly",
-                "email": "johnmkelly86@gmail.com",
-                "role": "Maintainer"
+                "role": "Maintainer",
+                "email": "johnmkelly86@gmail.com"
             },
             {
                 "name": "Raúl Araya",
-                "email": "nubeiro@gmail.com",
-                "role": "Maintainer"
+                "role": "Maintainer",
+                "email": "nubeiro@gmail.com"
+            },
+            {
+                "name": "Luke Bakken",
+                "role": "Maintainer",
+                "email": "luke@bakken.io"
             }
         ],
         "description": "Formerly videlalvaro/php-amqplib.  This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",

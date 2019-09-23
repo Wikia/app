@@ -24,6 +24,7 @@ class ArticleExporter {
 					'revisionId' => strval( $article['parse']['revid'] ),
 					'title' => $article['parse']['title'],
 					'url' => $title->getFullURL(),
+					'htmlContent' => $article['parse']['text']['*'],
 					'plaintextContent' => $this->getPlaintext( $article['parse']['text']['*'] ),
 					'categories' => $this->getCategories( $article['parse']['categories'] ),
 					'linkedPageTitles' => $this->getPageTitles( $article['parse']['links'] ),
