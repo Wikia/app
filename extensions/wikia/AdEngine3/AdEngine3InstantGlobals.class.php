@@ -99,7 +99,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverScrollSpeedTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverStickySlotsLines';
-		$vars[] = 'wgAdDriverUnstickHiViLeaderboardAfterTimeoutCountries';
 		$vars[] = 'wgAdDriverVmgBidderCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadHMDCountries';

@@ -6,6 +6,8 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
+use Wikia\CircuitBreaker\CircuitBreakerOpen;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Logger\Loggable;
 
 /**
@@ -14,6 +16,9 @@ use Wikia\Logger\Loggable;
 class ConnectionManager {
 
 	use Loggable;
+	const CONNECTIOU_TIMEOUT = 3.0;
+	const READ_WRITE_TIMEOUT = 130.0;
+	const CHANNEL_RPC_TIMEOUT = 0.3;
 
 	/** @var string $host */
 	private $host;
@@ -29,11 +34,15 @@ class ConnectionManager {
 	/** @var AMQPChannel[] $channels */
 	private $channels = [];
 
-	public function __construct( string $host, int $port, string $user, string $pass ) {
+	/** @var ServiceCircuitBreaker */
+	private $circuitBreaker;
+
+	public function __construct( string $host, int $port, string $user, string $pass, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
 		$this->pass = $pass;
+		$this->circuitBreaker = $circuitBreaker;
 
 		// free resources on request shutdown
 		register_shutdown_function( [ $this, 'close' ] );
@@ -48,8 +57,11 @@ class ConnectionManager {
 	 *
 	 * @param string $vHost
 	 * @return AMQPChannel
+	 * @throws CircuitBreakerOpen
 	 */
 	public function getChannel( string $vHost ): AMQPChannel {
+		$this->circuitBreaker->assertOperationAllowed();
+
 		if ( !isset( $this->channels[$vHost] ) ) {
 			$this->channels[$vHost] = $this->getConnection( $vHost )->channel();
 
@@ -61,14 +73,31 @@ class ConnectionManager {
 		return $this->channels[$vHost];
 	}
 
+	/**
+	 * @param string $vHost
+	 * @return AbstractConnection
+	 * @throws CircuitBreakerOpen
+	 */
 	private function getConnection( string $vHost ): AbstractConnection {
+		$this->circuitBreaker->assertOperationAllowed();
+
 		if ( !isset( $this->connections[$vHost] ) ) {
 			$this->connections[$vHost] = new AMQPStreamConnection(
 				$this->host,
 				$this->port,
 				$this->user,
 				$this->pass,
-				$vHost
+				$vHost,
+				false,
+				'AMQPLAIN',
+				null,
+				'en_US',
+				self::CONNECTIOU_TIMEOUT,
+				self::READ_WRITE_TIMEOUT,
+				null,
+				false,
+				60,
+				self::CHANNEL_RPC_TIMEOUT
 			);
 		}
 

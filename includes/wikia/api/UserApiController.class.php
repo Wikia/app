@@ -10,6 +10,10 @@ class UserApiController extends WikiaApiController {
 	const AVATAR_DEFAULT_SIZE = 100;
 	const USER_LIMIT = 100;
 
+	const USER_QUERY_BY_NAME_MAX_LENGTH = 255;
+	const USER_QUERY_BY_NAME_DEFAULT_LIMIT = 6;
+	const USER_QUERY_BY_NAME_MAX_LIMIT = 20;
+
 	/**
 	 * Get details about one or more user
 	 *
@@ -72,5 +76,49 @@ class UserApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * IW-2298: Query for user names matching a given prefix in a case-insensitive manner.
+	 *
+	 * @throws DBQueryError
+	 * @throws InvalidParameterApiException
+	 * @throws MWException
+	 */
+	public function getUsersByName(): void {
+		global $wgExternalSharedDB;
+
+		$query = $this->request->getVal( 'query' );
+		$limitFromQuery = $this->request->getInt( 'limit', self::USER_QUERY_BY_NAME_DEFAULT_LIMIT );
+		$limit = max( 1, min( self::USER_QUERY_BY_NAME_MAX_LIMIT, $limitFromQuery ) );
+
+		if ( empty( $query ) || mb_strlen( $query ) > self::USER_QUERY_BY_NAME_MAX_LENGTH ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		// We use Latin-1 encoding to connect to our databases, but the column we're querying here uses the utf8mb4 charset.
+		// Override the client character set to avoid encoding issues
+		$dbr->query( 'SET NAMES utf8mb4' );
+
+		$res = $dbr->select(
+			'user',
+			[ 'user_id', 'user_name_normalized' ],
+			[ 'user_name_normalized ' . $dbr->buildLike( mb_strtolower( $query ), $dbr->anyString() ) ],
+			__METHOD__,
+			[ 'LIMIT' => $limit ]
+		);
+
+		$users = [];
+
+		foreach ( $res as $row ) {
+			$users[] = [
+				'id' => $row->user_id,
+				'name' => $row->user_name_normalized,
+			];
+		}
+
+		$this->response->setData( [ 'users' => $users ] );
 	}
 }

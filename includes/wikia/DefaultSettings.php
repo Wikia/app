@@ -267,6 +267,7 @@ $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 $wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
+$wgAutoloadClasses['Redshift'] = "$IP/includes/wikia/Redshift.class.php";
 
 /**
  * Resource Loader enhancements
@@ -820,7 +821,7 @@ $wgABTests = array();
 /**
  * Memcached client timeouts
  */
-$wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
+$wgMemCachedConnectionTimeout = 1; // connection timeout in seconds
 
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';

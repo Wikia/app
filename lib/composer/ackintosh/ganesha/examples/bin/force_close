@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+require_once dirname(__DIR__) . '/common.php';
+
+$storage = $argv[1] ?: 'redis';
+
+buildGanesha($storage)->reset();

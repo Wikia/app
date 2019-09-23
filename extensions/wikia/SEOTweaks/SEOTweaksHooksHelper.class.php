@@ -392,11 +392,14 @@ class SEOTweaksHooksHelper {
 				$parsed['path'] = substr( $parsed['path'], strlen( $path ) );
 			}
 			$city_id = WikiFactory::DomainToID( wfNormalizeHost( $host ) . $path );
-			if ( $city_id ) {
+			if ( $city_id && $city_id !== WikiFactory::LANGUAGE_WIKIS_INDEX ) {
 				$primaryCityUrl = parse_url( WikiFactory::cityIDtoUrl( $city_id ) );
 				$parsed['host'] = $primaryCityUrl['host'];
 				if ( isset( $primaryCityUrl['path'] ) ) {
 					$parsed['path'] = $primaryCityUrl['path'] . ( $parsed['path'] ?? '' );
+				}
+				if ( !isset( $parsed['scheme'] ) ) {
+					$parsed['scheme'] = wfHttpsAllowedForURL( $url ) ? 'https' : 'http';
 				}
 				$url = http_build_url( '', $parsed );
 			}

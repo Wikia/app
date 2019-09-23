@@ -21,6 +21,8 @@ class UrlGenerator {
 	const MODE_WINDOW_CROP_FIXED = 'window-crop-fixed';
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
+	const MODE_SMART = 'smart';
+
 
 	const IMAGE_TYPE_AVATAR = 'avatars';
 	const IMAGE_TYPE_IMAGES = 'images';
@@ -241,6 +243,10 @@ class UrlGenerator {
 	 */
 	public function windowCropFixed() {
 		return $this->mode(self::MODE_WINDOW_CROP_FIXED);
+	}
+
+	public function smart() {
+		return $this->mode( self::MODE_SMART );
 	}
 
 	/**
