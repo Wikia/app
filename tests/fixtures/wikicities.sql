@@ -109,11 +109,3 @@ CREATE TABLE l10n_cache (
   lc_value mediumblob NOT NULL,
   PRIMARY KEY (lc_prefix, lc_lang, lc_key)
 );
-
--- Table for storing users to be replicated to clusters, just mock for tests
-CREATE TABLE `user_replicate_queue` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(5) unsigned NOT NULL,
-  `retries_count` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-);
