@@ -8,7 +8,7 @@ class UserReplicationWatcher {
 
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		$dbw->insert(
-			'user_replication_queue',
+			'user_replicate_queue',
 			['user_id' => $user->getId()]
 		);
 	}

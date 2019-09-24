@@ -11,8 +11,7 @@ mysql $(mysqlparams) -e "set global foreign_key_checks=0;set global sql_mode='ST
 
 mysql $(mysqlparams) -e "drop database if exists firefly; create database firefly default character set latin1 collate latin1_swedish_ci;"
 mysql $(mysqlparams) firefly < ../maintenance/tables.sql
-cat ../maintenance/wikia/sql/wikicities-schema.sql
-git status
+
 mysql $(mysqlparams) firefly < ../maintenance/wikia/sql/wikicities-schema.sql
 
 mysql $(mysqlparams) firefly  < ../maintenance/wikia/sql/specials-schema.sql
