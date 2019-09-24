@@ -164,7 +164,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 3000)); // 10k default
+	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 2000)); // 10k default
 	context.set('custom.fmrDelayDisabled', instantConfig.get('wgAdDriverDisableFMRDelayOasisCountries'));
 
 	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
