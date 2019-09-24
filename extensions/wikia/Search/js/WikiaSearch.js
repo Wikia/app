@@ -84,7 +84,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				}
 			});
 
-			$('.result-link').on('click', function(event) {
+			$('.result h1 .result-link').on('click', function(event) {
 				this.trackSearchResultClick(event.target);
 			}.bind(this));
 
