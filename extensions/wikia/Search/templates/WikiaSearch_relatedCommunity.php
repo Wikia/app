@@ -1,17 +1,25 @@
 <div class="exact-wiki-match">
 	<h1 class="exact-wiki-match__header"><?= wfMessage('wikiasearch3-related-wiki')->escaped(); ?></h1>
 	<div class="exact-wiki-match__result">
-		<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" title="<?= Sanitizer::encodeAttribute(
-			$community['name'] ) ?>"
-		   data-event="image">
+		<?php
+		$trackingData = function (int $pos) use ($community) {
+			return 'data-pos="' . $pos . '"' .
+				   ' data-wiki-id="' . $community['id'] . '"' .
+				   ' data-thumbnail="' . isset( $community['thumbnail'] ) . '"';
+		}
+		?>
+		<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" title="<?= Sanitizer::encodeAttribute( $community['name'] ) ?>"
+		   data-event="image" <?= $trackingData(0); ?>>
 			<img src="<?= Sanitizer::encodeAttribute( $community['thumbnail'] ) ?>" alt="<?= Sanitizer::encodeAttribute(
 				$community['name'] ) ?>"
 				 class="exact-wiki-match__image" />
 		</a>
 		<div class="exact-wiki-match__content">
 			<h1 class="exact-wiki-match__wiki-header">
-				<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" data-event="title"><?= Sanitizer::encodeAttribute
-					( $community['name'] ) ?></a>
+				<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" data-event="title"
+					<?= $trackingData(1); ?>>
+					<?= Sanitizer::encodeAttribute( $community['name'] ) ?>
+				</a>
 			</h1>
 			<p class="exact-wiki-match__hub subtle"><?= htmlspecialchars( $community['hub'] ) ?></p>
 			<ul class="exact-wiki-match__statistics">

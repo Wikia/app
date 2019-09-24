@@ -1,6 +1,40 @@
 (function($, window) {
 
 require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
+	var resultClickTrackerFactory = function (type, idGenerator) {
+		return function(clickedElement) {
+			var queryparams = new URL(window.location).searchParams;
+			var query = queryparams.get('search') || queryparams.get('query');
+
+			if (!query) {
+				return;
+			}
+
+			var payload = {
+				searchPhrase: query,
+				filters: {
+					searchType: this.getCurrentScope()
+				},
+				clicked: {
+					type: type, // we don't show wikis results right now
+					id: idGenerator(clickedElement),
+					title: clickedElement.text,
+					position: parseInt(clickedElement.getAttribute('data-pos')),
+					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
+				},
+				target: 'redirect',
+				app: 'mw-desktop',
+				siteId: parseInt(window.wgCityId),
+				searchId: this.getUniqueSearchId(),
+				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
+			};
+
+			trackingOptIn.pushToUserConsentQueue(function () {
+				window.searchTracking.trackSearchClicked(payload);
+			});
+		};
+	};
+
 	var WikiaSearch = {
 		searchUID: null,
 
@@ -41,7 +75,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			}.bind(this));
 
 			$('.exact-wiki-match__result a').on('click', function(event) {
-				this.trackSearchResultClick(event.target);
+				this.trackRightRailResultClick(event.target);
 			}.bind(this));
 
 			this.initVideoTabEvents();
@@ -95,37 +129,12 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			});
 
 		},
-		trackSearchResultClick: function(clickedElement) {
-			var queryparams = new URL(window.location).searchParams;
-			var query = queryparams.get('search') || queryparams.get('query');
-
-			if (!query) {
-				return;
-			}
-
-			var payload = {
-				searchPhrase: query,
-				filters: {
-					searchType: this.getCurrentScope()
-				},
-				clicked: {
-					type: 'article', // we don't show wikis results right now
-					id: clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id'),
-					title: clickedElement.text,
-					position: parseInt(clickedElement.getAttribute('data-pos')),
-					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
-				},
-				target: 'redirect',
-				app: 'mw-desktop',
-				siteId: parseInt(window.wgCityId),
-				searchId: this.getUniqueSearchId(),
-				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
-			};
-
-			trackingOptIn.pushToUserConsentQueue(function () {
-				window.searchTracking.trackSearchClicked(payload);
-			});
-		},
+		trackSearchResultClick: resultClickTrackerFactory('article', function (clickedElement) {
+			return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
+		}),
+		trackRightRailResultClick: resultClickTrackerFactory('community', function (clickedElement) {
+			return clickedElement.getAttribute('data-wiki-id');
+		}),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
