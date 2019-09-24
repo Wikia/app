@@ -42,6 +42,7 @@ class FixUserRegistration extends Maintenance {
 			// Update
 			if ( !empty( $timestamp ) ) {
 				$dbw->update( 'user', array( 'user_registration' => $timestamp ), array( 'user_id' => $id ), __METHOD__ );
+				$dbw->insert( 'user_replicate_queue', [ 'user_id' => $id ] );
 				$this->output( "$id $timestamp\n" );
 			} else {
 				$this->output( "$id NULL\n" );

@@ -233,6 +233,8 @@ class UserRightsProxy {
 			array( 'user_id' => $this->id ),
 			__METHOD__ );
 
+		$this->db->insert( 'user_replicate_queue', [ 'user_id' => $this->id ] );
+
 		global $wgMemc;
 		$key = wfForeignMemcKey( $this->database, false, 'user', 'id', $this->id );
 		$wgMemc->delete( $key );

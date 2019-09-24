@@ -81,6 +81,7 @@ class ConvertUserOptions extends Maintenance {
 				array( 'user_id' => $row->user_id ),
 				__METHOD__
 			);
+			$dbw->insert( 'user_replicate_queue', [ 'user_id' => $row->user_id ] );
 			$id = $row->user_id;
 		}
 
