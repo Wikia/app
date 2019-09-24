@@ -70,6 +70,15 @@ CREATE TABLE /*_*/user (
   user_birthdate date default NULL
 ) /*$wgDBTableOptions*/;
 
+
+
 CREATE UNIQUE INDEX /*i*/user_name ON /*_*/user (user_name);
 CREATE INDEX /*i*/user_email_token ON /*_*/user (user_email_token);
 CREATE INDEX /*i*/user_email ON /*_*/user (user_email(50));
+
+CREATE TABLE IF NOT EXISTS `user_replicate_queue` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(5) unsigned NOT NULL,
+  `retries_count` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
