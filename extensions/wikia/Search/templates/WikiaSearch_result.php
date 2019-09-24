@@ -10,6 +10,7 @@
 		}
 		?>
 		<?php
+		$title = $result->getText( 'title' );
 		$trackingData =
 			'class="result-link"' . ' data-pos="' . $pos . '"' .
 			' data-page-id="' . $result['pageid'] . '"' .
@@ -24,8 +25,6 @@
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 			<?php endif; ?>
 			<h1>
-				<?php $title = $result->getText( 'title' ); ?>
-
 				<a href="<?= $result->getEscapedUrl() ?>" <?= $trackingData; ?>><?= $title ?></a>
 			</h1>
 
