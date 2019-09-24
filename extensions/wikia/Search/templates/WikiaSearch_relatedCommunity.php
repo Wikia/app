@@ -9,15 +9,15 @@
 		}
 		?>
 		<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" title="<?= Sanitizer::encodeAttribute( $community['name'] ) ?>"
-		   data-event="image" <?= $trackingData(0); ?>>
+		   data-event="image">
 			<img src="<?= Sanitizer::encodeAttribute( $community['thumbnail'] ) ?>" alt="<?= Sanitizer::encodeAttribute(
-				$community['name'] ) ?>"
+				$community['name'] ) ?>" <?= $trackingData(0); ?> data-name="thumbnail"
 				 class="exact-wiki-match__image" />
 		</a>
 		<div class="exact-wiki-match__content">
 			<h1 class="exact-wiki-match__wiki-header">
 				<a href="<?= Sanitizer::encodeAttribute( $community['url'] ) ?>" data-event="title"
-					<?= $trackingData(1); ?>>
+					<?= $trackingData(1); ?> data-name="<?= Sanitizer::encodeAttribute( $community['name'] ) ?>">
 					<?= Sanitizer::encodeAttribute( $community['name'] ) ?>
 				</a>
 			</h1>

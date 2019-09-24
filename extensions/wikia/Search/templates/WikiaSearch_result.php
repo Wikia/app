@@ -14,6 +14,7 @@
 			'class="result-link"' . ' data-pos="' . $pos . '"' .
 			' data-page-id="' . $result['pageid'] . '"' .
 			' data-wiki-id="' . $result['wikiId'] . '"' .
+			' data-name="' . $title . '"' .
 			' data-thumbnail="' . !empty( $thumbnail ) . '"';
 		?>
 		<?php if ( !empty( $thumbnail ) ): ?>

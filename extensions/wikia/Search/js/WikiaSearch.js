@@ -1,7 +1,7 @@
 (function($, window) {
 
 require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
-	var resultClickTrackerFactory = function (type, idGenerator) {
+	var resultClickTrackerFactory = function (type, idGenerator, filtersProvider) {
 		return function(clickedElement) {
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
@@ -12,13 +12,11 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			var payload = {
 				searchPhrase: query,
-				filters: {
-					searchType: this.getCurrentScope()
-				},
+				filters: filtersProvider(clickedElement),
 				clicked: {
-					type: type, // we don't show wikis results right now
+					type: type,
 					id: idGenerator(clickedElement),
-					title: clickedElement.text,
+					title: clickedElement.getAttribute('data-name'),
 					position: parseInt(clickedElement.getAttribute('data-pos')),
 					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
 				},
@@ -26,7 +24,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
 				searchId: this.getUniqueSearchId(),
-				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
+				pvUniqueId: window.pvUID || 'dev', // on dev there is no pvUID available
 			};
 
 			trackingOptIn.pushToUserConsentQueue(function () {
@@ -129,12 +127,27 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			});
 
 		},
-		trackSearchResultClick: resultClickTrackerFactory('article', function (clickedElement) {
-			return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
-		}),
-		trackRightRailResultClick: resultClickTrackerFactory('community', function (clickedElement) {
-			return clickedElement.getAttribute('data-wiki-id');
-		}),
+		trackSearchResultClick: resultClickTrackerFactory(
+			'article',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
+			},
+			function () {
+				return {
+					searchType: this.getCurrentScope()
+				};
+			}
+		),
+		trackRightRailResultClick: resultClickTrackerFactory(
+			'community',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id');
+			},
+			function () {
+				return {};
+			}
+
+		),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
