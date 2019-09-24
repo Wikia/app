@@ -23,14 +23,30 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				target: 'redirect',
 				app: 'mw-desktop',
 				siteId: parseInt(window.wgCityId),
-				searchId: this.getUniqueSearchId(),
+				searchId: getUniqueSearchId(),
 				pvUniqueId: window.pvUID || 'dev', // on dev there is no pvUID available
 			};
 
 			trackingOptIn.pushToUserConsentQueue(function () {
 				window.searchTracking.trackSearchClicked(payload);
 			});
-		};
+		}.bind(this);
+	};
+
+	var getCurrentScope = function () {
+		return $('#search-v2-scope').val();
+	};
+
+	var getUniqueSearchId = function() {
+		if (this.searchUID) {
+			return this.searchUID;
+		}
+
+		var queryParams = new URL(window.location).searchParams;
+		var searchUID = queryParams.get('searchUID') || uuid();
+		this.searchUID = searchUID;
+
+		return searchUID;
 	};
 
 	var WikiaSearch = {
@@ -70,6 +86,10 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 
 			$('.result-link').on('click', function(event) {
 				this.trackSearchResultClick(event.target);
+			}.bind(this));
+
+			$('.WikiaSearchResultItemSitename a').on('click', function(event) {
+				this.trackSearchResultCommunityClick(event.target);
 			}.bind(this));
 
 			$('.exact-wiki-match__result a').on('click', function(event) {
@@ -134,7 +154,18 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			},
 			function () {
 				return {
-					searchType: this.getCurrentScope()
+					searchType: getCurrentScope()
+				};
+			}
+		),
+		trackSearchResultCommunityClick: resultClickTrackerFactory(
+			'community',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id');
+			},
+			function () {
+				return {
+					searchType: getCurrentScope()
 				};
 			}
 		),
@@ -157,13 +188,13 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			}
 
 			var results = this.getSearchResults();
-			var searchUID = this.getUniqueSearchId();
+			var searchUID = getUniqueSearchId();
 			this.appendSearchUidToPaginationLinks(searchUID);
 
 			var payload = {
 				searchPhrase: query,
 				filters: {
-					searchType: this.getCurrentScope()
+					searchType: getCurrentScope()
 				},
 				results: results,
 				page: parseInt(queryparams.get('page')) || 1,
@@ -191,17 +222,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				};
 			}).toArray();
 		},
-		getUniqueSearchId: function() {
-			if (this.searchUID) {
-				return this.searchUID;
-			}
-
-			var queryParams = new URL(window.location).searchParams;
-			var searchUID = queryParams.get('searchUID') || uuid();
-			this.searchUID = searchUID;
-
-			return searchUID;
-		},
 		appendSearchUidToPaginationLinks: function(searchUID) {
 			$('a.paginator-prev, a.paginator-next, a.paginator-page').each(function() {
 				var $elem = $(this);
@@ -223,9 +243,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				searchForm.submit();
 			});
 		},
-		getCurrentScope: function () {
-			return $('#search-v2-scope').val();
-		},
+		getCurrentScope: getCurrentScope,
 	};
 
 
