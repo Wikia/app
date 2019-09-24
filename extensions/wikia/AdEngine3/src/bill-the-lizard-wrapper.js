@@ -30,8 +30,7 @@ function serializeBids(slotName) {
     return targeting.getBiddersPrices(slotName, false).then(bidderPrices => [
         bidderPrices.bidder_0 || 0, // wikia adapter
         bidderPrices.bidder_1 || 0,
-        // bidderPrices.bidder_2 || 0,
-        0,
+        bidderPrices.bidder_2 || 0,
         bidderPrices.bidder_4 || 0,
         bidderPrices.bidder_5 || 0,
         bidderPrices.bidder_6 || 0,
@@ -93,9 +92,9 @@ export const billTheLizardWrapper = {
             billTheLizard.projectsHandler.enable('garfield');
         }
 
-        billTheLizard.executor.register('catlapseIncontentBoxad', () => {
-            console.log('catlapsed!');
-        });
+        // billTheLizard.executor.register('catlapseIncontentBoxad', () => {
+        //     console.log('catlapsed!');
+        // });
 
         eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
             if (adSlot.getConfigProperty('cheshireCatSlot')) {
@@ -131,7 +130,8 @@ export const billTheLizardWrapper = {
     },
 
     callGarfield(callId) {
-        serializeBids(bidPosKeyVal).then((bids) => {
+        serializeBids(callId).then((bids) => {
+            console.log(bids)
             context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
