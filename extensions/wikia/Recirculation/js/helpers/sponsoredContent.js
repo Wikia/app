@@ -12,11 +12,11 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	function fetch() {
 		$.ajax({
 			url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/article',
-            data: {
-                geo: userGeo,
-                wikiId: w.wgCityId,
-                vertical: w.wgWikiVertical
-            }
+			data: {
+				geo: userGeo,
+				wikiId: w.wgCityId,
+				vertical: w.wgWikiVertical
+			}
 		}).done(function (result) {
 			deferred.resolve(result);
 		}).fail(function (err) {
