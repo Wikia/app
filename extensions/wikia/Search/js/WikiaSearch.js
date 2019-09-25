@@ -183,10 +183,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
 
-			if (!query) {
-				return;
-			}
-
 			var results = this.getSearchResults();
 			var searchUID = getUniqueSearchId();
 			this.appendSearchUidToPaginationLinks(searchUID);
