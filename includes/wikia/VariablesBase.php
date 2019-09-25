@@ -9343,3 +9343,9 @@ $wgOverrideUcfirstCharacters = [
 	'𞥂' => '𞥂',
 	'𞥃' => '𞥃',
 ];
+
+/**
+ * Variable to bump the cache of EasyTimeline
+ * @var string
+ */
+$wgTimelineRenderHashAppend = 'v2';

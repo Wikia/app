@@ -61,7 +61,7 @@ function wfTimelineExtension( Parser $parser ): bool {
  * @return string
  */
 function wfRenderTimeline( $timelinesrc ) {
-	global $wgUploadDirectory, $wgUploadPath, $wgArticlePath, $wgTmpDirectory, $wgRenderHashAppend;
+	global $wgUploadDirectory, $wgUploadPath, $wgArticlePath, $wgTmpDirectory, $wgTimelineRenderHashAppend;
 	global $wgTimelineSettings;
 
 	// Get the backend to store plot data and pngs
@@ -78,8 +78,8 @@ function wfRenderTimeline( $timelinesrc ) {
 
 	// Get a hash of the plot data
 	$hash = md5( $timelinesrc );
-	if ( $wgRenderHashAppend != '' ) {
-		$hash = md5( $hash . $wgRenderHashAppend );
+	if ( $wgTimelineRenderHashAppend != '' ) {
+		$hash = md5( $hash . $wgTimelineRenderHashAppend );
 	}
 
 	// Storage destination path (excluding file extension)
@@ -108,7 +108,7 @@ function wfRenderTimeline( $timelinesrc ) {
 			$tmpPath = $tmpFile->getPath();
 			file_put_contents( $tmpPath, $timelinesrc ); // store plot data to file
 
-			// Get command for ploticus to read the user input and output an error, 
+			// Get command for ploticus to read the user input and output an error,
 			// map, and rendering (png or gif) file under the same dir as the temp file.
 			$cmdline = wfEscapeShellArg( $wgTimelineSettings->perlCommand, $wgTimelineSettings->timelineFile ) .
 			" -i " . wfEscapeShellArg( $tmpPath ) . " -m -P " . wfEscapeShellArg( $wgTimelineSettings->ploticusCommand ) .
@@ -183,7 +183,7 @@ function wfRenderTimeline( $timelinesrc ) {
 		// Wikia change - end
 
 		$txt = $map .
-			"<img usemap=\"#timeline_" . htmlspecialchars( $hash ) . "\" " . 
+			"<img usemap=\"#timeline_" . htmlspecialchars( $hash ) . "\" " .
 			"src=\"" . htmlspecialchars( $url ) . "\">";
 
 		if( $expired ) {
@@ -223,7 +223,7 @@ function easyTimelineFixMap( $html ) {
 	$name = $map->attributes->getNamedItem( 'name' )->value;
 	$html = Xml::openElement( 'map', array( 'name' => $name ) );
 
-	$allowedAttribs = array( 'shape', 'coords', 'href', 'nohref', 'alt', 
+	$allowedAttribs = array( 'shape', 'coords', 'href', 'nohref', 'alt',
 		'tabindex', 'title' );
 	foreach ( $map->childNodes as $node ) {
 		if ( strtolower( $node->nodeName ) !== 'area' ) {
