@@ -12,7 +12,7 @@ import { getNavbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
 import { recRunner } from '../wad/rec-runner';
-import billTheLizardWrapper  from '../bill-the-lizard-wrapper';
+import { billTheLizardWrapper }   from '../bill-the-lizard-wrapper';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
@@ -29,7 +29,6 @@ let currentRecNode = null;
 
 let currentAdSlot = null;
 let nextSlotName = null;
-let nextSlot = null;
 let rotatorListener = null;
 let recirculationElement = null;
 
@@ -249,6 +248,7 @@ function tryPushNextSlot() {
  * @returns {void}
  */
 export function rotateIncontentBoxad(slotName) {
+	let nextSlot = null;
 	nextSlotName = slotName;
 	recirculationElement = document.getElementById('recirculation-rail');
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarManager().getHeight();
