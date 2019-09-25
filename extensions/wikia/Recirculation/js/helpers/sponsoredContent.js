@@ -7,28 +7,23 @@ define('ext.wikia.recirculation.helpers.sponsoredContent', [
 	'use strict';
 
 	var userGeo = geo.getCountryCode();
-	var hasFetched = false;
 	var deferred = $.Deferred();
 
 	function fetch() {
-		if (!hasFetched) {
-			hasFetched = true;
-
-			$.ajax({
-				url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/article',
-                data: {
-                    geo: userGeo,
-                    wikiId: w.wgCityId,
-                    vertical: w.wgWikiVertical
-                }
-			}).done(function (result) {
-				deferred.resolve(result);
-			}).fail(function (err) {
-				log('Failed to fetch Sponsored content data' + err, log.levels.error);
-				// don't block rendering of rail/MCF
-				deferred.resolve(null);
-			});
-		}
+		$.ajax({
+			url: w.wgServicesExternalDomain + 'wiki-recommendations/sponsored-articles/article',
+            data: {
+                geo: userGeo,
+                wikiId: w.wgCityId,
+                vertical: w.wgWikiVertical
+            }
+		}).done(function (result) {
+			deferred.resolve(result);
+		}).fail(function (err) {
+			log('Failed to fetch Sponsored content data' + err, log.levels.error);
+			// don't block rendering of rail/MCF
+			deferred.resolve(null);
+		});
 
 		return deferred.promise();
 	}
