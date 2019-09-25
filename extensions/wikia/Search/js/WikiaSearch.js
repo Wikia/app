@@ -1,6 +1,8 @@
 (function($, window) {
 
 require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
+	var currentScope = $('#search-v2-scope').val();
+
 	var resultClickTrackerFactory = function (type, idGenerator, filtersProvider) {
 		return function(clickedElement) {
 			var queryparams = new URL(window.location).searchParams;
@@ -33,17 +35,13 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 		}.bind(this);
 	};
 
-	var getCurrentScope = function () {
-		return $('#search-v2-scope').val();
-	};
-
 	var getUniqueSearchId = function() {
 		if (this.searchUID) {
 			return this.searchUID;
 		}
 
 		var queryParams = new URL(window.location).searchParams;
-		
+
 		return queryParams.get('searchUID') || uuid();
 	};
 
@@ -152,7 +150,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			},
 			function () {
 				return {
-					searchType: getCurrentScope()
+					searchType: currentScope
 				};
 			}
 		),
@@ -163,7 +161,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			},
 			function () {
 				return {
-					searchType: getCurrentScope()
+					searchType: currentScope
 				};
 			}
 		),
@@ -188,7 +186,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			var payload = {
 				searchPhrase: query,
 				filters: {
-					searchType: getCurrentScope()
+					searchType: currentScope
 				},
 				results: results,
 				page: parseInt(queryparams.get('page')) || 1,
@@ -237,7 +235,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				searchForm.submit();
 			});
 		},
-		getCurrentScope: getCurrentScope,
 	};
 
 
