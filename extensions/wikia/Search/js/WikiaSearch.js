@@ -43,10 +43,8 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 		}
 
 		var queryParams = new URL(window.location).searchParams;
-		var searchUID = queryParams.get('searchUID') || uuid();
-		this.searchUID = searchUID;
-
-		return searchUID;
+		
+		return queryParams.get('searchUID') || uuid();
 	};
 
 	var WikiaSearch = {
