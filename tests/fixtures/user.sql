@@ -70,8 +70,6 @@ CREATE TABLE /*_*/user (
   user_birthdate date default NULL
 ) /*$wgDBTableOptions*/;
 
-
-
 CREATE UNIQUE INDEX /*i*/user_name ON /*_*/user (user_name);
 CREATE INDEX /*i*/user_email_token ON /*_*/user (user_email_token);
 CREATE INDEX /*i*/user_email ON /*_*/user (user_email(50));

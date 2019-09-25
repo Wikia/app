@@ -74,14 +74,22 @@ class ConvertUserOptions extends Maintenance {
 
 			$u->saveSettings();
 
-			// Do this here as saveSettings() doesn't set user_options to '' anymore!
-			$dbw->update(
-				'user',
-				array( 'user_options' => '' ),
-				array( 'user_id' => $row->user_id ),
-				__METHOD__
-			);
-			$dbw->insert( 'user_replicate_queue', [ 'user_id' => $row->user_id ] );
+			$dbw->begin();
+			try {
+				// Do this here as saveSettings() doesn't set user_options to '' anymore!
+				$dbw->update(
+					'user',
+					array( 'user_options' => '' ),
+					array( 'user_id' => $row->user_id ),
+					__METHOD__
+				);
+				$dbw->insert( 'user_replicate_queue', [ 'user_id' => $row->user_id ] );
+				$dbw->commit();
+			} catch ( DBError $e ) {
+				$dbw->rollback();
+				$this->output( "clearing settings failed: {$e->getMessage()}, for user: {$row->user_id}" );
+			}
+
 			$id = $row->user_id;
 		}
 
