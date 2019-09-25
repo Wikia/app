@@ -1,10 +1,40 @@
 import {
     billTheLizard,
+    BillTheLizard,
+    billTheLizardEvents,
     context,
+    events,
+    eventService
 } from '@wikia/ad-engine';
 import targeting from './targeting';
+import pageTracker from './tracking/page-tracker';
 
 let config = null; //config will be used later
+let garfieldCalled = false;
+const baseSlotName = 'incontent_boxad_1';
+
+function getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
+        console.log(btlStatus);
+        let slotStatus;
+
+        switch (btlStatus) {
+            case BillTheLizard.TIMEOUT:
+            case BillTheLizard.FAILURE: {
+                console.log('btl_failure');
+                slotStatus = 'FAILURE';
+                break;
+            }
+            case BillTheLizard.ON_TIME: {
+                console.log('btl_on_time');
+                slotStatus = 'ONTAJM';
+                break;
+            }
+            default: {
+                console.log('default');
+                slotStatus = '????';
+            }
+        }
+}
 
 function serializeBids(slotName) {
     return targeting.getBiddersPrices(slotName, false).then(bidderPrices => [
@@ -42,6 +72,45 @@ export const billTheLizardWrapper = {
 
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
             console.log('catlapsed!');
+        });
+
+        context.push('listeners.slot', {
+            onRenderEnded: (adSlot) => {
+                if (adSlot.getSlotName() === baseSlotName && !garfieldCalled) {
+                    this.callGarfield(baseSlotName);
+                }
+            },
+        });
+
+        eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
+            if (adSlot.getConfigProperty('garfieldCat')) {
+                const callId = adSlot.config.adProduct;
+                adSlot.setConfigProperty('btlStatus', getBtlSlotStatus(
+                    billTheLizard.getResponseStatus(callId),
+                    callId,
+                    defaultStatus,
+                ));
+            }
+        });
+
+        eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
+            const { query, callId } = event;
+            let propName = 'btl_request';
+            if (callId) {
+                propName = `${propName}_${callId}`;
+            }
+
+            pageTracker.trackProp(propName, query);
+        });
+
+        eventService.on(billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, (event) => {
+                const { response, callId } = event;
+                let propName = 'btl_response';
+                if (callId) {
+                    propName = `${propName}_${callId}`;
+                    defaultStatus = BillTheLizard.REUSED;
+                }
+                pageTracker.trackProp(propName, response);
         });
     },
 
