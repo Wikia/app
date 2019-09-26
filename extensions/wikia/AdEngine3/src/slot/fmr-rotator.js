@@ -256,7 +256,6 @@ export function rotateIncontentBoxad(slotName) {
 	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
 	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
 
-
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		if (slot.getSlotName().substring(0, 16) === fmrPrefix) {
 			billTheLizardWrapper.callGarfield(slot.config.adProduct);
@@ -272,7 +271,6 @@ export function rotateIncontentBoxad(slotName) {
 
 						return;
 					}
-
 					setTimeout(() => {
 						hideSlot();
 					}, refreshInfo.refreshDelay);

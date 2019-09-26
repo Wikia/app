@@ -1,9 +1,16 @@
 import {
+    BillTheLizard,
     billTheLizard,
+    billTheLizardEvents,
     context,
+    events,
+    eventService
 } from '@wikia/ad-engine';
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
+
+let garfieldCalled = false;
+const baseSlotName = 'incontent_boxad_1';
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) { //config will be used later
@@ -18,18 +25,19 @@ class BillTheLizardWrapper {
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
             console.log('catlapsed!');
         });
-        context.push('listeners.slot', {
-            onRenderEnded: (adSlot) => {
-                if (adSlot.getSlotName() === baseSlotName && !garfieldCalled) {
-                    this.callGarfield(baseSlotName);
-                }
-            },
-        });
+
+        // context.push('listeners.slot', {
+        //     onRenderEnded: (adSlot) => {
+        //         if (adSlot.getSlotName() === baseSlotName && !garfieldCalled) {
+        //             this.callGarfield(baseSlotName);
+        //         }
+        //     },
+        // });
 
         eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
             if (adSlot.getConfigProperty('garfieldCat')) {
                 const callId = adSlot.config.adProduct;
-                adSlot.setConfigProperty('btlStatus', getBtlSlotStatus(
+                adSlot.setConfigProperty('btlStatus', this.getBtlSlotStatus(
                     billTheLizard.getResponseStatus(callId),
                     callId,
                     defaultStatus,
