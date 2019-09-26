@@ -4,7 +4,7 @@ import {
 	events,
 	eventService,
 	fillerService,
-  InstantConfigCacheStorage,
+	InstantConfigCacheStorage,
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
@@ -19,6 +19,7 @@ import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
 import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
 import * as fallbackInstantConfig from './fallback-config.json';
+import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
 function setupPageLevelTargeting(adsContext) {
 	const pageLevelParams = targeting.getPageLevelTargeting(adsContext);
@@ -97,6 +98,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	}
 
 	context.set('state.deviceType', utils.client.getDeviceType());
+
+	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
 
 	context.set('options.video.moatTracking.enabled', instantConfig.isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
 	context.set('options.video.moatTracking.sampling', instantConfig.get('wgAdDriverPorvataMoatTrackingSampling'));
@@ -240,6 +243,10 @@ async function configure(adsContext, isOptedIn) {
 	registerSlotTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
+
+	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+
+	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }
 
 /**
