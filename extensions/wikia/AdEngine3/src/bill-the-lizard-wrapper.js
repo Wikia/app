@@ -10,7 +10,9 @@ import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
 
 let garfieldCalled = false;
-const baseSlotName = 'incontent_boxad_1';
+let nextSlot = null;
+const baseSlotName = 'INCONTENT_BOXAD_1';
+const fmrPrefix = 'incontent_boxad_';
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) { //config will be used later
@@ -26,24 +28,32 @@ class BillTheLizardWrapper {
             console.log('catlapsed!');
         });
 
-        // context.push('listeners.slot', {
-        //     onRenderEnded: (adSlot) => {
-        //         if (adSlot.getSlotName() === baseSlotName && !garfieldCalled) {
-        //             this.callGarfield(baseSlotName);
-        //         }
-        //     },
-        // });
-
-        eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
-            if (adSlot.getConfigProperty('garfieldCat')) {
-                const callId = adSlot.config.adProduct;
-                adSlot.setConfigProperty('btlStatus', this.getBtlSlotStatus(
-                    billTheLizard.getResponseStatus(callId),
-                    callId,
-                    defaultStatus,
-                ));
-            }
+        context.push('listeners.slot', {
+            onRenderEnded: (adSlot) => {
+                const slotName = adSlot.config.adProduct
+                if (slotName.includes('incontent_boxad')) {
+                    nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
+                }
+            },
         });
+
+        context.set(
+            'bidders.prebid.bidsRefreshing.bidsBackHandler',
+            () => {
+                    this.callGarfield(nextSlot);
+            },
+        );
+
+        // eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
+        //     if (adSlot.getConfigProperty('garfieldCat')) {
+        //         const callId = adSlot.config.adProduct;
+        //         adSlot.setConfigProperty('btlStatus', this.getBtlSlotStatus(
+        //             billTheLizard.getResponseStatus(callId),
+        //             callId,
+        //             defaultStatus,
+        //         ));
+        //     }
+        // });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
             const { query, callId } = event;
@@ -66,9 +76,8 @@ class BillTheLizardWrapper {
         });
     }
 
-
     callGarfield(callId) {
-        this.serializeBids(callId).then((bids) => {
+        this.serializeBids(baseSlotName).then((bids) => {
             context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
