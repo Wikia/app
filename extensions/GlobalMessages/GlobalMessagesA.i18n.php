@@ -13831,11 +13831,9 @@ $1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 この新アカウントのパスワードは、ログインした際に''[[Special:ChangePassword|パスワード変更]]''ページで変更できます。",
 	'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
-|\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
+<div id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;">\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
 
-{{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。
-|}',
+{{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。</div>',
 	'allowemail' => '他のユーザーからの電子メールの受信を有効化する',
 	'action-read' => 'このページの閲覧',
 	'action-edit' => 'このページの編集',
@@ -13893,7 +13891,7 @@ $1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 	'activeusers' => '活動中のユーザー一覧',
 	'activeusers-intro' => '過去$1{{PLURAL:$1|日|日間}}に活動をしたユーザーの一覧です。',
 	'activeusers-count' => '過去$3{{PLURAL:$3|日|日間}}に$1回の{{PLURAL:$1|編集}}',
-	'activeusers-from' => '次の文字列から始まるユーザーを表示:',
+	'activeusers-from' => '次の文字列から始まるユーザーを表示：',
 	'activeusers-hidebots' => 'ボットを非表示',
 	'activeusers-hidesysops' => 'アドミンを隠す',
 	'activeusers-noresult' => 'ユーザーが見つかりませんでした。',
@@ -13915,7 +13913,7 @@ $1のブロックの理由は「$2」です。',
 	'allmessagesname' => '名前',
 	'allmessagesdefault' => '既定のメッセージ',
 	'allmessagescurrent' => '現在のメッセージ',
-	'allmessagestext' => '以下は、MediaWiki名前空間に保存されているシステムメッセージのリストです。セキュリティ対策のため、MediaWikiメッセージの中には編集できないものもあります（詳細については[[ヘルプ:システムメッセージ|こちらのページ]] をご覧ください）。編集できるべきと思うメッセージがある場合や、既存のメッセージを変更する必要がある場合は、[[Special:Contact|FANDOMスタッフまでお知らせ]]ください。',
+	'allmessagestext' => '以下は、MediaWiki名前空間に保存されているシステムメッセージのリストです。セキュリティ対策のため、MediaWikiメッセージの中には編集できないものもあります（詳細については[[ヘルプ:システムメッセージ|こちらのページ]] をご覧ください）。編集できるべきと思うメッセージがある場合や、既存のメッセージを変更する必要がある場合は、[[Special:Contact|Fandomスタッフまでお知らせ]]ください。',
 	'allmessagesnotsupportedDB' => "'''\$wgUseDatabaseMessages'''が無効なので、このページを使うことはできません。",
 	'allmessages-filter-legend' => '絞り込み',
 	'allmessages-filter' => '変更状態により絞り込む：',
@@ -13937,7 +13935,7 @@ $1のブロックの理由は「$2」です。',
 	'api-error-badaccess-groups' => 'このWikiへのファイルのアップロードが許可されていません。',
 	'api-error-badtoken' => '内部エラー：トークンが不正です。',
 	'api-error-copyuploaddisabled' => 'URLによるアップロードはこのサーバーでは無効になっています。',
-	'api-error-duplicate' => '当ウェブサイト上には、既に同じ内容の[$2 別ファイル]が存在しています{{PLURAL:$1|}}。',
+	'api-error-duplicate' => '当ウェブサイト上には、既に同じ内容の{{PLURAL:$1|[$2 別ファイル]}}が存在しています。',
 	'api-error-duplicate-archive' => '同じ内容で既に削除済みの{{PLURAL:$1|[$2 別のファイルが]|[$2 別のファイルがいくつか]}}サイト上にあります。',
 	'api-error-duplicate-archive-popup-title' => 'すでに削除された重複{{PLURAL:$1|ファイル|ファイル}}',
 	'api-error-duplicate-popup-title' => '重複{{PLURAL:$1|ファイル}}',
