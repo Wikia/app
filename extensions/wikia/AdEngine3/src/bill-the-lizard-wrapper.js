@@ -94,7 +94,19 @@ class BillTheLizardWrapper {
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
+
+                const slotId = callId.substring(16);
+                const prevPrediction = billTheLizard.getPreviousPrediction(
+                    slotId,
+                    this.getCallId,
+                    'garfield'
+                );
+
                 slotStatus = btlStatus;
+
+                if (prevPrediction !== undefined) {
+                    slotStatus += `;res=${prevPrediction.result};${prevPrediction.callId}`;
+                }
                 break;
             }
             case BillTheLizard.ON_TIME: {
@@ -109,7 +121,11 @@ class BillTheLizardWrapper {
                 }
 
                 const slotId = callId.substring(16);
-                const prevPrediction = billTheLizard.getPreviousPrediction(slotId, this.getCallId, 'garfield');
+                const prevPrediction = billTheLizard.getPreviousPrediction(
+                    slotId,
+                    this.getCallId,
+                    'garfield'
+                );
 
                 if (prevPrediction === undefined) {
                     // shouldnt see a lot of that
