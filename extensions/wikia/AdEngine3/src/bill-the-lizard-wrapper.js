@@ -12,11 +12,10 @@ import pageTracker from './tracking/page-tracker';
 const baseSlotName = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
 
-let garfieldCalled = false;
 let nextSlot = null;
 
 class BillTheLizardWrapper {
-    configureBillTheLizard(billTheLizardConfig) { //config will be used later
+    configureBillTheLizard(billTheLizardConfig) {
         const config = billTheLizardConfig;
 
         const enableGarfield = context.get('options.billTheLizard.garfield');
@@ -24,6 +23,9 @@ class BillTheLizardWrapper {
         if (enableGarfield === true) {
             billTheLizard.projectsHandler.enable('garfield');
         }
+
+        context.set('services.billTheLizard.projects', config.projects);
+        context.set('services.billTheLizard.timeout', config.timeout || 0);
 
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
             console.log('catlapsed!');
@@ -86,10 +88,6 @@ class BillTheLizardWrapper {
         });
     }
 
-    /**
-     * @private
-     * @param btlStatus, callId, fallbackStatus
-     */
     getBtlSlotStatus(btlStatus, callId) {
         let slotStatus;
 
@@ -124,10 +122,6 @@ class BillTheLizardWrapper {
         return slotStatus;
     }
 
-    /**
-     * @private
-     * @param counter
-     */
     getCallId(counter = null) {
         return `incontent_boxad_${counter}`;
     }
