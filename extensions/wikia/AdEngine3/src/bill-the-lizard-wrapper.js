@@ -9,10 +9,11 @@ import {
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
 
-let garfieldCalled = false;
-let nextSlot = null;
 const baseSlotName = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
+
+let garfieldCalled = false;
+let nextSlot = null;
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) { //config will be used later
@@ -30,7 +31,7 @@ class BillTheLizardWrapper {
 
         context.push('listeners.slot', {
             onRenderEnded: (adSlot) => {
-                const slotName = adSlot.config.adProduct
+                const slotName = adSlot.getConfigProperty('slotName');
                 if (slotName.includes('incontent_boxad')) {
                     nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
                 }
@@ -44,16 +45,16 @@ class BillTheLizardWrapper {
             },
         );
 
-        // eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
-        //     if (adSlot.getConfigProperty('garfieldCat')) {
-        //         const callId = adSlot.config.adProduct;
-        //         adSlot.setConfigProperty('btlStatus', this.getBtlSlotStatus(
-        //             billTheLizard.getResponseStatus(callId),
-        //             callId,
-        //             defaultStatus,
-        //         ));
-        //     }
-        // });
+        eventService.on(events.AD_SLOT_CREATED, (adSlot) => {
+            if (adSlot.getConfigProperty('garfieldCat')) {
+                const callId = adSlot.getConfigProperty('slotName');
+                adSlot.setConfigProperty('btlStatus', this.getBtlSlotStatus(
+                    billTheLizard.getResponseStatus(callId),
+                    callId,
+                    defaultStatus,
+                ));
+            }
+        });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
             const { query, callId } = event;
@@ -89,27 +90,46 @@ class BillTheLizardWrapper {
      * @private
      * @param btlStatus, callId, fallbackStatus
      */
-    getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
-        console.log(btlStatus);
+    getBtlSlotStatus(btlStatus, callId) {
         let slotStatus;
 
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
-                console.log('btl_failure');
-                slotStatus = 'FAILURE';
+                slotStatus = btlStatus;
                 break;
             }
             case BillTheLizard.ON_TIME: {
-                console.log('btl_on_time');
-                slotStatus = 'ONTAJM';
+                const prediction = billTheLizard.getPrediction('garfield', callId);
+                const result = prediction ? prediction.result : undefined;
+                slotStatus = `${BillTheLizard.ON_TIME};res=${result};${callId}`;
                 break;
             }
             default: {
-                console.log('default');
-                slotStatus = '????';
+                if (callId === baseSlotName.toLowerCase()){
+                    return 'not_used';
+                }
+
+                const slotId = callId.substring(16);
+                const prevPrediction = billTheLizard.getPreviousPrediction(slotId, this.getCallId, 'garfield');
+
+                if (prevPrediction === undefined) {
+                    // shouldnt see a lot of that
+                    return 'weird_cat';
+                }
+
+                slotStatus = `${BillTheLizard.REUSED};res=${prevPrediction.result};${prevPrediction.callId}`;
             }
         }
+        return slotStatus;
+    }
+
+    /**
+     * @private
+     * @param counter
+     */
+    getCallId(counter = null) {
+        return `incontent_boxad_${counter}`;
     }
 
     /**
