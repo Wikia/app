@@ -110,7 +110,7 @@ class DiscussionsThreadModel {
 			} elseif ( count( $categoryData ) === 1 ) {
 				// A single category specified, use its name
 				$categoryName = $categoryData[0]['name'];
-				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryIds";
+				$discussionsUrl = "/f?sort=$sortKey&catId=$categoryIds";
 				$filteredCategoryIds[] = $categoryData[0]['id'];
 			} else {
 				// Multiple categories specified, don't use name
@@ -125,10 +125,10 @@ class DiscussionsThreadModel {
 					$filteredCategoryIds[] = $category['id'];
 				}
 
-				$discussionsUrl = "/d/f?sort=$sortKey$catIdUrl";
+				$discussionsUrl = "/f?sort=$sortKey$catIdUrl";
 			}
 		} else {
-			$discussionsUrl = "/d/f?sort=$sortKey";
+			$discussionsUrl = "/f?sort=$sortKey";
 		}
 
 		return [
