@@ -3,14 +3,14 @@
 require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
 	var currentScope = $('#search-v2-scope').val();
 
-	var resultClickTrackerFactory = function (type, idGenerator, filtersProvider) {
+	var resultClickTrackerFactory = function (type, idGenerator, filters) {
 		return function(clickedElement) {
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
 
 			var payload = {
 				searchPhrase: query,
-				filters: filtersProvider(clickedElement),
+				filters: filters,
 				clicked: {
 					type: type,
 					id: idGenerator(clickedElement),
@@ -144,21 +144,15 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			function (clickedElement) {
 				return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
 			},
-			function () {
-				return {
-					searchType: currentScope
-				};
-			}
+			{}
 		),
 		trackSearchResultCommunityClick: resultClickTrackerFactory(
 			'community',
 			function (clickedElement) {
 				return clickedElement.getAttribute('data-wiki-id');
 			},
-			function () {
-				return {
-					searchType: currentScope
-				};
+			{
+				searchType: currentScope
 			}
 		),
 		trackRightRailResultClick: resultClickTrackerFactory(
@@ -166,9 +160,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			function (clickedElement) {
 				return clickedElement.getAttribute('data-wiki-id');
 			},
-			function () {
-				return {};
-			}
+			{}
 
 		),
 		trackSearchResultsImpression: function() {
