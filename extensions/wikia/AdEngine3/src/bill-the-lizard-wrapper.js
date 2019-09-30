@@ -9,7 +9,7 @@ import {
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
 
-const baseSlotName = 'INCONTENT_BOXAD_1';
+const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
 
 let nextSlot = null;
@@ -34,7 +34,7 @@ class BillTheLizardWrapper {
         context.push('listeners.slot', {
             onRenderEnded: (adSlot) => {
                 const slotName = adSlot.getConfigProperty('slotName');
-                if (slotName.includes('incontent_boxad')) {
+                if (slotName.includes(fmrPrefix)) {
                     nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
                 }
             },
@@ -80,7 +80,7 @@ class BillTheLizardWrapper {
     }
 
     callGarfield(callId) {
-        this.serializeBids(baseSlotName).then((bids) => {
+        this.serializeBids(garfieldSlotsBidderAlias).then((bids) => {
             context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
@@ -94,8 +94,7 @@ class BillTheLizardWrapper {
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
-
-                const slotId = callId.substring(16);
+                const slotId = callId.substring(fmrPrefix.length);
                 const prevPrediction = billTheLizard.getPreviousPrediction(
                     slotId,
                     this.getCallId,
@@ -116,11 +115,11 @@ class BillTheLizardWrapper {
                 break;
             }
             default: {
-                if (callId === baseSlotName.toLowerCase()){
+                if (callId === garfieldSlotsBidderAlias.toLowerCase()){
                     return 'not_used';
                 }
 
-                const slotId = callId.substring(16);
+                const slotId = callId.substring(fmrPrefix.length);
                 const prevPrediction = billTheLizard.getPreviousPrediction(
                     slotId,
                     this.getCallId,
