@@ -101,7 +101,7 @@ In general, FANDOM does not review nor do we endorse the content of this or any 
 $messages['lol'] = array(
 	'content-warning-desc' => 'crwdns66493:0crwdne66493:0',
 	'content-warning-title' => 'crwdns66494:0crwdne66494:0',
-	'content-warning-body' => 'crwdns66495:0crwdne66495:0',
+	'content-warning-body' => 'crwdns90960:0crwdne90960:0',
 	'content-warning-button-continue' => 'crwdns66496:0crwdne66496:0',
 	'content-warning-button-cancel' => 'crwdns66497:0crwdne66497:0',
 	'content-warning-footnote' => 'crwdns66498:0crwdne66498:0',

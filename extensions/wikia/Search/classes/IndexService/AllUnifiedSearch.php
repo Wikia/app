@@ -49,7 +49,27 @@ class AllUnifiedSearch extends AbstractService {
 			}
 		}
 
+		$result['is_disabled_in_global_search'] = $this->isDiabledInGlobalSearch();
 		return $result;
 	}
 
+	/**
+	 * Calculate flag for deciding to include page in global search.
+	 *
+	 * @return array
+	 */
+	protected function isDiabledInGlobalSearch() {
+		global $wgExcludeWikiFromSearch;
+		global $wgForceWikiIncludeInSearch;
+
+		if ( !empty( $wgExcludeWikiFromSearch ) ) {
+			return true;
+		}
+		if ( !empty( $wgForceWikiIncludeInSearch ) ) {
+			return false;
+		}
+
+		$wikiArticles = \SiteStats::articles();
+		return $wikiArticles < 50;
+	}
 }
