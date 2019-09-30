@@ -86,7 +86,18 @@ class WikiService extends WikiaModel {
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
 				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
 
-				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
+				$userIds = self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
+				$admins = [];
+				foreach ($userIds as $admin) {
+					$user = \User::newFromId( $admin['userId'] );
+					$user->load();
+					if ( !$user || $user->isAnon() ) {
+						continue;
+					}
+					$admins[] = $admin;
+				}
+
+				return $admins;
 			}
 		);
 
@@ -166,7 +177,7 @@ class WikiService extends WikiaModel {
 	 * @return string memcache key
 	 */
 	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = null ) {
-		return wfSharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
+		return wfSharedMemcKey( 'wiki_admin_ids', self::CACHE_VERSION, $wikiId, $excludeBots, $limit );
 	}
 
 	/**
@@ -553,10 +564,6 @@ class WikiService extends WikiaModel {
 			$userEdits = 0;
 			if(empty($admin['userId']) || in_array($admin['userId'], self::$excludedWikiaUsers)) {
 				unset($admins[$key]);
-				continue;
-			}
-			$user = \User::newFromId( $admin['userId'] );
-			if ( !$user || !$user->loadFromId() || $user->isAnon() ) {
 				continue;
 			}
 			if(isset($adminsEdits[$admin['userId']])) {
