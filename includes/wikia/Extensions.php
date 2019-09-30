@@ -190,7 +190,7 @@ $wgWikicitiesNavLinks[] = array( 'text'=>'wikicitieshome', 'href'=>'wikicitiesho
 
 putenv( 'GDFONTPATH=/usr/share/fonts/truetype/dejavu/' );
 include_once "$IP/extensions/timeline/Timeline.php";
-$wgTimelineSettings->fontFile = 'DejaVuSans.ttf';
+$wgTimelineSettings->fontFile = 'DejaVuMono.ttf';
 
 if ( $wgDevelEnvironment ) {
 	# lazy-load blobs from production when there's a miss on devbox blobs cluster
