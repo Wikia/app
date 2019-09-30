@@ -15,8 +15,11 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
 			'name' => $this->getVal( 'name' ),
-			'parentName' => $this->getVal( 'parentName' )
 		] );
+	}
+
+	public function image() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
 	public function linkBranded() {
