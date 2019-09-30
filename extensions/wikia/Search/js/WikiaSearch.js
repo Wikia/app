@@ -32,13 +32,13 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 	};
 
 	var getUniqueSearchId = function() {
-		if (this.searchUID) {
-			return this.searchUID;
+		if (!this.searchUID) {
+			var queryParams = new URL(window.location).searchParams;
+
+			this.searchUID = queryParams.get('searchUID') || uuid();
 		}
 
-		var queryParams = new URL(window.location).searchParams;
-
-		return queryParams.get('searchUID') || uuid();
+		return this.searchUID;
 	};
 
 	var WikiaSearch = {
