@@ -86,24 +86,28 @@ class WikiService extends WikiaModel {
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
 				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
 
-				$userIds = self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
-				$admins = [];
-				foreach ($userIds as $admin) {
-					$user = \User::newFromId( $admin['userId'] );
-					$user->load();
-					if ( !$user || $user->isAnon() ) {
-						continue;
-					}
-					$admins[] = $admin;
-				}
-
-				return $admins;
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
 			}
 		);
 
 		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
+		$result = [];
 
-		return $userIds;
+		foreach ($userIds as $admin) {
+			$user = \User::newFromId( $admin['userId'] );
+			try {
+				$user->load();
+			}
+			catch ( MWException $e ) {
+				continue;
+			}
+			if ( $user->isAnon() ) {
+				continue;
+			}
+			$result[] = $admin;
+		}
+
+		return $result;
 	}
 
 	/**
