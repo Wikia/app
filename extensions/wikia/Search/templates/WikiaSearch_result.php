@@ -12,7 +12,7 @@
 		<?php
 		$title = $result->getText( 'title' );
 		$trackingData =
-			'class="result-link"' . ' data-pos="' . $pos . '"' .
+			 'data-pos="' . $pos . '"' .
 			' data-page-id="' . $result['pageid'] . '"' .
 			' data-wiki-id="' . $result['wikiId'] . '"' .
 			' data-name="' . $title . '"' .
@@ -25,7 +25,7 @@
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 			<?php endif; ?>
 			<h1>
-				<a href="<?= $result->getEscapedUrl() ?>" <?= $trackingData; ?>><?= $title ?></a>
+				<a href="<?= $result->getEscapedUrl() ?>" class="result-link" <?= $trackingData; ?>><?= $title ?></a>
 			</h1>
 
 			<?= $result->getText(); ?>
@@ -34,7 +34,7 @@
 				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
 					<ul>
 						<li class="WikiaSearchResultItemSitename">
-							<a href="<?= $result['wikiUrl']; ?>"<?= $trackingData; ?>>
+							<a href="<?= $result['wikiUrl']; ?>" class="result-link community-result-link" <?= $trackingData; ?>>
 								<?= Language::factory( $wg->ContentLanguage )->truncate( $result['sitename'], 90 ); ?>
 							</a>
 						</li>
@@ -42,7 +42,7 @@
 				<?php else: ?>
 					<ul>
 						<li>
-							<a href="<?= $result->getEscapedUrl(); ?>" <?= $trackingData; ?> >
+							<a href="<?= $result->getEscapedUrl(); ?>" class="result-link" <?= $trackingData; ?> >
 								<?= Language::factory( $wg->ContentLanguage )->truncate( $result->getTextUrl(), 90 ); ?>
 							</a>
 						</li>

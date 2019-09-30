@@ -76,7 +76,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				}
 			});
 
-			$('.result h1 .result-link').on('click', function(event) {
+			$('.result .result-link:not(.community-result-link)').on('click', function(event) {
 				this.trackSearchResultClick(event.target);
 			}.bind(this));
 
