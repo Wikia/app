@@ -556,7 +556,7 @@ class WikiService extends WikiaModel {
 				continue;
 			}
 			$user = \User::newFromId( $admin['userId'] );
-			if ( !$user || $user->isAnon() ) {
+			if ( !$user || !$user->loadFromId() || $user->isAnon() ) {
 				continue;
 			}
 			if(isset($adminsEdits[$admin['userId']])) {
