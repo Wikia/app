@@ -555,6 +555,10 @@ class WikiService extends WikiaModel {
 				unset($admins[$key]);
 				continue;
 			}
+			$user = \User::newFromId( $admin['userId'] );
+			if ( !$user || $user->isAnon() ) {
+				continue;
+			}
 			if(isset($adminsEdits[$admin['userId']])) {
 				$userEdits = $this->countAdminEdits($adminsEdits[$admin['userId']]);
 			}
