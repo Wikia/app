@@ -17,7 +17,7 @@ class WikiService extends WikiaModel {
 	const TOPUSER_CACHE_VALID = 10800;
 	const TOPUSER_LIMIT = 10;
 
-	const CACHE_VERSION = '5';
+	const CACHE_VERSION = '6';
 	const MAX_WIKI_RESULTS = 300;
 
 	const MOST_LINKED_CACHE_TTL = 86400; // 86400 == 24h

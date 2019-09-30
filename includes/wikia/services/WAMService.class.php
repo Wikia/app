@@ -10,7 +10,7 @@ class WAMService {
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
-	const MEMCACHE_VER = '4';
+	const MEMCACHE_VER = '3';
 
 	protected $verticalIds = [
 		WikiFactoryHub::VERTICAL_ID_OTHER,
