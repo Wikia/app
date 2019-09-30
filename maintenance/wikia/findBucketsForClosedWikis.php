@@ -39,7 +39,7 @@ class FindBuckets extends Maintenance {
 				$uploadPath = $row->cv_value;
 				$path = trim( parse_url( $uploadPath, PHP_URL_PATH ), '/' );
 				$bucket = substr( $path, 0, - 7 );
-				$this->output( $row->city_url . ' ' . $bucket );
+				$this->output( $bucket );
 			} );
 	}
 
