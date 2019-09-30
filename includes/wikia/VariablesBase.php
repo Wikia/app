@@ -9348,4 +9348,4 @@ $wgOverrideUcfirstCharacters = [
  * Variable to bump the cache of EasyTimeline
  * @var string
  */
-$wgTimelineRenderHashAppend = 'v3';
+$wgTimelineRenderHashAppend = 'v4';
