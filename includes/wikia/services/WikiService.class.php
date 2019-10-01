@@ -17,7 +17,7 @@ class WikiService extends WikiaModel {
 	const TOPUSER_CACHE_VALID = 10800;
 	const TOPUSER_LIMIT = 10;
 
-	const CACHE_VERSION = '5';
+	const CACHE_VERSION = '6';
 	const MAX_WIKI_RESULTS = 300;
 
 	const MOST_LINKED_CACHE_TTL = 86400; // 86400 == 24h
@@ -90,7 +90,11 @@ class WikiService extends WikiaModel {
 			}
 		);
 
-		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
+		$userIds = array_filter( array_unique( array_merge( $userIds, $adminIds ) ), function ( $userId ) {
+			$user = User::newFromId( $userId );
+			$user->load();
+			return !$user->isAnon();
+		} );
 
 		return $userIds;
 	}
@@ -166,7 +170,7 @@ class WikiService extends WikiaModel {
 	 * @return string memcache key
 	 */
 	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = null ) {
-		return wfSharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
+		return wfSharedMemcKey( 'wiki_admin_ids', self::CACHE_VERSION, $wikiId, $excludeBots, $limit );
 	}
 
 	/**
