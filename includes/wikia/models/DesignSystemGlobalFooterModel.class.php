@@ -231,10 +231,65 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-footer-mobile-site-link'
 				]
+			],
+			'fandom_overview' => [
+				'header' => [
+					'type' => 'line-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-overview-header'
+					]
+				],
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Fandom'
+						],
+						'href' => 'https://www.fandom.com/',
+						'tracking_label' => '',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Gamepedia'
+						],
+						'href' => 'https://www.gamepedia.com/',
+						'tracking_label' => '',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'D&D Beyond'
+						],
+						'href' => 'https://www.dndbeyond.com/',
+						'tracking_label' => '',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Muthead'
+						],
+						'href' => 'https://www.muthead.com/',
+						'tracking_label' => '',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Futhead'
+						],
+						'href' => 'https://www.futhead.com/',
+						'tracking_label' => '',
+					],
+				]
 			]
 		];
 
-		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 		$data['advertise'] = $this->getAdvertise();
@@ -393,82 +448,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		return $data;
-	}
-
-	private function getFandomOverview() {
-		$out = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-overview-header'
-				]
-			],
-			'links' => [ ]
-		];
-
-		if ( $this->lang === static::DEFAULT_LANG ) {
-			$out['links'] = [
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom'
-					],
-					'href' => 'https://www.fandom.com/',
-					'tracking_label' => '',
-				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Gamepedia'
-					],
-					'href' => 'https://www.gamepedia.com/',
-					'tracking_label' => '',
-				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'D&D Beyond'
-					],
-					'href' => 'https://www.dndbeyond.com/',
-					'tracking_label' => '',
-				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Muthead'
-					],
-					'href' => 'https://www.muthead.com/',
-					'tracking_label' => '',
-				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Futhead'
-					],
-					'href' => 'https://www.futhead.com/',
-					'tracking_label' => '',
-				],
-			];
-		}
-
-		$out['links'][] = [
-			'type' => 'link-branded',
-			'brand' => 'explore-wikis',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-overview-link-explore-wikis'
-			],
-			'href' => $this->getHref( 'explore-wikis' ),
-			'tracking_label' => 'fandom-overview.explore-wikis',
-		];
-
-		return $out;
 	}
 
 	private function getFollowUs() {
