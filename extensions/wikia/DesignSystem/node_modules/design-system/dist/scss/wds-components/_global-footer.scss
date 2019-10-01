@@ -106,7 +106,7 @@
 			margin-top: 20px;
 		}
 
-		&.wds-is-fandom-overview, &.wds-is-company-overview, &.wds-is-community {
+		&.wds-is-fandom-overview, &.wds-is-site-overview, &.wds-is-community {
 			.wds-global-footer__links-list {
 				column-count: 2;
 				column-gap: 26px;
@@ -234,7 +234,7 @@
 		}
 
 		&__section {
-			&.wds-is-fandom-overview, &.wds-is-company-overview, &.wds-is-community {
+			&.wds-is-fandom-overview, &.wds-is-site-overview, &.wds-is-community {
 				.wds-global-footer__links-list {
 					column-count: initial;
 				}
