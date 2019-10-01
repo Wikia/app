@@ -91,6 +91,10 @@ class BillTheLizardWrapper {
     getBtlSlotStatus(btlStatus, callId) {
         let slotStatus;
 
+        console.log('getBtlSlotStatus btlStatus', btlStatus);
+        console.log('predictions', billTheLizard.getPredictions('garfield'));
+        console.log('getResponseStatus', billTheLizard.getResponseStatus(callId));
+
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
