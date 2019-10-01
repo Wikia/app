@@ -93,8 +93,8 @@ class WikiService extends WikiaModel {
 		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
 		$result = [];
 
-		foreach ($userIds as $admin) {
-			$user = \User::newFromId( $admin['userId'] );
+		foreach ( $userIds as $adminId ) {
+			$user = \User::newFromId( $adminId );
 			try {
 				$user->load();
 			}
@@ -104,7 +104,7 @@ class WikiService extends WikiaModel {
 			if ( $user->isAnon() ) {
 				continue;
 			}
-			$result[] = $admin;
+			$result[] = $adminId;
 		}
 
 		return $result;
