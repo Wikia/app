@@ -90,24 +90,13 @@ class WikiService extends WikiaModel {
 			}
 		);
 
-		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
-		$result = [];
+		$userIds = array_filter( array_unique( array_merge( $userIds, $adminIds ) ), function ( $userId ) {
+			$user = User::newFromId( $userId );
+			$user->load();
+			return !$user->isAnon();
+		} );
 
-		foreach ( $userIds as $adminId ) {
-			$user = \User::newFromId( $adminId );
-			try {
-				$user->load();
-			}
-			catch ( MWException $e ) {
-				continue;
-			}
-			if ( $user->isAnon() ) {
-				continue;
-			}
-			$result[] = $adminId;
-		}
-
-		return $result;
+		return $userIds;
 	}
 
 	/**
