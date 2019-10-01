@@ -47,6 +47,7 @@ $wgLinkSuggestLimit = 6;
 $wgAutoloadClasses['LinkSuggest'] = __DIR__ . '/LinkSuggest.class.php';
 $wgAutoloadClasses['LinkSuggestLoader'] = __DIR__ . '/LinkSuggestLoader.class.php';
 $wgAutoloadClasses['LinkSuggestHooks'] = __DIR__ . '/LinkSuggestHooks.class.php';
+$wgAutoloadClasses['LinkSuggestController'] = __DIR__ . '/LinkSuggestController.php';
 
 // i18n
 $wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';

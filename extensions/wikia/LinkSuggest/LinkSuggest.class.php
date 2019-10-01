@@ -14,6 +14,7 @@ use Wikia\Measurements\Time as T;
  */
 class LinkSuggest {
 	const MAX_LINK_SUGGESTIONS_LIMIT = 100;
+	const CACHE_VERSION = 1;
 	/**
 	 * Get list of suggested images
 	 *
@@ -65,9 +66,9 @@ class LinkSuggest {
 		}
 
 		if ( $isMobile ) {
-			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ), 'WikiaMobile' );
+			$key = wfMemcKey( __METHOD__, md5( self::CACHE_VERSION.'_' .$query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '').$request->getText('nsfilter', '') ), 'WikiaMobile' );
 		} else {
-			$key = wfMemcKey( __METHOD__, md5( $query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
+			$key = wfMemcKey( __METHOD__, md5( self::CACHE_VERSION.'_' .$query.$limit.'_'.$request->getText('format').$request->getText('nospecial', '').$request->getText('nsfilter', '') ) );
 		}
 
 		// use mb_strlen to test string length accurately
