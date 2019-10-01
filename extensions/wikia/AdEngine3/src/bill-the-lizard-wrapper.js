@@ -12,12 +12,14 @@ import pageTracker from './tracking/page-tracker';
 const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
 
+let garfieldCalled = false;
 let nextSlot = null;
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) {
         const config = billTheLizardConfig;
 
+        const baseSlotName = fmrPrefix + 1;
         const enableGarfield = context.get('options.billTheLizard.garfield');
 
         if (enableGarfield === true) {
@@ -34,8 +36,13 @@ class BillTheLizardWrapper {
         context.push('listeners.slot', {
             onRenderEnded: (adSlot) => {
                 const slotName = adSlot.getConfigProperty('slotName');
+
                 if (slotName.includes(fmrPrefix)) {
                     nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
+                }
+
+                if (slotName === baseSlotName && !garfieldCalled) {
+                    this.callGarfield(nextSlot);
                 }
             },
         });
@@ -56,6 +63,10 @@ class BillTheLizardWrapper {
                     defaultStatus,
                 ));
             }
+        });
+
+        eventService.on(events.BIDS_REFRESH, () => {
+            garfieldCalled = true;
         });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
@@ -84,16 +95,13 @@ class BillTheLizardWrapper {
             context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
+            garfieldCalled = true;
             billTheLizard.call(['garfield'], callId);
         });
     }
 
     getBtlSlotStatus(btlStatus, callId) {
         let slotStatus;
-
-        console.log('getBtlSlotStatus btlStatus', btlStatus);
-        console.log('predictions', billTheLizard.getPredictions('garfield'));
-        console.log('getResponseStatus', billTheLizard.getResponseStatus(callId));
 
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
