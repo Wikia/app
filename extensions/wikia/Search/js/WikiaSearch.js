@@ -1,6 +1,46 @@
 (function($, window) {
 
 require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTracking, uuid, trackingOptIn) {
+	var currentScope = $('#search-v2-scope').val();
+
+	var resultClickTrackerFactory = function (type, idGenerator, filters) {
+		return function(clickedElement) {
+			var queryparams = new URL(window.location).searchParams;
+			var query = queryparams.get('search') || queryparams.get('query');
+
+			var payload = {
+				searchPhrase: query,
+				filters: filters,
+				clicked: {
+					type: type,
+					id: idGenerator(clickedElement),
+					title: clickedElement.getAttribute('data-name'),
+					position: parseInt(clickedElement.getAttribute('data-pos')),
+					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
+				},
+				target: 'redirect',
+				app: 'mw-desktop',
+				siteId: parseInt(window.wgCityId),
+				searchId: getUniqueSearchId(),
+				pvUniqueId: window.pvUID || 'dev', // on dev there is no pvUID available
+			};
+
+			trackingOptIn.pushToUserConsentQueue(function () {
+				window.searchTracking.trackSearchClicked(payload);
+			});
+		}.bind(this);
+	};
+
+	var getUniqueSearchId = function() {
+		if (!this.searchUID) {
+			var queryParams = new URL(window.location).searchParams;
+
+			this.searchUID = queryParams.get('searchUID') || uuid();
+		}
+
+		return this.searchUID;
+	};
+
 	var WikiaSearch = {
 		searchUID: null,
 
@@ -36,8 +76,16 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				}
 			});
 
-			$('.result-link').on('click', function(event) {
+			$('.result .result-link:not(.community-result-link)').on('click', function(event) {
 				this.trackSearchResultClick(event.target);
+			}.bind(this));
+
+			$('.WikiaSearchResultItemSitename a').on('click', function(event) {
+				this.trackSearchResultCommunityClick(event.target);
+			}.bind(this));
+
+			$('.exact-wiki-match__result a').on('click', function(event) {
+				this.trackRightRailResultClick(event.target);
 			}.bind(this));
 
 			this.initVideoTabEvents();
@@ -91,53 +139,42 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			});
 
 		},
-		trackSearchResultClick: function(clickedElement) {
-			var queryparams = new URL(window.location).searchParams;
-			var query = queryparams.get('search') || queryparams.get('query');
-
-			if (!query) {
-				return;
+		trackSearchResultClick: resultClickTrackerFactory(
+			'article',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
+			},
+			{}
+		),
+		trackSearchResultCommunityClick: resultClickTrackerFactory(
+			'community',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id');
+			},
+			{
+				searchType: currentScope
 			}
+		),
+		trackRightRailResultClick: resultClickTrackerFactory(
+			'community',
+			function (clickedElement) {
+				return clickedElement.getAttribute('data-wiki-id');
+			},
+			{}
 
-			var payload = {
-				searchPhrase: query,
-				filters: {
-					searchType: this.getCurrentScope()
-				},
-				clicked: {
-					type: 'article', // we don't show wikis results right now
-					id: clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id'),
-					title: clickedElement.text,
-					position: parseInt(clickedElement.getAttribute('data-pos')),
-					thumbnail: !!clickedElement.getAttribute('data-thumbnail'),
-				},
-				target: 'redirect',
-				app: 'mw-desktop',
-				siteId: parseInt(window.wgCityId),
-				searchId: this.getUniqueSearchId(),
-				pvUniqueId: window.pvUID || "dev", // on dev there is no pvUID available
-			};
-
-			trackingOptIn.pushToUserConsentQueue(function () {
-				window.searchTracking.trackSearchClicked(payload);
-			});
-		},
+		),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
 			var query = queryparams.get('search') || queryparams.get('query');
 
-			if (!query) {
-				return;
-			}
-
 			var results = this.getSearchResults();
-			var searchUID = this.getUniqueSearchId();
+			var searchUID = getUniqueSearchId();
 			this.appendSearchUidToPaginationLinks(searchUID);
 
 			var payload = {
 				searchPhrase: query,
 				filters: {
-					searchType: this.getCurrentScope()
+					searchType: currentScope
 				},
 				results: results,
 				page: parseInt(queryparams.get('page')) || 1,
@@ -165,17 +202,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				};
 			}).toArray();
 		},
-		getUniqueSearchId: function() {
-			if (this.searchUID) {
-				return this.searchUID;
-			}
-
-			var queryParams = new URL(window.location).searchParams;
-			var searchUID = queryParams.get('searchUID') || uuid();
-			this.searchUID = searchUID;
-
-			return searchUID;
-		},
 		appendSearchUidToPaginationLinks: function(searchUID) {
 			$('a.paginator-prev, a.paginator-next, a.paginator-page').each(function() {
 				var $elem = $(this);
@@ -196,9 +222,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				searchForm.find('#search-v2-scope').val(value);
 				searchForm.submit();
 			});
-		},
-		getCurrentScope: function () {
-			return $('#search-v2-scope').val();
 		},
 	};
 
