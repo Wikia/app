@@ -27,6 +27,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
+		line-height: 0;
 		margin: 0;
 		padding: 28px 0 18px;
 	}
@@ -211,6 +212,7 @@
 		font-weight: $wds-font-weight-bold;
 		line-height: $wds-line-height-none;
 		margin-bottom: 12px;
+		margin-top: 0;
 		padding: 0;
 		text-transform: uppercase;
 	}
@@ -225,7 +227,7 @@
 @media #{$wds-breakpoint-l-up} {
 	.wds-global-footer {
 		&__header {
-			padding: 40px 0 26px;
+			padding: 40px 0 46px;
 		}
 
 		&__main {
