@@ -36,8 +36,8 @@
 				'DesignSystemGlobalFooterService',
 				'section',
 				[
-					'model' => $model['company_overview'],
-					'name' => 'company-overview',
+					'model' => $model['site_overview'],
+					'name' => 'site-overview',
 				]
 			); ?>
 		</div>

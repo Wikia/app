@@ -48,7 +48,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				'tracking_label' => 'logo',
 			],
-			'company_overview' => [
+			'site_overview' => [
 				'header' => [
 					'type' => 'line-text',
 					'title' => [
