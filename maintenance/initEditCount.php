@@ -77,11 +77,18 @@ in the load balancer, usually indicating a replication environment.' );
 					__METHOD__ );
 
 				foreach ( $result as $row ) {
-					$dbw->update( 'user',
-						array( 'user_editcount' => $row->user_editcount ),
-						array( 'user_id' => $row->user_id ),
-						__METHOD__ );
-					++$migrated;
+					$dbw->begin();
+					try {
+						$dbw->update( 'user',
+							array( 'user_editcount' => $row->user_editcount ),
+							array( 'user_id' => $row->user_id ),
+							__METHOD__ );
+						$dbw->insert( 'user_replicate_queue', [ 'user_id' => $row->user_id ] );
+						++$migrated;
+						$dbw->commit();
+					} catch ( DBError $e ) {
+						$dbw->rollback();
+					}
 				}
 
 				$delta = microtime( true ) - $start;

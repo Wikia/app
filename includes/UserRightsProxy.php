@@ -228,10 +228,20 @@ class UserRightsProxy {
 	 * Replaces User::touchUser()
 	 */
 	function invalidateCache() {
-		$this->db->update( 'user',
-			array( 'user_touched' => $this->db->timestamp() ),
-			array( 'user_id' => $this->id ),
-			__METHOD__ );
+
+		$this->db->begin();
+		try {
+			$this->db->update( 'user',
+				array( 'user_touched' => $this->db->timestamp() ),
+				array( 'user_id' => $this->id ),
+				__METHOD__ );
+
+			$this->db->insert( 'user_replicate_queue', [ 'user_id' => $this->id ] );
+			$this->db->commit();
+		} catch ( DBError $e ) {
+			$this->db->rollback();
+		}
+
 
 		global $wgMemc;
 		$key = wfForeignMemcKey( $this->database, false, 'user', 'id', $this->id );
