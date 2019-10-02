@@ -13,6 +13,12 @@ const PAGE_TYPES = {
 function isIncontentBoxadApplicable() {
 	const isSupportedPageType = ['article', 'search'].indexOf(context.get('wiki.targeting.pageType')) !== -1;
 
+	console.log({
+		wgIsContentNamespace: window.wgIsContentNamespace,
+		opts: context.get('wiki.opts.adsInContent'),
+		isCorporate: context.get('wiki.targeting.wikiIsCorporate'),
+	});
+
 	return isSupportedPageType &&
 		window.wgIsContentNamespace &&
 		context.get('wiki.opts.adsInContent') &&
@@ -376,6 +382,7 @@ export default {
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
 
+		console.log('start', {isApplicable, parentNode});
 		if (!isApplicable || !parentNode) {
 			slotService.setState(slotName, false);
 			return;

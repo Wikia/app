@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
