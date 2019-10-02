@@ -145,6 +145,7 @@ export default {
 				sizes: [],
 				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 				insertBeforeSelector: '#incontent_boxad_1',
+				garfieldCat: true,
 				repeat: {
 					additionalClasses: 'hide',
 					index: 1,
