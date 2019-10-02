@@ -41,8 +41,17 @@ class FixUserRegistration extends Maintenance {
 			$timestamp = $dbr->selectField( 'revision', 'MIN(rev_timestamp)', array( 'rev_user' => $id ), __METHOD__ );
 			// Update
 			if ( !empty( $timestamp ) ) {
-				$dbw->update( 'user', array( 'user_registration' => $timestamp ), array( 'user_id' => $id ), __METHOD__ );
-				$this->output( "$id $timestamp\n" );
+				$dbw->begin();
+				try {
+					$dbw->update( 'user', array( 'user_registration' => $timestamp ), array( 'user_id' => $id ), __METHOD__ );
+					$dbw->insert( 'user_replicate_queue', [ 'user_id' => $id ] );
+					$this->output( "$id $timestamp\n" );
+					$dbw->commit();
+				} catch ( DBError $e ) {
+					$this->output( "failed: $id" );
+					$dbw->rollback();
+				}
+
 			} else {
 				$this->output( "$id NULL\n" );
 			}

@@ -1830,8 +1830,10 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
+$wgAutoloadClasses['UserReplicationWatcher'] = "$IP/includes/wikia/UserReplicationWatcher.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+$wgHooks['UserSaveSettings'][] = 'UserReplicationWatcher::onUserSaveSettings';
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3006
