@@ -1415,13 +1415,6 @@ $wgAdDriverDelayTimeout = 2000;
 $wgAdDriverOverscrolledCountries = null;
 
 /**
- * @name $wgAdDriverBrowsiCountries
- * List of countries Browsi will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBrowsiCountries = null;
-
-/**
  * @name $wgAdDriverConfiantDesktopCountries
  * List of countries Confiant will be enabled on Oasis
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
