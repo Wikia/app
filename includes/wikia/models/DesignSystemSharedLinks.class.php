@@ -354,7 +354,7 @@ class DesignSystemSharedLinks {
 		'en' => [
 			'facebook' => 'https://www.facebook.com/getfandom',
 			'twitter' => 'https://twitter.com/getfandom',
-			'youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
+			'youtube' => 'https://www.youtube.com/fandomentertainment',
 			'instagram' => 'https://www.instagram.com/getfandom/',
 			'linkedin' => 'https://www.linkedin.com/company/157252',
 		],
