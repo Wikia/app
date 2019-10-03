@@ -11,14 +11,19 @@ import pageTracker from './tracking/page-tracker';
 
 const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
+const NOT_USED_STATUS = 'not_used';
 
+let garfieldCalled = false;
 let nextSlot = null;
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) {
         const config = billTheLizardConfig;
 
+        const baseSlotName = fmrPrefix + 1;
         const enableGarfield = context.get('options.billTheLizard.garfield');
+
+        defaultStatus = NOT_USED_STATUS;
 
         if (enableGarfield === true) {
             billTheLizard.projectsHandler.enable('garfield');
@@ -34,8 +39,13 @@ class BillTheLizardWrapper {
         context.push('listeners.slot', {
             onRenderEnded: (adSlot) => {
                 const slotName = adSlot.getConfigProperty('slotName');
+
                 if (slotName.includes(fmrPrefix)) {
                     nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
+                }
+
+                if (slotName === baseSlotName && !garfieldCalled) {
+                    this.callGarfield(nextSlot);
                 }
             },
         });
@@ -43,7 +53,7 @@ class BillTheLizardWrapper {
         context.set(
             'bidders.prebid.bidsRefreshing.bidsBackHandler',
             () => {
-                    this.callGarfield(nextSlot);
+                this.callGarfield(nextSlot);
             },
         );
 
@@ -56,6 +66,10 @@ class BillTheLizardWrapper {
                     defaultStatus,
                 ));
             }
+        });
+
+        eventService.on(events.BIDS_REFRESH, () => {
+            garfieldCalled = true;
         });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
@@ -84,16 +98,13 @@ class BillTheLizardWrapper {
             context.set('services.billTheLizard.parameters.garfield', {
                 bids,
             });
+            garfieldCalled = true;
             billTheLizard.call(['garfield'], callId);
         });
     }
 
-    getBtlSlotStatus(btlStatus, callId) {
+    getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
         let slotStatus;
-
-        console.log('getBtlSlotStatus btlStatus', btlStatus);
-        console.log('predictions', billTheLizard.getPredictions('garfield'));
-        console.log('getResponseStatus', billTheLizard.getResponseStatus(callId));
 
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
@@ -119,8 +130,9 @@ class BillTheLizardWrapper {
                 break;
             }
             default: {
-                if (callId === garfieldSlotsBidderAlias.toLowerCase()){
-                    return 'not_used';
+                if (fallbackStatus === NOT_USED_STATUS) {
+                    // we don't use a slot until we got response from Bill
+                    return NOT_USED_STATUS;
                 }
 
                 const slotId = callId.substring(fmrPrefix.length);
