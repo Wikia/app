@@ -109,12 +109,7 @@ class BillTheLizardWrapper {
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
-                const slotId = callId.substring(fmrPrefix.length);
-                const prevPrediction = billTheLizard.getPreviousPrediction(
-                    slotId,
-                    this.getCallId,
-                    'garfield'
-                );
+                const prevPrediction = billTheLizard.getLastReusablePrediction('garfield');
 
                 slotStatus = btlStatus;
 
@@ -135,12 +130,7 @@ class BillTheLizardWrapper {
                     return NOT_USED_STATUS;
                 }
 
-                const slotId = callId.substring(fmrPrefix.length);
-                const prevPrediction = billTheLizard.getPreviousPrediction(
-                    slotId,
-                    this.getCallId,
-                    'garfield'
-                );
+                const prevPrediction = billTheLizard.getLastReusablePrediction('garfield');
 
                 if (prevPrediction === undefined) {
                     // shouldnt see a lot of that
