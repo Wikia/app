@@ -4,6 +4,7 @@ namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tracer\WikiaTracer;
@@ -15,6 +16,8 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 	use Loggable;
 
+	const TASK_PUBLISHER_CIRCUIT_BREAKER_NAME = 'task_publisher';
+
 	/** @var ConnectionManager $rabbitConnectionManager */
 	private $rabbitConnectionManager;
 
@@ -24,8 +27,12 @@ class DefaultTaskPublisher implements TaskPublisher {
 	/** @var AsyncTaskList[] $tasks LIFO queue storing tasks to be published */
 	private $tasks = [];
 
-	public function __construct( ConnectionManager $rabbitConnectionManager ) {
+	/** @var ServiceCircuitBreaker */
+	private $circuitBreaker;
+
+	public function __construct( ConnectionManager $rabbitConnectionManager, ServiceCircuitBreaker $circuitBreaker ) {
 		$this->rabbitConnectionManager = $rabbitConnectionManager;
+		$this->circuitBreaker = $circuitBreaker;
 
 		// Schedule doUpdate() to be executed at the end of the request
 		\Hooks::register( 'RestInPeace', [ $this, 'doUpdate' ] );
@@ -62,6 +69,11 @@ class DefaultTaskPublisher implements TaskPublisher {
 			return;
 		}
 
+		if ( !$this->circuitBreaker->operationAllowed() ) {
+			$this->info( 'circuit breaker open for task publisher' );
+			return;
+		}
+
 		try {
 			$channel = $this->rabbitConnectionManager->getChannel( '/' );
 
@@ -71,9 +83,9 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 				$message = new AMQPMessage( json_encode( $payload ), [
 					'content_type' => 'application/json',
-					'content-encoding' => 'UTF-8',
+					'content_encoding' => 'UTF-8',
 					'immediate' => false,
-					'delivery_mode' => 2, // persistent
+					'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
 					'app_id' => 'mediawiki',
 					'correlation_id' => WikiaTracer::instance()->getTraceId(),
 				] );
@@ -85,6 +97,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 
 			$channel->publish_batch();
 			$channel->wait_for_pending_acks( AsyncTaskList::ACK_WAIT_TIMEOUT_SECONDS );
+			$this->circuitBreaker->setOperationStatus( true );
 		} catch ( AMQPExceptionInterface $e ) {
 			$this->logError( $e );
 		} catch ( \ErrorException $e ) {
@@ -93,6 +106,7 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function logError( \Exception $e ) {
+		$this->circuitBreaker->setOperationStatus( false );
 		$this->error( 'Failed to publish background task', [
 			'exception' => $e,
 		] );

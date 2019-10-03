@@ -356,6 +356,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 			.inter-wiki-search & {
 				float: left;
 			}
+
+			&.WikiaSearchResultItemSitename {
+				text-transform: uppercase;
+				font-size: 12px;
+			}
 		}
 
 		.redirect-title .result-link {

@@ -2,7 +2,7 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 
 	var track = tracker.buildTrackingFunction({
 		category: 'article',
-		label: 'watch-hulu',
+		label: 'watch-show',
 		trackingMethod: 'analytics'
 	});
 
@@ -15,6 +15,16 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 			track({
 				action: 'impression'
 			});
+
+			if (watchShowElement.dataset.trackingPixel) {
+				var img = document.createElement('img');
+
+				img.width = 0;
+				img.height = 0;
+				img.src = watchShowElement.dataset.trackingPixel;
+
+				document.body.appendChild(img);
+			}
 
 			watchShowElement.querySelector('.wds-button').addEventListener('click', function () {
 				track({

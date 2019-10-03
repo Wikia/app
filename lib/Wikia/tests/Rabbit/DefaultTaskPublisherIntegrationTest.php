@@ -5,6 +5,8 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\TestCase;
+use Wikia\CircuitBreaker\NoopCircuitBreakerStorage;
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
@@ -36,8 +38,9 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->rabbitConnectionManager = new ConnectionManager( 'localhost', 5672, 'guest', 'guest' );
-		$this->defaultTaskPublisher = new DefaultTaskPublisher( $this->rabbitConnectionManager );
+		$circuitBreaker = new ServiceCircuitBreaker( 'rabbitmq', new NoopCircuitBreakerStorage() );
+		$this->rabbitConnectionManager = new ConnectionManager( 'localhost', 5672, 'guest', 'guest', $circuitBreaker );
+		$this->defaultTaskPublisher = new DefaultTaskPublisher( $this->rabbitConnectionManager, $circuitBreaker );
 
 		try {
 			$this->channel = $this->rabbitConnectionManager->getChannel( '/' );
@@ -48,6 +51,9 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 */
 	public function testPublishSingleTask() {
 		$task = ( new TestTask() )->wikiId( static::TEST_WIKI_ID );
 		$task->call( 'job' );
@@ -64,6 +70,9 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		$this->waitForConsumers();
 	}
 
+	/**
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 */
 	public function testPublishTasksToDifferentQueues() {
 		$task = ( new TestTask() )->wikiId( static::TEST_WIKI_ID );
 		$task->call( 'job' );
@@ -91,6 +100,9 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		$this->waitForConsumers();
 	}
 
+	/**
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 */
 	public function testPublishSingleTaskForMultipleWikis() {
 		$task = ( new TestTask() )->wikiId( [ static::TEST_WIKI_ID, static::OTHER_WIKI_ID ] );
 		$task->call( 'job' );
@@ -124,6 +136,9 @@ class DefaultTaskPublisherIntegrationTest extends TestCase {
 		$this->assertEquals( 2, $received, 'Expected to receive exactly two messages' );
 	}
 
+	/**
+	 * @throws \Wikia\CircuitBreaker\CircuitBreakerOpen
+	 */
 	public function testShouldPublishTaskFromTaskProducer() {
 		$task = ( new TestTask() )->wikiId( 123 );
 		$task->call( 'job' );

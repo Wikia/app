@@ -18,16 +18,18 @@
 							) ?>
 						<?php endif; ?>
 						<?php if ( $member->getImage() ) : ?>
-							<img src="<?= wfBlankImgUrl() ?>"
-								 data-src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
-								 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
-								 class="category-page__member-thumbnail <?= Sanitizer::encodeAttribute( ImageLazyLoad::LAZY_IMAGE_CLASSES ) ?>"
-								 onload="<?= Sanitizer::encodeAttribute( ImageLazyLoad::IMG_ONLOAD ) ?>"
-							>
-							<noscript><img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
-								 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
-								 class="category-page__member-thumbnail"
-							></noscript>
+							<a href="<?= Sanitizer::encodeAttribute( $member->getTitle()->getLocalURL() ); ?>" title="<?= Sanitizer::encodeAttribute( $member->getTitle()->getPrefixedText() ); ?>">
+								<img src="<?= wfBlankImgUrl() ?>"
+									 data-src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
+									 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getPrefixedText() ); ?>"
+									 class="category-page__member-thumbnail <?= Sanitizer::encodeAttribute( ImageLazyLoad::LAZY_IMAGE_CLASSES ) ?>"
+									 onload="<?= Sanitizer::encodeAttribute( ImageLazyLoad::IMG_ONLOAD ) ?>"
+								>
+								<noscript><img src="<?= Sanitizer::encodeAttribute( $member->getImage() ); ?>"
+									 alt="<?= Sanitizer::encodeAttribute( $member->getTitle()->getText() ); ?>"
+									 class="category-page__member-thumbnail"
+								></noscript>
+							</a>
 						<?php endif; ?>
 					</div>
 					<?= Linker::linkKnown( $member->getTitle(), null, [ 'class' => 'category-page__member-link' ] ) ?>

@@ -4,6 +4,7 @@ import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
+import { contextReady } from "./utils/context-ready";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -142,6 +143,7 @@ export default {
 				sizes: [],
 				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 				insertBeforeSelector: '#incontent_boxad_1',
+				garfieldCat: true,
 				repeat: {
 					additionalClasses: 'hide',
 					index: 1,
@@ -365,7 +367,9 @@ export default {
 		return isApplicable && isInjected;
 	},
 
-	injectIncontentBoxad() {
+	async injectIncontentBoxad() {
+		await contextReady;
+
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');

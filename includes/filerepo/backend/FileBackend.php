@@ -1436,7 +1436,7 @@ abstract class FileBackendStore extends FileBackend {
 				return [
 					'op' => $op['op'],
 					'src' => $op['src'],
-					'dst' => $op['dst']
+					'dst' => $op['dst'] ?? null,
 				];
 				},
 			$ops );

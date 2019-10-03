@@ -10,8 +10,12 @@
 		}
 		?>
 		<?php
+		$title = $result->getText( 'title' );
 		$trackingData =
-			'class="result-link"' . ' data-pos="' . $pos . '"' . ' data-page-id="' . $result['pageid'] . '"' .
+			 'data-pos="' . $pos . '"' .
+			' data-page-id="' . $result['pageid'] . '"' .
+			' data-wiki-id="' . $result['wikiId'] . '"' .
+			' data-name="' . $title . '"' .
 			' data-thumbnail="' . !empty( $thumbnail ) . '"';
 		?>
 		<?php if ( !empty( $thumbnail ) ): ?>
@@ -21,19 +25,29 @@
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 			<?php endif; ?>
 			<h1>
-				<?php $title = $result->getText( 'title' ); ?>
-
-				<a href="<?= $result->getEscapedUrl() ?>" <?= $trackingData; ?>><?= $title ?></a>
+				<a href="<?= $result->getEscapedUrl() ?>" class="result-link" <?= $trackingData; ?>><?= $title ?></a>
 			</h1>
 
 			<?= $result->getText(); ?>
 
 			<?php if ( empty( $inGroup ) ): ?>
-				<ul>
-					<li>
-						<a href="<?= $result->getEscapedUrl(); ?>" <?= $trackingData; ?> ><?= Language::factory( $wg->ContentLanguage )
-								->truncate( $result->getTextUrl(), 90 ); ?></a></li>
-				</ul>
+				<?php if ( $scope === \Wikia\Search\Config::SCOPE_CROSS_WIKI ): ?>
+					<ul>
+						<li class="WikiaSearchResultItemSitename">
+							<a href="<?= $result['wikiUrl']; ?>" class="result-link community-result-link" <?= $trackingData; ?>>
+								<?= Language::factory( $wg->ContentLanguage )->truncate( $result['sitename'], 90 ); ?>
+							</a>
+						</li>
+					</ul>
+				<?php else: ?>
+					<ul>
+						<li>
+							<a href="<?= $result->getEscapedUrl(); ?>" class="result-link" <?= $trackingData; ?> >
+								<?= Language::factory( $wg->ContentLanguage )->truncate( $result->getTextUrl(), 90 ); ?>
+							</a>
+						</li>
+					</ul>
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( !empty( $thumbnail ) ): ?>

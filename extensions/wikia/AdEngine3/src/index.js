@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
@@ -8,7 +9,7 @@ import {
 	context,
 	events,
 	eventService,
-	geoCacheStorage,
+	InstantConfigCacheStorage,
 	jwplayerAdsFactory,
 	krux,
 	moatYi,
@@ -23,6 +24,7 @@ import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
+import { contextReadyResolver } from "./utils/context-ready";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -39,6 +41,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
 	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+	contextReadyResolver();
 
 	videoTracker.register();
 	recRunner.init();
@@ -67,6 +70,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 
 	trackLabradorValues();
 	trackLikhoToDW();
+	trackTabId();
 }
 
 function startAdEngine() {
@@ -91,7 +95,8 @@ function startAdEngine() {
 }
 
 function trackLabradorValues() {
-	const labradorPropValue = geoCacheStorage.getSamplingResults().join(';');
+	const cacheStorage = InstantConfigCacheStorage.make();
+	const labradorPropValue = cacheStorage.getSamplingResults().join(';');
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
@@ -107,6 +112,19 @@ function trackLikhoToDW() {
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
+}
+
+/**
+ * @private
+ */
+function trackTabId() {
+	if (!context.get('options.tracking.tabId')) {
+		return;
+  }
+
+  window.tabId = sessionStorage.tab_id ? sessionStorage.tab_id : sessionStorage.tab_id = uuid();
+
+  pageTracker.trackProp('tab_id', window.tabId);
 }
 
 function callExternals() {

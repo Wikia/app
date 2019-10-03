@@ -307,13 +307,11 @@ export default {
 						siteId: '147980',
 						sizeId: '201',
 						zoneId: '699374',
-						position: 'btf'
 					},
 					incontent_player: {
 						siteId: '55412',
 						sizeId: '203',
 						zoneId: '260296',
-						position: 'btf'
 					}
 				}
 			},
@@ -354,7 +352,6 @@ export default {
 						targeting: {
 							loc: ['hivi']
 						},
-						position: 'btf',
 						siteId: '148804',
 						zoneId: '704676'
 					},
@@ -366,7 +363,6 @@ export default {
 						targeting: {
 							loc: ['footer']
 						},
-						position: 'btf',
 						siteId: '148804',
 						zoneId: '704674'
 					}

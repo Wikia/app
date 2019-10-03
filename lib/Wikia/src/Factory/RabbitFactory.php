@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Factory;
 
+use Wikia\CircuitBreaker\ServiceCircuitBreaker;
 use Wikia\Rabbit\ConnectionManager;
 use Wikia\Rabbit\DefaultTaskPublisher;
 use Wikia\Rabbit\NullTaskPublisher;
@@ -13,6 +14,14 @@ class RabbitFactory extends AbstractFactory {
 
 	/** @var TaskPublisher $taskPublisher */
 	private $taskPublisher;
+
+	/** @var ServiceCircuitBreaker */
+	private $circuitBreaker;
+
+	public function __construct( ServiceFactory $factory ) {
+		parent::__construct( $factory );
+		$this->circuitBreaker = ServiceFactory::instance()->circuitBreakerFactory()->getCircuitBreaker( 'rabbitmq' );
+	}
 
 	/**
 	 * @param ConnectionManager $rabbitConnectionManager
@@ -39,7 +48,8 @@ class RabbitFactory extends AbstractFactory {
 				$wgRabbitHost,
 				$wgRabbitPort,
 				$wgRabbitUser,
-				$wgRabbitPass
+				$wgRabbitPass,
+				$this->circuitBreaker
 			);
 		}
 
@@ -61,10 +71,17 @@ class RabbitFactory extends AbstractFactory {
 		global $wgTaskBrokerDisabled;
 
 		// PLATFORM-1740: Do not publish tasks if the broker is disabled
-		if ( $wgTaskBrokerDisabled ) {
+		if ( $wgTaskBrokerDisabled || !$this->circuitBreaker->operationAllowed() ) {
 			return new NullTaskPublisher();
 		}
 
-		return new DefaultTaskPublisher( $this->connectionManager() );
+		return new DefaultTaskPublisher( $this->connectionManager(), $this->circuitBreaker );
+	}
+
+	/**
+	 * @return ServiceCircuitBreaker
+	 */
+	public function getCircuitBreaker(): ServiceCircuitBreaker {
+		return $this->circuitBreaker;
 	}
 }

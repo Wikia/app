@@ -90,7 +90,7 @@ class VideoEmbedTool extends Video {
 
 		return sprintf(
 			'%s^150 AND (%s)^250 AND (html_media_extras_txt:(%s))^300',
-			Utilities::valueForField( 'categories', $service->getHubForWikiId( $service->getWikiId() ) ),
+			Utilities::valueForField( 'categories', $service->getCanonicalCategoryForWikiId( $service->getWikiId() ) ),
 			$this->getConfig()->getQuery()->getSolrQuery(),
 			$this->getTopicsAsQuery()
 		);
