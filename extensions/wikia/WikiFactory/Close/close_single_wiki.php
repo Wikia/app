@@ -15,7 +15,7 @@ use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 
-class CloseSingleWikiGcs extends Maintenance {
+class CloseSingleWiki extends Maintenance {
 
 	protected $delay = 5;
 	protected $dropIndex = false;
@@ -242,5 +242,5 @@ class CloseSingleWikiGcs extends Maintenance {
 	}
 }
 
-$maintClass = 'CloseSingleWikiGcs';
+$maintClass = 'CloseSingleWiki';
 require_once RUN_MAINTENANCE_IF_MAIN;

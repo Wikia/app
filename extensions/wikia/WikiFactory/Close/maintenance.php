@@ -18,7 +18,7 @@ require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 require_once __DIR__ . '/gcs_bucket_remover.php';
 
-class CloseWikiMaintenanceGcs extends Maintenance {
+class CloseWikiMaintenance extends Maintenance {
 
 	use Wikia\Logger\Loggable;
 
@@ -510,5 +510,5 @@ class CloseWikiMaintenanceGcs extends Maintenance {
 
 }
 
-$maintClass = CloseWikiMaintenanceGcs::class;
+$maintClass = CloseWikiMaintenance::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
