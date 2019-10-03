@@ -1,8 +1,8 @@
 <figure class="wds-global-footer__image">
-	<?= DesignSystemHelper::renderApiImage( $model, 'wds-icon' ) ?>
-	<?php if ( !empty( $model['caption'] ) ) : ?>
+	<?= DesignSystemHelper::renderApiImage( $image, 'wds-icon' ) ?>
+	<?php if ( !empty( $image['caption'] ) ) : ?>
 		<figcaption class="wds-global-footer__image-caption">
-			<?= DesignSystemHelper::renderText( $model['caption'] ) ?>
+			<?= DesignSystemHelper::renderText( $image['caption'] ) ?>
 		</figcaption>
 	<?php endif; ?>
 </figure>

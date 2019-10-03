@@ -18,10 +18,6 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		] );
 	}
 
-	public function image() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
-	}
-
 	public function linkBranded() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}

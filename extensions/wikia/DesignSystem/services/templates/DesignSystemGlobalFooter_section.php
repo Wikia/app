@@ -8,7 +8,7 @@
 	<?php endif; ?>
 
 	<?php if ( !empty( $model['image'] ) ) : ?>
-		<?= $app->renderView( 'DesignSystemGlobalFooterService', 'image', [ 'model' => $model['image'] ] ); ?>
+		<?= $app->renderPartial( 'DesignSystemGlobalFooterService', 'image', [ 'image' => $model['image'] ] ); ?>
 	<?php endif; ?>
 
 	<?php if ( !empty( $model['links'] ) ) : ?>
