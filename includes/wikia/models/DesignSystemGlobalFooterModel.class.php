@@ -205,7 +205,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'key' => 'global-footer-community-apps-link-app-store'
 						],
 						'href' => $this->getHref( 'ddb-app-store' ),
-						'tracking_label' => '',
+						'tracking_label' => 'community-apps.app-store-ddb',
 					],
 					[
 						'type' => 'link-image',
@@ -220,7 +220,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'key' => 'global-footer-community-apps-link-google-play'
 						],
 						'href' => $this->getHref( 'ddb-google-play' ) . '&referrer=utm_source%3Dwikia%26utm_medium%3Dglobalfooter',
-						'tracking_label' => '',
+						'tracking_label' => 'community-apps.google-play-ddb',
 					]
 				]
 			],
@@ -248,7 +248,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'value' => 'Fandom'
 						],
 						'href' => 'https://www.fandom.com/',
-						'tracking_label' => '',
+						'tracking_label' => 'explore.fandom',
 					],
 					[
 						'type' => 'link-text',
@@ -257,7 +257,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'value' => 'Gamepedia'
 						],
 						'href' => 'https://www.gamepedia.com/',
-						'tracking_label' => '',
+						'tracking_label' => 'explore.gamepedia',
 					],
 					[
 						'type' => 'link-text',
@@ -266,7 +266,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'value' => 'D&D Beyond'
 						],
 						'href' => 'https://www.dndbeyond.com/',
-						'tracking_label' => '',
+						'tracking_label' => 'explore.dnd-beyond',
 					],
 					[
 						'type' => 'link-text',
@@ -275,7 +275,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'value' => 'Muthead'
 						],
 						'href' => 'https://www.muthead.com/',
-						'tracking_label' => '',
+						'tracking_label' => 'explore.muthead',
 					],
 					[
 						'type' => 'link-text',
@@ -284,7 +284,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'value' => 'Futhead'
 						],
 						'href' => 'https://www.futhead.com/',
-						'tracking_label' => '',
+						'tracking_label' => 'explore.futhead',
 					],
 				]
 			]
