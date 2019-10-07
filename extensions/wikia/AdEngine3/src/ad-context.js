@@ -501,6 +501,13 @@ export default {
 				partnerCode: 'wikiaimajsint377461931603',
 				sampling: 0,
 			},
+			iasTracking: {
+				enabled: false,
+				config: {
+					anId: 'TBD',
+					campId: 'TBD',
+				}
+			},
 		},
 		wad: {
 			enabled: false,
