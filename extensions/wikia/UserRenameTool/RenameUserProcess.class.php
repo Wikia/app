@@ -130,6 +130,14 @@ class RenameUserProcess {
 			$this->addLog( 'Running query: ' . $dbw->lastQuery() . " resulted in {$affectedRows} row(s) being affected." );
 
 			if ( $affectedRows ) {
+
+				$this->addLog( "Adding a row in replication queue" );
+				$dbw->insert(
+					'user_replicate_queue',
+					['user_id' => $this->mUserId],
+					__METHOD__
+				);
+
 				$dbw->commit( __METHOD__ );
 				wfWaitForSlaves( $dbw->getDBname() );
 
