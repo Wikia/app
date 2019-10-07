@@ -506,7 +506,7 @@ export default {
 				config: {
 					anId: 'TBD',
 					campId: 'TBD',
-				}
+				},
 			},
 		},
 		wad: {
