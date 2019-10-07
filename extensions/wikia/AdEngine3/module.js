@@ -2,10 +2,10 @@
 require(['ext.wikia.adEngine3.ads'], function (ads) {
 	ads.run();
 
-	registerEditorSavedEvents();
+	registerEditorSavedEvents(ads);
 });
 
-function registerEditorSavedEvents() {
+function registerEditorSavedEvents(ads) {
 	window.wgAfterContentAndJS.push(() => {
 		// VE editor save complete
 		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
