@@ -12,9 +12,11 @@ class DesignSystemGlobalFooterService extends WikiaService {
 	}
 
 	public function section() {
+		$version = $this->getVal('footer_version', '1');
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
 			'name' => $this->getVal( 'name' ),
+			'parentName' => $this->getVal( 'parentName' )
 		] );
 	}
 

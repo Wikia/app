@@ -1,6 +1,6 @@
 <?php
 
-class DesignSystemGlobalFooterModel extends WikiaModel {
+class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 	const DEFAULT_LANG = 'en';
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
@@ -27,8 +27,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
-
 		if ( $this->isWikiaOrgCommunity ) {
 			return $this->getWikiaOrgModel();
 		}
@@ -46,11 +44,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'href' => $this->getHref( 'fandom-logo' ),
 				'title' => [
 					'type' => 'text',
-					'value' => 'Fandom powered by Wikia'
+					'value' => 'Fandom'
 				],
 				'tracking_label' => 'logo',
 			],
-			'company_overview' => [
+			'site_overview' => [
 				'header' => [
 					'type' => 'line-text',
 					'title' => [
@@ -94,11 +92,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						],
 						'href' => $this->getHref( 'contact' ),
 						'tracking_label' => 'company-overview.contact',
-					]
-				]
-			],
-			'site_overview' => [
-				'links' => [
+					],
 					[
 						'type' => 'link-text',
 						'title' => [
@@ -137,34 +131,23 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
-			'create_wiki' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-create-wiki-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' ),
-						'tracking_label' => 'start-a-wiki',
-					]
-				]
-			],
-			'community_apps' => [
+			'fandom_apps' => [
 				'header' => [
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => $mobileAppsTranslationKeys[ 'header' ]
+						'key' => 'global-footer-community-apps-header',
 					]
 				],
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => $mobileAppsTranslationKeys[ 'description' ]
+					'key' => 'global-footer-community-apps-description'
+				],
+			],
+			'fandom_stores' => [
+				'image' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-store-logo-fandom'
 				],
 				'links' => [
 					[
@@ -199,6 +182,48 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
+			'ddb_stores' => [
+				'image' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-store-logo-ddb',
+					'caption' => [
+						'type' => 'text',
+						'value' => 'D&D Beyond'
+					],
+				],
+				'links' => [
+					[
+						'type' => 'link-image',
+						// 'image' is deprecated, use 'image-data' instead
+						'image' => 'wds-company-store-appstore',
+						'image-data' => [
+							'type' => 'wds-svg',
+							'name' => 'wds-company-store-appstore',
+						],
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-community-apps-link-app-store'
+						],
+						'href' => $this->getHref( 'ddb-app-store' ),
+						'tracking_label' => 'community-apps.app-store-ddb',
+					],
+					[
+						'type' => 'link-image',
+						// 'image' is deprecated, use 'image-data' instead
+						'image' => 'wds-company-store-googleplay',
+						'image-data' => [
+							'type' => 'wds-svg',
+							'name' => 'wds-company-store-googleplay',
+						],
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-community-apps-link-google-play'
+						],
+						'href' => $this->getHref( 'ddb-google-play' ) . '&referrer=utm_source%3Dwikia%26utm_medium%3Dglobalfooter',
+						'tracking_label' => 'community-apps.google-play-ddb',
+					]
+				]
+			],
 			'licensing_and_vertical' => $this->getLicensingAndVertical(),
 			'mobile_site_button' => [
 				'type' => 'link-text',
@@ -206,10 +231,65 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-footer-mobile-site-link'
 				]
+			],
+			'fandom_overview' => [
+				'header' => [
+					'type' => 'line-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-overview-header'
+					]
+				],
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Fandom'
+						],
+						'href' => 'https://www.fandom.com/',
+						'tracking_label' => 'explore.fandom',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Gamepedia'
+						],
+						'href' => 'https://www.gamepedia.com/',
+						'tracking_label' => 'explore.gamepedia',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'D&D Beyond'
+						],
+						'href' => 'https://www.dndbeyond.com/',
+						'tracking_label' => 'explore.dnd-beyond',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Muthead'
+						],
+						'href' => 'https://www.muthead.com/',
+						'tracking_label' => 'explore.muthead',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'Futhead'
+						],
+						'href' => 'https://www.futhead.com/',
+						'tracking_label' => 'explore.futhead',
+					],
+				]
 			]
 		];
 
-		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 		$data['advertise'] = $this->getAdvertise();
@@ -370,67 +450,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getFandomOverview() {
-		$out = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-overview-header'
-				]
-			],
-			'links' => [ ]
-		];
-
-		if ( $this->lang === static::DEFAULT_LANG ) {
-			$out['links'] = [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-games'
-					],
-					'href' => 'https://www.fandom.com/games',
-					'tracking_label' => 'fandom-overview.games',
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-movies'
-					],
-					'href' => 'https://www.fandom.com/movies',
-					'tracking_label' => 'fandom-overview.movies',
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-tv'
-					],
-					'href' => 'https://www.fandom.com/tv',
-					'tracking_label' => 'fandom-overview.tv',
-				],
-			];
-		}
-
-		$out['links'][] = [
-			'type' => 'link-branded',
-			'brand' => 'explore-wikis',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-overview-link-explore-wikis'
-			],
-			'href' => $this->getHref( 'explore-wikis' ),
-			'tracking_label' => 'fandom-overview.explore-wikis',
-		];
-
-		return $out;
-	}
-
 	private function getFollowUs() {
 		$data = [
 			'header' => [
@@ -499,18 +518,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				'href' => $this->getHref( 'support' ),
 				'tracking_label' => 'community.support',
-			];
-		}
-
-		if ( $this->getHref( 'wam' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-wam-score'
-				],
-				'href' => $this->getHref( 'wam' ),
-				'tracking_label' => 'community.wam',
 			];
 		}
 
@@ -590,19 +597,5 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getSocialHrefs() {
 		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
-	}
-
-	private function getLocalizedAppTranslations( $lang ) {
-		if ( $lang === 'en' ) {
-			return [
-				'header' => 'global-footer-fandom-app-header',
-				'description' => 'global-footer-fandom-app-description'
-			];
-		}
-
-		return [
-			'header' => 'global-footer-community-apps-header',
-			'description' => 'global-footer-community-apps-description'
-		];
 	}
 }

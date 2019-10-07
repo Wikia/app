@@ -13,79 +13,75 @@
 		</h2>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
-		<div class="wds-global-footer__fandom-sections">
+		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
+				'DesignSystemGlobalFooterServiceV2',
 				'section',
 				[
 					'model' => $model['fandom_overview'],
 					'name' => 'fandom-overview',
-					'parentName' => 'fandom'
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
+				'DesignSystemGlobalFooterServiceV2',
 				'section',
 				[
 					'model' => $model['follow_us'],
 					'name' => 'follow-us',
-					'parentName' => 'fandom'
 				]
 			); ?>
 		</div>
-		<div class="wds-global-footer__wikia-sections">
+		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'section',
-				[
-					'model' => $model['company_overview'],
-					'name' => 'company-overview',
-					'parentName' => 'wikia'
-				]
-			); ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
+				'DesignSystemGlobalFooterServiceV2',
 				'section',
 				[
 					'model' => $model['site_overview'],
 					'name' => 'site-overview',
-					'parentName' => 'wikia'
 				]
 			); ?>
+		</div>
+		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
+				'DesignSystemGlobalFooterServiceV2',
 				'section',
 				[
 					'model' => $model['community'],
 					'name' => 'community',
-					'parentName' => 'wikia'
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'section',
-				[
-					'model' => $model['create_wiki'],
-					'name' => 'create-wiki',
-					'parentName' => 'wikia'
-				]
-			); ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'section',
-				[
-					'model' => $model['community_apps'],
-					'name' => 'community-apps',
-					'parentName' => 'wikia'
-				]
-			); ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
+				'DesignSystemGlobalFooterServiceV2',
 				'section',
 				[
 					'model' => $model['advertise'],
 					'name' => 'advertise',
-					'parentName' => 'wikia'
+				]
+			); ?>
+		</div>
+		<div class="wds-global-footer__column">
+			<?= $app->renderView(
+				'DesignSystemGlobalFooterServiceV2',
+				'section',
+				[
+					'model' => $model['fandom_apps'],
+					'name' => 'fandom-apps',
+				]
+			); ?>
+			<?= $app->renderView(
+				'DesignSystemGlobalFooterServiceV2',
+				'section',
+				[
+					'model' => $model['fandom_stores'],
+					'name' => 'fandom-stores',
+				]
+			); ?>
+			<?= $app->renderView(
+				'DesignSystemGlobalFooterServiceV2',
+				'section',
+				[
+					'model' => $model['ddb_stores'],
+					'name' => 'ddb-stores',
 				]
 			); ?>
 		</div>

@@ -1,0 +1,29 @@
+<section class="wds-global-footer__section wds-is-<?= Sanitizer::encodeAttribute( $name ) ?>">
+	<?php if ( !empty( $model['header']['title'] ) ) : ?>
+		<h3 class="wds-global-footer__section-header"><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></h3>
+	<?php endif; ?>
+
+	<?php if ( !empty( $model['description'] ) ) : ?>
+		<span class="wds-global-footer__section-description"><?= DesignSystemHelper::renderText( $model['description'] ) ?></span>
+	<?php endif; ?>
+
+	<?php if ( !empty( $model['image'] ) ) : ?>
+		<?= $app->renderPartial( 'DesignSystemGlobalFooterService', 'image', [ 'image' => $model['image'] ] ); ?>
+	<?php endif; ?>
+
+	<?php if ( !empty( $model['links'] ) ) : ?>
+		<ul class="wds-global-footer__links-list">
+			<?php foreach ( $model['links'] as $link ) : ?>
+				<li class="wds-global-footer__links-list-item">
+					<?php if ( $link['type'] === 'link-image' ) : ?>
+						<?= $app->renderView( 'DesignSystemGlobalFooterServiceV2', 'linkImage', [ 'model' => $link ] ); ?>
+					<?php elseif ( $link['type'] === 'link-branded' ) : ?>
+						<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkBranded', [ 'model' => $link ] ); ?>
+					<?php else : ?>
+						<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkText', [ 'model' => $link ] ); ?>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
+</section>
