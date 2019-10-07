@@ -7,6 +7,8 @@ class ParselyService implements FandomArticleService {
 	const REQUEST_TIMEOUT_SECONDS = 2;
 	const EXTRA_POSTS_TO_FETCH = 10;
 
+	private const FANDOM_BASE_URL = 'https://www.fandom.com';
+
 	/** @var string $baseUrl */
 	private $baseUrl;
 	/** @var string $apiKey */
@@ -33,10 +35,13 @@ class ParselyService implements FandomArticleService {
 			foreach ( $response['data'] as $postData ) {
 				$metadata = json_decode( $postData['metadata'], true );
 
+				// IW-2588: Hotfix to prevent showcase URLs from polluting the production cache
+				$articlePath = parse_url( $postData['url'], PHP_URL_PATH );
+
 				if ( isset( $metadata['postID'] ) ) {
 					$posts[$metadata['postID']] = [
 						'title' => $postData['title'],
-						'url' => $postData['url'],
+						'url' => self::FANDOM_BASE_URL . $articlePath,
 						'thumbnail' => $postData['image_url'],
 						'site_name' => static::FANDOM_SITE_NAME,
 					];
