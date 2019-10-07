@@ -469,6 +469,7 @@ export default {
 			fallbackConfigKey: 'fallbackInstantConfig',
 		},
 		krux: {
+			account: 'ns:wikia',
 			enabled: false,
 			id: 'JU3_GW1b',
 		},
