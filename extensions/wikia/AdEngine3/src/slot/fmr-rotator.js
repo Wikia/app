@@ -12,7 +12,6 @@ import { getNavbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
 import { btLoader } from '../wad/bt-loader';
 import { recRunner } from '../wad/rec-runner';
-import { billTheLizardWrapper }   from '../bill-the-lizard-wrapper';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
