@@ -68,8 +68,7 @@ $messages['es'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'La definición de la etiqueta no se termina correctamente',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'No coinciden las etiquetas de inicio y de fin',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Fin prematuro de etiqueta',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'El atributo "$1" no está respaldado en
-	la etiqueta <infobox>',
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'El atributo "$1" no está soportado en la etiqueta <infobox>',
 );
 
 $messages['fr'] = array(

@@ -1415,13 +1415,6 @@ $wgAdDriverDelayTimeout = 2000;
 $wgAdDriverOverscrolledCountries = null;
 
 /**
- * @name $wgAdDriverBrowsiCountries
- * List of countries Browsi will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBrowsiCountries = null;
-
-/**
  * @name $wgAdDriverConfiantDesktopCountries
  * List of countries Confiant will be enabled on Oasis
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1830,8 +1823,10 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
+$wgAutoloadClasses['UserReplicationWatcher'] = "$IP/includes/wikia/UserReplicationWatcher.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+$wgHooks['UserSaveSettings'][] = 'UserReplicationWatcher::onUserSaveSettings';
 
 /**
  * https://wikia-inc.atlassian.net/browse/SER-3006

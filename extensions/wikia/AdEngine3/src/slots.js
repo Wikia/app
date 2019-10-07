@@ -1,9 +1,10 @@
-import { AdSlot, context, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
 import { recRunner } from './wad/rec-runner';
 import { btLoader } from './wad/bt-loader';
+import { contextReady } from "./utils/context-ready";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -25,6 +26,25 @@ function isHighImpactApplicable() {
 
 function isFloorAdhesionApplicable() {
 	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
+}
+
+function registerFloorAdhesionCodePriority() {
+	let porvataClosedActive = false;
+
+	slotService.on('floor_adhesion', AdSlot.STATUS_SUCCESS, () => {
+		porvataClosedActive = true;
+
+		eventService.on(events.VIDEO_AD_IMPRESSION, () => {
+			if (porvataClosedActive) {
+				porvataClosedActive = false;
+				slotService.disable('floor_adhesion', 'closed-by-porvata');
+			}
+		});
+	});
+
+	slotService.on('floor_adhesion', AdSlot.HIDDEN_EVENT, () => {
+		porvataClosedActive = false;
+	});
 }
 
 /**
@@ -66,7 +86,6 @@ export default {
 			},
 			top_leaderboard: {
 				aboveTheFold: true,
-				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -102,7 +121,6 @@ export default {
 			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
-				bidderAlias: 'TOP_RIGHT_BOXAD',
 				slotNameSuffix: '',
 				group: 'MR',
 				options: {},
@@ -137,7 +155,6 @@ export default {
 			},
 			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
-				bidderAlias: 'INCONTENT_BOXAD_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -145,6 +162,7 @@ export default {
 				sizes: [],
 				defaultSizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 				insertBeforeSelector: '#incontent_boxad_1',
+				garfieldCat: true,
 				repeat: {
 					additionalClasses: 'hide',
 					index: 1,
@@ -164,7 +182,6 @@ export default {
 			},
 			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
-				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -190,7 +207,6 @@ export default {
 				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
-				bidderAlias: 'INCONTENT_PLAYER',
 				insertBeforeSelector: '#mw-content-text > h2',
 				insertBelowFirstViewport: true,
 				disabled: true,
@@ -234,7 +250,6 @@ export default {
 			},
 			featured: {
 				adProduct: 'featured',
-				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',
@@ -371,7 +386,9 @@ export default {
 		return isApplicable && isInjected;
 	},
 
-	injectIncontentBoxad() {
+	async injectIncontentBoxad() {
+		await contextReady;
+
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
@@ -399,5 +416,7 @@ export default {
 				'floor_adhesion',
 				{ distanceFromTop: utils.getViewportHeight() },
 		);
+
+		registerFloorAdhesionCodePriority();
 	},
 };
