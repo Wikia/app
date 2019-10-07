@@ -11,12 +11,28 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		}
 	}
 
+	public function indexV2() {
+		$model = $this->getData();
+
+		$this->setVal( 'model', $model );
+
+		if ($model['is-wikia-org']) {
+			$this->overrideTemplate('WikiaOrg_index');
+		}
+	}
+
 	public function section() {
-		$version = $this->getVal('footer_version', '1');
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
 			'name' => $this->getVal( 'name' ),
 			'parentName' => $this->getVal( 'parentName' )
+		] );
+	}
+
+	public function sectionV2() {
+		$this->response->setValues( [
+			'model' => $this->getVal( 'model' ),
+			'name' => $this->getVal( 'name' ),
 		] );
 	}
 
@@ -28,6 +44,10 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function linkImageV2() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	public function linkText() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
@@ -36,7 +56,8 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
 			'id' => $this->wg->CityId,
 			'product' => 'wikis',
-			'lang' => $this->wg->Lang->getCode()
+			'lang' => $this->wg->Lang->getCode(),
+			'footer_version' => '2',
 		] )->getData();
 	}
 }

@@ -15,16 +15,16 @@
 	<div class="wds-global-footer__main">
 		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['fandom_overview'],
 					'name' => 'fandom-overview',
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['follow_us'],
 					'name' => 'follow-us',
@@ -33,8 +33,8 @@
 		</div>
 		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['site_overview'],
 					'name' => 'site-overview',
@@ -43,16 +43,16 @@
 		</div>
 		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['community'],
 					'name' => 'community',
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['advertise'],
 					'name' => 'advertise',
@@ -61,24 +61,24 @@
 		</div>
 		<div class="wds-global-footer__column">
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['fandom_apps'],
 					'name' => 'fandom-apps',
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['fandom_stores'],
 					'name' => 'fandom-stores',
 				]
 			); ?>
 			<?= $app->renderView(
-				'DesignSystemGlobalFooterServiceV2',
-				'section',
+				'DesignSystemGlobalFooterService',
+				'sectionV2',
 				[
 					'model' => $model['ddb_stores'],
 					'name' => 'ddb-stores',

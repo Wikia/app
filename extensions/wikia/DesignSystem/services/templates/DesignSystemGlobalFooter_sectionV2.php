@@ -16,7 +16,7 @@
 			<?php foreach ( $model['links'] as $link ) : ?>
 				<li class="wds-global-footer__links-list-item">
 					<?php if ( $link['type'] === 'link-image' ) : ?>
-						<?= $app->renderView( 'DesignSystemGlobalFooterServiceV2', 'linkImage', [ 'model' => $link ] ); ?>
+						<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkImageV2', [ 'model' => $link ] ); ?>
 					<?php elseif ( $link['type'] === 'link-branded' ) : ?>
 						<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkBranded', [ 'model' => $link ] ); ?>
 					<?php else : ?>

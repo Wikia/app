@@ -135,10 +135,7 @@
 	</div>
 </section><!--WikiaPage-->
 
-<?= $footerVersion === '2'
-	? $app->renderView( 'DesignSystemGlobalFooterServiceV2', 'index' )
-	: $app->renderView( 'DesignSystemGlobalFooterService', 'index' );
-?>
+<?= $app->renderView( 'DesignSystemGlobalFooterService', 'indexV2' ); ?>
 
 <? if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>
