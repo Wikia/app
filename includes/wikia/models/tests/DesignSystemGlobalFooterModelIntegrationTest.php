@@ -22,7 +22,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 		$this->mockGlobalVariable('wgCityId', $product);
 		$this->mockGlobalVariable( 'wgSitename', $sitename);
 
-		$footerModel = new DesignSystemGlobalFooterModel( $product, $productInstanceId, false );
+		$footerModel = new DesignSystemGlobalFooterModelV2( $product, $productInstanceId, false );
 		$result = $footerModel->getData();
 
 		$this->assertEquals( $expectedResult, $result['licensing_and_vertical'] );
@@ -32,7 +32,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 		return [
 			[
 				1,
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS,
 				'http://unittest.wikia.com',
 				'wikia',
 				[
@@ -54,7 +54,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 			],
 			[
 				2,
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS,
 				'http://memory-alpha.wikia.com',
 				'memory-alpha',
 				[
@@ -76,7 +76,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 			],
 			[
 				3,
-				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
+				DesignSystemGlobalFooterModelV2::PRODUCT_FANDOMS,
 				'https://www.fandom.com',
 				'Fandom',
 				'licensing_and_vertical' => [
@@ -103,7 +103,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 			],
 			[
 				4,
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS,
 				'http://test2.wikia.com',
 				'wikia',
 				[
@@ -127,7 +127,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testInternationalHeader() {
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1,false, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1,false, 'en' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['header'] );
@@ -135,7 +135,7 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 		$this->assertArrayNotHasKey( 'fandom', $result );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1, false, 'de' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'de' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['header'] );
@@ -145,40 +145,40 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testGetFandomOverview() {
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1, false, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'en' );
 		$result = $footerModel->getData();
 
-		$this->assertCount( 4, $result['fandom_overview']['links'] );
+		$this->assertCount( 5, $result['fandom_overview']['links'] );
 
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1, false, 'pl' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'pl' );
 		$result = $footerModel->getData();
 
-		$this->assertCount( 1, $result['fandom_overview']['links'] );
+		$this->assertCount( 5, $result['fandom_overview']['links'] );
 	}
 
 	public function testCorrectMobileAppsTranslationKeys() {
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1, false, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'en' );
 		$enLocaleData = $footerModel->getData();
 
 		$this->assertEquals(
-			'global-footer-fandom-app-header',
-			$enLocaleData[ 'community_apps' ][ 'header' ][ 'title' ][ 'key' ]
+			'global-footer-community-apps-header',
+			$enLocaleData[ 'fandom_apps' ][ 'header' ][ 'title' ][ 'key' ]
 		);
 		$this->assertEquals(
-			'global-footer-fandom-app-description',
-			$enLocaleData[ 'community_apps' ][ 'description' ][ 'key' ]
+			'global-footer-community-apps-description',
+			$enLocaleData[ 'fandom_apps' ][ 'description' ][ 'key' ]
 		);
 
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1, false, 'pl' );
+		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'pl' );
 		$nonEnLocaleData = $footerModel->getData();
 
 		$this->assertEquals(
 			'global-footer-community-apps-header',
-			$nonEnLocaleData[ 'community_apps' ][ 'header' ][ 'title' ][ 'key' ]
+			$nonEnLocaleData[ 'fandom_apps' ][ 'header' ][ 'title' ][ 'key' ]
 		);
 		$this->assertEquals(
 			'global-footer-community-apps-description',
-			$nonEnLocaleData[ 'community_apps' ][ 'description' ][ 'key' ]
+			$nonEnLocaleData[ 'fandom_apps' ][ 'description' ][ 'key' ]
 		);
 	}
 

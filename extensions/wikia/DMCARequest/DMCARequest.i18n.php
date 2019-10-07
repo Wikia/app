@@ -49,7 +49,7 @@ Please ensure the accuracy of your notice before sending it, and please note tha
 	'dmcarequest-email-subject' => 'Claim of copyright infringement',
 	'dmcarequest-email-text' => 'TO:
 ATTN: Copyright Agent
-Wikia, Inc.
+Fandom, Inc.
 360 Third Street
 Suite 750
 San Francisco, CA 94107

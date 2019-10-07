@@ -21,12 +21,21 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getFooter() {
 		$params = $this->getRequestParameters();
-		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$this->isWikiaOrgCommunity(),
-			$params[static::PARAM_LANG]
-		);
+		$version = $this->getVal('footer_version', '1');
+
+		$footerModel = $version === '2'
+			? new DesignSystemGlobalFooterModelV2(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
+				$params[static::PARAM_LANG]
+			)
+			: new DesignSystemGlobalFooterModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$this->isWikiaOrgCommunity(),
+				$params[static::PARAM_LANG]
+			);
 
 		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $footerModel->getData() );
@@ -83,12 +92,20 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 		$isWikiaOrgCommunity = $this->isWikiaOrgCommunity();
 
-		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$isWikiaOrgCommunity,
-			$params[static::PARAM_LANG]
-		);
+		$version = $this->getVal('footer_version', '1');
+		$footerModel = $version === '2'
+			? new DesignSystemGlobalFooterModelV2(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
+				$params[static::PARAM_LANG]
+			)
+			: new DesignSystemGlobalFooterModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$isWikiaOrgCommunity,
+				$params[static::PARAM_LANG]
+			);
 
 		// TODO: remove after full rollout of XW-4947
 		$version = $this->getVal('version', '1');
