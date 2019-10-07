@@ -6,15 +6,17 @@ require(['ext.wikia.adEngine3.ads'], function (ads) {
 });
 
 function registerEditorSavedEvents(ads) {
+	var eventId = 'M-FnMTsI';
+
 	window.wgAfterContentAndJS.push(() => {
 		// VE editor save complete
 		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
-			ads.fireKruxEvent();
+			ads.fireKruxEvent(eventId);
 		});
 
 		// MW/CK editor saving in progress
 		window.mw.hook('mwEditorSaved').add(() => {
-			ads.fireKruxEvent();
+			ads.fireKruxEvent(eventId);
 		});
 	});
 }
