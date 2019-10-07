@@ -135,7 +135,7 @@
 	</div>
 </section><!--WikiaPage-->
 
-<?= $app->renderView( 'DesignSystemGlobalFooterService', 'indexV2' ); ?>
+<?= $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
 
 <? if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>

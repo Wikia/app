@@ -11,16 +11,6 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		}
 	}
 
-	public function indexV2() {
-		$model = $this->getData();
-
-		$this->setVal( 'model', $model );
-
-		if ($model['is-wikia-org']) {
-			$this->overrideTemplate('WikiaOrg_index');
-		}
-	}
-
 	public function section() {
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
@@ -29,22 +19,11 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		] );
 	}
 
-	public function sectionV2() {
-		$this->response->setValues( [
-			'model' => $this->getVal( 'model' ),
-			'name' => $this->getVal( 'name' ),
-		] );
-	}
-
 	public function linkBranded() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
 	public function linkImage() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
-	}
-
-	public function linkImageV2() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
