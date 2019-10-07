@@ -149,7 +149,7 @@ $messages['es'] = array(
 	'wampage-header' => 'WAM',
 	'wampage-header-wam' => 'Puntuación WAM',
 	'wampage-header-faq' => 'Preguntas frecuentes',
-	'wampage-content' => 'El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de FANDOM más visitadas y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias.',
+	'wampage-content' => 'El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de FANDOM más visitadas y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraos de comprobar regularmente los resultados de las últimas tendencias.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===¿Cómo hace los cálculos del WAM?===
 La puntuación WAM es una combinación de tráfico, compromiso y crecimiento. No podemos decirte los detalles concretos porque no queremos que los wikis intenten manipular las valoraciones. Pero ten por seguro que hemos incluido todos los ingredientes esenciales para valorar qué wikis son exitosos.

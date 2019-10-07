@@ -703,6 +703,7 @@ Si piensas que tu página no necesita esta sección, simplemente bórrala. Tambi
 	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Seleccionar un mapa existente o crear un mapa para insertarlo. <a href="$1" target="_blank">Aprende más.</a>',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'No hay mapas creados hasta el momento',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Colabora con la comunidad colocando puntos de interés en el mapa. <a href="$1" target="_blank">Aprende mas.</a>',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Este wiki solo permite agregar contenido con licencia de la <a href="http://video.wikia.com" target="_blank">Videoteca de FANDOM</a>. Por favor, ve a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para buscar videos.',
 );
 
 $messages['eu'] = array(
