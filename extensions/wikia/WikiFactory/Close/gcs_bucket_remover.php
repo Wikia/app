@@ -10,16 +10,20 @@ class GcsBucketRemover {
 			$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
 
 			if ( empty( $wgUploadPath ) ) {
-				$this->info( "Upload path path is empty, leave early\n" );
-
+				$this->info( "Upload path path is empty, leave early" );
 				return false;
 			}
 
 			/** @var GcsFileBackend $backend */
 			$backend = FileBackendGroup::singleton()->get( 'gcs-backend' );
 
-			$this->info( sprintf( 'Removing images from path %s', $wgUploadPath ) );
+			$this->info( "Removing images from path: $wgUploadPath" );
 			$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+
+			if ( $this->pathLooksUnsafeToRemove( $path ) ) {
+				$this->warning( "Upload path looks unsafe to remove: $path" );
+				return false;
+			}
 
 			$this->info( sprintf( 'Getting file list for %s', $path ) );
 
@@ -35,12 +39,15 @@ class GcsBucketRemover {
 			}
 		}
 		catch ( Exception $ex ) {
-			$this->info( __METHOD__ . ' - ' . $ex->getMessage() );
-
-			Wikia\Logger\WikiaLogger::instance()->error( 'Removing files failed', [
+			$this->error( 'Removing files failed', [
 				'exception' => $ex,
-				'city_id' => $wikiId,
+				'wiki_id' => $wikiId,
 			] );
 		}
+	}
+
+	// We don't want to trigger file removal if the path looks too short (i. e. doesn't have at least 2 segments)
+	private function pathLooksUnsafeToRemove( string $path ) : bool {
+		return count( explode( '/', $path ) ) < 2;
 	}
 }

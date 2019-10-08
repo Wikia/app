@@ -148,6 +148,13 @@ class UserDataRemover {
 				__METHOD__
 			);
 
+			$this->info( "Adding a row in replication queue" );
+			$dbMaster->insert(
+				'user_replicate_queue',
+				['user_id' => $userId],
+				__METHOD__
+			);
+
 			$this->info( 'Commiting changes' );
 			// commit early so that cache is properly invalidated
 			$dbMaster->commit( __METHOD__ );

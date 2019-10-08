@@ -95,6 +95,8 @@ class DesignSystemSharedLinks {
 			'media-kit-contact' => null,
 			'app-store' => 'https://itunes.apple.com/us/app/fandom-videos-news-reviews/id1230063803?ls=1&mt=8',
 			'google-play' => 'https://play.google.com/store/apps/details?id=com.fandom.app',
+			'ddb-app-store' => 'https://apps.apple.com/us/app/d-d-beyond/id1263629972',
+			'ddb-google-play' => 'https://play.google.com/store/apps/details?id=com.curse.dndbeyond&hl=en',
 			'fandom-logo' => 'https://www.fandom.com/',
 			'wikia-org-logo' => 'https://www.wikia.org/',
 			'games' => 'https://www.fandom.com/topics/games',
@@ -352,7 +354,7 @@ class DesignSystemSharedLinks {
 		'en' => [
 			'facebook' => 'https://www.facebook.com/getfandom',
 			'twitter' => 'https://twitter.com/getfandom',
-			'youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
+			'youtube' => 'https://www.youtube.com/fandomentertainment',
 			'instagram' => 'https://www.instagram.com/getfandom/',
 			'linkedin' => 'https://www.linkedin.com/company/157252',
 		],

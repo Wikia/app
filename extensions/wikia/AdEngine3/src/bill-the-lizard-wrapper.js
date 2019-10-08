@@ -11,6 +11,7 @@ import pageTracker from './tracking/page-tracker';
 
 const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
 const fmrPrefix = 'incontent_boxad_';
+const NOT_USED_STATUS = 'not_used';
 
 let garfieldCalled = false;
 let nextSlot = null;
@@ -21,6 +22,8 @@ class BillTheLizardWrapper {
 
         const baseSlotName = fmrPrefix + 1;
         const enableGarfield = context.get('options.billTheLizard.garfield');
+
+        defaultStatus = NOT_USED_STATUS;
 
         if (enableGarfield === true) {
             billTheLizard.projectsHandler.enable('garfield');
@@ -50,7 +53,7 @@ class BillTheLizardWrapper {
         context.set(
             'bidders.prebid.bidsRefreshing.bidsBackHandler',
             () => {
-                    this.callGarfield(nextSlot);
+                this.callGarfield(nextSlot);
             },
         );
 
@@ -100,18 +103,13 @@ class BillTheLizardWrapper {
         });
     }
 
-    getBtlSlotStatus(btlStatus, callId) {
+    getBtlSlotStatus(btlStatus, callId, fallbackStatus) {
         let slotStatus;
 
         switch (btlStatus) {
             case BillTheLizard.TIMEOUT:
             case BillTheLizard.FAILURE: {
-                const slotId = callId.substring(fmrPrefix.length);
-                const prevPrediction = billTheLizard.getPreviousPrediction(
-                    slotId,
-                    this.getCallId,
-                    'garfield'
-                );
+                const prevPrediction = billTheLizard.getLastReusablePrediction('garfield');
 
                 slotStatus = btlStatus;
 
@@ -127,16 +125,12 @@ class BillTheLizardWrapper {
                 break;
             }
             default: {
-                if (callId === garfieldSlotsBidderAlias.toLowerCase()){
-                    return 'not_used';
+                if (fallbackStatus === NOT_USED_STATUS) {
+                    // we don't use a slot until we got response from Bill
+                    return NOT_USED_STATUS;
                 }
 
-                const slotId = callId.substring(fmrPrefix.length);
-                const prevPrediction = billTheLizard.getPreviousPrediction(
-                    slotId,
-                    this.getCallId,
-                    'garfield'
-                );
+                const prevPrediction = billTheLizard.getLastReusablePrediction('garfield');
 
                 if (prevPrediction === undefined) {
                     // shouldnt see a lot of that

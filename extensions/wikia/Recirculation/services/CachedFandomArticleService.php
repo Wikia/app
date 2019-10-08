@@ -4,6 +4,8 @@ class CachedFandomArticleService implements FandomArticleService {
 
 	const CACHE_TTL_SECONDS = 900; // 15 minutes
 
+	private const CACHE_VERSION = 2;
+
 	/** @var BagOStuff $cacheService */
 	private $cacheService;
 	/** @var FandomArticleService $articleService */
@@ -15,7 +17,7 @@ class CachedFandomArticleService implements FandomArticleService {
 	}
 
 	public function getTrendingFandomArticles( int $limit ): array {
-		$key = wfSharedMemcKey( 'recirculation-trending-fandom-articles', $limit );
+		$key = wfSharedMemcKey( 'recirculation-trending-fandom-articles', self::CACHE_VERSION, $limit );
 		$cachedValue = $this->cacheService->get( $key );
 
 		if ( is_array( $cachedValue ) ) {

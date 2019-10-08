@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['parserhook'][] = [
 	'name' => 'Facebook Tags',
-	'author' => 'Wikia, Inc.',
+	'author' => 'Fandom, Inc.',
 	'descriptionmsg' => 'facebook-tags-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookTags',
 ];
