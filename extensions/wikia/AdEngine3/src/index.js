@@ -3,6 +3,7 @@ import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { isAutoPlayDisabled } from './ml/executor';
 import {
+	AdSlot,
 	bidders,
 	billTheLizard,
 	confiant,
@@ -86,10 +87,8 @@ function startAdEngine() {
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
 
-		context.push('listeners.slot', {
-			onRenderEnded: (slot) => {
-				slot.getElement().classList.remove('default-height');
-			}
+		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
+			slot.getElement().classList.remove('default-height');
 		});
 	}
 }
