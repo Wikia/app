@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = [
 	'name' => 'Auth Preferences',
-	'author' => 'Wikia, Inc.',
+	'author' => 'Fandom, Inc.',
 	'descriptionmsg' => 'auth-prefs-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthPreferences',
 ];

@@ -5,3 +5,8 @@
 .mobile-site-link--active {
 	display: inline-block;
 }
+
+// this selector is needed to overwrite some oasis styling
+.wds-global-footer__column + .wds-global-footer__column:last-child {
+	float: none;
+}

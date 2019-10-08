@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => "The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc's Terms of Use].",
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Fandom, Inc's Terms of Use].",
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -48,7 +48,7 @@ $messages['fi'] = array(
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => "The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc's Terms of Use].",
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Fandom, Inc's Terms of Use].",
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -58,7 +58,7 @@ $messages['fr'] = array(
 	'content-warning-title' => 'Avertissement sur le contenu',
 	'content-warning-body' => "Le wiki $1 est susceptible d'inclure du contenu répréhensible tel que de la violence, du contenu sexuel suggestif, de l'humour noir ou d'autres éléments non destinés au grand public.
 
-D'une manière générale, FANDOM ne vérifie pas ni n'approuve le contenu de ce wiki ni de quelconque autre wiki. Pour plus d'informations sur nos politiques, veuillez lire les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation de Wikia, Inc.].",
+D'une manière générale, FANDOM ne vérifie pas ni n'approuve le contenu de ce wiki ni de quelconque autre wiki. Pour plus d'informations sur nos politiques, veuillez lire les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation de Fandom, Inc.].",
 	'content-warning-button-continue' => 'JE COMPRENDS ET JE SOUHAITE CONTINUER',
 	'content-warning-button-cancel' => 'Je ne souhaite pas continuer',
 	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.',
@@ -92,7 +92,7 @@ $messages['ko'] = array(
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => "The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc's Terms of Use].",
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Fandom, Inc's Terms of Use].",
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -112,7 +112,7 @@ $messages['nl'] = array(
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => "The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc's Terms of Use].",
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Fandom, Inc's Terms of Use].",
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -144,7 +144,7 @@ $messages['ru'] = array(
 	'content-warning-title' => 'Опасный контент',
 	'content-warning-body' => 'Эта вики $1 может содержать материалы сомнительного содержания. Например, сцены насилия, пародии в жанре «чёрного юмора» или другой контент, не предназначенный для широкой аудитории.
 
-Как правило, ФЭНДОМ не занимается ни проверкой, ни одобрением содержания этой или какой-либо другой вики. Подробнее о наших правилах читайте на странице [http://ru.wikia.com/%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования, установленные компанией Wikia, Inc].',
+Как правило, ФЭНДОМ не занимается ни проверкой, ни одобрением содержания этой или какой-либо другой вики. Подробнее о наших правилах читайте на странице [http://ru.wikia.com/%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования, установленные компанией Fandom, Inc].',
 	'content-warning-button-continue' => 'Я ПОНИМАЮ ЭТО И ХОЧУ ПРОДОЛЖИТЬ',
 	'content-warning-button-cancel' => 'Я не хочу продолжать',
 	'content-warning-desc' => 'Добавляет предупреждение к вики, которая может содержать нежелательный контент.',
@@ -156,7 +156,7 @@ $messages['vi'] = array(
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => "The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc's Terms of Use].",
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Fandom, Inc's Terms of Use].",
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -165,7 +165,7 @@ In general, FANDOM does not review nor do we endorse the content of this or any 
 $messages['zh-hans'] = array(
 	'content-warning-body' => '在$1上的维基可能包含令人反感的内容，如暴力内容、性内容、冷幽默及滑稽嘲讽，或者其他非大众化的描述性内容。
 
-一般情况下，FANDOM不会审查亦不会赞同此类内容以及社区的存在。有关我们网页条款的详细信息，请查看[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE Wikia, Inc使用条款]。',
+一般情况下，FANDOM不会审查亦不会赞同此类内容以及社区的存在。有关我们网页条款的详细信息，请查看[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE Fandom, Inc使用条款]。',
 	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.',
 	'content-warning-title' => 'Content Warning',
 	'content-warning-button-continue' => 'I understand and I wish to continue',
@@ -176,7 +176,7 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'content-warning-body' => '在$1上的wiki可能包含令人反感的內容，如暴力、性描寫、黑色幽默及滑稽嘲諷，或者其他非針對一般大眾的內容。
 
-一般情況下，FANDOM不會審核亦不會對此類內容和Wiki背書。有關我們網頁條款的詳細內容，請查看[http://zh-tw.wikia.com/wiki/%E4%Bd%Bf%E7%94%A8%E6%A2%9D%E6%Ac%Be Wikia, Inc使用條款]。',
+一般情況下，FANDOM不會審核亦不會對此類內容和Wiki背書。有關我們網頁條款的詳細內容，請查看[http://zh-tw.wikia.com/wiki/%E4%Bd%Bf%E7%94%A8%E6%A2%9D%E6%Ac%Be Fandom, Inc使用條款]。',
 	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.',
 	'content-warning-title' => 'Content Warning',
 	'content-warning-button-continue' => 'I understand and I wish to continue',
