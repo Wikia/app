@@ -88,7 +88,7 @@ function startAdEngine() {
 
 		context.push('listeners.slot', {
 			onRenderEnded: (slot) => {
-				slot.getElement().classList.remove('default-height');
+				slot.getElement().classList.remove('default-height-2');
 			}
 		});
 	}
