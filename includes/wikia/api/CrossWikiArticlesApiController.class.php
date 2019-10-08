@@ -101,14 +101,17 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			}
 
 			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $wikiId );
+			$url = $title->getFullURL();
 
-			$items[ $wikiId . '_' . $row->page_id ] = array(
-				'url' => $title->getFullURL(),
+			$items[$wikiId . '_' . $row->page_id] = [
+				// IW-2588: Force these URLs to always use HTTPS
+				// The recommendations service calls this API over HTTP, but forwards these URLs to clients
+				'url' => wfHttpsAllowedForURL( $url ) ? wfHttpToHttps( $url ) : $url,
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => in_array( $row->page_id , $videos )
-			);
+				'hasVideo' => in_array( $row->page_id, $videos ),
+			];
 		}
 
 		return $items;
@@ -116,10 +119,10 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 
 	protected function getThumbnails( $dbname, $articleIds ) {
 		$params = array(
-			'controller' => 'ArticlesApiController', 
-			'method' => 'getDetails', 
-			'abstract' => '0', 
-			'ids' => implode(',', $articleIds), 
+			'controller' => 'ArticlesApiController',
+			'method' => 'getDetails',
+			'abstract' => '0',
+			'ids' => implode(',', $articleIds),
 			'format' => 'json'
 		);
 		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );

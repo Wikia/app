@@ -1,3 +1,258 @@
-@import 'global-footer/common';
-@import 'global-footer/breakpoint-l-down';
-@import 'global-footer/breakpoint-xl-up';
+.wds-global-footer {
+	background-color: $wds-fandom-color-navy;
+	box-sizing: border-box;
+	color: $wds-color-white;
+	font-size: $wds-font-size-s;
+	line-height: $wds-line-height-tight;
+	margin-top: 30px;
+	word-wrap: break-word;
+
+	// reset and set some defaults (that should be set in DS)
+	* {
+		box-sizing: inherit;
+	}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__header-wrapper {
+		display: block;
+		width: 100%;
+	}
+
+	&__header {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		line-height: 0;
+		margin: 0;
+		padding: 28px 0 18px;
+	}
+
+	&__bottom-bar {
+		background: rgba($wds-color-night-sky, .5);
+		font-size: $wds-font-size-xs;
+		min-height: 50px;
+		padding: 0 20px;
+		text-align: center;
+
+		/**
+		 * Note: The following rule is an exception on DS Class Naming because whole
+		 * text is user-supplied and we don't insert class names there.
+		 */
+		a,
+		a:visited {
+			color: $wds-fandom-color-aqua;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: $wds-color-white;
+		}
+	}
+
+	&__bottom-bar-row {
+		margin: 0 auto;
+
+		&.wds-has-border-top {
+			border-top: 1px solid $wds-color-slate-gray;
+		}
+
+		&.wds-has-padding {
+			padding: 16px 0;
+		}
+	}
+
+	&__header-logo {
+		height: 35px;
+		width: 164px;
+	}
+
+	&__main {
+		padding: 0 20px 28px;
+		max-width: 500px;
+		width: 100%;
+	}
+
+	&__link {
+		&,
+		&:active,
+		&:visited,
+		&:focus {
+			color: $wds-fandom-color-aqua;
+			font-weight: $wds-font-weight-normal;
+			text-decoration: none;
+			transition: color $wds-button-transition-duration;
+		}
+
+		&:hover {
+			color: $wds-color-white;
+			text-decoration: none;
+		}
+	}
+
+	&__links-list-item {
+		margin-bottom: 20px;
+	}
+
+	&__section {
+		+ .wds-global-footer__section {
+			margin-top: 40px;
+		}
+
+		&:first-child {
+			margin-top: 20px;
+		}
+
+		&.wds-is-fandom-overview, &.wds-is-site-overview, &.wds-is-community {
+			.wds-global-footer__links-list {
+				column-count: 2;
+				column-gap: 26px;
+			}
+		}
+
+		&.wds-is-follow-us {
+			.wds-global-footer__links-list {
+				display: flex;
+				flex-wrap: nowrap;
+			}
+
+			.wds-global-footer__link {
+				$social-icon-size: 24px;
+
+				background: no-repeat center;
+				background-size: $social-icon-size;
+				display: inline-block;
+				height: $social-icon-size;
+				margin-right: 20px;
+				width: $social-icon-size;
+			}
+
+			.wds-global-footer__link-image {
+				color: $wds-color-white;
+				opacity: 0.3;
+				transition: opacity $wds-button-transition-duration;
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+
+		&.wds-is-fandom-apps {
+			margin-top: 40px;
+		}
+
+		&.wds-is-fandom-stores {
+			padding-bottom: 20px;
+			margin-top: 14px;
+			position: relative;
+
+			&::after {
+				border-bottom: 1px solid $wds-fandom-color-dark-gray;
+				display: block;
+				content: '';
+				position: absolute;
+				left: 0;
+				width: 230px;
+				bottom: 0;
+				height: 1px;
+			}
+		}
+
+		&.wds-is-ddb-stores {
+			margin-top: 20px;
+		}
+
+		&.wds-is-fandom-stores, &.wds-is-ddb-stores {
+			display: flex;
+			line-height: 0;
+
+			.wds-global-footer__image {
+				margin: 0 19px 0 0;
+
+				svg {
+					width: 80px;
+					height: 80px;
+				}
+			}
+
+			.wds-global-footer__image-caption {
+				font-size: $wds-font-size-xs;
+				line-height: $wds-line-height-normal;
+				margin-top: 4px;
+				text-align: center;
+			}
+
+			.wds-global-footer__link {
+				display: block;
+			}
+
+			.wds-global-footer__links-list-item {
+				margin-bottom: 10px;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			.wds-global-footer__link-image {
+				height: 35px;
+				width: 119px;
+			}
+		}
+	}
+
+	&__section-header {
+		color: $wds-color-white;
+		font-size: $wds-font-size-xs;
+		font-weight: $wds-font-weight-bold;
+		line-height: $wds-line-height-none;
+		margin-bottom: 12px;
+		margin-top: 0;
+		padding: 0;
+		text-transform: uppercase;
+	}
+
+	&__section-description {
+		color: $wds-color-white;
+		margin: 0;
+		padding: 0;
+	}
+}
+
+@media #{$wds-breakpoint-l-up} {
+	.wds-global-footer {
+		&__header {
+			padding: 40px 0 46px;
+		}
+
+		&__main {
+			display: grid;
+			grid-column-gap: 55px;
+			grid-template-columns: repeat(4, 1fr);
+			margin: 0 auto;
+			max-width: $wds-breakpoint-l;
+			padding-bottom: 28px;
+		}
+
+		&__section {
+			&.wds-is-fandom-overview, &.wds-is-site-overview, &.wds-is-community {
+				.wds-global-footer__links-list {
+					column-count: initial;
+				}
+			}
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		&__links-list-item {
+			margin-bottom: 9px;
+		}
+	}
+}

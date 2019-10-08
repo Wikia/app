@@ -1,4 +1,4 @@
-import { AdSlot, context, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
@@ -26,6 +26,25 @@ function isHighImpactApplicable() {
 
 function isFloorAdhesionApplicable() {
 	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
+}
+
+function registerFloorAdhesionCodePriority() {
+	let porvataClosedActive = false;
+
+	slotService.on('floor_adhesion', AdSlot.STATUS_SUCCESS, () => {
+		porvataClosedActive = true;
+
+		eventService.on(events.VIDEO_AD_IMPRESSION, () => {
+			if (porvataClosedActive) {
+				porvataClosedActive = false;
+				slotService.disable('floor_adhesion', 'closed-by-porvata');
+			}
+		});
+	});
+
+	slotService.on('floor_adhesion', AdSlot.HIDDEN_EVENT, () => {
+		porvataClosedActive = false;
+	});
 }
 
 /**
@@ -397,5 +416,7 @@ export default {
 				'floor_adhesion',
 				{ distanceFromTop: utils.getViewportHeight() },
 		);
+
+		registerFloorAdhesionCodePriority();
 	},
 };
