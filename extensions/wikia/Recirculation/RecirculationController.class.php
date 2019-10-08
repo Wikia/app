@@ -26,10 +26,12 @@ class RecirculationController extends WikiaController {
 		}
 
 		if ( RecirculationHooks::canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions ) ) {
-			$discussionsDataService = new DiscussionsDataService( $cityId, $limit );
+			global $wgServer, $wgScriptPath;
+			$baseUrl = $wgServer . $wgScriptPath;
+			$discussionsDataService = new DiscussionsDataService( $cityId, $limit, $baseUrl );
 			$posts = $discussionsDataService->getPosts( $sortKey );
 
-			$discussionsUrl = "$discussionsDataService->server/d/f";
+			$discussionsUrl = "$baseUrl/f";
 
 			$postObjects = [];
 
