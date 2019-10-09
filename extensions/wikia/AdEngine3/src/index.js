@@ -182,9 +182,9 @@ function fireKruxEvent(eventId, parameters = null) {
 export {
 	context,
 	contextConfigured,
-	fireKruxEvent,
-	jwplayerAdsFactory,
 	hmdLoader,
+	jwplayerAdsFactory,
+	krux,
 	isAutoPlayDisabled,
 	run,
 	slots,

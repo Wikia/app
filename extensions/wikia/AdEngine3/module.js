@@ -11,12 +11,12 @@ function registerEditorSavedEvents(ads) {
 	window.wgAfterContentAndJS.push(() => {
 		// VE editor save complete
 		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
-			ads.fireKruxEvent(eventId);
+			ads.krux.fireKruxEvent(eventId);
 		});
 
 		// MW/CK editor saving in progress
 		window.mw.hook('mwEditorSaved').add(() => {
-			ads.fireKruxEvent(eventId);
+			ads.krux.fireKruxEvent(eventId);
 		});
 	});
 }
