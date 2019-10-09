@@ -1448,7 +1448,7 @@ class ExtDynamicPageList {
         $targets = array();
         $from = '';
         $to = '';
-        if ($flip=='' | $flip=='normal')    $flip=false;
+        if ($flip=='' || $flip=='normal')    $flip=false;
         else                                $flip=true;
         if ($name=='') $name='&#160;';
         if ($yes=='') $yes= ' x ';

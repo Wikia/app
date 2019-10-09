@@ -1690,7 +1690,7 @@ class DPLMain {
 
         // addeditdate=true but not (ordermethod=...,firstedit or ordermethod=...,lastedit)
         //firstedit (resp. lastedit) -> add date of first (resp. last) revision
-        if( $bAddEditDate && !array_intersect($aOrderMethods, array('firstedit', 'lastedit')) & ($sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince == '')) {
+        if( $bAddEditDate && !array_intersect($aOrderMethods, array('firstedit', 'lastedit')) && ($sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince == '')) {
             return $output . $logger->escapeMsg(ExtDynamicPageList::FATAL_WRONGORDERMETHOD, 'addeditdate=true', 'firstedit | lastedit' );
         }
 
@@ -1700,7 +1700,7 @@ class DPLMain {
          * The fact is a page may be edited by multiple users. Which user(s) should we show? all? the first or the last one?
          * Ideally, we could use values such as 'all', 'first' or 'last' for the adduser parameter.
         */
-        if( $bAddUser && !array_intersect($aOrderMethods, array('firstedit', 'lastedit')) & ($sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince == '')) {
+        if( $bAddUser && !array_intersect($aOrderMethods, array('firstedit', 'lastedit')) && ($sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince == '')) {
             return $output . $logger->escapeMsg(ExtDynamicPageList::FATAL_WRONGORDERMETHOD, 'adduser=true', 'firstedit | lastedit' );
 		}
         if( isset($sMinorEdits) && !array_intersect($aOrderMethods, array('firstedit', 'lastedit')) )
