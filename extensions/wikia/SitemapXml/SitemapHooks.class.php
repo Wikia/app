@@ -27,18 +27,13 @@ class SitemapHooks {
 		}
 
 		$output->cancelRedirect();
+		$output->disable();
 
-		$request->response()->header( 'X-Sitemaps-Redirect-Cancelled: 1' );
-
-		// Override the wgServer so the sitemap uses host from the current request.
-		// This needs to be done because WFL used the address from city_url
-		$wgServer = "http://{$currentHost}";
-		// Reset script path and related variables on language path wikis
-		// so the URLs in the sitemap are correct
-		$wgScriptPath = '';
-		$wgScript = '/index.php';
-		$wgArticlePath = '/wiki/$1';
-		return false;
+		header( 'X-Sitemaps-Redirect-Cancelled: 1' );
+		header( 'Cache-Control: s-maxage=900' );
+		header( 'HTTP/1.1 410 Gone' );
+		echo '410: Gone';
+		exit( 0 );
 	}
 
 	private static function shouldCancelRedirect( $currentHost, Title $targetTitle ): bool {
