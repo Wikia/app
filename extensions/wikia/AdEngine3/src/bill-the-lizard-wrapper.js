@@ -153,7 +153,7 @@ class BillTheLizardWrapper {
     }
 
     hasAvailableModels(btlConfig, projectName) {
-        const projects = btlConfig.projects || config.projects;
+        const projects = btlConfig.projects;
 
         return projects && projects[projectName]
             && projects[projectName].some(
