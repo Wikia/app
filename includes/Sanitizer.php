@@ -1678,7 +1678,6 @@ class Sanitizer {
 			'samp'       => $common,
 			'kbd'        => $common,
 			'var'        => $common,
-			'abbr'       => $common,
 			# acronym
 
 			# 9.2.2
