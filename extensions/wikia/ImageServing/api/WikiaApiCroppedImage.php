@@ -4,6 +4,8 @@
  * Needs ImageServing extension to be usable.
  */
 
+use Wikia\Logger\WikiaLogger;
+
 if (!defined('MEDIAWIKI')) {
 	die();
 }
@@ -17,6 +19,8 @@ class WikiaApiCroppedImage extends ApiBase {
 	public function execute() {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
+
+		WikiaLogger::instance()->info( __METHOD__, [ "user_agent" => $wgRequest->getHeader( 'USER-AGENT' ) ] );
 
 		extract( $this->extractRequestParams() );
 		$imageServing = new ImageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));

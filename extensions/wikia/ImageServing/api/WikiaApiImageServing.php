@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * WikiaApiImageServing
  *
@@ -25,6 +28,8 @@ class WikiaApiImageServing extends ApiBase {
 	public function execute() {
 		global $wgRequest, $wgStyleVersion;
 		wfProfileIn(__METHOD__);
+
+		WikiaLogger::instance()->info( __METHOD__, [ "user_agent" => $wgRequest->getHeader( 'USER-AGENT' ) ] );
 
 		extract( $this->extractRequestParams() );
 
