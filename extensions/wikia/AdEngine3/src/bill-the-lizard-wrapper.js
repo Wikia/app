@@ -72,24 +72,10 @@ class BillTheLizardWrapper {
             garfieldCalled = true;
         });
 
-        eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
-            const { query, callId } = event;
-            let propName = 'btl_request';
-            if (callId) {
-                propName = `${propName}_${callId}`;
-            }
-
-            pageTracker.trackProp(propName, query);
-        });
-
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, (event) => {
-            const { response, callId } = event;
-            let propName = 'btl_response';
-            if (callId) {
-                propName = `${propName}_${callId}`;
+            if (event.callId) {
                 defaultStatus = BillTheLizard.REUSED;
             }
-            pageTracker.trackProp(propName, response);
         });
     }
 
