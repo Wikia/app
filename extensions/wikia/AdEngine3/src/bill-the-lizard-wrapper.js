@@ -171,8 +171,6 @@ class BillTheLizardWrapper {
             bidderPrices.bidder_16 || 0,
             bidderPrices.bidder_17 || 0,
             bidderPrices.bidder_18 || 0,
-            bidderPrices.bidder_19 || 0,
-            bidderPrices.bidder_20 || 0,
         ].join(','));
     }
 }
