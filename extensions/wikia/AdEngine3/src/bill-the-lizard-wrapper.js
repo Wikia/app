@@ -1,4 +1,5 @@
 import {
+    AdSlot,
     BillTheLizard,
     billTheLizard,
     billTheLizardEvents,
@@ -9,7 +10,7 @@ import {
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
 
-const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
+const garfieldSlotsBidderAlias = 'incontent_boxad_1';
 const fmrPrefix = 'incontent_boxad_';
 const NOT_USED_STATUS = 'not_used';
 
@@ -36,18 +37,16 @@ class BillTheLizardWrapper {
             console.log('catlapsed!');
         });
 
-        context.push('listeners.slot', {
-            onRenderEnded: (adSlot) => {
-                const slotName = adSlot.getConfigProperty('slotName');
+        eventService.on(AdSlot.SLOT_RENDERED_EVENT, (adSlot) => {
+            const slotName = adSlot.getConfigProperty('slotName');
 
-                if (slotName.includes(fmrPrefix)) {
-                    nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
-                }
+            if (slotName.includes(fmrPrefix)) {
+                nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
+            }
 
-                if (slotName === baseSlotName && !garfieldCalled) {
-                    this.callGarfield(nextSlot);
-                }
-            },
+            if (slotName === baseSlotName && !garfieldCalled) {
+                this.callGarfield(nextSlot);
+            }
         });
 
         context.set(
@@ -172,6 +171,8 @@ class BillTheLizardWrapper {
             bidderPrices.bidder_16 || 0,
             bidderPrices.bidder_17 || 0,
             bidderPrices.bidder_18 || 0,
+            bidderPrices.bidder_19 || 0,
+            bidderPrices.bidder_20 || 0,
         ].join(','));
     }
 }
