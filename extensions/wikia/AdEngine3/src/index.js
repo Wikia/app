@@ -175,16 +175,12 @@ function hideAllAdSlots() {
 	});
 }
 
-function fireKruxEvent(eventId, parameters = null) {
-	krux.fireEvent(eventId, parameters);
-}
-
 export {
 	context,
 	contextConfigured,
-	fireKruxEvent,
-	jwplayerAdsFactory,
 	hmdLoader,
+	jwplayerAdsFactory,
+	krux,
 	isAutoPlayDisabled,
 	run,
 	slots,
