@@ -5,7 +5,8 @@ import {
     billTheLizardEvents,
     context,
     events,
-    eventService
+    eventService,
+    utils
 } from '@wikia/ad-engine';
 import targeting from './targeting';
 import pageTracker from './tracking/page-tracker';
@@ -20,6 +21,10 @@ let nextSlot = null;
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) {
         const config = billTheLizardConfig;
+
+        if (!this.hasAvailableModels(config, 'garfield')) {
+            return;
+        }
 
         const baseSlotName = fmrPrefix + 1;
         const enableGarfield = context.get('options.billTheLizard.garfield');
@@ -144,6 +149,15 @@ class BillTheLizardWrapper {
 
     getCallId(counter = null) {
         return `incontent_boxad_${counter}`;
+    }
+
+    hasAvailableModels(btlConfig, projectName) {
+        const projects = btlConfig.projects;
+
+        return projects && projects[projectName]
+            && projects[projectName].some(
+                model => utils.geoService.isProperGeo(model.countries, model.name),
+            );
     }
 
     /**
