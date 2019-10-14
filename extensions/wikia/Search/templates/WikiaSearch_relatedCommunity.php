@@ -28,7 +28,9 @@
 				?>
 				<li><?= wfMessage( 'wikiasearch2-pages' )->rawParams( HTML::element( 'div', [], $shortenedPageCount->decorated ) )->params( $shortenedPageCount->rounded )->escaped(); ?></li>
 				<li><?= wfMessage( 'wikiasearch2-images' )->rawParams( HTML::element( 'div', [], $shortenedImageCount->decorated ) )->params( $shortenedImageCount->rounded )->escaped(); ?></li>
-				<li><?= wfMessage( 'wikiasearch2-videos' )->rawParams( HTML::element( 'div', [], $shortenedVideoCount->decorated ) )->params( $shortenedVideoCount->rounded )->escaped(); ?></li>
+				<?php if ($community['videoCount'] != 0): ?>
+					<li><?= wfMessage( 'wikiasearch2-videos' )->rawParams( HTML::element( 'div', [], $shortenedVideoCount->decorated ) )->params( $shortenedVideoCount->rounded )->escaped(); ?></li>
+				<?php endif; ?>
 			</ul>
 			<p class="exact-wiki-match__wiki-description"><?= \Wikia\Search\Result::limitTextLength( htmlspecialchars
 				( $community['description'] ), $community['descriptionWordLimit'] ); ?></p>
