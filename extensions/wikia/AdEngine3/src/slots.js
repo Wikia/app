@@ -2,8 +2,6 @@ import { AdSlot, context, events, eventService, scrollListener, slotInjector, sl
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
-import { recRunner } from './wad/rec-runner';
-import { btLoader } from './wad/bt-loader';
 import { contextReady } from "./utils/context-ready";
 
 const PAGE_TYPES = {
@@ -369,8 +367,8 @@ export default {
 				return;
 			}
 
-			if (babDetection.isBlocking() && recRunner.isEnabled('bt') && btLoader.duplicateSlot(slotName)) {
-				btLoader.triggerScript();
+			if (btRec.isEnabled() && btRec.duplicateSlot(slotName)) {
+				btRec.triggerScript();
 			}
 
 			document.removeEventListener('scroll', pushSlotAfterComments);

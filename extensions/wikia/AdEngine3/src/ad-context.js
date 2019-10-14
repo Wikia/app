@@ -542,9 +542,6 @@ export default {
 					}
 				}
 			},
-			hmdRec: {
-				enabled: false,
-			},
 		},
 	},
 };

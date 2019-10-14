@@ -6,6 +6,7 @@ import {
 	AdSlot,
 	bidders,
 	billTheLizard,
+	btRec,
 	confiant,
 	context,
 	events,
@@ -19,8 +20,6 @@ import {
 	utils
 } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
-import { recRunner } from './wad/rec-runner';
-import { hmdLoader } from './wad/hmd-loader';
 import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -45,7 +44,6 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	contextReadyResolver();
 
 	videoTracker.register();
-	recRunner.init();
 
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
@@ -82,7 +80,9 @@ function startAdEngine() {
 
 		window.wgAfterContentAndJS.push(() => {
 			slots.injectBottomLeaderboard();
-			babDetection.run();
+			babDetection.run().then(() => {
+				btRec.run();
+			});
 		});
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
@@ -178,7 +178,6 @@ function hideAllAdSlots() {
 export {
 	context,
 	contextConfigured,
-	hmdLoader,
 	jwplayerAdsFactory,
 	krux,
 	isAutoPlayDisabled,
