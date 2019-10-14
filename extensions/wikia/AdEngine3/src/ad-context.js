@@ -501,12 +501,16 @@ export default {
 		},
 		wad: {
 			enabled: false,
+			blocking: false,
 			btRec: {
 				enabled: false,
 				placementsMap: {
 					top_leaderboard: {
 						uid: '5b33d3584c-188',
-						style: 'margin:10px 0; z-index:100;',
+						style: {
+							'margin': '10px 0',
+							'z-index': '100'
+						},
 						size: {
 							width: 728,
 							height: 90
@@ -515,7 +519,10 @@ export default {
 					},
 					top_boxad: {
 						uid: '5b2d1649b2-188',
-						style: 'margin-bottom:10px; z-index:100;',
+						style: {
+							'margin-bottom': '10px',
+							'z-index': '100'
+						},
 						size: {
 							width: 300,
 							height: 250
@@ -524,7 +531,9 @@ export default {
 					},
 					incontent_boxad_1: {
 						uid: '5bbe13967e-188',
-						style: 'z-index:100;',
+						style: {
+							'z-index': '100'
+						},
 						size: {
 							width: 300,
 							height: 250
@@ -533,7 +542,10 @@ export default {
 					},
 					bottom_leaderboard: {
 						uid: '5b8f13805d-188',
-						style: 'margin-bottom:23px; z-index:100;',
+						style: {
+							'margin-bottom': '23px',
+							'z-index': '100'
+						},
 						size: {
 							width: 728,
 							height: 90
