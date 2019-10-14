@@ -130,12 +130,14 @@ class PreferencePersistence {
 		return [];
 	}
 
-	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null , $numUsersToRetrieve = 1000, $userIdContinue = null ) {
 		try {
 			return $this->findUsersWithGlobalPreference(
 				$this->getApi( null, ReverseLookupApi::class ),
 				$preferenceName,
-				$value
+				$value,
+				$numUsersToRetrieve,
+				$userIdContinue
 			);
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
@@ -228,8 +230,15 @@ class PreferencePersistence {
 		return $wikiList;
 	}
 
-	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
-		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
+	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null, $numUsersToRetrieve = 1000, $userIdContinue = null ) {
+		$USER_PREFERENCE_MAX_LIMIT = 10000; // user-preference's reverseLookup max limit - otherwise returns 400
+		if ($numUsersToRetrieve <= $USER_PREFERENCE_MAX_LIMIT) {
+			return $api->findUsers
+		}
+		$userList = [];
+
+
+		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value, $userIdContinue);
 		return $userList;
 	}
 
