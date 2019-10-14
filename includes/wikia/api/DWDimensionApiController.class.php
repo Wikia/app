@@ -1,7 +1,9 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 use FandomCreator\CommunitySetup;
+use Wikia\Service\User\Preferences\PreferenceService;
 
 class DWDimensionApiController extends WikiaApiController {
 	use PermissionsServiceAccessor;
@@ -34,6 +36,10 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
 		return $this->getDbSlave( $wgExternalSharedDB );
+	}
+
+	private function userPreferencesService(): PreferenceService {
+		return ServiceFactory::instance()->preferencesFactory()->preferenceService();
 	}
 
 	public function getWikiDartTags() {
@@ -206,6 +212,14 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		$botUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_USER_GROUP ] );
 		$botGlobalUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_GLOBAL_USER_GROUP ] );
+
+		$usersWithMarketingAllowed = $this->userPreferencesService()->findUsersWithGlobalPreferenceValue(
+			'marketingallowed',
+			1,
+			$limit,
+			intval($afterUserId) >= 0 ? $afterUserId : null
+		);
+		
 		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'user_id' => $row->user_id,

@@ -23,6 +23,8 @@ class PreferencePersistence {
 
 	const SERVICE_NAME = "user-preference";
 
+	const REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT = 10000;  // reverseLookup/global/{preferenceName}/users max limit
+
 	/** @var ApiProvider */
 	private $apiProvider;
 
@@ -130,12 +132,14 @@ class PreferencePersistence {
 		return [];
 	}
 
-	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null , $numUsersToRetrieve = 1000, $userIdContinue = null ) {
 		try {
 			return $this->findUsersWithGlobalPreference(
 				$this->getApi( null, ReverseLookupApi::class ),
 				$preferenceName,
-				$value
+				$value,
+				$numUsersToRetrieve,
+				$userIdContinue
 			);
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
@@ -228,9 +232,39 @@ class PreferencePersistence {
 		return $wikiList;
 	}
 
-	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
-		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
-		return $userList;
+	/**
+	 * Calls user-preference /reverse-lookup/global/{preferenceName}/users endpoint to get an array of string userIds
+	 * of users with $preferenceName set to $value (or set at all if $value is null)
+	 * Handles paginating API calls for $numUsersToRetrieve > 10000
+	 * @param ReverseLookupApi $api
+	 * @param string $preferenceName
+	 * @param string|null $value
+	 * @param int|null $numUsersToRetrieve
+	 * @param int|null $userIdContinue
+	 * @return array|string[] - userId
+	 * @throws ApiException
+	 */
+	private function findUsersWithGlobalPreference(ReverseLookupApi $api, $preferenceName, $value = null, $numUsersToRetrieve = 1000, $userIdContinue = null ) {
+		if ( $numUsersToRetrieve <= PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT ) {
+			return $api->findUsersWithGlobalPreference( $preferenceName, $value, $numUsersToRetrieve, $userIdContinue );
+		}
+		else {
+			// pagination for API calls
+			$userList = [];
+			$userIdContinue = intval($userIdContinue);
+			while ( count($userList) < $numUsersToRetrieve ){
+				$numUsersInCall = min(PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT, $numUsersToRetrieve - count($userList));
+				$userList = array_merge($userList,
+					$api->findUsersWithGlobalPreference(
+						$preferenceName,
+						$value,
+						$numUsersInCall,
+						$userIdContinue )
+				);
+				$userIdContinue += $numUsersInCall;
+			}
+			return $userList;
+		}
 	}
 
 	/**
