@@ -218,7 +218,7 @@ class DWDimensionApiController extends WikiaApiController {
 			'marketingallowed',
 			1,
 			$limit,
-			intval($afterUserId) >= 0 ? $afterUserId: null
+			intval($afterUserId) >= 0 ? $afterUserId : null
 		);
 
 		while ( $row = $db->fetchObject( $dbResult ) ) {

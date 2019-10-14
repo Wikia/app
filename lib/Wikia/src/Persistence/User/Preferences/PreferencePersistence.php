@@ -254,11 +254,13 @@ class PreferencePersistence {
 			$userIdContinue = intval($userIdContinue);
 			while ( count($userList) < $numUsersToRetrieve ){
 				$numUsersInCall = min(PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT, $numUsersToRetrieve - count($userList));
-				$userList += $api->findUsersWithGlobalPreference(
-					$preferenceName,
-					$value,
-					$numUsersInCall,
-					$userIdContinue );
+				$userList = array_merge($userList,
+					$api->findUsersWithGlobalPreference(
+						$preferenceName,
+						$value,
+						$numUsersInCall,
+						$userIdContinue )
+				);
 				$userIdContinue += $numUsersInCall;
 			}
 			return $userList;
