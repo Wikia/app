@@ -219,7 +219,7 @@ class DWDimensionApiController extends WikiaApiController {
 			$limit,
 			intval($afterUserId) >= 0 ? $afterUserId : null
 		);
-		
+
 		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'user_id' => $row->user_id,
@@ -229,7 +229,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'user_editcount' => $row->user_editcount,
 				'user_registration' => $row->user_registration,
 				'is_bot' => isset( $botUsers[ $row->user_id ] ),
-				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] )
+				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] ),
+				'user_marketingallowed' => in_array( $row->user_id, $usersWithMarketingAllowed )
 			];
 		}
 		$db->freeResult( $dbResult );
@@ -286,7 +287,7 @@ class DWDimensionApiController extends WikiaApiController {
 			if ( !preg_match( '#^c\d+$#', $wiki['cluster'] ) ) {
 				continue;
 			}
-			
+
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = null;
 			if ( isset( $db ) ) {
