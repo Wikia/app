@@ -11,9 +11,20 @@ function trackEvent(eventData) {
 	));
 }
 
+function trackVideoXClick() {
+	track({
+		action: 'click',
+		category: 'force_close',
+		label: adSlot.getSlotName(),
+		trackingMethod: 'ga',
+	}, false);
+}
+
+
 export default {
 	register: () => {
 		eventService.on(playerEvents.VIDEO_PLAYER_TRACKING_EVENT, trackEvent);
+		eventService.on(playerEvents.PLAYER_X_CLICK, trackVideoXClick());
 
 		porvataTracker.register();
 	},
