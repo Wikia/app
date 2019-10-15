@@ -75,8 +75,75 @@ class UserPreferencesIntegrationTest extends TestCase {
 		$this->assertEquals( $testPref, 0, "Error resetting user preference [cached] '" . self::TEST_PREFERENCE_NAME . "' for user id: '$this->testUserId'" );
 	}
 
-	protected function tearDown() {
+	public function testFindUsersWithGlobalPreferenceValueNoPaginationAllParamsSet()
+	{
+		// set a response from API
+		$exp = Phiremock::on(
+			A::getRequest()
+				->andUrl(Is::containing('/reverse-lookup/global'.self::TEST_PREFERENCE_NAME.'/users')))
+			->then(Respond::withStatusCode(200)
+				->andHeader('Content-Type', 'application/json')
+				->andBody(file_get_contents(__DIR__ . '/fixtures/sample_reverse_lookup_global_preferenceName_users_100.json')));
+		$this->getMockServer()->createExpectation($exp);
+
+		// make a call
+		$usersWithPreference = $this->preferenceService->findUsersWithGlobalPreferenceValue(
+			self::TEST_PREFERENCE_NAME,
+			1,
+			100,
+			123);
+
+		// check the call and response
+		$executionsWithCorrectValues = $this->getMockServer()->listExecutions(
+			A::getRequest()
+				->andUrl(Is::containing('userIdContinue=123'))
+				->andUrl(Is::containing('value=1'))
+				->andUrl(Is::containing('limit=100')));
+		$this->assertNotEmpty($executionsWithCorrectValues);
+
+		$this->assertNotEmpty($usersWithPreference, 'Some usersId should be returned with the preference');
+		$this->assertCount(100, $usersWithPreference, 'Response should contain 100 userIds');
+	}
+
+	public function testFindUsersWithGlobalPreferenceValuePagination()
+	{
+		// set a response from API
+		$firstResponsePageJson = json_encode(array_map('strval', range(1, 10000)));
+		$expSecondPage = Phiremock::on(
+			A::getRequest()
+				->andUrl(Is::containing('/reverse-lookup/global'.self::TEST_PREFERENCE_NAME.'/users'))
+				->andUrl(Is::matching('^((?!userIdContinue).)*$'))) // does not contain userIdContinue
+			->then(Respond::withStatusCode(200)
+				->andHeader('Content-Type', 'application/json')
+				->andBody($firstResponsePageJson));
+		$this->getMockServer()->createExpectation($expSecondPage);
+
+		$secondResponsePageJson = json_encode(array_map('strval', range(10001, 12000)));
+		$expSecondPage = Phiremock::on(
+			A::getRequest()
+				->andUrl(Is::containing('/reverse-lookup/global'.self::TEST_PREFERENCE_NAME.'/users'))
+				->andUrl(Is::containing('userIdContinue')))
+				->then(Respond::withStatusCode(200)
+					->andHeader('Content-Type', 'application/json')
+					->andBody($secondResponsePageJson));
+		$this->getMockServer()->createExpectation($expSecondPage);
+
+
+		// make a call
+		$usersWithPreference = $this->preferenceService->findUsersWithGlobalPreferenceValue(self::TEST_PREFERENCE_NAME,
+			1,
+			12000);
+
+		// check the response
+		$this->assertEquals(array_map('strval', range(1, 12000)),
+			$usersWithPreference,
+			'Response should contain concatenated two pages of userIds 1-12000');
+	}
+
+	protected function tearDown()
+	{
 		parent::tearDown();
 		$this->getMockServer()->clearExpectations();
 	}
+
 }
