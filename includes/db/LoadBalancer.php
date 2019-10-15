@@ -118,7 +118,7 @@ class LoadBalancer {
 	function getReaderIndex( $group = false, $wiki = false ) {
 		// Wikia change: just return the index of the replica DB in the server array
 		// Consul will handle health checks and load balancing for us
-		return 1;
+		return count( $this->mServers ) - 1;
 	}
 
 	/**
