@@ -462,7 +462,7 @@ export default {
 		},
 		durationMedia: {
 			enabled: false,
-			siteId: '1066',
+			siteId: '1167',
 		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
