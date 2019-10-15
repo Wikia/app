@@ -11,8 +11,10 @@ class DiscussionsDataService {
 	const MCACHE_VER = '1.2';
 
 	private $cityId, $limit;
+	/** @var string $baseUrl */
+	private $baseUrl;
 
-	public function __construct( $cityId, $limit ) {
+	public function __construct( int $cityId, int $limit, string $baseUrl ) {
 		$this->limit = $limit;
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
@@ -22,8 +24,7 @@ class DiscussionsDataService {
 			$this->cityId = $cityId;
 		}
 
-		// language-path - most likely this is ok, as the code below appends "/d/" to this value.
-		$this->server = WikiFactory::cityIDtoUrl( $this->cityId );
+		$this->baseUrl = $baseUrl;
 	}
 
 	public function getPosts( string $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ): array {
@@ -101,7 +102,7 @@ class DiscussionsDataService {
 		}
 
 		return new RecirculationContent( [
-			'url' => $this->server . '/d/p/' . $rawPost['id'],
+			'url' => $this->baseUrl . '/f/p/' . $rawPost['id'],
 			'index' => $index,
 			'title' => $postTitle,
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),

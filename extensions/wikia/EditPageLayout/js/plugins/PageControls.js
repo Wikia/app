@@ -117,6 +117,7 @@
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
 				label: 'publish'
 			});
+			mw.hook('mwEditorSaved').fire();
 
 			try {
 				if (window.veTrack) {

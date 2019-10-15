@@ -90,10 +90,8 @@ function startAdEngine() {
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
 
-		context.push('listeners.slot', {
-			onRenderEnded: (slot) => {
-				slot.getElement().classList.remove('default-height');
-			}
+		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
+			slot.getElement().classList.remove('default-height');
 		});
 	}
 }
@@ -196,10 +194,11 @@ function trackXClick() {
 export {
 	context,
 	contextConfigured,
-	jwplayerAdsFactory,
 	hmdLoader,
+	jwplayerAdsFactory,
+	krux,
 	isAutoPlayDisabled,
 	run,
 	slots,
-	waitForAdStackResolve
+	waitForAdStackResolve,
 }

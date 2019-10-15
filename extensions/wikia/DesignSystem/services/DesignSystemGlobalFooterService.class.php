@@ -15,7 +15,6 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
 			'name' => $this->getVal( 'name' ),
-			'parentName' => $this->getVal( 'parentName' )
 		] );
 	}
 
@@ -35,7 +34,8 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
 			'id' => $this->wg->CityId,
 			'product' => 'wikis',
-			'lang' => $this->wg->Lang->getCode()
+			'lang' => $this->wg->Lang->getCode(),
+			'footer_version' => '2',
 		] )->getData();
 	}
 }

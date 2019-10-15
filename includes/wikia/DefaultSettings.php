@@ -352,6 +352,7 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalFooterModelV2'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModelV2.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModelV2'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModelV2.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
@@ -1473,13 +1474,6 @@ $wgAdDriverBabDetectionMobileCountries = null;
  * List of countries to call BlockAdBlock detection scripts on news&stories
  */
 $wgAdDriverF2BabDetectionCountries = null;
-
-/**
- * @name $wgAdDriverGAMLazyLoadingCountries
- * List of countries GAM lazy loading will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY.
- */
-$wgAdDriverGAMLazyLoadingCountries = null;
 
 /**
  * @name $wgAdDriverWadBTCountries

@@ -1,4 +1,4 @@
-import { AdSlot, context, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
+import { AdSlot, context, events, eventService, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
@@ -26,6 +26,25 @@ function isHighImpactApplicable() {
 
 function isFloorAdhesionApplicable() {
 	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
+}
+
+function registerFloorAdhesionCodePriority() {
+	let porvataClosedActive = false;
+
+	slotService.on('floor_adhesion', AdSlot.STATUS_SUCCESS, () => {
+		porvataClosedActive = true;
+
+		eventService.on(events.VIDEO_AD_IMPRESSION, () => {
+			if (porvataClosedActive) {
+				porvataClosedActive = false;
+				slotService.disable('floor_adhesion', 'closed-by-porvata');
+			}
+		});
+	});
+
+	slotService.on('floor_adhesion', AdSlot.HIDDEN_EVENT, () => {
+		porvataClosedActive = false;
+	});
 }
 
 /**
@@ -67,7 +86,6 @@ export default {
 			},
 			top_leaderboard: {
 				aboveTheFold: true,
-				bidderAlias: 'TOP_LEADERBOARD',
 				firstCall: true,
 				adProduct: 'top_leaderboard',
 				slotNameSuffix: '',
@@ -103,7 +121,6 @@ export default {
 			top_boxad: {
 				adProduct: 'top_boxad',
 				aboveTheFold: true,
-				bidderAlias: 'TOP_RIGHT_BOXAD',
 				slotNameSuffix: '',
 				group: 'MR',
 				options: {},
@@ -138,7 +155,7 @@ export default {
 			},
 			incontent_boxad_1: {
 				adProduct: 'incontent_boxad_1',
-				bidderAlias: 'INCONTENT_BOXAD_1',
+				bidderAlias: 'incontent_boxad_1',
 				slotNameSuffix: '',
 				group: 'HiVi',
 				options: {},
@@ -166,7 +183,6 @@ export default {
 			},
 			bottom_leaderboard: {
 				adProduct: 'bottom_leaderboard',
-				bidderAlias: 'BOTTOM_LEADERBOARD',
 				slotNameSuffix: '',
 				group: 'PF',
 				options: {},
@@ -192,7 +208,6 @@ export default {
 				avoidConflictWith: null,
 				autoplay: true,
 				audio: false,
-				bidderAlias: 'INCONTENT_PLAYER',
 				insertBeforeSelector: '#mw-content-text > h2',
 				insertBelowFirstViewport: true,
 				disabled: true,
@@ -236,7 +251,6 @@ export default {
 			},
 			featured: {
 				adProduct: 'featured',
-				bidderAlias: 'FEATURED',
 				slotNameSuffix: '',
 				nonUapSlot: true,
 				group: 'VIDEO',
@@ -403,5 +417,7 @@ export default {
 				'floor_adhesion',
 				{ distanceFromTop: utils.getViewportHeight() },
 		);
+
+		registerFloorAdhesionCodePriority();
 	},
 };

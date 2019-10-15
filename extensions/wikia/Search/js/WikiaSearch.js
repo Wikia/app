@@ -144,7 +144,9 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			function (clickedElement) {
 				return clickedElement.getAttribute('data-wiki-id') + '_' + clickedElement.getAttribute('data-page-id');
 			},
-			{}
+			{
+				searchType: currentScope
+			}
 		),
 		trackSearchResultCommunityClick: resultClickTrackerFactory(
 			'community',
@@ -161,7 +163,6 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 				return clickedElement.getAttribute('data-wiki-id');
 			},
 			{}
-
 		),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
