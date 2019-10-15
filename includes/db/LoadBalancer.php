@@ -105,61 +105,6 @@ class LoadBalancer {
 	}
 
 	/**
-	 * Given an array of non-normalised probabilities, this function will select
-	 * an element and return the appropriate key
-	 *
-	 * @param $weights array
-	 * @return int
-	 * @throws WikiaException
-	 */
-	private function pickRandom( array $weights ) {
-		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
-		if ( !$this->hasConsulConfig() ) {
-			// SUS-4805
-			throw new WikiaException( __METHOD__ . ' - we only support Consul addresses in DB config' );
-		}
-
-		if ( count( $weights ) == 0 ) {
-			return false;
-		}
-
-		$sum = array_sum( $weights );
-		if ( $sum == 0 ) {
-			# No loads on any of them
-			# In previous versions, this triggered an unweighted random selection,
-			# but this feature has been removed as of April 2006 to allow for strict
-			# separation of query groups.
-			return false;
-		}
-		$max = mt_getrandmax();
-		$rand = mt_rand( 0, $max ) / $max * $sum;
-
-		$sum = 0;
-		$i = 0;
-		foreach ( $weights as $i => $w ) {
-			$sum += $w;
-			if ( $sum >= $rand ) {
-				break;
-			}
-		}
-		return $i;
-	}
-
-	/**
-	 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
-	 * check lags and pick a random entry.
-	 *
-	 * @param $loads array
-	 * @return bool|int|string
-	 * @throws WikiaException
-	 */
-	private function getRandomNonLagged( array $loads ) {
-
-		# Return a random representative of the remainder
-		return $this->pickRandom( $loads );
-	}
-
-	/**
 	 * Get the index of the reader connection, which may be a slave
 	 * This takes into account load ratios and lag times. It should
 	 * always return a consistent index during a given invocation
@@ -171,147 +116,9 @@ class LoadBalancer {
 	 * @throws MWException
 	 */
 	function getReaderIndex( $group = false, $wiki = false ) {
-		global $wgReadOnly, $wgDBClusterTimeout, $wgDBAvgStatusPoll, $wgDBtype;
-
-		# @todo FIXME: For now, only go through all this for mysql databases
-		if ($wgDBtype != 'mysql') {
-			return $this->getWriterIndex();
-		}
-
-		if ( count( $this->mServers ) == 1 )  {
-			# Skip the load balancing if there's only one server
-			return 0;
-		} elseif ( $group === false and $this->mReadIndex >= 0 ) {
-			# Shortcut if generic reader exists already
-			return $this->mReadIndex;
-		}
-
-		wfProfileIn( __METHOD__ );
-
-		$totalElapsed = 0;
-
-		# convert from seconds to microseconds
-		$timeout = $wgDBClusterTimeout * 1e6;
-
-		# Find the relevant load array
-		if ( $group !== false ) {
-			if ( isset( $this->mGroupLoads[$group] ) ) {
-				$nonErrorLoads = $this->mGroupLoads[$group];
-			} else {
-				# No loads for this group, return false and the caller can use some other group
-				wfDebug( __METHOD__.": no loads for group $group\n" );
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		} else {
-			$nonErrorLoads = $this->mLoads;
-		}
-
-		if ( !$nonErrorLoads ) {
-			throw new MWException( "Empty server array given to LoadBalancer" );
-		}
-
-		# Scale the configured load ratios according to the dynamic load (if the load monitor supports it)
-		$this->getLoadMonitor()->scaleLoads( $nonErrorLoads, $group, $wiki );
-
-		# First try quickly looking through the available servers for a server that
-		# meets our criteria
-		do {
-			$totalThreadsConnected = 0;
-			$overloadedServers = 0;
-			$currentLoads = $nonErrorLoads;
-			while ( count( $currentLoads ) ) {
-				/**
-				 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
-				 * check lags and pick a random entry, just use weights for balancing between
-				 * master and slave nodes.
-				 *
-				 * @see SUS-4805
-				 */
-				$i = $this->pickRandom( $currentLoads );
-
-				if ( $i === false ) {
-					// Wikia change - begin
-					global $wgDBname, $wgDBcluster;
-
-					Wikia\Logger\WikiaLogger::instance()->error( 'Failed to pick a slave DB node from LoadBalancer config ', [
-						'exception' => new Exception(),
-						'group' => $group,
-						'wiki' => $wiki ?: $wgDBname, # $wiki = false means a local DB
-						'cluster' => $wgDBcluster,
-					] );
-
-					throw new MWException( "Failed to pick a slave DB node from LoadBalancer config for " . $wiki ?: $wgDBname );
-					// Wikia change - end
-				}
-
-				wfDebugLog( 'connect', __METHOD__.": Using reader #$i: {$this->mServers[$i]['host']}...\n" );
-				$conn = $this->openConnection( $i, $wiki );
-
-				if ( !$conn ) {
-					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki ({$this->mServers[$i]['host']})\n" );
-					unset( $nonErrorLoads[$i] );
-					unset( $currentLoads[$i] );
-					continue;
-				}
-
-				// Perform post-connection backoff
-				$threshold = isset( $this->mServers[$i]['max threads'] )
-					? $this->mServers[$i]['max threads'] : false;
-				$backoff = $this->getLoadMonitor()->postConnectionBackoff( $conn, $threshold );
-
-				// Decrement reference counter, we are finished with this connection.
-				// It will be incremented for the caller later.
-				if ( $wiki !== false ) {
-					$this->reuseConnection( $conn );
-				}
-
-				if ( $backoff ) {
-					# Post-connection overload, don't use this server for now
-					$totalThreadsConnected += $backoff;
-					$overloadedServers++;
-					unset( $currentLoads[$i] );
-				} else {
-					# Return this server
-					break 2;
-				}
-			}
-
-			# No server found yet
-			$i = false;
-
-			# If all servers were down, quit now
-			if ( !count( $nonErrorLoads ) ) {
-				wfDebugLog( 'connect', "All servers down\n" );
-				break;
-			}
-
-			# Some servers must have been overloaded
-			if ( $overloadedServers == 0 ) {
-				throw new MWException( __METHOD__.": unexpectedly found no overloaded servers" );
-			}
-			# Back off for a while
-			# Scale the sleep time by the number of connected threads, to produce a
-			# roughly constant global poll rate
-			$avgThreads = $totalThreadsConnected / $overloadedServers;
-			$totalElapsed += $this->sleep( $wgDBAvgStatusPoll * $avgThreads );
-		} while ( $totalElapsed < $timeout );
-
-		if ( $totalElapsed >= $timeout ) {
-			wfDebugLog( 'connect', "All servers busy\n" );
-			$this->mErrorConnection = false;
-			$this->mLastError = 'All servers busy';
-		}
-
-		if ( $i !== false ) {
-			# Wikia change - SUS-1801: don't abuse MASTER_POS_WAIT when obtaining slave connection
-			# Slave connection successful
-			if ( $this->mReadIndex <=0 && $this->mLoads[$i]>0 && $i !== false ) {
-				$this->mReadIndex = $i;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $i;
+		// Wikia change: just return the index of the replica DB in the server array
+		// Consul will handle health checks and load balancing for us
+		return count( $this->mServers ) - 1;
 	}
 
 	/**
@@ -336,13 +143,11 @@ class LoadBalancer {
 	public function waitFor( $pos ) {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
-		$i = $this->mReadIndex;
+		$i = $this->getReaderIndex();
 
-		if ( $i > 0 ) {
-			if ( !$this->doWait( $i ) ) {
-				$this->mServers[$i]['slave pos'] = $this->getAnyOpenConnection( $i )->getSlavePos();
-				$this->mLaggedSlaveMode = true;
-			}
+		if ( !$this->doWait( $i ) ) {
+			$this->mServers[$i]['slave pos'] = $this->getAnyOpenConnection( $i )->getSlavePos();
+			$this->mLaggedSlaveMode = true;
 		}
 		wfProfileOut( __METHOD__ );
 	}
