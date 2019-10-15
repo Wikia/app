@@ -75,8 +75,7 @@ class UserPreferencesIntegrationTest extends TestCase {
 		$this->assertEquals( $testPref, 0, "Error resetting user preference [cached] '" . self::TEST_PREFERENCE_NAME . "' for user id: '$this->testUserId'" );
 	}
 
-	public function testFindUsersWithGlobalPreferenceValueNoPaginationAllParamsSet()
-	{
+	public function testFindUsersWithGlobalPreferenceValueNoPaginationAllParamsSet() {
 		// set a response from API
 		$exp = Phiremock::on(
 			A::getRequest()
@@ -105,8 +104,7 @@ class UserPreferencesIntegrationTest extends TestCase {
 		$this->assertCount(100, $usersWithPreference, 'Response should contain 100 userIds');
 	}
 
-	public function testFindUsersWithGlobalPreferenceValuePagination()
-	{
+	public function testFindUsersWithGlobalPreferenceValuePagination() {
 		// set a response from API
 		$firstResponsePageJson = json_encode(array_map('strval', range(1, 10000)));
 		$expSecondPage = Phiremock::on(
@@ -140,8 +138,7 @@ class UserPreferencesIntegrationTest extends TestCase {
 			'Response should contain concatenated two pages of userIds 1-12000');
 	}
 
-	protected function tearDown()
-	{
+	protected function tearDown() {
 		parent::tearDown();
 		$this->getMockServer()->clearExpectations();
 	}
