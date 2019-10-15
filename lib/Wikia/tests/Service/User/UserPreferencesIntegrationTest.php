@@ -25,6 +25,8 @@ class UserPreferencesIntegrationTest extends TestCase {
 	 */
 	protected $preferenceService;
 
+	const REVERSE_LOOKUP_GLOBAL_PREFERENCENAME_USER_URL = '/reverse-lookup/global/%s/users';
+
 	const TEST_PREFERENCE_NAME = "hidepatrolled";
 
 	protected function setUp() {
@@ -75,8 +77,38 @@ class UserPreferencesIntegrationTest extends TestCase {
 		$this->assertEquals( $testPref, 0, "Error resetting user preference [cached] '" . self::TEST_PREFERENCE_NAME . "' for user id: '$this->testUserId'" );
 	}
 
+	public function testFindUsersWithGlobalPreferenceValueAllParamsSet() {
+		// set a response from API
+		$exp = Phiremock::on(
+			A::getRequest()
+				->andUrl(Is::containing(sprintf(self::REVERSE_LOOKUP_GLOBAL_PREFERENCENAME_USER_URL, self::TEST_PREFERENCE_NAME))))
+			->then(Respond::withStatusCode(200)
+				->andHeader('Content-Type', 'application/json')
+				->andBody(file_get_contents(__DIR__ . '/fixtures/sample_reverse_lookup_global_preferenceName_users_100.json')));
+		$this->getMockServer()->createExpectation($exp);
+
+		// make a call
+		$usersWithPreference = $this->preferenceService->findUsersWithGlobalPreferenceValue(
+			self::TEST_PREFERENCE_NAME,
+			1,
+			100,
+			123);
+
+		// check the call and response
+		$executionsWithCorrectValues = $this->getMockServer()->listExecutions(
+			A::getRequest()
+				->andUrl(Is::containing('userIdContinue=123'))
+				->andUrl(Is::containing('value=1'))
+				->andUrl(Is::containing('limit=100')));
+		$this->assertNotEmpty($executionsWithCorrectValues);
+
+		$this->assertNotEmpty($usersWithPreference, 'Some usersId should be returned with the preference');
+		$this->assertCount(100, $usersWithPreference, 'Response should contain 100 userIds');
+	}
+
 	protected function tearDown() {
 		parent::tearDown();
 		$this->getMockServer()->clearExpectations();
 	}
+
 }
