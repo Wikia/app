@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'fandom-support' => 'Fandom Support',
 	'friday' => 'Friday',
 	'fri' => 'Fri',
 	'february' => 'February',
