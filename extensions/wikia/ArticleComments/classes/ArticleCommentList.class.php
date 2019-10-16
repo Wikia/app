@@ -495,7 +495,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMessage( $msg, $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp )->parse();
+		return wfMessage( $msg, $blockerLink, $reason, $ip, $blockid, $blockExpiry, $intended, $blockTimestamp )->parse();
 	}
 
 	/**

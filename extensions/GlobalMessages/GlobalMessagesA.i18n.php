@@ -30,9 +30,9 @@ The reason given is this:
 
 :\'\'$2\'\'
 
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
+* Start of block: $7
+* Expiry of block: $5
+* Intended blockee: $6
 
 Note that you may not use the "e-mail this user" feature unless you have a valid e-mail address registered in your [[Special:Preferences|user preferences]] and you have not been blocked from using it.
 
