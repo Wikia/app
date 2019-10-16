@@ -38,7 +38,6 @@ define('ext.wikia.adEngine3.api', [
 	}
 
 	return {
-		getHmdConfig: ads.hmdLoader.getConfig,
 		injectIncontentBoxad: ads.slots.injectIncontentBoxad,
 		isAutoPlayDisabled: ads.isAutoPlayDisabled,
 		isNetzathletenEnabled: isNetzathletenEnabled,

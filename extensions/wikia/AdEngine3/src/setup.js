@@ -43,12 +43,6 @@ async function updateWadContext() {
 	if (serviceCanBeEnabled) {
 		// BT rec
 		context.set('options.wad.btRec.enabled', instantConfig.get('icBTRec'));
-
-		// HMD rec
-		context.set(
-			'options.wad.hmdRec.enabled',
-			context.get('custom.hasFeaturedVideo') && instantConfig.isGeoEnabled('wgAdDriverWadHMDCountries'),
-		);
 	}
 }
 

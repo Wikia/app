@@ -1476,18 +1476,6 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
- * @name $wgAdDriverWadBTCountries
- * List of countries to enable Blockthrough recovery
- */
-$wgAdDriverWadBTCountries = null;
-
-/**
- * @name $wgAdDriverWadHMDCountries
- * List of countries to enable HOMAD recovery
- */
-$wgAdDriverWadHMDCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */

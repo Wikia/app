@@ -98,8 +98,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverStickySlotsLines';
 		$vars[] = 'wgAdDriverVmgBidderCountries';
-		$vars[] = 'wgAdDriverWadBTCountries';
-		$vars[] = 'wgAdDriverWadHMDCountries';
 
 		/**
 		 * Disaster Recovery
