@@ -8,6 +8,7 @@ import {
 	billTheLizard,
 	confiant,
 	context,
+	durationMedia,
 	events,
 	eventService,
 	InstantConfigCacheStorage,
@@ -134,6 +135,7 @@ function callExternals() {
 	});
 
 	confiant.call();
+	durationMedia.call();
 	krux.call();
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
