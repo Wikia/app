@@ -1476,13 +1476,6 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
- * @name $wgAdDriverGAMLazyLoadingCountries
- * List of countries GAM lazy loading will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY.
- */
-$wgAdDriverGAMLazyLoadingCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
