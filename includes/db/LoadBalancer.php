@@ -144,9 +144,10 @@ class LoadBalancer {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
 		$i = $this->getReaderIndex();
+		$conn = $this->getConnection( $i );
 
 		if ( !$this->doWait( $i ) ) {
-			$this->mServers[$i]['slave pos'] = $this->getAnyOpenConnection( $i )->getSlavePos();
+			$this->mServers[$i]['slave pos'] = $conn->getSlavePos();
 			$this->mLaggedSlaveMode = true;
 		}
 		wfProfileOut( __METHOD__ );

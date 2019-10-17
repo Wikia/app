@@ -43,12 +43,6 @@ async function updateWadContext() {
 	if (serviceCanBeEnabled) {
 		// BT rec
 		context.set('options.wad.btRec.enabled', instantConfig.get('icBTRec'));
-
-		// HMD rec
-		context.set(
-			'options.wad.hmdRec.enabled',
-			context.get('custom.hasFeaturedVideo') && instantConfig.isGeoEnabled('wgAdDriverWadHMDCountries'),
-		);
 	}
 }
 
@@ -138,6 +132,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	}
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
+	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& instantConfig.isGeoEnabled('wgAdDriverKruxCountries') && !instantConfig.get('wgSitewideDisableKrux'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
