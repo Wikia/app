@@ -111,7 +111,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
-	context.set('options.slotRepeater', true);
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
