@@ -128,12 +128,14 @@ function trackTabId() {
 }
 
 function trackKruxSegments() {
-	const kruxSegments = context.get('targeting.ksg');
-	const segmentsFromICBM = context.get('services.krux.icbmSegments');
+	const kruxUserSegments = context.get('targeting.ksg') || [];
+	const kruxICBMSegments = context.get('services.krux.icbmSegments') || [];
 
-	const segments = kruxSegments.filter(segment => segmentsFromICBM.includes(segment)) || [];
+	const kruxPropValue = kruxUserSegments.filter(segment => kruxICBMSegments.includes(segment));
 
-	pageTracker.trackProp('krux_segments', segments.join('|'));
+	if (kruxPropValue.length) {
+		pageTracker.trackProp('krux_segments', kruxPropValue.join('|'));
+	}
 }
 
 function callExternals() {
