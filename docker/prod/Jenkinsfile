@@ -205,9 +205,11 @@ node("docker-daemon-big") {
 
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextAppTag}")
+              sh(script: "git pull -r")
               println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentAppBranch}")
+              sh(script: "git pull -r")
               nextAppTag = createTag(currentAppTag)
             }
 
@@ -224,9 +226,11 @@ node("docker-daemon-big") {
 
             if (params.source == 'preview' || params.source == 'sync') {
               sh(script: "git checkout ${nextConfigTag}")
+              sh(script: "git pull -r")
               println("Source: ${params.source}; skip creating a tag")
             } else {
               sh(script: "git checkout ${currentConfigBranch}")
+              sh(script: "git pull -r")
               nextConfigTag = createTag(currentConfigTag)
             }
 
