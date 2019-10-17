@@ -241,7 +241,7 @@ class PreferencePersistence {
 	 * @param int $limit - must be less than set REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT
 	 * @param int|null $user_id_continue
 	 * @return array|string[] - userId
-	 * @throws ApiException
+	 * @throws ApiException|InvalidArgumentException - InvalidArgument when $limit is > PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT
 	 */
 	private function findUsersWithGlobalPreference(ReverseLookupApi $api, $preferenceName, $value = null, $limit = 1000, $user_id_continue = null ) {
 		if ( $limit <= PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT ) {
