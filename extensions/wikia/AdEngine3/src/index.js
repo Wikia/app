@@ -128,17 +128,12 @@ function trackTabId() {
 }
 
 function trackKruxSegments() {
-
 	const kruxSegments = context.get('targeting.ksg');
-	const segmentsFromICBM = ["ui9csb1gj", "aaaa", "bbbb", "tcq57x2i1", "cccc"];
-
-	// console.log(kruxSegments);
-	// console.log(segmentsFromICBM);
+	const segmentsFromICBM = context.get('services.krux.icbmSegments');
 
 	const segments = kruxSegments.filter(segment => segmentsFromICBM.includes(segment)) || [];
 
-	// pageTracker.trackProp('krux_segments', segments.join('|'));
-
+	pageTracker.trackProp('krux_segments', segments.join('|'));
 }
 
 function callExternals() {

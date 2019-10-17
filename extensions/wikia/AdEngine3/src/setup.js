@@ -135,6 +135,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& instantConfig.isGeoEnabled('wgAdDriverKruxCountries') && !instantConfig.get('wgSitewideDisableKrux'));
+	context.set('services.krux.icbmSegments', instantConfig.get('icKruxSegmentsTracking'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
 
