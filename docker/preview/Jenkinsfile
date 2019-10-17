@@ -59,6 +59,7 @@ def bump_minor() {
 }
 
 def createReleaseBranch(String releaseBranch) {
+  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
     sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
     sh(script: "git pull -r")
     if (!params.dry_run) {
@@ -66,7 +67,7 @@ def createReleaseBranch(String releaseBranch) {
     } else {
         println("Dry run: git push --set-upstream origin ${releaseBranch}")
     }
-
+  }
 }
 
 // If new release - create a tag e.g. release-230.001
@@ -201,31 +202,35 @@ node("docker-daemon") {
       parallel (
         "app": {
           if (params.source == 'latest' || params.source == 'hotfix') {
-            dir("app") {
-              //e.g. release-220.001
-              def lastAppReleaseTag = "release-" + get_latest_version()
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              dir("app") {
+                //e.g. release-220.001
+                def lastAppReleaseTag = "release-" + get_latest_version()
 
-              //e.g. release-220
-              lastAppReleaseBranch = lastAppReleaseTag.tokenize('.')[0]
+                //e.g. release-220
+                lastAppReleaseBranch = lastAppReleaseTag.tokenize('.')[0]
 
-              println("Checking out to last release branch: ${lastAppReleaseBranch}")
-              sh(script: "git checkout ${lastAppReleaseBranch} || git checkout -b ${lastAppReleaseBranch}")
-              sh(script: "git pull -r")
+                println("Checking out to last release branch: ${lastAppReleaseBranch}")
+                sh(script: "git checkout ${lastAppReleaseBranch} || git checkout -b ${lastAppReleaseBranch}")
+                sh(script: "git pull -r")
+              }
             }
           }
         },
         "config": {
           if (params.source == 'latest' || params.source == 'hotfix') {
-            dir("config") {
-              //e.g. release-220.001
-              def lastConfigReleaseTag = "release-" + get_latest_version()
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              dir("config") {
+                //e.g. release-220.001
+                def lastConfigReleaseTag = "release-" + get_latest_version()
 
-              //e.g. release-220
-              lastConfigReleaseBranch = lastConfigReleaseTag.tokenize('.')[0]
+                //e.g. release-220
+                lastConfigReleaseBranch = lastConfigReleaseTag.tokenize('.')[0]
 
-              println("Checking out to last release branch: ${lastConfigReleaseBranch}")
-              sh(script: "git checkout ${lastConfigReleaseBranch} || git checkout -b ${lastConfigReleaseBranch}")
-              sh(script: "git pull -r")
+                println("Checking out to last release branch: ${lastConfigReleaseBranch}")
+                sh(script: "git checkout ${lastConfigReleaseBranch} || git checkout -b ${lastConfigReleaseBranch}")
+                sh(script: "git pull -r")
+              }
             }
           }
         }
