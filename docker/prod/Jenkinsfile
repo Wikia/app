@@ -199,44 +199,48 @@ node("docker-daemon-big") {
       parallel (
         "app": {
           dir("app") {
-            git url: "git@github.com:Wikia/app.git",
-                branch: "dev",
-                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              git url: "git@github.com:Wikia/app.git",
+                  branch: "dev",
+                  credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview' || params.source == 'sync') {
-              sh(script: "git checkout ${nextAppTag}")
-              sh(script: "git pull -r")
-              println("Source: ${params.source}; skip creating a tag")
-            } else {
-              sh(script: "git checkout ${currentAppBranch}")
-              sh(script: "git pull -r")
-              nextAppTag = createTag(currentAppTag)
+              if (params.source == 'preview' || params.source == 'sync') {
+                sh(script: "git checkout ${nextAppTag}")
+                sh(script: "git pull -r")
+                println("Source: ${params.source}; skip creating a tag")
+              } else {
+                sh(script: "git checkout ${currentAppBranch}")
+                sh(script: "git pull -r")
+                nextAppTag = createTag(currentAppTag)
+              }
+
+              appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
+
+              println("Wikia/app commit: $appHash")\
             }
-
-            appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
-
-            println("Wikia/app commit: $appHash")
           }
         },
         "config": {
           dir("config") {
-            git url: "git@github.com:Wikia/config.git",
-                branch: "dev",
-                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              git url: "git@github.com:Wikia/config.git",
+                  branch: "dev",
+                  credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
-            if (params.source == 'preview' || params.source == 'sync') {
-              sh(script: "git checkout ${nextConfigTag}")
-              sh(script: "git pull -r")
-              println("Source: ${params.source}; skip creating a tag")
-            } else {
-              sh(script: "git checkout ${currentConfigBranch}")
-              sh(script: "git pull -r")
-              nextConfigTag = createTag(currentConfigTag)
+              if (params.source == 'preview' || params.source == 'sync') {
+                sh(script: "git checkout ${nextConfigTag}")
+                sh(script: "git pull -r")
+                println("Source: ${params.source}; skip creating a tag")
+              } else {
+                sh(script: "git checkout ${currentConfigBranch}")
+                sh(script: "git pull -r")
+                nextConfigTag = createTag(currentConfigTag)
+              }
+
+              configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
+
+              println("Wikia/config commit: $configHash")
             }
-
-            configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
-
-            println("Wikia/config commit: $configHash")
           }
         }
       )
