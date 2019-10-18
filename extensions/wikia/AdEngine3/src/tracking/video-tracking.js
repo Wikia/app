@@ -1,4 +1,4 @@
-import { AdSlot, eventService, porvataTracker, playerEvents } from '@wikia/ad-engine';
+import { eventService, porvataTracker, playerEvents } from '@wikia/ad-engine';
 import { track } from './tracker';
 
 function trackEvent(eventData) {
