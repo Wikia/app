@@ -131,7 +131,7 @@ function trackKruxSegments() {
 	const kruxUserSegments = context.get('targeting.ksg') || [];
 	const kruxTrackedSegments = context.get('services.krux.TrackedSegments') || [];
 
-	const kruxPropValue = kruxUserSegments.filter(segment => kruxICBMSegments.includes(segment));
+	const kruxPropValue = kruxUserSegments.filter(segment => kruxTrackedSegments.includes(segment));
 
 	if (kruxPropValue.length) {
 		pageTracker.trackProp('krux_segments', kruxPropValue.join('|'));
