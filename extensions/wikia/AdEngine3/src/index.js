@@ -62,7 +62,6 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 		pageTracker.trackProp('moat_yi', data);
 	});
 
-
 	await billTheLizardConfigurator.configure();
 
 	if (context.get('state.showAds')) {
