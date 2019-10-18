@@ -143,7 +143,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	playerInstance.on('onScrollStateChanged', function (data) {
 		if (data.state === 'closed') {
-			trigger('jwplayerClosed')
+			playerInstance.trigger('jwplayerClosed')
 		}
 	});
 }
