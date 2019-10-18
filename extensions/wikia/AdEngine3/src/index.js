@@ -62,6 +62,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 		pageTracker.trackProp('moat_yi', data);
 	});
 
+
 	await billTheLizardConfigurator.configure();
 
 	if (context.get('state.showAds')) {
@@ -179,14 +180,15 @@ function hideAllAdSlots() {
 }
 
 function trackXClick() {
-	eventService.on(AdSlot.CUSTOM_EVENT, ({ status }) => {
+	eventService.on(AdSlot.CUSTOM_EVENT, (adSlot, { status }) => {
+		console.log(status, adSlot.getSlotName());
 		if (status === SlotTweaker.SLOT_CLOSE_IMMEDIATELY || status === 'force-unstick') {
 			track({
 				action: 'click',
 				category: 'force_close',
-				label: AdSlot.getSlotName(),
-				trackingMethod: 'ga',
-			}, false);
+				label: adSlot.getSlotName(),
+				trackingMethod: 'analytics',
+			});
 		}
 	});
 }

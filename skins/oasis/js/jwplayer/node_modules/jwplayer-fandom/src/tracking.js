@@ -69,7 +69,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		var currentItem = playerInstance.getPlaylistItem() || playerInstance.getPlaylistItem(0);
 		var trackingData = {
 			action: gaData.action || 'click',
-			category: gaCategory,
+			category: gaData.category || gaCategory,
 			label: gaData.label,
 			//value tracks sound state: 1 for muted, 0 for unmuted
 			value: Number(playerInstance.getMute()),
@@ -178,14 +178,19 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	});
 
 	playerInstance.on('onScrollStateChanged', function (data) {
-		if (data.state === 'closed') {
-			track({
-				label: 'played-percentage-' + percentPlayed,
-				action: 'close'
-			});
-		}
 		onScroll = data.state === 'active';
 		tracker.setCustomDimension(38, onScroll ? 'Yes' : 'No');
+	});
+
+	playerInstance.on('jwplayerClosed', function () {
+		track({
+			label: 'played-percentage-' + percentPlayed,
+			action: 'close'
+		});
+		track({
+			category: 'force_close',
+			label: 'featured',
+		});
 	});
 
 	playerInstance.on('videoFeedbackImpression', function () {

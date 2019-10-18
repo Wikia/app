@@ -1,4 +1,4 @@
-import { eventService, porvataTracker, playerEvents } from '@wikia/ad-engine';
+import { AdSlot, eventService, porvataTracker, playerEvents } from '@wikia/ad-engine';
 import { track } from './tracker';
 
 function trackEvent(eventData) {
@@ -11,20 +11,20 @@ function trackEvent(eventData) {
 	));
 }
 
-function trackVideoXClick() {
+function trackVideoXClick(adSlot) {
 	track({
 		action: 'click',
 		category: 'force_close',
 		label: adSlot.getSlotName(),
-		trackingMethod: 'ga',
-	}, false);
+		trackingMethod: 'analytics',
+	});
 }
 
 
 export default {
 	register: () => {
 		eventService.on(playerEvents.VIDEO_PLAYER_TRACKING_EVENT, trackEvent);
-		eventService.on(playerEvents.PLAYER_X_CLICK, trackVideoXClick());
+		eventService.on(playerEvents.PLAYER_X_CLICK, trackVideoXClick);
 
 		porvataTracker.register();
 	},
