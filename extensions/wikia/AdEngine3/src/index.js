@@ -181,7 +181,6 @@ function hideAllAdSlots() {
 
 function trackXClick() {
 	eventService.on(AdSlot.CUSTOM_EVENT, (adSlot, { status }) => {
-		console.log(status, adSlot.getSlotName());
 		if (status === SlotTweaker.SLOT_CLOSE_IMMEDIATELY || status === 'force-unstick') {
 			track({
 				action: 'click',
