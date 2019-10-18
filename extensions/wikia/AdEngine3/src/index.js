@@ -129,7 +129,7 @@ function trackTabId() {
 
 function trackKruxSegments() {
 	const kruxUserSegments = context.get('targeting.ksg') || [];
-	const kruxICBMSegments = context.get('services.krux.icbmSegments') || [];
+	const kruxTrackedSegments = context.get('services.krux.TrackedSegments') || [];
 
 	const kruxPropValue = kruxUserSegments.filter(segment => kruxICBMSegments.includes(segment));
 
