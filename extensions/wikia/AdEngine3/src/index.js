@@ -127,6 +127,17 @@ function trackTabId() {
   pageTracker.trackProp('tab_id', window.tabId);
 }
 
+function trackKruxSegments() {
+	const kruxUserSegments = context.get('targeting.ksg') || [];
+	const kruxTrackedSegments = context.get('services.krux.trackedSegments') || [];
+
+	const kruxPropValue = kruxUserSegments.filter(segment => kruxTrackedSegments.includes(segment));
+
+	if (kruxPropValue.length) {
+		pageTracker.trackProp('krux_segments', kruxPropValue.join('|'));
+	}
+}
+
 function callExternals() {
 	const targeting = context.get('targeting');
 
@@ -136,7 +147,7 @@ function callExternals() {
 
 	confiant.call();
 	durationMedia.call();
-	krux.call();
+	krux.call().then(trackKruxSegments);
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
