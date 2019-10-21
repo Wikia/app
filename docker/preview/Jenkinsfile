@@ -210,7 +210,7 @@ node("docker-daemon") {
                 lastAppReleaseBranch = lastAppReleaseTag.tokenize('.')[0]
 
                 println("Checking out to last release branch: ${lastAppReleaseBranch}")
-                sh(script: "git checkout ${lastAppReleaseBranch} || git checkout -b ${lastAppReleaseBranch}")
+                sh(script: "git checkout ${lastAppReleaseBranch}")
                 sh(script: "git pull -r")
               }
             }
@@ -227,7 +227,7 @@ node("docker-daemon") {
                 lastConfigReleaseBranch = lastConfigReleaseTag.tokenize('.')[0]
 
                 println("Checking out to last release branch: ${lastConfigReleaseBranch}")
-                sh(script: "git checkout ${lastConfigReleaseBranch} || git checkout -b ${lastConfigReleaseBranch}")
+                sh(script: "git checkout ${lastConfigReleaseBranch}")
                 sh(script: "git pull -r")
               }
             }
