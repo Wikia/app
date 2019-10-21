@@ -59,14 +59,14 @@ def bump_minor() {
 }
 
 def createReleaseBranch(String releaseBranch) {
+  sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
     sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
-    sh(script: "git pull -r")
     if (!params.dry_run) {
         sh(script: "git push --set-upstream origin ${releaseBranch}")
     } else {
         println("Dry run: git push --set-upstream origin ${releaseBranch}")
     }
-
+  }
 }
 
 // If new release - create a tag e.g. release-230.001
@@ -152,10 +152,14 @@ node("docker-daemon") {
   def imageTag
 
   def currentAppTag
+  
+  def lastAppReleaseBranch
 
   def nextAppReleaseVersion
   def nextAppReleaseTag
   def nextAppReleaseBranch
+  
+  def lastConfigReleaseBranch
 
   def nextConfigReleaseVersion
   def nextConfigReleaseTag
@@ -188,6 +192,45 @@ node("docker-daemon") {
             git url: "git@github.com:Wikia/config.git",
               branch: 'dev',
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+          }
+        }
+      )
+    }
+    
+    stage("Checkout to last release branch") {
+      parallel (
+        "app": {
+          if (params.source == 'latest' || params.source == 'hotfix') {
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              dir("app") {
+                //e.g. release-220.001
+                def lastAppReleaseTag = "release-" + get_latest_version()
+
+                //e.g. release-220
+                lastAppReleaseBranch = lastAppReleaseTag.tokenize('.')[0]
+
+                println("Checking out to last release branch: ${lastAppReleaseBranch}")
+                sh(script: "git checkout ${lastAppReleaseBranch}")
+                sh(script: "git pull -r")
+              }
+            }
+          }
+        },
+        "config": {
+          if (params.source == 'latest' || params.source == 'hotfix') {
+            sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
+              dir("config") {
+                //e.g. release-220.001
+                def lastConfigReleaseTag = "release-" + get_latest_version()
+
+                //e.g. release-220
+                lastConfigReleaseBranch = lastConfigReleaseTag.tokenize('.')[0]
+
+                println("Checking out to last release branch: ${lastConfigReleaseBranch}")
+                sh(script: "git checkout ${lastConfigReleaseBranch}")
+                sh(script: "git pull -r")
+              }
+            }
           }
         }
       )
