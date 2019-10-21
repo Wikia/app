@@ -61,7 +61,6 @@ def bump_minor() {
 def createReleaseBranch(String releaseBranch) {
   sshagent(['bd3cf712-39a7-4b16-979e-ff86208ab2ea']) {
     sh(script: "git checkout ${releaseBranch} || git checkout -b ${releaseBranch}")
-    sh(script: "git pull -r")
     if (!params.dry_run) {
         sh(script: "git push --set-upstream origin ${releaseBranch}")
     } else {
