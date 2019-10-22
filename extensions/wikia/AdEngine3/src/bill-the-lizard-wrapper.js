@@ -9,7 +9,6 @@ import {
     utils
 } from '@wikia/ad-engine';
 import targeting from './targeting';
-import pageTracker from './tracking/page-tracker';
 
 const garfieldSlotsBidderAlias = 'incontent_boxad_1';
 const fmrPrefix = 'incontent_boxad_';
@@ -17,6 +16,7 @@ const NOT_USED_STATUS = 'not_used';
 
 let garfieldCalled = false;
 let nextSlot = null;
+let defaultStatus = NOT_USED_STATUS;
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) {

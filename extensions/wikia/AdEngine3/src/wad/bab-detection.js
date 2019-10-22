@@ -42,6 +42,8 @@ function setRuntimeParams(isBabDetected) {
 	window.ads.runtime = window.ads.runtime || {};
 	window.ads.runtime.bab = window.ads.runtime.bab || {};
 	window.ads.runtime.bab.blocking = isBabDetected;
+
+	context.set('options.wad.blocking', isBabDetected);
 }
 
 /**
@@ -132,12 +134,14 @@ export const babDetection = {
 	 * Starts WAD rec detection
 	 * @returns {void}
 	 */
-	run() {
+	async run() {
 		if (this.isEnabled()) {
-			utils.client.checkBlocking(
+			return await utils.client.checkBlocking(
 				() => trackDetection(true),
 				() => trackDetection(false),
 			);
 		}
+
+		return Promise.resolve();
 	},
 };

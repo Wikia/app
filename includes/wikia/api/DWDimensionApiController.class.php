@@ -1,13 +1,17 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 use FandomCreator\CommunitySetup;
+use Wikia\Service\User\Preferences\PreferenceService;
 
 class DWDimensionApiController extends WikiaApiController {
 	use PermissionsServiceAccessor;
 
 	const LIMIT = 100;
 	const LIMIT_MAX = 20000;
+
+	const LIMIT_MAX_GET_USERS = 10000;
 
 	const WIKI_DOMAINS_AFTER_DOMAIN = null;
 
@@ -34,6 +38,10 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
 		return $this->getDbSlave( $wgExternalSharedDB );
+	}
+
+	private function userPreferencesService(): PreferenceService {
+		return ServiceFactory::instance()->preferencesFactory()->preferenceService();
 	}
 
 	public function getWikiDartTags() {
@@ -194,8 +202,8 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getUsers() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min( $db->strencode( $this->getRequest()->getVal(
-			'limit', static::LIMIT ) ), static::LIMIT_MAX );
+		$limit = min( $db->strencode( $this->getRequest()->getInt(
+			'limit', static::LIMIT ) ), static::LIMIT_MAX_GET_USERS );
 		$afterUserId = $db->strencode( $this->getRequest()->getVal(
 			'after_user_id', static::DEFAULT_AFTER_ID ) );
 
@@ -206,6 +214,14 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		$botUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_USER_GROUP ] );
 		$botGlobalUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_GLOBAL_USER_GROUP ] );
+
+		$usersWithMarketingAllowed = $this->userPreferencesService()->findUsersWithGlobalPreferenceValue(
+			'marketingallowed',
+			1,
+			$limit,
+			intval($afterUserId) >= 0 ? $afterUserId : null
+		);
+		
 		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'user_id' => $row->user_id,
@@ -215,7 +231,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'user_editcount' => $row->user_editcount,
 				'user_registration' => $row->user_registration,
 				'is_bot' => isset( $botUsers[ $row->user_id ] ),
-				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] )
+				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ]),
+				'user_marketingallowed' => in_array( $row->user_id, $usersWithMarketingAllowed )
 			];
 		}
 		$db->freeResult( $dbResult );
