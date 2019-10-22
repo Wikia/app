@@ -12,6 +12,8 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	const THUMBNAIL_SIZE = 400;
 	const CACHE_3_DAYS = 259200;
 
+	private $articleVideoService;
+
 	/**
 	 * Get details about one or more articles
 	 *
@@ -113,7 +115,15 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	}
 
 	protected function getVideosIds( $wikiId ) {
-		return array_map( function( $video ) { return $video->getId(); }, ArticleVideoService::getFeaturedVideosForWiki( $wikiId ) );
+		$featuredVideos = $this->getArticleVideoService()->getFeaturedVideosForWiki( $wikiId );
+		return array_map( function( $video ) { return $video->getId(); }, $featuredVideos );
+	}
+
+	private function getArticleVideoService() {
+		if ( !isset( $this->articleVideoService ) ) {
+			$this->articleVideoService = new ArticleVideoService();
+		}
+		return $this->articleVideoService;
 	}
 
 }
