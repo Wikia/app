@@ -18,6 +18,7 @@ import {
 	moatYi,
 	moatYiEvents,
 	nielsen,
+	SlotTweaker,
 	utils
 } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
@@ -26,6 +27,7 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { contextReadyResolver } from "./utils/context-ready";
+import { track } from "./tracking/tracker";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -71,6 +73,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackLabradorValues();
 	trackLikhoToDW();
 	trackTabId();
+	trackXClick();
 }
 
 function startAdEngine() {
@@ -184,6 +187,19 @@ function hideAllAdSlots() {
 
 		if (element) {
 			element.classList.add('hidden');
+		}
+	});
+}
+
+function trackXClick() {
+	eventService.on(AdSlot.CUSTOM_EVENT, (adSlot, { status }) => {
+		if (status === SlotTweaker.SLOT_CLOSE_IMMEDIATELY || status === 'force-unstick') {
+			track({
+				action: 'click',
+				category: 'force_close',
+				label: adSlot.getSlotName(),
+				trackingMethod: 'analytics',
+			});
 		}
 	});
 }
