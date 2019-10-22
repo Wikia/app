@@ -9,7 +9,7 @@
 
 class CrossWikiArticlesApiController extends WikiaApiController {
 
-	const THUMBNAIL_SIZE = 200;
+	const THUMBNAIL_SIZE = 400;
 	const CACHE_3_DAYS = 259200;
 
 	/**
@@ -42,7 +42,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$items = [];
 
 		foreach( $wikiToArticleMap as $wikiId => $articles ) {
-			$items += $this->getDetailsForWiki( $wikiId, $articles );
+			$items += $this->getDetailsForWiki( $wikiId, $articles, $wikiToArticleMap );
 		}
 
 		$this->setResponseData(
@@ -58,48 +58,29 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	 *
 	 * @param int $wikiId
 	 * @param int[] $articles
+	 * @param $wikiToArticleMap
 	 * @return array
 	 * @throws Exception
 	 */
-	protected function getDetailsForWiki( int $wikiId, array $articles ) {
-		$dbr = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wikiId ) );
+	protected function getDetailsForWiki( int $wikiId, array $articles, array $wikiToArticleMap ) {
+		$dbname = WikiFactory::IDtoDB($wikiId);
+		$dbr = wfGetDB( DB_SLAVE, [], $dbname );
 
 		$res = $dbr->select(
-			['page', 'page_wikia_props'],
-			'page.page_id, page_title, page_namespace, props',
+			['page'],
+			'page.page_id, page_title, page_namespace',
 			['page.page_id' => $articles],
 			__METHOD__,
 			[],
-			[
-				'page_wikia_props' => [
-					'LEFT JOIN', [
-						'page.page_id=page_wikia_props.page_id',
-						'propname' => WPP_IMAGE_SERVING
-					]
-				],
-			]
+			[]
 		);
 
 		$videos = $this->getVideosIds( $wikiId );
 		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
+		$wikiDetails = $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] );
 
 		$items = [];
 		foreach ($res as $row) {
-			// extract suggested image
-			$imageServingData = @unserialize($row->props);
-
-			if (is_array($imageServingData)) {
-				$image = $imageServingData[0];
-				$file = new GlobalFile(GlobalTitle::newFromText($image, NS_FILE, $wikiId));
-
-				$thumbnail = $file->getUrlGenerator()
-					->width(self::THUMBNAIL_SIZE)->height(self::THUMBNAIL_SIZE)->zoomCropDown()
-					->url();
-			}
-			else {
-				$thumbnail = null;
-			}
-
 			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $wikiId );
 			$url = $title->getFullURL();
 
@@ -109,7 +90,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'url' => wfHttpsAllowedForURL( $url ) ? wfHttpToHttps( $url ) : $url,
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikiName,
-				'thumbnail' => $thumbnail,
+				'thumbnail' => $wikiDetails[$row->page_id]['thumbnail'] ?? null,
 				'hasVideo' => in_array( $row->page_id, $videos ),
 			];
 		}
@@ -123,7 +104,9 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			'method' => 'getDetails',
 			'abstract' => '0',
 			'ids' => implode(',', $articleIds),
-			'format' => 'json'
+			'format' => 'json',
+			'width' => CrossWikiArticlesApiController::THUMBNAIL_SIZE,
+			'height' => CrossWikiArticlesApiController::THUMBNAIL_SIZE
 		);
 		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );
 		return is_array($response) ? $response['items'] : array();
