@@ -145,6 +145,7 @@ $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxAp
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgAutoloadClasses['TemplatesApiController'] = "{$IP}/includes/wikia/api/TemplatesApiController.class.php";
 $wgAutoloadClasses['CrossWikiArticlesApiController'] = "{$IP}/includes/wikia/api/CrossWikiArticlesApiController.class.php";
+$wgAutoloadClasses['RecommendationTileApiController'] = "{$IP}/includes/wikia/api/RecommendationTileApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -161,6 +162,7 @@ $wgWikiaApiControllers['DWDimensionApiController'] = "{$IP}/includes/wikia/api/D
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgWikiaApiControllers['CrossWikiArticlesApiController'] = "{$IP}/includes/wikia/api/CrossWikiArticlesApiController.class.php";
+$wgWikiaApiControllers['RecommendationTileApiController'] = "{$IP}/includes/wikia/api/RecommendationTileApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
