@@ -16,40 +16,10 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CanonicalHref'
 );
 
+$wgAutoloadClasses[ 'CanonicalHrefHooks' ] = __DIR__ . '/CanonicalHrefHooks.php';
+
 //i18n
 $wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php';
 
-$wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
-
-/**
- * @param OutputPage $out
- * @param Skin $skin
- * @return bool
- * @throws FatalError
- * @throws MWException
- */
-function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
-	$statusCodesWithoutCanonicalHref = [ 404, 410 ];
-
-	if (
-		// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
-		$out->getRequest()->getVal( 'page' ) ||
-		// SUS-5546: Don't render a canonical href for the closed wiki page
-		$out->getTitle()->isSpecial( 'CloseWiki' ) ||
-		in_array( $out->mStatusCode, $statusCodesWithoutCanonicalHref )
-	) {
-		return true;
-	}
-
-	$canonicalUrl = $out->getTitle()->getFullURL();
-
-	// Allow hooks to change the canonicalUrl that will be used in the page.
-	Hooks::run( 'WikiaCanonicalHref', [ &$canonicalUrl, $out ] );
-
-	$out->addLink( [
-		'rel' => 'canonical',
-		'href' => $canonicalUrl,
-	] );
-
-	return true;
-}
+$wgHooks['BeforePageDisplay'][] = 'CanonicalHrefHooks::onBeforePageDisplay';
+$wgHooks['OutputPageAfterGetHeadLinksArray'][] = 'CanonicalHrefHooks::onOutputPageAfterGetHeadLinksArray';

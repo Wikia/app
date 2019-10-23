@@ -3270,7 +3270,7 @@ $templates
 		if( $p !== 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
 			// Only show if it's different from the default robots policy
-			$tags[] = Html::element( 'meta', array(
+			$tags['meta-robots'] = Html::element( 'meta', array(
 				'name' => 'robots',
 				'content' => $p,
 			) );
@@ -3461,6 +3461,14 @@ $templates
 				}
 			}
 		}
+
+		// Allow extensions to add, remove and/or otherwise manipulate these links
+		// If you want only to *add* <head> links, please use the addHeadItem()
+		// (or addHeadItems() for multiple items) method instead.
+		// This hook is provided as a last resort for extensions to modify these
+		// links before the output is sent to client.
+		Hooks::run( 'OutputPageAfterGetHeadLinksArray', [ &$tags, $this ] );
+
 		return implode( "\n", $tags );
 	}
 
