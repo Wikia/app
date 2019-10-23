@@ -11,7 +11,6 @@ import {
 } from '@wikia/ad-engine';
 import targeting from './targeting';
 
-const AD_SLOT_CATLAPSED_STATUS = 'catlapsed';
 const garfieldSlotsBidderAlias = 'incontent_boxad_1';
 const fmrPrefix = 'incontent_boxad_';
 const NOT_USED_STATUS = 'not_used';
@@ -44,11 +43,11 @@ class BillTheLizardWrapper {
         billTheLizard.executor.register('catlapseIncontentBoxad', () => {
             const slotNameToCatlapse = nextSlot;
 
-            slotService.on(slotNameToCatlapse, AD_SLOT_CATLAPSED_STATUS, () => {
+            slotService.on(slotNameToCatlapse, AdSlot.STATUS_CATLAPSED, () => {
                 utils.logger(logGroup, `Catlapsing ${slotNameToCatlapse}`);
             });
 
-            slotService.disable(slotNameToCatlapse, AD_SLOT_CATLAPSED_STATUS);
+            slotService.disable(slotNameToCatlapse, AdSlot.STATUS_CATLAPSED);
         });
 
         eventService.on(AdSlot.SLOT_RENDERED_EVENT, (adSlot) => {
