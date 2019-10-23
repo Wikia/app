@@ -13,6 +13,10 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	const CACHE_3_DAYS = 259200;
 
 	private $articleVideoService;
+	private $apiService;
+	private $globalTitle;
+	private $wikiFactory;
+	private $articleRetriever;
 
 	/**
 	 * Get details about one or more articles
@@ -65,25 +69,16 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 	 * @throws Exception
 	 */
 	protected function getDetailsForWiki( int $wikiId, array $articles, array $wikiToArticleMap ) {
-		$dbname = WikiFactory::IDtoDB($wikiId);
-		$dbr = wfGetDB( DB_SLAVE, [], $dbname );
-
-		$res = $dbr->select(
-			['page'],
-			'page.page_id, page_title, page_namespace',
-			['page.page_id' => $articles],
-			__METHOD__,
-			[],
-			[]
-		);
+		$dbname = $this->getWikiFactory()->IDtoDB($wikiId);
+		$articles = $this->getArticleRetriever()->retrieveArticles($dbname, $articles);
 
 		$videos = $this->getVideosIds( $wikiId );
-		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
+		$wikiName = $this->getWikiFactory()->getVarValueByName('wgSitename', $wikiId);
 		$wikiDetails = $this->getThumbnails( $dbname, $wikiToArticleMap[$wikiId] );
 
 		$items = [];
-		foreach ($res as $row) {
-			$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $wikiId );
+		foreach ($articles as $row) {
+			$title = $this->getGlobalTitle()->newFromText( $row->page_title, $row->page_namespace, $wikiId );
 			$url = $title->getFullURL();
 
 			$items[$wikiId . '_' . $row->page_id] = [
@@ -110,13 +105,41 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			'width' => CrossWikiArticlesApiController::THUMBNAIL_SIZE,
 			'height' => CrossWikiArticlesApiController::THUMBNAIL_SIZE
 		);
-		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );
+		$response = $this->getApiService()->foreignCall( $dbname, $params, \ApiService::WIKIA );
 		return is_array($response) ? $response['items'] : array();
 	}
 
 	protected function getVideosIds( $wikiId ) {
 		$featuredVideos = $this->getArticleVideoService()->getFeaturedVideosForWiki( $wikiId );
 		return array_map( function( $video ) { return $video->getId(); }, $featuredVideos );
+	}
+
+	private function getArticleRetriever() {
+		if ( !isset( $this->articleRetriever ) ) {
+			$this->articleRetriever = new ArticleRetriever();
+		}
+		return $this->articleRetriever;
+	}
+
+	private function getWikiFactory() {
+		if ( !isset( $this->wikiFactory ) ) {
+			$this->wikiFactory = new WikiFactory();
+		}
+		return $this->wikiFactory;
+	}
+
+	private function getGlobalTitle() {
+		if ( !isset( $this->globalTitle ) ) {
+			$this->globalTitle = new GlobalTitle();
+		}
+		return $this->globalTitle;
+	}
+
+	private function getApiService() {
+		if ( !isset( $this->apiService ) ) {
+			$this->apiService = new \ApiService();
+		}
+		return $this->apiService;
 	}
 
 	private function getArticleVideoService() {
@@ -126,4 +149,21 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		return $this->articleVideoService;
 	}
 
+}
+
+class ArticleRetriever {
+	function retrieveArticles($dbname, $articles) {
+		$dbr = wfGetDB( DB_SLAVE, [], $dbname );
+
+		$res = $dbr->select(
+			['page'],
+			'page.page_id, page_title, page_namespace',
+			['page.page_id' => $articles],
+			__METHOD__,
+			[],
+			[]
+		);
+
+		return $res;
+	}
 }
