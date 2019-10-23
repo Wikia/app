@@ -1,24 +1,30 @@
 import {
+    AdSlot,
     BillTheLizard,
     billTheLizard,
     billTheLizardEvents,
     context,
     events,
-    eventService
+    eventService,
+    utils
 } from '@wikia/ad-engine';
 import targeting from './targeting';
-import pageTracker from './tracking/page-tracker';
 
-const garfieldSlotsBidderAlias = 'INCONTENT_BOXAD_1';
+const garfieldSlotsBidderAlias = 'incontent_boxad_1';
 const fmrPrefix = 'incontent_boxad_';
 const NOT_USED_STATUS = 'not_used';
 
 let garfieldCalled = false;
 let nextSlot = null;
+let defaultStatus = NOT_USED_STATUS;
 
 class BillTheLizardWrapper {
     configureBillTheLizard(billTheLizardConfig) {
         const config = billTheLizardConfig;
+
+        if (!this.hasAvailableModels(config, 'garfield')) {
+            return;
+        }
 
         const baseSlotName = fmrPrefix + 1;
         const enableGarfield = context.get('options.billTheLizard.garfield');
@@ -36,18 +42,16 @@ class BillTheLizardWrapper {
             console.log('catlapsed!');
         });
 
-        context.push('listeners.slot', {
-            onRenderEnded: (adSlot) => {
-                const slotName = adSlot.getConfigProperty('slotName');
+        eventService.on(AdSlot.SLOT_RENDERED_EVENT, (adSlot) => {
+            const slotName = adSlot.getConfigProperty('slotName');
 
-                if (slotName.includes(fmrPrefix)) {
-                    nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
-                }
+            if (slotName.includes(fmrPrefix)) {
+                nextSlot = fmrPrefix + (adSlot.getConfigProperty('repeat.index') + 1);
+            }
 
-                if (slotName === baseSlotName && !garfieldCalled) {
-                    this.callGarfield(nextSlot);
-                }
-            },
+            if (slotName === baseSlotName && !garfieldCalled) {
+                this.callGarfield(nextSlot);
+            }
         });
 
         context.set(
@@ -72,24 +76,10 @@ class BillTheLizardWrapper {
             garfieldCalled = true;
         });
 
-        eventService.on(billTheLizardEvents.BILL_THE_LIZARD_REQUEST, (event) => {
-            const { query, callId } = event;
-            let propName = 'btl_request';
-            if (callId) {
-                propName = `${propName}_${callId}`;
-            }
-
-            pageTracker.trackProp(propName, query);
-        });
-
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, (event) => {
-            const { response, callId } = event;
-            let propName = 'btl_response';
-            if (callId) {
-                propName = `${propName}_${callId}`;
+            if (event.callId) {
                 defaultStatus = BillTheLizard.REUSED;
             }
-            pageTracker.trackProp(propName, response);
         });
     }
 
@@ -145,6 +135,15 @@ class BillTheLizardWrapper {
 
     getCallId(counter = null) {
         return `incontent_boxad_${counter}`;
+    }
+
+    hasAvailableModels(btlConfig, projectName) {
+        const projects = btlConfig.projects;
+
+        return projects && projects[projectName]
+            && projects[projectName].some(
+                model => utils.geoService.isProperGeo(model.countries, model.name),
+            );
     }
 
     /**

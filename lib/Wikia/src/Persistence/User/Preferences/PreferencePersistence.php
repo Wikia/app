@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
+use InvalidArgumentException;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\ReverseLookupApi;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
@@ -22,6 +23,8 @@ class PreferencePersistence {
 	use WikiaProfiler;
 
 	const SERVICE_NAME = "user-preference";
+
+	const REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT = 10000;  // reverseLookup/global/{preferenceName}/users max limit
 
 	/** @var ApiProvider */
 	private $apiProvider;
@@ -130,17 +133,18 @@ class PreferencePersistence {
 		return [];
 	}
 
-	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+	public function findUsersWithGlobalPreferenceValue($preferenceName, $value = null , $limit = 1000, $user_id_continue = null ) {
 		try {
 			return $this->findUsersWithGlobalPreference(
 				$this->getApi( null, ReverseLookupApi::class ),
 				$preferenceName,
-				$value
+				$value,
+				$limit,
+				$user_id_continue
 			);
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
 		}
-
 		return [];
 	}
 	
@@ -228,9 +232,24 @@ class PreferencePersistence {
 		return $wikiList;
 	}
 
-	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
-		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
-		return $userList;
+	/**
+	 * Calls user-preference /reverse-lookup/global/{preferenceName}/users endpoint to get an array of string userIds
+	 * of users with $preferenceName set to $value (or set at all if $value is null)
+	 * @param ReverseLookupApi $api
+	 * @param string $preferenceName
+	 * @param string|null $value
+	 * @param int $limit - must be less than set REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT
+	 * @param int|null $user_id_continue
+	 * @return array|string[] - userId
+	 * @throws ApiException|InvalidArgumentException - InvalidArgument when $limit is > PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT
+	 */
+	private function findUsersWithGlobalPreference(ReverseLookupApi $api, $preferenceName, $value = null, $limit = 1000, $user_id_continue = null ) {
+		if ( $limit <= PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT ) {
+			return $api->findUsersWithGlobalPreference( $preferenceName, $value, $limit, $user_id_continue );
+		}
+		else {
+			throw new InvalidArgumentException('Limit when requesting ReverseLookupApi must be less than '.PreferencePersistence::REVERSE_LOOKUP_GLOBAL_USERS_MAX_LIMIT);
+		}
 	}
 
 	/**
