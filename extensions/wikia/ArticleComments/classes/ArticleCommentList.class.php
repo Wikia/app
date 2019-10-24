@@ -470,7 +470,7 @@ class ArticleCommentList {
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
 		if ( $block->shouldHideBlockerName() ) {
-			$blockerLink =  '[[Special:Contact|' . wfMessage( 'fandom-support' ) . ']]';
+			$blockerLink =  '[[Special:Contact|' . wfMessage( 'fandom-support' )->plain() . ']]';
 		} else {
 			$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
 		}
