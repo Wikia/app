@@ -34,8 +34,6 @@ The reason given is this:
 * Expiry of block: $5
 * Intended blockee: $6
 
-Note that you may not use the "e-mail this user" feature unless you have a valid e-mail address registered in your [[Special:Preferences|user preferences]] and you have not been blocked from using it.
-
 Your current IP address is $3, and the block ID is #$5.
 
 You may contact $1 or an [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
