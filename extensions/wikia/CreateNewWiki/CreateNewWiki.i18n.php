@@ -1675,13 +1675,13 @@ $messages['ja'] = array(
 	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
 	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また入力は必須になります。',
 	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのwikiはすでに存在します。$1をご覧いただくか、別のアドレスをご指定ください。',
+	'autocreatewiki-name-taken' => 'このアドレスのWikiはすでに存在します。$1をご覧いただくか、別のアドレスをご指定ください。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
-	'autocreatewiki-empty-wikiname' => 'Fandomコミュニティ名は必ず入力してください。',
+	'autocreatewiki-empty-wikiname' => 'Wiki名は必ず入力してください。',
 	'autocreatewiki-category-label' => 'カテゴリ：',
 	'autocreatewiki-welcometalk-log' => 'ウェルカム・メッセージ',
-	'autocreatewiki-regex-error-comment' => 'Fandomコミュニティ「$1」で使用されています（全文：$2）',
+	'autocreatewiki-regex-error-comment' => 'Wiki「$1」で使用されています（全文：$2）',
 	'autocreatewiki-protect-reason' => '公式インターフェースの一部です。',
 	'autocreatewiki-welcometalk' => '== ようこそ！ ==
 このたびは、Fandomにて「$4」を立ち上げていただきありがとうございます。
