@@ -426,6 +426,11 @@ class AutomatedDeadWikisDeletionMaintenance {
 			);
 			$response = $apiClient->getSerializer()->deserialize($rawResponse, 'object', $httpHeader);
 		} catch (\Swagger\Client\ApiException $e) {
+			if( $e->getCode() == 404 ) {
+				return array(
+					'postCount'=> 0,
+				);
+			}
 			throw $this->processApiException($e, $apiClient);
 		}
 
