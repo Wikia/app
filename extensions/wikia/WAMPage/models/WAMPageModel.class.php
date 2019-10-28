@@ -291,7 +291,7 @@ class WAMPageModel extends WikiaModel {
 			'fetch_admins' => true,
 			'limit' => $iItemsPerPage,
 			'offset' => $iOffset,
-			'sort_column' => 'wam_change',
+			'sort_column' => 'wam_rank',
 			'sort_direction' => 'DESC',
 			'wiki_word' => isset( $aParams['searchPhrase'] ) ? $aParams['searchPhrase'] : null,
 			'vertical_id' => isset( $aParams['verticalId'] ) ? $aParams['verticalId'] : null,
