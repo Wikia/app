@@ -11,6 +11,7 @@ class RecommendationTileApiController extends WikiaApiController {
 
 	function getDetails() {
 		global $wgWikiaDatacenter;
+		global $wgChatPublicHost;
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$articleIds = str_getcsv( $this->request->getVal( 'ids', null ) );
 
@@ -36,7 +37,8 @@ class RecommendationTileApiController extends WikiaApiController {
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
 				'hasVideo' => in_array( $articleId, $videoIds ),
-				'DC' => $wgWikiaDatacenter
+				'DC' => $wgWikiaDatacenter,
+				'some_config_url' => $wgChatPublicHost
 			];
 		}
 
