@@ -402,10 +402,14 @@ class SitesApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\SiteHalResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+				case 400:
+					$data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+					$e->setResponseObject($data);
+					break;
+				case 403:
+					$data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+					$e->setResponseObject($data);
+					break;
             }
 
             throw $e;

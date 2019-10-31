@@ -488,6 +488,13 @@ class CloseWikiMaintenance extends Maintenance {
 			$this->getSitesApi()->hardDeleteSite( $cityId, $wgTheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
+			if ( $e->getCode() == 400 ) {
+				$this->warning( "Discussions probably don't exist for this wiki", [
+					'exception' => $e,
+					'city_id' => $cityId,
+				] );
+				return;
+			}
 			$this->error( "Failed to hard delete Discussion site", [
 				'exception' => $e,
 				'city_id' => $cityId,
