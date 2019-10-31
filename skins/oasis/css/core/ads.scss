@@ -136,38 +136,6 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
-#TOP_LEADERBOARD_AB {
-	background: rgba($color-page, $page-opacity);
-	max-width: $page-width-medium;
-	margin: 0 auto;
-	position: relative;
-	z-index: $wikia-top-ads-index;
-
-	.thumbnails-h-abp {
-		border: none;
-	}
-}
-
-@if $widthType == 0 {
-	@media #{$breakpoint-small-only} {
-		#TOP_LEADERBOARD_AB {
-			width: $page-width-small - 2 * $content-border-width;
-		}
-	}
-
-	@media #{$breakpoint-medium-only} {
-		#TOP_LEADERBOARD_AB {
-			width: $page-width-medium;
-		}
-	}
-
-	@media #{$breakpoint-large-up} {
-		#TOP_LEADERBOARD_AB {
-			width: $page-width-large;
-		}
-	}
-}
-
 #bottomLeaderboardWrapper {
 	text-align: center;
 	margin: 0 -5px;
