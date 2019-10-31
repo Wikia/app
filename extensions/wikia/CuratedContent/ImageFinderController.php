@@ -22,10 +22,12 @@ class ImageFinderController extends WikiaApiController {
 		$titles = Title::newFromIDs( $filePageIds );
 
 		foreach ( $titles as $title ) {
-			$file = wfFindFile( $title );
-			if ( $file &&
-				 $file instanceof LocalFile &&
-				 ( $file->getMediaType() == MEDIATYPE_BITMAP || $file->getMediaType() === MEDIATYPE_DRAWING )
+			$file = RepoGroup::singleton()->getLocalRepo()->findFile( $title );
+
+			if ( $file && (
+					$file->getMediaType() == MEDIATYPE_BITMAP ||
+					$file->getMediaType() === MEDIATYPE_DRAWING
+				)
 			) {
 				$results[] = [
 					'title' => $title->getText(),
