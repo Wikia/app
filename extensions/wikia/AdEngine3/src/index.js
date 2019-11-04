@@ -27,8 +27,12 @@ import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
-import { contextReadyResolver } from "./utils/context-ready";
 import { track } from "./tracking/tracker";
+import { Communicator, setupPostQuecast } from "@wikia/post-quecast";
+
+setupPostQuecast();
+
+const communicator = new Communicator();
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -45,8 +49,8 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
 
 	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
-	contextReadyResolver();
 
+	slots.injectIncontentBoxad();
 	videoTracker.register();
 
 	context.push('delayModules', babDetection);
@@ -165,6 +169,26 @@ function callExternals() {
 function run() {
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
 	window.Wikia.consentQueue.push(setupAdEngine);
+	registerEditorSavedEvents();
+}
+
+/**
+ * @private
+ */
+function registerEditorSavedEvents() {
+	var eventId = 'M-FnMTsI';
+
+	window.wgAfterContentAndJS.push(() => {
+		// VE editor save complete
+		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
+			krux.fireEvent(eventId);
+		});
+
+		// MW/CK editor saving in progress
+		window.mw.hook('mwEditorSaved').add(() => {
+			krux.fireEvent(eventId);
+		});
+	});
 }
 
 function waitForBiddersResolve() {
@@ -207,12 +231,11 @@ function trackXClick() {
 }
 
 export {
+	communicator,
 	context,
 	contextConfigured,
 	jwplayerAdsFactory,
-	krux,
 	isAutoPlayDisabled,
 	run,
-	slots,
 	waitForAdStackResolve,
 }

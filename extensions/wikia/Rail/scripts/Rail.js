@@ -84,7 +84,7 @@ $(function () {
 						require.optional('ext.wikia.adEngine3.api'),
 					], function (win, adsApi) {
 						if (adsApi) {
-							adsApi.injectIncontentBoxad();
+							adsApi.communicator.dispatch({type: '[Rail] Ready'});
 						}
 					});
 

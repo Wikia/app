@@ -1,25 +1,7 @@
 // Initialize ads module
 require(['ext.wikia.adEngine3.ads'], function (ads) {
 	ads.run();
-
-	registerEditorSavedEvents(ads);
 });
-
-function registerEditorSavedEvents(ads) {
-	var eventId = 'M-FnMTsI';
-
-	window.wgAfterContentAndJS.push(() => {
-		// VE editor save complete
-		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
-			ads.krux.fireEvent(eventId);
-		});
-
-		// MW/CK editor saving in progress
-		window.mw.hook('mwEditorSaved').add(() => {
-			ads.krux.fireEvent(eventId);
-		});
-	});
-}
 
 // AdEngine3 JS API that can be used outside extensions/Wikia/AdEngine3 directory
 define('ext.wikia.adEngine3.api', [
@@ -38,7 +20,7 @@ define('ext.wikia.adEngine3.api', [
 	}
 
 	return {
-		injectIncontentBoxad: ads.slots.injectIncontentBoxad,
+		communicator: ads.communicator,
 		isAutoPlayDisabled: ads.isAutoPlayDisabled,
 		isNetzathletenEnabled: isNetzathletenEnabled,
 		shouldShowAds: shouldShowAds,
