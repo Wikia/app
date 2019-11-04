@@ -199,7 +199,7 @@ class MercuryApi {
 				'twitterAccount' => $wgTwitterAccount,
 				'licenseText' => $wgRightsText,
 				'licenseUrl' => $wgRightsUrl,
-				'affiliateUnitEnabledDate' = $wgAffiliateUnitEnabledDate,
+				'affiliateUnitEnabledDate' => $wgAffiliateUnitEnabledDate,
 			]
 		);
 
