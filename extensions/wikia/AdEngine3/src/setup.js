@@ -148,7 +148,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'),
 	);
 
-	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASPorvataTracking'));
+	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
 	setupPageLevelTargeting(context.get('wiki'));
 
