@@ -292,7 +292,7 @@ class WAMPageModel extends WikiaModel {
 			'limit' => $iItemsPerPage,
 			'offset' => $iOffset,
 			'sort_column' => 'wam_rank',
-			'sort_direction' => 'DESC',
+			'sort_direction' => 'ASC',
 			'wiki_word' => isset( $aParams['searchPhrase'] ) ? $aParams['searchPhrase'] : null,
 			'vertical_id' => isset( $aParams['verticalId'] ) ? $aParams['verticalId'] : null,
 			'wiki_lang' =>  isset( $aParams['langCode'] ) ? $aParams['langCode'] : null,
