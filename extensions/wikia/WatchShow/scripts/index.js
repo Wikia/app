@@ -6,7 +6,10 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 		trackingMethod: 'analytics'
 	});
 
-	if (geo.getCountryCode() === 'US') {
+	var isEnabled = watchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now()); 
+	var isProperGeo = Array.isArray(watchShowGeos) && (watchShowGeos.indexOf(geo.getCountryCode()) > -1);
+
+	if (isEnabled && isProperGeo) {
 		var watchShowElement = document.getElementById('watch-show-rail-module');
 
 		if (watchShowElement) {

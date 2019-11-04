@@ -8940,6 +8940,18 @@ $wgWatchShowCTA = 'Watch This Show';
 $wgWatchShowButtonLabel = 'Watch Now';
 
 /**
+ * Watch Show extension default values
+ */
+$wgWatchShowEnabledDate = '2099-12-31T00:00:00Z'; // ISO-8601
+$wgWatchShowGeos = [];
+
+/**
+ * Affiliate units
+ * @var string
+ */
+$wgAffiliateUnitEnabledDate = '2099-12-31T00:00:00Z'; // ISO-8601
+
+/**
  * Enables EditDraftSaving extension
  * @see SUS-79
  * @var bool

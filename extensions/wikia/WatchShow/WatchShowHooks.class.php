@@ -13,6 +13,8 @@ class WatchShowHooks {
 		       $wgWatchShowButtonLabelMobile,
 		       $wgWatchShowURLMobileAndroid,
 		       $wgWatchShowURL,
+		       $wgWatchShowGeos,
+		       $wgWatchShowEnabledDate,
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowImageURL,
 		       $wgWatchShowImageURLMobile,
@@ -40,6 +42,14 @@ class WatchShowHooks {
 
 		if ( !empty( $wgWatchShowImageURLMobileDarkTheme ) ) {
 			$wikiVariables['watchShowImageURLDarkTheme'] = $wgWatchShowImageURLMobileDarkTheme;
+		}
+
+		if ( !empty( $wgWatchShowEnabledDate ) ) {
+			$wikiVariables['watchShowEnabledDate'] = $wgWatchShowEnabledDate;
+		}
+
+		if ( !empty( $wgWatchShowGeos ) ) {
+			$wikiVariables['watchShowGeos'] = $wgWatchShowGeos;
 		}
 
 		return true;
