@@ -1810,3 +1810,5 @@ include "${IP}/extensions/wikia/TaxonomyCategoryListing/TaxonomyCategoryListing.
 if ( !empty ( $wgEnableHydralyticsExt ) ) {
 	include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
 }
+
+include "${IP}/extensions/wikia/WikiDescription/WikiDescription.setup.php";
