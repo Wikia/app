@@ -19,6 +19,7 @@ export const track = (data) => {
 };
 
 export const registerSlotTracker = () => {
+	slotTracker.onChangeStatusToTrack.push('catlapsed');
 	slotTracker
 		.add(slotTrackingMiddleware)
 		.add(slotPropertiesTrackingMiddleware)

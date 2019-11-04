@@ -1,5 +1,5 @@
 #We want to use the same base as the application image in order to make dependencies consistent across them
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:9f609d20e87
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:0b02db1c1f7
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
