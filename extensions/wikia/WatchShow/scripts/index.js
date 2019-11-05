@@ -2,11 +2,11 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 
 	var track = tracker.buildTrackingFunction({
 		category: 'article',
-		label: 'watch-show',
+		label: 'watch-' + watchShowTrackingLabel,
 		trackingMethod: 'analytics'
 	});
 
-	var isEnabled = watchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now()); 
+	var isEnabled = watchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now());
 	var isProperGeo = Array.isArray(watchShowGeos) && (watchShowGeos.indexOf(geo.getCountryCode()) > -1);
 
 	if (isEnabled && isProperGeo) {
