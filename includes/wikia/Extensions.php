@@ -1811,4 +1811,4 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 	include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
 }
 
-include "${IP}/extensions/wikia/WikiDescription/WikiDescription.setup.php";
+include_once ( "${IP}/extensions/wikia/WikiDescription/WikiDescription.setup.php" );
