@@ -13,6 +13,9 @@ class WatchShowHooks {
 		       $wgWatchShowButtonLabelMobile,
 		       $wgWatchShowURLMobileAndroid,
 		       $wgWatchShowURL,
+		       $wgWatchShowGeos,
+		       $wgWatchShowTrackingLabel,
+		       $wgWatchShowEnabledDate,
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowImageURL,
 		       $wgWatchShowImageURLMobile,
@@ -42,12 +45,37 @@ class WatchShowHooks {
 			$wikiVariables['watchShowImageURLDarkTheme'] = $wgWatchShowImageURLMobileDarkTheme;
 		}
 
+		if ( !empty( $wgWatchShowEnabledDate ) ) {
+			$wikiVariables['watchShowEnabledDate'] = $wgWatchShowEnabledDate;
+		}
+
+		if ( !empty( $wgWatchShowGeos ) ) {
+			$wikiVariables['watchShowGeos'] = $wgWatchShowGeos;
+		}
+
+		if ( !empty( $wgWatchShowTrackingLabel ) ) {
+			$wikiVariables['watchShowTrackingLabel'] = $wgWatchShowTrackingLabel;
+
+		}
+
 		return true;
 	}
 
 	public static function onGetRailModuleList( Array &$railModuleList ): bool {
 		$railModuleList[1442] = [ 'WatchShowService', 'index', null ];
 
+		return true;
+	}
+
+	/**
+	 * Adds extra variables to the page config.
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgWatchShowGeos, $wgWatchShowTrackingLabel, $wgWatchShowEnabledDate;
+
+		$vars[ 'wgWatchShowEnabledDate' ] = $wgWatchShowEnabledDate;
+		$vars[ 'wgWatchShowGeos' ] = $wgWatchShowGeos;
+		$vars[ 'wgWatchShowTrackingLabel' ] = $wgWatchShowTrackingLabel;
 		return true;
 	}
 }
