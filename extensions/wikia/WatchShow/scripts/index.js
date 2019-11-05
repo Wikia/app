@@ -7,7 +7,10 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 	});
 
 	var isEnabled = wgWatchShowEnabledDate && (Date.parse(wgWatchShowEnabledDate) < Date.now());
-	var isProperGeo = Array.isArray(wgWatchShowGeos) && (wgWatchShowGeos.indexOf(geo.getCountryCode()) > -1);
+	// proper geo is always if the variable is empty
+	var isProperGeo = !wgWatchShowGeos
+		// proper geo check
+		|| (wgWatchShowGeos.split(',').indexOf(geo.getCountryCode()) > -1);
 
 	if (isEnabled && isProperGeo) {
 		var watchShowElement = document.getElementById('watch-show-rail-module');

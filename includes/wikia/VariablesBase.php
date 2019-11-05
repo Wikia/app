@@ -8943,7 +8943,6 @@ $wgWatchShowButtonLabel = 'Watch Now';
  * Watch Show extension default values
  */
 $wgWatchShowEnabledDate = '2099-12-31T00:00:00Z'; // ISO-8601
-$wgWatchShowGeos = [];
 
 /**
  * Affiliate units
