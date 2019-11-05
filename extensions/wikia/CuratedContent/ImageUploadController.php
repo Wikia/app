@@ -57,8 +57,8 @@ class ImageUploadController extends WikiaApiController {
 	public function getImageId() {
 		$titleParam = $this->getRequiredParam('title');
 
-		$dbw = wfGetDB( DB_SLAVE );
-		$id = $dbw->selectField(
+		$dbr = wfGetDB( DB_SLAVE );
+		$id = $dbr->selectField(
 			'page',
 			'page_id',
 			[ 'page_namespace' => NS_FILE, 'page_title' => $titleParam ]
