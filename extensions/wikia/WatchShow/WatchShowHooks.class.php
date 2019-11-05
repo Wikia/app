@@ -66,4 +66,16 @@ class WatchShowHooks {
 
 		return true;
 	}
+
+	/**
+	 * Adds extra variables to the page config.
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgWatchShowGeos, $wgWatchShowTrackingLabel, $wgWatchShowEnabledDate;
+
+		$vars[ 'wgWatchShowEnabledDate' ] = $wgWatchShowEnabledDate;
+		$vars[ 'wgWatchShowGeos' ] = $wgWatchShowGeos;
+		$vars[ 'wgWatchShowTrackingLabel' ] = $wgWatchShowTrackingLabel;
+		return true;
+	}
 }
