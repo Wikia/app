@@ -307,11 +307,13 @@ class WAMService {
 
 		switch ($inputOptions['sortColumn']) {
 			case 'wam_rank':
-			default:
-				$options['ORDER BY'] = 'wam ' . $sortDirection;
+				$options['ORDER BY'] = 'wam_rank ' . $sortDirection;
 				break;
 			case 'wam_change':
 				$options['ORDER BY'] = 'wam_change ' . $sortDirection;
+				break;
+			default:
+				$options['ORDER BY'] = 'wam ' . $sortDirection;
 				break;
 		}
 
