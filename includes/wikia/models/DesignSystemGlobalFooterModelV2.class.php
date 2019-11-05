@@ -247,7 +247,7 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 							'type' => 'text',
 							'value' => 'Fandom'
 						],
-						'href' => 'https://www.fandom.com/',
+						'href' => $this->getHref( 'fandom-logo' ),
 						'tracking_label' => 'explore.fandom',
 					],
 					[
