@@ -13,7 +13,10 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 		|| (wgWatchShowGeos.split(',').indexOf(geo.getCountryCode()) > -1);
 
 	if (isEnabled && isProperGeo) {
-		var watchShowElement = document.getElementById('watch-show-rail-module');
+		// special CA-ony version
+		var watchShowElement = geo.getCountryCode() === 'CA'
+			? document.getElementById('watch-show-rail-module-ca')
+			: document.getElementById('watch-show-rail-module');
 
 		if (watchShowElement) {
 			watchShowElement.classList.remove('wds-is-hidden');
