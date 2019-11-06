@@ -75,10 +75,6 @@
 
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
-
-	<?php
-		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
-	?>
 </div>
 <? if( $jsAtBottom ): ?>
 	<!--[if lt IE 8]>
