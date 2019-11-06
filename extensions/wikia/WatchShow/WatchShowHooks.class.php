@@ -17,10 +17,12 @@ class WatchShowHooks {
 		       $wgWatchShowTrackingLabel,
 		       $wgWatchShowEnabledDate,
 		       $wgWatchShowButtonLabel,
+		       $wgWatchShowButtonLabelCA,
 		       $wgWatchShowImageURL,
 		       $wgWatchShowImageURLMobile,
 		       $wgWatchShowImageURLMobileDarkTheme,
 		       $wgWatchShowCTA,
+		       $wgWatchShowCTACA,
 		       $wgWatchShowCTAMobile,
 		       $wgWatchShowTrackingPixelURL;
 
@@ -55,7 +57,14 @@ class WatchShowHooks {
 
 		if ( !empty( $wgWatchShowTrackingLabel ) ) {
 			$wikiVariables['watchShowTrackingLabel'] = $wgWatchShowTrackingLabel;
+		}
 
+		if ( !empty( $wgWatchShowCTACA ) ) {
+			$wikiVariables['watchShowCTACA'] = $wgWatchShowCTACA;
+		}
+
+		if ( !empty( $wgWatchShowButtonLabelCA ) ) {
+			$wikiVariables['watchShowButtonLabelCA'] = $wgWatchShowButtonLabelCA;
 		}
 
 		return true;

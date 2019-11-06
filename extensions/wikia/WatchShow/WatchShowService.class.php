@@ -5,6 +5,8 @@ class WatchShowService extends WikiaService {
 		global $wgWatchShowURL,
 		       $wgWatchShowCTA,
 		       $wgWatchShowButtonLabel,
+		       $wgWatchShowCTACA,
+		       $wgWatchShowButtonLabelCA,
 		       $wgWatchShowImageURL,
 		       $wgWatchShowTrackingPixelURL;
 
@@ -12,6 +14,8 @@ class WatchShowService extends WikiaService {
 			'url' => $wgWatchShowURL,
 			'callToAction' => $wgWatchShowCTA,
 			'buttonLabel' => $wgWatchShowButtonLabel,
+			'callToActionCA' => $wgWatchShowCTACA,
+			'buttonLabelCA' => $wgWatchShowButtonLabelCA,
 			'imageURL' => $wgWatchShowImageURL,
 			'trackingPixelURL' => $wgWatchShowTrackingPixelURL,
 		] );
