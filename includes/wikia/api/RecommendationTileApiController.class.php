@@ -36,9 +36,7 @@ class RecommendationTileApiController extends WikiaApiController {
 				'title' => $articleTitle->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => in_array( $articleId, $videoIds ),
-				'DC' => $wgWikiaDatacenter,
-				'some_config_url' => $wgChatPublicHost
+				'hasVideo' => in_array( $articleId, $videoIds )
 			];
 		}
 
