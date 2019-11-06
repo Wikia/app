@@ -21,6 +21,7 @@ class WAMService {
 		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
 		WikiFactoryHub::VERTICAL_ID_MUSIC,
 		WikiFactoryHub::VERTICAL_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_ANIME,
 	];
 
 	protected static $verticalNames = [
@@ -32,6 +33,7 @@ class WAMService {
 		WikiFactoryHub::VERTICAL_ID_LIFESTYLE => 'Lifestyle',
 		WikiFactoryHub::VERTICAL_ID_MUSIC => 'Music',
 		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
+		WikiFactoryHub::VERTICAL_ID_ANIME => 'Anime',
 	];
 
 	protected $defaultIndexOptions = array(

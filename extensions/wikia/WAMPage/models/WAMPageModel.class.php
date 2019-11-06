@@ -29,6 +29,7 @@ class WAMPageModel extends WikiaModel {
 		WikiFactoryHub::VERTICAL_ID_COMICS,
 		WikiFactoryHub::VERTICAL_ID_TV,
 		WikiFactoryHub::VERTICAL_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_ANIME,
 		WikiFactoryHub::VERTICAL_ID_MUSIC,
 		WikiFactoryHub::VERTICAL_ID_BOOKS,
 		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
