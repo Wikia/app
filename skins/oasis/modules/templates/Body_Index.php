@@ -27,8 +27,6 @@
 </div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
-<?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
-
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
 
 <?= $beforeWikiaPageHtml ?>
