@@ -9,35 +9,42 @@ class WatchShowHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgWatchShowURLMobile,
-		       $wgWatchShowButtonLabelMobile,
+		global $wgWatchShowURL,
+		       $wgWatchShowURLMobile,
 		       $wgWatchShowURLMobileAndroid,
-		       $wgWatchShowURL,
 		       $wgWatchShowGeos,
 		       $wgWatchShowTrackingLabel,
 		       $wgWatchShowEnabledDate,
-		       $wgWatchShowButtonLabel,
-		       $wgWatchShowButtonLabelCA,
-		       $wgWatchShowImageURL,
+		       $wgWatchShowButtonLabelMobile,
+		       $wgWatchShowButtonLabelMobileCA,
 		       $wgWatchShowImageURLMobile,
 		       $wgWatchShowImageURLMobileDarkTheme,
-		       $wgWatchShowCTA,
-		       $wgWatchShowCTACA,
 		       $wgWatchShowCTAMobile,
+		       $wgWatchShowCTAMobileCA,
 		       $wgWatchShowTrackingPixelURL;
+
+		if ( !empty( $wgWatchShowEnabledDate ) ) {
+			$wikiVariables['watchShowEnabledDate'] = $wgWatchShowEnabledDate;
+		}
 
 		if ( !empty( $wgWatchShowURLMobileAndroid ) ) {
 			$wikiVariables['watchShowURLAndroid'] = $wgWatchShowURLMobileAndroid;
 			$wikiVariables['watchShowURLIOS'] = $wgWatchShowURLMobile;
 		} else {
-			$wikiVariables['watchShowURL'] = !empty( $wgWatchShowURLMobile ) ? $wgWatchShowURLMobile : $wgWatchShowURL;
+			$wikiVariables['watchShowURL'] = $wgWatchShowURL;
 		}
 
-		$wikiVariables['watchShowCTA'] = !empty( $wgWatchShowCTAMobile ) ? $wgWatchShowCTAMobile : $wgWatchShowCTA;
-		$wikiVariables['watchShowButtonLabel'] =
-			!empty( $wgWatchShowButtonLabelMobile ) ? $wgWatchShowButtonLabelMobile : $wgWatchShowButtonLabel;
-		$wikiVariables['watchShowImageURL'] =
-			!empty( $wgWatchShowImageURLMobile ) ? $wgWatchShowImageURLMobile : $wgWatchShowImageURL;
+		$wikiVariables['watchShowCTA'] = $wgWatchShowCTAMobile;
+		if ( !empty( $wgWatchShowCTAMobileCA ) ) {
+			$wikiVariables['watchShowCTACA'] = $wgWatchShowCTAMobileCA;
+		}
+
+		$wikiVariables['watchShowButtonLabel'] = $wgWatchShowButtonLabelMobile;
+		if ( !empty( $wgWatchShowButtonLabelMobileCA ) ) {
+			$wikiVariables['watchShowButtonLabelCA'] = $wgWatchShowButtonLabelMobileCA;
+		}
+
+		$wikiVariables['watchShowImageURL'] = $wgWatchShowImageURLMobile;
 
 		if ( !empty( $wgWatchShowTrackingPixelURL ) ) {
 			$wikiVariables['watchShowTrackingPixelURL'] = $wgWatchShowTrackingPixelURL;
@@ -47,24 +54,12 @@ class WatchShowHooks {
 			$wikiVariables['watchShowImageURLDarkTheme'] = $wgWatchShowImageURLMobileDarkTheme;
 		}
 
-		if ( !empty( $wgWatchShowEnabledDate ) ) {
-			$wikiVariables['watchShowEnabledDate'] = $wgWatchShowEnabledDate;
-		}
-
 		if ( !empty( $wgWatchShowGeos ) ) {
 			$wikiVariables['watchShowGeos'] = $wgWatchShowGeos;
 		}
 
 		if ( !empty( $wgWatchShowTrackingLabel ) ) {
 			$wikiVariables['watchShowTrackingLabel'] = $wgWatchShowTrackingLabel;
-		}
-
-		if ( !empty( $wgWatchShowCTACA ) ) {
-			$wikiVariables['watchShowCTACA'] = $wgWatchShowCTACA;
-		}
-
-		if ( !empty( $wgWatchShowButtonLabelCA ) ) {
-			$wikiVariables['watchShowButtonLabelCA'] = $wgWatchShowButtonLabelCA;
 		}
 
 		return true;
