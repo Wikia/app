@@ -2,11 +2,17 @@ require(['wikia.geo', 'wikia.tracker'], function (geo, tracker) {
 
 	var track = tracker.buildTrackingFunction({
 		category: 'article',
-		label: 'watch-show',
+		label: 'watch-' + wgWatchShowTrackingLabel,
 		trackingMethod: 'analytics'
 	});
 
-	if (geo.getCountryCode() === 'US') {
+	var isEnabled = wgWatchShowEnabledDate && (Date.parse(wgWatchShowEnabledDate) < Date.now());
+	// proper geo is always if the variable is empty
+	var isProperGeo = !wgWatchShowGeos
+		// proper geo check
+		|| (wgWatchShowGeos.split(',').indexOf(geo.getCountryCode()) > -1);
+
+	if (isEnabled && isProperGeo) {
 		var watchShowElement = document.getElementById('watch-show-rail-module');
 
 		if (watchShowElement) {
