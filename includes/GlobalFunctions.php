@@ -1179,8 +1179,8 @@ function wfErrorLog( $text, $file ) {
  * @todo document
  */
 function wfLogProfilingData() {
-	global $wgRequestTime, $wgDebugLogFile, $wgDebugRawPage, $wgRequest;
-	global $wgProfileLimit, $wgUser, $wgProfilingDataLogged;
+	global $wgRequestTime, $wgDebugRawPage, $wgRequest;
+	global $wgProfileLimit,$wgProfilingDataLogged;
 
 	$wgProfilingDataLogged = true;
 
@@ -1201,44 +1201,21 @@ function wfLogProfilingData() {
 	$profiler->logData();
 
 	// Check whether this should be logged in the debug file.
-	if ( $wgDebugLogFile == '' || ( !$wgDebugRawPage && wfIsDebugRawPage() ) ) {
+	if ( !$wgDebugRawPage && wfIsDebugRawPage() ) {
 		return;
 	}
 
-	$forward = '';
-	if ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$forward = ' forwarded for ' . $_SERVER['HTTP_X_FORWARDED_FOR'];
-	}
-	if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-		$forward .= ' client IP ' . $_SERVER['HTTP_CLIENT_IP'];
-	}
-	if ( !empty( $_SERVER['HTTP_FROM'] ) ) {
-		$forward .= ' from ' . $_SERVER['HTTP_FROM'];
-	}
-	if ( $forward ) {
-		$forward = "\t(proxied via {$_SERVER['REMOTE_ADDR']}{$forward})";
-	}
-	// Don't load $wgUser at this late stage just for statistics purposes
-	// @todo FIXME: We can detect some anons even if it is not loaded. See User::getId()
-	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
-		$forward .= ' anon';
-	}
-
-	// Wikia change - begin - FauxRequest::getRequestURL() is not implemented and throws exception
-	// in maintenance scripts
+	// Command line script uses a FauxRequest object which does not have
+	// any knowledge about an URL and throw an exception instead.
 	try {
-		$log = sprintf( "%s\t%04.3f\t%s\n",
-			gmdate( 'YmdHis' ), $elapsed,
-			urldecode( $wgRequest->getRequestURL() . $forward ) );
-
-		wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
-	} catch (MWException $e) {
-		// double-check it is the case
-		if ( $e->getMessage() !== "FauxRequest::getRequestURL() not implemented" ) {
-			throw $e;
-		}
+		$url = urldecode( $wgRequest->getRequestURL() );
+	} catch ( Exception $ignored ) {
+		$url = '';
 	}
-	// Wikia change - end
+
+	$output = $profiler->getOutput();
+
+	\Wikia\Logger\WikiaLogger::instance()->info( "Profiler output generated, URL: $url\n$output" );
 }
 
 /**
