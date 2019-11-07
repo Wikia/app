@@ -10,8 +10,6 @@ class RecommendationTileApiController extends WikiaApiController {
 	const CACHE_3_DAYS = 259200;
 
 	function getDetails() {
-		global $wgWikiaDatacenter;
-		global $wgChatPublicHost;
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$articleIds = str_getcsv( $this->request->getVal( 'ids', null ) );
 
