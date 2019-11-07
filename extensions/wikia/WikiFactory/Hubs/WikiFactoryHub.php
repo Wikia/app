@@ -27,6 +27,7 @@ class WikiFactoryHub extends WikiaModel {
 	const VERTICAL_ID_LIFESTYLE = 5;
 	const VERTICAL_ID_MUSIC = 6;
 	const VERTICAL_ID_MOVIES = 7;
+	const VERTICAL_ID_ANIME = 8;
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
