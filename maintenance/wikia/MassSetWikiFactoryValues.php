@@ -6,97 +6,109 @@ require_once __DIR__ . '/../Maintenance.php';
 # https://docs.google.com/spreadsheets/d/1vGuJEZ0ncVQSXTrABM3YYHg2P531sWZosgNsq-uMy5M/edit#gid=2073314697
 
 class MassSetWikiFactoryValues extends Maintenance {
-  protected $saveChanges  = false;
-  
-  public function __construct() {
-    parent::__construct();
-    $this->mDescription = 'Sets Wiki Factory variable values based on CSV';
-    $this->addArg( 'file', 'CSV file with the list of wikis and vars' );
-    $this->addOption( 'saveChanges', 'Change the wiki values for real.', false, false, 'd' );
-  }
-  
-  private function readFromCSV() {
-    $fileName = $this->getArg( 0 );
-    
-    $fileHandle = fopen( $fileName, 'r' );
-    $index = 0;
-    $headers = [];
-    $communityData = [];
+	protected $saveChanges  = false;
+	
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = 'Sets Wiki Factory variable values based on CSV';
+		$this->addArg( 'file', 'CSV file with the list of wikis and vars' );
+		$this->addOption( 'saveChanges', 'Change the wiki values for real.', false, false, 'd' );
+	}
+	
+	private function readFromCSV() {
+		$fileName = $this->getArg( 0 );
+		
+		$fileHandle = fopen( $fileName, 'r' );
+		$index = 0;
+		$headers = [];
+		$communityData = [];
 
-    while ( ( $data = fgetcsv( $fileHandle ) ) !== false ) {
-      if ( is_null( $data[0] ) ) {
-        continue;
-      }
-      
-      if ($index === 0) {
-        // read headers, we'll use that to get the info
-        $headers = $data;
-      } else {
-        // actually read the vars and add to `communityData`
-        $newVariablesData = [];
-        foreach( $data as $k => $v ) {
-          if ( array_key_exists( $k, $headers ) ) {
-            $newVariablesData[$headers[$k]] = $v;
-          }
-        }
+		while ( ( $data = fgetcsv( $fileHandle ) ) !== false ) {
+			if ( is_null( $data[0] ) ) {
+				continue;
+			}
+			
+			if ($index === 0) {
+				// read headers, we'll use that to get the info
+				$headers = $data;
+			} else {
+				// actually read the vars and add to `communityData`
+				$newVariablesData = [];
+				foreach( $data as $k => $v ) {
+					if ( array_key_exists( $k, $headers ) ) {
+						$newVariablesData[$headers[$k]] = $v;
+					}
+				}
 
-        $communityData[] = $newVariablesData;
-      }
+				$communityData[] = $newVariablesData;
+			}
 
-      $index++;
-    }
+			$index++;
+		}
 
-    fclose( $fileHandle );
-    
-    return $communityData;
-  }
+		fclose( $fileHandle );
+		
+		return $communityData;
+	}
 
-  private function filterVariables($communityData) {
-    $variables = [];
+	private function filterVariables($communityData) {
+		$variables = [];
 
-    foreach ( $communityData as $varName => $varValue ) {
-      // if key starts with `wg` it's a WikiFactory Variable
-      if ( substr_compare( $varName, 'wg', 0, strlen( 'wg' ) ) === 0 ) {
-        $variables[$varName] = $varValue;
-      }
-    }
+		foreach ( $communityData as $varName => $varValue ) {
+			// if key starts with `wg` it's a WikiFactory Variable
+			if ( substr_compare( $varName, 'wg', 0, strlen( 'wg' ) ) === 0 ) {
+				$variables[$varName] = $varValue;
+			}
+		}
 
-    return $variables;
-  }
+		return $variables;
+	}
 
-  private function setVariable( $wikiId, $varName, $varValue ) {
-    $currentVarData = (array) WikiFactory::getVarByName( $varName, $wikiId, true );
-    $currentVarValue = array_key_exists( 'cv_value', $currentVarData ) ? $currentVarData['cv_value'] : '';
+	private function setVariable( $wikiId, $varName, $varValue ) {
+		$currentVarData = (array) WikiFactory::getVarByName( $varName, $wikiId, true );
+		$currentVarValue = array_key_exists( 'cv_value', $currentVarData ) ? $currentVarData['cv_value'] : '';
 
-    $this->output( "Set variable on {$wikiId}: `{$varName}=`` (previously: `{$currentVarValue}`)" );
-  }
+		$message = "{$wikiId}: `{$varName}`=`{$varValue}` (previously: `{$currentVarValue}`)";
 
-  private function applyVariables( $wikiId, $variables ) {
+		if ( $this->saveChanges ) {
+			$status = WikiFactory::setVarByName( $varName, $wikiId, $varValue, 'Set though MassSetWikiFactoryValues' );
 
-  }
+			if ( !$status ) {
+				$this->output( "Variable SET ERROR on {$message}" . PHP_EOL );
+			} else {
+				$this->output( "Variable SET OK on {$message}" . PHP_EOL );
+			}
+		} else {
+			$this->output( "Variable NOT SET on {$message}" . PHP_EOL );
+		}
+	}
 
-  public function execute() {
-    $this->saveChanges = $this->hasOption( 'saveChanges' );
-    $communities = $this->readFromCSV();
+	public function execute() {
+		$this->saveChanges = $this->hasOption( 'saveChanges' );
+		$communities = $this->readFromCSV();
 
-    // read the variables
-    foreach ( $communities as $community ) {
-      $wikiId = intval( $community['wikiId'], 10 );
+		// read the variables
+		foreach ( $communities as $community ) {
+			$wikiId = intval( $community['wikiId'], 10 );
 
-      if ( $wikiId > 0) {
-        $variables = $this->filterVariables( $community );
-        $wikiId = 1575417;
+			if ( $wikiId > 0) {
+				$variables = $this->filterVariables( $community );
+				$wikiId = 1575417;
 
-        foreach ( $variables as $varName => $varValue ) {
-            $this->setVariable( $wikiId, $varName, $varValue );
-        }
+				$this->output( "Setting variables for {$wikiId}" . PHP_EOL );
 
-        // free cache
-        $this->output( "Clearing cache for {$wikiId}" );
-        WikiFactory::clearCache( $wikiId );
-      }
-    }
-  }
+				foreach ( $variables as $varName => $varValue ) {
+						$this->setVariable( $wikiId, $varName, $varValue );
+				}
+
+				if ( $this->saveChanges ) {
+					// free cache
+					$this->output( "Clearing cache for {$wikiId}" . PHP_EOL );
+					WikiFactory::clearCache( $wikiId );
+				}
+			}
+		}
+	}
 }
 
 $maintClass = 'MassSetWikiFactoryValues';
