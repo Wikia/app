@@ -99,7 +99,6 @@ class MassSetWikiFactoryValues extends Maintenance {
 
 			if ( $wikiId > 0) {
 				$variables = $this->filterVariables( $community );
-				$wikiId = 1575417;
 
 				if ( !$this->dryRun ) {
 					$this->output( "Setting variables for {$wikiId}\n" );
