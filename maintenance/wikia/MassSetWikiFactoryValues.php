@@ -6,19 +6,25 @@ require_once __DIR__ . '/../Maintenance.php';
 # https://docs.google.com/spreadsheets/d/1vGuJEZ0ncVQSXTrABM3YYHg2P531sWZosgNsq-uMy5M/edit#gid=2073314697
 
 class MassSetWikiFactoryValues extends Maintenance {
-	protected $saveChanges  = false;
+	protected $dryRun = false;
 	
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Sets Wiki Factory variable values based on CSV';
 		$this->addArg( 'file', 'CSV file with the list of wikis and vars' );
-		$this->addOption( 'saveChanges', 'Change the wiki values for real.', false, false, 'd' );
+		$this->addOption( 'dry-run', 'Dry-run mode, do not actually chnage any values', false, false, 'd' );
 	}
 	
 	private function readFromCSV() {
 		$fileName = $this->getArg( 0 );
 		
 		$fileHandle = fopen( $fileName, 'r' );
+
+		if ( !$setsFile ) {
+			$this->error( "Unable to open {$fileName} for reading\n", 1 );
+			return [];
+		}
+
 		$index = 0;
 		$headers = [];
 		$communityData = [];
@@ -70,21 +76,21 @@ class MassSetWikiFactoryValues extends Maintenance {
 
 		$message = "{$wikiId}: `{$varName}`=`{$varValue}` (previously: `{$currentVarValue}`)";
 
-		if ( $this->saveChanges ) {
+		if ( !$this->dryRun ) {
 			$status = WikiFactory::setVarByName( $varName, $wikiId, $varValue, 'Set though MassSetWikiFactoryValues' );
 
 			if ( !$status ) {
-				$this->output( "Variable SET ERROR on {$message}" . PHP_EOL );
+				$this->output( "Error: Variable SET ERROR on {$message}\n" );
 			} else {
-				$this->output( "Variable SET OK on {$message}" . PHP_EOL );
+				$this->output( "Variable SET OK on {$message}\n" );
 			}
 		} else {
-			$this->output( "Variable NOT SET on {$message}" . PHP_EOL );
+			$this->output( "Variable NOT SET on {$message}\n" );
 		}
 	}
 
 	public function execute() {
-		$this->saveChanges = $this->hasOption( 'saveChanges' );
+		$this->dryRun = $this->hasOption( 'dryRun' );
 		$communities = $this->readFromCSV();
 
 		// read the variables
@@ -95,15 +101,15 @@ class MassSetWikiFactoryValues extends Maintenance {
 				$variables = $this->filterVariables( $community );
 				$wikiId = 1575417;
 
-				$this->output( "Setting variables for {$wikiId}" . PHP_EOL );
+				$this->output( "Setting variables for {$wikiId}\n" );
 
 				foreach ( $variables as $varName => $varValue ) {
 						$this->setVariable( $wikiId, $varName, $varValue );
 				}
 
-				if ( $this->saveChanges ) {
+				if ( !$this->dryRun ) {
 					// free cache
-					$this->output( "Clearing cache for {$wikiId}" . PHP_EOL );
+					$this->output( "Clearing cache for {$wikiId}\n" );
 					WikiFactory::clearCache( $wikiId );
 				}
 			}
