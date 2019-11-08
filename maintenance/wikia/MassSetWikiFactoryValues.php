@@ -68,7 +68,7 @@ class MassSetWikiFactoryValues extends Maintenance {
     $currentVarData = (array) WikiFactory::getVarByName( $varName, $wikiId, true );
     $currentVarValue = array_key_exists( 'cv_value', $currentVarData ) ? $currentVarData['cv_value'] : '';
 
-    echo "Set variable on {$wikiId}: `{$varName}=`` (previously: `{$currentVarValue}`)" . PHP_EOL;
+    $this->output( "Set variable on {$wikiId}: `{$varName}=`` (previously: `{$currentVarValue}`)" );
   }
 
   private function applyVariables( $wikiId, $variables ) {
@@ -90,14 +90,12 @@ class MassSetWikiFactoryValues extends Maintenance {
         foreach ( $variables as $varName => $varValue ) {
             $this->setVariable( $wikiId, $varName, $varValue );
         }
+
+        // free cache
+        $this->output( "Clearing cache for {$wikiId}" );
+        WikiFactory::clearCache( $wikiId );
       }
     }
-
-    // $str = json_encode($variables);
-    // $this->output( "found {$str}" );
-
-
-    // WikiFactory::clearCache( $wikiId );
   }
 }
 
