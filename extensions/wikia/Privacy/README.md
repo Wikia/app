@@ -10,18 +10,9 @@ A set of scripts that remove user data as a part of GPDR project.
 Alternatively, **Special:RequestToBeForgottenInternal is available** for `request-to-be-forgotten-admin` group members on wikis where [`$wgEnableRequestToBeForgottenInternalSpecialPage`](https://community.wikia.com/wiki/Special:WikiFactory/1474483/variables/wgEnableRequestToBeForgottenInternalSpecialPage) WikiFactory variable is set to `true`.
 
 ## Steps performed
-
-1. `UserDataRemover::removeGlobalData` anonimizes all user data not related to specific communities.
-  * the user is renamed to a random name (with `Anonymous ` prefix) by issuing an `UPDATE` query on `wikicities.user` table
-  * user's email and birthday are removed from the `user` table
-  * antispoof data is anonimized by removing the username record from the `spoofuser` table, and adding a hashed version to `spoofuser_forgotten`
-  * user specific data is removed from `user_email_log`, `user_properties` and `wikiastaff_log` tables.
-  * user cache in deleted
-  * the user is marked as disabled
-  * if the user was previously renamed, all the above steps are also performed for the old username
-2. `events_local_users` table is then used to get the list of wikis given user was active on.
-3. `RemoveUserDataOnWikiTask` task is scheduled for each of these wikis.
-4. The task is dispatched on each wiki and it does the following cleanups:
+1. `events_local_users` table is then used to get the list of wikis given user was active on.
+2. `RemoveUserDataOnWikiTask` task is scheduled for each of these wikis.
+3. The task is dispatched on each wiki and it does the following cleanups:
  * CheckUser feature - rows are removed from `cu_changes` and `cu_log` tables
  * Recent Changes - `recentchanges` table entries are updated to have an empty IP address
  * Abuse Filter - `abuse_filter`, `abuse_filter_history` tables rows are updated to have an empty user name (rows are removed from `abuse_filter_log` table)
@@ -30,6 +21,14 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
  * all `logging` entries connected to user pages are removed
  * all `watchlist` entries that belong to the user are removed
  * if the user was renamed, user pages are removed for the old username as well
+4. `UserDataRemover::removeGlobalData` anonimizes all user data not related to specific communities.
+  * the user is renamed to a random name (with `Anonymous ` prefix) by issuing an `UPDATE` query on `wikicities.user` table
+  * user's email and birthday are removed from the `user` table
+  * antispoof data is anonimized by removing the username record from the `spoofuser` table, and adding a hashed version to `spoofuser_forgotten`
+  * user specific data is removed from `user_email_log`, `user_properties` and `wikiastaff_log` tables.
+  * user cache in deleted
+  * the user is marked as disabled
+  * if the user was previously renamed, all the above steps are also performed for the old username
 
 ## Debugging
 
