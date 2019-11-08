@@ -20,7 +20,7 @@ class MassSetWikiFactoryValues extends Maintenance {
 		
 		$fileHandle = fopen( $fileName, 'r' );
 
-		if ( !$setsFile ) {
+		if ( !$fileHandle ) {
 			$this->error( "Unable to open {$fileName} for reading\n", 1 );
 			return [];
 		}
