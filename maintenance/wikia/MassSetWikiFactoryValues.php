@@ -90,7 +90,7 @@ class MassSetWikiFactoryValues extends Maintenance {
 	}
 
 	public function execute() {
-		$this->dryRun = $this->hasOption( 'dryRun' );
+		$this->dryRun = $this->hasOption( 'dry-run' );
 		$communities = $this->readFromCSV();
 
 		// read the variables
@@ -101,7 +101,12 @@ class MassSetWikiFactoryValues extends Maintenance {
 				$variables = $this->filterVariables( $community );
 				$wikiId = 1575417;
 
-				$this->output( "Setting variables for {$wikiId}\n" );
+				if ( !$this->dryRun ) {
+					$this->output( "Setting variables for {$wikiId}\n" );
+				} else {
+					$this->output( "Dry run of setting variables for {$wikiId}\n" );
+				}
+				
 
 				foreach ( $variables as $varName => $varValue ) {
 						$this->setVariable( $wikiId, $varName, $varValue );
