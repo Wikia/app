@@ -38,7 +38,7 @@ class DumpForumData extends Maintenance {
 		$this->dumpPages();
 		$this->dumpRevisions();
 		$this->dumpVotes();
-		$this->dumpFollows();
+		//$this->dumpFollows();
 		$this->dumpWallHistory();
 	}
 
