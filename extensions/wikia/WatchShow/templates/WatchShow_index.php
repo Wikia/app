@@ -2,7 +2,7 @@
 	<p class="watch-show__disclaimer-message">Disclosure: Some of the links below are affiliate links meaning, at no additional cost to you, Fandom will earn a commission if you click through and make a purchase</p>
 	<h2><?= $callToAction ?></h2>
 	<div class="watch-show__content">
-		<a href="<?= $url ?>" class="wds-button wds-is-secondary" target="_blank" rel="noopener"><?= $buttonLabel ?></a>
+		<a href="<?= $url ?>" class="wds-button wds-is-secondary" target="_blank" rel="noopener sponsored"><?= $buttonLabel ?></a>
 		<img src="<?= $imageURL ?>" alt="<?= $callToAction ?>" class="watch-show__image">
 	</div>
 </section>
@@ -10,7 +10,7 @@
 	<p class="watch-show__disclaimer-message">Disclosure: Some of the links below are affiliate links meaning, at no additional cost to you, Fandom will earn a commission if you click through and make a purchase</p>
 	<h2><?= $callToActionCA ?></h2>
 	<div class="watch-show__content">
-		<a href="<?= $url ?>" class="wds-button wds-is-secondary" target="_blank" rel="noopener"><?= $buttonLabelCA ?></a>
+		<a href="<?= $url ?>" class="wds-button wds-is-secondary" target="_blank" rel="noopener sponsored"><?= $buttonLabelCA ?></a>
 		<img src="<?= $imageURL ?>" alt="<?= $callToActionCA ?>" class="watch-show__image">
 	</div>
 </section>
