@@ -8270,7 +8270,7 @@ $messages['ja'] = array(
 	'badtitletext' => '要求されたページ名は、無効、空、または正しくない言語間リンク・ウィキ間リンクのページ名です。
 ページ名に利用できない文字が1つ以上含まれている可能性があります。',
 	'badretype' => '入力したパスワードが一致しません。',
-	'blocked-mailpassword' => 'ご利用中のIPアドレスからの編集はブロックされており、不正利用防止のため、パスワードの再発行機能はお使いいただけません。',
+	'blocked-mailpassword' => '使用しているIPアドレスからの編集はブロックされており、不正利用防止のため、パスワードの再発行機能は使用できません。',
 	'bold_sample' => '太字',
 	'bold_tip' => '太字',
 	'blockedtitle' => 'ユーザーはブロックされています',
@@ -8343,7 +8343,7 @@ HTMLタグを見直してください。',
 	'blocklist-rangeblocks' => 'レンジブロックを非表示',
 	'blocklist-timestamp' => 'タイムスタンプ',
 	'blocklist-target' => '対象',
-	'blocklist-expiry' => '有効期限',
+	'blocklist-expiry' => '期限',
 	'blocklist-by' => 'ブロックしたアドミン',
 	'blocklist-params' => 'ブロックのパラメータ',
 	'blocklist-reason' => '理由',
@@ -8379,7 +8379,7 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'button-createpage' => 'ページを作成',
+	'button-createpage' => '次へ',
 	'backlinksubtitle' => '← $1',
 	'backend-fail-hashes' => '比較用ハッシュを取得できませんでした。',
 	'backend-fail-connect' => 'ストレージバックエンド「$1」に接続できませんでした。',
