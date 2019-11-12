@@ -78,6 +78,10 @@ class WikiaRobots {
 		'/d/u/',
 		// Discussions guidelines
 		'/d/g',
+		// Feeds and posts user pages
+		'/f/u',
+		// Feeds and posts guidelines
+		'/f/g',
 		// Fandom old URLs
 		'/fandom?p=',
 		//Mobile Wiki search URL
