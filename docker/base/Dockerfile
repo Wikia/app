@@ -1,6 +1,6 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.3.8-fpm-stretch
+FROM php:7.3.11-fpm-stretch
 
 # set locale as required by MediaWiki / Perl
 ENV LANG C.UTF-8

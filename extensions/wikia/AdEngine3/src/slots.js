@@ -1,9 +1,18 @@
-import { AdSlot, context, events, eventService, scrollListener, slotInjector, slotService, utils, getAdProductInfo } from '@wikia/ad-engine';
+import {
+	AdSlot,
+	btRec,
+	context,
+	events,
+	eventService,
+	scrollListener,
+	slotInjector,
+	slotService,
+	utils,
+	getAdProductInfo
+} from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { babDetection } from './wad/bab-detection';
-import { recRunner } from './wad/rec-runner';
-import { btLoader } from './wad/bt-loader';
 import { contextReady } from "./utils/context-ready";
 
 const PAGE_TYPES = {
@@ -295,11 +304,6 @@ export default {
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
-		slotService.setState('gpt_flush', false);
-
-		// TODO: Remove those slots once AE3 is globally enabled
-		slotService.setState('top_leaderboard_ab', false);
-		slotService.setState('gpt_flush', false);
 	},
 
 	setupIdentificators() {
@@ -369,8 +373,8 @@ export default {
 				return;
 			}
 
-			if (babDetection.isBlocking() && recRunner.isEnabled('bt') && btLoader.duplicateSlot(slotName)) {
-				btLoader.triggerScript();
+			if (btRec.isEnabled() && btRec.duplicateSlot(slotName)) {
+				btRec.triggerScript();
 			}
 
 			document.removeEventListener('scroll', pushSlotAfterComments);

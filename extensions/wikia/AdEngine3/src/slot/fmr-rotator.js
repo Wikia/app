@@ -1,5 +1,6 @@
 import {
 	AdSlot,
+	btRec,
 	context,
 	events,
 	eventService,
@@ -10,8 +11,6 @@ import {
 } from '@wikia/ad-engine';
 import { getNavbarManager } from '../templates/navbar-updater';
 import { babDetection } from '../wad/bab-detection';
-import { btLoader } from '../wad/bt-loader';
-import { recRunner } from '../wad/rec-runner';
 
 const fmrPrefix = 'incontent_boxad_';
 const refreshInfo = {
@@ -22,7 +21,7 @@ const refreshInfo = {
 	startPosition: 0,
 };
 
-let btRec = false;
+let btRecStatus = false;
 let recSelector = null;
 let currentRecNode = null;
 
@@ -42,18 +41,18 @@ let recirculationElement = null;
  * @returns {void}
  */
 function applyRec(onSuccess) {
-	if (!btRec) {
+	if (!btRecStatus) {
 		return;
 	}
 
 	if (recSelector === null) {
-		recSelector = `div[id*="${btLoader.getPlacementId(nextSlotName)}"]`;
+		recSelector = `div[id*="${btRec.getPlacementId(nextSlotName)}"]`;
 	}
 
-	currentRecNode = btLoader.duplicateSlot(nextSlotName);
+	currentRecNode = btRec.duplicateSlot(nextSlotName);
 
 	if (currentRecNode) {
-		btLoader.triggerScript();
+		btRec.triggerScript();
 	}
 
 	if (onSuccess) {
@@ -87,7 +86,7 @@ function removeRecNode() {
  * @returns {boolean}
  */
 function isRefreshLimitAvailable() {
-	return btRec || (currentAdSlot && (currentAdSlot.getConfigProperty('repeat.index') < refreshInfo.refreshLimit));
+	return btRecStatus || (currentAdSlot && (currentAdSlot.getConfigProperty('repeat.index') < refreshInfo.refreshLimit));
 }
 
 /**
@@ -97,7 +96,7 @@ function isRefreshLimitAvailable() {
  */
 function isInViewport() {
 	const recirculationElementInViewport = utils.isInViewport(recirculationElement);
-	const btRecNodeInViewport = btRec && currentRecNode && utils.isInViewport(currentRecNode);
+	const btRecNodeInViewport = btRecStatus && currentRecNode && utils.isInViewport(currentRecNode);
 	const adSlotInViewport = currentAdSlot && currentAdSlot.getElement() && utils.isInViewport(currentAdSlot.getElement());
 
 	return recirculationElementInViewport || btRecNodeInViewport || adSlotInViewport;
@@ -148,7 +147,7 @@ function swapRecirculation(visible) {
  * @returns {void}
  */
 function hideSlot() {
-	if (btRec) {
+	if (btRecStatus) {
 		removeRecNode();
 	} else {
 		currentAdSlot.hide();
@@ -212,7 +211,7 @@ function slotStatusChanged(slotStatus) {
 		return;
 	}
 
-	if (!btRec) {
+	if (!btRecStatus) {
 		currentAdSlot = slotService.get(nextSlotName);
 		nextSlotName = fmrPrefix + (currentAdSlot.getConfigProperty('repeat.index') + 1);
 	}
@@ -252,8 +251,7 @@ export function rotateIncontentBoxad(slotName) {
 	refreshInfo.startPosition = utils.getTopOffset(recirculationElement) - getNavbarManager().getHeight();
 	refreshInfo.refreshDelay = context.get('custom.fmrRotatorDelay') || refreshInfo.refreshDelay;
 	refreshInfo.delayDisabled = context.get('custom.fmrDelayDisabled');
-	btRec = babDetection.isBlocking() && recRunner.isEnabled('bt');
-
+	btRecStatus = btRec.isEnabled();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		if (slot.getSlotName().substring(0, 16) === fmrPrefix) {

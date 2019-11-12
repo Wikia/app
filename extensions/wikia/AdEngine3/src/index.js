@@ -6,6 +6,7 @@ import {
 	AdSlot,
 	bidders,
 	billTheLizard,
+	btRec,
 	confiant,
 	context,
 	durationMedia,
@@ -17,16 +18,16 @@ import {
 	moatYi,
 	moatYiEvents,
 	nielsen,
+	SlotTweaker,
 	utils
 } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
-import { recRunner } from './wad/rec-runner';
-import { hmdLoader } from './wad/hmd-loader';
 import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { contextReadyResolver } from "./utils/context-ready";
+import { track } from "./tracking/tracker";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -46,7 +47,6 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	contextReadyResolver();
 
 	videoTracker.register();
-	recRunner.init();
 
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
@@ -73,6 +73,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackLabradorValues();
 	trackLikhoToDW();
 	trackTabId();
+	trackXClick();
 }
 
 function startAdEngine() {
@@ -83,7 +84,9 @@ function startAdEngine() {
 
 		window.wgAfterContentAndJS.push(() => {
 			slots.injectBottomLeaderboard();
-			babDetection.run();
+			babDetection.run().then(() => {
+				btRec.run();
+			});
 		});
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
@@ -127,6 +130,17 @@ function trackTabId() {
   pageTracker.trackProp('tab_id', window.tabId);
 }
 
+function trackKruxSegments() {
+	const kruxUserSegments = context.get('targeting.ksg') || [];
+	const kruxTrackedSegments = context.get('services.krux.trackedSegments') || [];
+
+	const kruxPropValue = kruxUserSegments.filter(segment => kruxTrackedSegments.includes(segment));
+
+	if (kruxPropValue.length) {
+		pageTracker.trackProp('krux_segments', kruxPropValue.join('|'));
+	}
+}
+
 function callExternals() {
 	const targeting = context.get('targeting');
 
@@ -136,7 +150,7 @@ function callExternals() {
 
 	confiant.call();
 	durationMedia.call();
-	krux.call();
+	krux.call().then(trackKruxSegments);
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
@@ -177,10 +191,22 @@ function hideAllAdSlots() {
 	});
 }
 
+function trackXClick() {
+	eventService.on(AdSlot.CUSTOM_EVENT, (adSlot, { status }) => {
+		if (status === SlotTweaker.SLOT_CLOSE_IMMEDIATELY || status === 'force-unstick') {
+			track({
+				action: 'click',
+				category: 'force_close',
+				label: adSlot.getSlotName(),
+				trackingMethod: 'analytics',
+			});
+		}
+	});
+}
+
 export {
 	context,
 	contextConfigured,
-	hmdLoader,
 	jwplayerAdsFactory,
 	krux,
 	isAutoPlayDisabled,

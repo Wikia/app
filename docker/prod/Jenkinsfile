@@ -213,7 +213,7 @@ node("docker-daemon-big") {
 
             appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
 
-            println("Wikia/app commit: $appHash")
+            println("Wikia/app commit: $appHash")\
           }
         },
         "config": {

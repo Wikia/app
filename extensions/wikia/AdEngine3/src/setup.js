@@ -43,12 +43,6 @@ async function updateWadContext() {
 	if (serviceCanBeEnabled) {
 		// BT rec
 		context.set('options.wad.btRec.enabled', instantConfig.get('icBTRec'));
-
-		// HMD rec
-		context.set(
-			'options.wad.hmdRec.enabled',
-			context.get('custom.hasFeaturedVideo') && instantConfig.isGeoEnabled('wgAdDriverWadHMDCountries'),
-		);
 	}
 }
 
@@ -117,7 +111,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
-	context.set('options.slotRepeater', true);
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -142,6 +135,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
 		&& instantConfig.isGeoEnabled('wgAdDriverKruxCountries') && !instantConfig.get('wgSitewideDisableKrux'));
+	context.set('services.krux.trackedSegments', instantConfig.get('icKruxSegmentsTracking'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
 
@@ -153,6 +147,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		'options.video.moatTracking.additonalParamsEnabled',
 		instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'),
 	);
+
+	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
 	setupPageLevelTargeting(context.get('wiki'));
 
@@ -191,6 +187,9 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
+
+		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
+		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
 
 	if (instantConfig.isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {

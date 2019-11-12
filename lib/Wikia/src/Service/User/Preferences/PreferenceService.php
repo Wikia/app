@@ -145,13 +145,15 @@ class PreferenceService {
 		}
 	}
 
-	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+	public function findUsersWithGlobalPreferenceValue($preferenceName, $value = null, $limit = 1000, $user_id_continue = null ) {
 		try {
-			return $this->persistence->findUsersWithGlobalPreferenceValue( $preferenceName, $value );
+			return $this->persistence->findUsersWithGlobalPreferenceValue( $preferenceName, $value, $limit, $user_id_continue );
 		} catch (\Exception $e) {
 			$this->error( $e->getMessage(), [
 				'preferenceName' => $preferenceName,
-				'value' => $value, ] );
+				'value' => $value,
+				'limit' => $limit,
+				'afterUserId' => $user_id_continue] );
 			throw $e;
 		}
 	}
