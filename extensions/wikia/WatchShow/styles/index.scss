@@ -13,6 +13,18 @@
 		@include flexbox();
 	}
 
+	&__disclaimer-message {
+		background-color: rgba($wds-fandom-color-black, .1);
+		color: $wds-fandom-color-black;
+		font-size: 8px;
+		font-style: italic;
+		letter-spacing: .02px;
+		line-height: 1.5;
+		margin-bottom: 20px;
+		padding: 10px;
+		position: relative;
+	}
+
 	&__image {
 		max-width: 100%;
 		max-height: 37px;
