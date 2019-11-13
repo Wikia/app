@@ -22,11 +22,11 @@ class ArticleVideoService {
 	/**
 	 * @param $cityId
 	 *
-	 * @return Mapping[]
+	 * @return MediaIdsForProductResponse
 	 * @internal param $pageId
 	 *
 	 */
-	public static function getFeaturedVideosForWiki( string $cityId ): MediaIdsForProductResponse {
+	public static function getFeaturedVideosForWiki( int $cityId ): MediaIdsForProductResponse {
 		$key = self::getMemCacheKey( $cityId );
 
 		return WikiaDataAccess::cacheWithOptions(
@@ -73,7 +73,7 @@ class ArticleVideoService {
 	 *
 	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
 	 */
-	public static function getFeatureVideoForArticle( string $cityId, string $pageId ): string {
+	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): string {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
 		$mediaId = $videos['defaultMediaId'] ?? '';
 
@@ -82,6 +82,12 @@ class ArticleVideoService {
 		}
 
 		return $mediaId;
+	}
+
+	public static function isVideoDedicatedForArticle( int $cityId, int $pageId ): bool {
+		$videos = self::getFeaturedVideosForWiki( $cityId );
+
+		return isset( $videos['mappings'][$pageId] );
 	}
 
 	public static function purgeVideoMemCache( $cityId ) {
