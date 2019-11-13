@@ -17,7 +17,8 @@ class WatchShowService extends WikiaService {
 			'buttonLabel' => $wgWatchShowButtonLabel,
 			'callToActionCA' => $wgWatchShowCTACA,
 			'buttonLabelCA' => $wgWatchShowButtonLabelCA,
-			'imageURL' => SassUtil::isThemeDark() ? $wgWatchShowImageURLDarkTheme : $wgWatchShowImageURL,
+			// TODO:: Replace string with $wgWatchShowImageURLDarkTheme variable once set in Wiki Factory
+			'imageURL' => SassUtil::isThemeDark() ? "https://static.wikia.nocookie.net/1d8d22a4-207e-47eb-991e-2d1a1c37f1cf" : $wgWatchShowImageURL,
 			'trackingPixelURL' => $wgWatchShowTrackingPixelURL,
 		] );
 	}
