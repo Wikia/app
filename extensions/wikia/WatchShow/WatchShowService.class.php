@@ -7,8 +7,8 @@ class WatchShowService extends WikiaService {
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowCTACA,
 		       $wgWatchShowButtonLabelCA,
-			   $wgWatchShowImageURL,
-			   $wgWatchShowImageURLMobileDarkTheme,
+		       $wgWatchShowImageURL,
+		       $wgWatchShowImageURLMobileDarkTheme,
 		       $wgWatchShowTrackingPixelURL;
 
 		$this->response->setValues( [
