@@ -94,8 +94,9 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 				
 				$this->buttons[] = [
 					'buttonAction' => 'coppa-staticimagereview',
+					// TODO this should be environment aware on UCP
 					'buttonLink' => Linker::makeExternalLink(
-                        			"http://www.wikia.com/image-review/coppa/" . $this->userName,
+                        			"https://services.fandom.com/image-review/ui/coppa?username=" . $this->userName,
                        				 $this->msg( 'coppatool-staticimagereview' )->escaped(),
                        				 true,
                         			'',
