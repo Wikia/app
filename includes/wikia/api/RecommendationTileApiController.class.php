@@ -18,7 +18,6 @@ class RecommendationTileApiController extends WikiaApiController {
 
 		$articles = $this->getArticleProperties( $articleIds );
 		$thumbnails = $this->getArticlesThumbnails( $articleIds, self::THUMBNAIL_MIN_SIZE, self::THUMBNAIL_MIN_SIZE );
-		$videoIds = $this->getFeaturedVideos();
 
 		$items = [];
 		/** @var Title $articleTitle */
@@ -34,7 +33,7 @@ class RecommendationTileApiController extends WikiaApiController {
 				'title' => $articleTitle->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => in_array( $articleId, $videoIds )
+				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId ) ),
 			];
 		}
 
@@ -90,9 +89,5 @@ class RecommendationTileApiController extends WikiaApiController {
 	protected function getWikiName(): string {
 		global $wgSitename;
 		return $wgSitename;
-	}
-
-	protected function getFeaturedVideos(): Array {
-		return array_map( function( $video ) { return $video->getId(); } , ArticleVideoService::getFeaturedVideosForWiki( $this->getWikiId() ) );
 	}
 }

@@ -108,7 +108,7 @@ class MappingsInternalV2Api
      * 
      *
      * @param string $product  (required)
-     * @return map[string,object]
+     * @return \Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getMediaIdsForProduct($product)
@@ -123,7 +123,7 @@ class MappingsInternalV2Api
      * 
      *
      * @param string $product  (required)
-     * @return Array of map[string,object], HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getMediaIdsForProductWithHttpInfo($product)
@@ -180,15 +180,15 @@ class MappingsInternalV2Api
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                'map[string,object]',
+                '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse',
                 '/internal/v2/mappings/{product}'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, 'map[string,object]', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'map[string,object]', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

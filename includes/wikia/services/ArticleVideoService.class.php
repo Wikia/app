@@ -1,8 +1,9 @@
 <?php
 
 use Swagger\Client\ApiException;
-use Swagger\Client\ArticleVideo\Api\MappingsInternalApi;
+use Swagger\Client\ArticleVideo\Api\MappingsInternalV2Api;
 use Swagger\Client\ArticleVideo\Models\Mapping;
+use Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 
@@ -25,7 +26,7 @@ class ArticleVideoService {
 	 * @internal param $pageId
 	 *
 	 */
-	public static function getFeaturedVideosForWiki( string $cityId ): array {
+	public static function getFeaturedVideosForWiki( string $cityId ): MediaIdsForProductResponse {
 		$key = self::getMemCacheKey( $cityId );
 
 		return WikiaDataAccess::cacheWithOptions(
@@ -33,10 +34,15 @@ class ArticleVideoService {
 			function () use ( $cityId ) {
 				$api = self::getMappingsInternalApiClient();
 				$api->getApiClient()->getConfig()->setApiKey( self::INTERNAL_REQUEST_HEADER, '1' );
-				$mappings = [];
+				$mappings =
+					new MediaIdsForProductResponse( [
+						'product' => $cityId,
+						'default_media_id' => '',
+						'mappings' => [],
+					] );
 
 				try {
-					list( $response, $code ) = $api->getForProductWithHttpInfo( $cityId );
+					list( $response, $code ) = $api->getMediaIdsForProductWithHttpInfo( $cityId );
 
 					if ( $code == 200 ) {
 						$mappings = $response;
@@ -68,22 +74,11 @@ class ArticleVideoService {
 	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
 	 */
 	public static function getFeatureVideoForArticle( string $cityId, string $pageId ): string {
-		$mediaId = '';
+		$videos = self::getFeaturedVideosForWiki( $cityId );
+		$mediaId = $videos['defaultMediaId'] ?? '';
 
-		$forArticle = array_map(
-			function ( Mapping $mapping ) {
-				return $mapping->getMediaId();
-			},
-			array_filter(
-				self::getFeaturedVideosForWiki( $cityId ),
-				function ( Mapping $mapping ) use ( $pageId ) {
-					return $mapping->getId() === (string) $pageId;
-				}
-			)
-		);
-
-		if ( !empty( $forArticle ) ) {
-			$mediaId = array_pop( $forArticle );
+		if ( isset( $videos['mappings'][$pageId] ) ) {
+			$mediaId = $videos['mappings'][$pageId];
 		}
 
 		return $mediaId;
@@ -96,14 +91,14 @@ class ArticleVideoService {
 	}
 
 	private static function getMemCacheKey( $cityId ) {
-		return wfMemcKey( 'article-video', 'get-for-product', $cityId );
+		return wfMemcKey( 'article-video', 'get-for-product-v2', $cityId );
 	}
 	/**
 	 * Get Swagger-generated API client
 	 *
-	 * @return MappingsInternalApi
+	 * @return MappingsInternalV2Api
 	 */
-	private static function getMappingsInternalApiClient(): MappingsInternalApi {
+	private static function getMappingsInternalApiClient(): MappingsInternalV2Api {
 		if ( is_null( self::$articleVideoApiClient ) ) {
 			self::$articleVideoApiClient = self::createMappingsInternalApiClient();
 		}
@@ -114,11 +109,11 @@ class ArticleVideoService {
 	/**
 	 * Create Swagger-generated API client
 	 *
-	 * @return MappingsInternalApi
+	 * @return MappingsInternalV2Api
 	 */
-	private static function createMappingsInternalApiClient(): MappingsInternalApi {
+	private static function createMappingsInternalApiClient(): MappingsInternalV2Api {
 		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
-		$api = $apiProvider->getApi( self::SERVICE_NAME, MappingsInternalApi::class );
+		$api = $apiProvider->getApi( self::SERVICE_NAME, MappingsInternalV2Api::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
 		// Overwriting to minimal value which is 1.
