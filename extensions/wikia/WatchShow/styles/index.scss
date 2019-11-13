@@ -10,6 +10,7 @@
 	}
 
 	.WikiaRail &.rail-module &__cta-header {
+		// overrides user front styles
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 		font-size: $wds-font-size-base !important;
 		text-align: left !important;
