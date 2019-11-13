@@ -6,7 +6,7 @@ class WatchShowService extends WikiaService {
 		       $wgWatchShowCTA,
 		       $wgWatchShowButtonLabel,
 		       $wgWatchShowCTACA,
-		       $wgWatchShowButtonLabelCA,
+			   $wgWatchShowButtonLabelCA,
 			   $wgWatchShowImageURL,
 			   $wgWatchShowImageURLDarkTheme,
 		       $wgWatchShowTrackingPixelURL;
