@@ -6539,8 +6539,8 @@ $messages['es'] = array(
 	'february-gen' => 'febrero',
 	'feb' => 'feb',
 	'faq' => 'Preguntas más frecuentes',
-	'feedlinks' => 'Sindicación:',
-	'feed-invalid' => 'Tipo de subscripción a sindicación de noticias inválida.',
+	'feedlinks' => 'Novedades:',
+	'feed-invalid' => 'Tipo de subscripción a noticias inválido.',
 	'feed-unavailable' => 'Las fuentes web no están disponibles',
 	'fileappenderrorread' => 'No se ha podido leer «$1» durante la anexión.',
 	'fileappenderror' => 'No se ha podido añadir «$1» a «$2».',
@@ -6551,7 +6551,7 @@ $messages['es'] = array(
 	'fileexistserror' => 'No se pudo escribir en el archivo «$1»: el archivo existe.',
 	'formerror' => 'Error: no se pudo enviar el formulario',
 	'filename' => 'Nombre del archivo',
-	'filedesc' => 'Sumario',
+	'filedesc' => 'Descripción',
 	'fileuploadsummary' => 'Descripción:',
 	'filereuploadsummary' => 'Cambios de archivo:',
 	'filestatus' => 'Estado de copyright:',
@@ -12108,11 +12108,11 @@ $1',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
 	'fewestrevisions-summary' => '',
-	'feedback-bugornote' => 'If you are ready to describe a technical problem in detail please [$1 report a bug].
-Otherwise, you can use the easy form below. Your comment will be added to the page "[$3 $2]", along with your username and what browser you are using.',
-	'feedback-thanks' => 'Thanks! Your feedback has been posted to the page "[$2 $1]".',
-	'feedback-bugcheck' => 'Great! Just check that it is not already one of the [$1 known bugs].',
-	'feedback-bugnew' => 'I checked. Report a new bug',
+	'feedback-bugornote' => '技術的な問題をお知らせいただける場合は、[$1 バグ報告]をお送りください。
+また、下の簡易フォームをご利用いただくこともできます。お送りいただいたコメントは、ユーザー名、ご利用中のブラウザ情報とともに"[$3 $2]"に投稿されます。',
+	'feedback-thanks' => 'フィードバックをお送りいただきありがとうございます。"[$3 $2]"に投稿されました。',
+	'feedback-bugcheck' => '[$1 既知のバグ]ではないかの確認をお願いいたします。',
+	'feedback-bugnew' => '既知のバグではないようです。新しいバグ報告を送信します。',
 	'forum-url' => 'Forum:Index',
 	'file-resolution-exceeded' => '指定された画像の解像度（$1メガピクセル）は、$3のMIME形式で許可される$2メガピクセルの上限を超えています。',
 );
@@ -20641,11 +20641,14 @@ PICT # misc.
 	'filedelete-nofile-old' => "Não há nenhuma versão de '''$1''' em arquivo com os parâmetros especificados.",
 	'filedelete-otherreason' => 'Outro/motivo adicional:',
 	'filedelete-reason-otherlist' => 'Outro motivo',
-	'filedelete-reason-dropdown' => '*Motivos comuns para eliminação
+	'filedelete-reason-dropdown' => '*Vandalismo e problemas
 ** Violação de direitos de autor
-** Arquivo duplicado
-** Imagem inapropriada ou pornografica
-** Imagem sem uso',
+**Spam/Vandalismo
+*Manutenção
+**Pedido do Autor
+**Serviço de Limpeza
+**Arquivo duplicado
+**Arquivo com nome inválido',
 	'filedelete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'filedelete-maintenance' => 'Eliminação e restauro de arquivos estão temporariamente desativados durante manutenção.',
 	'filedelete-maintenance-title' => 'Não é possível excluir o arquivo',
@@ -20698,7 +20701,7 @@ As imagens serão exibidas em sua resolução máxima, outros tipos de arquivos 
 	'feed-watom' => 'FANDOM Atom',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
-	'filepage.css' => '/* CSS placed here is included on the file description page, also included on foreign client wikis */',
+	'filepage.css' => '/* CSS colocados aqui são incluídos na página de descrição do arquivo, e também são incluídos em wikis estrangeiras */',
 	'fewestrevisions-summary' => '',
 	'feedback-bugornote' => 'Se você está preparado para descrever detalhadamente um problema técnico, [$1 relate um bug].
 Caso contrário, você poderá usar o formulário simplificado a seguir. Seu comentário será adicionado à página "[$3 $2]", junto com o seu nome de usuário e o navegador que estiver usando neste momento.',
@@ -20706,14 +20709,14 @@ Caso contrário, você poderá usar o formulário simplificado a seguir. Seu com
 	'feedback-bugcheck' => 'Perfeito! Apenas verifique se não é um dos [$1 bugs já conhecidos].',
 	'feedback-bugnew' => 'Eu verifiquei. Relatar um bug novo',
 	'footer_1' => 'Improve $1 by',
-	'footer_1.5' => 'editing this page',
-	'footer_2' => 'Discuss this page',
-	'footer_5' => '$1 made an edit on $2',
-	'footer_6' => 'View random page',
+	'footer_1.5' => 'editar esta página',
+	'footer_2' => 'Debata sobre essa página',
+	'footer_5' => '$1 fez uma edição em $2',
+	'footer_6' => 'Ver página aleatória',
 	'footer_7' => 'Email this page',
-	'footer_8' => 'Share this page',
-	'footer_9' => 'Rate this page',
-	'footer_10' => 'Share with $1',
+	'footer_8' => 'Compartilhe esta página',
+	'footer_9' => 'Classifique esta página',
+	'footer_10' => 'Compartilhe com $1',
 	'featured' => 'Destacado',
 	'forum-url' => 'Forum:Index',
 	'footer_MediaWiki' => '[http://www.mediawiki.org/ MediaWiki]',
