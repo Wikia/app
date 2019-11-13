@@ -2147,7 +2147,7 @@ class Title {
 			# Wikia change - begin
 			# @author macbre (BAC-535)
 			$blocker = $block->getBlocker();
-			if ($blocker instanceof User) {
+			if ( $blocker instanceof User ) {
 				// user groups to be displayed instead of user name
 				$groups = [
 					'staff',
@@ -2156,9 +2156,9 @@ class Title {
 				];
 				$blockerGroups = $blocker->getEffectiveGroups();
 
-				foreach($groups as $group) {
-					if (in_array($group, $blockerGroups)) {
-						$link = wfMessage("group-$group")->plain();
+				foreach ( $groups as $group ) {
+					if ( in_array( $group, $blockerGroups ) ) {
+						$link = '[[Special:Contact|' . wfMessage( 'fandom-support' )->plain() . ']]';
 					}
 				}
 			}

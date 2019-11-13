@@ -29,8 +29,8 @@ The block was made by $1.
 * Current IP address: $3
 </div>
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
+You may contact $1 or an [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
+Please include all of the details above in any queries you make.',
 	'blockednoreason' => 'no reason given',
 	'blocked-notice-logextract' => 'This user is currently blocked.
 The latest block log entry is provided below for reference:',
@@ -8031,22 +8031,20 @@ $messages['it'] = array(
 	'bold_sample' => 'Grassetto',
 	'bold_tip' => 'Grassetto',
 	'blockedtitle' => 'Utente bloccato.',
-	'blockedtext' => "<big>'''Questo nome utente o indirizzo IP sono stati bloccati.'''</big>
+	'blockedtext' => '<big>\'\'\'Questo nome utente o indirizzo IP è stato bloccato.\'\'\'</big>
 
-<div id=\"mw-message-blockedtext\" style=\"border:1px solid black; padding-left:0.5em;\">
-Il blocco è stato imposto da ''\$1''.
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+Il blocco è stato imposto da \'\'$1\'\'.
 
-* Ragione fornita: \$2
-* Inizio del blocco: \$8
-* Scadenza del blocco: \$6
-* Obiettivo del blocco: \$7
-* ID del blocco: #\$5
-* Indirizzo IP corrente: \$3
+* Ragione fornita: $2
+* Inizio del blocco: $8
+* Scadenza del blocco: $6
+* Obiettivo del blocco: $7
+* ID del blocco: #$5
+* Indirizzo IP corrente: $3
 </div>
 
-Se lo si desidera, è possibile contattare ''\$1'' o un altro [[Special:ListUsers/sysop|amministratore]] per discutere del blocco.
-
-Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.",
+È possibile contattare $1 o un altro [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] per chiedere chiarimenti circa il blocco. Si prega di specificare tutti i dettagli qui inclusi in qualsiasi richiesta di chiarimenti.',
 	'blockednoreason' => 'nessuna motivazione indicata',
 	'blocked-notice-logextract' => "Questo utente è attualmente bloccato.
 L'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:",
@@ -8265,9 +8263,9 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 $messages['ja'] = array(
 	'broken-file-category' => '壊れたファイルへのリンクがあるページ',
 	'badaccess' => '権限がありません',
-	'badaccess-group0' => '要求した操作を行うことは許可されていません。',
-	'badaccess-groups' => 'この操作は、$1{{PLURAL:$2|の|のいずれかの}}グループに属する利用者のみが実行できます。',
-	'badarticleerror' => 'このページでは要求された操作を行えません。',
+	'badaccess-group0' => '要求した操作を行う権限がありません。',
+	'badaccess-groups' => '$1{{PLURAL:$2|の|のいずれかの}}グループに属するユーザーのみ、この操作を行えます。',
+	'badarticleerror' => 'このページでは要求された操作を行えません。ページが既に削除された可能性があります。',
 	'badtitle' => '不正なページ名',
 	'badtitletext' => '要求されたページ名は、無効、空、または正しくない言語間リンク・ウィキ間リンクのページ名です。
 ページ名に利用できない文字が1つ以上含まれている可能性があります。',
@@ -8275,26 +8273,28 @@ $messages['ja'] = array(
 	'blocked-mailpassword' => '使用しているIPアドレスからの編集はブロックされており、不正利用防止のため、パスワードの再発行機能は使用できません。',
 	'bold_sample' => '太字',
 	'bold_tip' => '太字',
-	'blockedtitle' => '利用者はブロックされています',
-	'blockedtext' => "'''このユーザー名またはIPアドレスはブロックされています。'''
+	'blockedtitle' => 'ユーザーはブロックされています',
+	'blockedtext' => '<big>\'\'このユーザー名またはIPアドレスはブロックされています。\'\'\'</big>
 
-ブロックは$1によって実施されました。
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+このブロックは$1さんが設定しました。
 
-*ブロックの理由：$2
+* ブロックの理由：$2
 * ブロック開始時期：$8
 * ブロック解除予定：$6
 * ブロック対象：$7
-*ブロックID: #$5
-*現在のIPアドレス: $3
+* ブロックID：#$5
+* 現在のIPアドレス：$3
+</div>
 
-このブロックについて、$1もしくは他の[[Special:ListUsers|{{MediaWiki:Grouppage-sysop}}]]に問い合わせることができます。
-問い合わせを行う際には、上記のボックスに詳細を記入してください。",
+このブロックについては、$1さん、もしくは[[Special:ListUsers|{{MediaWiki:group-sysop-member}}]]に問い合わせることができます。
+問い合わせの際には、以上の情報も併せてお知らせください。',
 	'blockednoreason' => '理由が設定されていません',
-	'blocked-notice-logextract' => 'この利用者は現在ブロックされています。
+	'blocked-notice-logextract' => 'このユーザーは現在ブロックされています。
 参考のために最新のブロック記録を以下に表示します。',
 	'badsig' => '署名用のソースが正しくありません。
 HTMLタグを見直してください。',
-	'badsiglength' => '署名が長すぎます。$1文字以下でなければなりません。',
+	'badsiglength' => '署名が長すぎます。$1文字以下にしてください。',
 	'boteditletter' => 'ボ',
 	'badfilename' => 'ファイル名は「$1」へ変更されました。',
 	'backend-fail-stream' => 'ファイル $1 をストリームできませんでした。',
@@ -8312,31 +8312,31 @@ HTMLタグを見直してください。',
 	'backend-fail-closetemp' => '一時ファイルを閉じることができませんでした。',
 	'backend-fail-read' => 'ファイル $1 を読み込めませんでした。',
 	'backend-fail-create' => 'ファイル $1 を作成できませんでした。',
-	'backend-fail-readonly' => '申し訳ありません、「$1」は現在読み取り専用となっています。理由:「$2」',
+	'backend-fail-readonly' => '申し訳ありません、「$1」は現在読み取り専用となっています。理由：「$2」',
 	'backend-fail-synced' => 'ファイル「$1」は、ストレージバックエンド内部において不一致の状態にあります。',
 	'backend-fail-contenttype' => '「$1」に保存するコンテンツの種類が判断できませんでした。',
 	'brokenredirects' => '迷子のリダイレクト',
-	'brokenredirectstext' => '以下の転送は、存在しないページにリンクしています：',
+	'brokenredirectstext' => '以下の転送は、存在しないページにリンクしています。',
 	'brokenredirects-edit' => '編集',
 	'brokenredirects-delete' => '削除',
 	'booksources' => '書籍情報源',
 	'booksources-search-legend' => '書籍情報源を検索',
 	'booksources-go' => '検索',
-	'booksources-text' => '以下は、新古本を販売している外部サイトへのリンクの一覧で、検索中の本について、更に詳しい情報が提供されているかもしれません：',
+	'booksources-text' => '以下は、書籍（新本・古本）を販売している外部サイトのリンクの一覧です。検索中の本について、更に詳しい情報が提供されているかもしれません。',
 	'booksources-invalid-isbn' => '指定されたISBN番号は有効ではないようです。参照している情報源から写し間違えていませんか。',
 	'blanknamespace' => '（標準）',
-	'block' => '利用者をブロック',
-	'blockip' => '利用者をブロック',
-	'blockip-title' => '利用者のブロック',
-	'blockip-legend' => '利用者をブロック',
-	'blockiptext' => '以下のフォームを使用して、指定した利用者やIPアドレスからの書き込みアクセスをブロックすることができます。
-このような措置は、荒らしからの防御のためにのみ行われるべきで、また[[{{MediaWiki:Policy-url}}|方針]]に沿ったものであるべきです。
+	'block' => 'ユーザーをブロック',
+	'blockip' => 'ユーザーをブロック',
+	'blockip-title' => 'ユーザーのブロック',
+	'blockip-legend' => 'ユーザーをブロック',
+	'blockiptext' => '以下のフォームを使用して、指定したユーザーやIPアドレスからの書き込みアクセスをブロックすることができます。
+このような措置は、荒らしからの防御のためにのみ、また[[{{MediaWiki:Policy-url}}|方針]]に沿って行ってください。
 以下にブロックの理由を具体的に書いてください（例えば、荒らされたページへの言及など）。',
 	'badipaddress' => '不正なIPアドレス',
 	'blockipsuccesssub' => 'ブロックしました',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]をブロックしました。<br />
-[[Special:BlockList|投稿ブロック中の利用者やIPアドレス]]を参照してください。',
-	'blocklist' => 'ブロック中の利用者',
+[[Special:BlockList|投稿ブロック中のユーザーやIPアドレス]]を参照してください。',
+	'blocklist' => 'ブロック中のユーザー',
 	'blocklist-userblocks' => 'アカウントのブロックを非表示',
 	'blocklist-tempblocks' => '有期ブロックを非表示',
 	'blocklist-addressblocks' => '単一IPのブロックを非表示',
@@ -8344,26 +8344,26 @@ HTMLタグを見直してください。',
 	'blocklist-timestamp' => 'タイムスタンプ',
 	'blocklist-target' => '対象',
 	'blocklist-expiry' => '期限',
-	'blocklist-by' => 'ブロックした管理者',
+	'blocklist-by' => 'ブロックしたアドミン',
 	'blocklist-params' => 'ブロックのパラメータ',
 	'blocklist-reason' => '理由',
-	'blocklist-nousertalk' => '自身のトークページ編集禁止',
+	'blocklist-nousertalk' => '自身のトークページの編集禁止',
 	'blocklink' => 'ブロック',
 	'blocklogpage' => 'ブロック記録',
-	'blocklog-showlog' => 'この利用者は以前にブロックされたことがあります。
-参考のため、ブロックの記録を以下に示します：',
-	'blocklog-showsuppresslog' => 'この利用者は以前にブロックされ、隠されたことがあります。
-参考のため、隠蔽記録を以下に示します：',
+	'blocklog-showlog' => 'このユーザーは以前ブロックされたことがあります。
+参考のため、ブロックの記録を以下に示します。',
+	'blocklog-showsuppresslog' => 'このユーザーは以前にブロックされ、隠されたことがあります。
+参考のため、隠蔽記録を以下に示します。',
 	'blocklogentry' => '[[$1]] を$2ブロックしました。ブロックの詳細$3',
-	'blocklogtext' => 'このページは利用者のブロックと解除の記録です。
+	'blocklogtext' => 'このページはユーザーのブロックと解除の記録です。
 自動的にブロックされたIPアドレスは表示されていません。
 現時点で有効なブロックは[[Special:BlockList|ブロックの一覧]]をご覧ください。',
-	'block-log-flags-anononly' => '匿名利用者のみ',
+	'block-log-flags-anononly' => '未登録ユーザーのみ',
 	'block-log-flags-noautoblock' => '自動ブロック無効',
 	'block-log-flags-noemail' => 'メール送信のブロック',
 	'block-log-flags-nousertalk' => '自身のトークページの編集禁止',
 	'block-log-flags-angry-autoblock' => '拡張自動ブロック有効',
-	'block-log-flags-hiddenname' => '利用者名を隠す',
+	'block-log-flags-hiddenname' => 'ユーザー名を隠す',
 	'blockme' => '自分をブロック',
 	'bydate' => '日付順',
 	'bad_image_list' => '書式は以下の通りです：
@@ -8384,10 +8384,10 @@ Avatar6.jpg',
 	'backend-fail-hashes' => '比較用ハッシュを取得できませんでした。',
 	'backend-fail-connect' => 'ストレージバックエンド「$1」に接続できませんでした。',
 	'backend-fail-internal' => 'ストレージバックエンド「$1」でエラーが発生しました。',
-	'backend-fail-batchsize' => '$1ファイル{{PLURAL:$1|オペレーション|オペレーション}}のバッチのストレージバックエンド; 上限は$2 {{PLURAL:$2|オペレーション|オペレーション}}までです。',
+	'backend-fail-batchsize' => '$1ファイル{{PLURAL:$1|オペレーション|オペレーション}}のバッチのストレージバックエンド；上限は$2 {{PLURAL:$2|オペレーション|オペレーション}}までです。',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
-	'booksources-isbn' => 'ISBN:',
+	'booksources-isbn' => 'ISBN：',
 	'blocklist-summary' => '',
 	'block-log-flags-nocreate' => 'アカウント作成のブロック',
 	'bitrate-bits' => '$1bps',

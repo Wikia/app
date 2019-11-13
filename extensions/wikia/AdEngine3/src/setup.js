@@ -148,6 +148,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'),
 	);
 
+	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
+
 	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
@@ -185,6 +187,9 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
+
+		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
+		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
 
 	if (instantConfig.isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {

@@ -25,21 +25,19 @@ As a result, visitors using this IP address cannot create any more accounts at t
 	'accountcreatedtext' => 'The user account for $1 has been created.',
 	'anoneditwarning' => 'You are not logged in.',
 	'anonpreviewwarning' => "''You are not logged in. Saving will record your IP address in this page's edit history.''",
-	'autoblockedtext' => 'Your IP address has been automatically blocked because it was used by another user, who was blocked by $1.
+	'autoblockedtext' => "Your IP address has been automatically blocked because it was used by another user, who was blocked by $1.
 The reason given is this:
 
-:\'\'$2\'\'
+:''$2''
 
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-
-You may contact $1 or one of the other [[{{MediaWiki:Grouppage-sysop}}|administrators]] to discuss the block.
-
-Note that you may not use the "e-mail this user" feature unless you have a valid e-mail address registered in your [[Special:Preferences|user preferences]] and you have not been blocked from using it.
+* Start of block: $7
+* Expiry of block: $5
+* Intended blockee: $6
 
 Your current IP address is $3, and the block ID is #$5.
-Please include all above details in any queries you make.',
+
+You may contact $1 or an [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
+Please include all of the details above in any queries you make.",
 	'accmailtitle' => 'Password sent.',
 	'accmailtext' => "A randomly generated password for [[User talk:$1|$1]] has been sent to $2.
 
@@ -6334,9 +6332,9 @@ $messages['de'] = array(
 	'aboutsite' => 'Über {{SITENAME}}',
 	'aboutpage' => '{{ns:project}}:Über_dieses_Wiki',
 	'actionthrottled' => 'Aktionsanzahl limitiert',
-	'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
-Bitte versuche es in ein paar Minuten erneut.',
-	'acct_creation_throttle_hit' => 'Du hast schon $1 Benutzerkonten angelegt und kannst vorerst keine weiteren mehr anlegen.',
+	'actionthrottledtext' => 'Du kannst diese Aktion zur Zeit nicht ausführen. Bitte versuche es in ein paar Minuten erneut oder [[Spezial:Kontakt|kontaktieren unseren Support]], wenn du weiterhin Probleme hast.',
+	'acct_creation_throttle_hit' => 'Besucher dieses Wikis haben mit deiner IP-Adresse kürzlich bereits {{PLURAL:$1|einen Account|$1 Accounts}} erstellt, was in diesem Zeitraum die maximal erlaubte Anzahl ist.
+Aus diesem Grund kann aktuell mit der IP-Adresse kein weiterer Account erstellt werden.',
 	'accountcreated' => 'Benutzerkonto erstellt',
 	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
 	'anoneditwarning' => "<table align=center width=75% cellpadding=5 style=\"background: #D3E1F2; border: 1px solid #aaa; color: black;\">
@@ -6472,7 +6470,7 @@ Bitte wähle einen anderen Titel.',
 	'autosumm-replace' => 'Der Seiteninhalt wurde durch einen anderen Text ersetzt: „$1“',
 	'autoredircomment' => 'Weiterleitung auf [[$1]] erstellt',
 	'autosumm-new' => 'Die Seite wurde neu angelegt: „$1“',
-	'api-error-badaccess-groups' => 'Du hast nicht die Berechtigung Dateien in dieses Wiki hochzuladen.',
+	'api-error-badaccess-groups' => 'Du hast nicht die Berechtigung, Dateien in diesem Wiki hochzuladen.',
 	'api-error-badtoken' => 'Interner Fehler: Der Token ist fehlerhaft.',
 	'api-error-copyuploaddisabled' => 'Das Hochladen via URL wurde auf diesem Server deaktiviert.',
 	'api-error-duplicate' => 'Es gibt im Wiki bereits {{PLURAL:$1|[$2 eine andere Datei]|[$2 mehrere andere Dateien]}} gleichen Inhalts.',
@@ -13336,16 +13334,13 @@ La motivazione del blocco è la seguente:
 
 :''$2''
 
-* Inizio del blocco: $8
-* Scadenza del blocco: $6
-* Intervallo di blocco: $7
+* Inizio del blocco: $7
+* Scadenza del blocco: $5
+* Obiettivo del blocco: $6
 
-È possibile contattare $1 o un altro [[{{MediaWiki:Grouppage-sysop}}|amministratore]] per richiedere eventuali chiarimenti circa il blocco.
+L'indirizzo IP attuale è $3, il numero ID del blocco è #$5.
 
-Si noti che la funzione 'Scrivi all'utente' non è attiva se non è stato registrato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]] e, comunque, se nell'applicare il blocco, tale funzione è stata disabilitata (per la durata del blocco).
-
-L'indirizzo IP attuale è $3, il numero ID del blocco è #$5
-Si prega di specificare tutti i dettagli qui inclusi nel compilare qualsiasi richiesta di chiarimenti.",
+È possibile contattare $1 o un altro [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] per chiedere chiarimenti circa il blocco. Si prega di specificare tutti i dettagli qui inclusi in qualsiasi richiesta di chiarimenti.",
 	'accmailtitle' => 'Password inviata.',
 	'accmailtext' => "Una password generata casualmente per [[User talk:$1|$1]] è stata inviata a $2.
 
@@ -13810,21 +13805,19 @@ $messages['ja'] = array(
 </tr>
 </table>',
 	'anonpreviewwarning' => "''ログインしていません。投稿を保存すると、このページの履歴に使用中のIPアドレスが記録されます。''",
-	'autoblockedtext' => "利用中のIPアドレスは、$1によって投稿をブロックされた利用者によって使用されたために自動的にブロックされています。
-理由は次の通りです。
+	'autoblockedtext' => "このIPアドレスは、$1さんがブロックを設定した別のユーザーによって使用されたため、自動的にブロックされました。
+ブロックの理由：
 
 :''$2''
 
-* ブロックの開始：$8
-* ブロック解除予定：$6
-* 意図されているブロック対象者：$7
+* ブロック開始時期：$7
+* ブロック解除予定：$5
+* ブロック対象：$6
 
-$1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件について問い合わせることができます。
+現在のIPアドレスは$3、ブロックIDは#$5です。
 
-ただし、[[Special:Preferences|個人設定]]に正しいメールアドレスが登録されていない場合、またはメール送信がブロックされている場合、メール送信機能が使えないことに注意してください。
-
-現在利用中のIPアドレスは$3 、このブロックIDは&#x23;$5です。
-問い合わせを行う際には、この情報を必ず書いてください。",
+このブロックについては、$1さん、もしくは[[Special:ListUsers|{{MediaWiki:group-sysop-member}}]]に問い合わせることができます。
+問い合わせの際には、以上の情報も併せてお知らせください。",
 	'accmailtitle' => 'パスワードを送信しました。',
 	'accmailtext' => "[[User talk:$1|$1]]のために無作為に生成したパスワードを、$2に送信しました。
 
@@ -17772,7 +17765,7 @@ $messages['lol'] = array(
 	'accountcreatedtext' => 'crwdns27245:0crwdne27245:0',
 	'anoneditwarning' => 'crwdns48408:0crwdne48408:0',
 	'anonpreviewwarning' => 'crwdns27247:0crwdne27247:0',
-	'autoblockedtext' => 'crwdns27248:0{{MediaWiki:Grouppage-sysop}}crwdne27248:0',
+	'autoblockedtext' => 'crwdns94092:0{{MediaWiki:group-sysop-member}}crwdne94092:0',
 	'accmailtitle' => 'crwdns27249:0crwdne27249:0',
 	'accmailtext' => 'crwdns27250:0crwdne27250:0',
 	'anontalkpagetext' => 'crwdns48409:0{{ns:Special}}crwdne48409:0',

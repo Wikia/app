@@ -38,7 +38,8 @@ class ConfigureCategories extends Task {
 				WikiFactoryHub::VERTICAL_ID_BOOKS,
 				WikiFactoryHub::VERTICAL_ID_COMICS,
 				WikiFactoryHub::VERTICAL_ID_MUSIC,
-				WikiFactoryHub::VERTICAL_ID_MOVIES
+				WikiFactoryHub::VERTICAL_ID_MOVIES,
+				WikiFactoryHub::VERTICAL_ID_ANIME
 			]
 		) ) {
 			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT );

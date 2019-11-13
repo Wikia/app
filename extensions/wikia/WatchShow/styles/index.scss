@@ -5,11 +5,24 @@
 	.WikiaRail &.rail-module .wds-button.wds-is-secondary {
 		// overrides margin-left from skins/oasis/css/core/page.scss
 		margin-left: 0;
+		margin-right: 18px;
 	}
 
 	&__content {
 		@include align-items(center);
 		@include flexbox();
+	}
+
+	&__disclaimer-message {
+		background-color: rgba($wds-fandom-color-black, .1);
+		color: $wds-fandom-color-black;
+		font-size: 8px;
+		font-style: italic;
+		letter-spacing: .02px;
+		line-height: 1.5;
+		margin-bottom: 20px;
+		padding: 10px;
+		position: relative;
 	}
 
 	&__image {

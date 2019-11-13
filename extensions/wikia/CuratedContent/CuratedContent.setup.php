@@ -21,6 +21,8 @@ $wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentContr
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentModel'] =  __DIR__ . '/CuratedContentModel.class.php' ;
 $wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.class.php' ;
+$wgAutoloadClasses['ImageFinderController'] =  __DIR__ . '/ImageFinderController.php' ;
+$wgAutoloadClasses['ImageUploadController'] =  __DIR__ . '/ImageUploadController.php' ;
 
 /**
  * message files

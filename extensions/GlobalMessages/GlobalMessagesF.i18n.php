@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'fandom-support' => 'Fandom Support',
 	'friday' => 'Friday',
 	'fri' => 'Fri',
 	'february' => 'February',
@@ -5457,7 +5458,7 @@ $messages['de'] = array(
 	'filestatus' => 'Copyright-Status:',
 	'filesource' => 'Quelle:',
 	'filename-toolong' => 'Dateinamen dürfen nicht größer als 240 Byte sein.',
-	'filetype-mime-mismatch' => 'Dateierweiterung „.$1“ stimmt nicht mit dem MIME-Typ ($2) überein.',
+	'filetype-mime-mismatch' => 'Dateiendung „.$1“ stimmt nicht mit dem MIME-Typ ($2) überein.',
 	'filetype-badmime' => 'Dateien mit dem MIME-Typ „$1“ dürfen nicht hochgeladen werden.',
 	'filetype-bad-ie-mime' => 'Diese Datei kann nicht hochgeladen werden, da der Internet Explorer sie als „$1“ erkennt, welcher ein nicht erlaubter potentiell gefährlicher Dateityp ist.',
 	'filetype-unwanted-type' => "'''„.$1“''' ist ein unerwünschtes Dateiformat. Erlaubt {{PLURAL:$3|ist das Dateiformat|sind die Dateiformate}}: $2.",
@@ -5544,11 +5545,13 @@ PICT # misc.
 	'filedelete-nofile-old' => "Es gibt von '''„$1“''' keine archivierte Version mit den angegebenen Attributen.",
 	'filedelete-otherreason' => 'Anderer/ergänzender Grund:',
 	'filedelete-reason-otherlist' => 'Anderer Grund',
-	'filedelete-reason-dropdown' => '* Allgemeine Löschgründe
+	'filedelete-reason-dropdown' => '* Vandalismus und Probleme
 ** Urheberrechtsverletzung
-** Duplikat
-** Nicht mehr benötigt
-** Spam / Housekeeping',
+** Spam / Vandalismus
+* Instandhaltung
+** Löschantrag
+** Aufräumen
+** Duplikat',
 	'filedelete-edit-reasonlist' => 'Löschgründe bearbeiten',
 	'filedelete-maintenance' => 'Das Löschen und Wiederherstellen von Dateien ist aufgrund von Wartungsarbeiten vorübergehend deaktiviert.',
 	'filedelete-maintenance-title' => 'Die Datei kann nicht gelöscht werden.',
@@ -20551,13 +20554,13 @@ $messages['pt'] = array(
 {{PLURAL:\$3|O tipo preferível é|Os tipos preferíveis são}} \$2.",
 	'filetype-banned-type' => '\'\'\'".$1"\'\'\' {{PLURAL:$4|não é um tipo de arquivo permitido|não são tipos de arquivos permitidos}}.
 {{PLURAL:$3|O tipo de arquivo permitido é|Os tipos de arquivos permitidos são}} $2.',
-	'filetype-missing' => 'O arquivo não possui uma extensão (como, por exemplo, ".jpg").',
+	'filetype-missing' => 'O arquivo não possui uma extensão (como, por exemplo, ".jpg"). Por favor cheque o arquivo e o envie novamente',
 	'file-too-large' => 'O arquivo que você enviou era muito grande.',
 	'filename-tooshort' => 'O nome do arquivo é curto demais.',
 	'filetype-banned' => 'Este tipo de arquivo é proibido.',
-	'fileexists' => "Já existe um arquivo com este nome.
-Verifique '''<tt>[[:$1]]</tt>''' caso não tenha certeza se deseja alterar o arquivo atual.
-[[$1|thumb]]",
+	'fileexists' => 'Já existe um arquivo com este nome.
+Verifique [[:$1]] caso não tenha certeza se deseja alterar o arquivo atual. Uma vez enviado, essa foto pode levar até 2 minutos para ser visível.
+[[$1|thumb]]',
 	'filepageexists' => "A página de descrição deste arquivo já foi criada em '''<tt>[[:$1]]</tt>''', mas atualmente não existe nenhum arquivo com este nome.
 O sumário que você inseriu não aparecerá na página de descrição.
 Para que ele apareça, será necessário editá-lo manualmente.
