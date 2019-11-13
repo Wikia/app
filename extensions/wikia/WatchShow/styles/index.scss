@@ -1,5 +1,5 @@
-@import 'skins/shared/mixins/flexbox';
 @import "skins/shared/color";
+@import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
 
 .watch-show {
@@ -10,7 +10,7 @@
 	}
 
 	.WikiaRail &.rail-module &__cta-header {
-		// overrides user front styles
+		// overrides user font styles
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 		font-size: $wds-font-size-base !important;
 		text-align: left !important;
