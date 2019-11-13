@@ -2,14 +2,14 @@
 
 class WatchShowService extends WikiaService {
 	public function index() {
-		global 	$wgWatchShowURL,
-				$wgWatchShowCTA,
-				$wgWatchShowButtonLabel,
-				$wgWatchShowCTACA,
-				$wgWatchShowButtonLabelCA,
-				$wgWatchShowImageURL,
-				$wgWatchShowImageURLMobileDarkTheme,
-				$wgWatchShowTrackingPixelURL;
+		global $wgWatchShowURL,
+		       $wgWatchShowCTA,
+		       $wgWatchShowButtonLabel,
+		       $wgWatchShowCTACA,
+		       $wgWatchShowButtonLabelCA,
+			   $wgWatchShowImageURL,
+			   $wgWatchShowImageURLMobileDarkTheme,
+		       $wgWatchShowTrackingPixelURL;
 
 		$this->response->setValues( [
 			'url' => $wgWatchShowURL,
