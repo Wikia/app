@@ -15,6 +15,11 @@
 
 	&__disclaimer-message {
 		background-color: rgba($wds-fandom-color-black, .1);
+
+		@if $is-dark-wiki {
+			background-color: rgba($wds-color-white, .4);
+		}
+		
 		color: $wds-fandom-color-black;
 		font-size: 8px;
 		font-style: italic;
