@@ -26,6 +26,12 @@
 		position: relative;
 	}
 
+	&__cta-header {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+		font-size: $wds-font-size-base !important;
+		text-align: left !important;
+	}
+
 	&__image {
 		max-width: 100%;
 		max-height: 37px;
