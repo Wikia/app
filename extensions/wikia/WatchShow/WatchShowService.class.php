@@ -8,6 +8,7 @@ class WatchShowService extends WikiaService {
 		       $wgWatchShowCTACA,
 		       $wgWatchShowButtonLabelCA,
 		       $wgWatchShowImageURL,
+		       $wgWatchShowImageURLMobileDarkTheme,
 		       $wgWatchShowTrackingPixelURL;
 
 		$this->response->setValues( [
@@ -16,7 +17,8 @@ class WatchShowService extends WikiaService {
 			'buttonLabel' => $wgWatchShowButtonLabel,
 			'callToActionCA' => $wgWatchShowCTACA,
 			'buttonLabelCA' => $wgWatchShowButtonLabelCA,
-			'imageURL' => $wgWatchShowImageURL,
+			// TODO:: Replace $wgWatchShowImageURLMobileDarkTheme with $wgWatchShowImageURLDarkTheme variable once set in Wiki Factory
+			'imageURL' => SassUtil::isThemeDark() ? $wgWatchShowImageURLMobileDarkTheme : $wgWatchShowImageURL,
 			'trackingPixelURL' => $wgWatchShowTrackingPixelURL,
 		] );
 	}
