@@ -1154,14 +1154,12 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		// wrap image slideshow inside div.slideshow
-		$attribs = Sanitizer::mergeAttributes(
-			array(
-				'class' => $class,
-				'data-hash' => $this->mData['hash'],
-				'data-crop' => $this->mCrop,
-				'id' => $id,
-			),
-			$this->mAttribs );
+		$attribs = Sanitizer::mergeAttributes( $this->mAttribs, array(
+			'class' => $class,
+			'data-hash' => $this->mData['hash'],
+			'data-crop' => $this->mCrop,
+			'id' => $id,
+		) );
 
 		// renderSlideshow for WikiaMobile
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
