@@ -79,7 +79,7 @@ class WikiaRobots {
 		// Discussions guidelines
 		'/d/g',
 		// Feeds and posts user pages
-		'/f/u',
+		'/f/u/',
 		// Feeds and posts guidelines
 		'/f/g',
 		// Fandom old URLs
