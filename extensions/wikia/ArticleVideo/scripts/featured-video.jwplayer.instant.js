@@ -90,6 +90,8 @@ require([
 	}
 
 	function configurePlayer(willAutoplay, willMute) {
+		win.guaSetCustomDimension(30, videoDetails.isDedicatedForArticle ? 'article' : 'wiki');
+
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
