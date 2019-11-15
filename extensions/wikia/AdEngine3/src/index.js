@@ -76,9 +76,6 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackTabId();
 	trackXClick();
 	taxonomyService.configureComixologyTargeting();
-	console.log('APP:');
-	console.log(context.get('wiki.targeting.wikiId'));
-	console.log(context.get('wiki.targeting.pageArticleId'));
 }
 
 function startAdEngine() {
