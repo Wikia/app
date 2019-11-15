@@ -19,6 +19,7 @@ import {
 	moatYiEvents,
 	nielsen,
 	SlotTweaker,
+	taxonomyService,
 	utils
 } from '@wikia/ad-engine';
 import { babDetection } from './wad/bab-detection';
@@ -74,6 +75,10 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackLikhoToDW();
 	trackTabId();
 	trackXClick();
+	taxonomyService.configureComixologyTargeting();
+	console.log('APP:');
+	console.log(context.get('wiki.targeting.wikiId'));
+	console.log(context.get('wiki.targeting.pageArticleId'));
 }
 
 function startAdEngine() {

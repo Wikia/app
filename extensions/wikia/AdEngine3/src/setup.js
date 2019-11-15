@@ -138,6 +138,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.krux.trackedSegments', instantConfig.get('icKruxSegmentsTracking'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
+	context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
+	context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
 
 	const moatSampling = instantConfig.get('wgAdDriverMoatTrackingForFeaturedVideoAdSampling');
 	const isMoatTrackingEnabledForVideo = instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdCountries')
