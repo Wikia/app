@@ -83,6 +83,8 @@ class CreateWikiChecks {
 		$sResponse = "";
 		if ( $sValue == "" ) {
 			$sResponse = wfMsg( 'autocreatewiki-empty-wikiname' );
+		} elseif (  strlen( $sValue ) > 50 ) {
+			$sResponse = wfMsg( 'autocreatewiki-community-name-too-long' );
 		} elseif ( preg_match( '/[^' . $wgLegalTitleChars . ']/i', $sValue ) ) {
 			$sResponse = wfMsg( 'autocreatewiki-invalid-wikiname' );
 		} elseif ( !in_array( 'staff', $wgUser->getGroups() ) && (self::checkBadWords( $sValue, "name", true ) === false) ) {
@@ -107,7 +109,7 @@ class CreateWikiChecks {
 			#-- too short
 			$message = wfMessage( 'autocreatewiki-name-too-short' );
 		} elseif ( $sNameLength > 50 ) {
-			#-- too short
+			#-- too long
 			$message = wfMessage( 'autocreatewiki-name-too-long' );
 		} elseif ( preg_match( '/[^a-z0-9-]/i', $sName ) ||
 			$sName[0] == '-' || $sName[$sNameLength - 1] == '-'

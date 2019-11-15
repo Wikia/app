@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'autocreatewiki-name-taken' => 'There’s already a wiki with this address. Start editing at $1 or choose another address.',
 	'autocreatewiki-name-too-short' => 'This address is too short, choose an address with at least 3 characters.',
 	'autocreatewiki-name-too-long' => 'This address is too long. Please choose an address with maximum 50 characters.',
+	'autocreatewiki-community-name-too-long' => 'This name is too long. Please choose a name with maximum 50 characters.',
 	'autocreatewiki-empty-wikiname' => 'The name of the wiki cannot be empty.',
 	'autocreatewiki-category-label' => 'Category:',
 	'autocreatewiki-welcometalk-log' => 'Welcome Message',
