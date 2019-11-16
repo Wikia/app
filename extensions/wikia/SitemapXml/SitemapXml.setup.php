@@ -48,9 +48,6 @@ $wgSpecialPageGroups['Sitemap'] = 'wikia';
 
 $wgAutoloadClasses['SitemapXmlModel'] = __DIR__ . '/SitemapXmlModel.class.php';
 $wgAutoloadClasses['SitemapXmlController'] = __DIR__ . '/SitemapXmlController.class.php';
-$wgAutoloadClasses['ApiSitemapXml'] = __DIR__ . '/ApiSitemapXml.php';
-
-$wgAPIModules["sitemap"] = "ApiSitemapXml";
 
 $wgHooks['BeforeTitleRedirect'][] = 'SitemapHooks::onBeforeTitleRedirect';
 $wgHooks['TestCanonicalRedirect'][] = 'SitemapHooks::onTestCanonicalRedirect';

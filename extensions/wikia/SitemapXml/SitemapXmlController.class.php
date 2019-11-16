@@ -58,7 +58,18 @@ class SitemapXmlController extends WikiaController {
 		$start = microtime( true ) * 1000;
 		$response = $this->getResponse();
 
-		$path = $this->getRequest()->getVal( 'path', 'sitemap-index.xml' );
+		$path = $this->getRequest()->getVal( 'path', '' );
+
+		$showIndex = strpos( $path, '-index.xml' ) !== false;
+
+		$forceOldSitemap = strpos( $path, '-oldsitemapxml-' ) !== false;
+		$forceNewSitemap = strpos( $path, '-newsitemapxml-' ) !== false;
+
+		if ( !( $showIndex || $forceOldSitemap || $forceNewSitemap ) ) {
+			$this->print404();
+			die;
+		}
+
 		$parsedPath = $this->parsePath( $path );
 
 		if ( $parsedPath->index ) {
@@ -101,6 +112,16 @@ class SitemapXmlController extends WikiaController {
 		$response->setContentType( 'application/xml; charset=utf-8' );
 		$response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$response->setBody( $out );
+	}
+
+	/**
+	 * show 404
+	 *
+	 * @access private
+	 */
+	private function print404() {
+		header( 'HTTP/1.0 404 Not Found' );
+		echo '404: Page doesn\'t exist';
 	}
 
 	private function getLastMod( $touched ) {
