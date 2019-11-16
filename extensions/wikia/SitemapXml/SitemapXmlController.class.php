@@ -54,22 +54,27 @@ class SitemapXmlController extends WikiaController {
 		$this->model = new SitemapXmlModel();
 	}
 
-	public function index() {
-		$start = microtime( true ) * 1000;
-		$response = $this->getResponse();
-
+	public function sitemap() {
 		$path = $this->getRequest()->getVal( 'path', '' );
-
+		$response = $this->getResponse();
 		$showIndex = strpos( $path, '-index.xml' ) !== false;
 
 		$forceOldSitemap = strpos( $path, '-oldsitemapxml-' ) !== false;
 		$forceNewSitemap = strpos( $path, '-newsitemapxml-' ) !== false;
 
-		if ( !( $showIndex || $forceOldSitemap || $forceNewSitemap ) ) {
-			$response->setBody( $this->print404() );
+		if ( ( $showIndex && !$forceOldSitemap ) || $forceNewSitemap ) {
+			$this->index();
 			return;
 		}
+		$response->setBody( $this->print404() );
+		return;
+	}
 
+	public function index() {
+		$start = microtime( true ) * 1000;
+		$response = $this->getResponse();
+
+		$path = $this->getRequest()->getVal( 'path', '' );
 		$parsedPath = $this->parsePath( $path );
 
 		if ( $parsedPath->index ) {
