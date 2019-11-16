@@ -74,7 +74,7 @@ class SitemapXmlController extends WikiaController {
 		$start = microtime( true ) * 1000;
 		$response = $this->getResponse();
 
-		$path = $this->getRequest()->getVal( 'path', '' );
+		$path = $this->getRequest()->getVal( 'path', 'sitemap-index.xml' );
 		$parsedPath = $this->parsePath( $path );
 
 		if ( $parsedPath->index ) {
