@@ -66,8 +66,8 @@ class SitemapXmlController extends WikiaController {
 		$forceNewSitemap = strpos( $path, '-newsitemapxml-' ) !== false;
 
 		if ( !( $showIndex || $forceOldSitemap || $forceNewSitemap ) ) {
-			$this->print404();
-			die;
+			$response->setBody( $this->print404() );
+			return;
 		}
 
 		$parsedPath = $this->parsePath( $path );
@@ -121,7 +121,7 @@ class SitemapXmlController extends WikiaController {
 	 */
 	private function print404() {
 		header( 'HTTP/1.0 404 Not Found' );
-		echo '404: Page doesn\'t exist';
+		return '404: Page doesn\'t exist';
 	}
 
 	private function getLastMod( $touched ) {
