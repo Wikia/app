@@ -139,8 +139,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
 
-	if(instantConfig.get('icTaxonomyComixologyTag')) {
-		context.set('services.taxonomy.comixology.enabled', instantConfig.get('icTaxonomyComixologyTag'));
+	if(instantConfig.get('icTaxonomyComicsTag')) {
+		context.set('services.taxonomy.comics.enabled', instantConfig.get('icTaxonomyComicsTag'));
 		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
 	}

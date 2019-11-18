@@ -75,7 +75,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackLikhoToDW();
 	trackTabId();
 	trackXClick();
-	taxonomyService.configureComixologyTargeting();
+	taxonomyService.configureComicsTargeting();
 }
 
 function startAdEngine() {
