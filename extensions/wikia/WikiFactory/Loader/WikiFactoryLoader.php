@@ -179,7 +179,7 @@ class WikiFactoryLoader {
 					] as $header => $key) {
 				$details[ $key ] = isset( $server[$header] ) ? $server[$header] : '';
 			}
-			$log->info('apache request received', $details );
+//			$log->info('apache request received', $details );
 		}
 
 	}

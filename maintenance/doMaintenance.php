@@ -116,7 +116,7 @@ require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 // Much much faster startup than creating a title object
 $wgTitle = null;
 
-\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
+//\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
 
 function getMaintenanceRuntimeStatistics( $exception = null ) {
 	global $wgMaintenanceStartTime, $maintenance;
@@ -141,8 +141,8 @@ try {
 	// Potentially debug globals
 	$maintenance->globals();
 
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
-		getMaintenanceRuntimeStatistics() );
+//	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
+//		getMaintenanceRuntimeStatistics() );
 
 	$maintenance->status->markAsFinished();
 } catch ( MWException $mwe ) {

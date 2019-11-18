@@ -3812,7 +3812,7 @@ abstract class DatabaseBase implements DatabaseType {
 		/* @var $ret mysqli_result|bool */
 		$ret = $this->doQuery( $sql );
 
-		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
+//		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
 
