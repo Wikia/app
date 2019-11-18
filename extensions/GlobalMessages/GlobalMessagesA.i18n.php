@@ -22873,30 +22873,29 @@ W związku z tym, osoby korzystające z tego adresu IP w chwili obecnej nie mog�
 	'accountcreatedtext' => 'Konto dla $1 zostało utworzone.',
 	'anoneditwarning' => "'''Uwaga:''' Nie jesteś {{GENDER:|zalogowany|zalogowana}}.
 Twój adres IP zostanie zapisany w historii edycji strony.",
-	'anonpreviewwarning' => "''Nie jesteś zalogowany. Jeśli zapiszesz zmiany w historii edycji strony zostanie umieszczony Twój adres IP.''",
-	'autoblockedtext' => "Ten adres IP został zablokowany automatycznie, gdyż korzysta z niego inny użytkownik, zablokowany przez administratora $1.
-Powód blokady:
+	'anonpreviewwarning' => "''Nie jesteś zalogowany. Jeśli zapiszesz zmiany w historii edycji strony zostanie umieszczony twój adres IP.''",
+	'autoblockedtext' => 'Twój adres IP zostały automatycznie zablokowany ponieważ był wykorzystywany przez innego użytkownika, na którego została nałożona blokada przez $1.
+Powód nałożenia blokady jest następujący:
+:„$2”
 
-:''$2''
+* Początek blokady: $7
+* Wygaśnięcie blokady: $5
+* Zablokowany został: $6
 
-* Początek blokady: $8
-* Wygaśnięcie blokady: $6
-* Zablokowany został: $7
+Twój obecny adres IP to $3, a ID blokady to #$5.
 
-Możesz skontaktować się z $1 lub jednym z pozostałych [[{{MediaWiki:Grouppage-sysop}}|administratorów]] w celu uzyskania informacji o blokadzie.
-
-Nie możesz użyć funkcji „Wyślij e‐mail do tego użytkownika”, jeśli brak jest poprawnego adresu e‐mail w Twoich [[Special:Preferences|preferencjach]] lub jeśli taka możliwość została Ci zablokowana.
-
-Twój obecny adres IP to $3, a numer identyfikacyjny blokady to $5.
-Prosimy o podanie obu tych numerów przy wyjaśnianiu blokady.",
+W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]].
+Prosimy o podanie powyższych informacji przy wyjaśnianiu kwestii blokady.',
 	'accmailtitle' => 'Hasło zostało wysłane.',
 	'accmailtext' => "Losowo wygenerowane hasło dla [[User talk:$1|$1]] zostało wysłane do $2.
 
 Hasło dla tego nowego konta po zalogowaniu można zmienić na stronie ''[[Special:ChangePassword|zmiana hasła]]''.",
-	'anontalkpagetext' => "---- ''To jest strona dyskusji anonimowego użytkownika – takiego, który nie ma jeszcze swojego konta lub nie chce go w tej chwili używać.
+	'anontalkpagetext' => "<br style=\"clear:both;\" />
+----
+''To jest strona dyskusji anonimowego użytkownika – takiego, który nie ma jeszcze swojego konta lub nie chce go w tej chwili używać.
 By go identyfikować, używamy adresów IP.
-Jednak adres IP może być współdzielony przez wielu użytkowników.
-Jeśli jesteś anonimowym użytkownikiem i uważasz, że zamieszczone tu komentarze nie są skierowane do Ciebie, [[Special:UserLogin/signup|utwórz konto]] lub [[Special:UserLogin|zaloguj się]] – dzięki temu unikniesz w przyszłości podobnych nieporozumień.''",
+
+Niektóre adresy zmieniają się co jakiś czas i mogą być współdzielone przez wielu użytkowników. Jeśli jesteś anonimowym użytkownikiem i uważasz, że zamieszczone tu komentarze nie są skierowane do Ciebie, [[Special:UserLogin/signup|utwórz konto]] lub [[Special:UserLogin|zaloguj się]] – dzięki temu unikniesz w przyszłości podobnych nieporozumień.''",
 	'allowemail' => 'Zgadzam się, by inni użytkownicy mogli przesyłać do mnie e‐maile',
 	'action-read' => 'przeglądania tej strony',
 	'action-edit' => 'edytowania tej strony',
