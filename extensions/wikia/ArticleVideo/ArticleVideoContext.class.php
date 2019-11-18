@@ -19,7 +19,7 @@ class ArticleVideoContext {
 	public static function isFeaturedVideoAvailable( int $pageId ): bool {
 		global $wgEnableArticleFeaturedVideo, $wgCityId, $wgUser;
 
-		if ( !$wgEnableArticleFeaturedVideo || WikiaPageType::isActionPage() ) {
+		if ( !$wgEnableArticleFeaturedVideo || !WikiaPageType::isArticlePage() || WikiaPageType::isActionPage() ) {
 			return false;
 		}
 
