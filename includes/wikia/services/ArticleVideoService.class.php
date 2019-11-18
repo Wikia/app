@@ -75,7 +75,7 @@ class ArticleVideoService {
 	 */
 	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): string {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
-		$mediaId = $videos['defaultMediaId'] ?? '';
+		$mediaId = $videos['default_media_id'] ?? '';
 
 		if ( isset( $videos['mappings'][$pageId] ) ) {
 			$mediaId = $videos['mappings'][$pageId];
