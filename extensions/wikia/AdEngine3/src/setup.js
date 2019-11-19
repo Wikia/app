@@ -140,7 +140,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
 
 	if(instantConfig.get('icTaxonomyComicsTag')) {
-		context.set('services.taxonomy.comics.enabled', instantConfig.get('icTaxonomyComicsTag'));
+		context.set('services.taxonomy.comics.enabled', true);
 		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
 	}
