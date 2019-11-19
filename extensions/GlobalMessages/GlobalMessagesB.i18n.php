@@ -4543,15 +4543,15 @@ Puede que contenga uno o más caracteres que no se pueden usar en los títulos.'
 <div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 El bloqueo fue hecho por $1.
 
-*El motivo dado fue \'\'$2\'\'.
+* Razón dada: $2
 * Inicio del bloqueo: $8
 * Caducidad del bloqueo: $6
 * Bloqueo destinado a: $7
-* ID de bloqueo: #$5
+* ID del bloqueo: #$5
 * Dirección IP actual: $3
 </div>
 
-Puedes contactar con $1 u otro de los [[{{#Special:ListUsers}}{{MediaWiki:Grouppage-sysop}}]] para discutir el bloqueo.
+Puedes contactar con $1 o un [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] para discutir el bloqueo.
 Por favor incluye todos los datos aquí mostrados en cualquier consulta que hagas.',
 	'blockednoreason' => 'no se ha especificado el motivo',
 	'blocked-notice-logextract' => 'Este usuario está actualmente bloqueado.
@@ -14313,20 +14313,21 @@ Talvez contenha um ou mais caracteres que não podem ser usados em títulos.',
 	'bold_sample' => 'Texto em negrito',
 	'bold_tip' => 'Texto em negrito',
 	'blockedtitle' => 'O usuário está bloqueado',
-	'blockedtext' => "'''O seu nome de usuário ou endereço de IP foi bloqueado.'''
+	'blockedtext' => '<big>\'\'\'Seu nome de usuário ou endereço IP foi bloqueado.\'\'\'</big>
 
-O bloqueio foi realizado por \$1.
-O motivo apresentado foi ''\$2''.
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+O bloqueio foi feito por $1.
 
-* Início do bloqueio: \$8
-* Expiração do bloqueio: \$6
-* Destino do bloqueio: \$7
+* Razão do bloqueio: $2
+* Início do bloqueio: $8
+* Expiração do bloqueio: $6
+* Alvo do bloqueio: $7
+* Identidade do bloqueio: #$5
+* Endereço IP atual: $3
+</div>
 
-Você pode contatar \$1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir sobre o bloqueio.
-
-Você só poderá utilizar a funcionalidade \"Contatar usuário\" se um endereço de ''e-mail'' válido estiver especificado em suas [[Special:Preferences|preferências de usuário]] e você não tiver sido bloqueado de utilizar tal recurso.
-O seu endereço de IP atual é \$3 e a ID de bloqueio é #\$5.
-Por favor, inclua todos os detalhes acima em quaisquer tentativas de esclarecimento.",
+Você pode contatar $1 ou [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] para discutir o bloqueio.
+Por favor inclua todos os detalhes acima nas perguntas que fizer.',
 	'blockednoreason' => 'sem motivo especificado',
 	'blocked-notice-logextract' => 'Este usuário está atualmente bloqueado.
 O registro de bloqueio mais recente é fornecido abaixo, para referência:',

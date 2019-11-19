@@ -7612,20 +7612,18 @@ $messages['es'] = array(
 	'accountcreatedtext' => 'La cuenta de usuario para $1 ha sido creada.',
 	'anoneditwarning' => 'No has iniciado sesión con una cuenta de usuario.',
 	'anonpreviewwarning' => "''No has iniciado sesión con una cuenta de usuario. Al guardar los cambios se almacenará tu dirección IP en el historial de edición de la página.''",
-	'autoblockedtext' => "Tu dirección IP ha sido bloqueada automáticamente porque fue utilizada por otro usuario que fue bloqueado por $1.
+	'autoblockedtext' => "Tu dirección IP ha sido automáticamente bloqueada porque fue usada por otro usuario que estaba bloqueado por $1.
 La razón dada es esta:
 
 :''$2''
 
-* Inicio del bloqueo: $8
-* Caducidad del bloqueo: $6
-* Bloqueo destinado a: $7
+* Inicio del bloqueo: $7
+* Caducidad del bloqueo: $5
+* Bloqueo destinado a: $6
 
-Puedes contactar con $1 o con otro de los [[{{MediaWiki:Grouppage-sysop}}|bibliotecarios]] para discutir el bloqueo.
+Tu dirección IP actual es $3, y el ID de bloqueo es #$5.
 
-No puedes utilizar la función «enviar correo electrónico a este usuario»  a menos que tengas una dirección de correo electrónico válida registrada en tus [[Special:Preferences|preferencias de usuario]] y que el bloqueo no haya inhabilitado esta función.
-
-Tu actual dirección IP es $3, y el identificador del bloqueo es #$5.
+Puedes contactar a $1 o un [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] para discutir el bloqueo.
 Por favor incluye todos los datos aquí mostrados en cualquier consulta que hagas.",
 	'accmailtitle' => 'La contraseña ha sido enviada.',
 	'accmailtext' => 'Se ha enviado a $2 una contraseña generada aleatoriamente para [[User talk:$1|$1]].
@@ -22875,30 +22873,29 @@ W związku z tym, osoby korzystające z tego adresu IP w chwili obecnej nie mog�
 	'accountcreatedtext' => 'Konto dla $1 zostało utworzone.',
 	'anoneditwarning' => "'''Uwaga:''' Nie jesteś {{GENDER:|zalogowany|zalogowana}}.
 Twój adres IP zostanie zapisany w historii edycji strony.",
-	'anonpreviewwarning' => "''Nie jesteś zalogowany. Jeśli zapiszesz zmiany w historii edycji strony zostanie umieszczony Twój adres IP.''",
-	'autoblockedtext' => "Ten adres IP został zablokowany automatycznie, gdyż korzysta z niego inny użytkownik, zablokowany przez administratora $1.
-Powód blokady:
+	'anonpreviewwarning' => "''Nie jesteś zalogowany. Jeśli zapiszesz zmiany w historii edycji strony zostanie umieszczony twój adres IP.''",
+	'autoblockedtext' => 'Twój adres IP zostały automatycznie zablokowany ponieważ był wykorzystywany przez innego użytkownika, na którego została nałożona blokada przez $1.
+Powód nałożenia blokady jest następujący:
+:„$2”
 
-:''$2''
+* Początek blokady: $7
+* Wygaśnięcie blokady: $5
+* Zablokowany został: $6
 
-* Początek blokady: $8
-* Wygaśnięcie blokady: $6
-* Zablokowany został: $7
+Twój obecny adres IP to $3, a ID blokady to #$5.
 
-Możesz skontaktować się z $1 lub jednym z pozostałych [[{{MediaWiki:Grouppage-sysop}}|administratorów]] w celu uzyskania informacji o blokadzie.
-
-Nie możesz użyć funkcji „Wyślij e‐mail do tego użytkownika”, jeśli brak jest poprawnego adresu e‐mail w Twoich [[Special:Preferences|preferencjach]] lub jeśli taka możliwość została Ci zablokowana.
-
-Twój obecny adres IP to $3, a numer identyfikacyjny blokady to $5.
-Prosimy o podanie obu tych numerów przy wyjaśnianiu blokady.",
+W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]].
+Prosimy o podanie powyższych informacji przy wyjaśnianiu kwestii blokady.',
 	'accmailtitle' => 'Hasło zostało wysłane.',
 	'accmailtext' => "Losowo wygenerowane hasło dla [[User talk:$1|$1]] zostało wysłane do $2.
 
 Hasło dla tego nowego konta po zalogowaniu można zmienić na stronie ''[[Special:ChangePassword|zmiana hasła]]''.",
-	'anontalkpagetext' => "---- ''To jest strona dyskusji anonimowego użytkownika – takiego, który nie ma jeszcze swojego konta lub nie chce go w tej chwili używać.
+	'anontalkpagetext' => "<br style=\"clear:both;\" />
+----
+''To jest strona dyskusji anonimowego użytkownika – takiego, który nie ma jeszcze swojego konta lub nie chce go w tej chwili używać.
 By go identyfikować, używamy adresów IP.
-Jednak adres IP może być współdzielony przez wielu użytkowników.
-Jeśli jesteś anonimowym użytkownikiem i uważasz, że zamieszczone tu komentarze nie są skierowane do Ciebie, [[Special:UserLogin/signup|utwórz konto]] lub [[Special:UserLogin|zaloguj się]] – dzięki temu unikniesz w przyszłości podobnych nieporozumień.''",
+
+Niektóre adresy zmieniają się co jakiś czas i mogą być współdzielone przez wielu użytkowników. Jeśli jesteś anonimowym użytkownikiem i uważasz, że zamieszczone tu komentarze nie są skierowane do Ciebie, [[Special:UserLogin/signup|utwórz konto]] lub [[Special:UserLogin|zaloguj się]] – dzięki temu unikniesz w przyszłości podobnych nieporozumień.''",
 	'allowemail' => 'Zgadzam się, by inni użytkownicy mogli przesyłać do mnie e‐maile',
 	'action-read' => 'przeglądania tej strony',
 	'action-edit' => 'edytowania tej strony',
@@ -23850,21 +23847,19 @@ Como resultado, visitantes que usam este endereço de IP não podem criar mais n
 	'anoneditwarning' => "'''Atenção''': Você não se encontra autenticado.
 O seu endereço de IP será registrado no histórico de edições desta página.",
 	'anonpreviewwarning' => "''Você não está logado. Ao salvar, o seu endereço IP será registrado no histórico de edições desta página.''",
-	'autoblockedtext' => 'O seu endereço de IP foi bloqueado de forma automática, uma vez que foi utilizado recentemente por outro usuário, o qual foi bloqueado por $1.
-O motivo apresentado foi:
+	'autoblockedtext' => 'Seu endereço IP foi bloqueado automaticamente porque foi usado por outro usuário, que foi bloqueado por $1.
+A razão é:
 
-:\'\'$2\'\'
+:"$2"
 
-* Início do bloqueio: $8
-* Expiração do bloqueio: $6
-* Destino do bloqueio: $7
+*Início do bloqueio: $7
+*Expiração do bloqueio: $5
+*Alvo bloqueado: $6
 
-Você pode contatar $1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir sobre o bloqueio.
+Seu endereço de IP atual é $3, e a identidade do bloqueio é #$5
 
-Note que não poderá utilizar a funcionalidade "Contatar usuário" se não possuir uma conta neste wiki ({{SITENAME}}) com um endereço de \'\'e-mail\'\' válido indicado nas suas [[Special:Preferences|preferências de usuário]] ou se tiver sido bloqueado de utilizar tal recurso.
-
-Seu endereço de IP no momento é $3 e sua ID de bloqueio é #$5.
-Por favor, inclua tais dados em qualquer tentativa de esclarecimentos que for realizar.',
+Você pode contatar $1 ou [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] para discutir o bloqueio.
+Por favor inclua todos os detalhes acima nas perguntas que fizer.',
 	'accmailtitle' => 'Senha enviada.',
 	'accmailtext' => "Uma senha gerada aleatoriamente para [[User talk:$1|$1]] foi enviada para $2.
 
