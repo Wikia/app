@@ -88,6 +88,7 @@
 					<textarea id="Description" class="optin-prompt__left-column" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 					<?= $communityBuilderPrompt ?>
 				</div>
+				<div class="wiki-description-error error-msg"></div>
 				<div class="checkbox" id="all-ages-div">
 					<label>
 						<div class="checkbox-styled">

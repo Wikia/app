@@ -17,6 +17,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class CreateWikiChecks {
 	const BAD_WORDS_MSG = 'creation_blacklist';
+	const WIKI_NAME_LENGTH = 125;
+	const WIKI_DESCRIPTION_LENGTH = 500;
 
 	/**
 	 * isDomainExists
@@ -76,6 +78,19 @@ class CreateWikiChecks {
 	/*
 	 * check form fields
 	 */
+	public static function checkWikiDescriptionIsCorrect( $sDescription, $sLang = '' ) {
+		wfProfileIn( __METHOD__ );
+		$sResponse = "";
+		if ( strlen( $sDescription ) > self::WIKI_DESCRIPTION_LENGTH ) {
+			$sResponse = wfMsg( 'autocreatewiki-community-description-too-long' , self::WIKI_DESCRIPTION_LENGTH);
+		}
+		wfProfileOut( __METHOD__ );
+		return $sResponse;
+	}
+
+	/*
+	 * check form fields
+	 */
 	public static function checkWikiNameIsCorrect( $sValue, $sLang = '' ) {
 		global $wgUser, $wgLegalTitleChars;
 
@@ -83,8 +98,8 @@ class CreateWikiChecks {
 		$sResponse = "";
 		if ( $sValue == "" ) {
 			$sResponse = wfMsg( 'autocreatewiki-empty-wikiname' );
-		} elseif (  strlen( $sValue ) > 50 ) {
-			$sResponse = wfMsg( 'autocreatewiki-community-name-too-long' );
+		} elseif (  strlen( $sValue ) > self::WIKI_NAME_LENGTH ) {
+			$sResponse = wfMsg( 'autocreatewiki-community-name-too-long' , self::WIKI_NAME_LENGTH);
 		} elseif ( preg_match( '/[^' . $wgLegalTitleChars . ']/i', $sValue ) ) {
 			$sResponse = wfMsg( 'autocreatewiki-invalid-wikiname' );
 		} elseif ( !in_array( 'staff', $wgUser->getGroups() ) && (self::checkBadWords( $sValue, "name", true ) === false) ) {

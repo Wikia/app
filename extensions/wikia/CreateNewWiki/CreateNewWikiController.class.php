@@ -201,6 +201,22 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	/**
+	 * Ajax call to validate domain.
+	 * Called via nirvana dispatcher
+	 */
+	public function CheckWikiDescription() {
+		wfProfileIn(__METHOD__);
+		global $wgRequest;
+
+		$description = $wgRequest->getVal('description');
+		$lang = $wgRequest->getVal('lang');
+
+		$this->response->setVal( self::CHECK_RESULT_FIELD, CreateWikiChecks::checkWikiDescriptionIsCorrect($description, $lang) );
+
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
 	 * Ajax call for validate wiki name.
 	 */
 	public function CheckWikiName() {
