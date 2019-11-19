@@ -25,6 +25,12 @@ require([
 		return;
 	}
 
+	if (hasSeenTheVideoInCurrentSession()) {
+		return;
+	} else {
+		featuredVideoCookieService.setVideoSeenInSession();
+	}
+
 	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
@@ -123,6 +129,13 @@ require([
 			lang: videoDetails.lang,
 			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
+	}
+
+	function hasSeenTheVideoInCurrentSession() {
+		const videoSeenInSession = featuredVideoCookieService.getVideoSeenInSession();
+		const currentSession = cookies.get('current_session_id', wgCookieDomain);
+
+		return videoSeenInSession === currentSession;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {

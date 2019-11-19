@@ -3,6 +3,7 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 
 	var autoplayCookieName = 'featuredVideoAutoplay',
 		captionsCookieName = 'featuredVideoCaptions',
+		videoSeenInSessionCookieName = 'featuredVideoSeenInSession',
 		cookieExpireDays = 1209600000; // 14 days in milliseconds
 
 	function setCookie(cookieName) {
@@ -27,6 +28,8 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		getAutoplay: getCookie(autoplayCookieName),
 		setAutoplay: setCookie(autoplayCookieName),
 		getCaptions: getCookie(captionsCookieName),
-		setCaptions: setCookie(captionsCookieName)
+		setCaptions: setCookie(captionsCookieName),
+		getVideoSeenInSession: getCookie(videoSeenInSessionCookieName),
+		setVideoSeenInSession: setCookie(videoSeenInSessionCookieName)
 	};
 });
