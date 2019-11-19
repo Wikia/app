@@ -79,12 +79,10 @@ class CreateWikiChecks {
 	 * check form fields
 	 */
 	public static function checkWikiDescriptionIsCorrect( $sDescription, $sLang = '' ) {
-		wfProfileIn( __METHOD__ );
 		$sResponse = "";
 		if ( strlen( $sDescription ) > self::WIKI_DESCRIPTION_LENGTH ) {
 			$sResponse = wfMsg( 'autocreatewiki-community-description-too-long' , self::WIKI_DESCRIPTION_LENGTH);
 		}
-		wfProfileOut( __METHOD__ );
 		return $sResponse;
 	}
 
