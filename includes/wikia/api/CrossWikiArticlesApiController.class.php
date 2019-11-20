@@ -80,7 +80,6 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 			]
 		);
 
-		$videos = $this->getVideosIds( $wikiId );
 		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 
 		$items = [];
@@ -110,7 +109,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => in_array( $row->page_id, $videos ),
+				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $wikiId, $row->page_id ) ),
 			];
 		}
 
@@ -128,9 +127,4 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 		$response = \ApiService::foreignCall( $dbname, $params, \ApiService::WIKIA );
 		return is_array($response) ? $response['items'] : array();
 	}
-
-	protected function getVideosIds( $wikiId ) {
-		return array_map( function( $video ) { return $video->getId(); }, ArticleVideoService::getFeaturedVideosForWiki( $wikiId ) );
-	}
-
 }

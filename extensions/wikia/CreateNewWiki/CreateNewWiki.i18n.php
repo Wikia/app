@@ -59,14 +59,15 @@ $messages['en'] = array(
 	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
 	'autocreatewiki-protect-reason' => 'Part of the official interface',
 	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
-	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of FANDOM's Community Support team. We're excited to have {{subst:SITENAME}} as part of the FANDOM community!
+	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of Fandom's Community Support team. We're excited to have {{SITENAME}} as part of the Fandom community!
 
 It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
-*Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
-*Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
-*Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM, or visit [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
+* Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
+* Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
+* Stop by [https://community.fandom.com/wiki/Community_Central?utm_source=foundermessageversion1 Community Central] to check out the [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=foundermessageversion1 staff blog], and ask questions on our [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion1 Community Central forums].
+* Visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom.
+* Check out the [[Special:AdminDashboard|Admin Dashboard]] for your progress wheel. Complete the tasks to get to 100%!
 
 Have fun!",
 	'autocreatewiki-welcometalk' => "==Welcome!==
