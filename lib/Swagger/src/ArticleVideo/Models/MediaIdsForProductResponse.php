@@ -1,6 +1,6 @@
 <?php
 /**
- * Mapping
+ * MediaIdsForProductResponse
  *
  * PHP version 5
  *
@@ -44,7 +44,7 @@ namespace Swagger\Client\ArticleVideo\Models;
 use \ArrayAccess;
 
 /**
- * Mapping Class Doc Comment
+ * MediaIdsForProductResponse Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -53,13 +53,13 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Mapping implements ArrayAccess
+class MediaIdsForProductResponse implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Mapping';
+    protected static $swaggerModelName = 'MediaIdsForProductResponse';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -67,13 +67,8 @@ class Mapping implements ArrayAccess
       */
     protected static $swaggerTypes = array(
         'product' => 'string',
-        'id' => 'string',
-        'url' => 'string',
-        'media_id' => 'string',
-        'created_at' => '\DateTime',
-        'updated_at' => '\DateTime',
-        'created_by' => 'string',
-        'updated_by' => 'string'
+        'default_media_id' => 'string',
+        'mappings' => 'map[string,string]'
     );
 
     public static function swaggerTypes()
@@ -87,13 +82,8 @@ class Mapping implements ArrayAccess
      */
     protected static $attributeMap = array(
         'product' => 'product',
-        'id' => 'id',
-        'url' => 'url',
-        'media_id' => 'media_id',
-        'created_at' => 'created_at',
-        'updated_at' => 'updated_at',
-        'created_by' => 'created_by',
-        'updated_by' => 'updated_by'
+        'default_media_id' => 'defaultMediaId',
+        'mappings' => 'mappings'
     );
 
     public static function attributeMap()
@@ -107,13 +97,8 @@ class Mapping implements ArrayAccess
      */
     protected static $setters = array(
         'product' => 'setProduct',
-        'id' => 'setId',
-        'url' => 'setUrl',
-        'media_id' => 'setMediaId',
-        'created_at' => 'setCreatedAt',
-        'updated_at' => 'setUpdatedAt',
-        'created_by' => 'setCreatedBy',
-        'updated_by' => 'setUpdatedBy'
+        'default_media_id' => 'setDefaultMediaId',
+        'mappings' => 'setMappings'
     );
 
     public static function setters()
@@ -127,13 +112,8 @@ class Mapping implements ArrayAccess
      */
     protected static $getters = array(
         'product' => 'getProduct',
-        'id' => 'getId',
-        'url' => 'getUrl',
-        'media_id' => 'getMediaId',
-        'created_at' => 'getCreatedAt',
-        'updated_at' => 'getUpdatedAt',
-        'created_by' => 'getCreatedBy',
-        'updated_by' => 'getUpdatedBy'
+        'default_media_id' => 'getDefaultMediaId',
+        'mappings' => 'getMappings'
     );
 
     public static function getters()
@@ -158,13 +138,8 @@ class Mapping implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['product'] = isset($data['product']) ? $data['product'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
-        $this->container['media_id'] = isset($data['media_id']) ? $data['media_id'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : null;
-        $this->container['created_by'] = isset($data['created_by']) ? $data['created_by'] : null;
-        $this->container['updated_by'] = isset($data['updated_by']) ? $data['updated_by'] : null;
+        $this->container['default_media_id'] = isset($data['default_media_id']) ? $data['default_media_id'] : null;
+        $this->container['mappings'] = isset($data['mappings']) ? $data['mappings'] : null;
     }
 
     /**
@@ -212,148 +187,43 @@ class Mapping implements ArrayAccess
     }
 
     /**
-     * Gets id
+     * Gets default_media_id
      * @return string
      */
-    public function getId()
+    public function getDefaultMediaId()
     {
-        return $this->container['id'];
+        return $this->container['default_media_id'];
     }
 
     /**
-     * Sets id
-     * @param string $id
+     * Sets default_media_id
+     * @param string $default_media_id
      * @return $this
      */
-    public function setId($id)
+    public function setDefaultMediaId($default_media_id)
     {
-        $this->container['id'] = $id;
+        $this->container['default_media_id'] = $default_media_id;
 
         return $this;
     }
 
     /**
-     * Gets url
-     * @return string
+     * Gets mappings
+     * @return map[string,string]
      */
-    public function getUrl()
+    public function getMappings()
     {
-        return $this->container['url'];
+        return $this->container['mappings'];
     }
 
     /**
-     * Sets url
-     * @param string $url
+     * Sets mappings
+     * @param map[string,string] $mappings
      * @return $this
      */
-    public function setUrl($url)
+    public function setMappings($mappings)
     {
-        $this->container['url'] = $url;
-
-        return $this;
-    }
-
-    /**
-     * Gets media_id
-     * @return string
-     */
-    public function getMediaId()
-    {
-        return $this->container['media_id'];
-    }
-
-    /**
-     * Sets media_id
-     * @param string $media_id
-     * @return $this
-     */
-    public function setMediaId($media_id)
-    {
-        $this->container['media_id'] = $media_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets created_at
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->container['created_at'];
-    }
-
-    /**
-     * Sets created_at
-     * @param \DateTime $created_at
-     * @return $this
-     */
-    public function setCreatedAt($created_at)
-    {
-        $this->container['created_at'] = $created_at;
-
-        return $this;
-    }
-
-    /**
-     * Gets updated_at
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->container['updated_at'];
-    }
-
-    /**
-     * Sets updated_at
-     * @param \DateTime $updated_at
-     * @return $this
-     */
-    public function setUpdatedAt($updated_at)
-    {
-        $this->container['updated_at'] = $updated_at;
-
-        return $this;
-    }
-
-    /**
-     * Gets created_by
-     * @return string
-     */
-    public function getCreatedBy()
-    {
-        return $this->container['created_by'];
-    }
-
-    /**
-     * Sets created_by
-     * @param string $created_by
-     * @return $this
-     */
-    public function setCreatedBy($created_by)
-    {
-        $this->container['created_by'] = $created_by;
-
-        return $this;
-    }
-
-    /**
-     * Gets updated_by
-     * @return string
-     */
-    public function getUpdatedBy()
-    {
-        return $this->container['updated_by'];
-    }
-
-    /**
-     * Sets updated_by
-     * @param string $updated_by
-     * @return $this
-     */
-    public function setUpdatedBy($updated_by)
-    {
-        $this->container['updated_by'] = $updated_by;
+        $this->container['mappings'] = $mappings;
 
         return $this;
     }
