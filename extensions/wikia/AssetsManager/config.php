@@ -1955,14 +1955,6 @@ $config['jwplayer_js'] = [
 	],
 ];
 
-$config['jwplayer_js_blocking'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.blocking.js',
-	],
-];
-
 $config['community_header_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
