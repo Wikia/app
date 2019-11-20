@@ -133,7 +133,7 @@ require([
 
 	function hasSeenTheVideoInCurrentSession() {
 		const videoSeenInSession = featuredVideoCookieService.getVideoSeenInSession();
-		const currentSession = cookies.get('current_session_id', wgCookieDomain);
+		const currentSession = cookies.get('wikia_session_id', wgCookieDomain);
 
 		return videoSeenInSession === currentSession;
 	}
