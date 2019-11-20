@@ -1,10 +1,8 @@
 define('wikia.articleVideo.featuredVideo.session', [
 	'wikia.cookies',
-	'wikia.document',
 	'wikia.articleVideo.featuredVideo.cookies'
 ], function (
 	cookies,
-	document,
 	featuredVideoCookies
 ) {
 	var videoSeenInSessionCookieName = 'featuredVideoSeenInSession',
