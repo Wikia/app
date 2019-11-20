@@ -13,16 +13,9 @@ define('ext.wikia.adEngine3.api', [
 		});
 	}
 
-	function isNetzathletenEnabled() {
-		return ads.contextConfigured.then(function(context) {
-			return context.get('services.netzathleten.enabled')
-		});
-	}
-
 	return {
 		communicator: ads.communicator,
 		isAutoPlayDisabled: ads.isAutoPlayDisabled,
-		isNetzathletenEnabled: isNetzathletenEnabled,
 		shouldShowAds: shouldShowAds,
 		jwplayerAdsFactory: ads.jwplayerAdsFactory,
 		waitForAdStackResolve: ads.waitForAdStackResolve

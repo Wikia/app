@@ -135,10 +135,6 @@ class MercuryApi {
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
 				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				],
 				'quantcast' => [
 					'labels' => AnalyticsProviderQuantServe::getQuantcastLabels()
 				]
