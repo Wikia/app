@@ -68,16 +68,14 @@ If you need help getting started, check out our [[Help:Contents|help pages]] or 
 
 For general help, you could also stop by [https://community.fandom.com/wiki/Community_Central?utm_source=adminmessageversion1 Community Central] to explore the [https://community.fandom.com/wiki/Special:Forums?utm_source=adminmessageversion1 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=adminmessageversion1 blogs].
 
-Enjoy your time at {{SITENAME}}!"
-	,
+Enjoy your time at {{SITENAME}}!",
 	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}} I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
 
 It looks as though none of [[Special:Listusers/sysop|the admins for this community]] are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [https://community.fandom.com/wiki/Community_Central?utm_source=staffmessageversion1 Community Central] to explore our [https://community.fandom.com/wiki/Special:Forums?utm_source=staffmessageversion1 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=staffmessageversion1 blogs].
 
 And don't forget to check out [[w:c:community:Fandom_University|https://community.fandom.com/wiki/Fandom_University University]] for quick how-to videos.
 
-Enjoy your time at {{SITENAME}}!"
-	,
+Enjoy your time at {{SITENAME}}!",
 	'welcome-message-wall-anon' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
 
 '''[[Special:UserSignup|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
