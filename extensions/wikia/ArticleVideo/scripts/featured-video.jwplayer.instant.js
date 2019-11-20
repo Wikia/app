@@ -8,6 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.cookies',
+	'wikia.articleVideo.featuredVideo.session',
 	require.optional('ext.wikia.adEngine3.api'),
 ], function (
 	win,
@@ -19,17 +20,15 @@ require([
 	videoDetails,
 	featuredVideoAutoplay,
 	featuredVideoCookieService,
+	featuredVideoSession,
 	adsApi,
 ) {
-	if (!videoDetails) {
+	if (!canPlayVideo()) {
+		doc.body.classList.add('no-featured-video');
 		return;
 	}
 
-	if (hasSeenTheVideoInCurrentSession()) {
-		return;
-	} else {
-		featuredVideoCookieService.setVideoSeenInSession();
-	}
+	featuredVideoSession.setVideoSeenInSession();
 
 	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
@@ -133,11 +132,8 @@ require([
 		}, onPlayerReady);
 	}
 
-	function hasSeenTheVideoInCurrentSession() {
-		const videoSeenInSession = featuredVideoCookieService.getVideoSeenInSession();
-		const currentSession = cookies.get('wikia_session_id', wgCookieDomain);
-
-		return videoSeenInSession === currentSession;
+	function canPlayVideo() {
+		return videoDetails && (videoDetails.isDedicatedForArticle || !featuredVideoSession.hasSeenTheVideoInCurrentSession());
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
