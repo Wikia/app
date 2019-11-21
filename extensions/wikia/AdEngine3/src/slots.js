@@ -12,8 +12,9 @@ import {
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
 import { rotateIncontentBoxad } from './slot/fmr-rotator';
-import { Communicator, ofType } from "@wikia/post-quecast";
+import { ofType } from "@wikia/post-quecast";
 import { take } from "rxjs/operators";
+import { communicator } from "./communicator";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -392,8 +393,6 @@ export default {
 	},
 
 	async injectIncontentBoxad() {
-		const communicator = new Communicator();
-
 		await communicator.actions$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
 
 		const slotName = 'incontent_boxad_1';

@@ -132,14 +132,9 @@ require([
 
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
-			return adsApi.communicator.actions$
-				.pipe(
-					adsApi.ofType('[Ad Engine] setup jw player'),
-					adsApi.take(1)
-				)
-				.subscribe(function (action) {
-					setupPlayer(action.showAds, action.autoplayDisabled);
-				});
+			return adsApi.listenSetupJwPlayer(function (action) {
+				setupPlayer(action.showAds, action.autoplayDisabled);
+			});
 		}
 
         setupPlayer(false, false);

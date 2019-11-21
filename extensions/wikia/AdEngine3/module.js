@@ -7,10 +7,5 @@ require(['ext.wikia.adEngine3.ads'], function (ads) {
 define('ext.wikia.adEngine3.api', [
 	'ext.wikia.adEngine3.ads'
 ], function (ads) {
-	return {
-		take: ads.take,
-		ofType: ads.ofType,
-		communicator: ads.communicator,
-		jwplayerAdsFactory: ads.jwplayerAdsFactory,
-	};
+	return ads;
 });
