@@ -28,8 +28,6 @@ require([
 		return;
 	}
 
-	featuredVideoSession.setVideoSeenInSession();
-
 	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
@@ -48,6 +46,8 @@ require([
 	}
 
 	function onPlayerReady(playerInstance) {
+		featuredVideoSession.setVideoSeenInSession();
+
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
 		});
