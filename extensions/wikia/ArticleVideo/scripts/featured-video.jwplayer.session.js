@@ -18,9 +18,7 @@ define('wikia.articleVideo.featuredVideo.session', [
 			return;
 		}
 
-		cookies.set(videoSeenInSessionCookieName, currentSession, {
-			path: '/'
-		});
+		cookies.set(videoSeenInSessionCookieName, currentSession);
 	}
 
 	return {
