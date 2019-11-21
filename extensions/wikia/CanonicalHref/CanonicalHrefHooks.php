@@ -1,7 +1,7 @@
 <?php
 
 class CanonicalHrefHooks {
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): void {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		$statusCodesWithoutCanonicalHref = [ 404, 410 ];
 
 		if (
@@ -33,7 +33,7 @@ class CanonicalHrefHooks {
 	 * @param  OutputPage $out
 	 * @return void
 	 */
-	public static function onOutputPageAfterGetHeadLinksArray( array &$tags, OutputPage $out ): void {
+	public static function onOutputPageAfterGetHeadLinksArray( array &$tags, OutputPage $out ) {
 		if ( !isset( $tags['meta-robots'] ) ) {
 			return;
 		}
