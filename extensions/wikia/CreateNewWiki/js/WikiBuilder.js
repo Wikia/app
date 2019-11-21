@@ -15,6 +15,7 @@ define(
 		retryGoto = 0,
 		nameAjax = false,
 		domainAjax = false,
+		descriptionAjax = false,
 		wb,
 		$nameWikiWrapper,
 		$descWikiWrapper,
@@ -39,6 +40,9 @@ define(
 		nextButtons,
 		finishSpinner,
 		descWikiNext,
+		wikiDescription,
+		wikiDescriptionLabel,
+		wikiDescriptionError,
 		categoriesSetId,
 		hiddenDuplicate,
 		userAuth,
@@ -106,6 +110,9 @@ define(
 		nextButtons = wb.find('nav .next');
 		finishSpinner = wb.find('.finish-status');
 		descWikiNext = $descWikiWrapper.find('nav .next');
+		wikiDescription = $('#Description');
+		wikiDescriptionLabel = $descWikiWrapper.find('label[for=wiki-description]');
+		wikiDescriptionError = $descWikiWrapper.find('.wiki-description-error');
 	}
 
 	function bindEventHandlers() {
@@ -120,7 +127,8 @@ define(
 		wikiLanguageList.bind('click', onWikiLanguageListClick);
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
-		$('#Description').placeholder();
+		wikiDescription.placeholder();
+		wikiDescription.keyup(onWikiDescriptionKeyUp);
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
 		wikiVerticalList.bind('click', onWikiVerticalListClick);
@@ -169,7 +177,7 @@ define(
 		val = wikiVertical.val();
 
 		if (val !== '-1' /* yes, it is a string */ ) {
-			descriptionVal = $('#Description').val();
+			descriptionVal = wikiDescription.val();
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
 				method: 'Phalanx',
@@ -263,19 +271,19 @@ define(
 				hiddenDuplicate = duplicate.closest('label').hide();
 			}
 			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
-
-			nextButton.attr('disabled', false);
+			if(wikiDescriptionError.html() === ''){
+				nextButton.attr('disabled', false);
+			}
 			removeWikiVerticalError();
 		}
 	}
 
 	function onWikiVerticalListClick(e) {
-		var li = $(e.target),
-			input = $descWikiWrapper.find('input[name=wiki-vertical]');
+		var li = $(e.target);
 
 		$descWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
-		input.data({ short: li.data('short'), categoriesset: li.data('categoriesset') });
-		input.val(li.attr('id')).change();
+		wikiVertical.data({ short: li.data('short'), categoriesset: li.data('categoriesset') });
+		wikiVertical.val(li.attr('id')).change();
 		$descWikiWrapper.find('.default-value').text(li.text());
 	}
 
@@ -358,6 +366,14 @@ define(
 			clearTimeout(wntimer);
 		}
 		wntimer = setTimeout(checkWikiName, 500);
+	}
+
+	function onWikiDescriptionKeyUp() {
+		descriptionAjax = true;
+		if (wntimer) {
+			clearTimeout(wntimer);
+		}
+		wntimer = setTimeout(checkDescription, 500);
 	}
 
 	function onWikiNameFocus() {
@@ -511,6 +527,38 @@ define(
 		}
 	}
 
+	function checkDescription () {
+		var description = wikiDescription.val(),
+		nextButton = nextButtons.eq(1);
+		if (description) {
+			descriptionAjax = true;
+			checkNextButtonStep1();
+
+			$.nirvana.sendRequest({
+				controller: 'CreateNewWiki',
+				method: 'CheckWikiDescription',
+				data: {
+					description: description,
+				},
+				callback: function (res) {
+					if (res) {
+						var response = res.res;
+						if (response) {
+							addWikiDescriptionError(response);
+						} else {
+							removeWikiDescriptionError();
+							if (wikiVertical.val() !== '-1' /* yes, it is a string */ ) {
+								nextButton.attr('disabled', false);
+							}
+						}
+					}
+				}
+			});
+		} else {
+			removeWikiDescriptionError();
+		}
+	}
+
 	function isNameWikiSubmitError() {
 		return !wikiDomain.val() ||
 			!wikiName.val() ||
@@ -619,7 +667,7 @@ define(
 			categories.push($(this).val());
 		});
 
-		descriptionVal = $('#Description').val();
+		descriptionVal = wikiDescription.val();
 
 		$.get(mw.util.wikiScript('api'), {
 			action: 'query',
@@ -720,6 +768,18 @@ define(
 		}
 
 		$.showModal(errorModalHeader, errorModalMessage);
+	}
+
+	function addWikiDescriptionError(message) {
+		wikiDescription.addClass('input-error');
+		wikiDescriptionLabel.addClass('label-error');
+		wikiDescriptionError.html(message);
+	}
+
+	function removeWikiDescriptionError() {
+		wikiDescription.removeClass('input-error');
+		wikiDescriptionLabel.removeClass('label-error');
+		wikiDescriptionError.html('');
 	}
 
 	function addWikiNameError(message) {
