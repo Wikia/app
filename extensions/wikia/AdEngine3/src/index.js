@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
-import { isAutoPlayDisabled } from './ml/executor';
+import { featuredVideoAutoPlayDisabled } from './ml/executor';
 import {
 	AdSlot,
 	bidders,
@@ -28,22 +28,14 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { Communicator, setupPostQuecast } from "@wikia/post-quecast";
+import { Communicator, setupPostQuecast, ofType } from "@wikia/post-quecast";
+import { take } from 'rxjs/operators';
 
 setupPostQuecast();
 
 const communicator = new Communicator();
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
-
-let contextConfiguredTrigger;
-/**
- * Resolves with ad-engine context once it's been configured.
- * @type {Promise}
- */
-const contextConfigured = new Promise((resolve) => {
-	contextConfiguredTrigger = resolve;
-});
 
 async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	const wikiContext = window.ads.context;
@@ -56,7 +48,7 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
 
-	contextConfiguredTrigger(context);
+	setupJwPlayer();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
@@ -80,6 +72,28 @@ async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	trackTabId();
 	trackXClick();
 	taxonomyService.configureComicsTargeting();
+}
+
+async function setupJwPlayer() {
+	if (!context.get('state.showAds')) {
+		return communicator.dispatch({
+			type: '[Ad Engine] setup jw player',
+			showAds: false,
+			autoplayDisabled: featuredVideoAutoPlayDisabled,
+		});
+	}
+
+	const timeout = new Promise((resolve) => {
+		setTimeout(resolve, context.get('options.maxDelayTimeout'));
+	});
+
+	await Promise.race([ timeout, biddersDelay.getPromise() ]);
+
+	communicator.dispatch({
+		type: '[Ad Engine] setup jw player',
+		showAds: true,
+		autoplayDisabled: featuredVideoAutoPlayDisabled
+	})
 }
 
 function startAdEngine() {
@@ -191,22 +205,6 @@ function registerEditorSavedEvents() {
 	});
 }
 
-function waitForBiddersResolve() {
-	if (!context.get('state.showAds')) {
-		return Promise.resolve();
-	}
-
-	const timeout = new Promise((resolve) => {
-		setTimeout(resolve, context.get('options.maxDelayTimeout'));
-	});
-
-	return Promise.race([ timeout, biddersDelay.getPromise() ]);
-}
-
-function waitForAdStackResolve() {
-	return contextConfigured.then(waitForBiddersResolve);
-}
-
 function hideAllAdSlots() {
 	Object.keys(context.get('slots')).forEach((slotName) => {
 		const element = document.getElementById(slotName);
@@ -231,11 +229,9 @@ function trackXClick() {
 }
 
 export {
-	communicator,
-	context,
-	contextConfigured,
-	jwplayerAdsFactory,
-	isAutoPlayDisabled,
 	run,
-	waitForAdStackResolve,
+	take,
+	ofType,
+	communicator,
+	jwplayerAdsFactory,
 }

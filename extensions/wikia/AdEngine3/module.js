@@ -7,17 +7,10 @@ require(['ext.wikia.adEngine3.ads'], function (ads) {
 define('ext.wikia.adEngine3.api', [
 	'ext.wikia.adEngine3.ads'
 ], function (ads) {
-	function shouldShowAds() {
-		return ads.contextConfigured.then(function(context) {
-			return context.get('state.showAds')
-		});
-	}
-
 	return {
+		take: ads.take,
+		ofType: ads.ofType,
 		communicator: ads.communicator,
-		isAutoPlayDisabled: ads.isAutoPlayDisabled,
-		shouldShowAds: shouldShowAds,
 		jwplayerAdsFactory: ads.jwplayerAdsFactory,
-		waitForAdStackResolve: ads.waitForAdStackResolve
-	}
+	};
 });

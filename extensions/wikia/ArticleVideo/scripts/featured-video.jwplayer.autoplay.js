@@ -1,23 +1,18 @@
 define('wikia.articleVideo.featuredVideo.autoplay', [
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine3.api')
-], function (featuredVideoCookieService, adsApi) {
+], function (featuredVideoCookieService) {
 	'use strict';
 
-	function isDisabledByAdEngine() {
-		return adsApi && adsApi.isAutoPlayDisabled();
-	}
-
 	return {
-		isAutoplayEnabled: function () {
+		isAutoplayEnabled: function (adEngineAutoplayDisabled) {
 			return featuredVideoCookieService.getAutoplay() !== '0' &&
-				!isDisabledByAdEngine();
+				!adEngineAutoplayDisabled;
 		},
 		inNextVideoAutoplayEnabled: function () {
 			return true;
 		},
-		isAutoplayToggleShown: function () {
-			return !isDisabledByAdEngine()
+		isAutoplayToggleShown: function (adEngineAutoplayDisabled) {
+			return !adEngineAutoplayDisabled
 			;
 		}
 	};

@@ -69,34 +69,26 @@ require([
 		});
 	}
 
-	function setupPlayer() {
-		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
+	function setupPlayer(showAds, adEngineAutoplayDisabled) {
+		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(adEngineAutoplayDisabled),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		if (adsApi) {
-			var shouldShowAds = adsApi.shouldShowAds();
-
-			shouldShowAds.then(function(shouldShowAds) {
-				if (shouldShowAds) {
-					videoAds = adsApi.jwplayerAdsFactory.create({
-						adProduct: 'featured',
-						slotName: 'featured',
-						audio: !willMute,
-						autoplay: willAutoplay,
-						featured: true,
-						videoId: videoDetails.playlist[0].mediaid,
-					});
-					adsApi.jwplayerAdsFactory.loadMoatPlugin();
-				}
+		if (adsApi && showAds) {
+			videoAds = adsApi.jwplayerAdsFactory.create({
+				adProduct: 'featured',
+				slotName: 'featured',
+				audio: !willMute,
+				autoplay: willAutoplay,
+				featured: true,
+				videoId: videoDetails.playlist[0].mediaid,
 			});
-			configurePlayer(willAutoplay, willMute);
-		} else {
-			configurePlayer(willAutoplay, willMute);
+			adsApi.jwplayerAdsFactory.loadMoatPlugin();
 		}
+		configurePlayer(willAutoplay, willMute, adEngineAutoplayDisabled);
 
 	}
 
-	function configurePlayer(willAutoplay, willMute) {
+	function configurePlayer(willAutoplay, willMute, adEngineAutoplayDisabled) {
 		win.guaSetCustomDimension(30, videoDetails.isDedicatedForArticle ? 'article' : 'wiki');
 
 		win.wikiaJWPlayer('featured-video__player', {
@@ -110,7 +102,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(),
+				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(adEngineAutoplayDisabled),
 				showQuality: true,
 				showCaptions: true
 			},
@@ -140,10 +132,16 @@ require([
 
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
-			adsApi.waitForAdStackResolve().then(setupPlayer);
-			return;
+			return adsApi.communicator.actions$
+				.pipe(
+					adsApi.ofType('[Ad Engine] setup jw player'),
+					adsApi.take(1)
+				)
+				.subscribe(function (action) {
+					setupPlayer(action.showAds, action.autoplayDisabled);
+				});
 		}
 
-        setupPlayer();
+        setupPlayer(false, false);
 	});
 });
