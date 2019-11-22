@@ -578,9 +578,8 @@ class EditPageLayout extends EditPage {
 
 		if ( $this->app->wg->Request->getBool( 'redlink' ) ) {
 			// The edit page was reached via a red link.
-			// Redirect to the article page and let them click the edit tab if
-			// they really want a permission error.
-			$this->app->wg->Out->redirect( $this->mTitle->getFullUrl() );
+			// Don't redirect, but send 404 for SEO reasons.
+			$this->app->wg->Out->setStatusCode( 404 );
 			return;
 		}
 
