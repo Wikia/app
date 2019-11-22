@@ -1,7 +1,4 @@
 import { jwplayerAdsFactory } from '@wikia/ad-engine';
-import { ofType } from "@wikia/post-quecast";
-import { take } from 'rxjs/operators';
-import { communicator } from "./communicator";
 import { registerEditorSavedEvents, setupAdEngine } from "./startup";
 
 export function run() {
@@ -10,19 +7,10 @@ export function run() {
 	registerEditorSavedEvents();
 }
 
-export function dispatchRailReady() {
-	communicator.dispatch({type: '[Rail] Ready'});
-}
-
-export function listenSetupJwPlayer(callback) {
-	communicator.actions$
-		.pipe(
-			ofType('[Ad Engine] setup jw player'),
-			take(1)
-		)
-		.subscribe(callback);
-}
-
 export {
 	jwplayerAdsFactory,
 }
+
+// Those will stay
+export * from './platform-communication/dispatch-rail-ready';
+export * from './platform-communication/listen-setup-jwplayer';

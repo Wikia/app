@@ -132,7 +132,7 @@ require([
 
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
-			return adsApi.listenSetupJwPlayer(function (action) {
+			return adsApi.listenSetupJWPlayer(function (action) {
 				setupPlayer(action.showAds, action.autoplayDisabled);
 			});
 		}
