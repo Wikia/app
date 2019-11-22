@@ -46,7 +46,9 @@ require([
 	}
 
 	function onPlayerReady(playerInstance) {
-		featuredVideoSession.setVideoSeenInSession();
+		if (!videoDetails.isDedicatedForArticle) {
+			featuredVideoSession.setVideoSeenInSession();
+		}
 
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
