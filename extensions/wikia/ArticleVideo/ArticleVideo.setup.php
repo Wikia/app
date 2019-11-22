@@ -14,6 +14,7 @@ $wgResourceModules['ext.ArticleVideo.jw'] = [
 		'skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.session.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.instant.js',
 	],
 ];
