@@ -286,3 +286,9 @@ body > a > img[src$="noad.gif"] {
 #WikiaArticleMsg {
 	display: none;
 }
+
+@media #{$breakpoint-below-small-plus} {
+	.home-top-right-ads {
+		display: none;
+	}
+}
