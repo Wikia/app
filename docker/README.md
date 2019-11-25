@@ -8,14 +8,14 @@ docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:
 docker push artifactory.wikia-inc.com/sus/php-wikia-base:0b02db1c1f7
 
 # 2. and then dev image
-docker build -f dev/Dockerfile -t php-wikia-dev ./dev
-docker build -f dev/Dockerfile-nginx -t nginx-wikia-dev ./dev
+docker build -f devbox/Dockerfile -t php-wikia-dev ./devbox
+docker build -f devbox/Dockerfile-nginx -t nginx-wikia-dev ./devbox
 
 # 3. you can now run eval.php (execute this from root directory of app repo clone)
 docker run -it --rm -h localhost -e 'SERVER_ID=165' -e 'WIKIA_ENVIRONMENT=dev' -e 'WIKIA_DATACENTER=poz' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/sus/php-wikia-dev php maintenance/eval.php
 
 # 4. in order to run service locally use docker-compose
-docker-compose -f ./dev/docker-compose.yml up
+docker-compose -f ./devbox/docker-compose.yml up
 
 # 5. then you can use `docker exec` to take a look inside the container
 docker exec -it dev_php-wikia_1 bash
