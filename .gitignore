@@ -20,6 +20,8 @@ psy.cfg
 /atlassian-ide-plugin.xml
 _misc
 /.vscode
+# local history should not be added to github 
+/.history
 
 # Ignore VIM swap files
 *.sw[a-z]
