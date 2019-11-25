@@ -1,6 +1,7 @@
 # Hydralytics
-
 An admin analytics dashboard for communities admins. You need to be in a group with `analytics` right to access `Special:Analytics`.
+
+This extension has been ported & adapted from [Gamepedia](https://gitlab.com/hydrawiki/extensions/hydralytics/).  
 
 ## WikiFactory
 

@@ -86,6 +86,9 @@ def createTag(String nextTag) {
   }
 
   if (hasUnreleasedCommits) {
+    sh(script: 'git config --global user.email "macbre+1@wikia-inc.com"')
+    sh(script: 'git config --global user.name "WikiaJenkins"')
+    
     doesTagExist = sh(script: "git tag --list ${nextTag}", returnStdout: true).trim()
 
     if (doesTagExist) {

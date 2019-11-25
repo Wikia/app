@@ -1,6 +1,6 @@
 <?php
 /**
- * MappingsInternalApi
+ * MappingsInternalV2Api
  * PHP version 5
  *
  * @category Class
@@ -46,7 +46,7 @@ use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * MappingsInternalApi Class Doc Comment
+ * MappingsInternalV2Api Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
@@ -54,7 +54,7 @@ use \Swagger\Client\ObjectSerializer;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class MappingsInternalApi
+class MappingsInternalV2Api
 {
 
     /**
@@ -94,7 +94,7 @@ class MappingsInternalApi
      *
      * @param \Swagger\Client\ApiClient $apiClient set the API client
      *
-     * @return MappingsInternalApi
+     * @return MappingsInternalV2Api
      */
     public function setApiClient(\Swagger\Client\ApiClient $apiClient)
     {
@@ -103,37 +103,37 @@ class MappingsInternalApi
     }
 
     /**
-     * Operation getForProduct
+     * Operation getMediaIdsForProduct
      *
      * 
      *
      * @param string $product  (required)
-     * @return \Swagger\Client\ArticleVideo\Models\Mapping[]
+     * @return \Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getForProduct($product)
+    public function getMediaIdsForProduct($product)
     {
-        list($response) = $this->getForProductWithHttpInfo($product);
+        list($response) = $this->getMediaIdsForProductWithHttpInfo($product);
         return $response;
     }
 
     /**
-     * Operation getForProductWithHttpInfo
+     * Operation getMediaIdsForProductWithHttpInfo
      *
      * 
      *
      * @param string $product  (required)
-     * @return Array of \Swagger\Client\ArticleVideo\Models\Mapping[], HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getForProductWithHttpInfo($product)
+    public function getMediaIdsForProductWithHttpInfo($product)
     {
         // verify the required parameter 'product' is set
         if ($product === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $product when calling getForProduct');
+            throw new \InvalidArgumentException('Missing the required parameter $product when calling getMediaIdsForProduct');
         }
         // parse inputs
-        $resourcePath = "/internal/mappings/{product}";
+        $resourcePath = "/internal/v2/mappings/{product}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -180,15 +180,15 @@ class MappingsInternalApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\ArticleVideo\Models\Mapping[]',
-                '/internal/mappings/{product}'
+                '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse',
+                '/internal/v2/mappings/{product}'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ArticleVideo\Models\Mapping[]', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ArticleVideo\Models\Mapping[]', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ArticleVideo\Models\MediaIdsForProductResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

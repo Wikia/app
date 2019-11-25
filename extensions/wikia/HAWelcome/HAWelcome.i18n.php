@@ -64,14 +64,16 @@ $3",
 	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
 	'welcome-message-wall-user' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
 
-If you need help getting started, check out our [[Help:Getting Started|help pages]] or contact me or [[Special:Listusers/sysop|another admin]] here. For general help, you could also stop by [[w:c:community:main page|Community Central]] to explore the [[w:c:community:Special:Forum|forums]] and [[w:c:community:Blog:Wikia_Staff_Blog|blogs]].
+If you need help getting started, check out our [[Help:Contents|help pages]] or [[$2|contact me]] or [[Special:Listusers/sysop|another admin]] here. 
+
+For general help, you could also stop by [https://community.fandom.com/wiki/Community_Central?utm_source=adminmessageversion1 Community Central] to explore the [https://community.fandom.com/wiki/Special:Forums?utm_source=adminmessageversion1 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=adminmessageversion1 blogs].
 
 Enjoy your time at {{SITENAME}}!",
-	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
+	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}} I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
 
-It looks as though none of the admins for this community are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:c:community:Special:Forum|forums]].
+It looks as though none of [[Special:Listusers/sysop|the admins for this community]] are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [https://community.fandom.com/wiki/Community_Central?utm_source=staffmessageversion1 Community Central] to explore our [https://community.fandom.com/wiki/Special:Forums?utm_source=staffmessageversion1 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=staffmessageversion1 blogs].
 
-And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
+And don't forget to check out [[w:c:community:Fandom_University|https://community.fandom.com/wiki/Fandom_University University]] for quick how-to videos.
 
 Enjoy your time at {{SITENAME}}!",
 	'welcome-message-wall-anon' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
