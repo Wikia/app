@@ -200,6 +200,17 @@ export default {
 				enabled: false,
 				slots: {}
 			},
+			oneVideo: {
+				enabled: false,
+				slots: {
+					featured: {
+						pubId: '1192473'
+					},
+					incontent_player: {
+						pubId: '1192473'
+					}
+				}
+			},
 			openx: {
 				enabled: false,
 				delDomain: 'wikia-d.openx.net',
