@@ -32,7 +32,9 @@ You can safely purge this folder to reclaim the disk space if needed.
 		cd app/docker/devbox
 		echo "HOSTNAME_OVERRIDE=`hostname`" >> .env
 	```
-4. Starting mediawiki
+4. Rebuild containers - see "Rebuilding docker images", below. Make sure you did build both nginx and php-fpm.
+
+5. Starting mediawiki
 Use docker compose in order to start the nginx&php. Use something like the `screen` command if you want it to keep 
 running the the background.
 
@@ -41,7 +43,7 @@ running the the background.
 	docker-compose up
 	```
 
-5. Stopping mediawiki
+6. Stopping mediawiki
 	Usually the best option is to stop it with Ctrl+C and then run `docker-compose down`.
 
 ### Running eval.php
