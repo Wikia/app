@@ -16,10 +16,10 @@ class ArticleVideoContext {
 	 * @return bool
 	 *
 	 */
-	public static function isFeaturedVideoAvailable( string $pageId ): bool {
+	public static function isFeaturedVideoAvailable( int $pageId ): bool {
 		global $wgEnableArticleFeaturedVideo, $wgCityId, $wgUser;
 
-		if ( !$wgEnableArticleFeaturedVideo || WikiaPageType::isActionPage() ) {
+		if ( !$wgEnableArticleFeaturedVideo || !WikiaPageType::isArticlePage() || WikiaPageType::isActionPage() ) {
 			return false;
 		}
 
@@ -41,7 +41,7 @@ class ArticleVideoContext {
 	 * @return array
 	 *
 	 */
-	public static function getFeaturedVideoData( string $pageId ) {
+	public static function getFeaturedVideoData( int $pageId ) {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoAvailable( $pageId ) ) {
@@ -85,6 +85,7 @@ class ArticleVideoContext {
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
+				$videoData['isDedicatedForArticle'] = ArticleVideoService::isVideoDedicatedForArticle( $wg->cityId, $pageId );
 
 				$videoData = self::getVideoDataWithAttribution( $videoData );
 
