@@ -3,7 +3,8 @@
 class AffilliateServiceHooks {
 	public static function onBeforePageDisplay( OutputPage $out ) {
 		wfProfileIn( __METHOD__ );
-
+		$out->addModules( 'ext.wikia.AffiliateService' );
+		// $out->addModules( 'ext.wikia.TriviaQuizzes' );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
