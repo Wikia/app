@@ -139,6 +139,12 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
 
+	if(instantConfig.get('icTaxonomyComicsTag')) {
+		context.set('services.taxonomy.comics.enabled', true);
+		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
+		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
+	}
+
 	const moatSampling = instantConfig.get('wgAdDriverMoatTrackingForFeaturedVideoAdSampling');
 	const isMoatTrackingEnabledForVideo = instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdCountries')
 		&& utils.sampler.sample('moat_video_tracking', moatSampling);
