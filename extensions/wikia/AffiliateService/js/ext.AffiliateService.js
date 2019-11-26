@@ -1,6 +1,6 @@
 require(['jquery', 'mw'], function ($, mw) {
 	'use strict';
 	$(function () {
-		console.log('hello world from affiliate service');
+		console.log('hello world from affiliate service exte');
 	});
 });
