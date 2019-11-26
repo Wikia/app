@@ -1403,7 +1403,7 @@ if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
 }
 
-if ( !empty( $wgEnableQualarooExt ) ) {
+if ( !empty( $wgEnableQualarooExt ) && empty( $wgIsTestWiki ) ) {
 	include "$IP/extensions/wikia/Qualaroo/Qualaroo.setup.php";
 }
 

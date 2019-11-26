@@ -9354,3 +9354,5 @@ $wgOverrideUcfirstCharacters = [
  * @var string
  */
 $wgTimelineRenderHashAppend = 'v2';
+
+$wgIsTestWiki = false;
