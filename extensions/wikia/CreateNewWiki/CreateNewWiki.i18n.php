@@ -851,11 +851,11 @@ $messages['es'] = array(
 	'cnw-name-wiki-creative' => 'Ya sea una comunidad centrada en un fenómeno del entretenimiento mundial o un proyecto personal, esta necesita tener un buen nombre:',
 	'cnw-name-wiki-label' => 'Nombre de tu wiki',
 	'cnw-name-wiki-domain-label' => 'Dale a tu wiki una dirección',
-	'cnw-name-wiki-submit-error' => '¡Uy! Asegúrate de que los campos estén completados para continuar.',
+	'cnw-name-wiki-submit-error' => '¡Uy! Asegúrate de haber rellenado los campos antes de continuar.',
 	'cnw-desc-headline' => '¿De qué trata tu wiki?',
 	'cnw-desc-creative' => 'Una buena descripción ayudará a que la gente encuentre tu wiki.',
 	'cnw-desc-placeholder' => '¡Hazlo bien! Este texto aparecerá en la portada de tu wiki.',
-	'cnw-desc-select-vertical' => 'Elige un hub:',
+	'cnw-desc-select-vertical' => 'Elige una categoría:',
 	'cnw-desc-select-categories' => 'Selecciona algunas categorías adicionales si es necesario',
 	'cnw-desc-select-one' => 'Selecciona una',
 	'cnw-desc-all-ages' => '¿Es esta una comunidad dirigida a niños menores de 13 años?',
@@ -907,8 +907,8 @@ Puede parecer que haya muchas cosas por hacer, es por ello que estamos aquí par
 
 *Personaliza el color y estilo de tu comunidad a través del [[{{#Special:ThemeDesigner}}|Diseñador de Temas]].
 *Visita [[w:c:comunidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].
-*¿Utilizas Discord? ¡Nos encantaría que formes parte de nuestro servidor de Fandom/Gamepedia! En [[Ayuda:Discord]] aprenderás como participar con nuestra comunidad de habla hispana en el servidor.
-*Si estás interesado en saber como se va desarrollando tú comunidad, puedes ver las estadísticas en [[Especial:Analytics]].',
+*¿Utilizas Discord? ¡Nos encantaría que formes parte de nuestro servidor de Fandom/Gamepedia! En [[Ayuda:Discord]] aprenderás cómo participar con nuestra comunidad de habla hispana en el servidor.
+*Si estás interesado en saber cómo se va desarrollando tu comunidad, puedes ver las estadísticas en [[Especial:Analytics]].',
 	'autocreatewiki-welcometalk' => "== ¡Recibe nuestra bienvenida! ==
 ¡Hola!
 
