@@ -1,6 +1,15 @@
 // todo use it when border settings for handling `-k8s` suffix will be prepared
 // def sandbox = params.sandbox_name.endsWith("-k8s") ?  params.sandbox_name : params.sandbox_name + '-k8s';
 def datacenter = params.datacenter
+println("Current release branch for deployment: '${params.release_branch}'")
+if (params.release_branch == ''){
+     currentBuild.result = 'ABORTED'
+     error('Please set release_branch param')
+}
+println("Current release branch: '${params.release_branch}'")
+def escapedReleaseBranch = params.release_branch.replace('-', "\\-")
+
+
 
 def kubectlImage = env["K8S_DEPLOYER_IMAGE"]
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
@@ -22,7 +31,7 @@ def render(String template, java.util.LinkedHashMap binding) {
 def get_latest_version() {
   // eg. 757.001
   def latestVersion = sh(
-    script: "git describe --abbrev=0 --tags --match 'release-*'",
+    script: "git describe --abbrev=0 --tags --match '${params.release_branch}*'",
     returnStdout: true
   )
   .trim()
@@ -146,13 +155,13 @@ node("docker-daemon") {
   def imageTag
 
   def currentAppTag
-  
+
   def lastAppReleaseBranch
 
   def nextAppReleaseVersion
   def nextAppReleaseTag
   def nextAppReleaseBranch
-  
+
   def lastConfigReleaseBranch
 
   def nextConfigReleaseVersion
@@ -177,20 +186,20 @@ node("docker-daemon") {
         "app": {
           dir("app") {
             git url: "git@github.com:Wikia/app.git",
-              branch: 'dev',
+              branch: "dev",
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
           }
         },
         "config": {
           dir("config") {
             git url: "git@github.com:Wikia/config.git",
-              branch: 'dev',
+              branch: "dev",
               credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
           }
         }
       )
     }
-    
+
     stage("Checkout to last release branch") {
       parallel (
         "app": {
@@ -326,7 +335,7 @@ node("docker-daemon") {
               if (params.source == 'latest') {
                 println("Source: latest; skip creating a tag")
               } else {
-                createTag(nextAppReleaseTag)
+                nextAppReleaseTag = createTag(nextAppReleaseTag)
               }
             }
           },
@@ -335,7 +344,7 @@ node("docker-daemon") {
               if (params.source == 'latest') {
                 println("Source: latest; skip creating a tag")
               } else {
-                createTag(nextConfigReleaseTag)
+                nextConfigReleaseTag = createTag(nextConfigReleaseTag)
               }
             }
           }
@@ -347,14 +356,20 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            appHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
+            appHash = sh(script: "git tag -l '${escapedReleaseBranch}*' | tail -1", returnStdout: true).trim()
+            if (!appHash) {
+                throw new Exception("No tag found for this app branch")
+            }
 
             println("Wikia/app commit: $appHash")
           }
         },
         "config": {
           dir("config") {
-            configHash = sh(script: 'git describe --always --tags --abbrev=7 HEAD', returnStdout: true).trim()
+            configHash = sh(script: "git tag -l '${escapedReleaseBranch}*' | tail -1", returnStdout: true).trim()
+            if (!configHash) {
+                throw new Exception("No tag found for this config branch")
+            }
 
             println("Wikia/config commit: $configHash")
           }
@@ -492,7 +507,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result, nextAppReleaseTag, nextAppReleaseTag, buildUser)
+      notifyBuild(currentBuild.result, nextAppReleaseTag, nextConfigReleaseTag, buildUser)
     }
   }
 }
