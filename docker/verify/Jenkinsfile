@@ -356,7 +356,7 @@ node("docker-daemon") {
       parallel (
         "app": {
           dir("app") {
-            appHash = sh(script: "git tag -l '${escapedReleaseBranch}*' | tail -1", returnStdout: true).trim()
+            appHash = sh(script: "git describe --abbrev=0 --tags --match '${escapedReleaseBranch}*'", returnStdout: true).trim()
             if (!appHash) {
                 throw new Exception("No tag found for this app branch")
             }
@@ -366,7 +366,7 @@ node("docker-daemon") {
         },
         "config": {
           dir("config") {
-            configHash = sh(script: "git tag -l '${escapedReleaseBranch}*' | tail -1", returnStdout: true).trim()
+            configHash = sh(script: "git describe --abbrev=0 --tags --match '${escapedReleaseBranch}*'", returnStdout: true).trim()
             if (!configHash) {
                 throw new Exception("No tag found for this config branch")
             }
