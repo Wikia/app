@@ -13,6 +13,7 @@ import {
 	events,
 	eventService,
 	InstantConfigCacheStorage,
+	JWPlayerManager,
 	krux,
 	moatYi,
 	moatYiEvents,
@@ -70,6 +71,8 @@ export async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 
 async function setupJwPlayer() {
 	if (!context.get('state.showAds')) {
+		new JWPlayerManager().manage();
+
 		return communicator.dispatch({
 			type: '[Ad Engine] setup jw player',
 			showAds: false,

@@ -12,5 +12,4 @@ export {
 }
 
 // Those will stay
-export * from './platform-communication/dispatch-rail-ready';
-export * from './platform-communication/listen-setup-jwplayer';
+export * from './platform-communication';
