@@ -17,5 +17,5 @@ export function dispatchRailReady() {
 }
 
 export function dispatchPlayerReady(options, targeting, playerKey) {
-	jwpReady({options, targeting, playerKey});
+	communicator.dispatch(jwpReady({options, targeting, playerKey}));
 }

@@ -35,7 +35,7 @@ require([
 			plist: recommendedPlaylist,
 			vtags: videoTags
 		},
-		videoAds;
+		videoOptions;
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -56,8 +56,12 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		if (videoAds) {
-			videoAds.register(playerInstance, slotTargeting);
+		if (videoOptions) {
+			var playerKey = 'aeJWPlayerKey';
+
+			window[playerKey] = playerInstance;
+
+			adsApi.dispatchPlayerReady(videoOptions, slotTargeting, playerKey);
 		}
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -74,15 +78,14 @@ require([
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
 		if (adsApi && showAds) {
-			videoAds = adsApi.jwplayerAdsFactory.create({
+			videoOptions = {
 				adProduct: 'featured',
 				slotName: 'featured',
 				audio: !willMute,
 				autoplay: willAutoplay,
 				featured: true,
 				videoId: videoDetails.playlist[0].mediaid,
-			});
-			adsApi.jwplayerAdsFactory.loadMoatPlugin();
+			};
 		}
 		configurePlayer(willAutoplay, willMute, adEngineAutoplayDisabled);
 
