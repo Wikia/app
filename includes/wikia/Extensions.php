@@ -1274,8 +1274,7 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
 		case WIKIA_ENV_SANDBOX:
-			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
-			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
+			$wgVisualEditorParsoidURL = 'http://parsoid';
 			break;
 		case WIKIA_ENV_DEV:
 			// Note: This must NOT end with a slash due to Parsoid bug (wtf?)
