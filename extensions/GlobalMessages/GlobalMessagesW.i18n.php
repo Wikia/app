@@ -133,7 +133,7 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
 We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
@@ -3575,7 +3575,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'widget-contribs-limit' => 'Limit',
 	'widget_name' => 'Name',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -4249,7 +4249,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wikia-language-all' => 'All languages',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -4967,7 +4967,7 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S'
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -7434,7 +7434,7 @@ Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! 
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
 	'wikia-language-top' => 'Top $1 languages',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -7655,7 +7655,7 @@ $messages['ja'] = array(
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -11946,7 +11946,7 @@ Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].'
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
 We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
@@ -12796,7 +12796,7 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -13280,7 +13280,7 @@ Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se is
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Anterior',
 	'wikia-pagination-next' => 'Próximo',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -13854,7 +13854,7 @@ $messages['ru'] = array(
 	'widget-community-more' => 'Activity feed',
 	'whats_new' => "What's New",
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -18140,7 +18140,7 @@ $messages['zh-hans'] = array(
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minute|minutes}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -18269,7 +18269,7 @@ $messages['zh-hant'] = array(
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minute|minutes}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
