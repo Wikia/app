@@ -34,10 +34,6 @@ class CeleryPurger implements TaskProducer {
 			'urls' => [],
 			'keys' => [],
 		],
-		'mercury' => [
-			'urls' => [],
-			'keys' => [],
-		],
 		'vignette' => [
 			'urls' => [],
 			'keys' => [],
@@ -54,10 +50,6 @@ class CeleryPurger implements TaskProducer {
 		foreach ( $urls as $item ) {
 			if ( isset( $wgPurgeVignetteUsingSurrogateKeys ) && VignetteRequest::isVignetteUrl( $item ) ) {
 				$this->buckets['vignette']['urls'][] = $item;
-			} elseif ( strstr( $item, 'MercuryApi' ) !== false ) {
-				$this->buckets['mercury']['urls'][] = $item;
-				// TODO: we can remove this when mercury is only using internal cache
-				$this->buckets['mediawiki']['urls'][] = $item;
 			} else {
 				$this->buckets['mediawiki']['urls'][] = $item;
 			}
