@@ -218,6 +218,18 @@
             }
         }
     ],
+    "icPrebidCriteo": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
     "icA9Bidder": [
         {
             "apps": [
