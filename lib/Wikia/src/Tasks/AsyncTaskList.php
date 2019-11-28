@@ -13,8 +13,6 @@ use Wikia\Factory\ServiceFactory;
 use Wikia\Rabbit\TaskPublisher;
 use Wikia\Tasks\Queues\DeferredInsertsQueue;
 use Wikia\Tasks\Queues\DumpsOnDemandQueue;
-use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
-use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
@@ -104,12 +102,6 @@ class AsyncTaskList {
 				break;
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
-				break;
-			case ParsoidPurgeQueue::NAME:
-				$queue = new ParsoidPurgeQueue();
-				break;
-			case ParsoidPurgePriorityQueue::NAME:
-				$queue = new ParsoidPurgePriorityQueue();
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
