@@ -1434,10 +1434,6 @@ if ( !empty( $wgEnableEditorPreferenceExt ) ) {
 	include "$IP/extensions/wikia/EditorPreference/EditorPreference.php";
 }
 
-if( !empty( $wgEnableVisualEditorUI ) ) {
-	include "$IP/extensions/wikia/Parsoid/Parsoid.php";
-}
-
 if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
 	include "$IP/extensions/wikia/EditorSyntaxHighlighting/EditorSyntaxHighlighting.setup.php";
 }
