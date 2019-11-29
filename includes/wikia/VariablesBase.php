@@ -2711,6 +2711,11 @@ $wgEnableFlagClosedAccountsExt = true;
 $wgEnableForumExt = false;
 
 /**
+ * @var  $wgArchiveWikiForums
+ */
+$wgArchiveWikiForums = null;
+
+/**
  * Disallow anonymous editing of Forum:Index.
  * @see extensions/wikia/ForumIndexProtector
  * @var bool $wgEnableForumIndexProtector
