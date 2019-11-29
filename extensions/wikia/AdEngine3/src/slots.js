@@ -396,7 +396,7 @@ export default {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
-    const rotator = new FmrRotator(slotName, 'incontent_boxad_', btRec);
+		const rotator = new FmrRotator(slotName, 'incontent_boxad_', btRec);
 
 		if (!isApplicable || !parentNode) {
 			slotService.setState(slotName, false);
@@ -409,7 +409,7 @@ export default {
 
 		parentNode.appendChild(element);
 
-    rotator.rotateSlot(slotName);
+		rotator.rotateSlot(slotName);
 	},
 
 	injectHighImpact() {
