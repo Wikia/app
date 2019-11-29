@@ -1112,7 +1112,7 @@ $messages['fr'] = array(
 	'cnw-theme-instruction' => "Vous pouvez personnaliser l'apparence du wiki dans le Concepteur de thème quand vous le voulez !",
 	'cnw-welcome-headline' => 'Félicitations !  Vous venez de créer $1 !',
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour ajouter des pages au wiki.',
-	'cnw-welcome-help' => 'Vivez votre passion de fan. Trouvez des réponses, conseils et plus sur le  <a href="http://communaute.wikia.com">Centre des communautés</a>.',
+	'cnw-welcome-help' => 'Vivez votre passion de fan. Trouvez des réponses, conseils et plus sur le <a href="https://communaute.wikia.com">Centre des communautés</a>.',
 	'cnw-error-general' => 'Oups, un problème est survenu de notre côté ! Veuillez réessayer plus tard ou [[Special:Contact|nous contacter]] pour obtenir de l’aide.',
 	'cnw-error-general-heading' => 'Toutes nos excuses',
 	'cnw-badword-header' => 'Eh...',
