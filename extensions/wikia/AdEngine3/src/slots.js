@@ -4,7 +4,7 @@ import {
 	context,
 	events,
 	eventService,
-  SlotRotator,
+	FmrRotator,
 	scrollListener,
 	slotInjector,
 	slotService,
@@ -396,7 +396,7 @@ export default {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
-		const rotator = new SlotRotator(slotName, 'incontent_boxad_', btRec);
+		const rotator = new FmrRotator(slotName, 'incontent_boxad_', btRec);
 
 		if (!isApplicable || !parentNode) {
 			slotService.setState(slotName, false);
