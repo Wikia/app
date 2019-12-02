@@ -12,6 +12,7 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 	'localBasePath' => __DIR__,
 	'scripts' => [
 		'js/ext.AffiliateService.js',
+		'js/units.js',
 	],
 ];
 

@@ -1,8 +1,10 @@
 require([
 	'jquery',
 	'wikia.window',
+	'wikia.geo',
 	'wikia.log',
-], function ($, w, log) {
+	'ext.wikia.AffiliateService.units',
+], function ($, w, geo, log, units) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -21,30 +23,76 @@ require([
 			return infoBoxOffset.top + infoBoxHeight;
 		},
 
-		fetchUnitsFromService: function () {
+		fetchTargetingFromService: function () {
 			var url = w.wgServicesExternalDomain + 'knowledge-graph/affiliates/' + w.wgCityId + '/' + w.wgArticleId
 
 			$.ajax({
 				url: url,
 			}).done(function (result) {
-				deferred.resolve(result);
+				if (!Array.isArray(result) || result.length === 0) {
+					return [];
+				}
+				// flatten the response
+				var targeting = [];
+				result.forEach(function (campaign) {
+					var campaignName = campaign.campaign;
+					campaign.categories.forEach(function (category) {
+						targeting.push({
+							campaign: campaignName,
+							category: category.name,
+							score: category.score,
+							tracking: category.tracking,
+						})
+					})
+				});
+				// sort by score
+				targeting.sort(function (a, b) {
+					return b.score - a.score;
+				});
+				deferred.resolve(targeting);
 			}).fail(function (err) {
 				log('Failed to fetch affiliates data' + err, log.levels.error);
-				deferred.resolve(null);
+				deferred.resolve([]);
 			});
 
 			return deferred.promise();
 		},
 
-		addUnitsToPage: function () {
-			// fetch units
+		getAvailableUnits: function (targeting) {
+			var currentCountry = geo.getCountryCode();
+			// clone units
+			var availableUnits = units.slice();
+			// filter by geo
+			availableUnits = $.grep(availableUnits, function (unit) {
+				var c = unit.country;
+				// if there's no `.country` property os it is not an Array or `.country` is empty
+				return !Array.isArray(c) || (c.length === 0) || (c.indexOf(currentCountry) > -1);
+			});
+			// filter by category and campaign
+			availableUnits = $.grep(availableUnits, function (unit) {
+				var isValid = false;
+				targeting.forEach(function (t) {
+					if (unit.campaign === t.campaign && unit.category === t.category) {
+						isValid = true;
+					}
+				});
+				return isValid;
+			});
+
+			return availableUnits;
+		},
+
+		addUnitToPage: function () {
+			// fetch targeting
 			$.when(
-				AffiliateService.fetchUnitsFromService(),
-			).then(function (units) {
-				// if it's `null`, there's 404 on the services side
-				if (Array.isArray(units)) {
-					// HERE WE HAVE SOME DATA
-					console.log('>', units);
+				AffiliateService.fetchTargetingFromService(),
+			).then(function (targeting) {
+				if (targeting.length > 0) {
+					var availableUnits = AffiliateService.getAvailableUnits(targeting);
+
+					console.log('>', { targeting, units, availableUnits });
+				} else {
+					console.log('No units available');
 				}
 			});
 		},
@@ -70,14 +118,12 @@ require([
 		init: function () {
 			AffiliateService.$infoBox = $('.portable-infobox').first();
 
-
-			if (!AffiliateService.canDisplayUnit()) {
-				return;
-			}
+			// if (!AffiliateService.canDisplayUnit()) {
+			// 	return;
+			// }
 
 			AffiliateService.addMarker();
-			AffiliateService.addUnitsToPage();
-
+			AffiliateService.addUnitToPage();
 
 		// iterate through all of the paragraphs comparing the widths of each one. When there is a width that is much larger
 		// than the previous high use that. Only look at the first N paragraphs.
