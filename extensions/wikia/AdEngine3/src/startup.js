@@ -29,8 +29,6 @@ import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
 import { communicator } from "./communicator";
-import { merge, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -72,10 +70,6 @@ export async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 }
 
 async function setupJWPlayer() {
-	of(1).pipe(
-  		mergeMap(() => merge(of('oasis - first'), of('oasis - second')))
-	).subscribe(console.log);
-
 	new JWPlayerManager().manage();
 
 	if (!context.get('state.showAds')) {
