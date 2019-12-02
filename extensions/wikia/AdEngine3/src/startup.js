@@ -43,7 +43,7 @@ export async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	context.push('delayModules', babDetection);
 	context.push('delayModules', biddersDelay);
 
-	setupJwPlayer();
+	setupJWPlayer();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
@@ -69,10 +69,10 @@ export async function setupAdEngine(isOptedIn, geoRequiresConsent) {
 	taxonomyService.configureComicsTargeting();
 }
 
-async function setupJwPlayer() {
-	if (!context.get('state.showAds')) {
-		new JWPlayerManager().manage();
+async function setupJWPlayer() {
+	new JWPlayerManager().manage();
 
+	if (!context.get('state.showAds')) {
 		return communicator.dispatch({
 			type: '[Ad Engine] setup jw player',
 			showAds: false,
