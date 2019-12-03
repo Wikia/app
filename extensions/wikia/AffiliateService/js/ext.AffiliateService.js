@@ -32,7 +32,7 @@ require([
 		$infoBox: undefined,
 
 		canDisplayUnit: function () {
-			typeof AffiliateService.$infoBox !== 'undefined';
+			return typeof AffiliateService.$infoBox !== 'undefined';
 		},
 
 		getStartHeight: function () {
