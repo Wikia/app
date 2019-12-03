@@ -134,10 +134,17 @@ require([
 				notAllowedYStop.push(imageStart + $image.height());
 			});
 
+			// determine if this y coordinate conflicts with any images
 			function isValidSlot(yStart) {
+				// if there are no images always return true
+				if (notAllowedYStart.length === 0) {
+					return true;
+				}
+
+				// find the index of where this would be inserted
 				var index = insertSpot(notAllowedYStart, yStart);
 
-				// no images yet
+				// no images yet, we are gucci
 				if (index === -1) {
 					return true;
 				}
@@ -145,6 +152,12 @@ require([
 				var notAllowedYStartValue = notAllowedYStart[index];
 				var notAllowedYStopValue = notAllowedYStop[index];
 
+				// happens when the index is is out of the bounds of possibility (no images before that point)
+				if (notAllowedYStartValue === undefined) {
+					return true;
+				}
+
+				// verify that the final value that isn't allow is less than the requested y start position
 				if (notAllowedYStopValue < yStart) {
 					return true;
 				}
@@ -152,16 +165,36 @@ require([
 				return false;
 			}
 
-			// prepend the unit after the first paragraph below the infobox
+			// if we cannot find a location after useFallbackAtY use the highest slot below a heading
+			var $fallbackParagraph = null;
+			var useFallbackAtY = 20000;
+
+			var marker = '<div style="background: red; width: 100%; height: 100px; clear: both;"> </div>';
+
+			// prepend the unit after the first paragraph below the
 			$paragraphs.each(function(index, element) {
 				var $paragraph = $(element);
 				var paragraphY = $paragraph.offset().top;
 
+				// make sure we are past the infobox and not near an image
 				if (paragraphY > startHeight && isValidSlot(paragraphY)) {
-					$paragraph.prepend('<div style="background: red; width: 100%; height: 100px"> </div>')
-					return false;
+					if ($fallbackParagraph === null) {
+						$fallbackParagraph = $paragraph;
+					}
+
+					// when prepending make sure the prev child is a paragraph
+					if ($paragraph.prev().is('p')) {
+						$paragraph.prepend(marker)
+						return false;
+					}
 				}
 
+				// once we hit a certain height lets go back up and use one of the fall back paragraphs
+				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
+					console.log('using fallback slot');
+					$fallbackParagraph.prepend(marker);
+					return false;
+				}
 			});
 		},
 
