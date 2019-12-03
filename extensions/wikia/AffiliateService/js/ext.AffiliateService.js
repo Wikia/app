@@ -36,6 +36,10 @@ require([
 		},
 
 		getStartHeight: function () {
+			if (AffiliateService.$infoBox.length === 0) {
+				return 0;
+			}
+
 			var infoBoxOffset = AffiliateService.$infoBox.offset();
 			var infoBoxHeight = AffiliateService.$infoBox.height();
 
