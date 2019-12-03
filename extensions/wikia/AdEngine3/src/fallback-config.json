@@ -78,6 +78,18 @@
             "value": true
         }
     ],
+    "icPrebidOneVideo": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": false
+        }
+    ],
     "icPrebidIndexExchange": [
         {
             "apps": [
@@ -206,6 +218,18 @@
             }
         }
     ],
+    "icPrebidCriteo": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
     "icA9Bidder": [
         {
             "apps": [
@@ -254,9 +278,7 @@
                 "oasis"
             ],
             "regions": [
-                "CA",
-                "DE",
-                "PL"
+                "XX"
             ],
             "value": true
         }
