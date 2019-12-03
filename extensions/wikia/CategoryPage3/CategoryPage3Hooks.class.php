@@ -33,8 +33,6 @@ class CategoryPage3Hooks {
 			$surrogateKey = CategoryPage3CacheHelper::getSurrogateKey( $title );
 			// CDN
 			Wikia::purgeSurrogateKey( $surrogateKey );
-			// icache
-			Wikia::purgeSurrogateKey( $surrogateKey, 'mercury' );
 		}
 
 		return true;
