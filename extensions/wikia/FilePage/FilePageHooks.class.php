@@ -301,7 +301,6 @@ class FilePageHooks extends WikiaObject{
 					'key' => $key,
 				] );
 				Wikia::purgeSurrogateKey( $key );
-				Wikia::purgeSurrogateKey( $key, 'mercury' );
 			}
 		}
 	}
