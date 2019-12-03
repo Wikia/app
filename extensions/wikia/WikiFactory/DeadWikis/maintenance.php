@@ -245,6 +245,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$result[$classification][$id] = $wiki;
 			} else {
 				echo "Wiki \"{$wiki['dbname']}\" (#{$id}) was not classified for delete\n";
+				var_dump($wiki);
 			}
 		}
 
