@@ -1,3 +1,22 @@
+// find the first slot where we can insert
+// todo: we could use a better algorithm here
+function insertSpot(arr, val) {
+	for (var i = 0; i < arr.length - 1; i++) {
+		var arrVal = arr[i];
+		var nextVal = arr[i + 1];
+
+		if (i === 0 && arrVal > val) {
+			return -1;
+		}
+
+		if (arrVal <= val && nextVal > val) {
+			return i;
+		}
+	}
+
+	return arr.length;
+}
+
 require([
 	'jquery',
 	'wikia.window',
@@ -13,10 +32,14 @@ require([
 		$infoBox: undefined,
 
 		canDisplayUnit: function () {
-			typeof AffiliateService.$infoBox !== 'undefined';
+			return typeof AffiliateService.$infoBox !== 'undefined';
 		},
 
 		getStartHeight: function () {
+			if (AffiliateService.$infoBox.length === 0) {
+				return 0;
+			}
+
 			var infoBoxOffset = AffiliateService.$infoBox.offset();
 			var infoBoxHeight = AffiliateService.$infoBox.height();
 
@@ -103,13 +126,77 @@ require([
 			// only select paragraphs one level from the root main element
 			var $paragraphs = $('#mw-content-text > p');
 
-			// prepend the unit after the first paragraph below the infobox
-			$paragraphs.each(function (index, element) {
-				var $paragraph = $(element);
-				var paragraphHeight = $paragraph.offset().top;
+			// don't select placement near images
+			var $images = $('#mw-content-text > figure');
+			var notAllowedYStart = []; // array of y coordinate start positions
+			var notAllowedYStop = [] // array of y coordinate final positions
 
-				if (paragraphHeight > startHeight) {
-					$paragraph.prepend('<div style="background: red; width: 100%; height: 100px"> </div>')
+			$images.each(function(index, element) {
+				var $image = $(element);
+				var imageStart = $image.offset().top;
+				notAllowedYStart.push(imageStart);
+				notAllowedYStop.push(imageStart + $image.height());
+			});
+
+			// determine if this y coordinate conflicts with any images
+			function isValidSlot(yStart) {
+				// if there are no images always return true
+				if (notAllowedYStart.length === 0) {
+					return true;
+				}
+
+				// find the index of where this would be inserted
+				var index = insertSpot(notAllowedYStart, yStart);
+
+				// no images yet, we are gucci
+				if (index === -1) {
+					return true;
+				}
+
+				var notAllowedYStartValue = notAllowedYStart[index];
+				var notAllowedYStopValue = notAllowedYStop[index];
+
+				// happens when the index is is out of the bounds of possibility (no images before that point)
+				if (notAllowedYStartValue === undefined) {
+					return true;
+				}
+
+				// verify that the final value that isn't allow is less than the requested y start position
+				if (notAllowedYStopValue < yStart) {
+					return true;
+				}
+
+				return false;
+			}
+
+			// if we cannot find a location after useFallbackAtY use the highest slot below a heading
+			var $fallbackParagraph = null;
+			var useFallbackAtY = 20000;
+
+			var marker = '<div style="background: red; width: 100%; height: 100px; clear: both;"> </div>';
+
+			// prepend the unit after the first paragraph below the
+			$paragraphs.each(function(index, element) {
+				var $paragraph = $(element);
+				var paragraphY = $paragraph.offset().top;
+
+				// make sure we are past the infobox and not near an image
+				if (paragraphY > startHeight && isValidSlot(paragraphY)) {
+					if ($fallbackParagraph === null) {
+						$fallbackParagraph = $paragraph;
+					}
+
+					// when prepending make sure the prev child is a paragraph
+					if ($paragraph.prev().is('p')) {
+						$paragraph.prepend(marker)
+						return false;
+					}
+				}
+
+				// once we hit a certain height lets go back up and use one of the fall back paragraphs
+				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
+					console.log('using fallback slot');
+					$fallbackParagraph.prepend(marker);
 					return false;
 				}
 			});
