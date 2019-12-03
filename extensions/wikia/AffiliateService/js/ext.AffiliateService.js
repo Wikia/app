@@ -1,3 +1,22 @@
+// find the first slot where we can insert
+// todo: we could use a better algorithm here
+function insertSpot(arr, val) {
+	for (var i = 0; i < arr.length - 1; i++) {
+		var arrVal = arr[i];
+		var nextVal = arr[i + 1];
+
+		if (i === 0 && arrVal > val) {
+			return -1;
+		}
+
+		if (arrVal <= val && nextVal > val) {
+			return i;
+		}
+	}
+
+	return arr.length;
+}
+
 require([
 	'jquery',
 	'wikia.window',
@@ -103,15 +122,46 @@ require([
 			// only select paragraphs one level from the root main element
 			var $paragraphs = $('#mw-content-text > p');
 
-			// prepend the unit after the first paragraph below the infobox
-			$paragraphs.each(function (index, element) {
-				var $paragraph = $(element);
-				var paragraphHeight = $paragraph.offset().top;
+			// don't select placement near images
+			var $images = $('#mw-content-text > figure');
+			var notAllowedYStart = []; // array of y coordinate start positions
+			var notAllowedYStop = [] // array of y coordinate final positions
 
-				if (paragraphHeight > startHeight) {
+			$images.each(function(index, element) {
+				var $image = $(element);
+				var imageStart = $image.offset().top;
+				notAllowedYStart.push(imageStart);
+				notAllowedYStop.push(imageStart + $image.height());
+			});
+
+			function isValidSlot(yStart) {
+				var index = insertSpot(notAllowedYStart, yStart);
+
+				// no images yet
+				if (index === -1) {
+					return true;
+				}
+
+				var notAllowedYStartValue = notAllowedYStart[index];
+				var notAllowedYStopValue = notAllowedYStop[index];
+
+				if (notAllowedYStopValue < yStart) {
+					return true;
+				}
+
+				return false;
+			}
+
+			// prepend the unit after the first paragraph below the infobox
+			$paragraphs.each(function(index, element) {
+				var $paragraph = $(element);
+				var paragraphY = $paragraph.offset().top;
+
+				if (paragraphY > startHeight && isValidSlot(paragraphY)) {
 					$paragraph.prepend('<div style="background: red; width: 100%; height: 100px"> </div>')
 					return false;
 				}
+
 			});
 		},
 
