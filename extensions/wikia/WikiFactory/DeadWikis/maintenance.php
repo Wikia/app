@@ -243,6 +243,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($classification) {
 				echo "Marking wiki \"{$wiki['dbname']}\" (#{$id}) as \"$classification\"\n";
 				$result[$classification][$id] = $wiki;
+			} else {
+				echo "Wiki \"{$wiki['dbname']}\" (#{$id}) was not classified for delete\n";
 			}
 		}
 
