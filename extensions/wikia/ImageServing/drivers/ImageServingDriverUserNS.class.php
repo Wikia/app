@@ -19,7 +19,7 @@ class ImageServingDriverUserNS extends ImageServingDriverMainNS {
 	private function getAvatar( $user ) {
 		return array(
 			"name" => 'avatar',
-			"url" => AvatarService::getAvatarUrl( $user, 200 )
+			"url" => AvatarService::getAvatarUrl( $user, max( $this->minWidth, $this->minHeight, 200) )
 		);
 	}
 }
