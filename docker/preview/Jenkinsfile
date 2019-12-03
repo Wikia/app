@@ -537,7 +537,7 @@ EOL""")
         currentBuild.result = "UNSTABLE"
       }
 
-      notifyBuild(currentBuild.result, nextAppReleaseTag, nextAppReleaseTag, buildUser)
+      notifyBuild(currentBuild.result, nextAppReleaseTag, nextConfigReleaseTag, buildUser)
     }
   }
 }

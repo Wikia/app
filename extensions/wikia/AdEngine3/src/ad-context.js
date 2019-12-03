@@ -246,6 +246,27 @@ export default {
 				enabled: false,
 				slots: {}
 			},
+			oneVideo: {
+				enabled: false,
+				slots: {
+					featured: {
+						site: {
+							id: 1192473,
+							page: 'www.fandom.com',
+							ref: 'www.fandom.com'
+						},
+						pubId: 'HBExchange'
+					},
+					incontent_player: {
+						site: {
+							id: 1192473,
+							page: 'www.fandom.com',
+							ref: 'www.fandom.com'
+						},
+						pubId: 'HBExchange'
+					}
+				}
+			},
 			openx: {
 				enabled: false,
 				delDomain: 'wikia-d.openx.net',

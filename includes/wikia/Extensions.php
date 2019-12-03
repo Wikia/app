@@ -796,8 +796,10 @@ if( !empty( $wgEnableWallEngine ) ) {
 
 // Enable new style forums (/wiki/Special:Forum)
 if ( !empty( $wgEnableForumExt ) ) {
-	$wgArchiveWikiForums = true;
 	include( "{$IP}/extensions/wikia/Forum/Forum.setup.php" );
+	if ( is_null( $wgArchiveWikiForums ) ) {
+		$wgArchiveWikiForums = true;
+	}
 } else {
 	include( "{$IP}/extensions/wikia/Forum/ForumDisabled.setup.php" );
 }
@@ -1274,8 +1276,7 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
 		case WIKIA_ENV_SANDBOX:
-			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
-			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
+			$wgVisualEditorParsoidURL = 'http://parsoid';
 			break;
 		case WIKIA_ENV_DEV:
 			// Note: This must NOT end with a slash due to Parsoid bug (wtf?)
@@ -1433,10 +1434,6 @@ if( !empty( $wgEnableLyricsApi ) ) {
 
 if ( !empty( $wgEnableEditorPreferenceExt ) ) {
 	include "$IP/extensions/wikia/EditorPreference/EditorPreference.php";
-}
-
-if( !empty( $wgEnableVisualEditorUI ) ) {
-	include "$IP/extensions/wikia/Parsoid/Parsoid.php";
 }
 
 if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
