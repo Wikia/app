@@ -171,18 +171,6 @@ export default {
 						],
 						networkId: '3306'
 					},
-					featured: {
-						zoneId: '1470492',
-						sizes: [
-							[3, 3],
-						]
-					},
-					incontent_player: {
-						zoneId: '1470491',
-						sizes: [
-							[3, 3],
-						]
-					}
 				}
 			},
 			indexExchange: {
