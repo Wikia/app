@@ -17,7 +17,7 @@ define('ext.wikia.AffiliateService.tracker', [
 		// convert extra tracking options
 		var extraTracking = [];
 		options.extraTracking.forEach((kv) => {
-			extraTracking[`affiliation_${kv.key}`] = kv.val;
+			extraTracking['affiliation_' + kv.key] = kv.val;
 		});
 
 		// add more properties for tracking event
