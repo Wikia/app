@@ -24,7 +24,8 @@ require([
 	'wikia.log',
 	'wikia.mustache',
 	'ext.wikia.AffiliateService.units',
-], function ($, w, geo, log, mustache, units) {
+	'ext.wikia.AffiliateService.templates',
+], function ($, w, geo, log, mustache, units, templates) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -115,13 +116,16 @@ require([
 					var availableUnits = AffiliateService.getAvailableUnits(targeting);
 
 					console.log('>', { targeting, units, availableUnits });
+
+					// add unit to marker
+					AffiliateService.addMarker(units[0]);
 				} else {
 					console.log('No units available');
 				}
 			});
 		},
 
-		addMarker: function () {
+		addMarker: function (unit) {
 			var startHeight = AffiliateService.getStartHeight();
 
 			// only select paragraphs one level from the root main element
@@ -175,7 +179,7 @@ require([
 			var useFallbackAtY = 20000;
 
 			var marker = '<div style="background: red; width: 100%; height: 100px; clear: both;"> </div>';
-			var html = AffiliateService.renderUnitMarkup();
+			var html = AffiliateService.renderUnitMarkup(unit);
 
 			// prepend the unit after the first paragraph below the
 			$paragraphs.each(function(index, element) {
@@ -204,18 +208,13 @@ require([
 			});
 		},
 
-		renderUnitMarkup: function() {
-			var template = '<div style="display: flex; background: red; width: 100%; height: 100px"><img style="height: 100%;" src="{{image}}"><p>{{heading}}</p><button>{{buttonText}}</button><img src="{{logo}}" /></div>';
-			var unit = units[0];
-
-			var params = {
+		renderUnitMarkup: function(unit) {
+			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
 				heading: unit.heading,
 				buttonText: unit.subheading,
 				logo: unit.logo,
-			};
-			
-			return mustache.render(template, params);
+			});
 		},
 
 		init: function () {
@@ -225,28 +224,7 @@ require([
 			// 	return;
 			// }
 
-			AffiliateService.addMarker();
 			AffiliateService.addUnitToPage();
-
-		// iterate through all of the paragraphs comparing the widths of each one. When there is a width that is much larger
-		// than the previous high use that. Only look at the first N paragraphs.
-		// var widths = [];
-		// var defaultSlot = null;
-		// $paragraphs.each(function(index, element) {
-		// 	var $paragraph = $(element);
-		// 	var paragraphWidth = $paragraph.width();
-		// 	widths.push(paragraphWidth);
-
-		// 	var maxWidth = Math.max.apply(null, widths);
-
-		// 	if (index > 2) {
-		// 		console.log(paragraphWidth, maxWidth);
-		// 		if (paragraphWidth > maxWidth) {
-		// 			$paragraph.append('<div style="background: blue; width: 100%; height: 100px"> </div>')
-		// 			return false;
-		// 		}
-		// 	}
-		// });
 		},
 	};
 
