@@ -15,7 +15,7 @@ define('ext.wikia.AffiliateService.tracker', [
 		var currentOptions = $.extend(defaultOptions, options);
 
 		// convert extra tracking options
-		var extraTracking = [];
+		var extraTracking = {};
 		options.extraTracking.forEach((kv) => {
 			extraTracking['affiliation_' + kv.key] = kv.val;
 		});
