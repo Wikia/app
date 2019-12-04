@@ -65,10 +65,8 @@ $messages['en'] = array(
 
 It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
-* Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
 * Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
-* Stop by [https://community.fandom.com/wiki/Community_Central?utm_source=foundermessageversion1 Community Central] to check out the [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=foundermessageversion1 staff blog], and ask questions on our [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion1 Community Central forums].
-* Visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom.
+* Visit the [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=foundermessageversion2 staff blog], and ask questions on our [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion2 Community Central forums]..
 * Check out the [[Special:AdminDashboard|Admin Dashboard]] for your progress wheel. Complete the tasks to get to 100%!
 
 Have fun!",
