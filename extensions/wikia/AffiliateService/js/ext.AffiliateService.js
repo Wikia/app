@@ -117,7 +117,7 @@ require([
 
 					console.log('>', { targeting, units, availableUnits });
 
-					// add unit to marker
+					// add unit data to be inserted into template
 					AffiliateService.addMarker(units[0]);
 				} else {
 					console.log('No units available');
@@ -178,7 +178,7 @@ require([
 			var $fallbackParagraph = null;
 			var useFallbackAtY = 20000;
 
-			var marker = '<div style="background: red; width: 100%; height: 100px; clear: both;"> </div>';
+			// get html to insert into target location
 			var html = AffiliateService.renderUnitMarkup(unit);
 
 			// prepend the unit after the first paragraph below the
@@ -208,6 +208,7 @@ require([
 			});
 		},
 
+		// Using mustache to render template and unit info
 		renderUnitMarkup: function(unit) {
 			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
