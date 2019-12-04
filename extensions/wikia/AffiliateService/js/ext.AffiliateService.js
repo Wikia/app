@@ -119,7 +119,7 @@ require([
 		},
 
 		renderUnitMarkup: function() {
-			var template = '<div style="display: flex; border: 1px solid #333; width: 100%; height: 100px"><img style="height: 100%;" src="{{image}}"><p>{{heading}}</p><button>{{subheading}}</button><img src="{{logo}}" /></div>';
+			var template = '<div style="display: flex; background: red; width: 100%; height: 100px"><img style="height: 100%;" src="{{image}}"><p>{{heading}}</p><button>{{buttonText}}</button><img src="{{logo}}" /></div>';
 			var unit = units[0];
 
 			var params = {
