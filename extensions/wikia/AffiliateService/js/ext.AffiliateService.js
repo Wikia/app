@@ -38,25 +38,6 @@ function flattenServiceResponse(response) {
 	return targeting;
 }
 
-// find the first slot where we can insert
-// todo: we could use a better algorithm here
-function insertSpot(arr, val) {
-	for (var i = 0; i < arr.length - 1; i++) {
-		var arrVal = arr[i];
-		var nextVal = arr[i + 1];
-
-		if (i === 0 && arrVal > val) {
-			return -1;
-		}
-
-		if (arrVal <= val && nextVal > val) {
-			return i;
-		}
-	}
-
-	return arr.length;
-}
-
 require([
 	'jquery',
 	'wikia.window',
