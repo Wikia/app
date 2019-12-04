@@ -65,10 +65,8 @@ $messages['en'] = array(
 
 It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
-* Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
 * Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
-* Stop by [https://community.fandom.com/wiki/Community_Central?utm_source=foundermessageversion1 Community Central] to check out the [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=foundermessageversion1 staff blog], and ask questions on our [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion1 Community Central forums].
-* Visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom.
+* Visit the [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=foundermessageversion2 staff blog], and ask questions on our [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion2 Community Central forums]..
 * Check out the [[Special:AdminDashboard|Admin Dashboard]] for your progress wheel. Complete the tasks to get to 100%!
 
 Have fun!",
@@ -729,6 +727,8 @@ Viel Glück mit deinem Projekt, <br /><br />
 Das Fandom-Community-Team<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
 	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
+	'autocreatewiki-community-name-too-long' => 'Der gewählte Name ist zu lang. Bitte wähle einen kürzeren Namen.',
+	'autocreatewiki-community-description-too-long' => 'Diese Beschreibung ist zu lang. Bitte wähle eine kürzere Beschreibung.',
 );
 
 $messages['de-formal'] = array(
@@ -929,6 +929,8 @@ Buena suerte con el proyecto, < br /><br />
 Equipo comunitario de FANDOM< br /></p>',
 	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear un wiki.',
 	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
+	'autocreatewiki-community-name-too-long' => 'Este nombre es muy largo. Por favor elige otro más corto.',
+	'autocreatewiki-community-description-too-long' => 'Esta descripción es muy larga. Por favor elige una más corta.',
 );
 
 $messages['et'] = array(
@@ -1183,6 +1185,8 @@ Bonne réussite dans votre projet,<br /><br />
 L\'équipe de la communauté FANDOM<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wiki, vous devez confirmer votre adresse e-mail.',
 	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
+	'autocreatewiki-community-name-too-long' => 'Ce nom est trop long. Veuillez en choisir un plus court.',
+	'autocreatewiki-community-description-too-long' => 'Cette description est trop longue. Veuillez en choisir une plus courte.',
 );
 
 $messages['fy'] = array(
@@ -1627,6 +1631,8 @@ Buona fortuna con il tuo progetto,<br /><br />
 Team della community di FANDOM<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wiki.',
 	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
+	'autocreatewiki-community-name-too-long' => 'Questo nome è troppo lungo. Scegli un nome più corto, per favore.',
+	'autocreatewiki-community-description-too-long' => 'Questa descrizione è troppo lunga. Scegli una descrizione più corta, per favore.',
 );
 
 $messages['ja'] = array(
@@ -1717,6 +1723,8 @@ Fandomをお楽しみいただく上で、これらの記事を役立ててい�
 Fandomコミュニティ・チーム<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Fandomコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
+	'autocreatewiki-community-name-too-long' => '名前が長すぎます。短くしてください。',
+	'autocreatewiki-community-description-too-long' => '説明が長すぎます。短くしてください。',
 );
 
 $messages['km'] = array(
@@ -2024,6 +2032,8 @@ $messages['lol'] = array(
 	'autocreatewiki-welcomebody-HTML' => 'crwdns83248:0crwdne83248:0',
 	'cnw-error-unconfirmed-email' => 'crwdns15108:0crwdne15108:0',
 	'cnw-error-unconfirmed-email-header' => 'crwdns15107:0crwdne15107:0',
+	'autocreatewiki-community-name-too-long' => 'crwdns94204:0crwdne94204:0',
+	'autocreatewiki-community-description-too-long' => 'crwdns94206:0crwdne94206:0',
 );
 
 $messages['lrc'] = array(
@@ -2781,6 +2791,8 @@ Boa sorte com o projeto, <br />< br / >
  Equipe da comunidade FANDOM <br /></p>',
 	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wiki.',
 	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
+	'autocreatewiki-community-name-too-long' => 'Este nome é muito longo. Por favor escolha um nome mais curto.',
+	'autocreatewiki-community-description-too-long' => 'Esta descrição é muito longa. Por favor escolha uma descrição mais curta.',
 );
 
 $messages['ro'] = array(
@@ -2913,6 +2925,8 @@ $messages['ru'] = array(
 Команда ФЭНДОМА<br /></p>',
 	'cnw-error-unconfirmed-email' => 'Чтобы создать вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
+	'autocreatewiki-community-name-too-long' => 'Название слишком длинное. Дайте вики более короткое название.',
+	'autocreatewiki-community-description-too-long' => 'Описание слишком длинное. Опишите тему более коротко.',
 );
 
 $messages['sa'] = array(

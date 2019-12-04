@@ -197,7 +197,8 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US"
             ],
             "value": true
         }
@@ -251,8 +252,10 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "sampling": 100.0,
-            "value": false
+            "regions": [
+                "XX-SA"
+            ],
+            "value": true
         }
     ],
     "icIASVideoTracking": [
