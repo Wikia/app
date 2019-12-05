@@ -13,6 +13,7 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 	'scripts' => [
 		'js/ext.AffiliateService.js',
 		'js/units.js',
+		'js/tracker.js',
 	],
 ];
 
