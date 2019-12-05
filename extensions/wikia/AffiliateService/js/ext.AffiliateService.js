@@ -214,6 +214,7 @@ require([
 				image: unit.image,
 				heading: unit.heading,
 				buttonText: unit.subheading,
+				link: unit.link,
 				logo: unit.logo,
 			});
 		},
