@@ -11,7 +11,7 @@ class CurationCmsArticleService implements FandomArticleService {
 	const FAILED_TO_CALL_CURATION_CMS = "Failed to call curation-cms";
 	const FANDOM_SITE_NAME = 'Fandom';
 
-	const REQUEST_TIMEOUT_SECONDS = 2;
+	const REQUEST_TIMEOUT_SECONDS = 2.0;
 	const EXTRA_POSTS_TO_FETCH = 20;
 
 	private const FANDOM_BASE_URL = 'https://www.fandom.com';
@@ -31,10 +31,8 @@ class CurationCmsArticleService implements FandomArticleService {
 	 */
 	private function doApiRequest( int $limit ): ResponseInterface {
 		$client = new Client( [
-			// Base URI is used with relative requests
 			'base_uri' => $this->baseUrl,
-			// You can set any number of default request options.
-			'timeout' => 2.0,
+			'timeout' => static::REQUEST_TIMEOUT_SECONDS,
 		] );
 
 		$params = [
