@@ -796,8 +796,10 @@ if( !empty( $wgEnableWallEngine ) ) {
 
 // Enable new style forums (/wiki/Special:Forum)
 if ( !empty( $wgEnableForumExt ) ) {
-	$wgArchiveWikiForums = true;
 	include( "{$IP}/extensions/wikia/Forum/Forum.setup.php" );
+	if ( is_null( $wgArchiveWikiForums ) ) {
+		$wgArchiveWikiForums = true;
+	}
 } else {
 	include( "{$IP}/extensions/wikia/Forum/ForumDisabled.setup.php" );
 }

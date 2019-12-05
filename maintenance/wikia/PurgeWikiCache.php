@@ -13,7 +13,6 @@ class PurgeWikiCache extends Maintenance {
 		WikiFactory::clearCache( $wgCityId );
 
 		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wgCityId ) );
-		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wgCityId ), 'mercury' );
 
 		$this->output( 'Cache purged!' );
 	}

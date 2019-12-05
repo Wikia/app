@@ -152,11 +152,10 @@ class WikiaFilePage extends ImagePage {
 	 * Render the image or video
 	 */
 	public function view() {
-		global $wgRedirectFilePagesForAnons;
 		$keys = array();
 		Hooks::run( 'FilePages:InsertSurrogateKey', [ $this->getTitle(), &$keys ] );
 		Wikia::setSurrogateKeysHeaders( $keys, false );
-		if ( !$this->getContext()->getUser()->isAnon() || empty( $wgRedirectFilePagesForAnons ) ) {
+		if ( !$this->getContext()->getUser()->isAnon() ) {
 			parent::view();
 
 			return;
