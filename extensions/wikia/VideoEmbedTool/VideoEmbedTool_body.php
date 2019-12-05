@@ -302,7 +302,7 @@ class VideoEmbedTool {
 			$success = false;
 			if ( $placeholder ) {
 				$placeholder_tag = $placeholder[0];
-				$file = wfFindFile( $title );
+				$file = wfFindFile( $title, [ 'bypassCache' => true ] );
 				$embed_code = $file->transform( array( 'width'=>$width ) )->toHtml();
 
 				$params = array(

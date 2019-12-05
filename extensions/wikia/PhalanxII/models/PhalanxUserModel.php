@@ -97,6 +97,11 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlock->mTimestamp = $this->block->getTimestamp();
 		$this->user->mBlock->mAddress = $this->block->getText();
 
+		// SER-3682 for exact blocks the target should always be the user
+		if ( $type === 'exact' ) {
+			$this->user->mBlock->setTarget( $this->user );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $this;
 	}

@@ -40,13 +40,10 @@ class PurgeWikiCacheEverywhere extends Maintenance {
 		//proxy purge
 		$this->output( 'Purge prod surrogate keys' );
 		Wikia::purgeSurrogateKey( $prodKey );
-		Wikia::purgeSurrogateKey( $prodKey, 'mercury' );
 		$this->output( 'Purge surrogate keys for preview' );
 		Wikia::purgeSurrogateKey( $previewKey );
-		Wikia::purgeSurrogateKey( $previewKey, 'mercury' );
 		$this->output( 'Purge surrogate keys for verify' );
 		Wikia::purgeSurrogateKey( $verifyKey );
-		Wikia::purgeSurrogateKey( $verifyKey, 'mercury' );
 
 		$this->output( 'Cache purged!' );
 	}
