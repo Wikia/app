@@ -57,7 +57,7 @@ class CurationCmsArticleService implements FandomArticleService {
 	}
 
 	private static function getThumbnail( array $imageData ): string {
-		if ( array_key_exists( 'url', $imageData ) && array_key_exists( 'url', $imageData ) && array_key_exists( 'url', $imageData ) ) {
+		if ( isset( $imageData['key'], $imageData['width'], $imageData['height'] ) ) {
 			if ( VignetteRequest::isVignetteUrl( $imageData['url'] ) ) {
 				return VignetteRequest::fromUrl( $imageData['url'] )
 					->width( $imageData['width'] )
@@ -66,7 +66,7 @@ class CurationCmsArticleService implements FandomArticleService {
 			}
 		}
 
-		return array_key_exists( 'url', $imageData ) ? $imageData['url'] : false;
+		return $imageData['url'] ?? false;
 	}
 
 	public function getTrendingFandomArticles( int $limit ): array {
@@ -76,10 +76,10 @@ class CurationCmsArticleService implements FandomArticleService {
 
 		if ( isset( $data['feed'] ) ) {
 			foreach ( $data['feed'] as $post ) {
-				$id = isset( $post['id'] ) ? $post['id'] : false;
+				$id = $post['id'] ?? false;
+				$headline = $post['headline'] ?? false;
 				// IW-2588: Hotfix to prevent showcase URLs from polluting the production cache
 				$articlePath = isset( $post['sourceUrl'] ) ? parse_url( $post['sourceUrl'], PHP_URL_PATH ) : false;
-				$headline = isset( $post['headline'] ) ? $post['headline'] : false;
 				$thumbnail = isset( $post['image'] ) ? self::getThumbnail( $post['image'] ) : false;
 
 				if ( $id && $articlePath && $headline && $thumbnail ) {
@@ -98,16 +98,5 @@ class CurationCmsArticleService implements FandomArticleService {
 		}
 
 		return array_values( $posts );
-	}
-
-	private function getArticles( array $query ): array {
-		$url = $this->getApiUrl() . $path . '?' . http_build_query( $query );
-		$response = ExternalHttp::get( $url, static::REQUEST_TIMEOUT_SECONDS );
-
-		if ( $response ) {
-			return json_decode( $response, true ) ?? [];
-		}
-
-		return [];
 	}
 }
