@@ -18,7 +18,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		WikiFactory::isUsed( false );
 		$wgExtensionFunctions = [];
 		$this->dbName = $wgDBname;
-		
+
 		// WikiFactoryLoader has side effects that initialize the global content language with a StubObject
 		// In tests, we must ensure that any previous value for this global is correctly restored
 		$this->oldContentLanguage = $wgContLang;

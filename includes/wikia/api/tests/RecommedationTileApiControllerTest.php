@@ -55,7 +55,7 @@ class RecommendationTileApiControllerTest extends TestCase
 		$requestedIds = '1,8';
 
 		$request = new WikiaRequest( [
-			WikisApiController::PARAMETER_WIKI_IDS => $requestedIds
+			'ids'=> $requestedIds
 		] );
 		$response = new WikiaResponse( WikiaResponse::FORMAT_JSON, $request );
 

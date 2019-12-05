@@ -10,6 +10,8 @@ class SitemapHooksTest extends WikiaBaseTest {
 	 * @dataProvider canonicalRedirectProvider
 	 */
 	public function testCanonicalRedirect( $currentRequestUri, $targetUrl, $shouldAllowRedirect ) {
+		$this->markTestSkipped( 'PLATFORM-4489' );
+
 		$outputMock = $this->getMock( 'OutputPage', [ 'cancelRedirect' ] );
 		$responseMock = $this->getMock( 'WebResponse', [ 'header' ] );
 		$requestMock = $this->getMock( 'WebRequest', [ 'response' ] );
