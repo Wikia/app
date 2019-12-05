@@ -2,9 +2,9 @@
 
 class CachedFandomArticleService implements FandomArticleService {
 
-	const CACHE_TTL_SECONDS = 900; // 15 minutes
+	const CACHE_TTL_SECONDS = 3600; // 1 hour
 
-	private const CACHE_VERSION = 2;
+	private const CACHE_VERSION = 3;
 
 	/** @var BagOStuff $cacheService */
 	private $cacheService;
