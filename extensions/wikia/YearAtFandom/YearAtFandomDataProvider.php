@@ -44,7 +44,7 @@ final class YearAtFandomDataProvider {
 				],
 				__METHOD__,
 				[
-					'GROUP BY wiki_id, article_id'
+					'GROUP BY' =>  ['wiki_id', 'article_id']
 				]
 			);
 
