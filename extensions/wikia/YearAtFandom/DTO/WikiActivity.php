@@ -15,6 +15,8 @@ final class WikiActivity {
 	public $wikiUrl;
 	/** @var int */
 	public $categoryId;
+	/** @var string|null */
+	public $wikiThumbnailUrl;
 
 	public function __construct(
 		int $wikiId,
@@ -22,7 +24,8 @@ final class WikiActivity {
 		int $categoryId,
 		string $categoryName,
 		string $wikiName,
-		string $wikiUrl
+		string $wikiUrl,
+		?string $wikiThumbnailUrl
 	) {
 		$this->wikiId = $wikiId;
 		$this->pageViews = $pageViews;
@@ -30,5 +33,6 @@ final class WikiActivity {
 		$this->wikiName = $wikiName;
 		$this->wikiUrl = $wikiUrl;
 		$this->categoryId = $categoryId;
+		$this->wikiThumbnailUrl = $wikiThumbnailUrl;
 	}
 }

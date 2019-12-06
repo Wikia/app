@@ -56,15 +56,19 @@ final class YearAtFandomDataProvider {
 		$list = [];
 
 		foreach ( $result as $row ) {
-			$categoryInfo = HubService::getCategoryInfoForCity( (int) $row->wiki_id );
-			$wikicity = WikiFactory::getWikiByID( (int) $row->wiki_id );
+			$wikiId = (int)$row->wiki_id;
+			$categoryInfo = HubService::getCategoryInfoForCity( $wikiId );
+			$wikicity = WikiFactory::getWikiByID( $wikiId );
+			$thumbnail = $this->getWikiThumbnail( $wikiId );
+
 			$list[] = new WikiActivity(
-				(int) $row->wiki_id,
+				$wikiId,
 				(int) $row->sum_pv,
 				$categoryInfo->cat_id,
 				$categoryInfo->cat_name,
 				$wikicity->city_title,
-				$wikicity->city_url
+				$wikicity->city_url,
+				$thumbnail
 			);
 		}
 
@@ -90,5 +94,17 @@ final class YearAtFandomDataProvider {
 			(int) $result['creates'],
 			(int) $result['posts']
 		);
+	}
+
+	private function getWikiThumbnail( int $wikiId ): ?string {
+		$service = new CommunityDataService( $wikiId );
+		if ( empty( $service->getCommunityImageId() ) ) {
+			return null;
+		}
+		$imageServing =
+			new ImageServing( [ $service->getCommunityImageId() ], 1080, [ 'w' => 3, 'h' => 2 ] );
+		$images = $imageServing->getImages( 1 );
+
+		return $images[$service->getCommunityImageId()][0]['url'] ?? null;
 	}
 }
