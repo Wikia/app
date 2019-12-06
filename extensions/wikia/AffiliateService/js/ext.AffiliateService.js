@@ -17,6 +17,27 @@ function insertSpot(arr, val) {
 	return arr.length;
 }
 
+function flattenServiceResponse(response) {
+	var targeting = [];
+	response.forEach(function (campaign) {
+		var campaignName = campaign.campaign;
+		campaign.categories.forEach(function (category) {
+			targeting.push({
+				campaign: campaignName,
+				category: category.name,
+				score: category.score,
+				tracking: category.tracking,
+			})
+		})
+	});
+	// sort by score
+	targeting.sort(function (a, b) {
+		return b.score - a.score;
+	});
+
+	return targeting;
+}
+
 require([
 	'jquery',
 	'wikia.window',
@@ -25,7 +46,8 @@ require([
 	'wikia.mustache',
 	'ext.wikia.AffiliateService.units',
 	'ext.wikia.AffiliateService.templates',
-], function ($, w, geo, log, mustache, units, templates) {
+	'ext.wikia.AffiliateService.tracker',
+], function ($, w, geo, log, units, templates, tracker) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -33,8 +55,23 @@ require([
 	var AffiliateService = {
 		$infoBox: undefined,
 
+		// ?debugAffiliateServiceTargeting=campaign,category
+		getDebugTargeting: function() {
+			// check if we have the mechanism to get the param (ie. not on IE)
+			if (typeof URLSearchParams === 'function') {
+				var urlParams = new URLSearchParams(w.location.search);
+
+				if (urlParams.has('debugAffiliateServiceTargeting')) {
+					return urlParams.get('debugAffiliateServiceTargeting');
+				}
+			}
+
+			return false;
+		},
+
 		canDisplayUnit: function () {
-			return typeof AffiliateService.$infoBox !== 'undefined';
+			// logged-in && (dev || debugTargeting)
+			return (win.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
 		},
 
 		getStartHeight: function () {
@@ -49,32 +86,28 @@ require([
 		},
 
 		fetchTargetingFromService: function () {
+			var debugTargetting = AffiliateService.getDebugTargeting();
+			if (debugTargetting !== false) {
+				console.log('debugTargetting', debugTargetting);
+				const debugArray = debugTargetting.split(',');
+				deferred.resolve([{
+					campaign: debugArray[0],
+					category: debugArray[1],
+					score: 1,
+					tracking: [],
+				}]);
+				return deferred.promise();
+			}
+
 			var url = w.wgServicesExternalDomain + 'knowledge-graph/affiliates/' + w.wgCityId + '/' + w.wgArticleId
 
 			$.ajax({
 				url: url,
 			}).done(function (result) {
 				if (!Array.isArray(result) || result.length === 0) {
-					return [];
+					deferred.resolve([]);
 				}
-				// flatten the response
-				var targeting = [];
-				result.forEach(function (campaign) {
-					var campaignName = campaign.campaign;
-					campaign.categories.forEach(function (category) {
-						targeting.push({
-							campaign: campaignName,
-							category: category.name,
-							score: category.score,
-							tracking: category.tracking,
-						})
-					})
-				});
-				// sort by score
-				targeting.sort(function (a, b) {
-					return b.score - a.score;
-				});
-				deferred.resolve(targeting);
+				deferred.resolve(flattenServiceResponse(result));
 			}).fail(function (err) {
 				log('Failed to fetch affiliates data' + err, log.levels.error);
 				deferred.resolve([]);
@@ -86,22 +119,25 @@ require([
 		getAvailableUnits: function (targeting) {
 			var currentCountry = geo.getCountryCode();
 			// clone units
-			var availableUnits = units.slice();
+			var potentialUnits = units.slice();
 			// filter by geo
-			availableUnits = $.grep(availableUnits, function (unit) {
+			potentialUnits = $.grep(potentialUnits, function (unit) {
 				var c = unit.country;
 				// if there's no `.country` property os it is not an Array or `.country` is empty
 				return !Array.isArray(c) || (c.length === 0) || (c.indexOf(currentCountry) > -1);
 			});
-			// filter by category and campaign
-			availableUnits = $.grep(availableUnits, function (unit) {
-				var isValid = false;
+			// filter by category and campaign also add tracking to the list
+			var availableUnits = [];
+			potentialUnits.forEach(function (unit) {
+				// for every unit check every targeting, add to the list if we have a match
 				targeting.forEach(function (t) {
 					if (unit.campaign === t.campaign && unit.category === t.category) {
-						isValid = true;
+						// add tracking params coming from the service
+						availableUnits.push($.extend(unit, {
+							tracking: t.tracking,
+						}));
 					}
 				});
-				return isValid;
 			});
 
 			return availableUnits;
@@ -115,12 +151,24 @@ require([
 				if (targeting.length > 0) {
 					var availableUnits = AffiliateService.getAvailableUnits(targeting);
 
-					console.log('>', { targeting, units, availableUnits });
+					if (availableUnits.length > 0) {
+						var unit = availableUnits[0];
+						// add unit data to be inserted into template
+						AffiliateService.renderUnitMarkup(units[0]);
 
-					// add unit data to be inserted into template
-					AffiliateService.renderUnitMarkup(units[0]);
+						// placeholder, replace with impression
+						tracker.trackImpression('test', {
+							campaignId: unit.campaign,
+							categoryId: unit.category,
+							extraTracking: unit.tracking,
+						});
+
+						console.log('>', { targeting, units, availableUnits });
+					} else {
+						console.log('No units available for targeting', targeting);
+					}
 				} else {
-					console.log('No units available');
+					console.log('No targeting available');
 				}
 			});
 		},
@@ -205,6 +253,7 @@ require([
 					$fallbackParagraph.prepend(html);
 					return false;
 				}
+
 			});
 		},
 
@@ -221,9 +270,10 @@ require([
 		init: function () {
 			AffiliateService.$infoBox = $('.portable-infobox').first();
 
-			// if (!AffiliateService.canDisplayUnit()) {
-			// 	return;
-			// }
+			if (!AffiliateService.canDisplayUnit()) {
+				// fire negative impression
+				return;
+			}
 
 			AffiliateService.addUnitToPage();
 		},

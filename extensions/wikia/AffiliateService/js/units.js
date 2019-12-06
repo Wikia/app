@@ -23,6 +23,14 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			logo: 'https://static.wikia.nocookie.net/274624f0-64b8-42b8-8f5d-1b0f0529c3bb',
 			isBig: true,
 		},
+		{
+			category: 'ddb',
+			campaign: 'ddb',
+			name: 'test unit',
+			header: 'Header',
+			subheader: 'This is subheader',
+			link: 'https://ddb.com',
+		}
 	];
 
 	return units;
