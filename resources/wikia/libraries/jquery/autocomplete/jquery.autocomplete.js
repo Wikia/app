@@ -267,21 +267,29 @@
     },
 
     getSuggestions: function(q) {
-      var cr, me, ls;
-      cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
-      if (cr && $.isArray(cr.suggestions)) {
-        this.suggestions = cr.suggestions;
-        this.data = cr.data;
-        this.suggest();
-      } else if (!this.isBadQuery(q)) {
-        me = this;
+      // var cr, me, ls;
+      // cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
+      // if (cr && $.isArray(cr.suggestions)) {
+      //   this.suggestions = cr.suggestions;
+      //   this.data = cr.data;
+      //   this.suggest();
+      // } else if (!this.isBadQuery(q)) {
+        var me = this;
 
         /* Wikia change - allow custom param name */
         //me.options.params.query = q;
         var requestParams = me.options.params;
         requestParams[me.options.queryParamName] = q;
-        $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
-      }
+
+        $.ajax({
+	        type:     'GET',
+	        dataType: 'json',
+	        url: me.serviceUrl,
+		    xhrFields: {
+			    withCredentials: true
+		    },
+	        success: function(response) { me.processResponse(response); },
+	    });
     },
 
     isBadQuery: function(q) {
@@ -302,6 +310,7 @@
     },
 
     suggest: function() {
+    	console.log(this.suggestions);
       if (this.suggestions.length === 0) {
         this.hide();
         return;
@@ -322,7 +331,7 @@
         suggestion = this.suggestions[i];
         div = $('<' + suggestionWrapperElement + '>')
             .attr('title', $.htmlentities(suggestion))
-            .html(f($.htmlentities(suggestion), this.data[i], $.htmlentities(v)));
+            .html(f(suggestion, this.data[i], $.htmlentities(v)));
 
         if (me.selectedIndex === i) {
           div.addClass(this.options.selectedClass);
@@ -350,16 +359,14 @@
       } catch (err) { return; }
 
       /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
-      if(this.options.fnPreprocessResults != null){
+      if(this.options.fnPreprocessResults !== null){
         response = this.options.fnPreprocessResults(response);
       }
 
       if (!$.isArray(response.data)) { response.data = []; }
-      this.suggestions = response.suggestions;
-      this.data = response.data;
+      this.suggestions = response;
       this.cachedResponse[response.query] = response;
-      if (response.suggestions.length === 0 && !this.options.skipBadQueries /* Wikia change */) { this.badQueries.push(response.query); }
-      if (response.query === this.getQuery(this.currentValue)) { this.suggest(); }
+      this.suggest();
     },
 
     activate: function(index) {
