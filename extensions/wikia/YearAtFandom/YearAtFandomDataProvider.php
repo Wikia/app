@@ -61,6 +61,7 @@ final class YearAtFandomDataProvider {
 			$list[] = new WikiActivity(
 				(int) $row->wiki_id,
 				(int) $row->sum_pv,
+				$categoryInfo->cat_id,
 				$categoryInfo->cat_name,
 				$wikicity->city_title,
 				$wikicity->city_url

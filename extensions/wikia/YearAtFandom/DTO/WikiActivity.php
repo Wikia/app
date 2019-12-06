@@ -13,12 +13,22 @@ final class WikiActivity {
 	public $wikiName;
 	/** @var string */
 	public $wikiUrl;
+	/** @var int */
+	public $categoryId;
 
-	public function __construct( int $wikiId, int $pageViews, string $categoryName, string $wikiName, string $wikiUrl) {
+	public function __construct(
+		int $wikiId,
+		int $pageViews,
+		int $categoryId,
+		string $categoryName,
+		string $wikiName,
+		string $wikiUrl
+	) {
 		$this->wikiId = $wikiId;
 		$this->pageViews = $pageViews;
 		$this->categoryName = $categoryName;
 		$this->wikiName = $wikiName;
 		$this->wikiUrl = $wikiUrl;
+		$this->categoryId = $categoryId;
 	}
 }

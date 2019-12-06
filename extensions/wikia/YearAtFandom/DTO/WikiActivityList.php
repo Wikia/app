@@ -21,4 +21,31 @@ final class WikiActivityList {
 
 		return array_splice($views, 0, 5 );
 	}
+
+	/**
+	 * @return CategoryActivity[]
+	 */
+	public function top5Categories(): array {
+		/** @var CategoryActivity[] $categories */
+		$categories = [];
+
+		foreach ( $this->list as $activity ) {
+			if (!isset($categories[$activity->categoryId])) {
+				$categories[$activity->categoryId] = new CategoryActivity(
+					$activity->categoryId,
+					$activity->categoryName,
+					$activity->pageViews
+				);
+			} else {
+				$categories[$activity->categoryId] = $categories[$activity->categoryId]
+					->withAddedViews($activity->pageViews);
+			}
+		}
+
+		usort( $categories, function ( CategoryActivity $left, CategoryActivity $right) {
+			return $left->pageViews <=> $right->pageViews;
+		} );
+
+		return array_splice($categories, 0, 5 );
+	}
 }

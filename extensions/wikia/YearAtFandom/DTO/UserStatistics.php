@@ -25,6 +25,7 @@ final class UserStatistics implements JsonSerializable {
 			'summary' => $this->summary,
 			'top5Wikis' => $this->pageViews->top5Wikis(),
 			'top5Articles' => $this->articlePageViews->top5Articles(),
+			'top5Categories' => $this->pageViews->top5Categories(),
 		];
 	}
 }
