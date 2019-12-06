@@ -54,6 +54,11 @@ final class YearAtFandomDataProvider {
 
 			foreach ($result as $row) {
 				$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
+
+				if (!$title) {
+					continue;
+				}
+
 				$articlePageViewsList[] = new ArticlePageViews(
 					(int) $row->article_id,
 					(int) $row->wiki_id,
