@@ -85,7 +85,12 @@ final class YearAtFandomDataProvider {
 		$result = $this->statsDB->select(
 			'user_article_aggregates',
 			[ '*' ],
-			[ 'user_id' => $userId ]
+			[ 'user_id' => $userId ],
+			__METHOD__,
+			[
+				'ORDER BY' => 'sum_pv DESC',
+				'LIMIT' => 50
+			]
 		);
 
 		$list = [];
@@ -108,7 +113,12 @@ final class YearAtFandomDataProvider {
 		$result = $this->statsDB->select(
 			'user_community_aggregates',
 			[ '*' ],
-			[ 'user_id' => $userId ]
+			[ 'user_id' => $userId ],
+			__METHOD__,
+			[
+				'ORDER BY' => 'sum_pv DESC',
+				'LIMIT' => 50
+			]
 		);
 
 		$list = [];
