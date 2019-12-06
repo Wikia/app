@@ -28,7 +28,6 @@ require([
 ], function ($, w, geo, log, mustache, units, templates) {
 	'use strict';
 
-
 	var deferred = $.Deferred();
 
 	var AffiliateService = {
