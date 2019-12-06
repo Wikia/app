@@ -52,5 +52,19 @@
         position: absolute;
         right: 18px;
         width: 60px;
+
+        &.light {
+            @if $is-dark-wiki {
+                display: none;
+            }
+        }
+
+        &.dark {
+            display: none;
+
+            @if $is-dark-wiki {
+                display: block;
+            }
+        }
     }
 }

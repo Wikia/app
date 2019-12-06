@@ -216,8 +216,8 @@ require([
 				heading: unit.heading,
 				buttonText: unit.subheading,
 				link: unit.link,
-				// display logo based on theme (need to find a way to access this variable)
-				logo: isDarkTheme ? unit.logo.dark : unit.logo.light,
+				logoLight: unit.logo.light,
+				logoDark: unit.logo.dark,
 			});
 		},
 
