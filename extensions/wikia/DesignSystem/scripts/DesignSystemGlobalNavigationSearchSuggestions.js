@@ -70,6 +70,7 @@ $(function () {
 								'" class="wds-dropdown__content wds-global-navigation__search-suggestions wds-is-not-scrollable">' +
 								'<ul id="' + autocompleteElId +
 								'" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
+								'<ul class="wds-global-navigation__search-suggestions-wikis"></ul>' +
 								'</div>';
 						},
 						fnFormatResult: function (value, data, currentValue) {
@@ -80,6 +81,51 @@ $(function () {
 								'</a>';
 						},
 						fnPreprocessResults: function (data) {
+							data.wikis = [
+								{
+									"id": "1706",
+									"name": "Elder Scrolls",
+									"language": "en",
+									"description": "Elder Scrolls is a community site that anyone can contribute to. Discover, share and add your knowledge!",
+									"url": "http://elderscrolls.wikia.com/",
+									"hub": "Video Games",
+									"platform": "fandom",
+									"pageCount": 40000,
+									"imageCount": 30000,
+									"videoCount": 100,
+									"pageViews": 4000000
+								},
+								{
+									"id": "gamepedia_skyrim_gamepedia",
+									"name": "Skyrim Wiki",
+									"language": "en",
+									"description": "A comprehensive community wiki resource for the open world action RPG The Elder Scrolls V: Skyrim, including Dawnguard, Hearthfire and Dragonborn.",
+									"url": "http://skyrim.gamepedia.com",
+									"thumbnail": "https://mercury-media.cursecdn.com/avatars/46/235/636246703534181681.png",
+									"hub": "Gaming",
+									"platform": "gamepedia",
+									"pageCount": 20000,
+									"imageCount": 6000,
+									"videoCount": 0,
+									"pageViews": 100000
+								},
+								{
+									"id": "gamepedia_teso_gamepedia",
+									"name": "TESO Wiki",
+									"language": "en",
+									"description": "The comprehensive wiki resource for the game The Elder Scrolls Online, featuring Updates, Game guides and much more!",
+									"url": "http://teso.gamepedia.com",
+									"thumbnail": "https://mercury-media.cursecdn.com/avatars/0/521/635074126552445537.png",
+									"hub": "Gaming",
+									"platform": "gamepedia",
+									"pageCount": 9000,
+									"imageCount": 5000,
+									"videoCount": 0,
+									"pageViews": 1000
+								}
+							]
+							var wikis = $(".wds-global-navigation__search-suggestions-wikis");
+							data.wikis.forEach(wiki => wikis.append("<li>" + wiki.name + "</li>"));
 							trackSuggestionsImpression(data.ids, data.query);
 
 							return data;
