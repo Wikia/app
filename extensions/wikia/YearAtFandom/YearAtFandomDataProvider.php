@@ -44,7 +44,9 @@ final class YearAtFandomDataProvider {
 				],
 				__METHOD__,
 				[
-					'GROUP BY' =>  ['wiki_id', 'article_id']
+					'GROUP BY' =>  ['wiki_id', 'article_id'],
+					'ORDER BY' => 'totalPageviews DESC',
+					'LIMIT' => 5
 				]
 			);
 
@@ -89,7 +91,7 @@ final class YearAtFandomDataProvider {
 			__METHOD__,
 			[
 				'ORDER BY' => 'sum_pv DESC',
-				'LIMIT' => 50
+				'LIMIT' => 5
 			]
 		);
 
@@ -122,7 +124,7 @@ final class YearAtFandomDataProvider {
 			__METHOD__,
 			[
 				'ORDER BY' => 'sum_pv DESC',
-				'LIMIT' => 50
+				'LIMIT' => 5
 			]
 		);
 
