@@ -20,7 +20,7 @@ final class ArticlePageViewsList {
 	public function top5Articles(): array {
 		$views = $this->list;
 		usort( $views, function ( ArticlePageViews $left, ArticlePageViews $right) {
-			return $left->pageViews <=> $right->pageViews;
+			return $right->pageViews <=> $left->pageViews;
 		} );
 
 		return array_splice($views, 0, 5 );

@@ -16,7 +16,7 @@ final class WikiActivityList implements IteratorAggregate {
 	public function top5Wikis(): array {
 		$views = $this->list;
 		usort( $views, function ( WikiActivity $left, WikiActivity $right) {
-			return $left->pageViews <=> $right->pageViews;
+			return $right->pageViews <=> $left->pageViews;
 		} );
 
 		return array_splice($views, 0, 5 );
@@ -43,7 +43,7 @@ final class WikiActivityList implements IteratorAggregate {
 		}
 
 		usort( $categories, function ( CategoryActivity $left, CategoryActivity $right) {
-			return $left->pageViews <=> $right->pageViews;
+			return $right->pageViews <=> $left->pageViews;
 		} );
 
 		return array_splice($categories, 0, 5 );
