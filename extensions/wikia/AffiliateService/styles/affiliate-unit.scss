@@ -17,9 +17,21 @@
     &__image-wrapper {
         background-repeat: no-repeat;
         background-size: cover;
-        clip-path: polygon(0% 0%,100% 0%,80% 100%,0 100%);
         flex: 1;
         height: 100%;
+        position: relative;
+
+        // Used to crop image with 20 deg angle
+        &::after {
+            content: '';
+            position: absolute;
+            right: -36px;
+            top: 0;
+            height: 100%;
+            width: 0;
+            transform: skewX(-20deg);
+            border-left: 72px solid $color-page;
+        }
     }
 
     &__info {
