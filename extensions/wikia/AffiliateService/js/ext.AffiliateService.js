@@ -43,9 +43,11 @@ require([
 	'wikia.window',
 	'wikia.geo',
 	'wikia.log',
+	'wikia.mustache',
 	'ext.wikia.AffiliateService.units',
+	'ext.wikia.AffiliateService.templates',
 	'ext.wikia.AffiliateService.tracker',
-], function ($, w, geo, log, units, tracker) {
+], function ($, w, geo, log, mustache, units, templates, tracker) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -69,7 +71,7 @@ require([
 
 		canDisplayUnit: function () {
 			// logged-in && (dev || debugTargeting)
-			return (win.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
+			return (w.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
 		},
 
 		getStartHeight: function () {
@@ -151,6 +153,8 @@ require([
 
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
+						// add unit data to be inserted into template
+						AffiliateService.renderUnitMarkup(units[0]);
 
 						// placeholder, replace with impression
 						tracker.trackImpression('test', {
@@ -169,7 +173,7 @@ require([
 			});
 		},
 
-		addMarker: function () {
+		renderUnitMarkup: function (unit) {
 			var startHeight = AffiliateService.getStartHeight();
 
 			// only select paragraphs one level from the root main element
@@ -222,7 +226,8 @@ require([
 			var $fallbackParagraph = null;
 			var useFallbackAtY = 20000;
 
-			var marker = '<div style="background: red; width: 100%; height: 100px; clear: both;"> </div>';
+			// get html to insert into target location
+			var html = AffiliateService.getTemplate(unit);
 
 			// prepend the unit after the first paragraph below the
 			$paragraphs.each(function(index, element) {
@@ -237,7 +242,7 @@ require([
 
 					// when prepending make sure the prev child is a paragraph
 					if ($paragraph.prev().is('p')) {
-						$paragraph.prepend(marker)
+						$paragraph.prepend(html)
 						return false;
 					}
 				}
@@ -245,10 +250,20 @@ require([
 				// once we hit a certain height lets go back up and use one of the fall back paragraphs
 				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
 					console.log('using fallback slot');
-					$fallbackParagraph.prepend(marker);
+					$fallbackParagraph.prepend(html);
 					return false;
 				}
 
+			});
+		},
+
+		// Using mustache to render template and unit info
+		getTemplate: function(unit) {
+			return mustache.render(templates.AffiliateService_unit, {
+				image: unit.image,
+				heading: unit.heading,
+				buttonText: unit.subheading,
+				logo: unit.logo,
 			});
 		},
 
@@ -260,28 +275,7 @@ require([
 				return;
 			}
 
-			AffiliateService.addMarker();
 			AffiliateService.addUnitToPage();
-
-		// iterate through all of the paragraphs comparing the widths of each one. When there is a width that is much larger
-		// than the previous high use that. Only look at the first N paragraphs.
-		// var widths = [];
-		// var defaultSlot = null;
-		// $paragraphs.each(function(index, element) {
-		// 	var $paragraph = $(element);
-		// 	var paragraphWidth = $paragraph.width();
-		// 	widths.push(paragraphWidth);
-
-		// 	var maxWidth = Math.max.apply(null, widths);
-
-		// 	if (index > 2) {
-		// 		console.log(paragraphWidth, maxWidth);
-		// 		if (paragraphWidth > maxWidth) {
-		// 			$paragraph.append('<div style="background: blue; width: 100%; height: 100px"> </div>')
-		// 			return false;
-		// 		}
-		// 	}
-		// });
 		},
 	};
 
