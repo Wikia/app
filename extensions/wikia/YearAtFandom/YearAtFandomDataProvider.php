@@ -114,6 +114,10 @@ final class YearAtFandomDataProvider {
 			$wikicity = WikiFactory::getWikiByID( $wikiId );
 			$thumbnail = $this->getWikiThumbnail( $wikiId );
 
+			if (!isset($wikicity->city_dbname)) {
+				continue;
+			}
+
 			$list[] = new WikiActivity(
 				$wikiId,
 				$wikicity->city_dbname,
