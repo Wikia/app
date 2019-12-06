@@ -6,10 +6,10 @@ $(function ($) {
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
 		$searchToggle = $globalNav.find('.wds-global-navigation__search-toggle'),
-		$internalScopeButton = $globalNav.find('.wds-global-navigation__search-internal-scope'),
-		$crosswikiScopeButton = $globalNav.find('.wds-global-navigation__search-crosswiki-scope'),
-		$internalScopeLabel = $globalNav.find('wds-global-navigation__search-internal-scope__label'),
-		$crosswikiScopeLabel = $globalNav.find('wds-global-navigation__search-crosswiki-scope__label'),
+		$internalScopeButton = $globalNav.find('.wds-global-navigation__search-scope-internal__button'),
+		$crosswikiScopeButton = $globalNav.find('.wds-global-navigation__search-scope-crosswiki__button'),
+		$internalScopeLabel = $globalNav.find('wds-global-navigation__search-scope-internal__label'),
+		$crosswikiScopeLabel = $globalNav.find('wds-global-navigation__search-scope-crosswiki__label'),
 		activeSearchClass = 'wds-search-is-active',
 		activeClass = 'wds-is-active';
 
@@ -31,6 +31,7 @@ $(function ($) {
 	}
 
 	function switchActive($toActivate, $toDeactivate) {
+		debugger;
 		if (!$toActivate.hasClass(activeClass)) {
 			$toActivate.addClass(activeClass);
 		}
