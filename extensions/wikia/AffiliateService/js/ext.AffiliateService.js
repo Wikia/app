@@ -28,6 +28,7 @@ require([
 ], function ($, w, geo, log, mustache, units, templates) {
 	'use strict';
 
+
 	var deferred = $.Deferred();
 
 	var AffiliateService = {
@@ -215,7 +216,8 @@ require([
 				heading: unit.heading,
 				buttonText: unit.subheading,
 				link: unit.link,
-				logo: unit.logo,
+				// display logo based on theme (need to find a way to access this variable)
+				logo: isDarkTheme ? unit.logo.dark : unit.logo.light,
 			});
 		},
 
