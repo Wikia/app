@@ -14,6 +14,7 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 		'js/ext.AffiliateService.js',
 		'js/units.js',
 		'js/templates.mustache.js',
+		'js/tracker.js',
 	],
 	'styles' => [
 		'styles/affiliate-unit.scss',
@@ -23,3 +24,4 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 // hooks
 $wgAutoloadClasses['AffiliateServiceHooks'] = __DIR__ . '/AffiliateServiceHooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'AffiliateServiceHooks::onBeforePageDisplay';
+$wgHooks['WikiaSkinTopScripts'][] = 'AffiliateServiceHooks::onWikiaSkinTopScripts';

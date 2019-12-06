@@ -7,4 +7,11 @@ class AffiliateServiceHooks {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	public static function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
+		wfProfileIn( __METHOD__ );
+		$vars['wgAffiliateEnabled'] = Wikia::isDevEnv();
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
