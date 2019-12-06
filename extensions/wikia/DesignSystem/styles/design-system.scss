@@ -4,7 +4,6 @@
 @import '../node_modules/design-system/dist/scss/wds-variables/index';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'DesignSystemGlobalFooter';
-
 // Legacy notification styles - copied here from original GlobalNavigation extension
 @import 'GlobalNavigationNotifications';
 
@@ -98,15 +97,21 @@ $global-navigation-z-index: 5000101;
 	z-index: 2;
 }
 
+.wds-global-navigation__search-scope__label {
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+}
+
 .wds-global-navigation__search-scope__label:not(.wds-is-active) {
 	display: none !important;
 }
 
 .wds-global-navigation__search-toggle-text {
-  font-size: 14px;
+	font-size: 14px;
 }
 
-.wds-global-navigation__search-dropdown:hover:not(.wds-is-active) .wds-global-navigation__search-suggestions {
+.wds-global-navigation__search-dropdown:hover:not(.wds-is-active) .nwds-global-navigatio__search-suggestions {
 	display: none !important;
 }
 
@@ -116,4 +121,14 @@ $global-navigation-z-index: 5000101;
 			width: $content-width-small;
 		}
 	}
+}
+
+.wds-dropdown__toggle.wds-global-navigation__search-scope-dropdown {
+	border-right: 1px solid white;
+	padding-right: 7px;
+	margin: 0 7px;
+}
+
+.wds-dropdown__toggle.wds-global-navigation__search-scope-dropdown:not(.wds-search-is-active) {
+	display: none;
 }

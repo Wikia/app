@@ -10,6 +10,7 @@ $(function ($) {
 		$crosswikiScopeButton = $globalNav.find('.wds-global-navigation__search-scope-crosswiki__button'),
 		$internalScopeLabel = $globalNav.find('.wds-global-navigation__search-scope-internal__label'),
 		$crosswikiScopeLabel = $globalNav.find('.wds-global-navigation__search-scope-crosswiki__label'),
+		$searchScopeDropdown = $globalNav.find('.wds-global-navigation__search-scope-dropdown'),
 		activeSearchClass = 'wds-search-is-active',
 		activeClass = 'wds-is-active',
 		scopeValue = $globalNav.find('.wds-global-navigation__search-scope__value');
@@ -18,6 +19,9 @@ $(function ($) {
 		if (!$globalNav.hasClass(activeSearchClass)) {
 			$globalNav.addClass(activeSearchClass);
 			$searchInput.focus();
+		}
+		if (!$searchScopeDropdown.hasClass(activeSearchClass)) {
+			$searchScopeDropdown.addClass(activeSearchClass);
 		}
 	}
 
@@ -47,6 +51,7 @@ $(function ($) {
 		$searchInput.val('');
 		$globalNav.removeClass(activeSearchClass);
 		$searchContainer.removeClass('wds-search-is-focused');
+		$searchScopeDropdown.removeClass(activeSearchClass);
 	}
 
 	$internalScopeButton.click(switchScope);
