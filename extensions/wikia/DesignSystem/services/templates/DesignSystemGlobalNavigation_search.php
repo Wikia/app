@@ -15,7 +15,6 @@
 		</div>
 		<div class="wds-dropdown wds-global-navigation__search-dropdown wds-no-chevron wds-has-dark-shadow">
 			<div class="wds-dropdown__toggle wds-global-navigation__search-input-wrapper">
-				<div class="WikiaSearchInputWrapper">
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
 						<span>
@@ -26,11 +25,13 @@
 						<div class="wds-dropdown__content">
 							<ul class="wds-list wds-is-linked">
 								<li>
-									<button class="wds-button wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
+									<button class="wds-global-navigation__search-internal-scope wds-button wds-is-text"
+											data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
 										<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></button>
 								</li>
 								<li>
-									<button class="wds-button wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
+									<button class="wds-global-navigation__search-crosswiki-scope wds-button
+									wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
 										<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?></button>
 								</li>
 							</ul>
@@ -48,7 +49,6 @@
 							data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $model['suggestions']['tracking-label'] ); ?>"
 						<?php endif; ?>
 					>
-				</div>
 				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-close-tiny',

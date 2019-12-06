@@ -4,9 +4,10 @@ $(function ($) {
 	var $globalNav = $('.wds-global-navigation'),
 		$searchContainer = $globalNav.find('.wds-global-navigation__search-container'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
-		$searchSubmit = $globalNav.find('.wds-global-navigation__sear' +
-			'ch-submit'),
+		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
 		$searchToggle = $globalNav.find('.wds-global-navigation__search-toggle'),
+		$internalScopeButton = $globalNav.find('.wds-global-navigation__search-internal-scope'),
+		$crosswikiScopeButton = $globalNav.find('.wds-global-navigation__search-crosswiki-scope'),
 		activeSearchClass = 'wds-search-is-active';
 
 	function activateSearch() {
@@ -16,12 +17,18 @@ $(function ($) {
 		}
 	}
 
+	function switchScope() {
+		alert('scope');
+	}
+
 	function deactivateSearch() {
 		$searchSubmit.prop('disabled', true);
 		$searchInput.val('');
 		$globalNav.removeClass(activeSearchClass);
 		$searchContainer.removeClass('wds-search-is-focused');
 	}
+
+	$crosswikiScopeButton.click(switchScope);
 
 	$searchInput.on('input', function () {
 		var textLength = this.value.length;
