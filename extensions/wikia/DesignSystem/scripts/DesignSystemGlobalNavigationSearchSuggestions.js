@@ -23,7 +23,7 @@ $(function () {
 					}
 				})
 				.autocomplete({
-					serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?query=elder&lang=en&namespace=0',
+					serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?lang=en&namespace=0',
 					queryParamName: 'query',
 					appendTo: searchDropdownSelector,
 					deferRequestBy: 200,

@@ -59,7 +59,6 @@
         return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
       },
       suggestionWrapperElement: 'div',
-      queryParamName: 'query',
       fnPreprocessResults: null,
       skipBadQueries: false,
       positionRight: null,
@@ -267,6 +266,7 @@
     },
 
     getSuggestions: function(q) {
+    	console.log('query', q);
       // var cr, me, ls;
       // cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       // if (cr && $.isArray(cr.suggestions)) {
@@ -276,14 +276,11 @@
       // } else if (!this.isBadQuery(q)) {
         var me = this;
 
-        /* Wikia change - allow custom param name */
-        //me.options.params.query = q;
-        var requestParams = me.options.params;
-        requestParams[me.options.queryParamName] = q;
-
+        me.options.params.query = q;
         $.ajax({
 	        type:     'GET',
 	        dataType: 'json',
+	        data: me.options.params,
 	        url: me.serviceUrl,
 		    xhrFields: {
 			    withCredentials: true
@@ -330,7 +327,7 @@
         // wikia change - start
         suggestion = this.suggestions[i];
         div = $('<' + suggestionWrapperElement + '>')
-            .attr('title', $.htmlentities(suggestion))
+            .attr('title', $.htmlentities(suggestion.title))
             .html(f(suggestion, this.data[i], $.htmlentities(v)));
 
         if (me.selectedIndex === i) {
@@ -365,7 +362,7 @@
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response;
-      this.cachedResponse[response.query] = response;
+      this.cachedResponse[this.options.params.query] = response;
       this.suggest();
     },
 
