@@ -15,6 +15,7 @@
 		</div>
 		<div class="wds-dropdown wds-global-navigation__search-dropdown wds-no-chevron wds-has-dark-shadow">
 			<div class="wds-dropdown__toggle wds-global-navigation__search-input-wrapper">
+				<input class="wds-global-navigation__search-scope__value" type="hidden" name="scope" value="internal" />
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
 						<span class="wds-global-navigation__search-scope__label wds-is-active
@@ -44,6 +45,7 @@
 							</ul>
 						</div>
 					</div>
+
 					<input
 						type="search"
 						class="wds-global-navigation__search-input"
