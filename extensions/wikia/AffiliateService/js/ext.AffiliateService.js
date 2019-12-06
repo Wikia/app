@@ -68,7 +68,8 @@ require([
 		},
 
 		canDisplayUnit: function () {
-			return w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false);
+			// logged-in && (dev || debugTargeting)
+			return (win.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
 		},
 
 		getStartHeight: function () {
