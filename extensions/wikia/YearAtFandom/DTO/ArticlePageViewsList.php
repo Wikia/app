@@ -10,6 +10,10 @@ final class ArticlePageViewsList {
 		$this->list = $list;
 	}
 
+	public static function empty(): self {
+		return new self([]);
+	}
+
 	/**
 	 * @return ArticlePageViews[]
 	 */

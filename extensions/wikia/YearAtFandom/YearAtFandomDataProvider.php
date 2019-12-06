@@ -48,6 +48,10 @@ final class YearAtFandomDataProvider {
 				]
 			);
 
+			if ($result->numRows() === 0 ) {
+				return ArticlePageViewsList::empty();
+			}
+
 			foreach ($result as $row) {
 				$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
 				$articlePageViewsList[] = new ArticlePageViews(
@@ -114,7 +118,7 @@ final class YearAtFandomDataProvider {
 				$wikiId,
 				$wikicity->city_dbname,
 				(int) $row->sum_pv,
-				$categoryInfo->cat_id,
+				(int) $categoryInfo->cat_id,
 				$categoryInfo->cat_name,
 				$wikicity->city_title,
 				$wikicity->city_url,
