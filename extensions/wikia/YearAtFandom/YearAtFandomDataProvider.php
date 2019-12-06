@@ -80,7 +80,15 @@ final class YearAtFandomDataProvider {
 	private function getUserContributionsForWiki( int $userId, string $wikiDBName ): array {
 		$db = wfGetDB( DB_SLAVE, [], $wikiDBName );
 
-		return $db->selectFieldValues( 'revision', 'rev_page', ['rev_user' => $userId] );
+		return $db->selectFieldValues(
+			'revision',
+			'rev_page',
+			['rev_user' => $userId],
+			__FUNCTION__,
+			[
+				'DISTINCT'
+			]
+		);
 	}
 
 	private function getArticlePageViews( int $userId ): ArticlePageViewsList {
