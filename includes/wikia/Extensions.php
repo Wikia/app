@@ -1809,3 +1809,5 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 }
 
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
+
+include_once "$IP/extensions/wikia/YearAtFandom/YearAtFandom.setup.php";
