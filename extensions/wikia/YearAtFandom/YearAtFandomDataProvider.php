@@ -3,7 +3,8 @@
 declare( strict_types=1 );
 
 final class YearAtFandomDataProvider {
-x	private $sharedDb;
+	private const FALLBACK_THUMBNAIL = 'https://static.wikia.nocookie.net/central/images/0/0d/Global_taxonomy_cover
+	.png/revision/latest';
 	/** @var DatabaseType */
 	private $statsDB;
 
@@ -176,11 +177,11 @@ x	private $sharedDb;
 	private function getWikiThumbnail( int $wikiId ): ?string {
 		$service = new CommunityDataService( $wikiId );
 		if ( empty( $service->getCommunityImageId() ) ) {
-			return null;
+			return self::FALLBACK_THUMBNAIL;
 		}
 		$imageServing = new ImageServing( [ $service->getCommunityImageId() ], 1080, [ 'w' => 3, 'h' => 2 ] );
 		$images = $imageServing->getImages( 1 );
 
-		return $images[$service->getCommunityImageId()][0]['url'] ?? null;
+		return $images[$service->getCommunityImageId()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
 	}
 }
