@@ -2,8 +2,8 @@
 
 declare( strict_types=1 );
 
-final class WikiPageViewsList {
-	/** @var WikiPageViews[] */
+final class WikiActivityList {
+	/** @var WikiActivity[] */
 	private $list;
 
 	public function __construct( array $list ) {
@@ -11,11 +11,11 @@ final class WikiPageViewsList {
 	}
 
 	/**
-	 * @return WikiPageViews[]
+	 * @return WikiActivity[]
 	 */
 	public function top5Wikis(): array {
 		$views = $this->list;
-		usort( $views, function ( WikiPageViews $left, WikiPageViews $right) {
+		usort( $views, function ( WikiActivity $left, WikiActivity $right) {
 			return $left->pageViews <=> $right->pageViews;
 		} );
 

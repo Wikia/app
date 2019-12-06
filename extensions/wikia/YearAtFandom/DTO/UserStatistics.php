@@ -3,7 +3,7 @@
 declare( strict_types=1 );
 
 final class UserStatistics implements JsonSerializable {
-	/** @var WikiPageViewsList */
+	/** @var WikiActivityList */
 	private $pageViews;
 	/** @var UserSummary */
 	private $summary;
@@ -12,7 +12,7 @@ final class UserStatistics implements JsonSerializable {
 
 	public function __construct(
 		UserSummary $summary,
-		WikiPageViewsList $pageViews,
+		WikiActivityList $pageViews,
 		ArticlePageViewsList $articlePageViews
 	) {
 		$this->pageViews = $pageViews;

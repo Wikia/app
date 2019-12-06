@@ -7,8 +7,6 @@ final class YearAtFandomDataProvider {
 	private $sharedDb;
 	/** @var DatabaseType */
 	private $warehouseDb;
-	/** @var HubService */
-	private $hubService;
 
 	public function __construct() {
 		global $wgExternalSharedDB, $wgDWStatsDB;
@@ -35,13 +33,20 @@ final class YearAtFandomDataProvider {
 		$list = [];
 
 		foreach ( $result as $row ) {
-			$list[] = new ArticlePageViews( $row->article_id, $row->wiki_id, $row->sum_pv );
+			$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
+			$list[] = new ArticlePageViews(
+				(int) $row->article_id,
+				(int) $row->wiki_id,
+				(int) $row->sum_pv,
+				$title->getText(),
+				$title->getFullURL()
+			);
 		}
 
 		return new ArticlePageViewsList( $list );
 	}
 
-	private function getWikiPageViews( int $userId ): WikiPageViewsList {
+	private function getWikiPageViews( int $userId ): WikiActivityList {
 		$result = $this->warehouseDb->select(
 			'user_community_aggregates',
 			[ '*' ],
@@ -51,10 +56,18 @@ final class YearAtFandomDataProvider {
 		$list = [];
 
 		foreach ( $result as $row ) {
-			$list[] = new WikiPageViews( $row->wiki_id, $row->sum_pv );
+			$categoryInfo = HubService::getCategoryInfoForCity( (int) $row->wiki_id );
+			$wikicity = WikiFactory::getWikiByID( (int) $row->wiki_id );
+			$list[] = new WikiActivity(
+				(int) $row->wiki_id,
+				(int) $row->sum_pv,
+				$categoryInfo->cat_name,
+				$wikicity->city_title,
+				$wikicity->city_url
+			);
 		}
 
-		return new WikiPageViewsList( $list );
+		return new WikiActivityList( $list );
 	}
 
 	private function getSummary( int $userId ): UserSummary {
@@ -69,12 +82,12 @@ final class YearAtFandomDataProvider {
 		}
 
 		return new UserSummary(
-			$result['total_pv'],
-			$result['days'],
-			$result['dist_wikis'],
-			$result['edits'],
-			$result['creates'],
-			$result['posts']
+			(int) $result['total_pv'],
+			(int) $result['days'],
+			(int) $result['dist_wikis'],
+			(int) $result['edits'],
+			(int) $result['creates'],
+			(int) $result['posts']
 		);
 	}
 }
