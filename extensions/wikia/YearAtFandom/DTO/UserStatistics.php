@@ -7,16 +7,24 @@ final class UserStatistics implements JsonSerializable {
 	private $pageViews;
 	/** @var UserSummary */
 	private $summary;
+	/** @var ArticlePageViewsList */
+	private $articlePageViews;
 
-	public function __construct( UserSummary $summary, WikiPageViewsList $pageViews ) {
+	public function __construct(
+		UserSummary $summary,
+		WikiPageViewsList $pageViews,
+		ArticlePageViewsList $articlePageViews
+	) {
 		$this->pageViews = $pageViews;
 		$this->summary = $summary;
+		$this->articlePageViews = $articlePageViews;
 	}
 
 	public function jsonSerialize() {
 		return [
 			'summary' => $this->summary,
-			'top5' => $this->pageViews->top5Wikis()
+			'top5Wikis' => $this->pageViews->top5Wikis(),
+			'top5Articles' => $this->articlePageViews->top5Articles(),
 		];
 	}
 }

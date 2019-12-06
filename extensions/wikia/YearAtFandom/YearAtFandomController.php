@@ -14,7 +14,7 @@ final class YearAtFandomController extends WikiaApiController {
 	}
 
 	public function get() {
-		$userId = $this->getVal( 'userId' );
+		$userId = (int) $this->getVal( 'userId' );
 
 		$this->getResponse()->setBody(\GuzzleHttp\json_encode( $this->provider->getAll( $userId ) ));
 	}

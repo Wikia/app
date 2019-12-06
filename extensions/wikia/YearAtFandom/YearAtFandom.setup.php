@@ -7,10 +7,12 @@
 
 $dir = __DIR__ . '/';
 
-$wgSpecialPages['YearAtFandom'] = 'YearAtFandomController';
-
-$wgAutoloadClasses['YearAtFandomController'] = $dir . 'YearAtFandomController.class.php';
-$wgWikiaApiControllers['YearAtFandomController'] = $dir . 'YearAtFandomController.class.php';
+$wgAutoloadClasses['YearAtFandomController'] = $dir . 'YearAtFandomController.php';
+$wgAutoloadClasses['YearAtFandomDataProvider'] = $dir . 'YearAtFandomDataProvider.php';
+foreach (scandir(__DIR__ . '/DTO') as $filename) {
+	$wgAutoloadClasses[substr($filename, 0, -4)] = __DIR__ . '/DTO/' . $filename;
+}
+$wgWikiaApiControllers['YearAtFandomController'] = $dir . 'YearAtFandomController.php';
 
 $wgExtensionCredits['other'][] = [
 	'name' => 'Year at Fandom',

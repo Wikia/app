@@ -14,7 +14,7 @@ final class WikiPageViewsList {
 	 * @return WikiPageViews[]
 	 */
 	public function top5Wikis(): array {
-		$views = clone $this->list;
+		$views = $this->list;
 		usort( $views, function ( WikiPageViews $left, WikiPageViews $right) {
 			return $left->pageViews <=> $right->pageViews;
 		} );

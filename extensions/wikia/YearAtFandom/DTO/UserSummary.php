@@ -32,4 +32,8 @@ final class UserSummary {
 		$this->creates = $creates;
 		$this->posts = $posts;
 	}
+
+	public static function missing(): self {
+		return new self(0, 0, 0, 0, 0, 0);
+	}
 }

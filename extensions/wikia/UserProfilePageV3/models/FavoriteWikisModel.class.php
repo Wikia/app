@@ -46,7 +46,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function getTopWikisFromDb( $limit = self::MAX_FAV_WIKIS ) {
-		global $wgDWStatsDB;
+		global §;
 
 		$dbr = wfGetDB(DB_SLAVE, [], $wgDWStatsDB );
 		$where = [

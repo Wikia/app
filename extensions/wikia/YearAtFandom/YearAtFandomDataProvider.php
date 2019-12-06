@@ -11,22 +11,23 @@ final class YearAtFandomDataProvider {
 	private $hubService;
 
 	public function __construct() {
-		global $wgExternalSharedDB, $wgExternalDatawareDB;
+		global $wgExternalSharedDB, $wgDWStatsDB;
 		$this->sharedDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$this->warehouseDb = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$this->warehouseDb = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
 		$this->hubService = new HubService();
 	}
 
 	public function getAll( int $userId ): UserStatistics {
 		return new UserStatistics(
 			$this->getSummary( $userId ),
-			$this->getPageViews( $userId )
+			$this->getWikiPageViews( $userId ),
+			$this->getArticlePageViews( $userId )
 		);
 	}
 
-	private function getPageViews( int $userId ): WikiPageViewsList {
+	private function getArticlePageViews( int $userId ): ArticlePageViewsList {
 		$result = $this->warehouseDb->select(
-			'blabla',
+			'user_article_aggregates',
 			[ '*' ],
 			[ 'user_id' => $userId ]
 		);
@@ -34,7 +35,23 @@ final class YearAtFandomDataProvider {
 		$list = [];
 
 		foreach ( $result as $row ) {
-			$list[] = new WikiPageViews( $row->wiki_id, $row->page_views );
+			$list[] = new ArticlePageViews( $row->article_id, $row->wiki_id, $row->sum_pv );
+		}
+
+		return new ArticlePageViewsList( $list );
+	}
+
+	private function getWikiPageViews( int $userId ): WikiPageViewsList {
+		$result = $this->warehouseDb->select(
+			'user_community_aggregates',
+			[ '*' ],
+			[ 'user_id' => $userId ]
+		);
+
+		$list = [];
+
+		foreach ( $result as $row ) {
+			$list[] = new WikiPageViews( $row->wiki_id, $row->sum_pv );
 		}
 
 		return new WikiPageViewsList( $list );
@@ -42,15 +59,19 @@ final class YearAtFandomDataProvider {
 
 	private function getSummary( int $userId ): UserSummary {
 		$result = $this->warehouseDb->select(
-			'user_aggregated',
+			'user_aggregates',
 			[ '*' ],
 			[ 'user_id' => $userId ]
 		)->fetchRow();
 
+		if (!$result) {
+			return UserSummary::missing();
+		}
+
 		return new UserSummary(
-			$result['page_views'],
-			$result['days_spent'],
-			$result['distinct_wikis'],
+			$result['total_pv'],
+			$result['days'],
+			$result['dist_wikis'],
 			$result['edits'],
 			$result['creates'],
 			$result['posts']
