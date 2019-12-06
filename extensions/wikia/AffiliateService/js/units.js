@@ -1,4 +1,3 @@
-//
 define('ext.wikia.AffiliateService.units', [], function () {
 	var units = [
 		{
