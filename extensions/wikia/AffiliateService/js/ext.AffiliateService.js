@@ -47,7 +47,7 @@ require([
 	'ext.wikia.AffiliateService.units',
 	'ext.wikia.AffiliateService.templates',
 	'ext.wikia.AffiliateService.tracker',
-], function ($, w, geo, log, units, templates, tracker) {
+], function ($, w, geo, log, mustache, units, templates, tracker) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -71,7 +71,7 @@ require([
 
 		canDisplayUnit: function () {
 			// logged-in && (dev || debugTargeting)
-			return (win.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
+			return (w.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
 		},
 
 		getStartHeight: function () {
