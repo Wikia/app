@@ -53,8 +53,22 @@ require([
 	var AffiliateService = {
 		$infoBox: undefined,
 
+		// ?debugAffiliateServiceTargeting=campaign,category
+		getDebugTargeting: function() {
+			// check if we have the mechanism to get the param (ie. not on IE)
+			if (typeof URLSearchParams === 'function') {
+				var urlParams = new URLSearchParams(w.location.search);
+
+				if (urlParams.has('debugAffiliateServiceTargeting')) {
+					return urlParams.get('debugAffiliateServiceTargeting');
+				}
+			}
+
+			return false;
+		},
+
 		canDisplayUnit: function () {
-			return typeof AffiliateService.$infoBox !== 'undefined';
+			return w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false);
 		},
 
 		getStartHeight: function () {
@@ -69,6 +83,19 @@ require([
 		},
 
 		fetchTargetingFromService: function () {
+			var debugTargetting = AffiliateService.getDebugTargeting();
+			if (debugTargetting !== false) {
+				console.log('debugTargetting', debugTargetting);
+				const debugArray = debugTargetting.split(',');
+				deferred.resolve([{
+					campaign: debugArray[0],
+					category: debugArray[1],
+					score: 1,
+					tracking: [],
+				}]);
+				return deferred.promise();
+			}
+
 			var url = w.wgServicesExternalDomain + 'knowledge-graph/affiliates/' + w.wgCityId + '/' + w.wgArticleId
 
 			$.ajax({
@@ -120,18 +147,23 @@ require([
 			).then(function (targeting) {
 				if (targeting.length > 0) {
 					var availableUnits = AffiliateService.getAvailableUnits(targeting);
-					var unit = availableUnits[0];
 
-					// placeholder, replace with impression
-					tracker.trackImpression('test', {
-						campaignId: unit.campaign,
-						categoryId: unit.category,
-						extraTracking: unit.tracking,
-					});
+					if (availableUnits.length > 0) {
+						var unit = availableUnits[0];
 
-					console.log('>', { targeting, units, availableUnits });
+						// placeholder, replace with impression
+						tracker.trackImpression('test', {
+							campaignId: unit.campaign,
+							categoryId: unit.category,
+							extraTracking: unit.tracking,
+						});
+
+						console.log('>', { targeting, units, availableUnits });
+					} else {
+						console.log('No units available for targeting', targeting);
+					}
 				} else {
-					console.log('No units available');
+					console.log('No targeting available');
 				}
 			});
 		},
@@ -222,9 +254,10 @@ require([
 		init: function () {
 			AffiliateService.$infoBox = $('.portable-infobox').first();
 
-			// if (!AffiliateService.canDisplayUnit()) {
-			// 	return;
-			// }
+			if (!AffiliateService.canDisplayUnit()) {
+				// fire negative impression
+				return;
+			}
 
 			AffiliateService.addMarker();
 			AffiliateService.addUnitToPage();

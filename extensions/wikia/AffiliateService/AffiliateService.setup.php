@@ -20,3 +20,4 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 // hooks
 $wgAutoloadClasses['AffiliateServiceHooks'] = __DIR__ . '/AffiliateServiceHooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'AffiliateServiceHooks::onBeforePageDisplay';
+$wgHooks['WikiaSkinTopScripts'][] = 'AffiliateServiceHooks::onWikiaSkinTopScripts';
