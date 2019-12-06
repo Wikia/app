@@ -38,18 +38,22 @@ final class YearAtFandomDataProvider {
 
 			$result = $this->statsDB->select(
 				'rollup_wiki_article_pageviews',
-				['*'],
+				['article_id', 'wiki_id', 'SUM(pageviews) as totalPageviews'],
 				[
 					'article_id' => $articleIds
+				],
+				__METHOD__,
+				[
+					'GROUP BY wiki_id, article_id'
 				]
 			);
 
 			foreach ($result as $row) {
 				$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
 				$articlePageViewsList[] = new ArticlePageViews(
-					$row->article_id,
-					$row->wiki_id,
-					$row->pageViews,
+					(int) $row->article_id,
+					(int) $row->wiki_id,
+					(int) $row->totalPageviews,
 					$title->getText(),
 					$title->getFullURL()
 				);
