@@ -17,21 +17,26 @@
 			<div class="wds-dropdown__toggle wds-global-navigation__search-input-wrapper">
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
-						<span>
+						<span class="wds-global-navigation__search-scope__label wds-is-active
+						wds-global-navigation__search-internal-scope__label">
 							<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?>
+						</span>
+						<span class="wds-global-navigation__search-scope__label
+						wds-global-navigation__search-crosswiki-scope__label">
+							<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?>
 						</span>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 						</div>
 						<div class="wds-dropdown__content">
 							<ul class="wds-list wds-is-linked">
 								<li>
-									<button class="wds-global-navigation__search-internal-scope wds-button wds-is-text"
+									<button type="button" class="wds-global-navigation__search-internal-scope wds-button wds-is-text"
 											data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
 										<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></button>
 								</li>
 								<li>
-									<button class="wds-global-navigation__search-crosswiki-scope wds-button
-									wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
+									<button type="button" class="wds-global-navigation__search-crosswiki-scope
+									wds-button wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
 										<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?></button>
 								</li>
 							</ul>

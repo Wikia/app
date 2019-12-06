@@ -98,6 +98,10 @@ $global-navigation-z-index: 5000101;
 	z-index: 2;
 }
 
+.wds-global-navigation__search-scope__label:not(.wds-is-active) {
+	display: none !important;
+}
+
 .wds-global-navigation__search-toggle-text {
   font-size: 14px;
 }

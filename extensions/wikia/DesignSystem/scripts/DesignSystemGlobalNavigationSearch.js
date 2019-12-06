@@ -8,7 +8,10 @@ $(function ($) {
 		$searchToggle = $globalNav.find('.wds-global-navigation__search-toggle'),
 		$internalScopeButton = $globalNav.find('.wds-global-navigation__search-internal-scope'),
 		$crosswikiScopeButton = $globalNav.find('.wds-global-navigation__search-crosswiki-scope'),
-		activeSearchClass = 'wds-search-is-active';
+		$internalScopeLabel = $globalNav.find('wds-global-navigation__search-internal-scope__label'),
+		$crosswikiScopeLabel = $globalNav.find('wds-global-navigation__search-internal-scope__label'),
+		activeSearchClass = 'wds-search-is-active',
+		activeClass = 'wds-is-active';
 
 	function activateSearch() {
 		if (!$globalNav.hasClass(activeSearchClass)) {
@@ -17,8 +20,24 @@ $(function ($) {
 		}
 	}
 
-	function switchScope() {
-		alert('scope');
+	function switchScope(e) {
+		let elem = $(e.target);
+		if (elem.is($internalScopeButton)) {
+			switchActive($internalScopeLabel, $crosswikiScopeLabel);
+		}
+		if (elem.is($crosswikiScopeButton)) {
+			switchActive($crosswikiScopeLabel, $internalScopeLabel);
+		}
+		e.stopPropagation();
+	}
+
+	function switchActive($toActivate, $toDeactivate) {
+		if (!$toActivate.hasClass(activeClass)) {
+			$toActivate.addClass(activeClass);
+		}
+		if ($toDeactivate.hasClass(activeClass)) {
+			$toDeactivate.removeClass(activeClass);
+		}
 	}
 
 	function deactivateSearch() {
@@ -28,6 +47,7 @@ $(function ($) {
 		$searchContainer.removeClass('wds-search-is-focused');
 	}
 
+	$internalScopeButton.click(switchScope);
 	$crosswikiScopeButton.click(switchScope);
 
 	$searchInput.on('input', function () {
