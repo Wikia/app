@@ -9,15 +9,19 @@ final class UserStatistics implements JsonSerializable {
 	private $summary;
 	/** @var ArticlePageViewsList */
 	private $articlePageViews;
+	/** @var ArticlePageViewsList */
+	private $contributionsPageViews;
 
 	public function __construct(
 		UserSummary $summary,
 		WikiActivityList $pageViews,
-		ArticlePageViewsList $articlePageViews
+		ArticlePageViewsList $articlePageViews,
+		ArticlePageViewsList $contributionsPageViews
 	) {
 		$this->pageViews = $pageViews;
 		$this->summary = $summary;
 		$this->articlePageViews = $articlePageViews;
+		$this->contributionsPageViews = $contributionsPageViews;
 	}
 
 	public function jsonSerialize() {
@@ -26,6 +30,7 @@ final class UserStatistics implements JsonSerializable {
 			'top5Wikis' => $this->pageViews->top5Wikis(),
 			'top5Articles' => $this->articlePageViews->top5Articles(),
 			'top5Categories' => $this->pageViews->top5Categories(),
+			'top5Contributions' => $this->contributionsPageViews->top5Articles(),
 		];
 	}
 }

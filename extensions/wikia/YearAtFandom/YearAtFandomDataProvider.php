@@ -6,25 +6,70 @@ final class YearAtFandomDataProvider {
 	/** @var DatabaseType */
 	private $sharedDb;
 	/** @var DatabaseType */
-	private $warehouseDb;
+	private $statsDB;
 
 	public function __construct() {
 		global $wgExternalSharedDB, $wgDWStatsDB;
 		$this->sharedDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$this->warehouseDb = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
+		$this->statsDB = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
 		$this->hubService = new HubService();
 	}
 
 	public function getAll( int $userId ): UserStatistics {
+		$wikiPageviews = $this->getWikiPageViews( $userId );
+
 		return new UserStatistics(
 			$this->getSummary( $userId ),
-			$this->getWikiPageViews( $userId ),
-			$this->getArticlePageViews( $userId )
+			$wikiPageviews,
+			$this->getArticlePageViews( $userId ),
+			$this->getUserContributionsPageviews( $userId, $wikiPageviews )
 		);
 	}
 
+	private function getUserContributionsPageviews( int $userId, WikiActivityList $activityList ): ArticlePageViewsList {
+		$articlePageViewsList = [];
+
+		foreach ($activityList as $activity) {
+			$articleIds = $this->getUserContributionsForWiki( $userId, $activity->wikiDBName() );
+
+			if (empty($articleIds)) {
+				continue;
+			}
+
+			$result = $this->statsDB->select(
+				'rollup_wiki_article_pageviews',
+				['*'],
+				[
+					'article_id' => $articleIds
+				]
+			);
+
+			foreach ($result as $row) {
+				$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
+				$articlePageViewsList[] = new ArticlePageViews(
+					$row->article_id,
+					$row->wiki_id,
+					$row->pageViews,
+					$title->getText(),
+					$title->getFullURL()
+				);
+			}
+		}
+
+		return new ArticlePageViewsList( $articlePageViewsList );
+	}
+
+	/**
+	 * @return int[] article ids
+	 */
+	private function getUserContributionsForWiki( int $userId, string $wikiDBName ): array {
+		$db = wfGetDB( DB_SLAVE, [], $wikiDBName );
+
+		return $db->selectFieldValues( 'revision', 'rev_page', ['rev_user' => $userId] );
+	}
+
 	private function getArticlePageViews( int $userId ): ArticlePageViewsList {
-		$result = $this->warehouseDb->select(
+		$result = $this->statsDB->select(
 			'user_article_aggregates',
 			[ '*' ],
 			[ 'user_id' => $userId ]
@@ -47,7 +92,7 @@ final class YearAtFandomDataProvider {
 	}
 
 	private function getWikiPageViews( int $userId ): WikiActivityList {
-		$result = $this->warehouseDb->select(
+		$result = $this->statsDB->select(
 			'user_community_aggregates',
 			[ '*' ],
 			[ 'user_id' => $userId ]
@@ -63,6 +108,7 @@ final class YearAtFandomDataProvider {
 
 			$list[] = new WikiActivity(
 				$wikiId,
+				$wikicity->city_dbname,
 				(int) $row->sum_pv,
 				$categoryInfo->cat_id,
 				$categoryInfo->cat_name,
@@ -76,7 +122,7 @@ final class YearAtFandomDataProvider {
 	}
 
 	private function getSummary( int $userId ): UserSummary {
-		$result = $this->warehouseDb->select(
+		$result = $this->statsDB->select(
 			'user_aggregates',
 			[ '*' ],
 			[ 'user_id' => $userId ]

@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-final class WikiActivityList {
+final class WikiActivityList implements IteratorAggregate {
 	/** @var WikiActivity[] */
 	private $list;
 
@@ -47,5 +47,12 @@ final class WikiActivityList {
 		} );
 
 		return array_splice($categories, 0, 5 );
+	}
+
+	/**
+	 * @return WikiActivity[]
+	 */
+	public function getIterator() {
+		return new ArrayIterator( $this->list );
 	}
 }
