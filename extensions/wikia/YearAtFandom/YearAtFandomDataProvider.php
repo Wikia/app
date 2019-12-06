@@ -3,16 +3,13 @@
 declare( strict_types=1 );
 
 final class YearAtFandomDataProvider {
-	/** @var DatabaseType */
-	private $sharedDb;
+x	private $sharedDb;
 	/** @var DatabaseType */
 	private $statsDB;
 
 	public function __construct() {
-		global $wgExternalSharedDB, $wgDWStatsDB;
-		$this->sharedDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		global $wgDWStatsDB;
 		$this->statsDB = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
-		$this->hubService = new HubService();
 	}
 
 	public function getAll( int $userId ): UserStatistics {
@@ -55,7 +52,7 @@ final class YearAtFandomDataProvider {
 			}
 
 			foreach ($result as $row) {
-				$title = GlobalTitle::newFromId( (int) $row->article_id, (int) $row->wiki_id );
+				$title = GlobalTitle::newFromId( (int) $row->article_id, $activity->wikiId, $activity->wikiDBName() );
 
 				if (!$title) {
 					continue;
