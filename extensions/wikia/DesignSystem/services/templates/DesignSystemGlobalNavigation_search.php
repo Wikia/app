@@ -15,18 +15,40 @@
 		</div>
 		<div class="wds-dropdown wds-global-navigation__search-dropdown wds-no-chevron wds-has-dark-shadow">
 			<div class="wds-dropdown__toggle wds-global-navigation__search-input-wrapper">
-				<input
-					type="search"
-					class="wds-global-navigation__search-input"
-					name="<?= Sanitizer::encodeAttribute( $model['results']['param-name'] ); ?>"
-					placeholder="<?= DesignSystemHelper::renderTranslatableText( $model['placeholder-active'] ); ?>"
-					autocomplete="off"
-					<?php if ( !empty( $model['suggestions'] ) ) : ?>
-						data-suggestions-url="<?= $model['suggestions']['url'] ?>"
-						data-suggestions-param-name="<?= $model['suggestions']['param-name'] ?>"
-						data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $model['suggestions']['tracking-label'] ); ?>"
-					<?php endif; ?>
-				>
+				<div class="WikiaSearchInputWrapper">
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+						<span>
+							<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?>
+						</span>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
+						</div>
+						<div class="wds-dropdown__content">
+							<ul class="wds-list wds-is-linked">
+								<li>
+									<button class="wds-button wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_INTERNAL ?>">
+										<?= wfMsg( 'wikiasearch2-search-scope-internal' ) ?></button>
+								</li>
+								<li>
+									<button class="wds-button wds-is-text" data-value="<?= \Wikia\Search\Config::SCOPE_CROSS_WIKI ?>">
+										<?= wfMsg( 'wikiasearch2-search-scope-crosswiki' ) ?></button>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<input
+						type="search"
+						class="wds-global-navigation__search-input"
+						name="<?= Sanitizer::encodeAttribute( $model['results']['param-name'] ); ?>"
+						placeholder="<?= DesignSystemHelper::renderTranslatableText( $model['placeholder-active'] ); ?>"
+						autocomplete="off"
+						<?php if ( !empty( $model['suggestions'] ) ) : ?>
+							data-suggestions-url="<?= $model['suggestions']['url'] ?>"
+							data-suggestions-param-name="<?= $model['suggestions']['param-name'] ?>"
+							data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $model['suggestions']['tracking-label'] ); ?>"
+						<?php endif; ?>
+					>
+				</div>
 				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-close-tiny',

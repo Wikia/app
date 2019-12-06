@@ -4,7 +4,8 @@ $(function ($) {
 	var $globalNav = $('.wds-global-navigation'),
 		$searchContainer = $globalNav.find('.wds-global-navigation__search-container'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
-		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
+		$searchSubmit = $globalNav.find('.wds-global-navigation__sear' +
+			'ch-submit'),
 		$searchToggle = $globalNav.find('.wds-global-navigation__search-toggle'),
 		activeSearchClass = 'wds-search-is-active';
 

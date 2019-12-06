@@ -207,20 +207,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Checks if template with given sufix exists
-	 *
-	 * @param $name string Template sufix
-	 *
-	 * @return bool
-	 */
-	protected function templateExists( $name ) {
-		//build path to templates dir
-		$path = __DIR__ . '/templates';
-
-		return file_exists( "{$path}/WikiaSearch_{$name}.php" );
-	}
-
-	/**
 	 * Sets the page title during index method.
 	 *
 	 * @param Wikia\Search\Config $searchConfig
