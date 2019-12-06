@@ -118,14 +118,14 @@ require([
 					console.log('>', { targeting, units, availableUnits });
 
 					// add unit data to be inserted into template
-					AffiliateService.addMarker(units[0]);
+					AffiliateService.renderUnitMarkup(units[0]);
 				} else {
 					console.log('No units available');
 				}
 			});
 		},
 
-		addMarker: function (unit) {
+		renderUnitMarkup: function (unit) {
 			var startHeight = AffiliateService.getStartHeight();
 
 			// only select paragraphs one level from the root main element
@@ -179,7 +179,7 @@ require([
 			var useFallbackAtY = 20000;
 
 			// get html to insert into target location
-			var html = AffiliateService.renderUnitMarkup(unit);
+			var html = AffiliateService.getTemplate(unit);
 
 			// prepend the unit after the first paragraph below the
 			$paragraphs.each(function(index, element) {
@@ -209,7 +209,7 @@ require([
 		},
 
 		// Using mustache to render template and unit info
-		renderUnitMarkup: function(unit) {
+		getTemplate: function(unit) {
 			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
 				heading: unit.heading,
