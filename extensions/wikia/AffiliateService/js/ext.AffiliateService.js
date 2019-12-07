@@ -89,13 +89,16 @@ require([
 			var debugTargetting = AffiliateService.getDebugTargeting();
 			if (debugTargetting !== false) {
 				console.log('debugTargetting', debugTargetting);
+
 				const debugArray = debugTargetting.split(',');
+
 				deferred.resolve([{
 					campaign: debugArray[0],
 					category: debugArray[1],
 					score: 1,
 					tracking: [],
 				}]);
+
 				return deferred.promise();
 			}
 
@@ -144,7 +147,6 @@ require([
 		},
 
 		addUnitToPage: function () {
-			// fetch targeting
 			$.when(
 				AffiliateService.fetchTargetingFromService(),
 			).then(function (targeting) {
@@ -154,22 +156,55 @@ require([
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
 						// add unit data to be inserted into template
-						AffiliateService.renderUnitMarkup(units[0]);
-
-						// placeholder, replace with impression
-						tracker.trackImpression('test', {
-							campaignId: unit.campaign,
-							categoryId: unit.category,
-							extraTracking: unit.tracking,
-						});
-
-						console.log('>', { targeting, units, availableUnits });
+						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
 					}
 				} else {
 					console.log('No targeting available');
 				}
+			});
+		},
+
+		insertAtPointAndTrack: function ($insertionPoint, unit) {
+			// check if we found good insertion point
+			if ($insertionPoint) {
+				// get html to insert into target location
+				var html = AffiliateService.getTemplate(unit);
+
+				// insert markup
+				$insertionPoint.prepend(html);
+
+				// hook onmousedown tracking
+				$insertionPoint.find('.affiliate-unit__cta').on('onmousedown', function (event) {
+					AffiliateService.trackOnClick('only-item', unit);
+				});
+
+				// Y of the insertion point
+				var instertedAtY = $insertionPoint.offset().top;
+				// TODO: do something with that
+				tracker.trackImpression({
+					campaignId: unit.campaign,
+					categoryId: unit.category,
+					extraTracking: unit.tracking,
+				});
+			} else {
+				// we couldn't insert the unit
+				tracker.trackNoImpression({
+					campaignId: unit.campaign,
+					categoryId: unit.category,
+					extraTracking: unit.tracking,
+				});
+			}
+
+			return unitInsertedAtY;
+		},
+
+		trackOnClick: function (label, unit) {
+			tracker.trackClick({
+				campaignId: unit.campaign,
+				categoryId: unit.category,
+				extraTracking: unit.tracking,
 			});
 		},
 
@@ -226,10 +261,8 @@ require([
 			var $fallbackParagraph = null;
 			var useFallbackAtY = 20000;
 
-			// get html to insert into target location
-			var html = AffiliateService.getTemplate(unit);
-
 			// prepend the unit after the first paragraph below the
+			var $insertionPoint = undefined;
 			$paragraphs.each(function(index, element) {
 				var $paragraph = $(element);
 				var paragraphY = $paragraph.offset().top;
@@ -242,19 +275,20 @@ require([
 
 					// when prepending make sure the prev child is a paragraph
 					if ($paragraph.prev().is('p')) {
-						$paragraph.prepend(html)
+						$insertionPoint = $paragraph;
 						return false;
 					}
 				}
 
 				// once we hit a certain height lets go back up and use one of the fall back paragraphs
 				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
-					console.log('using fallback slot');
-					$fallbackParagraph.prepend(html);
+					log('Affiliate Unit inserted using fallback slot');
+					$insertionPoint = $fallbackParagraph;
 					return false;
 				}
-
 			});
+
+			AffiliateUnit.insertAtPointAndTrack($insertionPoint, unit);
 		},
 
 		// Using mustache to render template and unit info
