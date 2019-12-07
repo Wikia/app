@@ -196,8 +196,6 @@ require([
 					extraTracking: unit.tracking,
 				});
 			}
-
-			return unitInsertedAtY;
 		},
 
 		trackOnClick: function (label, unit) {
@@ -288,7 +286,7 @@ require([
 				}
 			});
 
-			AffiliateUnit.insertAtPointAndTrack($insertionPoint, unit);
+			AffiliateService.insertAtPointAndTrack($insertionPoint, unit);
 		},
 
 		// Using mustache to render template and unit info

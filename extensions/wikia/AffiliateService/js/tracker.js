@@ -31,12 +31,14 @@ define('ext.wikia.AffiliateService.tracker', [
 		}, extraTracking);
 
 		// set up GA dimensions
-		win.guaSetCustomDimension(21, win.wgArticleId.toString());
-		win.guaSetCustomDimension(31, options.campaignId.toString());
-		win.guaSetCustomDimension(32, options.unitId.toString());
+		win.guaSetCustomDimension(21, (win.wgArticleId || '').toString());
+		win.guaSetCustomDimension(31, (options.campaignId || '').toString());
+		win.guaSetCustomDimension(32, (options.unitId || '').toString());
 		win.guaSetCustomDimension(33, Object.keys(extraTracking).map(function (k) {
 			return k + '=' + extraTracking[k];
 		}).join(','));
+
+		console.debug('Affiliate Tracking', computedTracking);
 
 		// send the actual tracking event
 		tracker.track(computedTracking);
