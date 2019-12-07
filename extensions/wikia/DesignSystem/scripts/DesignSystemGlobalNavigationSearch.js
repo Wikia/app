@@ -75,11 +75,6 @@ $(function ($) {
 				$searchInput.blur();
 			}
 		})
-		.on('blur', function () {
-			if (!this.value.length) {
-				deactivateSearch();
-			}
-		})
 		.on('focus', function () {
 			$searchContainer.addClass('wds-search-is-focused');
 		});

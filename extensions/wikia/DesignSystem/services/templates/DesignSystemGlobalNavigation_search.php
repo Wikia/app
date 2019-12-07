@@ -50,7 +50,6 @@
 						type="search"
 						class="wds-global-navigation__search-input"
 						name="<?= Sanitizer::encodeAttribute( $model['results']['param-name'] ); ?>"
-						placeholder="<?= DesignSystemHelper::renderTranslatableText( $model['placeholder-active'] ); ?>"
 						autocomplete="off"
 						<?php if ( !empty( $model['suggestions'] ) ) : ?>
 							data-suggestions-url="<?= $model['suggestions']['url'] ?>"
