@@ -24,6 +24,7 @@ final class YearAtFandomDataProvider {
 	}
 
 	private function getUserContributionsPageviews( int $userId, WikiActivityList $activityList ): ArticlePageViewsList {
+		return ArticlePageViewsList::empty();
 		$articlePageViewsList = [];
 
 		foreach ($activityList as $activity) {
