@@ -3,8 +3,7 @@
 declare( strict_types=1 );
 
 final class YearAtFandomDataProvider {
-	private const FALLBACK_THUMBNAIL = 'https://static.wikia.nocookie.net/central/images/0/0d/Global_taxonomy_cover
-	.png/revision/latest';
+	private const FALLBACK_THUMBNAIL = 'https://vignette.wikia.nocookie.net/ludwiktestwiki/images/4/49/Background3.jpg/revision/latest';
 	/** @var DatabaseType */
 	private $statsDB;
 
