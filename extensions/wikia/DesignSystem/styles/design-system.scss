@@ -85,6 +85,26 @@ $global-navigation-z-index: 5000101;
 			cursor: pointer;
 		}
 	}
+
+	.wds-dropdown::after,
+	.wds-dropdown::before {
+		bottom: -12px;
+	}
+
+	.wds-dropdown__toggle{
+		&.wds-global-navigation__search-scope-dropdown {
+			border-right: 1px solid white;
+			padding-right: 7px;
+			margin: 0 7px;
+			&:not(.wds-search-is-active) {
+				display: none;
+			}
+		}
+	}
+
+	.wds-dropdown__content {
+		transform: translate(-50%, 15%);
+	}
 }
 
 .wds-global-footer {
@@ -122,24 +142,3 @@ $global-navigation-z-index: 5000101;
 		}
 	}
 }
-
-.wds-dropdown::after,
-.wds-dropdown::before {
-	bottom: -12px;
-}
-
-.wds-dropdown__toggle{
-	&.wds-global-navigation__search-scope-dropdown {
-		border-right: 1px solid white;
-		padding-right: 7px;
-		margin: 0 7px;
-		&:not(.wds-search-is-active) {
-		display: none;
-		}
-	}
-}
-
-.wds-dropdown__content {
-	transform: translate(-50%, 15%)
-}
-
