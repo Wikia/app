@@ -154,7 +154,7 @@ require([
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
 						// add unit data to be inserted into template
-						AffiliateService.renderUnitMarkup(units[0]);
+						AffiliateService.renderUnitMarkup(units[1]);
 
 						// placeholder, replace with impression
 						tracker.trackImpression('test', {
