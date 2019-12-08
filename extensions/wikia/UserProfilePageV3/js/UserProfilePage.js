@@ -257,6 +257,7 @@ require(
 		registerAvatarHandlers: function (modal) {
 			var $avatarUploadInput = modal.find('#UPPLightboxAvatar'),
 				$avatarUploadButton = modal.find('#UPPLightboxAvatarUpload'),
+				$avatarCreateButton = modal.find('#UPPLightboxAvatarCreate'),
 				$avatarForm = modal.find('#usersAvatar'),
 				$sampleAvatars = modal.find('.sample-avatars');
 
@@ -268,6 +269,31 @@ require(
 			$avatarUploadInput.change(function () {
 				UserProfilePage.saveAvatarAIM($avatarForm);
 			});
+
+			$avatarCreateButton.click(function () {
+				var html = '<div class="wds-dialog__curtain avatar-builder__curtain">' +
+						'<div class="wds-dialog__wrapper  avatar-builder__wrapper">' +
+							'<div class="wds-dialog__title">Avatar builder</div>' +
+							'<div class="wds-dialog__content avatar-builder__content">' +
+								'<iframe src="https://xkxd02.krzysiek-18.fandom-dev.pl/f/avatar-builder" id="AvatarBuilder" class="avatar-builder" width="100%"></iframe>' +
+							'</div>' +
+						'</div>' +
+					'</div>';
+
+				var $el = $(html);
+
+				$($el).appendTo('body');
+			});
+
+			window.addEventListener("message", function (ev) {
+				$('.avatar-builder__curtain').remove();
+
+				var dt = new DataTransfer();
+
+				dt.items.add(new File([ev.data], 'avatar.png'));
+				$avatarUploadInput[0].files = dt.files;
+				UserProfilePage.saveAvatarAIM($avatarForm);
+			}, false);
 
 			$sampleAvatars.on('click', 'img', function (event) {
 				UserProfilePage.sampleAvatarChecked($(event.target));
@@ -304,6 +330,7 @@ require(
 					$modal.startThrobbing();
 				},
 				onComplete: function (response) {
+					debugger;
 					try {
 						response = JSON.parse(response);
 						var avatarImg = $modal.find('img.avatar');

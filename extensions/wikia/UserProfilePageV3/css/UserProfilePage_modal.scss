@@ -131,3 +131,21 @@
 		}
 	}
 }
+
+.avatar-builder {
+	height: 100%;
+
+	&__curtain {
+		z-index: 6000000;
+	}
+
+	&__wrapper {
+		width: 1000px;
+		height: 600px;
+		max-width: none;
+	}
+
+	&__content {
+		height: 500px;
+	}
+}

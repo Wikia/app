@@ -23,6 +23,7 @@
 						<div class="input-group">
 							<label for="UPPLightboxAvatar">
 								<button id="UPPLightboxAvatarUpload"><?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?></button>
+								<button id="UPPLightboxAvatarCreate">Create an avatar</button>
 							</label>
 							<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
 							<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="">
