@@ -96,14 +96,15 @@ $global-navigation-z-index: 5000101;
 			border-right: 1px solid white;
 			padding-right: 7px;
 			margin: 0 7px;
+
 			&:not(.wds-search-is-active) {
 				display: none;
 			}
-		}
-	}
 
-	.wds-dropdown__content {
-		transform: translate(-50%, 15%);
+			.wds-dropdown__content {
+				transform: translate(-50%, 15%);
+			}
+		}
 	}
 }
 
