@@ -24,7 +24,6 @@ final class YearAtFandomDataProvider {
 	}
 
 	private function getUserContributionsPageviews( int $userId, WikiActivityList $activityList ): ArticlePageViewsList {
-		return ArticlePageViewsList::empty();
 		$articlePageViewsList = [];
 
 		foreach ($activityList as $activity) {
@@ -33,40 +32,41 @@ final class YearAtFandomDataProvider {
 			if (empty($articleIds)) {
 				continue;
 			}
+			foreach ($articleIds as $id) {
+				$result = $this->statsDB->select(
+					'rollup_wiki_article_pageviews',
+					['article_id', 'wiki_id', 'SUM(pageviews) as totalPageviews'],
+					[
+						'article_id' => $id,
+						'YEAR(time_id) = 2019',
+					],
+					__METHOD__,
+					[
+						'GROUP BY' =>  ['wiki_id', 'article_id'],
+						'ORDER BY' => 'totalPageviews DESC',
+						'LIMIT' => 5
+					]
+				);
 
-			$result = $this->statsDB->select(
-				'rollup_wiki_article_pageviews',
-				['article_id', 'wiki_id', 'SUM(pageviews) as totalPageviews'],
-				[
-					'article_id' => $articleIds,
-					'YEAR(time_id) = 2019',
-				],
-				__METHOD__,
-				[
-					'GROUP BY' =>  ['wiki_id', 'article_id'],
-					'ORDER BY' => 'totalPageviews DESC',
-					'LIMIT' => 5
-				]
-			);
-
-			if ($result->numRows() === 0 ) {
-				return ArticlePageViewsList::empty();
-			}
-
-			foreach ($result as $row) {
-				$title = GlobalTitle::newFromId( (int) $row->article_id, $activity->wikiId, $activity->wikiDBName() );
-
-				if (!$title) {
+				if ($result->numRows() === 0 ) {
 					continue;
 				}
 
-				$articlePageViewsList[] = new ArticlePageViews(
-					(int) $row->article_id,
-					(int) $row->wiki_id,
-					(int) $row->totalPageviews,
-					$title->getText(),
-					$title->getFullURL()
-				);
+				foreach ($result as $row) {
+					$title = GlobalTitle::newFromId( (int) $row->article_id, $activity->wikiId, $activity->wikiDBName() );
+
+					if (!$title) {
+						continue;
+					}
+
+					$articlePageViewsList[] = new ArticlePageViews(
+						(int) $row->article_id,
+						(int) $row->wiki_id,
+						(int) $row->totalPageviews,
+						$title->getText(),
+						$title->getFullURL()
+					);
+				}
 			}
 		}
 
