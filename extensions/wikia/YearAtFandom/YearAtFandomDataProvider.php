@@ -38,8 +38,7 @@ final class YearAtFandomDataProvider {
 				['article_id', 'wiki_id', 'SUM(pageviews) as totalPageviews'],
 				[
 					'article_id' => $articleIds,
-					"time_id > '2019-01-01 00:00:00:00'",
-					"time_id < '2020-01-01 00:00:00:00'"
+					'YEAR(time_id) = 2019',
 				],
 				__METHOD__,
 				[
