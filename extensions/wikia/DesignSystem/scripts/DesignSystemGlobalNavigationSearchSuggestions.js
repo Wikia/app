@@ -89,6 +89,7 @@ $(function () {
 						},
 						fnPreprocessResults: function (data) {
 							var wikisContainer = $(".wds-global-navigation__search-suggestions-wikis");
+							wikisContainer.empty();
 							data.wikis.slice(0, 3).forEach(wiki => {
 								let link = '<a href="' + wiki.url + '">' +
 									'<img src="' + wiki.thumbnail + '" />' +
