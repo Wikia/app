@@ -2,6 +2,8 @@
 
 declare( strict_types=1 );
 
+use GuzzleHttp\Client;
+
 final class YearAtFandomDataProvider {
 	private const FALLBACK_THUMBNAIL = 'https://vignette.wikia.nocookie.net/ludwiktestwiki/images/c/c3/Background5.jpg/revision/latest';
 	/** @var DatabaseType */
@@ -143,7 +145,7 @@ final class YearAtFandomDataProvider {
 			$wikiId = (int)$row->wiki_id;
 			$categoryInfo = HubService::getCategoryInfoForCity( $wikiId );
 			$wikicity = WikiFactory::getWikiByID( $wikiId );
-			$thumbnail = $this->getWikiThumbnail( $wikiId );
+			$thumbnail = $this->getWikiThumbnail( $wikiId, $wikicity->city_url );
 
 			if (!isset($wikicity->city_dbname)) {
 				continue;
@@ -185,15 +187,16 @@ final class YearAtFandomDataProvider {
 		);
 	}
 
-	private function getWikiThumbnail( int $wikiId ): ?string {
-		$service = new CommunityDataService( $wikiId );
-		if ( empty( $service->getCommunityImageId() ) ) {
-			return self::FALLBACK_THUMBNAIL;
-		}
-		$imageServing = new ImageServing( [ $service->getCommunityImageId() ], 500, [ 'w' => 3, 'h' => 2 ] );
-		$images = $imageServing->getImages( 1 );
+	private function getWikiThumbnail( int $wikiId, string $cityUrl ): ?string {
+		$mainPage = GlobalTitle::newMainPage( $wikiId );
 
-		return $images[$service->getCommunityImageId()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
+		$response = (new Client([
+			'base_uri' => $cityUrl
+		]))->get('wikia.php?controller=ImageServing&height=300&width=500&count=1&ids[]=' . $mainPage->getArticleID());
+
+		$data = \GuzzleHttp\json_decode($response->getBody(), true);
+
+		return $data['result'][$mainPage->getArticleID()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
 	}
 
 	private function topWikiPageviews(): WikiPageviewsList {
