@@ -98,7 +98,7 @@ $global-navigation-z-index: 5000101;
 			margin: 0 7px;
 
 			&:not(.wds-search-is-active) {
-				@media screen and (max-width: 1824px) {
+				@media screen and (max-width: 1500px) {
 					display: none;
 				}
 			}
@@ -154,7 +154,25 @@ $global-navigation-z-index: 5000101;
 
 @media only screen and (min-width: 1500px) {
 	.wds-global-navigation__search-container {
-		width: 550px;
+		width: 1000px;
 	}
+}
+
+.wds-global-navigation__search-suggestions-wikis {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.wds-global-navigation__search-suggestions-wiki-div{
+	text-align: center;
+}
+
+.wds-global-navigation__search-suggestions-wiki-name-span {
+	display: block;
+}
+
+.wds-global-navigation__search-suggestions-wiki-thumbnail {
+	max-width: 200px;
 }
 
