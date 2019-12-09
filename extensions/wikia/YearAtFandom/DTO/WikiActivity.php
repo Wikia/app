@@ -19,11 +19,14 @@ final class WikiActivity {
 	public $categoryName;
 	/** @var int */
 	public $categoryId;
+	/** @var int */
+	public $ranking;
 
 	public function __construct(
 		int $wikiId,
 		string $wikiDBName,
 		int $pageViews,
+		int $ranking,
 		int $categoryId,
 		string $categoryName,
 		string $wikiName,
@@ -38,6 +41,7 @@ final class WikiActivity {
 		$this->categoryId = $categoryId;
 		$this->wikiThumbnailUrl = $wikiThumbnailUrl;
 		$this->wikiDBName = $wikiDBName;
+		$this->ranking = $ranking;
 	}
 
 	public function wikiDBName(): string {

@@ -157,6 +157,7 @@ final class YearAtFandomDataProvider {
 				$wikiId,
 				$wikicity->city_dbname,
 				(int) $row->sum_pv,
+				(int) $row->wiki_pos,
 				(int) $categoryInfo->cat_id,
 				$categoryInfo->cat_name,
 				$wikicity->city_title,
