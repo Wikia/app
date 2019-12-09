@@ -266,9 +266,14 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$keys = array();
 			Hooks::run( 'FilePages:InsertSurrogateKey', [ $title, &$keys ] );
+
 			Wikia::setSurrogateKeysHeaders( $keys, false );
+			$encodedKeys = [];
+			foreach ( $keys as $key ) {
+				$encodedKeys[] = urlencode( $key );
+			}
 			$data = [
-				'surrogateKeys' => $keys,
+				'surrogateKeys' => $encodedKeys,
 				'ns' => $title->getNamespace(),
 				'isSpecialRandom' => false
 			];
