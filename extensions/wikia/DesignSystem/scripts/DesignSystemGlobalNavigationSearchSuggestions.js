@@ -2,7 +2,7 @@ $(function () {
 	require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function (searchTracking, uuid, trackingOptIn) {
 		'use strict';
 		var searchDropdownSelector = '.wds-global-navigation__search-dropdown',
-            $globalNav = $('.wds-global-navigation'),
+			$globalNav = $('.wds-global-navigation'),
 			$searchDropdown = $globalNav.find(searchDropdownSelector),
 			$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 			searchSuggestionsUrl = $searchInput.data('suggestions-url'),
@@ -14,27 +14,27 @@ $(function () {
 				var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
-			$searchInput
-				.on({
-					suggestShow: function () {
-						$searchDropdown.addClass('wds-is-active');
-					},
-					suggestHide: function () {
-						$searchDropdown.removeClass('wds-is-active');
-					}
-				})
-				.autocomplete({
-					scope: searchScope,
-					serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?lang=en&namespace=0',
-					queryParamName: 'query',
-					appendTo: searchDropdownSelector,
-					deferRequestBy: 200,
-					minLength: 3,
-					maxHeight: 1000,
-					onSelect: function (value, data, event) {
-						var valueEncoded = encodeURIComponent(value.title.replace(/ /g, '_')),
-							// slashes can't be urlencoded because they break routing
-							location = value.url;
+				$searchInput
+					.on({
+						suggestShow: function () {
+							$searchDropdown.addClass('wds-is-active');
+						},
+						suggestHide: function () {
+							$searchDropdown.removeClass('wds-is-active');
+						}
+					})
+					.autocomplete({
+						scope: searchScope,
+						serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?lang=en&namespace=0',
+						queryParamName: 'query',
+						appendTo: searchDropdownSelector,
+						deferRequestBy: 200,
+						minLength: 3,
+						maxHeight: 1000,
+						onSelect: function (value, data, event) {
+							var valueEncoded = encodeURIComponent(value.title.replace(/ /g, '_')),
+								// slashes can't be urlencoded because they break routing
+								location = value.url;
 
 							window.Wikia.Tracker.track({
 								eventName: 'search_start_suggest',
@@ -77,14 +77,15 @@ $(function () {
 						},
 						fnFormatResult: function (value, data, currentValue) {
 							let pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
-							let link = '<a class="wds-global-navigation__dropdown-link">' +
-								value.title.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
-								'</a>';
-							if (value.wikiId != window.wgCityId) {
-								link += '<span class=wds-global-navigation__search-suggestions-wiki-span>';
+							let link = '<a class="wds-global-navigation__dropdown-link">';
+							link += value.title.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
+							if (searchScope.attr('value') !== 'internal') {
+								link += '<br><span class="wds-global-navigation__search-suggestions-wiki-span">';
 								link += 'in ' + value.sitename;
 								link += '</span>';
 							}
+							link += '</a>';
+
 							return link;
 						},
 						fnPreprocessResults: function (data) {

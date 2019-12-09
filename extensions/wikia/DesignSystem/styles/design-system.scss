@@ -144,6 +144,11 @@ $global-navigation-z-index: 5000101;
 	display: none !important;
 }
 
+.wds-global-navigation__search-suggestions-wiki-span {
+	font-size: 12px;
+	color: $wds-fandom-color-aqua;
+}
+
 @if $widthType == 0 {
 	@media #{$screen} and (max-width: #{$content-width-small}) {
 		.wds-global-footer {

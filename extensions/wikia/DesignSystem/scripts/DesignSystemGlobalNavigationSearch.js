@@ -38,12 +38,15 @@ $(function ($) {
 		let elem = $(e.target);
 		if (elem.is($internalScopeButton)) {
 			switchActive($internalScopeLabel, $crosswikiScopeLabel);
-			scopeValue.attr('value', 'internal');
+			scopeValue.val('internal');
+			scopeValue.change();
 		}
 		if (elem.is($crosswikiScopeButton)) {
 			switchActive($crosswikiScopeLabel, $internalScopeLabel);
-			scopeValue.attr('value', 'crosswiki');
+			scopeValue.val( 'crosswiki');
+			scopeValue.change();
 		}
+		e.stopPropagation();
 	}
 
 	function deactivateSearch() {
