@@ -89,13 +89,16 @@ require([
 			var debugTargetting = AffiliateService.getDebugTargeting();
 			if (debugTargetting !== false) {
 				console.log('debugTargetting', debugTargetting);
+
 				const debugArray = debugTargetting.split(',');
+
 				deferred.resolve([{
 					campaign: debugArray[0],
 					category: debugArray[1],
 					score: 1,
 					tracking: [],
 				}]);
+
 				return deferred.promise();
 			}
 
@@ -144,7 +147,6 @@ require([
 		},
 
 		addUnitToPage: function () {
-			// fetch targeting
 			$.when(
 				AffiliateService.fetchTargetingFromService(),
 			).then(function (targeting) {
@@ -153,8 +155,8 @@ require([
 
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
+            
 						// add unit data to be inserted into tempxlate
-						// index of 6 is ddb unit
 						AffiliateService.renderUnitMarkup(units[0]);
 
 						// placeholder, replace with impression
@@ -172,6 +174,42 @@ require([
 					console.log('No targeting available');
 				}
 			});
+		},
+
+		insertAtPointAndTrack: function ($insertionPoint, unit) {
+			// check if we found good insertion point
+			if ($insertionPoint) {
+				// get html to insert into target location
+				var html = AffiliateService.getTemplate(unit);
+
+				// insert markup
+				var $element = $insertionPoint.prepend(html);
+
+				// hook onmousedown tracking
+				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
+					tracker.trackClick('only-item', {
+						campaignId: unit.campaign,
+						categoryId: unit.category,
+						extraTracking: unit.tracking,
+					});
+				});
+
+				// Y of the insertion point
+				var instertedAtY = $insertionPoint.offset().top;
+				// TODO: do something with that
+				tracker.trackImpression({
+					campaignId: unit.campaign,
+					categoryId: unit.category,
+					extraTracking: unit.tracking,
+				});
+			} else {
+				// we couldn't insert the unit
+				tracker.trackNoImpression({
+					campaignId: unit.campaign,
+					categoryId: unit.category,
+					extraTracking: unit.tracking,
+				});
+			}
 		},
 
 		renderUnitMarkup: function (unit) {
@@ -227,10 +265,8 @@ require([
 			var $fallbackParagraph = null;
 			var useFallbackAtY = 20000;
 
-			// get html to insert into target location
-			var html = AffiliateService.getTemplate(unit);
-
 			// prepend the unit after the first paragraph below the
+			var $insertionPoint = undefined;
 			$paragraphs.each(function(index, element) {
 				var $paragraph = $(element);
 				var paragraphY = $paragraph.offset().top;
@@ -243,19 +279,20 @@ require([
 
 					// when prepending make sure the prev child is a paragraph
 					if ($paragraph.prev().is('p')) {
-						$paragraph.prepend(html)
+						$insertionPoint = $paragraph;
 						return false;
 					}
 				}
 
 				// once we hit a certain height lets go back up and use one of the fall back paragraphs
 				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
-					console.log('using fallback slot');
-					$fallbackParagraph.prepend(html);
+					log('Affiliate Unit inserted using fallback slot');
+					$insertionPoint = $fallbackParagraph;
 					return false;
 				}
-
 			});
+
+			AffiliateService.insertAtPointAndTrack($insertionPoint, unit);
 		},
 
 		// Using mustache to render template and unit info
