@@ -84,7 +84,6 @@
     killerFn: null,
 
     initialize: function() {
-
       var me, zindex;
       me = this;
 
@@ -126,6 +125,12 @@
       this.el.focus(function() { me.fixPosition(); });
 
       this.container.css({ maxHeight: this.options.maxHeight + 'px' });
+
+	    if (me.options.scope !== null) {
+		    me.options.scope.change(function() {
+				me.onValueChange();
+		    });
+	    }
     },
 
     disable: function() {
@@ -273,11 +278,6 @@
       //   this.data = cr.data;
       //   this.suggest();
       // } else if (!this.isBadQuery(q)) {
-
-	    if (!q) {
-	    	return;
-	    }
-
         let me = this;
         if (me.options.scope !== null && me.options.scope.attr('value') === 'internal') {
         	me.options.params.wikiId = window.wgCityId;
@@ -316,7 +316,6 @@
     },
 
     suggest: function() {
-    	console.log(this.suggestions);
       if (this.suggestions.length === 0) {
         this.hide();
         return;
