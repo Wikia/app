@@ -279,7 +279,7 @@
         me.options.params.query = q;
         $.ajax({
 	        type:     'GET',
-	        dataType: 'json',
+	        datatype: 'application/json',
 	        data: me.options.params,
 	        url: me.serviceUrl,
 		    xhrFields: {

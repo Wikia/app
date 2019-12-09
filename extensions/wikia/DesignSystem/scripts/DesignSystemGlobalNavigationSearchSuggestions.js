@@ -58,7 +58,7 @@ $(function () {
 								window.location.href = location;
 							}
 
-							trackSuggestionClick(value);
+							// trackSuggestionClick(value);
 						},
 						selectedClass: 'wds-is-selected',
 						// always send the request even if previous one returned no suggestions
@@ -84,12 +84,12 @@ $(function () {
 								link += 'in ' + value.sitename;
 								link += '</span>';
 							}
+							return link;
 						},
 						fnPreprocessResults: function (data) {
-							console.log('fnPreprocessResults', data);
-							let wikisUl = $(".wds-global-navigation__search-suggestions-wikis");
-							data.wikis.forEach(wiki => wikisUl.append("<li>" + wiki.name + "</li>"));
-							//trackSuggestionsImpression(data.ids, data.query);
+							var wikis = $(".wds-global-navigation__search-suggestions-wikis");
+							data.wikis.forEach(wiki => wikis.append("<li>" + wiki.name + "</li>"));
+							// trackSuggestionsImpression(data.ids, data.query);
 							return data.wikiPages;
 						},
 						actionEvent: 'mousedown',
