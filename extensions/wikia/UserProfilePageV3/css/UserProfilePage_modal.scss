@@ -140,12 +140,13 @@
 	}
 
 	&__wrapper {
+		display: flex;
 		width: 1000px;
-		height: 600px;
+		height: 750px;
 		max-width: none;
 	}
 
 	&__content {
-		height: 500px;
+		flex: 1;
 	}
 }

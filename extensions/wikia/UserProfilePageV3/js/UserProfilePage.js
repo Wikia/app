@@ -274,7 +274,6 @@ require(
 				var url = window.location.protocol + '//' + window.location.hostname + '/f/avatar-builder';
 				var html = '<div class="wds-dialog__curtain avatar-builder__curtain">' +
 						'<div class="wds-dialog__wrapper  avatar-builder__wrapper">' +
-							'<div class="wds-dialog__title">Avatar builder</div>' +
 							'<div class="wds-dialog__content avatar-builder__content">' +
 								'<iframe src=' + url + ' id="AvatarBuilder" class="avatar-builder" width="100%"></iframe>' +
 							'</div>' +
@@ -331,7 +330,6 @@ require(
 					$modal.startThrobbing();
 				},
 				onComplete: function (response) {
-					debugger;
 					try {
 						response = JSON.parse(response);
 						var avatarImg = $modal.find('img.avatar');
