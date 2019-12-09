@@ -3,6 +3,8 @@
 declare( strict_types=1 );
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 
 final class YearAtFandomDataProvider {
 	private const FALLBACK_THUMBNAIL = 'https://vignette.wikia.nocookie.net/ludwiktestwiki/images/c/c3/Background5.jpg/revision/latest';
@@ -190,13 +192,17 @@ final class YearAtFandomDataProvider {
 	private function getWikiThumbnail( int $wikiId, string $cityUrl ): ?string {
 		$mainPage = GlobalTitle::newMainPage( $wikiId );
 
-		$response = (new Client([
-			'base_uri' => $cityUrl
-		]))->get('wikia.php?controller=ImageServing&height=300&width=500&count=1&ids[]=' . $mainPage->getArticleID());
+		try {
+			$response = (new Client([
+				'base_uri' => $cityUrl
+			]))->get('wikia.php?controller=ImageServing&height=300&width=500&count=1&ids[]=' . $mainPage->getArticleID());
 
-		$data = \GuzzleHttp\json_decode($response->getBody(), true);
+			$data = \GuzzleHttp\json_decode($response->getBody(), true);
 
-		return $data['result'][$mainPage->getArticleID()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
+			return $data['result'][$mainPage->getArticleID()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
+		} catch ( GuzzleException $e) {
+			return self::FALLBACK_THUMBNAIL;
+		}
 	}
 
 	private function topWikiPageviews(): WikiPageviewsList {
