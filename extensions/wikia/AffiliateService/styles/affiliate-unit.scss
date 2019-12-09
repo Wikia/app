@@ -56,25 +56,25 @@
         text-transform: capitalize;
     }
 
-    &__logo {
+    &__logo.light {
+        @if $is-dark-wiki {
+            display: none;
+        }
+    }
+
+    &__logo.dark {
+        display: none;
+
+        @if $is-dark-wiki {
+            display: block;
+        }
+    }
+
+    &__logo svg {
         bottom: 12px;
         height: 34px;
         position: absolute;
         right: 18px;
         width: 60px;
-
-        &.light {
-            @if $is-dark-wiki {
-                display: none;
-            }
-        }
-
-        &.dark {
-            display: none;
-
-            @if $is-dark-wiki {
-                display: block;
-            }
-        }
     }
 }
