@@ -21,14 +21,14 @@
 
         // Used to crop image with 20 deg angle
         &::after {
+            border-left: 72px solid $color-page;
             content: '';
+            height: 100%;
             position: absolute;
             right: -50px;
             top: 0;
-            height: 100%;
-            width: 0;
             transform: skewX(-20deg);
-            border-left: 72px solid $color-page;
+            width: 0;
         }
     }
 

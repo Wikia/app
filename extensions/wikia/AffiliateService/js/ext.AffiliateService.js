@@ -157,7 +157,12 @@ require([
 						var unit = availableUnits[0];
             
 						// add unit data to be inserted into tempxlate
+						// Using first unit for testing
+						// replace with code below
 						AffiliateService.renderUnitMarkup(units[0]);
+
+						// Uncomment when debug pararm is ready
+						// AffiliateService.renderUnitMarkup(unit);
 
 						// placeholder, replace with impression
 						tracker.trackImpression('test', {
