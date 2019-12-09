@@ -269,7 +269,7 @@ class MercuryApiController extends WikiaController {
 			Wikia::setSurrogateKeysHeaders( $keys, false );
 			$encodedKeys = [];
 			foreach ( $keys as $key ) {
-				$encodedKeys[] = $key;
+				$encodedKeys[] = urlencode( $key );
 			}
 			$data = [
 				'surrogateKeys' => $encodedKeys,
