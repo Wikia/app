@@ -173,11 +173,15 @@ require([
 				var html = AffiliateService.getTemplate(unit);
 
 				// insert markup
-				$insertionPoint.prepend(html);
+				var $element = $insertionPoint.prepend(html);
 
 				// hook onmousedown tracking
-				$insertionPoint.find('.affiliate-unit__cta').on('onmousedown', function (event) {
-					AffiliateService.trackOnClick('only-item', unit);
+				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
+					tracker.trackClick('only-item', {
+						campaignId: unit.campaign,
+						categoryId: unit.category,
+						extraTracking: unit.tracking,
+					});
 				});
 
 				// Y of the insertion point
@@ -196,14 +200,6 @@ require([
 					extraTracking: unit.tracking,
 				});
 			}
-		},
-
-		trackOnClick: function (label, unit) {
-			tracker.trackClick({
-				campaignId: unit.campaign,
-				categoryId: unit.category,
-				extraTracking: unit.tracking,
-			});
 		},
 
 		renderUnitMarkup: function (unit) {
@@ -293,8 +289,8 @@ require([
 		getTemplate: function(unit) {
 			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
-				heading: unit.heading,
-				buttonText: unit.subheading,
+				heading: unit.header,
+				buttonText: unit.subheader,
 				logo: unit.logo,
 			});
 		},
