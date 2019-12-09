@@ -88,16 +88,14 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			category: 'ddb',
 			campaign: 'ddb',
 			name: 'ddb-unit',
-			header: 'The Official Digital Toolset for Dungeons & Dragons',
-			subheader: 'Visit D&D Beyond',
+			heading: 'The Official Digital Toolset for Dungeons & Dragons',
+			subheading: 'Visit D&D Beyond',
 			link: 'https://www.dndbeyond.com/intro',
 			image: 'https://static.wikia.nocookie.net/e95c2f7f-3240-4a70-9f24-1c0ce6b26072',
 			logo: {
-				// Not able to upload svg's to swagger
-				// TODO:
-				// get png assets from design
-				light: '',
-				dark: '',
+				// get svg's from within repo
+				light: './styles/assets/DDB-Logo-Black.svg',
+				dark: './styles/assets/DDB-Logo-White.svg',
 			},
 		}
 	];
