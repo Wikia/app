@@ -266,7 +266,6 @@
     },
 
     getSuggestions: function(q) {
-    	console.log('query', q);
       // var cr, me, ls;
       // cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       // if (cr && $.isArray(cr.suggestions)) {
@@ -275,9 +274,10 @@
       //   this.suggest();
       // } else if (!this.isBadQuery(q)) {
         let me = this;
-        console.log('scope', me.options.scope);
         if (me.options.scope !== null && me.options.scope.attr('value') === 'internal') {
-        	me.options.params.wikiId  = window.wgCityId;
+        	me.options.params.wikiId = window.wgCityId;
+        } else {
+	        delete me.options.params.wikiId;
         }
 
 	    me.options.params.query = q;

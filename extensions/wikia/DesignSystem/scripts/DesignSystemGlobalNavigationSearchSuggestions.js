@@ -80,7 +80,7 @@ $(function () {
 							let link = '<a class="wds-global-navigation__dropdown-link">' +
 								value.title.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 								'</a>';
-							if (value.wikiId != window.wgCityId) {
+							if (value.wikiId !== parseInt(window.wgCityId)) {
 								link += '<span class=wds-global-navigation__search-suggestions-wiki-span>';
 								link += 'in ' + value.sitename;
 								link += '</span>';
