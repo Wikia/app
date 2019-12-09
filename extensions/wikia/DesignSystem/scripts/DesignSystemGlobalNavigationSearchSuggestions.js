@@ -70,7 +70,7 @@ $(function () {
 								'" class="wds-dropdown__content wds-global-navigation__search-suggestions wds-is-not-scrollable">' +
 								'<ul id="' + autocompleteElId +
 								'" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
-								'<ul class="wds-global-navigation__search-suggestions-wikis"></ul>' +
+								'<div class="wds-global-navigation__search-suggestions-wikis" style="display: flex"></div>' +
 								'</div>';
 						},
 						fnFormatResult: function (value, data, currentValue) {
@@ -87,8 +87,14 @@ $(function () {
 							return link;
 						},
 						fnPreprocessResults: function (data) {
-							var wikis = $(".wds-global-navigation__search-suggestions-wikis");
-							data.wikis.forEach(wiki => wikis.append("<li>" + wiki.name + "</li>"));
+							var wikisContainer = $(".wds-global-navigation__search-suggestions-wikis");
+							data.wikis.slice(0, 3).forEach(wiki => {
+								let link = '<a href="' + wiki.url + '">' +
+									'<img src="' + wiki.thumbnail + '" />' +
+									'<span>' + wiki.name + '</span>' +
+									'</a>';
+								wikisContainer.append('<div>' + link + '</div>');
+							});
 							// trackSuggestionsImpression(data.ids, data.query);
 							return data.wikiPages;
 						},
