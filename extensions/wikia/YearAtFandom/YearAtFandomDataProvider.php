@@ -13,13 +13,14 @@ final class YearAtFandomDataProvider {
 	}
 
 	public function getAll( int $userId ): UserStatistics {
-		$wikiPageviews = $this->getWikiPageViews( $userId );
+		$userWikiPageviews = $this->getWikiPageViews( $userId );
 
 		return new UserStatistics(
 			$this->getSummary( $userId ),
-			$wikiPageviews,
+			$userWikiPageviews,
 			$this->getArticlePageViews( $userId ),
-			$this->getUserContributionsPageviews( $userId, $wikiPageviews )
+			$this->getUserContributionsPageviews( $userId, $userWikiPageviews ),
+			$this->topWikiPageviews()
 		);
 	}
 
@@ -192,5 +193,26 @@ final class YearAtFandomDataProvider {
 		$images = $imageServing->getImages( 1 );
 
 		return $images[$service->getCommunityImageId()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
+	}
+
+	private function topWikiPageviews(): WikiPageviewsList {
+		$result = $this->statsDB->select(
+			'top_wikis',
+			[ '*' ],
+			[],
+			__METHOD__,
+			[
+				'LIMIT' => 25,
+				'ORDER BY' => 'wiki_pos ASC'
+			]
+		);
+
+		$list = [];
+
+		foreach ( $result as $row ) {
+			$list[] = new WikiPageviews( (int)$row->wiki_id, (int)$row->wiki_pos, $row->title, (int)$row->sum_pv );
+		}
+
+		return new WikiPageviewsList( $list );
 	}
 }
