@@ -23,16 +23,16 @@ $(function () {
 					}
 				})
 				.autocomplete({
-					serviceUrl: searchSuggestionsUrl,
-					queryParamName: $searchInput.data('suggestions-param-name'),
+					serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?lang=en&namespace=0',
+					queryParamName: 'query',
 					appendTo: searchDropdownSelector,
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
 					onSelect: function (value, data, event) {
-						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+						var valueEncoded = encodeURIComponent(value.title.replace(/ /g, '_')),
 							// slashes can't be urlencoded because they break routing
-							location = window.wgArticlePath.replace(/\$1/, valueEncoded).replace(encodeURIComponent('/'), '/');
+							location = value.url;
 
 							window.Wikia.Tracker.track({
 								eventName: 'search_start_suggest',
@@ -74,11 +74,16 @@ $(function () {
 								'</div>';
 						},
 						fnFormatResult: function (value, data, currentValue) {
-							var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
-
-							return '<a class="wds-global-navigation__dropdown-link">' +
-								value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
+							console.log(value, currentValue);
+							let pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
+							let link = '<a class="wds-global-navigation__dropdown-link">' +
+								value.title.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 								'</a>';
+							if (value.wikiId !== 1706) {
+								link += '<span class=wds-global-navigation__search-suggestions-wiki-span>';
+								link += 'in ' + value.sitename;
+								link += '</span>';
+							}
 						},
 						fnPreprocessResults: function (data) {
 							data.wikis = [
@@ -127,8 +132,8 @@ $(function () {
 							var wikis = $(".wds-global-navigation__search-suggestions-wikis");
 							data.wikis.forEach(wiki => wikis.append("<li>" + wiki.name + "</li>"));
 							trackSuggestionsImpression(data.ids, data.query);
-
-							return data;
+							console.log('fnPreprocessResults', results);
+							return results.wikiPages;
 						},
 						actionEvent: 'mousedown',
 					});
