@@ -274,9 +274,13 @@
       //   this.data = cr.data;
       //   this.suggest();
       // } else if (!this.isBadQuery(q)) {
-        var me = this;
+        let me = this;
+        console.log('scope', me.options.scope);
+        if (me.options.scope !== null && me.options.scope.attr('value') === 'internal') {
+        	me.options.params.wikiId  = window.wgCityId;
+        }
 
-        me.options.params.query = q;
+	    me.options.params.query = q;
         $.ajax({
 	        type:     'GET',
 	        datatype: 'application/json',

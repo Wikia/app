@@ -6,6 +6,7 @@ $(function () {
 			$searchDropdown = $globalNav.find(searchDropdownSelector),
 			$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 			searchSuggestionsUrl = $searchInput.data('suggestions-url'),
+			searchScope = $globalNav.find('.wds-global-navigation__search-scope__value'),
 			trackingState = {};
 
 		function initSuggestions() {
@@ -23,6 +24,7 @@ $(function () {
 					}
 				})
 				.autocomplete({
+					scope: searchScope,
 					serviceUrl: 'https://services.fandom-dev.pl/unified-search/global-search-suggestions?lang=en&namespace=0',
 					queryParamName: 'query',
 					appendTo: searchDropdownSelector,
@@ -74,12 +76,11 @@ $(function () {
 								'</div>';
 						},
 						fnFormatResult: function (value, data, currentValue) {
-							console.log(value, currentValue);
 							let pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
 							let link = '<a class="wds-global-navigation__dropdown-link">' +
 								value.title.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 								'</a>';
-							if (value.wikiId !== 1706) {
+							if (value.wikiId != window.wgCityId) {
 								link += '<span class=wds-global-navigation__search-suggestions-wiki-span>';
 								link += 'in ' + value.sitename;
 								link += '</span>';
