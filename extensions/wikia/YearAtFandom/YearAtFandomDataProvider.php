@@ -190,7 +190,7 @@ final class YearAtFandomDataProvider {
 		if ( empty( $service->getCommunityImageId() ) ) {
 			return self::FALLBACK_THUMBNAIL;
 		}
-		$imageServing = new ImageServing( [ $service->getCommunityImageId() ], 1080, [ 'w' => 3, 'h' => 2 ] );
+		$imageServing = new ImageServing( [ $service->getCommunityImageId() ], 100, [ 'w' => 3, 'h' => 2 ] );
 		$images = $imageServing->getImages( 1 );
 
 		return $images[$service->getCommunityImageId()][0]['url'] ?? self::FALLBACK_THUMBNAIL;
