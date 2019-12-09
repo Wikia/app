@@ -12,7 +12,7 @@ define('ext.wikia.AffiliateService.tracker', [
 	}
 
 	function track(action, label, options) {
-		var currentOptions = $.extend(defaultOptions, options);
+		var currentOptions = $.extend(defaultOptions, options || {});
 
 		// convert extra tracking options
 		var extraTracking = {};
@@ -31,12 +31,14 @@ define('ext.wikia.AffiliateService.tracker', [
 		}, extraTracking);
 
 		// set up GA dimensions
-		win.guaSetCustomDimension(21, win.wgArticleId);
-		win.guaSetCustomDimension(31, options.campaignId);
-		win.guaSetCustomDimension(32, options.unitId);
+		win.guaSetCustomDimension(21, (win.wgArticleId || '').toString());
+		win.guaSetCustomDimension(31, (options.campaignId || '').toString());
+		win.guaSetCustomDimension(32, (options.unitId || '').toString());
 		win.guaSetCustomDimension(33, Object.keys(extraTracking).map(function (k) {
 			return k + '=' + extraTracking[k];
 		}).join(','));
+
+		console.debug('Affiliate Tracking', computedTracking);
 
 		// send the actual tracking event
 		tracker.track(computedTracking);
@@ -46,12 +48,17 @@ define('ext.wikia.AffiliateService.tracker', [
 		track(tracker.ACTIONS.CLICK, label, options);
 	}
 
-	function trackImpression(label, options) {
-		track(tracker.ACTIONS.IMPRESSION, label, options);
+	function trackImpression(options) {
+		track(tracker.ACTIONS.IMPRESSION, 'affiliate_shown', options);
+	}
+
+	function trackNoImpression(options) {
+		track(tracker.ACTIONS.NO_IMPRESSION, 'affiliate_not_shown', options);
 	}
 
 	return {
 		trackImpression: trackImpression,
+		trackNoImpression: trackNoImpression,
 		trackClick: trackClick,
 	};
 });
