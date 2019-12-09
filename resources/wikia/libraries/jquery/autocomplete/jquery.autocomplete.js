@@ -398,7 +398,7 @@
       var selectedValue, f;
       selectedValue = this.suggestions[i];
       if (selectedValue) {
-        this.el.val(selectedValue);
+        this.el.val(selectedValue.title);
         if (this.options.autoSubmit) {
           f = this.el.parents('form');
           if (f.length > 0) { f.get(0).submit(); }
@@ -456,7 +456,7 @@
       };
       s = me.suggestions[i];
       d = me.data[i];
-      me.el.val(getValue(s));
+      me.el.val(getValue(s.title));
       // wikia change - start
       if ($.isFunction(onSelect)) { return onSelect(s, d, e); }
       // wikia change - end
