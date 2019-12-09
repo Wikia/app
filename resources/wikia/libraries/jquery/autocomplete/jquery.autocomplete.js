@@ -273,6 +273,11 @@
       //   this.data = cr.data;
       //   this.suggest();
       // } else if (!this.isBadQuery(q)) {
+
+	    if (!q) {
+	    	return;
+	    }
+
         let me = this;
         if (me.options.scope !== null && me.options.scope.attr('value') === 'internal') {
         	me.options.params.wikiId = window.wgCityId;
