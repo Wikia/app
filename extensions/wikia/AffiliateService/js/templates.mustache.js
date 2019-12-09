@@ -7,8 +7,8 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
             '<div class="affiliate-unit__info">' + 
                 '<p class="affiliate-unit__header">{{heading}}</p>' + 
                 '<a href={{link}} class="wds-button wds-is-secondary affiliate-unit__cta">{{buttonText}}</a>' + 
-                '<div class="affiliate-unit__logo light">{{{logoLight}}}</div>' + 
-                '<div class="affiliate-unit__logo dark">{{logoDark}}</div>' + 
+                '<img class="affiliate-unit__logo light" src={{logoLight}}>' + 
+                '<img class="affiliate-unit__logo dark" src={{logoDark}}>' + 
             '</div>' + 
         '</div>',
     }; 
