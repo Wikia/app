@@ -74,7 +74,7 @@ async function setupJWPlayer() {
 
 	if (!context.get('state.showAds')) {
 		return communicator.dispatch({
-			type: '[Ad Engine] setup jw player',
+			type: '[Ad Engine] Setup JWPlayer',
 			showAds: false,
 			autoplayDisabled: featuredVideoAutoPlayDisabled,
 		});
@@ -87,7 +87,7 @@ async function setupJWPlayer() {
 	await Promise.race([ timeout, biddersDelay.getPromise() ]);
 
 	communicator.dispatch({
-		type: '[Ad Engine] setup jw player',
+		type: '[Ad Engine] Setup JWPlayer',
 		showAds: true,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
 	})

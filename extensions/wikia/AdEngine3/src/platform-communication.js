@@ -6,7 +6,7 @@ import { jwpReady } from "@wikia/ad-engine";
 export function listenSetupJWPlayer(callback) {
 	communicator.actions$
 		.pipe(
-			ofType('[Ad Engine] setup jw player'),
+			ofType('[Ad Engine] Setup JWPlayer'),
 			take(1)
 		)
 		.subscribe(callback);
