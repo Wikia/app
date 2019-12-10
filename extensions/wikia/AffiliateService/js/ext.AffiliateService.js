@@ -328,11 +328,38 @@ require([
 
 		// Using mustache to render template and unit info
 		getTemplate: function(unit) {
+			var updatedLink = unit.link;
+
+			if (unit.campaign === 'ddb') {
+				var beaconId = $.cookies.get('wikia_beacon_id');
+				var sessionId = $.cookies.get('wikia_session_id');
+				var userId = w.wgUserId || 'null';
+				var utmTerm = userId === 'null' ? sessionId + '_' + userId  : sessionId;
+				var queryParams = {
+					'utm_medium': 'affiliate_link',
+					'utm_source': 'fandom',
+					'utm_campaign': unit.category,
+					'utm_term': utmTerm,
+					'utm_content': w.wgCityId + '_' + w.wgArticleId + '_' + userId + '_mediawiki_content',
+					'fandom_session_id': sessionId,
+					'fandom_user_id': userId,
+					'fandom_campaign_id': unit.category,
+					'fandom_community_id': w.wgCityId,
+					'fandom_page_id': w.wgArticleId,
+					'fandom_beacon_id': beaconId,
+					'fandom_slot_id': 'mediawiki_content',
+				};
+
+				updatedLink = unit.link + '?' + $.param(queryParams);
+			}
+
+
+
 			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
 				heading: unit.heading,
 				buttonText: unit.subheading,
-				link: unit.link,
+				link: updatedLink,
 				logoLight: unit.logo.light,
 				logoDark: unit.logo.dark,
 			});
