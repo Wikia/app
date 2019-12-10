@@ -7,7 +7,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'The Star Wars story lives forever',
 			subheading: 'Watch Now On Disney+',
-			link: 'https://disneyplus.bn5x.net/DrrRa',
+			link: 'https://disneyplus.bn5x.net/333RX',
 			image: 'https://static.wikia.nocookie.net/f4fdc410-9a4c-4925-b39f-75f91f7a0e2d',
 			logo: {
 				light: 'https://static.wikia.nocookie.net/274624f0-64b8-42b8-8f5d-1b0f0529c3bb',
@@ -21,7 +21,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'Moana, a heroine kids and adults alike will admire and cheer for',
 			subheading: 'Watch Now On Disney+',
-			link: 'https://disneyplus.bn5x.net/333RX',
+			link: 'https://disneyplus.bn5x.net/DrrRa',
 			image: 'https://static.wikia.nocookie.net/0da1d7a3-3a55-4370-8db0-a3304e53dcd6',
 			logo: {
 				light: 'https://static.wikia.nocookie.net/274624f0-64b8-42b8-8f5d-1b0f0529c3bb',
@@ -35,7 +35,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'All Avengers, All the Time',
 			subheading: 'Watch Now On Disney+',
-			link: 'https://disneyplus.bn5x.net/333RX',
+			link: 'https://disneyplus.bn5x.net/YxZKm',
 			image: 'https://static.wikia.nocookie.net/370ee8c9-75ca-4e79-be37-92a60dbcebfa',
 			logo: {
 				light: 'https://static.wikia.nocookie.net/274624f0-64b8-42b8-8f5d-1b0f0529c3bb',
