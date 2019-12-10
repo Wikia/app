@@ -33,7 +33,8 @@ require([
 		videoTags = videoDetails.videoTags || '',
 		slotTargeting = {
 			plist: recommendedPlaylist,
-			vtags: videoTags
+			vtags: videoTags,
+			videoDedicatedFor: videoDetails.isDedicatedForArticle ? 'article' : 'wiki'
 		},
 		videoAds;
 
