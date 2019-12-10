@@ -34,7 +34,7 @@ require([
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags,
-			videoDedicatedFor: videoDetails.isDedicatedForArticle ? 'article' : 'wiki'
+			videoScope: videoDetails.isDedicatedForArticle ? 'article' : 'wiki'
 		},
 		videoAds;
 
@@ -108,14 +108,14 @@ require([
 	}
 
 	function configurePlayer(willAutoplay, willMute) {
-		var videoDedicatedFor = videoDetails.isDedicatedForArticle ? 'article' : 'wiki';
+		var videoScope = videoDetails.isDedicatedForArticle ? 'article' : 'wiki';
 
 		win.guaSetCustomDimension(30, videoMapping);
 
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
-					tracker.track(extend(data, { videoDedicatedFor: videoDedicatedFor }));
+					tracker.track(extend(data, { videoScope: videoScope }));
 				},
 				setCustomDimension: win.guaSetCustomDimension,
 				comscore: !win.wgDevelEnvironment
