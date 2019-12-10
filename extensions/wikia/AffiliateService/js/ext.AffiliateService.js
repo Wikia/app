@@ -170,8 +170,6 @@ require([
 							categoryId: unit.category,
 							extraTracking: unit.tracking,
 						});
-
-						console.log('>', { targeting, units, availableUnits });
 					} else {
 						console.log('No units available for targeting', targeting);
 					}
