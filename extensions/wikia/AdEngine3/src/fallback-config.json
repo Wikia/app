@@ -197,9 +197,10 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidSizePriceFloorRule": [
@@ -251,7 +252,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "sampling": 100.0,
+            "regions": [
+                "XX"
+            ],
             "value": false
         }
     ],
@@ -463,18 +466,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidTeads": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "IN"
             ],
             "value": true
         }

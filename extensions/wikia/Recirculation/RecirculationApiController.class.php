@@ -36,7 +36,7 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getTrendingFandomArticles() {
-		global $wgParselyApiUrl, $wgParselyApiKey, $wgParselyApiSecret, $wgMemc;
+		global $wgMemc;
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$limit = min(
@@ -44,7 +44,7 @@ class RecirculationApiController extends WikiaApiController {
 			static::MAX_MIXED_CONTENT_FOOTER_SLOTS
 		);
 
-		$articleService = new ParselyService( $wgParselyApiUrl, $wgParselyApiKey, $wgParselyApiSecret );
+		$articleService = new CurationCmsArticleService();
 		$cachedArticleService = new CachedFandomArticleService( $wgMemc, $articleService );
 
 		$posts = $cachedArticleService->getTrendingFandomArticles( $limit );
