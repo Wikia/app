@@ -15,9 +15,9 @@ define('ext.wikia.AffiliateService.tracker', [
 		var currentOptions = $.extend({}, defaultOptions, options || {});
 
 		// convert extra tracking options
-		var extraTracking = {};
+		var extraTrackingOptions = {};
 		options.extraTracking.forEach((kv) => {
-			extraTracking['affiliation_' + kv.key] = kv.val;
+			extraTrackingOptions['affiliation_' + kv.key] = kv.val;
 		});
 
 		// add more properties for tracking event
@@ -28,14 +28,14 @@ define('ext.wikia.AffiliateService.tracker', [
 			trackingMethod: 'analytics',
 			campaign_id: options.campaignId,
 			category_id: options.categoryId,
-		}, extraTracking);
+		}, extraTrackingOptions);
 
 		// set up GA dimensions
 		win.guaSetCustomDimension(21, (win.wgArticleId || '').toString());
 		win.guaSetCustomDimension(31, (options.campaignId || '').toString());
 		win.guaSetCustomDimension(32, (options.unitId || '').toString());
-		win.guaSetCustomDimension(33, Object.keys(extraTracking).map(function (k) {
-			return k + '=' + extraTracking[k];
+		win.guaSetCustomDimension(33, Object.keys(extraTrackingOptions).map(function (k) {
+			return k + '=' + extraTrackingOptions[k];
 		}).join(','));
 
 		console.debug('Affiliate Tracking', computedTracking);
