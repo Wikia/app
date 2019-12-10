@@ -110,7 +110,7 @@ require([
 	function configurePlayer(willAutoplay, willMute) {
 		var videoScope = videoDetails.isDedicatedForArticle ? 'article' : 'wiki';
 
-		win.guaSetCustomDimension(30, videoMapping);
+		win.guaSetCustomDimension(30, videoScope);
 
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
