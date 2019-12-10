@@ -81,8 +81,21 @@ require([
 		},
 
 		canDisplayUnit: function () {
-			// logged-in && (dev || debugTargeting)
-			return (w.wgUserName !== null) && (w.wgAffiliateEnabled || (AffiliateService.getDebugTargeting() !== false));
+			// you're logged out?
+			if (!w.wgUserName) {
+				// is that wiki whitelisted?
+				if (w.wgAffiliateEnabled) {
+					return true;
+				}
+
+				// do we have debug targeting
+				if (AffiliateService.getDebugTargeting() !== false) {
+					return true;
+				}
+			}
+
+			// tough luck
+			return false;
 		},
 
 		getStartHeight: function () {
