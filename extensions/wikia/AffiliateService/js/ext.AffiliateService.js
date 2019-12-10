@@ -157,11 +157,11 @@ require([
 						var unit = availableUnits[0];
             
 						// placeholder, replace with impression
-						tracker.trackImpression('test', {
-							campaignId: unit.campaign,
-							categoryId: unit.category,
-							extraTracking: unit.tracking,
-						});
+						// tracker.trackImpression('test', {
+						// 	campaignId: unit.campaign,
+						// 	categoryId: unit.category,
+						// 	extraTracking: unit.tracking,
+						// });
 
 						AffiliateService.renderUnitMarkup(unit);
 					} else {
