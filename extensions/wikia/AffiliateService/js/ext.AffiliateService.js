@@ -156,20 +156,14 @@ require([
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
             
-						// add unit data to be inserted into tempxlate
-						// Using first unit for testing
-						// replace with code below
-						AffiliateService.renderUnitMarkup(units[0]);
-
-						// Uncomment when debug pararm is ready
-						// AffiliateService.renderUnitMarkup(unit);
-
 						// placeholder, replace with impression
 						tracker.trackImpression('test', {
 							campaignId: unit.campaign,
 							categoryId: unit.category,
 							extraTracking: unit.tracking,
 						});
+
+						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
 					}
