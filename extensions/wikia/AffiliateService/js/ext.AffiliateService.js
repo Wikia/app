@@ -155,14 +155,7 @@ require([
 
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
-            
-						// placeholder, replace with impression
-						// tracker.trackImpression('test', {
-						// 	campaignId: unit.campaign,
-						// 	categoryId: unit.category,
-						// 	extraTracking: unit.tracking,
-						// });
-
+						// add unit data to be inserted into template
 						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
