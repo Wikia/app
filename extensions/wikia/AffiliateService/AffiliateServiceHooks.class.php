@@ -19,7 +19,6 @@ class AffiliateServiceHooks {
 			&& ( !$wgTitle->isMainPage() )
 			&& ( $wgTitle->getNamespace() === NS_MAIN );
 
-		// TODO: Hardocde community IDs here (CAKE-5379)
 		$allowedCityIds = [
 			"147", // https://starwars.fandom.com
 			"374", // https://disney.fandom.com
