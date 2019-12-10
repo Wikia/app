@@ -1,8 +1,8 @@
 define('ext.wikia.AffiliateService.units', [], function () {
 	var units = [
 		{
-			category: 'disneyplus',
-			campaign: 'starwars',
+			campaign: 'disneyplus',
+			category: 'starwars',
 			name: 'starwars-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'The Star Wars story lives forever',
@@ -15,8 +15,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'disneyplus',
-			campaign: 'disney',
+			campaign: 'disneyplus',
+			category: 'disney',
 			name: 'disney-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'Moana, a heroine kids and adults alike will admire and cheer for',
@@ -29,8 +29,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'disneyplus',
-			campaign: 'marvel',
+			campaign: 'disneyplus',
+			category: 'marvel',
 			name: 'marvel-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'All Avengers, All the Time',
@@ -43,8 +43,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'disneyplus',
-			campaign: 'mandalorian',
+			campaign: 'disneyplus',
+			category: 'mandalorian',
 			name: 'mandalorian-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'A thrilling new adventure on the galactic frontier',
@@ -57,8 +57,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'disneyplus',
-			campaign: 'pixar',
+			campaign: 'disneyplus',
+			category: 'pixar',
 			name: 'pixar-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'The Incredibles- a family who saves the world together sticks together',
@@ -71,8 +71,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'disneyplus',
-			campaign: 'simpsons',
+			campaign: 'disneyplus',
+			category: 'simpsons',
 			name: 'simpsons-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'Don\'t have a cow man, relive the Simpsons',
@@ -85,8 +85,8 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			},
 		},
 		{
-			category: 'ddb',
 			campaign: 'ddb',
+			category: 'ddb',
 			name: 'ddb-unit',
 			heading: 'The Official Digital Toolset for Dungeons & Dragons',
 			subheading: 'Visit D&D Beyond',
