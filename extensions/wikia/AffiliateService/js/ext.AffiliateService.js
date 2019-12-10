@@ -289,9 +289,11 @@ require([
 		getTemplate: function(unit) {
 			return mustache.render(templates.AffiliateService_unit, {
 				image: unit.image,
-				heading: unit.header,
-				buttonText: unit.subheader,
-				logo: unit.logo,
+				heading: unit.heading,
+				buttonText: unit.subheading,
+				link: unit.link,
+				logoLight: unit.logo.light,
+				logoDark: unit.logo.dark,
 			});
 		},
 

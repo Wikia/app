@@ -1,0 +1,79 @@
+@import "skins/shared/color";
+
+.affiliate-unit {
+    &__wrapper {
+        background-color: rgba($color-page, 0.25);
+        border: solid 1px rgba($color-page-opposite, 0.5);
+        border-radius: 3px;
+        display: flex;
+        margin: 30px 18px;
+
+        @if $is-dark-wiki {
+            border: solid 1px rgba($color-page, 0.5);
+        }
+    }
+
+    &__image-wrapper {
+        background-repeat: no-repeat;
+        background-size: cover;
+        flex: 1;
+        position: relative;
+
+        // Used to crop image with 20 deg angle
+        &::after {
+            border-left: 72px solid $color-page;
+            content: '';
+            height: 100%;
+            position: absolute;
+            right: -50px;
+            top: 0;
+            transform: skewX(-20deg);
+            width: 0;
+        }
+    }
+
+    &__info {
+        flex: 2;
+        padding: 18px 18px 12px 18px;
+        position: relative;
+    }
+
+    &__cta.wds-button.wds-is-secondary {
+        border-color: $color-text-dark;
+        color: $color-text-dark;
+
+        @if $is-dark-wiki {
+            border-color: $color-text-light;
+            color: $color-text-light;
+        }
+    }
+
+    .WikiaArticle p &__header {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        margin: 0 0 14px;
+        text-transform: capitalize;
+    }
+
+    &__logo {
+        bottom: 12px;
+        height: 34px;
+        position: absolute;
+        right: 18px;
+
+        &.light {
+            @if $is-dark-wiki {
+                display: none;
+            }
+        }
+
+        &.dark {
+            display: none;
+
+            @if $is-dark-wiki {
+                display: block;
+            }
+        }
+    }
+}

@@ -16,6 +16,9 @@ $wgResourceModules['ext.wikia.AffiliateService'] = [
 		'js/templates.mustache.js',
 		'js/tracker.js',
 	],
+	'styles' => [
+		'styles/affiliate-unit.scss',
+	],
 ];
 
 // hooks
