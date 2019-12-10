@@ -27,12 +27,22 @@ function flattenServiceResponse(response) {
 				category: category.name,
 				score: category.score,
 				tracking: category.tracking,
+				recommendationLevel: category.recommendationLevel,
 			})
 		})
 	});
 	// sort by score
 	targeting.sort(function (a, b) {
 		return b.score - a.score;
+	});
+
+	// sort by page targetting first
+	targeting.sort(function(a, b) {
+		if (!a.recommendationLevel || !b.recommendationLevel) {
+			return 0;
+		}
+
+		return a.recommendationLevel === 'page' ? -1 : 1;
 	});
 
 	return targeting;
