@@ -51,6 +51,7 @@ require([
 	'use strict';
 
 	var deferred = $.Deferred();
+	var $w = $(w);
 
 	var AffiliateService = {
 		$infoBox: undefined,
@@ -136,7 +137,7 @@ require([
 				targeting.forEach(function (t) {
 					if (unit.campaign === t.campaign && unit.category === t.category) {
 						// add tracking params coming from the service
-						availableUnits.push($.extend(unit, {
+						availableUnits.push($.extend({}, unit, {
 							tracking: t.tracking,
 						}));
 					}
@@ -175,30 +176,47 @@ require([
 				// insert markup
 				var $element = $insertionPoint.prepend(html);
 
-				// hook onmousedown tracking
-				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
-					tracker.trackClick('only-item', {
-						campaignId: unit.campaign,
-						categoryId: unit.category,
-						extraTracking: unit.tracking,
-					});
+				// add extra fields
+				var extraTracking = unit.tracking.slice();
+				extraTracking.push({
+					// Y of the insertion point
+					key: 'instertedAtY',
+					val: $insertionPoint.offset().top,
 				});
 
-				// Y of the insertion point
-				var instertedAtY = $insertionPoint.offset().top;
-				// TODO: do something with that
-				tracker.trackImpression({
+				var trackingOptions = {
 					campaignId: unit.campaign,
 					categoryId: unit.category,
-					extraTracking: unit.tracking,
+					extraTracking: extraTracking,
+				};
+
+				// hook onmousedown tracking
+				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
+					tracker.trackClick('only-item', trackingOptions);
 				});
+
+				// hook true impression
+				var impressionFired = false;
+				$w.on('resize scroll', $.debounce(150, function () {
+					if (!impressionFired) {
+						var elementTop = $element.offset().top;
+						var elementBottom = elementTop + $element.outerHeight();
+						var viewportTop = $w.scrollTop();
+						var viewportBottom = viewportTop + $w.height();
+
+						// check if we're in viewport
+						if (elementBottom > viewportTop && elementTop < viewportBottom) {
+							tracker.trackImpression(trackingOptions);
+							impressionFired = true;
+						}
+					}
+				}));
+
+				// fire "load" impression
+				tracker.trackLoad(trackingOptions);
 			} else {
 				// we couldn't insert the unit
-				tracker.trackNoImpression({
-					campaignId: unit.campaign,
-					categoryId: unit.category,
-					extraTracking: unit.tracking,
-				});
+				tracker.trackNoImpression(trackingOptions);
 			}
 		},
 

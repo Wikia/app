@@ -8,11 +8,11 @@ define('ext.wikia.AffiliateService.tracker', [
 	var defaultOptions = {
 		campaignId: '',
 		categoryId: '',
-		extraTracking: {},
+		extraTracking: [],
 	}
 
 	function track(action, label, options) {
-		var currentOptions = $.extend(defaultOptions, options || {});
+		var currentOptions = $.extend({}, defaultOptions, options || {});
 
 		// convert extra tracking options
 		var extraTracking = {};
@@ -52,12 +52,17 @@ define('ext.wikia.AffiliateService.tracker', [
 		track(tracker.ACTIONS.IMPRESSION, 'affiliate_shown', options);
 	}
 
+	function trackLoad(options) {
+		track(tracker.ACTIONS.IMPRESSION, 'affiliate_loaded', options);
+	}
+
 	function trackNoImpression(options) {
 		track(tracker.ACTIONS.NO_IMPRESSION, 'affiliate_not_shown', options);
 	}
 
 	return {
 		trackImpression: trackImpression,
+		trackLoad: trackLoad,
 		trackNoImpression: trackNoImpression,
 		trackClick: trackClick,
 	};
