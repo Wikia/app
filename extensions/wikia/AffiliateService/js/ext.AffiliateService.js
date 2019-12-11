@@ -303,7 +303,7 @@ require([
 				}
 
 				// verify that the final value that isn't allow is less than the requested y start position
-				if (notAllowedYStopValue < yStart) {
+				if (yStart < notAllowedYStartValue || notAllowedYStopValue < yStart) {
 					return true;
 				}
 
