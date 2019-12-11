@@ -1,3 +1,19 @@
+/**
+ * Randomize array element order in-place.
+ * Using Durstenfeld shuffle algorithm.
+ *
+ * @see https://stackoverflow.com/a/12646864
+ * @see https://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm
+ */
+function shuffleArray(array) {
+	for (var i = array.length - 1; i > 0; i--) {
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+}
+
 // find the first slot where we can insert
 // todo: we could use a better algorithm here
 function insertSpot(arr, val) {
@@ -165,6 +181,8 @@ require([
 					}
 				});
 			});
+
+			shuffleArray(availableUnits);
 
 			return availableUnits;
 		},
