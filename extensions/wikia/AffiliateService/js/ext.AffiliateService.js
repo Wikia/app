@@ -214,7 +214,7 @@ require([
 			extraTracking.push({
 				// Y of the insertion point
 				key: 'instertedAtY',
-				val: $insertionPoint ? $insertionPoint.offset().top ; -1,
+				val: $insertionPoint ? $insertionPoint.offset().top : -1,
 			});
 
 			var trackingOptions = {
