@@ -62,6 +62,18 @@ require([
 	var deferred = $.Deferred();
 	var $w = $(w);
 
+	// used by AffiliateService.getAvailableUnits
+	var campaignOnWikiIds = {
+		'147': 'disneyplus', // https://starwars.fandom.com
+		'374': 'disneyplus', // https://disney.fandom.com
+		'2233': 'disneyplus', // https://marvel.fandom.com
+		'177996': 'disneyplus', // https://marvelcinematicuniverse.fandom.com
+		'673': 'disneyplus', // https://simpsons.fandom.com
+		'4097': 'disneyplus', // https://pixar.fandom.com
+		'691': 'ddb', // https://forgottenrealms.fandom.com
+		'1163770': 'ddb', // https://criticalrole.fandom.com
+	};
+
 	var AffiliateService = {
 		$infoBox: undefined,
 
@@ -151,6 +163,12 @@ require([
 				var c = unit.country;
 				// if there's no `.country` property os it is not an Array or `.country` is empty
 				return !Array.isArray(c) || (c.length === 0) || (c.indexOf(currentCountry) > -1);
+			});
+			// filter by current wikiId
+			var allowedCampaign = campaignOnWikiIds[w.wgCityId];
+			potentialUnits = $.grep(potentialUnits, function (unit) {
+				// if there's no `.country` property os it is not an Array or `.country` is empty
+				return allowedCampaign === unit.campaign;
 			});
 			// filter by category and campaign also add tracking to the list
 			var availableUnits = [];
