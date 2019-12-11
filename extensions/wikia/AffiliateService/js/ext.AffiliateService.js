@@ -30,7 +30,7 @@ function insertSpot(arr, val) {
 		}
 	}
 
-	return arr.length;
+	return arr.length - 1;
 }
 
 function flattenServiceResponse(response) {
@@ -196,7 +196,8 @@ require([
 
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
-						// add unit data to be inserted into template
+
+ 						// add unit data to be inserted into template
 						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
@@ -208,6 +209,20 @@ require([
 		},
 
 		insertAtPointAndTrack: function ($insertionPoint, unit) {
+			// add extra fields
+			var extraTracking = unit.tracking ? unit.tracking.slice() : [];
+			extraTracking.push({
+				// Y of the insertion point
+				key: 'instertedAtY',
+				val: $insertionPoint ? $insertionPoint.offset().top : -1,
+			});
+
+			var trackingOptions = {
+				campaignId: unit.campaign,
+				categoryId: unit.category,
+				extraTracking: extraTracking,
+			};
+
 			// check if we found good insertion point
 			if ($insertionPoint) {
 				// get html to insert into target location
@@ -215,20 +230,6 @@ require([
 
 				// insert markup
 				var $element = $insertionPoint.prepend(html);
-
-				// add extra fields
-				var extraTracking = unit.tracking.slice();
-				extraTracking.push({
-					// Y of the insertion point
-					key: 'instertedAtY',
-					val: $insertionPoint.offset().top,
-				});
-
-				var trackingOptions = {
-					campaignId: unit.campaign,
-					categoryId: unit.category,
-					extraTracking: extraTracking,
-				};
 
 				// hook onmousedown tracking
 				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
