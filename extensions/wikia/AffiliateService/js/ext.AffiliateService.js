@@ -53,11 +53,10 @@ require([
 	'wikia.window',
 	'wikia.geo',
 	'wikia.log',
-	'wikia.mustache',
 	'ext.wikia.AffiliateService.units',
 	'ext.wikia.AffiliateService.templates',
 	'ext.wikia.AffiliateService.tracker',
-], function ($, w, geo, log, mustache, units, templates, tracker) {
+], function ($, w, geo, log, units, templates, tracker) {
 	'use strict';
 
 	var deferred = $.Deferred();
@@ -353,9 +352,7 @@ require([
 				updatedLink = unit.link + '?' + $.param(queryParams);
 			}
 
-
-
-			return mustache.render(templates.AffiliateService_unit, {
+			return templates.unit({
 				image: unit.image,
 				heading: unit.heading,
 				buttonText: unit.subheading,
