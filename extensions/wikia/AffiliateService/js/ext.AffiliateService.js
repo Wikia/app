@@ -366,7 +366,6 @@ require([
 			AffiliateService.$infoBox = $('.portable-infobox').first();
 
 			if (!AffiliateService.canDisplayUnit()) {
-				// fire negative impression
 				return;
 			}
 
