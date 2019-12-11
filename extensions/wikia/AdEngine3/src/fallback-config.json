@@ -200,7 +200,7 @@
                 "PL",
                 "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidSizePriceFloorRule": [
@@ -253,9 +253,9 @@
                 "oasis"
             ],
             "regions": [
-                "XX-SA"
+                "XX"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icIASVideoTracking": [
@@ -466,18 +466,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidTeads": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "US-IN"
             ],
             "value": true
         }

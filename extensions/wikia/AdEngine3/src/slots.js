@@ -4,6 +4,7 @@ import {
 	context,
 	events,
 	eventService,
+	FmrRotator,
 	scrollListener,
 	slotInjector,
 	slotService,
@@ -11,7 +12,6 @@ import {
 	getAdProductInfo
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
-import { rotateIncontentBoxad } from './slot/fmr-rotator';
 import { ofType } from "@wikia/post-quecast";
 import { take } from "rxjs/operators";
 import { communicator } from "./communicator";
@@ -398,6 +398,7 @@ export default {
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
+		const rotator = new FmrRotator(slotName, 'incontent_boxad_', btRec);
 
 		if (!isApplicable || !parentNode) {
 			slotService.setState(slotName, false);
@@ -410,7 +411,7 @@ export default {
 
 		parentNode.appendChild(element);
 
-		rotateIncontentBoxad(slotName);
+		rotator.rotateSlot(slotName);
 	},
 
 	injectHighImpact() {
