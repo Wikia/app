@@ -352,8 +352,6 @@ require([
 				updatedLink = unit.link + '?' + $.param(queryParams);
 			}
 
-
-
 			return templates.unit({
 				image: unit.image,
 				heading: unit.heading,
@@ -371,8 +369,6 @@ require([
 				// fire negative impression
 				return;
 			}
-
-			console.log('hi');
 
 			AffiliateService.addUnitToPage();
 		},
