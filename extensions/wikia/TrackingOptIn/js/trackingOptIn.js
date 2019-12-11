@@ -19,7 +19,15 @@ define('wikia.trackingOptIn', [
 	function init() {
 		if (instantGlobals.wgEnableTrackingOptInModal) {
 			log('Using tracking opt in modal', log.levels.info, logGroup);
-			var instance = trackingOptInModal.init({
+
+			var usapiEnabled =
+				window &&
+				window.location &&
+				window.location.search &&
+				window.location.search.indexOf('icUSPrivacyApi=1') !== -1;
+
+			var instances = trackingOptInModal.init({
+				enableCCPAinit: usapiEnabled,
 				onAcceptTracking: function () {
 					optIn = true;
 					window.Wikia.consentQueue.start();
@@ -31,8 +39,8 @@ define('wikia.trackingOptIn', [
 				},
 				zIndex: 9999999
 			});
-			geoRequiresConsent = instance.geoRequiresTrackingConsent();
-			modalInstance = instance;
+			geoRequiresConsent = instances.gdpr.geoRequiresTrackingConsent();
+			modalInstance = instances.gdpr;
 		} else {
 			optIn = true;
 			geoRequiresConsent = false;
