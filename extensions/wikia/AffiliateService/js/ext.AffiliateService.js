@@ -30,7 +30,7 @@ function insertSpot(arr, val) {
 		}
 	}
 
-	return arr.length;
+	return arr.length - 1;
 }
 
 function flattenServiceResponse(response) {
@@ -340,7 +340,9 @@ require([
 				}
 			});
 
-			AffiliateService.insertAtPointAndTrack($insertionPoint, unit);
+			if ($insertionPoint !== undefined) {
+				AffiliateService.insertAtPointAndTrack($insertionPoint, unit);
+			}
 		},
 
 		// Using mustache to render template and unit info
