@@ -197,7 +197,7 @@ require([
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
 
-						// add unit data to be inserted into template
+ 						// add unit data to be inserted into template
 						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
@@ -210,7 +210,7 @@ require([
 
 		insertAtPointAndTrack: function ($insertionPoint, unit) {
 			// add extra fields
-			var extraTracking = unit.tracking.slice();
+			var extraTracking = unit.tracking ? unit.tracking.slice() : [];
 			extraTracking.push({
 				// Y of the insertion point
 				key: 'instertedAtY',
