@@ -33,7 +33,7 @@ define('ext.wikia.AffiliateService.tracker', [
 		// set up GA dimensions
 		win.guaSetCustomDimension(21, (win.wgArticleId || '').toString());
 		win.guaSetCustomDimension(31, (options.campaignId || '').toString());
-		win.guaSetCustomDimension(32, (options.unitId || '').toString());
+		win.guaSetCustomDimension(32, (options.categoryId || '').toString());
 		win.guaSetCustomDimension(33, Object.keys(extraTrackingOptions).map(function (k) {
 			return k + '=' + extraTrackingOptions[k];
 		}).join(','));
