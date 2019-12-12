@@ -8,6 +8,7 @@ import {
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
+	setupRdpContext,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
@@ -243,6 +244,7 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 async function configure(adsContext, isOptedIn) {
 	await setupAdContext(adsContext, isOptedIn);
 	setupNpaContext();
+	setupRdpContext();
 
 	templateRegistry.registerTemplates();
 
