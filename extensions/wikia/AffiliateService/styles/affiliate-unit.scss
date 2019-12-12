@@ -3,7 +3,7 @@
 .affiliate-unit {
     &__wrapper {
         background-color: rgba(#fff, .25);
-        border: solid 1px rgba(#fff, 0.5);
+        border: solid 1px rgba($color-page, 0.5);
         border-radius: 3px;
         display: flex;
         margin: 30px 18px;
@@ -44,16 +44,6 @@
         padding: 12px 18px;
         position: relative;
     }
-
-    // &__cta.wds-button.wds-is-secondary {
-    //     border-color: $color-text-dark;
-    //     color: $color-text-dark;
-
-    //     @if $is-dark-wiki {
-    //         border-color: $color-text-light;
-    //         color: $color-text-light;
-    //     }
-    // }
 
     .WikiaArticle p &__header {
         font-size: 16px;
