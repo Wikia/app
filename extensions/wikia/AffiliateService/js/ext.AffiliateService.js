@@ -318,10 +318,12 @@ require([
 			var $insertionPoint = undefined;
 			$paragraphs.each(function(index, element) {
 				var $paragraph = $(element);
-				var paragraphY = $paragraph.offset().top;
+				var paragraphYStart = $paragraph.offset().top;
+				var paragraphYEnd = $paragraph.height() + paragraphYStart;
+				var paragraphYMiddle = paragraphYStart + $paragraph.height() / 2;
 
 				// make sure we are past the infobox and not near an image
-				if (paragraphY > startHeight && isValidSlot(paragraphY)) {
+				if (paragraphYStart > startHeight && isValidSlot(paragraphYStart) && isValidSlot(paragraphYEnd) && isValidSlot(paragraphYMiddle)) {
 					if ($fallbackParagraph === null) {
 						$fallbackParagraph = $paragraph;
 					}
@@ -334,7 +336,7 @@ require([
 				}
 
 				// once we hit a certain height lets go back up and use one of the fall back paragraphs
-				if ($fallbackParagraph && paragraphY > useFallbackAtY) {
+				if ($fallbackParagraph && paragraphYStart > useFallbackAtY) {
 					log('Affiliate Unit inserted using fallback slot');
 					$insertionPoint = $fallbackParagraph;
 					return false;
