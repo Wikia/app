@@ -368,6 +368,18 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 			];
 		}
 
+		if ( true ) {
+			$data['site_overview']['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-usp-do-not-sell'
+				],
+				'href' => $this->getHref( 'usp-do-not-sell' ),
+				'tracking_label' => 'community.usp-do-not-sell',
+			];
+		}
+
 		return $data;
 	}
 
@@ -530,6 +542,18 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 				],
 				'href' => $this->getHref( 'help' ),
 				'tracking_label' => 'community.help',
+			];
+		}
+
+		if ( true ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-community-usp-do-not-sell'
+				],
+				'href' => $this->getHref( 'usp-do-not-sell' ),
+				'tracking_label' => 'community.usp-do-not-sell',
 			];
 		}
 
