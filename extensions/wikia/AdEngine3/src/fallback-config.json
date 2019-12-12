@@ -78,6 +78,18 @@
             "value": true
         }
     ],
+    "icPrebidOneVideo": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": false
+        }
+    ],
     "icPrebidIndexExchange": [
         {
             "apps": [
@@ -143,7 +155,7 @@
                 {
                     "name": "tb_viewability",
                     "countries": [
-                        "PL/100"
+                        "CZ/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -185,9 +197,10 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidSizePriceFloorRule": [
@@ -204,6 +217,21 @@
             "value": {
                 "300x600": 0.3
             }
+        }
+    ],
+    "icPrebidCriteo": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icA9Bidder": [
@@ -227,7 +255,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "sampling": 100.0,
+            "regions": [
+                "XX"
+            ],
             "value": false
         }
     ],
@@ -254,9 +284,7 @@
                 "oasis"
             ],
             "regions": [
-                "CA",
-                "DE",
-                "PL"
+                "XX"
             ],
             "value": true
         }
@@ -441,18 +469,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidTeads": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "IN"
             ],
             "value": true
         }

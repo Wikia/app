@@ -2711,6 +2711,11 @@ $wgEnableFlagClosedAccountsExt = true;
 $wgEnableForumExt = false;
 
 /**
+ * @var  $wgArchiveWikiForums
+ */
+$wgArchiveWikiForums = null;
+
+/**
  * Disallow anonymous editing of Forum:Index.
  * @see extensions/wikia/ForumIndexProtector
  * @var bool $wgEnableForumIndexProtector
@@ -6218,12 +6223,6 @@ $wgPageShareServices = [
 $wgPageShowWatchingUsers = false;
 
 /**
- * Base URL used for Parsely API calls
- * @var string $wgParselyApiUrl
- */
-$wgParselyApiUrl = 'https://api.parsely.com/v2/';
-
-/**
  * The expiry time for the parser cache, in seconds.
  * @var int $wgParserCacheExpireTime
  */
@@ -6834,12 +6833,6 @@ $wgRightsUrl = null;
  */
 $wgReadOnlyFile = false;
 
-/**
- * Whether or not to redirect all file pages to the first page they are used on for
- * anonymous users.
- * @var boolean
- */
-$wgRedirectFilePagesForAnons = false;
 
 /**
  * Allow redirection to another page when a user logs in.
@@ -9354,3 +9347,5 @@ $wgOverrideUcfirstCharacters = [
  * @var string
  */
 $wgTimelineRenderHashAppend = 'v2';
+
+$wgIsTestWiki = false;

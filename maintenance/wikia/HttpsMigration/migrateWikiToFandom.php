@@ -157,7 +157,6 @@ class MigrateWikiToFandom extends Maintenance {
 		WikiFactory::clearCache( $wikiId );
 
 		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ) );
-		Wikia::purgeSurrogateKey( Wikia::wikiSurrogateKey( $wikiId ), 'mercury' );
 
 		$dbName = WikiFactory::IDtoDB( $wikiId );
 

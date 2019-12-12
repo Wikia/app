@@ -139,6 +139,40 @@ export default {
 					}
 				}
 			},
+			criteo: {
+				enabled: false,
+				slots: {
+					top_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						networkId: '3306'
+					},
+					top_boxad: {
+						sizes: [
+							[300, 250],
+							[300, 600]
+						],
+						networkId: '3306'
+					},
+					incontent_boxad_1: {
+						sizes: [
+							[160, 600],
+							[300, 600],
+							[300, 250]
+						],
+						networkId: '3306'
+					},
+					bottom_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						networkId: '3306'
+					},
+				}
+			},
 			indexExchange: {
 				enabled: false,
 				slots: {

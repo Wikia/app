@@ -67,11 +67,9 @@ class CeleryPurgerTest extends TestCase {
 				'https://starwars.wikia.com/wiki/Darth_Vader',
 				'http://community.wikia.com/wiki/Main_Page',
 				'https://vignette.wikia.nocookie.net/cardfight/images/d/dc/Gentle_Persuasion.jpg/revision/latest?cb=20150827145148',
-				'https://random.fandom.com/wikia.php?controller=MercuryApi',
 			],
 			[
-				'mediawiki' => [ 'https://starwars.wikia.com/wiki/Darth_Vader', 'http://community.wikia.com/wiki/Main_Page', 'https://random.fandom.com/wikia.php?controller=MercuryApi', ],
-				'mercury' => [ 'https://random.fandom.com/wikia.php?controller=MercuryApi', ],
+				'mediawiki' => [ 'https://starwars.wikia.com/wiki/Darth_Vader', 'http://community.wikia.com/wiki/Main_Page', ],
 				'vignette' => [ 'https://vignette.wikia.nocookie.net/cardfight/images/d/dc/Gentle_Persuasion.jpg/revision/latest?cb=20150827145148', ],
 			]
 		];
