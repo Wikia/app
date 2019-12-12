@@ -368,17 +368,15 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 			];
 		}
 
-		if ( true ) {
-			$data['site_overview']['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-usp-do-not-sell'
-				],
-				'href' => $this->getHref( 'usp-do-not-sell' ),
-				'tracking_label' => 'community.usp-do-not-sell',
-			];
-		}
+		$data['site_overview']['links'][] = [
+			'type' => 'link-text',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-community-usp-do-not-sell'
+			],
+			'href' => $this->getHref( 'usp-do-not-sell' ),
+			'tracking_label' => 'community.usp-do-not-sell',
+		];
 
 		return $data;
 	}
