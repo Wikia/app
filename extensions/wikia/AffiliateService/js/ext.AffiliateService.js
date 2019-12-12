@@ -37,6 +37,13 @@ function flattenServiceResponse(response) {
 	var targeting = [];
 	response.forEach(function (campaign) {
 		var campaignName = campaign.campaign;
+
+		// remove ddb
+		// TODO: remove this block when releasing for all communities
+		if (campaignName === 'ddb') {
+			return;
+		}
+
 		campaign.categories.forEach(function (category) {
 			targeting.push({
 				campaign: campaignName,
