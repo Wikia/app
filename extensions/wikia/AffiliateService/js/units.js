@@ -90,7 +90,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			name: 'hulu-unit',
 			country: ['US', 'CA', 'NL', 'AU', 'NZ'],
 			heading: 'Upgrade Your Hulu Bundle with Disney+',
-			subheading: 'Need this',
+			subheading: 'Upgrade Now',
 			link: 'https://fandom.com/articles/disney-plus-bundle-how-to',
 			image: 'https://static.wikia.nocookie.net/803e11a2-7213-48bc-9bfe-828111661cec',
 			logo: {
