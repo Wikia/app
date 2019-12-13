@@ -132,10 +132,10 @@ spec:
   endpoints:
   - port: main
     path: /metrics.php
-    interval: 10s
+    interval: 30s
   - port: vtsmetrics
     path: /metrics
-    interval: 10s
+    interval: 30s
 ---
 apiVersion: v1
 kind: Service

@@ -1793,6 +1793,8 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
+include_once "$IP/extensions/wikia/AffiliateService/AffiliateService.setup.php";
+
 // LORE-519
 if ( !empty ( $wgEnableArticleExporterHooks ) ) {
     include "$IP/extensions/wikia/ArticleExporter/ArticleExporterHooks.setup.php";

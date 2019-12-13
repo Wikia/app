@@ -133,10 +133,10 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
-    interval: 10s
+    interval: 30s
   - port: vtsmetrics
     path: /metrics
-    interval: 10s
+    interval: 30s
 ---
 apiVersion: v1
 kind: Service
@@ -345,7 +345,7 @@ spec:
   endpoints:
   - port: metrics
     path: /metrics
-    interval: 10s
+    interval: 30s
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -366,4 +366,4 @@ spec:
   endpoints:
   - port: main
     path: /metrics.php
-    interval: 10s
+    interval: 30s

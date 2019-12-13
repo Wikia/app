@@ -155,7 +155,7 @@
                 {
                     "name": "tb_viewability",
                     "countries": [
-                        "PL/100"
+                        "CZ/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -228,7 +228,10 @@
                 "muthead",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icA9Bidder": [
