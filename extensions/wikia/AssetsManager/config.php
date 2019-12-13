@@ -603,7 +603,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'#group_jwplayer_mobile_featured_video_ads_js',
-		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
 	],
 ];
 

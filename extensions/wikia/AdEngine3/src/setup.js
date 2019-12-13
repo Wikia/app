@@ -47,7 +47,13 @@ async function updateWadContext() {
 	}
 }
 
-async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
+async function setupAdContext(
+	wikiContext,
+	isOptedIn = false,
+	geoRequiresConsent = true,
+	isSaleOptOut = false,
+	geoRequiresSignal = true
+) {
 	const showAds = getReasonForNoAds() === null;
 
 	utils.geoService.setUpGeoData();
@@ -110,8 +116,11 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
+
 	context.set('options.trackingOptIn', isOptedIn);
 	context.set('options.geoRequiresConsent', geoRequiresConsent);
+	context.set('options.optOutSale', isSaleOptOut);
+	context.set('options.geoRequiresSignal', geoRequiresSignal);
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -240,8 +249,8 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	window.adslots2.start();
 }
 
-async function configure(adsContext, isOptedIn) {
-	await setupAdContext(adsContext, isOptedIn);
+async function configure(adsContext, isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal) {
+	await setupAdContext(adsContext, isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal);
 	setupNpaContext();
 	setupRdpContext();
 
