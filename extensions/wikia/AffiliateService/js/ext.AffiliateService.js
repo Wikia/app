@@ -59,16 +59,21 @@ function flattenServiceResponse(response) {
 		return b.score - a.score;
 	});
 
-	// sort by page targetting first
-	targeting.sort(function(a, b) {
-		if (!a.recommendationLevel || !b.recommendationLevel) {
-			return 0;
-		}
+	// create page level and community level recommendations
+	// NOTE items without `recommendationLevel` belong to both arrays
+	var communityTargeting = [];
+	var pageTargeting = [];
 
-		return a.recommendationLevel === 'page' ? -1 : 1;
+	targeting.forEach(function (t) {
+		if (!t.recommendationLevel || t.recommendationLevel === 'page') {
+			pageTargeting.push(t);
+		}
+		if (!t.recommendationLevel || t.recommendationLevel === 'community') {
+			communityTargeting.push(t);
+		}
 	});
 
-	return targeting;
+	return pageTargeting.length > 0 ? pageTargeting : communityTargeting;
 }
 
 require([
