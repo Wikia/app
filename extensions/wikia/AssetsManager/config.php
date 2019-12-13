@@ -83,7 +83,6 @@ $config['adengine3_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist/ads.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/prebid.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
 ];
@@ -92,7 +91,6 @@ $config['adengine3_dev_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist-dev/ads.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/prebid.js',
 		'//extensions/wikia/AdEngine3/alert.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],

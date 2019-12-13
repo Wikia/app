@@ -20,14 +20,8 @@ define('wikia.trackingOptIn', [
 		if (instantGlobals.wgEnableTrackingOptInModal) {
 			log('Using tracking opt in modal', log.levels.info, logGroup);
 
-			var usapiEnabled =
-				window &&
-				window.location &&
-				window.location.search &&
-				window.location.search.indexOf('icUSPrivacyApi=1') !== -1;
-
 			var instances = trackingOptInModal.init({
-				enableCCPAinit: usapiEnabled,
+				enableCCPAinit: true,
 				onAcceptTracking: function () {
 					optIn = true;
 					window.Wikia.consentQueue.start();
