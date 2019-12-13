@@ -76,6 +76,17 @@ function flattenServiceResponse(response) {
 	return pageTargeting.length > 0 ? pageTargeting : communityTargeting;
 }
 
+var HULU_COMMUNITIES = [
+	321995, // american horror story
+	1644254, // brokyln 99
+	881799, // rick and morty
+	200383, // bobs burgers
+	951918, // the handmaids tale
+	8395, // runaways
+	1637241, // futureman
+	147, // TODO REMOVE ONLY FOR TESTING
+];
+
 require([
 	'jquery',
 	'wikia.window',
@@ -92,6 +103,11 @@ require([
 
 	var AffiliateService = {
 		$infoBox: undefined,
+
+		isHuluCommunity: function() {
+			return HULU_COMMUNITIES.indexOf(this.currentWikiId) !== -1;
+		},
+
 
 		// ?debugAffiliateServiceTargeting=campaign,category
 		getDebugTargeting: function() {
@@ -110,6 +126,10 @@ require([
 		canDisplayUnit: function () {
 			// you're logged out?
 			if (!w.wgUserName) {
+				if (AffiliateService.isHuluCommunity()) {
+					return true;
+				}
+
 				// is that wiki whitelisted?
 				if (w.wgAffiliateEnabled) {
 					return true;
@@ -146,6 +166,17 @@ require([
 				deferred.resolve([{
 					campaign: debugArray[0],
 					category: debugArray[1],
+					score: 1,
+					tracking: [],
+				}]);
+
+				return deferred.promise();
+			}
+
+			if (AffiliateService.isHuluCommunity()) {
+				deferred.resolve([{
+					campaign: 'disneyplus',
+					category: 'hulu',
 					score: 1,
 					tracking: [],
 				}]);
