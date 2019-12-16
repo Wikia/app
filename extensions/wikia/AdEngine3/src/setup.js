@@ -47,13 +47,7 @@ async function updateWadContext() {
 	}
 }
 
-async function setupAdContext(
-	wikiContext,
-	isOptedIn = false,
-	geoRequiresConsent = true,
-	isSaleOptOut = false,
-	geoRequiresSignal = true
-) {
+async function setupAdContext(wikiContext, consents) {
 	const showAds = getReasonForNoAds() === null;
 
 	utils.geoService.setUpGeoData();
@@ -117,10 +111,11 @@ async function setupAdContext(
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 
-	context.set('options.trackingOptIn', isOptedIn);
-	context.set('options.geoRequiresConsent', geoRequiresConsent);
-	context.set('options.optOutSale', isSaleOptOut);
-	context.set('options.geoRequiresSignal', geoRequiresSignal);
+	context.set('bidders.prebid.libraryUrl', instantConfig.get('icPrebidVersion'));
+	context.set('options.trackingOptIn', consents.isOptedIn);
+	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
+	context.set('options.optOutSale', consents.isSaleOptOut);
+	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -249,8 +244,8 @@ async function setupAdContext(
 	window.adslots2.start();
 }
 
-async function configure(adsContext, isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal) {
-	await setupAdContext(adsContext, isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal);
+async function configure(adsContext, consents) {
+	await setupAdContext(adsContext, consents);
 	setupNpaContext();
 	setupRdpContext();
 

@@ -5,7 +5,7 @@ define('wikia.trackingOptIn', [
 	'wikia.log',
 	'wikia.trackingOptInModal'
 ], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
-	var modalInstance,
+	var gdprInstance,
 		ccpaInstance,
 		optIn = false,
 		saleOptOut = false,
@@ -36,8 +36,8 @@ define('wikia.trackingOptIn', [
 			},
 			zIndex: 9999999
 		});
-		modalInstance = instances.gdpr;
-		geoRequiresConsent = modalInstance.geoRequiresTrackingConsent();
+		gdprInstance = instances.gdpr;
+		geoRequiresConsent = gdprInstance.geoRequiresTrackingConsent();
 
 		ccpaInstance = instances.ccpa;
 		saleOptOut = !!ccpaInstance.hasUserProvidedSignal();
@@ -67,7 +67,7 @@ define('wikia.trackingOptIn', [
 	}
 
 	function reset() {
-		modalInstance.reset();
+		gdprInstance.reset();
 	}
 
 	return {

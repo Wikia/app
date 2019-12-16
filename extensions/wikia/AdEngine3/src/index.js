@@ -41,10 +41,15 @@ const contextConfigured = new Promise((resolve) => {
 	contextConfiguredTrigger = resolve;
 });
 
-async function setupAdEngine(isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal) {
+async function setupAdEngine(
+	isOptedIn = false,
+	geoRequiresConsent = true,
+	isSaleOptOut = false,
+	geoRequiresSignal = true,
+) {
 	const wikiContext = window.ads.context;
 
-	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal);
+	await ads.configure(wikiContext, { isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal });
 	contextReadyResolver();
 
 	videoTracker.register();
