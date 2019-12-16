@@ -92,7 +92,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			heading: 'Upgrade Your Hulu Bundle with Disney+',
 			subheading: 'Upgrade Now',
 			link: 'https://fandom.com/articles/disney-plus-bundle-how-to',
-			image: 'https://static.wikia.nocookie.net/803e11a2-7213-48bc-9bfe-828111661cec',
+			image: 'https://static.wikia.nocookie.net/a20f7e88-cdd0-4629-b888-5b30bc2156b2',
 			logo: {
 				light: 'https://static.wikia.nocookie.net/274624f0-64b8-42b8-8f5d-1b0f0529c3bb',
 				dark: 'https://static.wikia.nocookie.net/1d8d22a4-207e-47eb-991e-2d1a1c37f1cf',
