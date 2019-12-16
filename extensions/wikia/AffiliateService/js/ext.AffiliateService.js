@@ -78,7 +78,7 @@ function flattenServiceResponse(response) {
 
 var HULU_COMMUNITIES = [
 	321995, // american horror story
-	1644254, // brokyln 99
+	1644254, // brookyln 99
 	881799, // rick and morty
 	200383, // bobs burgers
 	951918, // the handmaids tale
