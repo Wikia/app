@@ -84,7 +84,6 @@ var HULU_COMMUNITIES = [
 	951918, // the handmaids tale
 	8395, // runaways
 	1637241, // futureman
-	147, // TODO REMOVE ONLY FOR TESTING
 ];
 
 require([
