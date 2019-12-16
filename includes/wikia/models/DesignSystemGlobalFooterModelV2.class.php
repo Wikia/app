@@ -332,6 +332,15 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 						'href' => $this->getHref( 'privacy-policy' ),
 						'tracking_label' => 'site-overview.privacy-policy',
 					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-community-usp-do-not-sell'
+						],
+						'href' => $this->getHref( 'usp-do-not-sell' ),
+						'tracking_label' => 'community.usp-do-not-sell',
+					],
 				]
 			],
 			'mobile_site_button' => [
@@ -367,16 +376,6 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 				'tracking_label' => 'community.help',
 			];
 		}
-
-		$data['site_overview']['links'][] = [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-community-usp-do-not-sell'
-			],
-			'href' => $this->getHref( 'usp-do-not-sell' ),
-			'tracking_label' => 'community.usp-do-not-sell',
-		];
 
 		return $data;
 	}
