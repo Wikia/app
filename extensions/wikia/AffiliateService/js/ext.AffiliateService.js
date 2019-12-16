@@ -40,9 +40,10 @@ function flattenServiceResponse(response) {
 
 		// remove ddb
 		// TODO: remove this block when releasing for all communities
-		if (campaignName === 'ddb') {
-			return;
-		}
+		// Comment out for testing
+		// if (campaignName === 'ddb') {
+		// 	return;
+		// }
 
 		campaign.categories.forEach(function (category) {
 			targeting.push({
