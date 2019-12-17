@@ -59,17 +59,32 @@ function flattenServiceResponse(response) {
 		return b.score - a.score;
 	});
 
-	// sort by page targetting first
-	targeting.sort(function(a, b) {
-		if (!a.recommendationLevel || !b.recommendationLevel) {
-			return 0;
-		}
+	// create page level and community level recommendations
+	// NOTE items without `recommendationLevel` belong to both arrays
+	var communityTargeting = [];
+	var pageTargeting = [];
 
-		return a.recommendationLevel === 'page' ? -1 : 1;
+	targeting.forEach(function (t) {
+		if (!t.recommendationLevel || t.recommendationLevel === 'page') {
+			pageTargeting.push(t);
+		}
+		if (!t.recommendationLevel || t.recommendationLevel === 'community') {
+			communityTargeting.push(t);
+		}
 	});
 
-	return targeting;
+	return pageTargeting.length > 0 ? pageTargeting : communityTargeting;
 }
+
+var HULU_COMMUNITIES = [
+	321995, // american horror story
+	1644254, // brookyln 99
+	881799, // rick and morty
+	200383, // bobs burgers
+	951918, // the handmaids tale
+	8395, // runaways
+	1637241, // futureman
+];
 
 require([
 	'jquery',
@@ -88,6 +103,11 @@ require([
 	var AffiliateService = {
 		$infoBox: undefined,
 
+		isHuluCommunity: function() {
+			return HULU_COMMUNITIES.indexOf(this.currentWikiId) !== -1;
+		},
+
+
 		// ?debugAffiliateServiceTargeting=campaign,category
 		getDebugTargeting: function() {
 			// check if we have the mechanism to get the param (ie. not on IE)
@@ -105,6 +125,10 @@ require([
 		canDisplayUnit: function () {
 			// you're logged out?
 			if (!w.wgUserName) {
+				if (AffiliateService.isHuluCommunity()) {
+					return true;
+				}
+
 				// is that wiki whitelisted?
 				if (w.wgAffiliateEnabled) {
 					return true;
@@ -141,6 +165,17 @@ require([
 				deferred.resolve([{
 					campaign: debugArray[0],
 					category: debugArray[1],
+					score: 1,
+					tracking: [],
+				}]);
+
+				return deferred.promise();
+			}
+
+			if (AffiliateService.isHuluCommunity()) {
+				deferred.resolve([{
+					campaign: 'disneyplus',
+					category: 'hulu',
 					score: 1,
 					tracking: [],
 				}]);
