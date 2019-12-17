@@ -98,7 +98,7 @@ require([
 		$infoBox: undefined,
 
 		isHuluCommunity: function() {
-			return HULU_COMMUNITIES.indexOf(this.currentWikiId) !== -1;
+			return HULU_COMMUNITIES.indexOf(parseInt(w.wgCityId, 10)) !== -1;
 		},
 
 
