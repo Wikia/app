@@ -13,7 +13,6 @@
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-lodash": "^3.3.4",
-    "copy-webpack-plugin": "4.5.1",
     "css-loader": "^3.2.0",
     "mini-css-extract-plugin": "0.4.0",
     "node-sass": "4.13.0",
@@ -29,7 +28,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v51.2.0",
+    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v53.0.0",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "js-cookie": "2.2.0",

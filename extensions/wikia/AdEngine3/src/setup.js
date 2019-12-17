@@ -8,6 +8,7 @@ import {
 	InstantConfigService,
 	PorvataFiller,
 	setupNpaContext,
+	setupRdpContext,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
@@ -46,7 +47,7 @@ async function updateWadContext() {
 	}
 }
 
-async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent = true) {
+async function setupAdContext(wikiContext, consents) {
 	const showAds = getReasonForNoAds() === null;
 
 	utils.geoService.setUpGeoData();
@@ -109,8 +110,12 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
-	context.set('options.trackingOptIn', isOptedIn);
-	context.set('options.geoRequiresConsent', geoRequiresConsent);
+
+	context.set('bidders.prebid.libraryUrl', instantConfig.get('icPrebidVersion'));
+	context.set('options.trackingOptIn', consents.isOptedIn);
+	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
+	context.set('options.optOutSale', consents.isSaleOptOut);
+	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -184,7 +189,6 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 			s2: [context.get('targeting.s2') || ''],
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
-		context.set('custom.isCMPEnabled', true);
 
 		if (!instantConfig.get('icPrebidLkqdOutstream')) {
 			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
@@ -240,9 +244,10 @@ async function setupAdContext(wikiContext, isOptedIn = false, geoRequiresConsent
 	window.adslots2.start();
 }
 
-async function configure(adsContext, isOptedIn) {
-	await setupAdContext(adsContext, isOptedIn);
+async function configure(adsContext, consents) {
+	await setupAdContext(adsContext, consents);
 	setupNpaContext();
+	setupRdpContext();
 
 	templateRegistry.registerTemplates();
 
