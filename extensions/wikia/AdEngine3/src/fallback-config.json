@@ -105,77 +105,7 @@
             "value": true
         }
     ],
-    "wgAdDriverBillTheLizardConfig": {
-        "timeout": 2000,
-        "projects": {
-            "vcr": [
-                {
-                    "name": "vcr",
-                    "countries": [
-                        "PL/100",
-                        "CZ/100",
-                        "HK/100",
-                        "UK/100",
-                        "GB/100"
-                    ],
-                    "dfp_targeting": true
-                }
-            ],
-            "garfield": [
-                {
-                    "name": "garfield",
-                    "on_1": [
-                        "catlapseIncontentBoxad"
-                    ],
-                    "countries": [
-                        "CZ/25"
-                    ],
-                    "dfp_targeting": true
-                }
-            ],
-            "cheshirecat": [
-                {
-                    "name": "cheshirecat",
-                    "on_1": [
-                        "catlapseIncontentBoxad"
-                    ],
-                    "countries": [
-                        "PL/100",
-                        "UK/100",
-                        "GB/100",
-                        "DK/100",
-                        "FR/100",
-                        "IT/100",
-                        "NI/100"
-                    ],
-                    "dfp_targeting": true
-                }
-            ],
-            "tb_viewability": [
-                {
-                    "name": "tb_viewability",
-                    "countries": [
-                        "CZ/100"
-                    ],
-                    "dfp_targeting": true
-                }
-            ],
-            "queen_of_hearts": [
-                {
-                    "name": "ctp_desktop:2.0.0",
-                    "on_0": [
-                        "disableAutoPlay"
-                    ],
-                    "on_1": [
-                        "disableAutoPlay"
-                    ],
-                    "countries": [
-                        "XX/0.05-cached"
-                    ]
-                }
-            ]
-        }
-    },
+    "wgAdDriverBillTheLizardConfig": "{\n    \"timeout\": 2000,\n    \"projects\": {\n        \"vcr\": [\n            {\n                \"name\": \"vcr\",\n                \"countries\": [\n                    \"PL/100\",\n                    \"CZ/100\",\n                    \"HK/100\",\n                    \"UK/100\",\n                    \"GB/100\"\n                ],\n                \"dfp_targeting\": true\n            }\n        ],\n        \"garfield\": [\n            {\n                \"name\": \"garfield\",\n                \"on_1\": [\n                    \"catlapseIncontentBoxad\"\n                ],\n                \"countries\": [\n                    \"CZ/25\"\n                ],\n                \"dfp_targeting\": true\n            }\n        ],\n        \"cheshirecat\": [\n            {\n                \"name\": \"cheshirecat\",\n                \"on_1\": [\n                    \"catlapseIncontentBoxad\"\n                ],\n                \"countries\": [\n                    \"PL/100\",\n                    \"UK/100\",\n                    \"GB/100\",\n                    \"DK/100\",\n                    \"FR/100\",\n                    \"IT/100\",\n                    \"NI/100\"\n                ],\n                \"dfp_targeting\": true\n            }\n        ],\n        \"tb_viewability\": [\n            {\n                \"name\": \"tb_viewability\",\n                \"countries\": [\n                    \"CZ/100\",\n                    \"DK/100\",\n                ],\n                \"dfp_targeting\": true\n            }\n        ],\n        \"queen_of_hearts\": [\n            {\n                \"name\": \"ctp_desktop:2.0.0\",\n                \"on_0\": [\n                    \"disableAutoPlay\"\n                ],\n                \"on_1\": [\n                    \"disableAutoPlay\"\n                ],\n                \"countries\": [\n                    \"XX/0.05-cached\"\n                ]\n            }\n        ]\n    }\n}",
     "icPostmessageTracking": [
         {
             "apps": [
@@ -229,7 +159,9 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX-AS",
+                "XX-EU",
+                "XX-SA"
             ],
             "value": true
         }
