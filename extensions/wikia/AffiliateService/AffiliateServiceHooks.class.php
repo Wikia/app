@@ -19,15 +19,68 @@ class AffiliateServiceHooks {
 			&& ( !$wgTitle->isMainPage() )
 			&& ( $wgTitle->getNamespace() === NS_MAIN );
 
+		// generated list to continue soft rollout
 		$allowedCityIds = [
-			147, // https://starwars.fandom.com
-			374, // https://disney.fandom.com
-			2233, // https://marvel.fandom.com
-			177996, // https://marvelcinematicuniverse.fandom.com
-			673, // https://simpsons.fandom.com
-			4097, // https://pixar.fandom.com
-			691, // https://forgottenrealms.fandom.com
-			1163770, // https://criticalrole.fandom.com
+			1000000311,
+			113,
+			1163770,
+			119,
+			1249,
+			125,
+			13346,
+			1456064,
+			147,
+			1544,
+			1706,
+			1706,
+			174,
+			174,
+			175043,
+			177996,
+			2061,
+			20780,
+			2154,
+			2233,
+			2237,
+			250551,
+			2520,
+			2569,
+			277,
+			283,
+			2860,
+			3035,
+			3035,
+			3124,
+			3125,
+			31618,
+			323,
+			3469,
+			3510,
+			374,
+			376,
+			4097,
+			410,
+			410,
+			4541,
+			462,
+			48473,
+			490,
+			509,
+			530,
+			5975,
+			663,
+			673,
+			68170,
+			691,
+			74,
+			78127,
+			831,
+			833670,
+			835,
+			916058,
+			932,
+			95,
+			984,
 		];
 		$isProperCommunity = Wikia::isDevEnv() || in_array( $wgCityId, $allowedCityIds );
 
