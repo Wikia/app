@@ -47,7 +47,6 @@ class AffiliateServiceHooks {
 			283,
 			2860,
 			3035,
-			3035,
 			3124,
 			3125,
 			31618,
