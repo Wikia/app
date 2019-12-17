@@ -29476,9 +29476,7 @@ $messages['pl'] = array(
 '''Zmiany nie zostały jeszcze zapisane!'''",
 	'sitejspreview' => "'''Pamiętaj, że to tylko podgląd kodu JavaScript.'''
 '''Zmiany nie zostały jeszcze zapisane!'''",
-	'session_fail_preview' => "'''Uwaga! Serwer nie może przetworzyć tej edycji z powodu utraty danych sesji.
-Spróbuj jeszcze raz.
-Jeśli to nie pomoże – [[Special:UserLogout|wyloguj się]] i zaloguj ponownie.'''",
+	'session_fail_preview' => '<strong>Zmiany nie zostały zapisane! Kliknij ponownie „Publikuj”, aby zapisać edycję.</strong>',
 	'session_fail_preview_html' => "'''Uwaga! Serwer nie może przetworzyć tej edycji z powodu utraty danych sesji.'''
 
 ''Ponieważ w {{GRAMMAR:MS.lp|{{SITENAME}}}} włączona została opcja „surowy HTML”, podgląd został ukryty w celu zabezpieczenia przed atakami z użyciem JavaScriptu.''
