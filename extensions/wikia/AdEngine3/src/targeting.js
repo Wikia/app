@@ -25,6 +25,11 @@ function getAdLayout(adsContext) {
 	let layout = adsContext.targeting.pageType || 'article';
 
 	if (layout === 'article') {
+		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
+		if (adsContext.targeting.featuredVideo && adsContext.targeting.featuredVideo.isDedicatedForArticle === false) {
+			layout = `wv-${layout}`;
+		}
+
 		if (adsContext.targeting.hasFeaturedVideo) {
 			layout = `fv-${layout}`;
 		}
