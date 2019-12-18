@@ -205,7 +205,7 @@ class ForumExternalController extends WallExternalController {
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
 
-		if ( empty( $boardId ) || empty( $destinationBoardId ) ) {
+		if ( !$board || !$destinationBoard ) {
 			$this->status = 'error';
 			$this->errormsg = '';
 			return true;

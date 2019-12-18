@@ -155,7 +155,8 @@
                 {
                     "name": "tb_viewability",
                     "countries": [
-                        "PL/100"
+                        "CZ/100",
+                        "DK/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -197,9 +198,10 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidSizePriceFloorRule": [
@@ -227,7 +229,28 @@
                 "muthead",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "XX-AS",
+                "XX-EU",
+                "XX-SA"
+            ],
+            "value": true
+        }
+    ],
+    "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX",
+                "non-PL"
+            ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.4.0/20191216.min.js"
         }
     ],
     "icA9Bidder": [
@@ -251,7 +274,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "sampling": 100.0,
+            "regions": [
+                "XX"
+            ],
             "value": false
         }
     ],
@@ -463,18 +488,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidTeads": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "IN"
             ],
             "value": true
         }
