@@ -15,6 +15,8 @@
 		#{$property}: $color-vertical-music;
 	} @else if $vertical-name == 'movies' {
 		#{$property}: $color-vertical-movies;
+	} @else if $vertical-name == 'anime' {
+	#{$property}: $color-vertical-anime;
 	}
 }
 
@@ -125,4 +127,16 @@
 			@include vertical-icon('tv', $selected);
 		}
 	}
+
+	.icon-vertical-anime {
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-anime;
+		}
+
+		&::before {
+			@include vertical-icon('anime', $selected);
+		}
+	}
+
 }
