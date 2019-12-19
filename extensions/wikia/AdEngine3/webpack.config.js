@@ -2,7 +2,6 @@ const { getAdEngineLoader } = require('@wikia/ad-engine/configs/webpack-app.conf
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const compact = (collection) => Array.from(collection).filter(v => v != null);
 
@@ -51,13 +50,7 @@ module.exports = function (env) {
 		devtool: 'source-map',
 		plugins: [
 			new MiniCssExtractPlugin({filename: '[name].scss'}),
-			new webpack.optimize.ModuleConcatenationPlugin(),
-			new CopyWebpackPlugin([
-				{
-					from: './node_modules/@wikia/ad-engine/lib/prebid.min.js',
-					to: 'vendors/prebid.js'
-				}
-			])
+			new webpack.optimize.ModuleConcatenationPlugin()
 		]
 	};
 
