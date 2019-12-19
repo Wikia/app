@@ -111,7 +111,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 
-	context.set('bidders.prebid.libraryUrl', instantConfig.get('icPrebidVersion'));
 	context.set('options.trackingOptIn', consents.isOptedIn);
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
