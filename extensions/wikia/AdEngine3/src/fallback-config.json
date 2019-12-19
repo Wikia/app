@@ -155,8 +155,9 @@
                 {
                     "name": "tb_viewability",
                     "countries": [
-                        "CZ/100",
-                        "DK/100"
+                        "DK/100",
+                        "MY/100",
+                        "CA/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -322,12 +323,7 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "regions": [
-                "AU",
-                "CA",
-                "US"
-            ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidAppNexus": [
@@ -432,10 +428,7 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "regions": [
-                "US-PA"
-            ],
-            "value": true
+            "value": false
         }
     ],
     "icDurationMedia": [
