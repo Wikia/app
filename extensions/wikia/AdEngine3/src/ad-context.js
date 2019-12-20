@@ -204,17 +204,9 @@ export default {
 				enabled: false,
 				slots: {
 					featured: {
-						site: {
-							page: 'https://www.amazonaws.com',
-							ref: 'https://www.amazonaws.com/10',
-						},
 						pubId: 'HBExchange'
 					},
 					incontent_player: {
-						site: {
-							page: 'https://www.amazonaws.com',
-							ref: 'https://www.amazonaws.com/10',
-						},
 						pubId: 'HBExchange'
 					}
 				}
