@@ -231,9 +231,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX-AS",
-                "XX-EU",
-                "XX-SA"
+                "XX"
             ],
             "value": true
         }
@@ -248,8 +246,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-PL"
+                "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.4.0/20191216.min.js"
         }
