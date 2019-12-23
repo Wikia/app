@@ -414,20 +414,6 @@ export default {
 					}
 				}
 			},
-			teads: {
-				enabled: false,
-				debugPageId: 109648,
-				debugPlacementId: 119236,
-				slots: {
-					incontent_player: {
-						pageId: '109466',
-						placementId: '119043',
-						sizes: [
-							[1, 1],
-						]
-					},
-				},
-			},
 			triplelift: {
 				enabled: false,
 				slots: {
