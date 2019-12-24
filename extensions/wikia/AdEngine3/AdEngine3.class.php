@@ -108,7 +108,8 @@ class AdEngine3
 			if (!empty($featuredVideoData)) {
 				$featuredVideoDetails = [
 					'mediaId' => $featuredVideoData['mediaId'] ?? null,
-					'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? '')
+					'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? ''),
+					'isDedicatedForArticle' => $featuredVideoData['isDedicatedForArticle'],
 				];
 			}
 
