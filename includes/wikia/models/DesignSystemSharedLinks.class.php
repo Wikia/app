@@ -107,6 +107,7 @@ class DesignSystemSharedLinks {
 			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
 			'user-author-profile' => 'https://www.fandom.com/u/',
+			'usp-do-not-sell' => 'https://www.fandom.com/do-not-sell-my-info',
 		],
 		'de' => [
 			'explore-wikis' => 'https://www.fandom.com/explore-de?uselang=de',
