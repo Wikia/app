@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Logger\Loggable;
-use Wikia\Logger\WikiaLogger;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
@@ -145,6 +144,45 @@ class RemoveUserDataController extends WikiaController {
 		// setting a blank email will prevent db reloads
 		$user->setEmail( '' );
 		$user->invalidateCache();
+	}
+
+	/**
+	 * Helper method to remove local user data from the current wiki
+	 */
+	public function removeLocalUserData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if( !$this->request->wasPosted() ) {
+			$this->response->setCode( self::METHOD_NOT_ALLOWED );
+			return;
+		}
+
+		$auditLogId = $this->getVal( 'auditLogId' );
+		$userId = $this->getVal( 'userId' );
+		$renameUserId = $this->getVal( 'renameUserId' );
+
+		if ( empty( $userId ) || empty( $auditLogId ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$localDataRemover = new LocalUserDataRemover();
+		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId );
+
+		if ( !$dataWasRemoved ) {
+			$this->error( "User's local data was not removed correctly", [
+				'user_id' => $userId,
+				'rename_user_id' => $renameUserId,
+				'rtbf_log_id' => $auditLogId
+			] );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+		}
+
+		$this->info( "User's local data was removed", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
+		] );
 	}
 
 	private function getUserWikis( int $userId ) {
