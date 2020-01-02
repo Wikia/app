@@ -65,6 +65,13 @@
 		}
 	}
 
+	// this ensures that vpaid creatives are not covering jw controls (vpaid has z-index 99)
+	&.jw-flag-ads-vpaid {
+		.jw-controlbar {
+			z-index: 100 !important;
+		}
+	}
+
 	.wikia-jw-title-duration {
 		display: none;
 	}
