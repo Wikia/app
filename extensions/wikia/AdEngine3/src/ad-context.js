@@ -171,6 +171,18 @@ export default {
 						],
 						networkId: '3306'
 					},
+					featured: {
+						zoneId: '1470492',
+						sizes: [
+							[3, 3],
+						]
+					},
+					incontent_player: {
+						zoneId: '1470491',
+						sizes: [
+							[3, 3],
+						]
+					}
 				}
 			},
 			indexExchange: {
@@ -401,20 +413,6 @@ export default {
 						zoneId: '704674'
 					}
 				}
-			},
-			teads: {
-				enabled: false,
-				debugPageId: 109648,
-				debugPlacementId: 119236,
-				slots: {
-					incontent_player: {
-						pageId: '109466',
-						placementId: '119043',
-						sizes: [
-							[1, 1],
-						]
-					},
-				},
 			},
 			triplelift: {
 				enabled: false,

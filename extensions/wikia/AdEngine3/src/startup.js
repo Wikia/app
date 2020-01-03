@@ -32,10 +32,15 @@ import { communicator } from "./communicator";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
-export async function setupAdEngine(isOptedIn, geoRequiresConsent) {
+export async function setupAdEngine(
+	isOptedIn = false,
+	geoRequiresConsent = true,
+	isSaleOptOut = false,
+	geoRequiresSignal = true,
+) {
 	const wikiContext = window.ads.context;
 
-	await ads.configure(wikiContext, isOptedIn, geoRequiresConsent);
+	await ads.configure(wikiContext, { isOptedIn, geoRequiresConsent, isSaleOptOut, geoRequiresSignal });
 
 	slots.injectIncontentBoxad();
 	videoTracker.register();

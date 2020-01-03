@@ -1465,12 +1465,6 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
- * @name $wgEnableCMPCountries
- * List of countries to enable Consent Management module
- */
-$wgEnableCMPCountries = null;
-
-/**
  * @name $wgDisableIncontentPlayer
  * Flag disabling incontent player (for feed experiments)
  */
