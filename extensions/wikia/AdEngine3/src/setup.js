@@ -66,9 +66,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.hiviLeaderboard', instantConfig.isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
-		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
-		const originalSrc = context.get('src');
-		context.set('src', [originalSrc, context.get('wiki.targeting.testSrc')]);
+		context.set('src', context.get('wiki.targeting.testSrc'));
 	} else if (context.get('wiki.opts.isAdTestWiki')) {
 		context.set('src', 'test');
 	}
@@ -111,7 +109,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 
-	context.set('bidders.prebid.libraryUrl', instantConfig.get('icPrebidVersion'));
 	context.set('options.trackingOptIn', consents.isOptedIn);
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);

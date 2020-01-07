@@ -38,12 +38,6 @@ function flattenServiceResponse(response) {
 	response.forEach(function (campaign) {
 		var campaignName = campaign.campaign;
 
-		// remove ddb
-		// TODO: remove this block when releasing for all communities
-		if (campaignName === 'ddb') {
-			return;
-		}
-
 		campaign.categories.forEach(function (category) {
 			targeting.push({
 				campaign: campaignName,
@@ -104,7 +98,7 @@ require([
 		$infoBox: undefined,
 
 		isHuluCommunity: function() {
-			return HULU_COMMUNITIES.indexOf(this.currentWikiId) !== -1;
+			return HULU_COMMUNITIES.indexOf(parseInt(w.wgCityId, 10)) !== -1;
 		},
 
 
