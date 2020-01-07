@@ -12,8 +12,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 			return true;
 		},
 		isAutoplayToggleShown: function (adEngineAutoplayDisabled) {
-			return !adEngineAutoplayDisabled
-			;
+			return !adEngineAutoplayDisabled;
 		}
 	};
 });
