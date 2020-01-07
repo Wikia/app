@@ -1233,7 +1233,7 @@ $messages['ja'] = array(
 	'phalanx-label-filter' => 'フィルター：',
 	'phalanx-label-reason' => '理由：',
 	'phalanx-label-type' => '種類：',
-	'phalanx-label-lang' => '言語:',
+	'phalanx-label-lang' => '言語：',
 	'phalanx-format-text' => 'プレーンテキスト',
 	'phalanx-format-regex' => '正規表現',
 	'phalanx-format-case' => '大文字・小文字を区別',
@@ -1287,7 +1287,7 @@ $messages['ja'] = array(
 	'phalanx-view-id-submit' => 'フィルターを取得',
 	'phalanx-expire-durations' => '1時間、2時間、4時間、6時間、1日、3日、1週間、2週間、1か月、3か月、6か月、1年、無期限',
 	'phalanx-expire-custom' => 'カスタム',
-	'phalanx-expire-custom-tooltip' => '3時間、4か月...',
+	'phalanx-expire-custom-tooltip' => '3時間、4か月、...',
 	'phalanx-format-exact' => '完全一致',
 	'phalanx-validate-regexp' => '正規表現を検証',
 	'phalanx-validate-regexp-valid' => '正規表現は有効です',
@@ -1302,7 +1302,7 @@ $messages['ja'] = array(
 	'phalanx-modify-failure' => 'ブロックの変更中にエラーが発生しました',
 	'phalanx-modify-warning' => 'ブロックID#$1を編集しています。
 「{{int:phalanx-edit-block}}」をクリックすると変更が保存されます。',
-	'phalanx-test-description' => 'テストにより、現在にブロックに対するテキストが取得されました。',
+	'phalanx-test-description' => 'テストにより、現在のブロックに対するテキストが取得されました。',
 	'phalanx-test-results-legend' => 'テストの結果',
 	'phalanx-display-row-blocks' => 'ブロック：$1',
 	'phalanx-display-row-created' => "最終更新者：'''$1'''さん（日付：$2）",
@@ -1317,11 +1317,13 @@ $messages['ja'] = array(
 	'phalanx-unblock-message' => 'ブロックID#$1を削除しました',
 	'phalanx-help-type-content' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにコンテンツが一致する編集の保存を禁止します。',
 	'phalanx-help-type-summary' => 'このフィルターは、ブラックリストに登録されている語句のいずれかに指定の概要が一致する編集の保存を禁止します。',
-	'phalanx-help-type-title' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにタイトルが一致するページの作成を禁止します。',
+	'phalanx-help-type-title' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにタイトルが一致するページの作成を禁止します。
+
+編集中の新規ページは適用外です。',
 	'phalanx-help-type-user' => 'このフィルターは、ブラックリストに登録されている名前またはIPアドレスのいずれかに、名前かIPアドレスが一致するユーザーをブロックします（ローカルのMediaWikiブロックと同じです）。',
 	'phalanx-help-type-wiki-creation' => 'このフィルターは、ブラックリストに登録されている語句のいずれかに名前かURLが一致するwikiの作成を禁止します。',
 	'phalanx-help-type-email' => 'このフィルターは、ブロック中のメールアドレスを使用したアカウントの作成を禁止します。',
-	'phalanx-user-block-new-account' => 'このユーザー名は登録に使用できません。別のユーザー名を指定してください。',
+	'phalanx-user-block-new-account' => 'このユーザー名では登録できません。別のユーザー名を指定してください。',
 	'phalanx-email-block-new-account' => '現在、登録を完了できません。',
 	'phalanx-title-move-summary' => '入力した理由にブロック中の語句が含まれています。',
 	'phalanx-content-spam-summary' => 'テキストがページの概要内に見つかりました。',
@@ -1354,15 +1356,17 @@ $messages['ja'] = array(
 	'phalanx-required-filter' => '*この項目は必須です',
 	'phalanx-required-type' => '*1つ以上のチェックボックスを選択する必要があります',
 	'phalanx-type-device' => 'デバイス',
-	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-help-type-device' => 'このフィルターは、モバイルデバイスIDが一致したユーザーをブロックします。',
 	'phalanx-type-recent-questions' => '最近の質問',
-	'phalanx-help-type-question-title' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにタイトルが一致する質問（ページ）の作成をブロックします。',
+	'phalanx-help-type-question-title' => 'このフィルターは、ブラックリストに登録されている語句のいずれかにタイトルが一致する質問（ページ）の作成をブロックします。
+
+注：質問回答形式のWikiでのみ有効です。',
 	'phalanx-section-type-questions' => '質問',
 	'phalanx-type-question-title' => '質問のタイトル',
 	'phalanx-help-type-recent-questions' => 'このフィルターは、さまざまな出力（ウィジェット、リスト、タグによって生成されるリスティング）への質問（ページ）の表示を禁止します。 
 これらのページの作成は禁止しません。
 
-注：回答型のWikiでのみ使用できます。',
+注：質問回答形式のWikiでのみ有効です。',
 );
 
 $messages['km'] = array(

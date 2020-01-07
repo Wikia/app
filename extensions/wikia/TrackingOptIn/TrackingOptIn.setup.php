@@ -13,4 +13,3 @@ $wgExtensionCredits['other'][] =
 $wgAutoloadClasses['TrackingOptIn'] =  __DIR__ . '/TrackingOptIn.class.php';
 
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'TrackingOptIn::onOasisSkinAssetGroupsBlocking';
-$wgHooks['InstantGlobalsGetVariables'][] = 'TrackingOptIn::onInstantGlobalsGetVariables';

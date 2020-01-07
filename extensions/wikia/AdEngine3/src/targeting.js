@@ -25,7 +25,14 @@ function getAdLayout(adsContext) {
 	let layout = adsContext.targeting.pageType || 'article';
 
 	if (layout === 'article') {
-		if (adsContext.targeting.hasFeaturedVideo) {
+		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
+		if (
+			adsContext.targeting.hasFeaturedVideo
+			&& adsContext.targeting.featuredVideo
+			&& adsContext.targeting.featuredVideo.isDedicatedForArticle === false
+		) {
+			layout = `wv-${layout}`;
+		} else if (adsContext.targeting.hasFeaturedVideo) {
 			layout = `fv-${layout}`;
 		}
 
@@ -258,7 +265,8 @@ export default {
 			bidder_20: transformBidderPrice('33across'),
 			bidder_21: transformBidderPrice('triplelift'),
 			bidder_22: transformBidderPrice('teads'),
-			bidder_23: transformBidderPrice('oneVideo')
+			bidder_23: transformBidderPrice('oneVideo'),
+			bidder_24: transformBidderPrice('criteo'),
 		};
 	},
 };

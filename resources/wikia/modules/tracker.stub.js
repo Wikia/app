@@ -66,6 +66,9 @@
 				// impression of item on page/module
 				IMPRESSION: 'impression',
 
+				// negative impression of item on page/module
+				NO_IMPRESSION: 'no-impression',
+
 				// Generic keypress
 				KEYPRESS: 'keypress',
 

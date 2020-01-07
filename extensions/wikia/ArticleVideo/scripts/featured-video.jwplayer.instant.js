@@ -33,9 +33,20 @@ require([
 		videoTags = videoDetails.videoTags || '',
 		slotTargeting = {
 			plist: recommendedPlaylist,
-			vtags: videoTags
+			vtags: videoTags,
+			videoScope: videoDetails.isDedicatedForArticle ? 'article' : 'wiki'
 		},
 		videoAds;
+
+	function extend(target, obj) {
+		var key;
+
+		for (key in obj) {
+			target[key] = obj[key];
+		}
+
+		return target;
+	}
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -97,12 +108,14 @@ require([
 	}
 
 	function configurePlayer(willAutoplay, willMute) {
-		win.guaSetCustomDimension(30, videoDetails.isDedicatedForArticle ? 'article' : 'wiki');
+		var videoScope = videoDetails.isDedicatedForArticle ? 'article' : 'wiki';
+
+		win.guaSetCustomDimension(30, videoScope);
 
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
-					tracker.track(data);
+					tracker.track(extend(data, { videoScope: videoScope }));
 				},
 				setCustomDimension: win.guaSetCustomDimension,
 				comscore: !win.wgDevelEnvironment
