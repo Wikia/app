@@ -36,7 +36,6 @@ class LocalUserDataRemover {
 		];
 
 		try {
-
 			$user = User::newFromId( $userId );
 			$oldUser = User::newFromId( $renameUserId );
 
