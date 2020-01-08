@@ -70,7 +70,6 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $netzathleten ?>
 <?= $dynamicYield ?>
 
 <div class="WikiaSiteWrapper">
