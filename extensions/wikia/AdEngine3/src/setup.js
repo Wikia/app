@@ -18,7 +18,12 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import targeting from './targeting';
 import { templateRegistry } from './templates/templates-registry';
-import {registerPostmessageTrackingTracker, registerSlotTracker, registerViewabilityTracker} from './tracking/tracker';
+import {
+	registerBidderTracker,
+	registerPostmessageTrackingTracker,
+	registerSlotTracker,
+	registerViewabilityTracker
+} from './tracking/tracker';
 import * as fallbackInstantConfig from './fallback-config.json';
 import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
@@ -106,6 +111,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.tracking.kikimora.player', instantConfig.isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
 	context.set('options.tracking.slot.status', instantConfig.isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
 	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.tracking.slot.bidder', instantConfig.get('icBidsTracking'));
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
 
@@ -247,6 +253,7 @@ async function configure(adsContext, consents) {
 	templateRegistry.registerTemplates();
 
 	registerSlotTracker();
+	registerBidderTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
 
