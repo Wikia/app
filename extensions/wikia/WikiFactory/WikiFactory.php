@@ -3616,4 +3616,16 @@ class WikiFactory {
 	public static function clearVariablesCache() {
 		static::$variablesCache = [];
 	}
+
+	/**
+	 * Temporary helper when we need to handle something for a UCP wiki
+	 * in the current app.
+	 *
+	 * @param  int     $wikiId
+	 * @return boolean
+	 */
+	public static function isUCPWiki( int $wikiId ): bool {
+		$wiki = self::getWikiByID( $wikiId );
+		return $wiki->city_path === 'slot2';
+	}
 };
