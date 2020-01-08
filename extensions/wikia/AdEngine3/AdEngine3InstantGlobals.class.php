@@ -70,7 +70,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverMobileBottomLeaderboardSwapCountries';
 		$vars[] = 'wgAdDriverMobileTopBoxadCountries';
 		$vars[] = 'wgAdDriverMobileWikiAE3SearchCountries';
-		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverNielsenCountries';
 		$vars[] = 'wgAdDriverOasisFloorAdhesionCountries';
 		$vars[] = 'wgAdDriverOasisHiviLeaderboardCountries';

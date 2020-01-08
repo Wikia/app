@@ -12,7 +12,9 @@ import {
 	getAdProductInfo
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
-import { contextReady } from "./utils/context-ready";
+import { ofType } from "@wikia/post-quecast";
+import { take } from "rxjs/operators";
+import { communicator } from "./communicator";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -320,13 +322,13 @@ export default {
 	setupSlotVideoAdUnit(adSlot, params) {
 		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
 		const adUnit = utils.stringBuilder.build(
-				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
-				{
-					slotConfig: {
-						group: adProductInfo.adGroup,
-						adProduct: adProductInfo.adProduct,
-					},
+			context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+			{
+				slotConfig: {
+					group: adProductInfo.adGroup,
+					adProduct: adProductInfo.adProduct,
 				},
+			},
 		);
 
 		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
@@ -391,7 +393,7 @@ export default {
 	},
 
 	async injectIncontentBoxad() {
-		await contextReady;
+		await communicator.actions$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
 
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
@@ -418,8 +420,8 @@ export default {
 
 	injectFloorAdhesion() {
 		scrollListener.addSlot(
-				'floor_adhesion',
-				{ distanceFromTop: utils.getViewportHeight() },
+			'floor_adhesion',
+			{ distanceFromTop: utils.getViewportHeight() },
 		);
 
 		registerFloorAdhesionCodePriority();
