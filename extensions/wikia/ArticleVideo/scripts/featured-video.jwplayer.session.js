@@ -7,13 +7,20 @@ define('wikia.articleVideo.featuredVideo.session', [
 ) {
 	var videoSeenInSessionCookieName = 'featuredVideoSeenInSession',
 		videoSeenInSession = featuredVideoCookies.getVideoSeenInSession(),
-		currentSession = cookies.get('wikia_session_id');
+		currentSession = cookies.get('wikia_session_id'),
+		playerImpressionsInSession = featuredVideoCookies.getPlayerImpressionsInSession();
 
 	function hasSeenTheVideoInCurrentSession() {
 		return videoSeenInSession && currentSession && videoSeenInSession === currentSession;
 	}
 
+	function hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressions) {
+		return hasSeenTheVideoInCurrentSession() && playerImpressionsInSession >= allowedPlayerImpressions;
+	}
+
 	function setVideoSeenInSession() {
+		featuredVideoCookies.setPlayerImpressionsInSession(playerImpressionsInSession + 1);
+
 		if (hasSeenTheVideoInCurrentSession()) {
 			return;
 		}
@@ -21,9 +28,11 @@ define('wikia.articleVideo.featuredVideo.session', [
 		cookies.set(videoSeenInSessionCookieName, currentSession);
 	}
 
+
+
 	return {
-		hasSeenTheVideoInCurrentSession: hasSeenTheVideoInCurrentSession,
-		setVideoSeenInSession: setVideoSeenInSession
+		setVideoSeenInSession: setVideoSeenInSession,
+		hasMaxedOutPlayerImpressionsInSession: hasMaxedOutPlayerImpressionsInSession
 	};
 });
 
