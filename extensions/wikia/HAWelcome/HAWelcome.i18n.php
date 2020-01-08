@@ -17,11 +17,11 @@ This is your user page. Please edit this page to tell the community about yourse
 	'welcome-message-user' => "==Welcome==
 
 Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
-If you need help getting started, check out our [[Help:Getting Started|help pages]] or contact me or [[Special:Listusers/sysop|another admin]] here. For general help, you could also stop by [[w:c:community:main page|Community Central]] to explore the [[w:c:community:Special:Forum|forums]] and [[w:c:community:Blog:Wikia_Staff_Blog|blogs]].
 
-Please [[$2|leave me a message]] if I can help with anything. Enjoy your time at {{SITENAME}}!
+If you need help getting started, check out our [[Help:Contents|help pages]] or visit the [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion3 Community Central forums]].
 
-$3",
+Enjoy your time at {{SITENAME}}!
+",
 	'welcome-message-anon' => "==Welcome==
 
 Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
@@ -35,17 +35,12 @@ $3",
 	'welcome-message-log' => 'Welcome to {{SITENAME}}!',
 	'welcome-message-user-staff' => "==Welcome==
 
-Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
+Hi, welcome to {{SITENAME}} I'm a member of Fandom's staff team. Thank you for your edit to [[:$1]]!
 
-It looks as though none of the admins for this community are active right now, but if you need help, check out [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:c:community:Special:Forum|forums]].
-
-You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
-
-Please [[$2|leave me a message]] if I can help with anything.
+It looks like none of the admins for this community are active right now, but if you need help, check out our [[Help:Contents|help pages]] or visit the [https://community.fandom.com/wiki/Special:Forums?utm_source=staffmessageversion3 Community Central forums].
 
 Enjoy your time at {{SITENAME}}!
-
-$3",
+",
 	'welcome-message-anon-staff' => "==Welcome==
 
 Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
