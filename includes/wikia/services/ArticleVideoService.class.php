@@ -76,6 +76,7 @@ class ArticleVideoService {
 	 */
 	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): array {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
+
 		$mediaId = $videos['default_media_id'] ?? '';
 
 		if ( isset( $videos['mappings'][$pageId] ) ) {
@@ -101,7 +102,7 @@ class ArticleVideoService {
 	}
 
 	private static function getMemCacheKey( $cityId ) {
-		return wfMemcKey( 'article-video', 'get-for-product-v2', $cityId );
+		return wfMemcKey( 'article-video', 'get-for-product-v3', $cityId );
 	}
 	/**
 	 * Get Swagger-generated API client
