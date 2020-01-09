@@ -135,6 +135,11 @@ class MercuryApi {
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
 				],
+				// TODO: Remove netzathleten from API response once Mercury and mobile-wiki are released
+				'netzathleten' => [
+					'enabled' => false,
+					'url' => ''
+				],
 				'quantcast' => [
 					'labels' => AnalyticsProviderQuantServe::getQuantcastLabels()
 				]
