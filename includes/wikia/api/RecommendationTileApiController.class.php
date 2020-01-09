@@ -33,7 +33,7 @@ class RecommendationTileApiController extends WikiaApiController {
 				'title' => $articleTitle->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId ) ),
+				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId )['mediaId'] ),
 			];
 		}
 

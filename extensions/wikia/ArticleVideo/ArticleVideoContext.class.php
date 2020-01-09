@@ -28,7 +28,7 @@ class ArticleVideoContext {
 			return false;
 		}
 
-		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId )['mediaId'];
 
 		return !empty( $mediaId );
 	}
@@ -45,8 +45,11 @@ class ArticleVideoContext {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoAvailable( $pageId ) ) {
+			$featuredVideo = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+
 			$videoData = [];
-			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+			$videoData['mediaId'] = $featuredVideo['mediaId'];
+			$videoData['impressionsPerSession'] = $featuredVideo['impressionsPerSession'];
 			$logger = Wikia\Logger\WikiaLogger::instance();
 
 			if ( empty( $videoData['mediaId'] ) ) {

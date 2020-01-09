@@ -23,7 +23,7 @@ require([
 	featuredVideoSession,
 	adsApi,
 ) {
-	var allowedPlayerImpressionsPerSession = videoDetails.impressions_per_session;
+	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
 
 	if (!canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');

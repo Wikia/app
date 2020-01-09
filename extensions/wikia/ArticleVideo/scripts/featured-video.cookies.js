@@ -31,7 +31,9 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		getCaptions: getCookie(captionsCookieName),
 		setCaptions: setCookie(captionsCookieName),
 		getVideoSeenInSession: getCookie(videoSeenInSessionCookieName),
-		getPlayerImpressionsInSession: Number(getCookie(playerImpressionsCookieName)),
+		getPlayerImpressionsInSession: function () {
+			return Number(getCookie(playerImpressionsCookieName));
+		},
 		setPlayerImpressionsInSession: setCookie(playerImpressionsCookieName)
 	};
 });

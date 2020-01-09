@@ -39,6 +39,7 @@ class ArticleVideoService {
 						'product' => $cityId,
 						'default_media_id' => '',
 						'mappings' => [],
+						'impressions_per_session' => null,
 					] );
 
 				try {
@@ -73,7 +74,7 @@ class ArticleVideoService {
 	 *
 	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
 	 */
-	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): string {
+	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): array {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
 		$mediaId = $videos['default_media_id'] ?? '';
 
@@ -81,7 +82,10 @@ class ArticleVideoService {
 			$mediaId = $videos['mappings'][$pageId];
 		}
 
-		return $mediaId;
+		return [
+			'mediaId' => $mediaId,
+			'impressionsPerSession' => $videos['default_media_impressions_per_session']
+		];
 	}
 
 	public static function isVideoDedicatedForArticle( int $cityId, int $pageId ): bool {
