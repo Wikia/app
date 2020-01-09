@@ -221,6 +221,18 @@
             }
         }
     ],
+    "icBidsTracking": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
     "icPrebidCriteo": [
         {
             "apps": [
@@ -237,6 +249,22 @@
         }
     ],
     "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "PL",
+                "US-CA",
+                "US-NY"
+            ],
+            "sampling": 100.0,
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.44.1/20200103.min.js"
+        },
         {
             "apps": [
                 "futhead",
@@ -361,6 +389,22 @@
             "regions": [
                 "XX"
             ],
+            "value": true
+        }
+    ],
+    "icPrebidSendAllBids": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "sampling": 5.0,
             "value": true
         }
     ],

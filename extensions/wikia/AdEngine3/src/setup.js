@@ -66,9 +66,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.hiviLeaderboard', instantConfig.isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
-		// TODO: ADEN-8318 remove originalSrc and leave one value (testSrc)
-		const originalSrc = context.get('src');
-		context.set('src', [originalSrc, context.get('wiki.targeting.testSrc')]);
+		context.set('src', context.get('wiki.targeting.testSrc'));
 	} else if (context.get('wiki.opts.isAdTestWiki')) {
 		context.set('src', 'test');
 	}
@@ -211,8 +209,6 @@ async function setupAdContext(wikiContext, consents) {
 	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
 	}
-
-	context.set('services.netzathleten.enabled', instantConfig.isGeoEnabled('wgAdDriverNetzAthletenCountries'));
 
 	const cacheStorage = InstantConfigCacheStorage.make();
 	// Need to be placed always after all lABrador wgVars checks
