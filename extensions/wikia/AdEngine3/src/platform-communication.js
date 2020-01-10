@@ -19,3 +19,14 @@ export function dispatchRailReady() {
 export function dispatchPlayerReady(options, targeting, playerKey) {
 	communicator.dispatch(jwpReady({options, targeting, playerKey}));
 }
+
+export function isUapLoaded() {
+	return new Promise((res) => {
+		communicator.actions$
+		.pipe(
+			ofType('[Ad Engine] UAP Load Status'),
+			take(1)
+		)
+		.subscribe(isLoaded => res(isLoaded));
+	});
+}
