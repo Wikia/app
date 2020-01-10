@@ -54,10 +54,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
-		if ( !empty( $partnerSlot ) ) {
-			$data[ 'partner-slot' ] = $partnerSlot;
-		}
-
 		$data['services-domain'] = $wgServicesExternalDomain;
 
 		return $data;
