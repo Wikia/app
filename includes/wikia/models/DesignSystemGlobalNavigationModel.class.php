@@ -91,11 +91,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
-		$partnerSlot = $this->getPartnerSlot();
-		if ( !empty( $partnerSlot ) ) {
-			$data[ 'partner_slot' ] = $partnerSlot;
-		}
-
 		return $data;
 	}
 
@@ -447,25 +442,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'type' => 'text',
 			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
 		];
-	}
-
-	private function getPartnerSlot() {
-		if ( $this->lang === 'de' ) {
-			return [
-				'type' => 'link-image',
-				'href' => 'http://www.entertainweb.de/',
-				'image-data' => [
-					'type' => 'image-external',
-					'url' => 'https://services.wikia.com/static-assets/image/5588e692-fae8-4dc3-8db6-5f62e37fed47',
-				],
-				'title' => [
-					'type' => 'text',
-					'value' => 'entertainweb'
-				],
-				'tracking_label' => 'entertainweb',
-			];
-		}
-		return null;
 	}
 
 	private function getLogo() {
