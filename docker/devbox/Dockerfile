@@ -27,4 +27,4 @@ VOLUME /usr/wikia/slot1/current/config
 VOLUME /usr/wikia/slot1/current/cache/messages
 
 # we no longer need root's super-power
-USER nobody
+USER 65534

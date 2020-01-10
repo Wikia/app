@@ -964,12 +964,6 @@ $wgPhalanxServiceOptions = [
 ];
 
 /**
- * @name $wgEnableNetzAthleten
- * Enables NetzAthleten provider
- */
-$wgEnableNetzAthleten = true;
-
-/**
  * @name $wgAdDriverIsTestWiki
  * Enables test targeting parameters for wiki.
  */
@@ -986,13 +980,6 @@ $wgAdDriverAdEngine3Enabled = true;
  * Enables AdEngine3 dev assets (from AdEngine3/dist-dev)
  */
 $wgAdDriverAdEngine3DevAssets = false;
-
-/**
- * @name $wgAdDriverNetzAthletenCountries
- * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverNetzAthletenCountries = null;
 
 /**
  * @name $wgAdDriverLABradorDfpKeyvals

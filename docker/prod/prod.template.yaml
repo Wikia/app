@@ -114,6 +114,9 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -287,6 +290,9 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
 ---
 apiVersion: v1
 kind: Service
