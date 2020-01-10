@@ -28,9 +28,9 @@ class ArticleVideoContext {
 			return false;
 		}
 
-		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId )['mediaId'];
+		$videoDetails = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
 
-		return !empty( $mediaId );
+		return !empty( $videoDetails ) && isset($videoDetails['mediaId']);
 	}
 
 	/**

@@ -19,7 +19,9 @@ define('wikia.articleVideo.featuredVideo.session', [
 	}
 
 	function setVideoSeenInSession() {
-		featuredVideoCookies.setPlayerImpressionsInSession(playerImpressionsInSession + 1);
+		var newPlayerImpressionsInSession = hasSeenTheVideoInCurrentSession() ? playerImpressionsInSession + 1 : 1;
+
+		featuredVideoCookies.setPlayerImpressionsInSession(newPlayerImpressionsInSession);
 
 		if (hasSeenTheVideoInCurrentSession()) {
 			return;
@@ -27,8 +29,6 @@ define('wikia.articleVideo.featuredVideo.session', [
 
 		cookies.set(videoSeenInSessionCookieName, currentSession);
 	}
-
-
 
 	return {
 		setVideoSeenInSession: setVideoSeenInSession,
