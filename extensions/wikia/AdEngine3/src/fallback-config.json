@@ -199,10 +199,9 @@
                 "oasis"
             ],
             "regions": [
-                "PL",
                 "US"
             ],
-            "value": false
+            "value": true
         }
     ],
     "icPrebidSizePriceFloorRule": [
