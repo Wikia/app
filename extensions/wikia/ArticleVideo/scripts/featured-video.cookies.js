@@ -32,7 +32,7 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		setCaptions: setCookie(captionsCookieName),
 		getVideoSeenInSession: getCookie(videoSeenInSessionCookieName),
 		getPlayerImpressionsInSession: function () {
-			return Number(getCookie(playerImpressionsCookieName));
+			return Number(getCookie(playerImpressionsCookieName)());
 		},
 		setPlayerImpressionsInSession: setCookie(playerImpressionsCookieName)
 	};
