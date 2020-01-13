@@ -20,6 +20,11 @@ export function dispatchPlayerReady(options, targeting, playerKey) {
 	communicator.dispatch(jwpReady({options, targeting, playerKey}));
 }
 
+/**
+ * Returns a Promise which resolves when templates for first call slot have been initiated.
+ *
+ * @return {Promise<boolean>} true if UAP was loaded otherwise false
+ */
 export function isUapLoaded() {
 	return new Promise((res) => {
 		communicator.actions$
