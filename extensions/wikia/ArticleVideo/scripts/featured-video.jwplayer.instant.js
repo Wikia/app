@@ -145,9 +145,10 @@ require([
 	}
 
 	function canPlayVideo() {
-		return videoDetails && (videoDetails.isDedicatedForArticle || !featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(
-			allowedPlayerImpressionsPerSession
-		));
+		return videoDetails && (
+			videoDetails.isDedicatedForArticle ||
+			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+		);
 	}
 
 	function getModifiedPlaylist(playlist) {
