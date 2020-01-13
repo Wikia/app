@@ -27,9 +27,9 @@ export function isUapLoaded() {
 			ofType(universalAdPackage.uapLoadStatus),
 			take(1)
 		)
-		.subscribe(isLoaded => {
-			utils.logger('UAP Loaded', [isLoaded]);
-			res(isLoaded);
+		.subscribe(action => {
+			utils.logger('UAP Loaded', [action.isLoaded]);
+			res(action.isLoaded);
 		});
 	});
 }
