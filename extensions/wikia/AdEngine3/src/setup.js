@@ -210,8 +210,6 @@ async function setupAdContext(wikiContext, consents) {
 		context.set('custom.serverPrefix', 'vm1b');
 	}
 
-	context.set('services.netzathleten.enabled', instantConfig.isGeoEnabled('wgAdDriverNetzAthletenCountries'));
-
 	const cacheStorage = InstantConfigCacheStorage.make();
 	// Need to be placed always after all lABrador wgVars checks
 	context.set('targeting.labrador', cacheStorage.mapSamplingResults(instantConfig.get('wgAdDriverLABradorDfpKeyvals')));
