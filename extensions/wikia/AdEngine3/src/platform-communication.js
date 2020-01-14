@@ -1,6 +1,7 @@
 import { jwpReady, utils, universalAdPackage } from "@wikia/ad-engine";
 import { take } from "rxjs/operators";
-import { ofType } from "ts-action-operators";
+import { ofType as ofActionType } from "ts-action-operators";
+import { ofType } from "@wikia/post-quecast";
 import { communicator } from "./communicator";
 
 export function listenSetupJWPlayer(callback) {
@@ -29,7 +30,7 @@ export function isUapLoaded() {
 	return new Promise((res) => {
 		communicator.actions$
 		.pipe(
-			ofType(universalAdPackage.uapLoadStatus),
+			ofActionType(universalAdPackage.uapLoadStatus),
 			take(1)
 		)
 		.subscribe(action => {
