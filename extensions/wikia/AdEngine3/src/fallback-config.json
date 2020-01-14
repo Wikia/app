@@ -87,7 +87,7 @@
             "regions": [
                 "PL"
             ],
-            "value": false
+            "value": true
         }
     ],
     "icPrebidIndexExchange": [
@@ -262,7 +262,7 @@
                 "US-NY"
             ],
             "sampling": 100.0,
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.44.1/20200103.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.44.2/20200110.min.js"
         },
         {
             "apps": [
@@ -300,9 +300,10 @@
                 "oasis"
             ],
             "regions": [
-                "XX"
+                "XX-SA"
             ],
-            "value": false
+            "sampling": 100.0,
+            "value": true
         }
     ],
     "icIASVideoTracking": [
@@ -420,6 +421,18 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icPrebidNobid": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "value": false
         }
     ],
     "icPrebidOneMobile": [
