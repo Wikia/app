@@ -232,7 +232,7 @@ class WAMServiceTest extends WikiaBaseTest {
 					'limit' => 20
 				),
 				array(
-					'ORDER BY' => 'wam ASC',
+					'ORDER BY' => 'wam_rank ASC',
 					'OFFSET' => 0,
 					'LIMIT' => 20
 				),
