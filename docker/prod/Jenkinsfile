@@ -442,6 +442,14 @@ EOL""")
       }
     }
 
+     stage("Run deploy prod UCP") {
+        build job: 'mediawiki-deploy-prod-k8s-ucp', parameters: [
+            [$class: 'BooleanParameterValue', name: 'dry_run', value: params.dry_run],
+            string(name: 'branch', value: 'master'),
+            string(name: 'app_image', value: "$mediawikiImage:$imageTag"),
+          ]
+     }
+
   } catch (e) {
     // If there was an exception thrown, the build failed
     currentBuild.result = "FAILED"
