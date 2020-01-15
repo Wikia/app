@@ -7,6 +7,7 @@ class RecommendationTileApiControllerTest extends TestCase
 	protected function setUp()
 	{
 		parent::setUp();
+		require_once __DIR__ . '/../WikisApiController.class.php';
 		require_once __DIR__ . '/../RecommendationTileApiController.class.php';
 	}
 
