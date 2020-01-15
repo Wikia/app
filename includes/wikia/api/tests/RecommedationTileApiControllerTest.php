@@ -50,7 +50,7 @@ class RecommendationTileApiControllerTest extends TestCase
 		$objectUnderTest->method( 'getArticleProperties' )->willReturn( $this->getArticleTitles() );
 		$objectUnderTest->method( 'getWikiId' )->willReturn( 123 );
 		$objectUnderTest->method( 'getWikiName' )->willReturn( 'test_wiki_name' );
-		$objectUnderTest->method( 'getFeaturedVideos' )->willReturn( [1, 2, 3, 4] );
+		$objectUnderTest->method( 'getFeaturedVideos' )->willReturnOnConsecutiveCalls( '123', '' );
 
 		// given
 		$requestedIds = '1,8';
