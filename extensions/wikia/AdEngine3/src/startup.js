@@ -17,6 +17,7 @@ import {
 	krux,
 	moatYi,
 	moatYiEvents,
+	permutive,
 	nielsen,
 	SlotTweaker,
 	taxonomyService,
@@ -180,6 +181,7 @@ function callExternals() {
 		assetid: `fandom.com/${targeting.s0v}/${targeting.s1}/${targeting.artid}`,
 		section: `FANDOM ${targeting.s0v.toUpperCase()} NETWORK`,
 	});
+	permutive.call();
 }
 
 export function registerEditorSavedEvents() {
