@@ -39,7 +39,7 @@ EOL""")
 
     withDockerContainer(kubectlImage) {
       sh "kubectl --context kube-${datacenter}-dev -n 'dev' apply -f app/docker/servicesmw/k8s-${suffix}.yaml"
-      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-dev -n 'dev' rollout status deployment/mediawiki-servicesmw-'${suffix}'")
+      rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-${datacenter}-dev -n 'dev' rollout status deployment/mediawiki-servicesmw")
     }
 }
 

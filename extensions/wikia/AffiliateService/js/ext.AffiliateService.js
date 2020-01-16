@@ -268,7 +268,7 @@ require([
 				var $element = $insertionPoint.prepend(html);
 
 				// hook onmousedown tracking
-				$element.find('.affiliate-unit__cta').on('mousedown', function (event) {
+				$element.find('.aff-unit__cta').on('mousedown', function (event) {
 					tracker.trackClick('only-item', trackingOptions);
 				});
 

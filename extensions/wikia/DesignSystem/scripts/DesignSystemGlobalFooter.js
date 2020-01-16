@@ -14,10 +14,16 @@ require(['jquery', 'wikia.geo', 'wikia.log'],
 		if (!(geo.getCountryCode() === 'US' && geo.getRegionCode() === 'CA')) {
 			log('Hiding "Do Not Sell My Info" link outside of US-CA.', log.levels.debug, 'us-privacy');
 
-			var links = $('section.wds-global-footer__section.wds-is-community a[data-tracking-label="community.usp-do-not-sell"]');
+			var fandomLinks = $('section.wds-global-footer__section.wds-is-community a[data-tracking-label="community.usp-do-not-sell"]');
 
-			if (links.length > 0) {
-				links[0].closest('li').remove();
+			if (fandomLinks.length > 0) {
+				fandomLinks[0].closest('li').remove();
+			}
+
+			var wikiaOrgLinks = $('footer.wds-global-footer-wikia-org .wds-global-footer-wikia-org__links a[data-tracking-label="community.usp-do-not-sell"]');
+
+			if (wikiaOrgLinks.length > 0) {
+				wikiaOrgLinks[0].closest('li').remove();
 			}
 		}
 	}

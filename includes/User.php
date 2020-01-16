@@ -492,6 +492,26 @@ class User implements JsonSerializable {
 			if ( empty( $tokenInfo->user_id ) ) {
 				return new User;
 			}
+
+			// PLATFORM-4490 - make sure helios returns correct user id
+			$sessionUserId = $request->getSessionData( 'helios_user_id' );
+			if ( empty( $sessionUserId ) ) {
+				$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
+			} else {
+				if ( $tokenInfo->user_id != $sessionUserId ) {
+					// try to exclude false alerts when user just logged into a new account
+					if ( strpos( $_SERVER['HTTP_REFERER'], '/signin' ) !== false ||
+						 strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false) {
+						$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
+					} else {
+						WikiaLogger::instance()->error( 'Helios user id mismatch', [
+							'sessionUserId' => $sessionUserId,
+							'userId' => $tokenInfo->user_id
+						] );
+					}
+				}
+			}
+
 			$user = self::newFromId( $tokenInfo->user_id );
 			$user->setGlobalAuthToken( $token );
 

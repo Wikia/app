@@ -30,7 +30,7 @@ class SitemapHooksTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', parse_url( $currentRequestUri, PHP_URL_SCHEME ) );
 		$this->mockStaticMethod( 'WikiFactoryLoader', 'getCurrentRequestUri', $currentRequestUri );
 
-		$result = SitemapHooks::onTestCanonicalRedirect( $requestMock, $titleMock, $outputMock );
+		$result = SitemapHooks::allowRedirect( $titleMock );
 
 		$this->assertSame( $result, $shouldAllowRedirect );
 	}
