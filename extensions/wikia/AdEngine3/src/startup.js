@@ -166,6 +166,7 @@ function trackKruxSegments() {
 
 function callExternals() {
 	const targeting = context.get('targeting');
+	permutive.call();
 
 	bidders.requestBids({
 		responseListener: biddersDelay.markAsReady,
@@ -181,7 +182,6 @@ function callExternals() {
 		assetid: `fandom.com/${targeting.s0v}/${targeting.s1}/${targeting.artid}`,
 		section: `FANDOM ${targeting.s0v.toUpperCase()} NETWORK`,
 	});
-	permutive.call();
 }
 
 export function registerEditorSavedEvents() {
