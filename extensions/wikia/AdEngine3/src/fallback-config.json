@@ -203,7 +203,7 @@
             "regions": [
                 "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidSizePriceFloorRule": [
