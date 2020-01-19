@@ -8,7 +8,7 @@ define('wikia.articleVideo.featuredVideo.session', [
 	var videoSeenInSessionCookieName = 'featuredVideoSeenInSession',
 		videoSeenInSession = featuredVideoCookies.getVideoSeenInSession(),
 		currentSession = cookies.get('wikia_session_id'),
-		playerImpressionsInSession = featuredVideoCookies.getPlayerImpressionsInSession();
+		playerImpressionsInSession = featuredVideoCookies.getPlayerImpressionsInSession() || 0;
 
 	function hasSeenTheVideoInCurrentSession() {
 		return videoSeenInSession && currentSession && videoSeenInSession === currentSession;

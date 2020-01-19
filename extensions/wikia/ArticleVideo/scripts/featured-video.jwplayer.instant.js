@@ -152,12 +152,16 @@ require([
 	}
 
 	function getModifiedPlaylist(playlist) {
-		var playerImpressionsInSession = featuredVideoCookieService.getPlayerImpressionsInSession();
-		var newPlaylist = playlist.filter(function (item, index) {
-			return index >= playerImpressionsInSession - 1;
-		});
+		var normalizedPlaylistIndex = getNormalizedPlaylistIndex(playlist);
+		var newPlaylist = playlist.slice(normalizedPlaylistIndex);
 
 		return newPlaylist.length ? newPlaylist : playlist;
+	}
+
+	function getNormalizedPlaylistIndex(playlist) {
+		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInSession() || 0;
+
+		return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
