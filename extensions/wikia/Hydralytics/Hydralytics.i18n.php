@@ -493,7 +493,7 @@ $messages['ru'] = array(
 	'returning_visitors' => 'Вернувшиеся посетители',
 	'top_editors' => 'Активные редакторы',
 	'hlfaqurl-text' => 'Правила, регламенты и FAQ',
-	'analytics_report_generated' => 'Отчёт создан: $1',
+	'analytics_report_generated' => 'Отчёт создан: $1. Все данные указаны по UTC0.',
 	'number_of_pageviews' => 'Количество просмотров страниц',
 	'right-analytics' => 'Доступ к аналитике вики',
 	'desktop_vs_mobile' => 'Сеансы: ПК и моб. устройства',
@@ -503,11 +503,11 @@ $messages['ru'] = array(
 	'page' => 'Страница',
 	'help_links' => 'Справка',
 	'total_page_views' => '- всего просмотров за 30 дней',
-	'action-analytics' => 'access the Wiki Analytics',
-	'device_mobile' => 'Мобильный',
+	'action-analytics' => 'доступ к Аналитике вики',
+	'device_mobile' => 'Мобильные',
 	'device_other' => 'Другое',
 	'device_tablet' => 'Планшеты',
-	'device_desktop' => 'Монитор ПК',
+	'device_desktop' => 'Компьютеры',
 );
 
 $messages['zh-hans'] = array(
