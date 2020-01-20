@@ -264,6 +264,7 @@ export default {
 			bidder_19: transformBidderPrice('gumgum'),
 			bidder_20: transformBidderPrice('33across'),
 			bidder_21: transformBidderPrice('triplelift'),
+			bidder_23: transformBidderPrice('oneVideo'),
 			bidder_24: transformBidderPrice('criteo'),
 			bidder_25: transformBidderPrice('nobid'),
 		};

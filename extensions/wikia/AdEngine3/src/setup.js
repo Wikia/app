@@ -140,6 +140,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.krux.trackedSegments', instantConfig.get('icKruxSegmentsTracking'));
 	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
 	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
+	context.set('services.permutive.enabled', instantConfig.get('icPermutive'));
 
 	if(instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);

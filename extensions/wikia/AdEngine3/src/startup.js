@@ -17,6 +17,7 @@ import {
 	krux,
 	moatYi,
 	moatYiEvents,
+	permutive,
 	nielsen,
 	SlotTweaker,
 	taxonomyService,
@@ -165,6 +166,7 @@ function trackKruxSegments() {
 
 function callExternals() {
 	const targeting = context.get('targeting');
+	permutive.call();
 
 	bidders.requestBids({
 		responseListener: biddersDelay.markAsReady,

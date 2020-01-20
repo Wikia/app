@@ -280,6 +280,17 @@ export default {
 				enabled: false,
 				slots: {}
 			},
+			oneVideo: {
+				enabled: false,
+				slots: {
+					featured: {
+						pubId: 'FandomIS'
+					},
+					incontent_player: {
+						pubId: 'FandomOS'
+					}
+				}
+			},
 			openx: {
 				enabled: false,
 				delDomain: 'wikia-d.openx.net',
