@@ -134,7 +134,7 @@ require([
 			videoDetails: {
 				description: videoDetails.description,
 				title: videoDetails.title,
-				playlist: getModifiedPlaylist(videoDetails.playlist)
+				playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle)
 			},
 			logger: {
 				clientName: 'oasis'
@@ -151,11 +151,11 @@ require([
 		);
 	}
 
-	function getModifiedPlaylist(playlist) {
+	function getModifiedPlaylist(playlist, isDedicatedForArticle) {
 		var normalizedPlaylistIndex = getNormalizedPlaylistIndex(playlist);
 		var newPlaylist = playlist.slice(normalizedPlaylistIndex);
 
-		return newPlaylist.length ? newPlaylist : playlist;
+		return (!isDedicatedForArticle && newPlaylist.length) ? newPlaylist : playlist;
 	}
 
 	function getNormalizedPlaylistIndex(playlist) {
