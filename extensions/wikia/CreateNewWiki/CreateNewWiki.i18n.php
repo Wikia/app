@@ -703,7 +703,9 @@ All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden! Solltest du w
 
 Viele Grüße
 
-[[User:$2|$3]]',
+[[User:$2|$3]]
+
+PS: Bist du ein neuer Wiki-Gründer oder möchtest du generell Hilfe bei den ersten Schritten in deinem Wiki? Unsere Wiki-Paten helfen dir dabei, alles zu lernen, was du als Admin wissen musst, damit dein Wiki erfolgreich wird. [[w:c:de.community:Wiki-Paten-Antrag|Auf der Antragsseite]] erfährst du alle Details.',
 	'autocreatewiki-welcometalk' => '==Willkommen!==
 
 Hallo! Es ist super, dass du das {{subst:SITENAME}} erstellt hast! Jetzt, da du und dein neues Wiki Teil der Fandom-Gemeinschaft sind, möchte ich dir einige hilfreiche Tipps und Links geben, damit du mit deinem Wiki gleich durchstarten kannst.
