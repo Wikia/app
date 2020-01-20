@@ -33,7 +33,7 @@ class RecommendationTileApiController extends WikiaApiController {
 				'title' => $articleTitle->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => !empty( $this->getFeaturedVideos( $articleId )['mediaId'] ),
+				'hasVideo' => !empty( $this->getFeaturedVideos( $articleId ) ),
 			];
 		}
 
@@ -82,7 +82,7 @@ class RecommendationTileApiController extends WikiaApiController {
 	}
 
 	protected function getFeaturedVideos($articleId): string {
-		return ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId );
+		return ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId )['mediaId'];
 	}
 
 	protected function getWikiId(): int {

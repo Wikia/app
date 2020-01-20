@@ -69,10 +69,10 @@ class ArticleVideoService {
 	}
 
 	/**
-	 * @param $cityId
-	 * @param $pageId
+	 * @param int $cityId
+	 * @param int $pageId
 	 *
-	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
+	 * @return array - mediaId of featured video for given video if exists, empty string otherwise
 	 */
 	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): array {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
