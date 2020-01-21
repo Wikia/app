@@ -82,7 +82,7 @@ class RecommendationTileApiController extends WikiaApiController {
 	}
 
 	protected function getFeaturedVideos($articleId): string {
-		return ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId );
+		return ArticleVideoService::getFeatureVideoForArticle( $this->getWikiId(), $articleId )['mediaId'];
 	}
 
 	protected function getWikiId(): int {
