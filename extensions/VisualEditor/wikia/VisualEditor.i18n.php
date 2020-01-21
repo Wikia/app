@@ -468,7 +468,7 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fehler beim Hochladen der Datei',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Suche nach einem Video oder gib eine externe URL ein',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Die Vorschau ist bald verfügbar!',
-	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Bitte beachte beim Einbinden neuer Videos und Hochladen neuer Bilder die Richtlinien von {{SITENAME}} und die [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] von FANDOM.',
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Bitte beachte beim Einbinden neuer Videos und Hochladen neuer Bilder die Richtlinien von {{SITENAME}} und die [https://www.fandom.com/de/terms-of-use-de Nutzungsbedingungen] von Fandom.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Mehr dazu',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Deine Datei hier ablegen',
 	'wikia-visualeditor-help-label' => 'Bekannte Probleme',
@@ -542,7 +542,7 @@ Füge hier den ersten Abschnitt deiner Seite ein. Du kannst hier auch dein Thema
 * Beschreibung der Protagonisten
 * Hintergrundinformationen
 Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösche ihn einfach. Du kannst den Text auch kopieren und erneut einfügen, wenn deine Seite mehr als einen Abschnitt haben soll.',
-	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeitung nicht verfügbar. $1 oder $2.',
+	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeiten nicht verfügbar. $1 oder $2.',
 	'wikia-visualeditor-anon-log-in' => 'Anmelden',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Du musst angemeldet sein, um ein neues Bild hochzuladen.',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Du musst angemeldet sein, um ein neues Video einzufügen.',
@@ -554,6 +554,7 @@ Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösc
 	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Wähle eine bestehende Karten-Vorlage oder lade deine eigene Karte hoch. <a href="$1" target="_blank">Mehr erfahren.</a>',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Es wurden noch keine Karten erstellt',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Unterstütze deine Community, indem du interessante Orte zur Karte hinzufügst. <a href="$1" target="_blank">Mehr erfahren.</a>',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Dieses Wiki erlaubt nur lizenzierte Inhalte, die aus der <a href="http://video.wikia.com" target="_blank">Fandom-Video-Bibliothek</a> hinzugefügt wird. Bitte gehe auf <a href="http://video.wikia.com" target="_blank">video.wikia.com</a>, um nach Videos zu suchen.',
 );
 
 $messages['diq'] = array(
