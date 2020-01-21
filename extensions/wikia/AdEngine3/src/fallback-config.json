@@ -418,7 +418,10 @@
                 "muthead",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icPrebidOneMobile": [
@@ -457,6 +460,17 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icPermutive": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "PL"
             ],
             "value": true
         }
