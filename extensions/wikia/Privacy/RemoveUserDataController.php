@@ -166,6 +166,12 @@ class RemoveUserDataController extends WikiaController {
 			return;
 		}
 
+		$this->info( "Removing local user data", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
+		] );
+
 		$localDataRemover = new LocalUserDataRemover();
 		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId );
 
@@ -178,32 +184,18 @@ class RemoveUserDataController extends WikiaController {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		}
 
-		$this->info( "User's local data was removed", [
+		$this->info( "Deleting user cache", [
 			'user_id' => $userId,
 			'rename_user_id' => $renameUserId,
 			'rtbf_log_id' => $auditLogId
 		] );
-	}
-
-	public function removeUserCache() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		if( !$this->request->wasPosted() ) {
-			$this->response->setCode( self::METHOD_NOT_ALLOWED );
-			return;
-		}
-
-		$userId = $this->getVal( 'userId' );
-
-		if ( empty( $userId ) ) {
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
-			return;
-		}
 
 		User::newFromId( $userId )->deleteCache();
 
-		$this->info( "User was removed from cache", [
-			'user_id' => $userId
+		$this->info( "User's local data was removed", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
 		] );
 	}
 
