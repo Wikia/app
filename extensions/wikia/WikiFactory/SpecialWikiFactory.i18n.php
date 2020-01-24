@@ -133,6 +133,7 @@ $messages['en'] = array(
 	'newwikisgraph-wikis-created' => 'wikis created',
 	'newwikisgraph-param-all' => 'All',
 	'newwikisgraph-param-other' => 'Other',
+	'wikifactory-wiki-config-redirect' => "To access configuration of $1 visit [https://community.fandom.com/wiki/Special:WikiConfig/$2 Special:WikiConfig]\n\n",
 );
 
 $messages['qqq'] = array(

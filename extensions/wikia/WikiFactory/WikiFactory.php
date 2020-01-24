@@ -21,6 +21,8 @@ $wgExtensionCredits['other'][] = [
  */
 $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 
+$wgExtensionMessagesFiles['WikiFactory'] = __DIR__ . '/SpecialWikiFactory.i18n.php';
+
 class WikiFactoryDuplicateDomain extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
 

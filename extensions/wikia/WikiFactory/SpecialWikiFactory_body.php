@@ -193,6 +193,12 @@ class WikiFactoryPage extends SpecialPage {
 		if( !is_null( $cityid ) ) {
 			$isSlot1Wiki = WikiFactory::isSlot1Wiki( $cityid );
 			if ( !$isSlot1Wiki ) {
+				$output = $this->getOutput();
+				$output->addWikiMsg(
+					'wikifactory-wiki-config-redirect',
+					WikiFactory::getWikiByID( $cityid )->city_title,
+					$cityid
+				);
 				return false;
 			}
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/{$cityid}/{$tab}" );
