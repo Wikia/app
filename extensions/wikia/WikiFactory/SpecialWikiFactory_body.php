@@ -188,8 +188,13 @@ class WikiFactoryPage extends SpecialPage {
 				}
 			}
 		}
+
 		$this->mTab = $tab;
 		if( !is_null( $cityid ) ) {
+			$isSlot1Wiki = WikiFactory::isSlot1Wiki( $cityid );
+			if ( !$isSlot1Wiki ) {
+				return false;
+			}
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/{$cityid}/{$tab}" );
 		}
 		if ( !isset($this->mVariableName) ) {
