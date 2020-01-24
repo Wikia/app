@@ -236,7 +236,7 @@ function trackVideoPage() {
 				category: 'featured-video',
 				action: 'pageview',
 				label: s2,
-			})
-		);
+			},
+		));
 	}
 }
