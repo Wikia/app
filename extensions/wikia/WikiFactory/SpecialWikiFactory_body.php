@@ -197,6 +197,7 @@ class WikiFactoryPage extends SpecialPage {
 				$output->addWikiMsg(
 					'wikifactory-wiki-config-redirect',
 					WikiFactory::getWikiByID( $cityid )->city_title,
+					WikiFactory::cityIDtoUrl( $cityid ),
 					$cityid
 				);
 				return false;
