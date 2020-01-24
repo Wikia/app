@@ -5,7 +5,7 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 	/**
 	 * @param $expected
 	 * @param $wgEnableArticleFeaturedVideo
-	 * @param $mediaId
+	 * @param $videoDetails
 	 * @param $message
 	 *
 	 * @dataProvider featuredVideoProvider
@@ -13,11 +13,11 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 	public function testIsFeaturedVideoEnabled(
 		$expected,
 		$wgEnableArticleFeaturedVideo,
-		$mediaId,
+		$videoDetails,
 		$message
 	) {
 		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
-		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
+		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $videoDetails );
 		$this->mockStaticMethod( 'WikiaPageType', 'isArticlePage', true);
 
 		$result = ArticleVideoContext::isFeaturedVideoAvailable( 123 );
@@ -27,14 +27,19 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 
 	// expected,
 	// wgEnableArticleFeaturedVideo,
-	// mediaId
+	// videoDetails
 	// message
 	public function featuredVideoProvider() {
 		return [
-			[ false, false, '', 'Featured video set when extension is disabled' ],
-			[ false, true, '', 'Featured video set when data is missing' ],
-			[ false, true, '', 'Featured video set when data is empty' ],
-			[ true, true, 'alsdkflkasjdkfjaslkdfjl', 'Featured video not set when data is correct' ],
+			[ false, false, [], 'Featured video set when extension is disabled' ],
+			[ false, true, [], 'Featured video set when data is missing' ],
+			[ false, true, [], 'Featured video set when data is empty' ],
+			[
+				true,
+				true,
+				[ 'mediaId' => 'alsdkflkasjdkfjaslkdfjl', 'impressionsPerSession' => 1 ],
+				'Featured video not set when data is correct'
+			],
 		];
 	}
 }

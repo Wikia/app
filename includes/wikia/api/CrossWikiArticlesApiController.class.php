@@ -109,7 +109,7 @@ class CrossWikiArticlesApiController extends WikiaApiController {
 				'title' => $title->getPrefixedText(),
 				'wikiName' => $wikiName,
 				'thumbnail' => $thumbnail,
-				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $wikiId, $row->page_id ) ),
+				'hasVideo' => !empty( ArticleVideoService::getFeatureVideoForArticle( $wikiId, $row->page_id )['mediaId'] ),
 			];
 		}
 

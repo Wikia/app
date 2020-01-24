@@ -39,6 +39,7 @@ class ArticleVideoService {
 						'product' => $cityId,
 						'default_media_id' => '',
 						'mappings' => [],
+						'impressions_per_session' => null,
 					] );
 
 				try {
@@ -68,20 +69,24 @@ class ArticleVideoService {
 	}
 
 	/**
-	 * @param $cityId
-	 * @param $pageId
+	 * @param int $cityId
+	 * @param int $pageId
 	 *
-	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
+	 * @return array - mediaId of featured video for given video if exists, empty string otherwise
 	 */
-	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): string {
+	public static function getFeatureVideoForArticle( int $cityId, int $pageId ): array {
 		$videos = self::getFeaturedVideosForWiki( $cityId );
+
 		$mediaId = $videos['default_media_id'] ?? '';
 
 		if ( isset( $videos['mappings'][$pageId] ) ) {
 			$mediaId = $videos['mappings'][$pageId];
 		}
 
-		return $mediaId;
+		return [
+			'mediaId' => $mediaId,
+			'impressionsPerSession' => $videos['default_media_impressions_per_session']
+		];
 	}
 
 	public static function isVideoDedicatedForArticle( int $cityId, int $pageId ): bool {
@@ -97,7 +102,7 @@ class ArticleVideoService {
 	}
 
 	private static function getMemCacheKey( $cityId ) {
-		return wfMemcKey( 'article-video', 'get-for-product-v2', $cityId );
+		return wfMemcKey( 'article-video', 'get-for-product-v3', $cityId );
 	}
 	/**
 	 * Get Swagger-generated API client

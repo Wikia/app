@@ -36,6 +36,19 @@ class DesignSystemSharedLinks {
 	/**
 	 * @param $name string key for href
 	 * @param $lang string two letter language code
+	 * @return string full URL without making it local to environment
+	 *
+	 * In case of lang specific URL missing, default one is returned.
+	 */
+	public function getProdHref( $name, $lang ) {
+		$lang = $this->getLangWithFallback( $lang );
+
+		return $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+	}
+
+	/**
+	 * @param $name string key for href
+	 * @param $lang string two letter language code
 	 * @param $cityId int
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
@@ -107,7 +120,8 @@ class DesignSystemSharedLinks {
 			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
 			'user-author-profile' => 'https://www.fandom.com/u/',
-			'usp-do-not-sell' => 'https://www.fandom.com/do-not-sell-my-info',
+			'usp-do-not-sell-fandom' => 'https://www.fandom.com/do-not-sell-my-info',
+			'usp-do-not-sell-wikiaorg' => 'https://www.wikia.org/do-not-sell-my-info',
 		],
 		'de' => [
 			'explore-wikis' => 'https://www.fandom.com/explore-de?uselang=de',
