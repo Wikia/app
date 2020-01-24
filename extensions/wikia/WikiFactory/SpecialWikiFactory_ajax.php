@@ -527,7 +527,7 @@ function axWFactoryDomainQuery() {
 				[ 'city_id' => $domain->city_id ]
 			);
 			if ( $row ) {
-				if ($row->city_path == 'slot1') {
+				if ( $row->city_path === WikiFactory::SLOT_1 ) {
 					$domain->city_domain = strtolower( $domain->city_domain );
 					$rxp_query = preg_quote( $query, '/' );
 
