@@ -21,8 +21,6 @@ $wgExtensionCredits['other'][] = [
  */
 $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 
-$wgExtensionMessagesFiles['WikiFactory'] = __DIR__ . '/SpecialWikiFactory.i18n.php';
-
 class WikiFactoryDuplicateDomain extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
 
@@ -2089,10 +2087,7 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		$wikiData = static::getWikiByID( $city_id );
-
-		return $wikiData->city_path;
+		return static::getWikiByID( $city_id )->city_path;
 	}
 
 	/**
@@ -3655,10 +3650,6 @@ class WikiFactory {
 	 * @return boolean
 	 */
 	static public function isSlot1Wiki( $city_id ) {
-		if ( WikiFactory::getCityPath( $city_id ) === static::SLOT_1 ) {
-			return true;
-		}
-
-		return false;
+		return WikiFactory::getCityPath( $city_id ) === static::SLOT_1;
 	}
 };
