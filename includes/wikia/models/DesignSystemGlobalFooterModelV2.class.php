@@ -338,7 +338,7 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-usp-do-not-sell'
 						],
-						'href' => $this->getHref( 'usp-do-not-sell' ),
+						'href' => $this->getProdHref( 'usp-do-not-sell-wikiaorg' ),
 						'tracking_label' => 'community.usp-do-not-sell',
 					],
 				]
@@ -548,7 +548,7 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-footer-community-usp-do-not-sell'
 			],
-			'href' => $this->getHref( 'usp-do-not-sell' ),
+			'href' => $this->getProdHref( 'usp-do-not-sell-fandom' ),
 			'tracking_label' => 'community.usp-do-not-sell',
 		];
 
@@ -612,6 +612,10 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 
 	private function getHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	}
+
+	private function getProdHref( $hrefKey ) {
+		return DesignSystemSharedLinks::getInstance()->getProdHref( $hrefKey , $this->lang );
 	}
 
 	private function getSocialHrefs() {

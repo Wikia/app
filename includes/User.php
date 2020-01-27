@@ -506,7 +506,13 @@ class User implements JsonSerializable {
 					} else {
 						WikiaLogger::instance()->error( 'Helios user id mismatch', [
 							'sessionUserId' => $sessionUserId,
-							'userId' => $tokenInfo->user_id
+							'heliosResponse' => [
+								'userId' => $tokenInfo->user_id,
+								'accessToken' => $tokenInfo->access_token,
+								'beacon' => self::heliosClient()->getResponseHeader( 'x-client-beacon-id' ),
+								'servedBy' => self::heliosClient()->getResponseHeader( 'x-served-by' ),
+								'timestamp' => self::heliosClient()->getResponseHeader( 'x-backend-timestamp' ),
+							]
 						] );
 					}
 				}

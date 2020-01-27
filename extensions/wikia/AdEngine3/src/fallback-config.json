@@ -824,12 +824,14 @@
     "icPermutive": [
         {
             "apps": [
+                "f2",
                 "gamepedia",
                 "mobile-wiki",
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US-NY"
             ],
             "value": true
         }
