@@ -53,7 +53,7 @@ class PopularPagesService {
 
 		foreach ( $data as $id => $article ) {
 			$data[$id]['id'] = $id;
-			$data[$id]['hasVideo'] = !empty( ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $id ) );
+			$data[$id]['hasVideo'] = !empty( ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $id )['mediaId'] );
 		}
 
 		return array_values( $data );

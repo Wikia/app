@@ -23,6 +23,8 @@ require([
 	featuredVideoSession,
 	adsApi,
 ) {
+	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
+
 	if (!canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');
 		return;
@@ -132,7 +134,7 @@ require([
 			videoDetails: {
 				description: videoDetails.description,
 				title: videoDetails.title,
-				playlist: videoDetails.playlist
+				playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle)
 			},
 			logger: {
 				clientName: 'oasis'
@@ -143,7 +145,23 @@ require([
 	}
 
 	function canPlayVideo() {
-		return videoDetails && (videoDetails.isDedicatedForArticle || !featuredVideoSession.hasSeenTheVideoInCurrentSession());
+		return videoDetails && (
+			videoDetails.isDedicatedForArticle ||
+			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+		);
+	}
+
+	function getModifiedPlaylist(playlist, isDedicatedForArticle) {
+		var normalizedPlaylistIndex = getNormalizedPlaylistIndex(playlist);
+		var newPlaylist = playlist.slice(normalizedPlaylistIndex);
+
+		return (!isDedicatedForArticle && newPlaylist.length) ? newPlaylist : playlist;
+	}
+
+	function getNormalizedPlaylistIndex(playlist) {
+		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInSession() || 0;
+
+		return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
