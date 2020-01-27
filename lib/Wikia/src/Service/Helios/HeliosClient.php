@@ -34,6 +34,7 @@ class HeliosClient {
 
 	protected $baseUri;
 	protected $status;
+	protected $responseHeaders;
 	protected $schwartzToken;
 
 	/** @var ServiceCircuitBreaker */
@@ -59,6 +60,20 @@ class HeliosClient {
 	}
 
 	/**
+	 * Returns one of the response headers with a default values as a fallback
+	 * @param $header Header name
+	 * @param string $default value returned in case of missing header
+	 * @return string
+	 */
+	public function getResponseHeader( $header, $default = '' ) {
+		$header = strtolower( $header );
+		if ( is_array( $this->responseHeaders ) && array_key_exists( $header, $this->responseHeaders ) ) {
+			return $this->responseHeaders[$header];
+		}
+		return $default;
+	}
+
+	/**
 	 * The general method for handling the communication with the service.
 	 *
 	 * @param       $resourceName
@@ -73,6 +88,9 @@ class HeliosClient {
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
+		// reset the response data as client can be used to make multiple requests
+		$this->status = null;
+		$this->responseHeaders = null;
 
 		if ( !$this->circuitBreaker->operationAllowed() ) {
 			throw new ClientException( "circuit breaker open" );
@@ -153,8 +171,8 @@ class HeliosClient {
 			$retryCnt += 1;
 			sleep( self::HELIOS_REQUEST_RETRY_DELAY_SEC );
 		}
-
 		$this->status = $request->getStatus();
+		$this->responseHeaders = $request->getResponseHeaders();
 		$this->circuitBreaker->setOperationStatus( $this->status < 500 );
 
 		return $this->processResponseOutput( $request );
