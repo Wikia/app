@@ -30,7 +30,7 @@ class ArticleVideoContext {
 
 		$videoDetails = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
 
-		return !empty( $videoDetails ) && isset($videoDetails['mediaId']);
+		return !empty( $videoDetails ) && !empty( $videoDetails['mediaId'] );
 	}
 
 	/**
