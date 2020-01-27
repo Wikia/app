@@ -6,8 +6,6 @@ use VignetteRequest;
 use Wikia\Logger\Loggable;
 use Wikia\Rabbit\TaskProducer;
 use Wikia\Rabbit\TaskPublisher;
-use Wikia\Tasks\AsyncCeleryTask;
-use Wikia\Tasks\Queues\PurgeQueue;
 
 /**
  * Use Celery / RabbitMQ queue to send purge requests to Fastly
@@ -20,15 +18,12 @@ use Wikia\Tasks\Queues\PurgeQueue;
  * @author Owen
  * @author macbre
  */
-
-class CeleryPurger implements TaskProducer, Purger {
+class CdnPurger implements TaskProducer, Purger {
 
 	use Loggable;
 
-	// task to be run by Celery to actually perform the purge
-	const TASK_NAME = 'celery_workers.purger.purge';
 	const SERVICE_MEDIAWIKI = 'mediawiki';
-	const SERVICE_VIGNETTE = 'vignette';
+	const SERVICE_THUMBLR = 'thumblr.mediawiki';
 
 	/** @var array $buckets */
 	private $buckets = [
@@ -36,7 +31,7 @@ class CeleryPurger implements TaskProducer, Purger {
 			'urls' => [],
 			'keys' => [],
 		],
-		self::SERVICE_VIGNETTE => [
+		self::SERVICE_THUMBLR => [
 			'urls' => [],
 			'keys' => [],
 		],
@@ -51,7 +46,7 @@ class CeleryPurger implements TaskProducer, Purger {
 
 		foreach ( $urls as $item ) {
 			if ( isset( $wgPurgeVignetteUsingSurrogateKeys ) && VignetteRequest::isVignetteUrl( $item ) ) {
-				$this->buckets[self::SERVICE_VIGNETTE]['urls'][] = $item;
+				$this->buckets[self::SERVICE_THUMBLR]['urls'][] = $item;
 			} else {
 				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
 			}
@@ -60,18 +55,19 @@ class CeleryPurger implements TaskProducer, Purger {
 
 	/**
 	 * SUS-81: allow CDN purging by surrogate key
-	 *
 	 * Use Wikia::setSurrogateKeysHeaders helper to emit proper headers
-	 *
 	 * @param string $key surrogate key to purge
 	 */
 	public function addSurrogateKey( string $key ) {
 		$this->buckets[self::SERVICE_MEDIAWIKI]['keys'][] = $key;
 
-		$this->info( 'varnish.purge', [
-			'key' => $key,
-			'service' => self::SERVICE_MEDIAWIKI
-		] );
+		$this->info(
+			'varnish.purge',
+			[
+				'key' => $key,
+				'service' => self::SERVICE_MEDIAWIKI,
+			]
+		);
 	}
 
 	public function getTasks() {
@@ -79,13 +75,7 @@ class CeleryPurger implements TaskProducer, Purger {
 
 		foreach ( $this->buckets as $service => $data ) {
 			if ( !empty( array_filter( $data ) ) ) {
-				$task = new AsyncCeleryTask();
-
-				$task->taskType( self::TASK_NAME );
-				$task->setArgs( $data['urls'], $data['keys'], $service );
-				$task->setQueue( PurgeQueue::NAME );
-
-				yield $task;
+				yield new CdnPurgerTask( $service, $data['urls'], $data['keys'] );
 			}
 
 			$urlsByService[$service] = $data['urls'];
@@ -93,7 +83,7 @@ class CeleryPurger implements TaskProducer, Purger {
 
 		// log purges using Kibana (BAC-1317)
 		$context = [
-			'urls' => $urlsByService
+			'urls' => $urlsByService,
 		];
 
 		$this->info( 'varnish.purge', $context );
