@@ -500,14 +500,18 @@ class User implements JsonSerializable {
 			} else {
 				if ( $tokenInfo->user_id != $sessionUserId ) {
 					// try to exclude false alerts when user just logged into a new account
-					if ( strpos( $_SERVER['HTTP_REFERER'], '/signin' ) !== false ||
-						 strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false) {
+					if ( !empty( $_SERVER['HTTP_REFERER'] ) &&
+						 ( strpos( $_SERVER['HTTP_REFERER'], '/signin' ) !== false ||
+						   strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false ) ) {
 						$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
 					} else {
-						WikiaLogger::instance()->error( 'Helios user id mismatch', [
-							'sessionUserId' => $sessionUserId,
-							'userId' => $tokenInfo->user_id
-						] );
+						WikiaLogger::instance()->error(
+							'Helios user id mismatch',
+							[
+								'sessionUserId' => $sessionUserId,
+								'userId' => $tokenInfo->user_id,
+							]
+						);
 					}
 				}
 			}
