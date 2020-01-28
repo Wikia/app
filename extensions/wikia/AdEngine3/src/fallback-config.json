@@ -524,40 +524,6 @@
             "value": true
         }
     ],
-    "icKrux": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "AU",
-                "BE",
-                "BR",
-                "CA",
-                "CL",
-                "DE",
-                "DK",
-                "ES",
-                "FI",
-                "FR",
-                "GB",
-                "IT",
-                "JP",
-                "MX",
-                "NL",
-                "NO",
-                "NZ",
-                "PL",
-                "RU",
-                "SE",
-                "SG",
-                "UK",
-                "US"
-            ],
-            "value": true
-        }
-    ],
     "icPrebidAol": [
         {
             "apps": [
@@ -1001,21 +967,6 @@
                 "XX"
             ],
             "value": true
-        }
-    ],
-    "icKruxSegmentsTracking": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "PL"
-            ],
-            "value": [
-                "uijvh5mh8",
-                "qjh7uwb8w"
-            ]
         }
     ],
     "icAdEngineDelay": [

@@ -56,8 +56,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
-		$vars[] = 'wgAdDriverKruxCountries';
-		$vars[] = 'wgAdDriverKruxNewParamsCountries';
 		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
 		$vars[] = 'wgAdDriverLABradorTestCountries';
 		$vars[] = 'wgAdDriverLazyBottomLeaderboardMobileWikiCountries';
@@ -103,7 +101,6 @@ class AdEngine3InstantGlobals
 		 * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
-		$vars[] = 'wgSitewideDisableKrux';
 
 		return true;
 	}

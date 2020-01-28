@@ -1276,17 +1276,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgSitewideDisableKrux
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
- *
- * Disable Krux sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisableKrux = false;
-
-/**
  * @name $wgAdDriverKikimoraTrackingCountries
  * Enables warehouse tracking of ad related info
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1424,20 +1413,6 @@ $wgAdDriverConfiantMobileCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverNielsenCountries = null;
-
-/**
- * @name $wgAdDriverKruxCountries
- * List of countries Krux will be enabled on
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverKruxCountries = null;
-
-/**
- * @name $wgAdDriverKruxNewParamsCountries
- * List of countries where Krux will use new parameters (kuid and ksg)
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverKruxNewParamsCountries = null;
 
 /**
  * @name $wgHighValueCountries

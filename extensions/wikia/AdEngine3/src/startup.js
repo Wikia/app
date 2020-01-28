@@ -14,7 +14,6 @@ import {
 	eventService,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	krux,
 	moatYi,
 	moatYiEvents,
 	permutive,
@@ -154,17 +153,6 @@ function trackTabId() {
 	pageTracker.trackProp('tab_id', window.tabId);
 }
 
-function trackKruxSegments() {
-	const kruxUserSegments = context.get('targeting.ksg') || [];
-	const kruxTrackedSegments = context.get('services.krux.trackedSegments') || [];
-
-	const kruxPropValue = kruxUserSegments.filter(segment => kruxTrackedSegments.includes(segment));
-
-	if (kruxPropValue.length) {
-		pageTracker.trackProp('krux_segments', kruxPropValue.join('|'));
-	}
-}
-
 function callExternals() {
 	const targeting = context.get('targeting');
 	permutive.call();
@@ -175,29 +163,12 @@ function callExternals() {
 
 	confiant.call();
 	durationMedia.call();
-	krux.call().then(trackKruxSegments);
 	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',
 		assetid: `fandom.com/${targeting.s0v}/${targeting.s1}/${targeting.artid}`,
 		section: `FANDOM ${targeting.s0v.toUpperCase()} NETWORK`,
-	});
-}
-
-export function registerEditorSavedEvents() {
-	var eventId = 'M-FnMTsI';
-
-	window.wgAfterContentAndJS.push(() => {
-		// VE editor save complete
-		window.ve.trackSubscribe('mwtiming.performance.user.saveComplete', () => {
-			krux.fireEvent(eventId);
-		});
-
-		// MW/CK editor saving in progress
-		window.mw.hook('mwEditorSaved').add(() => {
-			krux.fireEvent(eventId);
-		});
 	});
 }
 
