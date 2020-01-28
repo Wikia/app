@@ -1,4 +1,7 @@
 import {
+	bidderTracker,
+	bidderTrackingMiddleware,
+
 	slotBiddersTrackingMiddleware,
 	slotBillTheLizardStatusTrackingMiddleware,
 	slotPropertiesTrackingMiddleware,
@@ -39,6 +42,16 @@ export const registerViewabilityTracker = () => {
 		.register(({ data }) => track({
 			...data,
 			eventName: 'adengviewability',
+			trackingMethod: 'internal',
+		}));
+};
+
+export const registerBidderTracker = () => {
+	bidderTracker
+		.add(bidderTrackingMiddleware)
+		.register(({ data }) => track({
+			...data,
+			eventName: 'adengbidders',
 			trackingMethod: 'internal',
 		}));
 };
