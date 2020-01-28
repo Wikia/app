@@ -72,6 +72,7 @@ export async function setupAdEngine(
 	trackLikhoToDW();
 	trackTabId();
 	trackXClick();
+	trackVideoPage();
 	taxonomyService.configureComicsTargeting();
 }
 
@@ -221,4 +222,21 @@ function trackXClick() {
 			});
 		}
 	});
+}
+
+function trackVideoPage() {
+	const s2 = context.get('targeting.s2');
+
+	if (['fv-article', 'wv-article'].includes(s2)) {
+		track(Object.assign(
+			{
+				eventName: 'videoplayerevent',
+				trackingMethod: 'internal',
+			}, {
+				category: 'featured-video',
+				action: 'pageview',
+				label: s2,
+			},
+		));
+	}
 }

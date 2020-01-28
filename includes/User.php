@@ -505,13 +505,16 @@ class User implements JsonSerializable {
 						   strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false ) ) {
 						$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
 					} else {
-						WikiaLogger::instance()->error(
-							'Helios user id mismatch',
-							[
-								'sessionUserId' => $sessionUserId,
+						WikiaLogger::instance()->error( 'Helios user id mismatch', [
+							'sessionUserId' => $sessionUserId,
+							'heliosResponse' => [
 								'userId' => $tokenInfo->user_id,
+								'accessToken' => $tokenInfo->access_token,
+								'beacon' => self::heliosClient()->getResponseHeader( 'x-client-beacon-id' ),
+								'servedBy' => self::heliosClient()->getResponseHeader( 'x-served-by' ),
+								'timestamp' => self::heliosClient()->getResponseHeader( 'x-backend-timestamp' ),
 							]
-						);
+						] );
 					}
 				}
 			}

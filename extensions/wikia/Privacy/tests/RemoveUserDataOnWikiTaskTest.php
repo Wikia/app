@@ -84,7 +84,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_namespace', 'rc_title'] );
 		foreach ( $changes as $change ) {
-			$isUserPage = in_array( $change->rc_namespace, RemoveUserDataOnWikiTask::USER_NAMESPACES );
+			$isUserPage = in_array( $change->rc_namespace, LocalUserDataRemover::USER_NAMESPACES );
 			$startsWithUsername = strpos( $change->rc_title, self::TEST_USER_DB_KEY ) === 0;
 			$this->assertFalse( $isUserPage && $startsWithUsername );
 		}
