@@ -156,6 +156,150 @@
             "value": true
         }
     ],
+    "icFloorAdhesion": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "AD",
+                "AF",
+                "AG",
+                "AI",
+                "AL",
+                "AN",
+                "AS",
+                "AS",
+                "AT",
+                "AW",
+                "AX",
+                "BA",
+                "BB",
+                "BE",
+                "BG",
+                "BL",
+                "BM",
+                "BQ",
+                "BS",
+                "BY",
+                "BZ",
+                "CA",
+                "CH",
+                "CK",
+                "CR",
+                "CU",
+                "CW",
+                "CZ",
+                "DE",
+                "DK",
+                "DM",
+                "DO",
+                "EE",
+                "ES",
+                "FI",
+                "FJ",
+                "FM",
+                "FO",
+                "FR",
+                "GB",
+                "GD",
+                "GG",
+                "GI",
+                "GL",
+                "GP",
+                "GR",
+                "GT",
+                "GU",
+                "HN",
+                "HR",
+                "HT",
+                "HU",
+                "IE",
+                "IM",
+                "IS",
+                "IT",
+                "JE",
+                "JM",
+                "KI",
+                "KN",
+                "KY",
+                "LC",
+                "LI",
+                "LT",
+                "LU",
+                "LV",
+                "MC",
+                "MD",
+                "ME",
+                "MF",
+                "MH",
+                "MK",
+                "MP",
+                "MQ",
+                "MS",
+                "MT",
+                "MX",
+                "NC",
+                "NF",
+                "NI",
+                "NL",
+                "NO",
+                "NR",
+                "NU",
+                "NZ",
+                "PA",
+                "PF",
+                "PG",
+                "PL",
+                "PM",
+                "PN",
+                "PR",
+                "PT",
+                "PW",
+                "RO",
+                "RS",
+                "RU",
+                "SA",
+                "SB",
+                "SE",
+                "SI",
+                "SJ",
+                "SK",
+                "SM",
+                "SV",
+                "SX",
+                "TC",
+                "TK",
+                "TO",
+                "TR",
+                "TT",
+                "TV",
+                "UA",
+                "UK",
+                "UM",
+                "VA",
+                "VC",
+                "VG",
+                "VI",
+                "VU",
+                "WF",
+                "WS"
+            ],
+            "value": true
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
+            ],
+            "sampling": 90.0,
+            "value": true
+        }
+    ],
     "icPrebidLkqd": [
         {
             "apps": [
@@ -375,7 +519,7 @@
             "regions": [
                 "PL"
             ],
-            "sampling": 40.0,
+            "sampling": 35.0,
             "samplingCache": true,
             "value": true
         }
@@ -500,6 +644,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": [
                 "wgAdDriverCTPDesktopQueenCountries_A_99:queen_ctp_a",
                 "wgAdDriverCTPDesktopQueenCountries_B_1:queen_ctp_b",
@@ -565,7 +712,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -692,10 +839,18 @@
                 "oasis"
             ],
             "regions": [
-                "DE",
-                "XX-SA"
+                "US"
             ],
-            "sampling": 100.0,
+            "value": false
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
             "value": true
         }
     ],
