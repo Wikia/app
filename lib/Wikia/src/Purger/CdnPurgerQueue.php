@@ -8,17 +8,11 @@ use Wikia\Rabbit\TaskProducer;
 use Wikia\Rabbit\TaskPublisher;
 
 /**
- * Use Celery / RabbitMQ queue to send purge requests to Fastly
+ * Use cdn-purger service / RabbitMQ queue to send purge requests to Fastly and Wikia CDN.
  *
- * This class will enqueue all URLs and send list of unique URLs at the end of the request handling
- *
- * Each service has different options so it must be a different task for each one.
- * If there are going to be a lot of them, we should change the parameters to the celery worker
- *
- * @author Owen
- * @author macbre
+ * This class will enqueue all URLs and send list of unique URLs at the end of the request handling.
  */
-class CdnPurger implements TaskProducer, Purger {
+class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 
 	use Loggable;
 

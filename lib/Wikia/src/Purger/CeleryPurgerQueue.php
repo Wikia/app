@@ -21,7 +21,7 @@ use Wikia\Tasks\Queues\PurgeQueue;
  * @author macbre
  */
 
-class CeleryPurger implements TaskProducer, Purger {
+class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 
 	use Loggable;
 

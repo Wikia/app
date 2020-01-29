@@ -2,17 +2,17 @@
 
 namespace Wikia\Factory;
 
-use Wikia\Purger\CdnPurger;
-use Wikia\Purger\CeleryPurger;
-use Wikia\Purger\Purger;
+use Wikia\Purger\CdnPurgerQueue;
+use Wikia\Purger\CeleryPurgerQueue;
+use Wikia\Purger\PurgerQueue;
 use Wikia\Rabbit\TaskPublisher;
 
 class PurgerFactory extends AbstractFactory {
 
-	/** @var CeleryPurger $purger */
+	/** @var CeleryPurgerQueue $purger */
 	private $purger;
 
-	public function purger(): Purger {
+	public function purger(): PurgerQueue {
 		if ( !$this->purger ) {
 			$this->purger = $this->create( $this->serviceFactory()->rabbitFactory()->taskPublisher() );
 		}
@@ -20,12 +20,12 @@ class PurgerFactory extends AbstractFactory {
 		return $this->purger;
 	}
 
-	private function create( TaskPublisher $taskPublisher ): Purger {
+	private function create( TaskPublisher $taskPublisher ): PurgerQueue {
 		global $wgUseCdnPurger;
 		if ( $wgUseCdnPurger === true ) {
-			return new CdnPurger( $taskPublisher );
+			return new CdnPurgerQueue( $taskPublisher );
 		} else {
-			return new CeleryPurger( $taskPublisher );
+			return new CeleryPurgerQueue( $taskPublisher );
 		}
 	}
 }

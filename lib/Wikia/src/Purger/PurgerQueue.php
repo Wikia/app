@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace Wikia\Purger;
 
-interface Purger {
+interface PurgerQueue {
 	public function addUrls( array $urls );
 
 	public function addSurrogateKey( string $key );
