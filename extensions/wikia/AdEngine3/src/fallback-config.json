@@ -555,7 +555,7 @@
                 "UK",
                 "US"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidAol": [
@@ -986,7 +986,7 @@
             ],
             "regions": [
                 "PL",
-                "US-NY"
+                "US"
             ],
             "value": true
         }
