@@ -50,7 +50,7 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 		global $wgPurgeVignetteUsingSurrogateKeys;
 
 		foreach ( $urls as $item ) {
-			if ( isset( $wgPurgeVignetteUsingSurrogateKeys ) && VignetteRequest::isVignetteUrl( $item ) ) {
+			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
 				$this->buckets[self::SERVICE_VIGNETTE]['urls'][] = $item;
 			} else {
 				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
