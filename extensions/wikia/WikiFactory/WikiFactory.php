@@ -69,6 +69,8 @@ class WikiFactory {
 	// Language wikis index city_id in wikicities.city_list.
 	const LANGUAGE_WIKIS_INDEX = 3;
 
+	const SLOT_1 = 'slot1';
+
 	static public $types = [
 		"integer",
 		"long",
@@ -2069,6 +2071,26 @@ class WikiFactory {
 	}
 
 	/**
+	 * getCityPath
+	 *
+	 * Method for getting city_path value from city_list table
+	 *
+	 * @access private
+	 * @static
+	 *
+	 * @param integer $city_id
+	 *
+	 * @return string | bool
+	 */
+	static private function getCityPath( $city_id ) {
+		if ( !static::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+		return static::getWikiByID( $city_id )->city_path;
+	}
+
+	/**
 	 * @brief Returns true if wiki is public ("probably" its database exists)
 	 *
 	 * @desc Returns true if wiki is public which should mean its database exists.
@@ -3615,5 +3637,19 @@ class WikiFactory {
 
 	public static function clearVariablesCache() {
 		static::$variablesCache = [];
+	}
+
+	/**
+	 * Returns true if city_path for given wiki is equal as static::SLOT_1
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param integer $city_id
+	 *
+	 * @return boolean
+	 */
+	static public function isSlot1Wiki( $city_id ) {
+		return WikiFactory::getCityPath( $city_id ) === static::SLOT_1;
 	}
 };
