@@ -308,7 +308,7 @@ class HeliosClient {
 					]
 				);
 
-				$tries --;
+				$tries--;
 				if ( !$tries ) {
 					// something is seriously wrong
 					throw new ClientException( "Persistent Helios beacon mismatch" );
