@@ -40,7 +40,8 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 
 		foreach ( $urls as $item ) {
 			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
-				$this->buckets[self::SERVICE_THUMBLR]['urls'][] = $item;
+				$thumblrSurrogateKey = new ThumblrSurrogateKey( $item );
+				$this->buckets[self::SERVICE_THUMBLR]['key'][] = $thumblrSurrogateKey->value();
 			} else {
 				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
 			}
