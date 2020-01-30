@@ -27,7 +27,8 @@ class ThumblrSurrogateKey {
 		if ( $this->config->isArchive() ) {
 			$path = explode( '/', $this->config->relativePath() );
 
-			return $base . '/images/archive/' . $path[0] . $path[1] . $this->config->timestamp() . $path[2];
+			return $base . '/images/archive/' . $path[0] . '/' . $path[1] . '/'
+				   . $this->config->timestamp() . '!' . $path[2];
 		} else {
 			return $base . '/images/' . $this->config->relativePath();
 		}

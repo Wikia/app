@@ -32,8 +32,8 @@ class ThumblrSurrogateKeyTest extends TestCase {
 				'5721958a6276ea928748f754a5f8b67e454a277c'
 		];
 		yield [
-				'https://vignette.wikia.nocookie.net/starwars/images/archive/a/a9/20110116012411/Aargau.jpg',
-				'starwars/images/a/a9/Aargau.jpg',
+				'https://vignette.wikia.nocookie.net/starwars/images/a/a9/Aargau.jpg/revision/20110116012411',
+				'starwars/images/archive/a/a9/20110116012411!Aargau.jpg',
 				'47158eb1aeaa6c5b8e65481f863494735ff5b7b0'
 		];
 	}
