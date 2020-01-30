@@ -295,7 +295,7 @@ class HeliosClient {
 				 $currentCtx['client_beacon_id'] != $responseBeacon ) {
 				// report an issue with the token mismatch
 				\Wikia\Logger\WikiaLogger::instance()->error(
-					'Helios user id mismatch',
+					'Helios beacon mismatch',
 					[
 						'sessionUserId' => $sessionUserId,
 						'heliosResponse' => [
