@@ -20,6 +20,16 @@ class ThumblrSurrogateKey {
 	}
 
 	public function value() {
-		return $this->config->bucket() . '/' . $this->config->baseUrl();
+		$base = $this->config->bucket();
+		if ( !empty( $this->config->pathPrefix() ) ) {
+			$base = '/' . $this->config->pathPrefix();
+		}
+		if ( $this->config->isArchive() ) {
+			$path = explode( '/', $this->config->relativePath() );
+
+			return $base . '/images/archive/' . $path[0] . $path[1] . $this->config->timestamp() . $path[2];
+		} else {
+			return $base . '/images/' . $this->config->relativePath();
+		}
 	}
 }
