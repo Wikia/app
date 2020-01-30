@@ -22,7 +22,7 @@ class ThumblrSurrogateKey {
 	public function value() {
 		$base = $this->config->bucket();
 		if ( !empty( $this->config->pathPrefix() ) ) {
-			$base = '/' . $this->config->pathPrefix();
+			$base = $this->config->pathPrefix() . '/' . $base;
 		}
 		if ( $this->config->isArchive() ) {
 			$path = explode( '/', $this->config->relativePath() );
