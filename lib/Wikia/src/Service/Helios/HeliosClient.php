@@ -288,9 +288,9 @@ class HeliosClient {
 				return $tokenInfo;
 			}
 			$responseBeacon = $this->getResponseHeader( 'x-client-beacon-id' )[0];
+
 			// check if Helios returned non-matching user_id. Sometimes it means user logged into a different account
 			// so we compare beacons as well just to be sure there was a mismatch
-
 			if ( ( empty( $sessionUserId ) || $sessionUserId != $tokenInfo->user_id ) &&
 				 $currentCtx['client_beacon_id'] != $responseBeacon ) {
 				// report an issue with the token mismatch
