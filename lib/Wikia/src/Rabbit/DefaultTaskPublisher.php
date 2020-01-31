@@ -127,4 +127,4 @@ class DefaultTaskPublisher implements TaskPublisher {
 			'spawn_task_queue' => $queue,
 		] );
 	}
-}
+}	

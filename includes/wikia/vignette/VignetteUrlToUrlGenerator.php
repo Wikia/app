@@ -1,6 +1,7 @@
 <?php
-use \Wikia\Vignette\UrlGenerator;
-use \Wikia\Logger\Loggable;
+
+use Wikia\Logger\Loggable;
+use Wikia\Vignette\UrlGenerator;
 
 /**
  * Class VignetteUrlToUrlGenerator
@@ -29,10 +30,10 @@ class VignetteUrlToUrlGenerator {
 
 	public function build() {
 		if (!$this->parseUrl()) {
-			$this->reportWarning('unable to parse url');
+			$this->reportWarning( 'unable to parse url' . $this->url );
 		}
 
-		$isArchive = $this->urlParts['revision'] != \Wikia\Vignette\UrlGenerator::REVISION_LATEST;
+		$isArchive = $this->urlParts['revision'] != UrlGenerator::REVISION_LATEST;
 		if ($isArchive) {
 			$this->timestamp = $this->urlParts['revision'];
 		}
@@ -93,7 +94,7 @@ class VignetteUrlToUrlGenerator {
 				$this->reportWarning('invalid chunk');
 			}
 
-			list($key, $val) = $chunk;
+			[$key, $val] = $chunk;
 			switch ($key) {
 				case 'width':
 					$generator->width($val);
