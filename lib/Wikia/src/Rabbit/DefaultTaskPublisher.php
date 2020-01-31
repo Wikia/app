@@ -118,7 +118,8 @@ class DefaultTaskPublisher implements TaskPublisher {
 		$argsJson = json_encode( $payload['args'] ?? null );
 
 		$kwargs = $payload['kwargs']?? [];
-		$this->info( 'Publishing task of type: ' . $payload['task'] ?? null, [
+		$task =  $payload['task'] ?? null;
+		$this->info( 'Publishing task of type: ' . $task, [
 			'exception' => new \Exception(),
 			'spawn_task_id' => $payload['id'] ?? null,
 			'spawn_task_type' => $payload['task'] ?? null,
@@ -127,4 +128,4 @@ class DefaultTaskPublisher implements TaskPublisher {
 			'spawn_task_queue' => $queue,
 		] );
 	}
-}	
+}
