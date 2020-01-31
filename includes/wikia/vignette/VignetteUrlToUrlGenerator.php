@@ -10,7 +10,7 @@ use Wikia\Vignette\UrlGenerator;
 class VignetteUrlToUrlGenerator {
 	use Loggable;
 
-	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/|avatars\/)?(?<relativePath>.*?)\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*))?/';
+	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/|avatars\/)?(?<relativePath>.*?)?(\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*)))?/';
 
 	/** @var string */
 	private $url;
@@ -42,6 +42,9 @@ class VignetteUrlToUrlGenerator {
 			if ( $this->strict ) {
 				throw new InvalidArgumentException( ( 'URL is not a Vignette URL ' . $url ) );
 			}
+		}
+		if ($this->urlParts['revision'] ?? null === null) {
+			$this->urlParts['revision'] = UrlGenerator::REVISION_LATEST;
 		}
 
 		$isArchive = $this->urlParts['revision'] != UrlGenerator::REVISION_LATEST;
