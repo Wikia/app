@@ -22,7 +22,7 @@ class ThumblrSurrogateKey {
 	private $config;
 
 	public function __construct( string $url ) {
-		$this->config = ( new VignetteUrlToUrlGenerator( $url ) )->build()->config();
+		$this->config = ( new VignetteUrlToUrlGenerator( $url, true ) )->build()->config();
 	}
 
 	public function value() {

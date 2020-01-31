@@ -12,25 +12,36 @@ class VignetteUrlToUrlGenerator {
 
 	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/|avatars\/)?(?<relativePath>.*?)\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*))?/';
 
+	/** @var string */
 	private $url;
+	/** @var bool */
 	private $asOriginal;
 	private $urlParts;
 	private $query;
 	private $timestamp;
 	private $pathPrefix;
+	/** @var bool */
+	private $strict;
 
-	public function __construct($url, $asOriginal=false) {
+	public function __construct( $url, $asOriginal = false, $strict = false ) {
 		$this->url = $url;
 		$this->asOriginal = $asOriginal;
+		$this->strict = $strict;
 
 		if ( !VignetteRequest::isVignetteUrl( $url ) ) {
 			$this->reportWarning( 'invalid url' . $url );
+			if ( $strict ) {
+				throw new InvalidArgumentException( ( 'URL is not a Vignette URL ' . $url ) );
+			}
 		}
 	}
 
 	public function build() {
-		if (!$this->parseUrl()) {
+		if ( !$this->parseUrl() ) {
 			$this->reportWarning( 'unable to parse url' . $this->url );
+			if ( $this->strict ) {
+				throw new InvalidArgumentException( ( 'URL is not a Vignette URL ' . $url ) );
+			}
 		}
 
 		$isArchive = $this->urlParts['revision'] != UrlGenerator::REVISION_LATEST;
