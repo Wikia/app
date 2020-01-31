@@ -21,20 +21,22 @@ use Wikia\Tasks\Queues\PurgeQueue;
  * @author macbre
  */
 
-class CeleryPurger implements TaskProducer {
+class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 
 	use Loggable;
 
 	// task to be run by Celery to actually perform the purge
 	const TASK_NAME = 'celery_workers.purger.purge';
+	const SERVICE_MEDIAWIKI = 'mediawiki';
+	const SERVICE_VIGNETTE = 'vignette';
 
 	/** @var array $buckets */
 	private $buckets = [
-		'mediawiki' => [
+		self::SERVICE_MEDIAWIKI => [
 			'urls' => [],
 			'keys' => [],
 		],
-		'vignette' => [
+		self::SERVICE_VIGNETTE => [
 			'urls' => [],
 			'keys' => [],
 		],
@@ -48,10 +50,10 @@ class CeleryPurger implements TaskProducer {
 		global $wgPurgeVignetteUsingSurrogateKeys;
 
 		foreach ( $urls as $item ) {
-			if ( isset( $wgPurgeVignetteUsingSurrogateKeys ) && VignetteRequest::isVignetteUrl( $item ) ) {
-				$this->buckets['vignette']['urls'][] = $item;
+			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
+				$this->buckets[self::SERVICE_VIGNETTE]['urls'][] = $item;
 			} else {
-				$this->buckets['mediawiki']['urls'][] = $item;
+				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
 			}
 		}
 	}
@@ -62,14 +64,13 @@ class CeleryPurger implements TaskProducer {
 	 * Use Wikia::setSurrogateKeysHeaders helper to emit proper headers
 	 *
 	 * @param string $key surrogate key to purge
-	 * @param string $service Fastly's service name (defaults to "mediawiki")
 	 */
-	public function addSurrogateKey( string $key, string $service = 'mediawiki' ) {
-		$this->buckets[$service]['keys'][] = $key;
+	public function addSurrogateKey( string $key ) {
+		$this->buckets[self::SERVICE_MEDIAWIKI]['keys'][] = $key;
 
 		$this->info( 'varnish.purge', [
 			'key' => $key,
-			'service' => $service
+			'service' => self::SERVICE_MEDIAWIKI
 		] );
 	}
 
