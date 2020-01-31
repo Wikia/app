@@ -13,16 +13,22 @@ class AsyncPurgeTask extends BaseTask {
 	public function publish( FileInfo $fileId, array $thumbnailUrls ) {
 		global $wgCityId;
 
-		WikiaLogger::instance()->info( __METHOD__, [
-			'file' => json_encode( $fileId ),
-			'thumbnail_urls' => json_encode( $thumbnailUrls ),
-		] );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file' => json_encode( $fileId ),
+				'thumbnail_urls' => json_encode( $thumbnailUrls ),
+			]
+		);
 
 
-		WikiaLogger::instance()->info( __METHOD__, [
-			'file' => json_encode( $fileId ),
-			'thumbnail_urls' => json_encode( $thumbnailUrls ),
-		] );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file' => json_encode( $fileId ),
+				'thumbnail_urls' => json_encode( $thumbnailUrls ),
+			]
+		);
 
 		$task = new AsyncPurgeTask();
 		$task->call( 'removeThumbnails', $fileId->serializeForTask(), $thumbnailUrls );
@@ -36,10 +42,13 @@ class AsyncPurgeTask extends BaseTask {
 	 * @throws \Exception
 	 */
 	public function removeThumbnails( array $fileId, array $thumbnailUrls ) {
-		WikiaLogger::instance()->info( __METHOD__, [
-			'file' => json_encode( $fileId ),
-			'thumbnail_urls' => json_encode( $thumbnailUrls ),
-		] );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file' => json_encode( $fileId ),
+				'thumbnail_urls' => json_encode( $thumbnailUrls ),
+			]
+		);
 
 		try {
 			$fileInfo = FileInfo::deserializeFromTask( $fileId );
@@ -47,10 +56,13 @@ class AsyncPurgeTask extends BaseTask {
 			$this->purgeSurrogateKey( $fileInfo );
 		}
 		catch ( \Exception $exception ) {
-			WikiaLogger::instance()->error( __METHOD__, [
-				'file' => json_encode( $fileId ),
-				'thumbnail_urls' => $thumbnailUrls,
-			] );
+			WikiaLogger::instance()->error(
+				__METHOD__,
+				[
+					'file' => json_encode( $fileId ),
+					'thumbnail_urls' => $thumbnailUrls,
+				]
+			);
 			throw $exception;
 		}
 	}
@@ -59,16 +71,23 @@ class AsyncPurgeTask extends BaseTask {
 		global $wgThumblrUser, $wgThumblrPass;
 
 		$url = $this->getRemoveThumbnailsUrl( $fileId );
-		WikiaLogger::instance()->info( __METHOD__, [
-			'file' => json_encode( $fileId ),
-			'remove_thumbnails_url' => $url,
-		] );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file' => json_encode( $fileId ),
+				'remove_thumbnails_url' => $url,
+			]
+		);
 		$credentials = base64_encode( $wgThumblrUser . ':' . $wgThumblrPass );
-		\Http::request( "DELETE", $url, [
-			'headers' => [ 'Authorization' => 'Basic ' . $credentials ],
-			'internalRequest' => true,
-			'noProxy' => true,
-		] );
+		\Http::request(
+			"DELETE",
+			$url,
+			[
+				'headers' => [ 'Authorization' => 'Basic ' . $credentials ],
+				'internalRequest' => true,
+				'noProxy' => true,
+			]
+		);
 	}
 
 	private function getRemoveThumbnailsUrl( FileInfo $fileId ) {
@@ -86,6 +105,14 @@ class AsyncPurgeTask extends BaseTask {
 
 	private function purgeSurrogateKey( FileInfo $fileInfo ) {
 		$key = new ThumblrSurrogateKey( $fileInfo );
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file' => json_encode( $fileInfo ),
+				'key' => $key->value(),
+				'key_before_hashing' => $key->valueBeforeHashing(),
+			]
+		);
 		ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key->value() );
 	}
 }
