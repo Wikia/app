@@ -8,7 +8,13 @@ use VignetteUrlToUrlGenerator;
 use Wikia\Vignette\UrlConfig;
 
 /**
- * Historically, Vignette was purged via URL and
+ * Historically, Thumblr/Vignette was purged via URL, that was used by the purger to acquire surrogate key.
+ * This surrogate key was used to purge the MW's Thumblr asset. This was troublesome if the asset got removed, because
+ * fetching the surrogate key might have hit a CDN (Fastly or Wikia), that did not have the asset cached, so getting
+ * the surrogate key was impossible.
+ *
+ * This iteration, uses the same algorithm to produce the surrogate key, based on the asset's URL
+ * and uses this surrogate key to purge.
  *
  */
 class ThumblrSurrogateKey {

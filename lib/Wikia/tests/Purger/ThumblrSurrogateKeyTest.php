@@ -36,5 +36,10 @@ class ThumblrSurrogateKeyTest extends TestCase {
 			'starwars/images/archive/a/a9/20110116012411!Aargau.jpg',
 			'47158eb1aeaa6c5b8e65481f863494735ff5b7b0',
 		];
+		yield [
+			'https://vignette.wikia.nocookie.net/pablotestwiki/images/7/78/Dog1.jpeg/revision/latest?cb=20200131114431',
+			'pablotestwiki/images/7/78/Dog1.jpeg',
+			'1f80603cd81b520a87f380f0bc4780b35bd9f4f7',
+		];
 	}
 }
