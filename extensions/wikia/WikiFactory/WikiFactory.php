@@ -3640,18 +3640,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * Temporary helper when we need to handle something for a UCP wiki
-	 * in the current app.
-	 *
-	 * @param  int     $wikiId
-	 * @return boolean
-	 */
-	public static function isUCPWiki( int $wikiId ): bool {
-		$wiki = self::getWikiByID( $wikiId );
-		return $wiki->city_path === 'slot2';
-
-	/**
-	 * Returns true if city_path for given wiki is equal as static::SLOT_1
+	 * Returns true if city_path for given wiki is equal to static::SLOT_1
 	 *
 	 * @access public
 	 * @static
@@ -3660,7 +3649,7 @@ class WikiFactory {
 	 *
 	 * @return boolean
 	 */
-	static public function isSlot1Wiki( $city_id ) {
+	static public function isUCPWiki( $city_id ) {
 		return WikiFactory::getCityPath( $city_id ) === static::SLOT_1;
 	}
-};
+}
