@@ -47,7 +47,7 @@ class ThumblrSurrogateKey {
 		if ( !empty( $this->fileInfo->getPathPrefix() ) ) {
 			$base .= '/' . $this->fileInfo->getPathPrefix();
 		}
-		if ( $this->fileInfo->getRevision() === 'latest' ) {
+		if ( $this->fileInfo->getRevision() !== 'latest' ) {
 			$path = explode( '/', $this->fileInfo->getRelativePath() );
 
 			return $base . '/images/archive/' . $path[0] . '/' . $path[1] . '/'
