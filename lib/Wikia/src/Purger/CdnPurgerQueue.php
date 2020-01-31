@@ -45,6 +45,7 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 					$this->buckets[self::SERVICE_THUMBLR]['key'][] = $thumblrSurrogateKey->value();
 				}
 				catch ( \Exception $e ) {
+					$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
 					$this->error( 'Failed to add Vignette URL', [ 'exception' => $e ] );
 				}
 			} else {

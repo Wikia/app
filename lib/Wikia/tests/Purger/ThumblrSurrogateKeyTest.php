@@ -41,10 +41,5 @@ class ThumblrSurrogateKeyTest extends TestCase {
 			'pablotestwiki/images/7/78/Dog1.jpeg',
 			'1f80603cd81b520a87f380f0bc4780b35bd9f4f7',
 		];
-		yield [
-			'https://vignette.wikia.nocookie.net/justiceleagues/images/9/9d/Trio_poster.jpg',
-			'justiceleagues/images/9/9d/Trio_poster.jpg',
-			'cf84b4f06de9888ce98956802f790883cd460c5d',
-		];
 	}
 }
