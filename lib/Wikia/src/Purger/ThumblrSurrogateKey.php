@@ -7,6 +7,10 @@ namespace Wikia\Purger;
 use VignetteUrlToUrlGenerator;
 use Wikia\Vignette\UrlConfig;
 
+/**
+ * Historically, Vignette was purged via URL and
+ *
+ */
 class ThumblrSurrogateKey {
 	/** @var UrlConfig */
 	private $config;
@@ -15,11 +19,11 @@ class ThumblrSurrogateKey {
 		$this->config = ( new VignetteUrlToUrlGenerator( $url ) )->build()->config();
 	}
 
-	public function hashedValue() {
-		return sha1( $this->value() );
+	public function value() {
+		return sha1( $this->valueBeforeHashing() );
 	}
 
-	public function value() {
+	public function valueBeforeHashing() {
 		$base = $this->config->bucket();
 		if ( !empty( $this->config->pathPrefix() ) ) {
 			$base .= '/' . $this->config->pathPrefix();

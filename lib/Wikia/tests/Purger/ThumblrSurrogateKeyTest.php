@@ -11,13 +11,13 @@ class ThumblrSurrogateKeyTest extends TestCase {
 	/**
 	 * @dataProvider urlProvider
 	 * @param string $url
-	 * @param string $expectedKey
-	 * @param string $expectedHash
+	 * @param string $valueBeforeHashing
+	 * @param string $expectedValue
 	 */
-	public function testShould( string $url, string $expectedKey, string $expectedHash ) {
-		$thumblrSurrogateKey = new ThumblrSurrogateKey( $url );
-		$this->assertEquals( $thumblrSurrogateKey->value(), $expectedKey );
-		$this->assertEquals( $thumblrSurrogateKey->hashedValue(), $expectedHash );
+	public function testShould( string $url, string $valueBeforeHashing, string $expectedValue ) {
+		$key = new ThumblrSurrogateKey( $url );
+		$this->assertEquals( $key->valueBeforeHashing(), $valueBeforeHashing );
+		$this->assertEquals( $key->value(), $expectedValue );
 	}
 
 	public function urlProvider() {
