@@ -32,7 +32,7 @@ class ThumblrSurrogateKey {
 			new FileInfo(
 				$config->bucket(),
 				$config->relativePath(),
-				$config->timestamp(),
+				$config ->isArchive() ? 'latest' : $config->timestamp(),
 				$config->pathPrefix()
 			)
 		);
