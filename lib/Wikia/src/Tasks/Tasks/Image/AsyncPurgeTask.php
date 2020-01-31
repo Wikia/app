@@ -2,9 +2,9 @@
 
 namespace Wikia\Tasks\Tasks\Image;
 
-use SquidUpdate;
 use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Purger\ThumblrSurrogateKey;
 use Wikia\Tasks\Tasks\BaseTask;
 
 
@@ -42,8 +42,9 @@ class AsyncPurgeTask extends BaseTask {
 		] );
 
 		try {
-			$this->removeThumbnailsInThumblr( FileInfo::deserializeFromTask( $fileId ) );
-			$this->purgerUrls( $thumbnailUrls );
+			$fileInfo = FileInfo::deserializeFromTask( $fileId );
+			$this->removeThumbnailsInThumblr( $fileInfo );
+			$this->purgeSurrogateKey( $fileInfo );
 		}
 		catch ( \Exception $exception ) {
 			WikiaLogger::instance()->error( __METHOD__, [
@@ -52,13 +53,6 @@ class AsyncPurgeTask extends BaseTask {
 			] );
 			throw $exception;
 		}
-	}
-
-	private function purgerUrls( array $thumbnailUrls ) {
-		WikiaLogger::instance()->info( __METHOD__, [
-			'thumbnail_urls' => json_encode( $thumbnailUrls ),
-		] );
-		SquidUpdate::purge( $thumbnailUrls );
 	}
 
 	private function removeThumbnailsInThumblr( FileInfo $fileId ) {
@@ -90,4 +84,8 @@ class AsyncPurgeTask extends BaseTask {
 		return $url;
 	}
 
+	private function purgeSurrogateKey( FileInfo $fileInfo ) {
+		$key = new ThumblrSurrogateKey( $fileInfo );
+		ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key->value() );
+	}
 }

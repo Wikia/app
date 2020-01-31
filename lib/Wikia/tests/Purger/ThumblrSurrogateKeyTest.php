@@ -15,7 +15,7 @@ class ThumblrSurrogateKeyTest extends TestCase {
 	 * @param string $expectedValue
 	 */
 	public function testShould( string $url, string $valueBeforeHashing, string $expectedValue ) {
-		$key = new ThumblrSurrogateKey( $url );
+		$key = ThumblrSurrogateKey::fromUrl( $url );
 		$this->assertEquals( $key->valueBeforeHashing(), $valueBeforeHashing );
 		$this->assertEquals( $key->value(), $expectedValue );
 	}

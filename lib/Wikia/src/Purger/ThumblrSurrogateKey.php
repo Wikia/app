@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace Wikia\Purger;
 
 use VignetteUrlToUrlGenerator;
-use Wikia\Vignette\UrlConfig;
+use Wikia\Tasks\Tasks\Image\FileInfo;
 
 /**
  * Historically, Thumblr/Vignette was purged via URL, that was used by the purger to acquire surrogate key.
@@ -18,11 +18,24 @@ use Wikia\Vignette\UrlConfig;
  *
  */
 class ThumblrSurrogateKey {
-	/** @var UrlConfig */
-	private $config;
+	/** @var FileInfo */
+	private $fileInfo;
 
-	public function __construct( string $url ) {
-		$this->config = ( new VignetteUrlToUrlGenerator( $url, true ) )->build()->config();
+	public function __construct( FileInfo $fileInfo ) {
+		$this->fileInfo = $fileInfo;
+	}
+
+	public static function fromUrl( string $url ) {
+		$config = ( new VignetteUrlToUrlGenerator( $url, true, true ) )->build()->config();
+
+		return new ThumblrSurrogateKey(
+			new FileInfo(
+				$config->bucket(),
+				$config->relativePath(),
+				$config->timestamp(),
+				$config->pathPrefix()
+			)
+		);
 	}
 
 	public function value() {
@@ -30,17 +43,17 @@ class ThumblrSurrogateKey {
 	}
 
 	public function valueBeforeHashing() {
-		$base = $this->config->bucket();
-		if ( !empty( $this->config->pathPrefix() ) ) {
-			$base .= '/' . $this->config->pathPrefix();
+		$base = $this->fileInfo->getBucket();
+		if ( !empty( $this->fileInfo->getPathPrefix() ) ) {
+			$base .= '/' . $this->fileInfo->getPathPrefix();
 		}
-		if ( $this->config->isArchive() ) {
-			$path = explode( '/', $this->config->relativePath() );
+		if ( $this->fileInfo->getRevision() === 'latest' ) {
+			$path = explode( '/', $this->fileInfo->getRelativePath() );
 
 			return $base . '/images/archive/' . $path[0] . '/' . $path[1] . '/'
-				   . $this->config->timestamp() . '!' . $path[2];
+				   . $this->fileInfo->getRevision() . '!' . $path[2];
 		} else {
-			return $base . '/images/' . $this->config->relativePath();
+			return $base . '/images/' . $this->fileInfo->getRelativePath();
 		}
 	}
 }
