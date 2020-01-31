@@ -23,8 +23,8 @@ class VignetteUrlToUrlGenerator {
 		$this->url = $url;
 		$this->asOriginal = $asOriginal;
 
-		if (!VignetteRequest::isVignetteUrl($url)) {
-			$this->reportWarning('invalid url');
+		if ( !VignetteRequest::isVignetteUrl( $url ) ) {
+			$this->reportWarning( 'invalid url' . $url );
 		}
 	}
 
