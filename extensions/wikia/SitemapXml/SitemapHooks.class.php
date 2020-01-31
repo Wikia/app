@@ -12,9 +12,7 @@ class SitemapHooks {
 		return true;
 	}
 
-	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output ) {
-		global $wgServer, $wgScriptPath, $wgScript, $wgArticlePath;
-
+	public static function allowRedirect( Title $title ) {
 		if ( !self::isSitemapTitle( $title ) || WebRequest::detectProtocol() !== 'http' ) {
 			return true;
 		}
@@ -23,6 +21,16 @@ class SitemapHooks {
 
 		// We only want to deal with plain HTTP versions of the wikia.com domain
 		if ( !self::shouldCancelRedirect( $currentHost, $title ) ) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output ) {
+
+		if ( self::allowRedirect( $title ) ) {
 			return true;
 		}
 

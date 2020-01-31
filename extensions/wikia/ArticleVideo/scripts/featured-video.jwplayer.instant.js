@@ -23,6 +23,8 @@ require([
 	featuredVideoSession,
 	adsApi,
 ) {
+	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
+
 	if (!canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');
 		return;
@@ -36,7 +38,7 @@ require([
 			vtags: videoTags,
 			videoScope: videoDetails.isDedicatedForArticle ? 'article' : 'wiki'
 		},
-		videoAds;
+		videoOptions;
 
 	function extend(target, obj) {
 		var key;
@@ -67,8 +69,12 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		if (videoAds) {
-			videoAds.register(playerInstance, slotTargeting);
+		if (videoOptions) {
+			var playerKey = 'aeJWPlayerKey';
+
+			window[playerKey] = playerInstance;
+
+			adsApi.dispatchPlayerReady(videoOptions, slotTargeting, playerKey);
 		}
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -80,34 +86,25 @@ require([
 		});
 	}
 
-	function setupPlayer() {
-		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
+	function setupPlayer(showAds, adEngineAutoplayDisabled) {
+		var willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(adEngineAutoplayDisabled),
 			willMute = isFromRecirculation() ? false : willAutoplay;
 
-		if (adsApi) {
-			var shouldShowAds = adsApi.shouldShowAds();
-
-			shouldShowAds.then(function(shouldShowAds) {
-				if (shouldShowAds) {
-					videoAds = adsApi.jwplayerAdsFactory.create({
-						adProduct: 'featured',
-						slotName: 'featured',
-						audio: !willMute,
-						autoplay: willAutoplay,
-						featured: true,
-						videoId: videoDetails.playlist[0].mediaid,
-					});
-					adsApi.jwplayerAdsFactory.loadMoatPlugin();
-				}
-			});
-			configurePlayer(willAutoplay, willMute);
-		} else {
-			configurePlayer(willAutoplay, willMute);
+		if (adsApi && showAds) {
+			videoOptions = {
+				adProduct: 'featured',
+				slotName: 'featured',
+				audio: !willMute,
+				autoplay: willAutoplay,
+				featured: true,
+				videoId: videoDetails.playlist[0].mediaid,
+			};
 		}
+		configurePlayer(willAutoplay, willMute, adEngineAutoplayDisabled);
 
 	}
 
-	function configurePlayer(willAutoplay, willMute) {
+	function configurePlayer(willAutoplay, willMute, adEngineAutoplayDisabled) {
 		var videoScope = videoDetails.isDedicatedForArticle ? 'article' : 'wiki';
 
 		win.guaSetCustomDimension(30, videoScope);
@@ -123,7 +120,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(),
+				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(adEngineAutoplayDisabled),
 				showQuality: true,
 				showCaptions: true
 			},
@@ -137,7 +134,7 @@ require([
 			videoDetails: {
 				description: videoDetails.description,
 				title: videoDetails.title,
-				playlist: videoDetails.playlist
+				playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle)
 			},
 			logger: {
 				clientName: 'oasis'
@@ -148,15 +145,32 @@ require([
 	}
 
 	function canPlayVideo() {
-		return videoDetails && (videoDetails.isDedicatedForArticle || !featuredVideoSession.hasSeenTheVideoInCurrentSession());
+		return videoDetails && (
+			videoDetails.isDedicatedForArticle ||
+			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+		);
+	}
+
+	function getModifiedPlaylist(playlist, isDedicatedForArticle) {
+		var normalizedPlaylistIndex = getNormalizedPlaylistIndex(playlist);
+		var newPlaylist = playlist.slice(normalizedPlaylistIndex);
+
+		return (!isDedicatedForArticle && newPlaylist.length) ? newPlaylist : playlist;
+	}
+
+	function getNormalizedPlaylistIndex(playlist) {
+		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInSession() || 0;
+
+		return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
 		if (adsApi) {
-			adsApi.waitForAdStackResolve().then(setupPlayer);
-			return;
+			return adsApi.listenSetupJWPlayer(function (action) {
+				setupPlayer(action.showAds, action.autoplayDisabled);
+			});
 		}
 
-        setupPlayer();
+        setupPlayer(false, false);
 	});
 });
