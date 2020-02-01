@@ -393,6 +393,13 @@
             "value": true
         }
     ],
+    "icDisableAdStack": [
+        {
+            "apps": [
+                "oasis"
+            ]
+        }
+    ],
     "icPrebidOneMobile": [
         {
             "apps": [
