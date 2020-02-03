@@ -45,7 +45,7 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 					$this->buckets[self::SERVICE_THUMBLR]['key'][] = $key->value();
 				}
 				catch ( \Exception $e ) {
-					$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
+					$this->buckets[self::SERVICE_THUMBLR]['urls'][] = $item;
 					$this->error( 'Failed to add Vignette URL', [ 'exception' => $e ] );
 				}
 			} else {
@@ -85,20 +85,22 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 
 	public function getTasks() {
 		$urlsByService = [];
+		$keysByService = [];
 
 		foreach ( $this->buckets as $service => $data ) {
-			if ( !empty( array_filter( $data ) ) ) {
+			if ( !empty( $data ) && ( !empty( $data['urls'] ) || !empty( $data['keys'] ) ) ) {
 				yield new CdnPurgerTask( $service, $data['urls'], $data['keys'] );
 			}
-
 			$urlsByService[$service] = $data['urls'];
+			$keysByService[$service] = $data['keys'];
 		}
 
 		// log purges using Kibana (BAC-1317)
-		$context = [
-			'urls' => $urlsByService,
-		];
-
-		$this->info( 'varnish.purge', $context );
+		$this->info( 'varnish.purge',
+			[
+				'urls' => $urlsByService,
+				'keys' => $urlsByService,
+			 ]
+		);
 	}
 }
