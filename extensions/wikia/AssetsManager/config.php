@@ -183,6 +183,9 @@ $config['oasis_jquery'] = [
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 
+		// Remove this code after one week to display privacy notice update
+		'//skins/oasis/js/privacyUpdateNotification.js',
+
 		// BackgroundChanger
 		'//skins/oasis/js/BackgroundChanger.js',
 
