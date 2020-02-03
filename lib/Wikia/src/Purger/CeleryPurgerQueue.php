@@ -29,16 +29,18 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 	const TASK_NAME = 'celery_workers.purger.purge';
 	const SERVICE_MEDIAWIKI = 'mediawiki';
 	const SERVICE_VIGNETTE = 'vignette';
+	const KEYS = 'keys';
+	const URLS = 'urls';
 
 	/** @var array $buckets */
 	private $buckets = [
 		self::SERVICE_MEDIAWIKI => [
-			'urls' => [],
-			'keys' => [],
+			self::URLS => [],
+			self::KEYS => [],
 		],
 		self::SERVICE_VIGNETTE => [
-			'urls' => [],
-			'keys' => [],
+			self::URLS => [],
+			self::KEYS => [],
 		],
 	];
 
@@ -51,15 +53,15 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 
 		foreach ( $urls as $item ) {
 			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
-				$this->buckets[self::SERVICE_VIGNETTE]['urls'][] = $item;
+				$this->buckets[self::SERVICE_VIGNETTE][self::URLS][] = $item;
 			} else {
-				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
+				$this->buckets[self::SERVICE_MEDIAWIKI][self::URLS][] = $item;
 			}
 		}
 	}
 
 	public function addThumblrSurrogateKey( string $key ) {
-		$this->buckets[self::SERVICE_VIGNETTE]['keys'][] = $key;
+		$this->buckets[self::SERVICE_VIGNETTE][self::KEYS][] = $key;
 		$this->info(
 			'varnish.purge',
 			[
@@ -77,7 +79,7 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 	 * @param string $key surrogate key to purge
 	 */
 	public function addSurrogateKey( string $key ) {
-		$this->buckets[self::SERVICE_MEDIAWIKI]['keys'][] = $key;
+		$this->buckets[self::SERVICE_MEDIAWIKI][self::KEYS][] = $key;
 
 		$this->info( 'varnish.purge', [
 			'key' => $key,
@@ -93,18 +95,18 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 				$task = new AsyncCeleryTask();
 
 				$task->taskType( self::TASK_NAME );
-				$task->setArgs( $data['urls'], $data['keys'], $service );
+				$task->setArgs( $data[self::URLS], $data[self::KEYS], $service );
 				$task->setQueue( PurgeQueue::NAME );
 
 				yield $task;
 			}
 
-			$urlsByService[$service] = $data['urls'];
+			$urlsByService[$service] = $data[self::URLS];
 		}
 
 		// log purges using Kibana (BAC-1317)
 		$context = [
-			'urls' => $urlsByService
+			self::URLS => $urlsByService
 		];
 
 		$this->info( 'varnish.purge', $context );

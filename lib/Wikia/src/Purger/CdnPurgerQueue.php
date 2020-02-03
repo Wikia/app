@@ -18,16 +18,18 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 
 	const SERVICE_MEDIAWIKI = 'mediawiki';
 	const SERVICE_THUMBLR = 'thumblr.mediawiki';
+	const KEYS = 'keys';
+	const URLS = 'urls';
 
 	/** @var array $buckets */
 	private $buckets = [
 		self::SERVICE_MEDIAWIKI => [
-			'urls' => [],
-			'keys' => [],
+			self::URLS => [],
+			self::KEYS => [],
 		],
 		self::SERVICE_THUMBLR => [
-			'urls' => [],
-			'keys' => [],
+			self::URLS => [],
+			self::KEYS => [],
 		],
 	];
 
@@ -42,20 +44,20 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
 				try {
 					$key = ThumblrSurrogateKey::fromUrl( $item );
-					$this->buckets[self::SERVICE_THUMBLR]['key'][] = $key->value();
+					$this->buckets[self::SERVICE_THUMBLR][self::KEYS][] = $key->value();
 				}
 				catch ( \Exception $e ) {
-					$this->buckets[self::SERVICE_THUMBLR]['urls'][] = $item;
+					$this->buckets[self::SERVICE_THUMBLR][self::URLS][] = $item;
 					$this->error( 'Failed to add Vignette URL', [ 'exception' => $e ] );
 				}
 			} else {
-				$this->buckets[self::SERVICE_MEDIAWIKI]['urls'][] = $item;
+				$this->buckets[self::SERVICE_MEDIAWIKI][self::URLS][] = $item;
 			}
 		}
 	}
 
 	public function addThumblrSurrogateKey( string $key ) {
-		$this->buckets[self::SERVICE_THUMBLR]['key'][] = $key;
+		$this->buckets[self::SERVICE_THUMBLR][self::KEYS][] = $key;
 
 		$this->info(
 			'varnish.purge',
@@ -72,7 +74,7 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 	 * @param string $key surrogate key to purge
 	 */
 	public function addSurrogateKey( string $key ) {
-		$this->buckets[self::SERVICE_MEDIAWIKI]['keys'][] = $key;
+		$this->buckets[self::SERVICE_MEDIAWIKI][self::KEYS][] = $key;
 
 		$this->info(
 			'varnish.purge',
@@ -88,18 +90,18 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 		$keysByService = [];
 
 		foreach ( $this->buckets as $service => $data ) {
-			if ( !empty( $data ) && ( !empty( $data['urls'] ) || !empty( $data['keys'] ) ) ) {
-				yield new CdnPurgerTask( $service, $data['urls'], $data['keys'] );
+			if ( !empty( $data ) && ( !empty( $data[self::URLS] ) || !empty( $data[self::KEYS] ) ) ) {
+				yield new CdnPurgerTask( $service, $data[self::URLS], $data[self::KEYS] );
 			}
-			$urlsByService[$service] = $data['urls'];
-			$keysByService[$service] = $data['keys'];
+			$urlsByService[$service] = $data[self::URLS];
+			$keysByService[$service] = $data[self::KEYS];
 		}
 
 		// log purges using Kibana (BAC-1317)
 		$this->info( 'varnish.purge',
 			[
-				'urls' => $urlsByService,
-				'keys' => $urlsByService,
+				self::URLS => $urlsByService,
+				self::KEYS => $urlsByService,
 			 ]
 		);
 	}
