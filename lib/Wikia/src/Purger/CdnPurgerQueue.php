@@ -54,6 +54,18 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 		}
 	}
 
+	public function addThumblrSurrogateKey( string $key ) {
+		$this->buckets[self::SERVICE_THUMBLR]['key'][] = $key;
+
+		$this->info(
+			'varnish.purge',
+			[
+				'key' => $key,
+				'service' => self::SERVICE_THUMBLR,
+			]
+		);
+	}
+
 	/**
 	 * SUS-81: allow CDN purging by surrogate key
 	 * Use Wikia::setSurrogateKeysHeaders helper to emit proper headers

@@ -58,6 +58,17 @@ class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 		}
 	}
 
+	public function addThumblrSurrogateKey( string $key ) {
+		$this->buckets[self::SERVICE_VIGNETTE]['keys'][] = $key;
+		$this->info(
+			'varnish.purge',
+			[
+				'key' => $key,
+				'service' => self::SERVICE_VIGNETTE,
+			]
+		);
+	}
+
 	/**
 	 * SUS-81: allow CDN purging by surrogate key
 	 *

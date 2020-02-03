@@ -113,6 +113,6 @@ class AsyncPurgeTask extends BaseTask {
 				'key_before_hashing' => $key->valueBeforeHashing(),
 			]
 		);
-		ServiceFactory::instance()->purgerFactory()->purger()->addSurrogateKey( $key->value() );
+		ServiceFactory::instance()->purgerFactory()->purger()->addThumblrSurrogateKey( $key->value() );
 	}
 }
