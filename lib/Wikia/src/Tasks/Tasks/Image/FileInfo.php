@@ -44,4 +44,8 @@ class FileInfo {
 	public function getPathPrefix() {
 		return $this->pathPrefix;
 	}
+
+	public function isArchive() {
+
+	}
 }

@@ -7,7 +7,7 @@ use Wikia\Tasks\AsyncCeleryTask;
 
 class CeleryPurgerTest extends TestCase {
 
-	/** @var CeleryPurger $purger */
+	/** @var CeleryPurgerQueue $purger */
 	private $purger;
 
 	protected function setUp() {
@@ -15,7 +15,7 @@ class CeleryPurgerTest extends TestCase {
 
 		/** @var TaskPublisher|\PHPUnit_Framework_MockObject_MockObject $taskPublisher */
 		$taskPublisher = $this->getMockForAbstractClass( TaskPublisher::class );
-		$this->purger = new CeleryPurger( $taskPublisher );
+		$this->purger = new CeleryPurgerQueue( $taskPublisher );
 	}
 
 	public function testShouldRegisterItselfAsTaskProducer() {
@@ -25,12 +25,12 @@ class CeleryPurgerTest extends TestCase {
 
 		$taskPublisher->expects( $this->once() )
 			->method( 'registerProducer' )
-			->with( $this->callback( function ( CeleryPurger $purger ) use ( &$producer )  {
+			->with( $this->callback( function ( CeleryPurgerQueue $purger ) use ( &$producer )  {
 				$producer = $purger;
 				return true;
 			} ) );
 
-		$purger = new CeleryPurger( $taskPublisher );
+		$purger = new CeleryPurgerQueue( $taskPublisher );
 
 		$this->assertSame( $purger, $producer );
 	}
@@ -52,7 +52,7 @@ class CeleryPurgerTest extends TestCase {
 
 			$data = $task->serialize();
 
-			list( $urls, $keys, $service ) = $data['args'];
+			[ $urls, $keys, $service ] = $data['args'];
 
 			$this->assertEquals( $expected[$service], $urls, "Should purge correct set of URLs for service: $service" );
 			$this->assertEmpty( $keys, 'Should not purge surrogate keys when none given' );
@@ -85,7 +85,7 @@ class CeleryPurgerTest extends TestCase {
 		foreach ( $this->purger->getTasks() as $task ) {
 			$data = $task->serialize();
 
-			list( $urls, $keys, $service ) = $data['args'];
+			[ $urls, $keys, $service ] = $data['args'];
 
 			$this->assertEquals( 'mediawiki', $service );
 			$this->assertEquals( $inputUrls, $urls, "Should purge correct set of URLs" );

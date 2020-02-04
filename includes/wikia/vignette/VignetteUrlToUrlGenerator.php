@@ -1,6 +1,7 @@
 <?php
-use \Wikia\Vignette\UrlGenerator;
-use \Wikia\Logger\Loggable;
+
+use Wikia\Logger\Loggable;
+use Wikia\Vignette\UrlGenerator;
 
 /**
  * Class VignetteUrlToUrlGenerator
@@ -11,28 +12,39 @@ class VignetteUrlToUrlGenerator {
 
 	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/|avatars\/)?(?<relativePath>.*?)\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*))?/';
 
+	/** @var string */
 	private $url;
+	/** @var bool */
 	private $asOriginal;
 	private $urlParts;
 	private $query;
 	private $timestamp;
 	private $pathPrefix;
+	/** @var bool */
+	private $strict;
 
-	public function __construct($url, $asOriginal=false) {
+	public function __construct( $url, $asOriginal = false, $strict = false ) {
 		$this->url = $url;
 		$this->asOriginal = $asOriginal;
+		$this->strict = $strict;
 
-		if (!VignetteRequest::isVignetteUrl($url)) {
-			$this->reportWarning('invalid url');
+		if ( !VignetteRequest::isVignetteUrl( $url ) ) {
+			$this->reportWarning( 'invalid url' . $url );
+			if ( $strict ) {
+				throw new InvalidArgumentException( ( 'URL is not a Vignette URL ' . $url ) );
+			}
 		}
 	}
 
 	public function build() {
-		if (!$this->parseUrl()) {
-			$this->reportWarning('unable to parse url');
+		if ( !$this->parseUrl() ) {
+			$this->reportWarning( 'unable to parse url ' . $this->url );
+			if ( $this->strict ) {
+				throw new InvalidArgumentException( ( 'URL is not a Vignette URL ' . $this->url ) );
+			}
 		}
 
-		$isArchive = $this->urlParts['revision'] != \Wikia\Vignette\UrlGenerator::REVISION_LATEST;
+		$isArchive = $this->urlParts['revision'] != UrlGenerator::REVISION_LATEST;
 		if ($isArchive) {
 			$this->timestamp = $this->urlParts['revision'];
 		}
@@ -93,7 +105,7 @@ class VignetteUrlToUrlGenerator {
 				$this->reportWarning('invalid chunk');
 			}
 
-			list($key, $val) = $chunk;
+			[$key, $val] = $chunk;
 			switch ($key) {
 				case 'width':
 					$generator->width($val);

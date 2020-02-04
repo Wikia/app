@@ -21,22 +21,26 @@ use Wikia\Tasks\Queues\PurgeQueue;
  * @author macbre
  */
 
-class CeleryPurger implements TaskProducer {
+class CeleryPurgerQueue implements TaskProducer, PurgerQueue {
 
 	use Loggable;
 
 	// task to be run by Celery to actually perform the purge
 	const TASK_NAME = 'celery_workers.purger.purge';
+	const SERVICE_MEDIAWIKI = 'mediawiki';
+	const SERVICE_VIGNETTE = 'vignette';
+	const KEYS = 'keys';
+	const URLS = 'urls';
 
 	/** @var array $buckets */
 	private $buckets = [
-		'mediawiki' => [
-			'urls' => [],
-			'keys' => [],
+		self::SERVICE_MEDIAWIKI => [
+			self::URLS => [],
+			self::KEYS => [],
 		],
-		'vignette' => [
-			'urls' => [],
-			'keys' => [],
+		self::SERVICE_VIGNETTE => [
+			self::URLS => [],
+			self::KEYS => [],
 		],
 	];
 
@@ -48,12 +52,23 @@ class CeleryPurger implements TaskProducer {
 		global $wgPurgeVignetteUsingSurrogateKeys;
 
 		foreach ( $urls as $item ) {
-			if ( isset( $wgPurgeVignetteUsingSurrogateKeys ) && VignetteRequest::isVignetteUrl( $item ) ) {
-				$this->buckets['vignette']['urls'][] = $item;
+			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
+				$this->buckets[self::SERVICE_VIGNETTE][self::URLS][] = $item;
 			} else {
-				$this->buckets['mediawiki']['urls'][] = $item;
+				$this->buckets[self::SERVICE_MEDIAWIKI][self::URLS][] = $item;
 			}
 		}
+	}
+
+	public function addThumblrSurrogateKey( string $key ) {
+		$this->buckets[self::SERVICE_VIGNETTE][self::KEYS][] = $key;
+		$this->info(
+			'varnish.purge',
+			[
+				'key' => $key,
+				'service' => self::SERVICE_VIGNETTE,
+			]
+		);
 	}
 
 	/**
@@ -62,14 +77,13 @@ class CeleryPurger implements TaskProducer {
 	 * Use Wikia::setSurrogateKeysHeaders helper to emit proper headers
 	 *
 	 * @param string $key surrogate key to purge
-	 * @param string $service Fastly's service name (defaults to "mediawiki")
 	 */
-	public function addSurrogateKey( string $key, string $service = 'mediawiki' ) {
-		$this->buckets[$service]['keys'][] = $key;
+	public function addSurrogateKey( string $key ) {
+		$this->buckets[self::SERVICE_MEDIAWIKI][self::KEYS][] = $key;
 
 		$this->info( 'varnish.purge', [
 			'key' => $key,
-			'service' => $service
+			'service' => self::SERVICE_MEDIAWIKI
 		] );
 	}
 
@@ -81,18 +95,18 @@ class CeleryPurger implements TaskProducer {
 				$task = new AsyncCeleryTask();
 
 				$task->taskType( self::TASK_NAME );
-				$task->setArgs( $data['urls'], $data['keys'], $service );
+				$task->setArgs( $data[self::URLS], $data[self::KEYS], $service );
 				$task->setQueue( PurgeQueue::NAME );
 
 				yield $task;
 			}
 
-			$urlsByService[$service] = $data['urls'];
+			$urlsByService[$service] = $data[self::URLS];
 		}
 
 		// log purges using Kibana (BAC-1317)
 		$context = [
-			'urls' => $urlsByService
+			self::URLS => $urlsByService
 		];
 
 		$this->info( 'varnish.purge', $context );

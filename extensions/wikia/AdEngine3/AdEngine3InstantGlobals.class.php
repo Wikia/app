@@ -39,7 +39,6 @@ class AdEngine3InstantGlobals
 		$vars[] = 'wgAdDriverConfiantDesktopCountries';
 		$vars[] = 'wgAdDriverConfiantMobileCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
-		$vars[] = 'wgAdDriverDisableAdStackCountries';
 		$vars[] = 'wgAdDriverDisableFMRDelayOasisCountries';
 		$vars[] = 'wgAdDriverFMRRotatorDelay';
 		$vars[] = 'wgAdDriverEagerlyLoadedIncontentBoxad1MobileWikiCountries';
