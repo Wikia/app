@@ -192,7 +192,7 @@ class WikiFactoryPage extends SpecialPage {
 		$this->mTab = $tab;
 		if( !is_null( $cityid ) ) {
 			$isUCPWiki = WikiFactory::isUCPWiki( $cityid );
-			if ( !$isUCPWiki ) {
+			if ( $isUCPWiki ) {
 				$output = $this->getOutput();
 				$output->addWikiMsg(
 					'wikifactory-wiki-config-redirect',
