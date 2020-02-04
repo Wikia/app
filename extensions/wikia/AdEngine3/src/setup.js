@@ -53,8 +53,6 @@ async function updateWadContext() {
 }
 
 async function setupAdContext(wikiContext, consents) {
-	const showAds = getReasonForNoAds() === null;
-
 	utils.geoService.setUpGeoData();
 
 	context.extend(basicContext);
@@ -64,8 +62,12 @@ async function setupAdContext(wikiContext, consents) {
 	const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
 
 	context.set('wiki', wikiContext);
+	context.set('options.disableAdStack', instantConfig.get('icDisableAdStack'));
 	context.set('state.isSteam', utils.client.isSteamPlatform());
-	context.set('state.showAds', showAds && !context.get('state.isSteam'));
+
+	const showAds = getReasonForNoAds() === null;
+
+	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
 	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
 	context.set('custom.hiviLeaderboard', instantConfig.isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
@@ -289,8 +291,8 @@ function getReasonForNoAds() {
 	const possibleFrontendReasons = {
 		'noads_querystring': !!utils.queryString.get('noads'),
 		'noexternals_querystring': !!utils.queryString.get('noexternals'),
-		// two above are probably not needed but data QA will confirm 3:-)
-		'steam_browser': context.get('state.isSteam') === true,
+		'steam_browser': context.get('state.isSteam'),
+		'ad_stack_disabled': context.get('options.disableAdStack'),
 	};
 
 	const reasons = Object.keys(possibleFrontendReasons).filter(function (key) {

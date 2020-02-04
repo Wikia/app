@@ -138,6 +138,19 @@
                 "muthead",
                 "oasis"
             ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
             "value": false
         }
     ],
@@ -391,6 +404,13 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icDisableAdStack": [
+        {
+            "apps": [
+                "oasis"
+            ]
         }
     ],
     "icPrebidOneMobile": [
@@ -812,6 +832,19 @@
                 "oasis"
             ],
             "regions": [
+                "PL"
+            ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200114.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
                 "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v2.44.2/20200110.min.js"
@@ -833,16 +866,6 @@
         }
     ],
     "icPorvataDirect": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "US"
-            ],
-            "value": false
-        },
         {
             "apps": [
                 "mobile-wiki",
