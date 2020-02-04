@@ -183,7 +183,7 @@ $config['oasis_jquery'] = [
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 
-		// Remove this code after one week to display privacy notice update
+		// To be removed in https://wikia-inc.atlassian.net/browse/CAKE-5470
 		'//skins/oasis/js/privacyUpdateNotification.js',
 
 		// BackgroundChanger
