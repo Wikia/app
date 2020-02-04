@@ -587,7 +587,7 @@
 						}
 
 						if (typeof (modal) !== 'undefined') {
-							// VSTF can delete without confirmation modal
+							// SOAP can delete without confirmation modal
 							modal.trigger('close');
 						}
 					}
