@@ -5,7 +5,7 @@ $(function() {
         var notification = new BannerNotification(message).show();
 
         notification.onClose(function() {
-            document.cookie = 'dismissed-privacy-notification=true; path=/';
+            window.Wikia.Cookies.set('dismissed-privacy-notification', true);
         });
     }   
 });
