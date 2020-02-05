@@ -73,7 +73,7 @@ class InterwikiEdit extends SpecialPage {
 
 } // end class InterwikiEdit
 
-function wfSIWEMaybeAddExtraFields( int $wikiId, array $fields ): array {
+function wfSIWEAddExtraFields( int $wikiId, array $fields ): array {
 	if ( WikiFactory::isUCPWiki( $wikiId ) ) {
 		return array_merge( $fields, [
 				'iw_api' => '',
@@ -583,4 +583,3 @@ function wfSIWEClearCache() {
 
 	return 'Cache cleared for ' . $db;
 }
-
