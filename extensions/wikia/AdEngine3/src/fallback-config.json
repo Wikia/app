@@ -94,9 +94,7 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
-                "CA",
-                "PL"
+                "XX"
             ],
             "value": true
         }
@@ -542,6 +540,40 @@
             "sampling": 35.0,
             "samplingCache": true,
             "value": true
+        }
+    ],
+    "icKrux": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "AU",
+                "BE",
+                "BR",
+                "CA",
+                "CL",
+                "DE",
+                "DK",
+                "ES",
+                "FI",
+                "FR",
+                "GB",
+                "IT",
+                "JP",
+                "MX",
+                "NL",
+                "NO",
+                "NZ",
+                "PL",
+                "RU",
+                "SE",
+                "SG",
+                "UK",
+                "US"
+            ],
+            "value": false
         }
     ],
     "icPrebidAol": [
@@ -990,6 +1022,21 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icKruxSegmentsTracking": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": [
+                "uijvh5mh8",
+                "qjh7uwb8w"
+            ]
         }
     ],
     "icAdEngineDelay": [
