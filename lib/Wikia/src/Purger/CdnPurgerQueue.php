@@ -41,7 +41,7 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 		global $wgPurgeVignetteUsingSurrogateKeys;
 		foreach ( $urls as $item ) {
 			if ( filter_var( $item, FILTER_VALIDATE_URL ) === false ) {
-				$exceptionWithStackTrace = new\RuntimeException( 'Invalid URL ' . $item );
+				$exceptionWithStackTrace = new \RuntimeException( 'Invalid URL ' . $item );
 				$this->error(
 					'The URL provided for purging is not valid',
 					[ 'url' => $item, 'exception' => $exceptionWithStackTrace ]
