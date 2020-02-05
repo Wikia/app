@@ -278,7 +278,7 @@ function wfSIWEEditInterwiki(){
   					}
 				}else{
 						$ret .= "<p>Changing interwiki...<br />\n";
-						$fields = wfSIWEMaybeAddExtraFields( $wikiaID, $fields );
+						$fields = wfSIWEAddExtraFields( $wikiaID, $fields );
 						$res = $db->upsert(
 							'interwiki',
 							$fields,
