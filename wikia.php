@@ -48,7 +48,6 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 
 	try {
-
 		$response = $app->sendExternalRequest( null, null, null );
 
 		// if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)

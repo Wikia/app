@@ -44,27 +44,21 @@ class WikiaSearchIndexerController extends WikiaController
 	public function get()
 	{
 		$this->getResponse()->setFormat('json');
-		\Wikia\Logger\WikiaLogger::instance()->info( 'Start' );
 
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service', 'DefaultContent' );
-		\Wikia\Logger\WikiaLogger::instance()->info( $serviceName );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
 		$flags = explode( '|', $this->getVal( 'flags', '' ) );
-		\Wikia\Logger\WikiaLogger::instance()->info( $this->getVal( 'ids', '' ) );
 		if ( class_exists( $serviceName ) ) {
 			/* @var Wikia\Search\IndexService\AbstractService $service */
 			$service = new $serviceName( $ids, $flags );
 			$ids = $this->getVal( 'ids' );
-			\Wikia\Logger\WikiaLogger::instance()->info( "cvcvvc" );
 			if ( !empty( $ids ) ) {
 				$this->response->setData( $service->getResponseForPageIds() );
-				\Wikia\Logger\WikiaLogger::instance()->info( "returned" );
 			}
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'WikiaSearchIndexer invoked with bad service param.',
 				[ 'serviceName' => $serviceName ] );
 		}
-		\Wikia\Logger\WikiaLogger::instance()->info( "fin" );
 	}
 	
 	/**
