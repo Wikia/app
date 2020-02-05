@@ -263,7 +263,7 @@ function wfSIWEEditInterwiki(){
 							</form>";
 					}else{
 						$ret .= "<p>Changeing interwiki...<br />\n";
-						$fields = wfSIWEMaybeAddExtraFields( $wikiaID, $fields );
+						$fields = wfSIWEAddExtraFields( $wikiaID, $fields );
 						$res = $db->insert( 'interwiki', $fields, __METHOD__ );
 
 	  					if ($res){
