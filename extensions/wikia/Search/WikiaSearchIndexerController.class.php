@@ -65,7 +65,6 @@ class WikiaSearchIndexerController extends WikiaController
 				[ 'serviceName' => $serviceName ] );
 		}
 		\Wikia\Logger\WikiaLogger::instance()->info( "fin" );
-		die("fin test die on the on method");
 	}
 	
 	/**
