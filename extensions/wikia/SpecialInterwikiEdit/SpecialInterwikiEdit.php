@@ -542,7 +542,7 @@ function wfSIWELinkWikisCommitProper ($linker, $linkee) {
 			'iw_local' => '1',
 			'iw_trans' => '0',
 		];
-		$fields = wfSIWEMaybeAddExtraFields( $linker, $fields );
+		$fields = wfSIWEAddExtraFields( $linker, $fields );
 		return (bool) $db->replace(
 			"`$linkerDB`.`interwiki`",
 			[],
