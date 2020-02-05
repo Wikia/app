@@ -30,7 +30,6 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	require_once $IP . "/extensions/wikia/ApiDocs/ApiDocs.setup.php";
 	// same for JsonFormat
 	require_once $IP . "/extensions/wikia/JsonFormat/JsonFormat.setup.php";
-	Wikia\Logger\WikiaLogger::instance()->info( 'APP');
 
 	$app = F::app();
 
@@ -38,25 +37,20 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 		header( "HTTP/1.1 400 Bad Request", true, 400 );
 		return;
 	}
-	Wikia\Logger\WikiaLogger::instance()->info( 'title');
 
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
 
-	Wikia\Logger\WikiaLogger::instance()->info( 'purge');
 	// support "mcache" URL parameter to ease debugging
 	Wikia::setUpMemcachePurge( $app->wg->Request, $app->wg->User );
 
-	Wikia\Logger\WikiaLogger::instance()->info( 'skin');
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 
 	try {
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'REQUEST');
 		$response = $app->sendExternalRequest( null, null, null );
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'CacheControl');
 		// if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
 		// then force no cache to reflect api.php default behavior
 		$cacheControl = $response->getHeader( 'Cache-Control' );
@@ -69,7 +63,6 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 				'method' => $response->getMethodName()
 			] );
 		}
-		Wikia\Logger\WikiaLogger::instance()->info( 'Exception');
 
 		// PLATFORM-1633: decrease the noise in reported transactions
 		$ex = $response->getException();
@@ -84,15 +77,11 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 			] );
 		}
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'Handle domain');
 		wfHandleCrossSiteAJAXdomain(); // PLATFORM-1719
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'send header');
 		$response->sendHeaders();
-		Wikia\Logger\WikiaLogger::instance()->info( 'hook');
 		Hooks::run( 'NirvanaAfterRespond', [ $app, $response ] );
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'render');
 		$response->render();
 	} catch ( WikiaHttpException $e ) {
 		http_response_code( $e->getCode() );
@@ -123,12 +112,10 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 			'exception' => $e
 		] );
 	}
-	Wikia\Logger\WikiaLogger::instance()->info( 'Kill MW');
 	// Execute common request shutdown procedure
 	$mw = new MediaWiki();
 	$mw->restInPeace();
 	die;
-	Wikia\Logger\WikiaLogger::instance()->info( 'Killed MW');
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }
