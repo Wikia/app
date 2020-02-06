@@ -5,7 +5,7 @@ $(function() {
         var notification = new BannerNotification(message).show();
 
         notification.onClose(function() {
-            window.Wikia.Cookies.set('dismissed-privacy-notification', true);
+            window.Wikia.Cookies.set('dismissed-privacy-notification', true, {domain: 'fandom.com'});
         });
     }   
 });
