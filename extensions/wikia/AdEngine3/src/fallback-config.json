@@ -830,8 +830,11 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "PL",
+                "US-CA",
+                "US-NY"
             ],
+            "sampling": 100.0,
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200114.min.js"
         },
         {
