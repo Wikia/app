@@ -27,7 +27,7 @@ $(function() {
         }
 
         notification.onClose(function() {
-            window.Wikia.Cookies.set('dismissed-privacy-notification', true, { domain: getCookieDomain(window.location.hostname) });
+            window.Wikia.Cookies.set('dismissed-privacy-notification', true, { domain: getCookieDomain(window.location.hostname), path: '/' });
         });
     }   
 });
