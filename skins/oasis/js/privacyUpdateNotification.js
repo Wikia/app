@@ -5,22 +5,19 @@ $(function() {
         var notification = new BannerNotification(message).show();
 
         function getCookieDomain(hostname) {
-            const parts = hostname.split('.');
-            if (parts.length < 2) {
-                return undefined;
-            }
+            var parts = hostname.split('.');
         
-            let cookieDomain = `.${parts[parts.length - 2]}.${parts[parts.length - 1]}`;
+            var cookieDomain = '.' + parts[parts.length-2] + '.' + parts[parts.length - 1];
             // These exceptions require a third part for a valid cookie domain. This isn't
             // a definitive list but rather the most likely domains on which Fandom would
             // host a site.
-            const exceptions = [
+            var exceptions = [
                 '.co.jp',
                 '.co.nz',
                 '.co.uk',
             ];
             if (exceptions.indexOf(cookieDomain) >= 0) {
-                cookieDomain = `.${parts[parts.length - 3]}${cookieDomain}`;
+                cookieDomain = '.' + parts[parts.length - 3] + cookieDomain;
             }
         
             return cookieDomain;
