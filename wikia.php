@@ -114,6 +114,7 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	// Execute common request shutdown procedure
 	$mw = new MediaWiki();
 	$mw->restInPeace();
+	die;
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }

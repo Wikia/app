@@ -136,19 +136,6 @@
                 "muthead",
                 "oasis"
             ],
-            "regions": [
-                "PL"
-            ],
-            "value": true
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
             "value": false
         }
     ],
