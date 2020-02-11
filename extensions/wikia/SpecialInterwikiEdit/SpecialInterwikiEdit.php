@@ -73,6 +73,15 @@ class InterwikiEdit extends SpecialPage {
 
 } // end class InterwikiEdit
 
+function wfSIWEAddExtraFields( int $wikiId, array $fields ): array {
+	if ( WikiFactory::isUCPWiki( $wikiId ) ) {
+		return array_merge( $fields, [
+				'iw_api' => '',
+				'iw_wikiid' => '',
+			] );
+	}
+	return $fields;
+}
 
 function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 	global $wgOut, $wgExternalSharedDB;
@@ -254,6 +263,7 @@ function wfSIWEEditInterwiki(){
 							</form>";
 					}else{
 						$ret .= "<p>Changeing interwiki...<br />\n";
+						$fields = wfSIWEAddExtraFields( $wikiaID, $fields );
 						$res = $db->insert( 'interwiki', $fields, __METHOD__ );
 
 	  					if ($res){
@@ -267,15 +277,19 @@ function wfSIWEEditInterwiki(){
 	  					}
   					}
 				}else{
-			        	$ret .= "<p>Changing interwiki...<br />\n";
-		        		$res = $db->query("INSERT INTO " .
-		        				"`interwiki` (iw_prefix,iw_url,iw_local,iw_trans) " .
-		        				"VALUES (". $db->addQuotes($fields['iw_prefix']). ",". $db->addQuotes($fields['iw_url']). ",".
-		        				$db->addQuotes($fields['iw_local']). ",". $db->addQuotes($fields['iw_trans']). ") ".
-		        				"ON DUPLICATE KEY ".
-		        				"UPDATE iw_url=". $db->addQuotes($fields['iw_url']).
-		        				", iw_local=". $db->addQuotes($fields['iw_local']).
-		        				", iw_trans=". $db->addQuotes($fields['iw_trans']), __METHOD__ );
+						$ret .= "<p>Changing interwiki...<br />\n";
+						$fields = wfSIWEAddExtraFields( $wikiaID, $fields );
+						$res = $db->upsert(
+							'interwiki',
+							$fields,
+							[],
+							[
+								'iw_url' => $fields['iw_url'],
+								'iw_local' => $fields['iw_local'],
+								'iw_trans' => $fields['iw_trans'],
+							],
+							__METHOD__
+						);
 
 	  				if ($res){
   						$ret.= "Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
@@ -522,12 +536,22 @@ function wfSIWELinkWikisCommitProper ($linker, $linkee) {
 
 	$db =& wfGetDB( DB_MASTER, array(), $linkerDB );
 	if ($db->selectDB($linkerDB)) {
-		return (bool) $db->query("REPLACE INTO `$linkerDB`.`interwiki`(iw_prefix, iw_url, iw_local, iw_trans)" .
-				" values('". $iw_prefix. "','". wfSIWEMakeInterlanguageUrl($linkee). "',1,0);");
-	} else {
-		return false;
+		$fields = [
+			'iw_prefix' => $iw_prefix,
+			'iw_url' => wfSIWEMakeInterlanguageUrl( $linkee ),
+			'iw_local' => '1',
+			'iw_trans' => '0',
+		];
+		$fields = wfSIWEAddExtraFields( $linker, $fields );
+		return (bool) $db->replace(
+			"`$linkerDB`.`interwiki`",
+			[],
+			$fields,
+			__METHOD__
+		);
 	}
 
+	return false;
 }
 
 function wfSIWEGetRequestData() {
@@ -559,4 +583,3 @@ function wfSIWEClearCache() {
 
 	return 'Cache cleared for ' . $db;
 }
-

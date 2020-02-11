@@ -69,7 +69,7 @@ class WikiFactory {
 	// Language wikis index city_id in wikicities.city_list.
 	const LANGUAGE_WIKIS_INDEX = 3;
 
-	const SLOT_1 = 'slot1';
+	const SLOT_2 = 'slot2';
 
 	static public $types = [
 		"integer",
@@ -3640,7 +3640,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * Returns true if city_path for given wiki is equal as static::SLOT_1
+	 * Returns true if city_path for given wiki is equal to static::SLOT_1
 	 *
 	 * @access public
 	 * @static
@@ -3649,7 +3649,7 @@ class WikiFactory {
 	 *
 	 * @return boolean
 	 */
-	static public function isSlot1Wiki( $city_id ) {
-		return WikiFactory::getCityPath( $city_id ) === static::SLOT_1;
+	static public function isUCPWiki( $city_id ) {
+		return WikiFactory::getCityPath( $city_id ) === static::SLOT_2;
 	}
-};
+}

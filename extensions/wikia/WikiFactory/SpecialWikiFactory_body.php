@@ -191,8 +191,8 @@ class WikiFactoryPage extends SpecialPage {
 
 		$this->mTab = $tab;
 		if( !is_null( $cityid ) ) {
-			$isSlot1Wiki = WikiFactory::isSlot1Wiki( $cityid );
-			if ( !$isSlot1Wiki ) {
+			$isUCPWiki = WikiFactory::isUCPWiki( $cityid );
+			if ( $isUCPWiki ) {
 				$output = $this->getOutput();
 				$output->addWikiMsg(
 					'wikifactory-wiki-config-redirect',
