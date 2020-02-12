@@ -488,35 +488,9 @@ class User implements JsonSerializable {
 		}
 
 		try {
-			$tokenInfo = self::heliosClient()->info( $token );
+			$tokenInfo = self::heliosClient()->info( $token, $request );
 			if ( empty( $tokenInfo->user_id ) ) {
 				return new User;
-			}
-
-			// PLATFORM-4490 - make sure helios returns correct user id
-			$sessionUserId = $request->getSessionData( 'helios_user_id' );
-			if ( empty( $sessionUserId ) ) {
-				$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
-			} else {
-				if ( $tokenInfo->user_id != $sessionUserId ) {
-					// try to exclude false alerts when user just logged into a new account
-					if ( !empty( $_SERVER['HTTP_REFERER'] ) &&
-						 ( strpos( $_SERVER['HTTP_REFERER'], '/signin' ) !== false ||
-						   strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false ) ) {
-						$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
-					} else {
-						WikiaLogger::instance()->error( 'Helios user id mismatch', [
-							'sessionUserId' => $sessionUserId,
-							'heliosResponse' => [
-								'userId' => $tokenInfo->user_id,
-								'accessToken' => $tokenInfo->access_token,
-								'beacon' => self::heliosClient()->getResponseHeader( 'x-client-beacon-id' ),
-								'servedBy' => self::heliosClient()->getResponseHeader( 'x-served-by' ),
-								'timestamp' => self::heliosClient()->getResponseHeader( 'x-backend-timestamp' ),
-							]
-						] );
-					}
-				}
 			}
 
 			$user = self::newFromId( $tokenInfo->user_id );
@@ -4333,31 +4307,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-
-	/**
-	 * Is the user authenticated via the authentication service?
-	 * @return bool true if yes, false if no
-	 */
-	public function isUserAuthenticatedViaAuthenticationService() {
-		global $wgRejectAuthenticationFallback;
-
-		if ( !$wgRejectAuthenticationFallback ) {
-			return true;
-		}
-
-		$token = $this->getGlobalAuthToken();
-		if ( empty( $token ) ) {
-			return false;
-		}
-
-		$tokenInfo = self::heliosClient()->info( $token );
-		if ( !empty( $tokenInfo->user_id ) ) {
-			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
-		}
-
-		return false;
-	}
-
+	
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
