@@ -31,8 +31,4 @@ class WikiFounderIpController extends WikiaController {
 		$this->response->setCode( 200 );
 		$this->response->setVal("wikiFounderIp", $ip);
 	}
-
-	public function allowsExternalRequests() {
-		return false;
-	}
 }
