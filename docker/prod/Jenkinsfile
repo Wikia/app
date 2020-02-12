@@ -430,13 +430,10 @@ EOL""")
 
     stage('Trigger tests') {
       if (!params.dry_run) {
-        //TODO: uncomment when this becomes main release pipeline
-        // build job: 'app-prod-push-event',
-        //   parameters: [
-        //     string(name: 'release', value: nextAppTag),
-        //     string(name: 'datacenter', value: 'sjc')
-        //   ],
-        //   wait: false
+            build job: 'app-prod-push-event', parameters: [
+                     string(name: 'release', value: String.format("app: %s,config: %s,", nextAppReleaseTag, nextConfigReleaseTag)),
+                     string(name: 'datacenter', value: 'sjc')],
+                     wait: false
       } else {
         println('Dry run: app-prod-push-event')
       }
