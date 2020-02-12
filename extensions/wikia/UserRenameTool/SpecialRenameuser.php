@@ -44,7 +44,7 @@ $wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.a
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
 $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProcess.class.php';
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
-$wgAutoloadClasses['RemoveUserDataController'] = dirname( __FILE__ ). '/RenameUserController.php';
+$wgAutoloadClasses['RenameUserController'] = dirname( __FILE__ ). '/RenameUserController.php';
 
 // Resource Loader modules
 $userRenameResourceTemplate = array(
