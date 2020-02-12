@@ -431,7 +431,7 @@ EOL""")
     stage('Trigger tests') {
       if (!params.dry_run) {
             build job: 'app-prod-push-event', parameters: [
-                     string(name: 'release', value: String.format("app: %s,config: %s,", nextAppReleaseTag, nextConfigReleaseTag)),
+                     string(name: 'release', value: String.format("app: %s,config: %s,", nextAppTag, nextConfigTag)),
                      string(name: 'datacenter', value: 'sjc')],
                      wait: false
       } else {
