@@ -113,32 +113,6 @@ class AdEngine3InstantGlobals
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables(array &$vars)
 	{
-		// Shared variables with communities
-		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
-		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
-		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
-		$vars[] = 'wgAdDriverMoatYieldIntelligenceCountries';
-		$vars[] = 'wgAdDriverNielsenCountries';
-		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
-		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
-		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
-		$vars[] = 'wgAdDriverStickySlotsLines';
-		$vars[] = 'wgAdDriverVideoMidrollCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
-		$vars[] = 'wgAdDriverVideoPostrollCountries';
-		$vars[] = 'wgAdDriverLABradorDfpKeyvals';
-		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries';
-
-		// News&Stories variables only
-		$vars[] = 'wgAdDriverLABradorTestF2Countries';
-		$vars[] = 'wgAdDriverF2BabDetectionCountries';
-		$vars[] = 'wgAdDriverF2DelayTimeout';
-		$vars[] = 'wgAdDriverF2VideoF15nCountries';
-		$vars[] = 'wgAdDriverF2VideoF15nMap';
-
 		return true;
 	}
 
@@ -151,19 +125,6 @@ class AdEngine3InstantGlobals
 	 */
 	public static function onInstantGlobalsGetFandomCreatorVariables(array &$vars)
 	{
-		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
-		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
-		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
-		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
-		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
-		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
-		$vars[] = 'wgAdDriverVideoMidrollCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
-		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
-		$vars[] = 'wgAdDriverVideoPostrollCountries';
-
 		return true;
 	}
 }
