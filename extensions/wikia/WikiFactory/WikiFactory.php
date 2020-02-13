@@ -3640,7 +3640,21 @@ class WikiFactory {
 	}
 
 	/**
-	 * Returns true if city_path for given wiki is equal to static::SLOT_1
+	 * Returns true if a given city path is equal to static::SLOT_2
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string $city_path
+	 *
+	 * @return boolean
+	 */
+	static public function isUCPPath( $city_path ) {
+		return $city_path === static::SLOT_2;
+	}
+
+	/**
+	 * Returns true for UCP wikis
 	 *
 	 * @access public
 	 * @static
@@ -3650,6 +3664,6 @@ class WikiFactory {
 	 * @return boolean
 	 */
 	static public function isUCPWiki( $city_id ) {
-		return WikiFactory::getCityPath( $city_id ) === static::SLOT_2;
+		return self::isUCPPath( self::getCityPath( $city_id ) );
 	}
 }
