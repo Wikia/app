@@ -25,7 +25,14 @@ require([
 ) {
 	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
 
-	if (!canPlayVideo()) {
+	window.canPlayVideo = function () {
+		return videoDetails && (
+			videoDetails.isDedicatedForArticle ||
+			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+		);
+	};
+
+	if (!window.canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');
 		return;
 	}
@@ -142,13 +149,6 @@ require([
 			lang: videoDetails.lang,
 			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
-	}
-
-	function canPlayVideo() {
-		return videoDetails && (
-			videoDetails.isDedicatedForArticle ||
-			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
-		);
 	}
 
 	function getModifiedPlaylist(playlist, isDedicatedForArticle) {
