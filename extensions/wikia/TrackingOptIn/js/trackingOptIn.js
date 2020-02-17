@@ -1,10 +1,9 @@
 /*global define*/
 define('wikia.trackingOptIn', [
-	'wikia.instantGlobals',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.trackingOptInModal'
-], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
+], function (lazyQueue, log, trackingOptInModal) {
 	var gdprInstance,
 		ccpaInstance,
 		optIn = false,

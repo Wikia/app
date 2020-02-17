@@ -50,10 +50,4 @@ class QualarooHooks {
 
 		return true;
 	}
-
-	public static function onInstantGlobalsGetVariables( array &$vars ) {
-		$vars[] = 'wgMobileQualaroo';
-
-		return true;
-	}
 }

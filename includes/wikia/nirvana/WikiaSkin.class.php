@@ -250,7 +250,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	/**
 	 * Load ResourceLoader modules that have a short caching time
 	 *
-	 * Used by AbTesting and InstantGlobals
+	 * Used by AbTesting
 	 *
 	 * @return string
 	 * @author macbre
