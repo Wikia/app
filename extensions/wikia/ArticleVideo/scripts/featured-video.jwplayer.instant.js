@@ -25,14 +25,14 @@ require([
 ) {
 	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
 
-	window.canPlayVideo = function () {
+	win.canPlayVideo = function () {
 		return videoDetails && (
 			videoDetails.isDedicatedForArticle ||
 			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
 		);
 	};
 
-	if (!window.canPlayVideo()) {
+	if (!win.canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');
 		return;
 	}
