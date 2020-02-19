@@ -25,7 +25,7 @@ function setupExecutor() {
 
 export const billTheLizardConfigurator = {
 	async configure() {
-		const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
+		const instantConfig =  await InstantConfigService.init();
 		const config = instantConfig.get('wgAdDriverBillTheLizardConfig', {});
 		const { mediaId, videoTags } = context.get('wiki.targeting.featuredVideo') || {};
 		const now = new Date();
