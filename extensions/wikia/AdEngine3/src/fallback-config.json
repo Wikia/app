@@ -727,23 +727,9 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX",
+                "non-US"
             ],
-            "sampling": 5.0,
-            "value": true
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "CZ"
-            ],
-            "sampling": 100.0,
             "value": true
         }
     ],
