@@ -29,7 +29,6 @@ final class MultiDeleteController extends WikiaController {
 
 		foreach ( $pagesToDelete as $pageName ) {
 			$page = WikiPage::factory( \Title::newFromText( $pageName ) );
-			$pageId = $page->getId();
 
 			if ( $page !== null ) {
 				$e = '';
