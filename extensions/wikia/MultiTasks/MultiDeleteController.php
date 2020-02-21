@@ -18,10 +18,10 @@ final class MultiDeleteController extends WikiaController {
 			$this->response->setCode( 405 );
 			return;
 		}
-		$pagesToDelete = $this->getVal( 'pagesToDelete' );
+		$pagesToDelete = $this->getVal( 'pages' );
 		$userId = $this->getVal( 'user' );
 		$reason = $this->getVal( 'reason' );
-		if ( empty( $pagesToDelete ) || empty( $user ) ||  empty( $reason ) ) {
+		if ( empty( $pagesToDelete ) || empty( $userId ) ||  empty( $reason ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -35,5 +35,7 @@ final class MultiDeleteController extends WikiaController {
 				$page->doDeleteArticle( $reason, false, null, null, $e, $user );
 			}
 		}
+		$this->response->setCode( 200 );
+		return;
 	}
 }
