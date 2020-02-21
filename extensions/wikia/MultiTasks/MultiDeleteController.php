@@ -36,6 +36,5 @@ final class MultiDeleteController extends WikiaController {
 			}
 		}
 		$this->response->setCode( WikiaResponse ::RESPONSE_CODE_OK );
-		return;
 	}
 }
