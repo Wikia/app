@@ -24,21 +24,20 @@ require([
 	adsApi,
 ) {
 	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1,
-		willPlayVideoOnCurrentPageView = true;
+		canPlayVideoFlag = null;
 
 	win.canPlayVideo = function () {
-		if (!willPlayVideoOnCurrentPageView) {
-			return false;
+		if (canPlayVideoFlag === null) {
+			canPlayVideoFlag = videoDetails && (
+				videoDetails.isDedicatedForArticle ||
+				!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+			);
 		}
 
-		return videoDetails && (
-			videoDetails.isDedicatedForArticle ||
-			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
-		);
+		return canPlayVideoFlag;
 	};
 
 	if (!win.canPlayVideo()) {
-		willPlayVideoOnCurrentPageView = false;
 		doc.body.classList.add('no-featured-video');
 		return;
 	}
