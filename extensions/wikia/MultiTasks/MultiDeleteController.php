@@ -33,7 +33,7 @@ final class MultiDeleteController extends WikiaController {
 
 			if ( $page !== null ) {
 				$e = '';
-				$page->doDeleteArticle( $reason, false, $pageId, true, $e, $user );
+				$page->doDeleteArticle( $reason, false, 0, true, $e, $user );
 			}
 		}
 		$this->response->setCode( WikiaResponse ::RESPONSE_CODE_OK );
