@@ -299,7 +299,7 @@ export default {
 		slotService.setState('top_boxad', isRightRailApplicable());
 		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
+		slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
 		slotService.setState('floor_adhesion', isFloorAdhesionApplicable());
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());

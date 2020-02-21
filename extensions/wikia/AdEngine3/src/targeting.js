@@ -21,22 +21,33 @@ function decodeLegacyDartParams(dartString) {
 	return params;
 }
 
+function getVideoStatus() {
+	if (context.get('wiki.targeting.hasFeaturedVideo')) {
+		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
+		const isWikiaVideo = context.get('wiki.targeting.featuredVideo.isDedicatedForArticle') === false;
+		const wikiaVideoPlayed = isWikiaVideo && window.canPlayVideo && window.canPlayVideo();
+
+		return {
+			wikiaVideo: isWikiaVideo,
+			videoPlayed: !isWikiaVideo || wikiaVideoPlayed,
+		};
+	}
+
+	return {};
+}
+
 function getAdLayout(targeting) {
 	let layout = targeting.pageType || 'article';
 
 	if (layout === 'article') {
-		if (targeting.hasFeaturedVideo) {
-			// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
-			const isWikiaVideo = targeting.featuredVideo && targeting.featuredVideo.isDedicatedForArticle === false;
-			const wikiaVideoPlayed = isWikiaVideo && window.canPlayVideo && window.canPlayVideo();
-			const videoPrefix = wikiaVideoPlayed ? 'wv' : 'fv';
+		const videoStatus = getVideoStatus();
+		if (!!videoStatus.videoPlayed) {
+			const videoPrefix = videoStatus.wikiaVideo ? 'wv' : 'fv';
 
 			layout = `${videoPrefix}-${layout}`;
-
-			context.set('custom.hasFeaturedVideo', !isWikiaVideo || wikiaVideoPlayed);
 		}
 
-		if (targeting.hasIncontentPlayer) {
+		if (context.get('custom.hasIncontentPlayer')) {
 			layout = `${layout}-ic`;
 		}
 	}
@@ -178,6 +189,7 @@ function getZone(adsContext) {
 }
 
 export default {
+	getVideoStatus,
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
