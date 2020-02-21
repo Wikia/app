@@ -24,17 +24,17 @@ require([
 	adsApi,
 ) {
 	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1,
-		canPlayVideoFlag = null;
+		hasVideoOnPage = null;
 
 	win.canPlayVideo = function () {
-		if (canPlayVideoFlag === null) {
-			canPlayVideoFlag = videoDetails && (
+		if (hasVideoOnPage === null) {
+			hasVideoOnPage = videoDetails && (
 				videoDetails.isDedicatedForArticle ||
 				!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
 			);
 		}
 
-		return canPlayVideoFlag;
+		return hasVideoOnPage;
 	};
 
 	if (!win.canPlayVideo()) {
