@@ -2926,13 +2926,6 @@ $wgEnableJavaScriptTest = false;
 $wgEnableJSVariablesExt = true;
 
 /**
- * Enable Krux ad targeting.
- * @see extensions/wikia/AnalyticsEngine/AnalyticsProviderKrux.php
- * @var bool $wgEnableKruxTargeting
- */
-$wgEnableKruxTargeting = true;
-
-/**
  * Enable Lightbox extension.
  * @var bool $wgEnableLightboxExt
  * @see extensions/wikia/Lightbox

@@ -300,17 +300,17 @@ Er verhindert nicht die Bearbeitung einer bereits vorhandenen Seite.',
 	'phalanx-help-type-user' => 'Dieser Filter blockiert einen Benutzer (genauso wie eine lokale MediaWiki-Sperre), wenn der Name oder die IP-Adresse mit einem Eintrag in der schwarzen Liste übereinstimmt.',
 	'phalanx-help-type-wiki-creation' => 'Dieser Filter verhindert die Erstellung eines Wikis, falls sein Name oder seine URL auf einen Eintrag in der schwarzen Liste passt.',
 	'phalanx-help-type-email' => 'Dieser Filter verhindert die Kontoerstellung über eine blockierte E-Mail-Adresse.',
-	'phalanx-user-block-reason-ip' => 'Es können über diese IP-Adresse im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden, da sie gesperrt ist aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen.
-Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.',
-	'phalanx-user-block-reason-exact' => 'Über diesen Benutzernamen oder diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.',
-	'phalanx-user-block-reason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten FANDOM-Netzwerk keine Änderungen vornehmen.
-Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lösen.',
+	'phalanx-user-block-reason-ip' => 'Es können über diese IP-Adresse im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden, da sie aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen, gesperrt ist.
+Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf.',
+	'phalanx-user-block-reason-exact' => 'Über diesen Benutzernamen oder diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf.',
+	'phalanx-user-block-reason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten Fandom-Netzwerk keine Änderungen vornehmen.
+Nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf, um dieses Problem zu lösen.',
 	'phalanx-user-block-new-account' => 'Dieser Benutzername ist zur Registrierung nicht verfügbar. Bitte wähle einen anderen.',
-	'phalanx-user-block-withreason-ip' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen, im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden.
-Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
-	'phalanx-user-block-withreason-exact' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
-	'phalanx-user-block-withreason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten FANDOM-Netzwerk keine Änderungen vornehmen.
-Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lösen.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-ip' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen, im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. 
+Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-exact' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten Fandom-Netzwerk keine Änderungen vornehmen.
+Nimm bitte [[Spezial:Kontakt|Kontakt zu uns]] auf, um das Problem zu lösen.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
 	'phalanx-title-move-summary' => 'Der von dir eingegebene Grund enthält eine gesperrte Phrase.',
 	'phalanx-content-spam-summary' => 'Der Text wurde in der Zusammenfassung gefunden.',
 	'phalanx-stats-title' => 'Phalanx Statistik',
@@ -345,7 +345,7 @@ Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lös
 	'right-phalanx' => 'Kann globale Benutzersperren und Spamfilter verwalten',
 	'right-phalanxexempt' => 'Von Phalanx-Regelungen ausgenommen',
 	'right-phalanxemailblock' => 'Kann E-Mail-bezogene Sperren ordnen, einsehen und bearbeiten',
-	'phalanx-sp-contributions-blocked-globally' => 'Dieser Benutzer ist derzeit im gesamten FANDOM-Netzwerk gesperrt.',
+	'phalanx-sp-contributions-blocked-globally' => 'Dieser Benutzer ist derzeit im gesamten Fandom-Netzwerk gesperrt.',
 	'phalanx-modify-block' => 'Filter ändern',
 	'phalanx-label-comment' => 'Kommentar (privat):',
 	'phalanx-expires' => 'Gültig bis $1',
@@ -1227,7 +1227,7 @@ Nota: funziona solo su wiki-risposte.',
 $messages['ja'] = array(
 	'phalanx-type-title' => 'ページ名',
 	'phalanx-type-email' => 'メール',
-	'phalanx-type-wiki-creation' => 'ウィキ作成',
+	'phalanx-type-wiki-creation' => 'サイト名',
 	'phalanx-add-block' => 'ブロックを適用',
 	'phalanx-edit-block' => 'ブロックを保存',
 	'phalanx-label-filter' => 'フィルター：',
@@ -2306,7 +2306,7 @@ $messages['ru'] = array(
 	'phalanx-label-reason' => 'Причина (видна всем):',
 	'phalanx-label-expiry' => 'Срок действия:',
 	'phalanx-label-type' => 'Тип:',
-	'phalanx-label-lang' => 'Language:',
+	'phalanx-label-lang' => 'Язык:',
 	'phalanx-view-type' => 'Тип блокировки...',
 	'phalanx-view-blocker' => 'Поиск по фильтру для текста:',
 	'phalanx-view-blocks' => 'Поиск фильтров',
@@ -2369,7 +2369,7 @@ $messages['ru'] = array(
 	'phalanx-stats-table-exact' => 'Строго',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'В случае',
-	'phalanx-stats-table-language' => 'Language',
+	'phalanx-stats-table-language' => 'Язык',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина (видна всем)',
 	'phalanx-stats-row' => "в $4, тип фильтра '''$1''' заблокировал(а) '''$2''' на $3",
@@ -2421,8 +2421,8 @@ $messages['ru'] = array(
 	'phalanx-section-type-wiki-creation' => 'Создание вики',
 	'phalanx-required-filter' => '* Это поле является обязательным',
 	'phalanx-required-type' => '* Требуется по крайней мере одна галочка',
-	'phalanx-type-device' => 'device',
-	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-type-device' => 'ID устройства',
+	'phalanx-help-type-device' => 'Этот фильтр блокирует участника по ID его мобильного устройства.',
 	'phalanx-type-recent-questions' => 'свежие вопросы',
 	'phalanx-help-type-question-title' => 'Этот фильтр блокирует создание вопроса (страницы), если его название соответствует слову из чёрного списка фильтра.
 

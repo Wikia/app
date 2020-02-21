@@ -606,11 +606,6 @@ export default {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
 		},
-		krux: {
-			account: 'ns:wikia',
-			enabled: false,
-			id: 'JU3_GW1b',
-		},
 		moatYi: {
 			enabled: false,
 			partnerCode: 'wikiaprebidheader490634422386',

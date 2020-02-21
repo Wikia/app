@@ -39,8 +39,14 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 
 	public function addUrls( array $urls ) {
 		global $wgPurgeVignetteUsingSurrogateKeys;
-
 		foreach ( $urls as $item ) {
+			if ( filter_var( $item, FILTER_VALIDATE_URL ) === false ) {
+				$exceptionWithStackTrace = new \RuntimeException( 'Invalid URL ' . $item );
+				$this->error(
+					'The URL provided for purging is not valid',
+					[ 'url' => $item, 'exception' => $exceptionWithStackTrace ]
+				);
+			}
 			if ( $wgPurgeVignetteUsingSurrogateKeys === true && VignetteRequest::isVignetteUrl( $item ) ) {
 				try {
 					$key = ThumblrSurrogateKey::fromUrl( $item );
@@ -98,11 +104,12 @@ class CdnPurgerQueue implements TaskProducer, PurgerQueue {
 		}
 
 		// log purges using Kibana (BAC-1317)
-		$this->info( 'varnish.purge',
+		$this->info(
+			'varnish.purge',
 			[
 				self::URLS => $urlsByService,
 				self::KEYS => $urlsByService,
-			 ]
+			]
 		);
 	}
 }

@@ -62,7 +62,6 @@ class AdEngine3
 		$scriptModules[] = 'wikia.cookies';
 		$scriptModules[] = 'wikia.document';
 		$scriptModules[] = 'wikia.geo';
-		$scriptModules[] = 'wikia.instantGlobals';
 		$scriptModules[] = 'wikia.location';
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
@@ -125,7 +124,6 @@ class AdEngine3
 					'noAdsReason' => $adsDeciderService->getNoAdsReason(),
 				]),
 				'targeting' => array_filter([
-					'enableKruxTargeting' => !$wg->NoExternals && $wg->EnableKruxTargeting && !AdTargeting::isDirectedAtChildren(),
 					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
 					'esrbRating' => AdTargeting::getEsrbRating(),
 					'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),

@@ -37,7 +37,7 @@ function setupPageLevelTargeting(adsContext) {
 
 async function updateWadContext() {
 	// BlockAdBlock detection
-	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig = await InstantConfigService.init();
 
 	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
@@ -59,7 +59,7 @@ async function setupAdContext(wikiContext, consents) {
 
 	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
-	const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig =  await InstantConfigService.init();
 
 	context.set('wiki', wikiContext);
 	context.set('options.disableAdStack', instantConfig.get('icDisableAdStack'));
@@ -69,8 +69,7 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
-	context.set('custom.hiviLeaderboard', instantConfig.isGeoEnabled('wgAdDriverOasisHiviLeaderboardCountries'));
+	context.set('custom.hiviLeaderboard', instantConfig.get('icHiViLeaderboardSlot'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
 		context.set('src', context.get('wiki.targeting.testSrc'));
@@ -78,19 +77,19 @@ async function setupAdContext(wikiContext, consents) {
 		context.set('src', 'test');
 	}
 
-	instantConfig.isGeoEnabled('wgAdDriverLABradorTestCountries');
+	instantConfig.get('icLABradorTest');
 
 	context.set('slots', slots.getContext());
+	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
+	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
-
-	if (wikiContext.targeting.hasFeaturedVideo) {
+	if (context.get('custom.hasFeaturedVideo')) {
 		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
 	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
 	}
 
-	const stickySlotsLines = instantConfig.get('wgAdDriverStickySlotsLines');
+	const stickySlotsLines = instantConfig.get('icStickySlotLineItemIds');
 
 	if (stickySlotsLines && stickySlotsLines.length) {
 		context.set('templates.stickyTLB.lineItemIds', stickySlotsLines);
@@ -101,18 +100,20 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
 
-	context.set('options.video.moatTracking.enabled', instantConfig.isGeoEnabled('wgAdDriverPorvataMoatTrackingCountries'));
-	context.set('options.video.moatTracking.sampling', instantConfig.get('wgAdDriverPorvataMoatTrackingSampling'));
+	context.set('options.video.moatTracking.enabled', instantConfig.get('icPorvataMoatTracking'));
+	//  During moving variables from WikiFactory to ICBM, options.video.moatTracking.sampling
+	//  was set to 100 since in ad-engine it's being used in getMoatTrackingStatus() function.
+	context.set('options.video.moatTracking.sampling', 100);
 
-	context.set('options.video.playAdsOnNextVideo', instantConfig.isGeoEnabled('wgAdDriverPlayAdsOnNextFVCountries'));
-	context.set('options.video.adsOnNextVideoFrequency', instantConfig.get('wgAdDriverPlayAdsOnNextFVFrequency') || 3);
-	context.set('options.video.isMidrollEnabled', instantConfig.isGeoEnabled('wgAdDriverFVMidrollCountries'));
-	context.set('options.video.isPostrollEnabled', instantConfig.isGeoEnabled('wgAdDriverFVPostrollCountries'));
+	context.set('options.video.playAdsOnNextVideo', !!instantConfig.get('icFeaturedVideoAdsFrequency'));
+	context.set('options.video.adsOnNextVideoFrequency', instantConfig.get('icFeaturedVideoAdsFrequency'));
+	context.set('options.video.isMidrollEnabled', instantConfig.get('icFeaturedVideoMidroll'));
+	context.set('options.video.isPostrollEnabled', instantConfig.get('icFeaturedVideoPostroll'));
 
-	context.set('options.maxDelayTimeout', instantConfig.get('wgAdDriverDelayTimeout', 2000));
-	context.set('options.tracking.kikimora.player', instantConfig.isGeoEnabled('wgAdDriverKikimoraPlayerTrackingCountries'));
-	context.set('options.tracking.slot.status', instantConfig.isGeoEnabled('wgAdDriverKikimoraTrackingCountries'));
-	context.set('options.tracking.slot.viewability', instantConfig.isGeoEnabled('wgAdDriverKikimoraViewabilityTrackingCountries'));
+	context.set('options.maxDelayTimeout', instantConfig.get('icAdEngineDelay', 2000));
+	context.set('options.tracking.kikimora.player', instantConfig.get('icPlayerTracking'));
+	context.set('options.tracking.slot.status', instantConfig.get('icSlotTracking'));
+	context.set('options.tracking.slot.viewability', instantConfig.get('icViewabilityTracking'));
 	context.set('options.tracking.slot.bidder', instantConfig.get('icBidsTracking'));
 	context.set('options.tracking.postmessage', true);
 	context.set('options.tracking.tabId', instantConfig.get('icTabIdTracking'));
@@ -143,11 +144,8 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.krux.enabled', context.get('wiki.targeting.enableKruxTargeting')
-		&& instantConfig.isGeoEnabled('wgAdDriverKruxCountries') && !instantConfig.get('wgSitewideDisableKrux'));
-	context.set('services.krux.trackedSegments', instantConfig.get('icKruxSegmentsTracking'));
-	context.set('services.moatYi.enabled', instantConfig.isGeoEnabled('wgAdDriverMoatYieldIntelligenceCountries'));
-	context.set('services.nielsen.enabled', instantConfig.isGeoEnabled('wgAdDriverNielsenCountries'));
+	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
+	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive'));
 
 	if(instantConfig.get('icTaxonomyComicsTag')) {
@@ -156,15 +154,7 @@ async function setupAdContext(wikiContext, consents) {
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
 	}
 
-	const moatSampling = instantConfig.get('wgAdDriverMoatTrackingForFeaturedVideoAdSampling');
-	const isMoatTrackingEnabledForVideo = instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdCountries')
-		&& utils.sampler.sample('moat_video_tracking', moatSampling);
-	context.set('options.video.moatTracking.enabledForArticleVideos', isMoatTrackingEnabledForVideo);
-	context.set(
-		'options.video.moatTracking.additonalParamsEnabled',
-		instantConfig.isGeoEnabled('wgAdDriverMoatTrackingForFeaturedVideoAdditionalParamsCountries'),
-	);
-
+	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
 	setupPageLevelTargeting(context.get('wiki'));
@@ -178,8 +168,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('wgAdDriverFMRRotatorDelay', 10000));
-	context.set('custom.fmrDelayDisabled', instantConfig.get('wgAdDriverDisableFMRDelayOasisCountries'));
+	context.set('custom.fmrRotatorDelay', instantConfig.get('icFMRRotatorDelay', 10000));
 
 	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
 
@@ -208,12 +197,12 @@ async function setupAdContext(wikiContext, consents) {
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
 
-	if (instantConfig.isGeoEnabled('wgAdDriverAdditionalVastSizeCountries')) {
+	if (instantConfig.get('icAdditionalVastSize')) {
 		context.push('slots.featured.videoSizes', [480, 360]);
 	}
 	context.set('slots.featured.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
 	context.set('slots.incontent_player.videoAdUnit', context.get('vast.adUnitIdWithDbName'));
-	context.set('slots.floor_adhesion.disabled', !instantConfig.isGeoEnabled('wgAdDriverOasisFloorAdhesionCountries'));
+	context.set('slots.floor_adhesion.disabled', !instantConfig.get('icFloorAdhesion'));
 
 	if (utils.geoService.isProperGeo(['AU', 'NZ'])) {
 		context.set('custom.serverPrefix', 'vm1b');
@@ -221,7 +210,7 @@ async function setupAdContext(wikiContext, consents) {
 
 	const cacheStorage = InstantConfigCacheStorage.make();
 	// Need to be placed always after all lABrador wgVars checks
-	context.set('targeting.labrador', cacheStorage.mapSamplingResults(instantConfig.get('wgAdDriverLABradorDfpKeyvals')));
+	context.set('targeting.labrador', cacheStorage.mapSamplingResults(instantConfig.get('icLABradorGamKeyValues')));
 
 	slots.setupIdentificators();
 	slots.setupStates();
@@ -260,7 +249,7 @@ async function configure(adsContext, consents) {
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
 
-	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }

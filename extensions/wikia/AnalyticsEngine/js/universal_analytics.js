@@ -135,35 +135,6 @@
 		return 'No';
 	}
 
-	function getKruxSegment() {
-		var kruxSegment = 'not set',
-			uniqueKruxSegments = {
-				ocry7a4xg: 'Game Heroes 2014',
-				ocr1te1tc: 'Digital DNA 2014',
-				ocr6m2jd6: 'Inquisitive Minds 2014',
-				ocr05ve5z: 'Culture Caster 2014',
-				ocr88oqh9: 'Social Entertainers 2014'
-			},
-			uniqueKruxSegmentsKeys = Object.keys(uniqueKruxSegments),
-			markedSegments = [],
-			kruxSegments = [];
-
-		if (window.localStorage) {
-			kruxSegments = (window.localStorage.kxsegs || '').split(',');
-		}
-
-		if (kruxSegments.length) {
-			markedSegments = uniqueKruxSegmentsKeys.filter(function (n) {
-				return kruxSegments.indexOf(n) !== -1;
-			});
-			if (markedSegments.length) {
-				kruxSegment = uniqueKruxSegments[markedSegments[0]];
-			}
-		}
-
-		return kruxSegment;
-	}
-
 	function trackBlocking(detectorSettings, isBlocked) {
 		var value = isBlocked ? 'Yes' : 'No';
 		if (blockingTracked[detectorSettings.trackName]) {
@@ -347,7 +318,6 @@
 				['set', 'dimension13', getEsrbRating()],                                    // ESRB rating
 				['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],                   // HasAds
 				['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],         // IsCorporatePage
-				['set', 'dimension16', getKruxSegment()],                                   // Krux Segment
 				['set', 'dimension17', window.wgWikiVertical],                              // Vertical
 				['set', 'dimension18', window.wgWikiCategories.join(',')],                  // Categories
 				['set', 'dimension19', window.wgArticleType],                               // ArticleType
@@ -425,7 +395,6 @@
 			window.ga('ads.set', 'dimension13', getEsrbRating());                                // ESRB rating
 			window.ga('ads.set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');               // HasAds
 			window.ga('ads.set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');     // IsCorporatePage
-			window.ga('ads.set', 'dimension16', getKruxSegment());                               // Krux Segment
 			window.ga('ads.set', 'dimension17', window.wgWikiVertical);                          // Vertical
 			window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));              // Categories
 			window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType

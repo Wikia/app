@@ -10,7 +10,7 @@ $cnt = 0;
 foreach( $data as $row ):
 ?>
 <div class="wf-list">
-	<?php if ( $row->wiki->city_path === WikiFactory::SLOT_1 ): ?>
+	<?php if ( !WikiFactory::isUCPPath( $row->wiki->city_path ) ): ?>
 		<h4><a href="<?php echo $title->getFullUrl() . "/{$row->wiki->city_id}" ?>">
 			<?php CityListPager::bold( $row->wiki->city_title, $part )?>
 			<span style="font-size: smaller">language: <?php echo $row->wiki->city_lang ?></span>

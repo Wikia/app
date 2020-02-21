@@ -40,11 +40,4 @@ class ArticleVideoHooks {
 		\Wikia::addAssetsToOutput( 'recommended_video_scss' );
 		\Wikia::addAssetsToOutput( 'recommended_video_js' );
 	}
-
-	public static function onInstantGlobalsGetVariables( array &$vars ): bool {
-		$vars[] = 'wgArticleVideoAutoplayCountries';
-		$vars[] = 'wgArticleVideoNextVideoAutoplayCountries';
-
-		return true;
-	}
 }
