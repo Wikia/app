@@ -83,8 +83,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().videoPlayed);
 	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	setupPageLevelTargeting(context.get('wiki'));
-
 	if (context.get('custom.hasFeaturedVideo')) {
 		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
 	} else {
@@ -158,6 +156,8 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
+
+	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
 		context.set('custom.wikiIdentifier', '_top1k_wiki');
