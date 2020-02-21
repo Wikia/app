@@ -37,7 +37,7 @@ function setupPageLevelTargeting(adsContext) {
 
 async function updateWadContext() {
 	// BlockAdBlock detection
-	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig = await InstantConfigService.init();
 
 	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
@@ -59,7 +59,7 @@ async function setupAdContext(wikiContext, consents) {
 
 	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
-	const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig =  await InstantConfigService.init();
 
 	context.set('wiki', wikiContext);
 	context.set('options.disableAdStack', instantConfig.get('icDisableAdStack'));
@@ -250,7 +250,7 @@ async function configure(adsContext, consents) {
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
 
-	const instantConfig = await InstantConfigService.init(window.Wikia.InstantGlobals);
+	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }
