@@ -3,6 +3,7 @@
 declare( strict_types=1 );
 
 use Wikia\Logger\Loggable;
+use User;
 
 final class MultiDeleteController extends WikiaController {
 	use Loggable;
@@ -18,12 +19,13 @@ final class MultiDeleteController extends WikiaController {
 			return;
 		}
 		$pagesToDelete = $this->getVal( 'pagesToDelete' );
-		$user = $this->getVal( 'user' );
+		$userId = $this->getVal( 'user' );
 		$reason = $this->getVal( 'reason' );
 		if ( empty( $pagesToDelete ) || empty( $user ) ||  empty( $reason ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
+		$user = User::newFromId( $userId );
 
 		foreach ( $pagesToDelete as $pageName ) {
 			$page = WikiPage::factory( \Title::newFromText( $pageName ) );
