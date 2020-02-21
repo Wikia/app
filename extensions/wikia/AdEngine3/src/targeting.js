@@ -24,12 +24,12 @@ function decodeLegacyDartParams(dartString) {
 function getVideoStatus() {
 	if (context.get('wiki.targeting.hasFeaturedVideo')) {
 		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
-		const isWikiaVideo = context.get('wiki.targeting.featuredVideo.isDedicatedForArticle') === false;
-		const wikiaVideoPlayed = isWikiaVideo && window.canPlayVideo && window.canPlayVideo();
+		const isDedicatedForArticle = context.get('wiki.targeting.featuredVideo.isDedicatedForArticle') !== false;
+		const bridgeVideoPlayed = !isDedicatedForArticle && window.canPlayVideo && window.canPlayVideo();
 
 		return {
-			wikiaVideo: isWikiaVideo,
-			videoPlayed: !isWikiaVideo || wikiaVideoPlayed,
+			isDedicatedForArticle,
+			hasVideoOnPage: isDedicatedForArticle || bridgeVideoPlayed,
 		};
 	}
 
@@ -41,8 +41,8 @@ function getAdLayout(targeting) {
 
 	if (layout === 'article') {
 		const videoStatus = getVideoStatus();
-		if (!!videoStatus.videoPlayed) {
-			const videoPrefix = videoStatus.wikiaVideo ? 'wv' : 'fv';
+		if (!!videoStatus.hasVideoOnPage) {
+			const videoPrefix = videoStatus.isDedicatedForArticle ? 'fv' : 'wv';
 
 			layout = `${videoPrefix}-${layout}`;
 		}

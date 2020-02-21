@@ -80,7 +80,7 @@ async function setupAdContext(wikiContext, consents) {
 	instantConfig.get('icLABradorTest');
 
 	context.set('slots', slots.getContext());
-	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().videoPlayed);
+	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
 	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
 	if (context.get('custom.hasFeaturedVideo')) {
