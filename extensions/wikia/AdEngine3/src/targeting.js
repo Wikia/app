@@ -1,4 +1,4 @@
-import { utils, likhoService, bidders } from '@wikia/ad-engine';
+import { bidders, context, likhoService, utils } from '@wikia/ad-engine';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
 
@@ -21,22 +21,22 @@ function decodeLegacyDartParams(dartString) {
 	return params;
 }
 
-function getAdLayout(adsContext) {
-	let layout = adsContext.targeting.pageType || 'article';
+function getAdLayout(targeting) {
+	let layout = targeting.pageType || 'article';
 
 	if (layout === 'article') {
-		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
-		if (
-			adsContext.targeting.hasFeaturedVideo
-			&& adsContext.targeting.featuredVideo
-			&& adsContext.targeting.featuredVideo.isDedicatedForArticle === false
-		) {
-			layout = `wv-${layout}`;
-		} else if (adsContext.targeting.hasFeaturedVideo) {
-			layout = `fv-${layout}`;
+		if (targeting.hasFeaturedVideo) {
+			// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
+			const isWikiaVideo = targeting.featuredVideo && targeting.featuredVideo.isDedicatedForArticle === false;
+			const wikiaVideoPlayed = isWikiaVideo && window.canPlayVideo && window.canPlayVideo();
+			const videoPrefix = wikiaVideoPlayed ? 'wv' : 'fv';
+
+			layout = `${videoPrefix}-${layout}`;
+
+			context.set('custom.hasFeaturedVideo', !isWikiaVideo || wikiaVideoPlayed);
 		}
 
-		if (adsContext.targeting.hasIncontentPlayer) {
+		if (targeting.hasIncontentPlayer) {
 			layout = `${layout}-ic`;
 		}
 	}
@@ -173,7 +173,7 @@ function getZone(adsContext) {
 	return {
 		site: adsContext.targeting.mappedVerticalName,
 		name: getRawDbName(adsContext),
-		pageType: getAdLayout(adsContext),
+		pageType: getAdLayout(adsContext.targeting),
 	};
 }
 
