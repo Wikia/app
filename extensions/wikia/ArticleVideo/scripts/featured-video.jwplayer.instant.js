@@ -23,9 +23,14 @@ require([
 	featuredVideoSession,
 	adsApi,
 ) {
-	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
+	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1,
+		willPlayVideoOnCurrentPageView = true;
 
 	win.canPlayVideo = function () {
+		if (!willPlayVideoOnCurrentPageView) {
+			return false;
+		}
+
 		return videoDetails && (
 			videoDetails.isDedicatedForArticle ||
 			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
@@ -33,6 +38,7 @@ require([
 	};
 
 	if (!win.canPlayVideo()) {
+		willPlayVideoOnCurrentPageView = false;
 		doc.body.classList.add('no-featured-video');
 		return;
 	}
