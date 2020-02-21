@@ -29,10 +29,11 @@ final class MultiDeleteController extends WikiaController {
 
 		foreach ( $pagesToDelete as $pageName ) {
 			$page = WikiPage::factory( \Title::newFromText( $pageName ) );
+			$pageId = $page->getId();
 
 			if ( $page !== null ) {
 				$e = '';
-				$page->doDeleteArticle( $reason, false, null, null, $e, $user );
+				$page->doDeleteArticle( $reason, false, $pageId, true, $e, $user );
 			}
 		}
 		$this->response->setCode( WikiaResponse ::RESPONSE_CODE_OK );
