@@ -33,6 +33,10 @@ final class MultiDeleteController extends WikiaController {
 			if ( $page !== null ) {
 				$e = '';
 				$page->doDeleteArticle( $reason, false, 0, true, $e, $user );
+			} else {
+				$this->info( 'Page selected to delete in MultiDelete is missing', [
+					'pageName' => $pageName
+				]);
 			}
 		}
 		$this->response->setCode( WikiaResponse ::RESPONSE_CODE_OK );
