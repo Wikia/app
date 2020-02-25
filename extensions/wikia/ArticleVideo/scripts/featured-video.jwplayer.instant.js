@@ -23,9 +23,21 @@ require([
 	featuredVideoSession,
 	adsApi,
 ) {
-	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1;
+	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1,
+		hasVideoOnPage = null;
 
-	if (!canPlayVideo()) {
+	win.canPlayVideo = function () {
+		if (hasVideoOnPage === null) {
+			hasVideoOnPage = videoDetails && (
+				videoDetails.isDedicatedForArticle ||
+				!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+			);
+		}
+
+		return hasVideoOnPage;
+	};
+
+	if (!win.canPlayVideo()) {
 		doc.body.classList.add('no-featured-video');
 		return;
 	}
@@ -142,13 +154,6 @@ require([
 			lang: videoDetails.lang,
 			shouldForceUserIntendedPlay: shouldForceUserIntendedPlay()
 		}, onPlayerReady);
-	}
-
-	function canPlayVideo() {
-		return videoDetails && (
-			videoDetails.isDedicatedForArticle ||
-			!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
-		);
 	}
 
 	function getModifiedPlaylist(playlist, isDedicatedForArticle) {

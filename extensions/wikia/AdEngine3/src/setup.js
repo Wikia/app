@@ -69,7 +69,6 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
 	context.set('custom.hiviLeaderboard', instantConfig.get('icHiViLeaderboardSlot'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
@@ -81,10 +80,10 @@ async function setupAdContext(wikiContext, consents) {
 	instantConfig.get('icLABradorTest');
 
 	context.set('slots', slots.getContext());
+	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
+	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
-
-	if (wikiContext.targeting.hasFeaturedVideo) {
+	if (context.get('custom.hasFeaturedVideo')) {
 		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
 	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);

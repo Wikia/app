@@ -727,8 +727,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-US"
+                "XX"
             ],
             "value": true
         }
