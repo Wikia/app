@@ -2,6 +2,8 @@
 
 class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
+	const UCP_CREATE_NEW_WIKI = 'https://ucp-internal-test-community.fandom.com/wiki/Special:CreateNewWiki';
+
 	public function __construct() {
 		parent::__construct( 'CreateNewWiki', 'createnewwiki' );
 	}
@@ -14,6 +16,10 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
 		$user = $this->getUser();
+
+		if ( !$user->isStaff() ) {
+			$out->redirect(self::UCP_CREATE_NEW_WIKI);
+		}
 
 		$this->checkPermissions();
 
