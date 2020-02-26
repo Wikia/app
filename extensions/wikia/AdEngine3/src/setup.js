@@ -291,7 +291,7 @@ function getReasonForNoAds() {
 	return reasons.length > 0 ? reasons[0] : null;
 }
 
-function init() {
+function init(inhibitors) {
 	const engine = new AdEngine();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
@@ -299,7 +299,7 @@ function init() {
 		context.onChange(`slots.${slot.getSlotName()}.videoDepth`, () => slots.setupSlotParameters(slot));
 	});
 
-	engine.init();
+	engine.init(inhibitors);
 
 	return engine;
 }
