@@ -17,7 +17,7 @@ class PreferenceServiceTest extends TestCase {
 	/** @var UserPreferences */
 	protected $savedPreferences;
 
-	/** @var PHPUnit_Framework_MockObject_MockObject */
+	/** @var PHPUnit_Framework_MockObject_MockObject|PreferencePersistence */
 	protected $persistence;
 
 	protected function setUp() {
