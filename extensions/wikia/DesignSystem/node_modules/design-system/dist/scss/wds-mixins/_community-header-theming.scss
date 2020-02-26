@@ -51,29 +51,31 @@
 		@include button-group-theming($text-color);
 	}
 
-	.wds-tabs__tab-label {
-		color: $text-color;
-
-		a {
-			color:inherit;
-		}
-	}
-
-	.wds-tabs__tab.wds-is-current {
-		@include wds-box-underline($text-color);
-	}
-
-	.wds-tabs__tab:hover {
+	.wds-tabs {
 		.wds-tabs__tab-label {
-			color: $text-hover-color;
+			color: $text-color;
 
 			a {
-				color: inherit;
+				color:inherit;
 			}
 		}
 
-		&.wds-is-current {
-			@include wds-box-underline($text-hover-color);
+		.wds-tabs__tab.wds-is-current {
+			@include wds-box-underline($text-color);
+		}
+
+		.wds-tabs__tab:hover {
+			.wds-tabs__tab-label {
+				color: $text-hover-color;
+
+				a {
+					color: inherit;
+				}
+			}
+
+			&.wds-is-current {
+				@include wds-box-underline($text-hover-color);
+			}
 		}
 	}
 
