@@ -101,6 +101,49 @@ class ForumDumper {
 		$this->votes[] = $data;
 	}
 
+	/**
+	 * Page
+	 * +-------------------+---------------------+------+-----+----------------+----------------+
+	 * | Field             | Type                | Null | Key | Default        | Extra          |
+	 * +-------------------+---------------------+------+-----+----------------+----------------+
+	 * | page_id           | int(10) unsigned    | NO   | PRI | NULL           | auto_increment |
+	 * | page_namespace    | int(10) unsigned    | NO   | MUL | NULL           |                |
+	 * | page_title        | varchar(255)        | NO   |     | NULL           |                |
+	 * | page_restrictions | tinyblob            | NO   |     | NULL           |                |
+	 * | page_is_redirect  | tinyint(3) unsigned | NO   | MUL | 0              |                |
+	 * | page_is_new       | tinyint(3) unsigned | NO   |     | 0              |                |
+	 * | page_random       | double unsigned     | NO   | MUL | NULL           |                |
+	 * | page_touched      | binary(14)          | NO   |     |                |                |
+	 * | page_latest       | int(10) unsigned    | NO   |     | NULL           |                |
+	 * | page_len          | int(10) unsigned    | NO   | MUL | NULL           |                |
+	 * +-------------------+---------------------+------+-----+----------------+----------------+
+	 *
+	 * Comments_index
+	 * +-----------------------+------------------+------+-----+---------------------+-------+
+	 * | Field                 | Type             | Null | Key | Default             | Extra |
+	 * +-----------------------+------------------+------+-----+---------------------+-------+
+	 * | parent_page_id        | int(10) unsigned | NO   | PRI | NULL                |       |
+	 * | comment_id            | int(10) unsigned | NO   | PRI | NULL                |       |
+	 * | parent_comment_id     | int(10) unsigned | NO   | MUL | 0                   |       |
+	 * | last_child_comment_id | int(10) unsigned | NO   |     | 0                   |       |
+	 * | archived              | tinyint(1)       | NO   |     | 0                   |       |
+	 * | deleted               | tinyint(1)       | NO   |     | 0                   |       |
+	 * | removed               | tinyint(1)       | NO   |     | 0                   |       |
+	 * | first_rev_id          | int(10) unsigned | NO   |     | 0                   |       |
+	 * | created_at            | datetime         | NO   |     | 0000-00-00 00:00:00 |       |
+	 * | last_rev_id           | int(10) unsigned | NO   |     | 0                   |       |
+	 * | last_touched          | datetime         | NO   | MUL | 0000-00-00 00:00:00 |       |
+	 * +-----------------------+------------------+------+-----+---------------------+-------+
+	 *
+	 * Page_wikia_props
+	 * +----------+---------+------+-----+---------+-------+
+	 * | Field    | Type    | Null | Key | Default | Extra |
+	 * +----------+---------+------+-----+---------+-------+
+	 * | page_id  | int(10) | NO   | MUL | NULL    |       |
+	 * | propname | int(10) | NO   | MUL | NULL    |       |
+	 * | props    | blob    | NO   |     | NULL    |       |
+	 * +----------+---------+------+-----+---------+-------+
+	 */
 	public function getPages() {
 		if ( !empty( $this->pages ) ) {
 			return $this->pages;
@@ -155,6 +198,34 @@ class ForumDumper {
 		return $this->pages;
 	}
 
+	/**
+	 * Revision
+	 * +----------------+---------------------+------+-----+----------------+----------------+
+	 * | Field          | Type                | Null | Key | Default        | Extra          |
+	 * +----------------+---------------------+------+-----+----------------+----------------+
+	 * | rev_id         | int(10) unsigned    | NO   | PRI | NULL           | auto_increment |
+	 * | rev_page       | int(10) unsigned    | NO   | MUL | NULL           |                |
+	 * | rev_text_id    | int(10) unsigned    | NO   |     | NULL           |                |
+	 * | rev_comment    | tinyblob            | NO   |     | NULL           |                |
+	 * | rev_user       | int(10) unsigned    | NO   | MUL | 0              |                |
+	 * | rev_user_text  | varchar(255)        | NO   | MUL |                |                |
+	 * | rev_timestamp  | binary(14)          | NO   | MUL |                |                |
+	 * | rev_minor_edit | tinyint(3) unsigned | NO   |     | 0              |                |
+	 * | rev_deleted    | tinyint(3) unsigned | NO   |     | 0              |                |
+	 * | rev_len        | int(10) unsigned    | YES  |     | NULL           |                |
+	 * | rev_parent_id  | int(10) unsigned    | YES  |     | NULL           |                |
+	 * | rev_sha1       | varbinary(32)       | NO   |     |                |                |
+	 * +----------------+---------------------+------+-----+----------------+----------------+
+	 *
+	 * Text
+	 * +-----------+------------------+------+-----+---------+----------------+
+	 * | Field     | Type             | Null | Key | Default | Extra          |
+	 * +-----------+------------------+------+-----+---------+----------------+
+	 * | old_id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+	 * | old_text  | mediumblob       | NO   |     | NULL    |                |
+	 * | old_flags | tinyblob         | NO   |     | NULL    |                |
+	 * +-----------+------------------+------+-----+---------+----------------+
+	 */
 	public function getRevisions() {
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
@@ -300,6 +371,16 @@ class ForumDumper {
 		return self::CONTRIBUTOR_TYPE_USER;
 	}
 
+	/**
+	 * Page_vote
+	 * +------------+-----------------+------+-----+---------+-------+
+	 * | Field      | Type            | Null | Key | Default | Extra |
+	 * +------------+-----------------+------+-----+---------+-------+
+	 * | article_id | int(8) unsigned | NO   | PRI | NULL    |       |
+	 * | user_id    | int(5) unsigned | NO   | PRI | NULL    |       |
+	 * | time       | datetime        | NO   |     | NULL    |       |
+	 * +------------+-----------------+------+-----+---------+-------+
+	 */
 	public function getVotes() {
 		if ( !empty( $this->votes ) ) {
 			return $this->votes;

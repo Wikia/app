@@ -23,6 +23,18 @@ class FollowsFinder {
 		$this->threadNameToId = $threadNameToId;
 	}
 
+	/**
+	 * Watchlist
+	 * +--------------------------+------------------+------+-----+-------------------+-------+
+	 * | Field                    | Type             | Null | Key | Default           | Extra |
+	 * +--------------------------+------------------+------+-----+-------------------+-------+
+	 * | wl_user                  | int(10) unsigned | NO   | PRI | NULL              |       |
+	 * | wl_namespace             | int(11)          | NO   | PRI | 0                 |       |
+	 * | wl_title                 | varchar(255)     | NO   | PRI |                   |       |
+	 * | wl_notificationtimestamp | varbinary(14)    | YES  |     | NULL              |       |
+	 * | wl_wikia_addedtimestamp  | timestamp        | YES  | MUL | CURRENT_TIMESTAMP |       |
+	 * +--------------------------+------------------+------+-----+-------------------+-------+
+	 */
 	public function findFollows() {
 		$pageTitles = array_keys( $this->threadNameToId );
 
