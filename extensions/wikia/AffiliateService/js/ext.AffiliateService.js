@@ -414,8 +414,8 @@ require([
 				heading: unit.heading,
 				buttonText: unit.subheading,
 				link: updatedLink,
-				logoLight: unit.logo.light,
-				logoDark: unit.logo.dark,
+				logoLight: unit.logo ? unit.logo.light : null,
+				logoDark: unit.logo ? unit.logo.dark : null,
 			});
 		},
 
