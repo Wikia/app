@@ -249,25 +249,6 @@
             "value": true
         }
     ],
-    "icDisableAdStack": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "browsers": [
-                "Chrome"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "RU"
-            ],
-            "sampling": 3.0,
-            "samplingCache": true,
-            "value": true
-        }
-    ],
     "icPrebidOneMobile": [
         {
             "apps": [
