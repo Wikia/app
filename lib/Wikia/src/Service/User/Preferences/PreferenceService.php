@@ -164,7 +164,7 @@ class PreferenceService {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function save( $userId, array $additionalGlobalOptions ) {
+	public function save( $userId, array $additionalGlobalOptions = [] ) {
 		if ( $userId == 0 ) {
 			return false;
 		}
@@ -177,9 +177,6 @@ class PreferenceService {
 		}
 
 		$prefsToSave = new UserPreferences();
-		foreach ( $additionalGlobalOptions as $key => $val ) {
-			$prefsToSave->setGlobalPreference( $key, $val );
-		}
 
 		foreach ( $prefs->getGlobalPreferences() as $pref ) {
 			if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getGlobalDefault( $pref->getName() ) ) ) {
@@ -194,6 +191,10 @@ class PreferenceService {
 					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
+		}
+
+		foreach ( $additionalGlobalOptions as $key => $val ) {
+			$prefsToSave->setGlobalPreference( $key, $val );
 		}
 
 		if ( !$prefsToSave->isEmpty() ) {

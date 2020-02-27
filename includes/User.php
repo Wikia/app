@@ -2367,7 +2367,13 @@ class User implements JsonSerializable {
 	 */
 	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
+		global $wgPrivateUserAttributes;
+
 		$this->loadOptions();
+		if ( in_array( $oname, $wgPrivateUserAttributes ) && array_key_exists( $oname, $this->mOptions ) ) {
+			$options = $this->getOptions();
+			return array_key_exists( $oname, $options ) ? $options[$oname] : $defaultOverride;
+		}
 
 		if ( is_null( $this->mOptions ) ) {
 			if($defaultOverride != '') {
