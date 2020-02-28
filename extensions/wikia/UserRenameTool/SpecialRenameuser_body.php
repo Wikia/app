@@ -25,8 +25,6 @@ class SpecialRenameuser extends SpecialPage {
 	public function execute( $par ) {
 		global $wgCentralWikiId;
 
-		$wgCentralWikiId = 2163826;
-
 		$query = $this->getQuery( $par );
 		$title = GlobalTitle::newFromText( 'UserRenameTool', NS_SPECIAL, $wgCentralWikiId );
 
