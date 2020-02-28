@@ -42,7 +42,7 @@ async function updateWadContext() {
 	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
 	// showAds is undefined by default
-	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
+	const serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('state.showAds') !== false &&
 		!window.wgUserName;
 
@@ -146,9 +146,9 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
-	context.set('services.permutive.enabled', instantConfig.get('icPermutive'));
+	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 
-	if(instantConfig.get('icTaxonomyComicsTag')) {
+	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
 		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
