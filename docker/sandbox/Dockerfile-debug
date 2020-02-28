@@ -32,3 +32,5 @@ COPY --from=AdEngine3Assets /AdEngine3/dist /usr/wikia/slot1/current/src/extensi
 RUN mkdir -p /usr/wikia/slot1/current/cache/messages && \
   chmod 777 /usr/wikia/slot1/current/cache/messages && \
   WIKIA_ENVIRONMENT=prod WIKIA_DATACENTER=sjc SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --threads=16
+
+USER 65534
