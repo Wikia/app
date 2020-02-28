@@ -16,28 +16,26 @@ class DeleteWikiPage extends Maintenance {
 	}
 
 	public function execute() {
-		$pagesToDelete = $this->getOption( 'pagesToDelete', false );
+		$pageName = $this->getOption( 'pageName', false );
 		$reason = $this->getOption( 'reason', false );
 		$userId = $this->getOption( 'userId', false );
 
-		if ( $pagesToDelete === false || $reason === false || $user === false ) {
+		if ( $pageName === false || $reason === false || $user === false ) {
 			$this->output( "Failed to run scrip, missing parameters" );
 			exit( 1 );
 		}
 
-		$decodedPagesToDelete = json_decode( $pagesToDelete );
-		foreach ( $decodedPagesToDelete as $pageName ) {
-			$page = WikiPage::factory( \Title::newFromText( $pageName ) );
-			if ( $page !== null ) {
-				$e = '';
-				$successfullyDeleted = $page->doDeleteArticle( $reason, false, 0, true, $e, User::newFromId( $userId ) );
-				if( !$successfullyDeleted ) {
-					$this->output("Page selected to delete in MultiDelete is missing {$pageName}", []);
-				}
-
-			} else {
+		$page = WikiPage::factory( \Title::newFromText( $pageName ) );
+		if ( $page !== null ) {
+			$e = '';
+			$successfullyDeleted = $page->doDeleteArticle( $reason, false, 0, true, $e, User::newFromId( $userId ) );
+			if( !$successfullyDeleted ) {
 				$this->output("Page selected to delete in MultiDelete is missing {$pageName}", []);
+				exit( 1 );
 			}
+		} else {
+			$this->output("Page selected to delete in MultiDelete is missing {$pageName}", []);
+			exit( 1 );
 		}
 	}
 

@@ -47,32 +47,33 @@ final class MultiDeleteController extends WikiaController {
 		}
 
 		$wikis = self::getWikisForPageDelete( $firstWikiId, $lastWikiId, $runOnType, $runOnValue );
-
-		$pages = json_encode( $pagesToDelete );
 		foreach( $wikis as $wiki ) {
-			$command = implode( ' ', array_merge( [
-				"SERVER_ID={$wiki->city_id}",
-				"php",
-				"{$IP}/extensions/wikia/MultiTasks/maintenance/DeleteWikiPage.php",
-				"--pagesToDelete={$pages}",
-				"--reason={$reason}",
-				"--user={$userId}"
-			]) );
-			$status = 0;
-			wfShellExec( $command, $status );
+			foreach($pagesToDelete as $page ) {
 
-			if ($status) {
-				$this->error(__CLASS__ . " Error while running DeleteWikiPage.php", [
-					'wikiId' => $wiki->city_id,
-					'pages' => $pages,
-					'user' => $userId
-				]);
-			} else {
-				$this->info(__CLASS__ . " Finished running DeleteWikiPage.php ", [
-					'wikiId' => $wiki->city_id,
-					'pages' => $pages,
-					'user' => $userId
-				]);
+				$command = implode( ' ', array_merge( [
+					"SERVER_ID={$wiki->city_id}",
+					"php",
+					"{$IP}/extensions/wikia/MultiTasks/maintenance/DeleteWikiPage.php",
+					"--pageName={$page}",
+					"--reason={$reason}",
+					"--userId={$userId}"
+				]) );
+				$status = 0;
+				wfShellExec( $command, $status );
+
+				if ( $status ) {
+					$this->error("Error while running DeleteWikiPage.php", [
+						'wikiId' => $wiki->city_id,
+						'page' => $page,
+						'user' => $userId
+					]);
+				} else {
+					$this->info("Finished running DeleteWikiPage.php ", [
+						'wikiId' => $wiki->city_id,
+						'page' => $page,
+						'user' => $userId
+					]);
+				}
 			}
 		}
 
