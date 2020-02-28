@@ -46,31 +46,42 @@ final class MultiDeleteController extends WikiaController {
 			return;
 		}
 
-		$wikis = self::getWikisForPageDelete(
-			$this->params['firstWikiId'],
-			$this->params['lastWikiId'],
-			$this->params['runOnType'],
-			$this->params['runOnValue']
-		);
+		$wikis = self::getWikisForPageDelete( $firstWikiId, $lastWikiId, $runOnType, $runOnValue );
 
+		$pages = json_encode( $pagesToDelete );
 		foreach( $wikis as $wiki ) {
 			$command = implode( ' ', array_merge( [
 				"SERVER_ID={$wiki->city_id}",
 				"php",
 				"{$IP}/extensions/wikia/MultiTasks/maintenance/DeleteWikiPage.php",
-				"--pagesToDelete={$pagesToDelete}",
+				"--pagesToDelete={$pages}",
 				"--reason={$reason}",
 				"--user={$userId}"
 			]) );
 			$status = 0;
 			wfShellExec( $command, $status );
+
+			if ($status) {
+				$this->error(__CLASS__ . " Error while running DeleteWikiPage.php", [
+					'wikiId' => $wiki->city_id,
+					'pages' => $pages,
+					'user' => $userId
+				]);
+			} else {
+				$this->info(__CLASS__ . " Finished running DeleteWikiPage.php ", [
+					'wikiId' => $wiki->city_id,
+					'pages' => $pages,
+					'user' => $userId
+				]);
+			}
 		}
 
 		$this->response->setCode( WikiaResponse ::RESPONSE_CODE_OK );
 	}
 
-	private function getWikisForPageDelete( int $firstId, int $lastId, string $runOnType, string $runOnValue ) {
-		$dbr = wfGetDB( DB_SLAVE );
+	private function getWikisForPageDelete( $firstId, $lastId, $runOnType, $runOnValue ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		switch( $runOnType ) {
 			case MultiDeleteController::ALL:
 			case MultiDeleteController::SELECTED:
