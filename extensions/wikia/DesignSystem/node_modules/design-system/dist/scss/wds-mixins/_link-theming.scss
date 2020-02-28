@@ -1,0 +1,16 @@
+@import '../wds-functions/active-color';
+@import '../wds-variables/index';
+
+@mixin link-theming($link-color, $link-active-color: null) {
+	color: $link-color;
+	transition: color $wds-button-transition-duration;
+
+	&:hover, &:focus, &:active {
+		@if $link-active-color {
+			color: $link-active-color;
+		}
+		@else {
+			color: active-color($link-color);
+		}
+	}
+}

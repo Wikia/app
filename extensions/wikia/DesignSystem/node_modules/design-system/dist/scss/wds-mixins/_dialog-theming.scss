@@ -1,0 +1,23 @@
+@import'../wds-functions/index';
+
+@mixin dialog-theming($background-color, $border-color, $overlay-color) {
+	$text-color: $wds-fandom-color-black;
+
+	@if brightness($background-color) < 128 {
+		$text-color: $wds-color-white;
+	}
+
+
+	&__curtain {
+		background-color: $overlay-color;
+	}
+
+	&__wrapper {
+		background: $background-color;
+		color: $text-color;
+	}
+
+	&__actions {
+		border-top-color: $border-color;
+	}
+}
