@@ -1,0 +1,15 @@
+@import 'brightness';
+
+@function active-color($color) {
+	@if type_of($color) != color {
+		@return $color;
+	}
+
+	$active-color: lighten($color, 20%);
+
+	@if brightness($color) > 128 {
+		$active-color: darken($color, 20%);
+	}
+
+	@return $active-color;
+}
