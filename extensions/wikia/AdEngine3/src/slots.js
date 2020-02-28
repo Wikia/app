@@ -230,6 +230,7 @@ export default {
 					pos: ['incontent_player'],
 					rv: 1,
 				},
+        isVideo: true,
 			},
 			floor_adhesion: {
 				adProduct: 'floor_adhesion',
@@ -271,6 +272,7 @@ export default {
 				},
 				trackEachStatus: true,
 				trackingKey: 'featured-video',
+				isVideo: true,
 			},
 		};
 	},
