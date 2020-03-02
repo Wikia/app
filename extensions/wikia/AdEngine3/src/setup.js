@@ -195,6 +195,10 @@ async function setupAdContext(wikiContext, consents) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
 
+		if (!instantConfig.get('icPrebidIndexExchangeFeatured')) {
+			context.remove('bidders.prebid.indexExchange.slots.featured');
+		}
+
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
@@ -293,7 +297,7 @@ function getReasonForNoAds() {
 	return reasons.length > 0 ? reasons[0] : null;
 }
 
-function init() {
+function init(inhibitors) {
 	const engine = new AdEngine();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
@@ -301,7 +305,7 @@ function init() {
 		context.onChange(`slots.${slot.getSlotName()}.videoDepth`, () => slots.setupSlotParameters(slot));
 	});
 
-	engine.init();
+	engine.init(inhibitors);
 
 	return engine;
 }

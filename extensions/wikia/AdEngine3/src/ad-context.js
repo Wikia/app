@@ -216,6 +216,9 @@ export default {
 							[970, 250]
 						],
 						siteId: '209250'
+					},
+					featured: {
+						siteId: '437502'
 					}
 				},
 				recPlacements: {
@@ -646,6 +649,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {
