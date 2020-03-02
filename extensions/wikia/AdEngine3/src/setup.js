@@ -193,6 +193,10 @@ async function setupAdContext(wikiContext, consents) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
 
+		if (!instantConfig.get('icPrebidIndexExchangeFeatured')) {
+			context.remove('bidders.prebid.indexExchange.slots.featured');
+		}
+
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
