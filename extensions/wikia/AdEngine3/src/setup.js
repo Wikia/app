@@ -123,6 +123,8 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
 
+	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
+
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',
