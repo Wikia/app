@@ -1,0 +1,35 @@
+@import '../wds-functions/active-color';
+@import 'wds-box-underline';
+
+@mixin tabs-theming($tab-color, $tab-active-color: null) {
+	$tab-hover-color: active-color($tab-color);
+
+	@if $tab-active-color {
+		$tab-hover-color: $tab-active-color;
+	}
+
+	.wds-tabs__tab {
+		&-label {
+			color: $tab-color;
+		}
+
+		&.wds-is-current {
+			@include wds-box-underline($tab-color);
+		}
+
+		&.wds-is-active,
+		&:hover {
+			.wds-tabs__tab-label {
+				color: $tab-hover-color;
+
+				> a {
+					color: $tab-hover-color;
+				}
+			}
+
+			&.wds-is-current {
+				@include wds-box-underline($tab-hover-color);
+			}
+		}
+	}
+}
