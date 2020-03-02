@@ -61,14 +61,14 @@ $3",
 
 If you need help getting started, check out our [[Help:Contents|help pages]] or [[$2|contact me]] or another admin here. 
 
-For general help, you could also stop by Community Central to explore the [https://community.fandom.com/wiki/Special:Forums?utm_source=foundermessageversion2 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=adminmessageversion2 blogs].
+For general help, you could also stop by Community Central to explore the [[w:forums|help forum]] and [[w:sblog|blog]].
 
 Enjoy your time at {{SITENAME}}!",
 	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}} I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
 
-It looks as though none of the admins for this community are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [https://community.fandom.com/wiki/Community_Central?utm_source=staffmessageversion2 Community Central] to explore our  [https://community.fandom.com/wiki/Special:Forums?utm_source=staffmessageversion2 forums] and [https://community.fandom.com/wiki/Blog:Fandom_Staff_Blog?utm_source=staffmessageversion2 blogs].
+It looks as though none of the admins for this community are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:forums|forum]] and [[w:sblog|blog]].
 
-Enjoy your time at {{SITENAME}}!",
+Enjoy your time at {{SITENAME}}",
 	'welcome-message-wall-anon' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
 
 '''[[Special:UserSignup|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
