@@ -649,6 +649,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {
