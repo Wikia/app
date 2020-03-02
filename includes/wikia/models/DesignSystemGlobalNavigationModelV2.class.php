@@ -101,13 +101,15 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getCreateWiki( string $trackingLabel ) {
+		global $wgUCPCommunityCNWAddress;
+
 		return [
 			'type' => 'link-button',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
 			],
-			'href' => $this->getHref( 'create-new-wiki', true ),
+			'href' => $wgUCPCommunityCNWAddress,
 			'tracking-label' => $trackingLabel,
 		];
 	}
