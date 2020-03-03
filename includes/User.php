@@ -4153,6 +4153,7 @@ class User implements JsonSerializable {
 	 */
 	protected function savePreferences() {
 		$additionalGlobalOptions = [];
+
 		foreach( $this->mOptions as $key => $value ) {
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
 				$additionalGlobalOptions[$key] = $value;
