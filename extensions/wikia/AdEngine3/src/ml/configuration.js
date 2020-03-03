@@ -11,7 +11,7 @@ import { bucketizeViewportHeight } from './buicketizer';
 import pageTracker from '../tracking/page-tracker';
 
 function setupProjects() {
-	if (context.get('wiki.targeting.hasFeaturedVideo')) {
+	if (context.get('custom.hasFeaturedVideo')) {
 		billTheLizard.projectsHandler.enable('queen_of_hearts');
 		billTheLizard.projectsHandler.enable('vcr');
 	}
@@ -25,7 +25,7 @@ function setupExecutor() {
 
 export const billTheLizardConfigurator = {
 	async configure() {
-		const instantConfig =  await InstantConfigService.init(window.Wikia.InstantGlobals);
+		const instantConfig =  await InstantConfigService.init();
 		const config = instantConfig.get('wgAdDriverBillTheLizardConfig', {});
 		const { mediaId, videoTags } = context.get('wiki.targeting.featuredVideo') || {};
 		const now = new Date();

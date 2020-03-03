@@ -188,8 +188,20 @@ class WikiFactoryPage extends SpecialPage {
 				}
 			}
 		}
+
 		$this->mTab = $tab;
 		if( !is_null( $cityid ) ) {
+			$isUCPWiki = WikiFactory::isUCPWiki( $cityid );
+			if ( $isUCPWiki ) {
+				$output = $this->getOutput();
+				$output->addWikiMsg(
+					'wikifactory-wiki-config-redirect',
+					WikiFactory::getWikiByID( $cityid )->city_title,
+					WikiFactory::cityIDtoUrl( $cityid ) . '/wiki',
+					$cityid
+				);
+				return false;
+			}
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/{$cityid}/{$tab}" );
 		}
 		if ( !isset($this->mVariableName) ) {

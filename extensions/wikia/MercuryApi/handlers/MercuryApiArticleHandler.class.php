@@ -108,6 +108,12 @@ class MercuryApiArticleHandler {
 			$featuredVideoData['embed']['jsParams']['videoTags'] = $featuredVideo['videoTags'];
 			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
 			$featuredVideoData['metadata'] = $featuredVideo['metadata'];
+			$featuredVideoData['isDedicatedForArticle'] = $featuredVideo['isDedicatedForArticle'];
+			$featuredVideoData['isDedicatedForArticle'] = $featuredVideo['isDedicatedForArticle'];
+
+			if (isset($featuredVideo['impressionsPerSession'])) {
+				$featuredVideoData['impressionsPerSession'] = $featuredVideo['impressionsPerSession'];
+			}
 
 			return $featuredVideoData;
 		}

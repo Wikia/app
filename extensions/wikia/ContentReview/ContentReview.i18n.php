@@ -437,6 +437,67 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
 );
 
 $messages['ko'] = array(
+	'content-review-module-submit-exception' => '다음 오류로 인해 검토를 요청하는 데 실패했습니다: $1',
+	'content-review-module-header-actions' => '작업',
+	'content-review-module-header-pagename' => '문서 이름',
+	'content-review-rejection-reason-link' => '이유',
+	'content-review-status-in-review' => '검토 중',
+	'content-review-module-help-article' => '도움말:CSS 및 자바 스크립트',
+	'content-review-test-mode-enabled' => '현재 검토되지 않은 자바 스크립트를 사용하고 있습니다. ',
+	'content-review-module-status-approved' => '승인됨',
+	'content-review-module-help-text' => '도움말',
+	'content-review-module-help' => '[[도움말:CSS 및 자바 스크립트|도움말]]',
+	'content-review-module-header-live' => '적용된 판:',
+	'content-review-importjs-description' => '이곳에서 기존의 스크립트를 가져오실 수 있습니다.
+* 문서 이름을 통해 귀하의 커뮤니티에서 스크립트를 가져오실 수 있습니다. - 예: MyScript.js
+* “dev:문서 이름” 형식을 통해 dev.fandom.com에서 스크립트를 가져오실 수 있습니다. - 예: dev:Code.js
+각 문서의 이름에서 미디어위키 이름공간을 제외하고 입력해야 합니다. 한 줄에 하나씩 입력해야 합니다. 보다 자세한 내용은 [[도움말:자바 스크립트 및 CSS 불러오기|이곳]]을 참고하시기 바랍니다.
+----
+',
+	'content-review-module-header-latest' => '최신 판:',
+	'content-review-module-status-awaiting' => '검토 대기 중',
+	'action-content-review' => '콘텐츠 검토',
+	'content-review-module-title' => '자바 스크립트 검토 상황',
+	'content-review-rejection-explanation' => '==$1==
+최근 검토 요청된 자바 스크립트([$2 $3] 판)는 팬덤 검토 시스템에 의해 승인 거부되었습니다. 해당 스크립트가 [[도움말:자바 스크립트 검토 시스템|자바 스크립트 승인 기준]]에 부합하는지 확인해 주시기 바랍니다.',
+	'group-content-reviewer' => '콘텐츠 검토자',
+	'content-review-status-autoapproved' => '자동 승인됨',
+	'content-review-module-status-live' => '현재 적용 중',
+	'content-review-module-submit-error' => '검토를 요청하는 데 실패했습니다.',
+	'content-review-special-js-description' => '이 문서에서는 미디어위키 이름공간에 속한 스크립트들의 [[도움말:자바 스크립트 검토 시스템|검토 상황]]을 확인하실 수 있습니다.',
+	'content-review-module-header-last' => '최근 검토된 판:',
+	'content-review-module-status-none' => '없음',
+	'content-review-restore-summary' => '$1 판으로 되돌림',
+	'content-review-module-submit' => '검토 요청',
+	'right-content-review' => '콘텐츠 검토 도구를 활성화합니다',
+	'content-review-status-rejected' => '거부됨',
+	'content-review-test-mode-error' => '오류가 발생했습니다. 잠시 후 다시 시도해 주십시오.',
+	'content-review-special-js-pages-title' => '자바 스크립트 문서',
+	'content-review-status-unreviewed' => '미검토',
+	'content-review-module-jspages' => '모든 자바 스크립트 문서',
+	'content-review-rejection-explanation-title' => '$1 판은 승인 거부되었습니다',
+	'content-review-profile-tags-description' => '이 기능을 사용하시려면 dev.fandom.com으로부터 [[w:c:dev:ProfileTags|ProfileTags.js]] 스크립트를 가져오셔야 합니다. ([[w:c:dev:ProfileTags|자세히 알아보기]])
+
+이 문서를 통해 사용자 프로필에 나타나는 태그를 수정하실 수 있습니다. 사용자 이름과 태그는 수직선(|)을 통해 구분합니다. 한 사용자에게 여러 태그를 표시하려면 각 태그를 쉼표로 구분하여 입력하십시오. 한 줄에 한 사용자씩 입력하십시오.
+
+예시:
+
+ 사용자이름 | 연습생, 뉴비
+ 사용자이름2 | 전문가
+----
+',
+	'content-review-status-approved' => '승인됨',
+	'content-review-module-test-mode-enable' => '테스트 모드 활성화',
+	'content-review-status-live' => '적용됨',
+	'content-review-module-test-mode-disable' => '테스트 모드 비활성화',
+	'right-content-review-test-mode' => '콘텐츠 검토용 테스트 환경을 활성화합니다',
+	'content-review-module-status-unsubmitted' => '검토 요청 필요',
+	'content-review-status-link-text' => '검토 상황',
+	'content-review-special-js-importjs-description' => '참고: [[MediaWiki:ImportJS|ImportJS]] 기능을 통해 검토 단계를 생략하고 기존의 스크립트를 귀하의 위키 또는 dev.fandom.com으로부터 가져오실 수 있습니다.',
+	'content-review-status-escalated' => '추가 검토 중',
+	'content-review-module-submit-success' => '검토를 요청했습니다.',
+	'content-review-desc' => '자바 스크립트가 커뮤니티에 적용되기 전에 미리 내용을 검토하는 절차를 추가합니다.',
+	'content-review-module-status-rejected' => '거부됨',
 );
 
 $messages['nl'] = array(

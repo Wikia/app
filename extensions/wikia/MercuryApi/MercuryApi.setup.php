@@ -43,7 +43,6 @@ $wgHooks['ArticleRollbackComplete'][] = 'MercuryApiHooks::onArticleRollbackCompl
 $wgHooks['ArticleSaveComplete'][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks['ClosedWikiHandler'][] = 'MercuryApiHooks::onClosedOrEmptyWikiDomains';
 $wgHooks['CuratedContentSave'][] = 'MercuryApiHooks::onCuratedContentSave';
-$wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGetVariables';
 $wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
 $wgHooks['MakeHeadline'][] = 'MercuryApiHooks::onMakeHeadline';
 $wgHooks['ParserBeforeTidy'][] = 'MercuryApiHooks::onParserBeforeTidy';

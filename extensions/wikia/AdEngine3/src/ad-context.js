@@ -139,6 +139,52 @@ export default {
 					}
 				}
 			},
+			criteo: {
+				enabled: false,
+				slots: {
+					top_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						networkId: '3306'
+					},
+					top_boxad: {
+						sizes: [
+							[300, 250],
+							[300, 600]
+						],
+						networkId: '3306'
+					},
+					incontent_boxad_1: {
+						sizes: [
+							[160, 600],
+							[300, 600],
+							[300, 250]
+						],
+						networkId: '3306'
+					},
+					bottom_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						networkId: '3306'
+					},
+					featured: {
+						zoneId: '1470492',
+						sizes: [
+							[3, 3],
+						]
+					},
+					incontent_player: {
+						zoneId: '1470491',
+						sizes: [
+							[3, 3],
+						]
+					}
+				}
+			},
 			indexExchange: {
 				enabled: false,
 				slots: {
@@ -170,6 +216,9 @@ export default {
 							[970, 250]
 						],
 						siteId: '209250'
+					},
+					featured: {
+						siteId: '437502'
 					}
 				},
 				recPlacements: {
@@ -196,9 +245,54 @@ export default {
 					}
 				}
 			},
+			nobid: {
+				enabled: false,
+				slots: {
+					top_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						siteId: 21872987104
+					},
+					top_boxad: {
+						sizes: [
+							[300, 250],
+							[300, 600]
+						],
+						siteId: 21872987104
+					},
+					incontent_boxad_1: {
+						sizes: [
+							[300, 250],
+							[300, 600],
+							[160, 600]
+						],
+						siteId: 21872987104
+					},
+					bottom_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						siteId: 21872987104
+					}
+				}
+			},
 			onemobile: {
 				enabled: false,
 				slots: {}
+			},
+			oneVideo: {
+				enabled: false,
+				slots: {
+					featured: {
+						pubId: 'FandomIS'
+					},
+					incontent_player: {
+						pubId: 'FandomOS'
+					}
+				}
 			},
 			openx: {
 				enabled: false,
@@ -368,20 +462,6 @@ export default {
 					}
 				}
 			},
-			teads: {
-				enabled: false,
-				debugPageId: 109648,
-				debugPlacementId: 119236,
-				slots: {
-					incontent_player: {
-						pageId: '109466',
-						placementId: '119043',
-						sizes: [
-							[1, 1],
-						]
-					},
-				},
-			},
 			triplelift: {
 				enabled: false,
 				slots: {
@@ -529,11 +609,6 @@ export default {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
 		},
-		krux: {
-			account: 'ns:wikia',
-			enabled: false,
-			id: 'JU3_GW1b',
-		},
 		moatYi: {
 			enabled: false,
 			partnerCode: 'wikiaprebidheader490634422386',
@@ -574,6 +649,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {

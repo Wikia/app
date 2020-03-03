@@ -16,10 +16,10 @@ class ArticleVideoContext {
 	 * @return bool
 	 *
 	 */
-	public static function isFeaturedVideoAvailable( string $pageId ): bool {
+	public static function isFeaturedVideoAvailable( int $pageId ): bool {
 		global $wgEnableArticleFeaturedVideo, $wgCityId, $wgUser;
 
-		if ( !$wgEnableArticleFeaturedVideo || WikiaPageType::isActionPage() ) {
+		if ( !$wgEnableArticleFeaturedVideo || !WikiaPageType::isArticlePage() || WikiaPageType::isActionPage() ) {
 			return false;
 		}
 
@@ -28,9 +28,9 @@ class ArticleVideoContext {
 			return false;
 		}
 
-		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
+		$videoDetails = ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $pageId );
 
-		return !empty( $mediaId );
+		return !empty( $videoDetails ) && !empty( $videoDetails['mediaId'] );
 	}
 
 	/**
@@ -41,12 +41,15 @@ class ArticleVideoContext {
 	 * @return array
 	 *
 	 */
-	public static function getFeaturedVideoData( string $pageId ) {
+	public static function getFeaturedVideoData( int $pageId ) {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoAvailable( $pageId ) ) {
+			$featuredVideo = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+
 			$videoData = [];
-			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+			$videoData['mediaId'] = $featuredVideo['mediaId'];
+			$videoData['impressionsPerSession'] = $featuredVideo['impressionsPerSession'];
 			$logger = Wikia\Logger\WikiaLogger::instance();
 
 			if ( empty( $videoData['mediaId'] ) ) {
@@ -85,6 +88,7 @@ class ArticleVideoContext {
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
+				$videoData['isDedicatedForArticle'] = ArticleVideoService::isVideoDedicatedForArticle( $wg->cityId, $pageId );
 
 				$videoData = self::getVideoDataWithAttribution( $videoData );
 

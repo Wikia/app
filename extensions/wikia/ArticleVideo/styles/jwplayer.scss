@@ -1,6 +1,10 @@
 @import 'video-shared-variables';
 @import '/skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/index.css';
 
+.no-featured-video .featured-video__wrapper {
+	display: none;
+}
+
 .featured-video {
 	padding-top: 56.25%; // we want to have 16:9 ratio div size
 	position: relative;

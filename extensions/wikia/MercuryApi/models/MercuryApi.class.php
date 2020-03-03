@@ -135,10 +135,6 @@ class MercuryApi {
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
 				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
-				],
 				'quantcast' => [
 					'labels' => AnalyticsProviderQuantServe::getQuantcastLabels()
 				]
@@ -172,7 +168,7 @@ class MercuryApi {
 		global $wgCityId, $wgStyleVersion, $wgContLang, $wgContentNamespaces, $wgDefaultSkin, $wgCdnRootUrl,
 		       $wgRecommendedVideoABTestPlaylist, $wgFandomAppSmartBannerText, $wgTwitterAccount,
 		       $wgEnableFeedsAndPostsExt, $wgEnableEmbeddedFeeds, $wgDevelEnvironment, $wgQualarooDevUrl, $wgQualarooUrl,
-		       $wgRightsText, $wgRightsUrl, $wgRedirectFilePagesForAnons, $wgEnableDiscussions;
+		       $wgRightsText, $wgRightsUrl, $wgEnableDiscussions, $wgIsTestWiki;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -186,7 +182,7 @@ class MercuryApi {
 				'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 				'enableDiscussions' => $wgEnableDiscussions,
 				'enableEmbeddedFeedsModule' => $wgEnableFeedsAndPostsExt && $wgEnableEmbeddedFeeds,
-				'enableFilePageRedirectsForAnons' => $wgRedirectFilePagesForAnons,
+				'enableFilePageRedirectsForAnons' => true,
 				'fandomAppSmartBannerText' => $wgFandomAppSmartBannerText,
 				'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 				'namespaces' => $wgContLang->getNamespaces(),
@@ -198,6 +194,7 @@ class MercuryApi {
 				'twitterAccount' => $wgTwitterAccount,
 				'licenseText' => $wgRightsText,
 				'licenseUrl' => $wgRightsUrl,
+				'isTestWiki' => $wgIsTestWiki,
 			]
 		);
 

@@ -13,8 +13,6 @@ use simple_html_dom;
  * @subpackage IndexService
  */
 class FullContent extends AbstractService {
-	const SPACE_SEQUENCE_REGEXP = "/\s+/";
-
 	/**
 	 * Text from selectors in this list should be removed during HTML stripping.
 	 *
@@ -32,14 +30,8 @@ class FullContent extends AbstractService {
 		'sup.reference',
 		'script',
 		'style',
+		'comment',
 	];
-
-	/**
-	 * We remove these selectors since they are unreliable indicators of textual content
-	 *
-	 * @var array
-	 */
-	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
 
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)

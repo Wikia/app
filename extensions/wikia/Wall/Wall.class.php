@@ -28,18 +28,24 @@ class Wall extends WikiaModel {
 	}
 
 	/**
+	 * Return an instance of Wall corresponding to the given title,
+	 * or null if the given title is not in a valid Wall namespace.
 	 * @param Title $title
-	 *
-	 * @return static
+	 * @return static|null
 	 */
-	static public function newFromTitle( Title $title ): Wall {
-		wfProfileIn( __METHOD__ );
+	static public function newFromTitle( Title $title ): ?Wall {
+		global $wgWallNS, $wgCityId;
 
-		$wall = new static();
-		$wall->mTitle = $title;
-		$wall->mCityId = F::app()->wg->CityId;
-		wfProfileOut( __METHOD__ );
-		return $wall;
+		// IW-2736: Ensure that the provided title belongs to a valid Wall namespace
+		if ( $title->inNamespaces( $wgWallNS ) ) {
+			$wall = new static();
+			$wall->mTitle = $title;
+			$wall->mCityId = $wgCityId;
+
+			return $wall;
+		}
+
+		return null;
 	}
 
 	/**

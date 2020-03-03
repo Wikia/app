@@ -488,10 +488,11 @@ class User implements JsonSerializable {
 		}
 
 		try {
-			$tokenInfo = self::heliosClient()->info( $token );
+			$tokenInfo = self::heliosClient()->info( $token, $request );
 			if ( empty( $tokenInfo->user_id ) ) {
 				return new User;
 			}
+
 			$user = self::newFromId( $tokenInfo->user_id );
 			$user->setGlobalAuthToken( $token );
 
@@ -4306,31 +4307,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-
-	/**
-	 * Is the user authenticated via the authentication service?
-	 * @return bool true if yes, false if no
-	 */
-	public function isUserAuthenticatedViaAuthenticationService() {
-		global $wgRejectAuthenticationFallback;
-
-		if ( !$wgRejectAuthenticationFallback ) {
-			return true;
-		}
-
-		$token = $this->getGlobalAuthToken();
-		if ( empty( $token ) ) {
-			return false;
-		}
-
-		$tokenInfo = self::heliosClient()->info( $token );
-		if ( !empty( $tokenInfo->user_id ) ) {
-			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
-		}
-
-		return false;
-	}
-
+	
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.

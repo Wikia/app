@@ -4,6 +4,7 @@ import {
 	context,
 	events,
 	eventService,
+	FmrRotator,
 	scrollListener,
 	slotInjector,
 	slotService,
@@ -11,9 +12,9 @@ import {
 	getAdProductInfo
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
-import { rotateIncontentBoxad } from './slot/fmr-rotator';
-import { babDetection } from './wad/bab-detection';
-import { contextReady } from "./utils/context-ready";
+import { ofType } from "@wikia/post-quecast";
+import { take } from "rxjs/operators";
+import { communicator } from "./communicator";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -229,6 +230,7 @@ export default {
 					pos: ['incontent_player'],
 					rv: 1,
 				},
+				isVideo: true,
 			},
 			floor_adhesion: {
 				adProduct: 'floor_adhesion',
@@ -270,6 +272,7 @@ export default {
 				},
 				trackEachStatus: true,
 				trackingKey: 'featured-video',
+				isVideo: true,
 			},
 		};
 	},
@@ -298,12 +301,12 @@ export default {
 		slotService.setState('top_boxad', isRightRailApplicable());
 		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
-		slotService.setState('incontent_player', context.get('wiki.targeting.hasIncontentPlayer'));
 		slotService.setState('invisible_skin', true);
 		slotService.setState('floor_adhesion', isFloorAdhesionApplicable());
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
+		slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
 	},
 
 	setupIdentificators() {
@@ -321,13 +324,13 @@ export default {
 	setupSlotVideoAdUnit(adSlot, params) {
 		const adProductInfo = getAdProductInfo(adSlot.getSlotName(), params.type, params.adProduct);
 		const adUnit = utils.stringBuilder.build(
-				context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
-				{
-					slotConfig: {
-						group: adProductInfo.adGroup,
-						adProduct: adProductInfo.adProduct,
-					},
+			context.get(`slots.${adSlot.getSlotName()}.videoAdUnit`) || context.get('vast.adUnitId'),
+			{
+				slotConfig: {
+					group: adProductInfo.adGroup,
+					adProduct: adProductInfo.adProduct,
 				},
+			},
 		);
 
 		context.set(`slots.${adSlot.getSlotName()}.videoAdUnit`, adUnit);
@@ -392,11 +395,12 @@ export default {
 	},
 
 	async injectIncontentBoxad() {
-		await contextReady;
+		await communicator.actions$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
 
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
 		const parentNode = document.getElementById('WikiaAdInContentPlaceHolder');
+		const rotator = new FmrRotator(slotName, 'incontent_boxad_', btRec);
 
 		if (!isApplicable || !parentNode) {
 			slotService.setState(slotName, false);
@@ -409,7 +413,7 @@ export default {
 
 		parentNode.appendChild(element);
 
-		rotateIncontentBoxad(slotName);
+		rotator.rotateSlot(slotName);
 	},
 
 	injectHighImpact() {
@@ -418,8 +422,8 @@ export default {
 
 	injectFloorAdhesion() {
 		scrollListener.addSlot(
-				'floor_adhesion',
-				{ distanceFromTop: utils.getViewportHeight() },
+			'floor_adhesion',
+			{ distanceFromTop: utils.getViewportHeight() },
 		);
 
 		registerFloorAdhesionCodePriority();

@@ -43,8 +43,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
-			case 'NetzAthleten':
-				return new AnalyticsProviderNetzAthleten();
 			case 'Samba':
 				return new AnalyticsProviderSamba();
 		}

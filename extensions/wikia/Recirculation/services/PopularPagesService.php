@@ -50,15 +50,10 @@ class PopularPagesService {
 		global $wgCityId;
 
 		$data = $this->getPopularPages( $limit, $thumbWidth, $thumbHeight );
-		$videos = ArticleVideoService::getFeaturedVideosForWiki( $wgCityId );
 
-		foreach ( $videos as $mapping ) {
-			if ( isset( $data[$mapping->getId()] ) ) {
-				$data[$mapping->getId()]['hasVideo'] = true;
-			}
-		}
 		foreach ( $data as $id => $article ) {
 			$data[$id]['id'] = $id;
+			$data[$id]['hasVideo'] = !empty( ArticleVideoService::getFeatureVideoForArticle( $wgCityId, $id )['mediaId'] );
 		}
 
 		return array_values( $data );
