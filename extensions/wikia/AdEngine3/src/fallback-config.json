@@ -138,7 +138,9 @@
                 "oasis"
             ],
             "regions": [
-                "XX-EU"
+                "XX-AS",
+                "XX-EU",
+                "XX-OC"
             ],
             "value": true
         }
@@ -219,6 +221,17 @@
                 "mobile-wiki",
                 "oasis"
             ]
+        }
+    ],
+    "icFloatingMedrecDestroyable": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icPrebidNobid": [
@@ -516,7 +529,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -796,7 +809,6 @@
             ],
             "regions": [
                 "GB",
-                "PL",
                 "UK",
                 "US"
             ],
