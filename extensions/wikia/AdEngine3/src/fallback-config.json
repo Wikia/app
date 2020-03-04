@@ -223,6 +223,18 @@
             ]
         }
     ],
+    "icPrebidIndexExchangeFeatured": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        }
+    ],
     "icFloatingMedrecDestroyable": [
         {
             "apps": [
