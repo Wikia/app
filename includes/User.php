@@ -119,15 +119,13 @@ class User implements JsonSerializable {
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		// user_groups table
 		'mGroups',
-		// user_properties table
-		'mOptionOverrides',
 	);
 
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName,
 		$mEmail, $mToken, $mEmailAuthenticated,
-		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
+		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups,
 		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
@@ -359,14 +357,6 @@ class User implements JsonSerializable {
 		if ( $this->isAnon() ) {
 			// Anonymous users are uncached
 			return;
-		}
-
-		// prepare mOptionOverrides for caching
-		$this->mOptionOverrides = [];
-		foreach ( $this->mOptions as $optionKey => $optionValue ) {
-			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
-				$this->mOptionOverrides[$optionKey] = $optionValue;
-			}
 		}
 
 		$data = array();
@@ -1021,7 +1011,6 @@ class User implements JsonSerializable {
 		$this->mName = $name;
 		$this->mRealName = '';
 		$this->mEmail = '';
-		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		$loggedOut = $this->getRequest()->getCookie( 'LoggedOut' );
@@ -1221,7 +1210,6 @@ class User implements JsonSerializable {
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
 		$this->mOptions = null;
-		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
@@ -2367,13 +2355,8 @@ class User implements JsonSerializable {
 	 */
 	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
-		global $wgPrivateUserAttributes;
 
 		$this->loadOptions();
-		if ( in_array( $oname, $wgPrivateUserAttributes ) && array_key_exists( $oname, $this->mOptions ) ) {
-			$options = $this->getOptions();
-			return array_key_exists( $oname, $options ) ? $options[$oname] : $defaultOverride;
-		}
 
 		if ( is_null( $this->mOptions ) ) {
 			if($defaultOverride != '') {
@@ -3071,7 +3054,6 @@ class User implements JsonSerializable {
 			return;
 
 		$this->mOptionsLoaded = true;
-		$this->mOptionOverrides = array();
 
 		// If an option is not set in $str, use the default value
 		$this->mOptions = self::getDefaultOptions();
@@ -3081,7 +3063,6 @@ class User implements JsonSerializable {
 			$m = array();
 			if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
 				$this->mOptions[$m[1]] = $m[2];
-				$this->mOptionOverrides[$m[1]] = $m[2];
 			}
 		}
 	}
@@ -4114,31 +4095,23 @@ class User implements JsonSerializable {
 
 		$this->mOptions = self::getDefaultOptions();
 		// Maybe load from the object
-		if ( !is_null( $this->mOptionOverrides ) ) {
-			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
-			foreach( $this->mOptionOverrides as $key => $value ) {
-				$this->mOptions[$key] = $value;
-			}
-		} else {
-			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-			// Load from database
-			// shared users database
-			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB;
-			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-			$res = $dbr->select(
-				'user_properties',
-				'*',
-				array( 'up_user' => $this->getId() ),
-				__METHOD__
-			);
+		wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
+		// Load from database
+		// shared users database
+		// @author Krzysztof Krzyżaniak (eloy)
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-			$this->mOptionOverrides = array();
-			foreach ( $res as $row ) {
-				$this->mOptionOverrides[$row->up_property] = $row->up_value;
-				$this->mOptions[$row->up_property] = $row->up_value;
-			}
+		$res = $dbr->select(
+			'user_properties',
+			'*',
+			array( 'up_user' => $this->getId() ),
+			__METHOD__
+		);
+
+		foreach ( $res as $row ) {
+			$this->mOptions[$row->up_property] = $row->up_value;
 		}
 
 		$this->mOptionsLoaded = true;
@@ -4320,7 +4293,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-	
+
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
