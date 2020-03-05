@@ -1,4 +1,4 @@
-import { setupAdEngine } from "./startup";
+import { setupAdEngine } from './startup';
 
 export function run() {
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
