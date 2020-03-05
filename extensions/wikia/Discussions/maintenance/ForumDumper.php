@@ -2,6 +2,8 @@
 
 namespace Discussions;
 
+use Article;
+
 class ForumDumper {
 
 	const TABLE_PAGE = 'page';
@@ -10,6 +12,7 @@ class ForumDumper {
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
 	const TABLE_PAGE_WIKIA_PROPS = 'page_wikia_props';
+	const TABLE_WALL_RELATED_PAGES = 'wall_related_pages';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -73,6 +76,14 @@ class ForumDumper {
 		"timestamp",
 	];
 
+	const COLUMNS_TOPICS = [
+		"topic_id",
+		"page_id",
+		"article_id",
+		"article_title",
+		"relative_url"
+	];
+
 	const FORUM_NAMEPSACES = [
 		NS_WIKIA_FORUM_BOARD,
 		NS_WIKIA_FORUM_BOARD_THREAD,
@@ -81,6 +92,7 @@ class ForumDumper {
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
+	private $topics = [];
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -99,6 +111,10 @@ class ForumDumper {
 
 	public function addVote( $data ) {
 		$this->votes[] = $data;
+	}
+
+	public function addTopic( $data ) {
+		$this->topics[] = $data;
 	}
 
 	/**
@@ -267,6 +283,49 @@ class ForumDumper {
 		return $this->revisions;
 	}
 
+	/**
+	 * Wall_related_pages
+	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
+	 * | Field       | Type             | Null | Key | Default           | Extra                       |
+	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
+	 * | comment_id  | int(10) unsigned | NO   | PRI | NULL              |                             |
+	 * | page_id     | int(10) unsigned | NO   | PRI | NULL              |                             |
+	 * | order_index | int(10) unsigned | NO   |     | NULL              |                             |
+	 * | add_at      | timestamp        | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+	 * | last_update | timestamp        | YES  |     | NULL              |                             |
+	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
+	 */
+	public function getTopics() {
+		if ( !empty( $this->topics ) ) {
+			return $this->topics;
+		}
+
+		$pageIds = array_keys( $this->getPages() );
+
+		$dbh = wfGetDB( DB_SLAVE );
+		( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
+			->FROM( self::TABLE_WALL_RELATED_PAGES )
+			->JOIN( self::TABLE_PAGE )
+			->AS_( 'p' )
+			->ON( 'comment_id', 'p.page_id' )
+			->WHERE( 'comment_id' )
+			->IN( $pageIds )
+			->runLoop( $dbh, function ( &$topics, $row ) {
+				list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
+				$id = count( $this->topics ) + 1;
+
+				$this->addTopic( [
+					"topic_id" => $id,
+					"page_id" => $row->comment_id,
+					"article_id" => $row->page_id,
+					"article_title" => $title,
+					"relative_url" => $url
+				] );
+			} );
+
+		return $this->topics;
+	}
+
 	public function getTextAndTitle( $textId ) {
 		$articleComment = \ArticleComment::newFromId( $textId );
 		$articleComment->load();
@@ -422,4 +481,10 @@ class ForumDumper {
 		return $threadsNamesToIds;
 	}
 
+	private function getRelatedArticleData( $textId ) {
+		$article = Article::newFromID( $textId );
+		$title  = $article->getTitle();
+
+		return [ $title->getText(), $title->getLocalURL() ];
+	}
 }

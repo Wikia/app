@@ -40,6 +40,7 @@ class DumpForumData extends Maintenance {
 		$this->dumpVotes();
 		$this->dumpFollows();
 		$this->dumpWallHistory();
+		$this->dumpTopics();
 	}
 
 	private function setConnectinoEncoding() {
@@ -52,6 +53,7 @@ class DumpForumData extends Maintenance {
 		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
 		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
 		fwrite( $this->fh, "DELETE FROM import_history;\n" );
+		fwrite( $this->fh, "DELETE FROM import_topics;\n" );
 	}
 
 	private function dumpPages() {
@@ -115,6 +117,19 @@ class DumpForumData extends Maintenance {
 			$insert = $this->createInsert(
 				'import_history',
 				Discussions\WallHistoryFinder::COLUMNS,
+				$data
+			);
+			fwrite( $this->fh, $insert . "\n");
+		}
+	}
+
+	private function dumpTopics() {
+		$topics = $this->dumper->getTopics();
+
+		foreach ( $topics as $data ) {
+			$insert = $this->createInsert(
+				'import_topics',
+				Discussions\ForumDumper::COLUMNS_TOPICS,
 				$data
 			);
 			fwrite( $this->fh, $insert . "\n");
