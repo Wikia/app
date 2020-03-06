@@ -18,7 +18,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$user = $this->getUser();
 
 		if ( !$user->isStaff() ) {
-			$out->redirect( $wgUCPCommunityCNWAddress );
+			$out->redirect( WikiFactory::getLocalEnvURL( $wgUCPCommunityCNWAddress ) );
 		}
 
 		$this->checkPermissions();
