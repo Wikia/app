@@ -138,9 +138,8 @@
                 "oasis"
             ],
             "regions": [
-                "XX-AS",
-                "XX-EU",
-                "XX-OC"
+                "XX",
+                "non-US"
             ],
             "value": true
         }
@@ -157,7 +156,7 @@
             "regions": [
                 "XX"
             ],
-            "value": true
+            "value": false
         }
     ],
     "icPrebidLkqd": [
@@ -741,6 +740,18 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icPrebidTelaria": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
             ],
             "value": true
         }
