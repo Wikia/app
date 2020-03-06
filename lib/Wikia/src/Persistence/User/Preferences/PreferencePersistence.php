@@ -82,6 +82,8 @@ class PreferencePersistence {
 	 * @throws NotFoundException
 	 */
 	public function get( $userId ) {
+		global $wgPrivateUserAttributes;
+
 		$prefs = new UserPreferences();
 
 		try {
@@ -91,7 +93,9 @@ class PreferencePersistence {
 
 			if ( $globalPreferences != null ) {
 				foreach ( $globalPreferences as $p ) {
-					$prefs->setGlobalPreference( $p->getName(), $p->getValue() );
+					if ( !in_array( $p->getName(), $wgPrivateUserAttributes ) ) {
+						$prefs->setGlobalPreference($p->getName(), $p->getValue());
+					}
 				}
 			}
 
