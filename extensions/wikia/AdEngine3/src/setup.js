@@ -42,7 +42,7 @@ async function updateWadContext() {
 	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
 	// showAds is undefined by default
-	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
+	const serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('state.showAds') !== false &&
 		!window.wgUserName;
 
@@ -123,6 +123,8 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
 
+	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
+
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
 			'options.unstickHiViLeaderboardAfterTimeout',
@@ -146,9 +148,9 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
-	context.set('services.permutive.enabled', instantConfig.get('icPermutive'));
+	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 
-	if(instantConfig.get('icTaxonomyComicsTag')) {
+	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
 		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
@@ -191,6 +193,10 @@ async function setupAdContext(wikiContext, consents) {
 
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
+
+		if (!instantConfig.get('icPrebidIndexExchangeFeatured')) {
+			context.remove('bidders.prebid.indexExchange.slots.featured');
 		}
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
@@ -291,7 +297,7 @@ function getReasonForNoAds() {
 	return reasons.length > 0 ? reasons[0] : null;
 }
 
-function init() {
+function init(inhibitors) {
 	const engine = new AdEngine();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
@@ -299,7 +305,7 @@ function init() {
 		context.onChange(`slots.${slot.getSlotName()}.videoDepth`, () => slots.setupSlotParameters(slot));
 	});
 
-	engine.init();
+	engine.init(inhibitors);
 
 	return engine;
 }

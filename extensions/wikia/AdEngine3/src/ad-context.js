@@ -216,6 +216,9 @@ export default {
 							[970, 250]
 						],
 						siteId: '209250'
+					},
+					featured: {
+						siteId: '437502'
 					}
 				},
 				recPlacements: {
@@ -459,6 +462,15 @@ export default {
 					}
 				}
 			},
+			telaria: {
+				enabled: false,
+				slots: {
+					featured: {
+						adCode: '2ciy2-doix6',
+						supplyCode: '2ciy2-9kbup',
+					}
+				}
+			},
 			triplelift: {
 				enabled: false,
 				slots: {
@@ -646,6 +658,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {
