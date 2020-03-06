@@ -535,7 +535,6 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	private function checkUserPermissions() {
-		global $wgUser;
 
 		return $this->getContext()->getUser()->isStaff();
 	}
