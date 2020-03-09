@@ -109,7 +109,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
 			],
-			'href' => $wgUCPCommunityCNWAddress,
+			'href' => WikiFactory::getLocalEnvURL( $wgUCPCommunityCNWAddress ),
 			'tracking-label' => $trackingLabel,
 		];
 	}
