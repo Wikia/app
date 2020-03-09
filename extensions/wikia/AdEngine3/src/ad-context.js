@@ -139,52 +139,6 @@ export default {
 					}
 				}
 			},
-			criteo: {
-				enabled: false,
-				slots: {
-					top_leaderboard: {
-						sizes: [
-							[728, 90],
-							[970, 250]
-						],
-						networkId: '3306'
-					},
-					top_boxad: {
-						sizes: [
-							[300, 250],
-							[300, 600]
-						],
-						networkId: '3306'
-					},
-					incontent_boxad_1: {
-						sizes: [
-							[160, 600],
-							[300, 600],
-							[300, 250]
-						],
-						networkId: '3306'
-					},
-					bottom_leaderboard: {
-						sizes: [
-							[728, 90],
-							[970, 250]
-						],
-						networkId: '3306'
-					},
-					featured: {
-						zoneId: '1470492',
-						sizes: [
-							[3, 3],
-						]
-					},
-					incontent_player: {
-						zoneId: '1470491',
-						sizes: [
-							[3, 3],
-						]
-					}
-				}
-			},
 			indexExchange: {
 				enabled: false,
 				slots: {
@@ -231,19 +185,6 @@ export default {
 			kargo: {
 				enabled: false,
 				slots: {}
-			},
-			lkqd: {
-				enabled: false,
-				slots: {
-					featured: {
-						placementId: '523',
-						siteId: '890798'
-					},
-					incontent_player: {
-						placementId: '523',
-						siteId: '892126'
-					}
-				}
 			},
 			nobid: {
 				enabled: false,
@@ -518,16 +459,6 @@ export default {
 					}
 				}
 			},
-			vmg: {
-				enabled: false,
-				slots: {
-					top_leaderboard: {
-						sizes: [
-							[3, 3]
-						]
-					}
-				}
-			},
 			wikia: {
 				enabled: false,
 				slots: {
@@ -573,7 +504,6 @@ export default {
 		beachfrontDfp: false,
 		dbNameForAdUnit: '_not_a_top1k_wiki',
 		dfpId: '5441',
-		lkqdDfp: false,
 		pubmaticDfp: false,
 		rubiconDfp: true,
 		serverPrefix: 'wka1b',
