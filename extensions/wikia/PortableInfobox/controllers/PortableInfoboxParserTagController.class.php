@@ -196,6 +196,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$renderedValue = $errorRenderer->renderArticleMsgView();
 		}
 
+		// Convert text to language variant
+		$renderedValue = $parser->getTargetLanguage()->convert( $renderedValue );
+		
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
