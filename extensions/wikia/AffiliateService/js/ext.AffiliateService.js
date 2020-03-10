@@ -385,6 +385,8 @@ require([
 		// Using mustache to render template and unit info
 		getTemplate: function(unit) {
 			var updatedLink = unit.link;
+			var watchShowEnabledDate = w.WatchShowEnabledDate || false;
+			var isWatchShowEnabled = watchShowEnabledDate && (new Date(watchShowEnabledDate).getTime() < Date.now());
 
 			if (unit.campaign === 'ddb') {
 				var beaconId = $.cookies.get('wikia_beacon_id');
@@ -416,6 +418,7 @@ require([
 				link: updatedLink,
 				logoLight: unit.logo ? unit.logo.light : null,
 				logoDark: unit.logo ? unit.logo.dark : null,
+				showDisclaimer: !isWatchShowEnabled,
 			});
 		},
 
