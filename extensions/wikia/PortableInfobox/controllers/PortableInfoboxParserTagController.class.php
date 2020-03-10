@@ -133,6 +133,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
 		$this->markers[$marker] = $renderedValue;
 
+		// Convert text to language variant
+		$renderedValue = $parser->getTargetLanguage()->convert( $renderedValue );
+		
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
 
@@ -195,9 +198,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 		} else {
 			$renderedValue = $errorRenderer->renderArticleMsgView();
 		}
-
-		// Convert text to language variant
-		$renderedValue = $parser->getTargetLanguage()->convert( $renderedValue );
 		
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
