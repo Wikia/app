@@ -95,8 +95,10 @@
             ],
             "regions": [
                 "CA",
-                "PL"
+                "PL",
+                "US"
             ],
+            "sampling": 5.0,
             "value": true
         }
     ],
@@ -138,34 +140,9 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-US"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidCriteo": [
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": false
-        }
-    ],
-    "icPrebidLkqd": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "value": false
+            "value": true
         }
     ],
     "icPrebidPubmatic": [
@@ -497,7 +474,8 @@
                 "5311481412",
                 "5312401627",
                 "5312726345",
-                "5312208469"
+                "5312208469",
+                "5323165810"
             ]
         }
     ],
@@ -751,6 +729,8 @@
                 "oasis"
             ],
             "regions": [
+                "AU",
+                "CA",
                 "PL"
             ],
             "value": true
