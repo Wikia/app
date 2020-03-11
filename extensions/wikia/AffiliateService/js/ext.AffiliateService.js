@@ -419,6 +419,7 @@ require([
 				logoLight: unit.logo ? unit.logo.light : null,
 				logoDark: unit.logo ? unit.logo.dark : null,
 				showDisclaimer: !isWatchShowEnabled,
+				disclaimerMessage: w.disclaimerMessage,
 			});
 		},
 

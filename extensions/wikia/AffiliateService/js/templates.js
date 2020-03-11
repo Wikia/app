@@ -12,7 +12,7 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
         
         if (options.showDisclaimer) {
             disclaimer = '<p class="aff-unit__disclaimer-message">'
-                + 'Fandom may earn an affiliate commission on sales made from links on this page.'
+                + options.disclaimerMessage
                 + '</p>';
         }
 
