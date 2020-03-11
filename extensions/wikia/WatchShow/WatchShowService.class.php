@@ -20,7 +20,7 @@ class WatchShowService extends WikiaService {
 			// TODO:: Replace $wgWatchShowImageURLMobileDarkTheme with $wgWatchShowImageURLDarkTheme variable once set in Wiki Factory
 			'imageURL' => SassUtil::isThemeDark() ? $wgWatchShowImageURLMobileDarkTheme : $wgWatchShowImageURL,
 			'trackingPixelURL' => $wgWatchShowTrackingPixelURL,
-			'disclaimer-message' => wfMessage( 'watch-show-disclaimer' )->escaped(),
+			'disclaimerMessage' => wfMessage( 'watch-show-disclaimer' )->escaped(),
 		] );
 	}
 }
