@@ -9,7 +9,7 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
             logos = '<img class="aff-unit__logo light" src="' + options.logoLight + '">'
                 + '<img class="aff-unit__logo dark" src="' + options.logoDark + '">';
         }
-        console.log('showDisclaimer', options.showDisclaimer);
+        
         if (options.showDisclaimer) {
             disclaimer = '<p class="aff-unit__disclaimer-message">'
                 + 'Fandom may earn an affiliate commission on sales made from links on this page.'
