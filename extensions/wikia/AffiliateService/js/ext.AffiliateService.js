@@ -386,7 +386,7 @@ require([
 		getTemplate: function(unit) {
 			var updatedLink = unit.link;
 			var watchShowEnabledDate = w.wgWatchShowEnabledDate || false;
-			var isWatchShowEnabled = wgWatchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now());
+			var isWatchShowEnabled = watchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now());
 
 			if (unit.campaign === 'ddb') {
 				var beaconId = $.cookies.get('wikia_beacon_id');
