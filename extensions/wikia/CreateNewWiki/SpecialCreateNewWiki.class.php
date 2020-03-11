@@ -11,15 +11,9 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 	 * @throws ErrorPageError
 	 */
 	public function execute( $par ) {
-		global $wgUCPCommunityCNWAddress;
-
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
 		$user = $this->getUser();
-
-		if ( !$user->isStaff() ) {
-			$out->redirect( WikiFactory::getLocalEnvURL( $wgUCPCommunityCNWAddress ) );
-		}
 
 		$this->checkPermissions();
 

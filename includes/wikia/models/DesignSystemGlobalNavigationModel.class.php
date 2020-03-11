@@ -29,7 +29,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	public function getData() {
-		global $wgUser, $wgUCPCommunityCNWAddress;
+		global $wgUser;
 
 		$data = [
 			'logo' => $this->getLogo(),
@@ -43,7 +43,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-create-wiki-link-start-wikia'
 					],
-					'href' => WikiFactory::getLocalEnvURL( $wgUCPCommunityCNWAddress ),
+					'href' => $this->getHref( 'create-new-wiki', true ),
 					'tracking_label' => 'start-a-wiki',
 				]
 			]

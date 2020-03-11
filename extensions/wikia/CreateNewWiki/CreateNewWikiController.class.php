@@ -240,11 +240,6 @@ class CreateNewWikiController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		$this->checkWriteRequest();
 
-		if ( !$this->checkUserPermissions() ) {
-			$this->response->setCode( 404 ); // Pretend it does not exist
-			return;
-		}
-
 		$params = $this->getRequest()->getArray('data');
 		$fandomCreatorCommunityId = $this->getRequest()->getVal( 'fandomCreatorCommunityId' );
 
@@ -400,11 +395,6 @@ class CreateNewWikiController extends WikiaController {
 	public function finishCreateWiki() {
 		$this->checkWriteRequest();
 
-		if ( !$this->checkUserPermissions() ) {
-			$this->response->setCode( 404 ); // Pretend it does not exist
-			return;
-		}
-
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$wiki = WikiFactory::getWikiByID( $wikiId );
 
@@ -532,9 +522,5 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setCode( 400 );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-badword-msg', $blockedKeyword )->text() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-badword-header' )->text() );
-	}
-
-	private function checkUserPermissions() {
-		return $this->getContext()->getUser()->isStaff();
 	}
 }
