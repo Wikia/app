@@ -217,6 +217,10 @@
                 "oasis"
             ],
             "regions": [
+                "AU",
+                "CA",
+                "DE",
+                "NZ",
                 "PL"
             ],
             "value": true
