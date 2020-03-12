@@ -117,6 +117,11 @@ require([
 		},
 
 		canDisplayUnit: function () {
+			if (AffiliateService.getDebugTargeting() !== false) {
+				return true;
+			}
+
+			// you're logged out?
 			return !w.wgUserName;
 		},
 
