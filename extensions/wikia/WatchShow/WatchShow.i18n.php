@@ -2,11 +2,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'watch-show-disclaimer' => 'Fandom may earn an affiliate commission on sales made from links on this page.',
+	'watch-show-disclaimer' => 'Fandom may earn an affiliate commission on sales made from links on this page.'
 );
 
 $messages['qqq'] = array(
-    'watch-show-disclaimer' => 'Fandom may earn an affiliate commission on sales made from links on this page.'
+    'watch-show-disclaimer' => 'Watch Show Disclaimer'
 );
 
 $messages['de'] = array(
