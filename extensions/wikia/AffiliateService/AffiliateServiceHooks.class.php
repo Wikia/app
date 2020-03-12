@@ -84,7 +84,7 @@ class AffiliateServiceHooks {
 		$vars['wgAffiliateEnabled'] = $isProperNamespace && $isProperCommunity;
 
 		// add translations from AffiliateService.i18n.php
-		$vars['disclaimerMessage'] = wfMessage('affiliate-service-disclaimer')->escaped();
+		$vars['disclaimerMessage'] = wfMessage('affiliate-service-disclaimer')->plain();
 
 		wfProfileOut( __METHOD__ );
 		return true;
