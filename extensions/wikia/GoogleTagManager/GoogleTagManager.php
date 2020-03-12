@@ -1,3 +1,0 @@
-<?php 
-
-printf('loaded');
