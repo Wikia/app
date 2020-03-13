@@ -7,8 +7,8 @@ function trackingPairsToObject(unit) {
 	};
 
 	if (unit.tracking && unit.tracking.forEach && typeof unit.tracking.forEach === 'function') {
-		unit.tracking.forEach((kv) => {
-			tracking[`${kv.key}`] = kv.val;
+		unit.tracking.forEach(function (kv) {
+			tracking[kv.key] = kv.val;
 		});
 	}
 
@@ -21,9 +21,9 @@ function linkToProxyLink(link, unit, wikiId, articleId, host) {
 	var category = unit.category;
 
 	// wikiId/articleId/category/algorithm/method/version
-	var path = `${wikiId}/${articleId}/${category}/${tracking.algo}/${tracking.method}/${tracking.version}`;
+	var path = [wikiId, articleId, category, tracking.algo, tracking.method, tracking.version].join('/')
 
-	var potentialLink = `${host}${path}?r=${encodeURIComponent(link)}`;
+	var potentialLink = host + path + "?r=" +encodeURIComponent(link);
 
 	// if we reach the limit lets serve them the link without the tracking
 	if (potentialLink.length > 2000) {
