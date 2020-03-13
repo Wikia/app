@@ -1,3 +1,39 @@
+function trackingPairsToObject(unit) {
+	var tracking = {
+		algo: '',
+		method: '',
+		version: '',
+		recommendation_level: '',
+	};
+
+	if (unit.tracking && unit.tracking.forEach && typeof unit.tracking.forEach === 'function') {
+		unit.tracking.forEach((kv) => {
+			tracking[`${kv.key}`] = kv.val;
+		});
+	}
+
+	return tracking;
+}
+
+function linkToProxyLink(link, unit, wikiId, articleId, host) {
+	var tracking = trackingPairsToObject(unit);
+
+	var category = unit.category;
+
+	// wikiId/articleId/category/algorithm/method/version
+	var path = `${wikiId}/${articleId}/${category}/${tracking.algo}/${tracking.method}/${tracking.version}`;
+
+	var potentialLink = `${host}${path}?r=${encodeURIComponent(link)}`;
+
+	// if we reach the limit lets serve them the link without the tracking
+	if (potentialLink.length > 2000) {
+		return link;
+	}
+
+	return potentialLink;
+
+}
+
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
@@ -97,13 +133,13 @@ require([
 	var AffiliateService = {
 		$infoBox: undefined,
 
-		isHuluCommunity: function() {
+		isHuluCommunity: function () {
 			return HULU_COMMUNITIES.indexOf(parseInt(w.wgCityId, 10)) !== -1;
 		},
 
 
 		// ?debugAffiliateServiceTargeting=campaign,category
-		getDebugTargeting: function() {
+		getDebugTargeting: function () {
 			// check if we have the mechanism to get the param (ie. not on IE)
 			if (typeof URLSearchParams === 'function') {
 				var urlParams = new URLSearchParams(w.location.search);
@@ -220,7 +256,7 @@ require([
 					if (availableUnits.length > 0) {
 						var unit = availableUnits[0];
 
- 						// add unit data to be inserted into template
+						// add unit data to be inserted into template
 						AffiliateService.renderUnitMarkup(unit);
 					} else {
 						console.log('No units available for targeting', targeting);
@@ -295,7 +331,7 @@ require([
 			var notAllowedYStart = []; // array of y coordinate start positions
 			var notAllowedYStop = [] // array of y coordinate final positions
 
-			$images.each(function(index, element) {
+			$images.each(function (index, element) {
 				var $image = $(element);
 				var imageStart = $image.offset().top;
 				notAllowedYStart.push(imageStart);
@@ -339,7 +375,7 @@ require([
 
 			// prepend the unit after the first paragraph below the
 			var $insertionPoint = undefined;
-			$paragraphs.each(function(index, element) {
+			$paragraphs.each(function (index, element) {
 				var $paragraph = $(element);
 				var paragraphYStart = $paragraph.offset().top;
 				var paragraphYEnd = $paragraph.height() + paragraphYStart;
@@ -370,14 +406,14 @@ require([
 		},
 
 		// Using mustache to render template and unit info
-		getTemplate: function(unit) {
+		getTemplate: function (unit) {
 			var updatedLink = unit.link;
 
 			if (unit.campaign === 'ddb') {
 				var beaconId = $.cookies.get('wikia_beacon_id');
 				var sessionId = $.cookies.get('wikia_session_id');
 				var userId = w.wgUserId || 'null';
-				var utmTerm = userId === 'null' ? sessionId + '_' + userId  : sessionId;
+				var utmTerm = userId === 'null' ? sessionId + '_' + userId : sessionId;
 				var queryParams = {
 					'utm_medium': 'affiliate_link',
 					'utm_source': 'fandom',
@@ -400,7 +436,7 @@ require([
 				image: unit.image,
 				heading: unit.heading,
 				buttonText: unit.subheading,
-				link: updatedLink,
+				link: linkToProxyLink(updatedLink, unit, w.wgCityId, w.wgArticleId, w.wgServicesExternalDomain + 'affiliate/redirect/'),
 				logoLight: unit.logo ? unit.logo.light : null,
 				logoDark: unit.logo ? unit.logo.dark : null,
 			});
