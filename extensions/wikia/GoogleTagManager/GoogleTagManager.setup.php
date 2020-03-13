@@ -10,9 +10,6 @@ $wgExtensionCredits['other'][] = [
 $wgResourceModules['ext.wikia.GoogleTagManager'] = [
 	'remoteExtPath' => 'wikia/GoogleTagManager',
 	'localBasePath' => __DIR__,
-	'scripts' => [
-		'js/ext.GoogleTagManager.js'
-	],
 ];
 
 // hooks
