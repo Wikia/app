@@ -10,8 +10,12 @@ $wgExtensionCredits['other'][] = [
 $wgResourceModules['ext.wikia.GoogleTagManager'] = [
 	'remoteExtPath' => 'wikia/GoogleTagManager',
 	'localBasePath' => __DIR__,
+	'scripts' => [
+		'js/ext.GoogleTagManager.js'
+	],
 ];
 
 // hooks
 $wgAutoloadClasses['GoogleTagManagerHooks'] = __DIR__ . '/GoogleTagManagerHooks.class.php';
+$wgHooks['WikiaSkinTopScripts'][] =  'GoogleTagManagerHooks::onWikiaSkinTopScripts';
 $wgHooks['BeforePageDisplay'][] = 'GoogleTagManagerHooks::onBeforePageDisplay';
