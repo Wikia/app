@@ -16,7 +16,7 @@ class GoogleTagManagerHooks {
 		$tagManagerNoScript = '<!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MDPTN53" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->';
 
 		$out->addModules( 'ext.wikia.GoogleTagManager' );
-		$out->addHTML( $tagManagerNoScript );
+		$out->prependHTML( $tagManagerNoScript );
 
 		wfProfileOut( __METHOD__ );
 		return true;
