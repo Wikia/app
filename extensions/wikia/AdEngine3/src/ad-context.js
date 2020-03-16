@@ -126,10 +126,6 @@ export default {
 					}
 				}
 			},
-			audienceNetwork: {
-				enabled: false,
-				slots: {}
-			},
 			beachfront: {
 				enabled: false,
 				debugAppId: '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
