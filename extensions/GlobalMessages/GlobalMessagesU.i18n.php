@@ -15617,7 +15617,7 @@ $messages['it'] = array(
 	'unprotect' => 'Cambia la protezione',
 	'unprotectthispage' => 'Cambia la protezione a questa pagina',
 	'unexpected' => 'Valore imprevisto: "$1"="$2".',
-	'userlogin' => 'Entra / Registrati',
+	'userlogin' => 'Accedi / Registrati',
 	'userloginnocreate' => 'Entra',
 	'userlogout' => 'Esci',
 	'userlogin-resetlink' => 'Hai dimenticato i tuoi dati di accesso?',
