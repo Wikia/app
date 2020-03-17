@@ -217,11 +217,7 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
-                "CA",
-                "DE",
-                "NZ",
-                "PL"
+                "XX"
             ],
             "value": true
         }
@@ -735,7 +731,8 @@
             "regions": [
                 "AU",
                 "CA",
-                "PL"
+                "PL",
+                "US"
             ],
             "value": true
         }
