@@ -1,9 +1,8 @@
-import { registerEditorSavedEvents, setupAdEngine } from "./startup";
+import { setupAdEngine } from './startup';
 
 export function run() {
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
 	window.Wikia.consentQueue.push(setupAdEngine);
-	registerEditorSavedEvents();
 }
 
 // Those will stay

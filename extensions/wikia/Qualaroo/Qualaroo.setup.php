@@ -31,4 +31,3 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'QualarooHooks::onOasisSkinAssetGro
 $wgHooks['OasisSkinAssetGroups'][] = 'QualarooHooks::onOasisSkinAssetGroups';
 $wgHooks['MakeGlobalVariablesScript'][] = 'QualarooHooks::onMakeGlobalVariablesScript';
 $wgHooks['WikiaAssetsPackages'][]  = 'QualarooHooks::onWikiaAssetsPackages';
-$wgHooks['InstantGlobalsGetVariables'][] = 'QualarooHooks::onInstantGlobalsGetVariables';

@@ -16,7 +16,7 @@
 	margin: 0;
 	min-height: $wds-icon-small-size;
 	outline: none;
-	padding: 7px 18px;
+	padding: $wds-button-vertical-padding $wds-button-horizontal-padding;
 	text-decoration: none;
 	text-transform: uppercase;
 	transition-duration: $wds-button-transition-duration;
@@ -62,11 +62,11 @@
 
 		&:not(:only-child) {
 			&:first-child {
-				margin-right: 6px;
+				margin-right: $wds-button-horizontal-gap;
 			}
 
 			&:last-child {
-				margin-left: 6px;
+				margin-left: $wds-button-horizontal-gap;
 			}
 		}
 	}

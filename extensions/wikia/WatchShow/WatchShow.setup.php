@@ -18,3 +18,6 @@ $wgHooks['BeforePageDisplay'][] = 'WatchShowHooks::onBeforePageDisplay';
 $wgHooks['MercuryWikiVariables'][] = 'WatchShowHooks::onMercuryWikiVariables';
 $wgHooks['GetRailModuleList'][] = 'WatchShowHooks::onGetRailModuleList';
 $wgHooks['MakeGlobalVariablesScript'][] = 'WatchShowHooks::onMakeGlobalVariablesScript';
+
+// i18n
+$wgExtensionMessagesFiles['WatchShow'] = __DIR__ . '/WatchShow.i18n.php';

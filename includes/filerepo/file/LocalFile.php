@@ -12,6 +12,8 @@
 define( 'MW_FILE_VERSION', 8 );
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Tasks\Image\AsyncPurgeTask;
+use Wikia\Tasks\Tasks\Image\FileInfo;
 
 /**
  * Class to represent a local file in the wiki's own database
@@ -743,16 +745,8 @@ class LocalFile extends File {
 	 * @param $archiveName string name of the archived file
 	 */
 	function purgeOldThumbnails( $archiveName ) {
-		// Get a list of old thumbnails and URLs
-		$files = $this->getThumbnails( $archiveName );
-		$dir = array_shift( $files );
-		$this->purgeThumbList( $dir, $files );
-
-		$urls = [];
-		foreach ( $files as $file ) {
-			$urls[] = $this->getArchiveThumbUrl( $archiveName, $file );
-		}
-		$this->publishAsyncPurgeTask( $urls );
+		$file = OldLocalFile::newFromArchiveName($this->title, $this->repo, $archiveName );
+		$file->purgeThumbnails();
 	}
 
 	/**
@@ -804,13 +798,13 @@ class LocalFile extends File {
 			'revision' => $revision,
 			'path-prefix' => $this->getPathPrefix(),
 		] );
-		$id = new \Wikia\Tasks\Tasks\Image\FileInfo(
+		$id = new FileInfo(
 			$this->getBucket(),
 			$relativePath,
 			$revision,
 			$this->getPathPrefix()
 		);
-		( new \Wikia\Tasks\Tasks\Image\AsyncPurgeTask() )->publish( $id, $urls );
+		( new AsyncPurgeTask() )->publish( $id, $urls );
 	}
 
 	/**

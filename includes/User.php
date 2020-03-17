@@ -119,15 +119,13 @@ class User implements JsonSerializable {
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		// user_groups table
 		'mGroups',
-		// user_properties table
-		'mOptionOverrides',
 	);
 
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName,
 		$mEmail, $mToken, $mEmailAuthenticated,
-		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
+		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups,
 		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
@@ -361,14 +359,6 @@ class User implements JsonSerializable {
 			return;
 		}
 
-		// prepare mOptionOverrides for caching
-		$this->mOptionOverrides = [];
-		foreach ( $this->mOptions as $optionKey => $optionValue ) {
-			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
-				$this->mOptionOverrides[$optionKey] = $optionValue;
-			}
-		}
-
 		$data = array();
 		foreach ( self::$mCacheVars as $name ) {
 			$data[$name] = $this->$name;
@@ -488,35 +478,9 @@ class User implements JsonSerializable {
 		}
 
 		try {
-			$tokenInfo = self::heliosClient()->info( $token );
+			$tokenInfo = self::heliosClient()->info( $token, $request );
 			if ( empty( $tokenInfo->user_id ) ) {
 				return new User;
-			}
-
-			// PLATFORM-4490 - make sure helios returns correct user id
-			$sessionUserId = $request->getSessionData( 'helios_user_id' );
-			if ( empty( $sessionUserId ) ) {
-				$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
-			} else {
-				if ( $tokenInfo->user_id != $sessionUserId ) {
-					// try to exclude false alerts when user just logged into a new account
-					if ( !empty( $_SERVER['HTTP_REFERER'] ) &&
-						 ( strpos( $_SERVER['HTTP_REFERER'], '/signin' ) !== false ||
-						   strpos( $_SERVER['HTTP_REFERER'], '/register' ) !== false ) ) {
-						$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
-					} else {
-						WikiaLogger::instance()->error( 'Helios user id mismatch', [
-							'sessionUserId' => $sessionUserId,
-							'heliosResponse' => [
-								'userId' => $tokenInfo->user_id,
-								'accessToken' => $tokenInfo->access_token,
-								'beacon' => self::heliosClient()->getResponseHeader( 'x-client-beacon-id' ),
-								'servedBy' => self::heliosClient()->getResponseHeader( 'x-served-by' ),
-								'timestamp' => self::heliosClient()->getResponseHeader( 'x-backend-timestamp' ),
-							]
-						] );
-					}
-				}
 			}
 
 			$user = self::newFromId( $tokenInfo->user_id );
@@ -1047,7 +1011,6 @@ class User implements JsonSerializable {
 		$this->mName = $name;
 		$this->mRealName = '';
 		$this->mEmail = '';
-		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		$loggedOut = $this->getRequest()->getCookie( 'LoggedOut' );
@@ -1247,7 +1210,6 @@ class User implements JsonSerializable {
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
 		$this->mOptions = null;
-		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
@@ -2393,6 +2355,7 @@ class User implements JsonSerializable {
 	 */
 	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
+
 		$this->loadOptions();
 
 		if ( is_null( $this->mOptions ) ) {
@@ -3091,7 +3054,6 @@ class User implements JsonSerializable {
 			return;
 
 		$this->mOptionsLoaded = true;
-		$this->mOptionOverrides = array();
 
 		// If an option is not set in $str, use the default value
 		$this->mOptions = self::getDefaultOptions();
@@ -3101,7 +3063,6 @@ class User implements JsonSerializable {
 			$m = array();
 			if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
 				$this->mOptions[$m[1]] = $m[2];
-				$this->mOptionOverrides[$m[1]] = $m[2];
 			}
 		}
 	}
@@ -4134,31 +4095,23 @@ class User implements JsonSerializable {
 
 		$this->mOptions = self::getDefaultOptions();
 		// Maybe load from the object
-		if ( !is_null( $this->mOptionOverrides ) ) {
-			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
-			foreach( $this->mOptionOverrides as $key => $value ) {
-				$this->mOptions[$key] = $value;
-			}
-		} else {
-			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-			// Load from database
-			// shared users database
-			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB;
-			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-			$res = $dbr->select(
-				'user_properties',
-				'*',
-				array( 'up_user' => $this->getId() ),
-				__METHOD__
-			);
+		wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
+		// Load from database
+		// shared users database
+		// @author Krzysztof Krzyżaniak (eloy)
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-			$this->mOptionOverrides = array();
-			foreach ( $res as $row ) {
-				$this->mOptionOverrides[$row->up_property] = $row->up_value;
-				$this->mOptions[$row->up_property] = $row->up_value;
-			}
+		$res = $dbr->select(
+			'user_properties',
+			'*',
+			array( 'up_user' => $this->getId() ),
+			__METHOD__
+		);
+
+		foreach ( $res as $row ) {
+			$this->mOptions[$row->up_property] = $row->up_value;
 		}
 
 		$this->mOptionsLoaded = true;
@@ -4172,7 +4125,14 @@ class User implements JsonSerializable {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	protected function savePreferences() {
-		$this->userPreferences()->save($this->getId());
+		$additionalGlobalOptions = [];
+		foreach( $this->mOptions as $key => $value ) {
+			if ( $this->shouldOptionBeStored( $key, $value ) ) {
+				$additionalGlobalOptions[$key] = $value;
+			}
+		}
+
+		$this->userPreferences()->save($this->getId(), $additionalGlobalOptions);
 	}
 
 	/**
@@ -4332,30 +4292,6 @@ class User implements JsonSerializable {
 	 */
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
-	}
-
-	/**
-	 * Is the user authenticated via the authentication service?
-	 * @return bool true if yes, false if no
-	 */
-	public function isUserAuthenticatedViaAuthenticationService() {
-		global $wgRejectAuthenticationFallback;
-
-		if ( !$wgRejectAuthenticationFallback ) {
-			return true;
-		}
-
-		$token = $this->getGlobalAuthToken();
-		if ( empty( $token ) ) {
-			return false;
-		}
-
-		$tokenInfo = self::heliosClient()->info( $token );
-		if ( !empty( $tokenInfo->user_id ) ) {
-			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
-		}
-
-		return false;
 	}
 
 	/**

@@ -101,8 +101,8 @@ spec:
               cpu: 5
               memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: 2.5
-              memory: 3Gi
+              cpu: 1
+              memory: 1.4Gi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
@@ -277,8 +277,8 @@ spec:
               cpu: 5
               memory: 5Gi  # 20 fpm workers x 200MB PHP memory limit
             requests:
-              cpu: 2.5
-              memory: 3Gi
+              cpu: 1
+              memory: 1.4Gi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
@@ -325,8 +325,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 45
-  minReplicas: 15
+  maxReplicas: 15
+  minReplicas: 5
   metrics:
   - type: Resource
     resource:

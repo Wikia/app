@@ -5331,21 +5331,21 @@ $messages['fr'] = array(
 	'bold_sample' => 'Texte gras',
 	'bold_tip' => 'Texte gras',
 	'blockedtitle' => 'L’utilisateur est bloqué.',
-	'blockedtext' => '<big>\'\'\'\'Votre compte utilisateur ou votre adresse IP a été bloqué.\'\'\'</big>
+	'blockedtext' => '<big>\'\'\'Votre nom d\'utilisateur ou votre adresse IP a été bloqué(e).\'\'\'</big>
 
 <div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 Le blocage a été effectué par $1.
 
-* Raison invoquée : $2
-* Début du blocage : $8
-* Expiration du blocage : $6
-* Compte bloqué : $7
-* ID bloqué : #$5
-* Adresse IP actuelle : $3
+* Raison invoquée : $2
+* Début du blocage : $8
+* Expiration du blocage : $6
+* Compte bloqué : $7
+* ID de blocage : #$5
+* Adresse IP actuelle : $3
 </div>
 
-Vous pouvez contacter $1 ou un autre [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] pour en discuter.
-Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
+Vous pouvez contacter $1 ou un [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] pour discuter du blocage.
+Veuillez préciser tous les détails ci-dessus dans chaque requête effectuée.',
 	'blockednoreason' => 'aucune raison donnée',
 	'blocked-notice-logextract' => 'Cet utilisateur est actuellement bloqué.
 La dernière entrée du registre des blocages est indiquée ci-dessous à titre d’information :',
@@ -8274,7 +8274,7 @@ $messages['ja'] = array(
 	'bold_sample' => '太字',
 	'bold_tip' => '太字',
 	'blockedtitle' => 'ユーザーはブロックされています',
-	'blockedtext' => '<big>\'\'このユーザー名またはIPアドレスはブロックされています。\'\'\'</big>
+	'blockedtext' => '<big>\'\'\'このユーザー名またはIPアドレスはブロックされています。\'\'\'</big>
 
 <div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 このブロックは$1さんが設定しました。

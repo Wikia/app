@@ -79,10 +79,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
 
-	// ADEN-6676
-	$instantGlobalsModule = new InstantGlobalsModule();
-	$scripts .= Html::inlineScript( JavaScriptMinifier::minify( $instantGlobalsModule->getScript() ) ) . "\n";
-
 	return true;
 }
 

@@ -55,8 +55,13 @@
 
 	&.is-empty > &__field ~ &__label {
 		font-size: $wds-typescale-size-base;
+		height: 1rem;
 		line-height: 1rem;
+		overflow: hidden;
+		right: 0;
+		text-overflow: ellipsis;
 		top: 0;
+		white-space: nowrap;
 	}
 
 	&.is-empty > &__hint {

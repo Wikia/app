@@ -101,8 +101,8 @@ spec:
               cpu: 5
               memory: 5Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: 2.5
-              memory: 3Gi
+              cpu: 1
+              memory: 1.4Gi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
