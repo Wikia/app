@@ -186,10 +186,6 @@ async function setupAdContext(wikiContext, consents) {
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
 
-		if (!instantConfig.get('icPrebidLkqdOutstream')) {
-			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
-		}
-
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
