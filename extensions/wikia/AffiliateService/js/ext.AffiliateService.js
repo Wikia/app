@@ -117,25 +117,12 @@ require([
 		},
 
 		canDisplayUnit: function () {
-			// you're logged out?
-			if (!w.wgUserName) {
-				if (AffiliateService.isHuluCommunity()) {
-					return true;
-				}
-
-				// is that wiki whitelisted?
-				if (w.wgAffiliateEnabled) {
-					return true;
-				}
-
-				// do we have debug targeting
-				if (AffiliateService.getDebugTargeting() !== false) {
-					return true;
-				}
+			if (AffiliateService.getDebugTargeting() !== false) {
+				return true;
 			}
 
-			// tough luck
-			return false;
+			// you're logged out?
+			return !w.wgUserName;
 		},
 
 		getStartHeight: function () {
@@ -385,6 +372,8 @@ require([
 		// Using mustache to render template and unit info
 		getTemplate: function(unit) {
 			var updatedLink = unit.link;
+			var watchShowEnabledDate = w.wgWatchShowEnabledDate || false;
+			var isWatchShowEnabled = watchShowEnabledDate && (Date.parse(watchShowEnabledDate) < Date.now());
 
 			if (unit.campaign === 'ddb') {
 				var beaconId = $.cookies.get('wikia_beacon_id');
@@ -416,6 +405,8 @@ require([
 				link: updatedLink,
 				logoLight: unit.logo ? unit.logo.light : null,
 				logoDark: unit.logo ? unit.logo.dark : null,
+				showDisclaimer: !isWatchShowEnabled,
+				disclaimerMessage: w.disclaimerMessage,
 			});
 		},
 

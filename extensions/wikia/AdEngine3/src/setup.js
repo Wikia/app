@@ -170,7 +170,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('icFMRRotatorDelay', 10000));
 
 	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
 

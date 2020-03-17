@@ -558,6 +558,10 @@ if( !empty( $wgEnableGoogleDocsExt ) ) {
 	include( "$IP/extensions/wikia/GoogleDocs/GoogleDocs.php" );
 }
 
+if( !empty( $wgEnableGoogleTagManager ) ) {
+	include( "$IP/extensions/wikia/GoogleTagManager/GoogleTagManager.setup.php" );
+}
+
 if( !empty( $wgEnableJSVariablesExt ) ) {
 	include( "$IP/extensions/wikia/JSVariables/JSVariables.php" );
 }
@@ -1811,3 +1815,5 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 }
 
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
+
+$wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';
