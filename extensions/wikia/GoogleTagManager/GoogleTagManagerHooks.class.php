@@ -11,7 +11,7 @@ class GoogleTagManagerHooks {
 	
 	public static function onBeforePageDisplay( OutputPage $out ) {
 		wfProfileIn( __METHOD__ );
-		global $wgEnableGoogleTagManager;
+		global $wgEnableGoogleTagManagerExt;
 
 		$tagManagerNoScript = '<!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MDPTN53" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->';
 

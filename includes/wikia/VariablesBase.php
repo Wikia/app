@@ -2793,11 +2793,11 @@ $wgEnableGoogleDocsExt = true;
 $wgEnableGoogleFormTagExt = true;
 
 /**
- * Enables GoogleTagManager by default
+ * Enables Google Tag Manager by default
  * @see /extensions/wikia/GoogleTagManager
- * @var bool $wgEnableGoogleTagManager
+ * @var bool $wgEnableGoogleTagManagerExt
  */
-$wgEnableGoogleTagManager = true;
+$wgEnableGoogleTagManagerExt = true;
 
 /**
  * Enable Gracenote extension for Lyrics. Defaults to false, toggled in
