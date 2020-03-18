@@ -2793,6 +2793,13 @@ $wgEnableGoogleDocsExt = true;
 $wgEnableGoogleFormTagExt = true;
 
 /**
+ * Enables Google Tag Manager by default
+ * @see /extensions/wikia/GoogleTagManager
+ * @var bool $wgEnableGoogleTagManagerExt
+ */
+$wgEnableGoogleTagManagerExt = true;
+
+/**
  * Enable Gracenote extension for Lyrics. Defaults to false, toggled in
  * WikiFactory.
  * @see extensions/3rdparty/LyricWiki/Gracenote
