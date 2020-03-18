@@ -247,15 +247,19 @@ class ForumDumper {
 			return $this->revisions;
 		}
 
-		$pageIds = array_keys( $this->getPages() );
+		$revIds = [];
+
+		foreach ( $this->getPages() as $id => $data ) {
+			$revIds[] = $data['latest_revision_id'];
+		}
 
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_REVISION )
 			->JOIN( self::TABLE_TEXT )
 			->ON( 'rev_text_id', 'old_id' )
-			->WHERE( 'rev_page' )
-			->IN( $pageIds )
+			->WHERE( 'rev_id' )
+			->IN( $revIds )
 			->runLoop( $dbh, function ( &$revisions, $row ) {
 				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
