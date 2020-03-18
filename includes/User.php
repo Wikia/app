@@ -4597,7 +4597,7 @@ class User implements JsonSerializable {
 	 *
 	 * @return Boolean User is below 16 y.o.
 	 */
-	public function isSubjectToCoppa() { // TODO: Unit tests
+	public function isSubjectToCoppa() { // TODO: Unit tests; Is it cached? If yes, is the cache properly cleared?
 		if ($this->mBirthDate === null) {
 			return false;
 		}
