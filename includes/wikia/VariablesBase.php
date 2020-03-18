@@ -2793,7 +2793,7 @@ $wgEnableGoogleDocsExt = true;
 $wgEnableGoogleFormTagExt = true;
 
 /**
- * Enable GoogleTagManager
+ * Enables GoogleTagManager by default
  * @see /extensions/wikia/GoogleTagManager
  * @var bool $wgEnableGoogleTagManager
  */
