@@ -31,12 +31,18 @@ class MercuryApiArticleHandler {
 	 * @throws WikiaException
 	 */
 	public static function getArticleDetails( Article $article ) {
+		global $wgEnableArticleCommentsExt;
+
 		$articleId = $article->getID();
 		$articleDetails = F::app()->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData(
 			)['items'][$articleId];
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
+
+		if ( !$wgEnableArticleCommentsExt ) {
+			$articleDetails['comments'] = -1;
+		}
 
 		\Hooks::run( 'MercuryArticleDetails', [ $article, &$articleDetails ] );
 
