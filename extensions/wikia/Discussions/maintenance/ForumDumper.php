@@ -167,12 +167,17 @@ class ForumDumper {
 
 		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
+		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )
 			->ON( 'page_id', 'comment_id' )
+			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
+			->AS_( 'pp' )
+			->ON( 'page.page_id', 'pp.page_id' )
+			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
 			->WHERE( 'page_namespace' )
 			->IN( self::FORUM_NAMEPSACES )
+			->ORDER_BY( 'idx' )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
 				// A few of these properties were removed and do not appear on some wikis
 				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
