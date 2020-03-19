@@ -248,36 +248,40 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT_ALL()
-			->FROM( self::TABLE_REVISION )
-			->JOIN( self::TABLE_TEXT )
-			->ON( 'rev_text_id', 'old_id' )
-			->WHERE( 'rev_id' )
-			->IN( $revIds )
-			->runLoop( $dbh, function ( &$revisions, $row ) {
-				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
+		$chunks = array_chunk($revIds, 500);
 
-				$pages = $this->getPages();
-				$curPage = $pages[$row->rev_page];
+		foreach ($chunks as $part) {
+			$dbh = wfGetDB( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT_ALL()
+				->FROM( self::TABLE_REVISION )
+				->JOIN( self::TABLE_TEXT )
+				->ON( 'rev_text_id', 'old_id' )
+				->WHERE( 'rev_id' )
+				->IN( $part )
+				->runLoop( $dbh, function ( &$revisions, $row ) {
+					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
-				$this->addRevision( [
-					"revision_id" => $row->rev_id,
-					"page_id" => $row->rev_page,
-					"page_namespace" => $curPage['namespace'],
-					"title" => $title,
-					"user_type" => $this->getContributorType( $row ),
-					"user_identifier" => $row->rev_user,
-					"timestamp" => $row->rev_timestamp,
-					"is_minor_edit" => $row->rev_minor_edit,
-					"is_deleted" => $row->rev_deleted,
-					"length" => $row->rev_len,
-					"parent_id" => $row->rev_parent_id,
-					"text_flags" => $row->old_flags,
-					"raw_content" => $plainText,
-					"content" => $parsedText,
-				] );
-			} );
+					$pages = $this->getPages();
+					$curPage = $pages[$row->rev_page];
+
+					$this->addRevision( [
+						"revision_id" => $row->rev_id,
+						"page_id" => $row->rev_page,
+						"page_namespace" => $curPage['namespace'],
+						"title" => $title,
+						"user_type" => $this->getContributorType( $row ),
+						"user_identifier" => $row->rev_user,
+						"timestamp" => $row->rev_timestamp,
+						"is_minor_edit" => $row->rev_minor_edit,
+						"is_deleted" => $row->rev_deleted,
+						"length" => $row->rev_len,
+						"parent_id" => $row->rev_parent_id,
+						"text_flags" => $row->old_flags,
+						"raw_content" => $plainText,
+						"content" => $parsedText,
+					] );
+				} );
+		}
 
 		return $this->revisions;
 	}
