@@ -121,8 +121,13 @@ require([
 				return true;
 			}
 
-			// you're logged out?
-			return !w.wgUserName;
+			// is this the proper namespace and logged out
+			if (w.wgAffiliateEnabled && !w.wgUserName) {
+				return true;
+			}
+
+			// out of luck
+			return false;
 		},
 
 		getStartHeight: function () {
