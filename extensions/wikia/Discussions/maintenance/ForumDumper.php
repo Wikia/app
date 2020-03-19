@@ -3,11 +3,6 @@
 namespace Discussions;
 
 use Article;
-use ArticleComment;
-use ParserOptions;
-use ParserPool;
-use RequestContext;
-use Title;
 
 class ForumDumper {
 
@@ -172,17 +167,12 @@ class ForumDumper {
 
 		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
+		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )
 			->ON( 'page_id', 'comment_id' )
-			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
-			->AS_( 'pp' )
-			->ON( 'page.page_id', 'pp.page_id' )
-			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
 			->WHERE( 'page_namespace' )
 			->IN( self::FORUM_NAMEPSACES )
-			->ORDER_BY( 'idx' )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
 				// A few of these properties were removed and do not appear on some wikis
 				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
@@ -258,40 +248,36 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$revIdsParts = array_chunk($revIds, 1000);
+		$dbh = wfGetDB( DB_SLAVE );
+		( new \WikiaSQL() )->SELECT_ALL()
+			->FROM( self::TABLE_REVISION )
+			->JOIN( self::TABLE_TEXT )
+			->ON( 'rev_text_id', 'old_id' )
+			->WHERE( 'rev_id' )
+			->IN( $revIds )
+			->runLoop( $dbh, function ( &$revisions, $row ) {
+				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
-		foreach ( $revIdsParts as $part ) {
-			$dbh = wfGetDB( DB_SLAVE );
-			( new \WikiaSQL() )->SELECT_ALL()
-				->FROM( self::TABLE_REVISION )
-				->JOIN( self::TABLE_TEXT )
-				->ON( 'rev_text_id', 'old_id' )
-				->WHERE( 'rev_id' )
-				->IN( $part )
-				->runLoop( $dbh, function ( &$revisions, $row ) {
-					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_id, $row->rev_page );
+				$pages = $this->getPages();
+				$curPage = $pages[$row->rev_page];
 
-					$pages = $this->getPages();
-					$curPage = $pages[$row->rev_page];
-
-					$this->addRevision( [
-						"revision_id" => $row->rev_id,
-						"page_id" => $row->rev_page,
-						"page_namespace" => $curPage['namespace'],
-						"title" => $title,
-						"user_type" => $this->getContributorType( $row ),
-						"user_identifier" => $row->rev_user,
-						"timestamp" => $row->rev_timestamp,
-						"is_minor_edit" => $row->rev_minor_edit,
-						"is_deleted" => $row->rev_deleted,
-						"length" => $row->rev_len,
-						"parent_id" => $row->rev_parent_id,
-						"text_flags" => $row->old_flags,
-						"raw_content" => $plainText,
-						"content" => $parsedText,
-					] );
-				} );
-		}
+				$this->addRevision( [
+					"revision_id" => $row->rev_id,
+					"page_id" => $row->rev_page,
+					"page_namespace" => $curPage['namespace'],
+					"title" => $title,
+					"user_type" => $this->getContributorType( $row ),
+					"user_identifier" => $row->rev_user,
+					"timestamp" => $row->rev_timestamp,
+					"is_minor_edit" => $row->rev_minor_edit,
+					"is_deleted" => $row->rev_deleted,
+					"length" => $row->rev_len,
+					"parent_id" => $row->rev_parent_id,
+					"text_flags" => $row->old_flags,
+					"raw_content" => $plainText,
+					"content" => $parsedText,
+				] );
+			} );
 
 		return $this->revisions;
 	}
@@ -339,10 +325,13 @@ class ForumDumper {
 		return $this->topics;
 	}
 
-	public function getTextAndTitle( $revId, $pageId ) {
-		$rev = \Revision::newFromId($revId);
-		$rawText = $this->getRawText( $rev );
-		list ($parsedText) = $this->getParsedText( $rev );
+	public function getTextAndTitle( $textId ) {
+		$articleComment = \ArticleComment::newFromId( $textId );
+		$articleComment->load();
+
+		$rawText = $this->getRawText( $articleComment );
+		$title = $articleComment->getMetadata( 'title', '' );
+		$parsedText = $this->getParsedText( $articleComment );
 
 		if ( empty( $parsedText ) ) {
 			// If there's nothing to parse, use rawText as the default
@@ -361,53 +350,30 @@ class ForumDumper {
 			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
 		}
 
-		$articleComment = ArticleComment::newFromId( $pageId );
-		$articleComment->setRawText($rev->getText());
-//		$articleComment->load();
-		$title = $articleComment->getMetadata('title');
-
 		return [ $parsedText, $rawText, $title ];
 	}
 
-	private function getRawText( \Revision $revision ) {
-		$text = preg_replace( '#</?ac_metadata(\s[^>]*)?>#i', '', $revision->getText() );
-		$rawText = strip_tags( $text );
+	private function getRawText( \ArticleComment $articleComment ) {
+		$rawText = strip_tags( $articleComment->getRawText() );
 
 		// There are some bogus characters in our data.  Strip them out
 		return filter_var( $rawText, FILTER_UNSAFE_RAW,
 			FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH );
 	}
 
-	private function getParsedText( \Revision $revision ) {
-		$wikiText = preg_replace( '#</?ac_metadata(\s[^>]*)?>#i', '', $revision->getText() );
+	private function getParsedText( \ArticleComment $articleComment ) {
+		$wikiText = $articleComment->getRawText();
 
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
 			return "";
 		}
 
-		$parser = ParserPool::get();
-//		$parser->setHook( 'ac_metadata', 'ArticleComment::parserTag' );
-
-//		$parser->ac_metadata = [];
-		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-		$opts->setEditSection(false);
-		$opts->setAllowSpecialInclusion(false);
-
-		$parserOutput = $parser->parse( $revision->getText(), $revision->getTitle(), $opts );
-
-		$formattedText = wfFixMalformedHTML( $parserOutput->getText() );
+		$formattedText = $articleComment->getText();
 		$formattedText = $this->updateLazyImages( $formattedText );
 		$formattedText = $this->removeACMetadata( $formattedText );
 
-//		$title = isset( $parser->ac_metadata ) ? $parser->ac_metadata['title'] : '';
-
-
-//		ArticleComment::newFromId($pageId)->getMetadata();
-
-		ParserPool::release( $parser );
-
-		return [$formattedText];
+		return $formattedText;
 	}
 
 	/**
