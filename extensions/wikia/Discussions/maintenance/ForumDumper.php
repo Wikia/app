@@ -258,7 +258,7 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$revIdsParts = array_chunk($revIds, 10000);
+		$revIdsParts = array_chunk($revIds, 1000);
 
 		foreach ( $revIdsParts as $part ) {
 			$dbh = wfGetDB( DB_SLAVE );
