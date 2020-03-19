@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'downloadyourdata-location' => 'Location',
 	'downloadyourdata-occupation' => 'Occupation',
 	'downloadyourdata-user-activity-link' => 'User activity link',
+	'downloadyourdata-anon-error' => 'Please sign in to download your data',
 );
 
 $messages['qqq'] = array(
@@ -43,6 +44,7 @@ $messages['qqq'] = array(
 	'downloadyourdata-location' => 'Name of the csv file field that stores user location',
 	'downloadyourdata-occupation' => 'Name of the csv file field that stores user occupation',
 	'downloadyourdata-user-activity-link' => 'Name of the csv file field that stores link to a page that should user activity across wikis',
+	'downloadyourdata-anon-error' => 'Error message shown to anonymous users',
 );
 
 $messages['de'] = array(
