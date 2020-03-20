@@ -258,7 +258,7 @@ class ForumDumper {
 		foreach ($chunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
 			( new \WikiaSQL() )->SELECT_ALL()
-				->FROM( self::TABLE_REVISION )
+				->FROM( self::TABLE_REVISION.' FORCE INDEX(PRIMARY) ' )
 //				->JOIN( self::TABLE_TEXT )
 //				->ON( 'rev_text_id', 'old_id' )
 				->WHERE( 'rev_id' )
