@@ -253,7 +253,7 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$chunks = array_chunk($revIds, 500);
+		$chunks = array_chunk($revIds, 1000);
 
 		foreach ($chunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
@@ -264,7 +264,7 @@ class ForumDumper {
 				->WHERE( 'rev_id' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$revisions, $row ) {
-					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
+//					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
 					$pages = $this->getPages();
 					$curPage = $pages[$row->rev_page];
@@ -273,7 +273,7 @@ class ForumDumper {
 						"revision_id" => $row->rev_id,
 						"page_id" => $row->rev_page,
 						"page_namespace" => $curPage['namespace'],
-						"title" => $title,
+						"title" => 'a', //$title,
 						"user_type" => $this->getContributorType( $row ),
 						"user_identifier" => $row->rev_user,
 						"timestamp" => $row->rev_timestamp,
@@ -282,8 +282,8 @@ class ForumDumper {
 						"length" => $row->rev_len,
 						"parent_id" => $row->rev_parent_id,
 						"text_flags" => $row->old_flags,
-						"raw_content" => $plainText,
-						"content" => $parsedText,
+						"raw_content" => 'b', //$plainText,
+						"content" => 'c', //$parsedText,
 					] );
 				} );
 		}
