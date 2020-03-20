@@ -13,9 +13,7 @@
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
 
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-
-use \Wikia\Logger\WikiaLogger;
+require_once( __DIR__ . '/../../Maintenance.php' );
 
 /**
  * Class GetWikiProperties
@@ -97,9 +95,8 @@ class GetWikiProperties extends Maintenance {
 			$wikiData[6] = $this->usesMediaGallery( $wikiId );
 			$wikiData[7] = $this->usesAchievements( $wikiId );
 			$wikiData[8] = $this->getBlogCount( $dbr );
-			$wikiData[9] = $this->usesCustomJS( $wikiId );
-			$wikiData[10] = $this->usesCustomCSS( $wikiId );
-			$wikiData[11] = $this->usesSemanticMediawiki( $wikiId );
+			$wikiData[9] = $this->usesCustomJSorCSS( $wikiId );
+			$wikiData[10] = $this->usesSemanticMediawiki( $wikiId );
 
 			fputcsv( $this->outputFh, $wikiData );
 
@@ -115,12 +112,10 @@ class GetWikiProperties extends Maintenance {
 		return (bool)WikiFactory::getVarByName( 'wgEnableSemanticMediaWikiExt', $wikiId );
 	}
 
-	private function usesCustomJS( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgAllowUserJs', $wikiId );
-	}
+	private function usesCustomJSorCSS( int $wikiId ): ?bool {
+		$allowJS = (bool)WikiFactory::getVarByName( 'wgUseSiteJs', $wikiId );
 
-	private function usesCustomCSS( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgAllowUserCss', $wikiId );
+		return !empty( $allowJS );
 	}
 
 	private function usesAchievements( int $wikiId ): ?bool {
