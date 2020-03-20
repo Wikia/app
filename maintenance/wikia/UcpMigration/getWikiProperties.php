@@ -92,8 +92,14 @@ class GetWikiProperties extends Maintenance {
 
 			$wikiData[2] = WikiFactory::getLocalEnvURL( $data->city_url );
 			$wikiData[3] = $data->city_dbname;
-			$wikiData[4] = $this->getBlogCount( $dbr );
+			$wikiData[4] = $this->usesUnmigratedForums( $wikiId );
 			$wikiData[5] = $this->getArticleComments( $dbr, $wikiId );
+			$wikiData[6] = $this->usesMediaGallery( $wikiId );
+			$wikiData[7] = $this->usesAchievements( $wikiId );
+			$wikiData[8] = $this->getBlogCount( $dbr );
+			$wikiData[9] = $this->usesCustomJS( $wikiId );
+			$wikiData[10] = $this->usesCustomCSS( $wikiId );
+			$wikiData[11] = $this->usesSemanticMediawiki( $wikiId );
 
 			fputcsv( $this->outputFh, $wikiData );
 
@@ -103,6 +109,30 @@ class GetWikiProperties extends Maintenance {
 		$this->output( "Processed {$count} wikis\nErrors: {$errors}\n" );
 
 		return 0;
+	}
+
+	private function usesSemanticMediawiki( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgEnableSemanticMediaWikiExt', $wikiId );
+	}
+
+	private function usesCustomJS( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgAllowUserJs', $wikiId );
+	}
+
+	private function usesCustomCSS( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgAllowUserCss', $wikiId );
+	}
+
+	private function usesAchievements( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgEnableAchievementsExt', $wikiId );
+	}
+
+	private function usesMediaGallery( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgEnableMediaGalleryExt', $wikiId );
+	}
+
+	private function usesUnmigratedForums( int $wikiId ): ?bool {
+		return (bool)WikiFactory::getVarByName( 'wgEnableForumExt', $wikiId );
 	}
 
 	/**
