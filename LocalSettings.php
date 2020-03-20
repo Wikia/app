@@ -395,6 +395,11 @@ if ( !empty( $wgGroupPermissionsLocal ) ) {
  */
 $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUserAttributes );
 
+/**
+ * Special config overrides
+ */
+require_once "$IP/../config/overrides.php";
+
 require_once "$IP/includes/wikia/Emergency.php";
 
 if ( $wgDevelEnvironment && empty( $wgRunningUnitTests ) ) {
