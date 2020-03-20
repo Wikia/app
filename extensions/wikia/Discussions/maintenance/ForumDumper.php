@@ -259,8 +259,8 @@ class ForumDumper {
 			$dbh = wfGetDB( DB_SLAVE );
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_REVISION )
-				->JOIN( self::TABLE_TEXT )
-				->ON( 'rev_text_id', 'old_id' )
+//				->JOIN( self::TABLE_TEXT )
+//				->ON( 'rev_text_id', 'old_id' )
 				->WHERE( 'rev_id' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$revisions, $row ) {
@@ -281,7 +281,7 @@ class ForumDumper {
 						"is_deleted" => $row->rev_deleted,
 						"length" => $row->rev_len,
 						"parent_id" => $row->rev_parent_id,
-						"text_flags" => $row->old_flags,
+						"text_flags" => 'd', //$row->old_flags,
 						"raw_content" => 'b', //$plainText,
 						"content" => 'c', //$parsedText,
 					] );
