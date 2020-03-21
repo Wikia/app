@@ -29,6 +29,8 @@ class GetWikiProperties extends Maintenance {
 		$this->mDescription = 'Gathers basic information about wikis';
 		$this->addOption( 'file', 'CSV file to load list of wikis from', true, true, 'f' );
 		$this->addOption( 'outFile', 'CSV file to save result to', true, true, 'o' );
+		$this->addOption( 'from', 'number of record to start processing from', false, true, 's' );
+		$this->addOption( 'limit', 'total number of records to process', false, true, 'l' );
 	}
 
 	public function __destruct()  {
@@ -60,10 +62,14 @@ class GetWikiProperties extends Maintenance {
 			}
 		}
 
+		$startIdx = $this->getOption( 'from' );
+		$limit = $this->getOption( 'limit' );
+
 		$wikiData = fgetcsv( $this->inputFh );
 
 		// skip header row if exists
 		$count = 0;
+		$pos = 0;
 		$errors = 0;
 		if ( !empty( $wikiData ) && !is_numeric( $wikiData[0] ) ) {
 			fputcsv( $this->outputFh, $wikiData );
@@ -71,7 +77,19 @@ class GetWikiProperties extends Maintenance {
 		}
 
 		while ( !empty( $wikiData ) ) {
+			++$pos;
+
+			if ( !empty( $startIdx ) && $pos < $startIdx ) {
+				$wikiData = fgetcsv( $this->inputFh );
+				continue;
+			}
+
+			if ( !empty( $limit ) && $count > $limit ) {
+				break;
+			}
+
 			++$count;
+
 			$wikiId = (int)$wikiData[0];
 			$this->output( "Gathering data for wiki {$wikiId}\n" );
 
