@@ -100,6 +100,9 @@ class GetWikiProperties extends Maintenance {
 			$wikiData[9] = $this->usesCustomJSorCSS( $wikiId );
 			$wikiData[10] = $this->usesSemanticMediawiki( $wikiId );
 
+			$dbr->close();
+			unset( $dbr );
+
 			fputcsv( $this->outputFh, $wikiData );
 
 			$wikiData = fgetcsv( $this->inputFh );
