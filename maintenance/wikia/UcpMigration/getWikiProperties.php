@@ -77,15 +77,17 @@ class GetWikiProperties extends Maintenance {
 
 			$data = WikiFactory::getWikiByID( $wikiId );
 			if ( !$data ) {
-				$this->output( "Could not fetch WikiFactory data for wiki {$wikiId}\n" );
+				$this->outputError( "Could not fetch WikiFactory data for wiki {$wikiId}\n", $wikiData );
 				++$errors;
+				$wikiData = fgetcsv( $this->inputFh );
 				continue;
 			}
 
 			$dbr = wfGetDB( DB_SLAVE, [], $data->city_dbname );
 			if ( empty( $dbr ) ) {
-				$this->output( "Could not get database for wiki {$wikiId}\n" );
-				return null;
+				$this->outputError( "Could not get database for wiki {$wikiId}\n", $wikiData );
+				$wikiData = fgetcsv( $this->inputFh );
+				continue;
 			}
 
 			$wikiData[2] = WikiFactory::getLocalEnvURL( $data->city_url );
@@ -106,6 +108,12 @@ class GetWikiProperties extends Maintenance {
 		$this->output( "Processed {$count} wikis\nErrors: {$errors}\n" );
 
 		return 0;
+	}
+
+	protected function outputError( string $err, array $data ) {
+		$this->error( $err );
+		$data[2] = 'ERROR!';
+		fputcsv( $this->outputFh, $data );
 	}
 
 	private function usesSemanticMediawiki( int $wikiId ): ?bool {
