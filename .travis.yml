@@ -16,6 +16,8 @@ addons:
 services:
   - mysql  # https://docs.travis-ci.com/user/database-setup/#mysql
 
+before_install: phpenv config-add myconfig.ini
+
 install:
   - pecl channel-update pecl.php.net
   - wget https://pecl.php.net/get/mustache-0.8.1.tgz && pecl install mustache-0.8.1.tgz
