@@ -18,7 +18,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		WikiFactory::isUsed( false );
 		$wgExtensionFunctions = [];
 		$this->dbName = $wgDBname;
-		
+
 		// WikiFactoryLoader has side effects that initialize the global content language with a StubObject
 		// In tests, we must ensure that any previous value for this global is correctly restored
 		$this->oldContentLanguage = $wgContLang;
@@ -133,8 +133,8 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		$headers = xdebug_get_headers();
 
 		$this->assertFalse( $result );
-		$this->assertContains( 'X-Redirected-By-WF: NotPrimary', $headers );
-		$this->assertContains( "Location: $expectedRedirect", $headers );
+		$this->assertContains( 'X-Redirected-By-WF: NotPrimary', $headers, 'Required header not found in: ' . print_r( $headers, true ) );
+		$this->assertContains( "Location: $expectedRedirect", $headers, 'Required header not found in: ' . print_r( $headers, true ) );
 		$this->assertEquals( 301, http_response_code() );
 	}
 
