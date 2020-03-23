@@ -166,12 +166,12 @@ class ForumDumper {
 			return $this->pages;
 		}
 
+		$pageIdsToOrder = [];
+
 		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
+		( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
-			->LEFT_JOIN( self::TABLE_COMMENTS )
-			->ON( 'page_id', 'comment_id' )
 			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
 			->AS_( 'pp' )
 			->ON( 'page.page_id', 'pp.page_id' )
@@ -179,40 +179,58 @@ class ForumDumper {
 			->WHERE( 'page_namespace' )
 			->IN( self::FORUM_NAMEPSACES )
 			->ORDER_BY( 'idx' )
-			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
-				// A few of these properties were removed and do not appear on some wikis
-				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
-					if ( !property_exists( $row, $prop ) ) {
-						$row->$prop = 0;
-					}
-				}
-
-				$this->addPage( $row->page_id, [
-					"page_id" => $row->page_id,
-					"namespace" => $row->page_namespace,
-					"raw_title" => $row->page_title,
-					"is_redirect" => $row->page_is_redirect,
-					"is_new" => $row->page_is_new,
-					"touched" => $row->page_touched,
-					"latest_revision_id" => $row->page_latest,
-					"length" => $row->page_len,
-					"parent_page_id" => $row->parent_page_id,
-					"parent_comment_id" => $row->parent_comment_id,
-					"last_child_comment_id" => $row->last_child_comment_id,
-					"archived_ind" => $row->archived ?: 0,
-					"deleted_ind" => $row->deleted ?: 0,
-					"removed_ind" => $row->removed ?: 0,
-					"locked_ind" => $row->locked ?: 0,
-					"protected_ind" => $row->protected ?: 0,
-					"sticky_ind" => $row->sticky ?: 0,
-					"first_revision_id" => $row->last_rev_id, //we want just one revision
-					"last_revision_id" => $row->last_rev_id,
-					"comment_timestamp" => $row->last_touched,
-					"display_order" => $display_order ++,
-				] );
+			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order, &$pageIdsToOrder ) {
+				$pageIdsToOrder[$row->page_id] = $display_order ++;
 			} );
 
 		$dbh->close();
+
+		$pageIds = array_keys( $pageIdsToOrder );
+		$pageIdsChunks = array_chunk( $pageIds, 100 );
+
+		foreach ( $pageIdsChunks as $part ) {
+			$dbh = wfGetDB( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
+				->FROM( self::TABLE_PAGE )
+				->LEFT_JOIN( self::TABLE_COMMENTS )
+				->ON( 'page_id', 'comment_id' )
+				->WHERE( 'page_id' )
+				->IN( $part )
+				->runLoop( $dbh, function ( &$pages, $row ) use ( $pageIdsToOrder ) {
+					// A few of these properties were removed and do not appear on some wikis
+					foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
+						if ( !property_exists( $row, $prop ) ) {
+							$row->$prop = 0;
+						}
+					}
+
+					$this->addPage( $row->page_id, [
+						"page_id" => $row->page_id,
+						"namespace" => $row->page_namespace,
+						"raw_title" => $row->page_title,
+						"is_redirect" => $row->page_is_redirect,
+						"is_new" => $row->page_is_new,
+						"touched" => $row->page_touched,
+						"latest_revision_id" => $row->page_latest,
+						"length" => $row->page_len,
+						"parent_page_id" => $row->parent_page_id,
+						"parent_comment_id" => $row->parent_comment_id,
+						"last_child_comment_id" => $row->last_child_comment_id,
+						"archived_ind" => $row->archived ?: 0,
+						"deleted_ind" => $row->deleted ?: 0,
+						"removed_ind" => $row->removed ?: 0,
+						"locked_ind" => $row->locked ?: 0,
+						"protected_ind" => $row->protected ?: 0,
+						"sticky_ind" => $row->sticky ?: 0,
+						"first_revision_id" => $row->last_rev_id, //we want just one revision
+						"last_revision_id" => $row->last_rev_id,
+						"comment_timestamp" => $row->last_touched,
+						"display_order" => $pageIdsToOrder[$row->page_id],
+					] );
+				} );
+
+			$dbh->close();
+		}
 
 		return $this->pages;
 	}
