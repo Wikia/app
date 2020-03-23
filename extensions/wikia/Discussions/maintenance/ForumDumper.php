@@ -3,6 +3,7 @@
 namespace Discussions;
 
 use Article;
+use Title;
 
 class ForumDumper {
 
@@ -323,7 +324,7 @@ class ForumDumper {
 				->AS_( 'p' )
 				->ON( 'comment_id', 'p.page_id' )
 				->WHERE( 'comment_id' )
-				->IN( $pageIds )
+				->IN( $part )
 				->runLoop( $dbh, function ( &$topics, $row ) {
 					list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
 					$id = count( $this->topics ) + 1;
@@ -528,8 +529,7 @@ class ForumDumper {
 	}
 
 	private function getRelatedArticleData( $textId ) {
-		$article = Article::newFromID( $textId );
-		$title  = $article->getTitle();
+		$title  = Title::newFromID( $textId );
 
 		return [ $title->getText(), $title->getLocalURL() ];
 	}
