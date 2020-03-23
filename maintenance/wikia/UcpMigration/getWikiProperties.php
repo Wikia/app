@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Maintenance script to migrate urls included in custom CSS files to https/protocol relative
+ * Maintenance script to fetch wiki properties needed for migration to Unified Community Platform
  * @usage
- *  # this will migrate assets for wiki with ID 119:
- *  run_maintenance --script='wikia/HttpsMigration/migrateCustomCss.php  --saveChanges' --id=119
- *  # running on some wikis in dry mode and dumping url changes to a csv file:
- *  run_maintenance --script='wikia/HttpsMigration/migrateCustomCss.php --file migrate_css.csv' --where='city_id < 10000'
- *
+ *  # this will fetch info for wikis specified in input.csv and output them to file output.csv:
+ *  php '/maintenance/wikia/UcpMigration/getWikiProperties.php -f input.csv -o output.csv
+ *	# additionally you can specify offset and limit of records to process with -s and -l options.
  */
 
 ini_set( 'display_errors', 'stderr' );
