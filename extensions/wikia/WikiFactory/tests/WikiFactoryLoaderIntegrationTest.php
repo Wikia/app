@@ -185,6 +185,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testRedirectsToNotValidPageWhenNoEntryForDomain(
 		array $server
 	) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
