@@ -113,7 +113,8 @@ class SetupWikiCitiesIntegrationTest extends \WikiaDatabaseTest {
 
 		$domains = \WikiFactory::getDomains( $wikiId );
 
-		$this->assertCount( 2, $domains, 'Wiki with fandom.com domain should have two domain entries' );
+		$this->assertCount( 2, $domains, 'Wiki with fandom.com domain should have two domain entries but has more: '
+										 . print_r( $domains, true ) );
 		$this->assertContains( static::TEST_FANDOM_DOMAIN, $domains, 'Wiki domain should have domain entry' );
 		$this->assertContains( static::TEST_WIKIA_DOMAIN, $domains, 'Wiki with fandom.com domain should have wikia.com domain alias' );
 	}
