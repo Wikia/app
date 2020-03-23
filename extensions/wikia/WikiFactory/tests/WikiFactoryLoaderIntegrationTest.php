@@ -282,6 +282,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsFunctioningAsARedirect( array $server ) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
