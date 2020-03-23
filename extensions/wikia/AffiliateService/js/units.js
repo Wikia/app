@@ -139,7 +139,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			heading: 'Guarda i tuoi preferiti della Disney, tutti in un solo posto.',
 			subheading: 'Inizia la prova gratuita',
 			link: 'https://disneyplus.bn5x.net/c/1947570/772708/9358?subId1=generic-it&subId2=launch&subId3=ad-fandom&sharedid=desktop',
-			image: 'https://static.wikia.nocookie.net/7c17463b-98da-4119-a558-a9a6ab84b7bf/',
+			image: 'https://static.wikia.nocookie.net/df3afc30-0f94-470d-85ce-e1319062c993/',
 		},
 		{
 			campaign: 'disneyplus',
@@ -159,7 +159,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			heading: 'Schaue deine liebsten Disney-Filme und -Serien, alle am selben Ort.',
 			subheading: 'Jetzt Kostenlos Testen',
 			link: 'https://disneyplus.bn5x.net/c/1947570/772722/9358?subId1=generic-de&subId2=launch&subId3=ad-fandom&sharedid=desktop',
-			image: 'https://static.wikia.nocookie.net/7c17463b-98da-4119-a558-a9a6ab84b7bf/',
+			image: 'https://static.wikia.nocookie.net/df3afc30-0f94-470d-85ce-e1319062c993/',
 		},
 
 	];
