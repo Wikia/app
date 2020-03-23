@@ -262,12 +262,12 @@ class ForumDumper {
 			$dbh = wfGetDB( DB_SLAVE );
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_REVISION )
-//				->JOIN( self::TABLE_TEXT )
-//				->ON( 'rev_text_id', 'old_id' )
+				->JOIN( self::TABLE_TEXT )
+				->ON( 'rev_text_id', 'old_id' )
 				->WHERE( 'rev_id' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$revisions, $row ) {
-//					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
+					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
 					$pages = $this->getPages();
 					$curPage = $pages[$row->rev_page];
@@ -276,7 +276,7 @@ class ForumDumper {
 						"revision_id" => $row->rev_id,
 						"page_id" => $row->rev_page,
 						"page_namespace" => $curPage['namespace'],
-						"title" => 'a', //$title,
+						"title" => $title,
 						"user_type" => $this->getContributorType( $row ),
 						"user_identifier" => $row->rev_user,
 						"timestamp" => $row->rev_timestamp,
@@ -284,9 +284,9 @@ class ForumDumper {
 						"is_deleted" => $row->rev_deleted,
 						"length" => $row->rev_len,
 						"parent_id" => $row->rev_parent_id,
-						"text_flags" => 'd', //$row->old_flags,
-						"raw_content" => 'b', //$plainText,
-						"content" => 'c', //$parsedText,
+						"text_flags" => $row->old_flags,
+						"raw_content" => $plainText,
+						"content" => $parsedText,
 					] );
 				} );
 
@@ -327,15 +327,18 @@ class ForumDumper {
 				->IN( $part )
 				->runLoop( $dbh, function ( &$topics, $row ) {
 					list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
-					$id = count( $this->topics ) + 1;
 
-					$this->addTopic( [
-						"topic_id" => $id,
-						"page_id" => $row->comment_id,
-						"article_id" => $row->page_id,
-						"article_title" => $title,
-						"relative_url" => $url
-					] );
+					if ( $title && $url ) {
+						$id = count( $this->topics ) + 1;
+
+						$this->addTopic( [
+							"topic_id" => $id,
+							"page_id" => $row->comment_id,
+							"article_id" => $row->page_id,
+							"article_title" => $title,
+							"relative_url" => $url
+						] );
+					}
 				} );
 
 			$dbh->close();
@@ -530,6 +533,10 @@ class ForumDumper {
 
 	private function getRelatedArticleData( $textId ) {
 		$title  = Title::newFromID( $textId );
+
+		if ( !$title ) {
+			return [null, null];
+		}
 
 		return [ $title->getText(), $title->getLocalURL() ];
 	}
