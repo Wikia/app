@@ -496,6 +496,27 @@ class ForumDumper {
 		return $follows;
 	}
 
+	public function getWallHistory() {
+		$pageIdsInNamespace = $this->getPagesIds( NS_WIKIA_FORUM_BOARD );
+
+		$dumper = new WallHistoryFinder( $pageIdsInNamespace );
+		$history = $dumper->find();
+
+		return $history;
+	}
+
+	private function getPagesIds($namespace) {
+		$ids = [];
+
+		foreach ( $this->getPages() as $id => $page ) {
+			if ( $page["namespace"] == $namespace ) {
+				$ids[] = $id;
+			}
+		}
+
+		return $ids;
+	}
+
 	private function getThreadNamesToIds() {
 		$threadsNamesToIds = [];
 		foreach ( $this->getPages() as $id => $page ) {

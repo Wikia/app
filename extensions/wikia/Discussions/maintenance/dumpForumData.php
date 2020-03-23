@@ -38,23 +38,23 @@ class DumpForumData extends Maintenance {
 
 		$this->dumpPages();
 		$this->output("Pages dumped!");
-		sleep(5);
+		sleep(3);
 
 		$this->dumpRevisions();
 		$this->output("Revisions dumped!");
-		sleep(5);
+		sleep(3);
 
 		$this->dumpVotes();
 		$this->output("Votes dumped!");
-		sleep(5);
+		sleep(3);
 
 		$this->dumpFollows();
 		$this->output("Follows dumped!");
-		sleep(5);
+		sleep(3);
 
 		$this->dumpWallHistory();
 		$this->output("History dumped!");
-		sleep(5);
+		sleep(3);
 
 		$this->dumpTopics();
 		$this->output("Topics dumped!");
@@ -127,8 +127,7 @@ class DumpForumData extends Maintenance {
 	}
 
 	private function dumpWallHistory() {
-		$dumper = new Discussions\WallHistoryFinder( wfGetDB( DB_SLAVE ) );
-		$history = $dumper->find();
+		$history = $this->dumper->getWallHistory();
 
 		foreach ( $history as $data ) {
 			$insert = $this->createInsert(

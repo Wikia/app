@@ -15,10 +15,10 @@ class WallHistoryFinder {
 		'is_reply',
 		'post_user_id',
 	];
-	private $dbh;
+	private $pageIdsInNamespace;
 
-	public function __construct( $dbh ) {
-		$this->dbh = $dbh;
+	public function __construct( $pageIdsInNamespace ) {
+		$this->pageIdsInNamespace = $pageIdsInNamespace;
 	}
 
 	/**
@@ -56,16 +56,24 @@ class WallHistoryFinder {
 	 * +-------------------+---------------------+------+-----+----------------+----------------+
 	 */
 	public function find() {
-		return ( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
-			->FROM( self::TABLE_WALL_HISTORY )
-			->LEFT_JOIN( self::TABLE_PAGE )
-			->ON( 'parent_page_id', 'page_id' )
-			->AS_( 'p' )
-			->WHERE( 'p.page_namespace' )
-			->EQUAL_TO( NS_WIKIA_FORUM_BOARD )
-			->runLoop( $this->dbh, function ( &$entries, $row ) {
-				$entries[] = get_object_vars($row);
-			} );
+
+		$history = [];
+
+		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 100);
+
+		foreach ($pageIdsChunks as $part) {
+			$dbh = wfGetDB( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
+				->FROM( self::TABLE_WALL_HISTORY )
+				->WHERE( 'parent_page_id' )
+				->IN( $part )
+				->runLoop( $dbh, function ( &$entries, $row ) {
+					$history[] = get_object_vars($row);
+				} );
+			$dbh->close();
+		}
+
+		return $history;
 	}
 
 }
