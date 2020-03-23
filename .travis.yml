@@ -16,7 +16,7 @@ addons:
 services:
   - mysql  # https://docs.travis-ci.com/user/database-setup/#mysql
 
-before_install: phpenv config-add myconfig.ini
+before_install: phpenv config-add travis_php_config.ini
 
 install:
   - pecl channel-update pecl.php.net
