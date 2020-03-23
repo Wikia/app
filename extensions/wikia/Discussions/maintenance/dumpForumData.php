@@ -35,12 +35,29 @@ class DumpForumData extends Maintenance {
 
 		$this->setConnectinoEncoding();
 		$this->clearImportTables();
+
 		$this->dumpPages();
+		$this->output("Pages dumped!");
+		sleep(5);
+
 		$this->dumpRevisions();
+		$this->output("Revisions dumped!");
+		sleep(5);
+
 		$this->dumpVotes();
+		$this->output("Votes dumped!");
+		sleep(5);
+
 		$this->dumpFollows();
+		$this->output("Follows dumped!");
+		sleep(5);
+
 		$this->dumpWallHistory();
+		$this->output("History dumped!");
+		sleep(5);
+
 		$this->dumpTopics();
+		$this->output("Topics dumped!");
 	}
 
 	private function setConnectinoEncoding() {
