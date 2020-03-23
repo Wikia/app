@@ -211,6 +211,8 @@ class ForumDumper {
 				] );
 			} );
 
+		$dbh->close();
+
 		return $this->pages;
 	}
 
@@ -286,6 +288,8 @@ class ForumDumper {
 						"content" => 'c', //$parsedText,
 					] );
 				} );
+
+			$dbh->close();
 		}
 
 		return $this->revisions;
@@ -309,27 +313,32 @@ class ForumDumper {
 		}
 
 		$pageIds = array_keys( $this->getPages() );
+		$pageIdsChunks = array_chunk($pageIds, 100);
 
-		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
-			->FROM( self::TABLE_WALL_RELATED_PAGES )
-			->JOIN( self::TABLE_PAGE )
-			->AS_( 'p' )
-			->ON( 'comment_id', 'p.page_id' )
-			->WHERE( 'comment_id' )
-			->IN( $pageIds )
-			->runLoop( $dbh, function ( &$topics, $row ) {
-				list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
-				$id = count( $this->topics ) + 1;
+		foreach ($pageIdsChunks as $part) {
+			$dbh = wfGetDB( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
+				->FROM( self::TABLE_WALL_RELATED_PAGES )
+				->JOIN( self::TABLE_PAGE )
+				->AS_( 'p' )
+				->ON( 'comment_id', 'p.page_id' )
+				->WHERE( 'comment_id' )
+				->IN( $pageIds )
+				->runLoop( $dbh, function ( &$topics, $row ) {
+					list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
+					$id = count( $this->topics ) + 1;
 
-				$this->addTopic( [
-					"topic_id" => $id,
-					"page_id" => $row->comment_id,
-					"article_id" => $row->page_id,
-					"article_title" => $title,
-					"relative_url" => $url
-				] );
-			} );
+					$this->addTopic( [
+						"topic_id" => $id,
+						"page_id" => $row->comment_id,
+						"article_id" => $row->page_id,
+						"article_title" => $title,
+						"relative_url" => $url
+					] );
+				} );
+
+			$dbh->close();
+		}
 
 		return $this->topics;
 	}
@@ -455,28 +464,36 @@ class ForumDumper {
 
 		$pageIds = array_keys( $this->getPages() );
 
-		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT_ALL()
-			->FROM( self::TABLE_VOTE )
-			->WHERE( 'article_id' )
-			->IN( $pageIds )
-			->runLoop( $dbh, function ( &$pages, $row ) {
+		$pageIdsChunks = array_chunk($pageIds, 100);
 
-				$this->addVote( [
-					"page_id" => $row->article_id,
-					"user_identifier" => $row->user_id,
-					"timestamp" => $row->time,
-				] );
-			} );
+		foreach ($pageIdsChunks as $part) {
+			$dbh = wfGetDB( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT_ALL()
+				->FROM( self::TABLE_VOTE )
+				->WHERE( 'article_id' )
+				->IN( $part )
+				->runLoop( $dbh, function ( &$pages, $row ) {
+
+					$this->addVote( [
+						"page_id" => $row->article_id,
+						"user_identifier" => $row->user_id,
+						"timestamp" => $row->time,
+					] );
+				} );
+
+			$dbh->close();
+		}
 
 		return $this->votes;
 	}
 
 	public function getFollows() {
 		$threadsNamesToIds = $this->getThreadNamesToIds();
-		$finder = new FollowsFinder( wfGetDB( DB_SLAVE ), $threadsNamesToIds );
 
-		return $finder->findFollows();
+		$finder = new FollowsFinder( $threadsNamesToIds );
+		$follows = $finder->findFollows();
+
+		return $follows;
 	}
 
 	private function getThreadNamesToIds() {

@@ -15,11 +15,9 @@ class FollowsFinder {
 		self::MW_THREAD_ID,
 	];
 
-	private $dbh;
 	private $threadNameToId;
 
-	public function __construct( $dbh, $threadNameToId ) {
-		$this->dbh = $dbh;
+	public function __construct( $threadNameToId ) {
 		$this->threadNameToId = $threadNameToId;
 	}
 
@@ -36,20 +34,36 @@ class FollowsFinder {
 	 * +--------------------------+------------------+------+-----+-------------------+-------+
 	 */
 	public function findFollows() {
+		$follows = [];
 		$pageTitles = array_keys( $this->threadNameToId );
+		$pageTitlesChunks = array_chunk($pageTitles, 100);
 
-		return ( new \WikiaSQL() )->SELECT_ALL()
-			->FROM( self::TABLE_THREAD_WATCHER )
-			->WHERE( 'wl_namespace' )
-			->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
-			->AND_( 'wl_title' )
-			->IN( $pageTitles )
-			->runLoop( $this->dbh, function ( &$follows, $row ) {
-				$follows[] = [
-					self::FOLLOWER_ID => $row->wl_user,
-					self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
-				];
-			} );
+		$dbh = wfGetDB( DB_SLAVE );
+
+		if (!$dbh->tableExists(self::TABLE_THREAD_WATCHER)) {
+			return $follows;
+		}
+
+		foreach($pageTitlesChunks as $part) {
+			$dbh = wfGetDB( DB_SLAVE );
+
+			( new \WikiaSQL() )->SELECT_ALL()
+				->FROM( self::TABLE_THREAD_WATCHER )
+				->WHERE( 'wl_namespace' )
+				->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
+				->AND_( 'wl_title' )
+				->IN( $part )
+				->runLoop( $dbh, function ( &$follows, $row ) {
+					$follows[] = [
+						self::FOLLOWER_ID => $row->wl_user,
+						self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
+					];
+				} );
+
+			$dbh->close();
+		}
+
+		return $follows;
 	}
 
 }
