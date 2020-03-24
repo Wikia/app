@@ -186,7 +186,12 @@ class GetWikiProperties extends Maintenance {
 	}
 
 	private function getBlogCount( DatabaseBase $dbr ): int {
-		return $dbr->estimateRowCount( 'page',  '*', [ 'page_namespace' => 500 ] );
+		$res = $dbr->selectField( 'page',  'COUNT(*)', [ 'page_namespace' => 500 ] );
+		if ( empty( $res ) ) {
+			return 0;
+		} else {
+			return $res;
+		}
 	}
 
 }
