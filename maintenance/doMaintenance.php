@@ -162,15 +162,11 @@ try {
 
 // Wikia change
 // SUS-6163 - report when was the last time a given maintenance script has been run successfully
-\Wikia\Metrics\Collector::getInstance()
-	->addGauge(
-		'mediawiki_maintenance_scripts_last_success',
-		time(),
-		[
-			'script_class' => $maintClass,
-			'env' => $wgWikiaEnvironment,
-		],
-		'Unix timestamp maintenance script last succeeded'
-	);
+if ( empty( $_ENV['TRAVIS'] ) ) {
+	\Wikia\Metrics\Collector::getInstance()->addGauge( 'mediawiki_maintenance_scripts_last_success', time(), [
+				'script_class' => $maintClass,
+				'env' => $wgWikiaEnvironment,
+			], 'Unix timestamp maintenance script last succeeded' );
+}
 
 Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
