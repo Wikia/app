@@ -285,7 +285,7 @@ class ForumDumper {
 				->WHERE( 'rev_id' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$revisions, $row ) {
-					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
+					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page, $row->rev_id );
 
 					$pages = $this->getPages();
 					$curPage = $pages[$row->rev_page];
@@ -365,8 +365,10 @@ class ForumDumper {
 		return $this->topics;
 	}
 
-	public function getTextAndTitle( $textId ) {
+	public function getTextAndTitle( $textId, $revId ) {
 		$articleComment = \ArticleComment::newFromId( $textId );
+		$articleComment->mLastRevId = $revId;
+		$articleComment->mFirstRevId = $revId;
 		$articleComment->load();
 
 		$rawText = $this->getRawText( $articleComment );
