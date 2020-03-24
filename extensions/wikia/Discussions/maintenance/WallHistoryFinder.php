@@ -57,6 +57,10 @@ class WallHistoryFinder {
 	 */
 	public function find() {
 
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		$history = [];
 
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 100);
@@ -70,6 +74,7 @@ class WallHistoryFinder {
 				->runLoop( $dbh, function ( &$entries, $row ) {
 					$history[] = get_object_vars($row);
 				} );
+			$dbh->ping();
 			$dbh->close();
 		}
 

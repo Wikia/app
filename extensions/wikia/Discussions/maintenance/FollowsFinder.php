@@ -34,6 +34,11 @@ class FollowsFinder {
 	 * +--------------------------+------------------+------+-----+-------------------+-------+
 	 */
 	public function findFollows() {
+
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		$follows = [];
 		$pageTitles = array_keys( $this->threadNameToId );
 		$pageTitlesChunks = array_chunk($pageTitles, 100);
@@ -60,6 +65,7 @@ class FollowsFinder {
 					];
 				} );
 
+			$dbh->ping();
 			$dbh->close();
 		}
 

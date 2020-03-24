@@ -76,6 +76,8 @@ class DumpForumData extends Maintenance {
 	private function dumpPages() {
 		$pages = $this->dumper->getPages();
 
+		$this->output("Saving to file!");
+
 		foreach ( $pages as $id => $data ) {
 			$insert = $this->createInsert(
 				'import_page',
@@ -90,6 +92,8 @@ class DumpForumData extends Maintenance {
 	private function dumpRevisions() {
 		$revisions = $this->dumper->getRevisions();
 
+		$this->output("Saving to file!");
+
 		foreach ( $revisions as $data ) {
 			$insert = $this->createInsert(
 				'import_revision',
@@ -102,6 +106,8 @@ class DumpForumData extends Maintenance {
 
 	private function dumpVotes() {
 		$votes = $this->dumper->getVotes();
+
+		$this->output("Saving to file!");
 
 		foreach ( $votes as $data ) {
 			$insert = $this->createInsert(
@@ -116,6 +122,8 @@ class DumpForumData extends Maintenance {
 	private function dumpFollows() {
 		$follows = $this->dumper->getFollows();
 
+		$this->output("Saving to file!");
+
 		foreach ( $follows as $data ) {
 			$insert = $this->createInsert(
 				'import_follows',
@@ -129,6 +137,8 @@ class DumpForumData extends Maintenance {
 	private function dumpWallHistory() {
 		$history = $this->dumper->getWallHistory();
 
+		$this->output("Saving to file!");
+
 		foreach ( $history as $data ) {
 			$insert = $this->createInsert(
 				'import_history',
@@ -141,6 +151,8 @@ class DumpForumData extends Maintenance {
 
 	private function dumpTopics() {
 		$topics = $this->dumper->getTopics();
+
+		$this->output("Saving to file!");
 
 		foreach ( $topics as $data ) {
 			$insert = $this->createInsert(

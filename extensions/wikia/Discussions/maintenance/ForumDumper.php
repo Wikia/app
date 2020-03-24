@@ -269,6 +269,11 @@ class ForumDumper {
 	 * +-----------+------------------+------+-----+---------+----------------+
 	 */
 	public function getRevisions() {
+
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
 		}
@@ -333,6 +338,11 @@ class ForumDumper {
 	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
 	 */
 	public function getTopics() {
+
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		if ( !empty( $this->topics ) ) {
 			return $this->topics;
 		}
@@ -365,6 +375,7 @@ class ForumDumper {
 					}
 				} );
 
+			$dbh->ping();
 			$dbh->close();
 		}
 
@@ -488,6 +499,11 @@ class ForumDumper {
 	 * +------------+-----------------+------+-----+---------+-------+
 	 */
 	public function getVotes() {
+
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		if ( !empty( $this->votes ) ) {
 			return $this->votes;
 		}
@@ -511,6 +527,7 @@ class ForumDumper {
 					] );
 				} );
 
+			$dbh->ping();
 			$dbh->close();
 		}
 
