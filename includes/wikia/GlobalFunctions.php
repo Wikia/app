@@ -1527,11 +1527,6 @@ function wfHttpsAllowedForURL( $url ): bool {
 	if ( $host === false ) {
 		return false;
 	}
-	if ( $wgWikiaEnvironment === WIKIA_ENV_PROD &&
-		isset( $_SERVER['HTTP_X_STAGING'] ) &&
-		in_array( $_SERVER['HTTP_X_STAGING'], [ 'externaltest', 'showcase' ] ) ) {
-		return false;
-	}
 	if ( !preg_match( '/' . $wgWikiaBaseDomainRegex . '$/', $host ) ) {
 		return false;
 	}
