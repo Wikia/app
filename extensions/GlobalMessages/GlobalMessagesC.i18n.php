@@ -38,7 +38,7 @@ An account has been created for you created on {{SITENAME}} with the username "$
 
 Please log in at $4
 
-If you do not need this account, you can ignore this message or contact community@wikia.com with any questions.
+If you do not need this account, you can ignore this message or contact community@fandom.com with any questions.
 
 - Wikia Community Support
 
@@ -117,7 +117,7 @@ if you recently created your account, you may wish to wait a few minutes for it 
 	'confirmemail_send' => 'Mail a confirmation code',
 	'confirmemail_sent' => 'Confirmation email sent.',
 	'confirmemail_oncreate' => "A confirmation code was sent to your e-mail address.
-This code is not required to log in, but you will need to provide it before enabling any e-mail-based features in the wiki. If you do not receive the email, remember to check your spam and junk mail folders. Please allow (or ''whitelist'') emails from community@wikia.com to be received.",
+This code is not required to log in, but you will need to provide it before enabling any e-mail-based features in the wiki. If you do not receive the email, remember to check your spam and junk mail folders. Please allow (or ''whitelist'') emails from community@fandom.com to be received.",
 	'confirmemail_sendfailed' => '{{SITENAME}} could not send your confirmation mail.
 Please check your email address for invalid characters.
 
@@ -7370,7 +7370,7 @@ Alguien creó una cuenta de usuario para ti en {{SITENAME}} con el nombre "$2" y
 
 Por favor, inicia sesión en $4
 
-Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotros a través de community@wikia.com por si tienes preguntas.
+Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotros a través de community@fandom.com por si tienes preguntas.
 
 - Equipo comunitario de FANDOM
 
@@ -7442,7 +7442,7 @@ El correo electrónico incluirá un enlace con un código. Introdúcelo para con
 	'confirmemail_pending' => '<div class="error"> Ya te hemos enviado un código de confirmación por correo electrónico; si creaste una cuenta recientemente, puede que tengas que esperar unos minutos a que te llegue antes de intentar pedir un nuevo código.</div>',
 	'confirmemail_send' => 'Enviar el código de confimación',
 	'confirmemail_sent' => 'Confirmación de correo enviado.',
-	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico. Este código no es necesario para iniciar sesión, pero necesitarás ingresarlo antes de activar cualquier función basada en correo electrónico en el wiki. Si no has recibido el correo electrónico, recuerda revisar tus carpeta de spam. Por favor, permite correos electrónicos de community@wikia.com que sean recibidos.',
+	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico. Este código no es necesario para iniciar sesión, pero necesitarás ingresarlo antes de activar cualquier función basada en correo electrónico en el wiki. Si no has recibido el correo electrónico, recuerda revisar tus carpeta de spam. Por favor, permite correos electrónicos de community@fandom.com que sean recibidos.',
 	'confirmemail_sendfailed' => '{{SITENAME}} no pudo enviar el correo de confirmación. Por favor, comprueba que no haya caracteres inválidos en la dirección de correo electrónico que has ingresado. 
 
 El error del mensajero fue: $1',
@@ -8850,7 +8850,7 @@ si vous venez de créer votre compte, veuillez attendre quelques minutes que l'e
 	'confirmemail_send' => 'Envoyer un code de confirmation',
 	'confirmemail_sent' => 'E-mail de confirmation envoyé',
 	'confirmemail_oncreate' => "Un code de confirmation a été envoyé à votre adresse e-mail.
-Ce code n’est pas requis pour vous identifier sur ce wiki, mais vous devrez le fournir pour activer toute fonction de messagerie. Si vous ne recevez pas cet e-mail, n'oubliez pas de vérifier vos messages indésirables (spam). Veuillez autoriser les e-mails en provenance de community@wikia.com.",
+Ce code n’est pas requis pour vous identifier sur ce wiki, mais vous devrez le fournir pour activer toute fonction de messagerie. Si vous ne recevez pas cet e-mail, n'oubliez pas de vérifier vos messages indésirables (spam). Veuillez autoriser les e-mails en provenance de community@fandom.com.",
 	'confirmemail_sendfailed' => "{{SITENAME}} n’a pas pu vous envoyer l'e-mail de confirmation.
 Veuillez vérifiez que votre adresse e-mail ne comprend aucun caractère incorrect.
 
@@ -13528,7 +13528,7 @@ $2',
 
 $4 からログインしてください。
 
-もしこのアカウントを必要としない場合は、このメッセージを無視するか、community@wikia.com へお問い合わせください。
+もしこのアカウントを必要としない場合は、このメッセージを無視するか、community@fandom.com へお問い合わせください。
 
 - FANDOMコミュニティサポート
 
@@ -31886,7 +31886,7 @@ $2',
 
 请在$4登入帐户。
 
-如果您不需要这个帐户，您可以忽略这封邮件或community@wikia.com。
+如果您不需要这个帐户，您可以忽略这封邮件或community@fandom.com。
 
 - FANDOM社区支持
 ___________________________________________
@@ -31960,7 +31960,7 @@ $3的理由是''$2''",
 	'confirmemail_sent' => '确认邮件已发送。',
 	'confirmemail_oncreate' => '一个确认代码已被发送到您的邮箱。
 登录时无需使用该代码，但若要启用在此Wiki上的电子邮件相关功能，则必须先提交此代码。
-如果您没有收到这封邮件，请检查您的垃圾箱进行确认，并且设置允许接收来自community@wikia.com的邮件。',
+如果您没有收到这封邮件，请检查您的垃圾箱进行确认，并且设置允许接收来自community@fandom.com的邮件。',
 	'confirmemail_sendfailed' => '{{SITENAME}}不能发送确认邮件，请检查您的邮箱地址是否包含无效字符。
 
 邮件发送器的返回信息：$1',
@@ -32190,7 +32190,7 @@ $2',
 
 請在$4登入帐號。
 
-如果您不需要這個帳號，您可以忽略這封郵件或聯繫community@wikia.com。
+如果您不需要這個帳號，您可以忽略這封郵件或聯繫community@fandom.com。
 
 - FANDOM社區支持
 ___________________________________________
@@ -32266,7 +32266,7 @@ ___________________________________________
 	'confirmemail_send' => '發送認證碼',
 	'confirmemail_sent' => '確認郵件已發送。',
 	'confirmemail_oncreate' => '一個認證碼已經發送到您的郵箱。您登入時不會需要該代碼，
-但若您要啟用在此 wiki 上的任何基於電子郵件的功能，您必須先提交此代碼。如果您沒收到這封郵件，請檢查您的郵箱垃圾信區進行確認，並設置允許接收來自community@wikia.com的郵件。',
+但若您要啟用在此 wiki 上的任何基於電子郵件的功能，您必須先提交此代碼。如果您沒收到這封郵件，請檢查您的郵箱垃圾信區進行確認，並設置允許接收來自community@fandom.com的郵件。',
 	'confirmemail_sendfailed' => '{{SITENAME}}無法發送認證郵件，請檢查郵箱位址是否包含不效字元。
 
 郵件發送器回應: $1',

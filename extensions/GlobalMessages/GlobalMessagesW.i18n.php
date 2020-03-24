@@ -136,7 +136,7 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@fandom.com.',
 );
 
 $messages['qqq'] = array(
@@ -4203,7 +4203,7 @@ También puedes [[Special:EditWatchlist|usar el editor estándar]].',
 	'watchlisttools-edit' => 'Ver y editar tu lista de seguimiento',
 	'watchlisttools-raw' => 'Editar lista de seguimiento en crudo',
 	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear. 
-Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con FANDOM a través de community@wikia.com.',
+Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con FANDOM a través de community@fandom.com.',
 	'widget-desc-wikiamessages' => 'Mensajes de FANDOM',
 	'widget-title-wikiamessages' => 'Mensajes de FANDOM',
 	'wikia_messages' => 'Mensajes de FANDOM',
@@ -4921,7 +4921,7 @@ Vous pouvez aussi [[Special:EditWatchlist|utiliser l’éditeur normal]].',
 	'watchlisttools-edit' => 'Voir et modifier la liste de suivi',
 	'watchlisttools-raw' => 'Modifier la liste de suivi en mode brut',
 	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
-Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter FANDOM à l'adresse e-mail community@wikia.com.",
+Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter FANDOM à l'adresse e-mail community@fandom.com.",
 	'wikia_messages' => 'Messages de FANDOM',
 	'wikicitieshome' => 'Accueil de FANDOM',
 	'widget-desc-wikiamessages' => 'Messages de FANDOM',
@@ -7519,7 +7519,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
 	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
-+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@fandom.com.",
 );
 
 $messages['ja'] = array(
@@ -11949,7 +11949,7 @@ Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].'
 	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@fandom.com.',
 );
 
 $messages['nl-informal'] = array(
@@ -12760,7 +12760,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 	'widget_description' => 'Opis',
 	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-read-only-mode' => 'O nie! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz mieć problem przy wykonywaniu niektórych czynności, takich jak edytowanie, przesyłanie plików lub korzystanie z czatu. 
-Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problemu. Jeżeli ta wiadomość jest widoczna przez dłuższy czas, możesz skontaktować się z Fandomem pisząc na adres community@wikia.com.',
+Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problemu. Jeżeli ta wiadomość jest widoczna przez dłuższy czas, możesz skontaktować się z Fandomem pisząc na adres community@fandom.com.',
 	'widget-desc-wikiamessages' => 'Wiadomości Fandomu',
 	'wikia_messages' => 'Wiadomości Fandomu',
 	'wikicitieshome' => 'Strona główna FANDOM',
@@ -13809,7 +13809,7 @@ $messages['ru'] = array(
 	'watchlisttools-raw' => 'Править как текст',
 	'wikia-pagetitle' => '$1 — Wikia',
 	'wikia-read-only-mode' => 'Наш главный центр обработки данных в данный момент недоступен, поэтому вы подключены к резервному центру. К сожалению, это означает, что некоторые функции (редактирование, загрузка файлов или чат) могут быть временно недоступны.
-Пожалуйста, наберитесь терпения — мы работаем над устранением этой проблемы. Если вы продолжаете видеть эту ошибку в течение долгого периода времени, сообщите об этом нам по адресу community@wikia.com.',
+Пожалуйста, наберитесь терпения — мы работаем над устранением этой проблемы. Если вы продолжаете видеть эту ошибку в течение долгого периода времени, сообщите об этом нам по адресу community@fandom.com.',
 	'widget-desc-wikiamessages' => 'Сообщения Фэндома',
 	'widget-title-wikiamessages' => 'Сообщения Фэндома',
 	'wikia_messages' => 'Сообщения Фэндома',
@@ -18095,7 +18095,7 @@ $messages['zh-hans'] = array(
 	'watchlisttools-raw' => '编辑原始监视列表',
 	'wikia-read-only-mode' => '很抱歉！目前数据中心不可使用，目前显示的是資料备份。这意味着您可能无法执行某些操作，例如编辑、上传文件或在线聊天。
 
-我们正在努力解决这个问题，请您耐心等待！如果您过了很久还持续遇到这个状况，请发送邮件至community@wikia.com与FANDOM联系。',
+我们正在努力解决这个问题，请您耐心等待！如果您过了很久还持续遇到这个状况，请发送邮件至community@fandom.com与FANDOM联系。',
 	'widget-desc-wikiamessages' => 'FANDOM消息',
 	'widget-title-wikiamessages' => 'FANDOM消息',
 	'wikia_messages' => 'FANDOM消息',
@@ -18224,7 +18224,7 @@ $messages['zh-hant'] = array(
 	'watchlisttools-raw' => '編輯原始監視列表',
 	'wikia-read-only-mode' => '很抱歉！目前資料中心费法使用，目前顯示的是資料備份。這意味著您可能無法執行某些操作，例如編輯、上傳檔案或線上聊天。
 
-我們正在努力解決這個問題，請您耐心等待！如果您過了很久還持續遇到這個狀況，請發送郵件至community@wikia.com與FANDOM聯繫。',
+我們正在努力解決這個問題，請您耐心等待！如果您過了很久還持續遇到這個狀況，請發送郵件至community@fandom.com與FANDOM聯繫。',
 	'widget-desc-wikiamessages' => 'FANDOM訊息',
 	'widget-title-wikiamessages' => 'FANDOM訊息',
 	'wikia_messages' => 'FANDOM訊息',
