@@ -135,26 +135,26 @@ class GetWikiProperties extends Maintenance {
 		fputcsv( $this->outputFh, $data );
 	}
 
-	private function usesSemanticMediawiki( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgEnableSemanticMediaWikiExt', $wikiId );
+	private function usesSemanticMediawiki( int $wikiId ): bool {
+		return (bool)WikiFactory::getVarValueByName( 'wgEnableSemanticMediaWikiExt', $wikiId );
 	}
 
-	private function usesCustomJSorCSS( int $wikiId ): ?bool {
-		$allowJS = (bool)WikiFactory::getVarByName( 'wgUseSiteJs', $wikiId );
+	private function usesCustomJSorCSS( int $wikiId ): bool {
+		$allowJS = (bool)WikiFactory::getVarValueByName( 'wgUseSiteJs', $wikiId );
 
 		return !empty( $allowJS );
 	}
 
-	private function usesAchievements( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgEnableAchievementsExt', $wikiId );
+	private function usesAchievements( int $wikiId ): bool {
+		return (bool)WikiFactory::getVarValueByName( 'wgEnableAchievementsExt', $wikiId );
 	}
 
-	private function usesMediaGallery( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgEnableMediaGalleryExt', $wikiId );
+	private function usesMediaGallery( int $wikiId ): bool {
+		return (bool)WikiFactory::getVarValueByName( 'wgEnableMediaGalleryExt', $wikiId );
 	}
 
-	private function usesUnmigratedForums( int $wikiId ): ?bool {
-		return (bool)WikiFactory::getVarByName( 'wgEnableForumExt', $wikiId );
+	private function usesUnmigratedForums( int $wikiId ): bool {
+		return (bool)WikiFactory::getVarValueByName( 'wgEnableForumExt', $wikiId );
 	}
 
 	/**
@@ -164,10 +164,10 @@ class GetWikiProperties extends Maintenance {
 	 * @param int $wikiId
 	 * @return int|null
 	 */
-	private function getArticleComments( DatabaseBase $dbr, int $wikiId ): ?int {
-		$commentsEnabled = WikiFactory::getVarByName( 'wgEnableArticleCommentsExt', $wikiId );
+	private function getArticleComments( DatabaseBase $dbr, int $wikiId ): int {
+		$commentsEnabled = WikiFactory::getVarValueByName( 'wgEnableArticleCommentsExt', $wikiId );
 		if ( !$commentsEnabled ) {
-			return null;
+			return -1;
 		}
 
 		$activityCount = $dbr->selectField( 'page', 'count(*) as cnt', [
@@ -176,7 +176,7 @@ class GetWikiProperties extends Maintenance {
 		] );
 
 		if ( !$activityCount ) {
-			return null;
+			return -1;
 		}
 
 		return (int)$dbr->selectField( 'page', 'count(*) as cnt', [
@@ -185,7 +185,7 @@ class GetWikiProperties extends Maintenance {
 		] );
 	}
 
-	private function getBlogCount( DatabaseBase $dbr ): ?int {
+	private function getBlogCount( DatabaseBase $dbr ): int {
 		return $dbr->estimateRowCount( 'page',  '*', [ 'page_namespace' => 500 ] );
 	}
 
