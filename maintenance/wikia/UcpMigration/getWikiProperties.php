@@ -167,7 +167,7 @@ class GetWikiProperties extends Maintenance {
 	private function getArticleComments( DatabaseBase $dbr, int $wikiId ): int {
 		$commentsEnabled = WikiFactory::getVarValueByName( 'wgEnableArticleCommentsExt', $wikiId );
 		if ( !$commentsEnabled ) {
-			return -1;
+			return 0;
 		}
 
 		$activityCount = $dbr->selectField( 'page', 'count(*) as cnt', [
@@ -176,7 +176,7 @@ class GetWikiProperties extends Maintenance {
 		] );
 
 		if ( !$activityCount ) {
-			return -1;
+			return 0;
 		}
 
 		return (int)$dbr->selectField( 'page', 'count(*) as cnt', [
