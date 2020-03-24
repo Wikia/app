@@ -83,6 +83,6 @@ class RenameUserPagesTask extends BaseTask {
 		}
 
 		$user = User::newFromName( $newUserName );
-		$user->invalidateCache();
+		$user->deleteCache();
 	}
 }
