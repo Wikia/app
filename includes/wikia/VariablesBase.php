@@ -1018,6 +1018,13 @@ $wgCategoryMagicGallery = true;
 $wgCategoryPagingLimit = 200;
 
 /**
+ * Points to ucp-internal-test-community.fandom.com.
+ * Should be switched to ucp.fandom.com for initial rollout and to community.fandom.com after
+ * Community Central has been migrated to UCP.
+ */
+$wgCentralWikiId = 2182188;
+
+/**
  * Chat server API address. Normally it is resolved by consul, but for
  * development and testing purposes you can specify it here.
  * @see ChatConfig::getApiServer()
@@ -2784,6 +2791,13 @@ $wgEnableGoogleDocsExt = true;
  * @var bool $wgEnableGoogleFormTagExt
  */
 $wgEnableGoogleFormTagExt = true;
+
+/**
+ * Enables Google Tag Manager by default
+ * @see /extensions/wikia/GoogleTagManager
+ * @var bool $wgEnableGoogleTagManagerExt
+ */
+$wgEnableGoogleTagManagerExt = true;
 
 /**
  * Enable Gracenote extension for Lyrics. Defaults to false, toggled in

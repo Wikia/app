@@ -29,6 +29,15 @@ export const getConfig = () => ({
 	],
 
 	onInit(adSlot, params) {
+		const siteWrapper = document.querySelector('.WikiaSiteWrapper');
+
+		if (siteWrapper) {
+			// https://wikia-inc.atlassian.net/browse/ADEN-9974
+			// Fixes unwanted scroll on Chrome
+			document.body.style.setProperty('overflow-anchor', 'none');
+			siteWrapper.style.setProperty('overflow-anchor', 'auto');
+		}
+
 		this.adSlot = adSlot;
 		this.slotParams = params;
 		context.set('slots.bottom_leaderboard.viewportConflicts', []);
