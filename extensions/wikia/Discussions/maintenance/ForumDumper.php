@@ -185,6 +185,10 @@ class ForumDumper {
 
 		$dbh->close();
 
+		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
+		$dbh->close();
+
 		$pageIds = array_keys( $pageIdsToOrder );
 		$pageIdsChunks = array_chunk( $pageIds, 100 );
 
@@ -229,6 +233,7 @@ class ForumDumper {
 					] );
 				} );
 
+			$dbh->ping();
 			$dbh->close();
 		}
 
@@ -308,6 +313,7 @@ class ForumDumper {
 					] );
 				} );
 
+			$dbh->ping();
 			$dbh->close();
 		}
 
