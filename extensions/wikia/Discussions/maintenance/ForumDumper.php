@@ -96,6 +96,7 @@ class ForumDumper {
 	private $revisions = [];
 	private $votes = [];
 	private $topics = [];
+	private $revObjects = [];
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -122,6 +123,10 @@ class ForumDumper {
 
 	public function addTitle( $id, $title ) {
 		$this->titles[$id] = $title;
+	}
+
+	public function addRevObject( $id, $rev ) {
+		$this->revObjects[$id] = $rev;
 	}
 
 	/**
@@ -310,6 +315,9 @@ class ForumDumper {
 					->runLoop(
 						$dbh,
 						function ( &$revisions, $row ) {
+
+							$this->addRevObject( $row->rev_id, \Revision::newFromRow( $row ) );
+
 							list(
 								$parsedText, $plainText, $title
 								) =
@@ -422,6 +430,8 @@ class ForumDumper {
 			}
 		} while( $articleComment === false && $tries-- > 0);
 
+		$articleComment->mFirstRevision = $this->revObjects[$revId];
+		$articleComment->mLastRevision = $this->revObjects[$revId];
 		$articleComment->mLastRevId = $revId;
 		$articleComment->mFirstRevId = $revId;
 

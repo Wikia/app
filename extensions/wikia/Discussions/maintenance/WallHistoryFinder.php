@@ -16,9 +16,14 @@ class WallHistoryFinder {
 		'post_user_id',
 	];
 	private $pageIdsInNamespace;
+	private $history = [];
 
 	public function __construct( $pageIdsInNamespace ) {
 		$this->pageIdsInNamespace = $pageIdsInNamespace;
+	}
+
+	public function addHistory($data) {
+		$this->history[] = $data;
 	}
 
 	/**
@@ -61,8 +66,6 @@ class WallHistoryFinder {
 		$dbh->ping();
 		$dbh->close();
 
-		$history = [];
-
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 100);
 
 		foreach ($pageIdsChunks as $part) {
@@ -72,13 +75,20 @@ class WallHistoryFinder {
 				->WHERE( 'parent_page_id' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$entries, $row ) {
-					$history[] = get_object_vars($row);
+					$this->addHistory([
+						'revision_id' => $row->revision_id,
+						'comment_id' => $row->comment_id,
+						'event_date' => $row->event_date,
+						'action' => $row->action,
+						'is_reply' => $row->is_reply,
+						'post_user_id' => $row->post_user_id,
+					]);
 				} );
 			$dbh->ping();
 			$dbh->close();
 		}
 
-		return $history;
+		return $this->history;
 	}
 
 }

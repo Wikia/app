@@ -16,9 +16,14 @@ class FollowsFinder {
 	];
 
 	private $threadNameToId;
+	private $follows = [];
 
 	public function __construct( $threadNameToId ) {
 		$this->threadNameToId = $threadNameToId;
+	}
+
+	public function addFollow( $data ) {
+		$this->follows[] = $data;
 	}
 
 	/**
@@ -39,14 +44,13 @@ class FollowsFinder {
 		$dbh->ping();
 		$dbh->close();
 
-		$follows = [];
 		$pageTitles = array_keys( $this->threadNameToId );
 		$pageTitlesChunks = array_chunk($pageTitles, 100);
 
 		$dbh = wfGetDB( DB_SLAVE );
 
 		if (!$dbh->tableExists(self::TABLE_THREAD_WATCHER)) {
-			return $follows;
+			return $this->follows;
 		}
 
 		foreach($pageTitlesChunks as $part) {
@@ -59,17 +63,17 @@ class FollowsFinder {
 				->AND_( 'wl_title' )
 				->IN( $part )
 				->runLoop( $dbh, function ( &$follows, $row ) {
-					$follows[] = [
+					$this->addFollow([
 						self::FOLLOWER_ID => $row->wl_user,
 						self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
-					];
+					]);
 				} );
 
 			$dbh->ping();
 			$dbh->close();
 		}
 
-		return $follows;
+		return $this->follows;
 	}
 
 }
