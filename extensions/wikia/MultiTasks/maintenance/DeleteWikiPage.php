@@ -20,7 +20,7 @@ class DeleteWikiPage extends Maintenance {
 		$reason = $this->getOption( 'reason', false );
 		$userId = $this->getOption( 'userId', false );
 
-		if ( $pageName === false || $reason === false || $user === false ) {
+		if ( $pageName === false || $reason === false || $userId === false ) {
 			$this->output( "Failed to run scrip, missing parameters" );
 			exit( 1 );
 		}
