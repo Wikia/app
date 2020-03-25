@@ -91,6 +91,7 @@ class ForumDumper {
 		NS_WIKIA_FORUM_BOARD_THREAD,
 	];
 
+	private $titles = [];
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
@@ -117,6 +118,10 @@ class ForumDumper {
 
 	public function addTopic( $data ) {
 		$this->topics[] = $data;
+	}
+
+	public function addTitle( $id, $title ) {
+		$this->titles[$id] = $title;
 	}
 
 	/**
@@ -232,6 +237,8 @@ class ForumDumper {
 						"comment_timestamp" => $row->last_touched,
 						"display_order" => $pageIdsToOrder[$row->page_id],
 					] );
+
+					$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 				} );
 
 			$dbh->ping();
@@ -408,7 +415,7 @@ class ForumDumper {
 		$tries = 3;
 		$articleComment = false;
 		do {
-			$articleComment = \ArticleComment::newFromId( $textId );
+			$articleComment = \ArticleComment::newFromTitle( $this->titles[$textId] );
 
 			if ( $articleComment === false && $tries > 0 ) {
 				WikiaLogger::instance()->info( "Retry used! (article build) - ".( $tries - 1 )." left" );
