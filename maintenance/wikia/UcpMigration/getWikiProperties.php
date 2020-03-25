@@ -42,6 +42,8 @@ class GetWikiProperties extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgSpecialsDB;
+
 		$inputFileName = $this->getOption( 'file', false );
 		if ( $inputFileName ) {
 			$this->inputFh = fopen( $inputFileName, "r" );
@@ -64,6 +66,8 @@ class GetWikiProperties extends Maintenance {
 		$limit = $this->getOption( 'limit' );
 
 		$wikiData = fgetcsv( $this->inputFh );
+
+		$specialsDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 
 		// skip header row if exists
 		$count = 0;
@@ -123,7 +127,8 @@ class GetWikiProperties extends Maintenance {
 			$wikiData[8] = $this->getBlogCount( $dbr );
 			$wikiData[9] = $this->usesCustomJSorCSS( $wikiId );
 			$wikiData[10] = $this->usesSemanticMediawiki( $wikiId );
-			$wikiData[11] = $this->getEditsCount( $dbr );
+			$wikiData[11] = $this->getTotalEditsCount( $dbr );
+			$wikiData[12] = $this->getEditsCount( $specialsDB, $wikiId );
 
 			$dbr->close();
 			unset( $dbr );
@@ -203,7 +208,7 @@ class GetWikiProperties extends Maintenance {
 		}
 	}
 
-	private function getEditsCount( DatabaseBase $dbr ): int {
+	private function getTotalEditsCount( DatabaseBase $dbr ): int {
 		$res = $dbr->selectField( 'site_stats', 'ss_total_edits' );
 		if ( empty( $res ) ) {
 			return 0;
@@ -212,6 +217,14 @@ class GetWikiProperties extends Maintenance {
 		}
 	}
 
+	private function getEditsCount( DatabaseBase $specialsDbr, int $wikiId ): int {
+		$res = $specialsDbr->selectField( 'events_local_users', 'count(edits)', [ 'wiki_id' => $wikiId, 'editdate >= DATE_ADD(NOW(), INTERVAL -30 DAY)' ] );
+		if ( empty( $res ) ) {
+			return 0;
+		} else {
+			return $res;
+		}
+	}
 }
 
 $maintClass = "GetWikiProperties";
