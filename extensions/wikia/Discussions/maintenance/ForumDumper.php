@@ -4,6 +4,7 @@ namespace Discussions;
 
 use Article;
 use Title;
+use \Wikia\Logger\WikiaLogger;
 
 class ForumDumper {
 
@@ -287,39 +288,60 @@ class ForumDumper {
 		$chunks = array_chunk($revIds, 100);
 
 		foreach ($chunks as $part) {
-			$dbh = wfGetDB( DB_SLAVE );
-			( new \WikiaSQL() )->SELECT_ALL()
-				->FROM( self::TABLE_REVISION )
-				->JOIN( self::TABLE_TEXT )
-				->ON( 'rev_text_id', 'old_id' )
-				->WHERE( 'rev_id' )
-				->IN( $part )
-				->runLoop( $dbh, function ( &$revisions, $row ) {
-					list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page, $row->rev_id );
 
-					$pages = $this->getPages();
-					$curPage = $pages[$row->rev_page];
+			$tries = 3;
+			$queryResult = null;
 
-					$this->addRevision( [
-						"revision_id" => $row->rev_id,
-						"page_id" => $row->rev_page,
-						"page_namespace" => $curPage['namespace'],
-						"title" => $title,
-						"user_type" => $this->getContributorType( $row ),
-						"user_identifier" => $row->rev_user,
-						"timestamp" => $row->rev_timestamp,
-						"is_minor_edit" => $row->rev_minor_edit,
-						"is_deleted" => $row->rev_deleted,
-						"length" => $row->rev_len,
-						"parent_id" => $row->rev_parent_id,
-						"text_flags" => $row->old_flags,
-						"raw_content" => $plainText,
-						"content" => $parsedText,
-					] );
-				} );
+			do {
+				$dbh = wfGetDB( DB_SLAVE );
+				$queryResult = ( new \WikiaSQL() )->SELECT_ALL()
+					->FROM( self::TABLE_REVISION )
+					->JOIN( self::TABLE_TEXT )
+					->ON( 'rev_text_id', 'old_id' )
+					->WHERE( 'rev_id' )
+					->IN( $part )
+					->runLoop(
+						$dbh,
+						function ( &$revisions, $row ) {
+							list(
+								$parsedText, $plainText, $title
+								) =
+								$this->getTextAndTitle( $row->rev_page, $row->rev_id );
 
-			$dbh->ping();
-			$dbh->close();
+							$pages = $this->getPages();
+							$curPage = $pages[$row->rev_page];
+
+							$this->addRevision(
+								[
+									"revision_id" => $row->rev_id,
+									"page_id" => $row->rev_page,
+									"page_namespace" => $curPage['namespace'],
+									"title" => $title,
+									"user_type" => $this->getContributorType( $row ),
+									"user_identifier" => $row->rev_user,
+									"timestamp" => $row->rev_timestamp,
+									"is_minor_edit" => $row->rev_minor_edit,
+									"is_deleted" => $row->rev_deleted,
+									"length" => $row->rev_len,
+									"parent_id" => $row->rev_parent_id,
+									"text_flags" => $row->old_flags,
+									"raw_content" => $plainText,
+									"content" => $parsedText,
+								]
+							);
+						},
+						false
+					);
+
+				$dbh->ping();
+				$dbh->close();
+
+				if ( $queryResult === false && $tries > 0 ) {
+					WikiaLogger::instance()->info( "Retry used! (rev batch load) - ".( $tries - 1 )." left" );
+				}
+
+			} while ($queryResult === false && $tries-- > 0);
+
 		}
 
 		return $this->revisions;
@@ -383,10 +405,28 @@ class ForumDumper {
 	}
 
 	public function getTextAndTitle( $textId, $revId ) {
-		$articleComment = \ArticleComment::newFromId( $textId );
+		$tries = 3;
+		$articleComment = false;
+		do {
+			$articleComment = \ArticleComment::newFromId( $textId );
+
+			if ( $articleComment === false && $tries > 0 ) {
+				WikiaLogger::instance()->info( "Retry used! (article build) - ".( $tries - 1 )." left" );
+			}
+		} while( $articleComment === false && $tries-- > 0);
+
 		$articleComment->mLastRevId = $revId;
 		$articleComment->mFirstRevId = $revId;
-		$articleComment->load();
+
+		$loadTries = 3;
+		$loadStatus = false;
+		do {
+			$loadStatus = $articleComment->load();
+
+			if ( $loadStatus === false && $loadTries > 0 ) {
+				WikiaLogger::instance()->info( "Retry used! (article load) - ".( $loadTries - 1 )." left" );
+			}
+		} while( $loadStatus === false && $loadTries-- > 0 );
 
 		$rawText = $this->getRawText( $articleComment );
 		$title = $articleComment->getMetadata( 'title', '' );
