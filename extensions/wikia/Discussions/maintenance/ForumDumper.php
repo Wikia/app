@@ -423,9 +423,15 @@ class ForumDumper {
 		do {
 			$loadStatus = $articleComment->load();
 
+			if ($loadStatus && !$articleComment->getRawText()) {
+				WikiaLogger::instance()->info( "Revision text missing." );
+				$loadStatus = false;
+			}
+
 			if ( $loadStatus === false && $loadTries > 0 ) {
 				WikiaLogger::instance()->info( "Retry used! (article load) - ".( $loadTries - 1 )." left" );
 			}
+
 		} while( $loadStatus === false && $loadTries-- > 0 );
 
 		$rawText = $this->getRawText( $articleComment );
