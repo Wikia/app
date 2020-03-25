@@ -69,6 +69,7 @@ class GetWikiProperties extends Maintenance {
 		$count = 0;
 		$pos = 0;
 		$errors = 0;
+		$skipped = 0;
 		if ( !empty( $wikiData ) && !is_numeric( $wikiData[0] ) ) {
 			fputcsv( $this->outputFh, $wikiData );
 			$wikiData = fgetcsv( $this->inputFh );
@@ -99,6 +100,13 @@ class GetWikiProperties extends Maintenance {
 				continue;
 			}
 
+			if ( $data->city_public != WikiFactory::PUBLIC_WIKI ) {
+				$this->output( "Wiki is not public - skipping: {$wikiId}\n" );
+				$wikiData = fgetcsv( $this->inputFh );
+				++$skipped;
+				continue;
+			}
+
 			$dbr = wfGetDB( DB_SLAVE, [], $data->city_dbname );
 			if ( empty( $dbr ) ) {
 				$this->outputError( "Could not get database for wiki {$wikiId}\n", $wikiData );
@@ -115,6 +123,7 @@ class GetWikiProperties extends Maintenance {
 			$wikiData[8] = $this->getBlogCount( $dbr );
 			$wikiData[9] = $this->usesCustomJSorCSS( $wikiId );
 			$wikiData[10] = $this->usesSemanticMediawiki( $wikiId );
+			$wikiData[11] = $this->getEditsCount( $dbr );
 
 			$dbr->close();
 			unset( $dbr );
@@ -124,7 +133,7 @@ class GetWikiProperties extends Maintenance {
 			$wikiData = fgetcsv( $this->inputFh );
 		}
 
-		$this->output( "Processed {$count} wikis\nErrors: {$errors}\n" );
+		$this->output( "Processed {$count} wikis\nSkipped: {$skipped}\nErrors: {$errors}\n" );
 
 		return 0;
 	}
@@ -187,6 +196,15 @@ class GetWikiProperties extends Maintenance {
 
 	private function getBlogCount( DatabaseBase $dbr ): int {
 		$res = $dbr->selectField( 'page',  'COUNT(*)', [ 'page_namespace' => 500 ] );
+		if ( empty( $res ) ) {
+			return 0;
+		} else {
+			return $res;
+		}
+	}
+
+	private function getEditsCount( DatabaseBase $dbr ): int {
+		$res = $dbr->selectField( 'site_stats', 'ss_total_edits' );
 		if ( empty( $res ) ) {
 			return 0;
 		} else {
