@@ -316,7 +316,9 @@ class ForumDumper {
 						$dbh,
 						function ( &$revisions, $row ) {
 
-							$this->addRevObject( $row->rev_id, \Revision::newFromRow( $row ) );
+							$rev = \Revision::newFromRow( $row );
+							$rev->getText();
+							$this->addRevObject( $row->rev_id, $rev );
 
 							list(
 								$parsedText, $plainText, $title
