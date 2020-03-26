@@ -17,6 +17,7 @@ class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
 	private $dumper;
 	private $fh;
+	private $outputName;
 
 	public function __construct() {
 		parent::__construct();
@@ -25,16 +26,17 @@ class DumpForumData extends Maintenance {
 	}
 
 	public function execute() {
-		$outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
-		$this->fh = fopen( $outputName, 'w' );
+		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
+		$this->fh = fopen( $this->outputName, 'w' );
 		if ( $this->fh === false ) {
-			$this->error( "Unable to open file " . $outputName, 1 );
+			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
 		$this->dumper = new Discussions\ForumDumper();
 
 		$this->setConnectinoEncoding();
 		$this->clearImportTables();
+		fclose( $this->fh );
 
 		$this->dumpPages();
 		$this->output("Pages dumped!");
@@ -76,6 +78,7 @@ class DumpForumData extends Maintenance {
 	private function dumpPages() {
 		$pages = $this->dumper->getPages();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $pages as $id => $data ) {
@@ -87,11 +90,15 @@ class DumpForumData extends Maintenance {
 
 			fwrite( $this->fh, $insert . "\n" );
 		}
+
+		fclose( $this->fh );
+		$this->dumper->clearPages();
 	}
 
 	private function dumpRevisions() {
 		$revisions = $this->dumper->getRevisions();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $revisions as $data ) {
@@ -102,11 +109,15 @@ class DumpForumData extends Maintenance {
 			);
 			fwrite( $this->fh, $insert . "\n" );
 		}
+
+		fclose( $this->fh );
+		$this->dumper->clearRevisions();
 	}
 
 	private function dumpVotes() {
 		$votes = $this->dumper->getVotes();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $votes as $data ) {
@@ -117,11 +128,14 @@ class DumpForumData extends Maintenance {
 			);
 			fwrite( $this->fh, $insert . "\n" );
 		}
+
+		fclose( $this->fh );
 	}
 
 	private function dumpFollows() {
 		$follows = $this->dumper->getFollows();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $follows as $data ) {
@@ -132,11 +146,15 @@ class DumpForumData extends Maintenance {
 			);
 			fwrite( $this->fh, $insert . "\n");
 		}
+
+		fclose( $this->fh );
 	}
 
 	private function dumpWallHistory() {
+
 		$history = $this->dumper->getWallHistory();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $history as $data ) {
@@ -147,11 +165,14 @@ class DumpForumData extends Maintenance {
 			);
 			fwrite( $this->fh, $insert . "\n");
 		}
+
+		fclose( $this->fh );
 	}
 
 	private function dumpTopics() {
 		$topics = $this->dumper->getTopics();
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->output("Saving to file!");
 
 		foreach ( $topics as $data ) {
@@ -162,6 +183,8 @@ class DumpForumData extends Maintenance {
 			);
 			fwrite( $this->fh, $insert . "\n");
 		}
+
+		fclose( $this->fh );
 	}
 
 	private function createInsert( $table, $cols, $data ) {

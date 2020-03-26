@@ -297,7 +297,7 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$chunks = array_chunk($revIds, 100);
+		$chunks = array_chunk($revIds, 250);
 
 		$currentBatch = 1;
 
@@ -350,6 +350,8 @@ class ForumDumper {
 									"content" => $parsedText,
 								]
 							);
+
+							$this->addRevObject( $row->rev_id, null );
 						},
 						false
 					);
@@ -651,5 +653,46 @@ class ForumDumper {
 		}
 
 		return [ $title->getText(), $title->getLocalURL() ];
+	}
+
+	public function clearRevisions() {
+		foreach ( $this->revisions as $data ) {
+			$data["revision_id"] = null;
+			$data["page_id"] = null;
+			$data["page_namespace"] = null;
+			$data["title"] = null;
+			$data["user_type"] = null;
+			$data["user_identifier"] = null;
+			$data["timestamp"] = null;
+			$data["is_minor_edit"] = null;
+			$data["is_deleted"] = null;
+			$data["length"] = null;
+			$data["parent_id"] = null;
+			$data["text_flags"] = null;
+			$data["raw_content"] = null;
+			$data["content"] = null;
+		}
+	}
+
+	public function clearPages() {
+		foreach ( $this->pages as $id => $data ) {
+			$data["is_redirect"] = null;
+			$data["is_new"] = null;
+			$data["touched"] = null;
+			$data["length"] = null;
+			$data["parent_page_id"] = null;
+			$data["parent_comment_id"] = null;
+			$data["last_child_comment_id"] = null;
+			$data["archived_ind"] = null;
+			$data["deleted_ind"] = null;
+			$data["removed_ind"] = null;
+			$data["locked_ind"] = null;
+			$data["protected_ind"] = null;
+			$data["sticky_ind"] = null;
+			$data["first_revision_id"] = null;
+			$data["last_revision_id"] = null;
+			$data["comment_timestamp"] = null;
+			$data["display_order"] = null;
+		}
 	}
 }
