@@ -211,40 +211,51 @@ class ForumDumper {
 				->ON( 'page_id', 'comment_id' )
 				->WHERE( 'page_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( &$pages, $row ) use ( $pageIdsToOrder ) {
-					// A few of these properties were removed and do not appear on some wikis
-					foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
-						if ( !property_exists( $row, $prop ) ) {
-							$row->$prop = 0;
+				->runLoop(
+					$dbh,
+					function ( $result ) use ( $pageIdsToOrder, $dbh ) {
+
+						while ($row = $result->fetchObject()) {
+							// A few of these properties were removed and do not appear on some wikis
+							foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
+								if ( !property_exists( $row, $prop ) ) {
+									$row->$prop = 0;
+								}
+							}
+
+							$this->addPage(
+								$row->page_id,
+								[
+									"page_id" => $row->page_id,
+									"namespace" => $row->page_namespace,
+									"raw_title" => $row->page_title,
+									"is_redirect" => $row->page_is_redirect,
+									"is_new" => $row->page_is_new,
+									"touched" => $row->page_touched,
+									"latest_revision_id" => $row->page_latest,
+									"length" => $row->page_len,
+									"parent_page_id" => $row->parent_page_id,
+									"parent_comment_id" => $row->parent_comment_id,
+									"last_child_comment_id" => $row->last_child_comment_id,
+									"archived_ind" => $row->archived ?: 0,
+									"deleted_ind" => $row->deleted ?: 0,
+									"removed_ind" => $row->removed ?: 0,
+									"locked_ind" => $row->locked ?: 0,
+									"protected_ind" => $row->protected ?: 0,
+									"sticky_ind" => $row->sticky ?: 0,
+									"first_revision_id" => $row->last_rev_id, //we want just one revision
+									"last_revision_id" => $row->last_rev_id,
+									"comment_timestamp" => $row->last_touched,
+									"display_order" => $pageIdsToOrder[$row->page_id],
+								]
+							);
+
+							$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 						}
-					}
 
-					$this->addPage( $row->page_id, [
-						"page_id" => $row->page_id,
-						"namespace" => $row->page_namespace,
-						"raw_title" => $row->page_title,
-						"is_redirect" => $row->page_is_redirect,
-						"is_new" => $row->page_is_new,
-						"touched" => $row->page_touched,
-						"latest_revision_id" => $row->page_latest,
-						"length" => $row->page_len,
-						"parent_page_id" => $row->parent_page_id,
-						"parent_comment_id" => $row->parent_comment_id,
-						"last_child_comment_id" => $row->last_child_comment_id,
-						"archived_ind" => $row->archived ?: 0,
-						"deleted_ind" => $row->deleted ?: 0,
-						"removed_ind" => $row->removed ?: 0,
-						"locked_ind" => $row->locked ?: 0,
-						"protected_ind" => $row->protected ?: 0,
-						"sticky_ind" => $row->sticky ?: 0,
-						"first_revision_id" => $row->last_rev_id, //we want just one revision
-						"last_revision_id" => $row->last_rev_id,
-						"comment_timestamp" => $row->last_touched,
-						"display_order" => $pageIdsToOrder[$row->page_id],
-					] );
-
-					$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
-				} );
+						$dbh->freeResult( $result );
+					}, [], false
+				);
 
 			$dbh->ping();
 			$dbh->close();
@@ -311,7 +322,7 @@ class ForumDumper {
 
 			do {
 				$dbh = wfGetDB( DB_SLAVE );
-				$queryResult = ( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
+				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
 					->JOIN( self::TABLE_TEXT )
 					->ON( 'rev_text_id', 'old_id' )
@@ -319,41 +330,45 @@ class ForumDumper {
 					->IN( $part )
 					->runLoop(
 						$dbh,
-						function ( &$revisions, $row ) {
+						function ( $result ) use ( $dbh ) {
 
-							$rev = \Revision::newFromRow( $row );
-							$this->addRevObject( $row->rev_id, $rev );
+							while ($row = $result->fetchObject()) {
+								$rev = \Revision::newFromRow( $row );
+								$this->addRevObject( $row->rev_id, $rev );
 
-							list(
-								$parsedText, $plainText, $title
-								) =
-								$this->getTextAndTitle( $row->rev_page, $row->rev_id );
+								list(
+									$parsedText, $plainText, $title
+									) =
+									$this->getTextAndTitle( $row->rev_page, $row->rev_id );
 
-							$pages = $this->getPages();
-							$curPage = $pages[$row->rev_page];
+								$pages = $this->getPages();
+								$curPage = $pages[$row->rev_page];
 
-							$this->addRevision(
-								[
-									"revision_id" => $row->rev_id,
-									"page_id" => $row->rev_page,
-									"page_namespace" => $curPage['namespace'],
-									"title" => $title,
-									"user_type" => $this->getContributorType( $row ),
-									"user_identifier" => $row->rev_user,
-									"timestamp" => $row->rev_timestamp,
-									"is_minor_edit" => $row->rev_minor_edit,
-									"is_deleted" => $row->rev_deleted,
-									"length" => $row->rev_len,
-									"parent_id" => $row->rev_parent_id,
-									"text_flags" => $row->old_flags,
-									"raw_content" => $plainText,
-									"content" => $parsedText,
-								]
-							);
+								$this->addRevision(
+									[
+										"revision_id" => $row->rev_id,
+										"page_id" => $row->rev_page,
+										"page_namespace" => $curPage['namespace'],
+										"title" => $title,
+										"user_type" => $this->getContributorType( $row ),
+										"user_identifier" => $row->rev_user,
+										"timestamp" => $row->rev_timestamp,
+										"is_minor_edit" => $row->rev_minor_edit,
+										"is_deleted" => $row->rev_deleted,
+										"length" => $row->rev_len,
+										"parent_id" => $row->rev_parent_id,
+										"text_flags" => $row->old_flags,
+										"raw_content" => $plainText,
+										"content" => $parsedText,
+									]
+								);
 
-							$this->addRevObject( $row->rev_id, null );
+								$this->addRevObject( $row->rev_id, null );
+							}
+
+							$dbh->freeResult( $result );
 						},
-						false
+						false, false
 					);
 
 				$dbh->ping();
@@ -397,28 +412,33 @@ class ForumDumper {
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
-			( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
+			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
 				->JOIN( self::TABLE_PAGE )
 				->AS_( 'p' )
 				->ON( 'comment_id', 'p.page_id' )
 				->WHERE( 'comment_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( &$topics, $row ) {
-					list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
+				->runLoop(
+					$dbh,
+					function ( &$topics, $row ) {
+						list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
 
-					if ( $title && $url ) {
-						$id = count( $this->topics ) + 1;
+						if ( $title && $url ) {
+							$id = count( $this->topics ) + 1;
 
-						$this->addTopic( [
-							"topic_id" => $id,
-							"page_id" => $row->comment_id,
-							"article_id" => $row->page_id,
-							"article_title" => $title,
-							"relative_url" => $url
-						] );
+							$this->addTopic(
+								[
+									"topic_id" => $id,
+									"page_id" => $row->comment_id,
+									"article_id" => $row->page_id,
+									"article_title" => $title,
+									"relative_url" => $url
+								]
+							);
+						}
 					}
-				} );
+				);
 
 			$dbh->ping();
 			$dbh->close();
