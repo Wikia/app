@@ -304,6 +304,7 @@ class ForumDumper {
 		foreach ($chunks as $part) {
 
 			WikiaLogger::instance()->info( "Batch ".$currentBatch." of ".count( $chunks ) );
+			$currentBatch++;
 
 			$tries = 3;
 			$queryResult = null;
