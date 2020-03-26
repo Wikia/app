@@ -297,7 +297,7 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$chunks = array_chunk($revIds, 250);
+		$chunks = array_chunk($revIds, 1000);
 
 		$currentBatch = 1;
 
