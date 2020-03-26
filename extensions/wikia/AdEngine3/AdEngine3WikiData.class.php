@@ -14,7 +14,8 @@ class AdEngine3WikiData {
 			'comics' => 'ent',
 			'lifestyle' => 'life',
 			'music' => 'ent',
-			'movies' => 'ent'
+			'movies' => 'ent',
+			'anime' => 'ent'
 		];
 
 		$newVerticalName = strtolower( $newWikiVertical );

@@ -18,7 +18,7 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'watch-show-disclaimer' => 'Fandom may earn an affiliate commission on sales made from links on this page.'
+	'watch-show-disclaimer' => 'DIVULGATION : Certains des liens ci-dessus sont des liens d\'affiliation, ce qui signifie que, sans frais supplémentaires pour vous, Fandom percevra une commission si vous cliquez et effectuez un achat.*'
 );
 
 $messages['it'] = array(
