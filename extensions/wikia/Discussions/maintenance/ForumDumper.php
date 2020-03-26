@@ -299,7 +299,11 @@ class ForumDumper {
 
 		$chunks = array_chunk($revIds, 100);
 
+		$currentBatch = 1;
+
 		foreach ($chunks as $part) {
+
+			WikiaLogger::instance()->info( "Batch ".$currentBatch." of ".count( $chunks ) );
 
 			$tries = 3;
 			$queryResult = null;
@@ -317,7 +321,6 @@ class ForumDumper {
 						function ( &$revisions, $row ) {
 
 							$rev = \Revision::newFromRow( $row );
-							//$rev->getText();
 							$this->addRevObject( $row->rev_id, $rev );
 
 							list(
@@ -432,8 +435,8 @@ class ForumDumper {
 			}
 		} while( $articleComment === false && $tries-- > 0);
 
-//		$articleComment->mFirstRevision = $this->revObjects[$revId];
-//		$articleComment->mLastRevision = $this->revObjects[$revId];
+		$articleComment->mFirstRevision = $this->revObjects[$revId];
+		$articleComment->mLastRevision = $this->revObjects[$revId];
 		$articleComment->mLastRevId = $revId;
 		$articleComment->mFirstRevId = $revId;
 
