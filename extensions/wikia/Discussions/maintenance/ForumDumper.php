@@ -306,7 +306,7 @@ class ForumDumper {
 
 			do {
 				$dbh = wfGetDB( DB_SLAVE );
-				$queryResult = ( new \WikiaSQL() )->SELECT_ALL()
+				$queryResult = ( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
 					->JOIN( self::TABLE_TEXT )
 					->ON( 'rev_text_id', 'old_id' )
@@ -317,7 +317,7 @@ class ForumDumper {
 						function ( &$revisions, $row ) {
 
 							$rev = \Revision::newFromRow( $row );
-							$rev->getText();
+							//$rev->getText();
 							$this->addRevObject( $row->rev_id, $rev );
 
 							list(
@@ -432,8 +432,8 @@ class ForumDumper {
 			}
 		} while( $articleComment === false && $tries-- > 0);
 
-		$articleComment->mFirstRevision = $this->revObjects[$revId];
-		$articleComment->mLastRevision = $this->revObjects[$revId];
+//		$articleComment->mFirstRevision = $this->revObjects[$revId];
+//		$articleComment->mLastRevision = $this->revObjects[$revId];
 		$articleComment->mLastRevId = $revId;
 		$articleComment->mFirstRevId = $revId;
 
