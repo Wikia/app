@@ -194,14 +194,14 @@ class ForumDumper {
 				$pageIdsToOrder[$row->page_id] = $display_order ++;
 			} );
 
-		$dbh->close();
+		$dbh->closeConnection();
+		wfGetLB( false )->closeConnection( $dbh );
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		$pageIds = array_keys( $pageIdsToOrder );
-		$pageIdsChunks = array_chunk( $pageIds, 100 );
+		$pageIdsChunks = array_chunk( $pageIds, 500 );
 
 		foreach ( $pageIdsChunks as $part ) {
 			$dbh = wfGetDB( DB_SLAVE );
