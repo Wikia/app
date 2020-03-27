@@ -64,7 +64,6 @@ class WallHistoryFinder {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 100);
 
@@ -85,7 +84,8 @@ class WallHistoryFinder {
 					]);
 				} );
 			$dbh->ping();
-			$dbh->close();
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
 		}
 
 		return $this->history;

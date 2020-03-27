@@ -258,7 +258,8 @@ class ForumDumper {
 				);
 
 			$dbh->ping();
-			$dbh->close();
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
 		}
 
 		return $this->pages;
@@ -296,7 +297,6 @@ class ForumDumper {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
@@ -372,7 +372,8 @@ class ForumDumper {
 					);
 
 				$dbh->ping();
-				$dbh->close();
+				$dbh->closeConnection();
+				wfGetLB( false )->closeConnection( $dbh );
 
 				if ( $queryResult === false && $tries > 0 ) {
 					WikiaLogger::instance()->info( "Retry used! (rev batch load) - ".( $tries - 1 )." left" );
@@ -401,7 +402,6 @@ class ForumDumper {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		if ( !empty( $this->topics ) ) {
 			return $this->topics;
@@ -441,7 +441,8 @@ class ForumDumper {
 				);
 
 			$dbh->ping();
-			$dbh->close();
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
 		}
 
 		return $this->topics;
@@ -593,7 +594,6 @@ class ForumDumper {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		if ( !empty( $this->votes ) ) {
 			return $this->votes;
@@ -619,7 +619,8 @@ class ForumDumper {
 				} );
 
 			$dbh->ping();
-			$dbh->close();
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
 		}
 
 		return $this->votes;

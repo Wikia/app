@@ -42,7 +42,6 @@ class FollowsFinder {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		$dbh->ping();
-		$dbh->close();
 
 		$pageTitles = array_keys( $this->threadNameToId );
 		$pageTitlesChunks = array_chunk($pageTitles, 100);
@@ -70,7 +69,8 @@ class FollowsFinder {
 				} );
 
 			$dbh->ping();
-			$dbh->close();
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
 		}
 
 		return $this->follows;
