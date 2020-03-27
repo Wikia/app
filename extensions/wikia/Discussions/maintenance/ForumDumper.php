@@ -203,6 +203,7 @@ class ForumDumper {
 
 		foreach ( $pageIdsChunks as $part ) {
 			$dbh = wfGetDB( DB_SLAVE );
+			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
 				->FROM( self::TABLE_PAGE )
 				->LEFT_JOIN( self::TABLE_COMMENTS )
@@ -317,6 +318,7 @@ class ForumDumper {
 
 			do {
 				$dbh = wfGetDB( DB_SLAVE );
+				$dbh->ping();
 				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
 					->JOIN( self::TABLE_TEXT )
@@ -393,10 +395,6 @@ class ForumDumper {
 	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
 	 */
 	public function getTopics() {
-
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
 		if ( !empty( $this->topics ) ) {
 			return $this->topics;
 		}
@@ -406,6 +404,7 @@ class ForumDumper {
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
+			$dbh->ping();
 			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
 				->JOIN( self::TABLE_PAGE )
@@ -434,7 +433,6 @@ class ForumDumper {
 					}
 				);
 
-			$dbh->ping();
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
@@ -585,10 +583,6 @@ class ForumDumper {
 	 * +------------+-----------------+------+-----+---------+-------+
 	 */
 	public function getVotes() {
-
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
 		if ( !empty( $this->votes ) ) {
 			return $this->votes;
 		}
@@ -599,6 +593,7 @@ class ForumDumper {
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
+			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_VOTE )
 				->WHERE( 'article_id' )
@@ -612,7 +607,6 @@ class ForumDumper {
 					] );
 				} );
 
-			$dbh->ping();
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
