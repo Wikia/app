@@ -94,10 +94,6 @@ class ForumDumper {
 
 	private $titles = [];
 	private $pages = [];
-	private $revisions = [];
-	private $votes = [];
-	private $topics = [];
-	private $revObjects = [];
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -110,24 +106,8 @@ class ForumDumper {
 		$this->pages[$id] = $data;
 	}
 
-	public function addRevision( $data ) {
-		$this->revisions[] = $data;
-	}
-
-	public function addVote( $data ) {
-		$this->votes[] = $data;
-	}
-
-	public function addTopic( $data ) {
-		$this->topics[] = $data;
-	}
-
 	public function addTitle( $id, $title ) {
 		$this->titles[$id] = $title;
-	}
-
-	public function addRevObject( $id, $rev ) {
-		$this->revObjects[$id] = $rev;
 	}
 
 	/**
@@ -173,8 +153,8 @@ class ForumDumper {
 	 * | props    | blob    | NO   |     | NULL    |       |
 	 * +----------+---------+------+-----+---------+-------+
 	 */
-	public function getPages() {
-		if ( !empty( $this->pages ) ) {
+	public function getPages( $fh = null ) {
+		if ( $fh == null || !empty( $this->pages ) ) {
 			return $this->pages;
 		}
 
@@ -212,7 +192,7 @@ class ForumDumper {
 				->IN( $part )
 				->runLoop(
 					$dbh,
-					function ( $result ) use ( $pageIdsToOrder, $dbh ) {
+					function ( $result ) use ( $pageIdsToOrder, $dbh, $fh ) {
 
 						while ($row = $result->fetchObject()) {
 							// A few of these properties were removed and do not appear on some wikis
@@ -224,6 +204,17 @@ class ForumDumper {
 
 							$this->addPage(
 								$row->page_id,
+								[
+									"page_id" => $row->page_id,
+									"namespace" => $row->page_namespace,
+									"raw_title" => $row->page_title,
+									"latest_revision_id" => $row->page_latest
+								]
+							);
+
+							$insert = DumpForumData::createInsert(
+								'import_page',
+								self::COLUMNS_PAGE,
 								[
 									"page_id" => $row->page_id,
 									"namespace" => $row->page_namespace,
@@ -248,6 +239,8 @@ class ForumDumper {
 									"display_order" => $pageIdsToOrder[$row->page_id],
 								]
 							);
+
+							fwrite( $fh, $insert . "\n" );
 
 							$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 						}
@@ -292,11 +285,6 @@ class ForumDumper {
 	 * +-----------+------------------+------+-----+---------+----------------+
 	 */
 	public function getRevisions( $fh ) {
-
-		if ( !empty( $this->revisions ) ) {
-			return $this->revisions;
-		}
-
 		$revIds = [];
 
 		foreach ( $this->getPages() as $id => $data ) {
@@ -378,8 +366,6 @@ class ForumDumper {
 			} while ($queryResult === false && $tries-- > 0);
 
 		}
-
-		return $this->revisions;
 	}
 
 	/**
@@ -394,13 +380,11 @@ class ForumDumper {
 	 * | last_update | timestamp        | YES  |     | NULL              |                             |
 	 * +-------------+------------------+------+-----+-------------------+-----------------------------+
 	 */
-	public function getTopics() {
-		if ( !empty( $this->topics ) ) {
-			return $this->topics;
-		}
+	public function getTopics( $fh ) {
 
 		$pageIds = array_keys( $this->getPages() );
-		$pageIdsChunks = array_chunk($pageIds, 100);
+		$pageIdsChunks = array_chunk($pageIds, 500);
+		$topicsNumber = 0;
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
@@ -414,30 +398,37 @@ class ForumDumper {
 				->IN( $part )
 				->runLoop(
 					$dbh,
-					function ( &$topics, $row ) {
-						list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
+					function ( $result ) use ( $dbh, $fh, &$topicsNumber ) {
 
-						if ( $title && $url ) {
-							$id = count( $this->topics ) + 1;
+						while ($row = $result->fetchObject()) {
+							list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
 
-							$this->addTopic(
-								[
-									"topic_id" => $id,
-									"page_id" => $row->comment_id,
-									"article_id" => $row->page_id,
-									"article_title" => $title,
-									"relative_url" => $url
-								]
-							);
+							if ( $title && $url ) {
+								$topicsNumber++;
+								$id = $topicsNumber;
+
+								$insert = DumpForumData::createInsert(
+									'import_topics',
+									self::COLUMNS_TOPICS,
+									[
+										"topic_id" => $id,
+										"page_id" => $row->comment_id,
+										"article_id" => $row->page_id,
+										"article_title" => $title,
+										"relative_url" => $url
+									]
+								);
+								fwrite( $fh, $insert . "\n");
+							}
 						}
-					}
+
+						$dbh->freeResult( $result );
+					}, [], false
 				);
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
-
-		return $this->topics;
 	}
 
 	public function getTextAndTitle( $textId, $revId, $rev ) {
@@ -582,14 +573,10 @@ class ForumDumper {
 	 * | time       | datetime        | NO   |     | NULL    |       |
 	 * +------------+-----------------+------+-----+---------+-------+
 	 */
-	public function getVotes() {
-		if ( !empty( $this->votes ) ) {
-			return $this->votes;
-		}
+	public function getVotes( $fh ) {
 
 		$pageIds = array_keys( $this->getPages() );
-
-		$pageIdsChunks = array_chunk($pageIds, 100);
+		$pageIdsChunks = array_chunk($pageIds, 500);
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
@@ -598,38 +585,41 @@ class ForumDumper {
 				->FROM( self::TABLE_VOTE )
 				->WHERE( 'article_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( &$pages, $row ) {
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
 
-					$this->addVote( [
-						"page_id" => $row->article_id,
-						"user_identifier" => $row->user_id,
-						"timestamp" => $row->time,
-					] );
-				} );
+					while ($row = $result->fetchObject()) {
+						$insert = DumpForumData::createInsert(
+							'import_vote',
+							self::COLUMNS_VOTE,
+							[
+								"page_id" => $row->article_id,
+								"user_identifier" => $row->user_id,
+								"timestamp" => $row->time,
+							]
+						);
+						fwrite( $fh, $insert . "\n" );
+					}
+
+					$dbh->freeResult( $result );
+				}, [], false );
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
-
-		return $this->votes;
 	}
 
-	public function getFollows() {
+	public function getFollows( $fh ) {
 		$threadsNamesToIds = $this->getThreadNamesToIds();
 
 		$finder = new FollowsFinder( $threadsNamesToIds );
-		$follows = $finder->findFollows();
-
-		return $follows;
+		$finder->findFollows( $fh );
 	}
 
-	public function getWallHistory() {
+	public function getWallHistory( $fh ) {
 		$pageIdsInNamespace = $this->getPagesIds( NS_WIKIA_FORUM_BOARD );
 
 		$dumper = new WallHistoryFinder( $pageIdsInNamespace );
-		$history = $dumper->find();
-
-		return $history;
+		$dumper->find( $fh );
 	}
 
 	private function getPagesIds($namespace) {
@@ -662,46 +652,5 @@ class ForumDumper {
 		}
 
 		return [ $title->getText(), $title->getLocalURL() ];
-	}
-
-	public function clearRevisions() {
-		foreach ( $this->revisions as $data ) {
-			$data["revision_id"] = null;
-			$data["page_id"] = null;
-			$data["page_namespace"] = null;
-			$data["title"] = null;
-			$data["user_type"] = null;
-			$data["user_identifier"] = null;
-			$data["timestamp"] = null;
-			$data["is_minor_edit"] = null;
-			$data["is_deleted"] = null;
-			$data["length"] = null;
-			$data["parent_id"] = null;
-			$data["text_flags"] = null;
-			$data["raw_content"] = null;
-			$data["content"] = null;
-		}
-	}
-
-	public function clearPages() {
-		foreach ( $this->pages as $id => $data ) {
-			$data["is_redirect"] = null;
-			$data["is_new"] = null;
-			$data["touched"] = null;
-			$data["length"] = null;
-			$data["parent_page_id"] = null;
-			$data["parent_comment_id"] = null;
-			$data["last_child_comment_id"] = null;
-			$data["archived_ind"] = null;
-			$data["deleted_ind"] = null;
-			$data["removed_ind"] = null;
-			$data["locked_ind"] = null;
-			$data["protected_ind"] = null;
-			$data["sticky_ind"] = null;
-			$data["first_revision_id"] = null;
-			$data["last_revision_id"] = null;
-			$data["comment_timestamp"] = null;
-			$data["display_order"] = null;
-		}
 	}
 }

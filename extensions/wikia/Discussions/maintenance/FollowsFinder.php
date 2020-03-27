@@ -3,6 +3,8 @@
 
 namespace Discussions;
 
+use DumpForumData;
+
 class FollowsFinder {
 
 	const TABLE_THREAD_WATCHER = 'watchlist';
@@ -16,14 +18,9 @@ class FollowsFinder {
 	];
 
 	private $threadNameToId;
-	private $follows = [];
 
 	public function __construct( $threadNameToId ) {
 		$this->threadNameToId = $threadNameToId;
-	}
-
-	public function addFollow( $data ) {
-		$this->follows[] = $data;
 	}
 
 	/**
@@ -38,42 +35,47 @@ class FollowsFinder {
 	 * | wl_wikia_addedtimestamp  | timestamp        | YES  | MUL | CURRENT_TIMESTAMP |       |
 	 * +--------------------------+------------------+------+-----+-------------------+-------+
 	 */
-	public function findFollows() {
-
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
+	public function findFollows( $fh ) {
 		$pageTitles = array_keys( $this->threadNameToId );
 		$pageTitlesChunks = array_chunk($pageTitles, 100);
 
 		$dbh = wfGetDB( DB_SLAVE );
+		$dbh->ping();
 
 		if (!$dbh->tableExists(self::TABLE_THREAD_WATCHER)) {
-			return $this->follows;
+			return [];
 		}
 
 		foreach($pageTitlesChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
-
+			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_THREAD_WATCHER )
 				->WHERE( 'wl_namespace' )
 				->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
 				->AND_( 'wl_title' )
 				->IN( $part )
-				->runLoop( $dbh, function ( &$follows, $row ) {
-					$this->addFollow([
-						self::FOLLOWER_ID => $row->wl_user,
-						self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
-					]);
-				} );
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
 
-			$dbh->ping();
+					while ($row = $result->fetchObject()) {
+						$insert = DumpForumData::createInsert(
+							'import_follows',
+							self::COLUMNS_FOLLOWS,
+							[
+								self::FOLLOWER_ID => $row->wl_user,
+								self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
+							]
+						);
+						fwrite( $fh, $insert . "\n");
+					}
+
+					$dbh->freeResult( $result );
+				}, [], false );
+
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
 
-		return $this->follows;
+		return [];
 	}
-
 }

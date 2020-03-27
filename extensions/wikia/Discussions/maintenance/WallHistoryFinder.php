@@ -2,10 +2,11 @@
 
 namespace Discussions;
 
+use DumpForumData;
+
 class WallHistoryFinder {
 
 	const TABLE_WALL_HISTORY = 'wall_history';
-	const TABLE_PAGE = 'page';
 
 	const COLUMNS = [
 		'revision_id',
@@ -16,14 +17,9 @@ class WallHistoryFinder {
 		'post_user_id',
 	];
 	private $pageIdsInNamespace;
-	private $history = [];
 
 	public function __construct( $pageIdsInNamespace ) {
 		$this->pageIdsInNamespace = $pageIdsInNamespace;
-	}
-
-	public function addHistory($data) {
-		$this->history[] = $data;
 	}
 
 	/**
@@ -60,35 +56,40 @@ class WallHistoryFinder {
 	 * | page_len          | int(10) unsigned    | NO   | MUL | NULL           |                |
 	 * +-------------------+---------------------+------+-----+----------------+----------------+
 	 */
-	public function find() {
-
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
-		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 100);
+	public function find( $fh ) {
+		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 500);
 
 		foreach ($pageIdsChunks as $part) {
 			$dbh = wfGetDB( DB_SLAVE );
+			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
 				->FROM( self::TABLE_WALL_HISTORY )
 				->WHERE( 'parent_page_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( &$entries, $row ) {
-					$this->addHistory([
-						'revision_id' => $row->revision_id,
-						'comment_id' => $row->comment_id,
-						'event_date' => $row->event_date,
-						'action' => $row->action,
-						'is_reply' => $row->is_reply,
-						'post_user_id' => $row->post_user_id,
-					]);
-				} );
-			$dbh->ping();
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
+
+					while ($row = $result->fetchObject()) {
+						$insert = DumpForumData::createInsert(
+							'import_history',
+							self::COLUMNS,
+							[
+								'revision_id' => $row->revision_id,
+								'comment_id' => $row->comment_id,
+								'event_date' => $row->event_date,
+								'action' => $row->action,
+								'is_reply' => $row->is_reply,
+								'post_user_id' => $row->post_user_id,
+							]
+						);
+						fwrite( $fh, $insert . "\n");
+					}
+
+					$dbh->freeResult( $result );
+				}, [], false );
+
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
-
-		return $this->history;
 	}
 
 }

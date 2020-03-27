@@ -76,115 +76,44 @@ class DumpForumData extends Maintenance {
 	}
 
 	private function dumpPages() {
-		$pages = $this->dumper->getPages();
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
-
-		foreach ( $pages as $id => $data ) {
-			$insert = $this->createInsert(
-				'import_page',
-				Discussions\ForumDumper::COLUMNS_PAGE,
-				$data
-			);
-
-			fwrite( $this->fh, $insert . "\n" );
-		}
-
+		$this->dumper->getPages( $this->fh );
 		fclose( $this->fh );
-		$this->dumper->clearPages();
 	}
 
 	private function dumpRevisions() {
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$revisions = $this->dumper->getRevisions( $this->fh );
-
-//		$this->output("Saving to file!");
-
-//		foreach ( $revisions as $data ) {
-//			$insert = $this->createInsert(
-//				'import_revision',
-//				Discussions\ForumDumper::COLUMNS_REVISION,
-//				$data
-//			);
-//			fwrite( $this->fh, $insert . "\n" );
-//		}
-
+		$this->dumper->getRevisions( $this->fh );
 		fclose( $this->fh );
-//		$this->dumper->clearRevisions();
 	}
 
 	private function dumpVotes() {
-		$votes = $this->dumper->getVotes();
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
-
-		foreach ( $votes as $data ) {
-			$insert = $this->createInsert(
-				'import_vote',
-				Discussions\ForumDumper::COLUMNS_VOTE,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n" );
-		}
-
+		$this->dumper->getVotes( $this->fh );
 		fclose( $this->fh );
 	}
 
 	private function dumpFollows() {
-		$follows = $this->dumper->getFollows();
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
-
-		foreach ( $follows as $data ) {
-			$insert = $this->createInsert(
-				'import_follows',
-				Discussions\FollowsFinder::COLUMNS_FOLLOWS,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n");
-		}
-
+		$this->dumper->getFollows( $this->fh );
 		fclose( $this->fh );
 	}
 
 	private function dumpWallHistory() {
 
-		$history = $this->dumper->getWallHistory();
-
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
-
-		foreach ( $history as $data ) {
-			$insert = $this->createInsert(
-				'import_history',
-				Discussions\WallHistoryFinder::COLUMNS,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n");
-		}
-
+		$this->dumper->getWallHistory( $this->fh );
 		fclose( $this->fh );
 	}
 
 	private function dumpTopics() {
-		$topics = $this->dumper->getTopics();
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
-
-		foreach ( $topics as $data ) {
-			$insert = $this->createInsert(
-				'import_topics',
-				Discussions\ForumDumper::COLUMNS_TOPICS,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n");
-		}
-
+		$this->dumper->getTopics( $this->fh );
 		fclose( $this->fh );
 	}
 
