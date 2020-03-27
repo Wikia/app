@@ -117,7 +117,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	/**
 	 * @return bool
 	 */
-	protected function closeConnection() {
+	public function closeConnection() {
 		return $this->mConn->close();
 	}
 
