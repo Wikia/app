@@ -197,9 +197,6 @@ class ForumDumper {
 		$dbh->closeConnection();
 		wfGetLB( false )->closeConnection( $dbh );
 
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
 		$pageIds = array_keys( $pageIdsToOrder );
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
 
@@ -257,7 +254,6 @@ class ForumDumper {
 					}, [], false
 				);
 
-			$dbh->ping();
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
 		}
@@ -295,9 +291,6 @@ class ForumDumper {
 	 */
 	public function getRevisions() {
 
-		$dbh = wfGetDB( DB_SLAVE );
-		$dbh->ping();
-
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
 		}
@@ -308,13 +301,14 @@ class ForumDumper {
 			$revIds[] = $data['latest_revision_id'];
 		}
 
-		$chunks = array_chunk($revIds, 1000);
+		$chunks = array_chunk($revIds, 500);
+		$chunksNumber = count( $chunks );
 
 		$currentBatch = 1;
 
 		foreach ($chunks as $part) {
 
-			WikiaLogger::instance()->info( "Batch ".$currentBatch." of ".count( $chunks ) );
+			WikiaLogger::instance()->info( "Batch " . $currentBatch . " of " . $chunksNumber );
 			$currentBatch++;
 
 			$tries = 3;
@@ -371,7 +365,6 @@ class ForumDumper {
 						false, false
 					);
 
-				$dbh->ping();
 				$dbh->closeConnection();
 				wfGetLB( false )->closeConnection( $dbh );
 
