@@ -3,6 +3,7 @@
 namespace Discussions;
 
 use Article;
+use DumpForumData;
 use Title;
 use \Wikia\Logger\WikiaLogger;
 
@@ -289,7 +290,7 @@ class ForumDumper {
 	 * | old_flags | tinyblob         | NO   |     | NULL    |                |
 	 * +-----------+------------------+------+-----+---------+----------------+
 	 */
-	public function getRevisions() {
+	public function getRevisions( $fh ) {
 
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
@@ -324,21 +325,22 @@ class ForumDumper {
 					->IN( $part )
 					->runLoop(
 						$dbh,
-						function ( $result ) use ( $dbh ) {
+						function ( $result ) use ( $dbh, $fh ) {
 
 							while ($row = $result->fetchObject()) {
 								$rev = \Revision::newFromRow( $row );
-								$this->addRevObject( $row->rev_id, $rev );
 
 								list(
 									$parsedText, $plainText, $title
 									) =
-									$this->getTextAndTitle( $row->rev_page, $row->rev_id );
+									$this->getTextAndTitle( $row->rev_page, $row->rev_id, $rev );
 
 								$pages = $this->getPages();
 								$curPage = $pages[$row->rev_page];
 
-								$this->addRevision(
+								$insert = DumpForumData::createInsert(
+									'import_revision',
+									self::COLUMNS_REVISION,
 									[
 										"revision_id" => $row->rev_id,
 										"page_id" => $row->rev_page,
@@ -356,8 +358,7 @@ class ForumDumper {
 										"content" => $parsedText,
 									]
 								);
-
-								$this->addRevObject( $row->rev_id, null );
+								fwrite( $fh, $insert . "\n" );
 							}
 
 							$dbh->freeResult( $result );
@@ -441,7 +442,7 @@ class ForumDumper {
 		return $this->topics;
 	}
 
-	public function getTextAndTitle( $textId, $revId ) {
+	public function getTextAndTitle( $textId, $revId, $rev ) {
 		$tries = 3;
 		$articleComment = false;
 		do {
@@ -452,8 +453,8 @@ class ForumDumper {
 			}
 		} while( $articleComment === false && $tries-- > 0);
 
-		$articleComment->mFirstRevision = $this->revObjects[$revId];
-		$articleComment->mLastRevision = $this->revObjects[$revId];
+		$articleComment->mFirstRevision = $rev;
+		$articleComment->mLastRevision = $rev;
 		$articleComment->mLastRevId = $revId;
 		$articleComment->mFirstRevId = $revId;
 

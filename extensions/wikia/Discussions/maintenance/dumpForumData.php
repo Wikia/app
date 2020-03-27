@@ -96,22 +96,23 @@ class DumpForumData extends Maintenance {
 	}
 
 	private function dumpRevisions() {
-		$revisions = $this->dumper->getRevisions();
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output("Saving to file!");
+		$revisions = $this->dumper->getRevisions( $this->fh );
 
-		foreach ( $revisions as $data ) {
-			$insert = $this->createInsert(
-				'import_revision',
-				Discussions\ForumDumper::COLUMNS_REVISION,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n" );
-		}
+//		$this->output("Saving to file!");
+
+//		foreach ( $revisions as $data ) {
+//			$insert = $this->createInsert(
+//				'import_revision',
+//				Discussions\ForumDumper::COLUMNS_REVISION,
+//				$data
+//			);
+//			fwrite( $this->fh, $insert . "\n" );
+//		}
 
 		fclose( $this->fh );
-		$this->dumper->clearRevisions();
+//		$this->dumper->clearRevisions();
 	}
 
 	private function dumpVotes() {
@@ -187,7 +188,7 @@ class DumpForumData extends Maintenance {
 		fclose( $this->fh );
 	}
 
-	private function createInsert( $table, $cols, $data ) {
+	public static function createInsert( $table, $cols, $data ) {
 		$db = wfGetDB( DB_SLAVE );
 
 		$insert = "INSERT INTO $table (`site_id`, " .
