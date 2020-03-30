@@ -60,7 +60,7 @@ class WallHistoryFinder {
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = wfGetDB( DB_SLAVE );
+			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
 				->FROM( self::TABLE_WALL_HISTORY )

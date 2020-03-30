@@ -161,7 +161,7 @@ class ForumDumper {
 		$pageIdsToOrder = [];
 
 		$display_order = 0;
-		$dbh = wfGetDB( DB_SLAVE );
+		$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 		( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
@@ -182,7 +182,7 @@ class ForumDumper {
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
 
 		foreach ( $pageIdsChunks as $part ) {
-			$dbh = wfGetDB( DB_SLAVE );
+			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
 				->FROM( self::TABLE_PAGE )
@@ -305,7 +305,7 @@ class ForumDumper {
 			$queryResult = null;
 
 			do {
-				$dbh = wfGetDB( DB_SLAVE );
+				$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 				$dbh->ping();
 				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
@@ -387,7 +387,7 @@ class ForumDumper {
 		$topicsNumber = 0;
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = wfGetDB( DB_SLAVE );
+			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
@@ -579,7 +579,7 @@ class ForumDumper {
 		$pageIdsChunks = array_chunk($pageIds, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = wfGetDB( DB_SLAVE );
+			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_VOTE )

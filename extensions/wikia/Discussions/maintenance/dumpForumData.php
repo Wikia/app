@@ -5,6 +5,8 @@
  * @ingroup Maintenance
  */
 
+use Wikia\Logger\WikiaLogger;
+
 error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
@@ -141,6 +143,27 @@ class DumpForumData extends Maintenance {
 		$insert .= ');';
 
 		return $insert;
+	}
+
+	public static function getDBSafe( $db ) {
+
+		$tries = 0;
+		$acquired = false;
+
+		$dbh = null;
+
+		do {
+			try {
+				$dbh = wfGetDB( $db );
+				$acquired = true;
+			} catch ( MWException $e ) {
+				$tries++;
+				sleep( 1 );
+				WikiaLogger::instance()->warning( 'Cannot obtain db connection, reattempting: '.$tries );
+			}
+		} while ( !$acquired && $tries <= 3);
+
+		return $dbh;
 	}
 }
 

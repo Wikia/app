@@ -47,7 +47,7 @@ class FollowsFinder {
 		}
 
 		foreach($pageTitlesChunks as $part) {
-			$dbh = wfGetDB( DB_SLAVE );
+			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_THREAD_WATCHER )
