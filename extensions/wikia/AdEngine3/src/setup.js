@@ -122,6 +122,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
+	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
 
