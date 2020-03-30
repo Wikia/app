@@ -68,14 +68,18 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			langForAds = lang.substr(0, 2),
 			playerSetup = {
 				advertising: {
+					admessage: i18n.admessage,
 					autoplayadsmuted: willAutoplay,
 					client: 'googima',
-					vpaidcontrols: true,
-					admessage: i18n.admessage,
 					cuetext: i18n.cuetext,
+					loadVideoTimeout: 16000,
+					requestTimeout: 11000,
+					setLocale: langForAds,
 					skipmessage: i18n.skipmessage,
 					skiptext: i18n.skiptext,
-					setLocale: langForAds
+					truncateMacros: false,
+					vastLoadTimeout: 11000,
+					vpaidcontrols: true
 				},
 				autostart: willAutoplay && !document.hidden,
 				description: options.videoDetails.description,
