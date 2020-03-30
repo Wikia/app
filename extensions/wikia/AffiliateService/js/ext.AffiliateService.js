@@ -132,7 +132,7 @@ require([
 
 		getStartHeight: function () {
 			if (AffiliateService.$infoBox.length === 0) {
-				return 2000; // when no infobox, fall back to at least 2000 pixels down the page
+				return 0;
 			}
 
 			var infoBoxOffset = AffiliateService.$infoBox.offset();
