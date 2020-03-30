@@ -132,7 +132,7 @@ require([
 
 		getStartHeight: function () {
 			if (AffiliateService.$infoBox.length === 0) {
-				return 0;
+				return 2000; // when no infobox, fall back to at least 2000 pixels down the page
 			}
 
 			var infoBoxOffset = AffiliateService.$infoBox.offset();
@@ -416,7 +416,11 @@ require([
 		},
 
 		init: function () {
-			AffiliateService.$infoBox = $('.portable-infobox').first();
+			if ($('.portable-infobox').length > 0) {
+				AffiliateService.$infoBox = $('.portable-infobox').first();
+			} else if ($('.infobox').length > 0) {
+				AffiliateService.$infoBox = $('.infobox').first();
+			}
 
 			if (!AffiliateService.canDisplayUnit()) {
 				return;
