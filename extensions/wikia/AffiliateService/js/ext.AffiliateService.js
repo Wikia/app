@@ -416,7 +416,11 @@ require([
 		},
 
 		init: function () {
-			AffiliateService.$infoBox = $('.portable-infobox').first();
+			if ($('.portable-infobox').length > 0) {
+				AffiliateService.$infoBox = $('.portable-infobox').first();
+			} else if ($('.infobox').length > 0) {
+				AffiliateService.$infoBox = $('.infobox').first();
+			}
 
 			if (!AffiliateService.canDisplayUnit()) {
 				return;

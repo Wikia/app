@@ -94,7 +94,7 @@
 
     &__logo {
         bottom: 12px;
-        height: 34px;
+        height: 34px !important; // some communities have extra styles
         position: absolute;
         right: 18px;
 
