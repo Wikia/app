@@ -90,15 +90,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$response = $createNewWikiController->getResponse();
 
-		if ($testData['status'] === 'ok') {
-			$this->assertEquals( 201, $response->getCode(),
-				'Method responded with HTTP 201 Created' );
-			$this->assertEquals( $taskId, $response->getVal( 'task_id' ), 'Task ID is emitted in JSON response' );
-		}
-		else {
-			$this->assertEquals( $testData['status'], $response->getVal(CreateNewWikiController::STATUS_FIELD) );
-			$this->assertEquals( $testData['expectedCode'], $response->getCode() );
-		}
+		$this->assertEquals( 404, $response->getCode(),
+			'Method responded with HTTP 404 Not found' ); // As of now we expect people to not be able to create
+		// old wikis, unless they are staff
+
 	}
 
 	public function getCreateWikiDataProvider() {

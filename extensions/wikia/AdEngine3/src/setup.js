@@ -42,7 +42,7 @@ async function updateWadContext() {
 	context.set('options.wad.enabled', instantConfig.get('icBabDetection'));
 
 	// showAds is undefined by default
-	var serviceCanBeEnabled = !context.get('custom.noExternals') &&
+	const serviceCanBeEnabled = !context.get('custom.noExternals') &&
 		context.get('state.showAds') !== false &&
 		!window.wgUserName;
 
@@ -69,7 +69,6 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('state.showAds', showAds);
 	context.set('custom.noExternals', window.wgNoExternals || utils.queryString.isUrlParamSet('noexternals'));
-	context.set('custom.hasFeaturedVideo', !!context.get('wiki.targeting.hasFeaturedVideo'));
 	context.set('custom.hiviLeaderboard', instantConfig.get('icHiViLeaderboardSlot'));
 
 	if (context.get('wiki.opts.isAdTestWiki') && context.get('wiki.targeting.testSrc')) {
@@ -81,10 +80,10 @@ async function setupAdContext(wikiContext, consents) {
 	instantConfig.get('icLABradorTest');
 
 	context.set('slots', slots.getContext());
+	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
+	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
-	context.set('wiki.targeting.hasIncontentPlayer', slots.injectIncontentPlayer());
-
-	if (wikiContext.targeting.hasFeaturedVideo) {
+	if (context.get('custom.hasFeaturedVideo')) {
 		context.set('slots.incontent_boxad_1.defaultSizes', [300, 250]);
 	} else {
 		slots.addSlotSize(context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard', [3, 3]);
@@ -123,6 +122,9 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
+	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
+
+	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -147,9 +149,9 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
-	context.set('services.permutive.enabled', instantConfig.get('icPermutive'));
+	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 
-	if(instantConfig.get('icTaxonomyComicsTag')) {
+	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
 		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
 		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
@@ -169,7 +171,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('icFMRRotatorDelay', 10000));
 
 	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
 
@@ -186,12 +187,12 @@ async function setupAdContext(wikiContext, consents) {
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
 
-		if (!instantConfig.get('icPrebidLkqdOutstream')) {
-			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
-		}
-
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
+		}
+
+		if (!instantConfig.get('icPrebidIndexExchangeFeatured')) {
+			context.remove('bidders.prebid.indexExchange.slots.featured');
 		}
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
@@ -292,7 +293,7 @@ function getReasonForNoAds() {
 	return reasons.length > 0 ? reasons[0] : null;
 }
 
-function init() {
+function init(inhibitors) {
 	const engine = new AdEngine();
 
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
@@ -300,7 +301,7 @@ function init() {
 		context.onChange(`slots.${slot.getSlotName()}.videoDepth`, () => slots.setupSlotParameters(slot));
 	});
 
-	engine.init();
+	engine.init(inhibitors);
 
 	return engine;
 }

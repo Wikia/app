@@ -18,7 +18,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		WikiFactory::isUsed( false );
 		$wgExtensionFunctions = [];
 		$this->dbName = $wgDBname;
-		
+
 		// WikiFactoryLoader has side effects that initialize the global content language with a StubObject
 		// In tests, we must ensure that any previous value for this global is correctly restored
 		$this->oldContentLanguage = $wgContLang;
@@ -121,8 +121,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
-		string $expectedRedirect, array $server
+		string $expectedRedirect, string $expectedRedirCondition, array $server
 	) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 
@@ -132,43 +133,44 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		$headers = xdebug_get_headers();
 
 		$this->assertFalse( $result );
-		$this->assertContains( 'X-Redirected-By-WF: NotPrimary', $headers );
-		$this->assertContains( "Location: $expectedRedirect", $headers );
+		$this->assertContains( "X-Redirected-By-WF: $expectedRedirCondition", $headers,
+			'Required header not found in: ' . print_r( $headers, true ) );
+		$this->assertContains( "Location: $expectedRedirect", $headers, 'Required header not found in: ' . print_r( $headers, true ) );
 		$this->assertEquals( 301, http_response_code() );
 	}
 
 	public function provideRequestWithAlternativeDomain() {
-		yield [ 'http://test1.wikia.com/wiki/Foo', [
+		yield [ 'http://test1.wikia.com/wiki/Foo', 'AlternativeDomain', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'test1.wikicities.com',
 			'REQUEST_URI' => '/wiki/Foo',
 		] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [
+		yield [ 'http://test1.wikia.com/de/wiki/Bar', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'einetest.wikia.com',
 			'REQUEST_URI' => '/wiki/Bar',
 		] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [
+		yield [ 'http://test1.wikia.com/de/wiki/Bar', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'einetest.wikia.com',
 			'REQUEST_URI' => '/wiki/Bar',
 		] ];
-		yield [ 'http://test1.wikia.com/wiki/Test', [
+		yield [ 'http://test1.wikia.com/wiki/Test', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'test1.wikia.com',
 			'REQUEST_URI' => '/en/wiki/Test',
 		] ];
-		yield [ 'http://poznan.wikia.com/wiki/Strona_główna', [
+		yield [ 'http://poznan.wikia.com/wiki/Strona_główna', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'poznan.wikia.com',
 			'REQUEST_URI' => '/pl/wiki/Strona_główna',
 		] ];
-		yield [ 'http://poznan.wikia.com/', [
+		yield [ 'http://poznan.wikia.com/', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'poznan.wikia.com',
 			'REQUEST_URI' => '/pl',
 		] ];
-		yield [ 'http://poznan.wikia.com/', [
+		yield [ 'http://poznan.wikia.com/', 'NotPrimary', [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'poznan.wikia.com',
 			'REQUEST_URI' => '/pl/',
@@ -185,6 +187,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testRedirectsToNotValidPageWhenNoEntryForDomain(
 		array $server
 	) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
@@ -220,6 +223,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsMarkedForClosing( array $server ) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
@@ -278,6 +282,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsFunctioningAsARedirect( array $server ) {
+		$this->mockGlobalVariable( 'wgCommandLineMode', false );
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 

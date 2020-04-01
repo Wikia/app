@@ -11,7 +11,7 @@ import { bucketizeViewportHeight } from './buicketizer';
 import pageTracker from '../tracking/page-tracker';
 
 function setupProjects() {
-	if (context.get('wiki.targeting.hasFeaturedVideo')) {
+	if (context.get('custom.hasFeaturedVideo')) {
 		billTheLizard.projectsHandler.enable('queen_of_hearts');
 		billTheLizard.projectsHandler.enable('vcr');
 	}
