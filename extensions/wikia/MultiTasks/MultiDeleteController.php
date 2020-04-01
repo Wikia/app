@@ -13,7 +13,7 @@ final class MultiDeleteController extends WikiaController {
 	private const SELECTED = 'list';
 
 	public function allowsExternalRequests() {
-		return false;
+		return true;
 	}
 
 	public function multiDeletePages() {
@@ -37,12 +37,31 @@ final class MultiDeleteController extends WikiaController {
 			empty( $pagesToDelete ) ||
 			empty( $userId ) ||
 			empty( $reason ) ||
-			empty( $firstWikiId ) ||
+			!isset( $firstWikiId ) ||
 			empty( $lastWikiId ) ||
 			empty( $runOnType ) ||
 			empty( $runOnValue )
 		) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				sprintf( "%s", __METHOD__, ),
+				[
+					'$pagesToDelete' => $pagesToDelete,
+					'$userId' => $userId,
+					'$reason' => $reason,
+					'$firstWikiId' => $firstWikiId,
+					'$firstWikiId1' => isset( $firstWikiId ),
+					'$lastWikiId' => $lastWikiId,
+					'$runOnType' => $runOnType,
+					'$runOnValue' => $runOnValue,
+					'data' => empty( $pagesToDelete ) ||
+							  empty( $userId ) ||
+							  empty( $reason ) ||
+							  !isset( $firstWikiId ) ||
+							  empty( $lastWikiId ) ||
+							  empty( $runOnType ) ||
+							  empty( $runOnValue )
+				] );
 			return;
 		}
 
