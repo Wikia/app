@@ -1,9 +1,8 @@
 <?php
 
-use Discussions\ForumDumper;
-
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
-require_once( __DIR__ . 'ForumDumper.php' );
+
+//cat wikis.txt | while read line ; do SERVER_ID=$line php extensions/wikia/Discussions/maintenance/dumpForumSizes.php ; done > result.txt
 
 class ForumSize extends Maintenance {
 
@@ -25,7 +24,7 @@ class ForumSize extends Maintenance {
 		)
 			->FROM( "page" )
 			->WHERE( 'page_namespace' )
-			->IN( ForumDumper::FORUM_NAMEPSACES )
+			->IN( 2000, 2001 )
 			->runLoop(
 				$dbr,
 				function ( &$data, $row ) {
