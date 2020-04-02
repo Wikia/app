@@ -4605,6 +4605,31 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Get flag if user is <16 y.o. for COPPA.
+	 *
+	 * @see ADEN-10054
+	 *
+	 * @return Boolean User is below 16 y.o.
+	 */
+	public function isSubjectToCoppa() { // TODO: Unit tests; Is it cached? If yes, is the cache properly cleared?
+		if ($this->mBirthDate === null) {
+			return false;
+		}
+		try {
+			$birthDate = new DateTime($this->mBirthDate);
+		} catch (Exception $e) {
+			return false;
+		}
+		if ($birthDate === false) {
+			return false;
+		}
+		$now = new DateTime();
+		$diff = $now->diff($birthDate, true);
+
+		return $diff->y < 16;
+	}
+
+	/**
 	 * Returns a simple representation of user object.
 	 *
 	 * @return array
