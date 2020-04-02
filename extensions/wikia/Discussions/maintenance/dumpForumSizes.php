@@ -19,7 +19,7 @@ class ForumSize extends Maintenance {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$data = ( new \WikiaSQL() )->SELECT(
+		$pages = ( new \WikiaSQL() )->SELECT(
 			"count(*) as i"
 		)
 			->FROM( "page" )
@@ -32,7 +32,56 @@ class ForumSize extends Maintenance {
 				}
 			);
 
-		echo("Result: " . $data[0] . " for " . $wgCityId . ": " . $wgSitename . "\n");
+		$votes = ( new \WikiaSQL() )->SELECT(
+			"count(*) as i"
+		)
+			->FROM( "page_vote" )
+			->JOIN( "page" )
+			->ON( "article_id", "page_id" )
+			->WHERE( 'page_namespace' )
+			->IN( 2000, 2001 )
+			->runLoop(
+				$dbr,
+				function ( &$data, $row ) {
+					$data[] = $row->i;
+				}
+			);
+
+		$topics = ( new \WikiaSQL() )->SELECT(
+			"count(*) as i"
+		)
+			->FROM( "wall_related_pages" )
+			->JOIN( "page" )
+			->AS_( 'p' )
+			->ON( 'comment_id', 'p.page_id' )
+			->WHERE( 'p.page_namespace' )
+			->IN( 2000, 2001 )
+			->runLoop(
+				$dbr,
+				function ( &$data, $row ) {
+					$data[] = $row->i;
+				}
+			);
+
+		$history = ( new \WikiaSQL() )->SELECT(
+			"count(*) as i"
+		)
+			->FROM( "wall_history" )
+			->JOIN( "page" )
+			->AS_( 'p' )
+			->ON( 'parent_page_id', 'p.page_id' )
+			->WHERE( 'p.page_namespace' )
+			->IN( 2000 )
+			->runLoop(
+				$dbr,
+				function ( &$data, $row ) {
+					$data[] = $row->i;
+				}
+			);
+
+		$total = $pages[0] * 2 + $votes[0] + $topics[0] + $history[0];
+
+		echo("Result: " . $total . " inserts for " . $wgCityId . ": " . $wgSitename . "\n");
 	}
 }
 
