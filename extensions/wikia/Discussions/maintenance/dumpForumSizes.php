@@ -32,7 +32,7 @@ class ForumSize extends Maintenance {
 				}
 			);
 
-		echo("Result;${wgCityId};${wgSitename};${$data[0]};\n");
+		echo("Result: " . $data[0] . " for " . $wgCityId . ": " . $wgSitename . "\n");
 	}
 }
 
