@@ -110,6 +110,10 @@ class ForumDumper {
 		$this->titles[$id] = $title;
 	}
 
+	public function removeTitle( $id ) {
+		$this->titles[ $id ] = null;
+	}
+
 	/**
 	 * Page
 	 * +-------------------+---------------------+------+-----+----------------+----------------+
@@ -241,6 +245,8 @@ class ForumDumper {
 							);
 
 							fwrite( $fh, $insert . "\n" );
+							fflush( $fh );
+							unset( $insert );
 
 							$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 						}
@@ -251,6 +257,7 @@ class ForumDumper {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
 		}
 
 		return $this->pages;
@@ -349,6 +356,8 @@ class ForumDumper {
 									]
 								);
 								fwrite( $fh, $insert . "\n" );
+								fflush( $fh );
+								unset( $insert );
 							}
 
 							$dbh->freeResult( $result );
@@ -419,6 +428,8 @@ class ForumDumper {
 									]
 								);
 								fwrite( $fh, $insert . "\n");
+								fflush( $fh );
+								unset( $insert );
 							}
 						}
 
@@ -483,6 +494,8 @@ class ForumDumper {
 		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
 			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
 		}
+
+		$this->removeTitle( $textId );
 
 		return [ $parsedText, $rawText, $title ];
 	}
@@ -598,6 +611,8 @@ class ForumDumper {
 							]
 						);
 						fwrite( $fh, $insert . "\n" );
+						fflush( $fh );
+						unset( $insert );
 					}
 
 					$dbh->freeResult( $result );

@@ -67,6 +67,8 @@ class FollowsFinder {
 							]
 						);
 						fwrite( $fh, $insert . "\n");
+						fflush( $fh );
+						unset( $insert );
 					}
 
 					$dbh->freeResult( $result );
