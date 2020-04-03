@@ -233,8 +233,8 @@ class ForumDumper {
 									"locked_ind" => $row->locked ?: 0,
 									"protected_ind" => $row->protected ?: 0,
 									"sticky_ind" => $row->sticky ?: 0,
-									"first_revision_id" => $row->last_rev_id, //we want just one revision
-									"last_revision_id" => $row->last_rev_id,
+									"first_revision_id" => $row->page_latest, //we want just one revision
+									"last_revision_id" => $row->page_latest,
 									"comment_timestamp" => $row->last_touched,
 									"display_order" => $pageIdsToOrder[$row->page_id],
 								]
