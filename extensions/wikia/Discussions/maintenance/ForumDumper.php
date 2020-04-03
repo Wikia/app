@@ -354,10 +354,13 @@ class ForumDumper {
 										"raw_content" => $plainText,
 										"content" => $parsedText,
 									]
-								);
-								fwrite( $fh, $insert . "\n" );
+								) . "\n";
+								fwrite( $fh, $insert) ;
 								fflush( $fh );
 								unset( $insert );
+								unset( $parsedText );
+								unset( $plainText );
+								unset( $title );
 							}
 
 							$dbh->freeResult( $result );
