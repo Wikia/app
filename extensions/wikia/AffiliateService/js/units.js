@@ -148,7 +148,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			country: ['FR'],
 			heading: 'Regardez tous vos Disney favoris, au même endroit.',
 			subheading: 'Jours d’Essai Gratuits',
-			link: 'https://disneyplus.bn5x.net/c/1947570/772699/9358?subId1=generic-uk&subId2=launch&subId3=ad-fandom&sharedid=desktop',
+			link: 'https://disneyplus.bn5x.net/c/1947570/772639/9358?subId1=generic-fr&subId2=launch&subId3=ad-fandom&sharedid=desktop',
 			image: 'https://static.wikia.nocookie.net/7c17463b-98da-4119-a558-a9a6ab84b7bf/',
 		},
 		{
