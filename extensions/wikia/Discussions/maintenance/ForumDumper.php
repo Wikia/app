@@ -111,7 +111,7 @@ class ForumDumper {
 	}
 
 	public function removeTitle( $id ) {
-		$this->titles[ $id ] = null;
+		unset( $this->titles[ $id ] );
 	}
 
 	/**
@@ -242,9 +242,9 @@ class ForumDumper {
 									"comment_timestamp" => $row->last_touched,
 									"display_order" => $pageIdsToOrder[$row->page_id],
 								]
-							);
+							) . "\n";
 
-							fwrite( $fh, $insert . "\n" );
+							fwrite( $fh, $insert );
 							fflush( $fh );
 							unset( $insert );
 
