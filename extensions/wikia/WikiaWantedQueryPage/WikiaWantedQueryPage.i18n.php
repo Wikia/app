@@ -33,3 +33,7 @@ $messages['ru'] = [
 	'wantedquerypage-wantedpages-excludetitles' => 'Исключить заголовки',
 ];
 
+$messages['tr'] = [
+	'wantedquerypage-desc' => 'QueryPage tabanlı MediaWiki özel sayfalarının üzerine yazma uzantısı',
+	'wantedquerypage-wantedpages-excludetitles' => 'Başlıkları hariç tut',
+];
