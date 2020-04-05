@@ -191,6 +191,14 @@ $messages['sv'] = [
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 och $2 fler',
 ];
 
+$messages['tr'] = [
+	'wikiastyleguide-desc' => 'WikiaStyleGuide uzantısı',
+	'wikiastyleguide-dropdown-all' => 'Tümü',
+	'wikiastyleguide-dropdown-select-all' => 'Tümünü Seç',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 ve  $2 fazlası',
+	'wikiastyleguide-tooltip-icon-question-mark' => '?',
+];
+
 $messages['uk'] = [
 	'wikiastyleguide-desc' => 'ВікіяРозширенняГід по стилю',
 	'wikiastyleguide-dropdown-all' => 'Усі',
