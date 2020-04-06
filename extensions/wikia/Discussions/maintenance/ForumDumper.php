@@ -671,24 +671,4 @@ class ForumDumper {
 
 		return [ $title->getText(), $title->getLocalURL() ];
 	}
-
-	public function dumpPagesIds( $fh = null ) {
-
-		$dbh = DumpForumData::getDBSafe( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
-			->FROM( self::TABLE_PAGE )
-			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
-			->AS_( 'pp' )
-			->ON( 'page.page_id', 'pp.page_id' )
-			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
-			->WHERE( 'page_namespace' )
-			->IN( self::FORUM_NAMEPSACES )
-			->ORDER_BY( 'idx' )
-			->runLoop( $dbh, function ( &$pages, $row ) use ( $fh ) {
-				fwrite( $fh, $row->page_id . "\n" );
-			} );
-
-		$dbh->closeConnection();
-		wfGetLB( false )->closeConnection( $dbh );
-	}
 }

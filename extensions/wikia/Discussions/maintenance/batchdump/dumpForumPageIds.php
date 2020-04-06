@@ -8,11 +8,6 @@
 error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../../maintenance/Maintenance.php' );
-include_once( __DIR__ . '/../dumpForumData.php' );
-include_once( __DIR__ . '/../ForumDumper.php' );
-include_once( __DIR__ . '/../FollowsFinder.php' );
-include_once( __DIR__ . '/../WallHistoryFinder.php' );
-
 
 class DumpForumPageIds extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
@@ -33,11 +28,30 @@ class DumpForumPageIds extends Maintenance {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
-		$this->dumper = new Discussions\ForumDumper();
-		$this->dumper->dumpPagesIds( $this->fh );
+		$this->dumpPagesIds( $this->fh );
 		fclose( $this->fh );
 
 		$this->output( "Pages ids dumped!" );
+	}
+
+	public function dumpPagesIds( $fh = null ) {
+
+		$dbh = wfGetDB( DB_SLAVE );
+		( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
+			->FROM( "page" )
+			->LEFT_JOIN( "page_wikia_props" )
+			->AS_( 'pp' )
+			->ON( 'page.page_id', 'pp.page_id' )
+			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
+			->WHERE( 'page_namespace' )
+			->IN( 2000, 2001 )
+			->ORDER_BY( 'idx' )
+			->runLoop( $dbh, function ( &$pages, $row ) use ( $fh ) {
+				fwrite( $fh, $row->page_id . "\n" );
+			} );
+
+		$dbh->closeConnection();
+		wfGetLB( false )->closeConnection( $dbh );
 	}
 }
 
