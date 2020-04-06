@@ -22,7 +22,7 @@ class DumpForumPageIds extends Maintenance {
 
 	public function execute() {
 
-		$pageIdsName = $this->hasOption( 'pageids' ) ? $this->getOption( 'pageids' ) : "php://stdout";
+		$pageIdsName = $this->hasOption( 'pageids' ) ? $this->getArg( 0 ) : "php://stdout";
 		$pageIdsFh = fopen( $pageIdsName, 'w' );
 		if ( $pageIdsFh === false ) {
 			$this->error( "Unable to open file " . $pageIdsName, 1 );
@@ -32,7 +32,7 @@ class DumpForumPageIds extends Maintenance {
 		fclose( $pageIdsFh );
 		$this->output( "Pages ids dumped!" );
 
-		$this->outputName = $this->hasOption( 'out' ) ? $this->getOption( 'out' ) : "php://stdout";
+		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg( 1 ) : "php://stdout";
 		$this->fh = fopen( $this->outputName, 'w' );
 		if ( $this->fh === false ) {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
