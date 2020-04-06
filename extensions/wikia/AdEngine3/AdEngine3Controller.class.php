@@ -29,12 +29,18 @@ class AdEngine3Controller extends WikiaController {
 	}
 
 	public function postLog() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if( !$this->request->wasPosted() ) {
+			$this->response->setCode( 405 );
+			return;
+		}
+
 		\Wikia\Logger\WikiaLogger::instance()
-			->debug( 'AdEngine', [
-				'postLog' => 'true',
-				'message' => 'postLog test',
-				'vast' => $this->request->getVal('vast'),
-			]);
+			->debug(
+				'AdEngine log',
+				$this->context->getRequest()->getValues()
+			);
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 	}
