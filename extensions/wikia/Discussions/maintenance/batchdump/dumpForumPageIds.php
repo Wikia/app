@@ -8,6 +8,7 @@
 error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../../maintenance/Maintenance.php' );
+include_once( __DIR__ . '/../dumpForumData.php' );
 include_once( __DIR__ . '/../ForumDumper.php' );
 include_once( __DIR__ . '/../FollowsFinder.php' );
 include_once( __DIR__ . '/../WallHistoryFinder.php' );
