@@ -10,28 +10,37 @@ error_reporting(E_ALL);
 require_once( __DIR__ . '/../../../../../maintenance/Maintenance.php' );
 
 class DumpForumPageIds extends Maintenance {
-	/** @var  \Discussions\ForumDumper */
-	private $dumper;
 	private $fh;
 	private $outputName;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Dumps forum page ids';
-		$this->addArg( 'out', "Output file for page ids", $required = true );
+		$this->addArg( 'pageids', "Output file for page ids", $required = true );
+		$this->addArg( 'out', "Output file for INSERTS", $required = true );
 	}
 
 	public function execute() {
-		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
+
+		$pageIdsName = $this->hasOption( 'pageids' ) ? $this->getOption( 'pageids' ) : "php://stdout";
+		$pageIdsFh = fopen( $pageIdsName, 'w' );
+		if ( $pageIdsFh === false ) {
+			$this->error( "Unable to open file " . $pageIdsName, 1 );
+		}
+
+		$this->dumpPagesIds( $pageIdsFh );
+		fclose( $pageIdsFh );
+		$this->output( "Pages ids dumped!" );
+
+		$this->outputName = $this->hasOption( 'out' ) ? $this->getOption( 'out' ) : "php://stdout";
 		$this->fh = fopen( $this->outputName, 'w' );
 		if ( $this->fh === false ) {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
-		$this->dumpPagesIds( $this->fh );
+		$this->setConnectinoEncoding();
+		$this->clearImportTables();
 		fclose( $this->fh );
-
-		$this->output( "Pages ids dumped!" );
 	}
 
 	public function dumpPagesIds( $fh = null ) {
@@ -52,6 +61,19 @@ class DumpForumPageIds extends Maintenance {
 
 		$dbh->closeConnection();
 		wfGetLB( false )->closeConnection( $dbh );
+	}
+
+	private function setConnectinoEncoding() {
+		fwrite( $this->fh, "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;" );
+	}
+
+	private function clearImportTables() {
+		fwrite( $this->fh, "DELETE FROM import_page;\n" );
+		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
+		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
+		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
+		fwrite( $this->fh, "DELETE FROM import_history;\n" );
+		fwrite( $this->fh, "DELETE FROM import_topics;\n" );
 	}
 }
 
