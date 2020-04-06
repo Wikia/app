@@ -8,7 +8,7 @@ eval $command;
 eval pagesNumber=\$\("cat $2 | wc -l"\)
 echo "== Pages ids dumped: $pagesNumber"
 
-for i in $(seq 0 500 pagesNumber);
+for i in $(seq 0 500 $pagesNumber);
 do
   if [[ $((i + 500)) -gt "$pagesNumber" ]]
   then
