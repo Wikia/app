@@ -156,12 +156,13 @@ class ForumDumper {
 	 * | props    | blob    | NO   |     | NULL    |       |
 	 * +----------+---------+------+-----+---------+-------+
 	 */
-	public function getPages( $fh = null, array $pageIdsFixed = null, int $minIndex = -1 ) {
+	public function getPages( $fh = null, $pageIdsFixed = [], $minIndex = -1 ) {
 		if ( $fh == null || !empty( $this->pages ) ) {
 			return $this->pages;
 		}
 
 		$pageIdsToOrder = $this->getPageIdsDisplayOrder( $pageIdsFixed, $minIndex );
+		WikiaLogger::instance()->info( wfArrayToString( $pageIdsToOrder ) );
 
 		$pageIds = array_keys( $pageIdsToOrder );
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
@@ -179,7 +180,7 @@ class ForumDumper {
 					$dbh,
 					function ( $result ) use ( $pageIdsToOrder, $dbh, $fh ) {
 
-						while ($row = $result->fetchObject()) {
+						while ( $row = $result->fetchObject() ) {
 							// A few of these properties were removed and do not appear on some wikis
 							foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
 								if ( !property_exists( $row, $prop ) ) {
@@ -198,32 +199,32 @@ class ForumDumper {
 							);
 
 							$insert = DumpUtils::createInsert(
-								'import_page',
-								self::COLUMNS_PAGE,
-								[
-									"page_id" => $row->page_id,
-									"namespace" => $row->page_namespace,
-									"raw_title" => $row->page_title,
-									"is_redirect" => $row->page_is_redirect,
-									"is_new" => $row->page_is_new,
-									"touched" => $row->page_touched,
-									"latest_revision_id" => $row->page_latest,
-									"length" => $row->page_len,
-									"parent_page_id" => $row->parent_page_id,
-									"parent_comment_id" => $row->parent_comment_id,
-									"last_child_comment_id" => $row->last_child_comment_id,
-									"archived_ind" => $row->archived ?: 0,
-									"deleted_ind" => $row->deleted ?: 0,
-									"removed_ind" => $row->removed ?: 0,
-									"locked_ind" => $row->locked ?: 0,
-									"protected_ind" => $row->protected ?: 0,
-									"sticky_ind" => $row->sticky ?: 0,
-									"first_revision_id" => $row->page_latest, //we want just one revision
-									"last_revision_id" => $row->page_latest,
-									"comment_timestamp" => $row->last_touched,
-									"display_order" => $pageIdsToOrder[$row->page_id],
-								]
-							) . "\n";
+									'import_page',
+									self::COLUMNS_PAGE,
+									[
+										"page_id" => $row->page_id,
+										"namespace" => $row->page_namespace,
+										"raw_title" => $row->page_title,
+										"is_redirect" => $row->page_is_redirect,
+										"is_new" => $row->page_is_new,
+										"touched" => $row->page_touched,
+										"latest_revision_id" => $row->page_latest,
+										"length" => $row->page_len,
+										"parent_page_id" => $row->parent_page_id,
+										"parent_comment_id" => $row->parent_comment_id,
+										"last_child_comment_id" => $row->last_child_comment_id,
+										"archived_ind" => $row->archived ?: 0,
+										"deleted_ind" => $row->deleted ?: 0,
+										"removed_ind" => $row->removed ?: 0,
+										"locked_ind" => $row->locked ?: 0,
+										"protected_ind" => $row->protected ?: 0,
+										"sticky_ind" => $row->sticky ?: 0,
+										"first_revision_id" => $row->page_latest, //we want just one revision
+										"last_revision_id" => $row->page_latest,
+										"comment_timestamp" => $row->last_touched,
+										"display_order" => $pageIdsToOrder[$row->page_id],
+									]
+								) . "\n";
 
 							fwrite( $fh, $insert );
 							fflush( $fh );
@@ -233,12 +234,13 @@ class ForumDumper {
 						}
 
 						$dbh->freeResult( $result );
-					}, [], false
+					},
+					[],
+					false
 				);
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
-
 		}
 
 		return $this->pages;

@@ -71,6 +71,7 @@ class DumpForumBatch extends Maintenance {
 	private function dumpPages( array $pageIds, int $minIndex ) {
 
 		$this->fh = fopen( $this->outputName, 'a' );
+		$this->output( wfArrayToString( $pageIds ) );
 		$this->dumper->getPages( $this->fh, $pageIds, $minIndex );
 		fclose( $this->fh );
 	}
