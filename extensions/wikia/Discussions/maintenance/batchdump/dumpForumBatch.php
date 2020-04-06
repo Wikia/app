@@ -20,7 +20,7 @@ class DumpForumBatch extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Dumps forum page ids';
+		$this->mDescription = 'Dumps forum in batches';
 		$this->addArg( 'pageids', "Output file for page ids", $required = true );
 		$this->addArg( 'out', "Output file for INSERTS", $required = true );
 		$this->addArg( 'minIndex', "Min index", $required = true );
