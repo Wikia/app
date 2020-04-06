@@ -7,11 +7,11 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		playerImpressionsCookieName = 'playerImpressionsInSession',
 		cookieExpireDays = 1209600000; // 14 days in milliseconds
 
-	function setCookie(cookieName) {
+	function setCookie(cookieName, domain, path) {
 		return function (cookieValue) {
 			cookies.set(cookieName, cookieValue, {
-				path: '/',
-				domain: window.wgCookieDomain,
+				path: path,
+				domain: domain,
 				expires: cookieExpireDays
 			});
 
@@ -27,13 +27,17 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 
 	return {
 		getAutoplay: getCookie(autoplayCookieName),
-		setAutoplay: setCookie(autoplayCookieName),
+		setAutoplay: setCookie(autoplayCookieName, window.wgCookieDomain, '/'),
 		getCaptions: getCookie(captionsCookieName),
-		setCaptions: setCookie(captionsCookieName),
+		setCaptions: setCookie(captionsCookieName, window.wgCookieDomain, '/'),
 		getVideoSeenInSession: getCookie(videoSeenInSessionCookieName),
 		getPlayerImpressionsInSession: function () {
 			return Number(getCookie(playerImpressionsCookieName)());
 		},
-		setPlayerImpressionsInSession: setCookie(playerImpressionsCookieName)
+		setPlayerImpressionsInSession: setCookie(
+			playerImpressionsCookieName,
+			window.location.hostname,
+			'/' + window.wgScriptPath
+		)
 	};
 });
