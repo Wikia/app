@@ -46,23 +46,18 @@ class DumpForumBatch extends Maintenance {
 
 		$this->dumpPages( $pageIds, $minIndex );
 		$this->output("Pages dumped!");
-		sleep(3);
 
 		$this->dumpRevisions();
 		$this->output("Revisions dumped!");
-		sleep(3);
 
 		$this->dumpVotes();
 		$this->output("Votes dumped!");
-		sleep(3);
 
 		$this->dumpFollows();
 		$this->output("Follows dumped!");
-		sleep(3);
 
 		$this->dumpWallHistory();
 		$this->output("History dumped!");
-		sleep(3);
 
 		$this->dumpTopics();
 		$this->output("Topics dumped!");
@@ -71,7 +66,6 @@ class DumpForumBatch extends Maintenance {
 	private function dumpPages( array $pageIds, int $minIndex ) {
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->output( wfArrayToString( $pageIds ) );
 		$this->dumper->getPages( $this->fh, $pageIds, $minIndex );
 		fclose( $this->fh );
 	}

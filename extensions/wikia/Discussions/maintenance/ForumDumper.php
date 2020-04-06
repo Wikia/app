@@ -162,7 +162,6 @@ class ForumDumper {
 		}
 
 		$pageIdsToOrder = $this->getPageIdsDisplayOrder( $pageIdsFixed, $minIndex );
-		WikiaLogger::instance()->info( wfArrayToString( $pageIdsToOrder ) );
 
 		$pageIds = array_keys( $pageIdsToOrder );
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
