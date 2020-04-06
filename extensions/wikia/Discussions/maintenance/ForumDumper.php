@@ -2,8 +2,7 @@
 
 namespace Discussions;
 
-use Article;
-use DumpForumData;
+use DumpUtils;
 use Title;
 use \Wikia\Logger\WikiaLogger;
 
@@ -157,36 +156,18 @@ class ForumDumper {
 	 * | props    | blob    | NO   |     | NULL    |       |
 	 * +----------+---------+------+-----+---------+-------+
 	 */
-	public function getPages( $fh = null ) {
+	public function getPages( $fh = null, array $pageIdsFixed = null, int $minIndex = -1 ) {
 		if ( $fh == null || !empty( $this->pages ) ) {
 			return $this->pages;
 		}
 
-		$pageIdsToOrder = [];
-
-		$display_order = 0;
-		$dbh = DumpForumData::getDBSafe( DB_SLAVE );
-		( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
-			->FROM( self::TABLE_PAGE )
-			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
-			->AS_( 'pp' )
-			->ON( 'page.page_id', 'pp.page_id' )
-			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
-			->WHERE( 'page_namespace' )
-			->IN( self::FORUM_NAMEPSACES )
-			->ORDER_BY( 'idx' )
-			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order, &$pageIdsToOrder ) {
-				$pageIdsToOrder[$row->page_id] = $display_order ++;
-			} );
-
-		$dbh->closeConnection();
-		wfGetLB( false )->closeConnection( $dbh );
+		$pageIdsToOrder = $this->getPageIdsDisplayOrder( $pageIdsFixed, $minIndex );
 
 		$pageIds = array_keys( $pageIdsToOrder );
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
 
 		foreach ( $pageIdsChunks as $part ) {
-			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
 				->FROM( self::TABLE_PAGE )
@@ -216,7 +197,7 @@ class ForumDumper {
 								]
 							);
 
-							$insert = DumpForumData::createInsert(
+							$insert = DumpUtils::createInsert(
 								'import_page',
 								self::COLUMNS_PAGE,
 								[
@@ -312,7 +293,7 @@ class ForumDumper {
 			$queryResult = null;
 
 			do {
-				$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+				$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 				$dbh->ping();
 				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
@@ -335,7 +316,7 @@ class ForumDumper {
 								$pages = $this->getPages();
 								$curPage = $pages[$row->rev_page];
 
-								$insert = DumpForumData::createInsert(
+								$insert = DumpUtils::createInsert(
 									'import_revision',
 									self::COLUMNS_REVISION,
 									[
@@ -399,7 +380,7 @@ class ForumDumper {
 		$topicsNumber = 0;
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
@@ -419,7 +400,7 @@ class ForumDumper {
 								$topicsNumber++;
 								$id = $topicsNumber;
 
-								$insert = DumpForumData::createInsert(
+								$insert = DumpUtils::createInsert(
 									'import_topics',
 									self::COLUMNS_TOPICS,
 									[
@@ -595,7 +576,7 @@ class ForumDumper {
 		$pageIdsChunks = array_chunk($pageIds, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_VOTE )
@@ -604,7 +585,7 @@ class ForumDumper {
 				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
 
 					while ($row = $result->fetchObject()) {
-						$insert = DumpForumData::createInsert(
+						$insert = DumpUtils::createInsert(
 							'import_vote',
 							self::COLUMNS_VOTE,
 							[
@@ -670,5 +651,36 @@ class ForumDumper {
 		}
 
 		return [ $title->getText(), $title->getLocalURL() ];
+	}
+
+	private function getPageIdsDisplayOrder( array $pageIdsFixed, int $minIndex ) {
+		$pageIdsToOrder = [];
+
+		if ( $pageIdsFixed == null || empty( $pageIdsFixed ) || $minIndex == -1 ) {
+			$display_order = 0;
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
+				->FROM( self::TABLE_PAGE )
+				->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
+				->AS_( 'pp' )
+				->ON( 'page.page_id', 'pp.page_id' )
+				->AND_( 'propname', WPP_WALL_ORDER_INDEX )
+				->WHERE( 'page_namespace' )
+				->IN( self::FORUM_NAMEPSACES )
+				->ORDER_BY( 'idx' )
+				->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order, &$pageIdsToOrder ) {
+					$pageIdsToOrder[$row->page_id] = $display_order ++;
+				} );
+
+			$dbh->closeConnection();
+			wfGetLB( false )->closeConnection( $dbh );
+		} else {
+			$display_order = $minIndex;
+			foreach ( $pageIdsFixed as $pageId ) {
+				$pageIdsToOrder[$pageId] = $display_order ++;
+			}
+		}
+
+		return $pageIdsToOrder;
 	}
 }

@@ -3,7 +3,7 @@
 
 namespace Discussions;
 
-use DumpForumData;
+use DumpUtils;
 
 class FollowsFinder {
 
@@ -47,7 +47,7 @@ class FollowsFinder {
 		}
 
 		foreach($pageTitlesChunks as $part) {
-			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_THREAD_WATCHER )
@@ -58,7 +58,7 @@ class FollowsFinder {
 				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
 
 					while ($row = $result->fetchObject()) {
-						$insert = DumpForumData::createInsert(
+						$insert = DumpUtils::createInsert(
 							'import_follows',
 							self::COLUMNS_FOLLOWS,
 							[

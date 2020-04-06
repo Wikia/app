@@ -7,39 +7,44 @@
 
 error_reporting(E_ALL);
 
-require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
-include_once( __DIR__ . '/DumpUtils.php' );
-include_once( __DIR__ . '/ForumDumper.php' );
-include_once( __DIR__ . '/FollowsFinder.php' );
-include_once( __DIR__ . '/WallHistoryFinder.php' );
+require_once( __DIR__ . '/../../../../../maintenance/Maintenance.php' );
+include_once( __DIR__ . '/../DumpUtils.php' );
+include_once( __DIR__ . '/../ForumDumper.php' );
+include_once( __DIR__ . '/../FollowsFinder.php' );
+include_once( __DIR__ . '/../WallHistoryFinder.php' );
 
-
-class DumpForumData extends Maintenance {
-	/** @var  \Discussions\ForumDumper */
+class DumpForumBatch extends Maintenance {
 	private $dumper;
 	private $fh;
 	private $outputName;
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Dumps a set of INSERT statements suitable for importing into Discussion "import" tables';
-		$this->addArg( 'out', "Output file for SQL statements", $required = false );
+		$this->mDescription = 'Dumps forum page ids';
+		$this->addArg( 'pageids', "Output file for page ids", $required = true );
+		$this->addArg( 'out', "Output file for INSERTS", $required = true );
+		$this->addArg( 'minIndex', "Min index", $required = true );
+		$this->addArg( 'maxIndex', "Max index", $required = true );
 	}
 
 	public function execute() {
-		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
-		$this->fh = fopen( $this->outputName, 'w' );
-		if ( $this->fh === false ) {
-			$this->error( "Unable to open file " . $this->outputName, 1 );
+
+		$pageIdsName = $this->hasOption( 'pageids' ) ? $this->getArg( 0 ) : "php://stdout";
+		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg( 1 ) : "php://stdout";
+		$minIndex = $this->hasOption( 'minIndex' ) ? $this->getArg( 2 ) : -1;
+		$maxIndex = $this->hasOption( 'maxIndex' ) ? $this->getArg( 3 ) : -1;
+
+		$pageIds = [];
+
+		for ($x = $minIndex; $x <= $maxIndex; $x++) {
+			$spl = new SplFileObject( $pageIdsName );
+			$spl->seek( $x );
+			$pageIds[] = $spl->current();
 		}
 
 		$this->dumper = new Discussions\ForumDumper();
 
-		$this->setConnectinoEncoding();
-		$this->clearImportTables();
-		fclose( $this->fh );
-
-		$this->dumpPages();
+		$this->dumpPages( $pageIds, $minIndex );
 		$this->output("Pages dumped!");
 		sleep(3);
 
@@ -63,23 +68,10 @@ class DumpForumData extends Maintenance {
 		$this->output("Topics dumped!");
 	}
 
-	private function setConnectinoEncoding() {
-		fwrite( $this->fh, "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;" );
-	}
-
-	private function clearImportTables() {
-		fwrite( $this->fh, "DELETE FROM import_page;\n" );
-		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
-		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
-		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
-		fwrite( $this->fh, "DELETE FROM import_history;\n" );
-		fwrite( $this->fh, "DELETE FROM import_topics;\n" );
-	}
-
-	private function dumpPages() {
+	private function dumpPages( array $pageIds, int $minIndex ) {
 
 		$this->fh = fopen( $this->outputName, 'a' );
-		$this->dumper->getPages( $this->fh, [], -1 );
+		$this->dumper->getPages( $this->fh, $pageIds, $minIndex );
 		fclose( $this->fh );
 	}
 
@@ -119,5 +111,5 @@ class DumpForumData extends Maintenance {
 	}
 }
 
-$maintClass = DumpForumData::class;
+$maintClass = DumpForumBatch::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );

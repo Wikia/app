@@ -2,7 +2,7 @@
 
 namespace Discussions;
 
-use DumpForumData;
+use DumpUtils;
 
 class WallHistoryFinder {
 
@@ -60,7 +60,7 @@ class WallHistoryFinder {
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpForumData::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
 				->FROM( self::TABLE_WALL_HISTORY )
@@ -69,7 +69,7 @@ class WallHistoryFinder {
 				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
 
 					while ($row = $result->fetchObject()) {
-						$insert = DumpForumData::createInsert(
+						$insert = DumpUtils::createInsert(
 							'import_history',
 							self::COLUMNS,
 							[
