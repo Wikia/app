@@ -5,7 +5,7 @@ command="php extensions/wikia/Discussions/maintenance/batchdump/dumpForumPageIds
 echo $command;
 eval $command;
 
-pagesNumber = $(eval "wc -l $2")
+eval pagesNumber=\$\("cat $2 | wc -l"\)
 echo "== Pages ids dumped: $pagesNumber"
 
 for i in $(seq 0 500 pagesNumber);
