@@ -27,4 +27,15 @@ class AdEngine3Controller extends WikiaController {
 		$this->slotName = $this->request->getVal('slotName');
 		$this->showAd = AdEngine3Service::shouldShowAd($this->pageTypes);
 	}
+
+	public function postLog() {
+		\Wikia\Logger\WikiaLogger::instance()
+			->debug( 'AdEngine', [
+				'postLog' => 'true',
+				'message' => 'postLog test',
+				'vast' => $this->request->getVal('vast'),
+			]);
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
+	}
 }
