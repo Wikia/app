@@ -4,7 +4,7 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 	var autoplayCookieName = 'featuredVideoAutoplay',
 		captionsCookieName = 'featuredVideoCaptions',
 		videoSeenInSessionCookieName = 'featuredVideoSeenInSession',
-		playerImpressionsCookieName = 'playerImpressionsInSession',
+		playerImpressionsCookieName = 'playerImpressionsInWiki',
 		cookieExpireDays = 1209600000; // 14 days in milliseconds
 
 	function setCookie(cookieName, domain, path) {
@@ -31,10 +31,10 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		getCaptions: getCookie(captionsCookieName),
 		setCaptions: setCookie(captionsCookieName, window.wgCookieDomain, '/'),
 		getVideoSeenInSession: getCookie(videoSeenInSessionCookieName),
-		getPlayerImpressionsInSession: function () {
+		getPlayerImpressionsInWiki: function () {
 			return Number(getCookie(playerImpressionsCookieName)());
 		},
-		setPlayerImpressionsInSession: setCookie(
+		setPlayerImpressionsInWiki: setCookie(
 			playerImpressionsCookieName,
 			window.location.hostname,
 			'/' + window.wgScriptPath
