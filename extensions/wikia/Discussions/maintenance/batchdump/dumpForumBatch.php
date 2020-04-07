@@ -36,10 +36,11 @@ class DumpForumBatch extends Maintenance {
 
 		$pageIds = [];
 
+		$spl = new SplFileObject( $pageIdsName );
+		$spl->seek( $minIndex );
 		for ($x = $minIndex; $x <= $maxIndex; $x++) {
-			$spl = new SplFileObject( $pageIdsName );
-			$spl->seek( $x );
 			$pageIds[] = trim( $spl->current() );
+			$spl->next();
 		}
 
 		$this->dumper = new Discussions\ForumDumper();
