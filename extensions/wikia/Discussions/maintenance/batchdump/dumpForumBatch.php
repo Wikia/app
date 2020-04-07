@@ -43,6 +43,7 @@ class DumpForumBatch extends Maintenance {
 			$spl->next();
 		}
 
+		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper = new Discussions\ForumDumper();
 
 		$this->dumpPages( $pageIds, $minIndex );
@@ -62,48 +63,32 @@ class DumpForumBatch extends Maintenance {
 
 		$this->dumpTopics();
 		$this->output("Topics dumped!");
+
+		fclose( $this->fh );
 	}
 
 	private function dumpPages( array $pageIds, int $minIndex ) {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getPages( $this->fh, $pageIds, $minIndex );
-		fclose( $this->fh );
 	}
 
 	private function dumpRevisions() {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getRevisions( $this->fh );
-		fclose( $this->fh );
 	}
 
 	private function dumpVotes() {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getVotes( $this->fh );
-		fclose( $this->fh );
 	}
 
 	private function dumpFollows() {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getFollows( $this->fh );
-		fclose( $this->fh );
 	}
 
 	private function dumpWallHistory() {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getWallHistory( $this->fh );
-		fclose( $this->fh );
 	}
 
 	private function dumpTopics() {
-
-		$this->fh = fopen( $this->outputName, 'a' );
 		$this->dumper->getTopics( $this->fh );
-		fclose( $this->fh );
 	}
 }
 
