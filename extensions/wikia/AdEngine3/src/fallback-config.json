@@ -618,10 +618,9 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-PL"
+                "XX-EU"
             ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200309.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200326-auction-fix.min.js"
         },
         {
             "apps": [
@@ -632,9 +631,9 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX"
             ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200326-auction-fix.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200309.min.js"
         }
     ],
     "icA9Bidder": [
