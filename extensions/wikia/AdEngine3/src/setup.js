@@ -160,6 +160,11 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
+	context.set(
+		'options.jwplayerA9LoggerErrorCodes',
+		instantConfig.get('icA9LoggerErrorCodes'),
+	);
+
 	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
