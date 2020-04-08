@@ -25,6 +25,12 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		};
 	}
 
+	function getLangPath() {
+		var pathParts = window.location.pathname.split('/');
+
+		return pathParts[1] === 'wiki' ? '/' : '/' + pathParts[1];
+	}
+
 	return {
 		getAutoplay: getCookie(autoplayCookieName),
 		setAutoplay: setCookie(autoplayCookieName, window.wgCookieDomain, '/'),
@@ -37,7 +43,7 @@ define('wikia.articleVideo.featuredVideo.cookies', ['wikia.cookies'], function (
 		setPlayerImpressionsInWiki: setCookie(
 			playerImpressionsCookieName,
 			window.location.hostname,
-			'/' + window.wgScriptPath
+			getLangPath()
 		)
 	};
 });
