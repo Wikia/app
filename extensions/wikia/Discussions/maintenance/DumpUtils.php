@@ -46,7 +46,7 @@ class DumpUtils {
 			$values = [];
 			preg_match('/VALUES (.*);/', $single, $values);
 
-			$insert .= $values[0];
+			$insert .= $values[1];
 
 			if(++$i !== $numItems) {
 				$insert .= ", ";
