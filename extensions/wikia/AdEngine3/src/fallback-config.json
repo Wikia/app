@@ -358,6 +358,20 @@
             "value": true
         }
     ],
+    "icA9LoggerErrorCodes": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": [
+                303
+            ]
+        }
+    ],
     "icPlayerTracking": [
         {
             "apps": [
@@ -618,10 +632,9 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-PL"
+                "SG"
             ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200309.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
         },
         {
             "apps": [
@@ -632,9 +645,22 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX-EU"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200326-auction-fix.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200309.min.js"
         }
     ],
     "icA9Bidder": [

@@ -448,6 +448,8 @@ require([
 				logoDark: unit.logo ? unit.logo.dark : null,
 				showDisclaimer: !isWatchShowEnabled,
 				disclaimerMessage: w.disclaimerMessage,
+				campaign: unit.campaign,
+				category: unit.category
 			});
 		},
 
