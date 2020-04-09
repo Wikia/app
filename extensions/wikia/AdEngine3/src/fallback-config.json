@@ -358,6 +358,20 @@
             "value": true
         }
     ],
+    "icA9LoggerErrorCodes": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": [
+                303
+            ]
+        }
+    ],
     "icPlayerTracking": [
         {
             "apps": [
@@ -609,6 +623,19 @@
         }
     ],
     "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "SG"
+            ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
+        },
         {
             "apps": [
                 "futhead",
