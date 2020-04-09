@@ -30,6 +30,34 @@ class DumpUtils {
 		return $insert;
 	}
 
+	public static function createMultiInsert( $table, $cols, $inserts ) {
+		$db = wfGetDB( DB_SLAVE );
+
+		$insert = "INSERT INTO $table (`site_id`, " .
+				  implode( ",", array_map( function ( $c ) use ( $db ) {
+					  return 	$db->addIdentifierQuotes( $c );
+				  }, $cols ) ) .
+				  ")" .
+				  " VALUES ";
+
+		$numItems = count($inserts);
+		$i = 0;
+		foreach ( $inserts as $single ) {
+			$values = [];
+			preg_match('/VALUES (.*);/', $single, $values);
+
+			$insert .= $values[0];
+
+			if(++$i !== $numItems) {
+				$insert .= ", ";
+			}
+		}
+
+		$insert .= ';';
+
+		return $insert;
+	}
+
 	public static function getDBSafe( $db ) {
 
 		$tries = 0;

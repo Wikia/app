@@ -17,9 +17,11 @@ class WallHistoryFinder {
 		'post_user_id',
 	];
 	private $pageIdsInNamespace;
+	private $bulk;
 
-	public function __construct( $pageIdsInNamespace ) {
+	public function __construct( $pageIdsInNamespace, $bulk = false ) {
 		$this->pageIdsInNamespace = $pageIdsInNamespace;
+		$this->bulk = $bulk;
 	}
 
 	/**
@@ -62,6 +64,7 @@ class WallHistoryFinder {
 		foreach ($pageIdsChunks as $part) {
 			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
+			$inserts = [];
 			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
 				->FROM( self::TABLE_WALL_HISTORY )
 				->WHERE( 'parent_page_id' )
@@ -81,9 +84,13 @@ class WallHistoryFinder {
 								'post_user_id' => $row->post_user_id,
 							]
 						);
-						fwrite( $fh, $insert . "\n");
-						fflush( $fh );
-						unset( $insert );
+
+						$inserts[] = $insert;
+
+						if ( !$this->bulk ) {
+							fwrite( $fh, $insert . "\n");
+							fflush( $fh );
+						}
 					}
 
 					$dbh->freeResult( $result );
@@ -91,6 +98,19 @@ class WallHistoryFinder {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
+			if ( $this->bulk && !empty( $inserts )) {
+				$chunks = array_chunk( $inserts, 100 );
+				foreach ( $chunks as $chunk ) {
+					$multiInsert = DumpUtils::createMultiInsert('import_history',
+							self::COLUMNS, $chunk) . "\n";
+					fwrite( $fh, $multiInsert );
+					fflush( $fh );
+					unset( $multiInsert );
+				}
+			}
+
+			unset( $inserts );
 		}
 	}
 

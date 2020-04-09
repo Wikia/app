@@ -93,6 +93,11 @@ class ForumDumper {
 
 	private $titles = [];
 	private $pages = [];
+	private $bulk;
+
+	public function __construct($bulk = false) {
+		$this->bulk = $bulk;
+	}
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -167,6 +172,7 @@ class ForumDumper {
 		$pageIdsChunks = array_chunk( $pageIds, 500 );
 
 		foreach ( $pageIdsChunks as $part ) {
+			$inserts = [];
 			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
 			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
@@ -225,9 +231,12 @@ class ForumDumper {
 									]
 								) . "\n";
 
-							fwrite( $fh, $insert );
-							fflush( $fh );
-							unset( $insert );
+							$inserts[] = $insert;
+
+							if ( !$this->bulk ) {
+								fwrite( $fh, $insert );
+								fflush( $fh );
+							}
 
 							$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 						}
@@ -240,6 +249,19 @@ class ForumDumper {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
+			if ( $this->bulk && !empty( $inserts )) {
+				$chunks = array_chunk( $inserts, 50);
+				foreach ( $chunks as $chunk ) {
+					$multiInsert = DumpUtils::createMultiInsert('import_page',
+							self::COLUMNS_PAGE, $chunk) . "\n";
+					fwrite( $fh, $multiInsert );
+					fflush( $fh );
+					unset( $multiInsert );
+				}
+			}
+
+			unset( $inserts );
 		}
 
 		return $this->pages;
@@ -296,6 +318,7 @@ class ForumDumper {
 			do {
 				$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 				$dbh->ping();
+				$inserts = [];
 				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
 					->FROM( self::TABLE_REVISION )
 					->JOIN( self::TABLE_TEXT )
@@ -337,12 +360,13 @@ class ForumDumper {
 										"content" => $parsedText,
 									]
 								) . "\n";
-								fwrite( $fh, $insert) ;
-								fflush( $fh );
-								unset( $insert );
-								unset( $parsedText );
-								unset( $plainText );
-								unset( $title );
+
+								$inserts[] = $insert;
+
+								if ( !$this->bulk ) {
+									fwrite( $fh, $insert) ;
+									fflush( $fh );
+								}
 							}
 
 							$dbh->freeResult( $result );
@@ -352,6 +376,19 @@ class ForumDumper {
 
 				$dbh->closeConnection();
 				wfGetLB( false )->closeConnection( $dbh );
+
+				if ( $this->bulk && !empty( $inserts )) {
+					$chunks = array_chunk( $inserts, 10 );
+					foreach ( $chunks as $chunk ) {
+						$multiInsert = DumpUtils::createMultiInsert('import_revision',
+								self::COLUMNS_REVISION, $chunk) . "\n";
+						fwrite( $fh, $multiInsert );
+						fflush( $fh );
+						unset( $multiInsert );
+					}
+				}
+
+				unset( $inserts );
 
 				if ( $queryResult === false && $tries > 0 ) {
 					WikiaLogger::instance()->info( "Retry used! (rev batch load) - ".( $tries - 1 )." left" );
@@ -383,6 +420,7 @@ class ForumDumper {
 		foreach ($pageIdsChunks as $part) {
 			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
+			$inserts = [];
 			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
 				->JOIN( self::TABLE_PAGE )
@@ -411,10 +449,14 @@ class ForumDumper {
 										"article_title" => $title,
 										"relative_url" => $url
 									]
-								);
-								fwrite( $fh, $insert . "\n");
-								fflush( $fh );
-								unset( $insert );
+								) . "\n";
+
+								$inserts[] = $insert;
+
+								if ( !$this->bulk ) {
+									fwrite( $fh, $insert) ;
+									fflush( $fh );
+								}
 							}
 						}
 
@@ -424,6 +466,19 @@ class ForumDumper {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
+			if ( $this->bulk && !empty( $inserts )) {
+				$chunks = array_chunk( $inserts, 100 );
+				foreach ( $chunks as $chunk ) {
+					$multiInsert = DumpUtils::createMultiInsert('import_topics',
+							self::COLUMNS_TOPICS, $chunk) . "\n";
+					fwrite( $fh, $multiInsert );
+					fflush( $fh );
+					unset( $multiInsert );
+				}
+			}
+
+			unset( $inserts );
 		}
 	}
 
@@ -579,6 +634,7 @@ class ForumDumper {
 		foreach ($pageIdsChunks as $part) {
 			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
+			$inserts = [];
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_VOTE )
 				->WHERE( 'article_id' )
@@ -594,10 +650,14 @@ class ForumDumper {
 								"user_identifier" => $row->user_id,
 								"timestamp" => $row->time,
 							]
-						);
-						fwrite( $fh, $insert . "\n" );
-						fflush( $fh );
-						unset( $insert );
+						) . "\n";
+
+						$inserts[] = $insert;
+
+						if ( !$this->bulk ) {
+							fwrite( $fh, $insert) ;
+							fflush( $fh );
+						}
 					}
 
 					$dbh->freeResult( $result );
@@ -605,20 +665,33 @@ class ForumDumper {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
+			if ( $this->bulk && !empty( $inserts )) {
+				$chunks = array_chunk( $inserts, 200 );
+				foreach ( $chunks as $chunk ) {
+					$multiInsert = DumpUtils::createMultiInsert('import_vote',
+							self::COLUMNS_VOTE, $chunk) . "\n";
+					fwrite( $fh, $multiInsert );
+					fflush( $fh );
+					unset( $multiInsert );
+				}
+			}
+
+			unset( $inserts );
 		}
 	}
 
 	public function getFollows( $fh ) {
 		$threadsNamesToIds = $this->getThreadNamesToIds();
 
-		$finder = new FollowsFinder( $threadsNamesToIds );
+		$finder = new FollowsFinder( $threadsNamesToIds, $this->bulk );
 		$finder->findFollows( $fh );
 	}
 
 	public function getWallHistory( $fh ) {
 		$pageIdsInNamespace = $this->getPagesIds( NS_WIKIA_FORUM_BOARD );
 
-		$dumper = new WallHistoryFinder( $pageIdsInNamespace );
+		$dumper = new WallHistoryFinder( $pageIdsInNamespace, $this->bulk );
 		$dumper->find( $fh );
 	}
 

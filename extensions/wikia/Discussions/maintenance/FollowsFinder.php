@@ -18,9 +18,11 @@ class FollowsFinder {
 	];
 
 	private $threadNameToId;
+	private $bulk;
 
-	public function __construct( $threadNameToId ) {
+	public function __construct( $threadNameToId, $bulk = false ) {
 		$this->threadNameToId = $threadNameToId;
+		$this->bulk = $bulk;
 	}
 
 	/**
@@ -49,6 +51,7 @@ class FollowsFinder {
 		foreach($pageTitlesChunks as $part) {
 			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
 			$dbh->ping();
+			$inserts = [];
 			( new \WikiaSQL() )->SELECT_ALL()
 				->FROM( self::TABLE_THREAD_WATCHER )
 				->WHERE( 'wl_namespace' )
@@ -66,9 +69,13 @@ class FollowsFinder {
 								self::MW_THREAD_ID => $this->threadNameToId[$row->wl_title],
 							]
 						);
-						fwrite( $fh, $insert . "\n");
-						fflush( $fh );
-						unset( $insert );
+
+						$inserts[] = $insert;
+
+						if ( !$this->bulk ) {
+							fwrite( $fh, $insert . "\n");
+							fflush( $fh );
+						}
 					}
 
 					$dbh->freeResult( $result );
@@ -76,6 +83,19 @@ class FollowsFinder {
 
 			$dbh->closeConnection();
 			wfGetLB( false )->closeConnection( $dbh );
+
+			if ( $this->bulk && !empty( $inserts )) {
+				$chunks = array_chunk( $inserts, 100 );
+				foreach ( $chunks as $chunk ) {
+					$multiInsert = DumpUtils::createMultiInsert('import_follows',
+							self::COLUMNS_FOLLOWS, $chunk) . "\n";
+					fwrite( $fh, $multiInsert );
+					fflush( $fh );
+					unset( $multiInsert );
+				}
+			}
+
+			unset( $inserts );
 		}
 
 		return [];

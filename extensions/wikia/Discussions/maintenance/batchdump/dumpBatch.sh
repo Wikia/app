@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#bash extensions/wikia/Discussions/maintenance/batchdump/dumpBatch.sh --pageids pageids.txt --out importData.sql
+
 echo == Dumping page ids
 command="php extensions/wikia/Discussions/maintenance/batchdump/dumpForumPageIds.php $@"
 echo $command;
