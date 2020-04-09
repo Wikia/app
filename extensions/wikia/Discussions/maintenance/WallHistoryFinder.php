@@ -69,7 +69,7 @@ class WallHistoryFinder {
 				->FROM( self::TABLE_WALL_HISTORY )
 				->WHERE( 'parent_page_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh, &$inserts ) {
 
 					while ($row = $result->fetchObject()) {
 						$insert = DumpUtils::createInsert(

@@ -183,7 +183,7 @@ class ForumDumper {
 				->IN( $part )
 				->runLoop(
 					$dbh,
-					function ( $result ) use ( $pageIdsToOrder, $dbh, $fh ) {
+					function ( $result ) use ( $pageIdsToOrder, $dbh, $fh, &$inserts ) {
 
 						while ( $row = $result->fetchObject() ) {
 							// A few of these properties were removed and do not appear on some wikis
@@ -327,7 +327,7 @@ class ForumDumper {
 					->IN( $part )
 					->runLoop(
 						$dbh,
-						function ( $result ) use ( $dbh, $fh ) {
+						function ( $result ) use ( $dbh, $fh, &$inserts ) {
 
 							while ($row = $result->fetchObject()) {
 								$rev = \Revision::newFromRow( $row );
@@ -430,7 +430,7 @@ class ForumDumper {
 				->IN( $part )
 				->runLoop(
 					$dbh,
-					function ( $result ) use ( $dbh, $fh, &$topicsNumber ) {
+					function ( $result ) use ( $dbh, $fh, &$topicsNumber, &$inserts ) {
 
 						while ($row = $result->fetchObject()) {
 							list( $title, $url ) = $this->getRelatedArticleData( $row->page_id );
@@ -639,7 +639,7 @@ class ForumDumper {
 				->FROM( self::TABLE_VOTE )
 				->WHERE( 'article_id' )
 				->IN( $part )
-				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh, &$inserts ) {
 
 					while ($row = $result->fetchObject()) {
 						$insert = DumpUtils::createInsert(

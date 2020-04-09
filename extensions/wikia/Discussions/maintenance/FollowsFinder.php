@@ -58,7 +58,7 @@ class FollowsFinder {
 				->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
 				->AND_( 'wl_title' )
 				->IN( $part )
-				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh ) {
+				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh, &$inserts ) {
 
 					while ($row = $result->fetchObject()) {
 						$insert = DumpUtils::createInsert(
