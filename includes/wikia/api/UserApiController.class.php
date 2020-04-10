@@ -52,7 +52,8 @@ class UserApiController extends WikiaApiController {
 				'title' => $user->getTitleKey(),
 				'name' => $userName,
 				'url' => AvatarService::getUrl( $userName ),
-				'numberofedits' => (int) $user->getEditCount()
+				'numberofedits' => (int) $user->getEditCount(),
+				'is_subject_to_coppa' => $user->isSubjectToCoppa()
 			);
 
 			//add avatar url if size !== 0

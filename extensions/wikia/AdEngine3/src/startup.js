@@ -13,8 +13,6 @@ import {
 	eventService,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	moatYi,
-	moatYiEvents,
 	permutive,
 	Runner,
 	nielsen,
@@ -48,9 +46,6 @@ export async function setupAdEngine(
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
-	});
-	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
-		pageTracker.trackProp('moat_yi', data);
 	});
 
 	await billTheLizardConfigurator.configure();
@@ -153,7 +148,6 @@ function callExternals() {
 	permutive.call();
 	confiant.call();
 	durationMedia.call();
-	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',
