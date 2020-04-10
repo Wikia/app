@@ -547,10 +547,6 @@ export default {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
 		},
-		moatYi: {
-			enabled: false,
-			partnerCode: 'wikiaprebidheader490634422386',
-		},
 		nielsen: {
 			enabled: false,
 			appId: 'P26086A07-C7FB-4124-A679-8AC404198BA7',
