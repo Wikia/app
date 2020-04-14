@@ -76,7 +76,7 @@ class WikiFactoryLoader {
 		 *
 		 * @see SUS-6026
 		 */
-		$this->mCommandLine = $wgCommandLineMode;
+		$this->mCommandLine = $wgCommandLineMode || !empty( $server['HTTP_X_DISABLE_CLOSED_WIKI_HANDLING'] );
 
 		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
 			// SUS-5816 | a special HTTP request with wiki ID forced via request header
