@@ -16,25 +16,25 @@ class RemoveUserDataController extends WikiaController {
 	public function removeUserData() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->request->wasPosted() ) {
+		if( !$this->request->wasPosted() ) {
 			$this->response->setCode( self::METHOD_NOT_ALLOWED );
 			return;
 		}
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
 
-		$this->info( "Right to be forgotten request for user $userId", [ 'userId' => $userId ] );
+		$this->info( "Right to be forgotten request for user $userId", ['userId' => $userId] );
 
 		$dataRemover = new UserDataRemover();
 		$auditLogId = $dataRemover->startRemovalProcess( $userId );
 
 
 		$this->response->setCode( self::ACCEPTED );
-		$this->response->setValues( [ 'auditLogId' => $auditLogId ] );
+		$this->response->setValues( ['auditLogId' => $auditLogId] );
 	}
 
 	/**
@@ -44,19 +44,17 @@ class RemoveUserDataController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
 
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
-		$this->response->setValues(
-			[
-				'userId' => $userId,
-				'username' => User::whoIs( $userId ),
-				'numberOfWikis' => count( $this->getUserWikis( $userId ) ),
-			]
-		);
+		$this->response->setValues( [
+			'userId' => $userId,
+			'username' => User::whoIs( $userId ),
+			'numberOfWikis' => count( $this->getUserWikis( $userId ) )
+		] );
 	}
 
 	/**
@@ -68,7 +66,7 @@ class RemoveUserDataController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$userId = (int)$this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -83,32 +81,32 @@ class RemoveUserDataController extends WikiaController {
 				'number_of_wikis',
 			],
 			[
-				'user_id' => $userId,
+				'user_id' => $userId
 			],
 			__METHOD__,
 			[
 				// we only want the last log related to the user
-				'ORDER BY' => 'created DESC',
+				'ORDER BY' => 'created DESC'
 			]
 		);
 
 		$logEntries = iterator_to_array( $rows );
 
 		// there's no entry for a given user ID
-		if ( empty( $logEntries ) ) {
+		if( empty( $logEntries ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 			return;
 		}
 
-		foreach ( $logEntries as $logEntry ) {
+		foreach( $logEntries as $logEntry ) {
 			// if there is a successful log entry, return it
-			if ( RemovalAuditLog::allDataWasRemoved( $logEntry->id ) ) {
+			if( RemovalAuditLog::allDataWasRemoved( $logEntry->id ) ) {
 				$this->okResponse( $userId, $logEntry->id, $logEntry->created, true );
 				return;
 			}
 		}
 
-		$firstEntry = reset( $logEntries );
+		$firstEntry = reset($logEntries);
 
 		// if all log entries are unsuccessful, return the latest fail
 		$this->okResponse( $userId, $firstEntry->id, $firstEntry->created, false );
@@ -116,14 +114,12 @@ class RemoveUserDataController extends WikiaController {
 
 	private function okResponse( $userId, $logId, $created, $dataWasRemoved ) {
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
-		$this->response->setValues(
-			[
-				'userId' => $userId,
-				'logId' => $logId,
-				'created' => $created,
-				'is_completed' => $dataWasRemoved,
-			]
-		);
+		$this->response->setValues( [
+			'userId' => $userId,
+			'logId' => $logId,
+			'created' => $created,
+			'is_completed' => $dataWasRemoved
+		] );
 	}
 
 	/**
@@ -133,13 +129,13 @@ class RemoveUserDataController extends WikiaController {
 	public function removeEmailFromCache() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->request->wasPosted() ) {
+		if( !$this->request->wasPosted() ) {
 			$this->response->setCode( self::METHOD_NOT_ALLOWED );
 			return;
 		}
 
 		$userId = $this->getVal( 'userId' );
-		if ( empty( $userId ) ) {
+		if( empty( $userId ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
@@ -182,7 +178,7 @@ class RemoveUserDataController extends WikiaController {
 	public function removeLocalUserData() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->request->wasPosted() ) {
+		if( !$this->request->wasPosted() ) {
 			$this->response->setCode( self::METHOD_NOT_ALLOWED );
 			return;
 		}
@@ -196,60 +192,42 @@ class RemoveUserDataController extends WikiaController {
 			return;
 		}
 
-		$this->info(
-			"Removing local user data",
-			[
-				'user_id' => $userId,
-				'rename_user_id' => $renameUserId,
-				'rtbf_log_id' => $auditLogId,
-			]
-		);
+		$this->info( "Removing local user data", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
+		] );
 
 		$localDataRemover = new LocalUserDataRemover();
 		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId );
 
 		if ( !$dataWasRemoved ) {
-			$this->error(
-				"User's local data was not removed correctly",
-				[
-					'user_id' => $userId,
-					'rename_user_id' => $renameUserId,
-					'rtbf_log_id' => $auditLogId,
-				]
-			);
+			$this->error( "User's local data was not removed correctly", [
+				'user_id' => $userId,
+				'rename_user_id' => $renameUserId,
+				'rtbf_log_id' => $auditLogId
+			] );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		}
 
-		$this->info(
-			"Deleting user cache",
-			[
-				'user_id' => $userId,
-				'rename_user_id' => $renameUserId,
-				'rtbf_log_id' => $auditLogId,
-			]
-		);
+		$this->info( "Deleting user cache", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
+		] );
 
 		User::newFromId( $userId )->deleteCache();
 
-		$this->info(
-			"User's local data was removed",
-			[
-				'user_id' => $userId,
-				'rename_user_id' => $renameUserId,
-				'rtbf_log_id' => $auditLogId,
-			]
-		);
+		$this->info( "User's local data was removed", [
+			'user_id' => $userId,
+			'rename_user_id' => $renameUserId,
+			'rtbf_log_id' => $auditLogId
+		] );
 	}
 
 	private function getUserWikis( int $userId ) {
 		$specialsDbr = self::getSpecialsDB();
-		return $specialsDbr->selectFieldValues(
-			'events_local_users',
-			'wiki_id',
-			[ 'user_id' => $userId ],
-			__METHOD__,
-			[ 'DISTINCT' ]
-		);
+		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
 	}
 
 
@@ -260,7 +238,7 @@ class RemoveUserDataController extends WikiaController {
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
-		return [ 'right_to_be_forgotten' => 1 ];
+		return ['right_to_be_forgotten' => 1];
 	}
 
 }
