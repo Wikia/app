@@ -13,7 +13,7 @@ class AdEngineController extends WikiaController {
 		}
 
 		\Wikia\Logger\WikiaLogger::instance()
-			->debug(
+			->info(
 				'AdEngine log',
 				$this->context->getRequest()->getValues()
 			);
