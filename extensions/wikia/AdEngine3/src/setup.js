@@ -122,6 +122,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
+	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
 
@@ -146,7 +147,6 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 
@@ -158,6 +158,11 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
+
+	context.set(
+		'options.jwplayerA9LoggerErrorCodes',
+		instantConfig.get('icA9LoggerErrorCodes'),
+	);
 
 	setupPageLevelTargeting(context.get('wiki'));
 

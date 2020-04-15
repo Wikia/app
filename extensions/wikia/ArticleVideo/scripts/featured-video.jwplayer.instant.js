@@ -30,7 +30,7 @@ require([
 		if (hasVideoOnPage === null) {
 			hasVideoOnPage = videoDetails && (
 				videoDetails.isDedicatedForArticle ||
-				!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+				!featuredVideoSession.hasMaxedOutPlayerImpressionsInWiki(allowedPlayerImpressionsPerSession)
 			);
 		}
 
@@ -164,7 +164,7 @@ require([
 	}
 
 	function getNormalizedPlaylistIndex(playlist) {
-		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInSession() || 0;
+		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInWiki() || 0;
 
 		return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
 	}

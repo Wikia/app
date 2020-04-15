@@ -540,13 +540,12 @@ export default {
 			enabled: false,
 			siteId: '1167',
 		},
+		externalLogger: {
+			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
+		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
-		},
-		moatYi: {
-			enabled: false,
-			partnerCode: 'wikiaprebidheader490634422386',
 		},
 		nielsen: {
 			enabled: false,
