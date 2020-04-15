@@ -493,7 +493,8 @@
                 "5344168056",
                 "5344988584",
                 "5345336345",
-                "5345336348"
+                "5345336348",
+                "5348167401"
             ]
         }
     ],
@@ -635,10 +636,7 @@
                 "muthead",
                 "oasis"
             ],
-            "regions": [
-                "SG"
-            ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         },
         {
             "apps": [
@@ -652,6 +650,20 @@
                 "XX-EU"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200326-auction-fix.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX",
+                "non-US"
+            ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
         },
         {
             "apps": [
