@@ -79,7 +79,7 @@ class WikiFactoryLoader {
 		$this->mCommandLine = $wgCommandLineMode || (
 				// SER-3981 RTBF process has been moved to UCP, the tasks need to be run on closed wikis
 				!empty( $server['HTTP_X_DISABLE_CLOSED_WIKI_HANDLING'] )
-				&& !empty( $server['HTTP_X_WIKIA-INTERNAL-REQUEST'] )
+				&& !empty( $server['HTTP_X_WIKIA_INTERNAL_REQUEST'] )
 			);
 
 		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
