@@ -50,7 +50,6 @@ export async function setupAdEngine(
 	});
 
 	await billTheLizardConfigurator.configure();
-	iasPublisherOptimization.load();
 
 	if (context.get('state.showAds')) {
 		const inhibitors = callExternals();
@@ -148,6 +147,7 @@ function callExternals() {
 	inhibitors.push(wadRunner.call());
 
 	permutive.call();
+	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
