@@ -221,6 +221,14 @@
             "value": true
         }
     ],
+    "icFloatingMedrecRecirculationDisabled": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
     "icPrebidNobid": [
         {
             "apps": [
@@ -365,6 +373,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "PL"
             ],
             "value": [
