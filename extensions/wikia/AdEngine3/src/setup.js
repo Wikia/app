@@ -150,14 +150,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
-	context.set('services.iasPublisherOptimization.pubId', '930616');
-	context.set('services.iasPublisherOptimization.slots', [
-    'hivi_leaderboard',
-    'top_leaderboard',
-    'top_boxad',
-    'incontent_boxad_1',
-    'bottom_leaderboard',
-  ]);
 
 	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
