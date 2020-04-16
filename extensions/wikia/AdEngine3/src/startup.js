@@ -11,6 +11,7 @@ import {
 	durationMedia,
 	events,
 	eventService,
+	iasPublisherOptimization,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	permutive,
@@ -49,6 +50,7 @@ export async function setupAdEngine(
 	});
 
 	await billTheLizardConfigurator.configure();
+	iasPublisherOptimization.load();
 
 	if (context.get('state.showAds')) {
 		const inhibitors = callExternals();
