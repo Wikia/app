@@ -546,12 +546,12 @@ export default {
 		iasPublisherOptimization: {
 			pubId: '930616',
 			slots: [
-        'hivi_leaderboard',
-        'top_leaderboard',
-        'top_boxad',
-        'incontent_boxad_1',
-        'bottom_leaderboard',
-      ],
+				'hivi_leaderboard',
+				'top_leaderboard',
+				'top_boxad',
+				'incontent_boxad_1',
+				'bottom_leaderboard',
+			],
 		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
