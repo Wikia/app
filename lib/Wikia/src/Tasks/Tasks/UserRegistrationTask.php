@@ -37,7 +37,7 @@ class UserRegistrationTask extends BaseTask {
 	public function callUserRegistrationHooks( $userRegistrationInfoJson ) {
 		/** @var WebRequest $wgRequest */
 		global $wgRequest; // NOSONAR
-		list( $jsonObject ) = $userRegistrationInfoJson;
+		[ $jsonObject ] = $userRegistrationInfoJson;
 		$userRegistrationInfo = UserRegistrationInfo::newFromJson( $jsonObject);
 
 		$clientIp = $userRegistrationInfo->getClientIp();
@@ -45,7 +45,21 @@ class UserRegistrationTask extends BaseTask {
 		// setup global session
 		$wgRequest->setIP( $clientIp );
 
-		$user = $userRegistrationInfo->toUser();
+		$userId = $userRegistrationInfo->getUserId();
+
+		$user = User::newFromId( $userId );
+		$userExists = $user->loadFromDatabase();
+
+		if ( !$userExists ) {
+			$this->error( 'User is not accessible in database', [
+				'user_id' => $userId
+			] );
+
+			throw new \InvalidArgumentException(sprintf(
+				'User %d is not accessible in database',
+				$userId
+			));
+		}
 
 		if ( !$userRegistrationInfo->isEmailConfirmed() && $this->isEmailAuthenticationRequired ) {
 			$this->sendConfirmationEmail( $user, $userRegistrationInfo );
