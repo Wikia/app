@@ -125,6 +125,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
+	context.set('options.floatingMedrecRecirculationDisabled', instantConfig.get('icFloatingMedrecRecirculationDisabled'));
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(

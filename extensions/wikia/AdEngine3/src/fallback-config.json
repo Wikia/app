@@ -419,7 +419,16 @@
                 "oasis"
             ],
             "regions": [
-                "XX"
+                "AU",
+                "CA",
+                "DE",
+                "ES",
+                "FR",
+                "GB",
+                "JP",
+                "UK",
+                "XX-NA",
+                "XX-SA"
             ],
             "value": true
         }
@@ -601,7 +610,8 @@
                     "countries": [
                         "DK/100",
                         "MY/100",
-                        "CA/100"
+                        "CA/100",
+                        "US/25"
                     ],
                     "dfp_targeting": true
                 }
@@ -645,6 +655,9 @@
                 "muthead",
                 "oasis"
             ],
+            "regions": [
+                "XX-EU"
+            ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         },
         {
@@ -669,8 +682,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-US"
+                "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
         },
@@ -810,21 +822,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icMoatYieldIntelligence": [
-        {
-            "apps": [
-                "f2",
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "GB",
-                "ID",
-                "UK"
             ],
             "value": true
         }
