@@ -34,10 +34,10 @@ class UserRegistrationTask extends BaseTask {
 		$this->isEmailAuthenticationRequired = $wgEmailAuthentication;
 	}
 
-	public function callUserRegistrationHooks( $userRegistrationInfoJson ) {
+	public function callUserRegistrationHooks( $userRegistrationInfoJson, int $retryCount = 0 ) {
 		/** @var WebRequest $wgRequest */
 		global $wgRequest; // NOSONAR
-		[ $jsonObject ] = $userRegistrationInfoJson;
+		list( $jsonObject ) = $userRegistrationInfoJson;
 		$userRegistrationInfo = UserRegistrationInfo::newFromJson( $jsonObject);
 
 		$clientIp = $userRegistrationInfo->getClientIp();
@@ -45,33 +45,32 @@ class UserRegistrationTask extends BaseTask {
 		// setup global session
 		$wgRequest->setIP( $clientIp );
 
-		$userId = $userRegistrationInfo->getUserId();
+		$user = $userRegistrationInfo->toUser();
 
-		$user = User::newFromId( $userId );
-		$userExists = $user->loadFromDatabase();
+		try {
+			if ( !$userRegistrationInfo->isEmailConfirmed() && $this->isEmailAuthenticationRequired ) {
+				$this->sendConfirmationEmail( $user, $userRegistrationInfo );
+			}
 
-		if ( !$userExists ) {
-			$this->error( 'User is not accessible in database', [
-				'user_id' => $userId
-			] );
+			$this->updateUserCreationLog( $user );
 
-			throw new \InvalidArgumentException(sprintf(
-				'User %d is not accessible in database',
-				$userId
-			));
+			// For Facebook etc. registrations, the user already has a valid confirmed email
+			$byEmail = $userRegistrationInfo->isEmailConfirmed();
+
+			// notify extensions
+			Hooks::run( 'AddNewAccount', [ $user, $byEmail ] );
+		} catch (\Exception $e) {
+			$this->error('Failed to execute UserRegistrationTask, retrying', [
+				'user_id' => $userRegistrationInfo->getUserId(),
+				'wiki_id' => $userRegistrationInfo->getWikiId(),
+				'retry_count' => $retryCount
+			]);
+			if ($retryCount < 10) {
+				$task = self::newLocalTask();
+				$task->call( 'callUserRegistrationHooks', $userRegistrationInfoJson, $retryCount + 1 );
+				$task->queue();
+			}
 		}
-
-		if ( !$userRegistrationInfo->isEmailConfirmed() && $this->isEmailAuthenticationRequired ) {
-			$this->sendConfirmationEmail( $user, $userRegistrationInfo );
-		}
-
-		$this->updateUserCreationLog( $user );
-
-		// For Facebook etc. registrations, the user already has a valid confirmed email
-		$byEmail = $userRegistrationInfo->isEmailConfirmed();
-		
-		// notify extensions
-		Hooks::run( 'AddNewAccount', [ $user, $byEmail ] );
 	}
 
 	private function sendConfirmationEmail( User $user, UserRegistrationInfo $userRegistrationInfo ) {
