@@ -56,7 +56,7 @@ class UserApiController extends WikiaApiController {
 				'url' => AvatarService::getUrl( $userName ),
 				'numberofedits' => (int) $user->getEditCount(),
 				'is_subject_to_coppa' => (
-					$currentUser->equals( $user ) ? $this->userInfo->isSubjectToCoppa( $user ) : null
+					$currentUser->equals( $user ) ? $currentUser->isSubjectToCoppa() : null
 				),
 			);
 
