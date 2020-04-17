@@ -11,6 +11,7 @@ import {
 	durationMedia,
 	events,
 	eventService,
+	iasPublisherOptimization,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	permutive,
@@ -146,6 +147,7 @@ function callExternals() {
 	inhibitors.push(wadRunner.call());
 
 	permutive.call();
+	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);

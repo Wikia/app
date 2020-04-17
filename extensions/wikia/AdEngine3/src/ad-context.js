@@ -543,6 +543,16 @@ export default {
 		externalLogger: {
 			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
 		},
+		iasPublisherOptimization: {
+			pubId: '930616',
+			slots: [
+				'hivi_leaderboard',
+				'top_leaderboard',
+				'top_boxad',
+				'incontent_boxad_1',
+				'bottom_leaderboard',
+			],
+		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
