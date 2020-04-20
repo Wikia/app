@@ -30,11 +30,14 @@ class ForumWikiIds extends Maintenance {
 			->JOIN( "city_variables" )
 			->ON( 'city_list.city_id', 'city_variables.cv_city_id' )
 			->WHERE( 'cv_variable_id' )
-			->EQUAL_TO( 1195 )
+			->IN( [1195, 1581] )
 			->AND_( 'cv_value' )
 			->EQUAL_TO( 'b:1;' )
 			->AND_( 'city_public' )
 			->EQUAL_TO( WikiFactory::PUBLIC_WIKI )
+			->GROUP_BY( 'city_id' )
+			->HAVING( 'count(*)' )
+			->GREATER_THAN( 1 )
 			->runLoop(
 				$db,
 				function ( &$cities, $row ) use ( $fh ) {
