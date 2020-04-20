@@ -49,7 +49,7 @@ class FollowsFinder {
 		}
 
 		foreach($pageTitlesChunks as $part) {
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			$dbh->ping();
 			$inserts = [];
 			( new \WikiaSQL() )->SELECT_ALL()

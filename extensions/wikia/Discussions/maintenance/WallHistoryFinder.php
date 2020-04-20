@@ -62,7 +62,7 @@ class WallHistoryFinder {
 		$pageIdsChunks = array_chunk($this->pageIdsInNamespace, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			$dbh->ping();
 			$inserts = [];
 			( new \WikiaSQL() )->SELECT( ...self::COLUMNS )

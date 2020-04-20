@@ -58,7 +58,7 @@ class DumpUtils {
 		return $insert;
 	}
 
-	public static function getDBSafe( $db ) {
+	public static function getDBWithRetries( $db ) {
 
 		$tries = 0;
 		$acquired = false;

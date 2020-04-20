@@ -173,9 +173,13 @@ class ForumDumper {
 
 		foreach ( $pageIdsChunks as $part ) {
 			$inserts = [];
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			$dbh->ping();
-			( new \WikiaSQL() )->SELECT( "page.*, comments_index.*" )
+			( new \WikiaSQL() )->SELECT( "page.page_id, page.page_namespace, page.page_title,
+			 page.page_is_redirect, page.page_is_new, page.page_touched, page.page_latest, page.page_len, 
+			 comments_index.parent_page_id, comments_index.comment_id, comments_index.parent_comment_id, 
+			 comments_index.last_child_comment_id, comments_index.archived, comments_index.deleted, 
+			 comments_index.removed, comments_index.created_at, comments_index.last_touched" )
 				->FROM( self::TABLE_PAGE )
 				->LEFT_JOIN( self::TABLE_COMMENTS )
 				->ON( 'page_id', 'comment_id' )
@@ -316,7 +320,7 @@ class ForumDumper {
 			$queryResult = null;
 
 			do {
-				$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+				$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 				$dbh->ping();
 				$inserts = [];
 				( new \WikiaSQL() )->SELECT( "revision.*, text.*" )
@@ -418,10 +422,10 @@ class ForumDumper {
 		$topicsNumber = 0;
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			$dbh->ping();
 			$inserts = [];
-			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.*" )
+			$queryResult = ( new \WikiaSQL() )->SELECT( "wall_related_pages.comment_id, wall_related_pages.page_id" )
 				->FROM( self::TABLE_WALL_RELATED_PAGES )
 				->JOIN( self::TABLE_PAGE )
 				->AS_( 'p' )
@@ -632,7 +636,7 @@ class ForumDumper {
 		$pageIdsChunks = array_chunk($pageIds, 500);
 
 		foreach ($pageIdsChunks as $part) {
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			$dbh->ping();
 			$inserts = [];
 			( new \WikiaSQL() )->SELECT_ALL()
@@ -732,7 +736,7 @@ class ForumDumper {
 
 		if ( $pageIdsFixed == null || empty( $pageIdsFixed ) || $minIndex == -1 ) {
 			$display_order = 0;
-			$dbh = DumpUtils::getDBSafe( DB_SLAVE );
+			$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 			( new \WikiaSQL() )->SELECT( "page.page_id, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 				->FROM( self::TABLE_PAGE )
 				->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
