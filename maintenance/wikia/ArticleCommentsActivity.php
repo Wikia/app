@@ -45,7 +45,13 @@ class ArticleCommentsActivity extends Maintenance {
 				'page_namespace' => $namespaces,
 			] );
 
-			echo("Result;${wgCityId};${wgSitename};${commentsCount}\n");
+			$namespacesStr = implode(',', $namespaces);
+			// Select count(*) from ( select DISTINCT SUBSTRING_INDEX(page_title, "/@comment-", 1) as db_key, page_namespace from page where page_namespace in (1, 501, 15) and page_title like '%@comment-%') as initial_query;
+			$pagesWithComments = $dbr->query(
+				"select count(*) as cnt from (select DISTINCT SUBSTRING_INDEX(page_title, \"/@comment-\", 1) as db_key, page_namespace from page where page_namespace in (${namespacesStr}) and page_title like '%@comment-%') as initial_query"
+			)->fetchRow()['cnt'];
+
+			echo("Result;${wgCityId};${wgSitename};${commentsCount};${pagesWithComments}\n");
 		}
 	}
 }
