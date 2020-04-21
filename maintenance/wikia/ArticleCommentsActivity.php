@@ -10,13 +10,10 @@ ini_set( 'error_reporting', E_NOTICE );
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
-// cat wikis.txt | while read line ; do SERVER_ID=$line php maintenance/wikia/ArticleCommentsActivity.php ; done > results_raw.txt
-// SERVER_ID=1308778 php maintenance/wikia/ArticleCommentsActivity.php
-// cat results_raw.txt | grep -Eo ^Result.+$ > results_processed.csv
+// SERVER_ID=1308778 php maintenance/wikia/GenerateWikiIdsList.php
+// cat wikis.txt | while read line ; do SERVER_ID=$line php maintenance/wikia/ArticleCommentsActivity.php ; done | grep --line-buffered -Eo ^Result.+$ > results_raw.txt
 
-/**
- * Class MigrateWikiFactoryToHttps
- */
+
 class ArticleCommentsActivity extends Maintenance {
 
 	protected $dryRun  = false;
@@ -32,26 +29,23 @@ class ArticleCommentsActivity extends Maintenance {
 	public function execute() {
 		global $wgEnableArticleCommentsExt;
 
-		// select count(*) from page where page_title like '%/@comment-%' and page_namespace not in (1200,1201,110,111,106,107,2000,2001,2002) and page_touched > 20190801000000;
+		// select count(*) from page where page_title like '%/@comment-%' and page_namespace in
+		// $comments namespaces;
 		if ( !empty( $wgEnableArticleCommentsExt ) ) {
-			global $wgCityId, $wgSitename;
+			global $wgCityId, $wgSitename, $wgArticleCommentsNamespaces, $wgContentNamespaces;
 
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$activityCount = $dbr->selectField( 'page', 'count(*) as cnt', [
-					'page_title like \'%/@comment-%\'',
-					'page_namespace not in (1200,1201,110,111,106,107,2000,2001,2002)',
-					'page_touched > 20190801000000',
-				] );
+			$namespaces = array_map(function($ns) {
+				return MWNamespace::getTalk($ns);
+			}, empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces);
 
-			if ($activityCount > 0) {
-				$commentsCount = $dbr->selectField( 'page', 'count(*) as cnt', [
-					'page_title like \'%/@comment-%\'',
-					'page_namespace not in (1200,1201,110,111,106,107,2000,2001,2002)',
-				] );
+			$commentsCount = $dbr->selectField( 'page', 'count(*) as cnt', [
+				'page_title like \'%/@comment-%\'',
+				'page_namespace' => $namespaces,
+			] );
 
-				echo("Result;${wgCityId};${wgSitename};${activityCount};${commentsCount}\n");
-			}
+			echo("Result;${wgCityId};${wgSitename};${commentsCount}\n");
 		}
 	}
 }
