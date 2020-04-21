@@ -543,6 +543,18 @@
             ]
         }
     ],
+    "icA9VideoBidsCleaning": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidIndexExchange": [
         {
             "apps": [
@@ -623,7 +635,7 @@
                         "DK/100",
                         "MY/100",
                         "CA/100",
-                        "US/25"
+                        "US/50"
                     ],
                     "dfp_targeting": true
                 }
@@ -668,7 +680,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX-EU"
+                "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         },
