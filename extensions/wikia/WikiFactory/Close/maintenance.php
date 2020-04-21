@@ -28,6 +28,7 @@ class CloseWikiMaintenance extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'first', 'Run only once for first wiki in queue' );
+		$this->addOption( 'from', 'Starting offset for wiki to be closed' );
 		$this->addOption( 'dry-run', 'List wikis that will be removed and quit' );
 		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
 		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
@@ -53,12 +54,14 @@ class CloseWikiMaintenance extends Maintenance {
 		$first = $this->hasOption( 'first' );
 		$sleep = $this->getOption( 'sleep', 15 );
 		$limit = $this->getOption( 'limit', false );
+		$from = $this->getOption( 'from', 0 );
 		$cluster = $this->getOption( 'cluster', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first' => $first,
 			'limit' => $limit,
+			'from' => $from,
 		] );
 
 		// build database query
@@ -71,7 +74,10 @@ class CloseWikiMaintenance extends Maintenance {
 		 */
 		if ( !$first ) {
 			if ( is_numeric( $limit ) ) {
-				$opts["LIMIT"] = $limit;
+				$opts['LIMIT'] = $limit;
+			}
+			if ( is_numeric( $from ) && $from > 0 ) {
+				$opts['OFFSET'] = $from;
 			}
 		}
 
