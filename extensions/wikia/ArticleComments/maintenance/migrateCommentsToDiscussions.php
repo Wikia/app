@@ -1,14 +1,4 @@
 <?php
-// 0. Enable ReadOnly mode
-// 1. Get pages with comments
-// 1.1 select DISTINCT SUBSTRING_INDEX(page_title, "/@comment-", 1) as db_key, page_namespace from
-//     page where page_namespace in (${commentsNamespaces}) and page_title like '%@comment-%'
-// 1.2 map namespace from talk to page namespace MWNamespaces::getSubject
-// 1.3 map page name to parent page id (db query)
-// 1.4 create Title objects from page ids
-// 1.5 get deleted comments for last 3 months from archive table?
-// 2 Get comments for titles (ArticleCommentList class?)
-// 3 Save it to discussions
 
 /**
  * migrates article comments data to discussions service, see https://wikia-inc.atlassian.net/browse/IW-3046
@@ -18,6 +8,11 @@
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class MigrateCommentsToDiscussions extends Maintenance {
+	/**
+	 * @var DatabaseBase|null
+	 */
+	private $dbc;
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "migrates article comments data to discussions service";
@@ -40,10 +35,39 @@ class MigrateCommentsToDiscussions extends Maintenance {
 			return;
 		}
 
+//		$this->dbc = self::getDiscussionConnection();
+
+		foreach ( $pagesWithComments as $p ) {
+			$title = Title::newFromText( $p['db_key'], $p['ns'] );
+			$commentsForPage = $this->getCommentsForPage( $p['db_key'], $p['ns'] );
+
+		}
 		$commentsForPage = $this->getCommentsForPage( 'Comments_test', 1);
 		var_dump($commentsForPage);
 
 		$this->output("\n\n");
+	}
+
+	/**
+	 * @param Title $articleTitle
+	 * @param array $comments
+	 * [
+	 *  560 => [
+		 'level1' => "560",
+		 'level2' => [
+		   564 => "564",
+		   563 => "563"
+		 ]
+		]
+	 */
+	private function migrateComments( Title $articleTitle, array $comments ) {
+		// get data for comments based on provided page ids of comments on first and second level
+		// transaction start
+		// create thread
+		// create replies
+		// update first post id in thread
+		// update post count in thread
+		// transaction end
 	}
 
 	/**
@@ -87,12 +111,14 @@ class MigrateCommentsToDiscussions extends Maintenance {
 	}
 
 	/**
+	 * based on ArticleCommentsList::getCommentList
+	 *
 	 * @param string $dbKey
 	 * @param int $ns
-	 * @return array|bool|Object
+	 * @return array
 	 * @throws DBUnexpectedError
 	 */
-	private function getCommentsForPage( string $dbKey, int $ns ) {
+	private function getCommentsForPage( string $dbKey, int $ns ): array {
 		global $wgMemc;
 
 		$memckey = self::getCacheKey( $dbKey, $ns );
@@ -100,19 +126,20 @@ class MigrateCommentsToDiscussions extends Maintenance {
 		$commentsAll = $wgMemc->get( $memckey );
 
 		if ( empty( $commentsAll ) ) {
-			$pages = [ ];
-			$subpages = [ ];
+			$pages = [];
+			$subpages = [];
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$table = [ 'page' ];
-			$vars = [ 'page_id', 'page_title' ];
-			$conds = [
-				"page_title" . $dbr->buildLike( sprintf( "%s/%s", $dbKey, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ),
-				$namspace = MWNamespace::getTalk( $ns )
-			];
-			$options = [ 'ORDER BY' => 'page_id' ];
-
-			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options );
+			$res = $dbr->select(
+				'page',
+				[ 'page_id', 'page_title' ],
+				[
+					"page_title" . $dbr->buildLike( sprintf( "%s/%s", $dbKey, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ),
+					$namspace = MWNamespace::getTalk( $ns )
+				],
+				__METHOD__,
+				[ 'ORDER BY' => 'page_id' ]
+			);
 
 			$helperArray = [];
 			while ( $row = $dbr->fetchObject( $res ) ) {
@@ -150,8 +177,186 @@ class MigrateCommentsToDiscussions extends Maintenance {
 		return $commentsAll;
 	}
 
-	static private function getCacheKey( string $dbKey, int $ns ) {
+	private static function getCacheKey( string $dbKey, int $ns ) {
 		return wfMemcKey( 'articlecomment', 'comm', md5( $dbKey . $ns . ArticleCommentList::CACHE_VERSION ) );
+	}
+
+	private function createThread( int $articleId, int $userId, string $createdAt ): int {
+		global $wgCityId;
+
+		// create new thread
+		$this->dbc->insert(
+			'thread',
+			[
+				'site_id' => $wgCityId,
+				'created_by' => $userId,
+				'created_at' => $createdAt,
+				'container_type' => 'ARTICLE_COMMENT',
+				'container_id' => $articleId,
+				'first_post_id' => 0, // will be filled later
+				'source' => 17, // hardcoded in discussions service as wall import
+			],
+			__METHOD__
+		);
+
+		// fetch threadId and return it
+		return $this->dbc->insertId();
+	}
+
+	/**
+	 * Create reply in `post` and` post_revision` and update `post.post_revision_id` accordingly
+	 *
+	 * @param string $threadId
+	 * @param int $userId
+	 * @param string $ipAddress
+	 * @param string $createdAt
+	 * @param string $html
+	 * @param int position - index in thread
+	 *
+	 * @return string postId
+	 */
+	private function createReply( $threadId, $userId, $ipAddress, $createdAt, $html, $position ) {
+		global $wgCityId;
+
+		$storedIpAddress = empty( $ipAddress ) ? null : inet_pton( $ipAddress );
+		if ( $storedIpAddress === false ) {
+			// Store explicitly as NULL
+			$storedIpAddress = null;
+		}
+
+		// create reply, cache the Id
+		$this->dbc->insert(
+			'post',
+			[
+				'site_id' => $wgCityId,
+				'created_by' => $userId,
+				'created_ip' => $storedIpAddress,
+				'created_at' => $createdAt,
+				'thread_id' => $threadId,
+				'position' => $position,
+			],
+			__METHOD__
+		);
+
+		// fetch reply Id
+		$replyId = $this->dbc->insertId();
+
+		// create revision, fetch the Id
+		$this->dbc->insert(
+			'post_revision',
+			[
+				'created_by' => $userId,
+				'created_at' => $createdAt,
+				'created_ip' => $storedIpAddress,
+				'post_id' => $replyId,
+				'raw_content' => '',
+				'rendered_content' => $html,
+			],
+			__METHOD__
+		);
+
+		// fetch reply Id
+		$revisionId = $this->dbc->insertId();
+
+		// update reply with revision Id
+		$this->dbc->update(
+			'post',
+			[
+				'revision_id' => $revisionId,
+			],
+			[
+				'id' => $replyId,
+			],
+			__METHOD__
+		);
+
+		// return reply Id
+		return $replyId;
+	}
+
+	/**
+	 * Update `thread` with proper `first_post_id` for first reply
+	 *
+	 * @param string $threadId
+	 * @param string $replyId
+	 */
+	private function updateFirstPostId( $threadId, $replyId ) {
+		$this->dbc->update(
+			'thread',
+			[
+				'first_post_id' => $replyId,
+			],
+			[
+				'id' => $threadId,
+			],
+			__METHOD__
+		);
+	}
+
+	/**
+	 * Update the `thread` table with proper post counter
+	 */
+	private function updateThreadsWithReplyCount( $threadId ) {
+		$postCount = $this->dbc->selectRowCount(
+			'post',
+			'1',
+			[
+				'thread_id' => $threadId,
+				'deleted_ind' => 0,
+			],
+			__METHOD__
+		);
+		$this->dbc->update(
+			'thread',
+			[
+				'post_count' => $postCount,
+			],
+			[
+				'id' => $threadId,
+			],
+			__METHOD__
+		);
+	}
+
+	/**
+	 * Get discussions' connection
+	 */
+	private static function getDiscussionConnection( ) {
+		return \DatabaseBase::factory('mysql', [
+			'host' => $_ENV['MESSAGE_WALL_MIGRATION_HOST'],
+			'user' => $_ENV['MESSAGE_WALL_MIGRATION_USER'],
+			'password' => $_ENV['MESSAGE_WALL_MIGRATION_PASSWORD'],
+			'dbname' => self::getDiscussionShard(),
+		]);
+	}
+
+	/**
+	 * Get the shard number (db name) for current wiki
+	 */
+	private static function getDiscussionShard() {
+		global $wgCityId;
+		$dbc = DatabaseBase::factory('mysql', [
+			'host' => $_ENV['MESSAGE_WALL_MIGRATION_HOST'],
+			'user' => $_ENV['MESSAGE_WALL_MIGRATION_USER'],
+			'password' => $_ENV['MESSAGE_WALL_MIGRATION_PASSWORD'],
+			'dbname' => 'discussion_config',
+		]);
+		$row = $dbc->selectRow(
+			[
+				'sh' => 'shard',
+				'si' =>'site',
+			],
+			[ 'sh.schema_name' ],
+			[
+				'si.id' => $wgCityId,
+			],
+			__METHOD__,
+			[],
+			[
+				'si' => [ 'LEFT JOIN', [ 'sh.id = si.shard_id' ] ],
+			]
+		);
+		return $row->schema_name;
 	}
 }
 
