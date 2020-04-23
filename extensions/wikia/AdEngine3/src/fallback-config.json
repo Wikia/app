@@ -234,7 +234,12 @@
             "apps": [
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL",
+                "US-CA"
+            ],
+            "sampling": 50.0,
+            "value": true
         }
     ],
     "icPrebidNobid": [
@@ -524,7 +529,8 @@
                 "5339327016",
                 "5339327022",
                 "5340108841",
-                "5340108844"
+                "5340108844",
+                "5355041410"
             ]
         }
     ],
@@ -550,6 +556,7 @@
                 "oasis"
             ],
             "regions": [
+                "FR",
                 "PL"
             ],
             "value": true
@@ -635,7 +642,7 @@
                         "DK/100",
                         "MY/100",
                         "CA/100",
-                        "US/50"
+                        "US/100"
                     ],
                     "dfp_targeting": true
                 }
