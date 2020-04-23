@@ -25,7 +25,7 @@ define('wikia.articleVideo.featuredVideo.attribution', [
 				var attributionContainer = $('.featured-video__attribution-container'),
 					item = data.item;
 
-				if (item.username && item.userUrl && item.userAvatarUrl) {
+				if (item.username && item.userUrl) {
 					var params = {
 							username: item.username,
 							userUrl: item.userUrl,
