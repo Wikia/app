@@ -183,8 +183,12 @@ class CloseWikiMaintenance extends Maintenance {
 
 						$newFlags =
 							$newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
-					}
-					catch ( Exception $e ) {
+					} catch ( ConfigException $e ) {
+						$this->info( 'Skipping image archive creation', [
+							'exception' => $e->getMessage(),
+							'city_id' => $cityid,
+						] );
+					} catch ( Exception $e ) {
 						$this->error( "Can't create tar archive with images", [
 							'exception' => $e->getMessage(),
 							'city_id' => $cityid,
