@@ -2241,6 +2241,11 @@ $wgEnableAPI = true;
 $wgEnableArticleCommentsExt = false;
 
 /**
+ * Used to put article comments extension in readonly mode
+ */
+$wgArticleCommentsReadOnlyMode = false;
+
+/**
  * Enable ArticleVideo extension.
  * @see extensions/wikia/ArticleVideo
  * @see extensions/wikia/SiteWideMessages
