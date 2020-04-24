@@ -49,6 +49,7 @@ class CloseWikiMaintenance extends Maintenance {
 	 * 4. remove images
 	 *
 	 * @access public
+	 * @throws DBUnexpectedError
 	 */
 	public function execute() {
 		global $IP;
@@ -173,7 +174,7 @@ class CloseWikiMaintenance extends Maintenance {
 									unlink( $source );
 
 									// SUS-6077 | move to a next wiki instead of failing the entire process
-									continue;
+									continue 2;
 								}
 
 								$this->info( "{$source} copied to S3 Amazon" );
