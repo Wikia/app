@@ -35,11 +35,9 @@ spec:
               limits:
                 cpu: "6"
                 memory: 1200Mi
-                ephemeral-storage: "200Gi"
               requests:
                 cpu: "2"
                 memory: 800Mi
-                ephemeral-storage: "200Gi"
             args:
 ${args}
           restartPolicy: Never
