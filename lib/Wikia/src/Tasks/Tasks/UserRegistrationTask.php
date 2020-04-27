@@ -10,6 +10,7 @@ use UserLoginHelper;
 use UserRegistrationInfo;
 use WebRequest;
 use Wikia\Logger\Loggable;
+use Wikia\Tasks\Queues\Queue;
 
 /**
  * Class UserRegistrationTask notifies extensions (via AddNewAccount hook) on user registration
@@ -37,7 +38,7 @@ class UserRegistrationTask extends BaseTask {
 	public function callUserRegistrationHooks( $userRegistrationInfoJson, int $retryCount = 0 ) {
 		/** @var WebRequest $wgRequest */
 		global $wgRequest; // NOSONAR
-		list( $jsonObject ) = $userRegistrationInfoJson;
+		[ $jsonObject ] = $userRegistrationInfoJson;
 		$userRegistrationInfo = UserRegistrationInfo::newFromJson( $jsonObject);
 
 		$clientIp = $userRegistrationInfo->getClientIp();
@@ -69,6 +70,12 @@ class UserRegistrationTask extends BaseTask {
 				$task = self::newLocalTask();
 				$task->call( 'callUserRegistrationHooks', $userRegistrationInfoJson, $retryCount + 1 );
 				$task->queue();
+			} else {
+				$this->error('Failed to execute UserRegistrationTask, reached retry limit', [
+					'user_id' => $userRegistrationInfo->getUserId(),
+					'wiki_id' => $userRegistrationInfo->getWikiId(),
+					'retry_count' => $retryCount
+				]);
 			}
 		}
 	}
