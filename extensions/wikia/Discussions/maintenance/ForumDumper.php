@@ -761,4 +761,39 @@ class ForumDumper {
 
 		return $pageIdsToOrder;
 	}
+
+	public function getFirstRevCreatorByLatestRevision( $fh = null, $pageIdsFixed = [] ) {
+
+		$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
+		$dbh->ping();
+		$inserts = [];
+		( new \WikiaSQL() )->SELECT( "p.page_latest, r.rev_user_text, r.rev_deleted, r.rev_user" )
+			->FROM( self::TABLE_PAGE )
+			->AS_( 'p' )
+			->LEFT_JOIN( self::TABLE_COMMENTS )
+			->AS_( 'c' )
+			->ON( 'p.page_id', 'c.comment_id' )
+			->LEFT_JOIN( self::TABLE_REVISION )
+			->AS_( 'r' )
+			->ON( 'c.first_rev_id', 'r.rev_id' )
+			->WHERE( 'p.page_id' )
+			->IN( $pageIdsFixed )
+			->runLoop(
+				$dbh,
+				function ( $result ) use ( $dbh, $fh ) {
+
+					while ($row = $result->fetchObject()) {
+
+						$dump = $row->page_latest . ';' . $row->rev_user . ';' . $this->getContributorType( $row ) . "\n";
+						fwrite( $fh, $dump );
+					}
+
+					$dbh->freeResult( $result );
+				},
+				false, false
+			);
+
+		$dbh->closeConnection();
+		wfGetLB( false )->closeConnection( $dbh );
+	}
 }
