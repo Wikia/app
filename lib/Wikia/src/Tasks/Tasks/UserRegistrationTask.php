@@ -69,9 +69,14 @@ class UserRegistrationTask extends BaseTask {
 			if ($retryCount < 10) {
 				$task = self::newLocalTask();
 				$task->call( 'callUserRegistrationHooks', $userRegistrationInfoJson, $retryCount + 1 );
-				$task->queue();
+				$taskId = $task->queue();
+				$this->info('Failed to execute UserRegistrationTask, dispatched task', [
+					'user_id' => $userRegistrationInfo->getUserId(),
+					'wiki_id' => $userRegistrationInfo->getWikiId(),
+					'task_id' => $taskId
+				]);
 			} else {
-				$this->error('Failed to execute UserRegistrationTask, reached retry limit', [
+				$this->info('Failed to execute UserRegistrationTask, reached retry limit', [
 					'user_id' => $userRegistrationInfo->getUserId(),
 					'wiki_id' => $userRegistrationInfo->getWikiId(),
 					'retry_count' => $retryCount
