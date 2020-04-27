@@ -1654,6 +1654,7 @@ $wgDefaultUserOptions = [
 	'showtoolbar' => 1,
 	'skin' => 'oasis',
 	'stubthreshold' => 0,
+	'timecorrection' => 'System|0',
 	'thumbsize' => 2,
 	'underline' => 2,
 	'uselivepreview' => 0,
