@@ -73,7 +73,7 @@ class UserRegistrationTask extends BaseTask {
 				$this->info('Failed to execute UserRegistrationTask, dispatched task', [
 					'user_id' => $userRegistrationInfo->getUserId(),
 					'wiki_id' => $userRegistrationInfo->getWikiId(),
-					'task_id' => $taskId
+					'dispatched_task_id' => $taskId
 				]);
 			} else {
 				$this->info('Failed to execute UserRegistrationTask, reached retry limit', [
