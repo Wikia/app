@@ -144,6 +144,18 @@
             "value": true
         }
     ],
+    "icIASPublisherOptimization": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "PL",
+                "US-NY"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidPubmatic": [
         {
             "apps": [
@@ -226,7 +238,11 @@
             "apps": [
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "XX"
+            ],
+            "sampling": 50.0,
+            "value": true
         }
     ],
     "icPrebidNobid": [
@@ -419,7 +435,16 @@
                 "oasis"
             ],
             "regions": [
-                "XX"
+                "AU",
+                "CA",
+                "DE",
+                "ES",
+                "FR",
+                "GB",
+                "JP",
+                "UK",
+                "XX-NA",
+                "XX-SA"
             ],
             "value": true
         }
@@ -503,7 +528,12 @@
                 "5344988584",
                 "5345336345",
                 "5345336348",
-                "5348167401"
+                "5348167401",
+                "5339327016",
+                "5339327022",
+                "5340108841",
+                "5340108844",
+                "5355041410"
             ]
         }
     ],
@@ -520,6 +550,20 @@
                 "icPrebidSendAllBids_A_95:send_all_bids_a",
                 "icPrebidSendAllBids_B_5:send_all_bids_b"
             ]
+        }
+    ],
+    "icA9VideoBidsCleaning": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "FR",
+                "PL",
+                "SE"
+            ],
+            "value": true
         }
     ],
     "icPrebidIndexExchange": [
@@ -601,7 +645,8 @@
                     "countries": [
                         "DK/100",
                         "MY/100",
-                        "CA/100"
+                        "CA/100",
+                        "US/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -645,6 +690,9 @@
                 "muthead",
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         },
         {
@@ -669,8 +717,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-US"
+                "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
         },
@@ -711,6 +758,21 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icIxIdentityLibrary": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "NZ"
             ],
             "value": true
         }
@@ -810,21 +872,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icMoatYieldIntelligence": [
-        {
-            "apps": [
-                "f2",
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "GB",
-                "ID",
-                "UK"
             ],
             "value": true
         }
