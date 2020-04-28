@@ -16,7 +16,7 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
                 + '</p>';
         }
 
-        return '<div class="aff-unit__wrapper">'
+        return '<div class="aff-unit__wrapper" data-campaign="' + options.campaign + '" data-category="' + options.category + '">'
             + '<a class="aff-unit__link" href="' + options.link + '" target="_blank">'
             + '<div class="aff-unit__image-wrapper" style="background-image: url(' + options.image + ')"></div>'
             + '<div class="aff-unit__info">'

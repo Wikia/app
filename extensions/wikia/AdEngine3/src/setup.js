@@ -122,8 +122,10 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
+	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
+	context.set('options.floatingMedrecRecirculationDisabled', instantConfig.get('icFloatingMedrecRecirculationDisabled'));
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -146,9 +148,10 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
+	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
+	context.set('services.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 
 	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
@@ -158,6 +161,11 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
+
+	context.set(
+		'options.jwplayerA9LoggerErrorCodes',
+		instantConfig.get('icA9LoggerErrorCodes'),
+	);
 
 	setupPageLevelTargeting(context.get('wiki'));
 

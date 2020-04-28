@@ -50,7 +50,7 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'downloadyourdata-email' => 'E-Mail-Adresse',
 	'downloadyourdata-desc' => 'Ermöglicht Benutzern das Herunterzuladen ihrer Daten',
-	'downloadyourdata-intro' => 'Klicke auf die Schaltfläche unten, um eine .CSV-Kopie deiner FANDOM-Daten herunterzuladen. Diese Daten beinhalten deinen Benutzernamen, Benutzerkennung, deinen echten Name (falls angegeben), E-Mail-Adresse, Erstellungsdatum des Kontos und einen Link zu einer Liste deiner Beiträge.',
+	'downloadyourdata-intro' => 'Klicke auf die Schaltfläche unten, um eine .CSV-Kopie deiner Fandom-Daten herunterzuladen. Diese Daten beinhalten deinen Benutzernamen, Benutzerkennung, deinen echten Name (falls angegeben), E-Mail-Adresse, Erstellungsdatum des Kontos und einen Link zu einer Liste deiner Beiträge.',
 	'downloadyourdata-user-not-found' => "Benutzer ''$1'' wurde nicht gefunden",
 	'downloadyourdata-registration' => 'Benutzerregistrierung',
 	'downloadyourdata-userid' => 'Benutzerkennung',
@@ -67,19 +67,20 @@ $messages['de'] = array(
 	'downloadyourdata-birthdate' => 'Geburtsdatum',
 	'downloadyourdata-profile-gender' => 'Geschlecht (Profil)',
 	'downloadyourdata-birthday-value' => '$2 $1',
+	'downloadyourdata-anon-error' => 'Melde dich bitte an, um deine Daten herunterzuladen',
 );
 
 $messages['es'] = array(
 	'downloadyourdata-email' => 'Correo electrónico',
 	'downloadyourdata-desc' => 'Permite a los usuarios descargar sus datos',
-	'downloadyourdata-intro' => 'Haz clic en el botón de abajo para descargar una copia .CSV de tus datos en FANDOM. La información que proveemos es nombre de usuario, ID de usuario, nombre real (si ha sido entregado), correo electrónico, fecha de creación de cuenta y un enlace a una lista de tus comentarios.',
-	'downloadyourdata-user-not-found' => "Usuario '' $1 '' no encontrado",
+	'downloadyourdata-intro' => 'Haz clic en el botón de abajo para descargar una copia .CSV de tus datos en FANDOM. La información que proporcionamos es: nombre de usuario, ID de usuario, nombre real (si se aportó), correo electrónico, fecha de creación de cuenta y un enlace a una lista de tus comentarios.',
+	'downloadyourdata-user-not-found' => "No se ha encontrado al usuario '' $1 ''",
 	'downloadyourdata-registration' => 'Registro de usuario',
 	'downloadyourdata-userid' => 'Identificador de usuario',
 	'downloadyourdata' => 'Descarga tus datos',
 	'downloadyourdata-realname' => 'Nombre real',
 	'downloadyourdata-username' => 'Nombre de usuario',
-	'downloadyourdata-user-activity-link' => 'Enlace a actividad de usuario',
+	'downloadyourdata-user-activity-link' => 'Enlace a la actividad del usuario',
 	'downloadyourdata-button-text' => 'Descargar datos',
 	'downloadyourdata-gender' => 'Género',
 	'downloadyourdata-username-placeholder' => 'Nombre de usuario opcional',
@@ -89,6 +90,7 @@ $messages['es'] = array(
 	'downloadyourdata-birthdate' => 'Fecha de nacimiento',
 	'downloadyourdata-profile-gender' => 'Género (perfil)',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => 'Inicia sesión para descargar tus datos',
 );
 
 $messages['fr'] = array(
@@ -111,6 +113,7 @@ $messages['fr'] = array(
 	'downloadyourdata-birthdate' => 'Date de naissance',
 	'downloadyourdata-profile-gender' => 'Sexe (profil)',
 	'downloadyourdata-birthday-value' => '$2 $1',
+	'downloadyourdata-anon-error' => 'Veuillez vous connecter pour télécharger vos données.',
 );
 
 $messages['it'] = array(
@@ -133,12 +136,13 @@ $messages['it'] = array(
 	'downloadyourdata-birthdate' => 'Data di nascita',
 	'downloadyourdata-profile-gender' => 'Sesso (profilo)',
 	'downloadyourdata-birthday-value' => '$2 $1',
+	'downloadyourdata-anon-error' => 'Accedi per poter scaricare i tuoi dati, per favore',
 );
 
 $messages['ja'] = array(
 	'downloadyourdata-email' => 'メールアドレス',
 	'downloadyourdata-desc' => 'ユーザーが自分のデータをダウンロードできます',
-	'downloadyourdata-intro' => '下のボタンをクリックすると、自身のFANDOMデータのコピーをCSV形式でダウンロードできます。弊社が提供するデータは、ユーザー名、ユーザーID、本名（提供されている場合）、メールアドレス、アカウント作成日、投稿リストへのリンクになります。',
+	'downloadyourdata-intro' => '下のボタンをクリックすると、自身のFandomデータのコピーをCSV形式でダウンロードできます。弊社が提供するデータは、ユーザー名、ユーザーID、本名（提供されている場合）、メールアドレス、アカウント作成日、投稿リストへのリンクになります。',
 	'downloadyourdata-user-not-found' => "ユーザー''$1''は見つかりませんでした",
 	'downloadyourdata-registration' => 'ユーザー登録日',
 	'downloadyourdata-userid' => 'ユーザーID',
@@ -155,6 +159,7 @@ $messages['ja'] = array(
 	'downloadyourdata-birthdate' => '生年月日',
 	'downloadyourdata-profile-gender' => '性別（プロフィール）',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => 'データをダウンロードするにはログインしてください',
 );
 
 $messages['pl'] = array(
@@ -177,6 +182,7 @@ $messages['pl'] = array(
 	'downloadyourdata-birthdate' => 'Data urodzenia',
 	'downloadyourdata-profile-gender' => 'Płeć (profil)',
 	'downloadyourdata-birthday-value' => '$2 $1',
+	'downloadyourdata-anon-error' => 'Zaloguj się, aby pobrać swoje dane',
 );
 
 $messages['pt'] = array(
@@ -199,6 +205,7 @@ $messages['pt'] = array(
 	'downloadyourdata-birthdate' => 'Data de nascimento',
 	'downloadyourdata-profile-gender' => 'Sexo (perfil)',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => 'Por favor, faça login para baixar seus dados',
 );
 
 $messages['ru'] = array(
@@ -221,6 +228,7 @@ $messages['ru'] = array(
 	'downloadyourdata-birthdate' => 'Дата рождения',
 	'downloadyourdata-profile-gender' => 'Пол (в профайле)',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => 'Войдите, чтобы скачать свои данные',
 );
 
 $messages['zh-hans'] = array(
@@ -243,6 +251,7 @@ $messages['zh-hans'] = array(
 	'downloadyourdata-birthdate' => '出生日期',
 	'downloadyourdata-profile-gender' => '性别（个人简介）',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => '请登入后下载您的数据',
 );
 
 $messages['zh-hant'] = array(
@@ -265,5 +274,6 @@ $messages['zh-hant'] = array(
 	'downloadyourdata-birthdate' => '出生日期',
 	'downloadyourdata-profile-gender' => '性別（用戶檔案頁） ',
 	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-anon-error' => '請登入下載您的資料',
 );
 

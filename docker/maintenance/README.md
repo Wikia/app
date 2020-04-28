@@ -97,12 +97,6 @@ Removes dataware.wall_notification entries older than X days.
 
 Removes wikicities.shared_newtalks entries older than 90 days.
 
-#### close-my-account.yaml
-
-`extensions/wikia/CloseMyAccount/maintenance/CloseMyAccountMaintenance.php`
-
-Actually closes accounts scheduled to be closed.
-
 #### delete-articles-by-prefix-blogs.yaml
 
 `maintenance/wikia/deleteArticlesByPrefix.php`

@@ -11,10 +11,10 @@ import {
 	durationMedia,
 	events,
 	eventService,
+	iasPublisherOptimization,
+	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	moatYi,
-	moatYiEvents,
 	permutive,
 	Runner,
 	nielsen,
@@ -48,9 +48,6 @@ export async function setupAdEngine(
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
-	});
-	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
-		pageTracker.trackProp('moat_yi', data);
 	});
 
 	await billTheLizardConfigurator.configure();
@@ -151,9 +148,10 @@ function callExternals() {
 	inhibitors.push(wadRunner.call());
 
 	permutive.call();
+	identityLibrary.call();
+	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
-	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',

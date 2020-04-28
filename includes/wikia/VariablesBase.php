@@ -1654,6 +1654,7 @@ $wgDefaultUserOptions = [
 	'showtoolbar' => 1,
 	'skin' => 'oasis',
 	'stubthreshold' => 0,
+	'timecorrection' => 'System|0',
 	'thumbsize' => 2,
 	'underline' => 2,
 	'uselivepreview' => 0,
@@ -2239,6 +2240,11 @@ $wgEnableAPI = true;
  * @var bool $wgEnableArticleCommentsExt
  */
 $wgEnableArticleCommentsExt = false;
+
+/**
+ * Used to put article comments extension in readonly mode
+ */
+$wgArticleCommentsReadOnlyMode = false;
 
 /**
  * Enable ArticleVideo extension.

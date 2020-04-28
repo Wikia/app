@@ -29,8 +29,7 @@
 			<script><?= $jwPlayerScript ?></script>
 		</div>
 		<?php if ( !empty( $videoDetails['username'] ) &&
-				!empty( $videoDetails['userUrl'] ) &&
-		        !empty( $videoDetails['userAvatarUrl'] )
+				!empty( $videoDetails['userUrl'] )
 		): ?>
 			<?= $app->renderView( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
 		<?php endif; ?>
