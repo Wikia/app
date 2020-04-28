@@ -70,6 +70,8 @@ class ForumDumper {
 		"text_flags",
 		"raw_content",
 		"content",
+		"creation_timestamp",
+		"creation_user",
 	];
 
 	const COLUMNS_VOTE = [
@@ -179,7 +181,8 @@ class ForumDumper {
 			 page.page_is_redirect, page.page_is_new, page.page_touched, page.page_latest, page.page_len, 
 			 comments_index.parent_page_id, comments_index.comment_id, comments_index.parent_comment_id, 
 			 comments_index.last_child_comment_id, comments_index.archived, comments_index.deleted, 
-			 comments_index.removed, comments_index.created_at, comments_index.last_touched" )
+			 comments_index.removed, comments_index.created_at, comments_index.last_touched, 
+			 comments_index.first_rev_id" )
 				->FROM( self::TABLE_PAGE )
 				->LEFT_JOIN( self::TABLE_COMMENTS )
 				->ON( 'page_id', 'comment_id' )
@@ -203,7 +206,8 @@ class ForumDumper {
 									"page_id" => $row->page_id,
 									"namespace" => $row->page_namespace,
 									"raw_title" => $row->page_title,
-									"latest_revision_id" => $row->page_latest
+									"latest_revision_id" => $row->page_latest,
+									"first_revision_id" => $row->first_rev_id
 								]
 							);
 
@@ -303,7 +307,7 @@ class ForumDumper {
 		$revIds = [];
 
 		foreach ( $this->getPages() as $id => $data ) {
-			$revIds[] = $data['latest_revision_id'];
+			$revIds[] = [$data['latest_revision_id'], $data['first_revision_id']];
 		}
 
 		$chunks = array_chunk($revIds, 500);
@@ -320,6 +324,18 @@ class ForumDumper {
 			$queryResult = null;
 
 			do {
+				$firstRevIds = [];
+				foreach ( $part as $ids ) {
+					$firstRevIds[] = $ids[1];
+				}
+
+				$firstRevsData = $this->getFirstRevsData( $firstRevIds );
+
+				$latestRevIds = [];
+				foreach ( $part as $ids ) {
+					$latestRevIds[] = $ids[0];
+				}
+
 				$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
 				$dbh->ping();
 				$inserts = [];
@@ -328,10 +344,10 @@ class ForumDumper {
 					->JOIN( self::TABLE_TEXT )
 					->ON( 'rev_text_id', 'old_id' )
 					->WHERE( 'rev_id' )
-					->IN( $part )
+					->IN( $latestRevIds )
 					->runLoop(
 						$dbh,
-						function ( $result ) use ( $dbh, $fh, &$inserts ) {
+						function ( $result ) use ( $dbh, $fh, &$inserts, &$firstRevsData ) {
 
 							while ($row = $result->fetchObject()) {
 								$rev = \Revision::newFromRow( $row );
@@ -343,6 +359,9 @@ class ForumDumper {
 
 								$pages = $this->getPages();
 								$curPage = $pages[$row->rev_page];
+
+								$firstRevData = array_key_exists( $row->rev_page, $firstRevsData ) ?
+									$firstRevsData[$row->rev_page] : [];
 
 								$insert = DumpUtils::createInsert(
 									'import_revision',
@@ -362,6 +381,9 @@ class ForumDumper {
 										"text_flags" => $row->old_flags,
 										"raw_content" => $plainText,
 										"content" => $parsedText,
+										"creation_timestamp" => empty($firstRevData) ? $row->rev_timestamp :
+											$firstRevData['rev_timestamp'],
+										"creation_user" => empty($firstRevData) ? $row->rev_user : $firstRevData['rev_user']
 									]
 								) . "\n";
 
@@ -760,6 +782,41 @@ class ForumDumper {
 		}
 
 		return $pageIdsToOrder;
+	}
+
+	private function getFirstRevsData( $revIds = [] ) {
+		$data = [];
+
+		$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
+		$dbh->ping();
+		( new \WikiaSQL() )->SELECT( "r.rev_page, r.rev_user, r.rev_timestamp" )
+			->FROM( self::TABLE_REVISION )
+			->AS_( 'r' )
+			->WHERE( 'r.rev_id' )
+			->IN( $revIds )
+			->runLoop(
+				$dbh,
+				function ( $result ) use ( $dbh, &$data ) {
+
+					while ($row = $result->fetchObject()) {
+						$data[$row->rev_page] = [
+							"rev_user" => $row->rev_user,
+							"rev_timestamp" => $row->rev_timestamp
+						];
+					}
+
+					$dbh->freeResult( $result );
+				},
+				false, false
+			);
+
+		$dbh->closeConnection();
+		wfGetLB( false )->closeConnection( $dbh );
+
+
+		WikiaLogger::instance()->info( "AAA " . print_r($data, true) );
+
+		return $data;
 	}
 
 	public function getFirstRevCreatorByLatestRevision( $fh = null, $pageIdsFixed = [] ) {
