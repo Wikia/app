@@ -559,9 +559,8 @@
                 "oasis"
             ],
             "regions": [
-                "FR",
-                "PL",
-                "SE"
+                "XX",
+                "non-US"
             ],
             "value": true
         }
