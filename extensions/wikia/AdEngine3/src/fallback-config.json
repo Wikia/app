@@ -149,7 +149,11 @@
             "apps": [
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL",
+                "US-NY"
+            ],
+            "value": true
         }
     ],
     "icPrebidPubmatic": [
@@ -235,8 +239,7 @@
                 "oasis"
             ],
             "regions": [
-                "PL",
-                "US-CA"
+                "XX"
             ],
             "sampling": 50.0,
             "value": true
@@ -556,8 +559,8 @@
                 "oasis"
             ],
             "regions": [
-                "FR",
-                "PL"
+                "XX",
+                "non-US"
             ],
             "value": true
         }
@@ -754,6 +757,21 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icIxIdentityLibrary": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "NZ"
             ],
             "value": true
         }
