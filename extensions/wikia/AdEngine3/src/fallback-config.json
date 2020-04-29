@@ -150,7 +150,12 @@
                 "oasis"
             ],
             "regions": [
+                "AU",
+                "CA",
+                "DE",
+                "GB",
                 "PL",
+                "UK",
                 "US-NY"
             ],
             "value": true
