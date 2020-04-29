@@ -236,7 +236,7 @@ class UserRightsProxy {
 				array( 'user_id' => $this->id ),
 				__METHOD__ );
 
-			$this->db->insert( 'user_replicate_queue', [ 'user_id' => $this->id ] );
+			$this->db->insert( 'user_replicate_queue', [ 'user_id' => $this->id ], __METHOD__, [ 'IGNORE' ] );
 			$this->db->commit();
 		} catch ( DBError $e ) {
 			$this->db->rollback();
