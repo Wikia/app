@@ -813,9 +813,6 @@ class ForumDumper {
 		$dbh->closeConnection();
 		wfGetLB( false )->closeConnection( $dbh );
 
-
-		WikiaLogger::instance()->info( "AAA " . print_r($data, true) );
-
 		return $data;
 	}
 
