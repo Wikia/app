@@ -7,6 +7,7 @@ spec:
   schedule: ${schedule}
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
+  concurrencyPolicy: ${concurrency}
   jobTemplate:
     spec:
       template:
