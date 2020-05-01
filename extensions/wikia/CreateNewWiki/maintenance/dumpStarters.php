@@ -121,6 +121,7 @@ class DumpStarters extends Maintenance {
 	 */
 	private function storeDump( $filename, $dest ) {
 		global $wgWikiaEnvironment;
+		global $wgGcsConfig;
 
 		$bucketName = 'create-new-wiki';
 
