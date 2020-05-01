@@ -874,7 +874,7 @@ class ForumDumper {
 					while ($row = $result->fetchObject()) {
 
 						$timestamp = empty($row->rev_timestamp) ? $row->page_touched : $row->rev_timestamp;
-						$dump = $row->page_id . ';' . `site_id` . ';' . $timestamp . "\n";
+						$dump = $row->page_id . ';' . "`site_id`" . ';' . $timestamp . "\n";
 						fwrite( $fh, $dump );
 					}
 
