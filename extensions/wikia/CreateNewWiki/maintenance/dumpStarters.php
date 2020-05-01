@@ -1,5 +1,4 @@
 <?php
-
 use Google\Cloud\Storage\StorageClient;
 
 /**
@@ -121,12 +120,21 @@ class DumpStarters extends Maintenance {
 	 * @throws DumpStartersException
 	 */
 	private function storeDump( $filename, $dest ) {
+		global $wgWikiaEnvironment;
+
+		$bucketName = 'create-new-wiki';
+
+		if ( $wgWikiaEnvironment == 'dev' ) {
+			$bucketName = 'create-new-wiki-dev';
+		}
+
 		$this->output( sprintf( " \n\t[%s / %.2f kB]", $dest, filesize( $filename ) / 1024 ) );
 
 		$storage = new StorageClient( [ 'keyFile' => $wgGcsConfig['gcsCredentials'] ] );
 		$content = fopen( $filename, 'r' );
-		$bucket = $storage->bucket( 'create-new-wiki' );
-		$object = $bucket->upload( $content, [ 'name' => sprintf( 'app/%s', $dest ) ] );
+		$bucket = $storage->bucket( $bucketName );
+		$gcsPath = sprintf( 'app/%s', $dest );
+		$object = $bucket->upload( $content, [ 'name' => $gcsPath ] );
 
 		if ( is_null( $object ) ) {
 			throw new Exception( "Unable to store a dump for {$dest}" );
