@@ -53,7 +53,7 @@ class DumpCreatorId extends Maintenance {
 	}
 
 	private function dumpCreatorId( array $pageIds ) {
-		$this->dumper->getFirstRevCreatorByLatestRevision( $this->fh, $pageIds );
+		$this->dumper->getCreationDateByPageId( $this->fh, $pageIds );
 	}
 }
 

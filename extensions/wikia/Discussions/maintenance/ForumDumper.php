@@ -850,4 +850,40 @@ class ForumDumper {
 		$dbh->closeConnection();
 		wfGetLB( false )->closeConnection( $dbh );
 	}
+
+	public function getCreationDateByPageId( $fh = null, $pageIdsFixed = [] ) {
+
+		$dbh = DumpUtils::getDBWithRetries( DB_SLAVE );
+		$dbh->ping();
+		$inserts = [];
+		( new \WikiaSQL() )->SELECT( "p.page_id, p.page_touched, r.rev_timestamp" )
+			->FROM( self::TABLE_PAGE )
+			->AS_( 'p' )
+			->LEFT_JOIN( self::TABLE_COMMENTS )
+			->AS_( 'c' )
+			->ON( 'p.page_id', 'c.comment_id' )
+			->LEFT_JOIN( self::TABLE_REVISION )
+			->AS_( 'r' )
+			->ON( 'c.first_rev_id', 'r.rev_id' )
+			->WHERE( 'p.page_id' )
+			->IN( $pageIdsFixed )
+			->runLoop(
+				$dbh,
+				function ( $result ) use ( $dbh, $fh ) {
+
+					while ($row = $result->fetchObject()) {
+
+						$timestamp = empty($row->rev_timestamp) ? $row->page_touched : $row->rev_timestamp;
+						$dump = $row->page_id . ';' . `site_id` . ';' . $timestamp . "\n";
+						fwrite( $fh, $dump );
+					}
+
+					$dbh->freeResult( $result );
+				},
+				false, false
+			);
+
+		$dbh->closeConnection();
+		wfGetLB( false )->closeConnection( $dbh );
+	}
 }
