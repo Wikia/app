@@ -73,7 +73,7 @@ class Starters {
 	 * @return string
 	 */
 	public static function getStarterContentDumpPath( $starter ) {
-		return sprintf( '/dumps/%s.xml.bz2', $starter );
+		return sprintf( 'dumps/%s.xml.bz2', $starter );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Starters {
 	 * @return string
 	 */
 	public static function getStarterSqlDumpPath( $starter ) {
-		return sprintf( '/dumps/%s.sql.bz2', $starter );
+		return sprintf( 'dumps/%s.sql.bz2', $starter );
 	}
 
 	/**
