@@ -123,10 +123,10 @@ class DumpStarters extends Maintenance {
 		global $wgWikiaEnvironment;
 		global $wgGcsConfig;
 
-		$bucketName = 'create-new-wiki';
+		$bucketName = \Wikia\CreateNewWiki\tasks\ImportStarterData::BUCKET_NAME_PROD;
 
 		if ( $wgWikiaEnvironment == 'dev' ) {
-			$bucketName = 'create-new-wiki-dev';
+			$bucketName = \Wikia\CreateNewWiki\tasks\ImportStarterData::BUCKET_NAME_DEV;
 		}
 
 		$this->output( sprintf( " \n\t[%s / %.2f kB]", $dest, filesize( $filename ) / 1024 ) );
