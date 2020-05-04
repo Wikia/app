@@ -25,7 +25,7 @@ class DumpStarters extends Maintenance {
 	const DUMP_MIME_TYPE = 'application/bzip2';
 	
 	const BUCKET_NAME_PROD = 'create-new-wiki';
-	const BUCKET_NAME_DEV - 'create-new-wiki-dev';
+	const BUCKET_NAME_DEV = 'create-new-wiki-dev';
 
 	protected $mDescription = 'This script prepares XML and SQL dumps of starter wikis';
 
