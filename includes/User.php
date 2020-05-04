@@ -4307,7 +4307,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-	
+
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
@@ -4602,6 +4602,31 @@ class User implements JsonSerializable {
 			:
 			// anons - return the second argument - an IP address
 			$name;
+	}
+
+	/**
+	 * Get flag if user is <16 y.o. for CCPA.
+	 *
+	 * @see ADEN-10054
+	 *
+	 * @return Boolean User is below 16 y.o.
+	 */
+	public function isSubjectToCcpa() {
+		if ($this->mBirthDate === null) {
+			return false;
+		}
+		try {
+			$birthDate = new DateTime($this->mBirthDate);
+		} catch (Exception $e) {
+			return false;
+		}
+		if ($birthDate === false) {
+			return false;
+		}
+		$now = new DateTime();
+		$diff = $now->diff($birthDate, true);
+
+		return $diff->y < 16;
 	}
 
 	/**

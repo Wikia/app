@@ -126,62 +126,12 @@ export default {
 					}
 				}
 			},
-			audienceNetwork: {
-				enabled: false,
-				slots: {}
-			},
 			beachfront: {
 				enabled: false,
 				debugAppId: '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
 				slots: {
 					incontent_player: {
 						appId: 'd239e601-dd57-4163-fe5d-35012d77395f'
-					}
-				}
-			},
-			criteo: {
-				enabled: false,
-				slots: {
-					top_leaderboard: {
-						sizes: [
-							[728, 90],
-							[970, 250]
-						],
-						networkId: '3306'
-					},
-					top_boxad: {
-						sizes: [
-							[300, 250],
-							[300, 600]
-						],
-						networkId: '3306'
-					},
-					incontent_boxad_1: {
-						sizes: [
-							[160, 600],
-							[300, 600],
-							[300, 250]
-						],
-						networkId: '3306'
-					},
-					bottom_leaderboard: {
-						sizes: [
-							[728, 90],
-							[970, 250]
-						],
-						networkId: '3306'
-					},
-					featured: {
-						zoneId: '1470492',
-						sizes: [
-							[3, 3],
-						]
-					},
-					incontent_player: {
-						zoneId: '1470491',
-						sizes: [
-							[3, 3],
-						]
 					}
 				}
 			},
@@ -216,6 +166,9 @@ export default {
 							[970, 250]
 						],
 						siteId: '209250'
+					},
+					featured: {
+						siteId: '437502'
 					}
 				},
 				recPlacements: {
@@ -228,19 +181,6 @@ export default {
 			kargo: {
 				enabled: false,
 				slots: {}
-			},
-			lkqd: {
-				enabled: false,
-				slots: {
-					featured: {
-						placementId: '523',
-						siteId: '890798'
-					},
-					incontent_player: {
-						placementId: '523',
-						siteId: '892126'
-					}
-				}
 			},
 			nobid: {
 				enabled: false,
@@ -459,6 +399,15 @@ export default {
 					}
 				}
 			},
+			telaria: {
+				enabled: false,
+				slots: {
+					featured: {
+						adCode: '2ciy2-doix6',
+						supplyCode: '2ciy2-9kbup',
+					}
+				}
+			},
 			triplelift: {
 				enabled: false,
 				slots: {
@@ -502,16 +451,6 @@ export default {
 						inventoryCodes: [
 							'Fandom_DT_BLB_728x90_hdx_prebid',
 							'Fandom_DT_BLB_970x250_hdx_prebid'
-						]
-					}
-				}
-			},
-			vmg: {
-				enabled: false,
-				slots: {
-					top_leaderboard: {
-						sizes: [
-							[3, 3]
 						]
 					}
 				}
@@ -561,7 +500,6 @@ export default {
 		beachfrontDfp: false,
 		dbNameForAdUnit: '_not_a_top1k_wiki',
 		dfpId: '5441',
-		lkqdDfp: false,
 		pubmaticDfp: false,
 		rubiconDfp: true,
 		serverPrefix: 'wka1b',
@@ -602,13 +540,22 @@ export default {
 			enabled: false,
 			siteId: '1167',
 		},
+		externalLogger: {
+			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
+		},
+		iasPublisherOptimization: {
+			pubId: '930616',
+			slots: [
+				'hivi_leaderboard',
+				'top_leaderboard',
+				'top_boxad',
+				'incontent_boxad_1',
+				'bottom_leaderboard',
+			],
+		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
-		},
-		moatYi: {
-			enabled: false,
-			partnerCode: 'wikiaprebidheader490634422386',
 		},
 		nielsen: {
 			enabled: false,
@@ -646,6 +593,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {

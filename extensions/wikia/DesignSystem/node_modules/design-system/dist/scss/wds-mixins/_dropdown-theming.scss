@@ -22,12 +22,12 @@
 		}
 
 		.wds-list.wds-is-linked li {
-			> a {
+			> a:not(.wds-button) {
 				color: $color-text;
 			}
 
 			&:hover {
-				> a {
+				> a:not(.wds-button) {
 					background-color: rgba($color-links, .1);
 					color: $color-links;
 				}

@@ -52,14 +52,6 @@ spec:
       annotations:
         description: CleanUpWallNotifications maintenance script did not run in the last 24 hours
         summary: CleanUpWallNotifications last succeeded {{humanizeDuration $value}} ago
-    # CloseMyAccountMaintenance should be run every 24h
-    - alert: mediawiki_maintenance_scripts_CloseMyAccountMaintenance_last_run
-      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseMyAccountMaintenance"}) > 3600 * 25
-      labels:
-        team: core-platform
-      annotations:
-        description: CloseMyAccountMaintenance maintenance script did not run in the last 24 hours
-        summary: CloseMyAccountMaintenance last succeeded {{humanizeDuration $value}} ago
     # ContentReviewStatus should be run every 3h
     - alert: mediawiki_maintenance_scripts_ContentReviewStatus_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ContentReviewStatus"}) > 3600 * 4
@@ -171,30 +163,3 @@ spec:
       annotations:
         description: Maintenance script that marks wikis as closed was not run in the last four days
         summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
-  # SUS-6267 | monitoring for production pods
-  - name: mediawiki_prod.rules
-    rules:
-    - alert: mediawiki_prod_fpm_workers_usage_percentage
-      expr: avg(phpfpm_active_processes{service="mediawiki-prod"} / phpfpm_total_processes{service="mediawiki-prod"}) * 100 > 75
-      labels:
-        team: core-platform
-      annotations:
-        description: Production php-fpm workers usage is above the threshold
-        summary: fpm workers usage is at {{$value}} %
-        graphs: https://metrics.wikia-inc.com/d/znlnjNxik/kubernetes-production-traffic
-    - alert: mediawiki_prod_nginx_timing
-      expr: sum(rate(nginx_vts_server_request_seconds_total{job="mediawiki-prod", host="*"}[5m]))/sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", host="*"}[5m])) > 0.3
-      labels:
-        team: core-platform
-      annotations:
-        description: Average k8s request time is high
-        summary: Average request time is over {{$value}} s
-        graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status
-    - alert: mediawiki_prod_nginx_5xx
-      expr: (sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="5xx", host="*"}[15m])) / sum(rate(nginx_vts_server_requests_total{job="mediawiki-prod", code="total", host="*"}[15m]))) * 100 > 5
-      labels:
-        team: core-platform
-      annotations:
-        description: Too many 5xx status codes
-        summary: 5xx to total status code ratio is {{$value}}%
-        graphs: https://metrics.wikia-inc.com/d/ipO59ynWz/mediawiki-nginx-status

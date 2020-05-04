@@ -325,8 +325,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: mediawiki-tasks
-  maxReplicas: 45
-  minReplicas: 15
+  maxReplicas: 15
+  minReplicas: 5
   metrics:
   - type: Resource
     resource:

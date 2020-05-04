@@ -124,14 +124,20 @@ class AdEngine3
 					'noAdsReason' => $adsDeciderService->getNoAdsReason(),
 				]),
 				'targeting' => array_filter([
+					'directedAtChildren' => AdTargeting::isDirectedAtChildren(),
 					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
 					'esrbRating' => AdTargeting::getEsrbRating(),
+					'featuredVideo' => $featuredVideoDetails,
+					'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
+					'hasFeaturedVideo' => $hasFeaturedVideo,
 					'mappedVerticalName' => AdEngine3WikiData::getVerticalName($oldWikiVertical, $newWikiVertical),
+					'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
 					'pageArticleId' => $articleId,
 					'pageIsArticle' => !!$articleId,
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
 					'pageName' => $title->getPrefixedDBKey(),
 					'pageType' => $pageType,
+					'testSrc' => $wg->AdDriverAdTestWikiSrc,
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort($wg->CityId),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
@@ -139,12 +145,7 @@ class AdEngine3
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
-					'wikiVertical' => $newWikiVertical,
-					'newWikiCategories' => AdEngine3WikiData::getWikiCategories($wikiFactoryHub, $wg->CityId),
-					'hasPortableInfobox' => !empty(\Wikia::getProps($title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)),
-					'hasFeaturedVideo' => $hasFeaturedVideo,
-					'featuredVideo' => $featuredVideoDetails,
-					'testSrc' => $wg->AdDriverAdTestWikiSrc
+					'wikiVertical' => $newWikiVertical
 				])
 			];
 		} );

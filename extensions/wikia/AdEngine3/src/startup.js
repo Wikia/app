@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import { biddersDelay } from './bidders/bidders-delay';
 import { billTheLizardConfigurator } from './ml/configuration';
 import { featuredVideoAutoPlayDisabled } from './ml/executor';
 import {
@@ -12,17 +11,18 @@ import {
 	durationMedia,
 	events,
 	eventService,
+	iasPublisherOptimization,
+	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	moatYi,
-	moatYiEvents,
 	permutive,
+	Runner,
 	nielsen,
 	SlotTweaker,
 	taxonomyService,
 	utils
 } from '@wikia/ad-engine';
-import { babDetection } from './wad/bab-detection';
+import { wadRunner } from './wad/wad-runner';
 import ads from './setup';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -45,25 +45,20 @@ export async function setupAdEngine(
 	slots.injectIncontentBoxad();
 	videoTracker.register();
 
-	context.push('delayModules', babDetection);
-	context.push('delayModules', biddersDelay);
-
-	setupJWPlayer();
-
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
-	});
-	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
-		pageTracker.trackProp('moat_yi', data);
 	});
 
 	await billTheLizardConfigurator.configure();
 
 	if (context.get('state.showAds')) {
-		callExternals();
-		startAdEngine();
+		const inhibitors = callExternals();
+
+		setupJWPlayer(inhibitors);
+		startAdEngine(inhibitors);
 	} else {
+		dispatchJWPlayerSetupAction(false);
 		window.wgAfterContentAndJS.push(hideAllAdSlots);
 	}
 
@@ -75,41 +70,33 @@ export async function setupAdEngine(
 	taxonomyService.configureComicsTargeting();
 }
 
-async function setupJWPlayer() {
+async function setupJWPlayer(inhibitors = []) {
 	new JWPlayerManager().manage();
 
-	if (!context.get('state.showAds')) {
-		return communicator.dispatch({
-			type: '[Ad Engine] Setup JWPlayer',
-			showAds: false,
-			autoplayDisabled: featuredVideoAutoPlayDisabled,
-		});
-	}
+	const maxTimeout = context.get('options.maxDelayTimeout');
+	const runner = new Runner(inhibitors, maxTimeout, 'jwplayer-runner');
 
-	const timeout = new Promise((resolve) => {
-		setTimeout(resolve, context.get('options.maxDelayTimeout'));
+	runner.waitForInhibitors().then(() => {
+		dispatchJWPlayerSetupAction();
 	});
-
-	await Promise.race([ timeout, biddersDelay.getPromise() ]);
-
-	communicator.dispatch({
-		type: '[Ad Engine] Setup JWPlayer',
-		showAds: true,
-		autoplayDisabled: featuredVideoAutoPlayDisabled
-	})
 }
 
-function startAdEngine() {
+function dispatchJWPlayerSetupAction(showAds = true) {
+	communicator.dispatch({
+		type: '[Ad Engine] Setup JWPlayer',
+		showAds,
+		autoplayDisabled: featuredVideoAutoPlayDisabled
+	});
+}
+
+function startAdEngine(inhibitors) {
 	if (context.get('state.showAds')) {
 		utils.scriptLoader.loadScript(GPT_LIBRARY_URL);
 
-		ads.init();
+		ads.init(inhibitors);
 
 		window.wgAfterContentAndJS.push(() => {
 			slots.injectBottomLeaderboard();
-			babDetection.run().then(() => {
-				btRec.run();
-			});
 		});
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
@@ -155,21 +142,24 @@ function trackTabId() {
 
 function callExternals() {
 	const targeting = context.get('targeting');
+	const inhibitors = [];
+
+	inhibitors.push(bidders.requestBids());
+	inhibitors.push(wadRunner.call());
+
 	permutive.call();
-
-	bidders.requestBids({
-		responseListener: biddersDelay.markAsReady,
-	});
-
+	identityLibrary.call();
+	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
-	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',
 		assetid: `fandom.com/${targeting.s0v}/${targeting.s1}/${targeting.artid}`,
 		section: `FANDOM ${targeting.s0v.toUpperCase()} NETWORK`,
 	});
+
+	return inhibitors;
 }
 
 function hideAllAdSlots() {
