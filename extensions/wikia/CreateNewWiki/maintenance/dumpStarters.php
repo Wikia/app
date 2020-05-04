@@ -1,6 +1,5 @@
 <?php
 use Google\Cloud\Storage\StorageClient;
-use Wikia\CreateNewWiki\Tasks\ImportStarterData;
 
 /**
  * Script that prepares XML and SQL dumps with the latest revisions and *links tables rows of starter wikis
@@ -24,6 +23,9 @@ class DumpStartersException extends Exception {}
 class DumpStarters extends Maintenance {
 
 	const DUMP_MIME_TYPE = 'application/bzip2';
+	
+	const BUCKET_NAME_PROD = 'create-new-wiki';
+	const BUCKET_NAME_DEV - 'create-new-wiki-dev';
 
 	protected $mDescription = 'This script prepares XML and SQL dumps of starter wikis';
 
@@ -124,10 +126,10 @@ class DumpStarters extends Maintenance {
 		global $wgWikiaEnvironment;
 		global $wgGcsConfig;
 
-		$bucketName = ImportStarterData::BUCKET_NAME_PROD;
+		$bucketName = self::BUCKET_NAME_PROD;
 
 		if ( $wgWikiaEnvironment == 'dev' ) {
-			$bucketName = ImportStarterData::BUCKET_NAME_DEV;
+			$bucketName = self::BUCKET_NAME_DEV;
 		}
 
 		$this->output( sprintf( " \n\t[%s / %.2f kB]", $dest, filesize( $filename ) / 1024 ) );
