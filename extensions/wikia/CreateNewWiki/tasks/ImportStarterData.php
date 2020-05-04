@@ -80,10 +80,11 @@ class ImportStarterData extends Task {
 
 		$storage = new StorageClient( [ 'keyFile' => $wgGcsConfig['gcsCredentials'] ] );
 		$bucket = $storage->bucket( $bucketName );
-		$object = $bucket->object( $path );
+		$gcsPath = sprintf( 'app/%s', $path );
+		$object = $bucket->object( $gcsPath );
 
 		if ( is_null( $object ) ) {
-			throw new Exception( "Unable to fetch a dump from {$path}", self::ERR_OPEN_STARTER_DUMP_FAILED );
+			throw new Exception( "Unable to fetch a dump from {$gcsPath}", self::ERR_OPEN_STARTER_DUMP_FAILED );
 		}
 
 		$stream = $object->downloadAsStream();
