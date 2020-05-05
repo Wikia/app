@@ -156,7 +156,7 @@
                 "GB",
                 "PL",
                 "UK",
-                "US-NY"
+                "US"
             ],
             "value": true
         }
@@ -286,6 +286,19 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icTcf1Disabled": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
             ],
             "value": true
         }
@@ -699,45 +712,6 @@
                 "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX-EU"
-            ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200326-auction-fix.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200407.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200309.min.js"
         }
     ],
     "icA9Bidder": [
@@ -862,6 +836,23 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icTcf2Enabled": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "PL",
+                "US"
             ],
             "value": true
         }
