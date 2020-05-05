@@ -5,7 +5,6 @@ import {
 	AdSlot,
 	bidders,
 	billTheLizard,
-	btRec,
 	confiant,
 	context,
 	durationMedia,
