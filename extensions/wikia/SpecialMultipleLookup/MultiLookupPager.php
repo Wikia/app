@@ -50,13 +50,50 @@ class MultiLookupPager extends TablePager {
 		$wiki = WikiFactory::getWikiByID( $row->ml_city_id );
 
 		if ( $wiki ) {
-			$row->users = $this->getWikiUsers( $wiki->city_dbname );
 			$row->wiki_url = $wiki->city_url;
 
-			return parent::formatRow( $row );
+			if ( $wiki->city_path === 'slot2' ) {
+				$row->users = $this->getUcpWikiUsers($wiki->city_dbname);
+				return parent::formatRow($row);
+			} else {
+				$row->users = $this->getWikiUsers($wiki->city_dbname);
+				return parent::formatRow($row);
+			}
 		}
 
 		return '';
+	}
+
+	/**
+	 * Get recent contributors that used this IP address on a wiki
+	 * @param string $dbName
+	 * @return string[] array of user names and IP addresses
+	 */
+	private function getUcpWikiUsers( $dbName ) {
+		$userIp = inet_ntop( $this->target );
+		$cacheKey = wfSharedMemcKey( 'multilookup', $userIp, $dbName );
+
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $userIp ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
+
+			$res = $dbr->select(
+				[ 'recentchanges' ],
+				[ 'rc_user as user_id' ],
+				[ 'rc_ip' => $userIp ],
+				__METHOD__,
+				[ 'DISTINCT' ]
+			);
+
+			$users = [];
+			foreach ( $res as $user ) {
+				// SUS-812: use username lookup - user ID for registered users, IP address for anons
+				$userName = User::getUsername( $user->user_id, $userIp );
+
+				$users[] = $userName;
+			}
+
+			return $users;
+		} );
 	}
 
 	/**
