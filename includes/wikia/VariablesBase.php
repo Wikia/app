@@ -6675,6 +6675,9 @@ $wgRateLimits = [
 		'ip' => [ 10, 3600 ],
 		'user' => [ 4, 86400 ],
 	],
+	'share-email' => [
+		'user' => [ 10, 3600 ], // 10 emails/hour
+	],
 ];
 
 /**
