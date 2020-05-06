@@ -17,7 +17,7 @@ import {
 	permutive,
 	Runner,
 	nielsen,
-	recirculationHiddenEvent,
+	recirculationDisabledEvent,
 	SlotTweaker,
 	taxonomyService,
 	utils
@@ -107,7 +107,7 @@ function startAdEngine(inhibitors) {
 		});
 
 		eventService.communicator.actions$.pipe(
-			ofType(recirculationHiddenEvent)
+			ofType(recirculationDisabledEvent)
 		).subscribe(() => {
 			pageTracker.trackProp('hidden_popular_pages', '1');
 		})
