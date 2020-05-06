@@ -5,7 +5,6 @@ import {
 	AdSlot,
 	bidders,
 	billTheLizard,
-	btRec,
 	confiant,
 	context,
 	durationMedia,
@@ -18,6 +17,7 @@ import {
 	permutive,
 	Runner,
 	nielsen,
+	recirculationDisabledEvent,
 	SlotTweaker,
 	taxonomyService,
 	utils
@@ -29,6 +29,7 @@ import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
 import { communicator } from "./communicator";
+import { ofType } from 'ts-action-operators';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -104,6 +105,12 @@ function startAdEngine(inhibitors) {
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
 		});
+
+		eventService.communicator.actions$.pipe(
+			ofType(recirculationDisabledEvent)
+		).subscribe(() => {
+			pageTracker.trackProp('hidden_popular_pages', '1');
+		})
 	}
 }
 
