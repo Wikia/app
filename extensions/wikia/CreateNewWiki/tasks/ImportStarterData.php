@@ -69,8 +69,7 @@ class ImportStarterData extends Task {
 	 * @throws \CreateWikiException
 	 */
 	private function getDump( $path ) {
-		global $wgGcsConfig;
-		global $wgWikiaEnvironment;
+		global $wgWikiaEnvironment, $wgGcsConfig;
 
 		$bucketName = self::BUCKET_NAME_PROD;
 
