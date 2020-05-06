@@ -263,7 +263,8 @@ $wgLBFactoryConf = [
         'wikicities_c6'  => 'c6',
         'wikicities_c7'  => 'c7',
         'wikicities_c8'  => 'c8',
-        'dataware'       => 'ext1',
+		'wikicities_c9'  => 'c9',
+		'dataware'       => 'ext1',
         'archive'        => 'ext1',
         'portability_db' => 'ext1',
         'specials'       => 'specials',
@@ -319,6 +320,10 @@ $wgLBFactoryConf = [
             'geo-db-h-master.query.consul' => 0,
             'geo-db-h-slave.query.consul' => 1000,
         ],
+		'c9' => [
+			'ucp-dbmigration-s1' => 0,
+		],
+
         'ext1' => $wgDBArchiveCluster,
         'specials' => [
             'geo-db-specials-master.query.consul' => 0,

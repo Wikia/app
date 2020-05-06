@@ -4307,7 +4307,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-	
+
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
@@ -4605,13 +4605,13 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Get flag if user is <16 y.o. for COPPA.
+	 * Get flag if user is <16 y.o. for CCPA.
 	 *
 	 * @see ADEN-10054
 	 *
 	 * @return Boolean User is below 16 y.o.
 	 */
-	public function isSubjectToCoppa() { // TODO: Unit tests; Is it cached? If yes, is the cache properly cleared?
+	public function isSubjectToCcpa() {
 		if ($this->mBirthDate === null) {
 			return false;
 		}

@@ -134,8 +134,9 @@ class RenameUserProcess {
 				$this->addLog( "Adding a row in replication queue" );
 				$dbw->insert(
 					'user_replicate_queue',
-					['user_id' => $this->mUserId],
-					__METHOD__
+					[ 'user_id' => $this->mUserId ],
+					__METHOD__,
+					[ 'IGNORE' ]
 				);
 
 				$dbw->commit( __METHOD__ );
