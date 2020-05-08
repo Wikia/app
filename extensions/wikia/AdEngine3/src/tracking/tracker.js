@@ -2,6 +2,8 @@ import {
 	bidderTracker,
 	bidderTrackingMiddleware,
 
+	GAMOrigin,
+
 	slotBiddersTrackingMiddleware,
 	slotBillTheLizardStatusTrackingMiddleware,
 	slotPropertiesTrackingMiddleware,
@@ -85,5 +87,6 @@ export const registerPostmessageTrackingTracker = () => {
 						break;
 				}
 			},
+			[window.origin, GAMOrigin],
 		);
 };
