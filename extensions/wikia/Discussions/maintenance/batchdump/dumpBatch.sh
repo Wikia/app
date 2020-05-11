@@ -15,9 +15,9 @@ do
   if [[ $((i + 500)) -gt "$pagesNumber" ]]
   then
     echo "Min: $i max: $((pagesNumber - 1)) total: $pagesNumber";
-    eval "php extensions/wikia/Discussions/maintenance/batchdump/dumpCreatorId.php $@ --minIndex $i --maxIndex $((pagesNumber - 1))";
+    eval "php extensions/wikia/Discussions/maintenance/batchdump/dumpForumBatch.php $@ --minIndex $i --maxIndex $((pagesNumber - 1))";
   else
     echo "Min: $i max: $((i + 500 - 1)) total: $pagesNumber";
-    eval "php extensions/wikia/Discussions/maintenance/batchdump/dumpCreatorId.php $@ --minIndex $i --maxIndex $((i + 500 - 1))";
+    eval "php extensions/wikia/Discussions/maintenance/batchdump/dumpForumBatch.php $@ --minIndex $i --maxIndex $((i + 500 - 1))";
   fi;
 done
