@@ -31,7 +31,10 @@ class ArticleVideoHooks {
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgVideoBridgeCountries'] = F::app()->wg->VideoBridgeCountries;
+		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarByName(
+			'wgVideoBridgeCountries',
+			WikiFactory::COMMUNITY_CENTRAL
+		);
 
 		return true;
 	}

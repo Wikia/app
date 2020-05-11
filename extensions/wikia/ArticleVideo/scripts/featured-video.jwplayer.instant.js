@@ -175,9 +175,9 @@ require([
 	function isVideoBridgeAllowedForCountry() {
 		var countryCode = geo.getCountryCode();
 
-		return countryCode && window.wgVideoBridgeCountries.indexOf(countryCode) !== -1 ||
+		return countryCode && window.wgVideoBridgeCountries && (window.wgVideoBridgeCountries.indexOf(countryCode) !== -1 ||
 			window.wgVideoBridgeCountries.indexOf(countryCode.toLowerCase) !== -1 ||
-			window.wgVideoBridgeCountries.indexOf(countryCode.toUpperCase) !== -1;
+			window.wgVideoBridgeCountries.indexOf(countryCode.toUpperCase) !== -1);
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
