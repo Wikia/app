@@ -7,6 +7,7 @@ $wgAutoloadClasses['ArticleVideoInternalController'] = __DIR__ . '/ArticleVideoI
 
 $wgHooks['BeforePageDisplay'][] = 'ArticleVideoHooks::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = '\ArticleVideoHooks::onGetPreferences';
+$wgHooks['MakeGlobalVariablesScript'][] = 'ArticleVideoHooks::onMakeGlobalVariablesScript';
 
 $wgResourceModules['ext.ArticleVideo.jw'] = [
 	'scripts' => [

@@ -30,6 +30,12 @@ class ArticleVideoHooks {
 		}
 	}
 
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		$vars['wgVideoBridgeCountries'] = F::app()->wg->VideoBridgeCountries;
+
+		return true;
+	}
+
 	private static function addFeaturedVideoAssets() {
 		\Wikia::addAssetsToOutput( 'jwplayer_scss' );
 		\Wikia::addAssetsToOutput( 'jwplayer_js' );
