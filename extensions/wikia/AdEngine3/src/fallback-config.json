@@ -357,6 +357,18 @@
             "value": true
         }
     ],
+    "icA9BidRefreshing": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": false
+        }
+    ],
     "icA9Deals": [
         {
             "apps": [
@@ -744,6 +756,20 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icA9BidRefreshingSlots": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": [
+                "featured"
+            ]
         }
     ],
     "icPorvataDirect": [
