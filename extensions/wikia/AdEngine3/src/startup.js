@@ -10,6 +10,7 @@ import {
 	durationMedia,
 	events,
 	eventService,
+	facebookPixel,
 	iasPublisherOptimization,
 	identityLibrary,
 	InstantConfigCacheStorage,
@@ -154,6 +155,7 @@ function callExternals() {
 	inhibitors.push(bidders.requestBids());
 	inhibitors.push(wadRunner.call());
 
+	facebookPixel.call();
 	permutive.call();
 	identityLibrary.call();
 	iasPublisherOptimization.call();
