@@ -93,6 +93,12 @@ class ForumDumper {
 		NS_WIKIA_FORUM_BOARD_THREAD,
 	];
 
+	const ANON_WROTE_SELECTOR = "/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} wrote/";
+	const ANON_WROTE_REPLACEMENT = "Quote";
+
+	const QUOTE_SELECTOR = "/<div class=\\\"quote\\\">(.*?)<\/div>/s";
+	const QUOTE_REPLACEMENT = "<div class=\"quote\"><i>$1</i></div><br>";
+
 	private $titles = [];
 	private $pages = [];
 	private $bulk;
@@ -562,6 +568,13 @@ class ForumDumper {
 		}
 
 		$this->removeTitle( $textId );
+
+		if ( $rawText && $parsedText ) {
+			$rawTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $rawText );
+			$parsedTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $parsedText );
+			$parsedTextQuoteStyled = preg_replace( self::QUOTE_SELECTOR, self::QUOTE_REPLACEMENT, $parsedTextAnonymoused );
+			return [ $parsedTextQuoteStyled, $rawTextAnonymoused, $title ];
+		}
 
 		return [ $parsedText, $rawText, $title ];
 	}
