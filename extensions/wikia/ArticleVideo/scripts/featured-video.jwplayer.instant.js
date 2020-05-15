@@ -173,11 +173,12 @@ require([
 	}
 
 	function isVideoBridgeAllowedForCountry() {
-		var countryCode = geo.getCountryCode();
+		var countryCode = geo.getCountryCode().toLowerCase();
+		var allowedCountries = (window.wgVideoBridgeCountries || []).map(function (allowedCountryCode) {
+			return allowedCountryCode.toLowerCase();
+		});
 
-		return countryCode && window.wgVideoBridgeCountries && (window.wgVideoBridgeCountries.indexOf(countryCode) !== -1 ||
-			window.wgVideoBridgeCountries.indexOf(countryCode.toLowerCase) !== -1 ||
-			window.wgVideoBridgeCountries.indexOf(countryCode.toUpperCase) !== -1);
+		return countryCode && allowedCountries.indexOf(countryCode) !== -1;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {
