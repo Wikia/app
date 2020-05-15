@@ -30,15 +30,6 @@ class ArticleVideoHooks {
 		}
 	}
 
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarByName(
-			'wgVideoBridgeCountries',
-			WikiFactory::COMMUNITY_CENTRAL
-		);
-
-		return true;
-	}
-
 	private static function addFeaturedVideoAssets() {
 		\Wikia::addAssetsToOutput( 'jwplayer_scss' );
 		\Wikia::addAssetsToOutput( 'jwplayer_js' );
