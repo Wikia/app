@@ -2062,7 +2062,8 @@ class User implements JsonSerializable {
 		$this->load();
 		$wgMemc->delete( $this->getCacheKey() );
 		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-		( new UserIdentityBox( $this ) )->clearMemcUserIdentityData();
+		$wgMemc->delete( UserIdentityBox::getCacheKey( $this->getId() ) );
+		$wgMemc->delete( LookupContribsCore::getCacheKey( $this->getId() ) );
 		$this->userPreferences()->deleteFromCache( $this->getId() );
 	}
 

@@ -71,7 +71,7 @@ class LookupContribsCore {
 			return;
 		}
 
-		list( $orderType, $orderDirection ) = explode( ':', $order );
+		[ $orderType, $orderDirection ] = explode( ':', $order );
 
 		$this->mOrder = $orderType;
 		$this->mOrderDirection = $orderDirection;
@@ -232,7 +232,11 @@ class LookupContribsCore {
 	}
 
 	private function getUserActivityMemKey() {
-		return wfSharedMemcKey( __CLASS__, $this->mUserId );
+		return self::getMemcacheKey( $this->mUserId );
+	}
+
+	public static function getCacheKey( int $userId ) {
+		return wfSharedMemcKey( __CLASS__, $userId );
 	}
 
 	private function orderData( $userActivity ) {

@@ -266,7 +266,16 @@ class UserIdentityBox extends WikiaObject {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return wfSharedMemcKey( 'user-identity-box-data0', $this->user->getId(), self::CACHE_VERSION );
+		return self::getCacheKey( $this->user->getId() );
+	}
+
+	/**
+	 * @brief Returns string with key to memcached; requires $this->user field being instance of User
+	 *
+	 * @return string
+	 */
+	public static function getCacheKey( int $userId ) {
+		return wfSharedMemcKey( 'user-identity-box-data0', $userId, self::CACHE_VERSION );
 	}
 
 	/**
@@ -489,7 +498,7 @@ class UserIdentityBox extends WikiaObject {
 		return $memcData;
 	}
 
-	public function clearMemcUserIdentityData() {
+	private function clearMemcUserIdentityData() {
 		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 
