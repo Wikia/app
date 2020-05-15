@@ -174,7 +174,7 @@ require([
 
 	function isVideoBridgeAllowedForCountry() {
 		var countryCode = geo.getCountryCode().toLowerCase();
-		var allowedCountries = (window.wgVideoBridgeCountries || []).map(function (allowedCountryCode) {
+		var allowedCountries = (mw.config.get('wgVideoBridgeCountries') || []).map(function (allowedCountryCode) {
 			return allowedCountryCode.toLowerCase();
 		});
 
