@@ -489,7 +489,7 @@ class UserIdentityBox extends WikiaObject {
 		return $memcData;
 	}
 
-	private function clearMemcUserIdentityData() {
+	public function clearMemcUserIdentityData() {
 		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 

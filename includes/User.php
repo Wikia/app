@@ -1579,7 +1579,7 @@ class User implements JsonSerializable {
 
 		$triggered = false;
 		foreach( $keys as $key => $limit ) {
-			list( $max, $period ) = $limit;
+			[ $max, $period ] = $limit;
 			$summary = "(limit $max in {$period}s)";
 			$count = $wgMemc->get( $key );
 			// Already pinged?
@@ -2062,6 +2062,7 @@ class User implements JsonSerializable {
 		$this->load();
 		$wgMemc->delete( $this->getCacheKey() );
 		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
+		( new UserIdentityBox( $this ) )->clearMemcUserIdentityData();
 		$this->userPreferences()->deleteFromCache( $this->getId() );
 	}
 
@@ -3700,7 +3701,7 @@ class User implements JsonSerializable {
 		} else {
 			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
+			[$body, $bodyHTML] = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
