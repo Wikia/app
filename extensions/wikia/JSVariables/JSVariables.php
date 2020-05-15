@@ -52,7 +52,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
-		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarByName(
+		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarValueByName(
 			'wgVideoBridgeCountries',
 			WikiFactory::COMMUNITY_CENTRAL
 		);
