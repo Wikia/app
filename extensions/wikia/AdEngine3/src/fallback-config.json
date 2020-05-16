@@ -308,7 +308,7 @@
             "regions": [
                 "XX"
             ],
-            "value": false
+            "value": true
         }
     ],
     "icViewabilityTracking": [
