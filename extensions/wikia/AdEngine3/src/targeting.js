@@ -207,6 +207,7 @@ export default {
 			cat: getPageCategories(adsContext),
 			dmn: getDomain(),
 			hostpre: getHostnamePrefix(),
+			kid_wiki: adsContext.targeting.directedAtChildren ? '1' : '0',
 			lang: adsContext.targeting.wikiLanguage || 'unknown',
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
