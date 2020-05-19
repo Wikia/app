@@ -425,6 +425,7 @@ class CloseWikiMaintenance extends Maintenance {
 
 				$res = $this->createTarFile( $directory, $tarfile );
 				if ( $res ) {
+					$partSize = 0;
 					yield $tarfile;
 				}
 			}
