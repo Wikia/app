@@ -3,7 +3,7 @@
 class FandomComMigrationHooks {
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		if ( static::isEnabled() ) {
+		if ( static::isMigrationScheduled() ) {
 			$out->addModules( 'ext.fandomComMigration' );
 		}
 
@@ -13,7 +13,7 @@ class FandomComMigrationHooks {
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgFandomComMigrationCustomMessageBefore;
 
-		if ( static::isEnabled() ) {
+		if ( static::isMigrationScheduled() ) {
 			$parser = ParserPool::get();
 			if ( static::isMigrationScheduled() ) {
 				if ( !empty( $wgFandomComMigrationCustomMessageBefore ) ) {  // customized message
@@ -31,7 +31,7 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		if ( static::isEnabled() ) {
+		if ( static::isMigrationScheduled() ) {
 			$jsAssets[] = 'fandom_com_migration_js';
 		}
 
@@ -39,7 +39,7 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		if ( static::isEnabled() ) {
+		if ( static::isMigrationScheduled() ) {
 			$parser = ParserPool::get();
 			global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
 				   $wgFandomComMigrationCustomMessageAfter;
@@ -53,10 +53,6 @@ class FandomComMigrationHooks {
 		}
 
 		return true;
-	}
-
-	private static function isEnabled() {
-		return static::isMigrationScheduled();
 	}
 
 	/**
