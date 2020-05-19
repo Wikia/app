@@ -4,7 +4,7 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
     function unit(options) {
         var logos = '';
         var disclaimer = '';
-        var extra_disclaimer = '';
+        var extraDisclaimer = '';
 
         if (options.logoLight) {
             logos = '<img class="aff-unit__logo light" src="' + options.logoLight + '">'
@@ -17,9 +17,9 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
                 + '</p>';
         }
 
-        if (options.extra_disclaimer) {
-            extra_disclaimer = '<p class="aff-unit__extra-disclaimer-message">'
-                + options.extra_disclaimer
+        if (options.extraDisclaimer) {
+            extraDisclaimer = '<p class="aff-unit__extra-disclaimer-message">'
+                + options.extraDisclaimer
                 + '</p>';
         }
 
@@ -34,7 +34,7 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
             + '</a>'
             + '</div>'
             + disclaimer + ' '
-            + extra_disclaimer
+            + extraDisclaimer
     }
 
     return {

@@ -6,10 +6,10 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			name: 'hbomax-unit',
 			country: ['US'],
 			heading: 'Where HBO Meets So Much More',
-			subheading: 'START YOUR FREE TRAIL',
+			subheading: 'START YOUR FREE TRIAL',
 			link: 'https://www.hbomax.com/gzm',
 			image: 'https://static.wikia.nocookie.net/05a5bbb9-7662-416e-99c7-6e6700af9aa3',
-			extra_disclaimer: "Free trail for new customers only. Restrictions Apply."
+			extraDisclaimer: "Free trial for new customers only. Restrictions Apply."
 		},
 		{
 			campaign: 'disneyplus',
