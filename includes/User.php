@@ -2062,9 +2062,23 @@ class User implements JsonSerializable {
 		$this->load();
 		$wgMemc->delete( $this->getCacheKey() );
 		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-		$wgMemc->delete( UserIdentityBox::getCacheKey( $this->getId() ) );
-		$wgMemc->delete( LookupContribsCore::getCacheKey( $this->getId() ) );
+		$wgMemc->delete( self::getUserIdentityBoxCacheKey( $this->getId() ) );
+		$wgMemc->delete( self::getLookupContribsCoreCacheKey( $this->getId() ) );
 		$this->userPreferences()->deleteFromCache( $this->getId() );
+	}
+
+	/**
+	 * Returns memcached key for UserIdentityBox.
+	 */
+	public static function getUserIdentityBoxCacheKey( int $userId ): string {
+		return wfSharedMemcKey( 'user-identity-box-data0', $userId, /* version */ 3 );
+	}
+
+	/**
+	 * Returns memcached key for UserIdentityBox LookupContribsCore.
+	 */
+	public static function getLookupContribsCoreCacheKey( int $userId ): string {
+		return wfSharedMemcKey( 'LookupContribsCore', $userId );
 	}
 
 	/**

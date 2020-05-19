@@ -232,11 +232,7 @@ class LookupContribsCore {
 	}
 
 	private function getUserActivityMemKey() {
-		return self::getMemcacheKey( $this->mUserId );
-	}
-
-	public static function getCacheKey( int $userId ) {
-		return wfSharedMemcKey( __CLASS__, $userId );
+		return User::getLookupContribsCoreCacheKey( $this->mUserId );
 	}
 
 	private function orderData( $userActivity ) {

@@ -1,7 +1,6 @@
 <?php
 
 class UserIdentityBox extends WikiaObject {
-	const CACHE_VERSION = 3;
 
 	/**
 	 * Prefixes to memc keys etc.
@@ -94,7 +93,6 @@ class UserIdentityBox extends WikiaObject {
 		$data = $this->getUserData( 'getEmptyData' );
 		wfProfileOut( __METHOD__ );
 		return $data;
-
 	}
 
 	public function getFullData() {
@@ -266,17 +264,9 @@ class UserIdentityBox extends WikiaObject {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return self::getCacheKey( $this->user->getId() );
+		return User::getUserIdentityBoxCacheKey( $this->user->getId() );
 	}
 
-	/**
-	 * @brief Returns string with key to memcached; requires $this->user field being instance of User
-	 *
-	 * @return string
-	 */
-	public static function getCacheKey( int $userId ) {
-		return wfSharedMemcKey( 'user-identity-box-data0', $userId, self::CACHE_VERSION );
-	}
 
 	/**
 	 * @brief Sets empty data for a particular wiki
