@@ -316,7 +316,7 @@ class User implements JsonSerializable {
 		 */
 		$isExpired = true;
 		if(!empty($data)) {
-			$_key = self::getUserTouchedKey( $this->mId );
+			$_key = $this->getUserTouchedKey();
 			$_touched = $wgMemc->get( $_key );
 			if( empty( $_touched ) ) {
 				$wgMemc->set( $_key, $data['mTouched'] );
@@ -378,21 +378,19 @@ class User implements JsonSerializable {
 		// Wikia
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
-		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
+		$wgMemc->set( $this->getCacheKeyByName(), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
-	private function getCacheKey() {
-		return self::getCacheKeyById( $this->mId );
+	private function getCacheKey(): string {
+		$cacheKey = new UserIdCacheKeys($this->getId());
+		return $cacheKey->forUser();
 	}
 
-	private static function getCacheKeyById( int $id ) : string {
-		return wfMemcKey( 'user', 'id', $id );
-	}
-
-	private static function getCacheKeyByName( string $name ) : string {
-		return wfSharedMemcKey( 'user', 'name', $name );
+	private function getCacheKeyByName( ) : string {
+		$cacheKey = new UsernameCacheKeys($this->getName());
+		return $cacheKey->forUser();
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2035,8 +2033,7 @@ class User implements JsonSerializable {
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 
-			$memckey = self::getUserTouchedKey( $this->mId );
-			$wgMemc->set( $memckey, $this->mTouched );
+			$wgMemc->set( $this->getUserTouchedKey(), $this->mTouched );
 			wfDebug( "Shared user: updating shared user_touched\n" );
 		}
 	}
@@ -2056,35 +2053,24 @@ class User implements JsonSerializable {
 		self::permissionsService()->invalidateCache( $this );
 	}
 
+	/**
+	 * This method should be used to clear all cache for the user, not just account data, but also Masthead,
+	 * contributions and others. This should be used when user is renamed, anonymized and so on.
+	 */
 	public function deleteCache() {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 
 		$this->load();
-		$wgMemc->delete( $this->getCacheKey() );
-		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-		$wgMemc->delete( self::getUserIdentityBoxCacheKey( $this->getId() ) );
-		$wgMemc->delete( self::getLookupContribsCoreCacheKey( $this->getId() ) );
-		$this->userPreferences()->deleteFromCache( $this->getId() );
-	}
 
-	/**
-	 * Returns memcached key for UserIdentityBox.
-	 */
-	public static function getUserIdentityBoxCacheKey( int $userId ): string {
-		return wfSharedMemcKey( 'user-identity-box-data0', $userId, /* version */ 3 );
+		$userCache = new UserIdCacheKeys( $this->getId() );
+		foreach ( $userCache->getAllKeys() as $key) {
+			$wgMemc->delete( $key);
+		}
+		$usernameCache = new UsernameCacheKeys( $this->getName() );
+		foreach ( $usernameCache->getAllKeys( $wgCityId ) as $key) {
+			$wgMemc->delete($key);
+		}
 	}
-
-	/**
-	 * Returns memcached key for UserIdentityBox LookupContribsCore.
-	 */
-	public static function getLookupContribsCoreCacheKey( int $userId ): string {
-		return wfSharedMemcKey( 'LookupContribsCore', $userId );
-	}
-
-	public static function getFavoriteWikisCache( int $userId ): string {
-		return wfSharedMemcKey( 'user-identity-box-data-top-wikis', $userId, /* version */ 3 );
-	}
-
 
 	/**
 	 * Update the "touched" timestamp for the user
@@ -2146,19 +2132,6 @@ class User implements JsonSerializable {
 		}
 
 		return $this->mTouched;
-	}
-
-	/**
-	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
-	 * or invalidateCache both have side effects like loading things from cache before clearing
-	 * it and writing back to cache after finishing.
-	 *
-	 * @param int $userId
-	 */
-	public static function clearUserCache( $userId ) {
-		global $wgMemc;
-		$memKey = self::getCacheKeyById( $userId );
-		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -4301,16 +4274,11 @@ class User implements JsonSerializable {
 
 	/**
 	 * Return the memcache key for storing cross-wiki "user_touched" value.
-	 *
 	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
-	 *
-	 * @author wikia
-	 *
-	 * @param int $user_id
 	 * @return string memcache key
 	 */
-	public static function getUserTouchedKey( $user_id ) {
-		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
+	public function getUserTouchedKey(): string {
+		return wfSharedMemcKey( "user_touched", 'v1',  $this->mId );
 	}
 
 	/**

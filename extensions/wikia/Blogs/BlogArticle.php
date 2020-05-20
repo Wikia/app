@@ -194,7 +194,8 @@ class BlogArticle extends Article {
 	 * @return String - memcache key
 	 */
 	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
+		$usernameCacheKeys = new UsernameCacheKeys($userKey);
+		return $usernameCacheKeys->forBlogArticleListing( $pageNum );
 	}
 
 	/**
@@ -213,7 +214,8 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogFeedMemcacheKey( $userKey, $offset ) {
-		return wfMemcKey( 'blog', 'feed', 'v' . self::CACHE_VERSION, $userKey, $offset );
+		$usernameCacheKeys = new UsernameCacheKeys($userKey);
+		return $usernameCacheKeys->forBlogArticleFeed( $offset );
 	}
 
 	/**

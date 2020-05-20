@@ -2,13 +2,9 @@
 
 class UserIdentityBox extends WikiaObject {
 
-	/**
-	 * Prefixes to memc keys etc.
-	 */
 	const USER_PROPERTIES_PREFIX = 'UserProfilePagesV3_';
 	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
 	const USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY = 'UserProfilePagesV3_mastheadEditDate_';
-	const USER_MASTHEAD_EDITS_WIKIS = 'UserProfilePagesV3_mastheadEditsWikis_';
 	const USER_EVER_EDITED_MASTHEAD = 'UserProfilePagesV3_mastheadEditedEver';
 
 	/**
@@ -21,9 +17,9 @@ class UserIdentityBox extends WikiaObject {
 
 	const CACHE_TTL = 60 * 60; // 1 hour
 
-	private $user = null;
-	private $title = null;
-	private $favWikisModel = null;
+	private $user;
+	private $title;
+	private $favWikisModel;
 
 	const CACHE_FIELDS = [
 		'location',
@@ -68,6 +64,8 @@ class UserIdentityBox extends WikiaObject {
 		'name',
 		'hideEditsWikis',
 	);
+	/** @var UserIdCacheKeys */
+	private $userCache;
 
 	/**
 	 * @param User $user core user object
@@ -77,6 +75,7 @@ class UserIdentityBox extends WikiaObject {
 		$this->user = $user;
 		$this->title = $this->wg->Title;
 		$this->favWikisModel = $this->getFavoriteWikisModel();
+		$this->userCache = new UserIdCacheKeys( $user->getId() );
 
 		if ( is_null( $this->title ) ) {
 			$this->title = $this->user->getUserPage();
@@ -264,9 +263,8 @@ class UserIdentityBox extends WikiaObject {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return User::getUserIdentityBoxCacheKey( $this->user->getId() );
+		return $this->userCache->forUserIdentityBox();
 	}
-
 
 	/**
 	 * @brief Sets empty data for a particular wiki
