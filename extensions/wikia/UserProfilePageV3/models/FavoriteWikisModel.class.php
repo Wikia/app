@@ -150,7 +150,7 @@ class FavoriteWikisModel extends WikiaModel {
 	}
 
 	private function getTopWikisMemKey() {
-		return wfSharedMemcKey( 'user-identity-box-data-top-wikis', $this->user->getId(), self::CACHE_VERSION );
+		return User::getFavoriteWikisCache( $this->user->getId() );
 	}
 
 	/**

@@ -2081,6 +2081,11 @@ class User implements JsonSerializable {
 		return wfSharedMemcKey( 'LookupContribsCore', $userId );
 	}
 
+	public static function getFavoriteWikisCache( int $userId ): string {
+		return wfSharedMemcKey( 'user-identity-box-data-top-wikis', $userId, /* version */ 3 );
+	}
+
+
 	/**
 	 * Update the "touched" timestamp for the user
 	 *
