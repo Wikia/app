@@ -59,7 +59,7 @@
 # - dot in folder name in input path was misunderstood as start of file extension
 # - utf-8 chars within 160-255 range are translated to extended ascii
 #   however internal font used by Ploticus has strange mapping so some are replaced
-#   by undercore or unaccented version of character
+#   by underscore or unaccented version of character
 #   this is a make do solution until full unicode support with external fonts will be added
 #
 # 1.12 June 2009
@@ -70,8 +70,9 @@
 # - change svg encoding from iso-8859-1 -> UTF-8
 # - allow font to be specified using -f option as opposed to hardcoded FreeSans.
 
+use 5.010;
+
 use strict;
-use warnings;
 
 our $VERSION = '1.90';
 
@@ -82,6 +83,8 @@ use English '-no_match_vars';
 
 # Global variables.
 # Many of these should be refactored.
+my $SVG_ONLY = 0;
+
 my @PlotLines;
 my $CntErrors = 0;
 my @Errors;
@@ -290,6 +293,10 @@ sub ParseArguments {
         $articlepath = "http://en.wikipedia.org/wiki/\$1";
     }
 
+    if (defined $options{"s"}) {
+        $SVG_ONLY = 1;
+    }
+
     if (!-e $file_in) {
         &Abort("Input file '" . $file_in . "' not found.");
     }
@@ -310,8 +317,6 @@ sub InitFiles {
     $file_html    = $file . ".html";
     $file_errors  = $file . ".err";
 
-    # $file_pl_info = $file . ".inf" ;
-    # $file_pl_err  = $file . ".err" ;
     print "Output: Image files $file_bitmap & $file_vector\n";
 
     if ($linkmap) {
@@ -332,10 +337,6 @@ sub InitFiles {
 sub SetImageFormat {
     $env = "";
 
-    # $dir = cwd() ; # is there a better way to detect OS?
-    # if ($dir =~ /\//) { $env = "Linux" ;   $image_file_fmt = "png" ; $pathseparator = "/";}
-    # if ($dir =~ /\\/) { $env = "Windows" ; $image_file_fmt = "gif" ; $pathseparator = "\\";}
-    # cwd always to returns '/'s ? ->
     if ($OSNAME =~ /darwin/i) {
         $env            = "Linux";
         $image_file_fmt = "png";
@@ -346,7 +347,11 @@ sub SetImageFormat {
         $image_file_fmt = "gif";
         $pathseparator  = "\\";
     }
-    else { $env = "Linux"; $image_file_fmt = "png"; $pathseparator = "/"; }
+    else {
+        $env            = "Linux";
+        $image_file_fmt = "png";
+        $pathseparator  = "/";
+    }
 
     if ($env ne "") {
         print
@@ -646,12 +651,12 @@ sub CollectAttributes {
             if (   ($name ne "bar")
                 && ($name ne "text")
                 && ($name ne "link")
-                && ($name ne "legend"))    #  && ($name ne "hint")
+                && ($name ne "legend"))
             {
                 $value = lc($value);
             }
 
-            if ($name eq "link")           # restore colon
+            if ($name eq "link")    # restore colon
             {
                 $value =~ s/'colon'/:/;
             }
@@ -678,7 +683,9 @@ sub CollectAttributes {
             }
         }
     }
-    if (($name ne "") && ($Attributes{"single"} ne "")) {
+    if (    (defined $name and $name ne "")
+        and (defined $Attributes{"single"} and $Attributes{"single"} ne ""))
+    {
         &Error(   "Invalid attribute '"
                 . $Attributes{"single"}
                 . "' ignored.\nSpecify attributes as 'name:value' pairs.");
@@ -1386,7 +1393,6 @@ sub ParseImageSize {
                 }
             }
         }
-
         elsif ($attribute =~ /BarIncrement/i) {
             if (!&ValidAbs($attrvalue)) {
                 &Error(   "ImageSize attribute '$attribute' invalid.\n"
@@ -1397,11 +1403,6 @@ sub ParseImageSize {
 
             $Attributes{"barinc"} = $attrvalue;
         }
-
-        #   if ($attribute =~ /Width/i)
-        #   { $Attributes{"width"} = $attrvalue ; }
-        #   elsif ($attribute =~ /Height/i)
-        #   { $Attributes{"height"} = $attrvalue ; }
     }
 
     if (   ($Attributes{"width"} =~ /auto/i)
@@ -1756,7 +1757,7 @@ sub ParsePlotData {
     while ((!$InputParsed) && (!$NoData)) {
         if (!&ValidAttributes("PlotData")) { &GetData; next; }
 
-        $bar       = "";                # $barset = "" ;
+        $bar       = "";
         $at        = "";
         $from      = "";
         $till      = "";
@@ -1780,7 +1781,6 @@ sub ParsePlotData {
 
         if (defined($PlotDefs{"bar"})) { $bar = $PlotDefs{"bar"}; }
 
-        #  if (defined ($PlotDefs{"barset"}))    { $barset    = $PlotDefs{"barset"} ; }
         if (defined($PlotDefs{"color"})) { $color = $PlotDefs{"color"}; }
         if (defined($PlotDefs{"bgcolor"})) {
             $bgcolor = $PlotDefs{"bgcolor"};
@@ -2143,7 +2143,6 @@ sub ParsePlotData {
         {
             if ($bar ne "") { $PlotDefs{"bar"} = $bar; }
 
-            #     if ($barset     ne "") { $PlotDefs{"barset"}    = $barset ; }
             if ($color     ne "") { $PlotDefs{"color"}     = $color; }
             if ($bgcolor   ne "") { $PlotDefs{"bgcolor"}   = $bgcolor; }
             if ($textcolor ne "") { $PlotDefs{"textcolor"} = $textcolor; }
@@ -2156,8 +2155,6 @@ sub ParsePlotData {
             if ($mark      ne "") { $PlotDefs{"mark"}      = $mark; }
             if ($markcolor ne "") { $PlotDefs{"markcolor"} = $markcolor; }
 
-            #     if ($link       ne "") { $PlotDefs{"link"}      = $link ; }
-            #     if ($hint       ne "") { $PlotDefs{"hint"}      = $hint ; }
             &GetData;
             next PlotData;
         }
@@ -2606,8 +2603,7 @@ sub ParseTextData {
             $textcolor = $TextDefs{"textcolor"};
         }
 
-        # warn "data: $data"; # XXX $data is probably not really used
-        my $data2;    # = $data; # XXX see above
+        my $data2;
         ($data2, $text) = &ExtractText($data2);
         @Attributes = split(" ", $data2);
 
@@ -2723,9 +2719,6 @@ sub ParseTextData {
             $pos = "$posx,$posy";
             $TextDefs{"pos"} = $pos;
         }
-
-        #    if ($link ne "")
-        #    { ($text, $link, $hint) = &ProcessWikiLink ($text, $link, $hint) ; }
 
         if ($text eq "")    # upd defaults
         {
@@ -3453,14 +3446,6 @@ sub WritePlotFile {
     if   ($Axis{"time"} eq "x") { $AxisBars = "y"; }
     else                        { $AxisBars = "x"; }
 
-    #  if (($Axis{"time"} eq "y") && ($#Bars > 0))
-    #  {
-    #    undef @BarsTmp ;
-    #    while ($#Bars >= 0)
-    #    { push @BarsTmp, pop @Bars ; }
-    #    @Bars = @BarsTmp ;
-    #  }
-
     my $file_script;
     if ($tmpdir ne "") {
         $file_script = $tmpdir . $pathseparator . "EasyTimeline.txt.$$";
@@ -3469,15 +3454,9 @@ sub WritePlotFile {
         $file_script = "EasyTimeline.txt";
     }
 
-    print "Ploticus input file = " . $file_script . "\n";
+    print "Ploticus input file = $file_script\n";
 
-    # $image_file_fmt = "gif" ;
     open "FILE_OUT", ">", $file_script;
-
-    #proc settings
-    #  $script .= "#proc settings\n" ;
-    #  $script .= "  xml_encoding: utf-8\n" ;
-    #  $script .= "\n" ;
 
     # proc page
     $script .= "#proc page\n";
@@ -3689,7 +3668,6 @@ sub WritePlotFile {
 
     $script .= "\n([inc3])\n\n";    # will be replace by rects
 
-    # %x = %BarWidths; # XXX doesn't seem to be used
     my ($bar, $width);
     foreach my $entry (@PlotLines) {
         ($bar) = split(",", $entry);
@@ -3701,8 +3679,11 @@ sub WritePlotFile {
     @PlotBarsNow = @PlotLines;
     &PlotBars;
 
-    my ($scriptPng1, $scriptPng2, $scriptPng3);
-    my ($scriptSvg1, $scriptSvg2);
+    my $scriptPng1 = q{};
+    my $scriptPng2 = q{};
+    my $scriptPng3 = q{};
+    my $scriptSvg1 = q{};
+    my $scriptSvg2 = q{};
 
     #proc axis
     if ($#Bars > 0) {
@@ -3853,11 +3834,6 @@ sub WritePlotFile {
         $scriptSvg1 .= "\n";
     }
 
-    # $script .= "#proc symbol\n" ;
-    # $script .= "  location: 01/01/1943(s) Korea \n" ;
-    # $script .= "  symbol: style=fill shape=downtriangle fillcolor=white radius=0.04\n" ;
-    # $script .= "\n" ;
-
     #proc axis
     # repeat without grid to get axis on top of bar
     # needed because axis may overlap bar slightly
@@ -3959,16 +3935,17 @@ sub WritePlotFile {
 
     my $map = ($MapSVG) ? "-map" : "";
 
-    print "Running Ploticus to generate svg file\n";
+    print "Running Ploticus to generate svg file $file_vector\n";
 
-    # my $cmd = "$pl $map -" . "svg" . " -o $file_vector $file_script -tightcrop -font \"Times\"" ;
-    # my $cmd = "$pl $map -" . "svg" . " -o $file_vector $file_script -tightcrop" ;
+    my $escaped_font_file = EscapeShellArg($font_file);
     my $cmd =
           EscapeShellArg($pl)
         . " $map -" . "svg" . " -o "
         . EscapeShellArg($file_vector) . " "
         . EscapeShellArg($file_script)
-        . " -tightcrop -xml_encoding UTF-8";
+        . " -tightcrop"
+        . " -font '$escaped_font_file'"
+        . " -xml_encoding UTF-8";
     print "$cmd\n";
     system($cmd);
 
@@ -4004,11 +3981,8 @@ sub WritePlotFile {
         $map = '';
     }
 
-    # $crop = "-crop 0,0," + $ImageSize{"width"} . "," . $ImageSize{"height"} ;
-    print "Running Ploticus to generate bitmap\n";
+    print "Running Ploticus to generate bitmap file $file_bitmap\n";
 
-    # $cmd = "$pl $map -" . $image_file_fmt . " -o $file_bitmap $file_script -tightcrop" ; # -v $file_bitmap" ;
-    # $cmd = "$pl $map -" . $image_file_fmt . " -o $file_bitmap $file_script -tightcrop -diagfile $file_pl_info -errfile $file_pl_err" ;
     $cmd =
           EscapeShellArg($pl)
         . " $map -"
@@ -4076,18 +4050,38 @@ sub WritePlotFile {
     }
 
     if (-e $file_vector) {
-        open "FILE_IN", "<", $file_vector;
-        my @svg = <FILE_IN>;
-        close "FILE_IN";
+        open my $file_vector_handle, '<', $file_vector
+            or Abort("Can't open $file_vector for reading: $OS_ERROR");
+        my @svg = <$file_vector_handle>;
+        close $file_vector_handle
+            or Abort("Can't open $file_vector after reading: $OS_ERROR");
 
         foreach (@svg) {
             s/\{\{(\d+)\}\}x+/$textsSVG[$1]/gxe;
-            s/\[(\d+)\[ (.*?) \]\d+\]/'<a style="fill:blue;" xlink:href="' . $linksSVG[$1] . '">' . $2 . '<\/a>'/gxe;
+
+            if ($SVG_ONLY) {
+                s{
+                    (
+                        <text
+                        .*?
+                    )
+                    >
+                    \[(\d+)\[
+                    (.*?)
+                    \]\d+\]
+                }
+                {$1 style="fill:blue;">$3}gx;
+            }
+            else {
+                s/\[(\d+)\[ (.*?) \]\d+\]/'<a style="fill:blue;" xlink:href="' . $linksSVG[$1] . '">' . $2 . '<\/a>'/gxe;
+            }
         }
 
-        open "FILE_OUT", ">", $file_vector;
-        print FILE_OUT @svg;
-        close "FILE_OUT";
+        open $file_vector_handle, '>', $file_vector
+            or Abort("Can't open $file_vector for writing: $OS_ERROR");
+        print {$file_vector_handle} @svg;
+        close $file_vector_handle
+            or Abort("Can't open $file_vector after writing: $OS_ERROR");
     }
 
     # not for Wikipedia, for offline use:
@@ -4184,7 +4178,6 @@ sub WriteTexts {
         }
         else { $ypos = "$at(s)"; $xpos = "[$barcnt](s)"; }
 
-        # XXX - $shiftx was defined inside the if block.
         my ($shiftx, $shifty);
         if ($shift ne "") {
             ($shiftx, $shifty) = split(",", $shift);
@@ -4270,24 +4263,9 @@ sub PlotScale {
     my $grid  = shift;
     my ($color, $from, $till, $start);
 
-    # %x = %Period; # XXX doesn't seem to be used
-
-    #  if (($DateFormat =~ /\//) && ($grid))
-    #  { return ; }
-
-    #  if (($DateFormat =~ /\//)
-    #  {
-    #  }
-
-    #  if (! $grid) # redefine area, scale linear for time axis, showl whole years always, Ploticus bug
-    #  {
-    # $from = $Period{"from"} ;
-    # $till = $Period{"till"} ;
     $from = &DateToFloat($Period{"from"});
     $till = &DateToFloat($Period{"till"});
 
-    # $from =~ s/.*\///g ; # delete dd mm if present
-    # $till =~ s/.*\///g ;
     #proc areadef
     $script .= "#proc areadef\n";
     $script .= "  #clone: A\n";
@@ -4306,15 +4284,10 @@ sub PlotScale {
 
     $script .= "\n";
 
-    #  }
-
     $script .= "#proc " . $Axis{"time"} . "axis\n";
 
     if (($scale eq "Major") && (!$grid)) {
 
-        #   $script .= "  stubs: incremental " . $Scales{"Major inc"} . " " . $Scales{"Major unit"} . "\n" ;
-        #   if ($DateFormat =~ /\//)
-        #   { $script .= "  stubformat: " . $Axis{"format"} . "\n" ; }
         # temp always show whole years (Ploticus autorange bug)
         if ($Scales{"Major stubs"} eq "")    # ($DateFormat !~ /\//)
         {
@@ -4324,10 +4297,7 @@ sub PlotScale {
     }
     else { $script .= "  stubs: none\n"; }
 
-    if ($DateFormat !~ /\//)
-
-        # { $script .= "  ticincrement: " . $Scales{"$scale inc"} . " " . $Scales{"$scale unit"} . "\n" ; }
-    {
+    if ($DateFormat !~ /\//) {
         $script .= "  ticincrement: " . $Scales{"$scale inc"} . "\n";
     }
     else {
@@ -4340,7 +4310,6 @@ sub PlotScale {
     if (defined($Scales{"$scale start"})) {
         $start = $Scales{"$scale start"};
 
-        # $start =~ s/.*\///g ; # delete dd mm if present
         $start = &DateToFloat($start);
         if ($Axis{"order"} =~ /reverse/i) {
             my $loop = 0;
@@ -4362,9 +4331,9 @@ sub PlotScale {
             $script .= "  signreverse: yes\n";
         }
     }
-    else { $script .= "  ticlen: 0.02\n"; }
-
-    # $script .= "  location: 4\n" ; test
+    else {
+        $script .= "  ticlen: 0.02\n";
+    }
 
     $color .= $Scales{"$scale grid"};
 
@@ -4812,7 +4781,9 @@ sub BarDefined {
     }
 
     # not part of barset ? return
-    if ($bar != /\#\d+$/) { return ($false); }
+    if ($bar !~ /\#\d+$/) {
+        return ($false);
+    }
 
     # find previous bar in barset
     my $barcnt = $bar;
@@ -4842,10 +4813,7 @@ sub ValidAttributes {
         return (CheckAttributes($command, "", "canvas,bars"));
     }
 
-    if ($command =~ /^BarData$/i)
-
-        # { return (CheckAttributes ($command, "", "bar,barset,barcount,link,text")) ; }
-    {
+    if ($command =~ /^BarData$/i) {
         return (CheckAttributes($command, "", "bar,barset,link,text"));
     }
 
@@ -4977,8 +4945,11 @@ sub CheckPreset {
 
     my $newcommand = $true;
     my $addvalue   = $true;
-    my $prevcommand;
-    if ($command =~ /^$prevcommand$/i) { $newcommand = $false; }
+    state $prevcommand = q{};
+    if (lc $command eq lc $prevcommand) {
+        $newcommand = $false;
+    }
+
     if ((!$newcommand) && ($command =~ /^(?:DrawLines|PlotData|TextData)$/i))
     {
         $addvalue = $false;
