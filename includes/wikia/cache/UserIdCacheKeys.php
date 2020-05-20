@@ -34,9 +34,6 @@ class UserIdCacheKeys {
 		return wfSharedMemcKey( 'user-identity-box-data0', $this->userId, /* version */ 3 );
 	}
 
-	/**
-	 * Returns memcached key for UserIdentityBox LookupContribsCore.
-	 */
 	public function forLookupContribs(): string {
 		return wfSharedMemcKey( 'LookupContribsCore', $this->userId );
 	}
