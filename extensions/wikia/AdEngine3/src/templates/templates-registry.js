@@ -5,6 +5,7 @@ import {
 	FloorAdhesion,
 	Interstitial,
 	HideOnViewability,
+	LogoReplacement,
 	PorvataTemplate,
 	Roadblock,
 	StickyTLB
@@ -23,6 +24,7 @@ export const templateRegistry = {
 		templateService.register(FloorAdhesion);
 		templateService.register(Interstitial);
 		templateService.register(HideOnViewability);
+		templateService.register(LogoReplacement);
 		templateService.register(PorvataTemplate, getPorvataConfig());
 		templateService.register(Roadblock, getRoadblockConfig());
 		templateService.register(Skin);
