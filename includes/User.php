@@ -375,10 +375,10 @@ class User implements JsonSerializable {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 
-		// Wikia
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
-		$wgMemc->set( $this->getCacheKeyByName(), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
+		// SUS-2945
+		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
@@ -388,8 +388,8 @@ class User implements JsonSerializable {
 		return $cacheKey->forUser();
 	}
 
-	private function getCacheKeyByName( ) : string {
-		$cacheKey = new UserNameCacheKeys($this->getName());
+	private static function getCacheKeyByName( string $username ) : string {
+		$cacheKey = new UserNameCacheKeys( $username );
 		return $cacheKey->forUser();
 	}
 
