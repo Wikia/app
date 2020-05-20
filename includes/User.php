@@ -389,7 +389,7 @@ class User implements JsonSerializable {
 	}
 
 	private function getCacheKeyByName( ) : string {
-		$cacheKey = new UsernameCacheKeys($this->getName());
+		$cacheKey = new UserNameCacheKeys($this->getName());
 		return $cacheKey->forUser();
 	}
 
@@ -2066,7 +2066,7 @@ class User implements JsonSerializable {
 		foreach ( $userCache->getAllKeys() as $key) {
 			$wgMemc->delete( $key);
 		}
-		$usernameCache = new UsernameCacheKeys( $this->getName() );
+		$usernameCache = new UserNameCacheKeys( $this->getName() );
 		foreach ( $usernameCache->getAllKeys( $wgCityId ) as $key) {
 			$wgMemc->delete($key);
 		}

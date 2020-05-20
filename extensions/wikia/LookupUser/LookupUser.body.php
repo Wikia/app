@@ -321,7 +321,7 @@ EOT
 	 * @return string
 	 */
 	public static function getUserLookupMemcKey( $userName, $wikiId ) {
-		$cacheKeys = new UsernameCacheKeys( $userName );
+		$cacheKeys = new UserNameCacheKeys( $userName );
 		return $cacheKeys->forLookupUser( $wikiId );
 	}
 

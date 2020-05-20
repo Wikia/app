@@ -6,7 +6,7 @@ declare( strict_types=1 );
  * This class organises generators for all cache keys which need to be cleared when user data
  * changes, for example when it's anonymized or renamed.
  */
-class UsernameCacheKeys {
+class UserNameCacheKeys {
 
 	/** @var string */
 	private $username;
