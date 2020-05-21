@@ -195,6 +195,10 @@ class MercuryApi {
 				'licenseText' => $wgRightsText,
 				'licenseUrl' => $wgRightsUrl,
 				'isTestWiki' => $wgIsTestWiki,
+				'videoBridgeCountries' => WikiFactory::getVarValueByName(
+					'wgVideoBridgeCountries',
+					WikiFactory::COMMUNITY_CENTRAL
+				),
 			]
 		);
 

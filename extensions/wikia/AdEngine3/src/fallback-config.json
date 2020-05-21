@@ -148,7 +148,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -248,7 +251,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 10.0,
             "value": true
         }
     ],
@@ -302,6 +305,9 @@
                 "muthead",
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": true
         }
     ],
@@ -347,6 +353,21 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icA9BidRefreshing": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "ES",
+                "GB",
+                "UK"
             ],
             "value": true
         }
@@ -555,9 +576,20 @@
                 "5340108844",
                 "5355041410",
                 "5361162186",
+                "5361509998",
                 "5363972065",
                 "5363972611",
-                "5363972614"
+                "5371996289",
+                "5363972614",
+                "5366657920",
+                "5368489917",
+                "5369583245",
+                "5368490040",
+                "5368490043",
+                "5370873744",
+                "5366503822",
+                "5354223833",
+                "5353864975"
             ]
         }
     ],
@@ -573,8 +605,8 @@
             "value": [
                 "icPrebidSendAllBids_A_95:send_all_bids_a",
                 "icPrebidSendAllBids_B_5:send_all_bids_b",
-                "icFloatingMedrecRecirculationDisabled_A_50:fmr_50_50_a",
-                "icFloatingMedrecRecirculationDisabled_B_50:fmr_50_50_b"
+                "icFloatingMedrecRecirculationDisabled_A_90:fmr_50_50_a",
+                "icFloatingMedrecRecirculationDisabled_B_10:fmr_50_50_b"
             ]
         }
     ],
@@ -606,6 +638,20 @@
             "value": true
         }
     ],
+    "icFacebookPixel": [
+        {
+            "apps": [
+                "f2",
+                "gamepedia",
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
+            ],
+            "value": true
+        }
+    ],
     "icFeaturedVideoAdsFrequency": [
         {
             "apps": [
@@ -625,11 +671,7 @@
                 {
                     "name": "vcr",
                     "countries": [
-                        "PL/100",
-                        "CZ/100",
-                        "HK/100",
-                        "UK/100",
-                        "GB/100"
+                        
                     ],
                     "dfp_targeting": true
                 }
@@ -696,8 +738,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
                 "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -734,6 +778,23 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icA9BidRefreshingSlots": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "ES",
+                "GB",
+                "UK"
+            ],
+            "value": [
+                "featured"
+            ]
         }
     ],
     "icPorvataDirect": [
@@ -858,8 +919,7 @@
                 "oasis"
             ],
             "regions": [
-                "PL",
-                "US"
+                "XX"
             ],
             "value": true
         }

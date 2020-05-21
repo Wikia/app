@@ -4,6 +4,8 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 use Wikia\CreateNewWiki\Starters;
 use Wikia\Logger\Loggable;
+use Google\Cloud\Storage\StorageClient;
+use GuzzleHttp\Psr7\StreamWrapper;
 
 class ImportStarterData extends Task {
 
@@ -15,6 +17,9 @@ class ImportStarterData extends Task {
 	const ERR_RUN_UPDATES_FAILED = 4;
 
 	const MAX_REPLICATION_WAIT_MILLIS = 1250;
+
+	const BUCKET_NAME_PROD = 'create-new-wiki';
+	const BUCKET_NAME_DEV = 'create-new-wiki-dev';
 
 	public function run() {
 		global $wgContLang;
@@ -64,17 +69,28 @@ class ImportStarterData extends Task {
 	 * @throws \CreateWikiException
 	 */
 	private function getDump( $path ) {
-		$stream = fopen( "php://memory", "wb" );
+		global $wgWikiaEnvironment, $wgGcsConfig;
+
+		$bucketName = self::BUCKET_NAME_PROD;
+
+		if ( $wgWikiaEnvironment == 'dev' ) {
+			$bucketName = self::BUCKET_NAME_DEV;
+		}
+
+		$storage = new StorageClient( [ 'keyFile' => $wgGcsConfig['gcsCredentials'] ] );
+		$bucket = $storage->bucket( $bucketName );
+		$gcsPath = sprintf( 'app/%s', $path );
+		$object = $bucket->object( $gcsPath );
+
+		if ( is_null( $object ) ) {
+			throw new Exception( "Unable to fetch a dump from {$gcsPath}", self::ERR_OPEN_STARTER_DUMP_FAILED );
+		}
+
+		$stream = $object->downloadAsStream();
+		$stream = StreamWrapper::getResource( $stream );
 
 		if ( !is_resource( $stream ) ) {
 			throw new \CreateWikiException( "Unable to create a memory stream for starter database dump", self::ERR_OPEN_STARTER_DUMP_FAILED );
-		}
-
-		$swift = Starters::getStarterDumpStorage();
-		$res = $swift->read( $path, $stream );
-
-		if ( is_null( $res ) ) {
-			throw new \CreateWikiException( "Unable to fetch a dump from {$path}", self::ERR_OPEN_STARTER_DUMP_FAILED );
 		}
 
 		$stats = fstat( $stream );
