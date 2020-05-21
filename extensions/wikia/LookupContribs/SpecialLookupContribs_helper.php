@@ -30,12 +30,15 @@ class LookupContribsCore {
 
 	/** @var User */
 	private $oUser;
+	/** @var UserIdCacheKeys */
+	private $userCache;
 
 	public function __construct( $username, $mode = 0, $dbName = '', $ns = false ) {
 		$this->mUsername = $username;
 		$this->oUser = User::newFromName( $this->mUsername );
 		if ( $this->oUser instanceof User ) {
 			$this->mUserId = $this->oUser->getId();
+			$this->userCache = new UserIdCacheKeys( $this->mUserId );
 		}
 		$this->setMode( $mode );
 		$this->setDBname( $dbName );
@@ -71,7 +74,7 @@ class LookupContribsCore {
 			return;
 		}
 
-		list( $orderType, $orderDirection ) = explode( ':', $order );
+		[ $orderType, $orderDirection ] = explode( ':', $order );
 
 		$this->mOrder = $orderType;
 		$this->mOrderDirection = $orderDirection;
@@ -148,7 +151,7 @@ class LookupContribsCore {
 	public function getUserActivity() {
 		global $wgMemc, $wgSpecialsDB;
 
-		$memKey = $this->getUserActivityMemKey();
+		$memKey = $this->userCache->forLookupContribs();
 		$data = $wgMemc->get( $memKey );
 
 		if ( !empty( $data ) && is_array( $data ) ) {
@@ -228,11 +231,7 @@ class LookupContribsCore {
 	 */
 	public function clearUserActivityCache() {
 		global $wgMemc;
-		$wgMemc->delete( $this->getUserActivityMemKey() );
-	}
-
-	private function getUserActivityMemKey() {
-		return wfSharedMemcKey( __CLASS__, $this->mUserId );
+		$wgMemc->delete( $this->userCache->forLookupContribs() );
 	}
 
 	private function orderData( $userActivity ) {

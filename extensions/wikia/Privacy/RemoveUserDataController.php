@@ -190,7 +190,8 @@ class RemoveUserDataController extends WikiaController {
 			'rtbf_log_id' => $auditLogId
 		] );
 
-		User::newFromId( $userId )->deleteCache();
+		$user = User::newFromId( $userId );
+		$user->deleteCache();
 
 		$this->info( "User's local data was removed", [
 			'user_id' => $userId,
