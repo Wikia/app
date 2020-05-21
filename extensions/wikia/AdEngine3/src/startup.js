@@ -129,7 +129,7 @@ function trackLabradorValues() {
  * @private
  */
 function trackLikhoToDW() {
-	const likhoPropValue = likhoService.getType();
+	const likhoPropValue = likhoService.getTypes();
 
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));
