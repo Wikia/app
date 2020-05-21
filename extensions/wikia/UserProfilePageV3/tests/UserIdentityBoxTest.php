@@ -37,8 +37,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 			->setMethods( [ 'saveSettings', 'getId' ] )
 			->getMock();
 
-		$userMock->expects( $this->once() )
-			->method( 'getId' )
+		$userMock->method( 'getId' )
 			->willReturn( 1 );
 
 		$userMock->expects( $this->once() )
@@ -187,8 +186,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 */
 	public function testGetTopWikis() {
 		$userMock = $this->getMock( 'User', [ 'getOption', 'getId' ] );
-		$userMock->expects( $this->once() )
-			->method( 'getId' )
+		$userMock->method( 'getId' )
 			->willReturn( 1 );
 
 		$favoriteWikisModelMock = $this->getMock(
