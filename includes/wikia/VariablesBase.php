@@ -9365,3 +9365,8 @@ $wgOverrideUcfirstCharacters = [
 $wgTimelineRenderHashAppend = 'v2';
 
 $wgIsTestWiki = false;
+
+/**
+ * Variable storing country codes where Video Bridge can appear
+ */
+$wgVideoBridgeCountries = [];
