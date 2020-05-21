@@ -26,7 +26,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function testCheckIfDisplayZeroStates($data, $expectedResult) {
-		$userIdentityBox = new UserIdentityBox( $this->getMock('User') );
+		$userIdentityBox = new UserIdentityBox( new User );
 
 		$this->assertEquals($expectedResult, $userIdentityBox->checkIfDisplayZeroStates($data));
 	}
@@ -34,8 +34,12 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	public function testClearMastheadContents() {
 		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
 		$userMock = $this->getMockBuilder( User::class )
-			->setMethods( [ 'saveSettings' ] )
+			->setMethods( [ 'saveSettings', 'getId' ] )
 			->getMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( 1 );
 
 		$userMock->expects( $this->once() )
 			->method( 'saveSettings' )
@@ -182,7 +186,10 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @desc Tests if UserIdentityBox::getTopWikis delegates pulling wikis to FavoriteWikisModel
 	 */
 	public function testGetTopWikis() {
-		$userMock = $this->getMock( 'User', [ 'getOption' ] );
+		$userMock = $this->getMock( 'User', [ 'getOption', 'getId' ] );
+		$userMock->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( 1 );
 
 		$favoriteWikisModelMock = $this->getMock(
 			'FavoriteWikisModel',
