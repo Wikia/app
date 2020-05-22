@@ -15,6 +15,7 @@ import {
 	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
+	likhoService,
 	permutive,
 	Runner,
 	nielsen,
@@ -128,7 +129,7 @@ function trackLabradorValues() {
  * @private
  */
 function trackLikhoToDW() {
-	const likhoPropValue = context.get('targeting.likho') || [];
+	const likhoPropValue = likhoService.getTypes();
 
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));

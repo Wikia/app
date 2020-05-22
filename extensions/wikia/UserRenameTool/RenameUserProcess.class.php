@@ -144,7 +144,7 @@ class RenameUserProcess {
 
 				$this->addLog( "Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$wgExternalSharedDB}" );
 
-				User::clearUserCache( $this->mUserId );
+				User::newFromId( $this->mUserId )->deleteCache();
 
 				return true;
 			} else {

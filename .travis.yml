@@ -29,10 +29,5 @@ script:
   - git diff $TRAVIS_BRANCH..HEAD --name-only --diff-filter ACMRT | grep \.php$ | grep -Ev '(lib/composer|lib/Swagger|/templates/)' | xargs -n 1 php -l
   - cd tests && ./php-tests.sh
 
-# cache compiled version of pecl extensions
-cache:
-  directories:
-    - /home/travis/.phpenv
-
 notifications:
   email: false
