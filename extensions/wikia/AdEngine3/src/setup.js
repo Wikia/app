@@ -6,6 +6,7 @@ import {
 	fillerService,
 	InstantConfigCacheStorage,
 	InstantConfigService,
+	likhoService,
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
@@ -168,6 +169,7 @@ async function setupAdContext(wikiContext, consents) {
 		instantConfig.get('icA9LoggerErrorCodes'),
 	);
 
+	likhoService.refresh();
 	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
