@@ -213,9 +213,6 @@ class PreferenceService {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
 	}
 
-	public function deleteFromCache( $userId ) {
-	}
-
 	protected function getLoggerContext() {
 		return ['class' => 'PreferenceService'];
 	}

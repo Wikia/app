@@ -13,8 +13,6 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	const MAX_FAV_WIKIS = 4;
 
-	const CACHE_VERSION = '3';
-
 	// 3600 == 60 * 60 == 1 hr
 	const SAVED_WIKIS_TTL = 3600;
 
@@ -29,13 +27,13 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
 
-	/**
-	 * @param User $user
-	 */
+	/** @var UserIdCacheKeys */
+	private $cacheKeys;
+
 	public function __construct( User $user ) {
 		parent::__construct();
-
 		$this->user = $user;
+		$this->cacheKeys = new UserIdCacheKeys( $user->getId() );
 	}
 
 	/**
@@ -125,15 +123,17 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-
 		if ( $refreshHidden ) {
 			$this->clearHiddenTopWikis();
 		}
 
-		$memKey = $this->getTopWikisMemKey();
-		$savedWikis = WikiaDataAccess::cache( $memKey, self::SAVED_WIKIS_TTL, function() {
-			return $this->getTopWikisFromDb();
-		});
+		$savedWikis = WikiaDataAccess::cache(
+			$this->cacheKeys->forFavoriteWikis(),
+			self::SAVED_WIKIS_TTL,
+			function () {
+				return $this->getTopWikisFromDb();
+			}
+		);
 
 		$wikis = array_merge( $savedWikis, $this->getEditsWikis() );
 
@@ -149,10 +149,6 @@ class FavoriteWikisModel extends WikiaModel {
 		return $this->sortTopWikis( $wikis );
 	}
 
-	private function getTopWikisMemKey() {
-		return wfSharedMemcKey( 'user-identity-box-data-top-wikis', $this->user->getId(), self::CACHE_VERSION );
-	}
-
 	/**
 	 * Sorts top (fav) wikis by edits and cuts if there are more than default amount of top wikis
 	 *
@@ -161,7 +157,6 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function sortTopWikis( $topWikis ) {
-
 		if ( !empty( $topWikis ) ) {
 			$editcounts = [];
 
@@ -212,14 +207,13 @@ class FavoriteWikisModel extends WikiaModel {
 			];
 			$this->storeEditsWikis( $wikiId, $wiki );
 		}
-
 	}
 
 	private function storeEditsWikis( $wikiId, $wiki ) {
 		global $wgMemc;
 
 		// getting array of masthead edits wikis
-		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey() );
+		$mastheadEditsWikis = $wgMemc->get( $this->cacheKeys->forMastheadEdits() );
 		if ( !is_array( $mastheadEditsWikis ) ) {
 			$mastheadEditsWikis = [];
 		}
@@ -233,7 +227,7 @@ class FavoriteWikisModel extends WikiaModel {
 			}
 		}
 
-		$wgMemc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis );
+		$wgMemc->set( $this->cacheKeys->forMastheadEdits(), $mastheadEditsWikis );
 
 		return $mastheadEditsWikis;
 	}
@@ -244,17 +238,8 @@ class FavoriteWikisModel extends WikiaModel {
 	private function getEditsWikis() {
 		global $wgMemc;
 
-		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey() );
+		$mastheadEditsWikis = $wgMemc->get( $this->cacheKeys->forMastheadEdits() );
 		return is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
-	}
-
-	/**
-	 * Gets memcache id for hidden wikis
-	 *
-	 * @return string
-	 */
-	private function getMemcHiddenWikisId() {
-		return wfSharedMemcKey( 'user-identity-box-data-top-hidden-wikis', $this->user->getId(), self::CACHE_VERSION );
 	}
 
 	/**
@@ -265,7 +250,7 @@ class FavoriteWikisModel extends WikiaModel {
 
 		$hiddenWikis = [];
 		$this->updateHiddenInDb( wfGetDB( DB_MASTER, [], $wgExternalSharedDB ), $hiddenWikis );
-		$wgMemc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
+		$wgMemc->set( $this->cacheKeys->forHiddenWikis(), $hiddenWikis );
 	}
 
 	/**
@@ -276,12 +261,12 @@ class FavoriteWikisModel extends WikiaModel {
 	private function getHiddenTopWikis() {
 		global $wgMemc, $wgExternalSharedDB;
 
-		$hiddenWikis = $wgMemc->get( $this->getMemcHiddenWikisId() );
+		$hiddenWikis = $wgMemc->get( $this->cacheKeys->forHiddenWikis() );
 
 		if ( empty( $hiddenWikis ) && !is_array( $hiddenWikis ) ) {
 			$dbs = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 			$hiddenWikis = $this->getHiddenFromDb( $dbs );
-			$wgMemc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
+			$wgMemc->set( $this->cacheKeys->forHiddenWikis(), $hiddenWikis );
 		}
 
 		return $hiddenWikis;
@@ -301,7 +286,7 @@ class FavoriteWikisModel extends WikiaModel {
 			$hiddenWikis = $this->getHiddenTopWikis();
 			$hiddenWikis[] = $wikiId;
 			$this->updateHiddenInDb( wfGetDB( DB_MASTER, [], $wgExternalSharedDB ), $hiddenWikis );
-			$wgMemc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
+			$wgMemc->set( $this->cacheKeys->forHiddenWikis(), $hiddenWikis );
 		}
 
 		return true;
@@ -371,14 +356,5 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	private function isTopWikiHidden( $wikiId ) {
 		return in_array( $wikiId, $this->getHiddenTopWikis() );
-	}
-
-	/**
-	 * Returns shared key in memcached
-	 *
-	 * @return string
-	 */
-	private function getMemcMastheadEditsWikisKey() {
-		return wfSharedMemcKey( 'user-identity-box-data-masthead-edits0', $this->user->getId(), self::CACHE_VERSION );
 	}
 }

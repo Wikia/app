@@ -321,7 +321,8 @@ EOT
 	 * @return string
 	 */
 	public static function getUserLookupMemcKey( $userName, $wikiId ) {
-		return 'lookupUser' . 'user' . $userName . 'on' . $wikiId;
+		$cacheKeys = new UserNameCacheKeys( $userName );
+		return $cacheKeys->forLookupUser( $wikiId );
 	}
 
 	/**
@@ -341,7 +342,7 @@ EOT
 
 		global $wgMemc, $wgStylePath;
 
-		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ) );
+		$cachedData = $wgMemc->get( self::getUserLookupMemcKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
 			if ( $checkingBlocks === false ) {
 				if ( $cachedData['groups'] === false ) {
@@ -390,7 +391,7 @@ EOT
 
 		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
-		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ) );
+		$cachedData = $wgMemc->get( self::getUserLookupMemcKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
 			$result = array( 'success' => true, 'data' => $cachedData );
 		} else {
@@ -419,7 +420,7 @@ EOT
 					}
 
 					$result = array( 'success' => true, 'data' => $userData );
-					$wgMemc->set( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ), $userData, 3600 ); // 1h
+					$wgMemc->set( self::getUserLookupMemcKey( $userName, $wikiId ), $userData, 3600 ); // 1h
 				} else {
 					$result = array( 'success' => false );
 				}
