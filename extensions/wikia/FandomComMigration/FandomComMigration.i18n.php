@@ -4,6 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'fandom-com-migration-after' => "Attention: We have migrated your community's domain to fandom.com. Find out more in [https://community.fandom.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
 	'fandom-com-migration-before' => "Attention: Over the next few weeks, we are migrating your community's domain to fandom.com. Find out more on [https://community.fandom.com/wiki/Help:Fandom_domain_migration this Fandom help page].",
+	'fandom-ucp-migration-before' => "Attention: Over the next few weeks, we are migrating your community to the Unified Community Platform. Find out more on [https://community.fandom.com/wiki/Help:Unified_Community_Platform this Fandom help page].",
 );
 
 $messages['qqq'] = array(
