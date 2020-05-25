@@ -11,11 +11,21 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgFandomComMigrationCustomMessageBefore;
+		global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
+			   $wgFandomComMigrationCustomMessageAfter;
 
 		if ( static::isEnabled() ) {
 			$parser = ParserPool::get();
-			if ( static::isMigrationScheduled() ) {
+			// Send HTML instead of message key to avoid the issue of non-compatible i18n libs
+			if ( $wgFandomComMigrationDone ) {
+				if ( !empty( $wgFandomComMigrationCustomMessageAfter ) ) {  // customized message
+					$wikiVariables['fandomComMigrationNotificationAfter'] = $parser->parse(
+						$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+				} else {
+					$wikiVariables['fandomComMigrationNotificationAfter'] =
+						wfMessage( 'fandom-com-migration-after' )->parse();
+				}
+			} elseif ( static::isMigrationScheduled() ) {
 				if ( !empty( $wgFandomComMigrationCustomMessageBefore ) ) {  // customized message
 					$wikiVariables['fandomComMigrationNotificationBefore'] = $parser->parse(
 						$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
@@ -56,6 +66,15 @@ class FandomComMigrationHooks {
 	}
 
 	private static function isEnabled() {
+		global $wgDomainChangeDate, $wgFandomComMigrationDone;
+
+		if ( $wgFandomComMigrationDone && !empty( $wgDomainChangeDate ) ) {
+			$migrationDateTime = new DateTime( $wgDomainChangeDate );
+			$weekAgo = ( new DateTime() )->sub( new DateInterval( 'P7D' ) );
+
+			return $migrationDateTime > $weekAgo;
+		}
+
 		return static::isMigrationScheduled();
 	}
 
