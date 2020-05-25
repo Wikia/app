@@ -159,6 +159,7 @@
                 "CA",
                 "DE",
                 "GB",
+                "NZ",
                 "PL",
                 "UK",
                 "US"
@@ -274,7 +275,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -315,7 +319,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -442,7 +449,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -588,8 +598,8 @@
                 "5368490043",
                 "5370873744",
                 "5366503822",
-                "5354223833",
-                "5353864975"
+                "5353864975",
+                "5366503822"
             ]
         }
     ],
@@ -671,7 +681,11 @@
                 {
                     "name": "vcr",
                     "countries": [
-                        
+                        "PL/100",
+                        "CZ/100",
+                        "HK/100",
+                        "UK/100",
+                        "GB/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -763,6 +777,19 @@
                 "XX"
             ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         }
     ],
     "icA9Bidder": [
@@ -818,9 +845,6 @@
                 "muthead",
                 "oasis"
             ],
-            "regions": [
-                "NZ"
-            ],
             "value": true
         }
     ],
@@ -832,9 +856,11 @@
                 "oasis"
             ],
             "regions": [
+                "AU",
                 "GB",
                 "ID",
                 "MY",
+                "NZ",
                 "PH",
                 "SG",
                 "UK",

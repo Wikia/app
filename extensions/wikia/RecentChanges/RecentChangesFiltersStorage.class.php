@@ -74,7 +74,7 @@ class RecentChangesFiltersStorage {
 	}
 
 	protected function getCache() {
-		return $this->memc->get($this->getCacheKey(), null);
+		return $this->memc->get( $this->getCacheKey() );
 	}
 
 	protected function getCacheKey() {

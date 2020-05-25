@@ -61,7 +61,7 @@ class BlogArticle extends Article {
 			 * blog article, show if exists
 			 */
 			$oldPrefixedText = $this->mTitle->mPrefixedText;
-			list( $author, $prefixedText )  = explode( '/', $this->mTitle->getPrefixedText(), 2 );
+			[ $author, $prefixedText ]  = explode( '/', $this->mTitle->getPrefixedText(), 2 );
 			if ( isset( $prefixedText ) && !empty( $prefixedText ) ) {
 				$this->mTitle->mPrefixedText = $prefixedText;
 			}
@@ -194,7 +194,8 @@ class BlogArticle extends Article {
 	 * @return String - memcache key
 	 */
 	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
+		$usernameCacheKeys = new UserNameCacheKeys( $userKey);
+		return $usernameCacheKeys->forBlogArticleListing( $pageNum );
 	}
 
 	/**
@@ -213,7 +214,8 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogFeedMemcacheKey( $userKey, $offset ) {
-		return wfMemcKey( 'blog', 'feed', 'v' . self::CACHE_VERSION, $userKey, $offset );
+		$usernameCacheKeys = new UserNameCacheKeys( $userKey);
+		return $usernameCacheKeys->forBlogArticleFeed( $offset );
 	}
 
 	/**
@@ -448,7 +450,7 @@ class BlogArticle extends Article {
 			$title = $title->getBaseText();
 		}
 		if ( strpos( $title, "/" ) !== false ) {
-			list( $title, $rest ) = explode( "/", $title, 2 );
+			[ $title, $rest ] = explode( "/", $title, 2 );
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -473,7 +475,7 @@ class BlogArticle extends Article {
 			$text = $title->getBaseText();
 		}
 		if ( strpos( $text, "/" ) !== false ) {
-			list( $owner, $rest ) = explode( "/", $text, 2 );
+			[ $owner, $rest ] = explode( "/", $text, 2 );
 		}
 		wfProfileOut( __METHOD__ );
 
