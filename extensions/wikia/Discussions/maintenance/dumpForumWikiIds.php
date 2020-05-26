@@ -21,17 +21,15 @@ class ForumWikiIds extends Maintenance {
 		}
 
 		global $wgExternalSharedDB;
-			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		$cities = [];
 
 		( new \WikiaSQL() )->SELECT(
-			"city_id, city_public, cv_value"
+			"city_id, city_public"
 		)
 			->FROM( "city_list" )
-			->JOIN( "city_variables" )
-			->ON( 'city_list.city_id', 'city_variables.cv_city_id' )
-			->WHERE( 'cv_variable_id' )
-			->IN( [1581] )
-			->AND_( 'city_id' )
+			->WHERE( 'city_id' )
 			->IN(
 				( new \WikiaSQL() )->SELECT(
 				"city_id" )
@@ -45,10 +43,38 @@ class ForumWikiIds extends Maintenance {
 			)
 			->runLoop(
 				$db,
-				function ( &$cities, $row ) use ( $fh ) {
-					fwrite( $fh, $row->city_id . ';' . $row->city_public . ';' . $row->cv_value . "\n" );
+				function ( &$data, $row ) use ( $fh, &$cities ) {
+					$cities[$row->city_id] = [
+						"isPublic" => $row->city_public
+					];
 				}
 			);
+
+		$values = [];
+		( new \WikiaSQL() )->SELECT(
+			"city_id, cv_value"
+		)
+			->FROM( "city_list" )
+			->JOIN( "city_variables" )
+			->ON( 'city_list.city_id', 'city_variables.cv_city_id' )
+			->WHERE( 'cv_variable_id' )
+			->IN( [1581] )
+			->AND_( 'city_id' )
+			->IN( array_keys($cities) )
+			->runLoop(
+				$db,
+				function ( &$data, $row ) use ( $fh, &$values ) {
+					$values[$row->city_id] = [
+						"value" => $row->cv_value
+					];
+				}
+			);
+
+		foreach ( $cities as $id => $data ) {
+			$discussionValue = array_key_exists($id, $values) ? $values[$id] : '';
+			$discussionEnabled = empty($discussionValue) ? 'no' : $discussionValue === 'b:1;' ? 'yes' : 'no';
+			fwrite( $fh, $id . ';' . $data['isPublic'] . ';' . $discussionEnabled . ";\n" );
+		}
 
 		fclose( $fh );
 	}
