@@ -24,24 +24,29 @@ class ForumWikiIds extends Maintenance {
 			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 		( new \WikiaSQL() )->SELECT(
-			"city_id"
+			"city_id, city_public, cv_value"
 		)
 			->FROM( "city_list" )
 			->JOIN( "city_variables" )
 			->ON( 'city_list.city_id', 'city_variables.cv_city_id' )
 			->WHERE( 'cv_variable_id' )
-			->IN( [1195, 1581] )
-			->AND_( 'cv_value' )
-			->EQUAL_TO( 'b:1;' )
-			->AND_( 'city_public' )
-			->EQUAL_TO( WikiFactory::PUBLIC_WIKI )
-			->GROUP_BY( 'city_id' )
-			->HAVING( 'count(*)' )
-			->GREATER_THAN( 1 )
+			->IN( [1581] )
+			->AND_( 'city_id' )
+			->IN(
+				( new \WikiaSQL() )->SELECT(
+				"city_id" )
+					->FROM( "city_list" )
+					->JOIN( "city_variables" )
+					->ON( 'city_list.city_id', 'city_variables.cv_city_id' )
+					->WHERE( 'cv_variable_id' )
+					->IN( [1195] )
+					->AND_( "cv_value" )
+					->EQUAL_TO( "b:1;" )
+			)
 			->runLoop(
 				$db,
 				function ( &$cities, $row ) use ( $fh ) {
-					fwrite( $fh, $row->city_id . "\n" );
+					fwrite( $fh, $row->city_id . ';' . $row->city_public . ';' . $row->cv_value . "\n" );
 				}
 			);
 

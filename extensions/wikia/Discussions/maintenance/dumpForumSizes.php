@@ -8,6 +8,7 @@ class ForumSize extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
+		$this->addArg( 'out', "Output file for results", $required = false );
 	}
 
 	/**
@@ -16,6 +17,9 @@ class ForumSize extends Maintenance {
 	public function execute() {
 
 		global $wgCityId, $wgSitename;
+
+		$outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
+		$fh = fopen( $outputName, 'a' );
 
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -82,6 +86,8 @@ class ForumSize extends Maintenance {
 		$total = $pages[0] * 2 + $votes[0] + $topics[0] + $history[0];
 
 		echo("Result: " . $total . " inserts for " . $wgCityId . ": " . $wgSitename . "\n");
+
+		fwrite( $fh, $wgCityId . ';' . $wgSitename . ';' . $total . ";\n" );
 	}
 }
 
