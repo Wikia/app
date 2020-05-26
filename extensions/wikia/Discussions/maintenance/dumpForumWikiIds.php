@@ -71,8 +71,8 @@ class ForumWikiIds extends Maintenance {
 			);
 
 		foreach ( $cities as $id => $data ) {
-			$discussionValue = array_key_exists($id, $values) ? $values[$id] : '';
-			$discussionEnabled = empty($discussionValue) ? 'no' : $discussionValue === 'b:1;' ? 'yes' : 'no';
+			$discussionValue = array_key_exists($id, $values) ? $values[$id]['value'] : '';
+			$discussionEnabled = empty($discussionValue) ? 'no' : strcmp($discussionValue, 'b:1;') == 0 ? 'yes' : 'no';
 			fwrite( $fh, $id . ';' . $data['isPublic'] . ';' . $discussionEnabled . ";\n" );
 		}
 
