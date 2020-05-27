@@ -158,7 +158,6 @@ function callExternals() {
 
 	facebookPixel.call();
 	permutive.call();
-	identityLibrary.call();
 	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
