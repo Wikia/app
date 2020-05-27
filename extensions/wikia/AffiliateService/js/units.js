@@ -7,7 +7,7 @@ define('ext.wikia.AffiliateService.units', [], function () {
 			country: ['US'],
 			heading: 'Where HBO Meets So Much More',
 			subheading: 'START YOUR FREE TRIAL',
-			link: 'https://www.hbomax.com/gzm',
+			link: 'https://www.hbomax.com/',
 			image: 'https://static.wikia.nocookie.net/05a5bbb9-7662-416e-99c7-6e6700af9aa3',
 			extraDisclaimer: "Free trial for new customers only. Restrictions Apply."
 		},
