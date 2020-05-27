@@ -14,8 +14,8 @@ define( 'ext.wikia.AffiliateService.templates', [], function() {
             disclaimer = '<p class="aff-unit__disclaimer-message">'
                 + options.disclaimerMessage;
                     if (options.extraDisclaimer) {
-						disclaimer += ' ' + options.extraDisclaimer
-					}
+                        disclaimer += ' ' + options.extraDisclaimer
+                    }
                 disclaimer += '</p>';
         }
 
