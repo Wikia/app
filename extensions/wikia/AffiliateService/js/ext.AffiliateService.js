@@ -246,7 +246,9 @@ require([
 				});
 			});
 
-			shuffleArray(availableUnits);
+			// Commenting this out, not deleting at this time, because I want it to be
+			// obvious that it is an active decision to no longer do this! Safe to fully remove after 7/31/2020 - AG
+			// shuffleArray(availableUnits);
 
 			return availableUnits;
 		},
