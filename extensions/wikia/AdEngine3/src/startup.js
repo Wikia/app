@@ -13,6 +13,7 @@ import {
 	facebookPixel,
 	iasPublisherOptimization,
 	identityLibrary,
+	identityLibraryLoadedEvent,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
@@ -106,6 +107,12 @@ function startAdEngine(inhibitors) {
 
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
+		});
+
+		eventService.communicator.actions$.pipe(
+			ofType(identityLibraryLoadedEvent)
+		).subscribe((props) => {
+			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
 		});
 
 		eventService.communicator.actions$.pipe(
